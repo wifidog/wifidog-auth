@@ -35,7 +35,7 @@ function get_user_management_menu()
   $retval .= "<p>"._('User management')."</p>\n";
   $retval .= "<ul>\n";
 
-    $retval .= "<li><a href='".BASE_SSL_PATH."".USER_MANAGEMENT_PAGE."?action=register_new_account_form'>"._('Create new account')."</a></li>\n"; 
+    $retval .= "<li><a href='".BASE_SSL_PATH."signup.php'>"._('Create new account')."</a></li>\n"; 
     $retval .= "<li><a href='".BASE_SSL_PATH."".USER_MANAGEMENT_PAGE."?action=validation_email_form'>"._('Re-send validation email')."</a></li>\n";
     $retval .= "<li><a href='".BASE_SSL_PATH."".USER_MANAGEMENT_PAGE."?action=lost_username_form'>"._('Lost username')."</a></li>\n";
     $retval .= "<li><a href='".BASE_SSL_PATH."".USER_MANAGEMENT_PAGE."?action=lost_password_form'>"._('Lost password')."</a></li>\n";
