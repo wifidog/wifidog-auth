@@ -76,27 +76,27 @@ $db->ExecSql("SELECT node_id, name, (NOW()-last_heartbeat_timestamp) AS since_la
 	$num_online_users = $stats->getNumOnlineUsers($node_row['node_id']);
 	echo "Currently online: $num_online_users<br />\n";
 	$results = null;
-	$db->ExecSqlUniqueRes("SELECT COUNT(conn_id) FROM connections WHERE node_id='$node_row[node_id]' AND incoming!=0",$results, false);
+	$db->ExecSqlUniqueRes("SELECT COUNT(conn_id) FROM connections WHERE node_id='$node_row[node_id]' AND (incoming!=0 OR outgoing!=0)",$results, false);
 	echo "Cumulative: $results[count]<br />\n";
 
 	$results = null;
-	$db->ExecSqlUniqueRes("SELECT timestamp_in FROM connections WHERE node_id='$node_row[node_id]' AND incoming!=0 ORDER BY timestamp_in LIMIT 1",$results, false);
+	$db->ExecSqlUniqueRes("SELECT timestamp_in FROM connections WHERE node_id='$node_row[node_id]' AND (incoming!=0 OR outgoing!=0) ORDER BY timestamp_in LIMIT 1",$results, false);
 	echo "First: $results[timestamp_in]<br />\n";
 	$last_conn = $stats->getLastConnDate($node_row['node_id']);
 echo "Last: $last_conn</td></tr>\n";
 
 	echo "<tr class='spreadsheet'><th class='spreadsheet'>Unique users (successfull connections only)</th><td class='spreadsheet'>\n";
 	$results = null;
-	$db->ExecSqlUniqueRes("SELECT COUNT(DISTINCT user_id) FROM connections WHERE node_id='$node_row[node_id]' AND incoming!=0",$results, false);
+	$db->ExecSqlUniqueRes("SELECT COUNT(DISTINCT user_id) FROM connections WHERE node_id='$node_row[node_id]' AND (incoming!=0 OR outgoing!=0)",$results, false);
 	echo "Total: $results[count]<br />";
 	$results = null;
-	$db->ExecSqlUniqueRes("SELECT round(CAST( (SELECT SUM(daily_connections) FROM (SELECT COUNT(DISTINCT user_id) AS daily_connections, date_trunc('day', timestamp_in) FROM connections WHERE node_id='$node_row[node_id]' AND incoming!=0 GROUP BY date_trunc('day', timestamp_in)) AS daily_connections_table) / (EXTRACT(EPOCH FROM (NOW()-(SELECT timestamp_in FROM connections WHERE node_id='$node_row[node_id]' AND incoming!=0 ORDER BY timestamp_in LIMIT 1)) )/(3600*24)) AS numeric),2) AS connections_per_day",$results, false);
+	$db->ExecSqlUniqueRes("SELECT round(CAST( (SELECT SUM(daily_connections) FROM (SELECT COUNT(DISTINCT user_id) AS daily_connections, date_trunc('day', timestamp_in) FROM connections WHERE node_id='$node_row[node_id]' AND (incoming!=0 OR outgoing!=0) GROUP BY date_trunc('day', timestamp_in)) AS daily_connections_table) / (EXTRACT(EPOCH FROM (NOW()-(SELECT timestamp_in FROM connections WHERE node_id='$node_row[node_id]' AND (incoming!=0 OR outgoing!=0) ORDER BY timestamp_in LIMIT 1)) )/(3600*24)) AS numeric),2) AS connections_per_day",$results, false);
 echo "Average: $results[connections_per_day] per day<br/>\n";
 
 	$results = null;
 	$db->ExecSql("
 		SELECT SUM(daily_connections) AS visits, date_trunc('month', date) AS month FROM (
-			SELECT COUNT(DISTINCT user_id) AS daily_connections, date_trunc('day', timestamp_in) AS date FROM connections WHERE node_id='$node_row[node_id]' AND incoming!=0 GROUP BY date_trunc('day', timestamp_in)
+			SELECT COUNT(DISTINCT user_id) AS daily_connections, date_trunc('day', timestamp_in) AS date FROM connections WHERE node_id='$node_row[node_id]' AND (incoming!=0 OR outgoing!=0) GROUP BY date_trunc('day', timestamp_in)
 		) AS daily_connections_table GROUP BY date_trunc('month', date) ORDER BY month DESC
 	",$results, false);
 	echo "Monthly visits:<br />";
@@ -113,7 +113,7 @@ echo "Average: $results[connections_per_day] per day<br/>\n";
 	/* Hour of the day */
 	$results = null;
 	$db->ExecSql("
-		SELECT COUNT(conn_id) AS connections, extract('hour' from timestamp_in) AS hour FROM connections WHERE node_id='$node_row[node_id]' AND incoming!=0 GROUP BY extract('hour' from timestamp_in)
+		SELECT COUNT(conn_id) AS connections, extract('hour' from timestamp_in) AS hour FROM connections WHERE node_id='$node_row[node_id]' AND (incoming!=0 OR outgoing!=0) GROUP BY extract('hour' from timestamp_in)
 		 ORDER BY hour
 	",$results, false);
 	if ($results!=null)
@@ -131,7 +131,7 @@ echo "Average: $results[connections_per_day] per day<br/>\n";
 	/*Day of the week*/
 		$results = null;
 	$db->ExecSql("
-		SELECT COUNT(conn_id) AS connections, extract('dow' from timestamp_in) AS day FROM connections WHERE node_id='$node_row[node_id]' AND incoming!=0 GROUP BY extract('dow' from timestamp_in)
+		SELECT COUNT(conn_id) AS connections, extract('dow' from timestamp_in) AS day FROM connections WHERE node_id='$node_row[node_id]' AND (incoming!=0 OR outgoing!=0) GROUP BY extract('dow' from timestamp_in)
 		 ORDER BY day
 	",$results, false);
 	if ($results!=null)
@@ -150,7 +150,7 @@ echo "Average: $results[connections_per_day] per day<br/>\n";
 	
 	echo "<tr class='spreadsheet'><th class='spreadsheet'>Cumulative network traffic</th><td class='spreadsheet'>\n";
 	$results = null;
-	$db->ExecSqlUniqueRes("SELECT SUM(incoming)/1048576 as in, SUM(outgoing)/1048576 as out FROM connections WHERE node_id='$node_row[node_id]' AND incoming!=0",$results, false);
+	$db->ExecSqlUniqueRes("SELECT SUM(incoming)/1048576 as in, SUM(outgoing)/1048576 as out FROM connections WHERE node_id='$node_row[node_id]' AND (incoming!=0 OR outgoing!=0)",$results, false);
 	echo "$results[in] MB in / $results[out] MB out</td></tr>\n";
 			
 	echo "</table></p>\n";
@@ -161,25 +161,25 @@ echo "Average: $results[connections_per_day] per day<br/>\n";
 	
 	echo "<tr class='spreadsheet'><th class='spreadsheet'>First successfull connection</th><td class='spreadsheet'>\n";
 	$results = null;
-	$db->ExecSqlUniqueRes("SELECT timestamp_in FROM connections WHERE incoming!=0 ORDER BY timestamp_in LIMIT 1",$results, false);
+	$db->ExecSqlUniqueRes("SELECT timestamp_in FROM connections WHERE (incoming!=0 OR outgoing!=0) ORDER BY timestamp_in LIMIT 1",$results, false);
 	echo "$results[timestamp_in]</td></tr>\n";
 
 	
 	echo "<tr class='spreadsheet'><th class='spreadsheet'>Total number of unique successfull connections</th><td class='spreadsheet'>\n";
 	$results = null;
-	$db->ExecSqlUniqueRes("SELECT COUNT(conn_id) FROM connections WHERE incoming!=0",$results, false);
+	$db->ExecSqlUniqueRes("SELECT COUNT(conn_id) FROM connections WHERE (incoming!=0 OR outgoing!=0)",$results, false);
 	echo "$results[count]</td></tr>\n";
 
 	
 	echo "<tr class='spreadsheet'><th class='spreadsheet'>Total number of unique users (successfull connections only)</th><td class='spreadsheet'>\n";
 	$results = null;
-	$db->ExecSqlUniqueRes("SELECT COUNT(DISTINCT user_id) FROM connections WHERE incoming!=0",$results, false);
+	$db->ExecSqlUniqueRes("SELECT COUNT(DISTINCT user_id) FROM connections WHERE (incoming!=0 OR outgoing!=0)",$results, false);
 	echo "$results[count]</td></tr>\n";
 
 
 	echo "<tr class='spreadsheet'><th class='spreadsheet'>Network traffic</th><td class='spreadsheet'>\n";
 	$results = null;
-	$db->ExecSqlUniqueRes("SELECT SUM(incoming)/1048576 as in, SUM(outgoing)/1048576 as out FROM connections WHERE incoming!=0",$results, false);
+	$db->ExecSqlUniqueRes("SELECT SUM(incoming)/1048576 as in, SUM(outgoing)/1048576 as out FROM connections WHERE (incoming!=0 OR outgoing!=0)",$results, false);
 	echo "$results[in] MB in / $results[out] MB out</td></tr>\n";
 			
 			

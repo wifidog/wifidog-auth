@@ -1,4 +1,6 @@
 # $Header$
+2004-01-10 Benoit Grégoire  <bock@step.polymtl.ca>
+	* admin/user_stats.php: Add three top tens to the statistics:  Top ten apetite for bandwidth, top ten travelers, most addicted users.
 2004-01-04 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog/local_content/default/hotspot_logo_banner.jpg: Make it much thinner.
 	* wifidog/local_content/default/login.html: Remove announcements

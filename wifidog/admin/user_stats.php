@@ -73,6 +73,61 @@ echo $stats->getNumValidUsers();
 		}
 	}
 	echo "</td></tr>\n";
+	
+		echo "<tr class='spreadsheet'><th class='spreadsheet'>Ten most mobile users</th><td class='spreadsheet'>\n";
+
+	$results = null;
+	$db->ExecSql("
+		SELECT COUNT(DISTINCT node_id) AS num_hotspots_visited, user_id FROM users NATURAL JOIN connections WHERE (incoming!=0 OR outgoing!=0) GROUP BY user_id ORDER BY num_hotspots_visited DESC LIMIT 10
+	",$results, false);
+	if ($results!=null)
+	{
+	echo "<table  class='spreadsheet'><tr class='spreadsheet'><th class='spreadsheet'>User</th><th class='spreadsheet'>Number of hotspots visited</th></tr>";
+		foreach($results as $row)
+		{
+		echo "<tr class='spreadsheet'><td class='spreadsheet'>$row[user_id]</td><td class='spreadsheet'>$row[num_hotspots_visited]</td><tr>\n";
+		}
+	echo "</td></tr></table></p>\n";
+	}
+	echo "</td></tr>\n";
+
+		
+		echo "<tr class='spreadsheet'><th class='spreadsheet'>Ten most frequent users</th><td class='spreadsheet'>\n";
+
+	$results = null;
+	$db->ExecSql("SELECT COUNT(user_id) AS active_days, user_id FROM (
+			SELECT DISTINCT user_id, date_trunc('day', timestamp_in) AS date FROM connections WHERE (incoming!=0 OR outgoing!=0) GROUP BY date,user_id) as user_active_days GROUP BY user_id ORDER BY active_days DESC LIMIT 10
+		
+	",$results, false);
+	if ($results!=null)
+	{
+	echo "<table  class='spreadsheet'><tr class='spreadsheet'><th class='spreadsheet'>User</th><th class='spreadsheet'>Number of distinct days user has used the network</th></tr>";
+		foreach($results as $row)
+		{
+		echo "<tr class='spreadsheet'><td class='spreadsheet'>$row[user_id]</td><td class='spreadsheet'>$row[active_days]</td><tr>\n";
+		}
+	echo "</td></tr></table></p>\n";
+	}
+	echo "</td></tr>\n";
+
+			echo "<tr class='spreadsheet'><th class='spreadsheet'>Ten largest apetite for bandwidth</th><td class='spreadsheet'>\n";
+
+	$results = null;
+	$db->ExecSql("
+			SELECT DISTINCT user_id, SUM((incoming+outgoing)/1048576) AS total, SUM((incoming/1048576)) AS total_incoming, SUM((outgoing/1048576)) AS total_outgoing FROM connections GROUP BY user_id ORDER BY total DESC limit 10
+		
+	",$results, false);
+	if ($results!=null)
+	{
+	echo "<table  class='spreadsheet'><tr class='spreadsheet'><th class='spreadsheet'>User</th><th class='spreadsheet'>Total (MB)</th><th class='spreadsheet'>Incoming (MB)</th><th class='spreadsheet'>Outgoing (MB)</th></tr>";
+		foreach($results as $row)
+		{
+		echo "<tr class='spreadsheet'><td class='spreadsheet'>$row[user_id]</td><td class='spreadsheet'>$row[total]</td><td class='spreadsheet'>$row[total_incoming]</td><td class='spreadsheet'>$row[total_outgoing]</td><tr>\n";
+		}
+	echo "</td></tr></table></p>\n";
+	}
+	echo "</td></tr>\n";
+
 	echo "</table></p>\n";
 
     echo "</div>\n";	
