@@ -1,0 +1,42 @@
+    {include file=$header_file title="WiFiDog login page"}
+    <!--login page FR $Id$ -->      
+
+      <div id='head'>
+	<h1>BienvenuE!!  {$hotspot_name}, un acc&egrave;s gratuit {$hotspot_network_name}
+	</h1>
+	</div>
+
+	  
+
+      <div id="login">
+      	<form method="post">
+	  <input type="hidden" name="gw_address" value="{$gw_address}">
+	  <input type="hidden" name="gw_port" value="{$gw_port}">
+	  <input type="hidden" name="gw_id" value="{$gw_id}">
+	  <p><span class=warning>{$login_failed_message}</span>
+Nom d'utilisateurTRICE (ou courriel):
+	    <input type="text" name="user" size='12' value="{$previous_username}">
+	    Mot de passe:<input type="password" name="pass" size='12' value="{$previous_password}">
+	    <input type="submit" value='Login'></p>
+            </form>
+      </div>
+      
+                  <div id='navLeft'>
+{$user_management_menu}
+      </div>
+      <div id="content">
+
+<div class="logos">
+<img src='{$network_logo_url}' alt='{$hotspot_network_name} logo' /><br />
+<img src='{$wifidog_logo_url}' alt='WifiDog logo' />	
+</div>
+<img src='{$hotspot_logo_url}' alt='{$hotspot_name} logo' />
+
+	<h2>Announcements</h2>
+	  <dl>
+	  <dt>31/9/2004: Le logiciel régissant {$hotspot_network_name} est en cours de mise à jour.  Les
+code d'accès et mot de passe restent cependant valides..</dt> 
+	  </dl>
+</div>
+
+      {include file=$footer_file}
