@@ -24,7 +24,7 @@
    */
 define('BASEPATH','../');
 require_once 'admin_common.php';
-require_once BASEPATH.'Statistics.php';
+require_once BASEPATH.'classes/Statistics.php';
 
 $smarty->assign("total_users",  $stats->getNumUsers());
 $smarty->assign("total_valid",  $stats->getNumValidUsers());

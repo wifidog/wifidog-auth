@@ -82,12 +82,12 @@
         <th>Outgoing (MB)</th>
     </tr>
 
-    {section name=i loop=$most_apetite_users}
+    {section name=i loop=$most_greedy_users}
     <tr>
-        <td>{$most_apetite_users[i].user_id}</td>
-        <td>{$most_apetite_users[i].total}</td>
-        <td>{$most_apetite_users[i].total_incoming}</td>
-        <td>{$most_apetite_users[i].total_outgoing}</td>
+        <td>{$most_greedy_users[i].user_id}</td>
+        <td>{$most_greedy_users[i].total}</td>
+        <td>{$most_greedy_users[i].total_incoming}</td>
+        <td>{$most_greedy_users[i].total_outgoing}</td>
     </tr>
     {/section}
     </table>
