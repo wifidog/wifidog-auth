@@ -1,4 +1,7 @@
 # $Header$
+2004-11-04 Benoit Grégoire  <bock@step.polymtl.ca>
+	* wifidog/admin/hotspot_log.php: Add number of currently connected users here as well.
+
 2004-11-03 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog/ping/index.php: Log user-agent
 	* extensive statistics work

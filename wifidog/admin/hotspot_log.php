@@ -70,9 +70,11 @@ $db->ExecSql("SELECT node_id, name, (NOW()-last_heartbeat_timestamp) AS since_la
 	echo "<td class='spreadsheet'>$node_row[creation_date]</td></tr>\n";
 
 	echo "<tr class='spreadsheet'><th class='spreadsheet'>Successfull connections<br />(successfull means with data actually transferred)</th><td class='spreadsheet'>\n";
+	$num_online_users = $stats->getNumOnlineUsers($node_row['node_id']);
+	echo "Currently online: $num_online_users<br />\n";
 	$results = null;
 	$db->ExecSqlUniqueRes("SELECT COUNT(conn_id) FROM connections WHERE node_id='$node_row[node_id]' AND incoming!=0",$results, false);
-	echo "Number: $results[count]<br />\n";
+	echo "Cumulative: $results[count]<br />\n";
 
 	$results = null;
 	$db->ExecSqlUniqueRes("SELECT timestamp_in FROM connections WHERE node_id='$node_row[node_id]' AND incoming!=0 ORDER BY timestamp_in LIMIT 1",$results, false);
