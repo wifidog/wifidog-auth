@@ -113,18 +113,20 @@ if ($action == 'edit_node') { // Allow node creation or node edition
                 break;
 
             case 'update_node':
-                $description = $db->EscapeString($description);
-                $home_page_url = $db->EscapeString($home_page_url);
-                $map_url = $db->EscapeString($map_url);
-                $rss_url = $db->EscapeString($rss_url);
-                $public_phone_number = $db->EscapeString($public_phone_number);
-                $public_email = $db->EscapeString($public_email);
-                $mass_transit_info = $db->EscapeString($mass_transit_info);
-                $name = $db->EscapeString($name);
-                /* TODO Use object to update all of this and VALIDATE */
-
                 if ($new_node_id) {
-                    $sql_successful = $db->ExecSqlUpdate("UPDATE nodes SET node_id='$new_node_id',name='$name',rss_url='$rss_url',home_page_url='$home_page_url',description='$description',map_url='$map_url',street_address='$street_address',public_phone_number='$public_phone_number',public_email='$public_email',mass_transit_info='$mass_transit_info',node_deployment_status='$node_deployment_status' WHERE node_id='$node_id'");
+                    $node = Node::getNode($new_node_id);
+                    $node->setInfos( array(
+                            'name'                   => $name,
+                            'rss_url'                => $rss_url,
+                            'home_page_url'          => $home_page_url,
+                            'description'            => $description,
+                            'map_url'                => $map_url,
+                            'street_address'         => $street_address,
+                            'public_phone_number'    => $public_phone_number,
+                            'public_email'           => $public_email,
+                            'mass_transit_info'      => $mass_transit_info,
+                            'node_deployment_status' => $node_deployment_status
+                        ));
                 } else {
                     echo "NO NODE ID, this is a bug";
                 }

@@ -157,6 +157,27 @@ class Node
     return $this->mRow['node_deployment_status'];
   }
 
+  function setInfos($info_array)
+  {
+    global $db;
+
+    $infos_to_add = array();
+    if ($info_array) {
+      foreach ($info_array as $column => $value) {
+        $value = $db->EscapeString($value);
+        array_push($infos_to_add, "$column='$value'");
+      }
+      $sql = "UPDATE nodes SET ";
+      $sql .= implode(",", $infos_to_add);
+      $sql .= " WHERE node_id='{$this->mId}'";
+      if (!$db->ExecSqlUpdate($sql, false)) {
+        throw new Exception(_('Unable to update database!'));
+      }
+    } else {
+      throw new Exception(_('No info to update node with!'));
+    }
+  }
+
   /** Return all the nodes
    */
   static function getAllNodes ()
