@@ -1,8 +1,10 @@
 # $Header$
 2004-08-03 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Make gettext support optionnal, and define GETTEXT_AVAILABLE, will be set to true if gettext is available.  If false, blank _() and gettext() functions will be defined so the system still works.
+
 2004-08-03 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix BASE_URL_PATH to properly detect non-standard server ports (hopefully).
+
 2004-08-02 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog-auth lives! New since the dark ages
 	* Demo page to allow people to hack more easely on it
