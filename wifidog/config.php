@@ -6,6 +6,9 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.21  2005/03/17 03:57:39  masham
+ *      * use __FILE__ to resolve location of local.config
+ *
  *     Revision 1.20  2005/03/17 00:36:21  masham
  *      * config.php will use "local.config.php" instead, if present.  avoid cvs over-writing.
  *      * if CUSTOM_SIGNUP_URL is defined, signup.php will re-direct.  For integration with existing auth systems.
@@ -64,12 +67,11 @@
  *
  */
 
-
-if(file_exists("local.config.php")){
+if(file_exists(dirname(__FILE__)."/local.config.php")) {
 	// use a local copy of the configuration if found instead of the distro's.
-	require "local.config.php";
+	require dirname(__FILE__)."/local.config.php";
 } else {
-  
+
 /* Used by AbstractDb */
 define('CONF_DATABASE_HOST',   'localhost');
 define('CONF_DATABASE_NAME',   'wifidog');
