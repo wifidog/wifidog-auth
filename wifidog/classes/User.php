@@ -354,7 +354,7 @@ class User
 		$headers  = 'MIME-Version: 1.0' . "\r\n";
 		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 		$headers .= "From: ".VALIDATION_EMAIL_FROM_ADDRESS;
-		$subject = LOST_USERNAME_EMAIL_SUBJECT;
+		$subject = HOTSPOT_NETWORK_NAME._(" lost username request");
 		$body = _("Hello,<br>You have requested that the authentication server send you your username:<br>Username: ").$username._("<br><br>Have a nice day,<br>The Team");
 		
 		mail($this->getEmail(), $subject, $body, $headers);
@@ -377,7 +377,7 @@ class User
 				$headers  = 'MIME-Version: 1.0' . "\r\n";
 				$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 				$headers .= "From: ".VALIDATION_EMAIL_FROM_ADDRESS;
-				$subject = VALIDATION_EMAIL_SUBJECT;
+				$subject = HOTSPOT_NETWORK_NAME._(" new user validation");
 				$url = "http://".$_SERVER["SERVER_NAME"]."/validate.php?user_id=".$this->getId()."&token=".$this->getValidationToken();
 				$body = _("Hello,<br>Please follow the link below to validate your account.<br>").$url._("<br><br>Thank you,<br>The Team.");
 				
@@ -397,7 +397,7 @@ class User
 		$headers  = 'MIME-Version: 1.0' . "\r\n";
 		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 		$headers .= "From: ".VALIDATION_EMAIL_FROM_ADDRESS;
-		$subject = LOST_PASSWORD_EMAIL_SUBJECT;
+		$subject = HOTSPOT_NETWORK_NAME._(" new password request");
 		$body = _("Hello,<br>You have requested that the authentication server send you a new password:<br>Username: ").$username._("<br>Password: ").$new_password._("<br><br>Have a nice day,<br>The Team");
 		
 		mail($this->getEmail(), $subject, $body, $headers);

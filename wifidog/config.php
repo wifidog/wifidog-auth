@@ -6,8 +6,11 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.25  2005/03/31 17:54:45  fproulx
+ *     Missing files
+ *
  *     Revision 1.24  2005/03/30 20:04:42  fproulx
- *     2005-03-30 François Proulx  <francois.proulx@gmail.com>
+ *     2005-03-30 Fran?ois Proulx  <francois.proulx@gmail.com>
  *     	* Finished RADIUS authentication and accounting
  *     	* Accounting Unique session ID is now based on the same token we use
  *     	* Fixed all issues with lost_username, lost_password etc...
@@ -18,7 +21,7 @@
  *     	* A few examples on how set different RADIUS or local authenticators can be found in the config.php
  *
  *     Revision 1.23  2005/03/29 22:13:27  fproulx
- *     2005-03-28 François Proulx  <francois.proulx@gmail.com>
+ *     2005-03-28 Fran?ois Proulx  <francois.proulx@gmail.com>
  *     	* schema_validate.php : Modified schema : dropped e-mail + account unique index, dropped email not empty constraint
  *     	* Schema is now at version 3
  *     	* Coded RADIUS authentication
@@ -30,7 +33,7 @@
  *     	* TODO : Heavy testing possibly with remote RADIUS servers
  *
  *     Revision 1.22  2005/03/28 19:49:52  benoitg
- *     2005-03-28 Benoit Grégoire  <bock@step.polymtl.ca>
+ *     2005-03-28 Benoit Gr?goire  <bock@step.polymtl.ca>
  *     	* common.php:  Add get_guid() function
  *     	* validate_schema.php: New auto-upgrade script to allow autaumatic schema upgrade.  Note that you must still update dump_initial_data_postgres.sh and use sync_sql_for_cvs.sh so new users aren't left in the cold.
  *     	* New class Authenticator (and subclasses):  Begin virtualizing the login process.
@@ -43,7 +46,7 @@
  *      * if CUSTOM_SIGNUP_URL is defined, signup.php will re-direct.  For integration with existing auth systems.
  *
  *     Revision 1.19  2005/01/26 03:46:30  benoitg
- *     2005-01-25 Benoit Grégoire  <bock@step.polymtl.ca>
+ *     2005-01-25 Benoit Gr?goire  <bock@step.polymtl.ca>
  *     	* classes/Node.php:  New file, untested code example
  *     	* wifidog/admin/admin_common.php: Remove double-defined BASEPATH
  *
@@ -60,7 +63,7 @@
  *     *** empty log message ***
  *
  *     Revision 1.14  2005/01/12 00:57:42  benoitg
- *     2004-01-10 Benoit Grégoire  <bock@step.polymtl.ca>
+ *     2004-01-10 Benoit Gr?goire  <bock@step.polymtl.ca>
  *     	* wifidog/config.php:  Add list of hotspot to network rss feed list (not yet functionnal)
  *     	* wifidog/hotspot_status.php:  Allow RSS export of the list of deployed HotSpots.
  *     	* wifidog/admin/incoming_outgoing_swap.php:  Script to swap incoming and outgoing in your data.  only use this if you had gateways before 1.0.2 and wish to correct your logs before you upgrade.
@@ -68,7 +71,7 @@
  *     	* wifidog/portal/index.php: Preliminary work to enable smart press review of multiple RSS feeds.
  *
  *     Revision 1.13  2004/12/03 19:42:32  benoitg
- *     2004-12-03 Benoit Grégoire  <bock@step.polymtl.ca>
+ *     2004-12-03 Benoit Gr?goire  <bock@step.polymtl.ca>
  *     	* wifidog/admin/user_stats.php,  wifidog/classes/Statistics.php:  Embryonic aggregate user stats.  Currently allows you to find out the rate at which your users subscribe.
  *     	* wifidog/config.php, wifidog/local_content/default/login.html, wifidog/include/user_management_menu.php:  Add hotspot status page to login page.
  *     	* wifidog/hotspot_status.php: Cosmetic
@@ -76,7 +79,7 @@
  *     	* wifidog/index.php: Cosmetic.
  *
  *     Revision 1.12  2004/11/20 03:28:25  benoitg
- *     2004-11-19 Benoit Grégoire  <bock@step.polymtl.ca>
+ *     2004-11-19 Benoit Gr?goire  <bock@step.polymtl.ca>
  *     	* TODO: Add email domains to blacklist
  *     	* wifidog/config.php, wifidog/include/user_management_menu.php: Add tech support email address
  *     	* wifidog/hotspot_status.php: List of HotSpots that are open with summary of information.  Designed to be included as part of another page.
@@ -118,11 +121,8 @@ define('HOTSPOT_NETWORK_URL', 'http://www.ilesansfil.org/');
 define('TECH_SUPPORT_EMAIL', 'tech@ilesansfil.org');
 define('UNKNOWN_HOSTPOT_NAME', 'Unknown HotSpot');
 
-define('VALIDATION_EMAIL_FROM_ADDRESS', 'validation@ilesansfil.org');
-define('VALIDATION_EMAIL_SUBJECT', HOTSPOT_NETWORK_NAME._(" new user validation"));
 define('VALIDATION_GRACE_TIME', 20); /**< Number of minutes after new account creation during which internet access is available to validate your account.  Once elapsed, you have to validate from home... */
-define('LOST_PASSWORD_EMAIL_SUBJECT', HOTSPOT_NETWORK_NAME._(" new password request"));
-define('LOST_USERNAME_EMAIL_SUBJECT', HOTSPOT_NETWORK_NAME._(" lost username request"));
+define('VALIDATION_EMAIL_FROM_ADDRESS', 'validation@ilesansfil.org');
 /* RSS support.  If set to true, MAGPIERSS must be installed in MAGPIE_REL_PATH */
 define('RSS_SUPPORT', true); 
 /* Normally, the database cleanup routines will be called everytime a portal page is displayed.  If you set this to true, you must set a cron job on the server which will execute the script cron/cleanup.php. */
@@ -197,8 +197,8 @@ define('WIFIDOG_LOGO_NAME', 'wifidog_logo_banner.png');
 define('WIFIDOG_LOGO_BANNER_NAME', 'wifidog_logo_banner.png');
 
 define('DEFAULT_NODE_ID', 'default');
-define('DEFAULT_LANG', 'fr_FR');
-
+ define('DEFAULT_LANG', 'fr_FR');
+ 
 /*** FOR TESTING ONLY *** UNCOMMENT THE NEXT LINES
  *** WHEN READY TO TEST **************************
  *** This code define two (2) global variables:

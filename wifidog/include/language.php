@@ -1,4 +1,25 @@
 <?php
+require_once BASEPATH.'classes/Session.php';
+$session = new Session();
+/* Gettext support */
+if(!function_exists ('gettext'))
+  {
+    define('GETTEXT_AVAILABLE', false);
+    /* Redefine the gettext functions if gettext isn't installed */
+    function gettext($string)
+    {
+      return $string;
+    }
+    function _($string)
+    {
+      return $string;
+    }
+  }
+else
+  {
+    define('GETTEXT_AVAILABLE', true);
+  }
+
 if (!empty($_REQUEST['lang'])) {
     $session->set('SESS_LANGUAGE_VAR', $_REQUEST['lang']);
 }
