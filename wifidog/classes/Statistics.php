@@ -27,8 +27,7 @@ require_once BASEPATH.'include/common.php';
 /* Gives various statistics about the status of the network or of a specific node */
 class Statistics{
 
-  function Statistics() 
-  {
+  function Statistics() {
   }
   
   /**
@@ -36,67 +35,59 @@ class Statistics{
    * @param $node_id Optionnal.  The id of the node used for which you want the number of users.  Leave null to get the number of users online on the entire network
    * @return Number of online users
    */
-  function getNumOnlineUsers($node_id=null)
-  {
-  global $db;
-if($node_id!=null)
-{
-$node_id=$db->EscapeString($node_id);
-$sql_node=" AND connections.node_id='$node_id'";
-}
-else
-{
-$sql_node="";
-}
-$db->ExecSqlUniqueRes("SELECT COUNT(DISTINCT users.user_id) FROM users,connections " .
+  function getNumOnlineUsers($node_id = null) {
+    global $db;
+    if ($node_id != null) {
+      $node_id = $db->EscapeString($node_id);
+      $sql_node = " AND connections.node_id='$node_id'";
+    } else {
+      $sql_node = "";
+    }
+
+    $db->ExecSqlUniqueRes("SELECT COUNT(DISTINCT users.user_id) FROM users,connections " .
 	     "WHERE connections.token_status='" . TOKEN_INUSE . "' " .
-	     "AND users.user_id=connections.user_id $sql_node "
-	     ,$row, false);
-return $row['count'];
+	     "AND users.user_id=connections.user_id $sql_node ",$row, false);
+    return $row['count'];
   }
   
   /**
    * Find out how many users are valid in the database
    * @return Number of valid users
    */
-  function getNumValidUsers()
-  {
-  global $db;
-$db->ExecSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_status = ".ACCOUNT_STATUS_ALLOWED, $row, false);
-return $row['count'];
+  function getNumValidUsers() {
+    global $db;
+
+    $db->ExecSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_status = " . ACCOUNT_STATUS_ALLOWED, $row, false);
+    return $row['count'];
   }
     
   /**
    * Find out the total number of users in the database
    * @return Number of users
    */
-  function getNumUsers()
-  {
-  global $db;
-$db->ExecSqlUniqueRes("SELECT COUNT(user_id) FROM users", $row, false);
-return $row['count'];
+  function getNumUsers() {
+    global $db;
+    $db->ExecSqlUniqueRes("SELECT COUNT(user_id) FROM users", $row, false);
+    return $row['count'];
   }
-    
 
-    /**
+  /**
    * Find out the date of the most recent successfull (meaning with data transferred) connection to a HotSpot.
    * @param $node_id Optionnal.  The id of the node used for which you want the last successfull connection date
    * @return Textual date
    */
-  function getLastConnDate($node_id=null)
-  {
-  global $db;
-if($node_id!=null)
-{
-$node_id=$db->EscapeString($node_id);
-$sql_node=" AND connections.node_id='$node_id'";
-}
-else
-{
-$sql_node="";
-}
-	$db->ExecSqlUniqueRes("SELECT timestamp_in FROM connections WHERE incoming!=0 $sql_node ORDER BY timestamp_in DESC LIMIT 1",$row, false);
-return $row['timestamp_in'];
+  function getLastConnDate($node_id = null) {
+    global $db;
+
+    if ($node_id != null) {
+      $node_id = $db->EscapeString($node_id);
+      $sql_node = " AND connections.node_id='$node_id'";
+    } else {
+      $sql_node="";
+    }
+
+    $db->ExecSqlUniqueRes("SELECT timestamp_in FROM connections WHERE incoming!=0 $sql_node ORDER BY timestamp_in DESC LIMIT 1", $row, false);
+    return $row['timestamp_in'];
   }
   
 }//End class

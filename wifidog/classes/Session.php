@@ -23,11 +23,9 @@
    */
 class Session{
   
-  function Session() 
-  {
+  function Session() {
     $session_id = session_id();
-    if(empty($session_id))
-      {
+    if(empty($session_id)) {
 	session_start();
       }
   }
@@ -38,9 +36,8 @@ class Session{
    * @param mixed value of variable
    * @return void
    */
-  function set($name,$value)
-  {
-    $_SESSION[$name]=$value;
+  function set($name,$value) {
+    $_SESSION[$name] = $value;
   }
   
   /**
@@ -48,16 +45,12 @@ class Session{
    * @param string name of variable
    * @return mixed value of session varaible
    */
-  function get($name)
-  {
-    if (isset($_SESSION[$name]))
-      {
+  function get($name) {
+    if (isset($_SESSION[$name])) {
 	return $_SESSION[$name];
-      }
-    else
-      {
+    } else {
 	return false;
-      }
+    }
   }
 
   /**
@@ -65,25 +58,20 @@ class Session{
    * @param string name of variable
    * @return boolean
    */
-  function remove($name)
-  {
-    if (isset($_SESSION[$name])) 
-      {
+  function remove($name) {
+    if (isset($_SESSION[$name])) {
 	unset($_SESSION[$name]);
 	return true;
-      }
-    else 
-      {
+    } else {
 	return false;
-      }
+    }
   }
 
   /**
    * Delete the whole session
    * @return void
    */
-  function destroy() 
-  {
+  function destroy() {
     $_SESSION = array();
     session_destroy();
   }
@@ -92,8 +80,7 @@ class Session{
    * Delete the whole session
    * @return void
    */
-  function dump() 
-  {
+  function dump() {
     echo "<pre>";
     print_r($_SESSION);
     echo "</pre>\n";
