@@ -1,4 +1,8 @@
 # $Header$
+2005-01-31 Benoit Grégoire  <bock@step.polymtl.ca>
+	* wifidog/templates/hotspot_status.html:  Restore the number of nodes
+	* wifidog/hotspot_status.php: Restore the number of nodes, add formatting and more information to the RSS feed.
+
 2005-01-26 Philippe April <isf_lists@philippeapril.com>
 	* Some kind of virtual login (we need to talk about this).
 	* New User and Node classes
