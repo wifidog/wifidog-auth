@@ -30,11 +30,20 @@ function get_user_management_menu()
 
   $retval .= "<p>&nbsp;User management</p>\n";
   $retval .= "<ul>\n";
-  $retval .= "<li><a href='http://$_SERVER[SERVER_NAME]$_SERVER[PHP_SELF]?action=validation_email_form'>"._('Send validation email again')."</a></li>\n";
-  $retval .= "<li><a href='http://$_SERVER[SERVER_NAME]$_SERVER[PHP_SELF]?action=lost_username_form'>"._('Lost my username')."</a></li>\n";
-  $retval .= "<li><a href='http://$_SERVER[SERVER_NAME]$_SERVER[PHP_SELF]?action=lost_password_form'>"._('Lost my password')."</a></li>\n";
-  $retval .= "<li><a href='http://$_SERVER[SERVER_NAME]$_SERVER[PHP_SELF]?action=change_password_form'>"._('Change my password')."</a></li>\n"; 
-  $retval .= "<li><a href='http://$_SERVER[SERVER_NAME]$_SERVER[PHP_SELF]?action=register_new_account_form'>"._('Register a new user')."</a></li>\n"; 
+  if($_SERVER['SERVER_PORT']==80) { 
+    $retval .= "<li><a href='http://$_SERVER[SERVER_NAME]$_SERVER[PHP_SELF]?action=validation_email_form'>"._('Send validation email again')."</a></li>\n";
+    $retval .= "<li><a href='http://$_SERVER[SERVER_NAME]$_SERVER[PHP_SELF]?action=lost_username_form'>"._('Lost my username')."</a></li>\n";
+    $retval .= "<li><a href='http://$_SERVER[SERVER_NAME]$_SERVER[PHP_SELF]?action=lost_password_form'>"._('Lost my password')."</a></li>\n";
+    $retval .= "<li><a href='http://$_SERVER[SERVER_NAME]$_SERVER[PHP_SELF]?action=change_password_form'>"._('Change my password')."</a></li>\n"; 
+    $retval .= "<li><a href='http://$_SERVER[SERVER_NAME]$_SERVER[PHP_SELF]?action=register_new_account_form'>"._('Register a new user')."</a></li>\n"; 
+  }
+  else {
+    $retval .= "<li><a href='http://$_SERVER[SERVER_NAME]:$_SERVER[SERVER_PORT]$_SERVER[PHP_SELF]?action=validation_email_form'>"._('Send validation email again')."</a></li>\n";
+    $retval .= "<li><a href='http://$_SERVER[SERVER_NAME]:$_SERVER[SERVER_PORT]$_SERVER[PHP_SELF]?action=lost_username_form'>"._('Lost my username')."</a></li>\n";
+    $retval .= "<li><a href='http://$_SERVER[SERVER_NAME]:$_SERVER[SERVER_PORT]$_SERVER[PHP_SELF]?action=lost_password_form'>"._('Lost my password')."</a></li>\n";
+    $retval .= "<li><a href='http://$_SERVER[SERVER_NAME]:$_SERVER[SERVER_PORT]$_SERVER[PHP_SELF]?action=change_password_form'>"._('Change my password')."</a></li>\n";
+    $retval .= "<li><a href='http://$_SERVER[SERVER_NAME]:$_SERVER[SERVER_PORT]$_SERVER[PHP_SELF]?action=register_new_account_form'>"._('Register a new user')."</a></li>\n";
+  }
   $retval .= "</ul>\n";
   //$retval .= "</div>\n";
   return $retval;
