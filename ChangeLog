@@ -1,5 +1,6 @@
-2005-02-14 Philippe April <philippe@ilesansfil.org>
+2005-04-01 Philippe April <philippe@ilesansfil.org>
 	* User.php: Add reference to $db global variable.
+	* Tagged v0_1_0_alpha1
 	
 2005-03-31 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Remove spaces after php blocks in various files.
