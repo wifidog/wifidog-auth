@@ -573,9 +573,8 @@ $update_successful = $db->ExecSqlUpdate("UPDATE users  SET pass='$password_hash'
 	  {
 	    $status = ACCOUNT_STATUS_VALIDATION;
 	    $token = gentoken();
-	    $reg_date = time();
 	    $password_hash = get_password_hash($pass);
-	    $update_successful = $db->ExecSqlUpdate("INSERT INTO users (user_id,email,pass,account_status,validation_token,reg_date) VALUES ('$username','$email','$password_hash','{$status}','{$token}','{$reg_date}')");
+	    $update_successful = $db->ExecSqlUpdate("INSERT INTO users (user_id,email,pass,account_status,validation_token,reg_date) VALUES ('$username','$email','$password_hash','{$status}','{$token}',NOW())");
 	    if ($update_successful)
 	      {
 		send_validation_email($email);

@@ -1,4 +1,10 @@
 # $Header$
+2004-09-18 Benoit Grégoire  <bock@step.polymtl.ca>
+	* wifidog/config.php:  Add VALIDATION_GRACE_TIME configuration parameter.
+	* wifidog/auth/index.php:  Move grace time date arithmetics to the database, fixes validation period not working.  Stop storing VALIDATION_FAILES status to the database.  Add check for validation period expiration at stage login, not just stage counters, this will fix one minute validation period. 
+	* wifidog/login/index.php:  Check validation period activation, and if period is expired, explain to the user instead of redirecting to the gateway.
+	* wifidog/user_management/index.php:  Fix SQL error at new user registration.  
+	
 2004-09-02 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog/node_list.php: Complete the status page
 	* Add images

@@ -28,14 +28,25 @@ require_once BASEPATH.'include/common.php';
 
 $auth_response = ACCOUNT_STATUS_DENIED;
 $auth_message = '';
+
 $token = $db->EscapeString($_REQUEST['token']);
-$db->ExecSqlUniqueRes("SELECT * FROM users,connections WHERE users.user_id=connections.user_id AND connections.token='$token'", $info, false);
+$db->ExecSqlUniqueRes("SELECT *, CASE WHEN ((NOW() - reg_date) > interval '".VALIDATION_GRACE_TIME." minutes') THEN true ELSE false END AS validation_grace_time_expired FROM users,connections WHERE users.user_id=connections.user_id AND connections.token='$token'", $info, false);
 if ($info != null)
   {
     if ($_REQUEST['stage']== STAGE_LOGIN)
       {
 	if ($info['token_status'] == TOKEN_UNUSED) 
 	  {
+	  	/* This is for the 15 minutes validation period, the exact same code is also present in when the stage is counters.  If you update this one don't forget to update the other one! */
+		if (($info['account_status'] == ACCOUNT_STATUS_VALIDATION) && ($info['validation_grace_time_expired']=='t')) 
+		  {
+		    $auth_response = ACCOUNT_STATUS_VALIDATION_FAILED;
+		    $auth_message .= "| The validation grace period which began at ".$info['reg_date']." has now expired. ";
+		  }
+		else
+		  {
+
+
 	    $auth_response = $info['account_status'];
 	    /* Login the user */
 	    $mac = $db->EscapeString($_REQUEST['mac']);
@@ -57,6 +68,7 @@ if ($info != null)
 	    $sql = "DELETE FROM connections "
 	      . "WHERE token_status='" . TOKEN_UNUSED . "' AND user_id = '{$info['user_id']}';\n";
 	    $db->ExecSqlUpdate($sql, false);
+	    		  }
 	  }
 	else
 	  {
@@ -78,12 +90,11 @@ if ($info != null)
 	  {
 	    if ($info['token_status'] == TOKEN_INUSE)
 	      {
-		/* This is for the 15 minutes validation period */
-		if (($info['account_status'] == ACCOUNT_STATUS_VALIDATION) && (time() >= (strtotime($info['reg_date']) + (60*15)))) 
+		/* This is for the 15 minutes validation period, the exact same code is also present in when the stage is login.  If you update this one don't forget to update the other one! */
+		if (($info['account_status'] == ACCOUNT_STATUS_VALIDATION) && ($info['validation_grace_time_expired']=='t')) 
 		  {
 		    $auth_response = ACCOUNT_STATUS_VALIDATION_FAILED;
-		    $db->ExecSqlUpdate("UPDATE users SET account_status='".ACCOUNT_STATUS_VALIDATION_FAILED."' WHERE user_id='{$info['user_id']}'");
-		    $auth_message .= "| The validation period has now expired. ";
+		    $auth_message .= "| The validation grace period which began at ".$info['reg_date']." has now expired. ";
 		  }
 		else
 		  {

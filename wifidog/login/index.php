@@ -47,28 +47,38 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['pass']))
     $previous_password = $_REQUEST['pass'];
     $user = $db->EscapeString($_REQUEST['user']);
     $password_hash = get_password_hash($_REQUEST['pass']);
-    $db->ExecSqlUniqueRes("SELECT * FROM users WHERE (user_id='$user' OR email='$user') AND pass='$password_hash'", $user_info, false);
+    $db->ExecSqlUniqueRes("SELECT *, CASE WHEN ((NOW() - reg_date) > interval '".VALIDATION_GRACE_TIME." minutes') THEN true ELSE false END AS validation_grace_time_expired FROM users WHERE (user_id='$user' OR email='$user') AND pass='$password_hash'", $user_info, false);
 
     if ($user_info != null)
       {
-	$token = gentoken();
-	if ($_REQUEST['gw_id']) 
+	if (($user_info['account_status'] == ACCOUNT_STATUS_VALIDATION) && ($user_info['validation_grace_time_expired']=='t')) 
 	  {
-	    $node_id = $db->EscapeString($_REQUEST['gw_id']);
+	    $login_successfull=false;
+	    $validation_grace_time = VALIDATION_GRACE_TIME;
+	    $login_failed_message = _("Sorry, your $validation_grace_time minutes grace period to retrieve your email and validate your account has now expired. ($validation_grace_time min grace period started on $user_info[reg_date]).  You will have to connect to the internet and validate your account from another location.");
 	  }
-	if ($_SERVER['REMOTE_ADDR'])
+	else
 	  {
-	    $node_ip = $db->EscapeString($_SERVER['REMOTE_ADDR']);
-	  }
-	$db->ExecSqlUpdate("INSERT INTO connections (user_id, token, token_status, timestamp_in, node_id, node_ip, last_updated) VALUES ('{$user_info['user_id']}', '$token', '" . TOKEN_UNUSED . "', NOW(), '$node_id', '$node_ip', NOW())");
+	    $token = gentoken();
+	    if ($_REQUEST['gw_id']) 
+	      {
+		$node_id = $db->EscapeString($_REQUEST['gw_id']);
+	      }
+	    if ($_SERVER['REMOTE_ADDR'])
+	      {
+		$node_ip = $db->EscapeString($_SERVER['REMOTE_ADDR']);
+	      }
+	    $db->ExecSqlUpdate("INSERT INTO connections (user_id, token, token_status, timestamp_in, node_id, node_ip, last_updated) VALUES ('{$user_info['user_id']}', '$token', '" . TOKEN_UNUSED . "', NOW(), '$node_id', '$node_ip', NOW())");
 	
-	$login_successfull=true;
-	$security->login($user, $password_hash);
-	header("Location: http://" . $_REQUEST['gw_address'] . ":" . $_REQUEST['gw_port'] . "/wifidog/auth?token=$token");
+	    $login_successfull=true;
+	    $security->login($user, $password_hash);
+	    header("Location: http://" . $_REQUEST['gw_address'] . ":" . $_REQUEST['gw_port'] . "/wifidog/auth?token=$token");
+	  }
       }
     else
       {
 	$user_info = null;
+	/* This is only used to discriminate if the problem was a non-existent user of a wrong password. */
         $db->ExecSqlUniqueRes("SELECT * FROM users WHERE user_id='$user' OR email='$user'", $user_info, false);
 	if($user_info == null)
 	  {

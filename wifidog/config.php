@@ -17,6 +17,7 @@ define('UNKNOWN_HOSTPOT_NAME', 'Unknown HotSpot');
 
 define('VALIDATION_EMAIL_FROM_ADDRESS', 'validation@yourdomain.org');
 define('VALIDATION_EMAIL_SUBJECT', HOTSPOT_NETWORK_NAME.' new user validation');
+define('VALIDATION_GRACE_TIME', 20); /**< Number of minutes after new account creation during which internet access is available to validate your account.  Once elapsed, you have to validate from home... */
 define('LOST_PASSWORD_EMAIL_SUBJECT', HOTSPOT_NETWORK_NAME.' new password request');
 define('LOST_USERNAME_EMAIL_SUBJECT', HOTSPOT_NETWORK_NAME.' lost username request');
 /* RSS support.  If set to true, MAGPIERSS must be installed in MAGPIE_REL_PATH */
