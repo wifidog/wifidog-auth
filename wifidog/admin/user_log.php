@@ -51,7 +51,7 @@ if (!empty($_REQUEST['user_id'])) {
     }
     $smarty->display("admin/templates/user_log_detailed.html");
 } else {
-    $smarty->assign('sort_ids', array('user_id','email','reg_date'));
+    $smarty->assign('sort_ids', array('username','reg_date'));
     $smarty->assign('direction_ids', array('asc','desc'));
 
     $sort      = isset($_REQUEST['sort'])      ? $_REQUEST['sort']      : "user_id";
@@ -77,7 +77,7 @@ if (!empty($_REQUEST['user_id'])) {
             ));
     }
 
-    $db->ExecSql("SELECT user_id,email,reg_date,account_status FROM users ORDER BY $sort $direction LIMIT $per_page OFFSET $offset", $users_res);
+    $db->ExecSql("SELECT user_id,username,reg_date,account_status FROM users ORDER BY $sort $direction LIMIT $per_page OFFSET $offset", $users_res);
     if ($users_res) {
 	    $smarty->assign("users_array", $users_res);
     } else {

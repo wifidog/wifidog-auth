@@ -27,7 +27,7 @@ require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'include/common_interface.php';
 
 require_once BASEPATH.'classes/Node.php';
-
+//print_r($_SESSION);
 $smarty->assign("num_valid_users", $stats->getNumValidUsers());
 $smarty->assign("num_online_users", $stats->getNumOnlineUsers($node_id = null));
 

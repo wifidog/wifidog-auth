@@ -35,17 +35,17 @@ class Security {
 
 /**
 */
-  function login($username, $hash) {
+  function login($user_id, $hash) {
     global $db;
-    $username = $db->EscapeString($username);
+    $user_id = $db->EscapeString($user_id);
     $hash = $db->EscapeString($hash);
-    $db->ExecSqlUniqueRes("SELECT * FROM users WHERE (user_id='$username' OR email='$username') AND pass='$hash'", $user_info, false);
+    $db->ExecSqlUniqueRes("SELECT * FROM users WHERE user_id='$user_id' AND pass='$hash'", $user_info, true);
     if (empty($user_info)) {
-	echo '<p class=error>'._("Your username and password do not match")."</p>\n";
+	echo '<p class=error>'._("Your user_id and password do not match")."</p>\n";
 	exit;
     } else {
       /* Access granted */
-      $this->session->set(SESS_USERNAME_VAR, $username);
+      $this->session->set(SESS_USER_ID_VAR, $user_id);
       $this->session->set(SESS_PASSWORD_HASH_VAR, $hash);
     }
   }
@@ -53,10 +53,10 @@ class Security {
   function requireAdmin() {
     global $db;
     //$this->session->dump();
-    $user = $this->session->get(SESS_USERNAME_VAR);
+    $user_id = $this->session->get(SESS_USER_ID_VAR);
     $password_hash = $this->session->get(SESS_PASSWORD_HASH_VAR);
     
-    $db->ExecSqlUniqueRes("SELECT * FROM users NATURAL JOIN administrators WHERE (users.user_id='$user' OR email='$user') AND pass='$password_hash'", $user_info, false);
+    $db->ExecSqlUniqueRes("SELECT * FROM users NATURAL JOIN administrators WHERE (users.user_id='$user_id') AND pass='$password_hash'", $user_info, false);
     if (empty($user_info)) {
       echo '<p class=error>'._("You do not have administrator privileges")."</p>\n";
       exit;
@@ -70,10 +70,10 @@ class Security {
   function requireOwner($node_id) {
     global $db;
     //$this->session->dump();
-    $user = $this->session->get(SESS_USERNAME_VAR);
+    $user = $this->session->get(SESS_USER_ID_VAR);
     $password_hash = $this->session->get(SESS_PASSWORD_HASH_VAR);
 
-    $db->ExecSqlUniqueRes("SELECT * FROM users NATURAL JOIN node_owners WHERE (users.user_id='$user' OR email='$user') AND pass='$password_hash' AND node_owners.node_id='$node_id'", $user_info, false);
+    $db->ExecSqlUniqueRes("SELECT * FROM users NATURAL JOIN node_owners WHERE (users.user_id='$user') AND pass='$password_hash' AND node_owners.node_id='$node_id'", $user_info, false);
     if(empty($user_info)) {
         echo '<p class=error>'._("You do not have owner privileges")."</p>\n";
         exit;

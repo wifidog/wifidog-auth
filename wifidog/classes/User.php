@@ -24,7 +24,7 @@
    
 require_once BASEPATH.'include/common.php';
 
-/** Abstract a User.  A User is an actual physical transmitter. */
+/** Abstract a User. */
 class User {
   private $mRow;
   private $mId;
@@ -38,99 +38,160 @@ class User {
       $object = new self("user_id", $id);
       return $object;
     }
-  
-  /** Instantiate a user object 
-   * @param $id The id of the requested user 
-   * @return a User object, or null if there was an error
-   */
-  static function getUserByEmail($id) {
-      $object = null;
-      $object = new self("email", $id);
-      return $object;
-    }
 
   /** Create a new User in the database 
    * @param $id The id to be given to the new user
    * @return the newly created User object, or null if there was an error
    */
-  static function createUser($id, $email, $password) {
+  static function createUser($id, $username, $account_origin, $email, $password) {
       global $db;
 
       $object = null;
       $id_str = $db->EscapeString($id);
+      $username_str = $db->EscapeString($username);
+      $account_origin_str= $db->EscapeString($account);
       $email_str = $db->EscapeString($email);
       $password_hash = $db->EscapeString(User::passwordHash($password));
       $status = ACCOUNT_STATUS_VALIDATION;
       $token = User::generateToken();
-
-      $db->ExecSqlUpdate("INSERT INTO users (user_id,email,pass,account_status,validation_token,reg_date) VALUES ('$id_str','$email_str','$password_hash','$status','$token',NOW())");
-
+      
+      $db->ExecSqlUpdate("INSERT INTO users (user_id,username, account_origin,email,pass,account_status,validation_token,reg_date) VALUES ('$id_str','$username_str','$account_origin_str','$email_str','$password_hash','$status','$token',NOW())");
+      
       $object = new self('user_id', $id_str);
       return $object;
-    }
+  }
   
-/** @param $object_id The id of the user */
-  function __construct($field_id, $object_id) {
+  /** @param $object_id The id of the user */
+  function __construct($object_id) {
     global $db;
     $object_id_str = $db->EscapeString($object_id);
-    $sql = "SELECT * FROM users WHERE {$field_id}='{$object_id_str}'";
+    $sql = "SELECT * FROM users WHERE user_id='{$object_id_str}'";
     $db->ExecSqlUniqueRes($sql, $row, false);
     if ($row == null) {
-        throw new Exception(_("{$field_id} '{$object_id_str}' could not be found in the database"));
+      throw new Exception(_("user_id '{$object_id_str}' could not be found in the database"));
     }
     $this->mRow = $row;  
     $this->mId  = $row['user_id'];
   }//End class
   
-  function getName() {
+  function getId() {
     return $this->mId;
   }
-
-  function getEmail() {
+  
+  function getUsername() {
+    return $this->mRow['username'];
+  }
+  
+  private function getEmail() {
     return $this->mRow['email'];
   }
-
-  function getPasswordHash() {
+  
+  private function getPasswordHash() {
     return $this->mRow['pass'];
   }
-
+  
+/** Get the account status.  
+ * @return Possible values are listed in common.php
+*/
   function getAccountStatus() {
     return $this->mRow['account_status'];
   }
 
-  function getValidationToken() {
-    return $this->mRow['validation_token'];
-  }
-
-  function getInfoArray() {
-    return $this->mRow;
-  }
-
-  function setPassword($password) {
-    global $db;
-
-    $new_password_hash = $this->passwordHash($password);
-	if (!($update = $db->ExecSqlUpdate("UPDATE users SET pass='$new_password_hash' WHERE user_id='{$this->mId}'"))) {
-        throw new Exception(_("Could not change user's password."));
-    }
-    $this->mRow['pass'] = $password;
-  }
-
-  function getConnections() {
-    global $db;
-	$db->ExecSql("SELECT * FROM connections,nodes WHERE user_id='{$this->mId}' AND nodes.node_id=connections.node_id ORDER BY timestamp_in", $connections, false);
-    return $connections;
-  }
-
   function setAccountStatus($status) {
     global $db;
-
+    
     $status_str = $db->EscapeString($status);
-	if (!($update = $db->ExecSqlUpdate("UPDATE users SET account_status='{$status_str}' WHERE user_id='{$this->mId}'"))) {
-        throw new Exception(_("Could not update status."));
+    if (!($update = $db->ExecSqlUpdate("UPDATE users SET account_status='{$status_str}' WHERE user_id='{$this->mId}'"))) {
+      throw new Exception(_("Could not update status."));
     }
     $this->mRow['account_status'] = $status;
   }
+ 
+/** Is the user valid?  Valid means that the account is validated or hasn't exhausted it's validation period. 
+ $errmsg: Returs the reason why the account is or isn't valid */
+  function isUserValid(&$errmsg=null)
+  {
+    $retval = false;
+    $account_status=$this->getAccountStatus();
+    if($account_status==ACCOUNT_STATUS_ALLOWED)
+      {
+	$retval=true;
+      }
+    else if($account_status==ACCOUNT_STATUS_VALIDATION)
+      {
+	$sql = "SELECT CASE WHEN ((NOW() - reg_date) > interval '".VALIDATION_GRACE_TIME." minutes') THEN true ELSE false END AS validation_grace_time_expired FROM users WHERE (user_id='{$this->mId}'";
+	$db->ExecSqlUniqueRes($sql,  $user_info, false);
+	
+	if ($user_info['validation_grace_time_expired']=='t')
+	  {
+	    $errmsg = _("Sorry, your ").$validation_grace_time._(" minutes grace period to retrieve your email and validate your account has now expired. You will have to connect to the internet and validate your account from another location or create a new account. For help, please ") . '<a href="'.BASEPATH.'faq.php'.'">'. _("click here.") .'</a>';
+	    $retval=false;
+	  }
+	else
+	  {
+	    $errmsg = _("Your account is currently valid.");
+	    $retval=true;
+	  }
+      } 
+    else
+      {
+	$errmsg = _("Sorry, your account is not valid: ").$account_status_to_text[$account_status];
+	$retval=false;
+      }
+    return $retval;
+  }
+  
+  function getValidationToken() {
+    return $this->mRow['validation_token'];
+  }
+  
+  function getInfoArray() {
+    return $this->mRow;
+  }
+  
+/** Generate a token in the connection table so the user can actually use the internet 
+@return true on success, false on failure 
+*/
+  function generateConnectionToken()
+ {
+   if($this->isUserValid())
+     {
+       global $db;
+       $token=self::generateToken();
+       if ($_SERVER['REMOTE_ADDR'])
+	 {
+	   $node_ip = $db->EscapeString($_SERVER['REMOTE_ADDR']);
+	 }
+       if (isset($_REQUEST['gw_id']) && $_REQUEST['gw_id'])
+	 {
+	   $node_id = $db->EscapeString($_REQUEST['gw_id']);
+	   $db->ExecSqlUpdate("INSERT INTO connections (user_id, token, token_status, timestamp_in, node_id, node_ip, last_updated) VALUES ('".$this->getId()."', '$token', '" . TOKEN_UNUSED . "', NOW(), '$node_id', '$node_ip', NOW())",true);
+	 }
+       $retval=true;
+     }
+   else
+     {
+       $retval=false;
+     }
+   return $retval;
+ }
+  
+  function setPassword($password) {
+    global $db;
+    
+    $new_password_hash = $this->passwordHash($password);
+    if (!($update = $db->ExecSqlUpdate("UPDATE users SET pass='$new_password_hash' WHERE user_id='{$this->mId}'"))) {
+      throw new Exception(_("Could not change user's password."));
+    }
+    $this->mRow['pass'] = $password;
+  }
+  
+  function getConnections() {
+    global $db;
+    $db->ExecSql("SELECT * FROM connections,nodes WHERE user_id='{$this->mId}' AND nodes.node_id=connections.node_id ORDER BY timestamp_in", $connections, false);
+    return $connections;
+  }
+  
 
   /** Return all the users
    */
@@ -145,14 +206,14 @@ class User {
   }
 
   function sendLostUsername() {
-    $user_id = $this->getName();
+    $username = $this->getUsername();
     $subject = LOST_USERNAME_EMAIL_SUBJECT;
     $from = "From: " . VALIDATION_EMAIL_FROM_ADDRESS;
     $body = "Hello,
 
 You have requested that the authentication server send you your username:
 
-Username: $user_id
+Username: $username
 
 Have a nice day,
 
@@ -195,14 +256,14 @@ The Team";
     $new_password = $this->randomPass();
     $this->setPassword($new_password);
 
-    $user_id = $this->getName();
+    $username = $this->getUsername();
 
     $subject = LOST_PASSWORD_EMAIL_SUBJECT;
     $body = "Hello,
 
 You have requested that the authentication server send you a new password:
 
-Username: $user_id
+Username: $username
 Password: $new_password
 
 Have a nice day,
@@ -213,7 +274,7 @@ The Team";
     mail($this->getEmail(), $subject, $body, $from);
   }
 
-  function userExists($id) {
+  static function userExists($id) {
     global $db;
     $id_str = $db->EscapeString($id);
     $sql = "SELECT * FROM users WHERE user_id='{$id_str}'";
@@ -255,13 +316,6 @@ The Team";
 
     public static function generateToken() {
         return md5(uniqid(rand(),1));
-    }
-
-    /** Returns the hash of the password suitable for storing or comparing in the database.
-    * @return The 32 character hash.
-    */
-    public static function passwordHash($password) {
-        return base64_encode(pack("H*", md5($password)));
     }
 
 }// End class

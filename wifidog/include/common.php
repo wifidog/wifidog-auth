@@ -3,10 +3,10 @@ error_reporting(E_ALL);
 require_once BASEPATH.'config.php';
 require_once BASEPATH.'classes/AbstractDb.php';
 require_once BASEPATH.'classes/Session.php';
-
+require_once BASEPATH.'include/schema_validate.php';
 global $db;
 $db = new AbstractDb();
-
+validate_schema();
 /* Gettext support */
 if(!function_exists ('gettext'))
   {
@@ -59,6 +59,7 @@ define('ONLINE_STATUS_OFFLINE',	2);
 /* This section deals with sessions */
 
 define('SESS_USERNAME_VAR', 'SESS_USERNAME');
+define('SESS_USER_ID_VAR', 'SESS_USER_ID');
 define('SESS_PASSWORD_HASH_VAR', 'SESS_PASSWORD_HASH');
 define('SESS_ORIGINAL_URL_VAR', 'SESS_ORIGINAL_URL');
 define('SESS_LANGUAGE_VAR', 'SESS_LANGUAGE');
@@ -158,4 +159,11 @@ function find_local_content_url($filename)
     //echo "find_local_content_url():  Returned:                  $retval<br>\n";
     return $retval;
 }
+
+/** Return a 32 byte guid valid for database use */
+function get_guid()
+{
+  return  md5(uniqid(rand(), true));
+}
+
 ?>

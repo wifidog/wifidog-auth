@@ -37,7 +37,7 @@ require_once 'admin_common.php';
 require_once BASEPATH.'classes/Node.php';
 require_once BASEPATH.'classes/User.php';
 
-$user_id = $session->get(SESS_USERNAME_VAR);
+$user_id = $session->get(SESS_USER_ID_VAR);
 $smarty->assign("user_id", $user_id); // DEBUG
 
 empty($_REQUEST['action'])  ? $action  = '' : $action  = $_REQUEST['action'];

@@ -1,4 +1,9 @@
 # $Header$
+2005-03-28 Benoit Grégoire  <bock@step.polymtl.ca>
+	* common.php:  Add get_guid() function
+	* validate_schema.php: New auto-upgrade script to allow autaumatic schema upgrade.  Note that you must still update dump_initial_data_postgres.sh and use sync_sql_for_cvs.sh so new users aren't left in the cold.
+	* New class Authenticator (and subclasses):  Begin virtualizing the login process.
+	 
 2005-03-24 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Statistics.php: Fix getMostGreedyUsers returning bad values when incoming and outgoing for all connections from a user have null values. 
 	* wifidog/local_content/default/portal.html: Fix layout so it resizes properly.  This in an interim measure.

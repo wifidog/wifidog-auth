@@ -6,6 +6,12 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.22  2005/03/28 19:49:52  benoitg
+ *     2005-03-28 Benoit Grégoire  <bock@step.polymtl.ca>
+ *     	* common.php:  Add get_guid() function
+ *     	* validate_schema.php: New auto-upgrade script to allow autaumatic schema upgrade.  Note that you must still update dump_initial_data_postgres.sh and use sync_sql_for_cvs.sh so new users aren't left in the cold.
+ *     	* New class Authenticator (and subclasses):  Begin virtualizing the login process.
+ *
  *     Revision 1.21  2005/03/17 03:57:39  masham
  *      * use __FILE__ to resolve location of local.config
  *
@@ -121,6 +127,17 @@ define('NETWORK_RSS_URL', 'http://patricktanguay.com/isf/atom.xml, http://auth.i
 define('UNKNOWN_HOTSPOT_RSS_URL', '');
 
 define('LOCAL_CONTENT_REL_PATH', 'local_content/');//Path to the directory containing the different node specific directories.  Relative to BASE_URL_PATH
+
+/* Authentication sources section */
+ define('LOCAL_USER_ACCOUNT_ORIGIN', 'LOCAL_USER');
+require_once BASEPATH.'classes/AuthenticatorLocalUser.php';
+
+/* The array index for the source must match the account_origin in the user table */
+ $AUTH_SOURCE_ARRAY[LOCAL_USER_ACCOUNT_ORIGIN]=array(
+						     'name'=>HOTSPOT_NETWORK_NAME,
+						     'authenticator'=>new AuthenticatorLocalUser(LOCAL_USER_ACCOUNT_ORIGIN));
+
+
 
 /*These are the file names of the different templates that can be put in the CONTENT_PATH/(node_id)/ folders */
 define('STYLESHEET_NAME', 'stylesheet.css');

@@ -157,7 +157,7 @@ else if ($_REQUEST['action'] == 'upload_file')
 	  else
 	    {
 	      $username_str = $db->EscapeString($username);
-	      $db->ExecSqlUniqueRes("SELECT user_id FROM users WHERE user_id='$username_str'", $user_info_username, false);
+	      $db->ExecSqlUniqueRes("SELECT username FROM users WHERE username='$username_str'", $user_info_username, false);
 	      if($user_info_username!=null)
 		{
 		  $import_user[$username]['is_rejected']=true;
@@ -173,7 +173,7 @@ else if ($_REQUEST['action'] == 'upload_file')
 	      $password_hash = $db->EscapeString($user['passwd_hash']);
 	      $username =  $db->EscapeString($username);
 	      $email =  $db->EscapeString($user['email']);
-	      $sql = "INSERT INTO users (user_id,email,pass,account_status,validation_token,reg_date) VALUES ('$username','$email','$password_hash','{$status}','{$token}','{$reg_date}')";
+	      $sql = "INSERT INTO users (user_id, username,email,pass,account_status,validation_token,reg_date) VALUES ('".get_guid()."','$username','$email','$password_hash','{$status}','{$token}','{$reg_date}')";
 	      $update_successful = $db->ExecSqlUpdate($sql);
 	      if ($update_successful)
 		{

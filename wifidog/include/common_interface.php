@@ -31,6 +31,7 @@
 require_once BASEPATH.'classes/Session.php';
 require_once BASEPATH.'classes/Statistics.php';
 require_once BASEPATH.'classes/SmartyWifidog.php';
+require_once BASEPATH.'classes/User.php';
 
 $smarty = new SmartyWifidog;
 $session = new Session();
@@ -38,5 +39,14 @@ $stats = new Statistics();
 
 require_once BASEPATH.'include/language.php';
 
-$smarty->assign("auth_user", $session->get(SESS_USERNAME_VAR));
+try
+{
+  $current_user = new User($session->get(SESS_USER_ID_VAR));
+  $smarty->assign("auth_user", $current_user->getUsername());
+}
+catch (Exception $e) 
+{
+  ;
+}
+
 ?>
