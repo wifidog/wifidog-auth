@@ -125,11 +125,12 @@ function send_validation_email($email)
 	  else
 	    {
 	      $subject = VALIDATION_EMAIL_SUBJECT;
+              $url = "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"] . "?action=validate&username={" . $_REQUEST["username"] . "}&validation_token=" . $user_info["validation_token"];
 	      $body = "Hello
 
  Please follow the link below to validate your account.
 
- http://$_SERVER[SERVER_NAME]$_SERVER[PHP_SELF]?action=validate&username={$_REQUEST['username']}&validation_token=$user_info[validation_token]
+ $url
 
  Thank you,
 
@@ -544,9 +545,9 @@ $update_successful = $db->ExecSqlUpdate("UPDATE users  SET pass='$password_hash'
 	      {
 		echo "<p class=warning>"._('Sorry, a user account is already associated to the email adress: ')."</p>\n";
 		echo "<p>"._('If it really is your email, I can');
-		echo" <a href='http://$_SERVER[SERVER_NAME]$_SERVER[PHP_SELF]?email={$_REQUEST['email']}&action=mail_lost_username'>"._('send you your username by email')."</a>\n";
+		echo " <a href='http://" . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"] . "?email={" . $_REQUEST["email"] . "}&action=mail_lost_username'>" . _('send you your username by email')."</a>\n";
 		echo _(', or even ')."\n";
-		echo " <a href='http://$_SERVER[SERVER_NAME]$_SERVER[PHP_SELF]?email={$_REQUEST['email']}&action=mail_new_password'>"._('send you a new password by email')."</a>"."</p>\n";
+		echo " <a href='http://" . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"] . "?email={" . $_REQUEST["email"] . "}&action=mail_new_password'>" . _('send you a new password by email')."</a>"."</p>\n";
 	      }
 	    else
 	      {
