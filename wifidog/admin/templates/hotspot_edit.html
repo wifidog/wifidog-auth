@@ -1,0 +1,67 @@
+{include file="templates/header.html" title="Hotspot administration"}
+
+<h3>{$titre} {$smarty.const.HOTSPOT_NETWORK_NAME}</h3>
+
+<B style="position: absolute;top: 10px;right: 10px;">({$user_id})</B> <!-- DEBUG -->
+
+<form method='post' name='auth'>
+
+<table> <!-- Refaire le formattage sans la table -->
+  <tr>
+    <td>ID:</td>
+<!-- Tmp work around to disable the hotspot ID -->
+{if $node_id == "new"}
+    <td><input type="text" name="new_node_id" value="{$node.node_id}">&nbsp;{$javascript}</td><tr>
+{else}
+    <td><input type="text" value="{$node.node_id}" DISABLED><input type="hidden" name="new_node_id" value="{$node.node_id}"></td><tr>
+{/if}
+  <tr>
+    <td>Name:</td>
+    <td><input type="text" name="name" value="{$node.name}"></td><tr>
+  <tr>
+    <td>RSS URL:</td>
+    <td><input type="text" name="rss_url" value="{$node.rss_url}"></td><tr>
+  <tr>
+    <td>Homepage URL</td>
+    <td><input type="text" name="home_page_url" value="{$node.home_page_url}"></td><tr>
+  <tr>
+    <td>Description</td>
+    <td><input type="text" name="description" value="{$node.description}"></td><tr>
+  <tr>
+    <td>Map URL</td>
+    <td><input type="text" name="map_url" value="{$node.map_url}"></td><tr>
+  <tr>
+    <td>Street address</td>
+    <td><input type="text" name="street_address" value="{$node.street_address}"></td><tr>
+  <tr>
+    <td>Public phone number</td>
+    <td><input type="text" name="public_phone_number" value="{$node.public_phone_number}"></td><tr>
+  <tr>
+    <td>Public email</td>
+    <td><input type="text" name="public_email" value="{$node.public_email}"></td><tr>
+  <tr>
+    <td>Mass transit info</td>
+    <td><input type="text" name="mass_transit_info" value="{$node.mass_transit_info}"></td><tr>
+  <tr>
+    <td>Node deployement status</td>
+    <td><select name="node_deployment_status">
+{html_options values=$node_deployment_status output=$node_deployment_status selected=$node.node_deployment_status}
+        </select>
+    </td>
+  </tr>
+</table>
+
+{if $node_id == "new"}
+<input type='hidden' name='action' value='add_new_node'>
+{else}
+<input type='hidden' name='action' value='update_node'>
+{/if}
+
+<input type='submit'>
+</form>
+
+<BR>
+<P>Work in progress note : Better DB integrity testing is needed before allowing the hotspot ID modification.
+
+{include file="templates/footer.html"}
+

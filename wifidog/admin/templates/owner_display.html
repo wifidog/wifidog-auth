@@ -1,0 +1,43 @@
+{include file="templates/header.html" title="Hotspot owner administration"}
+
+<B style="position: absolute;top: 10px;right: 10px;">({$user_id})</B> <!-- DEBUG -->
+  
+<form method='post' name='auth'>
+
+<table class="spreadsheet">
+<thead>
+<tr class="spreadsheet">
+    <th class="spreadsheet" colspan=6>{"Configurations of all nodes of the"|_} {$smarty.const.HOTSPOT_NETWORK_NAME} {"network"|_}</th> 
+</tr>
+<tr class="spreadsheet">
+    <th class="spreadsheet">{"Id"|_}</th>
+    <th class="spreadsheet">{"Name"|_}</th>
+    <th class="spreadsheet">{"Action"|_}</th>
+</tr>
+</thead>
+
+{section name=node loop=$node_list}
+    <tr class='spreadsheet'>
+      <td class='spreadsheet'>
+        {$node_list[node].node_id}
+      </td>
+      <td class='spreadsheet'>
+        {$node_list[node].name}
+      </td>
+      <td class='spreadsheet'>
+        <a href='{$smarty.const.BASE_SSL_PATH}admin/owner_sendfiles.php?node_id={$node_list[node].node_id}&action=uploadform'><input type='button' value='Upload Files'</a>
+      </td>
+    </tr>
+{/section}
+</table>
+
+    <input type="hidden" name="action" value="">
+    <input type="hidden" name="node_id" value="{$nodes[node].node_id}">
+
+<p>
+<p class=warning>{$error_message}</p>
+
+</form>
+
+{include file="templates/footer.html"}
+

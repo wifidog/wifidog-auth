@@ -1,0 +1,63 @@
+{include file="templates/header.html" title="Hotspot administration"}
+
+<h3>{$titre} {$smarty.const.HOTSPOT_NETWORK_NAME}</h3>
+<SCRIPT LANGUAGE="JavaScript">
+
+{literal}
+function validateUsers() {
+{/literal}
+  user_id_array = new Array("{$user_id_array}");
+{literal}
+  if (document.auth.owner_user_id.value == "") {
+    alert('Valid user id is needed');
+    return false;
+  }
+    
+  for (i = 0; i < user_id_array.length; i++) {
+    if (user_id_array[i] == document.auth.owner_user_id.value) {
+      alert('The user id "' + document.auth.owner_user_id.value + '" is already a owner');
+        return false;
+    }
+  }
+  document.auth.action.value='add_owner';
+  return true;
+}
+</SCRIPT>
+{/literal}
+
+<form method="post" name="auth">
+
+  <table class="spreadsheet">
+    <thead>
+    <tr class="spreadsheet">
+      <th class="spreadsheet" colspan="6">Configurations of all nodes of the $hotspot_network_name network</th>
+    </tr>
+    <tr class="spreadsheet">
+      <th class="spreadsheet">User ID</th>
+      <th class="spreadsheet">Action</th>
+    </tr>
+    </thead>
+
+{section name=owner loop=$owner_list}
+    <tr class="spreadsheet">
+      <td class="spreadsheet">{$owner_list[owner].user_id}</td>
+      <td class="spreadsheet"><a href="{$smarty.const.BASE_SSL_PATH}admin/hotspot_owner.php?node_id={$node_id}&owner_user_id={$owner_list[owner].user_id}&action=del_owner"><input type="button" value="Delete" onclick="javascript: return confirm('Are you sure you want to delete {$owner_list[owner].user_id} ?');"></a></td>
+    </tr>
+{/section}
+
+    <tr class="spreadsheet">
+      <td class="spreadsheet" colspan="4">
+        <input type="hidden" name="action" value="">
+        <input type="hidden" name="node_id" value="{$node_id}">
+        <input type="text" name="owner_user_id">&nbsp;
+        <input type="submit" value="Add" onclick="return validateUsers();"> a new node owner
+      </td>
+    </tr>
+  </table>
+<p>
+<p class=warning>{$error_message}</p>
+
+</form>
+
+{include file="templates/footer.html"}
+
