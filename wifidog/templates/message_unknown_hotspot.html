@@ -1,0 +1,15 @@
+{include file="templates/header_small.html"}
+
+<p>
+{if $gw_id}
+{"Hotspot"|_} {$gw_id} {"is unknown to this authentication server."|_}
+{else}
+{"No Hotspot specified!"|_}
+{/if}
+</p>
+
+<p>
+{"Please get in touch with "|_} <a href="{$smarty.const.TECH_SUPPORT_EMAIL}">{$smarty.const.TECH_SUPPORT_EMAIL}</a>.
+</p>
+
+{include file="templates/footer.html"}

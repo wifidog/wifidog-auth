@@ -1,0 +1,41 @@
+{include file="templates/header_small.html"}
+    <div id="form">
+
+        <h3>{"Welcome!"|_}</h3>
+
+        <h3>{"This is the 'virtual login' page you can use to get the credentials which will then give you access to management functions on the network without being at a hotspot."|_}</h3>
+
+        <h3>{"Please log-in or"|_} <a href="{$smarty.const.BASE_SSL_PATH}signup.php">{"sign-up."|_}</a></h3>
+
+        <form name="login_form" method="post">
+        <table>
+        <tr>
+            <td>{"Username (or email)"|_}:</td>
+            <td><input type="text" name="username" value="{$username}" size="20"></td>
+        </tr>
+        <tr>
+            <td>{"Password"|_}:</td>
+            <td><input type="password" name="password" size="20"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input class="submit" type="submit" name="submit" value="{"Login"|_}"></td>
+        </tr>
+        </table>
+        </form>
+
+        <h3>{"I already have an account, but"|_}:</h3>
+        <ul>
+            <li><a href="{$smarty.const.BASE_SSL_PATH}lost_username.php">{"I Forgot my username"|_}</a><br>
+            <li><a href="{$smarty.const.BASE_SSL_PATH}lost_password.php">{"I Forgot my password"|_}</a>
+            <li><a href="{$smarty.const.BASE_SSL_PATH}resend_validation.php">{"Re-send the validation email"|_}</a><br>
+        </ul>
+    </div>
+
+    {if $error}
+    <div id="help">
+	{$error}
+    </div>
+    {/if}
+
+{include file="templates/footer.html"}
