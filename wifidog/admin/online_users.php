@@ -23,12 +23,13 @@
    */
 define('BASEPATH','../');
 require_once 'admin_common.php';
+require_once BASEPATH.'classes/Node.php';
 
-$db->ExecSql("SELECT * FROM connections,users,nodes WHERE token_status='" . TOKEN_INUSE . "' AND users.user_id=connections.user_id AND nodes.node_id=connections.node_id ORDER BY timestamp_in DESC", $users_res);
-if ($users_res) {
-	$smarty->assign("users_array", $users_res);
-} else {
-	$smarty->assign("error", _("Nobody's online!"));
+try {
+    $online_users = Node::getAllOnlineUsers();
+	$smarty->assign("users_array", $online_users);
+} catch (Exception $e) {
+	$smarty->assign("error", $e->getMessage());
 }
 
 $smarty->display("admin/templates/online_users.html");
