@@ -1,5 +1,8 @@
 # $Header$
 2005-03-28 Benoit Grégoire  <bock@step.polymtl.ca>
+	* sql:  Put initial data in a transaction, and specify the wifidog user so you do not have to su to it while using sync_sql_for_svs
+	
+2005-03-28 Benoit Grégoire  <bock@step.polymtl.ca>
 	* common.php:  Add get_guid() function
 	* validate_schema.php: New auto-upgrade script to allow autaumatic schema upgrade.  Note that you must still update dump_initial_data_postgres.sh and use sync_sql_for_cvs.sh so new users aren't left in the cold.
 	* New class Authenticator (and subclasses):  Begin virtualizing the login process.

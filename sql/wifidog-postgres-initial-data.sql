@@ -1,7 +1,8 @@
 \connect wifidog;
+BEGIN;
 --- The default admin user, delete or change password as soon as possible.  The password is admin 
-INSERT INTO users (user_id, pass, email, account_status) VALUES ('admin', 'ISMvKXpXpadDiUoOSoAfww==', 'test_user_please@delete.me', 1, 'df16cc4b1d0975e267f3425eaac31950');
-INSERT INTO administrators (user_id) VALUES ('admin');
+INSERT INTO users (user_id, username, pass, email, account_status) VALUES ('admin_original_user_delete_me', 'admin', 'ISMvKXpXpadDiUoOSoAfww==', 'test_user_please@delete.me', 1, 'df16cc4b1d0975e267f3425eaac31950');
+INSERT INTO administrators (user_id) VALUES ('admin_original_user_delete_me');
 --
 -- PostgreSQL database dump
 --
@@ -14,7 +15,7 @@ SET SESSION AUTHORIZATION 'wifidog';
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 2 (OID 299872)
+-- Data for TOC entry 2 (OID 115943)
 -- Name: token_status; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
@@ -36,7 +37,7 @@ SET SESSION AUTHORIZATION 'wifidog';
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 2 (OID 318918)
+-- Data for TOC entry 2 (OID 115973)
 -- Name: node_deployment_status; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
@@ -60,7 +61,7 @@ SET SESSION AUTHORIZATION 'wifidog';
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 2 (OID 566556)
+-- Data for TOC entry 2 (OID 115975)
 -- Name: venue_types; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
@@ -112,10 +113,11 @@ SET SESSION AUTHORIZATION 'wifidog';
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 2 (OID 680734)
+-- Data for TOC entry 2 (OID 115985)
 -- Name: schema_info; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
-INSERT INTO schema_info (tag, value) VALUES ('schema_version', '1');
+INSERT INTO schema_info (tag, value) VALUES ('schema_version', '2');
 
 
+COMMIT;

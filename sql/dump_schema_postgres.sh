@@ -1,2 +1,2 @@
 #!/bin/sh
-pg_dump wifidog -s -C -x -O
+pg_dump wifidog --username=wifidog -s -C -x -O
