@@ -54,6 +54,9 @@ class SmartyWifidog extends Smarty {
         
         $this->caching = false;
         $this->assign('app_name','Wifidog auth server');
+
+	/* We need this for various forms to redirect properly (language form) */
+	$this->assign('request_uri', $_SERVER["REQUEST_URI"]);
 	
 	if(is_file(NODE_CONTENT_PHP_RELATIVE_PATH.PAGE_HEADER_NAME))
 	  {

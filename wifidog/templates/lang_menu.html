@@ -1,4 +1,4 @@
-<form name="lang_form">
+<form name="lang_form" method="post" action="{$request_uri}">
 {"Language"|_}:
 <select name="lang" onChange="javascript: document.lang_form.submit();">
 {html_options values=$lang_ids selected=$lang_id output=$lang_names}
