@@ -6,6 +6,12 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.27  2005/04/01 02:05:32  benoitg
+ *     2005-03-31 Benoit Grégoire  <bock@step.polymtl.ca>
+ *     	* Remove spaces after php blocks in various files.
+ *     	* Temporarely fix single authentication source not present bug in login smarty template.  All other places where we select the network will be fixed tommorow.
+ *     	* Fix initial schema errors.
+ *
  *     Revision 1.26  2005/03/31 18:35:23  benoitg
  *     2005-03-31 Benoit Grégoire  <bock@step.polymtl.ca>
  *     	* More RADIUS install documentation.
@@ -187,13 +193,13 @@ $AUTH_SOURCE_ARRAY[IDRC_ACCOUNT_ORIGIN]=array(
 
 // RADIUS authenticators ( see AuthenticatorRadius constuctor doc for details )
 
-require_once BASEPATH.'classes/AuthenticatorRadius.php';
+/*require_once BASEPATH.'classes/AuthenticatorRadius.php';
 
 define('IDRC_ACCOUNT_ORIGIN', 'IDRC_RADIUS_USER');
 $AUTH_SOURCE_ARRAY[IDRC_ACCOUNT_ORIGIN]=array(
 			     'name'=>"IDRC RADIUS Server test",
 			     'authenticator'=>new AuthenticatorRadius(IDRC_ACCOUNT_ORIGIN, "192.168.0.11", 1812, 1813, "secret_key", "CHAP_MD5"));
-
+*/
 /*These are the file names of the different templates that can be put in the CONTENT_PATH/(node_id)/ folders */
 define('STYLESHEET_NAME', 'stylesheet.css');
 define('LOGIN_PAGE_NAME', 'login.html');

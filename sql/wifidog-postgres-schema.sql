@@ -101,7 +101,6 @@ CREATE TABLE users (
     reg_date timestamp without time zone DEFAULT now() NOT NULL,
     username text,
     account_origin text,
-    CONSTRAINT check_email_not_empty CHECK (((email)::text <> ''::text)),
     CONSTRAINT check_user_not_empty CHECK (((user_id)::text <> ''::text))
 );
 
@@ -176,19 +175,11 @@ CREATE INDEX idx_token_status_and_user_id ON connections USING btree (token_stat
 
 
 --
--- TOC entry 22 (OID 133192)
+-- TOC entry 21 (OID 133192)
 -- Name: idx_unique_username_and_account_origin; Type: INDEX; Schema: public; Owner: wifidog
 --
 
 CREATE UNIQUE INDEX idx_unique_username_and_account_origin ON users USING btree (username, account_origin);
-
-
---
--- TOC entry 21 (OID 140367)
--- Name: idx_unique_email_and_account_origin; Type: INDEX; Schema: public; Owner: wifidog
---
-
-CREATE UNIQUE INDEX idx_unique_email_and_account_origin ON users USING btree (email, account_origin);
 
 
 --
@@ -228,7 +219,7 @@ ALTER TABLE ONLY nodes
 
 
 --
--- TOC entry 23 (OID 133114)
+-- TOC entry 22 (OID 133114)
 -- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -237,7 +228,7 @@ ALTER TABLE ONLY users
 
 
 --
--- TOC entry 24 (OID 133116)
+-- TOC entry 23 (OID 133116)
 -- Name: node_owners_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -246,7 +237,7 @@ ALTER TABLE ONLY node_owners
 
 
 --
--- TOC entry 25 (OID 133118)
+-- TOC entry 24 (OID 133118)
 -- Name: node_deployment_status_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -255,7 +246,7 @@ ALTER TABLE ONLY node_deployment_status
 
 
 --
--- TOC entry 26 (OID 133120)
+-- TOC entry 25 (OID 133120)
 -- Name: venue_types_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -264,7 +255,7 @@ ALTER TABLE ONLY venue_types
 
 
 --
--- TOC entry 27 (OID 133122)
+-- TOC entry 26 (OID 133122)
 -- Name: schema_info_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -273,7 +264,7 @@ ALTER TABLE ONLY schema_info
 
 
 --
--- TOC entry 29 (OID 133124)
+-- TOC entry 28 (OID 133124)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -282,7 +273,7 @@ ALTER TABLE ONLY connections
 
 
 --
--- TOC entry 28 (OID 133128)
+-- TOC entry 27 (OID 133128)
 -- Name: administrators_ibfk_1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -291,7 +282,7 @@ ALTER TABLE ONLY administrators
 
 
 --
--- TOC entry 30 (OID 133132)
+-- TOC entry 29 (OID 133132)
 -- Name: fk_users; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -300,7 +291,7 @@ ALTER TABLE ONLY connections
 
 
 --
--- TOC entry 31 (OID 133136)
+-- TOC entry 30 (OID 133136)
 -- Name: fk_nodes; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -309,7 +300,7 @@ ALTER TABLE ONLY connections
 
 
 --
--- TOC entry 34 (OID 133140)
+-- TOC entry 33 (OID 133140)
 -- Name: fk_users; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -318,7 +309,7 @@ ALTER TABLE ONLY node_owners
 
 
 --
--- TOC entry 35 (OID 133144)
+-- TOC entry 34 (OID 133144)
 -- Name: fk_nodes; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -327,7 +318,7 @@ ALTER TABLE ONLY node_owners
 
 
 --
--- TOC entry 32 (OID 133148)
+-- TOC entry 31 (OID 133148)
 -- Name: fk_node_deployment_status; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -336,7 +327,7 @@ ALTER TABLE ONLY nodes
 
 
 --
--- TOC entry 33 (OID 133152)
+-- TOC entry 32 (OID 133152)
 -- Name: fk_venue_types; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 

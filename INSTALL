@@ -63,7 +63,6 @@ ln -s /usr/bin/php5ize /usr/bin/phpize
 Now you'll need a few packages, you can let PEAR install them
 automatically:
 
-pear install Auth
 pear install radius   ( PECL module compilation)
 pear install Auth_RADIUS
 pear install Crypt_CHAP

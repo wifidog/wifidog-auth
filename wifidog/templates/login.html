@@ -10,7 +10,7 @@
 	    <input type="hidden" name="gw_port" value="{$gw_port}">
 	    <input type="hidden" name="gw_id" value="{$gw_id}">
         <table>
-        {if count($auth_sources) > 1}
+
         <tr>
         	<td>{"Network"|_}:</td>
         	<td>
@@ -25,7 +25,7 @@
 				</select>
         	</td>
         </tr>
-        {/if}
+
         <tr>
             <td>{"Username (or email)"|_}:</td>
             <td><input type="text" name="username" value="{$username}" size="20"></td>

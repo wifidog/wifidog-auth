@@ -1,4 +1,9 @@
 2005-03-31 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Remove spaces after php blocks in various files.
+	* Temporarely fix single authentication source not present bug in login smarty template.  All other places where we select the network will be fixed tommorow.
+	* Fix initial schema errors.
+	
+2005-03-31 Benoit Grégoire  <bock@step.polymtl.ca>
 	* More RADIUS install documentation.
 	* Fix schema_validate.php
 	
