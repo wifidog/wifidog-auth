@@ -115,6 +115,12 @@ if ($action == 'edit_node') { // Allow node creation or node edition
             case 'update_node':
                 $description = $db->EscapeString($description);
                 $home_page_url = $db->EscapeString($home_page_url);
+                $map_url = $db->EscapeString($map_url);
+                $rss_url = $db->EscapeString($rss_url);
+                $public_phone_number = $db->EscapeString($public_phone_number);
+                $public_email = $db->EscapeString($public_email);
+                $mass_transit_info = $db->EscapeString($mass_transit_info);
+                $name = $db->EscapeString($name);
                 /* TODO Use object to update all of this and VALIDATE */
 
                 if ($new_node_id) {

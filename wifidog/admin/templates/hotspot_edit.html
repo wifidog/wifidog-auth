@@ -25,23 +25,23 @@
   </tr>
   <tr>
     <td class="item">{"RSS URL"|_}:</td>
-    <td><input type="text" name="rss_url" value="{$node_info.rss_url}"></td>
+    <td><input type="text" name="rss_url" value="{$node_info.rss_url}" size="50"></td>
   </tr>
   <tr>
     <td class="item">{"Homepage URL"|_}:</td>
-    <td><input type="text" name="home_page_url" value="{$node_info.home_page_url}"></td>
+    <td><input type="text" name="home_page_url" value="{$node_info.home_page_url}" size="50"></td>
   </tr>
   <tr>
     <td class="item">{"Description"|_}:</td>
-    <td><input type="text" name="description" value="{$node_info.description}"></td>
+    <td><input type="text" name="description" value="{$node_info.description}" size="50"></td>
   </tr>
   <tr>
     <td class="item">{"Map URL"|_}:</td>
-    <td><input type="text" name="map_url" value="{$node_info.map_url}"></td>
+    <td><input type="text" name="map_url" value="{$node_info.map_url}" size="50"></td>
   </tr>
   <tr>
     <td class="item">{"Street address"|_}:</td>
-    <td><input type="text" name="street_address" value="{$node_info.street_address}"></td>
+    <td><input type="text" name="street_address" value="{$node_info.street_address}" size="50"></td>
   </tr>
   <tr>
     <td class="item">{"Public phone number"|_}:</td>
@@ -49,11 +49,11 @@
   </tr>
   <tr>
     <td class="item">{"Public email"|_}:</td>
-    <td><input type="text" name="public_email" value="{$node_info.public_email}"></td>
+    <td><input type="text" name="public_email" value="{$node_info.public_email}" size="50"></td>
   </tr>
   <tr>
     <td class="item">{"Mass transit info"|_}:</td>
-    <td><input type="text" name="mass_transit_info" value="{$node_info.mass_transit_info}"></td>
+    <td><input type="text" name="mass_transit_info" value="{$node_info.mass_transit_info}" size="50"></td>
   </tr>
   <tr>
     <td class="item">{"Node deployment status"|_}:</td>
@@ -68,15 +68,15 @@
 
 {if !$node_info}
 <input type="hidden" name="action" value="add_new_node">
+<input type="submit" value="{"Add new node"|_}">
 {else}
 <input type="hidden" name="action" value="update_node">
+<input type="submit" value="{"Update node"|_}">
 {/if}
 
-<input type="submit">
 </form>
 
 <br>
 <p>Work in progress note: Better DB integrity testing is needed before allowing the hotspot ID modification.</p>
 
 {include file="templates/footer.html"}
-
