@@ -7,7 +7,7 @@ INSERT INTO administrators (user_id) VALUES ('admin_original_user_delete_me');
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'LATIN1';
+SET client_encoding = 'UNICODE';
 SET check_function_bodies = false;
 
 SET SESSION AUTHORIZATION 'wifidog';
@@ -15,7 +15,7 @@ SET SESSION AUTHORIZATION 'wifidog';
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 2 (OID 115943)
+-- Data for TOC entry 2 (OID 157593)
 -- Name: token_status; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
@@ -28,7 +28,7 @@ INSERT INTO token_status (token_status) VALUES ('USED');
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'LATIN1';
+SET client_encoding = 'UNICODE';
 SET check_function_bodies = false;
 
 SET SESSION AUTHORIZATION 'wifidog';
@@ -36,7 +36,7 @@ SET SESSION AUTHORIZATION 'wifidog';
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 2 (OID 115975)
+-- Data for TOC entry 2 (OID 157627)
 -- Name: venue_types; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
@@ -80,7 +80,7 @@ INSERT INTO venue_types (venue_type) VALUES ('Wi-Fi Zone');
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'LATIN1';
+SET client_encoding = 'UNICODE';
 SET check_function_bodies = false;
 
 SET SESSION AUTHORIZATION 'wifidog';
@@ -88,7 +88,7 @@ SET SESSION AUTHORIZATION 'wifidog';
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 2 (OID 115973)
+-- Data for TOC entry 2 (OID 157625)
 -- Name: node_deployment_status; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
@@ -105,7 +105,7 @@ INSERT INTO nodes (node_id, name, rss_url) VALUES ('default', 'Unknown node', NU
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'LATIN1';
+SET client_encoding = 'UNICODE';
 SET check_function_bodies = false;
 
 SET SESSION AUTHORIZATION 'wifidog';
@@ -113,7 +113,7 @@ SET SESSION AUTHORIZATION 'wifidog';
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 2 (OID 115985)
+-- Data for TOC entry 2 (OID 157637)
 -- Name: schema_info; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
