@@ -1,5 +1,10 @@
 # $Header$
 
+2004-09-29 Alexandre Carmel-Veilleux <acv@acv.ca>
+	* wifidog/admin/index.php: Integrated the changes contributed
+	on the mailing list by Rikhardur EGILSSON (fname.lname@oecd.org),
+	mainly a missing ' in some HTML.
+
 2004-09-28 Yanik Crépeau <yanik@exScriptis.com>
         * wifidog/include/common.php: Added commented header with cvs
 	keywords.
