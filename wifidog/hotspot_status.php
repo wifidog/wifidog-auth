@@ -34,7 +34,6 @@ if(!empty($_REQUEST['format'])) {
  }
 
 $db->ExecSql("SELECT *, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, EXTRACT(epoch FROM creation_date) as creation_date_epoch, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up FROM nodes WHERE node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE' ORDER BY creation_date", $node_results, false);
-
 if ($format == 'RSS') {
   Header("Cache-control: private, no-cache, must-revalidate");
   Header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); # Past date
@@ -208,6 +207,7 @@ if ($format == 'RSS') {
     $description = $xmldoc->createElement("description");
     $item->appendChild($description);
     $description_text='<p>';
+    
     if($node_row['node_deployment_status'] != 'NON_WIFIDOG_NODE')
       {
 	if($node_row['is_up']=='t')
@@ -285,7 +285,7 @@ if ($format == 'RSS') {
 
     /* source */
   }
-  ob_clean();
+  @ob_clean();
   echo $xmldoc->saveXML();
  } else {
   foreach($node_results as $node_row) {
