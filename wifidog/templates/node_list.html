@@ -1,0 +1,49 @@
+{include file="header.html" title="node list"}
+{include file="user_management_menu.html"}
+</div>
+<div id='content'>
+
+<table class='spreadsheet'>
+<thead>
+<tr class='spreadsheet'>
+    <th class='spreadsheet' colspan=6>Status of all nodes of the {$smarty.const.HOTSPOT_NETWORK_NAME} network</th>
+</tr>
+<tr class='spreadsheet'>
+    <th class='spreadsheet'>Status</th>
+	<th class='spreadsheet'>Id</th>
+	<th class='spreadsheet'>Name</th>
+	<th class='spreadsheet'>Local content demo</th>
+	<th class='spreadsheet'>Opened on</th>
+	<th class='spreadsheet'>Online users</th>
+</tr>
+</thead>
+
+{section name=node loop=$nodes}
+<tr class='spreadsheet'>
+    <td class='spreadsheet'>
+    {if $nodes[node].is_up == "t"}
+    <img src='{$smarty.const.BASE_URL_PATH}images/hotspot_status_up.png'>
+    {else}
+    <img src='{$smarty.const.BASE_URL_PATH}images/hotspot_status_down.png'>
+    {$nodes[node].duration.days} days {$nodes[node].duration.hours}h {$nodes[node].duration.minutes}min<br />
+    {/if}
+    {$nodes[node].last_heartbeat_user_agent}
+    </td>
+    <td class='spreadsheet'>{$nodes[node].node_id}</td>
+    <td class='spreadsheet'>{$nodes[node].name}</td>
+    <td class='spreadsheet'>
+    <a href='{$smarty.const.BASE_SSL_PATH}login/index.php?gw_id={$nodes[node].node_id}&gw_address=127.0.0.1&gw_port=80'>Login page</a><br />
+    <a href='{$smarty.const.BASE_URL_PATH}portal/index.php?gw_id={$nodes[node].node_id}'>Portal page</a>
+    </td>
+    <td class='spreadsheet'>{$nodes[node].creation_date}</td>
+    <td class='spreadsheet'>
+    {if $nodes[node].num_online_users != 0}
+    {$nodes[node].num_online_users}
+    {/if}
+    </td>
+</tr>
+{/section}
+
+</table>
+
+</div>

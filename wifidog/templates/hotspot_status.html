@@ -1,0 +1,73 @@
+{include file="header.html" title="node list"}
+{include file="user_management_menu.html"}
+</div>
+<div id='content'>
+
+<table class='spreadsheet'>
+<thead>
+<tr class='spreadsheet'>
+    <th class='spreadsheet' colspan=6>Status of the {$nodes_count} open {$smarty.const.HOTSPOT_NETWORK_NAME} HotSpots</th>
+</tr>
+<tr class='spreadsheet'>
+    <th class='spreadsheet'>HotSpot / Status</th>
+	<th class='spreadsheet'>Description</th>
+	<th class='spreadsheet'>Location</th>
+</tr>
+</thead>
+
+{section name=node loop=$nodes}
+<tr class='spreadsheet'>
+    <td class='spreadsheet'>
+    {if $nodes[node].node_deployment_status == 'NON_WIFIDOG_NODE'}
+      ?
+    {else}
+      {if $nodes[node].is_up == 't'}
+        <img src='{$smarty.const.BASE_URL_PATH}images/hotspot_status_up.png'>
+      {else}
+        <img src='{$smarty.const.BASE_URL_PATH}images/hotspot_status_down.png'>
+      {/if}
+    {/if}
+
+    {if !$nodes[node].home_page_url}
+      {$nodes[node].name}
+    {else}
+      <a href='{$nodes[node].home_page_url}' target='_new'>{$nodes[node].name}</a>
+    {/if}
+
+    {if $nodes[node].node_deployment_status == 'IN_TESTING'}
+      <br />
+      HotSpot in testing phase
+    {/if}
+
+    {if $nodes[node].node_deployment_status == 'NON_WIFIDOG_NODE' && $nodes[node].is_up != 't'}
+      <br />
+      {$nodes[node].duration.days} days {$nodes[node].duration.hours}h {$nodes[node].duration.minutes}min<br />
+    {/if}
+    </td>
+
+    <td class='spreadsheet'>
+    {if $nodes[node].description}
+      {$nodes[node].description}
+    {/if}
+    <br />
+
+    Opened on {$nodes[node].creation_date}
+    {if $nodes[node].num_online_users != 0}
+    , {$nodes[node].num_online_users} user(s) online
+    {/if}
+    </td>
+
+    <td class='spreadsheet'>
+    {if $nodes[node].street_address}<br />{$nodes[node].street_address}{/if}
+    {if $nodes[node].map_url} - <a href='{$nodes[node].map_url}' target='_new'>Map</a>{/if}
+    {if $nodes[node].mass_transit_info}<br />{$nodes[node].mass_transit_info}{/if}
+    {if $nodes[node].public_phone_number}<br />{$nodes[node].public_phone_number}{/if}
+    {if $nodes[node].public_email}<br />{$nodes[node].public_email}{/if}
+    </td>
+
+</tr>
+{/section}
+
+</table>
+
+</div>
