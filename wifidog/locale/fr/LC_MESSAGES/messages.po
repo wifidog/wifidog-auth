@@ -176,7 +176,7 @@ msgid ""
 "For now, you need to be logged in at a hotspot or to fake a login from one "
 "of the HotSpot login pages to have your administrative clearance recognised."
 msgstr ""
-"Pour l'instant, vous devez �re connect&eacute;eacute; &agrave; partir d'un "
+"Pour l'instant, vous devez &ecirc;tre connect&eacute;eacute; &agrave; partir d'un "
 "point d'acc&egrave;s ou simuler une connexion depuis une des pages de "
 "connexion d'un point d'acc&egrave;s pour pouvoir obtenir les acc&egrave;s "
 "administratifs."
@@ -200,7 +200,7 @@ msgstr "Vous n'avez pas les privileges d'administrateur"
 
 #: ../classes/Security.php:89 ../classes/Security.php:76
 msgid "NOT IMPLEMENTED YET, ACCESS DENIED"
-msgstr "ACC� REFUS� PAS ENCORE IMPL�ENT�"
+msgstr "ACC&Egrave; REFUS&Eacute; PAS ENCORE IMPL&Eacute;MENT&Eacute;"
 
 #: ../login/index.php:58 ../login/index.php:62 ../login/index.php:56
 #: ../login/index.php:52 ../login/index.php:46
@@ -210,10 +210,10 @@ msgid ""
 "grace period started on $user_info[reg_date]).  You will have to connect to "
 "the internet and validate your account from another location."
 msgstr ""
-"Désolé, votre période de $validation_grace_time minutes pour prendre votre "
-"courriel et valider votre compte a expiré. (La période de "
-"$validation_grace_time minutes avait débuté le $user_info[reg_date]).  Vous "
-"devez vous connecter à d'Internet par un autre moyen et valider votre compte."
+"D&eacute;sol&eacute;, votre p&eacute;riode de $validation_grace_time minutes pour prendre votre "
+"courriel et valider votre compte a expir&eacute;. (La p&eacute;riode de "
+"$validation_grace_time minutes avait d&eacute;but&eacute; le $user_info[reg_date]).  Vous "
+"devez vous connecter &agrave; l'Internet par un autre moyen et valider votre compte."
 
 #: smarty.txt:31 smarty.txt:35 smarty.txt:34 smarty.txt:44 smarty.txt:45
 #: smarty.txt:46 smarty.txt:53 smarty.txt:54 smarty.txt:59 smarty.txt:76
@@ -255,7 +255,7 @@ msgstr "Nom d'utilisateur ou courriel incorrect"
 
 #: ../login/index.php:93 ../login/index.php:73
 msgid "Incorrect password (Maybe you have CAPS LOCK on?)"
-msgstr "Mot de passe incorrect (CAPS LOCK peut-�re actif?)"
+msgstr "Mot de passe incorrect (CAPS LOCK peut-&ecirc;tre actif?)"
 
 #: ../portal/index.php:117 ../portal/index.php:116 ../portal/index.php:115
 #: ../portal/index.php:103 ../portal/index.php:102 ../portal/index_new.php:89
@@ -405,7 +405,7 @@ msgstr "J'ai oubli&eacute; mon mot de passe"
 #: smarty.txt:42 smarty.txt:47 smarty.txt:41 smarty.txt:51 smarty.txt:94
 #: smarty.txt:95 smarty.txt:91
 msgid "Re-send the validation email"
-msgstr "Renvoyez-moi de nouveau le courriel de validation"
+msgstr "Envoyez-moi de nouveau le courriel de validation"
 
 #: smarty.txt:44 smarty.txt:49 smarty.txt:43 smarty.txt:42 smarty.txt:52
 #: smarty.txt:53
@@ -630,7 +630,7 @@ msgstr "Mauvais mot de passe."
 
 #: ../change_password.php:62 ../change_password.php:49
 msgid "Your password has been changed succesfully."
-msgstr "Votre mot de passe a été changé avec succès."
+msgstr "Votre mot de passe a &eacute;t&eacute; chang&eacute; avec succ&egrave;s."
 
 #: ../change_password.php:66
 msgid "Could not change your password"
@@ -736,13 +736,13 @@ msgid ""
 "If you get prompted for a login, enter the username and password you have "
 "just created."
 msgstr ""
-"Votre compte a été activé avec succès!\n"
+"Votre compte a &eacute;t&eacute; activ&eacute; avec succ&egrave;s!\n"
 "\n"
 "Vous pouvez maintenant vous connecter n'importe quel site et prendre "
-"avantage de votre accès Internet gratuit!\n"
+"avantage de votre acc&egrave;s Internet gratuit!\n"
 "\n"
 "Lorsque l'on vous demandera de vous enregistrer, entez le nom d'usager et le "
-"mot de passe que vous venez de créer."
+"mot de passe que vous venez de cr&eacute;er."
 
 #: ../admin/hotspot.php:36
 msgid "Edit a hotspot with"
@@ -758,11 +758,11 @@ msgstr "Nom d'utilisateur invalide "
 
 #: ../admin/owner_sendfiles.php:74 ../admin/owner_sendfiles.php:67
 msgid "Can not write to directory '"
-msgstr "Impossible d'écrire dans le répertoire '"
+msgstr "Impossible d'&eacute;crire dans le r&eacute;pertoire '"
 
 #: ../admin/owner_sendfiles.php:74 ../admin/owner_sendfiles.php:67
 msgid "', ownership should be set to user "
-msgstr "', le proprétaire n'a pu être assigné à l'usager "
+msgstr "', le propr&eacute;taire n'a pu &ecirc;tre assign&eacute; &agrave; l'usager "
 
 #: ../classes/User.php:79
 msgid "{$field_id} '{$object_id_str}' could not be found in the database"
@@ -770,11 +770,11 @@ msgstr ""
 
 #: ../classes/User.php:110 ../classes/User.php:114
 msgid "Could not change user's password."
-msgstr "N'a pas pu changer le mot de passe de l'utilisateur"
+msgstr "Impossible de changer le mot de passe de l'utilisateur"
 
 #: ../classes/User.php:120 ../classes/User.php:130
 msgid "Could not update status."
-msgstr "N'a pas pu mettre &agrave; jour le statut."
+msgstr "Impossible de mettre &agrave; jour le statut."
 
 #: ../classes/User.php:132 ../classes/User.php:142
 msgid "No users could not be found in the database"
@@ -1230,7 +1230,7 @@ msgstr " statistiques d'utilisateur cumulatives"
 
 #: ../admin/owner_sendfiles.php:130
 msgid "You are not a hotspot owner"
-msgstr "Vous n'�es pas propri&eacute;taire d'un point d'acc&egrave;s"
+msgstr "Vous n'&ecirc;tes pas propri&eacute;taire d'un point d'acc&egrave;s"
 
 #: ../classes/Node.php:47
 msgid "Could not delete node owners!"
