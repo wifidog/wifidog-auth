@@ -1,4 +1,7 @@
 # $Header$
+2005-03-31 Francois Proulx  <francois.proulx@gmail.com>
+	* Added missing schema_validate.php modifs.
+	
 2005-03-30 Francois Proulx  <francois.proulx@gmail.com>
 	* Added PEAR install procedure
 	
