@@ -28,10 +28,9 @@ require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'classes/SmartyWifidog.php';
 require_once BASEPATH.'classes/Session.php';
 
-if(CONF_USE_CRON_FOR_DB_CLEANUP == false)
-  {
+if (CONF_USE_CRON_FOR_DB_CLEANUP == false) {
     garbage_collect();
-  }
+}
 
 $smarty = new SmartyWifidog;
 $session = new Session;
@@ -41,28 +40,21 @@ include BASEPATH.'include/language.php';
 $portal_template = $_REQUEST['gw_id'] . ".html";
 $node_id = $db->EscapeString($_REQUEST['gw_id']);
 $db->ExecSqlUniqueRes("SELECT * FROM nodes WHERE node_id='$node_id'", $node_info);
-if($node_info==null)
-  {
+if ($node_info == null) {
     $smarty->assign('hotspot_name', UNKNOWN_HOSTPOT_NAME);
     $hotspot_rss_url = UNKNOWN_HOTSPOT_RSS_URL;
-  }
- else
-   {
-     $smarty->assign('hotspot_name', $node_info['name']);
-     $hotspot_rss_url =  $node_info['rss_url'];
-   }
-
-/* Find out who is online */
-$db->ExecSql("SELECT users.user_id FROM users,connections " .
-	     "WHERE connections.token_status='" . TOKEN_INUSE . "' " .
-	     "AND users.user_id=connections.user_id AND connections.node_id='$node_id' "
-	     ,$users, false);
-if ($users != null) {
-	$smarty->assign("online_users", $users);
+} else {
+    $smarty->assign('hotspot_name', $node_info['name']);
+    $hotspot_rss_url =  $node_info['rss_url'];
 }
 
-if(RSS_SUPPORT)
-  {
+/* Find out who is online */
+$db->ExecSql("SELECT users.user_id FROM users,connections WHERE connections.token_status='" . TOKEN_INUSE . "' AND users.user_id=connections.user_id AND connections.node_id='$node_id'", $users, false);
+if ($users != null) {
+    $smarty->assign("online_users", $users);
+}
+
+if (RSS_SUPPORT) {
     //      $old_error_level = error_reporting(E_ERROR);
     define('MAGPIE_DIR', BASEPATH.MAGPIE_REL_PATH);
     //    require_once(MAGPIE_DIR.'rss_fetch.inc');
@@ -140,7 +132,7 @@ if(RSS_SUPPORT)
     //echo $hotspot_rss_html;
     $smarty->assign("hotspot_rss_html", $hotspot_rss_html);
     //   error_reporting($old_error_level);
-  }
+}
 
 if (isset($session)) {
     $smarty->assign("original_url_requested", $session->get(SESS_ORIGINAL_URL_VAR));
@@ -148,11 +140,14 @@ if (isset($session)) {
 
 $smarty->display(DEFAULT_CONTENT_SMARTY_PATH."header.html");
 $smarty->display(DEFAULT_CONTENT_SMARTY_PATH."header_portal.html");
+
+/* If we have local content, display it. Otherwise, display default */
 if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.PORTAL_PAGE_NAME)) {
     $smarty->display(NODE_CONTENT_SMARTY_PATH.PORTAL_PAGE_NAME);
 } else {
     $smarty->display(DEFAULT_CONTENT_SMARTY_PATH.PORTAL_PAGE_NAME);
 }
+
 $smarty->display(DEFAULT_CONTENT_SMARTY_PATH."footer_portal.html");
 $smarty->display(DEFAULT_CONTENT_SMARTY_PATH."footer.html");
 ?>
