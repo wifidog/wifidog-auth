@@ -25,7 +25,6 @@
 
 define('BASEPATH','./');
 require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/Style.php';
 require_once BASEPATH.'classes/Statistics.php';
 require_once BASEPATH.'classes/SmartyWifidog.php';
 
@@ -261,7 +260,6 @@ $i=0;
 	  $textnode = $xmldoc->createTextNode(utf8_encode(HOTSPOT_NETWORK_URL.$node_row['node_id']));
 	  $guid->appendChild($textnode);
 
-      /* pubDate */
     /* pubDate */
     $pubDate = $xmldoc->createElement("pubDate");
     $item->appendChild($pubDate);
@@ -272,8 +270,6 @@ $i=0;
     }
 
     echo $xmldoc->saveXML();
-    //$style=new Style();
-    //echo $style->GetFooter(true,true);
 } else {
     foreach($node_results as $node_row) {
         $node_row['num_online_users'] = $stats->getNumOnlineUsers($node_row['node_id']);
