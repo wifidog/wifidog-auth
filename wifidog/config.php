@@ -43,6 +43,7 @@ define('LOGIN_PAGE_NAME', 'login.html');
 define('PORTAL_PAGE_NAME', 'portal.html');
 define('PAGE_HEADER_NAME', 'header.html');
 define('PAGE_FOOTER_NAME', 'footer.html');
+define('USER_MANAGEMENT_PAGE', 'user_management/');
 define('HOTSPOT_LOGO_NAME', 'hotspot_logo.jpg');
 define('HOTSPOT_LOGO_BANNER_NAME', 'hotspot_logo_banner.jpg');
 

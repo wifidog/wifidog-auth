@@ -1,4 +1,12 @@
 # $Header$
+2004-08-11 Benoit Grégoire  <bock@step.polymtl.ca>
+	* wifidog/config.php: Add USER_MANAGEMENT_PAGE
+	* wifidog/include/user_management_menu.php:  Code meant to deal with non-standard ports broke the menu.  Hopefully fixed.
+	* Add alex's mising changelog entry...
+	
+2004-08-11 alexcv
+	* wifidog/ping/index.php: will now reply if the wifidog auth server is up. to be used by wifidog to do heartbeats.
+
 2004-08-07 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Add code to import a NoCat user database (passwd).  The username will be generated from the first part of the email if the name was en email.
 	* Change password hashing algorithm to make it compatible with NoCat (For the curious among you, the hashing algorithm is now:  take the md5 digest in binary format of the password, and base64 encode it.
