@@ -27,7 +27,7 @@ define('BASEPATH','./');
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'include/common_interface.php';
 
-if (isset($_REQUEST["message"]) {
+if (isset($_REQUEST["message"])) {
     switch ($_REQUEST["message"]) {
         case "failed_validation":
             $smarty->display("templates/message_failed_validation.html");
