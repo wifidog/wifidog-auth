@@ -6,6 +6,10 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.20  2005/03/17 00:36:21  masham
+ *      * config.php will use "local.config.php" instead, if present.  avoid cvs over-writing.
+ *      * if CUSTOM_SIGNUP_URL is defined, signup.php will re-direct.  For integration with existing auth systems.
+ *
  *     Revision 1.19  2005/01/26 03:46:30  benoitg
  *     2005-01-25 Benoit Grégoire  <bock@step.polymtl.ca>
  *     	* classes/Node.php:  New file, untested code example
@@ -59,6 +63,12 @@
  *
  *
  */
+
+
+if(file_exists("local.config.php")){
+	// use a local copy of the configuration if found instead of the distro's.
+	require "local.config.php";
+} else {
   
 /* Used by AbstractDb */
 define('CONF_DATABASE_HOST',   'localhost');
@@ -86,6 +96,10 @@ define('LOST_USERNAME_EMAIL_SUBJECT', HOTSPOT_NETWORK_NAME.' lost username reque
 define('RSS_SUPPORT', true); 
 /* Normally, the database cleanup routines will be called everytime a portal page is displayed.  If you set this to true, you must set a cron job on the server which will execute the script cron/cleanup.php. */
 define('CONF_USE_CRON_FOR_DB_CLEANUP', false);
+
+
+/* Use a custom signup system instead of the built in signup page. */
+//define("CUSTOM_SIGNUP_URL","https://www.bcwireless.net/hotspot/signup.php");
 
 /** The next two items are constants, do not edit */
 define('DBMS_MYSQL','AbstractDbMySql.php');
@@ -151,5 +165,5 @@ if (if (substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2) == "en") {
 }
 
 */ 
-
+}
 ?>

@@ -28,6 +28,11 @@ require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'include/common_interface.php';
 require_once BASEPATH.'classes/User.php';
 
+if(defined("CUSTOM_SIGNUP_URL")){
+	header("Location: ".CUSTOM_SIGNUP_URL."?gw=".base64_encode($_SERVER['REQUEST_URI']));
+	exit;	
+}
+
 function validate_username($username) {
     if (!isset($username) || !$username)
         throw new Exception(_('Username is required.'));
