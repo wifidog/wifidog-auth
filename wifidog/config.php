@@ -6,6 +6,9 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.17  2005/01/18 14:36:50  aprilp
+ *     Changed default language to fr_FR instead of fr, it wasn't working on some platforms
+ *
  *     Revision 1.16  2005/01/16 21:21:55  aprilp
  *     *** empty log message ***
  *
@@ -113,7 +116,7 @@ define('WIFIDOG_LOGO_NAME', 'wifidog_logo_banner.png');
 define('WIFIDOG_LOGO_BANNER_NAME', 'wifidog_logo_banner.png');
 
 define('DEFAULT_NODE_ID', 'default');
-define('DEFAULT_LANG', 'fr');
+define('DEFAULT_LANG', 'fr_FR');
 
 /*** FOR TESTING ONLY *** UNCOMMENT THE NEXT LINES
  *** WHEN READY TO TEST **************************
