@@ -37,13 +37,14 @@ class AbstractDb
        
     if ($ptr_connexion == FALSE)
       {
-	echo "Unable to connect to database on ".CONF_DATABASE_HOST;
+	echo "<p class=warning>Unable to connect to database on ".CONF_DATABASE_HOST."</p>";
 	return FALSE;
       }
 
     if(!mysql_select_db($db_name))
       {
-	echo "Unable to select the database: $db_name";
+	echo "<p class=warning>Unable to select the database: $db_name</p>";
+        exit();
 	return FALSE;
       }
 
@@ -120,8 +121,8 @@ class AbstractDb
 
     if ($result == FALSE)
       {
-	echo "<p>ExecSql(): ERREUR: Lors de l'exécution de la requête SQL:<br>$sql</p>";
-	echo "<p>L'erreur est:<br>".mysql_error($connection)."</p>";
+	echo "<p class=warning>ExecSql(): ERREUR: Lors de l'exécution de la requête SQL:<br>$sql</p>";
+	echo "<p class=warning>L'erreur est:<br>".mysql_error($connection)."</p>";
 	$returnResults = NULL;
 	$return_value = FALSE;
       }
@@ -240,22 +241,22 @@ class AbstractDb
 
     if ($result == FALSE)
       {
-	echo "<p>ExecSqlResUnique(): ERREUR: Lors de l'exécution de la requête SQL:<br>$sql</p>";
-	echo "<p>L'erreur est:<br>".mysql_error($connection)."</p>";
+	echo "<p class=warning>ExecSqlResUnique(): ERREUR: Lors de l'exécution de la requête SQL:<br>$sql</p>";
+	echo "<p class=warning>L'erreur est:<br>".mysql_error($connection)."</p>";
 	$retval = FALSE;
       }
     else
       {
 	if (mysql_num_rows($result) > 1)
 	  {
-	    echo "<p>ExecSqlResUnique(): ERREUR: Lors de l'exécution de la requête SQL:<br>$sql</p>";
+	    echo "<p class=warning>ExecSqlResUnique(): ERREUR: Lors de l'exécution de la requête SQL:<br>$sql</p>";
 	    echo "<p>Il y a ".mysql_num_rows($result)." résultats alors qu'il ne devrait y en avoir qu'un seul.</p>";
 	    $retval = FALSE;
 	  }
 	$retVal = mysql_fetch_assoc($result);
 	if ($debug)
 	  {
-	    echo "<p>ExecSqlResUnique(): DEBUG: Résultats:<br>";
+	    echo "<p class=warning>ExecSqlResUnique(): DEBUG: Résultats:<br>";
 	    print_r($retVal);
 	    echo "</p><hr />\n";
 	  }
@@ -303,8 +304,8 @@ class AbstractDb
 
     if ($result == FALSE)
       {
-	echo "<p>ExecSqlResUnique(): ERREUR: Lors de l'exécution de la requête SQL:<br><pre>$sql</pre></p>";
-	echo "<p>L'erreur est:<br>".mysql_error()."</p>";
+	echo "<p class=warning>ExecSqlResUnique(): ERREUR: Lors de l'exécution de la requête SQL:<br><pre>$sql</pre></p>";
+	echo "<p class=warning>L'erreur est:<br>".mysql_error()."</p>";
       }
     else
       {
