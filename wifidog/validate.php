@@ -42,7 +42,8 @@ if (!isset($_REQUEST["token"])) {
             $smarty->append("message", _("Your account has already been activated."));
         } else {
             $status = $db->EscapeString(ACCOUNT_STATUS_ALLOWED);
-            $update_successful = $db->ExecSqlUpdate("UPDATE users SET account_status='{$status}' WHERE user_id='{$username}' AND validation_token='$validation_token'");
+            $update_successful = null;
+            $update_successful = $db->ExecSqlUpdate("UPDATE users SET account_status='{$status}' WHERE user_id='{$_REQUEST["username"]}' AND validation_token='$validation_token'");
             if ($update_successful) {
                 $smarty->append("message", _("Your account has been succesfully activated!"));
                 $smarty->append("message", _("You may now browse to a remote Internet address and take advantage of the free Internet access!"));
