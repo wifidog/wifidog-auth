@@ -51,11 +51,21 @@ if (!empty($_REQUEST['user_id'])) {
     }
     $smarty->display("admin/templates/user_log_detailed.html");
 } else {
+    $smarty->assign('sort_ids', array('user_id','email','reg_date'));
+    $smarty->assign('direction_ids', array('asc','desc'));
+
+    $sort      = isset($_REQUEST['sort'])      ? $_REQUEST['sort']      : "user_id";
+    $direction = isset($_REQUEST['direction']) ? $_REQUEST['direction'] : "asc";
+
+    $smarty->assign("sort",      $sort);
+    $smarty->assign("direction", $direction);
+
     if (isset($_REQUEST["page"]) && is_numeric($_REQUEST["page"])) {
         $current_page = $_REQUEST["page"];
     } else {
         $current_page = 1;
     }
+    $smarty->assign("page", $current_page);
 
     $per_page = 100;
     $offset = (($current_page * $per_page) - $per_page + 1);
@@ -67,7 +77,7 @@ if (!empty($_REQUEST['user_id'])) {
             ));
     }
 
-    $db->ExecSql("SELECT user_id,email,reg_date FROM users ORDER BY user_id LIMIT $per_page OFFSET $offset", $users_res);
+    $db->ExecSql("SELECT user_id,email,reg_date FROM users ORDER BY $sort $direction LIMIT $per_page OFFSET $offset", $users_res);
     if ($users_res) {
 	    $smarty->assign("users_array", $users_res);
     } else {
