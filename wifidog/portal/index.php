@@ -72,24 +72,33 @@ if(RSS_SUPPORT)
 //    define('MAGPIE_DEBUG', 0);
  require_once BASEPATH.'classes/RssPressReview.inc';
  $press_review=new RssPressReview;
+   $tokens = "/[\s,]+/";
  $network_rss_sources = NETWORK_RSS_URL;
  $network_rss_html = null;
  		     if(!empty($network_rss_sources))
 		     {
 
-$network_rss_sources = array(
-		     array('url' => $network_rss_sources, 'default_publication_interval' => 7*24*3600)
-		     );
-		     $network_rss_html=$press_review->get_rss_html($network_rss_sources, 5);
+  $extract_array=null;
+  $extract_array = preg_split($tokens, $network_rss_sources);
+  //print_r($extract_array);
+  foreach($extract_array as $source)
+  {
+$network_rss_sources_array[] = array('url' => $source, 'default_publication_interval' => 7*24*3600);
+		     }
+		     $network_rss_html=$press_review->get_rss_html($network_rss_sources_array, 5);
 		     }
 		     
 		     $hotspot_rss_html=null;
 		     if(!empty($hotspot_rss_url))
 		     {
-$hotspot_rss_sources = array(
-		     array('url' => $hotspot_rss_url, 'default_publication_interval' => 7*24*3600)
-		     );
-		     $hotspot_rss_html=$press_review->get_rss_html($hotspot_rss_sources, 5);
+		       $extract_array=null;
+  $extract_array = preg_split($tokens, $hotspot_rss_url);
+  //print_r($extract_array);
+  foreach($extract_array as $source)
+  {
+$hotspot_rss_sources_array[] = array('url' => $source, 'default_publication_interval' => 7*24*3600);
+		     }
+		     $hotspot_rss_html=$press_review->get_rss_html($hotspot_rss_sources_array, 5);     
 }
     /**
      @return the generated html or the error message or an empty string if called without a URL.

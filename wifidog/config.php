@@ -6,6 +6,14 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.14  2005/01/12 00:57:42  benoitg
+ *     2004-01-10 Benoit Grégoire  <bock@step.polymtl.ca>
+ *     	* wifidog/config.php:  Add list of hotspot to network rss feed list (not yet functionnal)
+ *     	* wifidog/hotspot_status.php:  Allow RSS export of the list of deployed HotSpots.
+ *     	* wifidog/admin/incoming_outgoing_swap.php:  Script to swap incoming and outgoing in your data.  only use this if you had gateways before 1.0.2 and wish to correct your logs before you upgrade.
+ *     	* wifidog/classes/RssPressReview.inc:  Missing file from previous commit.
+ *     	* wifidog/portal/index.php: Preliminary work to enable smart press review of multiple RSS feeds.
+ *
  *     Revision 1.13  2004/12/03 19:42:32  benoitg
  *     2004-12-03 Benoit Grégoire  <bock@step.polymtl.ca>
  *     	* wifidog/admin/user_stats.php,  wifidog/classes/Statistics.php:  Embryonic aggregate user stats.  Currently allows you to find out the rate at which your users subscribe.
@@ -70,10 +78,13 @@ define('DBMS_POSTGRES','AbstractDbPostgres.php');
 define('CONF_DBMS',DBMS_POSTGRES);
 
 /***** You should normally not have to edit anything below this ******/
+define('WIFIDOG_NAME', 'WiFiDog Authentication server');
+define('WIFIDOG_VERSION', 'CVS');
+
 define('MAGPIE_REL_PATH',  'lib/magpie/');
 define('SMARTY_REL_PATH',  'lib/smarty/');
 //define('NETWORK_RSS_URL', 'http://wifinetnews.com/index.rdf');
-define('NETWORK_RSS_URL', 'http://patricktanguay.com/isf/atom.xml');
+define('NETWORK_RSS_URL', 'http://patricktanguay.com/isf/atom.xml, http://auth.ilesansfil.org/hotspot_status.php?format=RSS');
 define('UNKNOWN_HOTSPOT_RSS_URL', '');
 
 define('LOCAL_CONTENT_REL_PATH', 'local_content/');//Path to the directory containing the different node specific directories.  Relative to BASE_URL_PATH
