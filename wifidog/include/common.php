@@ -138,21 +138,6 @@ function garbage_collect()
   $expiration = time() - 60*10;
   $expiration=iso8601_date($expiration);
   $db -> ExecSqlUpdate ("UPDATE connections SET token_status='" . TOKEN_USED . "' WHERE last_updated < '$expiration' AND token_status = '".TOKEN_INUSE."'", false);
-
-/* Not needed anymore
-  $db -> ExecSql("SELECT user_id FROM users WHERE online_status='" . ONLINE_STATUS_ONLINE . "'", $users, true);
-  if($users!=null)
-    {
-      foreach ($users as $user)
-      {
-	$db -> ExecSqlUniqueRes("SELECT COUNT(*) FROM connections WHERE user_id='{$user['user_id']}' AND token_status='" . TOKEN_INUSE . "'",$count_row, true);
-	if ($count_row['COUNT(*)'] != 1)
-	  {
-	    $db -> ExecSqlUpdate("UPDATE users SET online_status='" . ONLINE_STATUS_OFFLINE . "' WHERE user_id='{$user['user_id']}'", false);
-	  }
-      }
-    }
-*/
 }
 
 /** Get the url from the local content_specific folder if the file exists, and from the default content folder otherwise */
