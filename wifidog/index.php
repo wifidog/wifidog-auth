@@ -45,8 +45,6 @@ $num_online_users=$row['count'];
 echo "<p>"._("The network currently has ").$num_valid_users._(" valid users.")." ".$num_online_users._(" user are currently online")."</p>\n";
     echo "<ul>\n";
     echo "<li><a href='node_list.php'>List network nodes</a></li>\n";
-    echo "<li><a href='".BASE_SSL_PATH."login/index.php?gw_id=default&gw_address=127.0.0.1&gw_port=80'>Login (demo)</a></li>\n";
-    echo "<li><a href='./portal/index.php?gw_id=default'>Portal (demo)</a></li>\n";
     echo "<li><a href='./user_management/index.php'>Personal user management</a></li>\n";
     echo "<li><a href='".BASE_SSL_PATH."admin/index.php'>Administration</a></li>\n";
     echo "</ul>\n";

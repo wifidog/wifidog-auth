@@ -359,7 +359,7 @@ class AbstractDb
 		else
 		{
 			$sql = "SELECT EXTRACT (year FROM INTERVAL '$intervalstr') AS years, EXTRACT (month FROM INTERVAL '$intervalstr') AS months, EXTRACT (day FROM INTERVAL '$intervalstr') AS days, EXTRACT (hour FROM INTERVAL '$intervalstr') AS hours, EXTRACT (minutes FROM INTERVAL '$intervalstr') AS minutes, EXTRACT (seconds FROM INTERVAL '$intervalstr') AS seconds";
-			$this -> ExecuterSqlResUnique($sql, $retval, false);
+			$this -> ExecSqlUniqueRes($sql, $retval, false);
 		}
 		return $retval;
 	}

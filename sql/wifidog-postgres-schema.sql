@@ -84,7 +84,8 @@ CREATE TABLE nodes (
     name text,
     rss_url text,
     last_heartbeat_ip character varying(16),
-    last_heartbeat_timestamp timestamp without time zone
+    last_heartbeat_timestamp timestamp without time zone DEFAULT now(),
+    creation_date date DEFAULT now()
 );
 
 

@@ -1,4 +1,9 @@
 # $Header$
+2004-09-02 Benoit Grégoire  <bock@step.polymtl.ca>
+	* wifidog/node_list.php: Complete the status page
+	* Add images
+	* Add hotspot creation date
+	
 2004-08-31 Benoit Grégoire  <bock@step.polymtl.ca>
 	* sql/: Update the postgres schemas and add scripts to ease maintaining it.
 	* sql/sync_sql_for_cvs.sh: Should you modify the schema in your db, run this script to the chances will be available in the cvs schemas and initial data.
