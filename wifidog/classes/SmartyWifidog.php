@@ -50,6 +50,9 @@ class SmartyWifidog extends Smarty {
         $this->config_dir = BASEPATH.'tmp/smarty/configs/';
         $this->cache_dir = BASEPATH.'tmp/smarty/cache/';
 
+        /* Register the _ smarty modifier to call the _()
+         * PHP function which is the gettext() function
+         */
         $this->register_modifier("_","_");
         
         $this->caching = false;
