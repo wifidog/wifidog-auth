@@ -1,0 +1,77 @@
+{literal}
+<style>
+#user_profile {
+        border: 1px solid black;
+        position: absolute;
+        left: 200px;
+        width: 300px;
+        background-color: #f2f2f2;
+        padding: 1em;
+    }
+
+#user_profile td.item {
+        font-weight: bold;
+    }
+
+#user_profile img {
+        border: 1px solid #666;
+    }
+</style>
+
+<script language="JavaScript" type="text/javascript">
+  function MM_findObj(n, d) { //v4.0
+    var p,i,x;
+    if(!d) d=document; 
+    if((p=n.indexOf("?"))>0&&parent.frames.length) {
+      d=parent.frames[n.substring(p+1)].document; 
+      n=n.substring(0,p);
+    }
+    if(!(x=d[n])&&d.all) x=d.all[n]; 
+      for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+      for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+      if(!x && document.getElementById) x=document.getElementById(n); return x;
+  }
+                 
+  function changestyle(couche, style) {
+    if (!(layer = MM_findObj(couche))) return;
+      layer.style.visibility = style;
+  }
+                                    
+  function changeclass(objet, myClass)
+  { 
+    objet.className = myClass;
+  }
+
+  function showuserdiv(name) {
+    document.getElementById('user_' + name).style.display = 'block';
+  }
+  function hideuserdiv(name) {
+    document.getElementById('user_' + name).style.display = 'none';
+  }
+</script>
+{/literal}
+
+<h1>{"Users Online"|_}</h1>
+<p class="indent">
+{section name=i loop=$online_users}
+    <li><a class="underlinepointer" onMouseOver="showuserdiv('{$online_users[i].user_id}')" onMouseOut="hideuserdiv('{$online_users[i].user_id}')">{$online_users[i].user_id}</a>
+    <div id="user_{$online_users[i].user_id}" style="display: none;">
+        <div id="user_profile">
+        {if $online_users[i].avatar_id}
+        <img src="{$smarty.const.BASE_NON_SSL_PATH}{$smarty.const.AVATARS_REL_PATH}/{$online_users[i].avatar_id}"><br>
+        {else}
+        <img src="{$smarty.const.BASE_NON_SSL_PATH}{$smarty.const.AVATARS_REL_PATH}/{$smarty.const.DEFAULT_AVATAR}"><br>
+        {/if}
+        <table>
+            <tr>
+            <td class="item">{"Username"|_}:</th>
+            <td>{$online_users[i].user_id}</td>
+            </tr>
+        </table>
+        </div>
+    </div>
+    {assign var="avatar" value=""}
+    {sectionelse}
+    Nobody's online!
+{/section}
+</p>
