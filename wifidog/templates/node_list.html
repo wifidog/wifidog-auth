@@ -1,22 +1,21 @@
 {include file="templates/header.html" title="node list"}
-<table class='spreadsheet'>
+<div id="node_list">
+<h3>{"Status of all nodes of the"|_} {$smarty.const.HOTSPOT_NETWORK_NAME} {"network"|_}</h3>
+<table>
 <thead>
-<tr class='spreadsheet'>
-    <th class='spreadsheet' colspan=6>{"Status of all nodes of the"|_} {$smarty.const.HOTSPOT_NETWORK_NAME} {"network"|_}</th>
-</tr>
-<tr class='spreadsheet'>
-    <th class='spreadsheet'>{"Status"|_}</th>
-	<th class='spreadsheet'>{"Id"|_}</th>
-	<th class='spreadsheet'>{"Name"|_}</th>
-	<th class='spreadsheet'>{"Local content demo"|_}</th>
-	<th class='spreadsheet'>{"Opened on"|_}</th>
-	<th class='spreadsheet'>{"Online users"|_}</th>
+<tr>
+    <th>{"Status"|_}</th>
+	<th>{"Id"|_}</th>
+	<th>{"Name"|_}</th>
+	<th>{"Local content demo"|_}</th>
+	<th>{"Opened on"|_}</th>
+	<th>{"Online users"|_}</th>
 </tr>
 </thead>
 
 {section name=node loop=$nodes}
-<tr class='spreadsheet'>
-    <td class='spreadsheet'>
+<tr class="{cycle values="odd,even"}">
+    <td>
     {if $nodes[node].is_up == "t"}
     <img src='{$smarty.const.BASE_URL_PATH}images/hotspot_status_up.png'>
     {else}
@@ -25,14 +24,14 @@
     {/if}
     {$nodes[node].last_heartbeat_user_agent}
     </td>
-    <td class='spreadsheet'>{$nodes[node].node_id}</td>
-    <td class='spreadsheet'>{$nodes[node].name}</td>
-    <td class='spreadsheet'>
-    <a href='{$smarty.const.BASE_SSL_PATH}login/index.php?gw_id={$nodes[node].node_id}&gw_address=127.0.0.1&gw_port=80'>{"Login page"|_}</a><br />
+    <td align="center">{$nodes[node].node_id}</td>
+    <td>{$nodes[node].name}</td>
+    <td align="center">
+    <a href='{$smarty.const.BASE_SSL_PATH}login/index.php?gw_id={$nodes[node].node_id}&gw_address=127.0.0.1&gw_port=80'>{"Login page"|_}</a>,
     <a href='{$smarty.const.BASE_URL_PATH}portal/index.php?gw_id={$nodes[node].node_id}'>{"Portal page"|_}</a>
     </td>
-    <td class='spreadsheet'>{$nodes[node].creation_date}</td>
-    <td class='spreadsheet'>
+    <td align="center">{$nodes[node].creation_date}</td>
+    <td align="center">
     {if $nodes[node].num_online_users != 0}
     {$nodes[node].num_online_users}
     {/if}
@@ -41,3 +40,4 @@
 {/section}
 
 </table>
+</div>
