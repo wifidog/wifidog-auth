@@ -55,7 +55,7 @@ The Team";
                 $from = "From: " . VALIDATION_EMAIL_FROM_ADDRESS;
 
                 mail($email, $subject, $body, $from);
-                $smarty->append("message", _("An email with confirmation instructions was sent to your email address.  Your account has been granted 15 minutes of access to retrieve your email and validate your account.  You may now open a browser window and go to any remote Internet address to obtain the login page."));
+                $smarty->assign("message", _("An email with confirmation instructions was sent to your email address.  Your account has been granted 15 minutes of access to retrieve your email and validate your account.  You may now open a browser window and go to any remote Internet address to obtain the login page."));
                 $smarty->display("templates/validate.html");
                 exit;
             }
@@ -84,7 +84,7 @@ The Team";
         $from = "From: ".VALIDATION_EMAIL_FROM_ADDRESS;
 
         mail($email, $subject, $body, $from);
-        $smarty->append("message", _("Your username has been emailed to you."));
+        $smarty->assign("message", _("Your username has been emailed to you."));
         $smarty->display("templates/validate.html");
         exit;
     }
@@ -117,7 +117,7 @@ The Team";
             $from = "From: ".VALIDATION_EMAIL_FROM_ADDRESS;
 
             mail($email, $subject, $body, $from);
-            $smarty->append("message", _("A new password has been emailed to you."));
+            $smarty->assign("message", _("A new password has been emailed to you."));
             $smarty->display("templates/validate.html");
             exit;
         }
