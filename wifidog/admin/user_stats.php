@@ -28,6 +28,9 @@ require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'classes/Style.php';
 require_once (BASEPATH.'include/user_management_menu.php');
 require_once BASEPATH.'classes/Statistics.php';
+require_once BASEPATH.'classes/Security.php';
+$security=new Security();
+$security->requireAdmin();
 
 $style = new Style();
 $stats=new Statistics();

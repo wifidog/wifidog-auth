@@ -43,9 +43,10 @@ $num_online_users=$stats->getNumOnlineUsers($node_id=null);
 
 echo "<p>"._("The network currently has ").$num_valid_users._(" valid users.")." ".$num_online_users._(" user(s) are currently online")."</p>\n";
     echo "<ul>\n";
-    echo "<li><a href='node_list.php'>List network nodes</a></li>\n";
-    echo "<li><a href='./user_management/index.php'>Personal user management</a></li>\n";
-    echo "<li><a href='".BASE_SSL_PATH."admin/index.php'>Administration</a></li>\n";
+    echo "<li><a href='hotspot_status.php'>"._("Deployed HotSpots status with coordinates")."</a></li>\n";
+    echo "<li><a href='node_list.php'>"._("Full node technical status (includes non-deployed nodes)")."</a></li>\n";
+    echo "<li><a href='./user_management/index.php'>"._("Personal user management")."</a></li>\n";
+    echo "<li><a href='".BASE_SSL_PATH."admin/index.php'>"._("Administration")."</a></li>\n";
     echo "</ul>\n";
     echo "</div>\n";	
 

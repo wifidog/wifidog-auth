@@ -104,13 +104,13 @@ if ($info != null)
 
 	  }
 	
-	if (!empty($_REQUEST['incoming']) && !empty($_REQUEST['outgoing']))
+	if (!empty($_REQUEST['incoming']) || !empty($_REQUEST['outgoing']))
 	  {
 	    $incoming = $db->EscapeString($_REQUEST['incoming']);
 	    $outgoing = $db->EscapeString($_REQUEST['outgoing']);
 
-	    if (($incoming > $info['incoming']) ||
-		($outgoing > $info['outgoing'])) 
+	    if (($incoming >= $info['incoming']) &&
+		($outgoing >= $info['outgoing'])) 
 	      {
 		$db->ExecSqlUpdate("UPDATE connections SET " .
 				   "incoming='$incoming'," .

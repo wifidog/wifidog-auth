@@ -1,4 +1,12 @@
 # $Header$
+2004-01-04 Benoit Grégoire  <bock@step.polymtl.ca>
+	* wifidog/local_content/default/hotspot_logo_banner.jpg: Make it much thinner.
+	* wifidog/local_content/default/login.html: Remove announcements
+	* wifidog/include/user_management_menu.php: Fix mailto:
+	* wifidog/auth/index.php: Fix auth server part of the no data transmited statistics bug.
+	* wifidog/admin/index.php: Add link to statistics
+	* wifidog/admin/user_stats.php: Activate security.
+	* wifidog/index.php: Make the distinction between the two hotspot status pages clearer.
 
 2004-12-08 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog/index.php: Add menu

@@ -28,11 +28,16 @@ require_once BASEPATH.'classes/Style.php';
 
 $style = new Style();
 echo $style->GetHeader(HOTSPOT_NETWORK_NAME.' administration');
-
-    echo "<h1>"._('Admin page for ') . HOTSPOT_NETWORK_NAME ."</h1>\n";
+    echo "<div id='head'><h1>Administration page for ". HOTSPOT_NETWORK_NAME ."</h1></div>\n";
+  echo "<div id='navLeft'>\n";
+//echo get_user_management_menu();
+echo "</div>\n";
+    echo "<div id='content'>\n";
+echo _("For now, you need to be logged in at a hotspot or to fake a login from one of the HotSpot login pages to have your administrative clearance recognised.");
     echo "<ul>\n";
     echo "<li><a href='user_log.php'>"._('User logs')."</a></li>\n";
-    //echo "<li><a href='hotspot_log.php'>"._('Hotspot logs')."</a></li>\n";
+    echo "<li><a href='user_stats.php'>"._('Cumulative user statistics')."</a></li>\n";
+    echo "<li><a href='hotspot_log.php'>"._('Hotspot logs')."</a></li>\n";
     echo "<li><a href='import_user_database.php'>"._('Import NoCat user database')."</a></li>\n";
     echo "</ul>\n";
 
