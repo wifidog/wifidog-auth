@@ -38,6 +38,7 @@ $stats = new Statistics();
 $db->ExecSql("SELECT *, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up FROM nodes WHERE node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE'  OR node_deployment_status = 'IN_TESTING' ORDER BY creation_date", $node_results, false);
 
 foreach($node_results as $node_row) {
+    $node_row['duration'] = $db->GetDurationArrayFromIntervalStr($node_row['since_last_heartbeat']);
     $node_row['num_online_users'] = $stats->getNumOnlineUsers($node_row['node_id']);
     $smarty->append("nodes", $node_row);
 }
