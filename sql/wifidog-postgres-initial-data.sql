@@ -1,6 +1,6 @@
 \connect wifidog;
 --- The default admin user, delete or change password as soon as possible.  The password is admin 
-INSERT INTO users (user_id, pass, email, account_status) VALUES ('admin', 'ISMvKXpXpadDiUoOSoAfww==', 'test_user_please@delete.me', 1, 'df16cc4b1d0975e267f3425eaac31950');
+INSERT INTO users (user_id, pass, email, account_status, validation_token, reg_date) VALUES ('admin', 'ISMvKXpXpadDiUoOSoAfww==', 'test_user_please@delete.me', 1, 'df16cc4b1d0975e267f3425eaac31950','2005-01-01 00:00:00');
 INSERT INTO administrators (user_id) VALUES ('admin');
 --
 -- PostgreSQL database dump
