@@ -9,7 +9,7 @@
 	* wifidog/include/user_management_menu.php:  Code meant to deal with non-standard ports broke the menu.  Hopefully fixed.
 	* Add alex's mising changelog entry...
 	
-2004-08-11 alexcv
+2004-08-11 Alexandre Carmel-Veilleux <acv@acv.ca>
 	* wifidog/ping/index.php: will now reply if the wifidog auth server is up. to be used by wifidog to do heartbeats.
 
 2004-08-07 Benoit Grégoire  <bock@step.polymtl.ca>
