@@ -13,9 +13,9 @@
 <!-- Tmp work around to disable the hotspot ID -->
     <td>
     {if $node_info}
-    <input type="text" value="{$node_id}" disabled><input type="hidden" name="new_node_id" value="{$node_info.id}">
+    <input type="text" value="{$node_id}" disabled><input type="hidden" name="new_node_id" value="{$node_info.node_id}">
     {else}
-    <input type="text" name="new_node_id" value="{$node_info.id}">&nbsp;{* $javascript *}
+    <input type="text" name="new_node_id" value="{$node_info.node_id}">&nbsp;{* $javascript *}
     {/if}
     </td>
   </tr>
