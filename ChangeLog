@@ -2,6 +2,7 @@
 2005-02-14 Philippe April <philippe@ilesansfil.org>
 	* wifidog/locale/gen.s: Was not working as expected, it will now get the
 	gettext from smarty properly.
+	* Updated TODO with ideas on making config better
 
 2005-01-31 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog/templates/hotspot_status.html:  Restore the number of nodes

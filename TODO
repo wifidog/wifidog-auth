@@ -1,6 +1,10 @@
 -Allow user to change his username (once a week to prevent abuse?)
 -Node manager
 -User profile
+-Make config.php a config_template.php instead, installing the auth server would
+ mean to copy config_template.php to config.php and then change the appropriate values.
+ We'd have a version number at the top of config.php and config_template.php, if they don't match
+ spit out a message to say "your config is broken!"
 
 Blacklist emails:
 simplicato.net
