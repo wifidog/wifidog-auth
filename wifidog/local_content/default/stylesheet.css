@@ -6,6 +6,7 @@ body {
   margin: 0;
   font-family: helvetica;
   font-size: 90%;
+  color: #628C53;
 }
 
 #head {
@@ -120,8 +121,12 @@ TD.spreadsheet_user { /*background-color: lightgray;*/ }
 .link     { color: blue; text-decoration: underline }
 A:link    { color: blue }
 A:active  { color: red; /* font-size: 125% */}
-A:visited { color: blue; font-size: 85% }
-	
+A:visited { font-size: 85% }
+
+#node_list table { background-color: #b1d5ba; border-collapse: collapse; }
+#node_list tr { background-color: #e1f5da; border: 1px solid; }
+#node_list tr.even { background-color: #e1f5da; }
+#node_list tr.odd { background-color: #b1d5ba; }
+#node_list td { margin: 0 0 0 0; }
+
 {/literal}
-
-
