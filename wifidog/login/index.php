@@ -43,7 +43,7 @@ if (!empty($_REQUEST['username']) && !empty($_REQUEST['password'])) {
     if ($user_info != null) {
 	    if (($user_info['account_status'] == ACCOUNT_STATUS_VALIDATION) && ($user_info['validation_grace_time_expired']=='t')) {
 	        $validation_grace_time = VALIDATION_GRACE_TIME;
-	        $smarty->assign("error",  _("Sorry, your $validation_grace_time minutes grace period to retrieve your email and validate your account has now expired. ($validation_grace_time min grace period started on $user_info[reg_date]).  You will have to connect to the internet and validate your account from another location."));
+	        $smarty->assign("error",  _("Sorry, your ").$validation_grace_time._(" minutes grace period to retrieve your email and validate your account has now expired. You will have to connect to the internet and validate your account from another location or create a new account. For help, please ") . '<a href="'.BASEPATH.'faq.php'.'">'. _("click here.") .'</a>');
 	    } else {
 	        $token = User::generateToken();
 	        if ($_SERVER['REMOTE_ADDR']) {

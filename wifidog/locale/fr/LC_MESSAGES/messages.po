@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-28 10:44-0500\n"
+"POT-Creation-Date: 2005-01-28 23:37-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,12 +38,12 @@ msgid "Re-send validation email"
 msgstr "Envoyez-moi de nouveau le courriel de validation"
 
 #: smarty.txt:7 smarty.txt:25 smarty.txt:24 smarty.txt:67 smarty.txt:62
-#: smarty.txt:60
+#: smarty.txt:60 smarty.txt:61
 msgid "Lost username"
 msgstr "Nom d'usager perdu"
 
 #: smarty.txt:8 smarty.txt:26 smarty.txt:25 smarty.txt:61 smarty.txt:57
-#: smarty.txt:64
+#: smarty.txt:64 smarty.txt:65
 msgid "Lost password"
 msgstr "Mot de passe perdu"
 
@@ -75,7 +75,7 @@ msgid "Status of all nodes of the"
 msgstr "Statut de tous les noeuds "
 
 #: smarty.txt:14 smarty.txt:10 smarty.txt:9 smarty.txt:108 smarty.txt:128
-#: smarty.txt:133
+#: smarty.txt:133 smarty.txt:120 smarty.txt:146
 msgid "network"
 msgstr " "
 
@@ -84,11 +84,12 @@ msgid "Status"
 msgstr ""
 
 #: smarty.txt:16 smarty.txt:12 smarty.txt:11 smarty.txt:109 smarty.txt:134
+#: smarty.txt:121 smarty.txt:147
 msgid "Id"
 msgstr ""
 
 #: smarty.txt:17 smarty.txt:13 smarty.txt:12 smarty.txt:110 smarty.txt:117
-#: smarty.txt:135
+#: smarty.txt:135 smarty.txt:122 smarty.txt:130 smarty.txt:148
 msgid "Name"
 msgstr "Nom"
 
@@ -96,7 +97,7 @@ msgstr "Nom"
 msgid "Local content demo"
 msgstr "D&eacute;mo de contenu local"
 
-#: smarty.txt:19 smarty.txt:15 smarty.txt:14 smarty.txt:111
+#: smarty.txt:19 smarty.txt:15 smarty.txt:14 smarty.txt:111 smarty.txt:123
 msgid "Opened on"
 msgstr "Ouvert le"
 
@@ -164,7 +165,7 @@ msgid ""
 "I am sure I want to import (Otherwise, the import will only be simulated)."
 msgstr ""
 
-#: ../admin/index.php:36 smarty.txt:98
+#: ../admin/index.php:36 smarty.txt:98 smarty.txt:110
 msgid ""
 "For now, you need to be logged in at a hotspot or to fake a login from one "
 "of the HotSpot login pages to have your administrative clearance recognised."
@@ -202,13 +203,13 @@ msgstr ""
 
 #: smarty.txt:31 smarty.txt:35 smarty.txt:34 smarty.txt:44 smarty.txt:45
 #: smarty.txt:46 smarty.txt:53 smarty.txt:54 smarty.txt:59 smarty.txt:76
-#: smarty.txt:70 smarty.txt:95
+#: smarty.txt:70 smarty.txt:95 smarty.txt:107
 msgid "Online at this hotspot"
 msgstr "En ligne &agrave; ce point d'acc&egrave;s sans-fil"
 
 #: smarty.txt:32 smarty.txt:36 smarty.txt:35 smarty.txt:45 smarty.txt:46
 #: smarty.txt:47 smarty.txt:54 smarty.txt:55 smarty.txt:60 smarty.txt:77
-#: smarty.txt:71 smarty.txt:96
+#: smarty.txt:71 smarty.txt:96 smarty.txt:108
 msgid "Go to the site I originally requested"
 msgstr "Aller au site web que j'ai demand&eacute;"
 
@@ -223,13 +224,14 @@ msgstr "Langue"
 #: smarty.txt:33 smarty.txt:32 smarty.txt:42 smarty.txt:34 smarty.txt:43
 #: smarty.txt:44 smarty.txt:36 smarty.txt:51 smarty.txt:52 smarty.txt:41
 #: smarty.txt:57 smarty.txt:35 smarty.txt:78 smarty.txt:45 smarty.txt:88
+#: smarty.txt:89
 msgid "Username (or email)"
 msgstr "Usager (ou courriel)"
 
 #: smarty.txt:34 smarty.txt:33 smarty.txt:43 smarty.txt:35 smarty.txt:44
 #: smarty.txt:45 smarty.txt:37 smarty.txt:47 smarty.txt:52 smarty.txt:53
 #: smarty.txt:42 smarty.txt:58 smarty.txt:36 smarty.txt:46 smarty.txt:79
-#: smarty.txt:55 smarty.txt:89
+#: smarty.txt:55 smarty.txt:89 smarty.txt:56 smarty.txt:90
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -307,7 +309,7 @@ msgid "HotSpot"
 msgstr "Noeud sans-fil"
 
 #: smarty.txt:35 smarty.txt:36 smarty.txt:38 smarty.txt:43 smarty.txt:37
-#: smarty.txt:47 smarty.txt:90
+#: smarty.txt:47 smarty.txt:90 smarty.txt:91
 msgid "Login"
 msgstr "Ouvrir une session"
 
@@ -354,6 +356,7 @@ msgid "Welcome to"
 msgstr "Bienvenue chez"
 
 #: smarty.txt:34 smarty.txt:39 smarty.txt:33 smarty.txt:43 smarty.txt:86
+#: smarty.txt:87
 msgid "Please log-in or"
 msgstr "Ouvrez une session ou"
 
@@ -362,43 +365,53 @@ msgid "Sign-up, it's free!"
 msgstr "Inscrivez-vous, c'est gratuit!"
 
 #: smarty.txt:39 smarty.txt:44 smarty.txt:38 smarty.txt:48 smarty.txt:91
+#: smarty.txt:92
 msgid "I already have an account, but"
 msgstr "J'ai d&eacute;j&agrave; un usager, mais"
 
 #: smarty.txt:40 smarty.txt:45 smarty.txt:39 smarty.txt:49 smarty.txt:92
+#: smarty.txt:93
 msgid "I Forgot my username"
 msgstr "J'ai oubli&eacute; mon nom d'usager"
 
 #: smarty.txt:41 smarty.txt:46 smarty.txt:40 smarty.txt:50 smarty.txt:93
+#: smarty.txt:94
 msgid "I Forgot my password"
 msgstr "J'ai oubli&eacute; mon mot de passe"
 
 #: smarty.txt:42 smarty.txt:47 smarty.txt:41 smarty.txt:51 smarty.txt:94
+#: smarty.txt:95
 msgid "Re-send the validation email"
 msgstr "Renvoyez-moi de nouveau le courriel de validation"
 
 #: smarty.txt:44 smarty.txt:49 smarty.txt:43 smarty.txt:42 smarty.txt:52
+#: smarty.txt:53
 msgid "Register a free account with"
 msgstr "Ouvrir un compte gratuit avec"
 
 #: smarty.txt:45 smarty.txt:50 smarty.txt:44 smarty.txt:43 smarty.txt:53
+#: smarty.txt:54
 msgid "Username desired"
 msgstr "Nom d'usager d&eacute;sir&eacute;"
 
 #: smarty.txt:46 smarty.txt:51 smarty.txt:45 smarty.txt:63 smarty.txt:68
 #: smarty.txt:44 smarty.txt:59 smarty.txt:54 smarty.txt:61 smarty.txt:66
+#: smarty.txt:55 smarty.txt:62 smarty.txt:67
 msgid "Your email address"
 msgstr "Votre courriel"
 
 #: smarty.txt:48 smarty.txt:53 smarty.txt:47 smarty.txt:46 smarty.txt:56
+#: smarty.txt:57
 msgid "Password (again)"
 msgstr "Mot de passe (encore)"
 
 #: smarty.txt:49 smarty.txt:54 smarty.txt:48 smarty.txt:47 smarty.txt:57
+#: smarty.txt:58
 msgid "Sign-up"
 msgstr "Souscrire"
 
 #: smarty.txt:50 smarty.txt:55 smarty.txt:49 smarty.txt:48 smarty.txt:58
+#: smarty.txt:59
 msgid ""
 "Your email address must be valid in order for your account to be activated"
 msgstr ""
@@ -420,11 +433,13 @@ msgstr " dans la base de donn&eacute;e."
 
 #: ../signup.php:47 ../include/validation.php:13
 #: ../include/mgmt_helpers.php:39 ../classes/User.php:157
+#: ../classes/User.php:167
 msgid "The user is not in validation period."
 msgstr "L'usager n'est pas en p&eacute;riode de validation."
 
 #: ../signup.php:50 ../include/validation.php:16
 #: ../include/mgmt_helpers.php:42 ../classes/User.php:160
+#: ../classes/User.php:170
 msgid "The validation token is empty."
 msgstr "Le jeton de validation est vide."
 
@@ -560,6 +575,7 @@ msgstr " dans la base de donn&eacute;e"
 
 #: smarty.txt:34 smarty.txt:53 smarty.txt:62 smarty.txt:73 smarty.txt:50
 #: smarty.txt:58 smarty.txt:67 smarty.txt:35 smarty.txt:65 smarty.txt:70
+#: smarty.txt:66 smarty.txt:71
 msgid "Your username"
 msgstr "Votre nom d'usager"
 
@@ -616,24 +632,24 @@ msgid "Internal error."
 msgstr "Erreur Interne."
 
 #: smarty.txt:52 smarty.txt:58 smarty.txt:49 smarty.txt:55 smarty.txt:69
-#: smarty.txt:75
+#: smarty.txt:75 smarty.txt:70 smarty.txt:76
 msgid "Change my password"
 msgstr "Changer mon mot de passe"
 
-#: smarty.txt:54 smarty.txt:51 smarty.txt:71
+#: smarty.txt:54 smarty.txt:51 smarty.txt:71 smarty.txt:72
 msgid "Your current password"
 msgstr "Votre mot de passe actuel"
 
 #: smarty.txt:55 smarty.txt:56 smarty.txt:52 smarty.txt:53 smarty.txt:72
-#: smarty.txt:73
+#: smarty.txt:73 smarty.txt:74
 msgid "Your new password"
 msgstr "Votre nouveau mot de passe"
 
-#: smarty.txt:57 smarty.txt:54 smarty.txt:74
+#: smarty.txt:57 smarty.txt:54 smarty.txt:74 smarty.txt:75
 msgid "(again)"
 msgstr "(encore)"
 
-#: smarty.txt:59 smarty.txt:56 smarty.txt:76
+#: smarty.txt:59 smarty.txt:56 smarty.txt:76 smarty.txt:77
 msgid ""
 "Please enter your current username, your current password, and your new "
 "password (with confirmation)"
@@ -641,21 +657,21 @@ msgstr ""
 "Veuillez entrer votre nom d'usager, votre mot de passe actuel, et votre "
 "nouveau mot de passe (avec confirmation)"
 
-#: smarty.txt:64 smarty.txt:60 smarty.txt:67
+#: smarty.txt:64 smarty.txt:60 smarty.txt:67 smarty.txt:68
 msgid "Reset my password"
 msgstr "R&eacute;initialiser mon mot de passe"
 
-#: smarty.txt:65 smarty.txt:61 smarty.txt:68
+#: smarty.txt:65 smarty.txt:61 smarty.txt:68 smarty.txt:69
 msgid "Please enter your username or email address to reset your password"
 msgstr ""
 "Veuillez entrez votre nom d'usager ou votre adresse courriel pour r&eacute;"
 "initialiser votre mot de passe"
 
-#: smarty.txt:69 smarty.txt:64 smarty.txt:62
+#: smarty.txt:69 smarty.txt:64 smarty.txt:62 smarty.txt:63
 msgid "Retrieve"
 msgstr "Rechercher"
 
-#: smarty.txt:70 smarty.txt:65 smarty.txt:63
+#: smarty.txt:70 smarty.txt:65 smarty.txt:63 smarty.txt:64
 msgid "Please enter your email address to recover your username"
 msgstr ""
 "Veuillez entrer votre adresse courriel afin de recevoir votre nom d'usager"
@@ -703,11 +719,11 @@ msgstr "Erreur interne"
 msgid "Invalid user id "
 msgstr "Nom d'usager invalide "
 
-#: ../admin/owner_sendfiles.php:74
+#: ../admin/owner_sendfiles.php:74 ../admin/owner_sendfiles.php:67
 msgid "Can not write to directory '"
 msgstr ""
 
-#: ../admin/owner_sendfiles.php:74
+#: ../admin/owner_sendfiles.php:74 ../admin/owner_sendfiles.php:67
 msgid "', ownership should be set to user "
 msgstr ""
 
@@ -715,15 +731,15 @@ msgstr ""
 msgid "{$field_id} '{$object_id_str}' could not be found in the database"
 msgstr ""
 
-#: ../classes/User.php:110
+#: ../classes/User.php:110 ../classes/User.php:114
 msgid "Could not change user's password."
 msgstr ""
 
-#: ../classes/User.php:120
+#: ../classes/User.php:120 ../classes/User.php:130
 msgid "Could not update status."
 msgstr ""
 
-#: ../classes/User.php:132
+#: ../classes/User.php:132 ../classes/User.php:142
 msgid "No users could not be found in the database"
 msgstr ""
 "Aucun usager n'a pu &ecirc;tre trouv&eacute; dans la base de donn&eacute;e"
@@ -732,15 +748,16 @@ msgstr ""
 msgid "You do not have owner privileges"
 msgstr "Vous n'avez pas les privil&egrave;ges d'administrateur"
 
-#: ../classes/Node.php:71
+#: ../classes/Node.php:71 ../classes/Node.php:97
 msgid "The id $node_id_str could not be found in the database"
 msgstr ""
 
 #: ../classes/Node.php:113 ../classes/Node.php:125 ../classes/Node.php:140
+#: ../classes/Node.php:169 ../classes/Node.php:181 ../classes/Node.php:196
 msgid "No nodes could not be found in the database"
 msgstr ""
 
-#: ../classes/Node.php:153
+#: ../classes/Node.php:153 ../classes/Node.php:207
 msgid "No deployment statues  could be found in the database"
 msgstr ""
 
@@ -772,156 +789,257 @@ msgstr "Aucun noeud sp&eacute;cifi&eacute;!"
 msgid "Please get in touch with "
 msgstr "Veuillez contacter "
 
-#: smarty.txt:77
+#: smarty.txt:77 smarty.txt:78
 msgid ""
 "You have now been granted 15 minutes of Internet access without being "
 "validated to go and activate your account."
 msgstr ""
 
-#: smarty.txt:78
+#: smarty.txt:78 smarty.txt:79
 msgid ""
 "If you fail to validate your account in 15 minutes, you will have to "
 "validate it from somewhere else."
 msgstr ""
 
-#: smarty.txt:79
+#: smarty.txt:79 smarty.txt:80
 msgid ""
 "If you do not receive an email from our validation server in the next "
 "minute, perhaps you have made a typo in your email address, you might have "
 "to create another account."
 msgstr ""
 
-#: smarty.txt:80
+#: smarty.txt:80 smarty.txt:81
 msgid "No message has been specified! (this is probably an error)"
 msgstr ""
 
-#: smarty.txt:81
+#: smarty.txt:81 smarty.txt:82
 msgid "Access denied!"
 msgstr "Acc&egrave;s refus&eacute;!"
 
-#: smarty.txt:82
+#: smarty.txt:82 smarty.txt:83
 msgid "You have failed to validate your account in 15 minutes."
 msgstr ""
 
-#: smarty.txt:83
+#: smarty.txt:83 smarty.txt:84
 msgid "Please validate your account from somewhere else or create a new one."
 msgstr ""
 
-#: smarty.txt:84
+#: smarty.txt:84 smarty.txt:85
 msgid "Welcome!"
 msgstr "Bienvenue!"
 
-#: smarty.txt:85
+#: smarty.txt:85 smarty.txt:86
 msgid ""
 "This is the 'virtual login' page you can use to get the credentials which "
 "will then give you access to management functions on the network without "
 "being at a hotspot."
 msgstr ""
 
-#: smarty.txt:87
+#: smarty.txt:87 smarty.txt:88
 msgid "sign-up."
 msgstr ""
 
-#: smarty.txt:97
+#: smarty.txt:97 smarty.txt:109
 msgid "new users"
 msgstr "nouveaux usagers"
 
-#: smarty.txt:99
+#: smarty.txt:99 smarty.txt:111
 msgid "User logs"
 msgstr "Logs des usagers"
 
-#: smarty.txt:100
+#: smarty.txt:100 smarty.txt:112
 msgid "Online Users"
 msgstr "Usagers en ligne"
 
-#: smarty.txt:101
+#: smarty.txt:101 smarty.txt:113
 msgid "Cumulative user statistics"
 msgstr "Statistiques cumulatives des usagers"
 
-#: smarty.txt:102
+#: smarty.txt:102 smarty.txt:114
 msgid "Hotspot logs"
 msgstr "Logs des noeuds"
 
-#: smarty.txt:103
+#: smarty.txt:103 smarty.txt:115
 msgid "Import NoCat user database"
 msgstr ""
 
-#: smarty.txt:104
+#: smarty.txt:104 smarty.txt:116
 msgid "Hotspot creation and configuration"
 msgstr ""
 
-#: smarty.txt:105
+#: smarty.txt:105 smarty.txt:117
 msgid "Hotspot owner administration"
 msgstr ""
 
-#: smarty.txt:106
+#: smarty.txt:106 smarty.txt:118
 msgid "Sort"
 msgstr "Trier"
 
-#: smarty.txt:107 smarty.txt:127 smarty.txt:132
+#: smarty.txt:107 smarty.txt:127 smarty.txt:132 smarty.txt:119 smarty.txt:145
 msgid "Configurations of all nodes of the"
 msgstr "Configuration de tous les noeuds de"
 
-#: smarty.txt:112 smarty.txt:130 smarty.txt:136
+#: smarty.txt:112 smarty.txt:130 smarty.txt:136 smarty.txt:124 smarty.txt:141
+#: smarty.txt:149
 msgid "Action"
 msgstr "Action"
 
-#: smarty.txt:113
+#: smarty.txt:113 smarty.txt:125
 msgid "Edit"
 msgstr "Modifier"
 
-#: smarty.txt:114
+#: smarty.txt:114 smarty.txt:126
 msgid "Owner"
 msgstr "Propri&eacute;taire"
 
-#: smarty.txt:115
+#: smarty.txt:115 smarty.txt:127
 msgid "Delete"
 msgstr "Supprimer"
 
-#: smarty.txt:116
+#: smarty.txt:116 smarty.txt:128
 msgid "Add a new node"
 msgstr "Ajouter un nouveau noeud"
 
-#: smarty.txt:118
+#: smarty.txt:118 smarty.txt:131
 msgid "RSS URL"
 msgstr ""
 
-#: smarty.txt:119
+#: smarty.txt:119 smarty.txt:132
 msgid "Homepage URL"
 msgstr "Page d'accueil"
 
-#: smarty.txt:120
+#: smarty.txt:120 smarty.txt:133
 msgid "Description"
 msgstr ""
 
-#: smarty.txt:121
+#: smarty.txt:121 smarty.txt:134
 msgid "Map URL"
 msgstr ""
 
-#: smarty.txt:122
+#: smarty.txt:122 smarty.txt:135
 msgid "Street address"
 msgstr "Adresse"
 
-#: smarty.txt:123
+#: smarty.txt:123 smarty.txt:136
 msgid "Public phone number"
 msgstr "Num&eacute;ro de t&eacute;l&eacute;phone"
 
-#: smarty.txt:124
+#: smarty.txt:124 smarty.txt:137
 msgid "Public email"
 msgstr "Courriel"
 
-#: smarty.txt:125
+#: smarty.txt:125 smarty.txt:138
 msgid "Mass transit info"
 msgstr "Transport en commun"
 
-#: smarty.txt:126
+#: smarty.txt:126 smarty.txt:139
 msgid "Node deployment status"
 msgstr "Statut de d&eacute;ploiement"
 
-#: smarty.txt:129
+#: smarty.txt:129 smarty.txt:143
 msgid "User ID"
 msgstr "Nom d'usager"
 
 #: smarty.txt:131
 msgid "Add a new node owner"
 msgstr "Ajouter un nouveau propri&eacute;taire de noeud"
+
+#: ../admin/hotspot.php:37
+msgid "Edit a hotspot"
+msgstr "Modifier un noeud"
+
+#: ../login/index.php:46
+msgid "Sorry, your "
+msgstr "D&eacute;sol&eacute;, votre p&eacute;riode de validation de "
+
+#: ../login/index.php:46
+msgid ""
+" minutes grace period to retrieve your email and validate your account has "
+"now expired. You will have to connect to the internet and validate your "
+"account from another location or create a new account. For help, please "
+msgstr " minutes afin de retrouver le courriel et valider votre compte est maintenant expir&eacute;. Vous devrez vous brancher &agrave; l'Internet et valider votre compte d'un autre endroit ou encore de cr&eacute;er un autre compte. Pour de l'aide, veuillez "
+
+#: ../login/index.php:46
+msgid "click here."
+msgstr "cliquer ici."
+
+#: smarty.txt:52
+msgid "I have trouble connecting and I would like some help"
+msgstr "J'ai des difficult&eacute; &agrave; me brancher et je voudrais de l'aide"
+
+#: smarty.txt:96
+msgid "Frequently Asked Questions"
+msgstr "Questions Fr&eacute;quemment Pos&eacute;es"
+
+#: smarty.txt:97
+msgid "Do I have to pay to get access to the Internet"
+msgstr "Dois-je payer pour avoir acc&egrave;s &agrave; l'Internet"
+
+#: smarty.txt:98
+msgid ""
+"No, Internet access is provided for free by the venue you are actually at"
+msgstr "Non, l'acc&egrave;s Internet vous est offert gratuitement par l'endroit o&ugrave; vous &ecirc;tes pr&eacute;sentement"
+
+#: smarty.txt:99
+msgid "I have failed to validate my account in x minutes"
+msgstr "J'ai &eacute;chou&eacute; la validation de mon compte en x minutes"
+
+#: smarty.txt:100
+msgid ""
+"You have been given an amount of minutes of Internet access in order to "
+"retrieve the email we sent to you and validate your free account. What you "
+"can do now is either <a href='signup.php'>create a new account</a> and then "
+"validate it properly, or get on the Internet from somewhere else (home, free "
+"Internet cafe, etc.) and validate the account you just created. If you need "
+"us to resend you the validation email, please <a href='resend_validation."
+"php'>click here</a>"
+msgstr "Vous avez &eacute;t&eacute; donn&eacute; un nombre de minutes d'acc&egrave;s Internet afin d'aller retrouver le courriel que nous vous avons envoy&eacute; et de valider votre compte gratuit. Ce que vous pouvez maintenant faire est soit de <a href='signup.php'>cr&eacute;er un nouveau compte</a> et de le valider de la bonne fa&ccedil;on, ou d'aller sur Internet &agrave; partir d'un autre endroit (de la maison, un caf&eacute; Internet gratuit, etc.) et valider le compte que vous venez de cr&eacute;er. Si vous voulez que nous vous envoyions de nouveau le courriel de validation, veuillez <a href='resend_validation.php'>cliquer ici</a>"
+
+#: smarty.txt:101
+msgid "What steps are required in order to create and validate a new account?"
+msgstr "Quelles &eacute;tapes sont requises afin de cr&eacute;er un nouveau compte et de le valider?"
+
+#: smarty.txt:102
+msgid "Here is an overview of the steps"
+msgstr "Voici un aper&ccedil;u des &eacute;tapes"
+
+#: smarty.txt:103
+msgid ""
+"Pick a username, enter your email address, and enter the password you would "
+"like. An email will be sent to you with a link you can click to validate "
+"your account"
+msgstr "Choisissez un nom d'usager, entrez votre adresse courriel et entrez le mot de passe que vous d&eacute;sirez. Un courriel vous sera envoy&eacute; avec un lien que vous pourrez cliquer afin de valider votre compte."
+
+#: smarty.txt:104
+msgid ""
+"Once the account is created, you need Internet access in order to check your "
+"email and click the validation link. In order to get temporary access to the "
+"Internet during your validation period, visit any URL (for example www."
+"google.com) to get the login page again"
+msgstr "Une fois que votre compte sera cr&eacute;&eacute;, vous aurez besoin d'acc&egrave;s Internet afin de v&eacute;rifier vos courriels et de cliquer sur le lien de validation. Afin d'obtenir un acc&egrave;s temporaire &agrave; l'Internet pendant la p&eacute;riode de validation, visitez n'importe quelle adresse (par exemple www.google.com) afin d'obtenir encore une fois une page de saisie d'usager et  mot de passe."
+
+#: smarty.txt:105
+msgid ""
+"Enter your login information. You will be given 15 minutes of Internet "
+"access, plenty of time to check your email and click on the link"
+msgstr "Entrez votre nom d'utilisateur et mot de passe. Vous b&eacute;n&eacute;ficierez de 15 minutes d'acc&egrave;s Internet, bien assez de temps pour aller v&eacute;rifier vos courriels et cliquer sur le lien"
+
+#: smarty.txt:106
+msgid "Once that last step is done, you will have full free Internet access"
+msgstr "D&egrave;s que cette derni&egrave;re &eacute;tape sera termin&eacute;e, vous aurez un acc&egrave;s complet gratuit &agrave; l'Internet"
+
+#: smarty.txt:129
+msgid "ID"
+msgstr ""
+
+#: smarty.txt:140
+msgid "Administrators"
+msgstr "Administrateurs"
+
+#: smarty.txt:142
+msgid "Give a user rights to administer this node"
+msgstr "Donner &agrave; un usager acc&egrave;s d'administrer ce noeud"
+
+#: smarty.txt:144
+msgid "Add"
+msgstr "Ajouter"
