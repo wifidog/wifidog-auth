@@ -16,36 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../user_management/index.php:347
-msgid "<h3>Inscription</h3>"
-msgstr ""
-
-#: ../user_management/index.php:352
-msgid ".HOTSPOT_NETWORK_NAME."
-msgstr ""
-
-#: ../user_management/index.php:389 ../user_management/index.php:437
-msgid "Unable to find $email in the database."
-msgstr "Impossible de trouver $email dans la base de donn&eacute;e"
-
-#: ../user_management/index.php:420
-msgid ""
-"This will destroy your previous password, you must confirm this operation."
-msgstr ""
-
-#: ../user_management/index.php:429 ../user_management/index.php:483
-#: ../user_management/index.php:646
-msgid "Unable to find $username in the database."
-msgstr "Incapable de trouver l'usager $username dans la base de donn&acute;e."
-
-#: ../user_management/index.php:492
-msgid "Wrong password for $username."
-msgstr "Mauvais mot de passe pour $username."
-
-#: ../user_management/index.php:631
-msgid "Sorry, validation token $validation_token is not valid!"
-msgstr ""
-
 #: smarty.txt:2 smarty.txt:20 smarty.txt:19
 msgid "Find more HotSpots"
 msgstr "Trouver plus de points d'acc&egrave;s sans-fil"
