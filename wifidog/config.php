@@ -6,12 +6,16 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.11  2004/09/28 20:46:40  yanik_crepeau
+ *     Added experimental (and commented) code for next developpments
+ *     regarding the language/localization issues.
+ *
  *     Revision 1.10  2004/09/28 20:44:08  yanik_crepeau
  *     Added commented hearder with Id and Log cvs keywords.
  *
  *
  */
- 
+  
 /* Used by AbstractDb */
 define('CONF_DATABASE_HOST',   'localhost');
 define('CONF_DATABASE_NAME',   'wifidog');
