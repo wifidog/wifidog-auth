@@ -22,7 +22,7 @@
    * Node configuration page
    * @author Copyright (C) 2005 Pascal Leclerc
    */
-
+define('BASEPATH','../');
 require_once 'admin_common.php';
 
 $user_id = $session->get(SESS_USERNAME_VAR);

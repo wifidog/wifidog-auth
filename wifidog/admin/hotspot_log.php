@@ -22,7 +22,7 @@
    * Network status page
    * @author Copyright (C) 2004 Benoit Grégoire
    */
-
+define('BASEPATH','../');
 require_once 'admin_common.php';
 
 $db->ExecSql("SELECT node_id, name, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up, creation_date FROM nodes ORDER BY node_id", $node_results, false);

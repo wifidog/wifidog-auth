@@ -21,7 +21,7 @@
   /**@file
    * @author Copyright (C) 2004 Philippe April.
    */
-  
+define('BASEPATH','../');
 require_once 'admin_common.php';
 
 $db->ExecSql("SELECT * FROM connections,users,nodes WHERE token_status='" . TOKEN_INUSE . "' AND users.user_id=connections.user_id AND nodes.node_id=connections.node_id ORDER BY timestamp_in DESC", $users_res);

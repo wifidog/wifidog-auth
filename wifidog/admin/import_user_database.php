@@ -21,7 +21,7 @@
   /**@file AbstractDb.php
    * @author Copyright (C) 2004 Technologies Coeus inc.
    */
-
+define('BASEPATH','../');
 require_once 'admin_common.php';
 
 /** Affiche les informations sur le fichier envoyé par le client

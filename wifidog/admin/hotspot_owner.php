@@ -24,7 +24,7 @@
    */
 
 // TODO : Permettre la recherche de users directement dans l'interface
-
+define('BASEPATH','../');
 require_once 'admin_common.php';
 
 $user_id = $session->get(SESS_USERNAME_VAR);

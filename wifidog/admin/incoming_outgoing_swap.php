@@ -22,7 +22,7 @@
    * Network status page
    * @author Copyright (C) 2004 Benoit Grégoire
    */
-
+define('BASEPATH','../');
 require_once 'admin_common.php';
 
 echo "<div id='head'><h1>". HOTSPOT_NETWORK_NAME ._(' cumulative user statistics')."</h1></div>\n";    

@@ -22,7 +22,7 @@
    * Network status page
    * @author Copyright (C) 2004 Benoit Grégoire
    */
-
+define('BASEPATH','../');
 require_once 'admin_common.php';
 
 $smarty->assign("total_users",  $stats->getNumUsers());

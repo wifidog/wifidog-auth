@@ -21,7 +21,7 @@
   /**@file
    * @author Copyright (C) 2004 Philippe April.
    */
-  
+define('BASEPATH','../');
 require_once 'admin_common.php';
 
 $total = array();
