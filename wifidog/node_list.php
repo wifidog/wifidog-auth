@@ -30,12 +30,12 @@ require_once (BASEPATH.'include/user_management_menu.php');
 
 $style = new Style();
 echo $style->GetHeader(HOTSPOT_NETWORK_NAME.' node list');
-    echo "<div class=content>\n";
-
-
-	
-    echo "<h1>". HOTSPOT_NETWORK_NAME ." node list</h1>\n";
-
+    echo "<div id='head'><h1>". HOTSPOT_NETWORK_NAME ." node list</h1></div>\n";    
+echo "<div id='navLeft'>\n";
+echo get_user_management_menu();
+echo "</div>\n";
+  
+echo "<div id='content'>\n";
 
 $db->ExecSql("SELECT node_id, name, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip,
  CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up, creation_date FROM nodes ORDER BY node_id",$node_results, false);
@@ -74,8 +74,6 @@ echo "<table class='spreadsheet'>\n";
 echo "</table>\n";
 
     echo "</div>\n";	
-echo "<div id='navLeft'>\n";
-echo get_user_management_menu();
-echo "</div>\n";
+
 echo $style->GetFooter();
 ?>

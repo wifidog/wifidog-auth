@@ -1,20 +1,4 @@
-
-    {include file=$header_file}
-      
-      
-      
-      <div class='content'>
-      <p>Site I originally requested: <a href='{$original_url_requested}'>{$original_url_requested}</a></p>
-	<p><a href='{$hotspot_network_url}'><img src='{$network_logo_banner_url}' alt='{$hotspot_network_name} logo'></a></p>
-	<p>Content from "<a href='{$hotspot_network_url}'>{$hotspot_network_name}</a>"</p>
-	{$network_rss_html}
-      </div>
-      <div class='content'>
-	<p><img src='{$hotspot_logo_banner_url}' alt='{$hotspot_name} logo'>
-	<p>Content from "{$hotspot_name}"</p>
-	{$hotspot_rss_html}
-      </div>
-      
+{include file=$header_file}
       <div id='navLeft'>
 	<p>Online at this hotspot:</p>
 	<ul>
@@ -24,6 +8,25 @@
       </ul>
 {$user_management_menu}
       </div>
+      <div id='head'>
+      
+      </div>
+      <div id='login'>
+      <p>Go to the site I originally requested: <a href='{$original_url_requested}'>{$original_url_requested}</a></p>
+      </div>
+      <div id='content'>
+      
+	<p><a href='{$hotspot_network_url}'><img src='{$network_logo_banner_url}' alt='{$hotspot_network_name} logo'></a></p>
+	<p>Content from "<a href='{$hotspot_network_url}'>{$hotspot_network_name}</a>"</p>
+	{$network_rss_html}
+      </div>
+      <div id='content'>
+	<p><img src='{$hotspot_logo_banner_url}' alt='{$hotspot_name} logo'>
+	<p>Content from "{$hotspot_name}"</p>
+	{$hotspot_rss_html}
+      </div>
+      
+
       {include file=$footer_file}
       
       

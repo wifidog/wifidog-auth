@@ -1,48 +1,41 @@
-    {include file=$header_file}
-      <div class='content'>
-	<h1>Greetings! Welcome to {$hotspot_name}, a {$hotspot_network_name} free HotSpot<br clear=all>
-	 <table width=100%>
-		<tr>
-		<th align=center><img src='{$hotspot_logo_url}' alt='{$hotspot_name} logo'></th>
-	  	<th align=center><img src='{$network_logo_url}' alt='{$hotspot_network_name} logo'></th>
-		</tr>
-	</table>
-	  
+    {include file=$header_file title="WiFiDog login page"}
+      
+
+      <div id='head'>
+	<h1>Greetings! Welcome to {$hotspot_name}, a {$hotspot_network_name} free HotSpot
 	</h1>
 	</div>
-      
-      <div class='content'>	
-	<form method="post">
+
+	  
+
+      <div id="login">
+      	<form method="post">
 	  <input type="hidden" name="gw_address" value="{$gw_address}">
 	  <input type="hidden" name="gw_port" value="{$gw_port}">
 	  <input type="hidden" name="gw_id" value="{$gw_id}">
-	  <p class=warning>{$login_failed_message}</p>
-	<table>
-	  <tr>
-	    <td>Username (or email):</td>
-	    <td><input type="text" name="user" value="{$previous_username}"></td>
-	    <td rowspan=3><img src='{$wifidog_logo_url}' alt='WifiDog logo'></td>
-	  </tr>
-	  <tr>
-	    <td>Password:</td>
-	    <td><input type="password" name="pass" value="{$previous_password}"></td>
-	  </tr>
-	  <tr>
-	    <td></td>
-	    <td><input type="submit" value='Login'></td>
-</tr>
-	</table>
-	<p>Accounts on {$hotspot_network_name} are <emp>totally free</emp>, use the left menu to create a new one or recover a lost username or password.</p>
-      </form>
+	  <p><span class=warning>{$login_failed_message}</span>
+Username (or email):
+	    <input type="text" name="user" size='12' value="{$previous_username}">
+	    Password:<input type="password" name="pass" size='12' value="{$previous_password}">
+	    <input type="submit" value='Login'></p>
+            </form>
       </div>
-      <div class='content'>
+      
+                  <div id='navLeft'>
+{$user_management_menu}
+      </div>
+      <div id="content">
+
+<div class="logos">
+<img src='{$network_logo_url}' alt='{$hotspot_network_name} logo' /><br />
+<img src='{$wifidog_logo_url}' alt='WifiDog logo' />	
+</div>
+<img src='{$hotspot_logo_url}' alt='{$hotspot_name} logo' />
+
 	<h2>Announcements</h2>
 	  <dl>
 	  <dt>31/9/2004: {$hotspot_network_name} is currently transitioning from NoCat to the brand new Wifidog captive portal.  Please note that your previous username and password should still work.</dt> 
 	  </dl>
-      </div>
+</div>
 
-      <div id='navLeft'>
-{$user_management_menu}
-      </div>
       {include file=$footer_file}

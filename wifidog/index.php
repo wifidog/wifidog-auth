@@ -28,7 +28,8 @@ require_once BASEPATH.'classes/Style.php';
 
 $style = new Style();
 echo $style->GetHeader(HOTSPOT_NETWORK_NAME.' authentication server');
-    echo "<div class=content>\n";
+    echo "<div id='head'><h1>Wifidog authentication server for ". HOTSPOT_NETWORK_NAME ."</h1></div>\n";
+    echo "<div id='content'>\n";
 
 $row = null;
 //$db->ExecSqlUniqueRes("SELECT COUNT(user_id), account_status FROM users GROUP BY account_status", $row, true);
@@ -40,9 +41,8 @@ $db->ExecSqlUniqueRes("SELECT COUNT(user_id) FROM ( SELECT DISTINCT user_id FROM
 	     ,$row, false);
 $num_online_users=$row['count'];
 
-	
-    echo "<h1>Wifidog authentication server for ". HOTSPOT_NETWORK_NAME ."</h1>\n";
-echo "<p>"._("The network currently has ").$num_valid_users._(" valid users.")." ".$num_online_users._(" user are currently online")."</p>\n";
+
+echo "<p>"._("The network currently has ").$num_valid_users._(" valid users.")." ".$num_online_users._(" user(s) are currently online")."</p>\n";
     echo "<ul>\n";
     echo "<li><a href='node_list.php'>List network nodes</a></li>\n";
     echo "<li><a href='./user_management/index.php'>Personal user management</a></li>\n";

@@ -39,15 +39,15 @@ function PrintUploadedFileInfo($form_name_file)
   echo "Nom du fichier temporaire sur le serveur: ".$_FILES[$form_name_file]['tmp_name']."<br>";
   echo "Erreurs au cours du transfert: ".$_FILES[$form_name_file]['error']."<br>";
 }
-    echo "<div class=content>\n";	
 
 $style = new Style();
 echo $style->GetHeader(HOTSPOT_NETWORK_NAME.' Import NoCat passwd file');
 
+    echo "<div id='head'><h1>"._('NoCat passwd file (user database) import')."</h1></div>\n";
+    echo "<div id='content'>\n";	
+
 if(empty($_REQUEST['action']))
   {
-
-    echo "<h1>"._('NoCat passwd file (user database) import')."</h1>\n";
     echo "<form name=upload_file enctype='multipart/form-data' action='' method='post'>\n";
     
     echo "<p>"._('Please select the NoCat passwd file you want to import.')."</p>\n";
@@ -197,7 +197,7 @@ else if ($_REQUEST['action'] == 'upload_file')
 	}
 	
 
-	echo "<h1>"._('Report')."</h1>\n";
+	echo "<h2>"._('Report')."</h2>\n";
 	/* List rejected users */
 	echo "<table class='spreadsheet'>\n";
 	$count_reject=0;
@@ -237,7 +237,7 @@ else if ($_REQUEST['action'] == 'upload_file')
 	echo "<tr class='spreadsheet'><th class='spreadsheet'>Username</th><th class='spreadsheet'>Original username</th><th class='spreadsheet'>Changed because of user</th></tr></thead\n";
 	echo "</table>\n";
 	
-	echo "<h2>$count_success user(s) successfully imported ($count_mangled of them had their username modified), $count_reject user(s)rejected</h1>\n";
+	echo "<h2>$count_success user(s) successfully imported ($count_mangled of them had their username modified), $count_reject user(s)rejected</h2>\n";
       }
   }
         echo "</div>\n";

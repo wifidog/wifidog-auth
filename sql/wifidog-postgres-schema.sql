@@ -110,8 +110,8 @@ CREATE TABLE users (
 --
 
 CREATE TABLE node_owners (
-    node_id information_schema.cardinal_number NOT NULL,
-    user_id information_schema.cardinal_number NOT NULL
+    node_id character varying(32) NOT NULL,
+    user_id character varying(45) NOT NULL
 ) WITHOUT OIDS;
 
 
@@ -177,12 +177,12 @@ ALTER TABLE ONLY users
 
 
 --
--- TOC entry 19 (OID 300990)
--- Name: node_owner_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
+-- TOC entry 19 (OID 310107)
+-- Name: node_owners_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
 --
 
 ALTER TABLE ONLY node_owners
-    ADD CONSTRAINT node_owner_pkey PRIMARY KEY (node_id, user_id);
+    ADD CONSTRAINT node_owners_pkey PRIMARY KEY (node_id, user_id);
 
 
 --
@@ -222,21 +222,21 @@ ALTER TABLE ONLY connections
 
 
 --
--- TOC entry 26 (OID 300993)
--- Name: fk_nodes; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY node_owners
-    ADD CONSTRAINT fk_nodes FOREIGN KEY (node_id) REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- TOC entry 27 (OID 300997)
+-- TOC entry 26 (OID 310097)
 -- Name: fk_users; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
 ALTER TABLE ONLY node_owners
     ADD CONSTRAINT fk_users FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 27 (OID 310101)
+-- Name: fk_nodes; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY node_owners
+    ADD CONSTRAINT fk_nodes FOREIGN KEY (node_id) REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

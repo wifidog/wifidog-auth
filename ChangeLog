@@ -1,4 +1,8 @@
 # $Header$
+2004-09-27 Benoit Grégoire  <bock@step.polymtl.ca>
+	* sql/wifidog-postgres-schema.sql:  Fix layout for the node_owners table
+	* Begin integrating Patrick Tanguay's new layout and generate the css dynamically to allow for background images.
+
 2004-09-22 Benoit Grégoire  <bock@step.polymtl.ca>
 	* portal/index.php:  Fix users appearing online at every hotspot.
 	* wifidog/classes/Style.php, wifidog/login/index.php:  Fix some potential cache problems and help with validation.

@@ -338,6 +338,9 @@ function send_lost_password_email($email, $new_passord)
 $style = new Style();
 echo $style->GetHeader(HOTSPOT_NETWORK_NAME.' New account registration');
 $showform=true;
+echo "<div id='navLeft'>\n";
+echo get_user_management_menu();
+echo "</div>\n";
 echo "<div class='content'>\n";
 
 if(empty($_REQUEST['action']))
@@ -642,9 +645,6 @@ $update_successful = $db->ExecSqlUpdate("UPDATE users  SET pass='$password_hash'
 	  }
       }//end action==send_validation_email
   }
-echo "</div>\n";
-echo "<div id='navLeft'>\n";
-echo get_user_management_menu();
 echo "</div>\n";
 echo $style->GetFooter();
 ?>

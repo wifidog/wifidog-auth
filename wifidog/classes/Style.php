@@ -27,29 +27,23 @@ Header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); # Past date
 Header("Pragma: no-cache");
 Header("Content-Type: text/html; charset=iso-8859-1");
 require_once BASEPATH.'include/common.php';
+require_once BASEPATH.'classes/SmartyWifidog.php';
 
 /** Style contains functions managing headers, footers, stylesheet, etc.
  */
 class Style
 {
   /**Display HTML headers
-   * @param $titre Title of the page
+   * @param $title Title of the page
    * @param $stylesheet stylesheet to include.
    * @param $prevent_cache Should the browsers and proxies be prevented from caching this content?
    * @return string to display in the page.
    */
-  function GetHeader($titre)
+  function GetHeader($title)
   {
-    $retval = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">'."\n";
-    $retval.= "<html>\n";
-    $retval.= "<head>\n";
-    $retval.= "<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'>\n";
-    $retval.= "<meta http-equiv='Pragma' CONTENT='no-cache'>\n";
-    $retval.= "<meta http-equiv='Expires' CONTENT='-1'>\n";
-    $retval.= "<link rel='stylesheet' href='".STYLESHEET_URL."' type='text/css'>\n";
-    $retval.= "<title>$titre</title>\n";
-    $retval.= "</head>\n";
-    $retval.= "<body>\n";
+    $smarty = new SmartyWifidog;
+    $smarty->assign('title',$title);
+    $retval = $smarty->fetch(DEFAULT_CONTENT_SMARTY_PATH.PAGE_HEADER_NAME);
     global $starttime;
     $starttime = microtime();
 

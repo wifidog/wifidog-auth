@@ -71,7 +71,14 @@ class SmartyWifidog extends Smarty {
 	    $this->assign('footer_file',DEFAULT_CONTENT_SMARTY_PATH.PAGE_FOOTER_NAME);
 	  }	
 	
-	$this->assign('stylesheet_url',STYLESHEET_URL);
+	if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.STYLESHEET_NAME))
+	  {
+	    $this->assign('stylesheet_file',NODE_CONTENT_SMARTY_PATH.STYLESHEET_NAME);
+	  }
+	else
+	  {
+	    $this->assign('stylesheet_file',DEFAULT_CONTENT_SMARTY_PATH.STYLESHEET_NAME);
+	  }
 
 /* Common content */
 	$this->assign('common_content_url',COMMON_CONTENT_URL);	/* For html href and src */
