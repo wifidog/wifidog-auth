@@ -1,6 +1,7 @@
 2005-04-01 Philippe April <philippe@ilesansfil.org>
 	* Fixed missing parenthesis in classes/User.php
 	* Removed unused files
+	* fixed schema_validate.php (typos)
 
 2005-04-01 Francois Proulx  <francois.proulx@gmail.com>
 	* EVERYTHING IS NOW UTF-8 YOU MUST EDIT YOUR FILES WITH AN UTF-8 COMPLIANT EDITOR

@@ -163,10 +163,10 @@ function update_schema()
 					$new_schema_version = 5;
 					echo "<h1>Recoding database from ISO-8859-1 to UTF-8</h1>";
 					echo "<h1>YOU MUST EXECUTE THESE COMMANDS IN COMMAND_LINE</h1>";
-					echo "pg_dump wifidog - U wifidog > wifidog_dump.sql<br>";
-					echo "dropdb wifidog - U wifidog <br>";
-					echo "createdb--encoding = UNICODE--template = template0 - U wifidog wifidog <br>";
-					echo "psql wifidog - U wifidog < wifidog_dump.sql<br><br>";
+					echo "pg_dump wifidog -U wifidog > wifidog_dump.sql<br>";
+					echo "dropdb wifidog -U wifidog <br>";
+					echo "createdb --encoding=UNICODE --template = template0 -U wifidog wifidog<br>";
+					echo "psql wifidog -U wifidog < wifidog_dump.sql<br><br>";
 					echo "THEN use psql to modify to schema_version manually<br><br>";
 					echo "UPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version'<p>";
 					exit;
