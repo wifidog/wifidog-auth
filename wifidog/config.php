@@ -17,16 +17,7 @@ define("VALIDATION_EMAIL_FROM_ADDRESS", 'validation@yourdomain.org');
 define("VALIDATION_EMAIL_SUBJECT", HOTSPOT_NETWORK_NAME.' new user validation');
 define("LOST_PASSWORD_EMAIL_SUBJECT", HOTSPOT_NETWORK_NAME.' new password request');
 define("LOST_USERNAME_EMAIL_SUBJECT", HOTSPOT_NETWORK_NAME.' lost username request');
-
-if($_SERVER['SERVER_PORT']==80)
-  {
-    define("BASE_URL_PATH",  'http://' . $_SERVER['SERVER_NAME'] . SYSTEM_PATH);
-  } 
-else
-  {
-   define("BASE_URL_PATH",  'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . SYSTEM_PATH);
-  }
-
+define("BASE_URL_PATH",  'http://' . $_SERVER['HTTP_HOST'] . SYSTEM_PATH);
 define('RSS_SUPPORT', true); //If true, MAGPIERSS must be installed in MAGPIE_REL_PATH
 
 /***** You should normally not have to edit anything below this ******/
