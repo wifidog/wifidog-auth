@@ -81,10 +81,7 @@ if (!empty($_REQUEST['username']) && !empty($_REQUEST['password'])) {
 }
 
 if ($login_successful == false) {
-    $smarty->assign("lang_menu", "templates/lang_menu.html");
-    $smarty->assign("user_management_menu", "templates/user_management_menu.html");
-    $smarty->assign('username', $_REQUEST["username"]);
-    $smarty->assign('login_failed_message', $login_failed_message);
+    isset($_REQUEST["username"]) && $smarty->assign('username', $_REQUEST["username"]);
     isset($_REQUEST["gw_address"]) && $smarty->assign('gw_address', $_REQUEST['gw_address']);
     isset($_REQUEST["gw_port"]) && $smarty->assign('gw_port', $_REQUEST['gw_port']);
     isset($_REQUEST["gw_id"]) && $smarty->assign('gw_id', $_REQUEST['gw_id']);
