@@ -1,4 +1,4 @@
-for i in *_*; do
+for i in "fr"; do
     echo > smarty.txt
     find ../templates -name "*.html" -exec ./gensmarty.pl {} >> smarty.txt \;
     find ../local_content -name "*.html" -exec ./gensmarty.pl {} >> smarty.txt \;
