@@ -113,6 +113,13 @@ function convert_nocat_password_hash($hash)
  return $hash . '==';
 }
 
+function iso8601_date($unix_timestamp) {
+   $tzd = date('O',$unix_timestamp);
+   $tzd = substr(chunk_split($tzd, 3, ':'),0,6);
+   $date = date('Y-m-d\TH:i:s', $unix_timestamp) . $tzd;
+   return $date; 
+}
+
 /** Cleanup dangling tokens and connections from the database, left if a gateway crashed, etc. */
 function garbage_collect()
 {
@@ -120,21 +127,23 @@ function garbage_collect()
 
   // 10 minutes
   $expiration = time() - 60*10;
-  $db -> ExecSqlUpdate ("UPDATE connections SET token_status='" . TOKEN_USED . "' WHERE UNIX_TIMESTAMP(last_updated) < $expiration");
+  $expiration=iso8601_date($expiration);
+  $db -> ExecSqlUpdate ("UPDATE connections SET token_status='" . TOKEN_USED . "' WHERE last_updated < '$expiration' AND token_status = '".TOKEN_INUSE."'", false);
 
-
-  $db -> ExecSql("SELECT user_id FROM users WHERE online_status='" . ONLINE_STATUS_ONLINE . "'", $users);
+/* Not needed anymore
+  $db -> ExecSql("SELECT user_id FROM users WHERE online_status='" . ONLINE_STATUS_ONLINE . "'", $users, true);
   if($users!=null)
     {
       foreach ($users as $user)
       {
-	$db -> ExecSqlUniqueRes("SELECT COUNT(*) FROM connections WHERE user_id='{$user['user_id']}' AND token_status='" . TOKEN_INUSE . "'",$count_row, false);
+	$db -> ExecSqlUniqueRes("SELECT COUNT(*) FROM connections WHERE user_id='{$user['user_id']}' AND token_status='" . TOKEN_INUSE . "'",$count_row, true);
 	if ($count_row['COUNT(*)'] != 1)
 	  {
 	    $db -> ExecSqlUpdate("UPDATE users SET online_status='" . ONLINE_STATUS_OFFLINE . "' WHERE user_id='{$user['user_id']}'", false);
 	  }
       }
     }
+*/
 }
 
 /** Get the url from the local content_specific folder if the file exists, and from the default content folder otherwise */

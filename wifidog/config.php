@@ -3,7 +3,7 @@
 define('CONF_DATABASE_HOST',   'localhost');
 define('CONF_DATABASE_NAME',   'wifidog');
 define('CONF_DATABASE_USER',   'wifidog');
-define('CONF_DATABASE_PASSWORD',   '');
+define('CONF_DATABASE_PASSWORD',   'wifidogtest');
 
 /*************************** Common setup option.  Adjust to suit your environment *******************************/
 
@@ -29,7 +29,7 @@ define('DBMS_MYSQL','AbstractDbMySql.php');
 define('DBMS_POSTGRES','AbstractDbPostgres.php');
 
 /** Defines which Database management software you want to use */
-define('CONF_DBMS',DBMS_MYSQL);
+define('CONF_DBMS',DBMS_POSTGRES);
 
 /***** You should normally not have to edit anything below this ******/
 define('MAGPIE_REL_PATH',  'lib/magpie/');

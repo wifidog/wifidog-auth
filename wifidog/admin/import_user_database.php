@@ -172,7 +172,7 @@ else if ($_REQUEST['action'] == 'upload_file')
 	    {
 	      $status = ACCOUNT_STATUS_ALLOWED;
 	      $token = gentoken();
-	      $reg_date = time();
+	      $reg_date = iso8601_date(time());
 	      $password_hash = $db->EscapeString($user['passwd_hash']);
 	      $username =  $db->EscapeString($username);
 	      $email =  $db->EscapeString($user['email']);

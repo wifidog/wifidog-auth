@@ -39,8 +39,8 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['pass']))
  $previous_password = $_REQUEST['pass'];
     $user = $db->EscapeString($_REQUEST['user']);
     $password_hash = get_password_hash($_REQUEST['pass']);
-    $db->ExecSqlUniqueRes("SELECT * FROM users WHERE user_id='$user' OR email='$user' AND pass='$password_hash'", $user_info, false);
-    
+    $db->ExecSqlUniqueRes("SELECT * FROM users WHERE (user_id='$user' OR email='$user') AND pass='$password_hash'", $user_info, false);
+
     if ($user_info != null)
       {
 	$token = gentoken();
@@ -52,7 +52,7 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['pass']))
 	  {
 	    $node_ip = $db->EscapeString($_SERVER['REMOTE_ADDR']);
 	  }
-	$db->ExecSqlUpdate("INSERT INTO connections (user_id, token, token_status, timestamp_in, node_id, node_ip) VALUES ('{$user_info['user_id']}', '$token', '" . TOKEN_UNUSED . "', NOW(), '$node_id', '$node_ip')");
+	$db->ExecSqlUpdate("INSERT INTO connections (user_id, token, token_status, timestamp_in, node_id, node_ip, last_updated) VALUES ('{$user_info['user_id']}', '$token', '" . TOKEN_UNUSED . "', NOW(), '$node_id', '$node_ip', NOW())");
 	
 	$login_successfull=true;
 	header("Location: http://" . $_REQUEST['gw_address'] . ":" . $_REQUEST['gw_port'] . "/wifidog/auth?token=$token");
@@ -67,7 +67,7 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['pass']))
 	  }
 	else
 	  {
-	    $login_failed_message = _('Incorrect password');
+	    $login_failed_message = _('Incorrect password (Maybe you have CAPS LOCK on?)');
 	  }
       }
   }

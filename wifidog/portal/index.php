@@ -91,14 +91,13 @@ else
     $hotspot_rss_url =  $node_info['rss_url'];
   }
 
+/* Find out who is online */
 $db->ExecSql("SELECT users.user_id FROM users,connections " .
 	     "WHERE connections.token_status='" . TOKEN_INUSE . "' " .
-	     "AND users.user_id=connections.user_id " .
-	     "AND users.online_status='" . ONLINE_STATUS_ONLINE . "'"
+	     "AND users.user_id=connections.user_id "
 	     ,$users, false);
 if($users!=null)
   {
-    
     foreach ($users as $user_info)
     {
       $smarty->append("online_users", $user_info);

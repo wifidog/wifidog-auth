@@ -19,89 +19,119 @@
    * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
    *                                                                  *
    \********************************************************************/
-  /**@file
+  /**@file index.php
+   * This is the main auth handler, be very carefull while editing this file.
    * @author Copyright (C) 2004 Benoit Grégoire et Philippe April
    */
 define('BASEPATH','../');
 require_once BASEPATH.'include/common.php';
 
-$auth_response = 0;
-$db->ExecSqlUniqueRes("SELECT * FROM users,connections WHERE users.user_id=connections.user_id AND connections.token='{$_REQUEST['token']}' LIMIT 1", $info, false);
+$auth_response = ACCOUNT_STATUS_DENIED;
+$auth_message = '';
+$token = $db->EscapeString($_REQUEST['token']);
+$db->ExecSqlUniqueRes("SELECT * FROM users,connections WHERE users.user_id=connections.user_id AND connections.token='$token'", $info, false);
 if ($info != null)
   {
-    switch($_REQUEST['stage'])
+    if ($_REQUEST['stage']== STAGE_LOGIN)
       {
-      case STAGE_LOGIN:
 	if ($info['token_status'] == TOKEN_UNUSED) 
 	  {
 	    $auth_response = $info['account_status'];
-
-	    /* Logging in implies that all other tokens should expire */
-	    $sql = '';
-	    $sql .= "UPDATE connections SET " .
-	      "timestamp_out=NOW()," .
-	      "token_status='" . TOKEN_USED . "' " .
-	      "WHERE user_id = '{$info['user_id']}' " .
-	      "AND token_status='" . TOKEN_INUSE . "';\n";
-	    $db->ExecSqlUpdate($sql, false);
+	    /* Login the user */
+	    $mac = $db->EscapeString($_REQUEST['mac']);
+	    $ip = $db->EscapeString($_REQUEST['ip']);
 	    $sql = "UPDATE connections SET " .
 	      "token_status='" . TOKEN_INUSE . "'," .
-	      "user_mac='{$_REQUEST['mac']}'," .
-	      "user_ip='{$_REQUEST['ip']}' " .
-	      "WHERE conn_id='{$info['conn_id']}' LIMIT 1;\n";
-	    	    $db->ExecSqlUpdate($sql, false);
-	    $sql = "UPDATE users SET " .
-	      "online_status='" . ONLINE_STATUS_ONLINE . "' " .
-	      "WHERE user_id='{$info['user_id']}' LIMIT 1;\n";
+	      "user_mac='$mac'," .
+	      "user_ip='$ip'," .
+	      "last_updated=NOW()" .
+	      "WHERE conn_id='{$info['conn_id']}';\n";
+	    $db->ExecSqlUpdate($sql, false);
+	    
+	    /* Logging in with a new token implies that all other active tokens should expire */
+	    $sql = "UPDATE connections SET " .
+	      "timestamp_out=NOW(), token_status='" . TOKEN_USED . "' " .
+	      "WHERE user_id = '{$info['user_id']}' AND token_status='" . TOKEN_INUSE . "' AND token!='$token';\n";
+	    $db->ExecSqlUpdate($sql, false);
+	    /* Delete all unused tokens for this user, so we don't fill the database with them */
+	    $sql = "DELETE FROM connections "
+	      . "WHERE token_status='" . TOKEN_UNUSED . "' AND user_id = '{$info['user_id']}';\n";
 	    $db->ExecSqlUpdate($sql, false);
 	  }
-	break;
-
-      case STAGE_LOGOUT:
-	$sql = '';
-	$sql .= "UPDATE connections SET " .
-	  "timestamp_out=NOW()," .
-	  "token_status='" . TOKEN_USED . "' " .
-	  "WHERE conn_id='{$info['conn_id']}' LIMIT 1;\n";
+	else
+	  {
+	    $auth_message .= "| Tried to login with a token that wasn't TOKEN_UNUSED. ";
+	  }
+      }
+    else if($_REQUEST['stage']==STAGE_LOGOUT || $_REQUEST['stage']==STAGE_COUNTERS)
+      {
+	if($_REQUEST['stage']==STAGE_LOGOUT)
+	  {
+	    $db->ExecSqlUpdate("UPDATE connections SET " .
+			       "timestamp_out=NOW()," .
+			       "token_status='" . TOKEN_USED . "' " .
+			       "WHERE conn_id='{$info['conn_id']}';\n");
+	    $auth_message .= "| User is now logged out. ";
+	  }
 	
-	$sql .= "UPDATE users SET " .
-	  "online_status='" . ONLINE_STATUS_OFFLINE . "'" .
-	  "WHERE user_id='{$info['user_id']}' LIMIT 1;\n";
-	$db->ExecSqlUpdate($sql);
-	break;
+	if( $_REQUEST['stage']==STAGE_COUNTERS)
+	  {
+	    if ($info['token_status'] == TOKEN_INUSE)
+	      {
+		/* This is for the 15 minutes validation period */
+		if (($info['account_status'] == ACCOUNT_STATUS_VALIDATION) && (time() >= (strtotime($info['reg_date']) + (60*15)))) 
+		  {
+		    $auth_response = ACCOUNT_STATUS_VALIDATION_FAILED;
+		    $db->ExecSqlUpdate("UPDATE users SET account_status='".ACCOUNT_STATUS_VALIDATION_FAILED."' WHERE user_id='{$info['user_id']}'");
+		    $auth_message .= "| The validation period has now expired. ";
+		  }
+		else
+		  {
+		    $auth_response = $info['account_status'];
+		  }
+	      }
+
+	  }
 	
-      case STAGE_COUNTERS:
-	if ($info['token_status'] == TOKEN_INUSE) {
-	  $auth_response = $info['account_status'];
+	if (!empty($_REQUEST['incoming']) && !empty($_REQUEST['outgoing']))
+	  {
+	    $incoming = $db->EscapeString($_REQUEST['incoming']);
+	    $outgoing = $db->EscapeString($_REQUEST['outgoing']);
 
-	  /* This is for the 15 minutes validation period */
-	  if (($info['account_status'] == ACCOUNT_STATUS_VALIDATION) && (time() >= ($info['reg_date'] + (60*15)))) 
-	    {
-	      $info['account_status'] = ACCOUNT_STATUS_VALIDATION_FAILED;
-	      $db->ExecSqlUpdate("UPDATE users SET account_status='{$info['account_status']}' WHERE user_id='{$info['user_id']}'");
-	    }
+	    if (($incoming > $info['incoming']) ||
+		($outgoing > $info['outgoing'])) 
+	      {
+		$db->ExecSqlUpdate("UPDATE connections SET " .
+				   "incoming='$incoming'," .
+				   "outgoing='$outgoing'," .
+				   "last_updated=NOW() " .
+				   "WHERE conn_id='{$info['conn_id']}'"
+				   );
+		    $auth_message .= "| Updated counters. ";
+	      }
+	    else
+	      {
+		    $auth_message .= "| Warning:  Incoming or outgoing counter is smaller than what is stored in the database; counters not updated. ";
 
-	  if ($_REQUEST['incoming'] && $_REQUEST['outgoing'])
-	    {
-	      if (($_REQUEST['incoming'] > $info['incoming']) ||
-		  ($_REQUEST['outgoing'] > $info['outgoing'])) 
-		{
-		  $db->ExecSqlUpdate("UPDATE connections SET " .
-				     "incoming='{$_REQUEST['incoming']}'," .
-				     "outgoing='{$_REQUEST['outgoing']}' " .
-				     "WHERE conn_id='{$info['conn_id']}' LIMIT 1"
-				     );
-		}
-	    }
-	}
-
-	break;
-
-      default:
-	echo "Unknown stage";
-	break;
-      }// End switch
+	      }
+	  }
+	else
+	  {
+	    $auth_message .= "| Incoming or outgoing counter is missing; counters not updated. ";
+	  }
+      }
+    else
+      {
+	$auth_message .= "| Error: Unknown stage. ";
+	$auth_response = ACCOUNT_STATUS_ERROR;
+      }
+  }
+else
+  {
+    $auth_message .= "| Error: couldn't find the requested token. ";
+    $auth_response = ACCOUNT_STATUS_ERROR;
   }
 
 echo "Auth: $auth_response\n";
+echo "Messages: $auth_message\n"
 ?>

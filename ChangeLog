@@ -1,4 +1,14 @@
 # $Header$
+2004-08-28 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Fix big gaping security hole in login page (password would be ignored if the username was used to login)
+	* PostgreSql port
+	* Change the method to determine who is online
+	* Stop keeping unused token once user successfully logs in.
+	* Fix missing update of token update date.
+	* Counters wouldn't get updated for stage=LOGOUT
+	* wifidog/auth/index.php:  Added a Messages: response in addition to Auth: so we can know what the hell the server is up to.  Currently you need to run wifidog in debug level 7 to see it. That message should be parsed so it is visible in debug level 6.
+	* wifidog/auth/index.php:   Fix code injection vulnerability.
+	
 2004-08-27 Benoit Grégoire  <bock@step.polymtl.ca>
 	* SSL support and RSS improvement
 	* Last commit tested with mysql support
