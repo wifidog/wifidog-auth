@@ -63,7 +63,7 @@ The Team";
                 $from = "From: " . VALIDATION_EMAIL_FROM_ADDRESS;
 
                 mail($email, $subject, $body, $from);
-                $smarty->assign("message", _("An email with confirmation instructions was sent to your email address.  Your account has been granted 15 minutes of access to retrieve your email and validate your account.  You may now open a browser window and go to any remote Internet address to obtain the login page."));
+                $smarty->append("message", _("An email with confirmation instructions was sent to your email address.  Your account has been granted 15 minutes of access to retrieve your email and validate your account.  You may now open a browser window and go to any remote Internet address to obtain the login page."));
                 $smarty->display("templates/validate.html");
                 exit;
             }

@@ -20,10 +20,13 @@
         <h3>{"Please log-in or"|_}<br><a href="{$smarty.const.BASE_SSL_PATH}signup.php">{"Sign-up, it's free!"|_}</a></h3>
 
         <form name="login_form">
+	<input type="hidden" name="gw_address" value="{$gw_address}">
+	<input type="hidden" name="gw_port" value="{$gw_port}">
+	<input type="hidden" name="gw_id" value="{$gw_id}">
         <table>
         <tr>
             <td>{"Username (or email)"|_}:</td>
-            <td><input type="text" name="username" size="20"></td>
+            <td><input type="text" name="username" value="{$username}" size="20"></td>
         </tr>
         <tr>
             <td>{"Password"|_}:</td>
@@ -43,5 +46,11 @@
             <li><a href="{$smarty.const.BASE_SSL_PATH}{$smarty.const.USER_MANAGEMENT_PAGE}?action=validation_email_form">{"Re-send the validation email"|_}</a><br>
         </ul>
     </div>
+
+    {if $error}
+    <div id="help">
+	{$error}
+    </div>
+    {/if}
 
 </div>
