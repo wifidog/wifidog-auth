@@ -1,5 +1,11 @@
 # $Header$
 2004-08-31 Benoit Grégoire  <bock@step.polymtl.ca>
+	* sql/: Update the postgres schemas and add scripts to ease maintaining it.
+	* sql/sync_sql_for_cvs.sh: Should you modify the schema in your db, run this script to the chances will be available in the cvs schemas and initial data.
+	* sql/dump_initial_data_postgres.sh: This does the actual dump of the data in a runnable form.  Note that this needs to be edited manually if you add a new table requiring initial data.
+	* INSTALL:  Update for postgres.  Somebody please test this.
+
+2004-08-31 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog/ping/index.php: Implement logging of which hotspot sent the heartbeat, from which ip and when.
 	* wifidog/node_list.php:  Primitive but functionnal hotspot status page.
 	* wifidog/include/user_management_menu.php:  Change menu labels
