@@ -90,7 +90,7 @@ class Style
     */
     $retval.= "</body>\n";
     //Work around IE cache 64k buffer bug
-    $retval.= '<head><meta http-equiv="Pragma" CONTENT="no-cache"><meta http-equiv="Expires" CONTENT="-1"></HEAD>';
+    //$retval.= '<head><meta http-equiv="Pragma" CONTENT="no-cache"><meta http-equiv="Expires" CONTENT="-1"></HEAD>';
     $retval.= "</html>";
 
     return $retval;

@@ -25,6 +25,7 @@
 
 define('BASEPATH','../');
 require_once BASEPATH.'include/common.php';
+require_once BASEPATH.'classes/Style.php';//Required to write http headers
 require_once BASEPATH.'classes/SmartyWifidog.php';
 require_once (BASEPATH.'include/user_management_menu.php');
 require_once BASEPATH.'classes/Session.php';
@@ -37,8 +38,8 @@ if(CONF_USE_CRON_FOR_DB_CLEANUP == false)
 $smarty = new SmartyWifidog;
 
 $portal_template = $_REQUEST['gw_id'] . ".html";
-
-$db->ExecSqlUniqueRes("SELECT * FROM nodes WHERE node_id='". $db->EscapeString($_REQUEST['gw_id'])."'", $node_info);
+$node_id = $db->EscapeString($_REQUEST['gw_id']);
+$db->ExecSqlUniqueRes("SELECT * FROM nodes WHERE node_id='$node_id'", $node_info);
 if($node_info==null)
   {
     $smarty->assign('hotspot_name', UNKNOWN_HOSTPOT_NAME);
@@ -53,7 +54,7 @@ else
 /* Find out who is online */
 $db->ExecSql("SELECT users.user_id FROM users,connections " .
 	     "WHERE connections.token_status='" . TOKEN_INUSE . "' " .
-	     "AND users.user_id=connections.user_id "
+	     "AND users.user_id=connections.user_id AND connections.node_id='$node_id' "
 	     ,$users, false);
 if($users!=null)
   {

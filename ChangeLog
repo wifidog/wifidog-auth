@@ -1,4 +1,8 @@
 # $Header$
+2004-09-22 Benoit Grégoire  <bock@step.polymtl.ca>
+	* portal/index.php:  Fix users appearing online at every hotspot.
+	* wifidog/classes/Style.php, wifidog/login/index.php:  Fix some potential cache problems and help with validation.
+	
 2004-09-18 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog/config.php:  Add VALIDATION_GRACE_TIME configuration parameter.
 	* wifidog/auth/index.php:  Move grace time date arithmetics to the database, fixes validation period not working.  Stop storing VALIDATION_FAILES status to the database.  Add check for validation period expiration at stage login, not just stage counters, this will fix one minute validation period. 

@@ -25,6 +25,7 @@
    */
 define('BASEPATH','../');
 require_once BASEPATH.'include/common.php';
+require_once BASEPATH.'classes/Style.php';//Required to write http headers
 require_once BASEPATH.'classes/SmartyWifidog.php';
 require_once (BASEPATH.'include/user_management_menu.php');
 require_once BASEPATH.'classes/Security.php';
