@@ -145,6 +145,8 @@ class RssPressReview
             /* running total of the difference between the date of the current item and the previous one */
             $average_publication_interval = null;
             $previous_item_date = null;
+			if(trim($rss_source['url'])=="")
+				continue;
             $rss = fetch_rss( $rss_source['url'] );
             if (!$rss) {
                 throw new Exception(_(magpie_error()));
@@ -227,6 +229,9 @@ class RssPressReview
         $sidx = 0;
         reset($rss_sources);
         foreach ($rss_sources as $rss_sources_key => $rss_source) {
+        	if(trim($rss_source['url'])=="")
+        		continue;
+        		
             $rss = fetch_rss($rss_source['url']);
             if (!$rss) {
                 throw new Exception(_(magpie_error()));
