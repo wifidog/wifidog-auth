@@ -139,5 +139,3 @@ class AuthenticatorLocalUser extends Authenticator
 
 } // End class
 ?>
-
-
