@@ -45,13 +45,10 @@
     <td>
     {if $nodes[node].description}
       {$nodes[node].description}
+      <br />
     {/if}
-    <br />
 
     Opened on {$nodes[node].creation_date}
-    {if $nodes[node].num_online_users != 0}
-    , {$nodes[node].num_online_users} user(s) online
-    {/if}
     </td>
 
     <td>
