@@ -1,0 +1,34 @@
+{include file="templates/header.html"}
+
+{if $error}
+	<div id="help">
+	{$error}
+	</div>
+{else}
+
+<div id="node_list">
+<table>
+<tr>
+	<th>Node</th>
+	<th>Users</th>
+	<th>Email</th>
+	<th>Logged in Since</th>
+	<th>Trafic IN/OUT</th>
+</tr>
+{section name=i loop=$users_array}
+<tr>
+    <td>{$users_array[i].name}</td>
+    <td><a href="user_log.php?user_id={$users_array[i].user_id}">{$users_array[i].user_id}</a></td>
+    <td>{$users_array[i].email}</td>
+    <td>{$users_array[i].timestamp_in|date_format:"%Y/%m/%d %H:%M:%S"}</td>
+    <td>{$users_array[i].incoming}/{$users_array[i].outgoing}</td>
+    <td></td>
+</tr>
+{/section}
+</table>
+</div>
+<br>
+
+{/if}
+
+{include file="templates/footer.html"}
