@@ -37,36 +37,33 @@ $login_successful = false;
 $login_failed_message = '';
 
 if (!empty($_REQUEST['url'])) {
-    $session = new Session();
     $session->set(SESS_ORIGINAL_URL_VAR, $_REQUEST['url']);
 }
 
-
 if (!empty($_REQUEST['username']) && !empty($_REQUEST['password'])) {
     $security = new Security();
-    $evious_username = $db->EscapeString($_REQUEST['username']);
     $username = $db->EscapeString($_REQUEST['username']);
     $password_hash = get_password_hash($_REQUEST['password']);
     $db->ExecSqlUniqueRes("SELECT *, CASE WHEN ((NOW() - reg_date) > interval '".VALIDATION_GRACE_TIME." minutes') THEN true ELSE false END AS validation_grace_time_expired FROM users WHERE (user_id='$username' OR email='$username') AND pass='$password_hash'", $user_info, false);
 
     if ($user_info != null) {
-	if (($user_info['account_status'] == ACCOUNT_STATUS_VALIDATION) && ($user_info['validation_grace_time_expired']=='t')) {
-	    $login_successful=false;
-	    $validation_grace_time = VALIDATION_GRACE_TIME;
-	    $smarty->assign("error",  _("Sorry, your $validation_grace_time minutes grace period to retrieve your email and validate your account has now expired. ($validation_grace_time min grace period started on $user_info[reg_date]).  You will have to connect to the internet and validate your account from another location."));
-	  } else {
-	    $token = gentoken();
-	    if ($_REQUEST['gw_id']) {
-            $node_id = $db->EscapeString($_REQUEST['gw_id']);
-	    }
-	    if ($_SERVER['REMOTE_ADDR']) {
-		    $node_ip = $db->EscapeString($_SERVER['REMOTE_ADDR']);
-	    }
-	    $db->ExecSqlUpdate("INSERT INTO connections (user_id, token, token_status, timestamp_in, node_id, node_ip, last_updated) VALUES ('{$user_info['user_id']}', '$token', '" . TOKEN_UNUSED . "', NOW(), '$node_id', '$node_ip', NOW())");
+	    if (($user_info['account_status'] == ACCOUNT_STATUS_VALIDATION) && ($user_info['validation_grace_time_expired']=='t')) {
+	        $validation_grace_time = VALIDATION_GRACE_TIME;
+	        $smarty->assign("error",  _("Sorry, your $validation_grace_time minutes grace period to retrieve your email and validate your account has now expired. ($validation_grace_time min grace period started on $user_info[reg_date]).  You will have to connect to the internet and validate your account from another location."));
+	    } else {
+	        $token = gentoken();
+	        if ($_REQUEST['gw_id']) {
+                $node_id = $db->EscapeString($_REQUEST['gw_id']);
+	        }
+	        if ($_SERVER['REMOTE_ADDR']) {
+		        $node_ip = $db->EscapeString($_SERVER['REMOTE_ADDR']);
+	        }
+	        $db->ExecSqlUpdate("INSERT INTO connections (user_id, token, token_status, timestamp_in, node_id, node_ip, last_updated) VALUES ('{$user_info['user_id']}', '$token', '" . TOKEN_UNUSED . "', NOW(), '$node_id', '$node_ip', NOW())");
 	
-	    $login_successful = true;
-	    $security->login($username, $password_hash);
-	    header("Location: http://" . $_REQUEST['gw_address'] . ":" . $_REQUEST['gw_port'] . "/wifidog/auth?token=$token");
+	        $login_successful = true;
+	        $security->login($username, $password_hash);
+	        header("Location: http://" . $_REQUEST['gw_address'] . ":" . $_REQUEST['gw_port'] . "/wifidog/auth?token=$token");
+            exit;
 	    }
     } else {
 	    $user_info = null;
@@ -80,12 +77,10 @@ if (!empty($_REQUEST['username']) && !empty($_REQUEST['password'])) {
     }
 }
 
-if ($login_successful == false) {
-    isset($_REQUEST["username"]) && $smarty->assign('username', $_REQUEST["username"]);
-    isset($_REQUEST["gw_address"]) && $smarty->assign('gw_address', $_REQUEST['gw_address']);
-    isset($_REQUEST["gw_port"]) && $smarty->assign('gw_port', $_REQUEST['gw_port']);
-    isset($_REQUEST["gw_id"]) && $smarty->assign('gw_id', $_REQUEST['gw_id']);
+isset($_REQUEST["username"]) && $smarty->assign('username', $_REQUEST["username"]);
+isset($_REQUEST["gw_address"]) && $smarty->assign('gw_address', $_REQUEST['gw_address']);
+isset($_REQUEST["gw_port"]) && $smarty->assign('gw_port', $_REQUEST['gw_port']);
+isset($_REQUEST["gw_id"]) && $smarty->assign('gw_id', $_REQUEST['gw_id']);
     
-    $smarty->display("templates/".LOGIN_PAGE_NAME);
-}
+$smarty->display("templates/".LOGIN_PAGE_NAME);
 ?>

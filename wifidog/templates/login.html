@@ -19,10 +19,10 @@
 
         <h3>{"Please log-in or"|_}<br><a href="{$smarty.const.BASE_SSL_PATH}signup.php">{"Sign-up, it's free!"|_}</a></h3>
 
-        <form name="login_form">
-	<input type="hidden" name="gw_address" value="{$gw_address}">
-	<input type="hidden" name="gw_port" value="{$gw_port}">
-	<input type="hidden" name="gw_id" value="{$gw_id}">
+        <form name="login_form" method="post">
+	    <input type="hidden" name="gw_address" value="{$gw_address}">
+	    <input type="hidden" name="gw_port" value="{$gw_port}">
+	    <input type="hidden" name="gw_id" value="{$gw_id}">
         <table>
         <tr>
             <td>{"Username (or email)"|_}:</td>
