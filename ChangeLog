@@ -3,7 +3,7 @@
 	* Add code to import a NoCat user database (passwd).  The username will be generated from the first part of the email if the name was en email.
 	* Change password hashing algorithm to make it compatible with NoCat (For the curious among you, the hashing algorithm is now:  take the md5 digest in binary format of the password, and base64 encode it.
 	* Table schema changed to accomodate newhash length (users.pass is now varchar(32))
-	* Allow the user to login with either his username or his email.
+	* The user is now allowed to login with either his username or his email.
 	
 2004-08-03 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Make gettext support optionnal, and define GETTEXT_AVAILABLE, will be set to true if gettext is available.  If false, blank _() and gettext() functions will be defined so the system still works.
