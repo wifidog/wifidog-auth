@@ -35,12 +35,14 @@ if (isset($_REQUEST["message"])) {
         case "denied":
             $smarty->display("templates/message_denied.html");
             break;
-        case "message":
+        case "activate":
             $smarty->display("templates/message_activate.html");
             break;
         default:
             $smarty->display("templates/message_default.html");
             break;
     }
+} else {
+    $smarty->display("templates/message_default.html");
 }
 ?>
