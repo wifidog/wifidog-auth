@@ -78,12 +78,13 @@ if (!empty($_REQUEST['username']) && !empty($_REQUEST['password'])) {
 if (isset($_REQUEST['gw_id'])) {
     $smarty->assign("gw_id", $_REQUEST['gw_id']);
 
-    $node = Node::getNode($db->EscapeString(CURRENT_NODE_ID));
-    if ($node == null) {
-        $smarty->display("templates/message_unknown_hotspot.html");
-        exit;
-    } else {
+    try {
+        $node = Node::getNode($db->EscapeString(CURRENT_NODE_ID));
     	$smarty->assign('hotspot_name', $node->getName());
+    } catch (Exception $e) {
+        $smarty->assign("error", $e->getMessage());
+        $smarty->display("templates/generic_error.html");
+        exit;
     }
 } else {
     /* Gateway ID is not set... Virtual login */
