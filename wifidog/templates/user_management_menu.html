@@ -5,10 +5,12 @@
 
 <h4>{"User management"|_}</h4>
 <ul>
+{if !$auth_user}
     <li><a href='{$smarty.const.BASE_SSL_PATH}signup.php'>{"Create new account"|_}</a></li>
     <li><a href='{$smarty.const.BASE_SSL_PATH}resend_validation.php'>{"Re-send validation email"|_}</a></li>
     <li><a href='{$smarty.const.BASE_SSL_PATH}lost_username.php'>{"Lost username"|_}</a></li>
     <li><a href='{$smarty.const.BASE_SSL_PATH}lost_password.php'>{"Lost password"|_}</a></li>
+{/if}
     <li><a href='{$smarty.const.BASE_SSL_PATH}change_password.php'>{"Change password"|_}</a></li>
 </ul>
 

@@ -25,65 +25,68 @@
    */
 define('BASEPATH','./');
 require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/SmartyWifidog.php';
-require_once BASEPATH.'classes/Security.php';
+require_once BASEPATH.'include/common_interface.php';
+require_once BASEPATH.'classes/User.php';
 
-$smarty = new SmartyWifidog;
-$session = new Session;
+function validate_username($username) {
+    if (!isset($username) || !$username)
+        throw new Exception(_('Username is required.'));
 
-include BASEPATH.'include/language.php';
-include BASEPATH.'include/mgmt_helpers.php';
+    if (!ereg("^[0-9a-zA-Z_]*$", $username))
+        throw new Exception(_('Username contains invalid characters.'));
+}
+
+function validate_email($email) {
+    if (!isset($email) || !$email)
+        throw new Exception(_("A valid email address is required."));
+
+    if (!ereg("^.*@.*\..*$", $email))
+        throw new Exception(_("The email address must be of the form user@domain.com."));
+}
+
+function validate_passwords($password, $password_again) {
+    if (!isset($password) || !$password)
+        throw new Exception(_("A password of at least 6 characters is required."));
+
+    if (!ereg("^[0-9a-zA-Z]*$", $password))
+        throw new Exception(_("Password contains invalid characters."));
+
+    if (!isset($password_again))
+        throw new Exception(_("You must type your password twice."));
+
+    if ($password != $password_again)
+        throw new Exception(_("Passwords do not match."));
+
+    if (strlen($password) < 6)
+        throw new Exception(_("Password is too short, it must be 6 characters minimum."));
+}
 
 if (isset($_REQUEST["submit"])) {
+    $username       = trim($_REQUEST['username']);
+    $email          = trim($_REQUEST['email']);
+    $password       = trim($_REQUEST['password']);
+    $password_again = trim($_REQUEST['password_again']);
+    $smarty->assign('username', $username);
+    $smarty->assign('email',    $email);
 
-    isset($_REQUEST["username"]) && $smarty->assign("username", $_REQUEST["username"]);
-    isset($_REQUEST["email"]) && $smarty->assign("email", $_REQUEST["email"]);
+    try {
+        validate_username($username);
+        validate_email($email);
+        validate_passwords($password, $password_again);
 
-    if (!isset($_REQUEST["username"]) || !$_REQUEST["username"]) {
-        $smarty->assign("error", _("Username is required."));
-    } else if (!ereg("^[0-9a-zA-Z]*$", $_REQUEST["username"])) {
-        $smarty->assign("error", _("Username contains invalid characters."));
-    } else if (!isset($_REQUEST["email"]) || !$_REQUEST["email"]) {
-        $smarty->assign("error", _("A valid email address is required."));
-    } else if (!ereg("^.*@.*\..*$", $_REQUEST["email"])) {
-        $smarty->assign("error", _("The email address must be of the form user@domain.com."));
-    } else if (!isset($_REQUEST["password"]) || !$_REQUEST["password"]) {
-        $smarty->assign("error", _("A password of at least 6 characters is required."));
-    } else if (!ereg("^[0-9a-zA-Z]*$", $_REQUEST["password"])) {
-        $smarty->assign("error", _("Password contains invalid characters."));
-    } else if (!isset($_REQUEST["password_again"])) {
-        $smarty->assign("error", _("You must type your password twice."));
-    } else if ($_REQUEST["password"] != $_REQUEST["password_again"]) {
-        $smarty->assign("error", _("Passwords do not match."));
-    } else if (strlen($_REQUEST["password"]) < 6) {
-        $smarty->assign("error", _("Password is too short, it must be 6 characters minimum."));
-    } else {
-        /* Everything is ok */
-        $_REQUEST["username"] = trim($_REQUEST["username"]);
-        $_REQUEST["email"] = trim($_REQUEST["email"]);
-        $password = $db->EscapeString($_REQUEST['password']);
-        $db->ExecSqlUniqueRes("SELECT * FROM users WHERE user_id='{$_REQUEST["username"]}'", $user_info_username, false);
-        $db->ExecSqlUniqueRes("SELECT * FROM users WHERE email='{$_REQUEST["email"]}'", $user_info_email, false);
-        if ($user_info_username != null) {
-            $smarty->assign("error", _("Sorry, a user account is already associated to this username. Pick another one."));
-        } else if ($user_info_email) {
-            $smarty->assign("error", _("Sorry, this email address is already registered."));
-            $smarty->append("choice", array(
-                        "description"   => _("Email me my username"),
-                        "link"          => "mail_username.php",
-                    )
-                );
-        } else {
-            $status = ACCOUNT_STATUS_VALIDATION;
-            $token = gentoken();
-            $password_hash = get_password_hash($_REQUEST["password"]);
-            $update_successful = $db->ExecSqlUpdate("INSERT INTO users (user_id,email,pass,account_status,validation_token,reg_date) VALUES ('{$_REQUEST["username"]}','{$_REQUEST["email"]}','$password_hash','{$status}','{$token}',NOW())");
-            if ($update_successful) {
-                send_validation_email($_REQUEST["email"]);
-            } else {
-                $smarty->assign("error", _("An internal error occured, please contact us."));
-            }
-        }
+        if (User::UserExists($username))
+            throw new Exception(_("Sorry, a user account is already associated to this username. Pick another one."));
+
+        if (User::EmailExists($email))
+            throw new Exception(_("Sorry, a user account is already associated to this email address."));
+
+        $user = User::CreateUser($username, $email, $password);
+        $user->sendValidationEmail();
+        $smarty->assign('message', _('An email with confirmation instructions was sent to your email address.  Your account has been granted 15 minutes of access to retrieve your email and validate your account.  You may now open a browser window and go to any remote Internet address to obtain the login page.'));
+        $smarty->display("templates/validate.html");
+        exit;
+    } catch (Exception $e) {
+        $smarty->assign('error', $e->getMessage());
     }
 }
 

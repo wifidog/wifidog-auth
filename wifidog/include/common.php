@@ -114,19 +114,6 @@ define('NODE_CONTENT_PHP_RELATIVE_PATH', BASEPATH.LOCAL_CONTENT_REL_PATH.CURRENT
 
 define('COMMON_CONTENT_URL', BASE_URL_PATH.LOCAL_CONTENT_REL_PATH.'common/');
     
-function gentoken()
-{
-  return md5(uniqid(rand(),1));
-}
-
-/** Returns the hash of the password suitable for storing or comparing in the database.
-* @return The 32 character hash.
-*/
-function get_password_hash($password)
-{
-    return base64_encode(pack("H*", md5($password)));
-}
-
 /** Convert a password hash form a NoCat passwd file into the same format as get_password_hash().
 * @return The 32 character hash.
 */

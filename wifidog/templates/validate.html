@@ -1,7 +1,5 @@
 {include file="templates/header_small.html"}
     <div id="sent_validation">
-        {section name=i loop=$message}
-        <p>{$message[i]}</p>
-        {/section}
+        <p>{$message|nl2br}</p>
     </div>
 {include file="templates/footer.html"}

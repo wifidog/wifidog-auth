@@ -14,6 +14,11 @@
 <div id='head'><h1>{$hotspot_network_name} {$title}</h1></div>
 
 <div id='navLeft'>
+{if $auth_user}
+<p style="font-size: 75%;">{"Logged in as:"|_} <b>{$auth_user}</b></p>
+{else}
+<p style="font-size: 75%;">{"NOT logged in."|_} <b><a href="{$smarty.const.BASE_NON_SSL_PATH}login/">{"Login?"|_}</a></b></p>
+{/if}
 {include file="templates/lang_menu.html"}
 {include file="templates/user_management_menu.html"}
 </div>

@@ -113,16 +113,6 @@ class SmartyWifidog extends Smarty {
      $this->assign('hotspot_logo_banner_url', find_local_content_url(HOTSPOT_LOGO_BANNER_NAME));
 
      $this->assign('hotspot_id', CURRENT_NODE_ID);
-     global $db;
-     $db->ExecSqlUniqueRes("SELECT * FROM nodes WHERE node_id='". $db->EscapeString(CURRENT_NODE_ID)."'", $node_info);
-     if($node_info==null)
-       {
-	 $this->assign('hotspot_name', UNKNOWN_HOSTPOT_NAME);
-       }
-     else
-       {
-	 $this->assign('hotspot_name', $node_info['name']);
-       }
    }
 
 /**similar to display(), but will find the content in the appropriate local content directory */

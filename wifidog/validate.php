@@ -23,39 +23,28 @@
    */
 define('BASEPATH','./');
 require_once (BASEPATH.'/include/common.php');
-require_once BASEPATH.'classes/SmartyWifidog.php';
-require_once BASEPATH.'classes/Security.php';
+require_once (BASEPATH.'/include/common_interface.php');
+require_once (BASEPATH.'/classes/User.php');
 
-$smarty = new SmartyWifidog;
-$session = new Session;
+try {
+    if (!isset($_REQUEST["token"]))
+        throw new Exception(_('No token specified!'));
 
-include BASEPATH.'include/language.php';
-      
-if (!isset($_REQUEST["token"])) {
-    $smarty->append("message", _("No token specified!"));
-} else if (!isset($_REQUEST["username"])) {
-    $smarty->append("message", _("No username specified!"));
-} else {
-    $validation_token = $db->EscapeString($_REQUEST['token']);
-    $db->ExecSqlUniqueRes("SELECT * FROM users WHERE user_id='{$_REQUEST["username"]}' AND validation_token='{$validation_token}'", $user_info);
-    if ($user_info != null) {
-        if ($user_info['account_status'] == ACCOUNT_STATUS_ALLOWED) {
-            $smarty->append("message", _("Your account has already been activated."));
-        } else {
-            $status = $db->EscapeString(ACCOUNT_STATUS_ALLOWED);
-            $update_successful = null;
-            $update_successful = $db->ExecSqlUpdate("UPDATE users SET account_status='{$status}' WHERE user_id='{$_REQUEST["username"]}' AND validation_token='$validation_token'");
-            if ($update_successful) {
-                $smarty->append("message", _("Your account has been succesfully activated!"));
-                $smarty->append("message", _("You may now browse to a remote Internet address and take advantage of the free Internet access!"));
-                $smarty->append("message", _("If you get prompted for a login, enter the username and password you have just created."));
-            } else {
-                $smarty->append("message", _("Internal Error"));
-    		}
-        }
-    } else {
-          $smarty->append("message", _("Sorry, your validation token is not valid!"));
-    }
+    if (!isset($_REQUEST["username"]))
+        throw new Exception(_('No username specified!'));
+
+    $user = User::getUserById($_REQUEST['username']);
+
+    if ($db->EscapeString($_REQUEST['token']) != $user->getValidationToken())
+        throw new Exception(_('The validation token does not match the one in the database.'));
+
+    if ($user->getAccountStatus() == ACCOUNT_STATUS_ALLOWED)
+        throw new Exception(_('Your account has already been activated.'));
+
+    $user->SetAccountStatus(ACCOUNT_STATUS_ALLOWED);
+    $smarty->assign('message', _("Your account has been succesfully activated!\n\nYou may now browse to a remote Internet address and take advantage of the free Internet access!\n\nIf you get prompted for a login, enter the username and password you have just created."));
+} catch (Exception $e) {
+    $smarty->assign('message', $e->getMessage());
 }
 
 $smarty->display("templates/validate.html");

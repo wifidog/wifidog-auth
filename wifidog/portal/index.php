@@ -25,34 +25,33 @@
 
 define('BASEPATH','../');
 require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/SmartyWifidog.php';
-require_once BASEPATH.'classes/Session.php';
+require_once BASEPATH.'include/common_interface.php';
+require_once BASEPATH.'classes/Node.php';
 
 if (CONF_USE_CRON_FOR_DB_CLEANUP == false) {
     garbage_collect();
 }
 
-$smarty = new SmartyWifidog;
-$session = new Session;
-
-include BASEPATH.'include/language.php';
+if (!isset($_REQUEST['gw_id'])) {
+    $smarty->display("templates/message_unknown_hotspot.html");
+    exit;
+}
 
 $portal_template = $_REQUEST['gw_id'] . ".html";
 $node_id = $db->EscapeString($_REQUEST['gw_id']);
-$db->ExecSqlUniqueRes("SELECT * FROM nodes WHERE node_id='$node_id'", $node_info);
-if ($node_info == null) {
-    $smarty->assign('hotspot_name', UNKNOWN_HOSTPOT_NAME);
-    $hotspot_rss_url = UNKNOWN_HOTSPOT_RSS_URL;
-} else {
-    $smarty->assign('hotspot_name', $node_info['name']);
-    $hotspot_rss_url =  $node_info['rss_url'];
+
+$node = Node::getObject($node_id);
+if ($node == null) {
+    $smarty->assign("gw_id", $_REQUEST['gw_id']);
+    $smarty->display("templates/message_unknown_hotspot.html");
+    exit;
 }
 
+$smarty->assign('hotspot_name', $node->getName());
+$hotspot_rss_url = $node->getRSSURL();
+
 /* Find out who is online */
-$db->ExecSql("SELECT users.user_id FROM users,connections WHERE connections.token_status='" . TOKEN_INUSE . "' AND users.user_id=connections.user_id AND connections.node_id='$node_id'", $users, false);
-if ($users != null) {
-    $smarty->assign("online_users", $users);
-}
+$smarty->assign("online_users", $node->getOnlineUsers());
 
 if (RSS_SUPPORT) {
     //      $old_error_level = error_reporting(E_ERROR);

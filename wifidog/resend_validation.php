@@ -25,25 +25,21 @@
    */
 define('BASEPATH','./');
 require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/SmartyWifidog.php';
-require_once BASEPATH.'classes/Security.php';
-
-$smarty = new SmartyWifidog;
-$session = new Session;
-
-include BASEPATH.'include/language.php';
-include BASEPATH.'include/mgmt_helpers.php';
+require_once BASEPATH.'include/common_interface.php';
+require_once BASEPATH.'classes/User.php';
 
 if (isset($_REQUEST["submit"])) {
     if (!$_REQUEST["username"]) {
         $smarty->assign("error", _("Please specify a username"));
     } else {
-        $user_info = null;
-        $db->ExecSqlUniqueRes("SELECT * FROM users WHERE user_id='{$_REQUEST["username"]}'", $user_info, false);
-        if ($user_info == null) {
-            $smarty->assign("error", _("Unable to find ") . $_REQUEST["username"] . _(" in the database") . ".");
-        } else {
-            send_validation_email($user_info["email"]);
+        try {
+            $user = User::getUserById($_REQUEST['username']);
+            $user->sendValidationEmail();
+            $smarty->assign('message', _("An email with confirmation instructions was sent to your email address."));
+            $smarty->display("templates/validate.html");
+            exit;
+        } catch (Exception $e) {
+            $smarty->assign('error', $e->getMessage());
         }
     }
 }

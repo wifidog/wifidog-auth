@@ -168,7 +168,7 @@ else if ($_REQUEST['action'] == 'upload_file')
 	  if(!empty($_REQUEST['import_confirm']) && $_REQUEST['import_confirm']=='true' && $import_user[$username]['is_rejected']==false)
 	    {
 	      $status = ACCOUNT_STATUS_ALLOWED;
-	      $token = gentoken();
+	      $token = User::generateToken();
 	      $reg_date = iso8601_date(time());
 	      $password_hash = $db->EscapeString($user['passwd_hash']);
 	      $username =  $db->EscapeString($username);

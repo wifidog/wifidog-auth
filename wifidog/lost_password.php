@@ -25,33 +25,26 @@
    */
 define('BASEPATH','./');
 require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/SmartyWifidog.php';
-require_once BASEPATH.'classes/Security.php';
+require_once BASEPATH.'include/common_interface.php';
+require_once BASEPATH.'classes/User.php';
 
-$smarty = new SmartyWifidog;
-$session = new Session;
-
-include BASEPATH.'include/language.php';
-include BASEPATH.'include/mgmt_helpers.php';
-
-if (isset($_REQUEST["submit"])) {
-    $user_info = null;
-    if ($_REQUEST["username"]) {
-	    $db->ExecSqlUniqueRes("SELECT * FROM users WHERE user_id='$username'", $user_info, false);
-	    if ($user_info == null) {
-            $smarty->assign("error", _("Unable to find ") . $_REQUEST["username"] . _(" in the database."));
-	    } else {
-            send_lost_password_email($user_info["email"]);
-        }
-    } else if ($_REQUEST["email"]) {
-	    $db->ExecSqlUniqueRes("SELECT * FROM users WHERE email='$email'", $user_info, false);
-	    if ($user_info == null) {
-            $smarty->assign("error", _("Unable to find ") . $_REQUEST["email"] . _(" in the database."));
-	    } else {
-            send_lost_password_email($user_info["email"]);
-        }
-    } else {
+if (isset($_REQUEST['submit'])) {
+    if (!$_REQUEST['username'] && !$_REQUEST['email']) {
         $smarty->assign("error", _("Please specify a username or email address"));
+    } else {
+        $username = $db->EscapeString($_REQUEST['username']);
+        $email = $db->EscapeString($_REQUEST['email']);
+
+        try {
+            $username && $user = User::getUserByID($username);
+            $email && $user = User::getUserByEmail($email);
+            $user->sendLostPasswordEmail();
+            $smarty->assign('message', _('A new password has been emailed to you.'));
+            $smarty->display('templates/validate.html');
+            exit;
+        } catch (Exception $e) {
+            $smarty->assign("error", $e->getMessage());
+        }
     }
 }
 

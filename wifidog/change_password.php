@@ -25,53 +25,33 @@
    */
 define('BASEPATH','./');
 require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/SmartyWifidog.php';
-require_once BASEPATH.'classes/Security.php';
-
-$smarty = new SmartyWifidog;
-$session = new Session;
-
-include BASEPATH.'include/language.php';
-include BASEPATH.'include/mgmt_helpers.php';
+require_once BASEPATH.'include/common_interface.php';
+require_once BASEPATH.'classes/User.php';
 
 isset($_REQUEST["username"]) && $smarty->assign("username", $_REQUEST["username"]);
 
 if (isset($_REQUEST["submit"])) {
-    $user_info = null;
-    if ($_REQUEST["username"] && $_REQUEST["oldpassword"] && $_REQUEST["newpassword"] && $_REQUEST["newpassword_again"]) {
+    try {
+        if (!$_REQUEST["username"] || !$_REQUEST["oldpassword"] || !$_REQUEST["newpassword"] || !$_REQUEST["newpassword_again"])
+            throw new Exception(_('You MUST fill in all the fields.'));
+        $username = $db->EscapeString(trim($_REQUEST['username']));
 	    $current_password = $db->EscapeString(trim($_REQUEST['oldpassword']));
     	$new_password = $db->EscapeString(trim($_REQUEST['newpassword']));
 
-	    $user_info = null;
-	    $db->ExecSqlUniqueRes("SELECT * FROM users WHERE user_id='{$_REQUEST["username"]}'", $user_info, false);
-	    if ($user_info == null) {
-            $smarty->assign("error", _("Unable to find ") . $_REQUEST["username"] . _(" in the database."));
-	    } else {
-	        $user_info = null;
-	        $current_password_hash = get_password_hash($current_password);
-	        $db->ExecSqlUniqueRes("SELECT * FROM users WHERE user_id='{$_REQUEST["username"]}' AND pass='$current_password_hash'", $user_info, false);
-	        if ($user_info == null) {
-                $smarty->assign("error", _("Wrong password."));
-	        } else {
-                if ($_REQUEST["newpassword"] != $_REQUEST["newpassword_again"]) {
-                    $smarty->assign("error", _("Passwords do not match."));
-                } else {
-                    $new_password_hash = get_password_hash($new_password);
-	                $update_successful = $db->ExecSqlUpdate("UPDATE users SET pass='$new_password_hash' WHERE user_id='{$user_info["user_id"]}'");
-	                if ($update_successful) {
-                        $smarty->append("message", _("Your password has been changed succesfully."));
-                        $smarty->display("templates/validate.html");
-                        exit;
-	                } else {
-                        $smarty->assign("error", _("Could not change your password"));
-	                }
-                }
-            }
-        }
-    } else {
-        $smarty->assign("error", _("Your MUST fill in all the fields"));
+        if ($_REQUEST["newpassword"] != $_REQUEST["newpassword_again"])
+            throw new Exception(_("Passwords do not match."));
+
+        $user = User::getUserById($username);
+        if ($user->getPasswordHash() != User::passwordHash($current_password))
+            throw new Exception(_("Wrong password."));
+
+        $user->SetPassword($new_password);
+        $smarty->assign("message", _("Your password has been changed succesfully."));
+        $smarty->display("templates/validate.html");
+        exit;
+    } catch (Exception $e) {
+        $smarty->assign("error", $e->getMessage());
     }
 }
-
 $smarty->display("templates/change_password.html");
 ?>

@@ -25,20 +25,21 @@
    */
 define('BASEPATH','./');
 require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/SmartyWifidog.php';
-require_once BASEPATH.'classes/Security.php';
-
-$smarty = new SmartyWifidog;
-$session = new Session;
-
-include BASEPATH.'include/language.php';
-include BASEPATH.'include/mgmt_helpers.php';
+require_once BASEPATH.'include/common_interface.php';
+require_once BASEPATH.'classes/User.php';
 
 if (isset($_REQUEST["submit"])) {
-    if (!$_REQUEST["email"]) {
-        $smarty->assign("error", _("Please specify an email address"));
-    } else {
-        send_lost_username_email($_REQUEST["email"]);
+    try {
+        if (!$_REQUEST["email"])
+            throw new Exception(_("Please specify an email address"));
+    
+        $user = User::getUserByEmail($_REQUEST['email']);
+        $user->sendLostUsername();
+        $smarty->assign("message", _("Your username has been emailed to you."));
+        $smarty->display("templates/validate.html");
+        exit;
+    } catch (Exception $e) {
+        $smarty->assign("error", $e->getMessage());
     }
 }
 

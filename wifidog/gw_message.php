@@ -25,13 +25,7 @@
    */
 define('BASEPATH','./');
 require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/SmartyWifidog.php';
-require_once BASEPATH.'classes/Security.php';
-
-$smarty = new SmartyWifidog;
-$session = new Session;
-
-include BASEPATH.'include/language.php';
+require_once BASEPATH.'include/common_interface.php';
 
 if (isset($_REQUEST["message"]) {
     switch ($_REQUEST["message"]) {

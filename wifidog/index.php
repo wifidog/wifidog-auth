@@ -24,18 +24,13 @@
 
 define('BASEPATH', './');
 require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/Statistics.php';
-require_once BASEPATH.'classes/SmartyWifidog.php';
+require_once BASEPATH.'include/common_interface.php';
 
-$smarty = new SmartyWifidog;
-$session = new Session();
-$stats = new Statistics();
-
-include BASEPATH.'include/language.php';
+require_once BASEPATH.'classes/Node.php';
 
 $smarty->assign("num_valid_users", $stats->getNumValidUsers());
 $smarty->assign("num_online_users", $stats->getNumOnlineUsers($node_id = null));
 
-$smarty->assign("title", "authentication server");
+$smarty->assign("title", _("authentication server"));
 $smarty->display("templates/main.html");
 ?>

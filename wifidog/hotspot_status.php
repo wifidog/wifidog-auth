@@ -25,14 +25,7 @@
 
 define('BASEPATH','./');
 require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/Statistics.php';
-require_once BASEPATH.'classes/SmartyWifidog.php';
-
-$smarty = new SmartyWifidog;
-$session = new Session();
-$stats = new Statistics();
-
-include BASEPATH.'include/language.php';
+require_once BASEPATH.'include/common_interface.php';
 
 if(!empty($_REQUEST['format'])) {
     $format = $_REQUEST['format'];

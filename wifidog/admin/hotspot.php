@@ -24,6 +24,7 @@
    */
 define('BASEPATH','../');
 require_once 'admin_common.php';
+require_once BASEPATH.'classes/Node.php';
 
 $user_id = $session->get(SESS_USERNAME_VAR);
 $smarty->assign("user_id", $user_id); // DEBUG
@@ -34,25 +35,18 @@ empty($_REQUEST['node_id']) ? $node_id = '' : $node_id = $_REQUEST['node_id'];
 if ($action=='edit_node') { // Allow node creation or node edition
     $smarty->assign("title", _("Edit a hotspot with"));
     
-    $db->ExecSql("SELECT * FROM node_deployment_status", $node_deployment_status_results, false);
-
     if ("$node_id" != "new") { // Node creation
-        $db->ExecSqlUniqueRes("SELECT node_id, name, rss_url, home_page_url, description, map_url, street_address, public_phone_number, public_email, mass_transit_info, node_deployment_status FROM nodes WHERE node_id='$node_id'", $node_result, false);
+        $node = Node::GetObject($node_id);
     }
-  
-    $smarty->assign("node", $node_result);
+
+    $smarty->register_object("node", $node);
     $smarty->assign("user_id", $user_id);
     $smarty->assign("node_id", $node_id);
+    $smarty->assign('node_deployment_status', Node::GetAllDeploymentStatus());
 
-    foreach($node_deployment_status_results as $status) {
-        $smarty->append('node_deployment_status', "$status[node_deployment_status]");
-    }
     $smarty->display("admin/templates/hotspot_edit.html");
+
 } elseif ($action=='add_node') { // Display hotspot creation form
-    $smarty->assign("title", _("Add a new hotspot with"));
-
-    $db->ExecSql("SELECT * FROM node_deployment_status", $node_deployment_status_results, false);
-
     /* max() + 1 doesn't work well when max() returns a String
     if ("$node_id" == "new") { // Allow user to get a valide node_id
         $db->ExecSqlUniqueRes("SELECT max(node_id) + 1 FROM nodes", $new_node, false);
@@ -62,13 +56,11 @@ if ($action=='edit_node') { // Allow node creation or node edition
     }
     */
 
+    $smarty->assign("title", _("Add a new hotspot with"));
     $smarty->assign("node_id", $node_id);
-
-    foreach($node_deployment_status_results as $status) {
-        $smarty->append('node_deployment_status', "$status[node_deployment_status]");
-    }
-
+    $smarty->assign('node_deployment_status', Node::GetAllDeploymentStatus());
     $smarty->display("admin/templates/hotspot_edit.html");
+
 } elseif ($action=='owner') { // Display hotspot owner list and add form
     $smarty->assign("title", "Owner hotspot with");
     $db->ExecSql("SELECT user_id FROM node_owners WHERE node_id='$node_id'", $node_owner_results);
@@ -130,10 +122,14 @@ if ($action=='edit_node') { // Allow node creation or node edition
       $db->ExecSqlUpdate("DELETE FROM node_owners WHERE node_id='$node_id' AND user_id='$user_id'");
     }
 
-    $db->ExecSql("SELECT node_id, name, creation_date from nodes", $node_results, false);
+    //$db->ExecSql("SELECT node_id, name, creation_date from nodes", $node_results, false);
 
-    if (is_array($node_results)) { // If no row return, $node_results will be NULL
-        $smarty->assign('nodes', $node_results);
+//$node = Node::GetObject('default');
+
+    //if (is_array($node_results)) { // If no row return, $node_results will be NULL
+    $nodes = Node::GetAllNodes();
+    if (is_array($nodes)) {
+        $smarty->assign('nodes', $nodes);
         //foreach($node_results as $node_row) {
         //    $smarty->append("nodes", $node_row);
         //}
