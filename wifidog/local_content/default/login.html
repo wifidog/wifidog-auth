@@ -1,0 +1,46 @@
+    {include file=$header_file}
+      <div class='content'>
+	<h1>Greetings! Welcome to<br clear=all>
+	  <img src='{$hotspot_logo_url}' alt='{$hotspot_name} logo'><br clear=all>
+	  {$hotspot_name}
+	  
+	</h1>
+	</div>
+      
+      <div class='content'>	
+	<form method="post">
+	  <input type="hidden" name="gw_address" value="{$gw_address}">
+	  <input type="hidden" name="gw_port" value="{$gw_port}">
+	  <input type="hidden" name="gw_id" value="{$gw_id}">
+	  <p class=warning>{$login_failed_message}</p>
+	<table>
+	  <tr>
+	    <td>Username:</td>
+	    <td><input type="text" name="user" value="{$previous_username}"></td>
+	    <td rowspan=3><img src='{$wifidog_logo_url}' alt='WifiDog logo'></td>
+	  </tr>
+	  <tr>
+	    <td>Password:</td>
+	    <td><input type="password" name="pass" value="{$previous_password}"></td>
+	  </tr>
+	  <tr>
+	    <td></td>
+	    <td><input type="submit" value='Login'></td>
+</tr>
+	</table>
+	<p><a href='{$user_management_url}'>Help me</a> create a free account on {$hotspot_network_name} or recover from a lost username or password.</p>
+      </form>
+      </div>
+      <div class='content'>
+	<h2>{$hotspot_name} is part of <br clear=all>
+	  <img src='{$network_logo_url}' alt='{$hotspot_network_name} logo'><br clear=all>
+	  <a href='{$hotspot_network_url}'>{$hotspot_network_name}</a>
+	  
+	</h2>
+
+      </div>
+
+      <div id='navLeft'>
+{$user_management_menu}
+      </div>
+      {include file=$footer_file}

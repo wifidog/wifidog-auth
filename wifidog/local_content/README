@@ -1,0 +1,10 @@
+This directory holds all the hotspot specific content.  You can (but don't have to) create a directory for each node in your database.  So, when someone connects from node 12, local content that is present in 12/ will be served instead of what id present in default.
+
+Note that all html files in default/ are actually smarty http://smarty.php.net/ templates.
+
+Two directories are special:
+
+default/ Contains all the files that could be optionally be put into a node_specific directory.  Please note that you can add any file present in the node specific directory with the same name as a file found in default will be served in it's place.  You do NOT have to fill the specific directory with every file.  Suppose you put    hotspot_logo.jpg and stylesheet.css into 12/, when someone connects from 12, they will see that logo and stylesheet, but all other content will be served from default/
+
+common/ Contains files that are available for any custom pages, the url and path of common is available to the smarty templates.  You may fill it with whatever you want in adition with the files already present.
+

@@ -1,0 +1,7 @@
+ 
+Need:
+Smarty template engine http://smarty.php.net/
+magpierss http://magpierss.sourceforge.net/
+php's php-xml extention installed.
+
+local_content/cache/ must be writable by your web server
