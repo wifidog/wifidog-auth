@@ -1,4 +1,7 @@
 # $Header$
+2005-01-25 Pascal Leclerc  <pascal@plec.ca>
+	* Added admin and owner administration pages
+
 2005-01-23 Philippe April <isf_lists@philippeapril.com>
 	* Added gateway error messages (validation period, etc.)
 
