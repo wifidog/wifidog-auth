@@ -110,7 +110,7 @@ class Statistics{
 
   public static function getMostGreedyUsers($limit) {
     global $db;
-    $db->ExecSql("SELECT DISTINCT user_id, SUM((incoming+outgoing)/1048576) AS total, SUM((incoming/1048576)) AS total_incoming, SUM((outgoing/1048576)) AS total_outgoing FROM connections GROUP BY user_id ORDER BY total DESC limit $limit", $results, false);
+    $db->ExecSql("SELECT DISTINCT user_id, SUM((incoming+outgoing)/1048576) AS total, SUM((incoming/1048576)) AS total_incoming, SUM((outgoing/1048576)) AS total_outgoing FROM connections WHERE incoming IS NOT NULL AND outgoing IS NOT NULL GROUP BY user_id ORDER BY total DESC limit $limit", $results, false);
     return $results;
   }
   

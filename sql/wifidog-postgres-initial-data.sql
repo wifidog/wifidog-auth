@@ -100,3 +100,22 @@ INSERT INTO venue_types (venue_type) VALUES ('Water Travel');
 INSERT INTO venue_types (venue_type) VALUES ('Wi-Fi Zone');
 
 
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'LATIN1';
+SET check_function_bodies = false;
+
+SET SESSION AUTHORIZATION 'wifidog';
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 2 (OID 680734)
+-- Name: schema_info; Type: TABLE DATA; Schema: public; Owner: wifidog
+--
+
+INSERT INTO schema_info (tag, value) VALUES ('schema_version', '1');
+
+

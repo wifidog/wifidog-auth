@@ -12,3 +12,4 @@ echo "INSERT INTO nodes (node_id, name, rss_url) VALUES ('default', 'Unknown nod
 
 pg_dump -a -D -t node_deployment_status
 pg_dump -a -D -t venue_types
+pg_dump -a -D -t schema_info

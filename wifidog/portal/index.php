@@ -141,8 +141,10 @@ $smarty->display(DEFAULT_CONTENT_SMARTY_PATH."header.html");
 
 /* If we have local content, display it. Otherwise, display default */
 if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.PORTAL_PAGE_NAME)) {
+    $smarty->assign("local_content_path", NODE_CONTENT_SMARTY_PATH);
     $smarty->display(NODE_CONTENT_SMARTY_PATH.PORTAL_PAGE_NAME);
 } else {
+    $smarty->assign("local_content_path", DEFAULT_CONTENT_SMARTY_PATH);
     $smarty->display(DEFAULT_CONTENT_SMARTY_PATH.PORTAL_PAGE_NAME);
 }
 

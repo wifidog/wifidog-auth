@@ -1,5 +1,16 @@
 # $Header$
-
+2005-03-24 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Statistics.php: Fix getMostGreedyUsers returning bad values when incoming and outgoing for all connections from a user have null values. 
+	* wifidog/local_content/default/portal.html: Fix layout so it resizes properly.  This in an interim measure.
+	* Update schema.  This will allow automatic schema updates in the future.  TO update a live server:
+		BEGIN;
+		CREATE TABLE schema_info (
+		    tag text PRIMARY KEY,
+		    value text
+		);
+		INSERT INTO schema_info (tag, value) VALUES ('schema_version', '1');
+		COMMIT;
+	
 2005-03-16 Matthew Asham <matthewa@bcwireless.net>
  * config.php: will use "local.config.php" instead, if present.  avoid cvs over-writing.
  * signup.php: if CUSTOM_SIGNUP_URL is defined, signup.php will re-direct.  For integration with existing auth systems
@@ -7,7 +18,6 @@
  * ./classes/RssPressReview.inc: if rss_source['url'] is blank, ignore the feed.
  
 2005-02-22 Benoit Grégoire  <bock@step.polymtl.ca>
-M ChangeLog
 	* sql/dump_initial_data_postgres.sh, wifidog-postgres-initial-data.sql, wifidog-postgres-schema.sql:-Widen the connections size to fix int4 wraparound problems.  To update a running server, execute the following sql sniplet: 
 BEGIN;
 ALTER TABLE connections RENAME incoming TO incoming_old;
