@@ -278,7 +278,7 @@ class User
 		else
 			if ($account_status == ACCOUNT_STATUS_VALIDATION)
 			{
-				$sql = "SELECT CASE WHEN ((NOW() - reg_date) > interval '".VALIDATION_GRACE_TIME." minutes') THEN true ELSE false END AS validation_grace_time_expired FROM users WHERE (user_id='{$this->mId}'";
+				$sql = "SELECT CASE WHEN ((NOW() - reg_date) > interval '".VALIDATION_GRACE_TIME." minutes') THEN true ELSE false END AS validation_grace_time_expired FROM users WHERE (user_id='{$this->mId}')";
 				$db->ExecSqlUniqueRes($sql, $user_info, false);
 
 				if ($user_info['validation_grace_time_expired'] == 't')
