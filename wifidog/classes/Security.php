@@ -55,7 +55,8 @@ class Security {
     //$this->session->dump();
     $user = $this->session->get(SESS_USERNAME_VAR);
     $password_hash = $this->session->get(SESS_PASSWORD_HASH_VAR);
-    $db->ExecSqlUniqueRes("SELECT * FROM users NATURAL JOIN administrators WHERE user_id='$user' AND pass='$password_hash'", $user_info, false);
+    
+    $db->ExecSqlUniqueRes("SELECT * FROM users NATURAL JOIN administrators WHERE (users.user_id='$user' OR email='$user') AND pass='$password_hash'", $user_info, false);
     if (empty($user_info)) {
       echo '<p class=error>'._("You do not have administrator privileges")."</p>\n";
       exit;
@@ -71,13 +72,14 @@ class Security {
     //$this->session->dump();
     $user = $this->session->get(SESS_USERNAME_VAR);
     $password_hash = $this->session->get(SESS_PASSWORD_HASH_VAR);
-    //$db->ExecSqlUniqueRes("SELECT * FROM users NATURAL JOIN administrators WHERE user_id='$user' AND pass='$password_hash'", $user_info, false);
-    if (empty($user_info)) {
-      echo '<p class=error>'._("NOT IMPLEMENTED YET, ACCESS DENIED")."</p>\n";
-      exit;
+
+    $db->ExecSqlUniqueRes("SELECT * FROM users NATURAL JOIN node_owners WHERE (users.user_id='$user' OR email='$user') AND pass='$password_hash' AND node_owners.node_id='$node_id'", $user_info, false);
+    if(empty($user_info)) {
+        echo '<p class=error>'._("You do not have owner privileges")."</p>\n";
+        exit;
     } else {
       /* Access granted */
-      //echo '<p class=error>'._("Access granted")."</p>\n";
+	  //echo '<p class=error>'._("Access granted")."</p>\n";
     }
   }
 
