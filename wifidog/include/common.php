@@ -6,6 +6,25 @@ require_once BASEPATH.'classes/AbstractDb.php';
 global $db;
 $db = new AbstractDb();
 
+/* Gettext support */
+if(!function_exists ('gettext'))
+  {
+    define('GETTEXT_AVAILABLE', false);
+    /* Redefine the gettext functions if gettext isn't installed */
+    function gettext($string)
+    {
+      return $string;
+    }
+    function _($string)
+    {
+      return $string;
+    }
+  }
+else
+  {
+    define('GETTEXT_AVAILABLE', true);
+  }
+
 /* NEVER edit these, as they mush match the C code of the gateway */
 define('ACCOUNT_STATUS_ERROR',		-1);
 define('ACCOUNT_STATUS_DENIED',		0);
