@@ -76,11 +76,11 @@ $lang_names = array(
 /* End */
 
 /* This section deals with PATHs */
-define('BASE_NON_SSL_PATH', 'http://' . $_SERVER['HTTP_HOST'] . SYSTEM_PATH);
+define('BASE_NON_SSL_PATH', 'http://' . $_SERVER['SERVER_NAME'] . SYSTEM_PATH);
 
 if(SSL_AVAILABLE)
   {
-    define('BASE_SSL_PATH', 'https://' . $_SERVER['HTTP_HOST'] . SYSTEM_PATH);
+    define('BASE_SSL_PATH', 'https://' . $_SERVER['SERVER_NAME'] . SYSTEM_PATH);
   }
 else
   {
