@@ -120,7 +120,7 @@ TD.spreadsheet_user { /*background-color: lightgray;*/ }
 .link     { color: blue; text-decoration: underline }
 A:link    { color: blue }
 A:active  { color: red; /* font-size: 125% */}
-A:visited { font-size: 85% }
+A:visited { color: blue; font-size: 85% }
 	
 {/literal}
 
