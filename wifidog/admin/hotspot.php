@@ -114,6 +114,7 @@ if ($action == 'edit_node') { // Allow node creation or node edition
 
             case 'update_node':
                 if ($new_node_id) {
+                  try {
                     $node = Node::getNode($new_node_id);
                     $node->setInfos( array(
                             'name'                   => $name,
@@ -127,6 +128,9 @@ if ($action == 'edit_node') { // Allow node creation or node edition
                             'mass_transit_info'      => $mass_transit_info,
                             'node_deployment_status' => $node_deployment_status
                         ));
+                  } catch (Exception $e) {
+                    echo '<p class="warning">'.$e->getMessage().'</p>'; 
+                  }
                 } else {
                     echo "NO NODE ID, this is a bug";
                 }

@@ -1,4 +1,19 @@
 # $Header$
+2005-02-22 Benoit Grégoire  <bock@step.polymtl.ca>
+M ChangeLog
+	* sql/dump_initial_data_postgres.sh, wifidog-postgres-initial-data.sql, wifidog-postgres-schema.sql:-Widen the connections size to fix int4 wraparound problems.  To update a running server, execute the following sql sniplet: 
+BEGIN;
+ALTER TABLE connections RENAME incoming TO incoming_old;
+ALTER TABLE connections ADD COLUMN incoming int8;
+ALTER TABLE connections RENAME outgoing TO outgoing_old;
+ALTER TABLE connections ADD COLUMN outgoing int8;
+UPDATE connections set incoming=incoming_old, outgoing=outgoing_old;
+ALTER TABLE connections DROP COLUMN incoming_old;
+ALTER TABLE connections DROP COLUMN outgoing_old;
+COMMIT;
+	* wifidog/admin/hotspot.php: Missing file from phil's commit.
+	* wifidog/locale/fr/LC_MESSAGES/messages.mo, messages.po:  New translation by Benoit St-André
+
 2005-02-14 Philippe April <philippe@ilesansfil.org>
 	* gw_message.php: the "activate" message was not properly defined and
 	would cause an error to show up instead of the nice activate your account

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-09 17:48-0500\n"
+"POT-Creation-Date: 2005-02-22 11:53-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Find more HotSpots"
 msgstr "Trouver plus de points d'acc&egrave;s sans-fil"
 
-#: smarty.txt:3 smarty.txt:21 smarty.txt:20 smarty.txt:23
+#: smarty.txt:3 smarty.txt:21 smarty.txt:20 smarty.txt:23 smarty.txt:111
 msgid "List of all HotSpots"
 msgstr "Liste de tous les points d'acc&egrave;s sans-fil"
 
@@ -77,7 +77,7 @@ msgstr "Statut de tous les noeuds"
 
 #: smarty.txt:14 smarty.txt:10 smarty.txt:9 smarty.txt:108 smarty.txt:128
 #: smarty.txt:133 smarty.txt:120 smarty.txt:146 smarty.txt:12 smarty.txt:123
-#: smarty.txt:151
+#: smarty.txt:151 smarty.txt:129 smarty.txt:157
 msgid "network"
 msgstr "r&eacute;seau"
 
@@ -87,12 +87,14 @@ msgstr "Statut"
 
 #: smarty.txt:16 smarty.txt:12 smarty.txt:11 smarty.txt:109 smarty.txt:134
 #: smarty.txt:121 smarty.txt:147 smarty.txt:14 smarty.txt:124 smarty.txt:152
+#: smarty.txt:130 smarty.txt:158
 msgid "Id"
 msgstr "Id"
 
 #: smarty.txt:17 smarty.txt:13 smarty.txt:12 smarty.txt:110 smarty.txt:117
 #: smarty.txt:135 smarty.txt:122 smarty.txt:130 smarty.txt:148 smarty.txt:15
-#: smarty.txt:125 smarty.txt:133 smarty.txt:153
+#: smarty.txt:125 smarty.txt:133 smarty.txt:153 smarty.txt:131 smarty.txt:139
+#: smarty.txt:159
 msgid "Name"
 msgstr "Nom"
 
@@ -101,7 +103,7 @@ msgid "Local content demo"
 msgstr "D&eacute;mo de contenu local"
 
 #: smarty.txt:19 smarty.txt:15 smarty.txt:14 smarty.txt:111 smarty.txt:123
-#: smarty.txt:17 smarty.txt:126
+#: smarty.txt:17 smarty.txt:126 smarty.txt:132
 msgid "Opened on"
 msgstr "Ouvert le"
 
@@ -172,12 +174,13 @@ msgstr ""
 "simule&eacute;)"
 
 #: ../admin/index.php:36 smarty.txt:98 smarty.txt:110 smarty.txt:112
+#: smarty.txt:118
 msgid ""
 "For now, you need to be logged in at a hotspot or to fake a login from one "
 "of the HotSpot login pages to have your administrative clearance recognised."
 msgstr ""
-"Pour l'instant, vous devez &ecirc;tre connect&eacute;eacute; &agrave; partir d'un "
-"point d'acc&egrave;s ou simuler une connexion depuis une des pages de "
+"Pour l'instant, vous devez &ecirc;tre connect&eacute;eacute; &agrave; partir "
+"d'un point d'acc&egrave;s ou simuler une connexion depuis une des pages de "
 "connexion d'un point d'acc&egrave;s pour pouvoir obtenir les acc&egrave;s "
 "administratifs."
 
@@ -210,20 +213,21 @@ msgid ""
 "grace period started on $user_info[reg_date]).  You will have to connect to "
 "the internet and validate your account from another location."
 msgstr ""
-"D&eacute;sol&eacute;, votre p&eacute;riode de $validation_grace_time minutes pour prendre votre "
-"courriel et valider votre compte a expir&eacute;. (La p&eacute;riode de "
-"$validation_grace_time minutes avait d&eacute;but&eacute; le $user_info[reg_date]).  Vous "
-"devez vous connecter &agrave; l'Internet par un autre moyen et valider votre compte."
+"D&eacute;sol&eacute;, votre p&eacute;riode de $validation_grace_time minutes "
+"pour prendre votre courriel et valider votre compte a expir&eacute;. (La "
+"p&eacute;riode de $validation_grace_time minutes avait d&eacute;but&eacute; "
+"le $user_info[reg_date]).  Vous devez vous connecter &agrave; l'Internet par "
+"un autre moyen et valider votre compte."
 
 #: smarty.txt:31 smarty.txt:35 smarty.txt:34 smarty.txt:44 smarty.txt:45
 #: smarty.txt:46 smarty.txt:53 smarty.txt:54 smarty.txt:59 smarty.txt:76
-#: smarty.txt:70 smarty.txt:95 smarty.txt:107 smarty.txt:110
+#: smarty.txt:70 smarty.txt:95 smarty.txt:107 smarty.txt:110 smarty.txt:116
 msgid "Online at this hotspot"
 msgstr "En ligne &agrave; ce point d'acc&egrave;s sans-fil"
 
 #: smarty.txt:32 smarty.txt:36 smarty.txt:35 smarty.txt:45 smarty.txt:46
 #: smarty.txt:47 smarty.txt:54 smarty.txt:55 smarty.txt:60 smarty.txt:77
-#: smarty.txt:71 smarty.txt:96 smarty.txt:108 smarty.txt:111
+#: smarty.txt:71 smarty.txt:96 smarty.txt:108 smarty.txt:111 smarty.txt:117
 msgid "Go to the site I originally requested"
 msgstr "Aller au site web que j'ai demand&eacute;"
 
@@ -630,7 +634,8 @@ msgstr "Mauvais mot de passe."
 
 #: ../change_password.php:62 ../change_password.php:49
 msgid "Your password has been changed succesfully."
-msgstr "Votre mot de passe a &eacute;t&eacute; chang&eacute; avec succ&egrave;s."
+msgstr ""
+"Votre mot de passe a &eacute;t&eacute; chang&eacute; avec succ&egrave;s."
 
 #: ../change_password.php:66
 msgid "Could not change your password"
@@ -706,7 +711,8 @@ msgstr ""
 msgid "Nobody's online!"
 msgstr "Il n'y a personne en ligne!"
 
-#: smarty.txt:32 smarty.txt:42 smarty.txt:38 smarty.txt:109
+#: smarty.txt:32 smarty.txt:42 smarty.txt:38 smarty.txt:109 smarty.txt:114
+#: smarty.txt:115
 msgid "Welcome! Hotspot:"
 msgstr "Bienvenue! Noeud sans-fil:"
 
@@ -762,7 +768,8 @@ msgstr "Impossible d'&eacute;crire dans le r&eacute;pertoire '"
 
 #: ../admin/owner_sendfiles.php:74 ../admin/owner_sendfiles.php:67
 msgid "', ownership should be set to user "
-msgstr "', le propr&eacute;taire n'a pu &ecirc;tre assign&eacute; &agrave; l'usager "
+msgstr ""
+"', le propr&eacute;taire n'a pu &ecirc;tre assign&eacute; &agrave; l'usager "
 
 #: ../classes/User.php:79
 msgid "{$field_id} '{$object_id_str}' could not be found in the database"
@@ -828,7 +835,7 @@ msgstr "est inconnu de ce serveur d'authentification."
 msgid "No Hotspot specified!"
 msgstr "Aucun point d'acc&egrave;s sp&eacute;cifi&eacute;!"
 
-#: smarty.txt:41 smarty.txt:95
+#: smarty.txt:41 smarty.txt:95 smarty.txt:107
 msgid "Please get in touch with "
 msgstr "Veuillez contacter "
 
@@ -895,105 +902,106 @@ msgstr ""
 msgid "sign-up."
 msgstr "cr&eacute;er un compte"
 
-#: smarty.txt:97 smarty.txt:109 smarty.txt:120
+#: smarty.txt:97 smarty.txt:109 smarty.txt:120 smarty.txt:126
 msgid "new users"
 msgstr "nouveaux utilisateurs"
 
-#: smarty.txt:99 smarty.txt:111 smarty.txt:113
+#: smarty.txt:99 smarty.txt:111 smarty.txt:113 smarty.txt:119
 msgid "User logs"
 msgstr "Logs des utilisateurs"
 
-#: smarty.txt:100 smarty.txt:112 smarty.txt:114
+#: smarty.txt:100 smarty.txt:112 smarty.txt:114 smarty.txt:108 smarty.txt:120
 msgid "Online Users"
 msgstr "Usagers en ligne"
 
-#: smarty.txt:101 smarty.txt:113 smarty.txt:115
+#: smarty.txt:101 smarty.txt:113 smarty.txt:115 smarty.txt:121
 msgid "Cumulative user statistics"
 msgstr "Statistiques cumulatives des utilisateurs"
 
-#: smarty.txt:102 smarty.txt:114 smarty.txt:116
+#: smarty.txt:102 smarty.txt:114 smarty.txt:116 smarty.txt:122
 msgid "Hotspot logs"
 msgstr "Logs des noeuds"
 
-#: smarty.txt:103 smarty.txt:115 smarty.txt:117
+#: smarty.txt:103 smarty.txt:115 smarty.txt:117 smarty.txt:123
 msgid "Import NoCat user database"
 msgstr "Importer la base d'utilisateur NoCat"
 
-#: smarty.txt:104 smarty.txt:116 smarty.txt:118
+#: smarty.txt:104 smarty.txt:116 smarty.txt:118 smarty.txt:124
 msgid "Hotspot creation and configuration"
 msgstr "Cr&eacute;ation et configuration d'un point d'acc&egrave;s"
 
-#: smarty.txt:105 smarty.txt:117 smarty.txt:119
+#: smarty.txt:105 smarty.txt:117 smarty.txt:119 smarty.txt:125
 msgid "Hotspot owner administration"
 msgstr "Administrateur du propri&eacute;taire de point d'acc&egrave;s"
 
-#: smarty.txt:106 smarty.txt:118 smarty.txt:121
+#: smarty.txt:106 smarty.txt:118 smarty.txt:121 smarty.txt:127
 msgid "Sort"
 msgstr "Trier"
 
 #: smarty.txt:107 smarty.txt:127 smarty.txt:132 smarty.txt:119 smarty.txt:145
-#: smarty.txt:122 smarty.txt:150
+#: smarty.txt:122 smarty.txt:150 smarty.txt:128 smarty.txt:156
 msgid "Configurations of all nodes of the"
 msgstr "Configuration de tous les noeuds de"
 
 #: smarty.txt:112 smarty.txt:130 smarty.txt:136 smarty.txt:124 smarty.txt:141
-#: smarty.txt:149 smarty.txt:127 smarty.txt:146 smarty.txt:154
+#: smarty.txt:149 smarty.txt:127 smarty.txt:146 smarty.txt:154 smarty.txt:133
+#: smarty.txt:152 smarty.txt:160
 msgid "Action"
 msgstr "Action"
 
-#: smarty.txt:113 smarty.txt:125 smarty.txt:128
+#: smarty.txt:113 smarty.txt:125 smarty.txt:128 smarty.txt:134
 msgid "Edit"
 msgstr "Modifier"
 
-#: smarty.txt:114 smarty.txt:126 smarty.txt:129
+#: smarty.txt:114 smarty.txt:126 smarty.txt:129 smarty.txt:135
 msgid "Owner"
 msgstr "Propri&eacute;taire"
 
-#: smarty.txt:115 smarty.txt:127 smarty.txt:130
+#: smarty.txt:115 smarty.txt:127 smarty.txt:130 smarty.txt:136
 msgid "Delete"
 msgstr "Supprimer"
 
-#: smarty.txt:116 smarty.txt:128 smarty.txt:131
+#: smarty.txt:116 smarty.txt:128 smarty.txt:131 smarty.txt:137
 msgid "Add a new node"
 msgstr "Ajouter un nouveau noeud"
 
-#: smarty.txt:118 smarty.txt:131 smarty.txt:134
+#: smarty.txt:118 smarty.txt:131 smarty.txt:134 smarty.txt:140
 msgid "RSS URL"
 msgstr "Adresse URL du fil RSS"
 
-#: smarty.txt:119 smarty.txt:132 smarty.txt:135
+#: smarty.txt:119 smarty.txt:132 smarty.txt:135 smarty.txt:141
 msgid "Homepage URL"
 msgstr "Adresse URL de la page d'accueil"
 
-#: smarty.txt:120 smarty.txt:133 smarty.txt:136
+#: smarty.txt:120 smarty.txt:133 smarty.txt:136 smarty.txt:142
 msgid "Description"
 msgstr "Description"
 
-#: smarty.txt:121 smarty.txt:134 smarty.txt:137
+#: smarty.txt:121 smarty.txt:134 smarty.txt:137 smarty.txt:143
 msgid "Map URL"
 msgstr "Adresse URL de la carte"
 
-#: smarty.txt:122 smarty.txt:135 smarty.txt:138
+#: smarty.txt:122 smarty.txt:135 smarty.txt:138 smarty.txt:144
 msgid "Street address"
 msgstr "Adresse"
 
-#: smarty.txt:123 smarty.txt:136 smarty.txt:139
+#: smarty.txt:123 smarty.txt:136 smarty.txt:139 smarty.txt:145
 msgid "Public phone number"
 msgstr "Num&eacute;ro de t&eacute;l&eacute;phone"
 
-#: smarty.txt:124 smarty.txt:137 smarty.txt:140
+#: smarty.txt:124 smarty.txt:137 smarty.txt:140 smarty.txt:146
 msgid "Public email"
 msgstr "Courriel"
 
-#: smarty.txt:125 smarty.txt:138 smarty.txt:141
+#: smarty.txt:125 smarty.txt:138 smarty.txt:141 smarty.txt:147
 msgid "Mass transit info"
 msgstr "Information sur transport en commun"
 
-#: smarty.txt:126 smarty.txt:139 smarty.txt:142
+#: smarty.txt:126 smarty.txt:139 smarty.txt:142 smarty.txt:148
 msgid "Node deployment status"
 msgstr "Statut de d&eacute;ploiement du point d'acc&egrave;s"
 
-#: smarty.txt:129 smarty.txt:143 smarty.txt:148
+#: smarty.txt:129 smarty.txt:143 smarty.txt:148 smarty.txt:154
 msgid "User ID"
 msgstr "Nom d'utilisateur"
 
@@ -1117,19 +1125,19 @@ msgstr ""
 "D&egrave;s que cette derni&egrave;re &eacute;tape sera termin&eacute;e, vous "
 "aurez un acc&egrave;s complet gratuit &agrave; l'Internet"
 
-#: smarty.txt:129 smarty.txt:132
+#: smarty.txt:129 smarty.txt:132 smarty.txt:138
 msgid "ID"
 msgstr ""
 
-#: smarty.txt:140 smarty.txt:145
+#: smarty.txt:140 smarty.txt:145 smarty.txt:151
 msgid "Administrators"
 msgstr "Administrateurs"
 
-#: smarty.txt:142 smarty.txt:147
+#: smarty.txt:142 smarty.txt:147 smarty.txt:153
 msgid "Give a user rights to administer this node"
 msgstr "Donner &agrave; un utilisateur acc&egrave;s d'administrer ce noeud"
 
-#: smarty.txt:144 smarty.txt:149
+#: smarty.txt:144 smarty.txt:149 smarty.txt:155
 msgid "Add"
 msgstr "Ajouter"
 
@@ -1151,15 +1159,15 @@ msgstr "Voir carte"
 msgid "Contact:"
 msgstr "Contact :"
 
-#: smarty.txt:107 smarty.txt:108
+#: smarty.txt:107 smarty.txt:108 smarty.txt:113
 msgid "tout"
 msgstr ""
 
-#: smarty.txt:143
+#: smarty.txt:143 smarty.txt:149
 msgid "Add new node"
 msgstr "Ajouter un nouveau noeud"
 
-#: smarty.txt:144
+#: smarty.txt:144 smarty.txt:150
 msgid "Update node"
 msgstr "Mettre &agrave; jour le noeud"
 
@@ -1268,3 +1276,15 @@ msgstr "Impossible de retirer le propri&eacute;taire"
 #: ../portal/index.php:108 ../portal/index_new.php:93
 msgid "Channel: "
 msgstr "Canal: "
+
+#: smarty.txt:109
+msgid "Username"
+msgstr ""
+
+#: smarty.txt:110
+msgid "The website I requested"
+msgstr ""
+
+#: smarty.txt:112
+msgid "My Profile"
+msgstr ""
