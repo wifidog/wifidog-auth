@@ -15,7 +15,7 @@ CREATE DATABASE wifidog WITH TEMPLATE = template0 ENCODING = 'LATIN1';
 SET search_path = public, pg_catalog;
 
 --
--- TOC entry 4 (OID 299867)
+-- TOC entry 3 (OID 299867)
 -- Name: administrators; Type: TABLE; Schema: public; Owner: wifidog
 --
 
@@ -25,7 +25,7 @@ CREATE TABLE administrators (
 
 
 --
--- TOC entry 5 (OID 299872)
+-- TOC entry 4 (OID 299872)
 -- Name: token_status; Type: TABLE; Schema: public; Owner: wifidog
 --
 
@@ -35,7 +35,7 @@ CREATE TABLE token_status (
 
 
 --
--- TOC entry 6 (OID 299881)
+-- TOC entry 5 (OID 299881)
 -- Name: connections; Type: TABLE; Schema: public; Owner: wifidog
 --
 
@@ -57,7 +57,7 @@ CREATE TABLE connections (
 
 
 --
--- TOC entry 7 (OID 299895)
+-- TOC entry 6 (OID 299895)
 -- Name: nodes; Type: TABLE; Schema: public; Owner: wifidog
 --
 
@@ -72,7 +72,7 @@ CREATE TABLE nodes (
 
 
 --
--- TOC entry 9 (OID 299906)
+-- TOC entry 7 (OID 299906)
 -- Name: users; Type: TABLE; Schema: public; Owner: wifidog
 --
 
@@ -87,7 +87,7 @@ CREATE TABLE users (
 
 
 --
--- TOC entry 10 (OID 300988)
+-- TOC entry 8 (OID 300988)
 -- Name: node_owners; Type: TABLE; Schema: public; Owner: wifidog
 --
 
@@ -98,7 +98,7 @@ CREATE TABLE node_owners (
 
 
 --
--- TOC entry 15 (OID 300919)
+-- TOC entry 12 (OID 300919)
 -- Name: idx_token; Type: INDEX; Schema: public; Owner: wifidog
 --
 
@@ -106,7 +106,7 @@ CREATE INDEX idx_token ON connections USING btree (token);
 
 
 --
--- TOC entry 16 (OID 300920)
+-- TOC entry 13 (OID 300920)
 -- Name: idx_token_status_and_user_id; Type: INDEX; Schema: public; Owner: wifidog
 --
 
@@ -114,7 +114,7 @@ CREATE INDEX idx_token_status_and_user_id ON connections USING btree (token_stat
 
 
 --
--- TOC entry 12 (OID 299870)
+-- TOC entry 9 (OID 299870)
 -- Name: administrators_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -123,7 +123,7 @@ ALTER TABLE ONLY administrators
 
 
 --
--- TOC entry 13 (OID 299874)
+-- TOC entry 10 (OID 299874)
 -- Name: token_status_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -132,7 +132,7 @@ ALTER TABLE ONLY token_status
 
 
 --
--- TOC entry 14 (OID 299889)
+-- TOC entry 11 (OID 299889)
 -- Name: connections_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -141,7 +141,7 @@ ALTER TABLE ONLY connections
 
 
 --
--- TOC entry 17 (OID 299901)
+-- TOC entry 14 (OID 299901)
 -- Name: nodes_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -150,7 +150,7 @@ ALTER TABLE ONLY nodes
 
 
 --
--- TOC entry 18 (OID 299912)
+-- TOC entry 15 (OID 299912)
 -- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -159,7 +159,7 @@ ALTER TABLE ONLY users
 
 
 --
--- TOC entry 19 (OID 310107)
+-- TOC entry 16 (OID 310107)
 -- Name: node_owners_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -168,7 +168,7 @@ ALTER TABLE ONLY node_owners
 
 
 --
--- TOC entry 21 (OID 299891)
+-- TOC entry 18 (OID 299891)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -177,7 +177,7 @@ ALTER TABLE ONLY connections
 
 
 --
--- TOC entry 20 (OID 299914)
+-- TOC entry 17 (OID 299914)
 -- Name: administrators_ibfk_1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -186,7 +186,7 @@ ALTER TABLE ONLY administrators
 
 
 --
--- TOC entry 22 (OID 300909)
+-- TOC entry 19 (OID 300909)
 -- Name: fk_users; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -195,7 +195,7 @@ ALTER TABLE ONLY connections
 
 
 --
--- TOC entry 23 (OID 300913)
+-- TOC entry 20 (OID 300913)
 -- Name: fk_nodes; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -204,7 +204,7 @@ ALTER TABLE ONLY connections
 
 
 --
--- TOC entry 24 (OID 310097)
+-- TOC entry 21 (OID 310097)
 -- Name: fk_users; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -213,35 +213,11 @@ ALTER TABLE ONLY node_owners
 
 
 --
--- TOC entry 25 (OID 310101)
+-- TOC entry 22 (OID 310101)
 -- Name: fk_nodes; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
 ALTER TABLE ONLY node_owners
     ADD CONSTRAINT fk_nodes FOREIGN KEY (node_id) REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- TOC entry 2 (OID 2200)
--- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
---
-
-COMMENT ON SCHEMA public IS 'Standard public schema';
-
-
---
--- TOC entry 8 (OID 299895)
--- Name: COLUMN nodes.last_heartbeat_ip; Type: COMMENT; Schema: public; Owner: wifidog
---
-
-COMMENT ON COLUMN nodes.last_heartbeat_ip IS 'The last IP the node''s gateway pinged the auth server from.';
-
-
---
--- TOC entry 11 (OID 300988)
--- Name: TABLE node_owners; Type: COMMENT; Schema: public; Owner: wifidog
---
-
-COMMENT ON TABLE node_owners IS 'Which user are owner of a node and can view statistics, etc.';
 
 

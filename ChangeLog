@@ -1,5 +1,8 @@
 # $Header$
 2004-09-27 Benoit Grégoire  <bock@step.polymtl.ca>
+	* sql/wifidog-postgres-schema.sql:  Remove non SQL standard "COMMENT ON" comments
+
+2004-09-27 Benoit Grégoire  <bock@step.polymtl.ca>
 	* sql/wifidog-postgres-schema.sql:  Drop procedural language stuff
 
 2004-09-27 Benoit Grégoire  <bock@step.polymtl.ca>
