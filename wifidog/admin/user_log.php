@@ -26,11 +26,13 @@ define('BASEPATH','../');
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'classes/SmartyWifidog.php';
 require_once BASEPATH.'classes/Security.php';
+require_once BASEPATH.'classes/Statistics.php';
 $security=new Security();
 $security->requireAdmin();
 
 $smarty = new SmartyWifidog;
 $session = new Session;
+$stats = new Statistics();
 
 include BASEPATH.'include/language.php';
 
@@ -41,8 +43,7 @@ $total['outgoing'] = 0;
 if (!empty($_REQUEST['user_id'])) {
     $db->ExecSqlUniqueRes("SELECT * FROM users WHERE user_id='$_REQUEST[user_id]'",$userinfo,false);
     if (!$userinfo) {
-	    echo "<p class=warning>"._("Error: Unable to locate $_REQUEST[user_id] in the database.")."</p>\n";
-	    exit;
+        $smarty->assign("error", _("Unable to locate ") . $_REQUEST['user_id'] . _(" in the database."));
     } else {
 	    $userinfo['account_status_description'] = $account_status_to_text[$userinfo['account_status']]; 
 	    $smarty->assign("userinfo", $userinfo);
@@ -57,21 +58,32 @@ if (!empty($_REQUEST['user_id'])) {
 	        }
 	        $smarty->assign("total", $total);
 	    } else {
-	    //No connections from user yet
+	        //No connections from user yet
 	    }
     }
     $smarty->display("admin/templates/user_log_detailed.html");
 } else {
-    $db->ExecSql("SELECT user_id FROM users ORDER BY user_id", $users_res);
-    if ($users_res) {
-	    $users = array();
-	    foreach ($users_res as $row) {
-	        $users[$row['user_id']] = $row['user_id'];
-	    }
-	    $smarty->assign("users_array", $users);
+    if (isset($_REQUEST["page"]) && is_numeric($_REQUEST["page"])) {
+        $current_page = $_REQUEST["page"];
     } else {
-		echo "<p class=warning>"._('Internal error.')." 3</p>\n";
-	    exit;
+        $current_page = 1;
+    }
+
+    $per_page = 10;
+    $offset = (($current_page * $per_page) - $per_page + 1);
+    $pages = $stats->getNumUsers() / $per_page;
+    for ($i = 1; $i <= $pages+1; $i++) {
+        $smarty->append("pages", array(
+                'number' => $i,
+                'selected' => ($i == $current_page),
+            ));
+    }
+
+    $db->ExecSql("SELECT user_id,email,reg_date FROM users ORDER BY user_id LIMIT $per_page OFFSET $offset", $users_res);
+    if ($users_res) {
+	    $smarty->assign("users_array", $users_res);
+    } else {
+        $smarty->assign("error", _('Internal error.'));
     }
 
     $smarty->display("admin/templates/user_log.html");
