@@ -1,0 +1,76 @@
+{include file="templates/header.html"}
+
+<table>
+<tr>
+	<td><b>Online Status:</b></td>
+	<td>
+    {if $userinfo.online_status == ONLINE_STATUS_ONLINE}
+    <font color="#008000"><b>Online</b></font>
+    {elseif $userinfo.online_status == ONLINE_STATUS_OFFLINE}
+    Offline
+    {else}
+    Unknown
+    {/if}
+    </td>
+</tr>
+<tr>
+	<td><b>User email:</b></td>
+	<td>{$userinfo.email}</td>
+</tr>
+<tr>
+	<td><b>User ID:</b></td>
+	<td>{$userinfo.user_id}</td>
+</tr>
+<tr>
+	<td><b>Registered on:</b></td>
+	<td>{$userinfo.reg_date|date_format:"%Y/%m/%d"}</td>
+</tr>
+<tr>
+	<td><b>Account Status:</b></td>
+	<td>{$userinfo.account_status_description}</td>
+</tr>
+<tr>
+	<td><b>Registered on:</b></td>
+	<td>{$userinfo.reg_date|date_format:"%Y/%m/%d"}</td>
+</tr>
+</table>
+
+{if $connections}
+<p><b>Connections:</b></p>
+
+<table border="1">
+<tr>
+	<td><b>Date In</b></td>
+	<td><b>Date Out</b></td>
+	<td><b>Token status</b></td>
+	<td><b>User's MAC</b></td>
+	<td><b>User's IP</b></td>
+	<td><b>Hotspot ID</b></td>
+	<td><b>Hotspot IP</b></td>
+	<td><b>Incoming traffic</b></td>
+	<td><b>Outgoing traffic</b></td>
+</tr>
+{foreach from=$connections item=connection}
+<tr>
+	<td>{$connection.timestamp_in}</td>
+	<td>{$connection.timestamp_out}</td>
+	<td>{$connection.token_status_description}</td>
+	<td>{$connection.user_mac}</td>
+	<td>{$connection.user_ip}</td>
+	<td>{$connection.node_id}</td>
+	<td>{$connection.node_ip}</td>
+	<td align="right">{$connection.incoming}</td>
+	<td align="right">{$connection.outgoing}</td>
+</tr>
+{/foreach}
+<tr>
+	<td COLSPAN=7 align="right">Total</td>
+	<td align="right">{$total.incoming}</td>
+	<td align="right">{$total.outgoing}</td>
+</tr>
+</table>
+{else}
+<p><b>No connections from this user yet!</b></p>
+{/if}
+
+{include file="templates/footer.html"}

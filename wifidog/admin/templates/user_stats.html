@@ -1,82 +1,100 @@
-<html>
-<head>
-<title>User Statistics</title>
-</head>
-<body>
+{include file="templates/header.html"}
+
+<div id="user_stats">
 
 <table>
+<thead>
 <tr>
-	<td><b>Online Status:</b></td>
-	<td>
-    {if $userinfo.online_status == ONLINE_STATUS_ONLINE}
-    <font color="#008000"><b>Online</b></font>
-    {elseif $userinfo.online_status == ONLINE_STATUS_OFFLINE}
-    Offline
-    {else}
-    Unknown
-    {/if}
+    <th colspan=5>Cumulative user statistics</th>
+</tr>
+</thead>
+
+<tr>
+    <th>Total number of users in the database</th>
+    <td>{$total_users}</td>
+</tr>
+	
+<tr>
+    <th>Number of validated users</th>
+    <td>{$total_valid}</td>
+</tr>
+
+<tr>
+    <th>User registration</th>
+    <td>
+    {section name=i loop=$registrations}
+    {$registrations[i].month}: {$registrations[i].num_users} {"new users"|_}
+    {/section}
     </td>
 </tr>
+	
 <tr>
-	<td><b>User email:</b></td>
-	<td>{$userinfo.email}</td>
-</tr>
-<tr>
-	<td><b>User ID:</b></td>
-	<td>{$userinfo.user_id}</td>
-</tr>
-<tr>
-	<td><b>Registered on:</b></td>
-	<td>{$userinfo.reg_date|date_format:"%Y/%m/%d"}</td>
-</tr>
-<tr>
-	<td><b>Account Status:</b></td>
-	<td>{$userinfo.account_status_description}</td>
-</tr>
-<tr>
-	<td><b>Registered on:</b></td>
-	<td>{$userinfo.reg_date|date_format:"%Y/%m/%d"}</td>
-</tr>
-</table>
+    <th>Ten most mobile users</th>
+    <td>
+    
+    <table>
+    <tr>
+        <th>User</th>
+        <th>Number of hotspots visited</th>
+    </tr>
 
-{if $connections}
-<p><b>Connections:</b></p>
+    {section name=i loop=$most_mobile_users}
+    <tr>
+        <td>{$most_mobile_users[i].user_id}</td>
+        <td>{$most_mobile_users[i].num_hotspots_visited}</td>
+    </tr>
+    {/section}
+    </table>
 
-<table border="1">
-<tr>
-	<td><b>Date In</b></td>
-	<td><b>Date Out</b></td>
-	<td><b>Token status</b></td>
-	<td><b>User's MAC</b></td>
-	<td><b>User's IP</b></td>
-	<td><b>Hotspot ID</b></td>
-	<td><b>Hotspot IP</b></td>
-	<td><b>Incoming traffic</b></td>
-	<td><b>Outgoing traffic</b></td>
+    </td>
 </tr>
-{foreach from=$connections item=connection}
-<tr>
-	<td>{$connection.timestamp_in}</td>
-	<td>{$connection.timestamp_out}</td>
-	<td>{$connection.token_status_description}</td>
-	<td>{$connection.user_mac}</td>
-	<td>{$connection.user_ip}</td>
-	<td>{$connection.node_id}</td>
-	<td>{$connection.node_ip}</td>
-	<td align="right">{$connection.incoming}</td>
-	<td align="right">{$connection.outgoing}</td>
-</tr>
-{/foreach}
-<tr>
-	<td COLSPAN=7 align="right">Total</td>
-	<td align="right">{$total.incoming}</td>
-	<td align="right">{$total.outgoing}</td>
-</tr>
-</table>
-{else}
-<p><b>No connections from this user yet!</b></p>
-{/if}
 
-</body>
-</html>
+<tr>
+    <th>Ten most frequent users</th>
+    <td>
+    
+    <table>
+    <tr>
+        <th>User</th>
+        <th>Number of distinct days user has used the network</th>
+    </tr>
 
+    {section name=i loop=$most_frequent_users}
+    <tr>
+        <td>{$most_frequent_users[i].user_id}</td>
+        <td>{$most_frequent_users[i].active_days}</td>
+    </tr>
+    {/section}
+    </table>
+
+    </td>
+</tr>
+
+<tr>
+    <th>Ten largest apetite for bandwidth</th>
+    <td>
+    
+    <table>
+    <tr>
+        <th>User</th>
+        <th>Total (MB)</th>
+        <th>Incoming (MB)</th>
+        <th>Outgoing (MB)</th>
+    </tr>
+
+    {section name=i loop=$most_apetite_users}
+    <tr>
+        <td>{$most_apetite_users[i].user_id}</td>
+        <td>{$most_apetite_users[i].total}</td>
+        <td>{$most_apetite_users[i].total_incoming}</td>
+        <td>{$most_apetite_users[i].total_outgoing}</td>
+    </tr>
+    {/section}
+    </table>
+
+    </td>
+</tr>
+
+</div>
+
+{include file="templates/footer.html"}

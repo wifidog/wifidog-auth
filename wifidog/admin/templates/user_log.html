@@ -1,0 +1,19 @@
+{include file="templates/header.html"}
+
+<form method="post">
+<table>
+<tr>
+	<td><b>Users:</b></td>
+	<td>
+	<select name='user_id'>
+		{html_options options=$users_array}
+	</select>
+	</td>
+</tr>
+<tr>
+	<td></td>
+	<td><input type="submit"></td>
+</tr>
+</form>
+
+{include file="templates/footer.html"}

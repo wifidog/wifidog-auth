@@ -25,17 +25,14 @@
 
 define('BASEPATH','../');
 require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/Style.php';
-require_once (BASEPATH.'include/user_management_menu.php');
 require_once BASEPATH.'classes/Statistics.php';
 require_once BASEPATH.'classes/Security.php';
 $security=new Security();
 $security->requireAdmin();
 
-$style = new Style();
 $stats=new Statistics();
-echo $style->GetHeader(HOTSPOT_NETWORK_NAME._(' cumulative user statistics'));
-    echo "<div id='head'><h1>". HOTSPOT_NETWORK_NAME ._(' cumulative user statistics')."</h1></div>\n";    
+
+echo "<div id='head'><h1>". HOTSPOT_NETWORK_NAME ._(' cumulative user statistics')."</h1></div>\n";    
 echo "<div id='navLeft'>\n";
 //echo get_user_management_menu();
 echo "</div>\n";
@@ -62,6 +59,4 @@ echo "<h3>This script was meant for auth servers that rean prior to the release 
 	$db->ExecSqlUpdate($sql, true);
 
     echo "</div>\n";	
-
-echo $style->GetFooter();
 ?>

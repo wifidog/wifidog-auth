@@ -24,7 +24,6 @@
 
 define('BASEPATH','../');
 require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/Style.php';
 require_once BASEPATH.'classes/Security.php';
 $security=new Security();
 $security->requireAdmin();
@@ -39,9 +38,6 @@ function PrintUploadedFileInfo($form_name_file)
   echo "Nom du fichier temporaire sur le serveur: ".$_FILES[$form_name_file]['tmp_name']."<br>";
   echo "Erreurs au cours du transfert: ".$_FILES[$form_name_file]['error']."<br>";
 }
-
-$style = new Style();
-echo $style->GetHeader(HOTSPOT_NETWORK_NAME.' Import NoCat passwd file');
 
     echo "<div id='head'><h1>"._('NoCat passwd file (user database) import')."</h1></div>\n";
     echo "<div id='content'>\n";	
