@@ -35,7 +35,7 @@ $login_failed_message = '';
 //print_r($_REQUEST);
 if (isset($_REQUEST['user']) && isset($_REQUEST['pass'])) 
   {
- $previous_username = $_REQUEST['user'];
+    $previous_username = $db->EscapeString($_REQUEST['user']);
  $previous_password = $_REQUEST['pass'];
     $user = $db->EscapeString($_REQUEST['user']);
     $password_hash = get_password_hash($_REQUEST['pass']);
@@ -46,13 +46,13 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['pass']))
 	$token = gentoken();
 	if ($_REQUEST['gw_id']) 
 	  {
-	    $hotspot_id = $_REQUEST['gw_id'];
+	    $node_id = $db->EscapeString($_REQUEST['gw_id']);
 	  }
 	if ($_SERVER['REMOTE_ADDR'])
 	  {
-	    $hotspot_ip = $_SERVER['REMOTE_ADDR'];
+	    $node_ip = $db->EscapeString($_SERVER['REMOTE_ADDR']);
 	  }
-	$db->ExecSqlUpdate("INSERT INTO connections (user_id, token, token_status, timestamp_in, hotspot_id, hotspot_ip) VALUES ('{$user_info['user_id']}', '$token', '" . TOKEN_UNUSED . "', NOW(), '$hotspot_id', '$hotspot_ip')");
+	$db->ExecSqlUpdate("INSERT INTO connections (user_id, token, token_status, timestamp_in, node_id, node_ip) VALUES ('{$user_info['user_id']}', '$token', '" . TOKEN_UNUSED . "', NOW(), '$node_id', '$node_ip')");
 	
 	$login_successfull=true;
 	header("Location: http://" . $_REQUEST['gw_address'] . ":" . $_REQUEST['gw_port'] . "/wifidog/auth?token=$token");

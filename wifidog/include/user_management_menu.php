@@ -31,11 +31,11 @@ function get_user_management_menu()
   $retval .= "<p>&nbsp;User management</p>\n";
   $retval .= "<ul>\n";
 
-    $retval .= "<li><a href='".BASE_URL_PATH."".USER_MANAGEMENT_PAGE."?action=validation_email_form'>"._('Send validation email again')."</a></li>\n";
-    $retval .= "<li><a href='".BASE_URL_PATH."".USER_MANAGEMENT_PAGE."?action=lost_username_form'>"._('Lost my username')."</a></li>\n";
-    $retval .= "<li><a href='".BASE_URL_PATH."".USER_MANAGEMENT_PAGE."?action=lost_password_form'>"._('Lost my password')."</a></li>\n";
-    $retval .= "<li><a href='".BASE_URL_PATH."".USER_MANAGEMENT_PAGE."?action=change_password_form'>"._('Change my password')."</a></li>\n"; 
-    $retval .= "<li><a href='".BASE_URL_PATH."".USER_MANAGEMENT_PAGE."?action=register_new_account_form'>"._('Register a new user')."</a></li>\n"; 
+    $retval .= "<li><a href='".BASE_SSL_PATH."".USER_MANAGEMENT_PAGE."?action=validation_email_form'>"._('Send validation email again')."</a></li>\n";
+    $retval .= "<li><a href='".BASE_SSL_PATH."".USER_MANAGEMENT_PAGE."?action=lost_username_form'>"._('Lost my username')."</a></li>\n";
+    $retval .= "<li><a href='".BASE_SSL_PATH."".USER_MANAGEMENT_PAGE."?action=lost_password_form'>"._('Lost my password')."</a></li>\n";
+    $retval .= "<li><a href='".BASE_SSL_PATH."".USER_MANAGEMENT_PAGE."?action=change_password_form'>"._('Change my password')."</a></li>\n"; 
+    $retval .= "<li><a href='".BASE_SSL_PATH."".USER_MANAGEMENT_PAGE."?action=register_new_account_form'>"._('Register a new user')."</a></li>\n"; 
  
   $retval .= "</ul>\n";
   //$retval .= "</div>\n";

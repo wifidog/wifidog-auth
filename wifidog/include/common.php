@@ -56,6 +56,16 @@ define('ONLINE_STATUS_ONLINE',	1);
 define('ONLINE_STATUS_OFFLINE',	2);
 
 /* This section deals with PATHs */
+define('BASE_URL_PATH', 'http://' . $_SERVER['HTTP_HOST'] . SYSTEM_PATH);
+if(SSL_AVAILABLE)
+  {
+    define('BASE_SSL_PATH', 'https://' . $_SERVER['HTTP_HOST'] . SYSTEM_PATH);
+  }
+else
+  {
+    define('BASE_SSL_PATH',BASE_URL_PATH);
+  }
+  
 if(empty($_REQUEST['gw_id']))
   {
     define('CURRENT_NODE_ID', DEFAULT_NODE_ID);
@@ -130,13 +140,16 @@ function garbage_collect()
 /** Get the url from the local content_specific folder if the file exists, and from the default content folder otherwise */
 function find_local_content_url($filename)
 {
-  if (is_file(NODE_CONTENT_URL.$filename))
+//echo "find_local_content_url():  Looking for:                  ".NODE_CONTENT_PHP_RELATIVE_PATH.$filename."<br>\n";
+  if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.$filename))
     {
-      return NODE_CONTENT_URL.$filename;
+       $retval = NODE_CONTENT_URL.$filename;
     }
   else
     {
-      return DEFAULT_CONTENT_URL.$filename;
+      $retval = DEFAULT_CONTENT_URL.$filename;
     }
+    //echo "find_local_content_url():  Returned:                  $retval<br>\n";
+    return $retval;
 }
 ?>

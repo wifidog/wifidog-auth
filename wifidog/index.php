@@ -31,10 +31,10 @@ echo $style->GetHeader(HOTSPOT_NETWORK_NAME.' authentication server');
 
     echo "<h1>Wifidog authentication server for ". HOTSPOT_NETWORK_NAME ."</h1>\n";
     echo "<ul>\n";
-    echo "<li><a href='./login/index.php?gw_id=default&gw_address=127.0.0.1&gw_port=80'>Login (demo)</a></li>\n";
+    echo "<li><a href='".BASE_SSL_PATH."login/index.php?gw_id=default&gw_address=127.0.0.1&gw_port=80'>Login (demo)</a></li>\n";
     echo "<li><a href='./portal/index.php?gw_id=default'>Portal (demo)</a></li>\n";
     echo "<li><a href='./user_management/index.php'>Personal user management</a></li>\n";
-    echo "<li><a href='./admin/index.php'>Administration</a></li>\n";
+    echo "<li><a href='".BASE_SSL_PATH."admin/index.php'>Administration</a></li>\n";
     echo "</ul>\n";
 
 echo $style->GetFooter();
