@@ -33,19 +33,17 @@ $session = new Session;
 
 include BASEPATH.'include/language.php';
 
-$login_successfull = false;
+$login_successful = false;
 $login_failed_message = '';
 $previous_username = '';
 $previous_password = '';
 
-if (!empty($_REQUEST['url']))
-  {
+if (!empty($_REQUEST['url'])) {
     $session = new Session();
     $session->set(SESS_ORIGINAL_URL_VAR, $_REQUEST['url']);
-  }
+}
 
-if (!empty($_REQUEST['user']) && !empty($_REQUEST['pass'])) 
-  {
+if (!empty($_REQUEST['user']) && !empty($_REQUEST['pass'])) {
     $security = new Security();
     $previous_username = $db->EscapeString($_REQUEST['user']);
     $previous_password = $_REQUEST['pass'];
@@ -53,64 +51,47 @@ if (!empty($_REQUEST['user']) && !empty($_REQUEST['pass']))
     $password_hash = get_password_hash($_REQUEST['pass']);
     $db->ExecSqlUniqueRes("SELECT *, CASE WHEN ((NOW() - reg_date) > interval '".VALIDATION_GRACE_TIME." minutes') THEN true ELSE false END AS validation_grace_time_expired FROM users WHERE (user_id='$user' OR email='$user') AND pass='$password_hash'", $user_info, false);
 
-    if ($user_info != null)
-      {
-	if (($user_info['account_status'] == ACCOUNT_STATUS_VALIDATION) && ($user_info['validation_grace_time_expired']=='t')) 
-	  {
-	    $login_successfull=false;
+    if ($user_info != null) {
+	if (($user_info['account_status'] == ACCOUNT_STATUS_VALIDATION) && ($user_info['validation_grace_time_expired']=='t')) {
+	    $login_successful=false;
 	    $validation_grace_time = VALIDATION_GRACE_TIME;
 	    $login_failed_message = _("Sorry, your $validation_grace_time minutes grace period to retrieve your email and validate your account has now expired. ($validation_grace_time min grace period started on $user_info[reg_date]).  You will have to connect to the internet and validate your account from another location.");
-	  }
-	else
-	  {
+	  } else {
 	    $token = gentoken();
-	    if ($_REQUEST['gw_id']) 
-	      {
-		$node_id = $db->EscapeString($_REQUEST['gw_id']);
-	      }
-	    if ($_SERVER['REMOTE_ADDR'])
-	      {
-		$node_ip = $db->EscapeString($_SERVER['REMOTE_ADDR']);
-	      }
+	    if ($_REQUEST['gw_id']) {
+            $node_id = $db->EscapeString($_REQUEST['gw_id']);
+	    }
+	    if ($_SERVER['REMOTE_ADDR']) {
+		    $node_ip = $db->EscapeString($_SERVER['REMOTE_ADDR']);
+	    }
 	    $db->ExecSqlUpdate("INSERT INTO connections (user_id, token, token_status, timestamp_in, node_id, node_ip, last_updated) VALUES ('{$user_info['user_id']}', '$token', '" . TOKEN_UNUSED . "', NOW(), '$node_id', '$node_ip', NOW())");
 	
-	    $login_successfull=true;
+	    $login_successful = true;
 	    $security->login($user, $password_hash);
 	    header("Location: http://" . $_REQUEST['gw_address'] . ":" . $_REQUEST['gw_port'] . "/wifidog/auth?token=$token");
-	  }
-      }
-    else
-      {
-	$user_info = null;
-	/* This is only used to discriminate if the problem was a non-existent user of a wrong password. */
+	    }
+    } else {
+	    $user_info = null;
+	    /* This is only used to discriminate if the problem was a non-existent user of a wrong password. */
         $db->ExecSqlUniqueRes("SELECT * FROM users WHERE user_id='$user' OR email='$user'", $user_info, false);
-	if($user_info == null)
-	  {
-	    $login_failed_message = _('Unknown username or email');
-	  }
-	else
-	  {
-	    $login_failed_message = _('Incorrect password (Maybe you have CAPS LOCK on?)');
-	  }
-      }
-  }
+	    if ($user_info == null) {
+	        $login_failed_message = _('Unknown username or email');
+	    } else {
+	        $login_failed_message = _('Incorrect password (Maybe you have CAPS LOCK on?)');
+	    }
+    }
+}
 
-if($login_successfull==false)
-  {
+if ($login_successful == false) {
     $smarty->assign("lang_menu", "templates/lang_menu.html");
     $smarty->assign("user_management_menu", "templates/user_management_menu.html");
-    $smarty->assign('previous_username',$previous_username);
-    $smarty->assign('previous_password',$previous_password);
-    $smarty->assign('login_failed_message',$login_failed_message);
+    $smarty->assign('previous_username', $previous_username);
+    $smarty->assign('previous_password', $previous_password);
+    $smarty->assign('login_failed_message', $login_failed_message);
     $smarty->assign('gw_address', $_REQUEST['gw_address']);
-    $smarty->assign('gw_port',$_REQUEST['gw_port']);
-    $smarty->assign('gw_id',$_REQUEST['gw_id']);
+    $smarty->assign('gw_port', $_REQUEST['gw_port']);
+    $smarty->assign('gw_id', $_REQUEST['gw_id']);
     
-    //$user_management_url = BASE_URL_PATH."user_management/";
-
-    $smarty->display(DEFAULT_CONTENT_SMARTY_PATH."header.html");
-    $smarty->display(DEFAULT_CONTENT_SMARTY_PATH."header_login.html");
-    $smarty->displayLocalContent(LOGIN_PAGE_NAME);
-    $smarty->display(DEFAULT_CONTENT_SMARTY_PATH."footer.html");
-  }
+    $smarty->display("templates/".LOGIN_PAGE_NAME);
+}
 ?>
