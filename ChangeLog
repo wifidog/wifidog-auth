@@ -1,3 +1,6 @@
+2005-04-01 Benoit Grégoire  <bock@step.polymtl.ca>
+	* wifidog/templates/auth_sources_selection.html:  Add missing file from francois's commit.
+
 2005-04-01 Philippe April <philippe@ilesansfil.org>
 	* Fixed missing parenthesis in classes/User.php
 	* Removed unused files

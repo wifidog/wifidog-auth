@@ -1,0 +1,20 @@
+{if count($auth_sources) > 1}
+<tr>
+	<td>{"Network"|_}:</td>
+	<td>
+		<select name="auth_source">
+    	{foreach key=auth_source_array_key item=auth_source from=$auth_sources}
+    		{if $selected_auth_source == $auth_source_array_key} 
+    		<option SELECTED label="{$auth_source.name}" value="{$auth_source_array_key}">{$auth_source.name}</option>
+    		{else}
+    		<option label="{$auth_source.name}" value="{$auth_source_array_key}">{$auth_source.name}</option>
+    		{/if}
+		{/foreach}
+		</select>
+	</td>
+</tr>
+{else}
+	{foreach key=auth_source_array_key item=auth_source from=$auth_sources}
+    	<input type="hidden" name="auth_source" value="{$auth_source_array_key}">
+	{/foreach}
+{/if}
