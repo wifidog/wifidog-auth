@@ -393,7 +393,7 @@ msgstr "Renvoyez-moi de nouveau le courriel de validation"
 
 #: smarty.txt:44 smarty.txt:49 smarty.txt:43
 msgid "Register a free account with"
-msgstr ""
+msgstr "Ouvrir un compte gratuit avec"
 
 #: smarty.txt:45 smarty.txt:50 smarty.txt:44
 msgid "Username desired"
