@@ -1,0 +1,255 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-01-11 21:59-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../user_management/index.php:347
+msgid "<h3>Inscription</h3>"
+msgstr ""
+
+#: ../user_management/index.php:352
+msgid ".HOTSPOT_NETWORK_NAME."
+msgstr ""
+
+#: ../user_management/index.php:389 ../user_management/index.php:437
+msgid "Unable to find $email in the database."
+msgstr ""
+
+#: ../user_management/index.php:420
+msgid ""
+"This will destroy your previous password, you must confirm this operation."
+msgstr ""
+
+#: ../user_management/index.php:429 ../user_management/index.php:483
+#: ../user_management/index.php:646
+msgid "Unable to find $username in the database."
+msgstr "Incapable de trouver l'usager $username dans la base de donnée."
+
+#: ../user_management/index.php:492
+msgid "Wrong password for $username."
+msgstr "Mauvais mot de passe pour $username."
+
+#: ../user_management/index.php:631
+msgid "Sorry, validation token $validation_token is not valid!"
+msgstr ""
+
+#: smarty.txt:2
+msgid "Find more HotSpots"
+msgstr "Trouver plus de points d'acc&egrave;s sans-fil"
+
+#: smarty.txt:3
+msgid "List of all HotSpots"
+msgstr "Liste de tous les points d'acc&egrave;s sans-fil"
+
+#: smarty.txt:4
+msgid "User management"
+msgstr "Gestion des usagers"
+
+#: smarty.txt:5
+msgid "Create new account"
+msgstr "Cr&eacute;er un nouveau compte"
+
+#: smarty.txt:6
+msgid "Re-send validation email"
+msgstr "Renvoyer le courriel de validation"
+
+#: smarty.txt:7
+msgid "Lost username"
+msgstr "Nom d'usager perdu"
+
+#: smarty.txt:8
+msgid "Lost password"
+msgstr "Mot de passe perdu"
+
+#: smarty.txt:9
+msgid "Change password"
+msgstr "Changer mon mot de passe"
+
+#: smarty.txt:10
+msgid "Accounts on"
+msgstr "Les comptes sur"
+
+#: smarty.txt:11
+msgid ""
+"are and will remain <emp>totally free</emp>, use the left menu to create a "
+"new one or recover a lost username or password"
+msgstr "sont et vont rester <emp>compl&egrave;tement gratuits</emp>, utilisez le "
+"menu de gauche pour cr&eacute;er un nouvel usager ou encore retrouver un nom d'usager "
+"ou un mot de passe perdu"
+
+#: smarty.txt:12
+msgid "Please report any problem or interruption in our service to"
+msgstr "Veuillez nous faire part de tout probl&egrave;me ou interruption "
+"de service &agrave;"
+
+#: smarty.txt:13
+msgid "Status of all nodes of the"
+msgstr "Status de tous les noeuds "
+
+#: smarty.txt:14
+msgid "network"
+msgstr " "
+
+#: smarty.txt:15
+msgid "Status"
+msgstr ""
+
+#: smarty.txt:16
+msgid "Id"
+msgstr ""
+
+#: smarty.txt:17
+msgid "Name"
+msgstr "Nom"
+
+#: smarty.txt:18
+msgid "Local content demo"
+msgstr "D&eacute;mo de contenu local"
+
+#: smarty.txt:19
+msgid "Opened on"
+msgstr "Ouvert le"
+
+#: smarty.txt:20
+msgid "Online users"
+msgstr "Usagers en ligne"
+
+#: smarty.txt:21
+msgid "days"
+msgstr "jours"
+
+#: smarty.txt:22
+msgid "Login page"
+msgstr "Authentification"
+
+#: smarty.txt:23
+msgid "Portal page"
+msgstr "Portail"
+
+#: smarty.txt:24
+msgid "The network currently has"
+msgstr "Le r&eacute;seau a pr&eacute;sentement"
+
+#: smarty.txt:25
+msgid "valid users"
+msgstr "usagers valides"
+
+#: smarty.txt:26
+msgid "user(s) are currently online"
+msgstr "usagers pr&eacute;sentement en ligne"
+
+#: smarty.txt:27
+msgid "Deployed HotSpots status with coordinates"
+msgstr "Noeuds sans-fil d&eacute;ploy&eacute;s avec coordonn&eacute;es"
+
+#: smarty.txt:28
+msgid "Full node technical status (includes non-deployed nodes)"
+msgstr "Status technique compl&egrave;te des noeuds (incluant les noeuds non-d&eacute;ploy&eacute;s"
+
+#: smarty.txt:29
+msgid "Personal user management"
+msgstr "Gestion de mon compte"
+
+#: smarty.txt:30
+msgid "Administration"
+msgstr ""
+
+#: ../admin/import_user_database.php:57
+msgid ""
+"Accept users with no email adresses (Normally, NoCat usernames are expected "
+"to be the user's email adress, and the username is generated from the prefix."
+msgstr ""
+
+#: ../admin/import_user_database.php:59
+msgid "Upload file"
+msgstr ""
+
+#: ../admin/import_user_database.php:62
+msgid ""
+"I am sure I want to import (Otherwise, the import will only be simulated)."
+msgstr ""
+
+#: ../admin/index.php:36
+msgid ""
+"For now, you need to be logged in at a hotspot or to fake a login from one "
+"of the HotSpot login pages to have your administrative clearance recognised."
+msgstr ""
+
+#: ../admin/user_log.php:44
+msgid "Error: Unable to locate $_REQUEST[user_id] in the database."
+msgstr ""
+
+#: ../admin/hotspot_mgmt.php:55
+msgid "Error: Unable to locate $_REQUEST[node_id] in the database."
+msgstr ""
+
+#: ../classes/Security.php:49
+msgid "Your username and password do not match"
+msgstr "Votre nom d'usager et mot de passe de sont pas valides"
+
+#: ../classes/Security.php:69
+msgid "You do not have administrator privileges"
+msgstr "Vous n'avez pas les privileges d'administrateur"
+
+#: ../classes/Security.php:89
+msgid "NOT IMPLEMENTED YET, ACCESS DENIED"
+msgstr ""
+
+#: ../include/user_management_menu.php:45
+msgid "Accounts on "
+msgstr ""
+
+#: ../include/user_management_menu.php:45
+msgid ""
+" are and will remain <emp>totally free</emp>, use the left menu to create a "
+"new one or recover a lost username or password."
+msgstr ""
+
+#: ../include/user_management_menu.php:46
+msgid "Please report any problem or interruption in our service to:"
+msgstr ""
+
+#: ../login/index.php:58 ../login/index.php:62
+msgid ""
+"Sorry, your $validation_grace_time minutes grace period to retrieve your "
+"email and validate your account has now expired. ($validation_grace_time min "
+"grace period started on $user_info[reg_date]).  You will have to connect to "
+"the internet and validate your account from another location."
+msgstr ""
+
+#: smarty.txt:31 smarty.txt:35
+msgid "Online at this hotspot"
+msgstr "En ligne &agrave; ce point d'acc&egrave;s sans-fil"
+
+#: smarty.txt:32 smarty.txt:36
+msgid "Go to the site I originally requested"
+msgstr "Aller au site web que j'ai demand&eacute;"
+
+#: ../portal/index.php:91 ../portal/index.php:92
+msgid "Error"
+msgstr "Erreur"
+
+#: smarty.txt:31
+msgid "Language"
+msgstr "Langue"
+
+#: smarty.txt:33
+msgid "Username (or email)"
+msgstr "Usager (ou courriel)"
+
+#: smarty.txt:34
+msgid "Password"
+msgstr "Mot de passe"
