@@ -23,21 +23,7 @@
    * @author Copyright (C) 2004 Benoit Grégoire
    */
 
-define('BASEPATH','../');
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/Statistics.php';
-require_once BASEPATH.'classes/Security.php';
-require_once BASEPATH.'classes/SmartyWifidog.php';
-
-$security = new Security();
-$security->requireAdmin();
-
-$stats = new Statistics();
-$smarty = new SmartyWifidog;
-$session = new Session;
-
-include BASEPATH.'include/language.php';
-
+require_once 'admin_common.php';
 
 $smarty->assign("total_users",  $stats->getNumUsers());
 $smarty->assign("total_valid",  $stats->getNumValidUsers());

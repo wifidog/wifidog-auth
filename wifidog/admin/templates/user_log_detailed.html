@@ -1,11 +1,17 @@
 {include file="templates/header.html"}
 
+{literal}
+<style>
+	#connections td.bytecount { text-align: right; }
+</style>
+{/literal}
+
 <table>
 <tr>
-	<td><b>Online Status:</b></td>
-	<td>
+    <th>Online Status:</th>
+    <td>
     {if $userinfo.online_status == ONLINE_STATUS_ONLINE}
-    <font color="#008000"><b>Online</b></font>
+    Online
     {elseif $userinfo.online_status == ONLINE_STATUS_OFFLINE}
     Offline
     {else}
@@ -14,59 +20,61 @@
     </td>
 </tr>
 <tr>
-	<td><b>User email:</b></td>
+	<th>User email:</th>
 	<td>{$userinfo.email}</td>
 </tr>
 <tr>
-	<td><b>User ID:</b></td>
+	<th>User ID:</th>
 	<td>{$userinfo.user_id}</td>
 </tr>
 <tr>
-	<td><b>Registered on:</b></td>
+	<th>Registered on:</th>
 	<td>{$userinfo.reg_date|date_format:"%Y/%m/%d"}</td>
 </tr>
 <tr>
-	<td><b>Account Status:</b></td>
+	<th>Account Status:</th>
 	<td>{$userinfo.account_status_description}</td>
 </tr>
 </table>
 
+<div id="connections">
 {if $connections}
-<p><b>Connections:</b></p>
 
-<table border="1">
+<table>
 <tr>
-	<td><b>Date In</b></td>
-	<td><b>Date Out</b></td>
-	<td><b>Token status</b></td>
-	<td><b>User's MAC</b></td>
-	<td><b>User's IP</b></td>
-	<td><b>Hotspot ID</b></td>
-	<td><b>Hotspot IP</b></td>
-	<td><b>Incoming traffic</b></td>
-	<td><b>Outgoing traffic</b></td>
+	<th>Date In</th>
+	<th>Date Out</th>
+	<th>Token status</th>
+	<th>MAC</th>
+	<th>IP</th>
+	<th>Hotspot ID</th>
+	<th>Hotspot IP</th>
+	<th>Incoming traffic</th>
+	<th>Outgoing traffic</th>
 </tr>
 {foreach from=$connections item=connection}
 <tr>
-	<td>{$connection.timestamp_in}</td>
-	<td>{$connection.timestamp_out}</td>
+	<td>{$connection.timestamp_in|date_format:"%Y-%m-%d %H:%M:%S"}</td>
+	<td>{$connection.timestamp_out|date_format:"%Y-%m-%d %H:%M:%S"}</td>
 	<td>{$connection.token_status_description}</td>
 	<td>{$connection.user_mac}</td>
 	<td>{$connection.user_ip}</td>
 	<td><acronym title="{$connection.name}">{$connection.node_id}</acronym></td>
 	<td>{$connection.node_ip}</td>
-	<td align="right">{$connection.incoming}</td>
-	<td align="right">{$connection.outgoing}</td>
+	<td class="bytecount">{$connection.incoming}</td>
+	<td class="bytecount">{$connection.outgoing}</td>
 </tr>
 {/foreach}
 <tr>
-	<td COLSPAN=7 align="right">Total</td>
-	<td align="right">{$total.incoming}</td>
-	<td align="right">{$total.outgoing}</td>
+	<td colspan="7">Total</td>
+	<td>{$total.incoming}</td>
+	<td>{$total.outgoing}</td>
 </tr>
 </table>
+
 {else}
-<p><b>No connections from this user yet!</b></p>
+No connections from this user yet!
 {/if}
+</div>
 
 {include file="templates/footer.html"}

@@ -23,20 +23,7 @@
    * @author Copyright (C) 2004 Benoit Grégoire
    */
 
-define('BASEPATH','../');
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/Statistics.php';
-require_once BASEPATH.'classes/SmartyWifidog.php';
-require_once BASEPATH.'classes/Session.php';
-require_once BASEPATH.'classes/Security.php';
-$security=new Security();
-$security->requireAdmin();
-
-$smarty = new SmartyWifidog;
-$stats = new Statistics();
-$session = new Session;
-
-include BASEPATH.'include/language.php';
+require_once 'admin_common.php';
 
 $db->ExecSql("SELECT node_id, name, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up, creation_date FROM nodes ORDER BY node_id", $node_results, false);
 

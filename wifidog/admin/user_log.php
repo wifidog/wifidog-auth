@@ -22,19 +22,7 @@
    * @author Copyright (C) 2004 Philippe April.
    */
   
-define('BASEPATH','../');
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/SmartyWifidog.php';
-require_once BASEPATH.'classes/Security.php';
-require_once BASEPATH.'classes/Statistics.php';
-$security=new Security();
-$security->requireAdmin();
-
-$smarty = new SmartyWifidog;
-$session = new Session;
-$stats = new Statistics();
-
-include BASEPATH.'include/language.php';
+require_once 'admin_common.php';
 
 $total = array();
 $total['incoming'] = 0;

@@ -1,16 +1,17 @@
 {include file="templates/header.html"}
 
 {if $error}
-<div id="help">
-{$error}
-</div>
+	<div id="help">
+	{$error}
+	</div>
 {else}
+
 <div>
 <table>
 <tr>
-	<td><b>Users</b></td>
-	<td><b>Email</b></td>
-	<td><b>Registered On</b></td>
+	<th>Users</th>
+	<th>Email</th>
+	<th>Registered On</th>
 </tr>
 {section name=i loop=$users_array}
 <tr>

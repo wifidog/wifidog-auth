@@ -23,14 +23,7 @@
    * @author Copyright (C) 2004 Benoit Grégoire
    */
 
-define('BASEPATH','../');
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/Statistics.php';
-require_once BASEPATH.'classes/Security.php';
-$security=new Security();
-$security->requireAdmin();
-
-$stats=new Statistics();
+require_once 'admin_common.php';
 
 echo "<div id='head'><h1>". HOTSPOT_NETWORK_NAME ._(' cumulative user statistics')."</h1></div>\n";    
 echo "<div id='navLeft'>\n";

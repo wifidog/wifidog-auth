@@ -22,11 +22,7 @@
    * @author Copyright (C) 2004 Technologies Coeus inc.
    */
 
-define('BASEPATH','../');
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/Security.php';
-$security=new Security();
-$security->requireAdmin();
+require_once 'admin_common.php';
 
 /** Affiche les informations sur le fichier envoyé par le client
  */
