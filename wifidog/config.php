@@ -6,8 +6,14 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.30  2005/04/01 21:38:23  fproulx
+ *     2005-04-01 Francois Proulx  <francois.proulx@gmail.com>
+ *     	* EVERYTHING IS NOW UTF-8 YOU MUST EDIT YOUR FILES WITH AN UTF-8 COMPLIANT EDITOR
+ *     	* The database will be converted to UTF-8 (version 5)
+ *     	* Added select boxes ( or hidden ) html form elements to choose the network for signup, lost password, username
+ *
  *     Revision 1.29  2005/04/01 20:58:28  benoitg
- *     2005-04-01 Benoit Grégoire  <bock@step.polymtl.ca>
+ *     2005-04-01 Benoit Grï¿½goire  <bock@step.polymtl.ca>
  *     	* Add constraints to account_origin to detect errors on inserts.
  *     	* Remove IDRC test server
  *
@@ -16,13 +22,13 @@
  *     	* User.php: Add reference to $db global variable.
  *
  *     Revision 1.27  2005/04/01 02:05:32  benoitg
- *     2005-03-31 Benoit Grégoire  <bock@step.polymtl.ca>
+ *     2005-03-31 Benoit GrÃ©goire  <bock@step.polymtl.ca>
  *     	* Remove spaces after php blocks in various files.
  *     	* Temporarely fix single authentication source not present bug in login smarty template.  All other places where we select the network will be fixed tommorow.
  *     	* Fix initial schema errors.
  *
  *     Revision 1.26  2005/03/31 18:35:23  benoitg
- *     2005-03-31 Benoit Grégoire  <bock@step.polymtl.ca>
+ *     2005-03-31 Benoit GrÃ©goire  <bock@step.polymtl.ca>
  *     	* More RADIUS install documentation.
  *     	* Fix schema_validate.php
  *
@@ -136,7 +142,7 @@ define('CONF_DATABASE_PASSWORD',   'wifidogtest');
 define('SYSTEM_PATH', '/');
 /**< Set this to true if your server has SSL available, otherwise, passwords will be transmitted in clear text over the air */
 define('SSL_AVAILABLE', true); 
-define('HOTSPOT_NETWORK_NAME', 'Île sans fil');
+define('HOTSPOT_NETWORK_NAME', 'ÃŽle sans fil');
 define('HOTSPOT_NETWORK_URL', 'http://www.ilesansfil.org/');
 define('TECH_SUPPORT_EMAIL', 'tech@ilesansfil.org');
 define('UNKNOWN_HOSTPOT_NAME', 'Unknown HotSpot');
@@ -197,7 +203,7 @@ require_once BASEPATH.'classes/AuthenticatorRadius.php';
 define('IDRC_ACCOUNT_ORIGIN', 'IDRC_RADIUS_USER');
 $AUTH_SOURCE_ARRAY[IDRC_ACCOUNT_ORIGIN]=array(
 			     'name'=>"IDRC RADIUS Server",
-			     'authenticator'=>new AuthenticatorRadius(IDRC_ACCOUNT_ORIGIN, "localhost", 1812, 1813, "secret_key", "CHAP_MD5"));
+			     'authenticator'=>new AuthenticatorRadius(IDRC_ACCOUNT_ORIGIN, "192.168.0.11", 1812, 1813, "secret_key", "CHAP_MD5"));
 */
 
 /*These are the file names of the different templates that can be put in the CONTENT_PATH/(node_id)/ folders */

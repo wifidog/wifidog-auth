@@ -19,7 +19,7 @@
  *                                                                  *
  \********************************************************************/
 /**@file User.php
- * @author Copyright (C) 2005 Benoit Grégoire <bock@step.polymtl.ca>
+ * @author Copyright (C) 2005 Benoit GrÃ©goire <bock@step.polymtl.ca>
  */
 
 require_once BASEPATH.'include/common.php';
@@ -55,7 +55,27 @@ class User
 		$account_origin_str = $db->EscapeString($account_origin);
 		$db->ExecSqlUniqueRes("SELECT user_id FROM users WHERE username = '$username_str' AND account_origin = '$account_origin_str'", $user_info, false);
 
-		$object = new self($user_info['user_id']);
+		if($user_info != null)
+			$object = new self($user_info['user_id']);
+		return $object;
+	}
+	
+	/** Instantiate a user object 
+	 * @param $email The email of the user
+	 * @param $account_origin The account origin
+	 * @return a User object, or null if there was an error
+	 */
+	public static function getUserByEmailAndOrigin($email, $account_origin)
+	{
+		global $db;
+		$object = null;
+
+		$email_str = $db->EscapeString($email);
+		$account_origin_str = $db->EscapeString($account_origin);
+		$db->ExecSqlUniqueRes("SELECT user_id FROM users WHERE email = '$email_str' AND account_origin = '$account_origin_str'", $user_info, false);
+
+		if($user_info != null)
+			$object = new self($user_info['user_id']);
 		return $object;
 	}
 
@@ -174,7 +194,12 @@ class User
 		$username_str = $db->EscapeString($username);
 		$account_origin_str = $db->EscapeString($account_origin);
 		$email_str = $db->EscapeString($email);
-		$password_hash = $db->EscapeString(User :: passwordHash($password));
+		/**
+         * utf8_decode is used for backward compatibility with old passwords
+         * containing special characters. 
+         * Conversion from UTF-8 to ISO-8859-1 is done to match the MD5 hash
+         */
+		$password_hash = $db->EscapeString(User :: passwordHash(utf8_decode($password)));
 		$status = ACCOUNT_STATUS_VALIDATION;
 		$token = User :: generateToken();
 
@@ -317,8 +342,8 @@ class User
 	function setPassword($password)
 	{
 		global $db;
-
-		$new_password_hash = User :: passwordHash($password);
+		
+		$new_password_hash = User :: passwordHash(utf8_decode($password));
 		if (!($update = $db->ExecSqlUpdate("UPDATE users SET pass='$new_password_hash' WHERE user_id='{$this->mId}'")))
 		{
 			throw new Exception(_("Could not change user's password."));
@@ -351,10 +376,10 @@ class User
 	{
 		$username = $this->getUsername();
 		$headers  = 'MIME-Version: 1.0' . "\r\n";
-		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+		$headers .= 'Content-type: text/plain; charset=UTF-8' . "\r\n";
 		$headers .= "From: ".VALIDATION_EMAIL_FROM_ADDRESS;
 		$subject = HOTSPOT_NETWORK_NAME._(" lost username request");
-		$body = _("Hello,<br>You have requested that the authentication server send you your username:<br>Username: ").$username._("<br><br>Have a nice day,<br>The Team");
+		$body = _("Hello,\nYou have requested that the authentication server send you your username:\nUsername: ").$username._("\n\nHave a nice day,\nThe Team");
 		
 		mail($this->getEmail(), $subject, $body, $headers);
 	}
@@ -374,11 +399,11 @@ class User
 			else
 			{
 				$headers  = 'MIME-Version: 1.0' . "\r\n";
-				$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+				$headers .= 'Content-type: text/plain; charset=UTF-8' . "\r\n";
 				$headers .= "From: ".VALIDATION_EMAIL_FROM_ADDRESS;
 				$subject = HOTSPOT_NETWORK_NAME._(" new user validation");
 				$url = "http://".$_SERVER["SERVER_NAME"]."/validate.php?user_id=".$this->getId()."&token=".$this->getValidationToken();
-				$body = _("Hello,<br>Please follow the link below to validate your account.<br>").$url._("<br><br>Thank you,<br>The Team.");
+				$body = _("Hello,\nPlease follow the link below to validate your account.\n").$url._("\n\nThank you,\nThe Team.");
 				
 				mail($this->getEmail(), $subject, $body, $headers);
 			}
@@ -394,10 +419,10 @@ class User
 		$username = $this->getUsername();
 		
 		$headers  = 'MIME-Version: 1.0' . "\r\n";
-		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+		$headers .= 'Content-type: text/plain; charset=UTF-8' . "\r\n";
 		$headers .= "From: ".VALIDATION_EMAIL_FROM_ADDRESS;
 		$subject = HOTSPOT_NETWORK_NAME._(" new password request");
-		$body = _("Hello,<br>You have requested that the authentication server send you a new password:<br>Username: ").$username._("<br>Password: ").$new_password._("<br><br>Have a nice day,<br>The Team");
+		$body = _("Hello,\nYou have requested that the authentication server send you a new password:\nUsername: ").$username._("\nPassword: ").$new_password._("\n\nHave a nice day,\nThe Team");
 		
 		mail($this->getEmail(), $subject, $body, $headers);
 	}

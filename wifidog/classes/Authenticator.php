@@ -19,7 +19,7 @@
  *                                                                  *
  \********************************************************************/
 /**@file Authenticator.php
- * @author Copyright (C) 2005 Benoit Grégoire <bock@step.polymtl.ca>,
+ * @author Copyright (C) 2005 Benoit GrÃ©goire <bock@step.polymtl.ca>,
  * Technologies Coeus inc.
  */
 
@@ -82,6 +82,14 @@ abstract class Authenticator
 		// Stop traffic counters update
 		global $db;
 		$db->ExecSqlUpdate("UPDATE connections SET "."timestamp_out=NOW(),"."token_status='".TOKEN_USED."' "."WHERE conn_id='{$info['conn_id']}';\n");
+	}
+	
+	/**
+	 * Property method that tells if the class allows registration
+	 */
+	function isRegistrationPermitted()
+	{
+		return false;
 	}
 
 } // End class

@@ -40,7 +40,7 @@ libphp5-commons
 php5-cli
 php5-devel
 php5-xml
-php5-xmlrpc ---> dépend de libxmlrpc
+php5-xmlrpc ---> depends on libxmlrpc
 php5-mhash 
 php5-mcrypt
 

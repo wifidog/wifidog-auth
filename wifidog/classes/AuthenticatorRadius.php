@@ -19,8 +19,8 @@
  *                                                                  *
  \********************************************************************/
 /**@file AuthenticatorRadius.php
- * @author Copyright (C) 2005 Benoit Grégoire <bock@step.polymtl.ca>, Technologies Coeus inc.
-* @author Copyright (C) 2005 François Proulx <francois.proulx@gmail.com>,Technologies Coeus inc.
+ * @author Copyright (C) 2005 Benoit GrÃ©goire <bock@step.polymtl.ca>, Technologies Coeus inc.
+* @author Copyright (C) 2005 FranÃ§ois Proulx <francois.proulx@gmail.com>,Technologies Coeus inc.
 * */
 
 /**
@@ -81,6 +81,10 @@ class AuthenticatorRadius extends Authenticator
 		$username = $db->EscapeString($username);
 		$password = $db->EscapeString($password);
 		// Local database password hashing is based on an empty string ( we do not store remote passwords )
+		/**
+		 * Backward compatibility conversion is not needed since the password is
+		 * blank ( we do not keep RADIUS passwords
+		 */
 		$password_hash = User :: passwordHash("");
 
 		/*

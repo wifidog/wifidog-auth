@@ -8,22 +8,7 @@
 
         <form name="login_form" method="post">
         <table>
-
-        <tr>
-        	<td>{"Network"|_}:</td>
-        	<td>
-        		<select name="auth_source">
-	        	{foreach key=key item=source from=$auth_sources}
-	        		{if $auth_source == $key} 
-	        		<option SELECTED label="{$source.name}" value="{$key}">{$source.name}</option>
-	        		{else}
-	        		<option label="{$source.name}" value="{$key}">{$source.name}</option>
-	        		{/if}
-				{/foreach}
-				</select>
-        	</td>
-        </tr>
-
+        {include file="templates/auth_sources_selection.html"}
         <tr>
             <td>{"Username (or email)"|_}:</td>
             <td><input type="text" name="username" value="{$username}" size="20"></td>

@@ -21,7 +21,7 @@
    \********************************************************************/
   /**@file
    * Login page
-   * @author Copyright (C) 2004 Benoit Grégoire et Philippe April
+   * @author Copyright (C) 2004 Benoit GrÃ©goire et Philippe April
    */
 define('BASEPATH','./');
 require_once BASEPATH.'include/common.php';
@@ -34,19 +34,23 @@ if (isset($_REQUEST['submit'])) {
     } else {
         $username = $db->EscapeString($_REQUEST['username']);
         $email = $db->EscapeString($_REQUEST['email']);
+        // If the source is present and that it's in our AUTH_SOURCE_ARRAY, save it to a var for later use
+		$_REQUEST['auth_source'] && in_array($_REQUEST['auth_source'], array_keys($AUTH_SOURCE_ARRAY)) && $account_origin = $_REQUEST['auth_source'];
 
         try {
+        	if(empty($account_origin))
+				throw new Exception(_("Sorry, this network does not exist !"));
+				
         	// Get a list of users associated with either a username of an e-mail
-            $username && $users_list = User::getUsersByUsername($username);
-            $email && $users_list = User::getUsersByEmail($email);
+            $username && $user = User::getUserByUsernameAndOrigin($username, $account_origin);
+            $email && $user = User::getUserByEmailAndOrigin($email, $account_origin);
             
             // In the case that both previous function calls failed to return a users list
             // Throw an exception
-            if(!empty($users_list))
-	            foreach($users_list as $user)
-	            	$user->sendLostPasswordEmail();
+            if($user != null)
+	            $user->sendLostPasswordEmail();
 	        else
-	        	throw new Exception(_("user_id '{$object_id_str}' could not be found in the database"));
+	        	throw new Exception(_("This username or email could not be found in our database"));
             	
             $smarty->assign('message', _('A new password has been emailed to you.'));
             $smarty->display('templates/validate.html');
@@ -56,6 +60,17 @@ if (isset($_REQUEST['submit'])) {
         }
     }
 }
+
+// Add the auth servers list to smarty variables
+$sources = array ();
+// Preserve keys
+foreach (array_keys($AUTH_SOURCE_ARRAY) as $auth_source_key)
+	if ($AUTH_SOURCE_ARRAY[$auth_source_key]['authenticator']->isRegistrationPermitted())
+		$sources[$auth_source_key] = $AUTH_SOURCE_ARRAY[$auth_source_key];
+
+isset ($sources) && $smarty->assign('auth_sources', $sources);
+// Pass the account_origin along, if it's set
+isset ($_REQUEST["auth_source"]) && $smarty->assign('selected_auth_source', $_REQUEST["auth_source"]);
 
 $smarty->display("templates/lost_password.html");
 ?>

@@ -21,7 +21,7 @@
    \********************************************************************/
   /**@file
    * Login page
-   * @author Copyright (C) 2004 Benoit Grégoire et Philippe April
+   * @author Copyright (C) 2004 Benoit GrÃ©goire et Philippe April
    */
 define('BASEPATH','./');
 require_once BASEPATH.'include/common.php';
@@ -32,18 +32,29 @@ isset($_REQUEST["username"]) && $smarty->assign("username", $_REQUEST["username"
 
 if (isset($_REQUEST["submit"])) {
     try {
-        if (!$_REQUEST["username"] || !$_REQUEST["oldpassword"] || !$_REQUEST["newpassword"] || !$_REQUEST["newpassword_again"])
+    	// If the source is present and that it's in our AUTH_SOURCE_ARRAY, save it to a var for later use
+		$_REQUEST['auth_source'] && in_array($_REQUEST['auth_source'], array_keys($AUTH_SOURCE_ARRAY)) && $account_origin = $_REQUEST['auth_source'];
+		
+        if (!$account_origin || !$_REQUEST["username"] || !$_REQUEST["oldpassword"] || !$_REQUEST["newpassword"] || !$_REQUEST["newpassword_again"])
             throw new Exception(_('You MUST fill in all the fields.'));
         $username = $db->EscapeString(trim($_REQUEST['username']));
 	    $current_password = $db->EscapeString(trim($_REQUEST['oldpassword']));
     	$new_password = $db->EscapeString(trim($_REQUEST['newpassword']));
 
+		if(empty($account_origin))
+			throw new Exception(_("Sorry, this network does not exist !"));
+				
         if ($_REQUEST["newpassword"] != $_REQUEST["newpassword_again"])
             throw new Exception(_("Passwords do not match."));
 
         // Warning for now, password change only works for local users, registered through our signup process.
-        $user = User::getUserByUsernameAndOrigin($username, LOCAL_USER_ACCOUNT_ORIGIN);
-        if ($user->getPasswordHash() != User::passwordHash($current_password))
+        $user = User::getUserByUsernameAndOrigin($username, $account_origin);
+        /**
+         * utf8_decode is used for backward compatibility with old passwords
+         * containing special characters. 
+         * Conversion from UTF-8 to ISO-8859-1 is done to match the MD5 hash 
+         */
+        if ($user->getPasswordHash() != User::passwordHash(utf8_decode($current_password)))
             throw new Exception(_("Wrong password."));
 
         $user->SetPassword($new_password);
@@ -54,5 +65,17 @@ if (isset($_REQUEST["submit"])) {
         $smarty->assign("error", $e->getMessage());
     }
 }
+
+// Add the auth servers list to smarty variables
+$sources = array ();
+// Preserve keys
+foreach (array_keys($AUTH_SOURCE_ARRAY) as $auth_source_key)
+	if ($AUTH_SOURCE_ARRAY[$auth_source_key]['authenticator']->isRegistrationPermitted())
+		$sources[$auth_source_key] = $AUTH_SOURCE_ARRAY[$auth_source_key];
+		
+isset ($sources) && $smarty->assign('auth_sources', $sources);
+// Pass the account_origin along, if it's set
+isset ($_REQUEST["auth_source"]) && $smarty->assign('selected_auth_source', $_REQUEST["auth_source"]);
+
 $smarty->display("templates/change_password.html");
 ?>

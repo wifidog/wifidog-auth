@@ -25,7 +25,7 @@
 Header("Cache-control: private, no-cache, must-revalidate");
 Header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); # Past date
 Header("Pragma: no-cache");
-Header("Content-Type: text/html; charset=iso-8859-1");
+Header("Content-Type: text/html; charset=utf-8");
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'classes/SmartyWifidog.php';
 require_once BASEPATH.'classes/Session.php';
@@ -64,7 +64,7 @@ class Style
   }
 
   /**Affiche le pied de page HTML
-   * @return string chaine à afficher dans la page.
+   * @return string chaine Ã  afficher dans la page.
    */
   function GetFooter()
   {
@@ -92,7 +92,7 @@ class Style
 
 
      $retval.= "<div class='content'>\n";
-     $retval.= "<P>Temps écoulé: $display_timetaken seconde(s) dont $display_sql_percent ($display_sql_total_time seconde(s)) pour les $sql_num_querys requêtes SQL ($sql_num_select_querys select, $sql_num_select_unique_querys select valeur unique, $sql_num_update_querys modifications)</P>\n";
+     $retval.= "<P>Temps Ã©coulÃ©: $display_timetaken seconde(s) dont $display_sql_percent ($display_sql_total_time seconde(s)) pour les $sql_num_querys requÃªtes SQL ($sql_num_select_querys select, $sql_num_select_unique_querys select valeur unique, $sql_num_update_querys modifications)</P>\n";
      $retval.= "</div>\n";
     */
     $retval.= "</body>\n";

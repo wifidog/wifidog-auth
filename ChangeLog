@@ -1,4 +1,9 @@
-2005-04-01 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-04-01 Francois Proulx  <francois.proulx@gmail.com>
+	* EVERYTHING IS NOW UTF-8 YOU MUST EDIT YOUR FILES WITH AN UTF-8 COMPLIANT EDITOR
+	* The database will be converted to UTF-8 (version 5)
+	* Added select boxes ( or hidden ) html form elements to choose the network for signup, lost password, username
+	
+2005-04-01 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* Add constraints to account_origin to detect errors on inserts.
 	* Remove IDRC test server
 
@@ -7,12 +12,12 @@
 	* Tagged v0_1_0_alpha1
 	* Removed spaces in AuthenticatorLocalUser.php
 	
-2005-03-31 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-03-31 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* Remove spaces after php blocks in various files.
 	* Temporarily fix single authentication source not present bug in login smarty template.  All other places where we select the network will be fixed tommorow.
 	* Fix initial schema errors.
 	
-2005-03-31 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-03-31 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* More RADIUS install documentation.
 	* Fix schema_validate.php
 	
@@ -26,7 +31,7 @@
 2005-03-31 Francois Proulx  <francois.proulx@gmail.com>
 	* Added PEAR install procedure
 	
-2005-03-30 François Proulx  <francois.proulx@gmail.com>
+2005-03-30 FranÃ§ois Proulx  <francois.proulx@gmail.com>
 	* Finished RADIUS authentication and accounting
 	* Accounting Unique session ID is now based on the same token we use
 	* Fixed all issues with lost_username, lost_password etc...
@@ -36,7 +41,7 @@
 	* Tested quite a bit, this version is considered stable
 	* A few examples on how set different RADIUS or local authenticators can be found in the config.php
 	
-2005-03-29 François Proulx  <francois.proulx@gmail.com>
+2005-03-29 FranÃ§ois Proulx  <francois.proulx@gmail.com>
 	* schema_validate.php : Modified schema : dropped e-mail + account unique index, dropped email not empty constraint
 	* Schema is now at version 3
 	* Coded RADIUS authentication
@@ -47,15 +52,15 @@
 	* TODO : Fix lost_username and lost_password ( issue since we dropped the unique constraint on emails... )
 	* TODO : Heavy testing possibly with remote RADIUS servers
 	
-2005-03-28 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-03-28 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* sql:  Put initial data in a transaction, and specify the wifidog user so you do not have to su to it while using sync_sql_for_svs
 	
-2005-03-28 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-03-28 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* common.php:  Add get_guid() function
 	* validate_schema.php: New auto-upgrade script to allow autaumatic schema upgrade.  Note that you must still update dump_initial_data_postgres.sh and use sync_sql_for_cvs.sh so new users aren't left in the cold.
 	* New class Authenticator (and subclasses):  Begin virtualizing the login process.
 	 
-2005-03-24 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-03-24 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* Statistics.php: Fix getMostGreedyUsers returning bad values when incoming and outgoing for all connections from a user have null values. 
 	* wifidog/local_content/default/portal.html: Fix layout so it resizes properly.  This in an interim measure.
 	* Update schema.  This will allow automatic schema updates in the future.  TO update a live server:
@@ -73,7 +78,7 @@
  * hotspot_status.php: ob_clean may complain about buffering.  muted.
  * ./classes/RssPressReview.inc: if rss_source['url'] is blank, ignore the feed.
  
-2005-02-22 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-02-22 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* sql/dump_initial_data_postgres.sh, wifidog-postgres-initial-data.sql, wifidog-postgres-schema.sql:-Widen the connections size to fix int4 wraparound problems.  To update a running server, execute the following sql sniplet: 
 BEGIN;
 ALTER TABLE connections RENAME incoming TO incoming_old;
@@ -85,7 +90,7 @@ ALTER TABLE connections DROP COLUMN incoming_old;
 ALTER TABLE connections DROP COLUMN outgoing_old;
 COMMIT;
 	* wifidog/admin/hotspot.php: Missing file from phil's commit.
-	* wifidog/locale/fr/LC_MESSAGES/messages.mo, messages.po:  New translation by Benoit St-André
+	* wifidog/locale/fr/LC_MESSAGES/messages.mo, messages.po:  New translation by Benoit St-AndrÃ©
 
 2005-02-14 Philippe April <philippe@ilesansfil.org>
 	* gw_message.php: the "activate" message was not properly defined and
@@ -97,7 +102,7 @@ COMMIT;
 	gettext from smarty properly.
 	* Updated TODO with ideas on making config better
 
-2005-01-31 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-01-31 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* wifidog/templates/hotspot_status.html:  Restore the number of nodes
 	* wifidog/hotspot_status.php: Restore the number of nodes, add formatting and more information to the RSS feed.
 
@@ -107,7 +112,7 @@ COMMIT;
 	* Modified all files to work with the classes.
 	* Remove mgmt_helpers (all done in User class now)
 
-2005-01-25 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-01-25 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* classes/Node.php:  New file, untested code example
 	* wifidog/admin/admin_common.php: Remove double-defined BASEPATH
 	
@@ -129,27 +134,27 @@ COMMIT;
 2005-01-12 Philippe April <isf_lists@philippeapril.com>
 	* i18n and smarty'ized parts
 
-2005-01-11 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-01-11 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* INSTALL: Mandate PHP5
 	* wifidog/hotspot_status.php: Allow export of the list as a RSS feed
 	* wifidog/classes/RssPressReview.inc:  Make it truly functionnal.
 	* wifidog/portal/index.php:  Support multiple RSS feeds.  The system will automatically pick the best 5 entries from all the feeds.  It will compensate for disparate publication intervals.  An entry from a feed that does not publish often will live longer than an entry from a feed that publishes very often.  If a feed doesn't have any entry that makes the cut, it will not appear at all.
 	* wifidog/templates/hotspot_status.html:  Add link to the RSS version.
 
-2005-01-11 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-01-11 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* wifidog/config.php:  Add list of hotspot to network rss feed list (not yet functionnal)
 	* wifidog/hotspot_status.php:  Allow RSS export of the list of deployed HotSpots.
 	* wifidog/admin/incoming_outgoing_swap.php:  Script to swap incoming and outgoing in your data.  only use this if you had gateways before 1.0.2 and wish to correct your logs before you upgrade.
 	* wifidog/classes/RssPressReview.inc:  Missing file from previous commit.
 	* wifidog/portal/index.php: Preliminary work to enable smart press review of multiple RSS feeds.
 
-2005-01-10 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-01-10 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* include/common.php: Fix SSL security warnings.  If SSL is enabled and the page was actually served over SSL, all media in the file will be served over SSL. Add a new define (BASE_NON_SSL_PATH) to allow us to make links that break out of SSL mode.  From now on, use the self adapting BASE_URL_PATH in most circumstance, BASE_SSL_PATH to enter SSL mode, and BASE_URL_PATH to break out of it.
 
-2005-01-10 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-01-10 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* admin/user_stats.php: Add three top tens to the statistics:  Top ten apetite for bandwidth, top ten travelers, most addicted users.
 
-2005-01-04 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-01-04 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* wifidog/local_content/default/hotspot_logo_banner.jpg: Make it much thinner.
 	* wifidog/local_content/default/login.html: Remove announcements
 	* wifidog/include/user_management_menu.php: Fix mailto:
@@ -158,19 +163,19 @@ COMMIT;
 	* wifidog/admin/user_stats.php: Activate security.
 	* wifidog/index.php: Make the distinction between the two hotspot status pages clearer.
 
-2004-12-08 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-12-08 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* wifidog/index.php: Add menu
 	* wifidog/include/user_management_menu.php: Editorial change, make translateable
 	* wifidog/portal/index.php:  Fix RSS feeds
 
-2004-12-03 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-12-03 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* wifidog/admin/user_stats.php,  wifidog/classes/Statistics.php:  Embryonic aggregate user stats.  Currently allows you to find out the rate at which your users subscribe.
 	* wifidog/config.php, wifidog/local_content/default/login.html, wifidog/include/user_management_menu.php:  Add hotspot status page to login page.
 	* wifidog/hotspot_status.php: Cosmetic
 	* wifidog/admin/hotspot_log.php: Stats now need admin privileges
 	* wifidog/index.php: Cosmetic.
 
-2004-11-19 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-11-19 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* TODO: Add email domains to blacklist
 	* wifidog/config.php, wifidog/include/user_management_menu.php: Add tech support email address
 	* wifidog/hotspot_status.php: List of HotSpots that are open with summary of information.  Designed to be included as part of another page.
@@ -180,15 +185,15 @@ COMMIT;
  	* wifidog/local_content/default/login.html.fr, portal.html.fr: Delete the files, this isn't the approach we will use for translation.
 	* sql/wifidog-postgres-initial-data.sql, wifidog-postgres-schema.sql: Update with new node information structures.
 
-2004-11-04 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-11-04 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* wifidog/admin/hotspot_log.php: Add number of currently connected users here as well.
 
-2004-11-03 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-11-03 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* wifidog/ping/index.php: Log user-agent
 	* extensive statistics work
 	* sql/wifidog-postgres-schema.sql: Add description field for hotspots and log user-agent
 
-2004-10-28 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-10-28 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* sql/wifidog-postgres-schema.sql:  Add constraints to avoid empty string in email or user_id.
 	* Some statistics fixes
 
@@ -197,44 +202,44 @@ COMMIT;
 	on the mailing list by Rikhardur EGILSSON (fname.lname@oecd.org),
 	mainly a missing ' in some HTML.
 
-2004-09-28 Yanik Crépeau <yanik@exScriptis.com>
+2004-09-28 Yanik CrÃ©peau <yanik@exScriptis.com>
         * wifidog/include/common.php: Added commented header with cvs
 	keywords.
 	* wifidog/include/common.php: Added commented code (not executing) for
 	further testing with language/localization issues. 
 
-2004-09-27 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-09-27 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* sql/wifidog-postgres-schema.sql:  Remove non SQL standard "COMMENT ON" comments
 
-2004-09-27 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-09-27 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* sql/wifidog-postgres-schema.sql:  Drop procedural language stuff
 
-2004-09-27 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-09-27 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* sql/wifidog-postgres-schema.sql:  Fix layout for the node_owners table
 	* Begin integrating Patrick Tanguay's new layout and generate the css dynamically to allow for background images.
 
-2004-09-22 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-09-22 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* portal/index.php:  Fix users appearing online at every hotspot.
 	* wifidog/classes/Style.php, wifidog/login/index.php:  Fix some potential cache problems and help with validation.
 	
-2004-09-18 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-09-18 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* wifidog/config.php:  Add VALIDATION_GRACE_TIME configuration parameter.
 	* wifidog/auth/index.php:  Move grace time date arithmetics to the database, fixes validation period not working.  Stop storing VALIDATION_FAILES status to the database.  Add check for validation period expiration at stage login, not just stage counters, this will fix one minute validation period. 
 	* wifidog/login/index.php:  Check validation period activation, and if period is expired, explain to the user instead of redirecting to the gateway.
 	* wifidog/user_management/index.php:  Fix SQL error at new user registration.  
 	
-2004-09-02 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-09-02 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* wifidog/node_list.php: Complete the status page
 	* Add images
 	* Add hotspot creation date
 	
-2004-08-31 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-08-31 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* sql/: Update the postgres schemas and add scripts to ease maintaining it.
 	* sql/sync_sql_for_cvs.sh: Should you modify the schema in your db, run this script to the chances will be available in the cvs schemas and initial data.
 	* sql/dump_initial_data_postgres.sh: This does the actual dump of the data in a runnable form.  Note that this needs to be edited manually if you add a new table requiring initial data.
 	* INSTALL:  Update for postgres.  Somebody please test this.
 
-2004-08-31 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-08-31 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* wifidog/ping/index.php: Implement logging of which hotspot sent the heartbeat, from which ip and when.
 	* wifidog/node_list.php:  Primitive but functionnal hotspot status page.
 	* wifidog/include/user_management_menu.php:  Change menu labels
@@ -242,15 +247,15 @@ COMMIT;
 	* wifidog/local_content/default/stylesheet.css:  Reduce H1 font size.
 	* wifidog/user_management/index.php:  Display the menu, will eventually allow us to present proper help text.
 
-2004-08-30 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-08-30 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* Add link to original requested site.
 	* wifidog/node_list.php:  New file.  Will become the main node status page.
 
-2004-08-28 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-08-28 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* Primitive network status available form the index page
 	* Administrative security is implemented.
 
-2004-08-28 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-08-28 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* Fix big gaping security hole in login page (password would be ignored if the username was used to login)
 	* PostgreSql port
 	* Change the method to determine who is online
@@ -260,7 +265,7 @@ COMMIT;
 	* wifidog/auth/index.php:  Added a Messages: response in addition to Auth: so we can know what the hell the server is up to.  Currently you need to run wifidog in debug level 7 to see it. That message should be parsed so it is visible in debug level 6.
 	* wifidog/auth/index.php:   Fix code injection vulnerability.
 	
-2004-08-27 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-08-27 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* SSL support and RSS improvement
 	* Last commit tested with mysql support
 	
@@ -268,7 +273,7 @@ COMMIT;
 	* wifidog/admin/user_log.php: Add total to incoming and outgoing
 	* Replace all SERVER_NAME by HTTP_HOST to fix non-standard server ports
 
-2004-08-11 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-08-11 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* wifidog/config.php: Add USER_MANAGEMENT_PAGE
 	* wifidog/include/user_management_menu.php:  Code meant to deal with non-standard ports broke the menu.  Hopefully fixed.
 	* Add alex's mising changelog entry...
@@ -276,7 +281,7 @@ COMMIT;
 2004-08-11 Alexandre Carmel-Veilleux <acv@acv.ca>
 	* wifidog/ping/index.php: will now reply if the wifidog auth server is up. to be used by wifidog to do heartbeats.
 
-2004-08-07 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-08-07 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* Add code to import a NoCat user database (passwd).  The username will be generated from the first part of the email if the name was en email.
 	* Change password hashing algorithm to make it compatible with NoCat (For the curious among you, the hashing algorithm is now:  take the md5 digest in binary format of the password, and base64 encode it.
 	* Table schema changed to accomodate newhash length (users.pass is now varchar(32))
@@ -287,13 +292,13 @@ COMMIT;
 	* wifidog/classes/AbstractDb.php: Add class=warning for better display
 	* wifidog/config.php: Add SYSTEM_PATH and test/fix non-standard server ports
 
-2004-08-03 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-08-03 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* Make gettext support optionnal, and define GETTEXT_AVAILABLE, will be set to true if gettext is available.  If false, blank _() and gettext() functions will be defined so the system still works.
 
-2004-08-03 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-08-03 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* Fix BASE_URL_PATH to properly detect non-standard server ports (hopefully).
 
-2004-08-02 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-08-02 Benoit GrÃ©goire  <bock@step.polymtl.ca>
 	* wifidog-auth lives! New since the dark ages
 	* Demo page to allow people to hack more easely on it
 	* Support for multiple nodes.  TODO:  Merge with the database project.

@@ -21,7 +21,7 @@
  *                                                                  *
  \********************************************************************/
 /**@file AuthenticatorLocalUser.php
- * @author Copyright (C) 2005 Benoit Grégoire <bock@step.polymtl.ca>,
+ * @author Copyright (C) 2005 Benoit GrÃ©goire <bock@step.polymtl.ca>,
  * Technologies Coeus inc.
  */
 
@@ -70,7 +70,12 @@ class AuthenticatorLocalUser extends Authenticator
 		$retval = false;
 		$username = $db->EscapeString($username);
 		$password = $db->EscapeString($password);
-		$password_hash = User :: passwordHash($_REQUEST['password']);
+		/**
+         * utf8_decode is used for backward compatibility with old passwords
+         * containing special characters. 
+         * Conversion from UTF-8 to ISO-8859-1 is done to match the MD5 hash
+         */
+		$password_hash = User :: passwordHash(utf8_decode($_REQUEST['password']));
 
 		$sql = "SELECT user_id FROM users WHERE (username='$username' OR email='$username') AND account_origin='".$this->getAccountOrigin()."' AND pass='$password_hash'";
 		$db->ExecSqlUniqueRes($sql, $user_info, false);
@@ -134,6 +139,11 @@ class AuthenticatorLocalUser extends Authenticator
 	function acctStop($info, & $errmsg = null)
 	{
 		parent :: acctStop($info);
+		return true;
+	}
+	
+	function isRegistrationPermitted()
+	{
 		return true;
 	}
 
