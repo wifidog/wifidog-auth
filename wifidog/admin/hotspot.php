@@ -40,20 +40,9 @@ if ($action == 'edit_node') { // Allow node creation or node edition
         $node = Node::getNode($node_id);
     }
 
-    $smarty->assign('node_info', array(
-        'id'                     => $node->getID(),
-        'name'                   => $node->getName(),
-        'rss_url'                => $node->getRSSURL(),
-        'home_page_url'          => $node->getHomePageURL(),
-        'description'            => $node->getDescription(),
-        'map_url'                => $node->getMapURL(),
-        'street_address'         => $node->getAddress(),
-        'public_phone_number'    => $node->getTelephone(),
-        'public_email'           => $node->getEmail(),
-        'mass_transit_info'      => $node->getTransitInfo(),
-    ));
-    $smarty->assign('node_deployment_status', $node->getDeploymentStatus());
     $smarty->assign('node_id', $node->getID());
+    $smarty->assign('node_deployment_status', $node->getDeploymentStatus());
+    $smarty->assign('node_info', $node->getInfoArray());
     $smarty->assign('all_deployment_status', Node::getAllDeploymentStatus());
 
     $smarty->display('admin/templates/hotspot_edit.html');
