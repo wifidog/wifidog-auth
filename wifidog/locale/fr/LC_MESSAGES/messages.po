@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-15 00:23-0500\n"
+"POT-Creation-Date: 2005-01-18 10:30-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -63,6 +63,7 @@ msgid "Create new account"
 msgstr "Cr&eacute;er un nouveau compte"
 
 #: smarty.txt:6 smarty.txt:24 smarty.txt:37 smarty.txt:38 smarty.txt:39
+#: smarty.txt:33
 msgid "Re-send validation email"
 msgstr "Renvoyez-moi le courriel de validation"
 
@@ -221,12 +222,12 @@ msgid ""
 msgstr ""
 
 #: smarty.txt:31 smarty.txt:35 smarty.txt:34 smarty.txt:44 smarty.txt:45
-#: smarty.txt:46 smarty.txt:53 smarty.txt:54
+#: smarty.txt:46 smarty.txt:53 smarty.txt:54 smarty.txt:59
 msgid "Online at this hotspot"
 msgstr "En ligne &agrave; ce point d'acc&egrave;s sans-fil"
 
 #: smarty.txt:32 smarty.txt:36 smarty.txt:35 smarty.txt:45 smarty.txt:46
-#: smarty.txt:47 smarty.txt:54 smarty.txt:55
+#: smarty.txt:47 smarty.txt:54 smarty.txt:55 smarty.txt:60
 msgid "Go to the site I originally requested"
 msgstr "Aller au site web que j'ai demand&eacute;"
 
@@ -239,12 +240,14 @@ msgid "Language"
 msgstr "Langue"
 
 #: smarty.txt:33 smarty.txt:32 smarty.txt:42 smarty.txt:34 smarty.txt:43
-#: smarty.txt:44 smarty.txt:36 smarty.txt:51 smarty.txt:52
+#: smarty.txt:44 smarty.txt:36 smarty.txt:51 smarty.txt:52 smarty.txt:41
+#: smarty.txt:57
 msgid "Username (or email)"
 msgstr "Usager (ou courriel)"
 
 #: smarty.txt:34 smarty.txt:33 smarty.txt:43 smarty.txt:35 smarty.txt:44
 #: smarty.txt:45 smarty.txt:37 smarty.txt:47 smarty.txt:52 smarty.txt:53
+#: smarty.txt:42 smarty.txt:58
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -256,31 +259,31 @@ msgstr "Nom d'usager ou courriel incorrect"
 msgid "Incorrect password (Maybe you have CAPS LOCK on?)"
 msgstr "Mot de passe incorrect (CAPS LOCK &agrave; actif?)"
 
-#: ../portal/index.php:117
+#: ../portal/index.php:117 ../portal/index.php:116
 msgid "Error: "
 msgstr "Erreur: "
 
-#: ../hotspot_status.php:68
+#: ../hotspot_status.php:68 ../hotspot_status.php:67
 msgid "Newest"
 msgstr "Plus r&eacute;cent"
 
-#: ../hotspot_status.php:68
+#: ../hotspot_status.php:68 ../hotspot_status.php:67
 msgid "Hotspots"
 msgstr "Noeuds sans-fil"
 
-#: ../hotspot_status.php:80
+#: ../hotspot_status.php:80 ../hotspot_status.php:79
 msgid "WiFiDog list of the most recent HotSpots opened by "
 msgstr ""
 
-#: ../hotspot_status.php:94
+#: ../hotspot_status.php:94 ../hotspot_status.php:93
 msgid "Copyright "
 msgstr ""
 
-#: ../hotspot_status.php:235
+#: ../hotspot_status.php:235 ../hotspot_status.php:234
 msgid "Address:"
 msgstr "Adresse:"
 
-#: ../hotspot_status.php:239
+#: ../hotspot_status.php:239 ../hotspot_status.php:238
 msgid "Mass transit:"
 msgstr "Transport en commun:"
 
@@ -318,7 +321,7 @@ msgstr ""
 msgid "HotSpot"
 msgstr "Noeud sans-fil"
 
-#: smarty.txt:35 smarty.txt:36 smarty.txt:38
+#: smarty.txt:35 smarty.txt:36 smarty.txt:38 smarty.txt:43
 msgid "Login"
 msgstr "Ouvrir une session"
 
@@ -354,82 +357,83 @@ msgstr "Si vous poss&eacute;dez un compte, veuillez ouvrir une session"
 msgid "Or"
 msgstr "Ou encore"
 
-#: smarty.txt:32 smarty.txt:43 smarty.txt:51
+#: smarty.txt:32 smarty.txt:43 smarty.txt:51 smarty.txt:37 smarty.txt:48
+#: smarty.txt:56
 msgid "FREE WIRELESS INTERNET"
 msgstr "INTERNET SANS-FIL GRATUIT"
 
-#: smarty.txt:33
+#: smarty.txt:33 smarty.txt:38
 msgid "Welcome to"
 msgstr "Bienvenue chez"
 
-#: smarty.txt:34
+#: smarty.txt:34 smarty.txt:39
 msgid "Please log-in or"
 msgstr "Ouvrez une session ou"
 
-#: smarty.txt:35
+#: smarty.txt:35 smarty.txt:40
 msgid "Sign-up, it's free!"
 msgstr "Inscrivez-vous, c'est gratuit!"
 
-#: smarty.txt:39
+#: smarty.txt:39 smarty.txt:44
 msgid "I already have an account, but"
 msgstr "J'ai d&eacute;j&agrave; un usager, mais"
 
-#: smarty.txt:40
+#: smarty.txt:40 smarty.txt:45
 msgid "I Forgot my username"
 msgstr "J'ai oubli&eacute; mon nom d'usager"
 
-#: smarty.txt:41
+#: smarty.txt:41 smarty.txt:46
 msgid "I Forgot my password"
 msgstr "J'ai oubli&eacute; mon mot de passe"
 
-#: smarty.txt:42
+#: smarty.txt:42 smarty.txt:47
 msgid "Re-send the validation email"
 msgstr "Renvoyez-moi le courriel de validation"
 
-#: smarty.txt:44
+#: smarty.txt:44 smarty.txt:49
 msgid "Register a free account with"
 msgstr ""
 
-#: smarty.txt:45
+#: smarty.txt:45 smarty.txt:50
 msgid "Username desired"
 msgstr "Nom d'usager d&eacute;sir&eacute;"
 
-#: smarty.txt:46
+#: smarty.txt:46 smarty.txt:51
 msgid "Your email address"
 msgstr "Votre courriel"
 
-#: smarty.txt:48
+#: smarty.txt:48 smarty.txt:53
 msgid "Password (again)"
 msgstr "Mot de passe (encore)"
 
-#: smarty.txt:49
+#: smarty.txt:49 smarty.txt:54
 msgid "Sign-up"
 msgstr "Souscrire"
 
-#: smarty.txt:50
+#: smarty.txt:50 smarty.txt:55
 msgid ""
 "Your email address must be valid in order for your account to be activated"
 msgstr ""
 "Votre adresse de courriel doit &ecirc;tre valide afin que votre compte "
 "puisse &ecirc;tre activ&eacute;"
 
-#: ../signup.php:43
+#: ../signup.php:43 ../include/validation.php:9
 msgid "Unable to locate "
 msgstr "Impossible de trouver "
 
-#: ../signup.php:43
+#: ../signup.php:43 ../include/validation.php:9
 msgid " in the database."
 msgstr " dans la base de donn&eacute;e."
 
-#: ../signup.php:47
+#: ../signup.php:47 ../include/validation.php:13
 msgid "The user is not in validation period."
 msgstr "L'usager n'est pas en p&eacute;riode de validation."
 
-#: ../signup.php:50
+#: ../signup.php:50 ../include/validation.php:16
 msgid "The validation token is empty."
 msgstr "Le jeton de validation est vide."
 
-#: ../signup.php:66
+#: ../signup.php:66 ../include/validation.php:32
 msgid ""
 "An email with confirmation instructions was sent to your email address.  "
 "Your account has been granted 15 minutes of access to retrieve your email "
@@ -437,50 +441,49 @@ msgid ""
 "remote Internet address to obtain the login page."
 msgstr ""
 "Un courriel incluant les instructions pour confirmer votre compte &agrave; "
-"&eacute;t&eacute; envoy&eacute; &agrave; votre adresse courriel. Votre compte &agrave; "
-"&eacute;t&eacute; accord&eacute; 15 minutes d'acc&egrave;s afin que vous "
-"puissiez allez lire vos courriels et valider votre compte. Veuillez "
-"maintenant aller &agrave; une adresse Internet distante afin d'obtenir une "
-"page de saisie de mot de passe."
+"&eacute;t&eacute; envoy&eacute; &agrave; votre adresse courriel. Votre "
+"compte &agrave; &eacute;t&eacute; accord&eacute; 15 minutes d'acc&egrave;s "
+"afin que vous puissiez allez lire vos courriels et valider votre compte. "
+"Veuillez maintenant aller &agrave; une adresse Internet distante afin "
+"d'obtenir une page de saisie de mot de passe."
 
-#: ../signup.php:80
+#: ../signup.php:80 ../signup.php:43
 msgid "Username is required."
 msgstr "Le nom d'utilisateur est requit."
 
-#: ../signup.php:82
+#: ../signup.php:82 ../signup.php:45
 msgid "Username contains invalid characters."
 msgstr "Le nom d'utilisateur contient des caract&egrave;res invalides."
 
-#: ../signup.php:84
+#: ../signup.php:84 ../signup.php:47
 msgid "A valid email address is required."
 msgstr "Une adresse courriel est requise."
 
-#: ../signup.php:86
+#: ../signup.php:86 ../signup.php:49
 msgid "The email address must be of the form user@domain.com."
-msgstr ""
-"L'adresse courriel doit &ecirc;tre de la forme usager@domaine.com."
+msgstr "L'adresse courriel doit &ecirc;tre de la forme usager@domaine.com."
 
-#: ../signup.php:88
+#: ../signup.php:88 ../signup.php:51
 msgid "A password of at least 6 characters is required."
 msgstr "Un mot de passe d'au moins 6 caract&egrave;res est requis."
 
-#: ../signup.php:90
+#: ../signup.php:90 ../signup.php:53
 msgid "Password contains invalid characters."
 msgstr "Le mot de passe contient des caract&egrave;res invalides."
 
-#: ../signup.php:92
+#: ../signup.php:92 ../signup.php:55
 msgid "You must type your password twice."
 msgstr "Vous devez entrer votre mot de passe deux fois pour le confirmer."
 
-#: ../signup.php:94
+#: ../signup.php:94 ../signup.php:57
 msgid "Passwords do not match."
 msgstr "Les mots de passe ne sont pas identiques."
 
-#: ../signup.php:96
+#: ../signup.php:96 ../signup.php:59
 msgid "Password is too short, it must be 6 characters minimum."
 msgstr "Mot de passe trop court, il doit contenir 6 caract&egrave;res minimum."
 
-#: ../signup.php:105
+#: ../signup.php:105 ../signup.php:68
 msgid ""
 "Sorry, a user account is already associated to this username. Pick another "
 "one."
@@ -488,17 +491,17 @@ msgstr ""
 "D&eacute;sol&eacute;, un compte est d&eacute;j&agrave; associ&eacute; "
 "&agrave; ce nom d'utilisateur. Choisissez en un autre."
 
-#: ../signup.php:107
+#: ../signup.php:107 ../signup.php:70
 msgid "Sorry, this email address is already registered."
 msgstr ""
 "D&eacute;sol&eacute;, cette adresse courriel est d&eacute;j&agrave; "
 "enregistr&eacute;e."
 
-#: ../signup.php:109
+#: ../signup.php:109 ../signup.php:72
 msgid "Email me my username"
 msgstr "Envoyez moi mon nom d'usager"
 
-#: ../signup.php:121
+#: ../signup.php:121 ../signup.php:84
 msgid "An internal error occured, please contact us."
 msgstr "Une erreur interne est survenue, veuillez nous contacter."
 
@@ -542,4 +545,31 @@ msgstr "Erreur Interne"
 
 #: ../validate.php:55 ../validate.php:56
 msgid "Sorry, your validation token is not valid!"
-msgstr "D&eacute;sol&eacute;, votre jeton de validation n'est pas accept&eacute;!"
+msgstr ""
+"D&eacute;sol&eacute;, votre jeton de validation n'est pas accept&eacute;!"
+
+#: ../resend_validation.php:39
+msgid "Please specify a username"
+msgstr ""
+
+#: ../resend_validation.php:44
+msgid "Unable to find "
+msgstr ""
+
+#: ../resend_validation.php:44
+msgid " in the database"
+msgstr ""
+
+#: smarty.txt:34
+msgid "Your username"
+msgstr ""
+
+#: smarty.txt:35
+msgid "Re-send"
+msgstr ""
+
+#: smarty.txt:36
+msgid ""
+"Please enter your username and the validation email will be resent to your "
+"email address"
+msgstr ""

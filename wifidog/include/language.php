@@ -1,4 +1,12 @@
 <?php
+if (!empty($_REQUEST['lang'])) {
+    $session->set('SESS_LANGUAGE_VAR', $_REQUEST['lang']);
+}
+
+if ($session->get('SESS_LANGUAGE_VAR')) {
+    setlocale(LC_ALL, $session->get('SESS_LANGUAGE_VAR'));
+}
+
 if (GETTEXT_AVAILABLE) {
 	$current_locale = setlocale(LC_ALL, DEFAULT_LANG);
 	if (setlocale(LC_ALL, DEFAULT_LANG) != DEFAULT_LANG) {

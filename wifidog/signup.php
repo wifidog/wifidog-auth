@@ -32,44 +32,7 @@ $smarty = new SmartyWifidog;
 $session = new Session;
 
 include BASEPATH.'include/language.php';
-
-function send_validation_email($email) {
-    global $db;
-    global $smarty;
-
-    $user_info = null;
-    $db->ExecSqlUniqueRes("SELECT * FROM users WHERE email='$email'", $user_info, false);
-    if ($user_info == null) {
-        $smarty->assign("error", _("Unable to locate ") . $_REQUEST["email"] . _(" in the database."));
-    } else {
-        if ($user_info['account_status'] != ACCOUNT_STATUS_VALIDATION) {
-            /* Note:  Do not display the username here, for privacy reasons */
-            $smarty->assign("error", _("The user is not in validation period."));
-	    } else {
-            if (empty($user_info['validation_token'])) {
-                $smarty->assign("error", _("The validation token is empty."));
-            } else {
-                $subject = VALIDATION_EMAIL_SUBJECT;
-                $url = "http://" . $_SERVER["HTTP_HOST"] . "/validate.php?username=" . $_REQUEST["username"] . "&token=" . $user_info["validation_token"];
-                $body = "Hello!
-
-Please follow the link below to validate your account.
-
-$url
-
-Thank you,
-
-The Team";
-                $from = "From: " . VALIDATION_EMAIL_FROM_ADDRESS;
-
-                mail($email, $subject, $body, $from);
-                $smarty->append("message", _("An email with confirmation instructions was sent to your email address.  Your account has been granted 15 minutes of access to retrieve your email and validate your account.  You may now open a browser window and go to any remote Internet address to obtain the login page."));
-                $smarty->display("templates/validate.html");
-                exit;
-            }
-        }
-    }
-}
+include BASEPATH.'include/mgmt_helpers.php';
 
 if (isset($_REQUEST["submit"])) {
 
@@ -116,7 +79,7 @@ if (isset($_REQUEST["submit"])) {
             $password_hash = get_password_hash($_REQUEST["password"]);
             $update_successful = $db->ExecSqlUpdate("INSERT INTO users (user_id,email,pass,account_status,validation_token,reg_date) VALUES ('{$_REQUEST["username"]}','{$_REQUEST["email"]}','$password_hash','{$status}','{$token}',NOW())");
             if ($update_successful) {
-                send_validation_email($_REQUEST["email"], $smarty);
+                send_validation_email($_REQUEST["email"]);
             } else {
                 $smarty->assign("error", _("An internal error occured, please contact us."));
             }
