@@ -15,24 +15,6 @@ CREATE DATABASE wifidog WITH TEMPLATE = template0 ENCODING = 'LATIN1';
 SET search_path = public, pg_catalog;
 
 --
--- TOC entry 21 (OID 17142)
--- Name: plpgsql_call_handler(); Type: FUNC PROCEDURAL LANGUAGE; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION plpgsql_call_handler() RETURNS language_handler
-    AS '$libdir/plpgsql', 'plpgsql_call_handler'
-    LANGUAGE c;
-
-
---
--- TOC entry 20 (OID 17143)
--- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: public; Owner: 
---
-
-CREATE TRUSTED PROCEDURAL LANGUAGE plpgsql HANDLER plpgsql_call_handler;
-
-
---
 -- TOC entry 4 (OID 299867)
 -- Name: administrators; Type: TABLE; Schema: public; Owner: wifidog
 --
@@ -186,7 +168,7 @@ ALTER TABLE ONLY node_owners
 
 
 --
--- TOC entry 23 (OID 299891)
+-- TOC entry 21 (OID 299891)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -195,7 +177,7 @@ ALTER TABLE ONLY connections
 
 
 --
--- TOC entry 22 (OID 299914)
+-- TOC entry 20 (OID 299914)
 -- Name: administrators_ibfk_1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -204,7 +186,7 @@ ALTER TABLE ONLY administrators
 
 
 --
--- TOC entry 24 (OID 300909)
+-- TOC entry 22 (OID 300909)
 -- Name: fk_users; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -213,7 +195,7 @@ ALTER TABLE ONLY connections
 
 
 --
--- TOC entry 25 (OID 300913)
+-- TOC entry 23 (OID 300913)
 -- Name: fk_nodes; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -222,7 +204,7 @@ ALTER TABLE ONLY connections
 
 
 --
--- TOC entry 26 (OID 310097)
+-- TOC entry 24 (OID 310097)
 -- Name: fk_users; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -231,7 +213,7 @@ ALTER TABLE ONLY node_owners
 
 
 --
--- TOC entry 27 (OID 310101)
+-- TOC entry 25 (OID 310101)
 -- Name: fk_nodes; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
