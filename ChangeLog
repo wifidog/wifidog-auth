@@ -1,4 +1,10 @@
 # $Header$
+2005-01-26 Philippe April <isf_lists@philippeapril.com>
+	* Some kind of virtual login (we need to talk about this).
+	* New User and Node classes
+	* Modified all files to work with the classes.
+	* Remove mgmt_helpers (all done in User class now)
+
 2005-01-25 Benoit Grégoire  <bock@step.polymtl.ca>
 	* classes/Node.php:  New file, untested code example
 	* wifidog/admin/admin_common.php: Remove double-defined BASEPATH
