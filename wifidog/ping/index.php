@@ -20,18 +20,14 @@
    *                                                                  *
    \********************************************************************/
   /**@file
+   * This will respond to the gateway to tell them that the gateway is still up, and also log the gateway checking in for network monitoring
    * @author Copyright (C) 2004 Alexandre Carmel-Veilleux <acv@acv.ca>
    */
 define('BASEPATH','../');
 require_once BASEPATH.'include/common.php';
 
-/* I still put the includes because hopefully, if the database is down or
-   something like that, they might fail... Wouldn't want the wifidog to
-   not notice a failure! */
-
-/* TODO: Perhaps, we can update something in the DB to signify that the
-   Gateway checked in and then the DB can be later queried and use those
-   timestamps to know which hotspots are up. */
-
 echo "Pong";
+    $node_id = $db->EscapeString($_REQUEST['gw_id']);
+$db->ExecSqlUpdate("UPDATE nodes SET last_heartbeat_ip='$_SERVER[REMOTE_ADDR]', last_heartbeat_timestamp=NOW() WHERE node_id='$node_id'");
+	
 ?>

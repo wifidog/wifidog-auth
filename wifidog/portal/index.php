@@ -34,12 +34,41 @@ if(CONF_USE_CRON_FOR_DB_CLEANUP == false)
     garbage_collect();
   }
 
+$smarty = new SmartyWifidog;
+
+$portal_template = $_REQUEST['gw_id'] . ".html";
+
+$db->ExecSqlUniqueRes("SELECT * FROM nodes WHERE node_id='". $db->EscapeString($_REQUEST['gw_id'])."'", $node_info);
+if($node_info==null)
+  {
+    $smarty->assign('hotspot_name', UNKNOWN_HOSTPOT_NAME);
+    $hotspot_rss_url = UNKNOWN_HOTSPOT_RSS_URL;
+  }
+else
+  {
+    $smarty->assign('hotspot_name', $node_info['name']);
+    $hotspot_rss_url =  $node_info['rss_url'];
+  }
+
+/* Find out who is online */
+$db->ExecSql("SELECT users.user_id FROM users,connections " .
+	     "WHERE connections.token_status='" . TOKEN_INUSE . "' " .
+	     "AND users.user_id=connections.user_id "
+	     ,$users, false);
+if($users!=null)
+  {
+    foreach ($users as $user_info)
+    {
+      $smarty->append("online_users", $user_info);
+    }
+  }
+
 if(RSS_SUPPORT)
   {
-    $old_error_level = error_reporting(E_ERROR);
+      $old_error_level = error_reporting(E_ERROR);
     define('MAGPIE_DIR', BASEPATH.MAGPIE_REL_PATH);
     require_once(MAGPIE_DIR.'rss_fetch.inc');
-    //define('MAGPIE_DEBUG', 2);
+    define('MAGPIE_DEBUG', 0);
     
     /**
      @return the generated html or the error message or an empty string if called without a URL.
@@ -73,40 +102,8 @@ if(RSS_SUPPORT)
 	}
       return $rss_html;
     }
-    error_reporting($old_error_level);
-  }//End RSS support
 
-$smarty = new SmartyWifidog;
 
-$portal_template = $_REQUEST['gw_id'] . ".html";
-
-$db->ExecSqlUniqueRes("SELECT * FROM nodes WHERE node_id='". $db->EscapeString($_REQUEST['gw_id'])."'", $node_info);
-if($node_info==null)
-  {
-    $smarty->assign('hotspot_name', UNKNOWN_HOSTPOT_NAME);
-    $hotspot_rss_url = UNKNOWN_HOTSPOT_RSS_URL;
-  }
-else
-  {
-    $smarty->assign('hotspot_name', $node_info['name']);
-    $hotspot_rss_url =  $node_info['rss_url'];
-  }
-
-/* Find out who is online */
-$db->ExecSql("SELECT users.user_id FROM users,connections " .
-	     "WHERE connections.token_status='" . TOKEN_INUSE . "' " .
-	     "AND users.user_id=connections.user_id "
-	     ,$users, false);
-if($users!=null)
-  {
-    foreach ($users as $user_info)
-    {
-      $smarty->append("online_users", $user_info);
-    }
-  }
-
-if(RSS_SUPPORT)
-  {
     $network_rss_html=generate_rss_html(NETWORK_RSS_URL);    
     //echo $networkrss_html;
     $smarty->assign("network_rss_html", $network_rss_html);
@@ -115,8 +112,10 @@ if(RSS_SUPPORT)
     $hotspot_rss_html=generate_rss_html($hotspot_rss_url);    
     //echo $hotspot_rss_html;
     $smarty->assign("hotspot_rss_html", $hotspot_rss_html);
+        error_reporting($old_error_level);
   }
 $smarty->assign("user_management_menu", get_user_management_menu());
+$smarty->assign("user_management_url", BASE_SSL_PATH.USER_MANAGEMENT_PAGE);
 
 $session = new Session();
 $smarty->assign("original_url_requested",$session->get(SESS_ORIGINAL_URL_VAR));

@@ -68,7 +68,7 @@ function display_register_form()
     {
       $email = '';
     }
-
+  echo "<h1>"._('Register a free account with')." ".HOTSPOT_NETWORK_NAME."</h1>\n";
   echo "<form method='post'>\n";
   echo "Your desired username: <input type='text' name='username' value='$username'><br>\n";
   echo "Your email address: <input type='text' name='email' value='$email'><br>\n";
@@ -338,10 +338,11 @@ function send_lost_password_email($email, $new_passord)
 $style = new Style();
 echo $style->GetHeader(HOTSPOT_NETWORK_NAME.' New account registration');
 $showform=true;
+echo "<div class='content'>\n";
 
 if(empty($_REQUEST['action']))
   {
-    echo get_user_management_menu();
+
   }
 else
   {
@@ -642,6 +643,9 @@ $update_successful = $db->ExecSqlUpdate("UPDATE users  SET pass='$password_hash'
 	  }
       }//end action==send_validation_email
   }
-
+echo "</div>\n";
+echo "<div id='navLeft'>\n";
+echo get_user_management_menu();
+echo "</div>\n";
 echo $style->GetFooter();
 ?>

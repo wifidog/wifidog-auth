@@ -1,8 +1,12 @@
     {include file=$header_file}
       <div class='content'>
-	<h1>Greetings! Welcome to<br clear=all>
-	  <img src='{$hotspot_logo_url}' alt='{$hotspot_name} logo'><br clear=all>
-	  {$hotspot_name}
+	<h1>Greetings! Welcome to {$hotspot_name}, a {$hotspot_network_name} free HotSpot<br clear=all>
+	 <table width=100%>
+		<tr>
+		<th align=center><img src='{$hotspot_logo_url}' alt='{$hotspot_name} logo'></th>
+	  	<th align=center><img src='{$network_logo_url}' alt='{$hotspot_network_name} logo'></th>
+		</tr>
+	</table>
 	  
 	</h1>
 	</div>
@@ -28,16 +32,14 @@
 	    <td><input type="submit" value='Login'></td>
 </tr>
 	</table>
-	<p><a href='{$user_management_url}'>Help me</a> create a free account on {$hotspot_network_name} or recover from a lost username or password.</p>
+	<p>Accounts on {$hotspot_network_name} are <emp>totally free</emp>, use the left menu to create a new one or recover a lost username or password.</p>
       </form>
       </div>
       <div class='content'>
-	<h2>{$hotspot_name} is part of <br clear=all>
-	  <img src='{$network_logo_url}' alt='{$hotspot_network_name} logo'><br clear=all>
-	  <a href='{$hotspot_network_url}'>{$hotspot_network_name}</a>
-	  
-	</h2>
-
+	<h2>Announcements</h2>
+	  <dl>
+	  <dt>31/9/2004: {$hotspot_network_name} is currently transitioning from NoCat to the brand new Wifidog captive portal.  Please note that your previous username and password should still work.</dt> 
+	  </dl>
       </div>
 
       <div id='navLeft'>

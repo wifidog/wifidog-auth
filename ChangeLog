@@ -1,4 +1,16 @@
 # $Header$
+2004-08-31 Benoit Grégoire  <bock@step.polymtl.ca>
+	* wifidog/ping/index.php: Implement logging of which hotspot sent the heartbeat, from which ip and when.
+	* wifidog/node_list.php:  Primitive but functionnal hotspot status page.
+	* wifidog/include/user_management_menu.php:  Change menu labels
+	* wifidog/local_content/default/login.html: Improve layout.  Someone needs to make this stylesheet correct, I took shortcuts...
+	* wifidog/local_content/default/stylesheet.css:  Reduce H1 font size.
+	* wifidog/user_management/index.php:  Display the menu, will eventually allow us to present proper help text.
+
+2004-08-30 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Add link to original requested site.
+	* wifidog/node_list.php:  New file.  Will become the main node status page.
+
 2004-08-28 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Primitive network status available form the index page
 	* Administrative security is implemented.

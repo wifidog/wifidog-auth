@@ -18,7 +18,8 @@
    * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
    *                                                                  *
    \********************************************************************/
-  /**@file index.php
+  /**@file node_list.php
+   * Network status page
    * @author Copyright (C) 2004 Benoit Grégoire
    */
 
@@ -35,7 +36,7 @@ echo $style->GetHeader(HOTSPOT_NETWORK_NAME.' node list');
     echo "<h1>". HOTSPOT_NETWORK_NAME ." node list</h1>\n";
 
 $row = null;
-$db->ExecSqlUniqueRes("SELECT * FROM nodes ORDER BY node_id",$row, true);
+$db->ExecSqlUniqueRes("SELECT node_id, name, NOW()-last_heartbeat_timestamp AS last_heartbeat, last_heartbeat_ip FROM nodes ORDER BY node_id",$row, true);
 
     echo "</div>\n";	
 
