@@ -1,4 +1,11 @@
 # $Header$
+
+2005-03-16 Matthew Asham <matthewa@bcwireless.net>
+ * config.php: will use "local.config.php" instead, if present.  avoid cvs over-writing.
+ * signup.php: if CUSTOM_SIGNUP_URL is defined, signup.php will re-direct.  For integration with existing auth systems
+ * hotspot_status.php: ob_clean may complain about buffering.  muted.
+ * ./classes/RssPressReview.inc: if rss_source['url'] is blank, ignore the feed.
+ 
 2005-02-22 Benoit Grégoire  <bock@step.polymtl.ca>
 M ChangeLog
 	* sql/dump_initial_data_postgres.sh, wifidog-postgres-initial-data.sql, wifidog-postgres-schema.sql:-Widen the connections size to fix int4 wraparound problems.  To update a running server, execute the following sql sniplet: 
