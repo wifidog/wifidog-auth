@@ -21,9 +21,9 @@ $account_status_to_text[ACCOUNT_STATUS_VALIDATION] = "Validation";
 $account_status_to_text[ACCOUNT_STATUS_VALIDATION_FAILED] = "Validation Failed";
 $account_status_to_text[ACCOUNT_STATUS_LOCKED] = "Locked";
 
-define('TOKEN_UNUSED',		0);
-define('TOKEN_INUSE',		1);
-define('TOKEN_USED',		2);
+define('TOKEN_UNUSED',		'UNUSED');
+define('TOKEN_INUSE',		'INUSE');
+define('TOKEN_USED',		'USED');
 
 $token_to_text[TOKEN_UNUSED] = "Unused";
 $token_to_text[TOKEN_INUSE] = "In use";
@@ -75,7 +75,6 @@ function garbage_collect()
 
   // 10 minutes
   $expiration = time() - 60*10;
-
   $db -> ExecSqlUpdate ("UPDATE connections SET token_status='" . TOKEN_USED . "' WHERE UNIX_TIMESTAMP(last_updated) < $expiration");
 
 

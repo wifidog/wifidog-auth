@@ -1,0 +1,20 @@
+# $Header$
+2004-08-02 Benoit Grégoire  <bock@step.polymtl.ca>
+	* wifidog-auth lives! New since the dark ages
+	* Demo page to allow people to hack more easely on it
+	* Support for multiple nodes.  TODO:  Merge with the database project.
+	* Very cool local content architecture.  Every hotspot can have a folder in the local_content directory.  This folder can be filed by a single logo, leaving all the rest to the default content, or be completely custom (stylesheet, login page, portal page, header, etc.)
+	* Everything in local content is templated with smarty, no problem with web designer wrecking havoc on the auth server.  You can edit everything in local_content/default even if you only speak html.
+	* No need to set any path in the web server config files (that one was a bitch to implement)
+	* RSS feed support (optionnal, with magpierss), one feed per node (url stored in the database, works great, but no gui to edit it yet) and one network-wide RSS feed.
+	* All path are editable from the config file
+	* "Productize" the thing, so it make sense for other groups to install it (the network name, url, default RSS, and such are set from the config file.
+	* Put most strings in gettext calls for easy future translation.
+	* User can request that the server send the validation email again
+	* User can change password
+	* User who forgot his username can have it mailed to him.
+	* User who lost his password can ask the system to generate a new one and mail it to him.
+	* Email is now a separate field to preserve user privacy.
+	* Database abstraction layer with very nice debugging features (just append true at the end of the call, and you'll see the query, the results, the query plan and number of affected rows.  Also allow future upgrade to postgres.
+	* Lots of other things I forgot.
+	

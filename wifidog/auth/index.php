@@ -26,7 +26,7 @@ define('BASEPATH','../');
 require_once BASEPATH.'include/common.php';
 
 $auth_response = 0;
-$db->ExecSqlUniqueRes("SELECT * FROM users,connections WHERE users.user_id=connections.user_id AND connections.token='{$_REQUEST['token']}' LIMIT 1", $info);
+$db->ExecSqlUniqueRes("SELECT * FROM users,connections WHERE users.user_id=connections.user_id AND connections.token='{$_REQUEST['token']}' LIMIT 1", $info, false);
 if ($info != null)
   {
     switch($_REQUEST['stage'])
@@ -43,17 +43,17 @@ if ($info != null)
 	      "token_status='" . TOKEN_USED . "' " .
 	      "WHERE user_id = '{$info['user_id']}' " .
 	      "AND token_status='" . TOKEN_INUSE . "';\n";
-	    
-	    $sql .= "UPDATE connections SET " .
+	    $db->ExecSqlUpdate($sql, false);
+	    $sql = "UPDATE connections SET " .
 	      "token_status='" . TOKEN_INUSE . "'," .
 	      "user_mac='{$_REQUEST['mac']}'," .
 	      "user_ip='{$_REQUEST['ip']}' " .
 	      "WHERE conn_id='{$info['conn_id']}' LIMIT 1;\n";
-	    
-	    $sql .= "UPDATE users SET " .
-	      "online_status='" . ONLINE_STATUS_ONLINE . "'" .
+	    	    $db->ExecSqlUpdate($sql, false);
+	    $sql = "UPDATE users SET " .
+	      "online_status='" . ONLINE_STATUS_ONLINE . "' " .
 	      "WHERE user_id='{$info['user_id']}' LIMIT 1;\n";
-	    $db->ExecSqlUpdate($sql);
+	    $db->ExecSqlUpdate($sql, false);
 	  }
 	break;
 

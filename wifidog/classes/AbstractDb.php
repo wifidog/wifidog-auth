@@ -297,7 +297,7 @@ class AbstractDb
 
     if ($debug == TRUE)
       {
-	echo "<P>".mysql_affected_rows($result)." rangées affectées par la requête SQL<br>\n";
+	echo "<P>".mysql_affected_rows()." rangées affectées par la requête SQL<br>\n";
 	echo "Temps écoulé: $sql_timetaken seconde(s)</P>\n";
       }
 
@@ -308,10 +308,6 @@ class AbstractDb
       }
     else
       {
-	if ($debug == TRUE)
-	  {
-	    echo "<p>ExecSqlUpdate(): DEBUG: ".mysql_affected_rows($result)." rangée(s) affectée(s)</p><hr />\n";
-	  }
 	return $result;
       }
   }

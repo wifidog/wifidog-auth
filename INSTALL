@@ -1,7 +1,15 @@
- 
-Need:
+Prerequisites:
 Smarty template engine http://smarty.php.net/
 magpierss http://magpierss.sourceforge.net/
 php's php-xml extention installed.
 
-local_content/cache/ must be writable by your web server
+Install:
+
+-Uncompress the tarball on your web server.
+-Put the content of the libs directory in the smarty tarball in lib/smarty/
+-Put the content of the magpierss-0.xx directory in the magpierss tarball in lib/magpie
+-local_content/cache/, and everything in tmp/smarty must be at least writable by your web server.  Run "sh permissions.sh" to set them 777
+-Edit wifidog/config.php to suit your environment.
+-Enjoy.
+
+  
