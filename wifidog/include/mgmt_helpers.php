@@ -42,7 +42,7 @@ function send_validation_email($email) {
                 $smarty->assign("error", _("The validation token is empty."));
             } else {
                 $subject = VALIDATION_EMAIL_SUBJECT;
-                $url = "http://" . $_SERVER["HTTP_HOST"] . "/validate.php?username=" . $_REQUEST["username"] . "&token=" . $user_info["validation_token"];
+                $url = "http://" . $_SERVER["SERVER_NAME"] . "/validate.php?username=" . $_REQUEST["username"] . "&token=" . $user_info["validation_token"];
                 $body = "Hello!
 
 Please follow the link below to validate your account.
