@@ -1,4 +1,7 @@
 # $Header$
+2005-01-20 Philippe April <isf_lists@philippeapril.com>
+	* Modularized the admin interface, added functions
+
 2005-01-18 Philippe April <isf_lists@philippeapril.com>
 	* Smarty'ized more, I think it's done now
 
