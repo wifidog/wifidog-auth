@@ -25,6 +25,7 @@
 define('BASEPATH','./');
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'classes/Style.php';
+require_once BASEPATH.'classes/Statistics.php';
 
 $style = new Style();
 echo $style->GetHeader(HOTSPOT_NETWORK_NAME.' authentication server');
@@ -35,12 +36,9 @@ $row = null;
 //$db->ExecSqlUniqueRes("SELECT COUNT(user_id), account_status FROM users GROUP BY account_status", $row, true);
 $db->ExecSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_status = ".ACCOUNT_STATUS_ALLOWED, $row, false);
 $num_valid_users=$row['count'];
-$row = null;
-$db->ExecSqlUniqueRes("SELECT COUNT(user_id) FROM ( SELECT DISTINCT user_id FROM connections " .
-	     "WHERE token_status='" . TOKEN_INUSE . "') AS online_users"	     
-	     ,$row, false);
-$num_online_users=$row['count'];
 
+$stats=new Statistics();
+$num_online_users=$stats->getNumOnlineUsers($node_id=null);
 
 echo "<p>"._("The network currently has ").$num_valid_users._(" valid users.")." ".$num_online_users._(" user(s) are currently online")."</p>\n";
     echo "<ul>\n";

@@ -40,8 +40,21 @@ class Security
 */
   function login($username, $hash)
   {
+      global $db;
+  $username = $db->EscapeString($username);
+  $hash = $db->EscapeString($hash);
+      $db->ExecSqlUniqueRes("SELECT * FROM users WHERE (user_id='$username' OR email='$username') AND pass='$hash'", $user_info, false);
+    if(empty($user_info))
+      {
+	echo '<p class=error>'._("Your username and password do not match")."</p>\n";
+	exit;
+      }
+    else
+      {
+	/* Access granted */
     $this->session->set(SESS_USERNAME_VAR, $username);
     $this->session->set(SESS_PASSWORD_HASH_VAR, $hash);
+      }
   }
 
   function requireAdmin()
@@ -50,7 +63,7 @@ class Security
     //$this->session->dump();
     $user = $this->session->get(SESS_USERNAME_VAR);
     $password_hash = $this->session->get(SESS_PASSWORD_HASH_VAR);
-    $db->ExecSqlUniqueRes("SELECT * FROM users NATURAL JOIN administrators WHERE (user_id='$user' OR email='$user') AND pass='$password_hash'", $user_info, false);
+    $db->ExecSqlUniqueRes("SELECT * FROM users NATURAL JOIN administrators WHERE user_id='$user' AND pass='$password_hash'", $user_info, false);
     if(empty($user_info))
       {
 	echo '<p class=error>'._("You do not have administrator privileges")."</p>\n";
@@ -70,7 +83,7 @@ class Security
     //$this->session->dump();
     $user = $this->session->get(SESS_USERNAME_VAR);
     $password_hash = $this->session->get(SESS_PASSWORD_HASH_VAR);
-    //$db->ExecSqlUniqueRes("SELECT * FROM users NATURAL JOIN administrators WHERE (user_id='$user' OR email='$user') AND pass='$password_hash'", $user_info, false);
+    //$db->ExecSqlUniqueRes("SELECT * FROM users NATURAL JOIN administrators WHERE user_id='$user' AND pass='$password_hash'", $user_info, false);
     if(empty($user_info))
       {
 	echo '<p class=error>'._("NOT IMPLEMENTED YET, ACCESS DENIED")."</p>\n";

@@ -32,7 +32,8 @@ echo $style->GetHeader(HOTSPOT_NETWORK_NAME.' administration');
     echo "<h1>"._('Admin page for ') . HOTSPOT_NETWORK_NAME ."</h1>\n";
     echo "<ul>\n";
     echo "<li><a href='user_log.php'>"._('User logs')."</a></li>\n";
-    echo "<li><a href='import_user_database.php'>"._('Import user database')."</a></li>\n";
+    //echo "<li><a href='hotspot_log.php'>"._('Hotspot logs')."</a></li>\n";
+    echo "<li><a href='import_user_database.php'>"._('Import NoCat user database')."</a></li>\n";
     echo "</ul>\n";
 
 echo $style->GetFooter();

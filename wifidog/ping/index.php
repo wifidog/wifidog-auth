@@ -28,6 +28,7 @@ require_once BASEPATH.'include/common.php';
 
 echo "Pong";
     $node_id = $db->EscapeString($_REQUEST['gw_id']);
-$db->ExecSqlUpdate("UPDATE nodes SET last_heartbeat_ip='$_SERVER[REMOTE_ADDR]', last_heartbeat_timestamp=NOW() WHERE node_id='$node_id'");
+    $user_agent =  $db->EscapeString($_SERVER['HTTP_USER_AGENT']);
+$db->ExecSqlUpdate("UPDATE nodes SET last_heartbeat_ip='$_SERVER[REMOTE_ADDR]', last_heartbeat_timestamp=NOW(), last_heartbeat_user_agent='$user_agent' WHERE node_id='$node_id'");
 	
 ?>

@@ -27,8 +27,11 @@ define('BASEPATH','./');
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'classes/Style.php';
 require_once (BASEPATH.'include/user_management_menu.php');
+require_once BASEPATH.'classes/Statistics.php';
 
 $style = new Style();
+$stats=new Statistics();
+
 echo $style->GetHeader(HOTSPOT_NETWORK_NAME.' node list');
     echo "<div id='head'><h1>". HOTSPOT_NETWORK_NAME ." node list</h1></div>\n";    
 echo "<div id='navLeft'>\n";
@@ -37,30 +40,32 @@ echo "</div>\n";
   
 echo "<div id='content'>\n";
 
-$db->ExecSql("SELECT node_id, name, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip,
+$db->ExecSql("SELECT node_id, name, last_heartbeat_user_agent, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip,
  CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up, creation_date FROM nodes ORDER BY node_id",$node_results, false);
 echo "<table class='spreadsheet'>\n";
-	echo "<thead><tr class='spreadsheet'><th class='spreadsheet' colspan=5>Status of all nodes of the ".HOTSPOT_NETWORK_NAME." network</th></tr>\n";
+	echo "<thead><tr class='spreadsheet'><th class='spreadsheet' colspan=6>Status of all nodes of the ".HOTSPOT_NETWORK_NAME." network</th></tr>\n";
 	echo "<tr class='spreadsheet'><th class='spreadsheet'>Status</th>\n";
 	echo "<th class='spreadsheet'>Id</th>\n";
 	echo "<th class='spreadsheet'>Name</th>\n";
 	echo "<th class='spreadsheet'>Local content demo</th>\n";
 	echo "<th class='spreadsheet'>Opened on</th>\n";
-	echo "</tr></thead\n";
+	echo "<th class='spreadsheet'>Online users</th>\n";	
+	echo "</tr></thead>\n";
 	foreach($node_results as $node_row)
 	{
 		echo "<tr class='spreadsheet'>\n";
 		echo "<td class='spreadsheet'>\n";
 		if($node_row['is_up']=='t')
 		{
-		echo "<img src='".BASE_URL_PATH . "images/hotspot_status_up.png'>";
+		echo "<img src='".BASE_URL_PATH . "images/hotspot_status_up.png'> ";
 		}
 		else
 		{
-		echo "<img src='".BASE_URL_PATH . "images/hotspot_status_down.png'>";
+		echo "<img src='".BASE_URL_PATH . "images/hotspot_status_down.png'> ";
 		$duration = $db->GetDurationArrayFromIntervalStr($node_row['since_last_heartbeat']);
-		echo $duration['days'].'days '.$duration['hours'].'h '.$duration['minutes'].'min';
+		echo $duration['days'].'days '.$duration['hours'].'h '.$duration['minutes'].'min<br />';
 		}
+		echo "$node_row[last_heartbeat_user_agent]";
 		echo "</td>\n";
 		echo "<td class='spreadsheet'>$node_row[node_id]</td>\n";
 		echo "<td class='spreadsheet'>$node_row[name]</td>\n";
@@ -69,6 +74,12 @@ echo "<table class='spreadsheet'>\n";
 		echo "<a href='".BASE_URL_PATH."portal/index.php?gw_id=$node_row[node_id]'>Portal page</a>\n";
 		echo "</td>\n";
 		echo "<td class='spreadsheet'>$node_row[creation_date]</td>\n";
+		$num_online_users = $stats->getNumOnlineUsers($node_row['node_id']);
+		if($num_online_users==0)
+		{
+		$num_online_users=null;
+		}
+		echo "<td class='spreadsheet'>$num_online_users</td>\n";
 		echo "</tr>\n";
 }
 echo "</table>\n";

@@ -6,12 +6,15 @@ INSERT INTO administrators (user_id) VALUES ('admin');
 -- PostgreSQL database dump
 --
 
+SET client_encoding = 'LATIN1';
+SET check_function_bodies = false;
+
 SET SESSION AUTHORIZATION 'wifidog';
 
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 1 (OID 299872)
+-- Data for TOC entry 2 (OID 299872)
 -- Name: token_status; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
