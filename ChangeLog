@@ -1,5 +1,10 @@
 # $Header$
 2005-02-14 Philippe April <philippe@ilesansfil.org>
+	* gw_message.php: the "activate" message was not properly defined and
+	would cause an error to show up instead of the nice activate your account
+	message
+
+2005-02-14 Philippe April <philippe@ilesansfil.org>
 	* wifidog/locale/gen.s: Was not working as expected, it will now get the
 	gettext from smarty properly.
 	* Updated TODO with ideas on making config better
