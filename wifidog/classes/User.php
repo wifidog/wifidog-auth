@@ -243,6 +243,7 @@ class User
 	 $errmsg: Returs the reason why the account is or isn't valid */
 	function isUserValid(& $errmsg = null)
 	{
+        global $db;
 		$retval = false;
 		$account_status = $this->getAccountStatus();
 		if ($account_status == ACCOUNT_STATUS_ALLOWED)
