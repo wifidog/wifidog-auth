@@ -1,0 +1,47 @@
+{include file="templates/header_small.html"}
+<div id="login">
+
+    <div id="lang">
+    {include file="templates/lang_menu.html"}
+    </div>
+
+    <div id="head">
+        <a href="{$smarty.const.HOTSPOT_NETWORK_URL}"><img src="/local_content/common/head.gif" border="0"></a><br>
+    </div>
+
+    <div id="banner">
+        {"FREE WIRELESS INTERNET"|_}
+    </div>
+
+    <div id="form">
+
+        <h3>{"Welcome to"|_} {$hotspot_name}</h3>
+
+        <h3>{"Please log-in or"|_}<br><a href="{$smarty.const.BASE_SSL_PATH}signup.php">{"Sign-up, it's free!"|_}</a></h3>
+
+        <form name="login_form">
+        <table>
+        <tr>
+            <td>{"Username (or email)"|_}:</td>
+            <td><input type="text" name="username" size="20"></td>
+        </tr>
+        <tr>
+            <td>{"Password"|_}:</td>
+            <td><input type="password" name="password" size="20"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input class="submit" type="submit" name="submit" value="{"Login"|_}"></td>
+        </tr>
+        </table>
+        </form>
+
+        <h3>{"I already have an account, but"|_}:</h3>
+        <ul>
+            <li><a href="{$smarty.const.BASE_SSL_PATH}{$smarty.const.USER_MANAGEMENT_PAGE}?action=lost_username_form">{"I Forgot my username"|_}</a><br>
+            <li><a href="{$smarty.const.BASE_SSL_PATH}{$smarty.const.USER_MANAGEMENT_PAGE}?action=lost_password_form">{"I Forgot my password"|_}</a>
+            <li><a href="{$smarty.const.BASE_SSL_PATH}{$smarty.const.USER_MANAGEMENT_PAGE}?action=validation_email_form">{"Re-send the validation email"|_}</a><br>
+        </ul>
+    </div>
+
+</div>

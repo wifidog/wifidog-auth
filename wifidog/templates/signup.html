@@ -1,0 +1,53 @@
+{include file="templates/header_small.html"}
+<div id="signup">
+
+    <div id="lang">
+    {include file="templates/lang_menu.html"}
+    </div>
+
+    <div id="head">
+        <a href="{$smarty.const.HOTSPOT_NETWORK_URL}"><img src="/local_content/common/head.gif" border="0"></a><br>
+    </div>
+
+    <div id="banner">
+        {"FREE WIRELESS INTERNET"|_}
+    </div>
+
+    <div id="form">
+        <h3>{"Register a free account with"|_} {$hotspot_network_name}</h3>
+
+        <form name="signup_form">
+        <table>
+        <tr>
+            <td>{"Username desired"|_}:</td>
+            <td><input type="text" name="username" value="{$username}" size="20"></td>
+        </tr>
+        <tr>
+            <td>{"Your email address"|_}:</td>
+            <td><input type="text" name="email" value="{$email}" size="30"></td>
+        </tr>
+        <tr>
+            <td>{"Password"|_}:</td>
+            <td><input type="password" name="password" size="20"></td>
+        </tr>
+        <tr>
+            <td>{"Password (again)"|_}:</td>
+            <td><input type="password" name="password_again" size="20"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input class="submit" type="submit" name="submit" value="{"Sign-up"|_}"></td>
+        </tr>
+        </table>
+        </form>
+
+    </div>
+    
+    <div id="help">
+        {if $error}
+        {$error}
+        {else}
+        {"Your email address must be valid in order for your account to be activated"|_}.
+        {/if}
+    </div>
+</div>
