@@ -76,7 +76,13 @@ CREATE TABLE nodes (
     creation_date date DEFAULT now(),
     home_page_url text,
     last_heartbeat_user_agent text,
-    description text
+    description text,
+    map_url text,
+    street_address text,
+    public_phone_number text,
+    public_email text,
+    mass_transit_info text,
+    node_deployment_status character varying(32) DEFAULT 'IN_PLANNING'::character varying NOT NULL
 );
 
 
@@ -109,7 +115,17 @@ CREATE TABLE node_owners (
 
 
 --
--- TOC entry 13 (OID 300919)
+-- TOC entry 10 (OID 318918)
+-- Name: node_deployment_status; Type: TABLE; Schema: public; Owner: wifidog
+--
+
+CREATE TABLE node_deployment_status (
+    node_deployment_status character varying(32) NOT NULL
+) WITHOUT OIDS;
+
+
+--
+-- TOC entry 14 (OID 300919)
 -- Name: idx_token; Type: INDEX; Schema: public; Owner: wifidog
 --
 
@@ -117,7 +133,7 @@ CREATE INDEX idx_token ON connections USING btree (token);
 
 
 --
--- TOC entry 14 (OID 300920)
+-- TOC entry 15 (OID 300920)
 -- Name: idx_token_status_and_user_id; Type: INDEX; Schema: public; Owner: wifidog
 --
 
@@ -125,7 +141,7 @@ CREATE INDEX idx_token_status_and_user_id ON connections USING btree (token_stat
 
 
 --
--- TOC entry 10 (OID 299870)
+-- TOC entry 11 (OID 299870)
 -- Name: administrators_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -134,7 +150,7 @@ ALTER TABLE ONLY administrators
 
 
 --
--- TOC entry 11 (OID 299874)
+-- TOC entry 12 (OID 299874)
 -- Name: token_status_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -143,7 +159,7 @@ ALTER TABLE ONLY token_status
 
 
 --
--- TOC entry 12 (OID 299889)
+-- TOC entry 13 (OID 299889)
 -- Name: connections_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -152,7 +168,7 @@ ALTER TABLE ONLY connections
 
 
 --
--- TOC entry 15 (OID 299901)
+-- TOC entry 16 (OID 299901)
 -- Name: nodes_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -161,7 +177,7 @@ ALTER TABLE ONLY nodes
 
 
 --
--- TOC entry 16 (OID 299912)
+-- TOC entry 17 (OID 299912)
 -- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -170,7 +186,7 @@ ALTER TABLE ONLY users
 
 
 --
--- TOC entry 17 (OID 310107)
+-- TOC entry 18 (OID 310107)
 -- Name: node_owners_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -179,7 +195,16 @@ ALTER TABLE ONLY node_owners
 
 
 --
--- TOC entry 19 (OID 299891)
+-- TOC entry 19 (OID 318920)
+-- Name: node_deployment_status_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY node_deployment_status
+    ADD CONSTRAINT node_deployment_status_pkey PRIMARY KEY (node_deployment_status);
+
+
+--
+-- TOC entry 21 (OID 299891)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -188,7 +213,7 @@ ALTER TABLE ONLY connections
 
 
 --
--- TOC entry 18 (OID 299914)
+-- TOC entry 20 (OID 299914)
 -- Name: administrators_ibfk_1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -197,7 +222,7 @@ ALTER TABLE ONLY administrators
 
 
 --
--- TOC entry 20 (OID 300909)
+-- TOC entry 22 (OID 300909)
 -- Name: fk_users; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -206,7 +231,7 @@ ALTER TABLE ONLY connections
 
 
 --
--- TOC entry 21 (OID 300913)
+-- TOC entry 23 (OID 300913)
 -- Name: fk_nodes; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -215,7 +240,7 @@ ALTER TABLE ONLY connections
 
 
 --
--- TOC entry 22 (OID 310097)
+-- TOC entry 25 (OID 310097)
 -- Name: fk_users; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -224,11 +249,20 @@ ALTER TABLE ONLY node_owners
 
 
 --
--- TOC entry 23 (OID 310101)
+-- TOC entry 26 (OID 310101)
 -- Name: fk_nodes; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
 ALTER TABLE ONLY node_owners
     ADD CONSTRAINT fk_nodes FOREIGN KEY (node_id) REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 24 (OID 318922)
+-- Name: fk_node_deployment_status; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY nodes
+    ADD CONSTRAINT fk_node_deployment_status FOREIGN KEY (node_deployment_status) REFERENCES node_deployment_status(node_deployment_status) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 

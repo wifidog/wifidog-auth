@@ -6,6 +6,17 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.12  2004/11/20 03:28:25  benoitg
+ *     2004-11-19 Benoit Grégoire  <bock@step.polymtl.ca>
+ *     	* TODO: Add email domains to blacklist
+ *     	* wifidog/config.php, wifidog/include/user_management_menu.php: Add tech support email address
+ *     	* wifidog/hotspot_status.php: List of HotSpots that are open with summary of information.  Designed to be included as part of another page.
+ *     	* wifidog/local_content/common/wifidog_logo_banner.gif: Add wifidog logo
+ *     	* wifidog/local_content/default/hotspot_logo_banner.jpg: Shrink the logo and write unknown hotspot, however this is still really ugly
+ *     	* wifidog/local_content/default/login.html, portal.html, stylesheet.css: Cosmetic fixes
+ *      	* wifidog/local_content/default/login.html.fr, portal.html.fr: Delete the files, this isn't the approach we will use for translation.
+ *     	* sql/wifidog-postgres-initial-data.sql, wifidog-postgres-schema.sql: Update with new node information structures.
+ *
  *     Revision 1.11  2004/09/28 20:46:40  yanik_crepeau
  *     Added experimental (and commented) code for next developpments
  *     regarding the language/localization issues.
@@ -30,6 +41,7 @@ define('SYSTEM_PATH', '/');
 define('SSL_AVAILABLE', true); 
 define('HOTSPOT_NETWORK_NAME', 'Île sans fil');
 define('HOTSPOT_NETWORK_URL', 'http://www.ilesansfil.org/');
+define('TECH_SUPPORT_EMAIL', 'tech@ilesansfil.org');
 define('UNKNOWN_HOSTPOT_NAME', 'Unknown HotSpot');
 
 define('VALIDATION_EMAIL_FROM_ADDRESS', 'validation@yourdomain.org');

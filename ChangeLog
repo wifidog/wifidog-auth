@@ -1,4 +1,14 @@
 # $Header$
+2004-11-19 Benoit Grégoire  <bock@step.polymtl.ca>
+	* TODO: Add email domains to blacklist
+	* wifidog/config.php, wifidog/include/user_management_menu.php: Add tech support email address
+	* wifidog/hotspot_status.php: List of HotSpots that are open with summary of information.  Designed to be included as part of another page.
+	* wifidog/local_content/common/wifidog_logo_banner.gif: Add wifidog logo
+	* wifidog/local_content/default/hotspot_logo_banner.jpg: Shrink the logo and write unknown hotspot, however this is still really ugly
+	* wifidog/local_content/default/login.html, portal.html, stylesheet.css: Cosmetic fixes
+ 	* wifidog/local_content/default/login.html.fr, portal.html.fr: Delete the files, this isn't the approach we will use for translation.
+	* sql/wifidog-postgres-initial-data.sql, wifidog-postgres-schema.sql: Update with new node information structures.
+
 2004-11-04 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog/admin/hotspot_log.php: Add number of currently connected users here as well.
 

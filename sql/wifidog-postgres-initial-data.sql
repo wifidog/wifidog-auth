@@ -22,5 +22,11 @@ INSERT INTO token_status (token_status) VALUES ('UNUSED');
 INSERT INTO token_status (token_status) VALUES ('INUSE');
 INSERT INTO token_status (token_status) VALUES ('USED');
 
+INSERT INTO node_deployment_status (node_deployment_status) VALUES ('DEPLOYED');
+INSERT INTO node_deployment_status (node_deployment_status) VALUES ('IN_PLANNING');
+INSERT INTO node_deployment_status (node_deployment_status) VALUES ('IN_TESTING');
+INSERT INTO node_deployment_status (node_deployment_status) VALUES ('NON_WIFIDOG_NODE');
+INSERT INTO node_deployment_status (node_deployment_status) VALUES ('PERMANENTLY_CLOSED');
+INSERT INTO node_deployment_status (node_deployment_status) VALUES ('TEMPORARILY_CLOSED');
 
 INSERT INTO nodes (node_id, name, rss_url) VALUES ('default', 'Unknown node', NULL);

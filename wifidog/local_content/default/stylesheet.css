@@ -28,7 +28,7 @@ h1 {
 }
 
 h2 {
-  clear: both;
+  /*clear: both;*/
   border-bottom: 1px solid #BFDCB5;
   color: #628C53;
 }
