@@ -24,8 +24,7 @@
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'classes/Session.php';
 
-define('SESS_USERNAME_VAR', 'SESS_USERNAME');
-define('SESS_PASSWORD_HASH_VAR', 'SESS_PASSWORD_HASH');
+
 
 /** 
  */

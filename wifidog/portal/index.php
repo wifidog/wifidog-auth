@@ -27,6 +27,7 @@ define('BASEPATH','../');
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'classes/SmartyWifidog.php';
 require_once (BASEPATH.'include/user_management_menu.php');
+require_once BASEPATH.'classes/Session.php';
 
 if(CONF_USE_CRON_FOR_DB_CLEANUP == false)
   {
@@ -116,6 +117,10 @@ if(RSS_SUPPORT)
     $smarty->assign("hotspot_rss_html", $hotspot_rss_html);
   }
 $smarty->assign("user_management_menu", get_user_management_menu());
+
+$session = new Session();
+$smarty->assign("original_url_requested",$session->get(SESS_ORIGINAL_URL_VAR));
+
 
 if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.PORTAL_PAGE_NAME))
   {

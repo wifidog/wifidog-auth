@@ -55,6 +55,12 @@ define('STAGE_COUNTERS',"counters");
 define('ONLINE_STATUS_ONLINE',	1);
 define('ONLINE_STATUS_OFFLINE',	2);
 
+/* This section deals with sessions */
+
+define('SESS_USERNAME_VAR', 'SESS_USERNAME');
+define('SESS_PASSWORD_HASH_VAR', 'SESS_PASSWORD_HASH');
+define('SESS_ORIGINAL_URL_VAR', 'SESS_ORIGINAL_URL');
+
 /* This section deals with PATHs */
 define('BASE_URL_PATH', 'http://' . $_SERVER['HTTP_HOST'] . SYSTEM_PATH);
 if(SSL_AVAILABLE)

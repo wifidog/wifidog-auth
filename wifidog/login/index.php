@@ -31,9 +31,15 @@ require_once BASEPATH.'classes/Security.php';
 
 $login_successfull = false;
 $login_failed_message = '';
- $previous_username = '';
- $previous_password = '';
-//print_r($_REQUEST);
+$previous_username = '';
+$previous_password = '';
+
+if (!empty($_REQUEST['url']))
+  {
+    $session = new Session();
+    $session->set(SESS_ORIGINAL_URL_VAR,$_REQUEST['url']);
+  }
+
 if (isset($_REQUEST['user']) && isset($_REQUEST['pass'])) 
   {
     $security = new Security();

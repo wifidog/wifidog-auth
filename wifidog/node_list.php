@@ -18,85 +18,26 @@
    * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
    *                                                                  *
    \********************************************************************/
-  /**@file Session.php
-   * @author Copyright (C) 2004 Technologies Coeus inc.
+  /**@file index.php
+   * @author Copyright (C) 2004 Benoit Grégoire
    */
-class Session{
-  
-  function Session() 
-  {
-    $session_id = session_id();
-    if(empty($session_id))
-      {
-	session_start();
-      }
-  }
-  
-  /**
-   * Sets a session variable
-   * @param string name of variable
-   * @param mixed value of variable
-   * @return void
-   */
-  function set($name,$value)
-  {
-    $_SESSION[$name]=$value;
-  }
-  
-  /**
-   * Fetches a session variable
-   * @param string name of variable
-   * @return mixed value of session varaible
-   */
-  function get($name)
-  {
-    if (isset($_SESSION[$name]))
-      {
-	return $_SESSION[$name];
-      }
-    else
-      {
-	return false;
-      }
-  }
 
-  /**
-   * Deletes a session variable
-   * @param string name of variable
-   * @return boolean
-   */
-  function remove($name)
-  {
-    if (isset($_SESSION[$name])) 
-      {
-	unset($_SESSION[$name]);
-	return true;
-      }
-    else 
-      {
-	return false;
-      }
-  }
+define('BASEPATH','./');
+require_once BASEPATH.'include/common.php';
+require_once BASEPATH.'classes/Style.php';
 
-  /**
-   * Delete the whole session
-   * @return void
-   */
-  function destroy() 
-  {
-    $_SESSION = array();
-    session_destroy();
-  }
+$style = new Style();
+echo $style->GetHeader(HOTSPOT_NETWORK_NAME.' node list');
+    echo "<div class=content>\n";
 
-  /**
-   * Delete the whole session
-   * @return void
-   */
-  function dump() 
-  {
-    echo "<pre>";
-    print_r($_SESSION);
-    echo "</pre>\n";
-  }
-}//End class
+
+	
+    echo "<h1>". HOTSPOT_NETWORK_NAME ." node list</h1>\n";
+
+$row = null;
+$db->ExecSqlUniqueRes("SELECT * FROM nodes ORDER BY node_id",$row, true);
+
+    echo "</div>\n";	
+
+echo $style->GetFooter();
 ?>
