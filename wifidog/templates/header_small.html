@@ -33,13 +33,6 @@
             border: 1px solid #666666;
         }
 
-    #login {
-            width: 30em;
-            position: relative;
-            margin: auto;
-            border: 1px solid #8EBC85;
-        }   
-
     #head {
             background: #CCE0C5 url("/local_content/common/h1_back.gif") repeat-x;
         }
@@ -93,4 +86,18 @@
 <title>{$title}</title>
 </head>
 <body>
+
+<div id="signup">
+
+    <div id="lang">
+    {include file="templates/lang_menu.html"}
+    </div>
+
+    <div id="head">
+        <a href="{$smarty.const.HOTSPOT_NETWORK_URL}"><img src="/local_content/common/head.gif" border="0"></a><br>
+    </div>
+
+    <div id="banner">
+        {"FREE WIRELESS INTERNET"|_}
+    </div>
 

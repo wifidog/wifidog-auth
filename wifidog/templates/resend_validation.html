@@ -1,18 +1,4 @@
 {include file="templates/header_small.html"}
-<div id="signup">
-
-    <div id="lang">
-    {include file="templates/lang_menu.html"}
-    </div>
-
-    <div id="head">
-        <a href="{$smarty.const.HOTSPOT_NETWORK_URL}"><img src="/local_content/common/head.gif" border="0"></a><br>
-    </div>
-
-    <div id="banner">
-        {"FREE WIRELESS INTERNET"|_}
-    </div>
-
     <div id="form">
         <h3>{"Re-send validation email"|_}</h3>
 
@@ -38,4 +24,4 @@
         {"Please enter your username and the validation email will be resent to your email address"|_}.
         {/if}
     </div>
-</div>
+{include file="templates/footer.html"}
