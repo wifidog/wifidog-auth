@@ -1,7 +1,7 @@
 {include file="templates/header.html" title="Hotspot administration"}
 
-<h3>{$titre} {$smarty.const.HOTSPOT_NETWORK_NAME}</h3>
-<SCRIPT LANGUAGE="JavaScript">
+<h3>{$title} {$smarty.const.HOTSPOT_NETWORK_NAME}</h3>
+<script LANGUAGE="JavaScript">
 
 {literal}
 function validateUsers() {
@@ -22,40 +22,39 @@ function validateUsers() {
   document.auth.action.value='add_owner';
   return true;
 }
-</SCRIPT>
+</script>
 {/literal}
 
 <form method="post" name="auth">
-
-  <table class="spreadsheet">
+  <table id="node_list">
     <thead>
-    <tr class="spreadsheet">
-      <th class="spreadsheet" colspan="6">Configurations of all nodes of the {$hotspot_network_name} network</th>
+    <tr>
+      <th  colspan="6">Configurations of all nodes of the {$hotspot_network_name} network</th>
     </tr>
-    <tr class="spreadsheet">
-      <th class="spreadsheet">User ID</th>
-      <th class="spreadsheet">Action</th>
+    <tr>
+      <th >User ID</th>
+      <th >Action</th>
     </tr>
     </thead>
 
 {section name=owner loop=$owner_list}
-    <tr class="spreadsheet">
-      <td class="spreadsheet">{$owner_list[owner].user_id}</td>
-      <td class="spreadsheet"><a href="{$smarty.const.BASE_SSL_PATH}admin/hotspot_owner.php?node_id={$node_id}&owner_user_id={$owner_list[owner].user_id}&action=del_owner"><input type="button" value="Delete" onclick="javascript: return confirm('Are you sure you want to delete {$owner_list[owner].user_id} ?');"></a></td>
+    <tr>
+      <td >{$owner_list[owner].user_id}</td>
+      <td ><a href="{$smarty.const.BASE_SSL_PATH}admin/hotspot_owner.php?node_id={$node_id}&owner_user_id={$owner_list[owner].user_id}&action=del_owner"><input type="button" value="Delete" onclick="javascript: return confirm('Are you sure you want to delete {$owner_list[owner].user_id} ?');"></a></td>
     </tr>
 {/section}
 
-    <tr class="spreadsheet">
-      <td class="spreadsheet" colspan="4">
+    <tr>
+      <td  colspan="4">
         <input type="hidden" name="action" value="">
         <input type="hidden" name="node_id" value="{$node_id}">
         <input type="text" name="owner_user_id">&nbsp;
-        <input type="submit" value="Add" onclick="return validateUsers();"> a new node owner
+        <input type="submit" value="{"Add a new node owner"|_}" onclick="return validateUsers();">
       </td>
     </tr>
   </table>
-<p>
-<p class=warning>{$error_message}</p>
+
+<p class="warning">{$error_message}</p>
 
 </form>
 

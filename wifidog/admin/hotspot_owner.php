@@ -42,18 +42,16 @@ if ("$action" == "add_owner") { // Add new owner in DB
         $valid_user_id = array_shift($user_id_result);
         $sql_successful = $db->ExecSqlUpdate("INSERT INTO node_owners (node_id, user_id) VALUES ('$node_id','$owner_user_id')");
         if (!$sql_successful)
-            $smarty->assign("error_message", "Internal error");
+            $smarty->assign("error_message", _("Internal error"));
+    } else {
+        $smarty->assign("error_message", _("Invalid user id ") . "($owner_user_id)");
     }
-    else {
-        $smarty->assign("error_message", "Invalid user id ($owner_user_id)");
-    }
-}
-elseif ("$action" == "del_owner") {
+} elseif ("$action" == "del_owner") {
     $db->ExecSqlUpdate("DELETE FROM node_owners WHERE node_id='$node_id' AND user_id='$owner_user_id'");
     // Maybe print a success action message (like error_message, but not in red)
 }
 
-$smarty->assign("titre", "Owner hotspot with");
+$smarty->assign("title", "Owner hotspot with");
 $db->ExecSql("SELECT user_id FROM node_owners WHERE node_id='$node_id'", $node_owner_results);
 
 $tmpArray = array();

@@ -24,15 +24,9 @@
 
 define('BASEPATH','../');
 require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/SmartyWifidog.php';
+require_once BASEPATH.'include/common_interface.php';
 require_once BASEPATH.'classes/Security.php';
-require_once BASEPATH.'classes/Statistics.php';
+
 $security = new Security();
 $security->requireAdmin();
-
-$smarty = new SmartyWifidog;
-$session = new Session;
-$stats = new Statistics();
-
-include BASEPATH.'include/language.php';
 ?>

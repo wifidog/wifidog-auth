@@ -23,16 +23,7 @@
    */
 
 define('BASEPATH','../');
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/SmartyWifidog.php';
-require_once BASEPATH.'classes/Security.php';
-$security=new Security();
-$security->requireAdmin();
-
-$smarty = new SmartyWifidog;
-$session = new Session;
-
-include BASEPATH.'include/language.php';
+require_once 'admin_common.php';
 
 $smarty->display("admin/templates/main.html");
 ?>

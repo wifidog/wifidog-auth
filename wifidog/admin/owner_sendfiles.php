@@ -64,22 +64,22 @@ $filesArray = array (
 );
 
 // Error checking before user can upload files
-if(!is_writable(BASEPATH.LOCAL_CONTENT_REL_PATH)) {
+if (!is_writable(BASEPATH.LOCAL_CONTENT_REL_PATH)) {
      /* TODO Detailler l'erreur :
           -Print absolute PATH directory
           -Print current uid/gid
           -Print needed uid/gid
       */
-    $uid = posix_getuid();
-    $smarty->assign("error_message", "Ecriture impossible dans le repertoire ".BASEPATH.LOCAL_CONTENT_REL_PATH." (UID=$uid)");
+    $fileinfo = posix_getpwuid(posix_getuid());
+    $smarty->assign("error_message", _("Can not write to directory '" . BASEPATH.LOCAL_CONTENT_REL_PATH . "', ownership should be set to user ") . $fileinfo['name'] . " (uid=" . $fileinfo['uid'] . ")");
     $smarty->display("admin/templates/owner_display.html");
     exit();
 }
 
 if ("$delfile" == "submit") { // Submit all files
     // Create node directory in local_content
-    if (!file_exists(BASEPATH.LOCAL_CONTENT_REL_PATH."$node_id")) {
-        mkdir(BASEPATH.LOCAL_CONTENT_REL_PATH."$node_id");  // TODO : Add error checking
+    if (!file_exists(BASEPATH.LOCAL_CONTENT_REL_PATH . $node_id)) {
+        mkdir(BASEPATH.LOCAL_CONTENT_REL_PATH . $node_id);  // TODO : Add error checking
     }
     
     foreach($filesArray as $fileArray) {
@@ -96,29 +96,27 @@ if ("$delfile" == "submit") { // Submit all files
         // TODO : Display file upload success or error.
         if (move_uploaded_file($source, $destination)) {
             //echo "File is valid, and was successfully uploaded.<BR>";
-        } 
-        else {
+        } else {
             $smarty->assign("error_message", 'Possible file upload attack!');
         }
     }
-}
-else { // Delete only if the filename is defined and include in $filesArray
+} else { // Delete only if the filename is defined and include in $filesArray
     foreach($filesArray as $fileArray) {
-        if ($fileArray['filename'] == "$delfile") {
+        if ($fileArray['filename'] == $delfile) {
             $filename = $fileArray['filename'];
-            $source = BASEPATH.LOCAL_CONTENT_REL_PATH."$node_id/$filename";
+            $source = BASEPATH.LOCAL_CONTENT_REL_PATH . "$node_id/$filename";
             //echo "DELETE SOURCE=$source<BR>";
             unlink($source);    
         }
     }
 }
 
-if ("$action" == "uploadform") {
+if ("$action" == 'uploadform') {
     $security->requireOwner($node_id);
     $inc = 0;
     foreach($filesArray as $fileArray) {
         $filename = $fileArray['filename'];
-        if (file_exists(BASEPATH.LOCAL_CONTENT_REL_PATH."$node_id/$filename")) {
+        if (file_exists(BASEPATH.LOCAL_CONTENT_REL_PATH . "$node_id/$filename")) {
             $filesArray[$inc]['file_exists'] = 1;
         }
         ++$inc;
@@ -127,22 +125,18 @@ if ("$action" == "uploadform") {
     $smarty->assign("file_list", $filesArray);
     $smarty->assign("node_id", $node_id);
     $smarty->display("admin/templates/owner_upload.html");
-}    
-else {
+} else {
     $db->ExecSql("SELECT nodes.node_id,name FROM nodes NATURAL JOIN node_owners WHERE node_owners.user_id='$user_id'", $node_results, false);
 
     if (is_array($node_results)) {
-        foreach($node_results as $node_row) {
-            $smarty->append("node_list", $node_row);
-        }
-    }
-    else {
-        $smarty->assign("error_message", 'You are not a hotspot owner');
+        $smarty->assign("node_list", $node_results);
+        //foreach($node_results as $node_row) {
+        //    $smarty->append("node_list", $node_row);
+        //}
+    } else {
+        $smarty->assign("error_message", _('You are not a hotspot owner'));
     }
     $smarty->assign("node_id", $node_id);
     $smarty->display("admin/templates/owner_display.html");
 }
-  
-
-
 ?>

@@ -21,21 +21,21 @@ function ConfirmDeleteFile(filename) {
 <input type="hidden" name="delfile" />
 <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
 
-<table class='spreadsheet'>
+<table id="node_list">
 <thead>
-  <tr class='spreadsheet'><th class='spreadsheet' colspan="6">Configurations of all nodes of the {$smarty.const.HOTSPOT_NETWORK_NAME} network</th></tr>
-  <tr class='spreadsheet'>
-    <th class='spreadsheet'>Filename</th>
-    <th class='spreadsheet'>Action</th>
+  <tr><th colspan="6">Configurations of all nodes of the {$smarty.const.HOTSPOT_NETWORK_NAME} network</th></tr>
+  <tr>
+    <th >Filename</th>
+    <th >Action</th>
   </tr>
 {section name=file loop=$file_list}
-  <tr class="spreadsheet">
+  <tr>
   {if $file_list[file].file_exists == 1}
-    <td class="spreadsheet"><a href="{$smarty.const.BASE_URL_PATH}{$smarty.const.LOCAL_CONTENT_REL_PATH}{$node_id}/{$file_list[file].filename}">{$file_list[file].filename}</a></td>
-    <td class="spreadsheet"><input type="button" value="Delete" onclick="ConfirmDeleteFile('{$file_list[file].filename}');" /></td>
+    <td ><a href="{$smarty.const.BASE_URL_PATH}{$smarty.const.LOCAL_CONTENT_REL_PATH}{$node_id}/{$file_list[file].filename}">{$file_list[file].filename}</a></td>
+    <td ><input type="button" value="Delete" onclick="ConfirmDeleteFile('{$file_list[file].filename}');" /></td>
   {else}
-    <td class="spreadsheet"><input type="file" name="{$file_list[file].filename}" /></td>
-    <td class="spreadsheet">{$file_list[file].filename}</td>
+    <td ><input type="file" name="{$file_list[file].filename}" /></td>
+    <td >{$file_list[file].filename}</td>
   {/if}
   </tr>
 {/section}
@@ -44,8 +44,7 @@ function ConfirmDeleteFile(filename) {
 <input type="hidden" value="{$node_id}" />
 <p><input type="submit" value="Submit" onclick="document.auth.delfile.value='submit';" />
 
-<p>
-<p class=warning>{$error_message}</p>
+<p class="warning">{$error_message}</p>
 
 </form>
 

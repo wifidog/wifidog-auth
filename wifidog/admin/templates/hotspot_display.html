@@ -1,45 +1,44 @@
 {include file="templates/header.html" title="Hotspot administration"}
 
-<B style="position: absolute;top: 10px;right: 10px;">({$user_id})</B> <!-- DEBUG -->
+<b style="position: absolute;top: 10px;right: 10px;">({$user_id})</b> <!-- DEBUG -->
 
-<form method='post' name='auth'>
+<form method="post" name="auth">
 
-<table class="spreadsheet">
+<table id="node_list">
 <thead>
-<tr class="spreadsheet">
-    <th class="spreadsheet" colspan=6>{"Configurations of all nodes of the"|_} {$smarty.const.HOTSPOT_NETWORK_NAME} {"network"|_}</th> 
+<tr>
+    <th colspan="6">{"Configurations of all nodes of the"|_} {$smarty.const.HOTSPOT_NETWORK_NAME} {"network"|_}</th> 
 </tr>
-<tr class="spreadsheet">
-    <th class="spreadsheet">{"Id"|_}</th>
-    <th class="spreadsheet">{"Name"|_}</th>
-    <th class="spreadsheet">{"Opened on"|_}</th>
-    <th class="spreadsheet">{"Action"|_}</th>
+<tr>
+    <th >{"Id"|_}</th>
+    <th >{"Name"|_}</th>
+    <th >{"Opened on"|_}</th>
+    <th >{"Action"|_}</th>
 </tr>
 </thead>
 
 {section name=node loop=$nodes}
-<tr class="spreadsheet">
-    <td class="spreadsheet">{$nodes[node].node_id}</td>
-    <td class="spreadsheet">{$nodes[node].name}</td>
-    <td class="spreadsheet">{$nodes[node].creation_date}</td>
-    <td class="spreadsheet">
-        <a href="{$smarty.const.BASE_SSL_PATH}admin/hotspot.php?node_id={$nodes[node].node_id}&action=edit_node"><input type="button" value="Edit"></a>&nbsp;
-        <a href="{$smarty.const.BASE_SSL_PATH}admin/hotspot_owner.php?node_id={$nodes[node].node_id}"><input type="button" value="Owner"></a>&nbsp;
-        <a href="{$smarty.const.BASE_SSL_PATH}admin/hotspot.php?node_id={$nodes[node].node_id}&action=del_node"><input type="button" value="Delete" onclick="javascript: return confirm('Are you sure you want to delete {$nodes[node].name} ?');"></a>
+<tr>
+    <td >{$nodes[node].node_id}</td>
+    <td >{$nodes[node].name}</td>
+    <td >{$nodes[node].creation_date}</td>
+    <td >
+        <a href="{$smarty.const.BASE_SSL_PATH}admin/hotspot.php?node_id={$nodes[node].node_id}&action=edit_node"><input type="button" value="{"Edit"|_}"></a>&nbsp;
+        <a href="{$smarty.const.BASE_SSL_PATH}admin/hotspot_owner.php?node_id={$nodes[node].node_id}"><input type="button" value="{"Owner"|_}"></a>&nbsp;
+        <a href="{$smarty.const.BASE_SSL_PATH}admin/hotspot.php?node_id={$nodes[node].node_id}&action=del_node"><input type="button" value="{"Delete"|_}" onclick="javascript: return confirm('Are you sure you want to delete {$nodes[node].name} ?');"></a>
     </td>
 </tr>
 {/section}
 
-<tr class="spreadsheet">
-    <td class="spreadsheet" colspan="4">
-      &nbsp;<a href="{$smarty.const.BASE_SSL_PATH}admin/hotspot.php?node_id=new&action=add_node"><input type="button" value="Add"></a> a new node
+<tr>
+    <td colspan="4">
+      &nbsp;<a href="{$smarty.const.BASE_SSL_PATH}admin/hotspot.php?node_id=new&action=add_node"><input type="button" value="{"Add a new node"|_}"></a>
     </td>
 </tr>
 </table>
 
 </form>
 
-<p>
-<p class=warning>{$error_message}</p>
+<p class="warning">{$error_message}</p>
 
 {include file="templates/footer.html"}
