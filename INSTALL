@@ -6,6 +6,7 @@ Prerequisites:
 -php's dom extension installed. (Required if you want to export the list of HotSpots as a RSS feed)
 -php compiled with gettext support (Will be autodetected if unavailable, but you will loose internationalization)
 -PostgreSQL (mysql code also exists, but is looking for a maintainer)
+-PEAR ( if you need RADIUS auth support, see below )
 
 Install files:
 
@@ -24,6 +25,38 @@ Database:
 
 Configure the system:	
 -Edit wifidog/config.php to suit your environment.
+
+*****************************
+RADIUS authentication support
+*****************************
+
+You'll need these RPM packages
+
+libphp5-commons
+php5-cli
+php5-devel
+php5-xml
+php5-xmlrpc ---> requires libxmlrpc
+
+run this in a shell
+"lynx -source http://go-pear.org | php5"
+
+*************
+WARNING:
+You must have PHP5 CLI with php5ize installed
+*************
+Make sure your include_path refers to your PEAR install
+ie. /usr/share/pear
+
+Now you'll need a few packages, you can let PEAR install them
+automatically, make sure you have Console_Opt, Archive_Tar et XML_RPC
+before you do this.
+
+Run those scripts
+/usr/share/pear/scripts/pear.sh install Auth
+/usr/share/pear/scripts/pear.sh install radius   ( PECL module compilation)
+/usr/share/pear/scripts/pear.sh install Auth_RADIUS
+
 
 Enjoy!
 
