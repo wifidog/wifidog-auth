@@ -69,7 +69,7 @@ if (!empty($_REQUEST['user_id'])) {
         $current_page = 1;
     }
 
-    $per_page = 10;
+    $per_page = 100;
     $offset = (($current_page * $per_page) - $per_page + 1);
     $pages = $stats->getNumUsers() / $per_page;
     for ($i = 1; $i <= $pages+1; $i++) {
