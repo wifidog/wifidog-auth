@@ -1,4 +1,7 @@
 # $Header$
+2005-01-23 Philippe April <isf_lists@philippeapril.com>
+	* Added gateway error messages (validation period, etc.)
+
 2005-01-20 Philippe April <isf_lists@philippeapril.com>
 	* Modularized the admin interface, added functions
 

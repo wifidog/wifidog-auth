@@ -35,6 +35,12 @@ include BASEPATH.'include/language.php';
 
 if (isset($_REQUEST["message"]) {
     switch ($_REQUEST["message"]) {
+        case "failed_validation":
+            $smarty->display("templates/message_failed_validation.html");
+            break;
+        case "denied":
+            $smarty->display("templates/message_denied.html");
+            break;
         case "message":
             $smarty->display("templates/message_activate.html");
             break;
