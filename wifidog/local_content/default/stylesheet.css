@@ -127,7 +127,8 @@ A:visited { font-size: 85% }
 #node_list tr { background-color: #e1f5da; border: 1px solid; }
 #node_list tr.even { background-color: #e1f5da; }
 #node_list tr.odd { background-color: #b1d5ba; }
-#node_list td { margin: 0 0 0 0; }
+#node_list td { margin: 0 0 0 0; text-align: center; }
+#node_list td.status { width: 15em; text-align: left; }
 #node_list a { color: #628C53; }
 
 {/literal}

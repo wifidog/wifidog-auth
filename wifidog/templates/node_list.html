@@ -15,7 +15,7 @@
 
 {section name=node loop=$nodes}
 <tr class="{cycle values="odd,even"}">
-    <td>
+    <td class="status">
     {if $nodes[node].is_up == "t"}
     <img src='{$smarty.const.BASE_URL_PATH}images/hotspot_status_up.png'>
     {else}
@@ -24,14 +24,14 @@
     {/if}
     {$nodes[node].last_heartbeat_user_agent}
     </td>
-    <td align="center">{$nodes[node].node_id}</td>
+    <td>{$nodes[node].node_id}</td>
     <td>{$nodes[node].name}</td>
-    <td align="center">
-    <a href='{$smarty.const.BASE_SSL_PATH}login/index.php?gw_id={$nodes[node].node_id}&gw_address=127.0.0.1&gw_port=80'>{"Login page"|_}</a>,
+    <td>
+    <a href='{$smarty.const.BASE_SSL_PATH}login/index.php?gw_id={$nodes[node].node_id}&gw_address=127.0.0.1&gw_port=80'>{"Login page"|_}</a><br />
     <a href='{$smarty.const.BASE_URL_PATH}portal/index.php?gw_id={$nodes[node].node_id}'>{"Portal page"|_}</a>
     </td>
-    <td align="center">{$nodes[node].creation_date}</td>
-    <td align="center">
+    <td>{$nodes[node].creation_date}</td>
+    <td>
     {if $nodes[node].num_online_users != 0}
     {$nodes[node].num_online_users}
     {/if}
