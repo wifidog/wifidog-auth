@@ -48,7 +48,7 @@ if (!empty($_REQUEST['user_id'])) {
 	    $userinfo['account_status_description'] = $account_status_to_text[$userinfo['account_status']]; 
 	    $smarty->assign("userinfo", $userinfo);
 	
-	    $db->ExecSql("SELECT * FROM connections WHERE user_id='{$_REQUEST['user_id']}' ORDER BY timestamp_in", $connection_array, false);
+	    $db->ExecSql("SELECT * FROM connections,nodes WHERE user_id='{$_REQUEST['user_id']}' AND nodes.node_id=connections.node_id ORDER BY timestamp_in", $connection_array, false);
 	    if ($connection_array) {
 	        foreach($connection_array as $connection) {
 	            $total['incoming'] += $connection['incoming'];
