@@ -139,7 +139,6 @@ if (isset($session)) {
 }
 
 $smarty->display(DEFAULT_CONTENT_SMARTY_PATH."header.html");
-$smarty->display(DEFAULT_CONTENT_SMARTY_PATH."header_portal.html");
 
 /* If we have local content, display it. Otherwise, display default */
 if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.PORTAL_PAGE_NAME)) {
@@ -148,6 +147,5 @@ if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.PORTAL_PAGE_NAME)) {
     $smarty->display(DEFAULT_CONTENT_SMARTY_PATH.PORTAL_PAGE_NAME);
 }
 
-$smarty->display(DEFAULT_CONTENT_SMARTY_PATH."footer_portal.html");
 $smarty->display(DEFAULT_CONTENT_SMARTY_PATH."footer.html");
 ?>
