@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-18 18:37-0500\n"
+"POT-Creation-Date: 2005-01-21 14:52-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,15 +33,15 @@ msgid "Create new account"
 msgstr "Cr&eacute;er un nouveau compte"
 
 #: smarty.txt:6 smarty.txt:24 smarty.txt:37 smarty.txt:38 smarty.txt:39
-#: smarty.txt:33 smarty.txt:23 smarty.txt:72
+#: smarty.txt:33 smarty.txt:23 smarty.txt:72 smarty.txt:66
 msgid "Re-send validation email"
 msgstr "Envoyez-moi de nouveau le courriel de validation"
 
-#: smarty.txt:7 smarty.txt:25 smarty.txt:24 smarty.txt:67
+#: smarty.txt:7 smarty.txt:25 smarty.txt:24 smarty.txt:67 smarty.txt:62
 msgid "Lost username"
 msgstr "Nom d'usager perdu"
 
-#: smarty.txt:8 smarty.txt:26 smarty.txt:25 smarty.txt:61
+#: smarty.txt:8 smarty.txt:26 smarty.txt:25 smarty.txt:61 smarty.txt:57
 msgid "Lost password"
 msgstr "Mot de passe perdu"
 
@@ -143,16 +143,19 @@ msgid "Administration"
 msgstr ""
 
 #: ../admin/import_user_database.php:57 ../admin/import_user_database.php:53
+#: ../admin/import_user_database.php:49
 msgid ""
 "Accept users with no email adresses (Normally, NoCat usernames are expected "
 "to be the user's email adress, and the username is generated from the prefix."
 msgstr ""
 
 #: ../admin/import_user_database.php:59 ../admin/import_user_database.php:55
+#: ../admin/import_user_database.php:51
 msgid "Upload file"
 msgstr ""
 
 #: ../admin/import_user_database.php:62 ../admin/import_user_database.php:58
+#: ../admin/import_user_database.php:54
 msgid ""
 "I am sure I want to import (Otherwise, the import will only be simulated)."
 msgstr ""
@@ -171,19 +174,20 @@ msgstr ""
 msgid "Error: Unable to locate $_REQUEST[node_id] in the database."
 msgstr ""
 
-#: ../classes/Security.php:49
+#: ../classes/Security.php:49 ../classes/Security.php:44
 msgid "Your username and password do not match"
 msgstr "Votre nom d'usager et mot de passe de sont pas valides"
 
-#: ../classes/Security.php:69
+#: ../classes/Security.php:69 ../classes/Security.php:60
 msgid "You do not have administrator privileges"
 msgstr "Vous n'avez pas les privileges d'administrateur"
 
-#: ../classes/Security.php:89
+#: ../classes/Security.php:89 ../classes/Security.php:76
 msgid "NOT IMPLEMENTED YET, ACCESS DENIED"
 msgstr ""
 
 #: ../login/index.php:58 ../login/index.php:62 ../login/index.php:56
+#: ../login/index.php:52
 msgid ""
 "Sorry, your $validation_grace_time minutes grace period to retrieve your "
 "email and validate your account has now expired. ($validation_grace_time min "
@@ -193,11 +197,13 @@ msgstr ""
 
 #: smarty.txt:31 smarty.txt:35 smarty.txt:34 smarty.txt:44 smarty.txt:45
 #: smarty.txt:46 smarty.txt:53 smarty.txt:54 smarty.txt:59 smarty.txt:76
+#: smarty.txt:70
 msgid "Online at this hotspot"
 msgstr "En ligne &agrave; ce point d'acc&egrave;s sans-fil"
 
 #: smarty.txt:32 smarty.txt:36 smarty.txt:35 smarty.txt:45 smarty.txt:46
 #: smarty.txt:47 smarty.txt:54 smarty.txt:55 smarty.txt:60 smarty.txt:77
+#: smarty.txt:71
 msgid "Go to the site I originally requested"
 msgstr "Aller au site web que j'ai demand&eacute;"
 
@@ -230,6 +236,7 @@ msgid "Incorrect password (Maybe you have CAPS LOCK on?)"
 msgstr "Mot de passe incorrect (CAPS LOCK &agrave; actif?)"
 
 #: ../portal/index.php:117 ../portal/index.php:116 ../portal/index.php:115
+#: ../portal/index.php:103
 msgid "Error: "
 msgstr "Erreur: "
 
@@ -361,27 +368,28 @@ msgstr "J'ai oubli&eacute; mon mot de passe"
 msgid "Re-send the validation email"
 msgstr "Renvoyez-moi de nouveau le courriel de validation"
 
-#: smarty.txt:44 smarty.txt:49 smarty.txt:43
+#: smarty.txt:44 smarty.txt:49 smarty.txt:43 smarty.txt:42
 msgid "Register a free account with"
 msgstr "Ouvrir un compte gratuit avec"
 
-#: smarty.txt:45 smarty.txt:50 smarty.txt:44
+#: smarty.txt:45 smarty.txt:50 smarty.txt:44 smarty.txt:43
 msgid "Username desired"
 msgstr "Nom d'usager d&eacute;sir&eacute;"
 
 #: smarty.txt:46 smarty.txt:51 smarty.txt:45 smarty.txt:63 smarty.txt:68
+#: smarty.txt:44 smarty.txt:59
 msgid "Your email address"
 msgstr "Votre courriel"
 
-#: smarty.txt:48 smarty.txt:53 smarty.txt:47
+#: smarty.txt:48 smarty.txt:53 smarty.txt:47 smarty.txt:46
 msgid "Password (again)"
 msgstr "Mot de passe (encore)"
 
-#: smarty.txt:49 smarty.txt:54 smarty.txt:48
+#: smarty.txt:49 smarty.txt:54 smarty.txt:48 smarty.txt:47
 msgid "Sign-up"
 msgstr "Souscrire"
 
-#: smarty.txt:50 smarty.txt:55 smarty.txt:49
+#: smarty.txt:50 smarty.txt:55 smarty.txt:49 smarty.txt:48
 msgid ""
 "Your email address must be valid in order for your account to be activated"
 msgstr ""
@@ -390,12 +398,14 @@ msgstr ""
 
 #: ../signup.php:43 ../include/validation.php:9 ../include/mgmt_helpers.php:35
 #: ../include/mgmt_helpers.php:72 ../include/mgmt_helpers.php:104
+#: ../admin/user_log.php:34
 msgid "Unable to locate "
 msgstr "Impossible de trouver "
 
 #: ../signup.php:43 ../include/validation.php:9 ../lost_password.php:42
 #: ../lost_password.php:49 ../change_password.php:48
 #: ../include/mgmt_helpers.php:35 ../include/mgmt_helpers.php:72
+#: ../admin/user_log.php:34
 msgid " in the database."
 msgstr " dans la base de donn&eacute;e."
 
@@ -482,25 +492,25 @@ msgstr "Envoyez moi mon nom d'usager"
 msgid "An internal error occured, please contact us."
 msgstr "Une erreur interne est survenue, veuillez nous contacter."
 
-#: ../validate.php:34
+#: ../validate.php:34 ../validate.php:35
 msgid "No token specified!"
 msgstr "Aucun jeton sp&eacute;cifi&eacute;!"
 
-#: ../validate.php:36
+#: ../validate.php:36 ../validate.php:37
 msgid "No username specified!"
 msgstr "Aucun nom d'utilisateur sp&eacute;cifi&eacute;!"
 
-#: ../validate.php:42
+#: ../validate.php:42 ../validate.php:43
 msgid "Your account has already been activated."
 msgstr ""
 "Votre compte &agrave; d&eacute;j&agrave; &eacute;t&eacute; activ&eacute;."
 
-#: ../validate.php:47 ../validate.php:48
+#: ../validate.php:47 ../validate.php:48 ../validate.php:49
 msgid "Your account has been succesfully activated!"
 msgstr ""
 "Votre compte &agrave; &eacute;t&eacute; activ&eacute; avec succ&egrave;s!"
 
-#: ../validate.php:48 ../validate.php:49
+#: ../validate.php:48 ../validate.php:49 ../validate.php:50
 msgid ""
 "You may now browse to a remote Internet address and take advantage of the "
 "free Internet access!"
@@ -508,7 +518,7 @@ msgstr ""
 "Vous pouvez maintenant visiter un site Internet distant et profiter de "
 "l'acc&egrave;s Internet gratuit!"
 
-#: ../validate.php:49 ../validate.php:50
+#: ../validate.php:49 ../validate.php:50 ../validate.php:51
 msgid ""
 "If you get prompted for a login, enter the username and password you have "
 "just created."
@@ -516,11 +526,11 @@ msgstr ""
 "Si vous recevez une invite de saisie d'usager et de mot de passe, veuillez "
 "entrer le nom d'usager et le mot de passe que vous venez de cr&eacute;er."
 
-#: ../validate.php:51 ../validate.php:52
+#: ../validate.php:51 ../validate.php:52 ../validate.php:53
 msgid "Internal Error"
 msgstr "Erreur Interne"
 
-#: ../validate.php:55 ../validate.php:56
+#: ../validate.php:55 ../validate.php:56 ../validate.php:57
 msgid "Sorry, your validation token is not valid!"
 msgstr ""
 "D&eacute;sol&eacute;, votre jeton de validation n'est pas accept&eacute;!"
@@ -538,19 +548,22 @@ msgstr "Impossible de trouver "
 msgid " in the database"
 msgstr " dans la base de donn&eacute;e"
 
-#: smarty.txt:34 smarty.txt:53 smarty.txt:62 smarty.txt:73
+#: smarty.txt:34 smarty.txt:53 smarty.txt:62 smarty.txt:73 smarty.txt:50
+#: smarty.txt:58 smarty.txt:67
 msgid "Your username"
 msgstr "Votre nom d'usager"
 
-#: smarty.txt:35 smarty.txt:74
+#: smarty.txt:35 smarty.txt:74 smarty.txt:68
 msgid "Re-send"
 msgstr "Envoyer de nouveau"
 
-#: smarty.txt:36 smarty.txt:75
+#: smarty.txt:36 smarty.txt:75 smarty.txt:69
 msgid ""
 "Please enter your username and the validation email will be resent to your "
 "email address"
-msgstr "Veuillez entrer votre nom d'usager et le courriel de validation vous sera renvoy&eacute; &agrave; votre adresse courriel"
+msgstr ""
+"Veuillez entrer votre nom d'usager et le courriel de validation vous sera "
+"renvoy&eacute; &agrave; votre adresse courriel"
 
 #: ../lost_username.php:39
 msgid "Please specify an email address"
@@ -592,40 +605,53 @@ msgstr "Un nouveau mot de passe vous &agrave; &eacute;t&eacute; envoy&eacute;."
 msgid "Internal error."
 msgstr "Erreur Interne."
 
-#: smarty.txt:52 smarty.txt:58
+#: smarty.txt:52 smarty.txt:58 smarty.txt:49 smarty.txt:55
 msgid "Change my password"
 msgstr "Changer mon mot de passe"
 
-#: smarty.txt:54
+#: smarty.txt:54 smarty.txt:51
 msgid "Your current password"
 msgstr "Votre mot de passe actuel"
 
-#: smarty.txt:55 smarty.txt:56
+#: smarty.txt:55 smarty.txt:56 smarty.txt:52 smarty.txt:53
 msgid "Your new password"
 msgstr "Votre nouveau mot de passe"
 
-#: smarty.txt:57
+#: smarty.txt:57 smarty.txt:54
 msgid "(again)"
 msgstr "(encore)"
 
-#: smarty.txt:59
+#: smarty.txt:59 smarty.txt:56
 msgid ""
 "Please enter your current username, your current password, and your new "
 "password (with confirmation)"
-msgstr "Veuillez entrer votre nom d'usager, votre mot de passe actuel, et votre nouveau mot de passe (avec confirmation)"
+msgstr ""
+"Veuillez entrer votre nom d'usager, votre mot de passe actuel, et votre "
+"nouveau mot de passe (avec confirmation)"
 
-#: smarty.txt:64
+#: smarty.txt:64 smarty.txt:60
 msgid "Reset my password"
 msgstr "R&eacute;initialiser mon mot de passe"
 
-#: smarty.txt:65
+#: smarty.txt:65 smarty.txt:61
 msgid "Please enter your username or email address to reset your password"
-msgstr "Veuillez entrez votre nom d'usager ou votre adresse courriel pour r&eacute;initialiser votre mot de passe"
+msgstr ""
+"Veuillez entrez votre nom d'usager ou votre adresse courriel pour r&eacute;"
+"initialiser votre mot de passe"
 
-#: smarty.txt:69
+#: smarty.txt:69 smarty.txt:64
 msgid "Retrieve"
 msgstr "Rechercher"
 
-#: smarty.txt:70
+#: smarty.txt:70 smarty.txt:65
 msgid "Please enter your email address to recover your username"
-msgstr "Veuillez entrer votre adresse courriel afin de recevoir votre nom d'usager"
+msgstr ""
+"Veuillez entrer votre adresse courriel afin de recevoir votre nom d'usager"
+
+#: ../admin/online_users.php:31
+msgid "Nobody's online!"
+msgstr "Il n'y a personne en ligne!"
+
+#: smarty.txt:32
+msgid "Welcome! Hotspot:"
+msgstr "Bienvenue! Noeud sans-fil:"

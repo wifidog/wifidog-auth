@@ -131,6 +131,13 @@ A:visited { font-size: 85% }
 #node_list td.status { width: 15em; text-align: left; font-size: 9pt; }
 #node_list a { color: #000000; }
 
+#hotspot_status table { background-color: #b1d5ba; border-collapse: collapse; width: 100%; }
+#hotspot_status tr { vertical-align: top; font-size: 10pt; font-family: Arial; background-color: #e1f5da; border: 1px solid; }
+#hotspot_status tr.even { background-color: #e1f5da; }
+#hotspot_status tr.odd { background-color: #b1d5ba; }
+#hotspot_status td { margin: 0 0 0 0; color: #000000; }
+#hotspot_status a { color: #000000; }
+
 #hotspot_log table { background-color: #b1d5ba; border-collapse: collapse; }
 #hotspot_log th { background-color: #e1f5da; border: 1px solid; }
 #hotspot_log tr { background-color: #ffffff; border: 1px solid; }
