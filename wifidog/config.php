@@ -6,6 +6,11 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.29  2005/04/01 20:58:28  benoitg
+ *     2005-04-01 Benoit Grégoire  <bock@step.polymtl.ca>
+ *     	* Add constraints to account_origin to detect errors on inserts.
+ *     	* Remove IDRC test server
+ *
  *     Revision 1.28  2005/04/01 02:17:40  benoitg
  *     2005-02-14 Philippe April <philippe@ilesansfil.org>
  *     	* User.php: Add reference to $db global variable.
@@ -194,15 +199,6 @@ $AUTH_SOURCE_ARRAY[IDRC_ACCOUNT_ORIGIN]=array(
 			     'name'=>"IDRC RADIUS Server",
 			     'authenticator'=>new AuthenticatorRadius(IDRC_ACCOUNT_ORIGIN, "localhost", 1812, 1813, "secret_key", "CHAP_MD5"));
 */
-
-// RADIUS authenticators ( see AuthenticatorRadius constuctor doc for details )
-
-require_once BASEPATH.'classes/AuthenticatorRadius.php';
-
-define('IDRC_ACCOUNT_ORIGIN', 'IDRC_RADIUS_USER');
-$AUTH_SOURCE_ARRAY[IDRC_ACCOUNT_ORIGIN]=array(
-			     'name'=>"IDRC RADIUS Server test",
-			     'authenticator'=>new AuthenticatorRadius(IDRC_ACCOUNT_ORIGIN, "192.168.0.11", 1812, 1813, "secret_key", "CHAP_MD5"));
 
 /*These are the file names of the different templates that can be put in the CONTENT_PATH/(node_id)/ folders */
 define('STYLESHEET_NAME', 'stylesheet.css');

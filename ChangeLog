@@ -1,3 +1,7 @@
+2005-04-01 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Add constraints to account_origin to detect errors on inserts.
+	* Remove IDRC test server
+
 2005-04-01 Philippe April <philippe@ilesansfil.org>
 	* User.php: Add reference to $db global variable.
 	* Tagged v0_1_0_alpha1
@@ -5,7 +9,7 @@
 	
 2005-03-31 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Remove spaces after php blocks in various files.
-	* Temporarely fix single authentication source not present bug in login smarty template.  All other places where we select the network will be fixed tommorow.
+	* Temporarily fix single authentication source not present bug in login smarty template.  All other places where we select the network will be fixed tommorow.
 	* Fix initial schema errors.
 	
 2005-03-31 Benoit Grégoire  <bock@step.polymtl.ca>
