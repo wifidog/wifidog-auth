@@ -57,13 +57,9 @@ $db->ExecSql("SELECT users.user_id FROM users,connections " .
 	     "WHERE connections.token_status='" . TOKEN_INUSE . "' " .
 	     "AND users.user_id=connections.user_id AND connections.node_id='$node_id' "
 	     ,$users, false);
-if($users!=null)
-  {
-    foreach ($users as $user_info)
-      {
-	$smarty->append("online_users", $user_info);
-      }
-  }
+if ($users != null) {
+	$smarty->assign("online_users", $users);
+}
 
 if(RSS_SUPPORT)
   {
