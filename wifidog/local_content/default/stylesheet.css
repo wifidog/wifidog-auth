@@ -52,6 +52,7 @@ h2 {
 }
 
 #content {
+  float: none;
   margin-left: 186px;
   padding: 10px;
   border-top: 1px solid #BFDCB5;
@@ -123,6 +124,7 @@ A:link    { color: blue }
 A:active  { color: red; /* font-size: 125% */}
 A:visited { font-size: 85% }
 
+#node_list { float: left; }
 #node_list table { background-color: #b1d5ba; border-collapse: collapse; width: 100%; }
 #node_list tr { background-color: #e1f5da; border: 1px solid; }
 #node_list tr.even { background-color: #e1f5da; }
@@ -131,6 +133,7 @@ A:visited { font-size: 85% }
 #node_list td.status { width: 15em; text-align: left; font-size: 9pt; }
 #node_list a { color: #000000; }
 
+#hotspot_status { float: left; }
 #hotspot_status table { background-color: #b1d5ba; border-collapse: collapse; width: 100%; }
 #hotspot_status tr { vertical-align: top; font-size: 10pt; font-family: Arial; background-color: #e1f5da; border: 1px solid; }
 #hotspot_status tr.even { background-color: #e1f5da; }
@@ -138,6 +141,7 @@ A:visited { font-size: 85% }
 #hotspot_status td { margin: 0 0 0 0; color: #000000; }
 #hotspot_status a { color: #000000; }
 
+#hotspot_log { float: left; }
 #hotspot_log table { background-color: #b1d5ba; border-collapse: collapse; }
 #hotspot_log th { background-color: #e1f5da; border: 1px solid; }
 #hotspot_log tr { background-color: #ffffff; border: 1px solid; }
@@ -145,6 +149,7 @@ A:visited { font-size: 85% }
 #hotspot_log td.status { width: 15em; text-align: left; font-size: 9pt; }
 #hotspot_log a { color: #000000; }
 
+#user_stats { float: left; }
 #user_stats table { background-color: #b1d5ba; border-collapse: collapse; }
 #user_stats th { background-color: #e1f5da; border: 1px solid; }
 #user_stats tr { background-color: #ffffff; border: 1px solid; }
@@ -152,6 +157,7 @@ A:visited { font-size: 85% }
 #user_stats td.status { width: 15em; text-align: left; font-size: 9pt; }
 #user_stats a { color: #000000; }
 
+#std_table { float: left; }
 #std_table table { border: 1px solid gray; }
 #std_table th { font-size: 14pt; background-color: #e1f5da;}
 #std_table td.item { font-weight: bold; }
