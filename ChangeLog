@@ -15,6 +15,7 @@
 	* User who forgot his username can have it mailed to him.
 	* User who lost his password can ask the system to generate a new one and mail it to him.
 	* Email is now a separate field to preserve user privacy.
+	* Enforces (politely) that there are no duplicate emails in the database
 	* Database abstraction layer with very nice debugging features (just append true at the end of the call, and you'll see the query, the results, the query plan and number of affected rows.  Also allow future upgrade to postgres.
 	* Lots of other things I forgot.
 	
