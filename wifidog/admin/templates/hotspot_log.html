@@ -12,12 +12,16 @@
 	<th>Status</th>
 	<td>
 	{if $nodes[node].is_up == 't'}
-	<img src='{$smarty.const.BASE_URL_PATH}images/hotspot_status_up.png'>
+	ONLINE! <img src='{$smarty.const.BASE_URL_PATH}images/hotspot_status_up.png'>
 	{else}
-	<img src='{$smarty.const.BASE_URL_PATH}images/hotspot_status_down.png'>
+	OFFLINE. <img src='{$smarty.const.BASE_URL_PATH}images/hotspot_status_down.png'>
 	{$nodes[node].duration.days} days {$nodes[node].duration.hours} hours {$nodes[node].duration.minutes} min
 	{/if}
 	</td>
+</tr>
+<tr>
+	<th>IP Address</th>
+	<td>{$nodes[node].last_heartbeat_ip}</td>
 </tr>
 <tr>
 	<th>Local content demo</th>
