@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-11 21:59-0500\n"
+"POT-Creation-Date: 2005-01-12 12:43-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #: ../user_management/index.php:389 ../user_management/index.php:437
 msgid "Unable to find $email in the database."
-msgstr ""
+msgstr "Impossible de trouver $email dans la base de donn&eacute;e"
 
 #: ../user_management/index.php:420
 msgid ""
@@ -36,7 +36,7 @@ msgstr ""
 #: ../user_management/index.php:429 ../user_management/index.php:483
 #: ../user_management/index.php:646
 msgid "Unable to find $username in the database."
-msgstr "Incapable de trouver l'usager $username dans la base de donnée."
+msgstr "Incapable de trouver l'usager $username dans la base de donn&acute;e."
 
 #: ../user_management/index.php:492
 msgid "Wrong password for $username."
@@ -46,124 +46,128 @@ msgstr "Mauvais mot de passe pour $username."
 msgid "Sorry, validation token $validation_token is not valid!"
 msgstr ""
 
-#: smarty.txt:2
+#: smarty.txt:2 smarty.txt:20
 msgid "Find more HotSpots"
 msgstr "Trouver plus de points d'acc&egrave;s sans-fil"
 
-#: smarty.txt:3
+#: smarty.txt:3 smarty.txt:21
 msgid "List of all HotSpots"
 msgstr "Liste de tous les points d'acc&egrave;s sans-fil"
 
-#: smarty.txt:4
+#: smarty.txt:4 smarty.txt:22
 msgid "User management"
 msgstr "Gestion des usagers"
 
-#: smarty.txt:5
+#: smarty.txt:5 smarty.txt:23
 msgid "Create new account"
 msgstr "Cr&eacute;er un nouveau compte"
 
-#: smarty.txt:6
+#: smarty.txt:6 smarty.txt:24
 msgid "Re-send validation email"
 msgstr "Renvoyer le courriel de validation"
 
-#: smarty.txt:7
+#: smarty.txt:7 smarty.txt:25
 msgid "Lost username"
 msgstr "Nom d'usager perdu"
 
-#: smarty.txt:8
+#: smarty.txt:8 smarty.txt:26
 msgid "Lost password"
 msgstr "Mot de passe perdu"
 
-#: smarty.txt:9
+#: smarty.txt:9 smarty.txt:27
 msgid "Change password"
 msgstr "Changer mon mot de passe"
 
-#: smarty.txt:10
+#: smarty.txt:10 smarty.txt:28
 msgid "Accounts on"
 msgstr "Les comptes sur"
 
-#: smarty.txt:11
+#: smarty.txt:11 smarty.txt:29
 msgid ""
 "are and will remain <emp>totally free</emp>, use the left menu to create a "
 "new one or recover a lost username or password"
-msgstr "sont et vont rester <emp>compl&egrave;tement gratuits</emp>, utilisez le "
-"menu de gauche pour cr&eacute;er un nouvel usager ou encore retrouver un nom d'usager "
-"ou un mot de passe perdu"
+msgstr ""
+"sont et vont rester <emp>compl&egrave;tement gratuits</emp>, utilisez le "
+"menu de gauche pour cr&eacute;er un nouvel usager ou encore retrouver un nom "
+"d'usager ou un mot de passe perdu"
 
-#: smarty.txt:12
+#: smarty.txt:12 smarty.txt:30
 msgid "Please report any problem or interruption in our service to"
-msgstr "Veuillez nous faire part de tout probl&egrave;me ou interruption "
-"de service &agrave;"
+msgstr ""
+"Veuillez nous faire part de tout probl&egrave;me ou interruption de service "
+"&agrave;"
 
-#: smarty.txt:13
+#: smarty.txt:13 smarty.txt:9
 msgid "Status of all nodes of the"
 msgstr "Status de tous les noeuds "
 
-#: smarty.txt:14
+#: smarty.txt:14 smarty.txt:10
 msgid "network"
 msgstr " "
 
-#: smarty.txt:15
+#: smarty.txt:15 smarty.txt:11
 msgid "Status"
 msgstr ""
 
-#: smarty.txt:16
+#: smarty.txt:16 smarty.txt:12
 msgid "Id"
 msgstr ""
 
-#: smarty.txt:17
+#: smarty.txt:17 smarty.txt:13
 msgid "Name"
 msgstr "Nom"
 
-#: smarty.txt:18
+#: smarty.txt:18 smarty.txt:14
 msgid "Local content demo"
 msgstr "D&eacute;mo de contenu local"
 
-#: smarty.txt:19
+#: smarty.txt:19 smarty.txt:15
 msgid "Opened on"
 msgstr "Ouvert le"
 
-#: smarty.txt:20
+#: smarty.txt:20 smarty.txt:16
 msgid "Online users"
 msgstr "Usagers en ligne"
 
-#: smarty.txt:21
+#: smarty.txt:21 smarty.txt:17
 msgid "days"
 msgstr "jours"
 
-#: smarty.txt:22
+#: smarty.txt:22 smarty.txt:18
 msgid "Login page"
 msgstr "Authentification"
 
-#: smarty.txt:23
+#: smarty.txt:23 smarty.txt:19
 msgid "Portal page"
 msgstr "Portail"
 
-#: smarty.txt:24
+#: smarty.txt:24 smarty.txt:2
 msgid "The network currently has"
 msgstr "Le r&eacute;seau a pr&eacute;sentement"
 
-#: smarty.txt:25
+#: smarty.txt:25 smarty.txt:3
 msgid "valid users"
 msgstr "usagers valides"
 
-#: smarty.txt:26
+#: smarty.txt:26 smarty.txt:4
 msgid "user(s) are currently online"
 msgstr "usagers pr&eacute;sentement en ligne"
 
-#: smarty.txt:27
+#: smarty.txt:27 smarty.txt:5
 msgid "Deployed HotSpots status with coordinates"
 msgstr "Noeuds sans-fil d&eacute;ploy&eacute;s avec coordonn&eacute;es"
 
-#: smarty.txt:28
+#: smarty.txt:28 smarty.txt:6
 msgid "Full node technical status (includes non-deployed nodes)"
-msgstr "Status technique compl&egrave;te des noeuds (incluant les noeuds non-d&eacute;ploy&eacute;s"
+msgstr ""
+"Status technique compl&egrave;te des noeuds (incluant les noeuds non-"
+"d&eacute;ploy&eacute;s"
 
-#: smarty.txt:29
+#: smarty.txt:29 smarty.txt:7
 msgid "Personal user management"
 msgstr "Gestion de mon compte"
 
-#: smarty.txt:30
+#: smarty.txt:30 smarty.txt:8
 msgid "Administration"
 msgstr ""
 
@@ -208,20 +212,6 @@ msgstr "Vous n'avez pas les privileges d'administrateur"
 msgid "NOT IMPLEMENTED YET, ACCESS DENIED"
 msgstr ""
 
-#: ../include/user_management_menu.php:45
-msgid "Accounts on "
-msgstr ""
-
-#: ../include/user_management_menu.php:45
-msgid ""
-" are and will remain <emp>totally free</emp>, use the left menu to create a "
-"new one or recover a lost username or password."
-msgstr ""
-
-#: ../include/user_management_menu.php:46
-msgid "Please report any problem or interruption in our service to:"
-msgstr ""
-
 #: ../login/index.php:58 ../login/index.php:62
 msgid ""
 "Sorry, your $validation_grace_time minutes grace period to retrieve your "
@@ -230,11 +220,11 @@ msgid ""
 "the internet and validate your account from another location."
 msgstr ""
 
-#: smarty.txt:31 smarty.txt:35
+#: smarty.txt:31 smarty.txt:35 smarty.txt:34
 msgid "Online at this hotspot"
 msgstr "En ligne &agrave; ce point d'acc&egrave;s sans-fil"
 
-#: smarty.txt:32 smarty.txt:36
+#: smarty.txt:32 smarty.txt:36 smarty.txt:35
 msgid "Go to the site I originally requested"
 msgstr "Aller au site web que j'ai demand&eacute;"
 
@@ -246,10 +236,62 @@ msgstr "Erreur"
 msgid "Language"
 msgstr "Langue"
 
-#: smarty.txt:33
+#: smarty.txt:33 smarty.txt:32
 msgid "Username (or email)"
 msgstr "Usager (ou courriel)"
 
-#: smarty.txt:34
+#: smarty.txt:34 smarty.txt:33
 msgid "Password"
 msgstr "Mot de passe"
+
+#: ../login/index.php:89
+msgid "Unknown username or email"
+msgstr "Nom d'usager ou courriel incorrect"
+
+#: ../login/index.php:93
+msgid "Incorrect password (Maybe you have CAPS LOCK on?)"
+msgstr "Mot de passe incorrect (CAPS LOCK &agrave; actif?)"
+
+#: ../portal/index.php:117
+msgid "Error: "
+msgstr "Erreur: "
+
+#: ../hotspot_status.php:68
+msgid "Newest"
+msgstr "Plus r&eacute;cent"
+
+#: ../hotspot_status.php:68
+msgid "Hotspots"
+msgstr "Noeuds sans-fil"
+
+#: ../hotspot_status.php:80
+msgid "WiFiDog list of the most recent HotSpots opened by "
+msgstr ""
+
+#: ../hotspot_status.php:94
+msgid "Copyright "
+msgstr ""
+
+#: ../hotspot_status.php:235
+msgid "Address:"
+msgstr "Adresse:"
+
+#: ../hotspot_status.php:239
+msgid "Mass transit:"
+msgstr "Transport en commun:"
+
+#: ../hotspot_status_thomas.php:43
+msgid "open"
+msgstr "ouvert"
+
+#: ../hotspot_status_thomas.php:43
+msgid "HotSpots"
+msgstr ""
+
+#: ../hotspot_status_thomas.php:89
+msgid "Opened on "
+msgstr "Ouvert le "
+
+#: ../hotspot_status_thomas.php:95
+msgid "user(s) online"
+msgstr "usager(s) en ligne"
