@@ -102,6 +102,10 @@ class User {
     return $this->mRow['validation_token'];
   }
 
+  function getInfoArray() {
+    return $this->mRow;
+  }
+
   function setPassword($password) {
     global $db;
 
@@ -110,6 +114,12 @@ class User {
         throw new Exception(_("Could not change user's password."));
     }
     $this->mRow['pass'] = $password;
+  }
+
+  function getConnections() {
+    global $db;
+	$db->ExecSql("SELECT * FROM connections,nodes WHERE user_id='{$this->mId}' AND nodes.node_id=connections.node_id ORDER BY timestamp_in", $connections, false);
+    return $connections;
   }
 
   function setAccountStatus($status) {

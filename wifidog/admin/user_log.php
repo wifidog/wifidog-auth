@@ -23,31 +23,31 @@
    */
 define('BASEPATH','../');
 require_once 'admin_common.php';
+require_once BASEPATH.'classes/User.php';
 
 $total = array();
 $total['incoming'] = 0;
 $total['outgoing'] = 0;
 
 if (!empty($_REQUEST['user_id'])) {
-    $db->ExecSqlUniqueRes("SELECT * FROM users WHERE user_id='$_REQUEST[user_id]'",$userinfo,false);
-    if (!$userinfo) {
-        $smarty->assign("error", _("Unable to locate ") . $_REQUEST['user_id'] . _(" in the database."));
-    } else {
-	    $userinfo['account_status_description'] = $account_status_to_text[$userinfo['account_status']]; 
+    try {
+        $user = User::getUserByID($_REQUEST['user_id']);
+        $userinfo = $user->getInfoArray();
+    	$userinfo['account_status_description'] = $account_status_to_text[$userinfo['account_status']]; 
 	    $smarty->assign("userinfo", $userinfo);
-	
-	    $db->ExecSql("SELECT * FROM connections,nodes WHERE user_id='{$_REQUEST['user_id']}' AND nodes.node_id=connections.node_id ORDER BY timestamp_in", $connection_array, false);
-	    if ($connection_array) {
-	        foreach($connection_array as $connection) {
-	            $total['incoming'] += $connection['incoming'];
-                $total['outgoing'] += $connection['outgoing'];
-	            $connection['token_status_description'] = $token_to_text[$connection['token_status']];
-	            $smarty->append("connections", $connection);
-	        }
-	        $smarty->assign("total", $total);
-	    } else {
-	        //No connections from user yet
-	    }
+
+        $connections = $user->getConnections();
+        if ($connections) {
+    	    foreach($connections as $connection) {
+    	        $total['incoming'] += $connection['incoming'];
+             $total['outgoing'] += $connection['outgoing'];
+    	        $connection['token_status_description'] = $token_to_text[$connection['token_status']];
+    	        $smarty->append("connections", $connection);
+    	    }
+        }
+	    $smarty->assign("total", $total);
+    } catch (Exception $e) {
+        $smarty->assign("error", $e->getMessage());
     }
     $smarty->display("admin/templates/user_log_detailed.html");
 } else {
