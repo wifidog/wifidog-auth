@@ -8,6 +8,7 @@ define('CONF_DATABASE_PASSWORD',   '');
 /* Normally, the database cleanup routines will be called everytime a portal page is displayed.  If you set this to true, you must set a cron job on the server which will execute the script cron/cleanup.php. */
 define('CONF_USE_CRON_FOR_DB_CLEANUP', false);
 
+define("SYSTEM_PATH", '/wifidog/');
 define("HOTSPOT_NETWORK_NAME", 'a WifiDog community network');
 define("HOTSPOT_NETWORK_URL", 'http://www.ilesansfil.org/wiki/WiFiDog');
 define('UNKNOWN_HOSTPOT_NAME', 'Unknown HotSpot');
@@ -19,13 +20,13 @@ define("LOST_USERNAME_EMAIL_SUBJECT", HOTSPOT_NETWORK_NAME.' lost username reque
 
 if($_SERVER['SERVER_PORT']==80)
   {
-    $server_port='';
+    define("BASE_URL_PATH",  'http://' . $_SERVER['SERVER_NAME'] . SYSTEM_PATH);
   } 
 else
   {
-   $server_port=$_SERVER['SERVER_PORT'];
+   define("BASE_URL_PATH",  'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . SYSTEM_PATH);
   }
-define("BASE_URL_PATH",  'http://' . $_SERVER['SERVER_NAME'] . '/wifidog/');
+
 define('RSS_SUPPORT', true); //If true, MAGPIERSS must be installed in MAGPIE_REL_PATH
 
 /***** You should normally not have to edit anything below this ******/
