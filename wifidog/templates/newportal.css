@@ -1,0 +1,152 @@
+{literal}
+body{
+	margin: 0px;
+	padding: 0px;
+	font-family: arial, sans-serif;
+	color: #616756;
+	font-size: 11px;
+	overflow: hidden;
+}
+div.activearea{
+	width: 250px;
+	border: 1px solid #E9E9E9;
+}
+div.administration{
+	width: 250px;
+	height: 30px;
+	background: #C8FF7A;
+	background-color: #C8FF7A;
+	vertical-align: middle;
+}
+span.administration{
+	position: relative;
+	top: 3px;
+	bottom: 3px;
+}
+div.navigation{
+	width: 250px;
+	height: 38px;
+	text-align: center;
+    {/literal}
+	background-image: url(../images/01_nav.gif);
+    {literal}
+	background-repeat: repeat;
+	background-position: left top;
+	overflow: hidden;
+}
+span.navigation{
+	position: relative;
+	top: 10px;
+}
+div.language{
+	width: 250px;
+	height: 30px;
+}
+form.language{
+	position: relative;
+	top: 5px;
+	right: 5px;
+	text-align: right;
+}
+div.content{
+	height: 400px;
+	overflow: hidden;
+}
+span.content{
+	position: relative;
+	top: 20px;
+	left: 10px;
+	height: 332px;
+	display: block;
+}
+div.avis{
+	width: 250px;
+	height: 200px;
+    {/literal}
+	background-image: url(../images/03_avis.gif);
+    {literal}
+	background-repeat: repeat-x;
+	background-position: left top;
+	background-color: #FDFDFD;
+}
+span.avis{
+	position: relative;
+	top: 20px;
+	left: 10px;
+}
+div.anysection{
+	padding: 0px 5px 0px 5px;
+	font-family: arial, sans-serif;
+	color: #616756;
+	font-size: 11px;
+	text-align: left;
+}
+div.test{
+	text-align: center;
+	vertical-align: text-top;
+}
+h1{
+	font-family: verdana, sans-serif;
+	color: #88AA4B;
+	font-size: 14px;
+}
+form{
+	padding: 0px;
+	margin: 0px;
+}
+img.separator{
+	display: inline;
+	position: relative;
+	top: 0px;
+	vertical-align: text-top;
+}
+img.administration{
+	vertical-align: middle;
+}
+a{
+	font-family: arial, sans-serif;
+	color: #616756;
+	font-size: 11px;
+	text-decoration: underline;
+}
+a:hover{
+	font-family: arial, sans-serif;
+	color: #88AA4B;
+	font-size: 11px;
+	text-decoration: underline;
+}
+a.administration{
+	margin: 5px;
+	font-family: arial, sans-serif;
+	color: #616756;
+	font-size: 11px;
+	font-weight: bold;
+	text-decoration: none;
+}
+a.navigation{
+	position: relative;
+	top: 10px;
+	padding-left: 5px;
+	padding-right: 5px;
+	font-family: arial, sans-serif;
+	color: #616756;
+	font-size: 11px;
+	text-decoration: none;
+}
+.indent{
+	padding-left: 25px;
+}
+
+.input{
+	font-family: arial, sans-serif;
+	color: #616756;
+	font-size: 11px;
+	border: 1px solid #C8FF7A;
+	background: #C8FF7A;
+}
+.error{
+	font-family: arial, sans-serif;
+	color: #88AA4B;
+	font-size: 11px;
+}
+{/literal}
