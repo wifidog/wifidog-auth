@@ -28,11 +28,24 @@ Header("Pragma: no-cache");
 Header("Content-Type: text/html; charset=iso-8859-1");
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'classes/SmartyWifidog.php';
+require_once BASEPATH.'classes/Session.php';
 
 /** Style contains functions managing headers, footers, stylesheet, etc.
  */
 class Style
 {
+  function Style() {
+    $session = new Session();
+    if (!empty($_REQUEST['lang']))
+      {
+        $session->set('SESS_LANGUAGE_VAR', $_REQUEST['lang']);
+      }
+
+    if ($session->get('SESS_LANGUAGE_VAR')) {
+        setlocale(LC_ALL, $session->get('SESS_LANGUAGE_VAR'));
+    }
+  }
+
   /**Display HTML headers
    * @param $title Title of the page
    * @param $stylesheet stylesheet to include.

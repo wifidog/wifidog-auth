@@ -6,6 +6,9 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.15  2005/01/12 15:52:36  aprilp
+ *     *** empty log message ***
+ *
  *     Revision 1.14  2005/01/12 00:57:42  benoitg
  *     2004-01-10 Benoit Grégoire  <bock@step.polymtl.ca>
  *     	* wifidog/config.php:  Add list of hotspot to network rss feed list (not yet functionnal)
@@ -107,6 +110,7 @@ define('WIFIDOG_LOGO_NAME', 'wifidog_logo_banner.png');
 define('WIFIDOG_LOGO_BANNER_NAME', 'wifidog_logo_banner.png');
 
 define('DEFAULT_NODE_ID', 'default');
+define('DEFAULT_LANG', 'fr_FR');
 
 /*** FOR TESTING ONLY *** UNCOMMENT THE NEXT LINES
  *** WHEN READY TO TEST **************************
