@@ -26,36 +26,51 @@ Database:
 Configure the system:	
 -Edit wifidog/config.php to suit your environment.
 
-*****************************
-RADIUS authentication support
-*****************************
+*************************************
+RADIUS authentication support section
+*************************************
 
-You'll need these RPM packages
+The following section only needs to be followed if you want RADIUS support.  You'll need to install PEAR and several PEAR and PHP modules.  The procedure below is for PHP 5.0.2 under Mandrake 10.1.  You WILL need to adapt it under other distributions.  
 
+All necessary RPM packages are available in the contrib urpmi source.  If you don't have a contrib source already, you can add one with the command:
+urpmi.addmedia contrib http://gulus.usherbrooke.ca/pub/distro/Mandrakelinux/official/10.1/i586/media/contrib with media_info/hdlist.cz
+
+You'll need the following packages:
 libphp5-commons
 php5-cli
 php5-devel
 php5-xml
-php5-xmlrpc ---> requires libxmlrpc
+php5-xmlrpc ---> dépend de libxmlrpc
+php5-mhash 
+php5-mcrypt
 
-run this in a shell
+The following command should install them all and resolve dependencies:
+
+urpmi php5-cli php5-devel php5-xml php5-xmlrpc php5-mhash php5-mcrypt
+
+To install PEAR, run this in a shell:
 "lynx -source http://go-pear.org | php5"
 
 *************
 WARNING:
 You must have PHP5 CLI with php5ize installed
+NB : By default Mandrake renames the PHP binaries with a 5 suffix.  You should create symbolic links so that you can use standard scripts:
+
+ln -s /usr/bin/php5 /usr/bin/php
+ln -s /usr/bin/php5ize /usr/bin/phpize
 *************
-Make sure your include_path refers to your PEAR install
-ie. /usr/share/pear
 
 Now you'll need a few packages, you can let PEAR install them
-automatically, make sure you have Console_Opt, Archive_Tar et XML_RPC
-before you do this.
+automatically:
 
-Run those scripts
-/usr/share/pear/scripts/pear.sh install Auth
-/usr/share/pear/scripts/pear.sh install radius   ( PECL module compilation)
-/usr/share/pear/scripts/pear.sh install Auth_RADIUS
+pear install Auth
+pear install radius   ( PECL module compilation)
+pear install Auth_RADIUS
+pear install Crypt_CHAP
+
+*****************************************
+End RADIUS authentication support section
+*****************************************
 
 
 Enjoy!

@@ -96,6 +96,7 @@ function update_schema() {
 			if ($schema_version < 3) {
 				$new_schema_version = 3;
 				echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>";
+				$sql .= "UPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
 				$sql .= "DROP INDEX idx_unique_email_and_account_origin;\n";
 				$sql .= "ALTER TABLE users DROP CONSTRAINT check_email_not_empty;\n";
 			}
