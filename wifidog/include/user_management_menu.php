@@ -42,8 +42,8 @@ function get_user_management_menu()
     $retval .= "<li><a href='".BASE_SSL_PATH."".USER_MANAGEMENT_PAGE."?action=change_password_form'>"._('Change password')."</a></li>\n"; 
  
   $retval .= "</ul>\n";
-  $retval .= "<p class='sidenote'>Accounts on ".HOTSPOT_NETWORK_NAME." are <emp>totally free</emp>, use the left menu to create a new one or recover a lost username or password.</p>\n";
-  $retval .= "<p class='sidenote'>Please report any problem or interruption in our service to: <a href='".TECH_SUPPORT_EMAIL."'>".TECH_SUPPORT_EMAIL."</a></p>\n";
+  $retval .= "<p class='sidenote'>"._("Accounts on ".HOTSPOT_NETWORK_NAME." are and will remain <emp>totally free</emp>, use the left menu to create a new one or recover a lost username or password.")."</p>\n";
+  $retval .= "<p class='sidenote'>"._("Please report any problem or interruption in our service to:")." <a href='".TECH_SUPPORT_EMAIL."'>".TECH_SUPPORT_EMAIL."</a></p>\n";
   //$retval .= "</div>\n";
   return $retval;
 }

@@ -66,11 +66,31 @@ if($users!=null)
 
 if(RSS_SUPPORT)
   {
-      $old_error_level = error_reporting(E_ERROR);
+//      $old_error_level = error_reporting(E_ERROR);
     define('MAGPIE_DIR', BASEPATH.MAGPIE_REL_PATH);
-    require_once(MAGPIE_DIR.'rss_fetch.inc');
-    define('MAGPIE_DEBUG', 0);
-    
+//    require_once(MAGPIE_DIR.'rss_fetch.inc');
+//    define('MAGPIE_DEBUG', 0);
+ require_once BASEPATH.'classes/RssPressReview.inc';
+ $press_review=new RssPressReview;
+ $network_rss_sources = NETWORK_RSS_URL;
+ $network_rss_html = null;
+ 		     if(!empty($network_rss_sources))
+		     {
+
+$network_rss_sources = array(
+		     array('url' => $network_rss_sources, 'default_publication_interval' => 7*24*3600)
+		     );
+		     $network_rss_html=$press_review->get_rss_html($network_rss_sources, 5);
+		     }
+		     
+		     $hotspot_rss_html=null;
+		     if(!empty($hotspot_rss_url))
+		     {
+$hotspot_rss_sources = array(
+		     array('url' => $hotspot_rss_url, 'default_publication_interval' => 7*24*3600)
+		     );
+		     $hotspot_rss_html=$press_review->get_rss_html($hotspot_rss_sources, 5);
+}
     /**
      @return the generated html or the error message or an empty string if called without a URL.
     */
@@ -105,15 +125,15 @@ if(RSS_SUPPORT)
     }
 
 
-    $network_rss_html=generate_rss_html(NETWORK_RSS_URL);    
+    //$network_rss_html=generate_rss_html(NETWORK_RSS_URL);    
     //echo $networkrss_html;
     $smarty->assign("network_rss_html", $network_rss_html);
 
     
-    $hotspot_rss_html=generate_rss_html($hotspot_rss_url);    
+    //$hotspot_rss_html=generate_rss_html($hotspot_rss_url);    
     //echo $hotspot_rss_html;
     $smarty->assign("hotspot_rss_html", $hotspot_rss_html);
-        error_reporting($old_error_level);
+     //   error_reporting($old_error_level);
   }
 $smarty->assign("user_management_menu", get_user_management_menu());
 $smarty->assign("user_management_url", BASE_SSL_PATH.USER_MANAGEMENT_PAGE);

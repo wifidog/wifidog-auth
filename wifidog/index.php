@@ -26,10 +26,14 @@ define('BASEPATH','./');
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'classes/Style.php';
 require_once BASEPATH.'classes/Statistics.php';
+require_once (BASEPATH.'include/user_management_menu.php');
 
 $style = new Style();
 echo $style->GetHeader(HOTSPOT_NETWORK_NAME.' authentication server');
     echo "<div id='head'><h1>Wifidog authentication server for ". HOTSPOT_NETWORK_NAME ."</h1></div>\n";
+  echo "<div id='navLeft'>\n";
+echo get_user_management_menu();
+echo "</div>\n";
     echo "<div id='content'>\n";
 
 $stats=new Statistics();

@@ -1,4 +1,10 @@
 # $Header$
+
+2004-12-08 Benoit Grégoire  <bock@step.polymtl.ca>
+	* wifidog/index.php: Add menu
+	* wifidog/include/user_management_menu.php: Editorial change, make translateable
+	* wifidog/portal/index.php:  Fix RSS feeds
+
 2004-12-03 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog/admin/user_stats.php,  wifidog/classes/Statistics.php:  Embryonic aggregate user stats.  Currently allows you to find out the rate at which your users subscribe.
 	* wifidog/config.php, wifidog/local_content/default/login.html, wifidog/include/user_management_menu.php:  Add hotspot status page to login page.
