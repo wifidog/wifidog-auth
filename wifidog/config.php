@@ -1,4 +1,17 @@
 <?php
+
+/* 
+ * File version: $Id$
+ *
+ * Log history:
+ *
+ *     $Log$
+ *     Revision 1.10  2004/09/28 20:44:08  yanik_crepeau
+ *     Added commented hearder with Id and Log cvs keywords.
+ *
+ *
+ */
+ 
 /* Used by AbstractDb */
 define('CONF_DATABASE_HOST',   'localhost');
 define('CONF_DATABASE_NAME',   'wifidog');
@@ -58,4 +71,32 @@ define('WIFIDOG_LOGO_NAME', 'wifidog_logo_banner.png');
 define('WIFIDOG_LOGO_BANNER_NAME', 'wifidog_logo_banner.png');
 
 define('DEFAULT_NODE_ID', 'default');
+
+/*** FOR TESTING ONLY *** UNCOMMENT THE NEXT LINES
+ *** WHEN READY TO TEST **************************
+ *** This code define two (2) global variables:
+ *** HTTP_HEADER_LANG will return the language of the
+ *** user's browser stripped from its country code. For
+ *** instance, if the HTTP_ACCEPT_LANGUAGE header is 
+ *** something like 'en-ca, en-us, en, fr-ca, fr', the
+ *** first two characters is picked and used as language
+ *** selector.
+ *** The other global variable is the FILE_NAME_SUFFIX.
+ *** for english it is empty, for any other language it is
+ *** the two character code used to set the language. When
+ *** choosing the template (let's say login.html), we simply
+ *** have to replace in the code and add 
+ *** "login.html".$FILE_NAME_SUFFIX to get the right 
+ *** template (assuming that login.html.fr exists for
+ *** French).
+if (if (substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2) == "en") {
+    define('HTTP_HEADER_LANG', 'en');
+    define('FILE_NAME_SUFFIX', '');   
+} else {
+    define('HTTP_HEADER_LANG', substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2));
+    define('FILE_NAME_SUFFIX', substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2));
+}
+
+*/ 
+
 ?>
