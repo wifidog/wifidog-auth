@@ -1,4 +1,8 @@
 # $Header$
+2005-01-25 Benoit Grégoire  <bock@step.polymtl.ca>
+	* classes/Node.php:  New file, untested code example
+	* wifidog/admin/admin_common.php: Remove double-defined BASEPATH
+	
 2005-01-25 Philippe April <isf_lists@philippeapril.com>
 	* Changed initial postgres inserts sql file, it wasn't working properly
 

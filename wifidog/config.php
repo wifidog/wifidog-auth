@@ -6,6 +6,11 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.19  2005/01/26 03:46:30  benoitg
+ *     2005-01-25 Benoit Grégoire  <bock@step.polymtl.ca>
+ *     	* classes/Node.php:  New file, untested code example
+ *     	* wifidog/admin/admin_common.php: Remove double-defined BASEPATH
+ *
  *     Revision 1.18  2005/01/19 00:05:37  aprilp
  *     Removed references to user_management pages that don't exist anymore
  *
@@ -72,7 +77,7 @@ define('HOTSPOT_NETWORK_URL', 'http://www.ilesansfil.org/');
 define('TECH_SUPPORT_EMAIL', 'tech@ilesansfil.org');
 define('UNKNOWN_HOSTPOT_NAME', 'Unknown HotSpot');
 
-define('VALIDATION_EMAIL_FROM_ADDRESS', 'validation@yourdomain.org');
+define('VALIDATION_EMAIL_FROM_ADDRESS', 'validation@ilesansfil.org');
 define('VALIDATION_EMAIL_SUBJECT', HOTSPOT_NETWORK_NAME.' new user validation');
 define('VALIDATION_GRACE_TIME', 20); /**< Number of minutes after new account creation during which internet access is available to validate your account.  Once elapsed, you have to validate from home... */
 define('LOST_PASSWORD_EMAIL_SUBJECT', HOTSPOT_NETWORK_NAME.' new password request');

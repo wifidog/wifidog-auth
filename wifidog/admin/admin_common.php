@@ -22,7 +22,6 @@
    * @author Copyright (C) 2004 Philippe April.
    */
 
-define('BASEPATH','../');
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'include/common_interface.php';
 require_once BASEPATH.'classes/Security.php';
