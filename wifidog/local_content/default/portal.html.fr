@@ -1,5 +1,5 @@
 {include file=$header_file}
-<!--portal page FR - $Id: -->
+<!--portal page FR - $Id$ -->
       <div id='navLeft'>
 	<p>Présentement en ligne:</p>
 	<ul>
