@@ -146,7 +146,6 @@ if(RSS_SUPPORT)
     //   error_reporting($old_error_level);
   }
 
-$smarty->assign("user_management_url", BASE_SSL_PATH.USER_MANAGEMENT_PAGE);
 if (isset($session)) {
     $smarty->assign("original_url_requested", $session->get(SESS_ORIGINAL_URL_VAR));
 }

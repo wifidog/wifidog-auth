@@ -6,6 +6,9 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.18  2005/01/19 00:05:37  aprilp
+ *     Removed references to user_management pages that don't exist anymore
+ *
  *     Revision 1.17  2005/01/18 14:36:50  aprilp
  *     Changed default language to fr_FR instead of fr, it wasn't working on some platforms
  *
@@ -104,7 +107,6 @@ define('LOGIN_PAGE_NAME', 'login.html');
 define('PORTAL_PAGE_NAME', 'portal.html');
 define('PAGE_HEADER_NAME', 'header.html');
 define('PAGE_FOOTER_NAME', 'footer.html');
-define('USER_MANAGEMENT_PAGE', 'user_management/');
 define('HOTSPOT_STATUS_PAGE', 'hotspot_status.php');
 define('HOTSPOT_LOGO_NAME', 'hotspot_logo.jpg');
 define('HOTSPOT_LOGO_BANNER_NAME', 'hotspot_logo_banner.jpg');
