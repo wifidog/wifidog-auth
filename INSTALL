@@ -1,9 +1,11 @@
 Prerequisites:
-Smarty template engine http://smarty.php.net/
-magpierss http://magpierss.sourceforge.net/ (Required for RSS support.  RSS support must be manually disabled if you do not insall it)
-php's php-xml extention installed. (Required if RSS support is on)
-php compiled with gettext support (Will be autodetected if unavailable, but you will loose internationalization)
-PostgreSQL (mysql code also exists, but is looking for a maintainer)
+-PHP5
+-Smarty template engine http://smarty.php.net/
+-Magpierss http://magpierss.sourceforge.net/ (Required for RSS support.  RSS support must be manually disabled if you do not insall it)
+-php's php-xml extention installed. (Required if RSS support is on)
+-php's dom extension installed. (Required if you want to export the list of HotSpots as a RSS feed)
+-php compiled with gettext support (Will be autodetected if unavailable, but you will loose internationalization)
+-PostgreSQL (mysql code also exists, but is looking for a maintainer)
 
 Install files:
 

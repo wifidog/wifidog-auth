@@ -45,11 +45,11 @@ if($node_info==null)
     $smarty->assign('hotspot_name', UNKNOWN_HOSTPOT_NAME);
     $hotspot_rss_url = UNKNOWN_HOTSPOT_RSS_URL;
   }
-else
-  {
-    $smarty->assign('hotspot_name', $node_info['name']);
-    $hotspot_rss_url =  $node_info['rss_url'];
-  }
+ else
+   {
+     $smarty->assign('hotspot_name', $node_info['name']);
+     $hotspot_rss_url =  $node_info['rss_url'];
+   }
 
 /* Find out who is online */
 $db->ExecSql("SELECT users.user_id FROM users,connections " .
@@ -59,47 +59,47 @@ $db->ExecSql("SELECT users.user_id FROM users,connections " .
 if($users!=null)
   {
     foreach ($users as $user_info)
-    {
-      $smarty->append("online_users", $user_info);
-    }
+      {
+	$smarty->append("online_users", $user_info);
+      }
   }
 
 if(RSS_SUPPORT)
   {
-//      $old_error_level = error_reporting(E_ERROR);
+    //      $old_error_level = error_reporting(E_ERROR);
     define('MAGPIE_DIR', BASEPATH.MAGPIE_REL_PATH);
-//    require_once(MAGPIE_DIR.'rss_fetch.inc');
-//    define('MAGPIE_DEBUG', 0);
- require_once BASEPATH.'classes/RssPressReview.inc';
- $press_review=new RssPressReview;
-   $tokens = "/[\s,]+/";
- $network_rss_sources = NETWORK_RSS_URL;
- $network_rss_html = null;
- 		     if(!empty($network_rss_sources))
-		     {
+    //    require_once(MAGPIE_DIR.'rss_fetch.inc');
+    //    define('MAGPIE_DEBUG', 0);
+    require_once BASEPATH.'classes/RssPressReview.inc';
+    $press_review=new RssPressReview;
+    $tokens = "/[\s,]+/";
+    $network_rss_sources = NETWORK_RSS_URL;
+    $network_rss_html = null;
+    if(!empty($network_rss_sources))
+      {
 
-  $extract_array=null;
-  $extract_array = preg_split($tokens, $network_rss_sources);
-  //print_r($extract_array);
-  foreach($extract_array as $source)
-  {
-$network_rss_sources_array[] = array('url' => $source, 'default_publication_interval' => 7*24*3600);
-		     }
-		     $network_rss_html=$press_review->get_rss_html($network_rss_sources_array, 5);
-		     }
+	$extract_array=null;
+	$extract_array = preg_split($tokens, $network_rss_sources);
+	//print_r($extract_array);
+	foreach($extract_array as $source)
+	  {
+	    $network_rss_sources_array[] = array('url' => $source, 'default_publication_interval' => 7*24*3600);
+	  }
+	$network_rss_html=$press_review->get_rss_html($network_rss_sources_array, 5);
+      }
 		     
-		     $hotspot_rss_html=null;
-		     if(!empty($hotspot_rss_url))
-		     {
-		       $extract_array=null;
-  $extract_array = preg_split($tokens, $hotspot_rss_url);
-  //print_r($extract_array);
-  foreach($extract_array as $source)
-  {
-$hotspot_rss_sources_array[] = array('url' => $source, 'default_publication_interval' => 7*24*3600);
-		     }
-		     $hotspot_rss_html=$press_review->get_rss_html($hotspot_rss_sources_array, 5);     
-}
+    $hotspot_rss_html=null;
+    if(!empty($hotspot_rss_url))
+      {
+	$extract_array=null;
+	$extract_array = preg_split($tokens, $hotspot_rss_url);
+	//print_r($extract_array);
+	foreach($extract_array as $source)
+	  {
+	    $hotspot_rss_sources_array[] = array('url' => $source, 'default_publication_interval' => 7*24*3600);
+	  }
+	$hotspot_rss_html=$press_review->get_rss_html($hotspot_rss_sources_array, 5);     
+      }
     /**
      @return the generated html or the error message or an empty string if called without a URL.
     */
@@ -120,13 +120,13 @@ $hotspot_rss_sources_array[] = array('url' => $source, 'default_publication_inte
 	      $rss_html .= "<p>"._('Channel: ') . $rss->channel['title'] . "</p>\n";
 	      $rss_html .= "<ul>\n";
 	      foreach ($rss->items as $item)
-	      {
-		//echo '<pre>'; print_r($item); 	echo '</pre>';
-		$href = $item['link'];
-		$title = $item['title'];
-		$summary =  $item['summary'];	
-		$rss_html .= "<li><emp><a href=$href>$title</a></emp> $summary</li>\n";
-	      }
+		{
+		  //echo '<pre>'; print_r($item); 	echo '</pre>';
+		  $href = $item['link'];
+		  $title = $item['title'];
+		  $summary =  $item['summary'];	
+		  $rss_html .= "<li><emp><a href=$href>$title</a></emp> $summary</li>\n";
+		}
 	      $rss_html .= "</ul>\n";
 	    }
 	}
@@ -142,7 +142,7 @@ $hotspot_rss_sources_array[] = array('url' => $source, 'default_publication_inte
     //$hotspot_rss_html=generate_rss_html($hotspot_rss_url);    
     //echo $hotspot_rss_html;
     $smarty->assign("hotspot_rss_html", $hotspot_rss_html);
-     //   error_reporting($old_error_level);
+    //   error_reporting($old_error_level);
   }
 $smarty->assign("user_management_menu", get_user_management_menu());
 $smarty->assign("user_management_url", BASE_SSL_PATH.USER_MANAGEMENT_PAGE);
@@ -155,9 +155,9 @@ if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.PORTAL_PAGE_NAME))
   {
     $smarty->display(NODE_CONTENT_SMARTY_PATH.PORTAL_PAGE_NAME);
   }
-else
-  {
-    $smarty->display(DEFAULT_CONTENT_SMARTY_PATH.PORTAL_PAGE_NAME);
-  }
+ else
+   {
+     $smarty->display(DEFAULT_CONTENT_SMARTY_PATH.PORTAL_PAGE_NAME);
+   }
 
 ?>

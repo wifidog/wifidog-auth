@@ -76,73 +76,73 @@ class RssPressReview
   /**
    @return the date in timestamp format of -1 if unavailable
   */
-  private function get_item_date ( $item, $debug = 0 )
-  {
-    $retval = -1;
-    if(!empty($item['dc']['date']))
-      {
-	$datestr = $item['dc']['date'];
-      }
-    else if (!empty($item['pubdate']))
-      {
-	$datestr = $item['pubdate'];
-      }
-    else if (!empty($item['date']))
-      {
-	$datestr = $item['date'];
-      }
-    else if (!empty($item['created']))
-      {
-	$datestr = $item['created'];
-      }
-    else
-      {
-	if ($debug)
-	  {
-	    echo "<p>get_item_date(): No date present!</p>";
-	  }
-	$datestr = null;
-      }
+  static private function get_item_date ( $item, $debug = 0 )
+    {
+      $retval = -1;
+      if(!empty($item['dc']['date']))
+	{
+	  $datestr = $item['dc']['date'];
+	}
+      else if (!empty($item['pubdate']))
+	{
+	  $datestr = $item['pubdate'];
+	}
+      else if (!empty($item['date']))
+	{
+	  $datestr = $item['date'];
+	}
+      else if (!empty($item['created']))
+	{
+	  $datestr = $item['created'];
+	}
+      else
+	{
+	  if ($debug)
+	    {
+	      echo "<p>get_item_date(): No date present!</p>";
+	    }
+	  $datestr = null;
+	}
 		
-    if ($datestr==null)
-      {
-	$retval = -1;
-      }
-    else
-      {
-	if ($debug)
-	  {
-	    echo "<p>get_item_date(): String to convert: $datestr</p>";	
-	  }
+      if ($datestr==null)
+	{
+	  $retval = -1;
+	}
+      else
+	{
+	  if ($debug)
+	    {
+	      echo "<p>get_item_date(): String to convert: $datestr</p>";	
+	    }
 	
-	$retval = parse_w3cdtf($datestr);
-	if($retval == -1)
-	  {
-	    $retval = strtotime($datestr);
-	  }
+	  $retval = parse_w3cdtf($datestr);
+	  if($retval == -1)
+	    {
+	      $retval = strtotime($datestr);
+	    }
 		
-	if ($debug)
-	  {
-	    if ($retval == -1)
-	      {
-		echo "<p>get_item_date(): Conversion of $datestr failed!</p>";	
-	      }
-	    else
-	      {
-		echo "<p>get_item_date(): Conversion succeded</p>";	
-		setlocale(LC_TIME, "fr_CA");
-		echo strftime("%c", $retval);
-	      }
-	  }
+	  if ($debug)
+	    {
+	      if ($retval == -1)
+		{
+		  echo "<p>get_item_date(): Conversion of $datestr failed!</p>";	
+		}
+	      else
+		{
+		  echo "<p>get_item_date(): Conversion succeded</p>";	
+		  setlocale(LC_TIME, "fr_CA");
+		  echo strftime("%c", $retval);
+		}
+	    }
 
-      }
-    if ($debug)
-      {
-	echo "<p>get_item_date(): Retval: $retval</p>";
-      }
-    return $retval;
+	}
+      if ($debug)
+	{
+	  echo "<p>get_item_date(): Retval: $retval</p>";
+	}
+      return $retval;
 
-  }
+    }
     
   /** Inverted comparaison function for adjusted dates (so that the most recent are first */
   private function cmp($a, $b)
@@ -168,6 +168,20 @@ class RssPressReview
     */
     return $string;
   }
+
+  /** This is the static comparing function to sort rss items in chronological order: */
+  static function cmp_date_item($a, $b)
+    {
+      $a_date=self::get_item_date($a);
+      $b_date=self::get_item_date($b);
+      if ($a_date == $b_date) {
+	return 0;
+      }
+      /*echo "cmp_date_item(): a:$a_date, b:$b_date ";
+       echo ($a_date < $b_date) ? +1 : -1;*/
+      return ($a_date < $b_date) ? +1 : -1;
+    }
+
 
   /*
    Example array of sources:
@@ -200,7 +214,7 @@ class RssPressReview
 	$i = 0;
 	$publication_interval_total = null; //running total of the difference between the date of the current item and the previous one
 	$average_publication_interval = null;
-	$previous_item_date;
+	$previous_item_date=null;
 	$rss = fetch_rss( $rss_source['url'] );
 	if ( !$rss )
 	  {
@@ -211,10 +225,20 @@ class RssPressReview
 	    //$rss_sources[$rss_sources_key]['rss']=$rss;
 	    //$rss->show_channel();
 	    //$rss->show_list();
-	      
+	    
+	    /* Sort the array in chronological order */
+
+	    /*foreach  ($rss->items as $item) {echo "$item[title] ". self::get_item_date($item) . "<br>\n";}*/
+	    if(!uasort($rss->items, array("RssPressReview","cmp_date_item")))
+	      {
+		echo "Error: uasort() failed<br />\n";
+	      }
+	    /*foreach  ($rss->items as $item) {echo "$item[title] ". self::get_item_date($item) . "<br>\n";}*/
+
+	    /* Calculate the publication interval for this source */
 	    foreach ($rss->items as $item)
 	      {
-		$date = $this->get_item_date($item);
+		$date = self::get_item_date($item);
 		      
 		if ($date == -1)
 		  {
@@ -236,6 +260,8 @@ class RssPressReview
 		$item_date_array_index++;
 		$i++;
 	      }// End foreach items
+
+
 	    if($i >= 2  && $publication_interval_total != 0)
 	      {
 		$average_publication_interval = $publication_interval_total/($i-1);
@@ -272,7 +298,7 @@ class RssPressReview
     //print_r($rss_sources);
     //print_r($item_date_array);
 
-    usort($item_date_array, "$this->cmp");
+    usort($item_date_array, array("RssPressReview","cmp"));
     //print_r($item_date_array);
     //echo "</pre>\n";
 
@@ -285,9 +311,12 @@ class RssPressReview
 
     /************** Now we actually display the feeds **************/
     $sidx=0;
+    $rss_html_all_feeds='';
+    //print_r($rss_sources);
+    reset($rss_sources);
     foreach ($rss_sources as $rss_sources_key => $rss_source)
       {
-	//echo "<h1>$rss_source[url]</h1>";
+	//echo "<h3>$rss_source[url]</h3>";
 	$rss = fetch_rss( $rss_source['url'] );
 	if ( !$rss )
 	  {
@@ -301,7 +330,7 @@ class RssPressReview
 	    $rss_header='';
 	    if ($rss_sources_key!=0)
 	      {
-		$rss_header .= "<hr />\n";
+		//$rss_header .= "<hr />\n";
 	      }
 	    $rss_header .= "<p class=textegris>"._('Source: ')."<b>";
 	    $channel_title = $this->convert_string_encoding($rss->channel['title']);
@@ -317,9 +346,15 @@ class RssPressReview
 	    $rss_header .= "<ul>\n";
 	    $header_is_displayed = false;
 	    $i = 0;
+	    /* Sort the items by date, so we get the most recent first */
+	    if(!uasort($rss->items, array("RssPressReview","cmp_date_item")))
+	      {
+		echo "Error: uasort() failed<br />\n";
+	      }
+
 	    foreach ($rss->items as $item)
 	      {
-		$date = $this->get_item_date($item);
+		$date = self::get_item_date($item);
 		$realdate = $date;
 		if ($date == -1)
 		  {
@@ -328,10 +363,14 @@ class RssPressReview
 		  }
 		      
 		$average_publication_interval = $rss_sources[$rss_sources_key]['average_publication_interval'];
+
 		$adjust_factor = $all_feed_publication_interval/$average_publication_interval;
 		$adjusted_date = time()- ((time()-$date)*$adjust_factor);
-
-		//echo "adjusted_date $adjusted_date, min_adjusted_date_to_display $min_adjusted_date_to_display<br>";
+		//echo "<pre>";print_r($item);echo"</pre>";
+		/*	setlocale(LC_TIME, "fr_CA");
+		 $display_date= strftime("%x", $realdate);
+		 echo "$item[title] ($display_date): adjusted_date $adjusted_date, min_adjusted_date_to_display $min_adjusted_date_to_display<br>";
+		 echo "average_publication_interval: $average_publication_interval, adjust_factor: $adjust_factor, date: $date, $adjusted_date: $adjusted_date<br>";*/
 		if ($adjusted_date >= $min_adjusted_date_to_display)
 		  {
 		    if(!$header_is_displayed)
@@ -339,11 +378,24 @@ class RssPressReview
 			$rss_html .= $rss_header;
 			$header_is_displayed = true;
 		      }
-		    $href = $item['link'];
+		    if(!empty($item['link']))
+		      {
+			$href = $item['link'];
+		      }
+		    else
+		      {
+			$href = false;
+		      }
 		    $title = $this->convert_string_encoding($item['title']);
 
-		    $summary =  $this->convert_string_encoding($item['summary']);	
-
+		    if(!empty($item['summary']))
+		      {
+			$summary =  $this->convert_string_encoding($item['summary']);	
+		      }
+		    else
+		      {
+			$summary = '';
+		      }
 		    if($realdate!= -1)
 		      {
 			setlocale(LC_TIME, "fr_CA");
@@ -355,15 +407,15 @@ class RssPressReview
 		      }
 	      
 		    $author='';
-		    if(trim($item['dc']['creator'])!='')
+		    if(!empty($item['dc']['creator']))
 		      {
 			$author = trim($item['dc']['creator']);
 		      }
-		    elseif (trim($item['author'])!='')
+		    elseif (!empty($item['author']))
 		      {
 			$author = trim($item['author']);
 		      }
-		    elseif (trim($item['author_name'])!='')
+		    elseif (!empty($item['author_name']))
 		      {
 			$author = trim($item['author_name']);
 		      }
@@ -375,9 +427,16 @@ class RssPressReview
 		      }
 		    $dhtml_id = "summary_".mt_rand(1, 10000). "_".$sidx;
 		    $rss_html .= "<li>\n";
-		    $rss_html .= "<span class='textegrispetit'>$display_date</span><a class='y' onMouseOver=\"changestyle('$dhtml_id','visible');\" onMouseOut=\"changestyle('$dhtml_id','hidden');\"  href='$href'>\n";
-		    $rss_html .= "<b>$title</b><br />\n";
-		    $rss_html .= "</a>\n";
+		    $rss_html .= "<span class='textegrispetit'>$display_date</span><span class='y' onMouseOver=\"changestyle('$dhtml_id','visible');\" onMouseOut=\"changestyle('$dhtml_id','hidden');\">\n";
+		    if($href)
+		      {
+			$rss_html .= "<a class='y' href='$href'>\n";
+		      }
+		    $rss_html .= "<b>$title</b></span><br />\n";
+		    if($href)
+		      {
+			$rss_html .= "</a>\n";
+		      }
 		    $rss_html .= "<div style='z-index: 1000; position: relative'>\n";
 		    $rss_html .= "<div style='z-index: 1000;' id='$dhtml_id' class='introduction'>
 	<p>$author ($channel_title) $display_date</p>\n";
@@ -389,14 +448,15 @@ class RssPressReview
 		$i++;
 		$sidx++;
 	      }// End foreach items
+
 	    if($header_is_displayed)
 	      {
 		$rss_html .= "</ul>\n";
 	      }
-	    return $rss_html;
-		  
+	    $rss_html_all_feeds .= $rss_html;
 	  }
       }// End foreach rss feeds
+    return $rss_html_all_feeds;
     error_reporting($old_error_level);
   }
 

@@ -1,5 +1,12 @@
 # $Header$
-2004-01-10 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-01-11 Benoit Grégoire  <bock@step.polymtl.ca>
+	* INSTALL: Mandate PHP5
+	* wifidog/hotspot_status.php: Allow export of the list as a RSS feed
+	* wifidog/classes/RssPressReview.inc:  Make it truly functionnal.
+	* wifidog/portal/index.php:  Support multiple RSS feeds.  The system will automatically pick the best 5 entries from all the feeds.  It will compensate for disparate publication intervals.  An entry from a feed that does not publish often will live longer than an entry from a feed that publishes very often.  If a feed doesn't have any entry that makes the cut, it will not appear at all.
+	* wifidog/templates/hotspot_status.html:  Add link to the RSS version.
+
+2004-01-11 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog/config.php:  Add list of hotspot to network rss feed list (not yet functionnal)
 	* wifidog/hotspot_status.php:  Allow RSS export of the list of deployed HotSpots.
 	* wifidog/admin/incoming_outgoing_swap.php:  Script to swap incoming and outgoing in your data.  only use this if you had gateways before 1.0.2 and wish to correct your logs before you upgrade.

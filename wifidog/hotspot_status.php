@@ -66,7 +66,7 @@ if($format=='RSS')
     $title = $xmldoc->createElement("title");
     $title = $channel->appendChild($title);
 
-    $textnode = $xmldoc->createTextNode(utf8_encode(_("New ").HOTSPOT_NETWORK_NAME. _("Hotspots")));
+    $textnode = $xmldoc->createTextNode(utf8_encode(_("Newest")." ".HOTSPOT_NETWORK_NAME. " ". _("Hotspots")));
     $title->appendChild($textnode);
 
     /* link */
@@ -291,6 +291,7 @@ $i=0;
        $smarty->append("nodes", $node_row);
      }
      $smarty->assign("nodes_count", count($node_results));
+     $smarty->assign("rss_format_url", 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'].'?format=RSS');
      echo $style->GetHeader(HOTSPOT_NETWORK_NAME.' hotspot status');
      $smarty->display("hotspot_status.html");
      echo $style->GetFooter();
