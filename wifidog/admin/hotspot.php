@@ -169,7 +169,7 @@ if ($action == 'edit_node') { // Allow node creation or node edition
     //$db->ExecSql("SELECT node_id, name, creation_date from nodes", $node_results, false);
     //$node = Node::GetObject('default');
     //if (is_array($node_results)) // If no row return, $node_results will be NULL
-    $nodes = Node::getAllNodes();
+    $nodes = Node::getAllNodesOrdered("node_id");
     if (is_array($nodes)) {
         $smarty->assign('nodes', $nodes);
     } else {
