@@ -65,8 +65,8 @@ define('SESS_LANGUAGE_VAR', 'SESS_LANGUAGE');
 
 /* Languages and sessions */
 $lang_ids = array(
-        "fr_FR",
-        "en_US"
+        "fr",
+        "en"
     );
 $lang_names = array(
         "Fran&ccedil;ais",
