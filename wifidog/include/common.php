@@ -24,10 +24,6 @@ if(!function_exists ('gettext'))
 else
   {
     define('GETTEXT_AVAILABLE', true);
-    setlocale(LC_ALL, DEFAULT_LANG);
-    bindtextdomain('messages', BASEPATH.'/locale');
-    bind_textdomain_codeset('messages', 'UTF-8');
-    textDomain('messages'); 
   }
 
 /* NEVER edit these, as they mush match the C code of the gateway */
