@@ -87,6 +87,22 @@ function gentoken()
   return md5(uniqid(rand(),1));
 }
 
+/** Returns the hash of the password suitable for storing or comparing in the database.
+* @return The 32 character hash.
+*/
+function get_password_hash($password)
+{
+    return base64_encode(pack("H*", md5($password)));
+}
+
+/** Convert a password hash form a NoCat passwd file into the same format as get_password_hash().
+* @return The 32 character hash.
+*/
+function convert_nocat_password_hash($hash)
+{
+ return $hash . '==';
+}
+
 /** Cleanup dangling tokens and connections from the database, left if a gateway crashed, etc. */
 function garbage_collect()
 {

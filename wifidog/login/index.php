@@ -38,8 +38,9 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['pass']))
  $previous_username = $_REQUEST['user'];
  $previous_password = $_REQUEST['pass'];
     $user = $db->EscapeString($_REQUEST['user']);
-    $password = $db->EscapeString($_REQUEST['pass']);
-    $db->ExecSqlUniqueRes("SELECT * FROM users WHERE user_id='$user' && pass=PASSWORD('$password')", $user_info);
+    $password_hash = get_password_hash($_REQUEST['pass']);
+    $db->ExecSqlUniqueRes("SELECT * FROM users WHERE user_id='$user' OR email='$user' AND pass='$password_hash'", $user_info, false);
+    
     if ($user_info != null)
       {
 	$token = gentoken();
@@ -59,10 +60,10 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['pass']))
     else
       {
 	$user_info = null;
-        $db->ExecSqlUniqueRes("SELECT * FROM users WHERE user_id='$user'", $user_info, false);
+        $db->ExecSqlUniqueRes("SELECT * FROM users WHERE user_id='$user' OR email='$user'", $user_info, false);
 	if($user_info == null)
 	  {
-	    $login_failed_message = _('Unknown username');
+	    $login_failed_message = _('Unknown username or email');
 	  }
 	else
 	  {

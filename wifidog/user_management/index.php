@@ -18,7 +18,7 @@
    * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
    *                                                                  *
    \********************************************************************/
-  /**@file AbstractDb.php
+  /**@file
    * @author Copyright (C) 2004 Benoit Grégoire, Philippe April.
    */
 define('BASEPATH','../');
@@ -267,6 +267,9 @@ function display_lost_password_form()
   echo "<p><input type='submit'></p>\n";
   echo "</form>\n";
 }
+
+/** Generate a random, eay to type and dictate password.
+*/
 function randompass()
 {
    $rand_pass = ''; // makes sure the $pass var is empty.
@@ -359,8 +362,6 @@ else
       }
      
 
-
-
     /* Lost username */
     if ($_REQUEST['action']=='lost_username_form')
       {
@@ -438,7 +439,8 @@ else
 	else
 	  {
 	    $new_password=randompass();
-$update_successful = $db->ExecSqlUpdate("UPDATE users  SET pass=PASSWORD('$new_password') WHERE user_id='$user_info[user_id]'");
+	    $password_hash = get_password_hash($new_password);
+$update_successful = $db->ExecSqlUpdate("UPDATE users  SET pass='$password_hash' WHERE user_id='$user_info[user_id]'");
 	    if ($update_successful)
 	      {
 		send_lost_password_email($user_info['email'], $new_password);
@@ -472,7 +474,8 @@ $update_successful = $db->ExecSqlUpdate("UPDATE users  SET pass=PASSWORD('$new_p
 	else
 	  {
 	    $user_info=null;
-	    $db->ExecSqlUniqueRes("SELECT * FROM users WHERE user_id='$username' AND pass=PASSWORD('$pass')", $user_info, false);
+	    $password_hash = get_password_hash($pass);
+	    $db->ExecSqlUniqueRes("SELECT * FROM users WHERE user_id='$username' AND pass='$password_hash'", $user_info, false);
 	    if($user_info==null)
 	      {
 			    		    echo "<p class=warning>"._("Wrong password for $username.")."</p>\n";
@@ -499,7 +502,8 @@ $update_successful = $db->ExecSqlUpdate("UPDATE users  SET pass=PASSWORD('$new_p
 
 	if(  $preconditions_ok == true)
 	  {
-	    $update_successful = $db->ExecSqlUpdate("UPDATE users  SET pass=PASSWORD('$new_pass') WHERE user_id='$user_info[user_id]'");
+	  $password_hash = get_password_hash($new_pass);
+	    $update_successful = $db->ExecSqlUpdate("UPDATE users  SET pass='$password_hash' WHERE user_id='$user_info[user_id]'");
 	    if ($update_successful)
 	      {
 		echo "<p class=ok>"._('Your password was successfully changed.')."</p>\n";
@@ -568,7 +572,8 @@ $update_successful = $db->ExecSqlUpdate("UPDATE users  SET pass=PASSWORD('$new_p
 	    $status = ACCOUNT_STATUS_VALIDATION;
 	    $token = gentoken();
 	    $reg_date = time();
-	    $update_successful = $db->ExecSqlUpdate("INSERT INTO users (user_id,email,pass,account_status,validation_token,reg_date) VALUES ('$username','$email',PASSWORD('$pass'),'{$status}','{$token}','{$reg_date}')");
+	    $password_hash = get_password_hash($pass);
+	    $update_successful = $db->ExecSqlUpdate("INSERT INTO users (user_id,email,pass,account_status,validation_token,reg_date) VALUES ('$username','$email','$password_hash','{$status}','{$token}','{$reg_date}')");
 	    if ($update_successful)
 	      {
 		send_validation_email($email);

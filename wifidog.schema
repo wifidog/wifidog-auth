@@ -68,7 +68,7 @@ CREATE TABLE `nodes` (
 
 CREATE TABLE `users` (
   `user_id` varchar(45) NOT NULL default '',
-  `pass` varchar(16) NOT NULL default '',
+  `pass` varchar(32) NOT NULL default '',
   `email` varchar(255) NOT NULL default '',
   `account_status` int(11) default NULL,
   `validation_token` varchar(64) NOT NULL default '',

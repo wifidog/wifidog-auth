@@ -8,3 +8,6 @@ default/ Contains all the files that could be optionally be put into a node_spec
 
 common/ Contains files that are available for any custom pages, the url and path of common is available to the smarty templates.  You may fill it with whatever you want in adition with the files already present.
 
+A few notes about Smarty templates:
+
+You can see the variables available to the template by adding {$debug} at the top of the html file.
