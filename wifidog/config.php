@@ -2,8 +2,8 @@
 /* Used by AbstractDb */
 define('CONF_DATABASE_HOST',   'localhost');
 define('CONF_DATABASE_NAME',   'wifidog');
-define('CONF_DATABASE_USER',   'root');
-define('CONF_DATABASE_PASSWORD',   'tartempion');
+define('CONF_DATABASE_USER',   'wifidog');
+define('CONF_DATABASE_PASSWORD',   '');
 
 /*************************** Common setup option.  Adjust to suit your environment *******************************/
 
@@ -36,7 +36,7 @@ define('MAGPIE_REL_PATH',  'lib/magpie/');
 define('SMARTY_REL_PATH',  'lib/smarty/');
 //define('NETWORK_RSS_URL', 'http://wifinetnews.com/index.rdf');
 define('NETWORK_RSS_URL', 'http://patricktanguay.com/isf/atom.xml');
-define('UNKNOWN_HOTSPOT_RSS_URL', 'http://slashdot.org/index.rss');
+define('UNKNOWN_HOTSPOT_RSS_URL', '');
 
 define('LOCAL_CONTENT_REL_PATH', 'local_content/');//Path to the directory containing the different node specific directories.  Relative to BASE_URL_PATH
 
