@@ -1,4 +1,11 @@
 # $Header$
+2004-12-03 Benoit Grégoire  <bock@step.polymtl.ca>
+	* wifidog/admin/user_stats.php,  wifidog/classes/Statistics.php:  Embryonic aggregate user stats.  Currently allows you to find out the rate at which your users subscribe.
+	* wifidog/config.php, wifidog/local_content/default/login.html, wifidog/include/user_management_menu.php:  Add hotspot status page to login page.
+	* wifidog/hotspot_status.php: Cosmetic
+	* wifidog/admin/hotspot_log.php: Stats now need admin privileges
+	* wifidog/index.php: Cosmetic.
+
 2004-11-19 Benoit Grégoire  <bock@step.polymtl.ca>
 	* TODO: Add email domains to blacklist
 	* wifidog/config.php, wifidog/include/user_management_menu.php: Add tech support email address

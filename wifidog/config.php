@@ -6,6 +6,14 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.13  2004/12/03 19:42:32  benoitg
+ *     2004-12-03 Benoit Grégoire  <bock@step.polymtl.ca>
+ *     	* wifidog/admin/user_stats.php,  wifidog/classes/Statistics.php:  Embryonic aggregate user stats.  Currently allows you to find out the rate at which your users subscribe.
+ *     	* wifidog/config.php, wifidog/local_content/default/login.html, wifidog/include/user_management_menu.php:  Add hotspot status page to login page.
+ *     	* wifidog/hotspot_status.php: Cosmetic
+ *     	* wifidog/admin/hotspot_log.php: Stats now need admin privileges
+ *     	* wifidog/index.php: Cosmetic.
+ *
  *     Revision 1.12  2004/11/20 03:28:25  benoitg
  *     2004-11-19 Benoit Grégoire  <bock@step.polymtl.ca>
  *     	* TODO: Add email domains to blacklist
@@ -77,6 +85,7 @@ define('PORTAL_PAGE_NAME', 'portal.html');
 define('PAGE_HEADER_NAME', 'header.html');
 define('PAGE_FOOTER_NAME', 'footer.html');
 define('USER_MANAGEMENT_PAGE', 'user_management/');
+define('HOTSPOT_STATUS_PAGE', 'hotspot_status.php');
 define('HOTSPOT_LOGO_NAME', 'hotspot_logo.jpg');
 define('HOTSPOT_LOGO_BANNER_NAME', 'hotspot_logo_banner.jpg');
 

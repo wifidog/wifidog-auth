@@ -28,6 +28,10 @@ function get_user_management_menu()
 
   //$retval .= "<div class='menu'>\n";
 
+  $retval .= "<p>Find more HotSpots</p>\n";
+  $retval .= "<ul>\n";
+   $retval .= "<li><a href='".BASE_URL_PATH."".HOTSPOT_STATUS_PAGE."'>"._('List of all HotSpots')."</a></li>\n"; 
+  $retval .= "</ul>\n";
   $retval .= "<p>User management</p>\n";
   $retval .= "<ul>\n";
 

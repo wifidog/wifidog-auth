@@ -18,7 +18,7 @@
    * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
    *                                                                  *
    \********************************************************************/
-  /**@file node_list.php
+  /**@file hotspot_status.php
    * Network status page
    * @author Copyright (C) 2004 Benoit Grégoire
    */
@@ -29,16 +29,18 @@ require_once BASEPATH.'classes/Style.php';
 require_once (BASEPATH.'include/user_management_menu.php');
 require_once BASEPATH.'classes/Statistics.php';
 
-//$style = new Style();
+$style = new Style();
 $stats=new Statistics();
 
-//echo $style->GetHeader(HOTSPOT_NETWORK_NAME.' hotspot status');
-// echo "<div id='head'><h1>". HOTSPOT_NETWORK_NAME ." node list</h1></div>\n";    
-  
-//echo "<div id='content'>\n";
+echo $style->GetHeader(HOTSPOT_NETWORK_NAME.' hotspot status');
+ echo "<div id='head'><h1>". HOTSPOT_NETWORK_NAME ." node list</h1></div>\n";    
+  echo "<div id='navLeft'>\n";
+echo get_user_management_menu();
+echo "</div>\n";
+echo "<div id='content'>\n";
 
 $db->ExecSql("SELECT *, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat,
- CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up FROM nodes WHERE node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE' ORDER BY creation_date",$node_results, false);
+ CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up FROM nodes WHERE node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE'  OR node_deployment_status = 'IN_TESTING' ORDER BY creation_date",$node_results, false);
 echo "<table class='spreadsheet'>\n";
 echo "<thead><tr class='spreadsheet'><th class='spreadsheet' colspan=6>"._('Status of the ').count($node_results) .' '._("open").' '.HOTSPOT_NETWORK_NAME.' '._("HotSpots")."</th></tr>\n";
 echo "<tr class='spreadsheet'><th class='spreadsheet'>"._('HotSpot / Status')."</th>\n";
@@ -73,7 +75,12 @@ foreach($node_results as $node_row)
     {
       echo "<a href='$node_row[home_page_url]' target='_new'>$node_row[name]</a>\n";
     }
-      if($node_row['is_up']!='t')
+      
+if($node_row['node_deployment_status']=='IN_TESTING')
+	{
+		echo _("<br />HotSpot in testing phase");
+	}
+if($node_row['node_deployment_status']!='NON_WIFIDOG_NODE' && $node_row['is_up']!='t')
 	{
 	  $duration = $db->GetDurationArrayFromIntervalStr($node_row['since_last_heartbeat']);
 	  echo '<br />' . $duration['days'].'days '.$duration['hours'].'h '.$duration['minutes'].'min<br />';
@@ -124,7 +131,7 @@ foreach($node_results as $node_row)
 }
 echo "</table>\n";
 
-//    echo "</div>\n";	
+    echo "</div>\n";	
 
-//echo $style->GetFooter();
+echo $style->GetFooter();
 ?>

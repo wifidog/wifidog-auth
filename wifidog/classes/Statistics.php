@@ -55,6 +55,29 @@ $db->ExecSqlUniqueRes("SELECT COUNT(DISTINCT users.user_id) FROM users,connectio
 return $row['count'];
   }
   
+  /**
+   * Find out how many users are valid in the database
+   * @return Number of valid users
+   */
+  function getNumValidUsers()
+  {
+  global $db;
+$db->ExecSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_status = ".ACCOUNT_STATUS_ALLOWED, $row, false);
+return $row['count'];
+  }
+    
+  /**
+   * Find out the total number of users in the database
+   * @return Number of users
+   */
+  function getNumUsers()
+  {
+  global $db;
+$db->ExecSqlUniqueRes("SELECT COUNT(user_id) FROM users", $row, false);
+return $row['count'];
+  }
+    
+
     /**
    * Find out the date of the most recent successfull (meaning with data transferred) connection to a HotSpot.
    * @param $node_id Optionnal.  The id of the node used for which you want the last successfull connection date
