@@ -97,5 +97,9 @@ isset($_REQUEST["gw_address"]) && $smarty->assign('gw_address', $_REQUEST['gw_ad
 isset($_REQUEST["gw_port"]) && $smarty->assign('gw_port', $_REQUEST['gw_port']);
 isset($_REQUEST["gw_id"]) && $smarty->assign('gw_id', $_REQUEST['gw_id']);
 
+isset($_REQUEST["gw_address"]) && $session->set(SESS_GW_ADDRESS_VAR, $_REQUEST['gw_address']);
+isset($_REQUEST["gw_port"]) && $session->set(SESS_GW_PORT_VAR, $_REQUEST['gw_port']);
+isset($_REQUEST["gw_id"]) && $session->set(SESS_GW_ID_VAR, $_REQUEST['gw_id']);
+
 $smarty->display("templates/".LOGIN_PAGE_NAME);
 ?>
