@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-14 23:40-0500\n"
+"POT-Creation-Date: 2005-01-15 00:23-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -212,7 +212,7 @@ msgstr "Vous n'avez pas les privileges d'administrateur"
 msgid "NOT IMPLEMENTED YET, ACCESS DENIED"
 msgstr ""
 
-#: ../login/index.php:58 ../login/index.php:62
+#: ../login/index.php:58 ../login/index.php:62 ../login/index.php:56
 msgid ""
 "Sorry, your $validation_grace_time minutes grace period to retrieve your "
 "email and validate your account has now expired. ($validation_grace_time min "
@@ -410,8 +410,8 @@ msgstr "Souscrire"
 msgid ""
 "Your email address must be valid in order for your account to be activated"
 msgstr ""
-"Votre adresse de courriel doit &ecircumflex;tre valide afin que votre compte "
-"puisse &ecircumflex;tre activ&eacute;"
+"Votre adresse de courriel doit &ecirc;tre valide afin que votre compte "
+"puisse &ecirc;tre activ&eacute;"
 
 #: ../signup.php:43
 msgid "Unable to locate "
@@ -457,7 +457,8 @@ msgstr "Une adresse courriel est requise."
 
 #: ../signup.php:86
 msgid "The email address must be of the form user@domain.com."
-msgstr "L'adresse courriel doit &ecircumflex;tre de la forme usager@domaine.com."
+msgstr ""
+"L'adresse courriel doit &ecirc;tre de la forme usager@domaine.com."
 
 #: ../signup.php:88
 msgid "A password of at least 6 characters is required."
@@ -511,14 +512,15 @@ msgstr "Aucun nom d'utilisateur sp&eacute;cifi&eacute;!"
 
 #: ../validate.php:42
 msgid "Your account has already been activated."
-msgstr "Votre compte &agrave; d&eacute;j&agrave; &eacute;t&eacute; activ&eacute;."
+msgstr ""
+"Votre compte &agrave; d&eacute;j&agrave; &eacute;t&eacute; activ&eacute;."
 
-#: ../validate.php:47
+#: ../validate.php:47 ../validate.php:48
 msgid "Your account has been succesfully activated!"
 msgstr ""
 "Votre compte &agrave; &eacute;t&eacute; activ&eacute; avec succ&egrave;s!"
 
-#: ../validate.php:48
+#: ../validate.php:48 ../validate.php:49
 msgid ""
 "You may now browse to a remote Internet address and take advantage of the "
 "free Internet access!"
@@ -526,7 +528,7 @@ msgstr ""
 "Vous pouvez maintenant visiter un site Internet distant et profiter de "
 "l'acc&egrave;s Internet gratuit!"
 
-#: ../validate.php:49
+#: ../validate.php:49 ../validate.php:50
 msgid ""
 "If you get prompted for a login, enter the username and password you have "
 "just created."
@@ -534,11 +536,10 @@ msgstr ""
 "Si vous recevez une invite de saisie d'usager et de mot de passe, veuillez "
 "entrer le nom d'usager et le mot de passe que vous venez de cr&eacute;er."
 
-#: ../validate.php:51
+#: ../validate.php:51 ../validate.php:52
 msgid "Internal Error"
 msgstr "Erreur Interne"
 
-#: ../validate.php:55
+#: ../validate.php:55 ../validate.php:56
 msgid "Sorry, your validation token is not valid!"
-msgstr ""
-"D&eacute;sol&eacute;, votre jeton de validation n'est pas accept&eacute;!"
+msgstr "D&eacute;sol&eacute;, votre jeton de validation n'est pas accept&eacute;!"
