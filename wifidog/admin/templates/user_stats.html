@@ -56,13 +56,13 @@
 </tr>
 {foreach from=$connections item=connection}
 <tr>
-	<td>{$connection.timestamp_in|date_format:"%Y/%m/%d %H:%M:%S"}</td>
-	<td>{$connection.timestamp_out|date_format:"%Y/%m/%d %H:%M:%S"}</td>
+	<td>{$connection.timestamp_in}</td>
+	<td>{$connection.timestamp_out}</td>
 	<td>{$connection.token_status_description}</td>
 	<td>{$connection.user_mac}</td>
 	<td>{$connection.user_ip}</td>
-	<td>{$connection.hotspot_id}</td>
-	<td>{$connection.hotspot_ip}</td>
+	<td>{$connection.node_id}</td>
+	<td>{$connection.node_ip}</td>
 	<td align="right">{$connection.incoming}</td>
 	<td align="right">{$connection.outgoing}</td>
 </tr>

@@ -10,4 +10,4 @@ common/ Contains files that are available for any custom pages, the url and path
 
 A few notes about Smarty templates:
 
-You can see the variables available to the template by adding {$debug} at the top of the html file.
+You can see the variables available to the template by adding {debug} at the top of the html file.

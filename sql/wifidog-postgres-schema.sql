@@ -67,7 +67,8 @@ CREATE TABLE nodes (
     rss_url text,
     last_heartbeat_ip character varying(16),
     last_heartbeat_timestamp timestamp without time zone DEFAULT now(),
-    creation_date date DEFAULT now()
+    creation_date date DEFAULT now(),
+    home_page_url text
 );
 
 
@@ -82,7 +83,9 @@ CREATE TABLE users (
     email character varying(255) DEFAULT ''::character varying NOT NULL,
     account_status integer,
     validation_token character varying(64) DEFAULT ''::character varying NOT NULL,
-    reg_date timestamp without time zone DEFAULT now() NOT NULL
+    reg_date timestamp without time zone DEFAULT now() NOT NULL,
+    CONSTRAINT check_email_not_empty CHECK (((email)::text <> ''::text)),
+    CONSTRAINT check_user_not_empty CHECK (((user_id)::text <> ''::text))
 );
 
 

@@ -68,14 +68,14 @@ function display_register_form()
     {
       $email = '';
     }
-  echo "<h1>"._('Register a free account with')." ".HOTSPOT_NETWORK_NAME."</h1>\n";
+  echo "<h3>"._('Register a free account with')." ".HOTSPOT_NETWORK_NAME."</h3>\n";
   echo "<form method='post'>\n";
-  echo "Your desired username: <input type='text' name='username' value='$username'><br>\n";
-  echo "Your email address: <input type='text' name='email' value='$email'><br>\n";
-  echo "Your password: <input type='password' name='pass' value='$pass'><br>\n";
-  echo "Your password(again): <input type='password' name='pass_again' value='$pass_again'><br>\n";
-  echo "<input type='hidden' name='action' value='create_new_account'><br>\n";
-  echo "<input type='submit'>\n";
+  echo "<p>Your desired username: <input type='text' name='username' value='$username'></p>\n";
+  echo "<p>Your email address: <input type='text' name='email' value='$email'> The email MUST be valid.  You will have to click on the link you will receive by email before your account is validated.</p>\n";
+  echo "<p>Your password: <input type='password' name='pass' value='$pass'></p>\n";
+  echo "<p>Your password(again): <input type='password' name='pass_again' value='$pass_again'></p>\n";
+  echo "<p><input type='hidden' name='action' value='create_new_account'>\n";
+  echo "<input type='submit'></p>\n";
   echo "</form>\n";
 }
 
@@ -89,7 +89,7 @@ function display_validation_email_form()
     {
       $username = '';
     }
-  echo "<h1>"._('Re-send validation email')."</h1>\n";
+  echo "<h3>"._('Re-send validation email')."</h3>\n";
   echo "<form method='post'>\n";
   echo "Your username: <input type='text' name='username' value='$username'><br>\n";
   echo "<input type='hidden' name='action' value='send_validation_email'><br>\n";
@@ -179,7 +179,7 @@ function display_change_password_form()
     {
       $new_pass_again = '';
     }
-  echo "<h1>"._('Change password')."</h1>\n";
+  echo "<h3>"._('Change password')."</h3>\n";
   echo "<form method='post'>\n";
   echo "Your username: <input type='text' name='username' value='$username'><br>\n";
   echo "Your old password: <input type='password' name='pass' value='$pass'><br>\n";
@@ -200,7 +200,7 @@ function display_lost_username_form()
     {
       $email = '';
     }
-  echo "<h1>"._('Lost username')."</h1>\n";
+  echo "<h3>"._('Lost username')."</h3>\n";
   echo "<form method='post'>\n";
   echo "<p>"._('Please enter your email address:')." <input type='text' name='email' value='$email'></p>\n";
   echo "<input type='hidden' name='action' value='mail_lost_username'>\n";
@@ -257,7 +257,7 @@ function display_lost_password_form()
       $email = '';
     }
 
-  echo "<h1>"._('Lost password')."</h1>\n";
+  echo "<h3>"._('Lost password')."</h3>\n";
   echo "<form method='post'>\n";
   echo "<p>"._('Please enter either your username or your email:')."</p>\n";
   echo "<p>"._('Username:')." <input type='text' name='username' value='$username'></p>\n";
@@ -321,23 +321,22 @@ function send_lost_password_email($email, $new_passord)
  Username: $user_info[user_id]
  Password: $new_passord
 
- To protect your account, it is recommended that you change your password immediately.
-
- Thank you,
+ Have a nice day,
 
  The Team";
       $from = "From: ".VALIDATION_EMAIL_FROM_ADDRESS;
 
       mail($email, $subject, $body, $from);
-            echo "<p>"._('Your password has been mailed to you.')."</p>\n";
+            echo "<p>"._('A new password has been mailed to you.')."</p>\n";
     }
 }
 
 
 
 $style = new Style();
-echo $style->GetHeader(HOTSPOT_NETWORK_NAME.' New account registration');
+echo $style->GetHeader(HOTSPOT_NETWORK_NAME.' user management');
 $showform=true;
+echo "<div id='head'><h1>".HOTSPOT_NETWORK_NAME." user management</h1></div>\n";
 echo "<div id='navLeft'>\n";
 echo get_user_management_menu();
 echo "</div>\n";
@@ -345,7 +344,14 @@ echo "<div class='content'>\n";
 
 if(empty($_REQUEST['action']))
   {
-
+echo _("<h3>Inscription</h3>
+<p>Pour vous connecter aux points d'accès ".HOTSPOT_NETWORK_NAME.", vous devez utiliser un nom d'utilisateur et un mot de passe.</p>
+<p>Les comptes sont totalement gratuits pour tous ceux qui en font la demande.</p>
+<p>Pour faire la demande d'un compte gratuit, veuillez choisir 'Create new account' dans le menu de gauche.</p>
+<h3>Sign up</h3>
+<p>".HOTSPOT_NETWORK_NAME." hotspots require you have a login and a password to utilize them.</p>
+<p>Accounts are given absolutely free to anyone who requests them.</p>
+<p>To request a free account, please choose 'Create new account' in the left menu.</p>");
   }
 else
   {

@@ -41,7 +41,7 @@ if (!empty($_REQUEST['url']))
     $session->set(SESS_ORIGINAL_URL_VAR,$_REQUEST['url']);
   }
 
-if (isset($_REQUEST['user']) && isset($_REQUEST['pass'])) 
+if (!empty($_REQUEST['user']) && !empty($_REQUEST['pass'])) 
   {
     $security = new Security();
     $previous_username = $db->EscapeString($_REQUEST['user']);

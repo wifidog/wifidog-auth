@@ -107,7 +107,7 @@ else if ($_REQUEST['action'] == 'upload_file')
 		  $original_username = $nocat_username;
 		}
 	      
-	      echo "<p class=info>Generating temporary user from:  $original_username; Checking internal duplicates</p>\n";
+	      echo "<p class=info>Generating temporary user from:  $original_username; Checking internal duplicates (duplicate usernames in the imported file)</p>\n";
 	      $username_modified_because_of=null;
 	      $username=$original_username;
 	      if(isset($import_user[$username]))
