@@ -2,12 +2,8 @@
 
 {section name=node loop=$nodes}
 <div id="hotspot_log">
-
 <table>
-<thead>
-<tr>
-	<th colspan=5>Node {$nodes[node].node_id}: {$nodes[node].name}</th>
-</tr>
+<caption><h3>Node {$nodes[node].node_id}: {$nodes[node].name}</h3></caption>
 <tr>
 	<th>Status</th>
 	<td>
@@ -62,11 +58,11 @@
     <table>
     <thead>
     <tr>
-	<th colspan=2>Hour of the day</th>
+	    <th colspan="2">Hour of the day</th>
     </tr>
     <tr>
-	<th>Start hour</th>
-	<th>Number of connections</th>
+	    <th>Start hour</th>
+	    <th>Number of connections</th>
     </tr>
     </thead>
 
@@ -82,7 +78,7 @@
     <table>
     <thead>
 	<tr>
-		<th colspan=2>Day of the week (0 is sunday)</th>
+		<th colspan="2">Day of the week (0 is sunday)</th>
 	</tr>
 	<tr>
 		<th>Start day</th>
@@ -105,7 +101,6 @@
 			
 </table>
 </div>
-<br>
 {/section}
 
 <div id="hotspot_log">

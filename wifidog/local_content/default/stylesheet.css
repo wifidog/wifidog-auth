@@ -141,9 +141,9 @@ A:visited { font-size: 85% }
 #hotspot_status td { margin: 0 0 0 0; color: #000000; }
 #hotspot_status a { color: #000000; }
 
-#hotspot_log { float: left; }
+#hotspot_log { margin: 1em; }
 #hotspot_log table { background-color: #b1d5ba; border-collapse: collapse; }
-#hotspot_log th { background-color: #e1f5da; border: 1px solid; }
+#hotspot_log th { background-color: #e1f5da; border: 1px solid; text-align: left; }
 #hotspot_log tr { background-color: #ffffff; border: 1px solid; }
 #hotspot_log td { margin: 0 0 0 0; color: #000000; }
 #hotspot_log td.status { width: 15em; text-align: left; font-size: 9pt; }
