@@ -36,13 +36,13 @@ if ($action=='edit_node') { // Allow node creation or node edition
     $smarty->assign("title", _("Edit a hotspot with"));
     
     if ("$node_id" != "new") { // Node creation
-        $node = Node::GetObject($node_id);
+        $node = Node::getNode($node_id);
     }
 
     $smarty->register_object("node", $node);
     $smarty->assign("user_id", $user_id);
     $smarty->assign("node_id", $node_id);
-    $smarty->assign('node_deployment_status', Node::GetAllDeploymentStatus());
+    $smarty->assign('node_deployment_status', Node::getAllDeploymentStatus());
 
     $smarty->display("admin/templates/hotspot_edit.html");
 
@@ -58,7 +58,7 @@ if ($action=='edit_node') { // Allow node creation or node edition
 
     $smarty->assign("title", _("Add a new hotspot with"));
     $smarty->assign("node_id", $node_id);
-    $smarty->assign('node_deployment_status', Node::GetAllDeploymentStatus());
+    $smarty->assign('node_deployment_status', Node::getAllDeploymentStatus());
     $smarty->display("admin/templates/hotspot_edit.html");
 
 } elseif ($action=='owner') { // Display hotspot owner list and add form
@@ -127,7 +127,7 @@ if ($action=='edit_node') { // Allow node creation or node edition
 //$node = Node::GetObject('default');
 
     //if (is_array($node_results)) { // If no row return, $node_results will be NULL
-    $nodes = Node::GetAllNodes();
+    $nodes = Node::getAllNodes();
     if (is_array($nodes)) {
         $smarty->assign('nodes', $nodes);
         //foreach($node_results as $node_row) {

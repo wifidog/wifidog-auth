@@ -26,13 +26,12 @@
 define('BASEPATH','./');
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'include/common_interface.php';
+require_once BASEPATH.'classes/Node.php';
 
-$db->ExecSql("SELECT node_id, name, last_heartbeat_user_agent, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up, creation_date FROM nodes ORDER BY node_id", $node_results, false);
-
-foreach($node_results as $node_row) {
-    $node_row['duration'] = $db->GetDurationArrayFromIntervalStr($node_row['since_last_heartbeat']);
-    $node_row['num_online_users'] = $stats->getNumOnlineUsers($node_row['node_id']);
-    $smarty->append("nodes", $node_row);
+foreach(Node::getAllNodesWithStatus("node_id") as $node) {
+    $node['duration'] = $db->GetDurationArrayFromIntervalStr($node['since_last_heartbeat']);
+    $node['num_online_users'] = $stats->getNumOnlineUsers($node['node_id']);
+    $smarty->append("nodes", $node);
 }
 
 $smarty->display("templates/node_list.html");

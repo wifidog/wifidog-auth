@@ -33,7 +33,7 @@ class Node {
    * @param $id The id of the requested node
    * @return a Node object, or null if there was an error
    */
-  static function getObject($id) {
+  static function getNode($id) {
       $object = null;
       $object = new self($id);
       return $object;
@@ -43,7 +43,7 @@ class Node {
    * @param $id The id to be given to the new node
    * @return the newly created Node object, or null if there was an error
    */
-  static function createObject($id) {
+  static function createNode($id) {
       global $db;
 
       $object = null;
@@ -61,7 +61,7 @@ class Node {
     $sql = "SELECT * FROM nodes WHERE node_id='$node_id_str'";
     $db->ExecSqlUniqueRes($sql, $row, false);
     if ($row == null) {
-	    throw new Exception(_("The id $node_id_str could not be found in the database"), "EXCEPTION_CREATE_OBJECT_FAILED");
+	    throw new Exception(_("The id $node_id_str could not be found in the database"));
     }
     $this->mRow = $row;  
     $this->mId  = $row['node_id'];
@@ -95,8 +95,29 @@ class Node {
     global $db;
 
     $db->ExecSql("SELECT * FROM nodes", $nodes, false);
+
     if ($nodes == null) {
-        throw new Exception(_("No nodes could not be found in the database"), "EXCEPTION_NO_NODES");
+        throw new Exception(_("No nodes could not be found in the database"));
+    }
+    return $nodes;
+  }
+
+  static function getAllNodesOrdered($order_by) {
+    global $db;
+
+    $db->ExecSql("SELECT * FROM nodes ORDER BY $order_by", $nodes, false);
+
+    if ($nodes == null) {
+        throw new Exception(_("No nodes could not be found in the database"));
+    }
+    return $nodes;
+  }
+
+  static function getAllNodesWithStatus() {
+    global $db;
+    $db->ExecSql("SELECT node_id, name, last_heartbeat_user_agent, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS online, creation_date FROM nodes ORDER BY node_id", $nodes, false);
+    if ($nodes == null) {
+        throw new Exception(_("No nodes could not be found in the database"));
     }
     return $nodes;
   }
@@ -106,7 +127,7 @@ class Node {
 
     $db->ExecSql("SELECT * FROM node_deployment_status", $statuses, false);
     if ($statuses == null) {
-        throw new Exception(_("No deployment statues  could be found in the database"), "EXCEPTION_NO_STATUSES");
+        throw new Exception(_("No deployment statues  could be found in the database"));
     }
     $statuses_array = array();
     foreach ($statuses as $status) {

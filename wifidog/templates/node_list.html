@@ -16,7 +16,7 @@
 {section name=node loop=$nodes}
 <tr class="{cycle values="odd,even"}">
     <td class="status">
-    {if $nodes[node].is_up == "t"}
+    {if $nodes[node].online == 't'}
     <img src='{$smarty.const.BASE_URL_PATH}images/hotspot_status_up.png'>
     {else}
     <img src='{$smarty.const.BASE_URL_PATH}images/hotspot_status_down.png'>
