@@ -19,7 +19,7 @@
    *                                                                  *
    \********************************************************************/
   /**@file index.php
-   * @author Copyright (C) 2004 Benoit Grégoire
+   * @author Copyright (C) 2004 Benoit Grï¿½goire
    */
 
 define('BASEPATH', './');

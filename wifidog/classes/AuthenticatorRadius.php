@@ -95,6 +95,7 @@ class AuthenticatorRadius extends Authenticator
 		 */
 		switch ($this->mRadius_encryption_method)
 		{
+			case "PAP" :
 			case "CHAP_MD5" :
 			case "MSCHAPv1" :
 			case "MSCHAPv2" :

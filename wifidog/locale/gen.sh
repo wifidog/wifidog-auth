@@ -6,9 +6,9 @@ for i in fr; do
     echo '?>' >> smarty.txt
 
     FILE="$i/LC_MESSAGES/messages.po"
-    find .. -maxdepth 1 -name "*.php" -exec xgettext --language=PHP --from-code=iso-8859-1 -j -o $FILE --keyword=_ {} \;
+    find .. -maxdepth 1 -name "*.php" -exec xgettext --language=PHP --from-code=utf-8 -j -o $FILE --keyword=_ {} \;
     for dir in admin classes include local_content login portal user_management; do
-        find ../$dir -maxdepth 1 -name "*.php" -exec xgettext --language=PHP --from-code=iso-8859-1 -j -o $FILE --keyword=_ {} \;
+        find ../$dir -maxdepth 1 -name "*.php" -exec xgettext --language=PHP --from-code=utf-8 -j -o $FILE --keyword=_ {} \;
     done
-    xgettext  --language=PHP --from-code=iso-8859-1 -j -o $FILE --keyword=_ smarty.txt
+    xgettext  --language=PHP --from-code=utf-8 -j -o $FILE --keyword=_ smarty.txt
 done

@@ -1,3 +1,7 @@
+2005-04-01 François Proulx  <francois.proulx@gmail.com>
+	* Modified gen.sh script to match UTF-8
+	* Added PAP RADIUS encryption support ( asked by Paris Sans Fil )
+	
 2005-04-01 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog/templates/auth_sources_selection.html:  Add missing file from francois's commit.
 
