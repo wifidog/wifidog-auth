@@ -104,7 +104,7 @@ class SmartyWifidog extends Smarty {
 /**similar to display(), but will find the content in the appropriate local content directory */
    function displayLocalContent($template_filename)
    {
-     if (is_file(NODE_CONTENT_URL.$template_filename))
+     if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.$template_filename))
        {
 	 $this->display(NODE_CONTENT_SMARTY_PATH.$template_filename);
        }
