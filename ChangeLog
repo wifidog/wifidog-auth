@@ -1,28 +1,31 @@
 # $Header$
-2004-01-12 Philippe April <isf_lists@philippeapril.com>
+2005-01-18 Philippe April <isf_lists@philippeapril.com>
+	* Smarty'ized more, I think it's done now
+
+2005-01-12 Philippe April <isf_lists@philippeapril.com>
 	* i18n and smarty'ized parts
 
-2004-01-11 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-01-11 Benoit Grégoire  <bock@step.polymtl.ca>
 	* INSTALL: Mandate PHP5
 	* wifidog/hotspot_status.php: Allow export of the list as a RSS feed
 	* wifidog/classes/RssPressReview.inc:  Make it truly functionnal.
 	* wifidog/portal/index.php:  Support multiple RSS feeds.  The system will automatically pick the best 5 entries from all the feeds.  It will compensate for disparate publication intervals.  An entry from a feed that does not publish often will live longer than an entry from a feed that publishes very often.  If a feed doesn't have any entry that makes the cut, it will not appear at all.
 	* wifidog/templates/hotspot_status.html:  Add link to the RSS version.
 
-2004-01-11 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-01-11 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog/config.php:  Add list of hotspot to network rss feed list (not yet functionnal)
 	* wifidog/hotspot_status.php:  Allow RSS export of the list of deployed HotSpots.
 	* wifidog/admin/incoming_outgoing_swap.php:  Script to swap incoming and outgoing in your data.  only use this if you had gateways before 1.0.2 and wish to correct your logs before you upgrade.
 	* wifidog/classes/RssPressReview.inc:  Missing file from previous commit.
 	* wifidog/portal/index.php: Preliminary work to enable smart press review of multiple RSS feeds.
 
-2004-01-10 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-01-10 Benoit Grégoire  <bock@step.polymtl.ca>
 	* include/common.php: Fix SSL security warnings.  If SSL is enabled and the page was actually served over SSL, all media in the file will be served over SSL. Add a new define (BASE_NON_SSL_PATH) to allow us to make links that break out of SSL mode.  From now on, use the self adapting BASE_URL_PATH in most circumstance, BASE_SSL_PATH to enter SSL mode, and BASE_URL_PATH to break out of it.
 
-2004-01-10 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-01-10 Benoit Grégoire  <bock@step.polymtl.ca>
 	* admin/user_stats.php: Add three top tens to the statistics:  Top ten apetite for bandwidth, top ten travelers, most addicted users.
 
-2004-01-04 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-01-04 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog/local_content/default/hotspot_logo_banner.jpg: Make it much thinner.
 	* wifidog/local_content/default/login.html: Remove announcements
 	* wifidog/include/user_management_menu.php: Fix mailto:
