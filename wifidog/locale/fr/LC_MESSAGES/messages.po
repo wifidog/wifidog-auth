@@ -161,7 +161,7 @@ msgstr "Noeuds sans-fil d&eacute;ploy&eacute;s avec coordonn&eacute;es"
 msgid "Full node technical status (includes non-deployed nodes)"
 msgstr ""
 "Status technique compl&egrave;te des noeuds (incluant les noeuds non-"
-"d&eacute;ploy&eacute;s"
+"d&eacute;ploy&eacute;s)"
 
 #: smarty.txt:29 smarty.txt:7
 msgid "Personal user management"
