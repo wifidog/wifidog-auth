@@ -1,13 +1,8 @@
-{include file="header.html" title="authentication server"}
-{include file="user_management_menu.html"}
-</div>
-<div id='content'>
-
-<p>The network currently has {$num_valid_users} valid users. {$num_online_users} user(s) are currently online.</p>
+{include file="templates/header.html" title="authentication server"}
+<p>{"The network currently has"|_} {$num_valid_users} {"valid users"|_}. {$num_online_users} {"user(s) are currently online"|_}.</p>
 <ul>
-<li><a href='hotspot_status.php'>Deployed HotSpots status with coordinates</a></li>
-<li><a href='node_list.php'>Full node technical status (includes non-deployed nodes)</a></li>
-<li><a href='user_management/index.php'>Personal user management</a></li>
-<li><a href='{$smarty.const.BASE_SSL_PATH}admin/index.php'>Administration</a></li>
+<li><a href='hotspot_status.php'>{"Deployed HotSpots status with coordinates"|_}</a></li>
+<li><a href='node_list.php'>{"Full node technical status (includes non-deployed nodes)"|_}</a></li>
+<li><a href='user_management/index.php'>{"Personal user management"|_}</a></li>
+<li><a href='{$smarty.const.BASE_SSL_PATH}admin/index.php'>{"Administration"|_}</a></li>
 </ul>
-</div>

@@ -29,26 +29,25 @@ require_once BASEPATH.'classes/Style.php';
 require_once BASEPATH.'classes/Statistics.php';
 require_once BASEPATH.'classes/SmartyWifidog.php';
 
-
-if(!empty($_REQUEST['format']))
-  {
-    $format = $_REQUEST['format'];
-  }
- else
-   {
-     $format = null;
-   }
-$style = new Style();
+$smarty = new SmartyWifidog;
+$session = new Session();
 $stats = new Statistics();
+
+include BASEPATH.'include/language.php';
+
+if(!empty($_REQUEST['format'])) {
+    $format = $_REQUEST['format'];
+} else {
+    $format = null;
+}
 
 $db->ExecSql("SELECT *, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, EXTRACT(epoch FROM creation_date) as creation_date_epoch, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up FROM nodes WHERE node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE' ORDER BY creation_date", $node_results, false);
 
-if($format=='RSS')
-  {
-     Header("Cache-control: private, no-cache, must-revalidate");
-     Header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); # Past date
-     Header("Pragma: no-cache");
-     Header("Content-Type: text/xml; charset=UTF-8");
+if ($format == 'RSS') {
+    Header("Cache-control: private, no-cache, must-revalidate");
+    Header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); # Past date
+    Header("Pragma: no-cache");
+    Header("Content-Type: text/xml; charset=UTF-8");
 
     $xmldoc = new DOMDocument();
     $xmldoc->formatOutput = true;
@@ -270,32 +269,18 @@ $i=0;
     $pubDate->appendChild($textnode);
 
       /* source */
-
-
     }
 
     echo $xmldoc->saveXML();
     //$style=new Style();
     //echo $style->GetFooter(true,true);
+} else {
+    foreach($node_results as $node_row) {
+        $node_row['num_online_users'] = $stats->getNumOnlineUsers($node_row['node_id']);
+        $smarty->append("nodes", $node_row);
+    }
 
-		
-  }
- else
-   {
-     $smarty = new SmartyWifidog;
-     $smarty->SetTemplateDir('templates/');
-
-     foreach($node_results as $node_row) {
-       $node_row['duration'] = $db->GetDurationArrayFromIntervalStr($node_row['since_last_heartbeat']);
-       $node_row['num_online_users'] = $stats->getNumOnlineUsers($node_row['node_id']);
-       $smarty->append("nodes", $node_row);
-     }
-     $smarty->assign("nodes_count", count($node_results));
-     $smarty->assign("rss_format_url", 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'].'?format=RSS');
-     echo $style->GetHeader(HOTSPOT_NETWORK_NAME.' hotspot status');
-     $smarty->display("hotspot_status.html");
-     echo $style->GetFooter();
-
-   }
-
+    $smarty->assign("title", "hotspot_status");
+    $smarty->display("templates/hotspot_status.html");
+}
 ?>

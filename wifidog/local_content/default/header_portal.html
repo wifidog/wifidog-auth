@@ -1,0 +1,20 @@
+<!--portal page EN - $Id$ -->
+<div id='navLeft'>
+<p>{"Online at this hotspot"|_}:</p>
+<ul>
+{foreach from=$online_users item=user_info}
+<li>{$user_info.user_id}</li>
+{/foreach}
+</ul>
+{include file='templates/lang_menu.html'}
+{include file='templates/user_management_menu.html'}
+</div>
+
+<div id='head'>
+</div>
+
+<div id='login'>
+<p>{"Go to the site I originally requested"|_}: <a href='{$original_url_requested}'>{$original_url_requested}</a></p>
+</div>
+
+<div id='content'>

@@ -1,4 +1,7 @@
 # $Header$
+2004-01-12 Philippe April <isf_lists@philippeapril.com>
+	* i18n and smarty'ized parts
+
 2004-01-11 Benoit Grégoire  <bock@step.polymtl.ca>
 	* INSTALL: Mandate PHP5
 	* wifidog/hotspot_status.php: Allow export of the list as a RSS feed

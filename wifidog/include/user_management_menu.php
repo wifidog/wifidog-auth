@@ -28,11 +28,11 @@ function get_user_management_menu()
 
   //$retval .= "<div class='menu'>\n";
 
-  $retval .= "<p>Find more HotSpots</p>\n";
+  $retval .= "<p>"._('Find more HotSpots')."</p>\n";
   $retval .= "<ul>\n";
-   $retval .= "<li><a href='".BASE_URL_PATH."".HOTSPOT_STATUS_PAGE."'>"._('List of all HotSpots')."</a></li>\n"; 
+  $retval .= "<li><a href='".BASE_URL_PATH."".HOTSPOT_STATUS_PAGE."'>"._('List of all HotSpots')."</a></li>\n"; 
   $retval .= "</ul>\n";
-  $retval .= "<p>User management</p>\n";
+  $retval .= "<p>"._('User management')."</p>\n";
   $retval .= "<ul>\n";
 
     $retval .= "<li><a href='".BASE_SSL_PATH."".USER_MANAGEMENT_PAGE."?action=register_new_account_form'>"._('Create new account')."</a></li>\n"; 
@@ -42,7 +42,7 @@ function get_user_management_menu()
     $retval .= "<li><a href='".BASE_SSL_PATH."".USER_MANAGEMENT_PAGE."?action=change_password_form'>"._('Change password')."</a></li>\n"; 
  
   $retval .= "</ul>\n";
-  $retval .= "<p class='sidenote'>"._("Accounts on ".HOTSPOT_NETWORK_NAME." are and will remain <emp>totally free</emp>, use the left menu to create a new one or recover a lost username or password.")."</p>\n";
+  $retval .= "<p class='sidenote'>"._("Accounts on ").HOTSPOT_NETWORK_NAME._(" are and will remain <emp>totally free</emp>, use the left menu to create a new one or recover a lost username or password.")."</p>\n";
   $retval .= "<p class='sidenote'>"._("Please report any problem or interruption in our service to:")." <a href='mailto:".TECH_SUPPORT_EMAIL."'>".TECH_SUPPORT_EMAIL."</a></p>\n";
   //$retval .= "</div>\n";
   return $retval;

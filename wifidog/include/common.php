@@ -2,6 +2,7 @@
 error_reporting(E_ALL);
 require_once BASEPATH.'config.php';
 require_once BASEPATH.'classes/AbstractDb.php';
+require_once BASEPATH.'classes/Session.php';
 
 global $db;
 $db = new AbstractDb();
@@ -23,6 +24,10 @@ if(!function_exists ('gettext'))
 else
   {
     define('GETTEXT_AVAILABLE', true);
+    setlocale(LC_ALL, DEFAULT_LANG);
+    bindtextdomain('messages', BASEPATH.'/locale');
+    bind_textdomain_codeset('messages', 'UTF-8');
+    textDomain('messages'); 
   }
 
 /* NEVER edit these, as they mush match the C code of the gateway */
@@ -60,6 +65,19 @@ define('ONLINE_STATUS_OFFLINE',	2);
 define('SESS_USERNAME_VAR', 'SESS_USERNAME');
 define('SESS_PASSWORD_HASH_VAR', 'SESS_PASSWORD_HASH');
 define('SESS_ORIGINAL_URL_VAR', 'SESS_ORIGINAL_URL');
+define('SESS_LANGUAGE_VAR', 'SESS_LANGUAGE');
+
+/* Languages and sessions */
+$lang_ids = array(
+        "fr_FR",
+        "en_US"
+    );
+$lang_names = array(
+        "Fran&ccedil;ais",
+        "English"
+    );
+
+/* End */
 
 /* This section deals with PATHs */
 define('BASE_NON_SSL_PATH', 'http://' . $_SERVER['HTTP_HOST'] . SYSTEM_PATH);

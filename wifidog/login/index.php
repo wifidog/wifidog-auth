@@ -25,10 +25,13 @@
    */
 define('BASEPATH','../');
 require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/Style.php';//Required to write http headers
 require_once BASEPATH.'classes/SmartyWifidog.php';
-require_once (BASEPATH.'include/user_management_menu.php');
 require_once BASEPATH.'classes/Security.php';
+
+$smarty = new SmartyWifidog;
+$session = new Session;
+
+include BASEPATH.'include/language.php';
 
 $login_successfull = false;
 $login_failed_message = '';
@@ -38,7 +41,7 @@ $previous_password = '';
 if (!empty($_REQUEST['url']))
   {
     $session = new Session();
-    $session->set(SESS_ORIGINAL_URL_VAR,$_REQUEST['url']);
+    $session->set(SESS_ORIGINAL_URL_VAR, $_REQUEST['url']);
   }
 
 if (!empty($_REQUEST['user']) && !empty($_REQUEST['pass'])) 
@@ -94,8 +97,8 @@ if (!empty($_REQUEST['user']) && !empty($_REQUEST['pass']))
 
 if($login_successfull==false)
   {
-    $smarty = new SmartyWifidog;
-    $smarty->assign("user_management_menu", get_user_management_menu());
+    $smarty->assign("lang_menu", "templates/lang_menu.html");
+    $smarty->assign("user_management_menu", "templates/user_management_menu.html");
     $smarty->assign('previous_username',$previous_username);
     $smarty->assign('previous_password',$previous_password);
     $smarty->assign('login_failed_message',$login_failed_message);
@@ -105,6 +108,9 @@ if($login_successfull==false)
     
     //$user_management_url = BASE_URL_PATH."user_management/";
 
+    $smarty->display(DEFAULT_CONTENT_SMARTY_PATH."header.html");
+    $smarty->display(DEFAULT_CONTENT_SMARTY_PATH."header_login.html");
     $smarty->displayLocalContent(LOGIN_PAGE_NAME);
+    $smarty->display(DEFAULT_CONTENT_SMARTY_PATH."footer.html");
   }
 ?>

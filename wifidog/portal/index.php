@@ -36,6 +36,9 @@ if(CONF_USE_CRON_FOR_DB_CLEANUP == false)
   }
 
 $smarty = new SmartyWifidog;
+$session = new Session;
+
+include BASEPATH.'include/language.php';
 
 $portal_template = $_REQUEST['gw_id'] . ".html";
 $node_id = $db->EscapeString($_REQUEST['gw_id']);
@@ -144,20 +147,19 @@ if(RSS_SUPPORT)
     $smarty->assign("hotspot_rss_html", $hotspot_rss_html);
     //   error_reporting($old_error_level);
   }
-$smarty->assign("user_management_menu", get_user_management_menu());
+
 $smarty->assign("user_management_url", BASE_SSL_PATH.USER_MANAGEMENT_PAGE);
+if (isset($session)) {
+    $smarty->assign("original_url_requested", $session->get(SESS_ORIGINAL_URL_VAR));
+}
 
-$session = new Session();
-$smarty->assign("original_url_requested",$session->get(SESS_ORIGINAL_URL_VAR));
-
-
-if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.PORTAL_PAGE_NAME))
-  {
+$smarty->display(DEFAULT_CONTENT_SMARTY_PATH."header.html");
+$smarty->display(DEFAULT_CONTENT_SMARTY_PATH."header_portal.html");
+if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.PORTAL_PAGE_NAME)) {
     $smarty->display(NODE_CONTENT_SMARTY_PATH.PORTAL_PAGE_NAME);
-  }
- else
-   {
-     $smarty->display(DEFAULT_CONTENT_SMARTY_PATH.PORTAL_PAGE_NAME);
-   }
-
+} else {
+    $smarty->display(DEFAULT_CONTENT_SMARTY_PATH.PORTAL_PAGE_NAME);
+}
+$smarty->display(DEFAULT_CONTENT_SMARTY_PATH."footer_portal.html");
+$smarty->display(DEFAULT_CONTENT_SMARTY_PATH."footer.html");
 ?>

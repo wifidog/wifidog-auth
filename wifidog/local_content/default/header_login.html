@@ -1,0 +1,24 @@
+<div id='head'>
+<h1>Greetings! Welcome to {$hotspot_name}, a {$hotspot_network_name} free HotSpot</h1>
+</div>
+
+<div id="login">
+<form method="post">
+<input type="hidden" name="gw_address" value="{$gw_address}">
+<input type="hidden" name="gw_port" value="{$gw_port}">
+<input type="hidden" name="gw_id" value="{$gw_id}">
+<p><span class=warning>{$login_failed_message}</span>
+{"Username (or email)"|_}:
+<input type="text" name="user" size='12' value="{$previous_username}">
+{"Password"|_}:
+<input type="password" name="pass" size='12' value="{$previous_password}">
+<input type="submit" value='Login'></p>
+</form>
+</div>
+      
+<div id='navLeft'>
+{include file='templates/lang_menu.html'}
+{include file='templates/user_management_menu.html'}
+</div>
+
+<div id='content'>

@@ -25,15 +25,14 @@
 
 define('BASEPATH','./');
 require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/Style.php';
 require_once BASEPATH.'classes/Statistics.php';
 require_once BASEPATH.'classes/SmartyWifidog.php';
 
 $smarty = new SmartyWifidog;
-$smarty->SetTemplateDir('templates/');
-
-$style = new Style();
+$session = new Session();
 $stats = new Statistics();
+
+include BASEPATH.'include/language.php';
 
 $db->ExecSql("SELECT node_id, name, last_heartbeat_user_agent, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up, creation_date FROM nodes ORDER BY node_id", $node_results, false);
 
@@ -43,7 +42,5 @@ foreach($node_results as $node_row) {
     $smarty->append("nodes", $node_row);
 }
 
-echo $style->GetHeader(HOTSPOT_NETWORK_NAME.' node list');
-$smarty->display("node_list.html");
-echo $style->GetFooter();
+$smarty->display("templates/node_list.html");
 ?>

@@ -49,6 +49,8 @@ class SmartyWifidog extends Smarty {
         $this->compile_dir = BASEPATH.'tmp/smarty/templates_c/';
         $this->config_dir = BASEPATH.'tmp/smarty/configs/';
         $this->cache_dir = BASEPATH.'tmp/smarty/cache/';
+
+        $this->register_modifier("_","_");
         
         $this->caching = false;
         $this->assign('app_name','Wifidog auth server');
@@ -61,6 +63,18 @@ class SmartyWifidog extends Smarty {
 	  {
 	    $this->assign('header_file',DEFAULT_CONTENT_SMARTY_PATH.PAGE_HEADER_NAME);
 	  }
+
+    if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.PORTAL_PAGE_NAME)) {
+        $this->assign('portal_page', NODE_CONTENT_SMARTY_PATH.PORTAL_PAGE_NAME);
+    } else {
+        $this->assign('portal_page', DEFAULT_CONTENT_SMARTY_PATH.PORTAL_PAGE_NAME);
+    }
+
+    if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.PORTAL_PAGE_NAME)) {
+        $this->assign('login_page', NODE_CONTENT_SMARTY_PATH.LOGIN_PAGE_NAME);
+    } else {
+        $this->assign('login_page', DEFAULT_CONTENT_SMARTY_PATH.LOGIN_PAGE_NAME);
+    }
 	
 	if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.PAGE_FOOTER_NAME))
 	  {
