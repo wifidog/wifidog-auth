@@ -77,13 +77,14 @@ if (!empty($_REQUEST['user_id'])) {
             ));
     }
 
-    $db->ExecSql("SELECT user_id,email,reg_date FROM users ORDER BY $sort $direction LIMIT $per_page OFFSET $offset", $users_res);
+    $db->ExecSql("SELECT user_id,email,reg_date,account_status FROM users ORDER BY $sort $direction LIMIT $per_page OFFSET $offset", $users_res);
     if ($users_res) {
 	    $smarty->assign("users_array", $users_res);
     } else {
         $smarty->assign("error", _('Internal error.'));
     }
 
+    $smarty->assign("account_status_to_text", $account_status_to_text);
     $smarty->display("admin/templates/user_log.html");
 }
 ?>
