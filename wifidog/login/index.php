@@ -78,7 +78,7 @@ if (!empty($_REQUEST['username']) && !empty($_REQUEST['password'])) {
 if (isset($_REQUEST['gw_id'])) {
     $smarty->assign("gw_id", $_REQUEST['gw_id']);
 
-    $node = Node::getObject($db->EscapeString(CURRENT_NODE_ID));
+    $node = Node::getNode($db->EscapeString(CURRENT_NODE_ID));
     if ($node == null) {
         $smarty->display("templates/message_unknown_hotspot.html");
         exit;

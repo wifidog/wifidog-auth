@@ -33,16 +33,9 @@
 */
 
 define('BASEPATH','../');
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/Style.php';
-require_once BASEPATH.'classes/Security.php';
-require_once BASEPATH.'classes/Session.php';
-
-$session  = new Session();
-$security = new Security();
-$smarty   = new SmartyWifidog;
-
-include BASEPATH.'include/language.php';
+require_once 'admin_common.php';
+require_once BASEPATH.'classes/Node.php';
+require_once BASEPATH.'classes/User.php';
 
 $user_id = $session->get(SESS_USERNAME_VAR);
 $smarty->assign("user_id", $user_id); // DEBUG

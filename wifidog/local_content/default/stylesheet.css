@@ -152,4 +152,8 @@ A:visited { font-size: 85% }
 #user_stats td.status { width: 15em; text-align: left; font-size: 9pt; }
 #user_stats a { color: #000000; }
 
+#std_table table { border: 1px solid gray; }
+#std_table th { font-size: 14pt; background-color: #e1f5da;}
+#std_table td.item { font-weight: bold; }
+
 {/literal}

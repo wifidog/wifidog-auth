@@ -26,35 +26,48 @@ function validateUsers() {
 {/literal}
 
 <form method="post" name="auth">
-  <table id="node_list">
+<input type="hidden" name="action" value="">
+<input type="hidden" name="node_id" value="{$node_id}">
+  <div id="std_table">
+  <table>
     <thead>
     <tr>
-      <th  colspan="6">Configurations of all nodes of the {$hotspot_network_name} network</th>
-    </tr>
-    <tr>
-      <th >User ID</th>
-      <th >Action</th>
+      <th>{"Administrators"|_}</th>
+      <th>{"Action"|_}</th>
     </tr>
     </thead>
 
 {section name=owner loop=$owner_list}
     <tr>
-      <td >{$owner_list[owner].user_id}</td>
-      <td ><a href="{$smarty.const.BASE_SSL_PATH}admin/hotspot_owner.php?node_id={$node_id}&owner_user_id={$owner_list[owner].user_id}&action=del_owner"><input type="button" value="Delete" onclick="javascript: return confirm('Are you sure you want to delete {$owner_list[owner].user_id} ?');"></a></td>
+      <td>{$owner_list[owner].user_id}</td>
+      <td><a href="{$smarty.const.BASE_SSL_PATH}admin/hotspot_owner.php?node_id={$node_id}&owner_user_id={$owner_list[owner].user_id}&action=del_owner"><input type="button" value="Delete" onclick="javascript: return confirm('Are you sure you want to delete {$owner_list[owner].user_id} ?');"></a></td>
     </tr>
 {/section}
 
-    <tr>
-      <td  colspan="4">
-        <input type="hidden" name="action" value="">
-        <input type="hidden" name="node_id" value="{$node_id}">
-        <input type="text" name="owner_user_id">&nbsp;
-        <input type="submit" value="{"Add a new node owner"|_}" onclick="return validateUsers();">
-      </td>
-    </tr>
   </table>
+  </div>
+  <br>
+  
+  <div id="std_table">
+  <table>
+  <thead>
+    <tr>
+      <th colspan="3">{"Give a user rights to administer this node"|_}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="item">{"User ID"|_}:</td>
+      <td><input type="text" name="owner_user_id"></td>
+      <td><input type="submit" value="{"Add"|_}" onclick="return validateUsers();"></td>
+    </tr>
+  </tbody>
+  </table>
+  </div>
 
-<p class="warning">{$error_message}</p>
+<div class="warning">
+<p>{$error_message}</p>
+</div>
 
 </form>
 

@@ -4,11 +4,10 @@
 
 <form method="post" name="auth">
 
-<table id="node_list">
+<div id="std_table">
+<h2>{"Configurations of all nodes of the"|_} {$smarty.const.HOTSPOT_NETWORK_NAME} {"network"|_}</h2>
+<table>
 <thead>
-<tr>
-    <th colspan="6">{"Configurations of all nodes of the"|_} {$smarty.const.HOTSPOT_NETWORK_NAME} {"network"|_}</th> 
-</tr>
 <tr>
     <th >{"Id"|_}</th>
     <th >{"Name"|_}</th>
@@ -19,10 +18,10 @@
 
 {section name=node loop=$nodes}
 <tr>
-    <td >{$nodes[node].node_id}</td>
-    <td >{$nodes[node].name}</td>
-    <td >{$nodes[node].creation_date}</td>
-    <td >
+    <td>{$nodes[node].node_id}</td>
+    <td>{$nodes[node].name}</td>
+    <td>{$nodes[node].creation_date}</td>
+    <td>
         <a href="{$smarty.const.BASE_SSL_PATH}admin/hotspot.php?node_id={$nodes[node].node_id}&action=edit_node"><input type="button" value="{"Edit"|_}"></a>&nbsp;
         <a href="{$smarty.const.BASE_SSL_PATH}admin/hotspot_owner.php?node_id={$nodes[node].node_id}"><input type="button" value="{"Owner"|_}"></a>&nbsp;
         <a href="{$smarty.const.BASE_SSL_PATH}admin/hotspot.php?node_id={$nodes[node].node_id}&action=del_node"><input type="button" value="{"Delete"|_}" onclick="javascript: return confirm('Are you sure you want to delete {$nodes[node].name} ?');"></a>
@@ -36,6 +35,7 @@
     </td>
 </tr>
 </table>
+</div>
 
 </form>
 

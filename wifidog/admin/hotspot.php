@@ -25,6 +25,7 @@
 define('BASEPATH','../');
 require_once 'admin_common.php';
 require_once BASEPATH.'classes/Node.php';
+require_once BASEPATH.'classes/User.php';
 
 $user_id = $session->get(SESS_USERNAME_VAR);
 $smarty->assign("user_id", $user_id); // DEBUG
@@ -32,21 +33,32 @@ $smarty->assign("user_id", $user_id); // DEBUG
 empty($_REQUEST['action'])  ? $action  = '' : $action  = $_REQUEST['action'];
 empty($_REQUEST['node_id']) ? $node_id = '' : $node_id = $_REQUEST['node_id'];
 
-if ($action=='edit_node') { // Allow node creation or node edition
-    $smarty->assign("title", _("Edit a hotspot with"));
+if ($action == 'edit_node') { // Allow node creation or node edition
+    $smarty->assign("title", _("Edit a hotspot"));
     
-    if ("$node_id" != "new") { // Node creation
+    if ($node_id != "new") { // Node creation
         $node = Node::getNode($node_id);
     }
 
-    $smarty->register_object("node", $node);
-    $smarty->assign("user_id", $user_id);
-    $smarty->assign("node_id", $node_id);
-    $smarty->assign('node_deployment_status', Node::getAllDeploymentStatus());
+    $smarty->assign('node_info', array(
+        'id'                     => $node->getID(),
+        'name'                   => $node->getName(),
+        'rss_url'                => $node->getRSSURL(),
+        'home_page_url'          => $node->getHomePageURL(),
+        'description'            => $node->getDescription(),
+        'map_url'                => $node->getMapURL(),
+        'street_address'         => $node->getAddress(),
+        'public_phone_number'    => $node->getTelephone(),
+        'public_email'           => $node->getEmail(),
+        'mass_transit_info'      => $node->getTransitInfo(),
+    ));
+    $smarty->assign('node_deployment_status', $node->getDeploymentStatus());
+    $smarty->assign('node_id', $node->getID());
+    $smarty->assign('all_deployment_status', Node::getAllDeploymentStatus());
 
-    $smarty->display("admin/templates/hotspot_edit.html");
+    $smarty->display('admin/templates/hotspot_edit.html');
 
-} elseif ($action=='add_node') { // Display hotspot creation form
+} else if ($action == 'add_node') { // Display hotspot creation form
     /* max() + 1 doesn't work well when max() returns a String
     if ("$node_id" == "new") { // Allow user to get a valide node_id
         $db->ExecSqlUniqueRes("SELECT max(node_id) + 1 FROM nodes", $new_node, false);
@@ -56,24 +68,30 @@ if ($action=='edit_node') { // Allow node creation or node edition
     }
     */
 
-    $smarty->assign("title", _("Add a new hotspot with"));
-    $smarty->assign("node_id", $node_id);
-    $smarty->assign('node_deployment_status', Node::getAllDeploymentStatus());
-    $smarty->display("admin/templates/hotspot_edit.html");
+    $smarty->assign('title', _('Add a new hotspot'));
+    $smarty->assign('all_deployment_status', Node::getAllDeploymentStatus());
+    $smarty->display('admin/templates/hotspot_edit.html');
 
-} elseif ($action=='owner') { // Display hotspot owner list and add form
-    $smarty->assign("title", "Owner hotspot with");
+} else if ($action == 'owner') { // Display hotspot owner list and add form
+    $smarty->assign('title', _('Owner hotspot with'));
     $db->ExecSql("SELECT user_id FROM node_owners WHERE node_id='$node_id'", $node_owner_results);
 
-    $smarty->assign('owner_list', $node_owner_results);
+    try {
+        $node = Node::getNode($node_id);
+        $smarty->assign('node_id', $node->getName());
+        $smarty->assign('owner_list', $node->getOwners());
+        $smarty->display('admin/templates/hotspot_owner.html');
+    } catch (Exception $e) {
+        echo $e->getMessage();
+        exit;
+    }
+
     //foreach($node_owner_results as $node_owner_row) {
     //    $smarty->append("owner_list", $node_owner_row);
     //}
   
-    $smarty->assign("node_id", $node_id);
-    $smarty->display("admin/templates/hotspot_owner.html");
 } else {
-    if ($action == 'update_node' || $action == 'add_new_node') { // Hotspot DB update or new hotspot creation
+    if ($action == 'update_node' || $action == 'add_new_node') {
         $new_node_id            = $_REQUEST['new_node_id'];
         $name                   = $_REQUEST['name'];
         $rss_url                = $_REQUEST['rss_url'];
@@ -86,57 +104,78 @@ if ($action=='edit_node') { // Allow node creation or node edition
         $mass_transit_info      = $_REQUEST['mass_transit_info'];
         $node_deployment_status = $_REQUEST['node_deployment_status'];
 
-        if ($action == 'add_new_node') { // SQL insert query for adding new node
-            
-            $sql_successful = $db->ExecSqlUpdate("INSERT INTO nodes (node_id, name, rss_url, creation_date, home_page_url, description, map_url, street_address, public_phone_number, public_email, mass_transit_info, node_deployment_status) VALUES ('$new_node_id','$name','$rss_url',NOW(),'$home_page_url','$description','$map_url','$street_address','$public_phone_number','$public_email','$mass_transit_info','$node_deployment_status')");
+        switch ($action) {
+            case 'add_new_node':
+                try {
+                    $node = Node::createNode(
+                            $new_node_id,
+                            $name,
+                            $rss_url,
+                            $home_page_url,
+                            $description,
+                            $map_url,
+                            $street_address,
+                            $public_phone_number,
+                            $public_email,
+                            $mass_transit_info,
+                            $node_deployment_status
+                        );
+                } catch (Exception $e) {
+                    echo '<p class="warning">'.$e->getMessage().'</p>'; 
+                }
+                break;
 
-        } elseif ($action == 'update_node') { // SQL update query for updating old node
-            $sql_successful = $db->ExecSqlUpdate("UPDATE nodes SET node_id='$new_node_id',name='$name',rss_url='$rss_url',home_page_url='$home_page_url',description='$description',map_url='$map_url',street_address='$street_address',public_phone_number='$public_phone_number',public_email='$public_email',mass_transit_info='$mass_transit_info',node_deployment_status='$node_deployment_status' WHERE node_id='$node_id'");
-            // NOTE IMPORTANTE : Penser de mettre a jour les node_owners d'un node_id modifie
-            // NOTE IMPORTANTE : Penser renommer le repertoire de l'ancien node_id vers le nouveau dans local_content 
-        } else { 
-          echo '<p class="warning">Unexpected results</p>\n'; 
+            case 'update_node':
+                $sql_successful = $db->ExecSqlUpdate("UPDATE nodes SET node_id='$new_node_id',name='$name',rss_url='$rss_url',home_page_url='$home_page_url',description='$description',map_url='$map_url',street_address='$street_address',public_phone_number='$public_phone_number',public_email='$public_email',mass_transit_info='$mass_transit_info',node_deployment_status='$node_deployment_status' WHERE node_id='$node_id'");
+                break;
+                /*
+                NOTE IMPORTANTE : Penser de mettre a jour les node_owners d'un node_id modifie
+                NOTE IMPORTANTE : Penser renommer le repertoire de l'ancien node_id vers le nouveau dans local_content 
+                */
+
+            default:
+                echo '<p class="warning">Unexpected results</p>'; 
+                exit;
+                break;
         }
 
-        if (!$sql_successful) {
-            echo '<p class="warning">' . _('Internal error.') . '</p>\n';
-        }
     } elseif ($action == 'del_node') {
-        $db->ExecSqlUpdate("DELETE FROM nodes WHERE node_id='$node_id'", false);
-        $db->ExecSqlUpdate("DELETE FROM node_owners WHERE node_id='$node_id'", false);
-        // NOTE IMPORTANTE : Penser d'effacer le contenu du node efface dans local_content/$node_id
-    } elseif ("$action" == "add_owner") { // Add new owner in DB
-        // TODO: VALIDER les champs de donnees node_id et user_id
-        $owner_user_id = $_REQUEST['owner_user_id'];
-        $sql_successful = $db->ExecSqlUniqueRes("SELECT user_id FROM users WHERE user_id='$owner_user_id'", $user_id_result, true);
-        $valid_user_id = array_shift($user_id_result);
-        if (!empty($valid_user_id)) { // Valide user_id
-            $sql_successful = $db->ExecSqlUpdate("INSERT INTO node_owners (node_id, user_id) VALUES ('$node_id','$owner_user_id')", true);
-            if (!$sql_successful) {
-                echo '<p class="warning">' . _('Internal error.') . '</p>\n';
-            }
-        } else {
-            echo '<p class="warning">' . _('Invalid user.') . '</p>\n';
+        try {
+            Node::deleteNode($node_id);
+        } catch (Exception $e) {
+            echo '<p class="warning">'.$e->getMessage().'</p>'; 
         }
-    } elseif ("$action" == 'del_owner') {
-      $db->ExecSqlUpdate("DELETE FROM node_owners WHERE node_id='$node_id' AND user_id='$user_id'");
+        // NOTE IMPORTANTE : Penser d'effacer le contenu du node efface dans local_content/$node_id
+    } elseif ($action == 'add_owner') {
+        try {
+            if (User::UserExists($_REQUEST['owner_user_id'])) {
+                $node = Node::getNode($_REQUEST['node_id']);
+                $node->addOwner($_REQUEST['owner_user_id']);
+            } else {
+                throw new Exception(_('Invalid user!'));
+            }
+        } catch (Exception $e) {
+            echo '<p class="warning">' . $e->getMessage() . '</p>';
+        }
+    } elseif ($action == 'del_owner') {
+        try {
+            $node = Node::getNode($_REQUEST['node_id']);
+            $node->removeOwner($_REQUEST['owner_user_id']);
+        } catch (Exception $e) {
+            echo '<p class="warning">' . $e->getMessage() . '</p>';
+        }
     }
 
     //$db->ExecSql("SELECT node_id, name, creation_date from nodes", $node_results, false);
-
-//$node = Node::GetObject('default');
-
-    //if (is_array($node_results)) { // If no row return, $node_results will be NULL
+    //$node = Node::GetObject('default');
+    //if (is_array($node_results)) // If no row return, $node_results will be NULL
     $nodes = Node::getAllNodes();
     if (is_array($nodes)) {
         $smarty->assign('nodes', $nodes);
-        //foreach($node_results as $node_row) {
-        //    $smarty->append("nodes", $node_row);
-        //}
     } else {
-        $smarty->assign("error_message", _("There is not hotspot for this network"));
+        $smarty->assign('error_message', _('There are no hotspot on this network.'));
     }
-    $smarty->display("admin/templates/hotspot_display.html");
+    $smarty->display('admin/templates/hotspot_display.html');
 }
 
 ?>

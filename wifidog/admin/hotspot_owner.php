@@ -26,6 +26,8 @@
 // TODO : Permettre la recherche de users directement dans l'interface
 define('BASEPATH','../');
 require_once 'admin_common.php';
+require_once BASEPATH.'classes/Node.php';
+require_once BASEPATH.'classes/User.php';
 
 $user_id = $session->get(SESS_USERNAME_VAR);
 $smarty->assign("user_id", $user_id); // DEBUG
@@ -34,37 +36,37 @@ empty($_REQUEST['action'])        ? $action        = '' : $action        = $_REQ
 empty($_REQUEST['node_id'])       ? $node_id       = '' : $node_id       = $_REQUEST['node_id'];
 empty($_REQUEST['owner_user_id']) ? $owner_user_id = '' : $owner_user_id = $_REQUEST['owner_user_id'];
 
-if ("$action" == "add_owner") { // Add new owner in DB
-    // TODO: VALIDER les champs de donnees node_id et user_id
-    $sql_successful = $db->ExecSqlUniqueRes("SELECT user_id FROM users WHERE user_id='$owner_user_id'", $user_id_result);
-    
-    if (is_array($user_id_result)) { // If it's an array a valide user_id was return
-        $valid_user_id = array_shift($user_id_result);
-        $sql_successful = $db->ExecSqlUpdate("INSERT INTO node_owners (node_id, user_id) VALUES ('$node_id','$owner_user_id')");
-        if (!$sql_successful)
-            $smarty->assign("error_message", _("Internal error"));
-    } else {
-        $smarty->assign("error_message", _("Invalid user id ") . "($owner_user_id)");
+$node = Node::getNode($_REQUEST['node_id']);
+
+if ($action) {
+    switch ($action) {
+        case 'add_owner':
+        try {
+                if (User::UserExists($_REQUEST['owner_user_id'])) {
+                    $node->addOwner($_REQUEST['owner_user_id']);
+                } else {
+                    throw new Exception(_('Invalid user!'));
+                }
+            } catch (Exception $e) {
+                echo '<p class="warning">' . $e->getMessage() . '</p>';
+            }
+            break;
+        case 'del_owner':
+            try {
+                $node->removeOwner($_REQUEST['owner_user_id']);
+            } catch (Exception $e) {
+                echo '<p class="warning">' . $e->getMessage() . '</p>';
+            }
+            break;
+
+        default:
+            echo '<p class="warning">Unknown action</p>';
+            break;
     }
-} elseif ("$action" == "del_owner") {
-    $db->ExecSqlUpdate("DELETE FROM node_owners WHERE node_id='$node_id' AND user_id='$owner_user_id'");
-    // Maybe print a success action message (like error_message, but not in red)
 }
 
-$smarty->assign("title", "Owner hotspot with");
-$db->ExecSql("SELECT user_id FROM node_owners WHERE node_id='$node_id'", $node_owner_results);
-
-$tmpArray = array();
-if (is_array($node_owner_results)) {
-    foreach($node_owner_results as $node_owner_row) {
-        $smarty->append("owner_list", $node_owner_row);
-        array_push($tmpArray, $node_owner_row['user_id']); // Use in javascript validation
-    }
-}
-$user_id_array = implode('","', $tmpArray);
-
-$smarty->assign("user_id_array", $user_id_array);
-$smarty->assign("node_id", $node_id);
-$smarty->display("admin/templates/hotspot_owner.html");
-
+$smarty->assign('title', _('Owner hotspot with'));
+$smarty->assign('owner_list', $node->getOwners());
+$smarty->assign('node_id', $node_id);
+$smarty->display('admin/templates/hotspot_owner.html');
 ?>

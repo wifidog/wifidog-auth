@@ -40,7 +40,7 @@ if (!isset($_REQUEST['gw_id'])) {
 $portal_template = $_REQUEST['gw_id'] . ".html";
 $node_id = $db->EscapeString($_REQUEST['gw_id']);
 
-$node = Node::getObject($node_id);
+$node = Node::getNode($node_id);
 if ($node == null) {
     $smarty->assign("gw_id", $_REQUEST['gw_id']);
     $smarty->display("templates/message_unknown_hotspot.html");
