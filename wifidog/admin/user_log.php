@@ -29,6 +29,10 @@ require_once BASEPATH.'classes/SmartyWifidog.php';
 $smarty = new SmartyWifidog;
 $smarty -> SetTemplateDir('templates/');
 
+$total = array();
+$total['incoming'] = 0;
+$total['outgoing'] = 0;
+
 if (!empty($_REQUEST['user_id']))
   {
     $db->ExecSqlUniqueRes("SELECT * FROM users WHERE user_id='$_REQUEST[user_id]'",$userinfo,false);
@@ -47,9 +51,12 @@ if (!empty($_REQUEST['user_id']))
 	  {
 	    foreach($connection_array as $connection)
 	    {
+	      $total['incoming'] += $connection['incoming'];
+              $total['outgoing'] += $connection['outgoing'];
 	      $connection['token_status_description'] = $token_to_text[$connection['token_status']];
 	      $smarty->append("connections", $connection);
 	    }
+	    $smarty->assign("total", $total);
 	  } 
 	else
 	  {
