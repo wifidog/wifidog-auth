@@ -1,5 +1,9 @@
 # $Header$
 2004-08-28 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Primitive network status available form the index page
+	* Administrative security is implemented.
+
+2004-08-28 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix big gaping security hole in login page (password would be ignored if the username was used to login)
 	* PostgreSql port
 	* Change the method to determine who is online

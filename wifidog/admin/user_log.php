@@ -25,6 +25,9 @@
 define('BASEPATH','../');
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'classes/SmartyWifidog.php';
+require_once BASEPATH.'classes/Security.php';
+$security=new Security();
+$security->requireAdmin();
 
 $smarty = new SmartyWifidog;
 $smarty -> SetTemplateDir('templates/');

@@ -25,6 +25,9 @@
 define('BASEPATH','../');
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'classes/Style.php';
+require_once BASEPATH.'classes/Security.php';
+$security=new Security();
+$security->requireAdmin();
 
 /** Affiche les informations sur le fichier envoyé par le client
  */
@@ -104,7 +107,7 @@ else if ($_REQUEST['action'] == 'upload_file')
 		  $original_username = $nocat_username;
 		}
 	      
-	      echo "<p class=info>Generating temporary user from:  $original_username; Checking duplicates</p>\n";
+	      echo "<p class=info>Generating temporary user from:  $original_username; Checking internal duplicates</p>\n";
 	      $username_modified_because_of=null;
 	      $username=$original_username;
 	      if(isset($import_user[$username]))
@@ -159,13 +162,15 @@ else if ($_REQUEST['action'] == 'upload_file')
 	      $import_user[$username]['is_rejected']=true;
 	      $import_user[$username]['reject_reason'] .= "<p class=error>"._('Sorry, the user must have a email adress.')."</p>\n";null;
 	    }
-	  
-	  $username_str = $db->EscapeString($username);
-	  $db->ExecSqlUniqueRes("SELECT user_id FROM users WHERE user_id='$username_str'", $user_info_username, false);
-	  if($user_info_username!=null)
+	  else
 	    {
-	      $import_user[$username]['is_rejected']=true;
-	      $import_user[$username]['reject_reason'] .= "<p class=error>"._('Sorry, a user account already exists with the username: ')."$username</p>\n";
+	      $username_str = $db->EscapeString($username);
+	      $db->ExecSqlUniqueRes("SELECT user_id FROM users WHERE user_id='$username_str'", $user_info_username, false);
+	      if($user_info_username!=null)
+		{
+		  $import_user[$username]['is_rejected']=true;
+		  $import_user[$username]['reject_reason'] .= "<p class=error>"._('Sorry, a user account already exists with the username: ')."$username</p>\n";
+		}
 	    }
 	  
 	  if(!empty($_REQUEST['import_confirm']) && $_REQUEST['import_confirm']=='true' && $import_user[$username]['is_rejected']==false)

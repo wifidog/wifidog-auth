@@ -27,6 +27,7 @@ define('BASEPATH','../');
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'classes/SmartyWifidog.php';
 require_once (BASEPATH.'include/user_management_menu.php');
+require_once BASEPATH.'classes/Security.php';
 
 $login_successfull = false;
 $login_failed_message = '';
@@ -35,8 +36,9 @@ $login_failed_message = '';
 //print_r($_REQUEST);
 if (isset($_REQUEST['user']) && isset($_REQUEST['pass'])) 
   {
+    $security = new Security();
     $previous_username = $db->EscapeString($_REQUEST['user']);
- $previous_password = $_REQUEST['pass'];
+    $previous_password = $_REQUEST['pass'];
     $user = $db->EscapeString($_REQUEST['user']);
     $password_hash = get_password_hash($_REQUEST['pass']);
     $db->ExecSqlUniqueRes("SELECT * FROM users WHERE (user_id='$user' OR email='$user') AND pass='$password_hash'", $user_info, false);
@@ -55,6 +57,7 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['pass']))
 	$db->ExecSqlUpdate("INSERT INTO connections (user_id, token, token_status, timestamp_in, node_id, node_ip, last_updated) VALUES ('{$user_info['user_id']}', '$token', '" . TOKEN_UNUSED . "', NOW(), '$node_id', '$node_ip', NOW())");
 	
 	$login_successfull=true;
+	$security->login($user, $password_hash);
 	header("Location: http://" . $_REQUEST['gw_address'] . ":" . $_REQUEST['gw_port'] . "/wifidog/auth?token=$token");
       }
     else
