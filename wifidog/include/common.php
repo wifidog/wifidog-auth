@@ -62,14 +62,25 @@ define('SESS_PASSWORD_HASH_VAR', 'SESS_PASSWORD_HASH');
 define('SESS_ORIGINAL_URL_VAR', 'SESS_ORIGINAL_URL');
 
 /* This section deals with PATHs */
-define('BASE_URL_PATH', 'http://' . $_SERVER['HTTP_HOST'] . SYSTEM_PATH);
+define('BASE_NON_SSL_PATH', 'http://' . $_SERVER['HTTP_HOST'] . SYSTEM_PATH);
+
 if(SSL_AVAILABLE)
   {
     define('BASE_SSL_PATH', 'https://' . $_SERVER['HTTP_HOST'] . SYSTEM_PATH);
   }
 else
   {
-    define('BASE_SSL_PATH',BASE_URL_PATH);
+    define('BASE_SSL_PATH', BASE_NON_SSL_PATH);
+  }
+  
+  /* If we actually ARE in SSL mode, make all URLS http:// to avoid security warnings. */
+if(isset($_SERVER['HTTPS']))
+  {
+  define('BASE_URL_PATH', BASE_SSL_PATH); 
+  }
+  else
+  {
+  define('BASE_URL_PATH', BASE_NON_SSL_PATH);
   }
   
 if(empty($_REQUEST['gw_id']))

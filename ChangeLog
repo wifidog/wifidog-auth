@@ -1,5 +1,7 @@
 # $Header$
 2004-01-10 Benoit Grégoire  <bock@step.polymtl.ca>
+	* include/common.php: Fix SSL security warnings.  If SSL is enabled and the page was actually served over SSL, all media in the file will be served over SSL. Add a new define (BASE_NON_SSL_PATH) to allow us to make links that break out of SSL mode.  From now on, use the self adapting BASE_URL_PATH in most circumstance, BASE_SSL_PATH to enter SSL mode, and BASE_URL_PATH to break out of it.
+2004-01-10 Benoit Grégoire  <bock@step.polymtl.ca>
 	* admin/user_stats.php: Add three top tens to the statistics:  Top ten apetite for bandwidth, top ten travelers, most addicted users.
 2004-01-04 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog/local_content/default/hotspot_logo_banner.jpg: Make it much thinner.
