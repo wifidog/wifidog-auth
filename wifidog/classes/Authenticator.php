@@ -28,11 +28,16 @@
 /** Abstract class to represent an authentication source */
 abstract class Authenticator
 {
-	protected $mAccountOrigin;
+	private $mAccountOrigin;
 
 	function __construct($account_orgin)
 	{
 		$this->mAccountOrigin = $account_orgin;
+	}
+	
+	public function getAccountOrigin()
+	{
+		return $this->mAccountOrigin; 
 	}
 
 	/** Attempts to login a user against the authentication source.  If successfull, returns a User object */

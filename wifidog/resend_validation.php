@@ -33,9 +33,11 @@ if (isset($_REQUEST["submit"])) {
         $smarty->assign("error", _("Please specify a username"));
     } else {
         try {
-        	// Get a local user
-            $user = User::getUserByUsernameAndOrigin($_REQUEST['username'], LOCAL_USER_ACCOUNT_ORIGIN);
-            $user->sendValidationEmail();
+        	// Get a list of users with this username
+            $users_list = User::getUsersByUsername($_REQUEST['username']);
+            foreach($users_list as $user)
+            	$user->sendValidationEmail();
+            	
             $smarty->assign('message', _("An email with confirmation instructions was sent to your email address."));
             $smarty->display("templates/validate.html");
             exit;

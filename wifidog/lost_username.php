@@ -33,8 +33,11 @@ if (isset($_REQUEST["submit"])) {
         if (!$_REQUEST["email"])
             throw new Exception(_("Please specify an email address"));
     
-        $user = User::getUserByEmail($_REQUEST['email']);
-        $user->sendLostUsername();
+    	// Get a list of User objects and send mail messages to them.
+        $users_list = User::getUsersByEmail($_REQUEST['email']);
+        foreach($users_list as $user)
+        	$user->sendLostUsername();
+        	
         $smarty->assign("message", _("Your username has been emailed to you."));
         $smarty->display("templates/validate.html");
         exit;

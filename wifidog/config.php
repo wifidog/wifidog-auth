@@ -6,6 +6,17 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.24  2005/03/30 20:04:42  fproulx
+ *     2005-03-30 François Proulx  <francois.proulx@gmail.com>
+ *     	* Finished RADIUS authentication and accounting
+ *     	* Accounting Unique session ID is now based on the same token we use
+ *     	* Fixed all issues with lost_username, lost_password etc...
+ *     	* User class has new static function getUsersByEmail and getUsersByUsername
+ *     	* Added translations for new features
+ *     	* Translated the validation, lost password, username e-mails
+ *     	* Tested quite a bit, this version is considered stable
+ *     	* A few examples on how set different RADIUS or local authenticators can be found in the config.php
+ *
  *     Revision 1.23  2005/03/29 22:13:27  fproulx
  *     2005-03-28 François Proulx  <francois.proulx@gmail.com>
  *     	* schema_validate.php : Modified schema : dropped e-mail + account unique index, dropped email not empty constraint
@@ -108,10 +119,10 @@ define('TECH_SUPPORT_EMAIL', 'tech@ilesansfil.org');
 define('UNKNOWN_HOSTPOT_NAME', 'Unknown HotSpot');
 
 define('VALIDATION_EMAIL_FROM_ADDRESS', 'validation@ilesansfil.org');
-define('VALIDATION_EMAIL_SUBJECT', HOTSPOT_NETWORK_NAME.' new user validation');
+define('VALIDATION_EMAIL_SUBJECT', HOTSPOT_NETWORK_NAME._(" new user validation"));
 define('VALIDATION_GRACE_TIME', 20); /**< Number of minutes after new account creation during which internet access is available to validate your account.  Once elapsed, you have to validate from home... */
-define('LOST_PASSWORD_EMAIL_SUBJECT', HOTSPOT_NETWORK_NAME.' new password request');
-define('LOST_USERNAME_EMAIL_SUBJECT', HOTSPOT_NETWORK_NAME.' lost username request');
+define('LOST_PASSWORD_EMAIL_SUBJECT', HOTSPOT_NETWORK_NAME._(" new password request"));
+define('LOST_USERNAME_EMAIL_SUBJECT', HOTSPOT_NETWORK_NAME._(" lost username request"));
 /* RSS support.  If set to true, MAGPIERSS must be installed in MAGPIE_REL_PATH */
 define('RSS_SUPPORT', true); 
 /* Normally, the database cleanup routines will be called everytime a portal page is displayed.  If you set this to true, you must set a cron job on the server which will execute the script cron/cleanup.php. */
@@ -140,20 +151,34 @@ define('UNKNOWN_HOTSPOT_RSS_URL', '');
 
 define('LOCAL_CONTENT_REL_PATH', 'local_content/');//Path to the directory containing the different node specific directories.  Relative to BASE_URL_PATH
 
-/* Authentication sources section */
- define('LOCAL_USER_ACCOUNT_ORIGIN', 'LOCAL_USER');
+// Authentication sources section
+/* The array index for the source must match the account_origin in the user table */
+
+// Local User authenticators
 require_once BASEPATH.'classes/AuthenticatorLocalUser.php';
-define('IDRC_ACCOUNT_ORIGIN', 'IDRC_RADIUS_USER');
+
+/**********************************************
+ * BIG FAT WARNING
+ * DO NOT remove this authenticator under any circumstance
+ * you SHOULD NOT change its name either
+ * The system relies heavily on its main authenticator to do
+ * multiple tasks with users...
+ * ********************************************
+ */
+define('LOCAL_USER_ACCOUNT_ORIGIN', 'LOCAL_USER');
+$AUTH_SOURCE_ARRAY[LOCAL_USER_ACCOUNT_ORIGIN]=array(
+			     'name'=>HOTSPOT_NETWORK_NAME,
+			     'authenticator'=>new AuthenticatorLocalUser(LOCAL_USER_ACCOUNT_ORIGIN));
+			     
+// RADIUS authenticators ( see AuthenticatorRadius constuctor doc for details )
+/*
 require_once BASEPATH.'classes/AuthenticatorRadius.php';
 
-/* The array index for the source must match the account_origin in the user table */
- $AUTH_SOURCE_ARRAY[LOCAL_USER_ACCOUNT_ORIGIN]=array(
-						     'name'=>HOTSPOT_NETWORK_NAME,
-						     'authenticator'=>new AuthenticatorLocalUser(LOCAL_USER_ACCOUNT_ORIGIN));
+define('IDRC_ACCOUNT_ORIGIN', 'IDRC_RADIUS_USER');
 $AUTH_SOURCE_ARRAY[IDRC_ACCOUNT_ORIGIN]=array(
-						     'name'=>"IDRC RADIUS",
-						     'authenticator'=>new AuthenticatorRadius(IDRC_ACCOUNT_ORIGIN, "localhost", 1812, 1813, "secret_key"));
-
+			     'name'=>"IDRC RADIUS Server",
+			     'authenticator'=>new AuthenticatorRadius(IDRC_ACCOUNT_ORIGIN, "localhost", 1812, 1813, "secret_key", "CHAP_MD5"));
+*/
 
 /*These are the file names of the different templates that can be put in the CONTENT_PATH/(node_id)/ folders */
 define('STYLESHEET_NAME', 'stylesheet.css');

@@ -41,7 +41,8 @@ if (isset($_REQUEST["submit"])) {
         if ($_REQUEST["newpassword"] != $_REQUEST["newpassword_again"])
             throw new Exception(_("Passwords do not match."));
 
-        $user = User::getUserById($username);
+        // Warning for now, password change only works for local users, registered through our signup process.
+        $user = User::getUserByUsernameAndOrigin($username, LOCAL_USER_ACCOUNT_ORIGIN);
         if ($user->getPasswordHash() != User::passwordHash($current_password))
             throw new Exception(_("Wrong password."));
 

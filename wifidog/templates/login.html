@@ -16,7 +16,11 @@
         	<td>
         		<select name="auth_source">
 	        	{foreach key=key item=source from=$auth_sources}
+	        		{if $auth_source == $key} 
+	        		<option SELECTED label="{$source.name}" value="{$key}">{$source.name}</option>
+	        		{else}
 	        		<option label="{$source.name}" value="{$key}">{$source.name}</option>
+	        		{/if}
 				{/foreach}
 				</select>
         	</td>

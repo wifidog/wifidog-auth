@@ -29,11 +29,11 @@ require_once (BASEPATH.'/classes/User.php');
 try {
     if (!isset($_REQUEST["token"]))
         throw new Exception(_('No token specified!'));
+        
+    if (!isset($_REQUEST["user_id"]))
+        throw new Exception(_('No user ID specified!'));
 
-    if (!isset($_REQUEST["username"]))
-        throw new Exception(_('No username specified!'));
-
-    $user = User::getUserByUsernameAndOrigin($_REQUEST['username'], LOCAL_USER_ACCOUNT_ORIGIN);
+    $user = User::getUserByID($_REQUEST['user_id']);
 
     if ($db->EscapeString($_REQUEST['token']) != $user->getValidationToken())
         throw new Exception(_('The validation token does not match the one in the database.'));

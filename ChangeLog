@@ -1,5 +1,15 @@
 # $Header$
-2005-03-28 François Proulx  <francois.proulx@gmail.com>
+2005-03-30 François Proulx  <francois.proulx@gmail.com>
+	* Finished RADIUS authentication and accounting
+	* Accounting Unique session ID is now based on the same token we use
+	* Fixed all issues with lost_username, lost_password etc...
+	* User class has new static function getUsersByEmail and getUsersByUsername
+	* Added translations for new features
+	* Translated the validation, lost password, username e-mails
+	* Tested quite a bit, this version is considered stable
+	* A few examples on how set different RADIUS or local authenticators can be found in the config.php
+	
+2005-03-29 François Proulx  <francois.proulx@gmail.com>
 	* schema_validate.php : Modified schema : dropped e-mail + account unique index, dropped email not empty constraint
 	* Schema is now at version 3
 	* Coded RADIUS authentication

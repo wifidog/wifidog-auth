@@ -36,9 +36,18 @@ if (isset($_REQUEST['submit'])) {
         $email = $db->EscapeString($_REQUEST['email']);
 
         try {
-            $username && $user = User::getUserByID($username);
-            $email && $user = User::getUserByEmail($email);
-            $user->sendLostPasswordEmail();
+        	// Get a list of users associated with either a username of an e-mail
+            $username && $users_list = User::getUsersByUsername($username);
+            $email && $users_list = User::getUsersByEmail($email);
+            
+            // In the case that both previous function calls failed to return a users list
+            // Throw an exception
+            if(!empty($users_list))
+	            foreach($users_list as $user)
+	            	$user->sendLostPasswordEmail();
+	        else
+	        	throw new Exception(_("user_id '{$object_id_str}' could not be found in the database"));
+            	
             $smarty->assign('message', _('A new password has been emailed to you.'));
             $smarty->display('templates/validate.html');
             exit;

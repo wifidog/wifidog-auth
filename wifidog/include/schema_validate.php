@@ -49,7 +49,7 @@ function validate_schema()
 	  echo "<html><head><h1>";
 	  echo _("The database schema is not up to date.  Do you want to try to update it?  This operation is irreversible.");
 	  echo "</h1><form name='login_form' method='get'>\n";
-	  echo "<input type='submit' name='submit' value='"._("Try too update database schema")."'>\n";
+	  echo "<input type='submit' name='submit' value='"._("Try to update database schema")."'>\n";
 	  echo _("Yes, I am sure:")."<input type='checkbox' name='schema_update_confirm'>\n";
 	  echo "</form>\n";
 	  echo "</html></head>";

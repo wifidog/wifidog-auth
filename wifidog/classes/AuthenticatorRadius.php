@@ -31,6 +31,7 @@
  * All rights reserved.
  */
 require_once BASEPATH.'classes/Authenticator.php';
+require_once BASEPATH.'classes/User.php';
 // Including PEAR RADIUS and CHAP MD5 interface classes
 require_once 'Auth/RADIUS.php';
 require_once 'Crypt/CHAP.php';
@@ -44,14 +45,17 @@ class AuthenticatorRadius extends Authenticator
 	private $mRadius_secret_key;
 	private $mRadius_encryption_method;
 
-	/** Returns the hash of the password suitable for storing or comparing in the database.  This hash is the same one as used in NoCat
-	 * @return The 32 character hash.
+	/**
+	 * AuthenticatorRadius constructor
+	 * @param $account_orgin : The origin of the account
+	 * @param $host : hostname of the RADIUS server
+	 * @param $auth_port : Authentication port of the RADIUS server
+	 * @param $acct_port : Accounting port of the RADIUS server
+	 * @param $secret_key : The secret key between between this client and the
+	 * server
+	 * @param $encryption_method : The encryption method choosen for the
+	 * requests
 	 */
-	public static function passwordHash($password)
-	{
-		return base64_encode(pack("H*", md5($password)));
-	}
-
 	function __construct($account_orgin, $host = "localhost", $auth_port = 1812, $acct_port = 1813, $secret_key = "", $encryption_method = "CHAP_MD5")
 	{
 		parent :: __construct($account_orgin);
@@ -78,8 +82,8 @@ class AuthenticatorRadius extends Authenticator
 		$retval = false;
 		$username = $db->EscapeString($username);
 		$password = $db->EscapeString($password);
-		// Local database password hashing is based on an empty string ( we are not storing remote pwd )
-		$password_hash = self :: passwordHash("");
+		// Local database password hashing is based on an empty string ( we do not store remote passwords )
+		$password_hash = User :: passwordHash("");
 
 		/*
 		 * Supported encryption methods are :
@@ -151,7 +155,7 @@ class AuthenticatorRadius extends Authenticator
 			{
 				// RADIUS authentication succeeded !
 				// Now checking for local copy of this user
-				$sql = "SELECT user_id FROM users WHERE (username='$username') AND account_origin='".$this->mAccountOrigin."' AND pass='$password_hash'";
+				$sql = "SELECT user_id FROM users WHERE (username='$username') AND account_origin='".$this->getAccountOrigin()."' AND pass='$password_hash'";
 				$db->ExecSqlUniqueRes($sql, $user_info, false);
 
 				if ($user_info != null)
@@ -159,7 +163,7 @@ class AuthenticatorRadius extends Authenticator
 					$user = new User($user_info['user_id']);
 					if ($user->isUserValid($errmsg))
 					{
-						$retval = & $user;
+						$retval = $user;
 						$security->login($user->getId(), $password_hash);
 						$errmsg = _("Login successfull");
 					}
@@ -173,7 +177,7 @@ class AuthenticatorRadius extends Authenticator
 				{
 					// This user has been succcessfully authenticated through remote RADIUS, but it's not yet in our local database
 					// Creating the user with a Global Unique ID, empty email and password
-					$user = User :: createUser(get_guid(), $username, $this->mAccountOrigin, "", "");
+					$user = User :: createUser(get_guid(), $username, $this->getAccountOrigin(), "", "");
 					$retval = & $user;
 					// Validate the user right away !
 					$user->setAccountStatus(ACCOUNT_STATUS_ALLOWED);
@@ -192,14 +196,14 @@ class AuthenticatorRadius extends Authenticator
 	}
 
 	/** Logs out the user */
-	function logout($info, &$errmsg = null)
+	function logout($info, & $errmsg = null)
 	{
 		// RADIUS logout actually means to stop accounting
 		return $this->acctStop($info);
 	}
 
 	/** Start accounting traffic for the user */
-	function acctStart($info, &$errmsg = null)
+	function acctStart($info, & $errmsg = null)
 	{
 		// RADIUS accounting start
 		$radius_acct = new Auth_RADIUS_Acct_Start;
@@ -208,6 +212,8 @@ class AuthenticatorRadius extends Authenticator
 		$radius_acct->username = $info['username'];
 		// Specify the way the user has been authenticated ( via RADIUS, the class did it )
 		$radius_acct->authentic = RADIUS_AUTH_RADIUS;
+		// Set the session ID to the generated token
+		$radius_acct->session_id = $info['token'];
 
 		$status = $radius_acct->start();
 		if (PEAR :: isError($status))
@@ -235,11 +241,11 @@ class AuthenticatorRadius extends Authenticator
 	}
 
 	/** Update traffic counters */
-	function acctUpdate($info, $incoming, $outgoing, &$errmsg = null)
+	function acctUpdate($info, $incoming, $outgoing, & $errmsg = null)
 	{
 		// Call generic traffic updater ( local database )
 		parent :: acctUpdate($info, $incoming, $outgoing);
-		
+
 		// RADIUS accounting ping
 		// Session is completely based on Database time
 		$session_time = strtotime($info['now']) - strtotime($info['timestamp_in']);
@@ -249,6 +255,8 @@ class AuthenticatorRadius extends Authenticator
 		// Specify the user for which accounting will be done
 		$radius_acct->username = $info['username'];
 		$racct->session_time = $session_time;
+		// Set the session ID to the generated token
+		$radius_acct->session_id = $info['token'];
 
 		$status = $radius_acct->start();
 		if (PEAR :: isError($status))
@@ -277,10 +285,10 @@ class AuthenticatorRadius extends Authenticator
 	}
 
 	/** Final update and stop accounting */
-	function acctStop($info, &$errmsg = null)
+	function acctStop($info, & $errmsg = null)
 	{
 		parent :: acctStop($info);
-		
+
 		// RADIUS accounting stop
 		// Session is completely based on Database time
 		$session_time = strtotime($info['now']) - strtotime($info['timestamp_in']);
@@ -290,6 +298,8 @@ class AuthenticatorRadius extends Authenticator
 		// Specify the user for which accounting will be done
 		$radius_acct->username = $info['username'];
 		$racct->session_time = $session_time;
+		// Set the session ID to the generated token
+		$radius_acct->session_id = $info['token'];
 
 		$status = $radius_acct->start();
 		if (PEAR :: isError($status))
@@ -301,7 +311,7 @@ class AuthenticatorRadius extends Authenticator
 		// Cause of session termination
 		$radius_acct->putAttribute(RADIUS_ACCT_TERMINATE_CAUSE, RADIUS_TERM_SESSION_TIMEOUT);
 		$result = $radius_acct->send();
-		
+
 		if (PEAR :: isError($result))
 		{
 			$errmsg = "Could not send accounting request to RADIUS server.";
@@ -321,12 +331,3 @@ class AuthenticatorRadius extends Authenticator
 
 } // End class
 ?>
-
-
-
-
-
-
-
-
-

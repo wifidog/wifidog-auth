@@ -61,6 +61,8 @@ if (!empty ($_REQUEST['username']) && !empty ($_REQUEST['password']) && !empty (
 
 // Add the auth servers list to smarty variables
 isset ($AUTH_SOURCE_ARRAY) && $smarty->assign('auth_sources', $AUTH_SOURCE_ARRAY);
+// Pass the account_origin along, if it's set
+isset ($_REQUEST["auth_source"]) && $smarty->assign('auth_source', $_REQUEST["auth_source"]);
 
 if (isset ($_REQUEST['gw_id'])) {
 	$smarty->assign("gw_id", $_REQUEST['gw_id']);
