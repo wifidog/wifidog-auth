@@ -85,7 +85,7 @@ if (isset($_REQUEST["submit"])) {
         if (User::EmailExists($email))
             throw new Exception(_("Sorry, a user account is already associated to this email address."));
 
-        $user = User::CreateUser($username, $email, $password);
+        $user = User::CreateUser(get_guid(), $username, LOCAL_USER_ACCOUNT_ORIGIN, $email, $password);
         $user->sendValidationEmail();
         $smarty->assign('message', _('An email with confirmation instructions was sent to your email address.  Your account has been granted 15 minutes of access to retrieve your email and validate your account.  You may now open a browser window and go to any remote Internet address to obtain the login page.'));
         $smarty->display("templates/validate.html");

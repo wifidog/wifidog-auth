@@ -6,6 +6,18 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.23  2005/03/29 22:13:27  fproulx
+ *     2005-03-28 François Proulx  <francois.proulx@gmail.com>
+ *     	* schema_validate.php : Modified schema : dropped e-mail + account unique index, dropped email not empty constraint
+ *     	* Schema is now at version 3
+ *     	* Coded RADIUS authentication
+ *     	* Modified templates to show a select box when more than one server is configured
+ *     	* Coded RADIUS accounting and backward compatibility accounting
+ *     	* Modified many statistics SQL queries to match new Users table
+ *     	* modified statistics templates to match user_id and account_origin
+ *     	* TODO : Fix lost_username and lost_password ( issue since we dropped the unique constraint on emails... )
+ *     	* TODO : Heavy testing possibly with remote RADIUS servers
+ *
  *     Revision 1.22  2005/03/28 19:49:52  benoitg
  *     2005-03-28 Benoit Grégoire  <bock@step.polymtl.ca>
  *     	* common.php:  Add get_guid() function
@@ -131,12 +143,16 @@ define('LOCAL_CONTENT_REL_PATH', 'local_content/');//Path to the directory conta
 /* Authentication sources section */
  define('LOCAL_USER_ACCOUNT_ORIGIN', 'LOCAL_USER');
 require_once BASEPATH.'classes/AuthenticatorLocalUser.php';
+define('IDRC_ACCOUNT_ORIGIN', 'IDRC_RADIUS_USER');
+require_once BASEPATH.'classes/AuthenticatorRadius.php';
 
 /* The array index for the source must match the account_origin in the user table */
  $AUTH_SOURCE_ARRAY[LOCAL_USER_ACCOUNT_ORIGIN]=array(
 						     'name'=>HOTSPOT_NETWORK_NAME,
 						     'authenticator'=>new AuthenticatorLocalUser(LOCAL_USER_ACCOUNT_ORIGIN));
-
+$AUTH_SOURCE_ARRAY[IDRC_ACCOUNT_ORIGIN]=array(
+						     'name'=>"IDRC RADIUS",
+						     'authenticator'=>new AuthenticatorRadius(IDRC_ACCOUNT_ORIGIN, "localhost", 1812, 1813, "secret_key"));
 
 
 /*These are the file names of the different templates that can be put in the CONTENT_PATH/(node_id)/ folders */

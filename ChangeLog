@@ -1,4 +1,15 @@
 # $Header$
+2005-03-28 François Proulx  <francois.proulx@gmail.com>
+	* schema_validate.php : Modified schema : dropped e-mail + account unique index, dropped email not empty constraint
+	* Schema is now at version 3
+	* Coded RADIUS authentication
+	* Modified templates to show a select box when more than one server is configured
+	* Coded RADIUS accounting and backward compatibility accounting
+	* Modified many statistics SQL queries to match new Users table
+	* modified statistics templates to match user_id and account_origin
+	* TODO : Fix lost_username and lost_password ( issue since we dropped the unique constraint on emails... )
+	* TODO : Heavy testing possibly with remote RADIUS servers
+	
 2005-03-28 Benoit Grégoire  <bock@step.polymtl.ca>
 	* sql:  Put initial data in a transaction, and specify the wifidog user so you do not have to su to it while using sync_sql_for_svs
 	

@@ -21,7 +21,7 @@
 <p>{"Online at this hotspot"|_}:</p>
 <ul>
 {foreach from=$online_users item=user_info}
-<li>{$user_info.user_id}</li>
+<li>{$user_info.username}</li>
 {/foreach}
 </ul>
 {include file='templates/user_management_menu.html'}

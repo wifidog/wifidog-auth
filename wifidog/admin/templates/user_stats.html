@@ -34,13 +34,13 @@
     
     <table>
     <tr>
-        <th>User</th>
+        <th>User ID</th>
         <th>Number of hotspots visited</th>
     </tr>
 
     {section name=i loop=$most_mobile_users}
     <tr>
-        <td>{$most_mobile_users[i].user_id}</td>
+        <td><a href="user_log.php?user_id={$most_mobile_users[i].user_id}">{$most_mobile_users[i].user_id}</a></td>
         <td>{$most_mobile_users[i].num_hotspots_visited}</td>
     </tr>
     {/section}
@@ -55,13 +55,13 @@
     
     <table>
     <tr>
-        <th>User</th>
+    	<th>User ID</th>
         <th>Number of distinct days user has used the network</th>
     </tr>
 
     {section name=i loop=$most_frequent_users}
     <tr>
-        <td>{$most_frequent_users[i].user_id}</td>
+        <td><a href="user_log.php?user_id={$most_frequent_users[i].user_id}">{$most_frequent_users[i].user_id}</a></td>
         <td>{$most_frequent_users[i].active_days}</td>
     </tr>
     {/section}
@@ -76,7 +76,7 @@
     
     <table>
     <tr>
-        <th>User</th>
+    	<th>User ID</th>
         <th>Total (MB)</th>
         <th>Incoming (MB)</th>
         <th>Outgoing (MB)</th>
@@ -84,7 +84,7 @@
 
     {section name=i loop=$most_greedy_users}
     <tr>
-        <td>{$most_greedy_users[i].user_id}</td>
+        <td><a href="user_log.php?user_id={$most_greedy_users[i].user_id}">{$most_greedy_users[i].user_id}</a></td>
         <td>{$most_greedy_users[i].total}</td>
         <td>{$most_greedy_users[i].total_incoming}</td>
         <td>{$most_greedy_users[i].total_outgoing}</td>

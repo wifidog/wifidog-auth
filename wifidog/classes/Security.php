@@ -39,7 +39,7 @@ class Security {
     global $db;
     $user_id = $db->EscapeString($user_id);
     $hash = $db->EscapeString($hash);
-    $db->ExecSqlUniqueRes("SELECT * FROM users WHERE user_id='$user_id' AND pass='$hash'", $user_info, true);
+    $db->ExecSqlUniqueRes("SELECT * FROM users WHERE user_id='$user_id' AND pass='$hash'", $user_info, false);
     if (empty($user_info)) {
 	echo '<p class=error>'._("Your user_id and password do not match")."</p>\n";
 	exit;

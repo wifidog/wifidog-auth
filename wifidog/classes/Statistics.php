@@ -98,19 +98,19 @@ class Statistics{
 
   public static function getMostMobileUsers($limit) {
     global $db;
-    $db->ExecSql("SELECT COUNT(DISTINCT node_id) AS num_hotspots_visited, user_id, username, account_origin FROM users NATURAL JOIN connections WHERE (incoming!=0 OR outgoing!=0) GROUP BY user_id ORDER BY num_hotspots_visited DESC LIMIT $limit", $results, false);
+    $db->ExecSql("SELECT COUNT(DISTINCT node_id) AS num_hotspots_visited, user_id, username, account_origin FROM users NATURAL JOIN connections WHERE (incoming!=0 OR outgoing!=0) GROUP BY account_origin, username,user_id ORDER BY num_hotspots_visited DESC LIMIT $limit", $results, false);
     return $results;
   }
 
   public static function getMostFrequentUsers($limit) {
     global $db;
-    $db->ExecSql("SELECT COUNT(user_id) AS active_days, user_id, username, account_origin FROM (SELECT DISTINCT user_id, date_trunc('day', timestamp_in) AS date, username, account_origin FROM connections WHERE (incoming!=0 OR outgoing!=0) GROUP BY date,user_id) as user_active_days GROUP BY user_id ORDER BY active_days DESC LIMIT $limit",$results, false);
+    $db->ExecSql("SELECT COUNT(user_active_days.user_id) AS active_days, user_active_days.user_id, username, account_origin FROM (SELECT DISTINCT user_id, date_trunc('day', timestamp_in) AS date FROM connections WHERE (incoming!=0 OR outgoing!=0) GROUP BY date,user_id) user_active_days JOIN users ON (users.user_id = user_active_days.user_id) GROUP BY account_origin, username, user_active_days.user_id ORDER BY active_days DESC LIMIT $limit",$results, false);
     return $results;
   }
 
   public static function getMostGreedyUsers($limit) {
     global $db;
-    $db->ExecSql("SELECT DISTINCT user_id, SUM((incoming+outgoing)/1048576) AS total, SUM((incoming/1048576)) AS total_incoming, SUM((outgoing/1048576)) AS total_outgoing, username, account_origin FROM connections WHERE incoming IS NOT NULL AND outgoing IS NOT NULL GROUP BY user_id ORDER BY total DESC limit $limit", $results, false);
+    $db->ExecSql("SELECT DISTINCT connections.user_id, SUM((incoming+outgoing)/1048576) AS total, SUM((incoming/1048576)) AS total_incoming, SUM((outgoing/1048576)) AS total_outgoing, username, account_origin FROM connections JOIN users ON (users.user_id = connections.user_id) WHERE incoming IS NOT NULL AND outgoing IS NOT NULL GROUP BY account_origin, username,connections.user_id ORDER BY total DESC limit $limit", $results, false);
     return $results;
   }
   

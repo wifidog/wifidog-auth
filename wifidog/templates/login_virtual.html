@@ -1,6 +1,5 @@
 {include file="templates/header_small.html"}
     <div id="form">
-
         <h3>{"Welcome!"|_}</h3>
 
         <h3>{"This is the 'virtual login' page you can use to get the credentials which will then give you access to management functions on the network without being at a hotspot."|_}</h3>
@@ -9,6 +8,18 @@
 
         <form name="login_form" method="post">
         <table>
+        {if count($auth_sources) > 1}
+        <tr>
+        	<td>{"Network"|_}:</td>
+        	<td>
+        		<select name="auth_source">
+	        	{foreach key=key item=source from=$auth_sources}
+	        		<option label="{$source.name}" value="{$key}">{$source.name}</option>
+				{/foreach}
+				</select>
+        	</td>
+        </tr>
+        {/if}
         <tr>
             <td>{"Username (or email)"|_}:</td>
             <td><input type="text" name="username" value="{$username}" size="20"></td>

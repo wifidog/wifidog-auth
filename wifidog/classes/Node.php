@@ -238,7 +238,7 @@ class Node
   {
     global $db;
 
-    $db->ExecSql("SELECT users.user_id FROM users,connections WHERE connections.token_status='". TOKEN_INUSE. "' AND users.user_id=connections.user_id AND connections.node_id='{$this->mId}'", $users, false);
+    $db->ExecSql("SELECT users.user_id, users.username, users.account_origin FROM users,connections WHERE connections.token_status='". TOKEN_INUSE. "' AND users.user_id=connections.user_id AND connections.node_id='{$this->mId}'", $users, false);
     return $users;
   }
 

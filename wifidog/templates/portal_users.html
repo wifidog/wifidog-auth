@@ -54,7 +54,7 @@
 <h1>{"Users Online"|_}</h1>
 <p class="indent">
 {section name=i loop=$online_users}
-    <li><a class="underlinepointer" onMouseOver="showuserdiv('{$online_users[i].user_id}')" onMouseOut="hideuserdiv('{$online_users[i].user_id}')">{$online_users[i].user_id}</a>
+    <li><a class="underlinepointer" onMouseOver="showuserdiv('{$online_users[i].username}')" onMouseOut="hideuserdiv('{$online_users[i].username}')">{$online_users[i].username}</a>
     <div id="user_{$online_users[i].user_id}" style="display: none;">
         <div id="user_profile">
         {if $online_users[i].avatar_id}
@@ -65,7 +65,7 @@
         <table>
             <tr>
             <td class="item">{"Username"|_}:</th>
-            <td>{$online_users[i].user_id}</td>
+            <td>{$online_users[i].username}</td>
             </tr>
         </table>
         </div>

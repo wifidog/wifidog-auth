@@ -21,7 +21,15 @@
 </tr>
 <tr>
 	<th>User email:</th>
-	<td>{$userinfo.email}</td>
+	<td>{if $userinfo.email} {$userinfo.email} {else} Unknown e-mail {/if}</td>
+</tr>
+<tr>
+	<th>Username:</th>
+	<td>{$userinfo.username}</td>
+</tr>
+<tr>
+	<th>Account origin:</th>
+	<td>{$userinfo.account_origin}</td>
 </tr>
 <tr>
 	<th>User ID:</th>

@@ -33,7 +33,7 @@ try {
     if (!isset($_REQUEST["username"]))
         throw new Exception(_('No username specified!'));
 
-    $user = User::getUserById($_REQUEST['username']);
+    $user = User::getUserByUsernameAndOrigin($_REQUEST['username'], LOCAL_USER_ACCOUNT_ORIGIN);
 
     if ($db->EscapeString($_REQUEST['token']) != $user->getValidationToken())
         throw new Exception(_('The validation token does not match the one in the database.'));
