@@ -24,11 +24,14 @@
 define('BASEPATH','../');
 require_once 'admin_common.php';
 
-/** Affiche les informations sur le fichier envoyé par le client
+$security = new Security();
+$security->requireAdmin();
+
+/** Affiche les informations sur le fichier envoyï¿½ par le client
  */
 function PrintUploadedFileInfo($form_name_file)
 {
-  echo "Nom du fichier envoyé:".$_FILES[$form_name_file]['name']."<br>";
+  echo "Nom du fichier envoyï¿½:".$_FILES[$form_name_file]['name']."<br>";
   echo "Taille: ".$_FILES[$form_name_file]['size']." octets"."<br>";
   echo "Mime type: ".$_FILES[$form_name_file]['type']."<br>";
   echo "Nom du fichier temporaire sur le serveur: ".$_FILES[$form_name_file]['tmp_name']."<br>";

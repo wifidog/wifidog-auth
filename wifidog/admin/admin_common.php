@@ -26,6 +26,4 @@ require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'include/common_interface.php';
 require_once BASEPATH.'classes/Security.php';
 
-$security = new Security();
-$security->requireAdmin();
 ?>

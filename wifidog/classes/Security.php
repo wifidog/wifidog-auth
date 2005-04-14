@@ -27,7 +27,7 @@ require_once BASEPATH.'classes/Session.php';
 /** 
  */
 class Security {
-  var $session;
+  private $session;
 
   function Security() {
     $this->session = new Session();

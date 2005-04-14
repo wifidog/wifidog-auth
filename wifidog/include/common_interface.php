@@ -41,8 +41,13 @@ require_once BASEPATH.'include/language.php';
 
 try
 {
-  $current_user = new User($session->get(SESS_USER_ID_VAR));
-  $smarty->assign("auth_user", $current_user->getUsername());
+  $username = null;
+  $current_user = User::getCurrentUser();
+  if($current_user!=null)
+  {$username=$current_user->getUsername();
+  }
+  
+  $smarty->assign("auth_user", $username);
 }
 catch (Exception $e) 
 {

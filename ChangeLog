@@ -1,3 +1,6 @@
+2005-04-14 Benoit Grégoire  <bock@step.polymtl.ca>
+	* First part of the future content delivery infrastructure.  Many files added.
+
 2005-04-01 François Proulx  <francois.proulx@gmail.com>
 	* Modified gen.sh script to match UTF-8
 	* Added PAP RADIUS encryption support ( asked by Paris Sans Fil )

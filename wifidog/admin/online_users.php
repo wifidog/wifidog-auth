@@ -25,6 +25,9 @@ define('BASEPATH','../');
 require_once 'admin_common.php';
 require_once BASEPATH.'classes/Node.php';
 
+$security = new Security();
+$security->requireAdmin();
+
 try {
     $online_users = Node::getAllOnlineUsers();
 	$smarty->assign("users_array", $online_users);

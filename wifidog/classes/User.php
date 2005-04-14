@@ -40,7 +40,27 @@ class User
 		$object = new self($id);
 		return $object;
 	}
-
+	
+	/** Instantiate the current user
+	 * @return a User object, or null if there was an error
+	 */
+	public static function getCurrentUser()
+	{
+		require_once BASEPATH.'classes/Session.php';
+		$session = new Session();
+		$user=null;
+		try
+		{
+			$user = new User($session->get(SESS_USER_ID_VAR));
+		}
+		catch(Exception $e)
+		{
+			/**If any problem occurs, the user should be considered logged out*/
+			$session->set(SESS_USER_ID_VAR, null);
+		}
+		return $user;
+	}
+	
 	/** Instantiate a user object 
 	 * @param $username The username of the user
 	 * @param $account_origin The account origin
@@ -237,6 +257,20 @@ class User
 	public function getEmail()
 	{
 		return $this->mRow['email'];
+	}
+
+/**What locale (language) does the user prefer?
+ * @todo Save in the database */
+	public function getPreferedLocale()
+	{
+		global $session;
+		//return $this->mRow['prefered_locale'];
+		$locale = $session->get('SESS_LANGUAGE_VAR');
+		if(empty($locale))
+		{
+			$locale=DEFAULT_LANG;
+		}
+		return $locale;
 	}
 
 	public function getPasswordHash()

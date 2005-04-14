@@ -26,6 +26,10 @@
 // TODO : Permettre la recherche de users directement dans l'interface
 define('BASEPATH','../');
 require_once 'admin_common.php';
+
+$security = new Security();
+$security->requireAdmin();
+
 require_once BASEPATH.'classes/Node.php';
 require_once BASEPATH.'classes/User.php';
 

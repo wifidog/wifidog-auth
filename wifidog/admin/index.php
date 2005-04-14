@@ -24,6 +24,7 @@
 
 define('BASEPATH','../');
 require_once 'admin_common.php';
+require_once BASEPATH.'classes/Content.php';
 
 $smarty->display("admin/templates/main.html");
 ?>

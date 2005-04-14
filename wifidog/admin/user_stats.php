@@ -20,10 +20,14 @@
    \********************************************************************/
   /**@file node_list.php
    * Network status page
-   * @author Copyright (C) 2004 Benoit Grégoire
+   * @author Copyright (C) 2004 Benoit Grï¿½goire
    */
 define('BASEPATH','../');
 require_once 'admin_common.php';
+
+$security = new Security();
+$security->requireAdmin();
+
 require_once BASEPATH.'classes/Statistics.php';
 
 $smarty->assign("total_users",  $stats->getNumUsers());

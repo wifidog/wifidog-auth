@@ -12,7 +12,7 @@ SET SESSION AUTHORIZATION 'wifidog';
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 2 (OID 144784)
+-- Data for TOC entry 2 (OID 192400)
 -- Name: token_status; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
@@ -33,7 +33,7 @@ SET SESSION AUTHORIZATION 'wifidog';
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 2 (OID 144818)
+-- Data for TOC entry 2 (OID 192434)
 -- Name: venue_types; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
@@ -85,7 +85,7 @@ SET SESSION AUTHORIZATION 'wifidog';
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 2 (OID 144816)
+-- Data for TOC entry 2 (OID 192432)
 -- Name: node_deployment_status; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
@@ -110,11 +110,31 @@ SET SESSION AUTHORIZATION 'wifidog';
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 2 (OID 144828)
+-- Data for TOC entry 2 (OID 192444)
 -- Name: schema_info; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
-INSERT INTO schema_info (tag, value) VALUES ('schema_version', '5');
+INSERT INTO schema_info (tag, value) VALUES ('schema_version', '6');
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'UNICODE';
+SET check_function_bodies = false;
+
+SET SESSION AUTHORIZATION 'wifidog';
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 2 (OID 214063)
+-- Name: locales; Type: TABLE DATA; Schema: public; Owner: wifidog
+--
+
+INSERT INTO locales (locales_id) VALUES ('fr');
+INSERT INTO locales (locales_id) VALUES ('en');
 
 
 COMMIT;

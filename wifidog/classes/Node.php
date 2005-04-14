@@ -19,7 +19,7 @@
    *                                                                  *
    \********************************************************************/
   /**@file Node.php
-   * @author Copyright (C) 2005 Benoit Grégoire <bock@step.polymtl.ca>
+   * @author Copyright (C) 2005 Benoit Grï¿½goire <bock@step.polymtl.ca>
    */
   require_once BASEPATH.'include/common.php';
 
@@ -98,7 +98,7 @@ class Node
       }
     $this->mRow = $row;
     $this->mId = $row['node_id'];
-  }				//End class
+  }	
 
   /** Return the name of the node 
    */

@@ -162,4 +162,25 @@ A:visited { font-size: 85% }
 #std_table th { font-size: 14pt; background-color: #e1f5da;}
 #std_table td.item { font-weight: bold; }
 
+/* The content container */
+.content { border: 2px solid gray; 
+			width:auto;}
+/* The admin container */
+.admin_container { border: 1px solid grey; 
+margin: 3px;
+width:auto; }
+ /* The class name of the container */
+.admin_class { /*float: left;*/ 
+					  color:grey;
+						border: none;
+display: none;
+}
+.admin_section_container { border: 2px solid blue; 
+margin: 3px;
+width:auto; }
+.admin_section_title { font-weight: bold;  }
+.admin_section_tools { clear: none;}
+
+.user_ui_container{ border: none;  }
+.user_ui_object_class{ display: none;  }
 {/literal}

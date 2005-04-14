@@ -22,7 +22,7 @@
  * @author Copyright (C) 2004 Technologies Coeus inc.
 */
 error_reporting(E_ALL);
-/** Classe statique, permet d'abstraire la connexion à la base de donnée
+/** Classe statique, permet d'abstraire la connexion ï¿½ la base de donnï¿½e
  */
 class AbstractDb
 {
@@ -45,18 +45,18 @@ class AbstractDb
 		return $ptr_connexion;
 	}
 
-	/**Exécute la requête, et retourne le résultat.  Affiche l'erreur s'il y a lieu.
-	 @param $sql Requête SELECT à exécuter
-	 @param $returnResults un array à deux dimensions des rangées de résultats, NULL si aucun résultats.
-	 @param $debug Si TRUE, affiche les résultats bruts de la requête
-	 @return TRUE si la requete a été effectuée avec succès, FALSE autrement.
+	/**Exï¿½cute la requï¿½te, et retourne le rï¿½sultat.  Affiche l'erreur s'il y a lieu.
+	 @param $sql Requï¿½te SELECT ï¿½ exï¿½cuter
+	 @param $returnResults un array ï¿½ deux dimensions des rangï¿½es de rï¿½sultats, NULL si aucun rï¿½sultats.
+	 @param $debug Si TRUE, affiche les rï¿½sultats bruts de la requï¿½te
+	 @return TRUE si la requete a ï¿½tï¿½ effectuï¿½e avec succï¿½s, FALSE autrement.
 	*/
 	function ExecSql($sql, & $returnResults, $debug=false)
 	{
 		$connection = $this -> connexionDb(NULL);
 		if ($debug == TRUE)
 		{
-			echo "<hr /><p>ExecuterSql(): DEBUG: Requête:<br>\n<pre>$sql</pre></p>\n<p>Plan:<br />\n";
+			echo "<hr /><p>ExecuterSql(): DEBUG: Requï¿½te:<br>\n<pre>$sql</pre></p>\n<p>Plan:<br />\n";
 			$result = pg_query($connection, "EXPLAIN ".$sql);
 
 			$plan_array = pg_fetch_all($result);
@@ -88,12 +88,12 @@ class AbstractDb
 
 		if ($debug == TRUE)
 		{
-			echo "<P>Temps écoulé pour la requête SQL: $sql_timetaken seconde(s)</P>\n";
+			echo "<P>Temps ï¿½coulï¿½ pour la requï¿½te SQL: $sql_timetaken seconde(s)</P>\n";
 		}
 
 		if ($result == FALSE)
 		{
-			echo "<p>ExecuterSql(): ERREUR: Lors de l'exécution de la requête SQL:<br>$sql</p>";
+			echo "<p>ExecuterSql(): ERREUR: Lors de l'exï¿½cution de la requï¿½te SQL:<br>$sql</p>";
 			echo "<p>L'erreur est:<br>".pg_last_error($connection)."</p>";
 			$returnResults = NULL;
 			$return_value = FALSE;
@@ -111,10 +111,10 @@ class AbstractDb
 				if ($debug)
 				{
 					$num_rows = pg_num_rows($result);
-					echo "<p>ExecuterSql(): DEBUG: Il y a $num_rows résultats:<br><TABLE class='spreadsheet'>";
+					echo "<p>ExecuterSql(): DEBUG: Il y a $num_rows rï¿½sultats:<br><TABLE class='spreadsheet'>";
 					if ($returnResults != NULL)
 					{
-						//On affiche l'en-tête des colonnes une seule fois*/
+						//On affiche l'en-tï¿½te des colonnes une seule fois*/
 						echo "<TR class='spreadsheet'>";
 						while (list ($col_name, $col_content) = each($returnResults[0]))
 						{
@@ -138,9 +138,9 @@ class AbstractDb
 		return $return_value;
 	}
 
-	/**Retourne une chaine de caractère dans un format compatible pour stockage dans la bd
-	 @param $chaine La chaîne de caractère à nettoyer
-	 @return La chaîne nettoyée
+	/**Retourne une chaine de caractï¿½re dans un format compatible pour stockage dans la bd
+	 @param $chaine La chaï¿½ne de caractï¿½re ï¿½ nettoyer
+	 @return La chaï¿½ne nettoyï¿½e
 	 */
 	function EscapeString($chaine)
 	{
@@ -154,9 +154,9 @@ class AbstractDb
 		}
 	}
 
-	/** Nettoye une chaine de caractère dans un format compatible bytea.
-	 @param $chaine La chaîne de caractère à nettoyer
-	 @return La chaîne nettoyée (escaped string)
+	/** Nettoye une chaine de caractï¿½re dans un format compatible bytea.
+	 @param $chaine La chaï¿½ne de caractï¿½re ï¿½ nettoyer
+	 @return La chaï¿½ne nettoyï¿½e (escaped string)
 	 */
 
 	function EscapeBinaryString($chaine)
@@ -165,9 +165,9 @@ class AbstractDb
 
 	}
 
-	/** Reconverti une chaine de caractère en format bytea pur.
-	 @param $chaine La chaîne de caractère 
-	 @return La chaîne reconvertie  en format original (unescaped string)
+	/** Reconverti une chaine de caractï¿½re en format bytea pur.
+	 @param $chaine La chaï¿½ne de caractï¿½re 
+	 @return La chaï¿½ne reconvertie  en format original (unescaped string)
 	 */
 
 	function UnescapeBinaryString($chaine)
@@ -176,18 +176,18 @@ class AbstractDb
 
 	}
 
-	/**Exécute une requête pour laquelle on prévoit un résultat UNIQUE.  Si le résultat n'est pas unique, un avertissement est affiché
-	 @param $sql Requête SELECT à exécuter
-	 @param $retVal un array des colonnes de la rangée retournée, NULL si aucun résultats.
-	 @param $debug Si TRUE, affiche les résultats bruts de la requête
-	 @return TRUE si la requete a été effectuée avec succès, FALSE autrement.
+	/**Exï¿½cute une requï¿½te pour laquelle on prï¿½voit un rï¿½sultat UNIQUE.  Si le rï¿½sultat n'est pas unique, un avertissement est affichï¿½
+	 @param $sql Requï¿½te SELECT ï¿½ exï¿½cuter
+	 @param $retVal un array des colonnes de la rangï¿½e retournï¿½e, NULL si aucun rï¿½sultats.
+	 @param $debug Si TRUE, affiche les rï¿½sultats bruts de la requï¿½te
+	 @return TRUE si la requete a ï¿½tï¿½ effectuï¿½e avec succï¿½s, FALSE autrement.
 	 */
 	function ExecSqlUniqueRes($sql, & $retVal, $debug=false)
 	{
 		$retval = TRUE;
 		if ($debug == TRUE)
 		{
-			echo "<hr /><p>Requête: <br><pre>$sql</pre></p>";
+			echo "<hr /><p>Requï¿½te: <br><pre>$sql</pre></p>";
 		}
 		$connection = $this -> connexionDb(NULL);
 
@@ -213,12 +213,12 @@ class AbstractDb
 
 		if ($debug == TRUE)
 		{
-			echo "<P>Temps écoulé pour la requête SQL: $sql_timetaken seconde(s)</P>\n";
+			echo "<P>Temps ï¿½coulï¿½ pour la requï¿½te SQL: $sql_timetaken seconde(s)</P>\n";
 		}
 
 		if ($result == FALSE)
 		{
-			echo "<p>ExecuterSqlResUnique(): ERREUR: Lors de l'exécution de la requête SQL:<br>$sql</p>";
+			echo "<p>ExecuterSqlResUnique(): ERREUR: Lors de l'exï¿½cution de la requï¿½te SQL:<br>$sql</p>";
 			echo "<p>L'erreur est:<br>".pg_last_error($connection)."</p>";
 			$retval = FALSE;
 		}
@@ -228,8 +228,8 @@ class AbstractDb
 			$retVal = $returnResults[0];
 			if (pg_num_rows($result) > 1)
 			{
-				echo "<p>ExecuterSqlResUnique(): ERREUR: Lors de l'exécution de la requête SQL:<br>$sql</p>";
-				echo "<p>Il y a ".pg_num_rows($result)." résultats alors qu'il ne devrait y en avoir qu'un seul.</p>";
+				echo "<p>ExecuterSqlResUnique(): ERREUR: Lors de l'exï¿½cution de la requï¿½te SQL:<br>$sql</p>";
+				echo "<p>Il y a ".pg_num_rows($result)." rï¿½sultats alors qu'il ne devrait y en avoir qu'un seul.</p>";
 				$retval = FALSE;
 				$debug = true;
 			}
@@ -238,10 +238,10 @@ class AbstractDb
 			if ($debug)
 			{
 				$num_rows = pg_num_rows($result);
-				echo "<p>ExecuterSqlResUnique(): DEBUG: Il y a $num_rows résultats:<br><TABLE class='spreadsheet'>";
+				echo "<p>ExecuterSqlResUnique(): DEBUG: Il y a $num_rows rï¿½sultats:<br><TABLE class='spreadsheet'>";
 				if ($returnResults != NULL)
 				{
-					//On affiche l'en-tête des colonnes une seule fois*/
+					//On affiche l'en-tï¿½te des colonnes une seule fois*/
 					echo "<TR class='spreadsheet'>";
 					while (list ($col_name, $col_content) = each($returnResults[0]))
 					{
@@ -267,16 +267,16 @@ class AbstractDb
 		return $retval;
 	}
 
-	/**Exécute une requête visant à modifier la base de donnée, et donc ne retournant aucun résultat.
-	 @param $sql Requête SELECT à exécuter
-	 @param $debug Si TRUE, affiche la requête brute
+	/**Exï¿½cute une requï¿½te visant ï¿½ modifier la base de donnï¿½e, et donc ne retournant aucun rï¿½sultat.
+	 @param $sql Requï¿½te SELECT ï¿½ exï¿½cuter
+	 @param $debug Si TRUE, affiche la requï¿½te brute
 	 */
 	function ExecSqlUpdate($sql, $debug=false)
 	{
 		$connection = $this -> connexionDb(NULL);
 		if ($debug == TRUE)
 		{
-			echo "<hr /><p>ExecuterSqlUpdate(): DEBUG: Requête:<br>\n<pre>$sql</pre></p>\n";
+			echo "<hr /><p>ExecuterSqlUpdate(): DEBUG: Requï¿½te:<br>\n<pre>$sql</pre></p>\n";
 		}
 
 		global $sql_num_update_querys;
@@ -301,23 +301,23 @@ class AbstractDb
 
 		if ($debug == TRUE)
 		{
-			echo "<P>".pg_affected_rows($result)." rangées affectées par la requête SQL<br>\n";
-			echo "Temps écoulé: $sql_timetaken seconde(s)</P>\n";
+			echo "<P>".pg_affected_rows($result)." rangï¿½es affectï¿½es par la requï¿½te SQL<br>\n";
+			echo "Temps ï¿½coulï¿½: $sql_timetaken seconde(s)</P>\n";
 		}
 
 		if ($result == FALSE)
 		{
-			echo "<p>ExecuterSqlResUnique(): ERREUR: Lors de l'exécution de la requête SQL:<br><pre>$sql</pre></p>";
+			echo "<p>ExecuterSqlResUnique(): ERREUR: Lors de l'exï¿½cution de la requï¿½te SQL:<br><pre>$sql</pre></p>";
 			echo "<p>L'erreur est:<br>".pg_last_error()."<br>".pg_result_error($result)."</p>";
 		}
 		else
 		{
 			if ($debug == TRUE)
 			{
-				echo "<p>ExecuterSqlUpdate(): DEBUG: ".pg_affected_rows($result)." rangée(s) affectée(s)</p><hr />\n";
+				echo "<p>ExecuterSqlUpdate(): DEBUG: ".pg_affected_rows($result)." rangï¿½e(s) affectï¿½e(s)</p><hr />\n";
 			}
-			return $result;
 		}
+		return $result;
 	}
 
 	/** Builds a string suitable for the databases interval datatype and returns it.
