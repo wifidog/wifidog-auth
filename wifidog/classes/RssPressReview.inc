@@ -101,7 +101,7 @@ class RssPressReview
      {
      	$input_encoding=$detected_encoding;
      }
-     echo "<p>convert_string_encoding() detected_encoding=$detected_encoding, input_encoding=$input_encoding, OUTPUT_ENCODING=".OUTPUT_ENCODING."</p>";
+     //echo "<p>convert_string_encoding() detected_encoding=$detected_encoding, input_encoding=$input_encoding, OUTPUT_ENCODING=".OUTPUT_ENCODING."</p>";
      if ($input_encoding!=OUTPUT_ENCODING)
      {
      $string = mb_convert_encoding($string, OUTPUT_ENCODING, $input_encoding);
