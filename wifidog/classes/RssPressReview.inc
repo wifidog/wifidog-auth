@@ -19,14 +19,14 @@
    *                                                                  *
    \********************************************************************/
   /**@file RssPressReview.inc
-   * @author Copyright (C) 2004 Benoit Grégoire (http://benoitg.coeus.ca/) et Technologies Coeus inc.
+   * @author Copyright (C) 2004 Benoit Grï¿½goire (http://benoitg.coeus.ca/) et Technologies Coeus inc.
    */
   //define('MAGPIE_DIR', './magpie/');
 require_once(MAGPIE_DIR.'rss_fetch.inc');
 require_once(MAGPIE_DIR.'rss_utils.inc');
 define('MAGPIE_DEBUG',0);
 define('DEFAULT_PUBLICATION_INTERVAL',(1*24*3600));
-define('OUTPUT_ENCODING','ISO-8859-1');
+define('OUTPUT_ENCODING','UTF-8');
 //mb_detect_order("UTF-8, ISO-8859-1, ASCII");
 
 class RssPressReview
@@ -92,14 +92,20 @@ class RssPressReview
       * @return The converted string
       */
     private function convert_string_encoding($string) {
-    /*
-     $input_encoding = mb_detect_encoding($string);
-     //echo "<p>convert_string_encoding() input_encoding=$input_encoding, OUTPUT_ENCODING=".OUTPUT_ENCODING.", string: $string</p>";
+     $detected_encoding = mb_detect_encoding($string);
+     if(empty($detected_encoding))
+     {
+     	$input_encoding='ISO-8859-1';
+     }
+     else
+     {
+     	$input_encoding=$detected_encoding;
+     }
+     echo "<p>convert_string_encoding() detected_encoding=$detected_encoding, input_encoding=$input_encoding, OUTPUT_ENCODING=".OUTPUT_ENCODING."</p>";
      if ($input_encoding!=OUTPUT_ENCODING)
      {
      $string = mb_convert_encoding($string, OUTPUT_ENCODING, $input_encoding);
      }
-    */
         return $string;
     }
 
@@ -381,7 +387,7 @@ function changeclass(objet, myClass)
             }
             $html .= "</ul>\n";
         }
-        return $this->get_rss_header() . $html;
+        return $this->convert_string_encoding($this->get_rss_header() . $html);
     }
 }
 ?>

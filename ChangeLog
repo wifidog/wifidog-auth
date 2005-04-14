@@ -1,4 +1,8 @@
 2005-04-14 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Fix Content object enumeration preventing usage of admin interface
+	* Partial fix for RSS feed encoding (multiple feed aggregation still broken);
+
+2005-04-14 Benoit Grégoire  <bock@step.polymtl.ca>
 	* First part of the future content delivery infrastructure.  Many files added.
 
 2005-04-01 François Proulx  <francois.proulx@gmail.com>

@@ -110,8 +110,11 @@ class Content
 			{
 				if ($file != '.' && $file != '..')
 				{
+					if(preg_match("/^.*\.php$/", $file)>0)
+					{					
 					$tab[$i] = $file;
 					$i ++;
+					}
 				}
 			}
 			closedir($handle);
