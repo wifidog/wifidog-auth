@@ -122,7 +122,7 @@ class Langstring extends Content
 				@param type_interface SIMPLE pour éditer un seul champ, COMPLETE pour voir toutes les chaînes, LARGE pour avoir un textarea.
 				@param num_nouveau Nombre de champ à afficher pour entrer de nouvelles chaîne en une seule opération
 				*/
-	function getAdminInterface($type_interface = 'SIMPLE', $num_nouveau = 1)
+	function getAdminInterface($type_interface = 'LARGE', $num_nouveau = 1)
 	{
 		$html='';
 		$html .= "<div class='admin_container'>\n";

@@ -1,4 +1,7 @@
 2005-04-14 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Content.php:  Use full langstring interface by default;
+
+2005-04-14 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Content.php:  Fix db reference;
 
 2005-04-14 Benoit Grégoire  <bock@step.polymtl.ca>
