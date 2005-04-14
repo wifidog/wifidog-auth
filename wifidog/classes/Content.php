@@ -308,6 +308,7 @@ class Content
 	 * @return The HTML fragment for this interface */
 	public function getAdminInterface($subclass_admin_interface = null)
 	{
+				global $db;
 		$html = '';
 		$html .= "<div class='admin_container'>\n";
 		$html .= "<div class='admin_class'>Content (".get_class($this)." instance)</div>\n";
@@ -408,6 +409,7 @@ class Content
 	*/
 	public function processAdminInterface()
 	{
+		global $db;
 		if ($this->getContentType() == 'Content') /* The object hasn't yet been typed */
 		{
 			$content_type = FormSelectGenerator :: getResult("content_".$this->id."_content_type", "Content");
@@ -423,7 +425,7 @@ class Content
 					if ($title != null)
 					{
 						$title_id = $title->GetId();
-						$this->mBd->ExecSqlUpdate("UPDATE content SET title = '$title_id' WHERE content_id = '$this->id'", FALSE);
+						$db->ExecSqlUpdate("UPDATE content SET title = '$title_id' WHERE content_id = '$this->id'", FALSE);
 					}
 				}
 				else
@@ -432,7 +434,7 @@ class Content
 					$name = "content_".$this->id."_title_erase";
 					if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
 					{
-						$this->mBd->ExecSqlUpdate("UPDATE content SET title = NULL WHERE content_id = '$this->id'", FALSE);
+						$db->ExecSqlUpdate("UPDATE content SET title = NULL WHERE content_id = '$this->id'", FALSE);
 						$title->delete();
 					}
 					else
@@ -448,7 +450,7 @@ class Content
 					if ($description != null)
 					{
 						$description_id = $description->GetId();
-						$this->mBd->ExecSqlUpdate("UPDATE content SET description = '$description_id' WHERE content_id = '$this->id'", FALSE);
+						$db->ExecSqlUpdate("UPDATE content SET description = '$description_id' WHERE content_id = '$this->id'", FALSE);
 					}
 				}
 				else
@@ -457,7 +459,7 @@ class Content
 					$name = "content_".$this->id."_description_erase";
 					if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
 					{
-						$this->mBd->ExecSqlUpdate("UPDATE content SET description = NULL WHERE content_id = '$this->id'", FALSE);
+						$db->ExecSqlUpdate("UPDATE content SET description = NULL WHERE content_id = '$this->id'", FALSE);
 						$description->delete();
 					}
 					else
@@ -473,7 +475,7 @@ class Content
 					if ($project_info != null)
 					{
 						$project_info_id = $project_info->GetId();
-						$this->mBd->ExecSqlUpdate("UPDATE content SET project_info = '$project_info_id' WHERE content_id = '$this->id'", FALSE);
+						$this->db->ExecSqlUpdate("UPDATE content SET project_info = '$project_info_id' WHERE content_id = '$this->id'", FALSE);
 					}
 				}
 				else
@@ -482,7 +484,7 @@ class Content
 					$name = "content_".$this->id."_project_info_erase";
 					if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
 					{
-						$this->mBd->ExecSqlUpdate("UPDATE content SET project_info = NULL WHERE content_id = '$this->id'", FALSE);
+						$this->db->ExecSqlUpdate("UPDATE content SET project_info = NULL WHERE content_id = '$this->id'", FALSE);
 						$project_info->delete();
 					}
 					else
@@ -498,7 +500,7 @@ class Content
 					if ($sponsor_info != null)
 					{
 						$sponsor_info_id = $sponsor_info->GetId();
-						$this->mBd->ExecSqlUpdate("UPDATE content SET sponsor_info = '$sponsor_info_id' WHERE content_id = '$this->id'", FALSE);
+						$this->db->ExecSqlUpdate("UPDATE content SET sponsor_info = '$sponsor_info_id' WHERE content_id = '$this->id'", FALSE);
 					}
 				}
 				else
@@ -507,7 +509,7 @@ class Content
 					$name = "content_".$this->id."_sponsor_info_erase";
 					if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
 					{
-						$this->mBd->ExecSqlUpdate("UPDATE content SET sponsor_info = NULL WHERE content_id = '$this->id'", FALSE);
+						$this->db->ExecSqlUpdate("UPDATE content SET sponsor_info = NULL WHERE content_id = '$this->id'", FALSE);
 						$sponsor_info->delete();
 					}
 					else
