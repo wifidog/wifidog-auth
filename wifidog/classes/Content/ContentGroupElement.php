@@ -43,6 +43,11 @@ class ContentGroupElement extends Content
 		$name = "get_new_content_{$user_prefix}_add";
 		if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
 		{
+			/* Get the display order to add the GontentGroupElement at the end */
+			$sql = "SELECT MAX(display_order) as max_display_order FROM content_group_element WHERE content_group_id='".$content_group->getId()."'";
+			$db->execSqlUniqueRes($sql, $max_display_order_row, false);
+			$display_order = $max_display_order_row['max_display_order'] + 1;
+
 			$name = "get_new_content_{$user_prefix}_content_type";
 			$content_type = FormSelectGenerator :: getResult($name, null);
 			$displayed_content_object = self :: createNewContent($content_type);
@@ -55,7 +60,7 @@ class ContentGroupElement extends Content
 			{
 				throw new Exception(_('Unable to insert new content into database!'));
 			}
-			$sql = "INSERT INTO content_group_element (content_group_element_id, content_group_id) VALUES ('$content_id', '".$content_group->GetId()."')";
+			$sql = "INSERT INTO content_group_element (content_group_element_id, content_group_id, display_order) VALUES ('$content_id', '".$content_group->GetId()."', $display_order)";
 			if (!$db->ExecSqlUpdate($sql, false))
 			{
 				throw new Exception(_('Unable to insert new content into database!'));
@@ -89,19 +94,28 @@ class ContentGroupElement extends Content
 
 	}
 
-	public function getAdminInterface($subclass_admin_interface = null)
+	public function getAdminUI($subclass_admin_interface = null)
 	{
 		$html = '';
-		$html .= "<div class='admin_container'>\n";
 		$html .= "<div class='admin_class'>ContentGroupElement (".get_class($this)." instance)</div>\n";
+
+		/* display_order */
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>Display order: </div>\n";
+				$html .= "<div class='admin_section_data'>\n";			
+		$name = "content_group_element_".$this->id."_display_order";
+		$html .= "<input type='text' name='$name' value='".$this->getDisplayOrder()."' size='2'>\n";
+				$html .= _("(Ignored if display type is random)")."\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
 
 		/* content_group_element_has_allowed_nodes */
 		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<span class='admin_section_title'>"._("AllowedNodes:")."</span>\n";
-		
-				$html .= "<ol class='admin_section_list'>\n";
-				
-				global $db;
+		$html .= "<div class='admin_section_title'>"._("AllowedNodes:")."</div>\n";
+		$html .= _("(Content can be displayed on ANY node unless one or more nodes are selected)")."\n";
+		$html .= "<ul class='admin_section_list'>\n";
+
+		global $db;
 		$sql = "SELECT * FROM content_group_element_has_allowed_nodes WHERE content_group_element_id='$this->id'";
 		$db->ExecSql($sql, $allowed_node_rows, false);
 		if ($allowed_node_rows != null)
@@ -110,7 +124,9 @@ class ContentGroupElement extends Content
 			{
 				$node = Node :: getNode($allowed_node_row['node_id']);
 				$html .= "<li class='admin_section_list_item'>\n";
+				$html .= "<div class='admin_section_data'>\n";
 				$html .= "".$node->GetId().": ".$node->GetName()."";
+				$html .= "</div>\n";
 				$html .= "<div class='admin_section_tools'>\n";
 				$name = "content_group_element_".$this->id."_allowed_node_".$node->GetId()."_remove";
 				$html .= "<input type='submit' name='$name' value='"._("Remove")."' onclick='submit();'>";
@@ -136,10 +152,10 @@ class ContentGroupElement extends Content
 			$name = "content_group_element_{$this->id}_new_allowed_node";
 			$html .= FormSelectGenerator :: generateFromArray($tab, null, $name, null, false);
 			$name = "content_group_element_{$this->id}_new_allowed_node_submit";
-			$html .= "<input type='submit' name='$name' value='"._("Add allowed node")."' onclick='submit();'>";
-		$html .= "</li'>\n";
+			$html .= "<input type='submit' name='$name' value='"._("Add new allowed node")."' onclick='submit();'>";
+			$html .= "</li'>\n";
 		}
-				$html .= "</ol>\n";
+		$html .= "</ul>\n";
 		$html .= "</div>\n";
 
 		/* displayed_content_id */
@@ -152,7 +168,7 @@ class ContentGroupElement extends Content
 		else
 		{
 			$displayed_content = self :: getContent($this->content_group_element_row['displayed_content_id']);
-			$html .= $displayed_content->getAdminInterface();
+			$html .= $displayed_content->getAdminUI();
 			$html .= "<div class='admin_section_tools'>\n";
 			$name = "content_group_element_{$this->id}_erase_displayed_content";
 			$html .= "<input type='submit' name='$name' value='"._("Delete")."' onclick='submit();'>";
@@ -161,8 +177,7 @@ class ContentGroupElement extends Content
 		$html .= "</div>\n";
 
 		$html .= $subclass_admin_interface;
-		$html .= "</div>\n";
-		return parent :: getAdminInterface($html);
+		return parent :: getAdminUI($html);
 	}
 
 	/**Replace and delete the old displayed_content (if any) by the new content (or no content)
@@ -194,9 +209,13 @@ class ContentGroupElement extends Content
 
 	}
 
-	function processAdminInterface()
+	function processAdminUI()
 	{
-		parent :: processAdminInterface();
+		parent :: processAdminUI();
+
+		/* display_order */
+		$name = "content_group_element_".$this->id."_display_order";
+		$this->setDisplayOrder($_REQUEST[$name]);
 
 		/* content_group_element_has_allowed_nodes */
 		global $db;
@@ -246,7 +265,7 @@ class ContentGroupElement extends Content
 			}
 			else
 			{
-				$displayed_content->processAdminInterface();
+				$displayed_content->processAdminUI();
 			}
 		}
 
@@ -254,30 +273,33 @@ class ContentGroupElement extends Content
 
 	/** Get the order of the element in the content group
 	 * @return the order of the element in the content group */
-	public function getOrder()
+	public function getDisplayOrder()
 	{
-		echo "<h1>WRITEME</h1>";
-		return false;
+		return $this->content_group_element_row['display_order'];
 	}
+
 	/** Set the order of the element in the content group
-	 * @param $order
-	 * @return true on success, false on failure */
-	public function setOrder($order)
+	 * @param $order*/
+	public function setDisplayOrder($order)
 	{
-		echo "<h1>WRITEME</h1>";
-		return false;
+		if ($order != $this->getDisplayOrder()) /* Only update database if there is an actual change */
+		{
+			global $db;
+			$order = $db->EscapeString($order);
+			$db->ExecSqlUpdate("UPDATE content_group_element SET display_order = $order WHERE content_group_element_id = '$this->id'", false);
+		}
 	}
-	
+
 	/** Delete this Content from the database 
 	 * @todo Implement proper Access control */
 	public function delete()
-	{	
-		if (!empty ($this->content_group_element_row['displayed_content_id']))
+	{
+		if ($this->isPersistent()==false && !empty ($this->content_group_element_row['displayed_content_id']))
 		{
 			$displayed_content = self :: getContent($this->content_group_element_row['displayed_content_id']);
 			$displayed_content->delete();
 		}
-		parent::delete();
+		parent :: delete();
 	}
 } // End class
 ?>

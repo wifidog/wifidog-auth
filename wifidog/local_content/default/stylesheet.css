@@ -166,7 +166,9 @@ A:visited { font-size: 85% }
 .content { border: 2px solid gray; 
 			width:auto;}
 /* The admin container */
-.admin_container { border: 1px solid grey; 
+.admin_container { display: block;
+border: 2px solid blue; 
+background-color:	white;
 margin: 3px;
 width:auto; }
  /* The class name of the container */
@@ -175,12 +177,20 @@ width:auto; }
 						border: none;
 display: none;
 }
-.admin_section_container { border: 2px solid blue; 
-margin: 3px;
+.admin_section_container { display: block;
+border: 1px solid #DDDDFF; /*light blue*/
+background-color:	#FBFBFF;/*lighter blue*/
+margin: 5px;
 width:auto; }
-.admin_section_title { font-weight: bold;  }
-.admin_section_tools { clear: none;}
+.admin_section_title { display: inline;
+						font-weight: bold;  }
+.admin_section_data { display: inline;  }
+.admin_section_tools { display: inline;}
 
+.admin_section_list { /* list of elements inside a section */
+display: compact;
+}
+.admin_section_list_item {display: compact; }
 .user_ui_container{ border: none;  }
 .user_ui_object_class{ display: none;  }
 {/literal}

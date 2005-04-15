@@ -1,3 +1,6 @@
+2005-04-15 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Support more of the content object model, do a half-decent CSS for the admin interface.
+
 2005-04-14 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Content.php:  Use full langstring interface by default;
 

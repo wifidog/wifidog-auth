@@ -84,7 +84,7 @@ if ($_REQUEST['action'] == 'list_all_content')
 	if ($_REQUEST['action'] == 'save')
 	{
 			$content = Content :: getContent($_REQUEST['content_id']);
-			$html .= $content->processAdminInterface();
+			$html .= $content->processAdminUI();
 			$_REQUEST['action'] = 'edit';
 	}
 
@@ -101,7 +101,7 @@ if ($_REQUEST['action'] == 'list_all_content')
 		}
 	$html .= "<form action='".CONTENT_ADMIN_HREF."' method='post'>";
 	$html .= "<input type='hidden' name='content_id' value='".$content->GetId()."'>\n";
-	$html .= $content->getAdminInterface();
+	$html .= $content->getAdminUI();
 	$html .= "<input type='hidden' name='action' value='save'>\n";
 	$html .= "<input type=submit name='save_submit' value='"._("Save")."'>\n";
 	$html .= '</form>';

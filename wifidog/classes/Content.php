@@ -306,7 +306,7 @@ class Content
 	/** Retreives the admin interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
 	 * @param $subclass_admin_interface Html content of the interface element of a children
 	 * @return The HTML fragment for this interface */
-	public function getAdminInterface($subclass_admin_interface = null)
+	public function getAdminUI($subclass_admin_interface = null)
 	{
 				global $db;
 		$html = '';
@@ -337,14 +337,24 @@ class Content
 				else
 				{
 					$title = self :: getContent($this->content_row['title']);
-					$html .= $title->getAdminInterface();
+					$html .= $title->getAdminUI();
 					$html .= "<div class='admin_section_tools'>\n";
 					$name = "content_".$this->id."_title_erase";
 					$html .= "<input type='submit' name='$name' value='"._("Delete")."' onclick='submit();'>";
 					$html .= "</div>\n";
 				}
 				$html .= "</div>\n";
-
+				
+		/* is_persistent */
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>Is persistent (reusable and read-only)?: </div>\n";		
+						$html .= "<div class='admin_section_data'>\n";		
+		$name = "content_".$this->id."_is_persistent";
+		$this->isPersistent()?$checked='CHECKED':$checked='';
+		$html .= "<input type='checkbox' name='$name' $checked>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
 				/* description */
 				$html .= "<div class='admin_section_container'>\n";
 				$html .= "<span class='admin_section_title'>"._("Description:")."</span>\n";
@@ -355,7 +365,7 @@ class Content
 				else
 				{
 					$description = self :: getContent($this->content_row['description']);
-					$html .= $description->getAdminInterface();
+					$html .= $description->getAdminUI();
 					$html .= "<div class='admin_section_tools'>\n";
 					$name = "content_".$this->id."_description_erase";
 					$html .= "<input type='submit' name='$name' value='"._("Delete")."' onclick='submit();'>";
@@ -373,7 +383,7 @@ class Content
 				else
 				{
 					$project_info = self :: getContent($this->content_row['project_info']);
-					$html .= $project_info->getAdminInterface();
+					$html .= $project_info->getAdminUI();
 					$html .= "<div class='admin_section_tools'>\n";
 					$name = "content_".$this->id."_project_info_erase";
 					$html .= "<input type='submit' name='$name' value='"._("Delete")."' onclick='submit();'>";
@@ -391,7 +401,7 @@ class Content
 				else
 				{
 					$sponsor_info = self :: getContent($this->content_row['sponsor_info']);
-					$html .= $sponsor_info->getAdminInterface();
+					$html .= $sponsor_info->getAdminUI();
 					$html .= "<div class='admin_section_tools'>\n";
 					$name = "content_".$this->id."_sponsor_info_erase";
 					$html .= "<input type='submit' name='$name' value='"._("Delete")."' onclick='submit();'>";
@@ -404,10 +414,10 @@ class Content
 		$html .= "</div>\n";
 		return $html;
 	}
-	/** Process admin interface of this object.  When an object overrides this method, they should call the parent processAdminInterface at the BEGINING of processing.
+	/** Process admin interface of this object.  When an object overrides this method, they should call the parent processAdminUI at the BEGINING of processing.
 	
 	*/
-	public function processAdminInterface()
+	public function processAdminUI()
 	{
 		global $db;
 		if ($this->getContentType() == 'Content') /* The object hasn't yet been typed */
@@ -439,11 +449,15 @@ class Content
 					}
 					else
 					{
-						$title->processAdminInterface();
+						$title->processAdminUI();
 					}
 				}
+				
+		/* is_persistent */
+		$name = "content_".$this->id."_is_persistent";
+		!empty($_REQUEST[$name])?$this->setIsPersistent(true):$this->setIsPersistent(false);
 
-				/* title */
+				/* description */
 				if (empty ($this->content_row['description']))
 				{
 					$description = self :: processNewContentInterface("description_{$this->id}_new");
@@ -464,7 +478,7 @@ class Content
 					}
 					else
 					{
-						$description->processAdminInterface();
+						$description->processAdminUI();
 					}
 				}
 
@@ -489,7 +503,7 @@ class Content
 					}
 					else
 					{
-						$project_info->processAdminInterface();
+						$project_info->processAdminUI();
 					}
 				}
 
@@ -514,7 +528,7 @@ class Content
 					}
 					else
 					{
-						$sponsor_info->processAdminInterface();
+						$sponsor_info->processAdminUI();
 					}
 				}
 
@@ -536,13 +550,54 @@ class Content
 		return false;
 	}
 	
+		/** Persistent (or read-only) content is meant for re-use.  It will not be deleted when the delete() method is called.  When a containing element (ContentGroup, ContentGroupElement) is deleted, it calls delete on all the content it includes.  If the content is persistent, only the association will be removed.
+	 * @return true or false */
+	public function isPersistent()
+	{
+		if($this->content_row['is_persistent']=='t')
+		{
+			$retval = true;
+		}
+		else
+		{
+			$retval=false;
+		}
+		return $retval;
+	}
+	
+	/** Set if the content group is persistent
+	 * @param $is_locative_content true or false
+	 * */
+	public function setIsPersistent($is_persistent)
+	{
+		if($is_persistent!=$this->isPersistent())/* Only update database if there is an actual change */
+		{
+		$is_persistent?$is_persistent_sql='TRUE':$is_persistent_sql='FALSE';
+
+		global $db;
+		$db->ExecSqlUpdate("UPDATE content SET is_persistent = $is_persistent_sql WHERE content_id = '$this->id'", false);
+		$this->refresh();
+		}
+
+	}
+	
+		/** Reloads the object from the database.  Should normally be called after a set operation
+	 * @todo Implement proper Access control */
+		protected function refresh()
+	{	
+		$this->__construct($this->id);
+	}
+	
 	/** Delete this Content from the database 
 	 * @todo Implement proper Access control */
 		public function delete()
 	{	
+		if($this->isPersistent()==false)
+		{
 		global $db;
 		$sql = "DELETE FROM content WHERE content_id='$this->id'";
 		$db->ExecSqlUpdate($sql, false);
+		}
 	}
 
 } // End class

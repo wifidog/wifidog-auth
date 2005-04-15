@@ -28,7 +28,7 @@ error_reporting(E_ALL);
 require_once BASEPATH.'config.php';
 require_once BASEPATH.'classes/AbstractDb.php';
 require_once BASEPATH.'classes/Session.php';
-define('REQUIRED_SCHEMA_VERSION', 6);
+define('REQUIRED_SCHEMA_VERSION', 7);
 
 /** Check that the database schema is up to date.  If it isn't, offer to update it. */
 function validate_schema()
@@ -275,15 +275,16 @@ function update_schema()
 			);";
 		}
 		
-		/*
 		$new_schema_version = 7;
 		if ($schema_version < $new_schema_version)
 		{
 
 			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>";
 			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+			$sql .= "ALTER TABLE content ADD COLUMN is_persistent bool;\n";
+			$sql .= "ALTER TABLE content ALTER COLUMN is_persistent SET DEFAULT FALSE;\n";
+			
 					}
-					*/
 		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);
 		echo "</html></head>";
 		exit ();

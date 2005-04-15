@@ -1,4 +1,5 @@
 <?php
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -28,7 +29,6 @@ require_once BASEPATH.'classes/LocaleList.php';
 require_once BASEPATH.'classes/Locale.php';
 
 error_reporting(E_ALL);
-define('LANGSTRING_BUTTON_ADD_NEW_VALUE', 'Ajouter une chaîne supplémentaire');
 
 /** Représente un Langstring en particulier, ne créez pas un objet langstrings si wous n'en avez pas spécifiquement besoin 
  */
@@ -41,7 +41,7 @@ class Langstring extends Content
 	{
 		parent :: __construct($content_id);
 		global $db;
-		$this->mBd=&$db;
+		$this->mBd = & $db;
 	}
 
 	/**Retourne la première chaîne disponible dans la langue par défaut de l'usager (si disponible), sinon dans la même langue majeure, sinon la première chaîne disponible
@@ -53,7 +53,7 @@ class Langstring extends Content
 		//Get user's prefered language
 
 		$sql = "SELECT value, locales_id, \n";
-		$sql .= Locale :: getSqlCaseStringSelect(User::getCurrentUser()->getPreferedLocale());
+		$sql .= Locale :: getSqlCaseStringSelect(User :: getCurrentUser()->getPreferedLocale());
 		$sql .= " as score FROM langstring_entries WHERE langstring_entries.langstrings_id = '{$this->id}' ORDER BY score LIMIT 1";
 		$this->mBd->ExecSqlUniqueRes($sql, $row, false);
 		if ($row == null)
@@ -72,7 +72,7 @@ class Langstring extends Content
 				 * @param $locale La langue régionale de la chaîne ajoutée, exemple: 'fr_CA', peut être NULL
 				 * @return bollean, true si une chaîne a été ajoutée à la base de donnée, false autrement.
 				 */
-	function AddString($string, $locale, $allow_empty_string=false)
+	function addString($string, $locale, $allow_empty_string = false)
 	{
 		$retval = false;
 		$id = 'NULL';
@@ -89,7 +89,7 @@ class Langstring extends Content
 		}
 		return $retval;
 	}
-	
+
 	/** Updates the string associated with the locale
 	 * @param $string La chaîne de caractère à ajouter.  Si la chaîne est vide ('') ou null, la fonction retourne sans toucher à la base de donnée
 	 * @param $locale La langue régionale de la chaîne ajoutée, exemple: 'fr_CA', peut être NULL
@@ -109,10 +109,10 @@ class Langstring extends Content
 			$string = $this->mBd->EscapeString($string);
 			// If the update returns 0 ( no update ), try inserting the record
 			$this->mBd->ExecSqlResUnique("SELECT * FROM langstring_entries WHERE locales_id = $id AND langstrings_id = '$this->id'", $row, false);
-			if($row != null)
+			if ($row != null)
 				$this->mBd->ExecSqlUpdate("UPDATE langstring_entries SET value = '$string' WHERE langstrings_id = '$this->id' AND locales_id = $id", false);
 			else
-				$this->AddString($string, $locale);
+				$this->addString($string, $locale);
 			$retval = true;
 		}
 		return $retval;
@@ -122,94 +122,76 @@ class Langstring extends Content
 				@param type_interface SIMPLE pour éditer un seul champ, COMPLETE pour voir toutes les chaînes, LARGE pour avoir un textarea.
 				@param num_nouveau Nombre de champ à afficher pour entrer de nouvelles chaîne en une seule opération
 				*/
-	function getAdminInterface($type_interface = 'LARGE', $num_nouveau = 1)
+	function getAdminUI($type_interface = 'LARGE', $num_nouveau = 1)
 	{
-		$html='';
-		$html .= "<div class='admin_container'>\n";
-		$html .= "<div class='admin_class'>Langstring (".get_class($this)." instance)</div>\n";
+		$html = '';
+				$html .= "<div class='admin_class'>Langstring (".get_class($this)." instance)</div>\n";
+				$html .= "<div class='admin_section_container'>\n";
+
 		
+
 		$liste_languages = new LocaleList();
 		$sql = "SELECT * FROM langstring_entries WHERE langstring_entries.langstrings_id = '$this->id' ORDER BY locales_id";
 		$this->mBd->ExecSql($sql, $result, FALSE); //echo "type_interface: $type_interface\n";
-		
-		$html .= "<TABLE class='spreadsheet'>";
-		if ($type_interface == 'COMPLETE')
-		{
-			$html .=  "<TR class='spreadsheet'>\n";
-			$html .=  "<TH class='spreadsheet'>Language</TH>\n";
-			$html .=  "<TH class='spreadsheet'>Chaîne</TH>\n";
-			$html .=  "<TH class='spreadsheet'>Effacer sous-chaîne #</TH>\n";
-			$html .=  "</TR>\n";
-		}
-		
+
+		/*		if ($type_interface == 'COMPLETE')
+				{
+					$html .=  "<TR class='spreadsheet'>\n";
+					$html .=  "<TH class='spreadsheet'>Language</TH>\n";
+					$html .=  "<TH class='spreadsheet'>Chaîne</TH>\n";
+					$html .=  "<TH class='spreadsheet'>Effacer sous-chaîne #</TH>\n";
+					$html .=  "</TR>\n";
+				}*/
+		$html .= "<ul class='admin_section_list'>\n";
 		if ($result != null)
 		{
 			while (list ($key, $value) = each($result))
 			{
-				$select = $liste_languages->GenererFormSelect("$value[locales_id]", "langstrings_".$this->id."_substring_$value[langstring_entries_id]_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
+				$html .= "<li class='admin_section_list_item'>\n";
+								$html .= "<div class='admin_section_data'>\n";
+								$html .= $liste_languages->GenererFormSelect("$value[locales_id]", "langstrings_".$this->id."_substring_$value[langstring_entries_id]_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
 				if ($type_interface == 'LARGE')
 				{
-					$html .=  "<TR class='spreadsheet' ><TD class='spreadsheet' colspan=2>$select<br>\n";
-					$html .=  "<textarea name='langstrings_".$this->id."_substring_$value[langstring_entries_id]_string' cols='50' rows='3'>".htmlspecialchars($value['value'], ENT_QUOTES, 'UTF-8')."</textarea>\n";
+					$html .= "<textarea name='langstrings_".$this->id."_substring_$value[langstring_entries_id]_string' cols='60' rows='3'>".htmlspecialchars($value['value'], ENT_QUOTES, 'UTF-8')."</textarea>\n";
 				}
 				else
 				{
-					$html .=  "<TR class='spreadsheet' ><TD class='spreadsheet'>$select</TD><TD class='spreadsheet'>\n";
-					$html .=  "<input type='text' name='langstrings_".$this->id."_substring_$value[langstring_entries_id]_string' size='44' value='".htmlspecialchars($value['value'], ENT_QUOTES, 'UTF-8')."'>\n";
+					$html .= "<input type='text' name='langstrings_".$this->id."_substring_$value[langstring_entries_id]_string' size='44' value='".htmlspecialchars($value['value'], ENT_QUOTES, 'UTF-8')."'>\n";
 				}
-				$html .=  "</TD>\n";
-				$html .=  "<TD class='spreadsheet'>";
-						//"<input type='checkbox' name='langstrings_".$this->id."_substring_$value[langstring_entries_id]_erase' value='true'>\n";
-				if ($type_interface != 'COMPLETE')
-				{
-					$name = "langstrings_".$this->id."_substring_$value[langstring_entries_id]_erase";
-					$html .=  "<input type='submit' name='$name' value='"._("Delete")."' onclick='submit();'>";
-				}
-				else
-				{
-					$html .=  "$value[langstring_entries_id]\n";
-				}
-				$html .=  "</TD></TR>\n";
-			}
-		}
-		
-		$html .=  "<TR class='spreadsheet'><TD class='spreadsheet' colspan=3>\n";
-		$name = "langstrings_".$this->id."_num_new_entry"; //echo "<TD class='spreadsheet'><input type='text' name='$name' size='30' value='0'></TD></TR>\n";
-		$html .=  "<input type='hidden'  value=''>\n";
-		$html .=  "<input type='submit' name='$name' value='".LANGSTRING_BUTTON_ADD_NEW_VALUE."' onclick='submit();'>";
-		$html .=  "</td></tr>";
-
-		if ($result == null)
-		{ //Nouvelles chaîne(s)
-			for ($i = 1; $i <= $num_nouveau; $i ++)
-			{
-				global $session;
-				$locale = $session->get('SESS_LANGUAGE_VAR');
-				$select = $liste_languages->GenererFormSelect($locale, "langstrings_".$this->id."_substring_new".$i."_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
-				if ($type_interface == 'LARGE')
-				{
-					$html .=  "<TR class='spreadsheet' ><TD class='spreadsheet' colspan=2>$select\n";
-					$html .=  "<textarea name='langstrings_".$this->id."_substring_new".$i."_string' cols='60' rows='3'></textarea>\n";
-				}
-				else
-				{
-					$html .=  "<TR class='spreadsheet' ><TD class='spreadsheet'>$select</TD><TD class='spreadsheet'>\n";
-					$html .=  "<input type='text' name='langstrings_".$this->id."_substring_new".$i."_string' size='44' value=''>\n";
-				}
-				$html .=  "</TD>\n";
-				$html .=  "<TD class='spreadsheet'>(Chaîne sera ajoutée)</TD>\n";
-				$html .=  "</TR>\n";
+								$html .= "</div>\n";
+								$html .= "<div class='admin_section_tools'>\n";
+				$name = "langstrings_".$this->id."_substring_$value[langstring_entries_id]_erase";
+				$html .= "<input type='submit' name='$name' value='"._("Delete string")."' onclick='submit();'>";
+								$html .= "</div>\n";
+								$html .= "</li>\n";
 			}
 		}
 
-		$html .=  "</TABLE>";
-				$html .=  "</div>";
-		return parent::getAdminInterface($html);
+		//Nouvelles chaîne
+		$locale = User :: getCurrentUser()->getPreferedLocale();
+		$html .= "<li class='admin_section_list_item'>\n";
+		$html .= $liste_languages->GenererFormSelect($locale, "langstrings_".$this->id."_substring_new_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
+		$new_substring_name = "langstrings_".$this->id."_substring_new_string";
+		if ($type_interface == 'LARGE')
+		{
+			$html .= "<textarea name='$new_substring_name' cols='60' rows='3'></textarea>\n";
+		}
+		else
+		{
+			$html .= "<input type='text' name='$new_substring_name' size='44' value=''>\n";
+		}
+		$new_substring_submit_name = "langstrings_".$this->id."_add_new_entry";
+		$html .= "<input type='submit' name='$new_substring_submit_name' value='"._("Add new string")."' onclick='submit();'>";
+		$html .= "</li>\n";
+
+		$html .= "</ul>\n";
+		$html .= "</div>\n";
+		return parent :: getAdminUI($html);
 	}
 
-	function processAdminInterface()
+	function processAdminUI()
 	{
-		parent::processAdminInterface();
+		parent :: processAdminUI();
 		$generateur_form_select = new FormSelectGenerator();
 		$sql = "SELECT * FROM langstring_entries WHERE langstring_entries.langstrings_id = '$this->id'";
 		$this->mBd->ExecSql($sql, $result, FALSE);
@@ -236,45 +218,25 @@ class Langstring extends Content
 					$this->mBd->ExecSqlUpdate("UPDATE langstring_entries SET locales_id = $language , value = '$string' WHERE langstrings_id = '$this->id' AND langstring_entries_id='$value[langstring_entries_id]'", FALSE);
 				}
 			}
-		} //Nouvelles chaîne(s) déja tapées
-		for ($i = 1; isSet ($_REQUEST["langstrings_".$this->id."_substring_new".$i."_string"]); $i ++)
-		{
-			if ($_REQUEST["langstrings_".$this->id."_substring_new".$i."_string"] != '') //Seulement si il y a effectivement du texte dans la nouvelle chaîne
-			{
-				$language = $generateur_form_select->getResult("langstrings_".$this->id."_substring_new".$i."_language", 'Langstring::AfficherInterfaceAdmin');
-				if (empty ($language))
-				{
-					$language = null;
-				}
-				$string = $this->mBd->EscapeString($_REQUEST["langstrings_".$this->id."_substring_new".$i."_string"]);
-				$this->AddString($string, $language);
-			}
-		} //Nouvelles chaînes vides
-		$name = "langstrings_".$this->id."_num_new_entry";
-		if (isset ($_REQUEST[$name]) && $_REQUEST[$name] == LANGSTRING_BUTTON_ADD_NEW_VALUE)
-		{
-			$num_new_entry = 1;
 		}
-		else
-			if (isset ($_REQUEST[$name]))
-			{
-				$num_new_entry = $_REQUEST[$name];
-			}
-			else
-			{
-				$num_new_entry = 0;
-			}
-		for ($i = 1; $i <= $num_new_entry; $i ++)
+		//Ajouter nouvelles chaîne(s) si champ non vide ou si l'usager a appuyé sur le bouton ajouter
+		$new_substring_name = "langstrings_".$this->id."_substring_new_string";
+		$new_substring_submit_name = "langstrings_".$this->id."_add_new_entry";
+		if ((isset ($_REQUEST[$new_substring_submit_name]) && $_REQUEST[$new_substring_submit_name] == true) || !empty ($_REQUEST[$new_substring_name]))
 		{
-			$string = '';
-			$language = User::getCurrentUser()->getPreferedLocale();
-			$this->AddString($string, $language, true);
+
+			$language = $generateur_form_select->getResult("langstrings_".$this->id."_substring_new_language", 'Langstring::AfficherInterfaceAdmin');
+			if (empty ($language))
+			{
+				$language = null;
+			}
+			$this->addString($_REQUEST[$new_substring_name], $language, true);
 		}
 	}
 
 	/**Affiche l'interface usager de l'objet
 			*/
-			
+
 	/** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
 	 * @param $subclass_admin_interface Html content of the interface element of a children
 	 * @return The HTML fragment for this interface */
@@ -286,64 +248,7 @@ class Langstring extends Content
 		$html .= $this->getString();
 		$html .= $subclass_user_interface;
 		$html .= "</div>\n";
-		return parent::getUserUI($html);
-	}
-
-	/**Exporte l'élément dans un format d'échange
-			@param $export_format format de la sortie
-			@param $document Le document auquel la sortie doit être ajouté.  Le type peut varier
-			@param $parent Le parent de l'élément à ajouter.  Le type peut varier	
-			*/
-	function Export($export_format, & $document, $parent)
-	{
-
-		$sql = "SELECT * FROM langstring_entries WHERE langstring_entries.langstrings_id = '$this->id'";
-		$this->mBd->ExecSql($sql, $result, FALSE);
-		if ($result != null)
-		{
-			if ($export_format == 'LOM')
-			{
-				while (list ($key, $value) = each($result))
-				{
-					$langstring = $document->createElementNS(LOM_EXPORT_NS,"string");
-					$langstring = $parent->appendChild($langstring);
-					if (!empty ($value['locales_id']))
-					{
-						$locale=new Locale($value['locales_id']);
-						$langstring->setAttribute('language', $locale->GetId());
-					}
-					$textnode = $document->createTextNode($value['value']);
-					$langstring->appendChild($textnode);
-				}
-			}
-			elseif ($export_format == 'RSS')
-			{
-				while (list ($key, $value) = each($result))
-				{
-					$textnode = $document->createTextNode($value['value']);
-					$parent->appendChild($textnode);
-				}
-			}
-			elseif ($export_format == 'VDEX')
-			{
-				while (list ($key, $value) = each($result))
-				{
-					$langstring = $document->createElementNS(VDEX_EXPORT_NS, "langstring");
-					$langstring = $parent->appendChild($langstring);
-					if (!empty ($value['locales_id']))
-					{
-						$locale=new Locale($value['locales_id']);
-						$langstring->setAttribute('language', $locale->GetId());
-					}
-					$textnode = $document->createTextNode($value['value']);
-					$langstring->appendChild($textnode);
-				}
-			}
-			else
-			{
-				echo "<h1> Langstring :: Export() : Format d'exportation inconnu!</h1>\n";
-			}
-		}
+		return parent :: getUserUI($html);
 	}
 
 	/**Retourne le nombre de sous-chaînes du langstring
@@ -364,63 +269,14 @@ class Langstring extends Content
 		$retval = true;
 		$sql = "SELECT count(langstring_entries_id) FROM langstring_entries WHERE langstring_entries.langstrings_id = $this->id AND value IS NOT NULL AND value!=''";
 		$this->mBd->ExecSqlResUnique($sql, $row, false);
-		
-		if ($row!=null && $row['count'] > 0)
+
+		if ($row != null && $row['count'] > 0)
 		{
 			$retval = false;
 		}
-		
+
 		return $retval;
 	}
-
-	/** Import
-	 * @param Langstring ID, "NEW" for new entry
-	 * @param import_format LOM or VDEX
-	 * @param langstrings the DOMNode object
-	 * @param document : the DOMDocument object
-	 */
-	public static function Import($id, $import_format, $langstrings, $document)
-	{
-		if ($import_format == 'LOM')
-		{
-			$xpath = new DOMXPath($document);
-			$xpath->registerNamespace("dns", "http://ltsc.ieee.org/xsd/LOM");
-			
-			$node_list = $xpath->query("dns:string", $langstrings);
-			$str = new Langstring($id);
-			foreach ($node_list as $node)
-			{
-				$attr_list = $xpath->query("@language", $node);
-				$langstring_lang = "";
-				foreach ($attr_list as $attr)
-					$langstring_lang = $str->mBd->EscapeString($attr->nodeValue);
-				$str->AddString($node->nodeValue, $langstring_lang);
-			}
-			return $str;
-		}
-		else if ($import_format == 'VDEX')
-		{
-			$xpath = new DOMXPath($document);
-			$xpath->registerNamespace("dns", "http://www.imsglobal.org/xsd/imsvdex_v1p0");
-			
-			$node_list = $xpath->query("dns:langstring", $langstrings);
-			$str = new Langstring($id);
-			$langstring_lang = "";
-			foreach ($node_list as $node)
-			{
-				$attr_list = $xpath->query("@language", $node);
-				foreach ($attr_list as $attr)
-					$langstring_lang = $str->mBd->EscapeString($attr->nodeValue);
-				$str->AddString($node->nodeValue, $langstring_lang);
-			}
-			return $str;
-		}
-		else
-		{
-			return "Import Identifier :: Uknown format : $import_format ";
-		}
-	}
-
 
 } /* end class Langstring */
 ?>
