@@ -178,7 +178,7 @@ class ContentGroup extends Content
 				$html .= "</li>\n";
 			}
 						$html .= "<li class='admin_section_list_item'>\n";
-						$html .= self :: getNewContentInterface("content_group_{$this->id}_new_element");
+						$html .= self :: getNewContentUI("content_group_{$this->id}_new_element");
 										$html .= "</li>\n";
 		$html .= "</ul>\n";
 		$html .= "</div>\n";
@@ -215,8 +215,8 @@ class ContentGroup extends Content
 				}
 			}
 
-/* We explicitely call the ContentGroupElement version of processNewContentInterface */
-		$new_element = ContentGroupElement :: processNewContentInterface("content_group_{$this->id}_new_element", $this);
+/* We explicitely call the ContentGroupElement version of processNewContentUI */
+		$new_element = ContentGroupElement :: processNewContentUI("content_group_{$this->id}_new_element", $this);
 	}
 	/**Get all elements
 	 * @return an array of ContentGroupElement or an empty arrray */

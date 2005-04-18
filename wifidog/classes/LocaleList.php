@@ -1,4 +1,5 @@
 <?php
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -39,8 +40,8 @@ class LocaleList
 	function __construct()
 	{
 		//parent::__construct();
-				global $db;
-		$this->mBd=&$db;//for backward compatibility
+		global $db;
+		$this->mBd = & $db; //for backward compatibility
 	}
 
 	/**Indique si la clef primaire de l'objet est une chaîne de caractère.
@@ -62,50 +63,61 @@ class LocaleList
 	{
 		$retval = "";
 		$sql = "SELECT * FROM locales ORDER BY locales_id";
-		$this -> mBd -> ExecSql($sql, $resultats, FALSE);
+		$this->mBd->ExecSql($sql, $resultats, FALSE);
 
 		$retval = "";
-		$retval.= "<select name='$prefixeNomSelectUsager$prefixeNomSelectObjet'>\n";
+		$retval .= "<select name='$prefixeNomSelectUsager$prefixeNomSelectObjet'>\n";
 		if ($permetValeurNulle == true)
 		{
-			$retval.= "<option value=''>---</option>\n";
+			$retval .= "<option value=''>---</option>\n";
 		}
 		//echo "$selectedClefPrimaire";
 		while (list ($key, $value) = each($resultats))
 		{
-			$retval.= "<option ";
+			$retval .= "<option ";
 
 			//echo "$value[$champClefPrimaire],$selectedClefPrimaire<br>";
-			if ($value['locales_id'] == $selectedClefPrimaire || $selectedClefPrimaire == null && $selectedClefPrimaire == $this -> GetDefault())
+			if ($value['locales_id'] == $selectedClefPrimaire || $selectedClefPrimaire == null && $selectedClefPrimaire == $this->GetDefault())
 			{
-				$retval.= "SELECTED ";
+				$retval .= "SELECTED ";
 			}
-			$retval.= "value='$value[locales_id]'>$value[locales_id]";
-			$retval.= "</option>\n";
+			$retval .= "value='$value[locales_id]'>$value[locales_id]";
+			$retval .= "</option>\n";
 		}
-		$retval.= "</select>\n";
+		$retval .= "</select>\n";
 		return $retval;
 	}
-
-
 
 	/**Retourne le language par défaut, selon les préférences de l'usager
 	*/
 	function GetDefault()
-	{global $session;
-		
-		return User::getCurrentUser()->getPreferedLocale();
+	{
+		global $session;
+
+		if ($user = User :: getCurrentUser())
+		{
+			$locale = $user->getPreferedLocale();
+		}
+		else
+		{
+			$locale = $session->get('SESS_LANGUAGE_VAR');
+			if (empty ($locale))
+			{
+				$locale = DEFAULT_LANG;
+			}
+		}
+		return $locale;
 	}
-	
+
 	/**Retourne la liste de toutes les clef primairess
 	*/
 	function GetListeClefsPrimaires()
 	{
-		$this -> mBd -> ExecuterSql("SELECT locales_id FROM locales", $resultats, FALSE);
+		$this->mBd->ExecuterSql("SELECT locales_id FROM locales", $resultats, FALSE);
 
 		foreach ($resultats as $resultat)
 		{
-			$retval[]=$resultat['locales_id'];
+			$retval[] = $resultat['locales_id'];
 		}
 		return $retval;
 	}
@@ -116,20 +128,20 @@ class LocaleList
 	@param $parent Le parent de l'élément à ajouter.  Le type peut varier	
 	@param $entree ID de l'entree de vocabulaire
 	*/
-	function Export($export_format, &$document, $parent, $entree = null)
-	{				
+	function Export($export_format, & $document, $parent, $entree = null)
+	{
 		if ($entree != null)
 		{
 			$langue = new Locale($entree);
-			$langue -> Export($export_format, $document, $parent);
+			$langue->Export($export_format, $document, $parent);
 		}
 	}
-	
+
 	function isEmpty()
 	{
 		return false;
 	}
-	
+
 	/**
 	 * By definition it cannot be considerend empty, so it's always compliant'
 	 * @return boolean
@@ -138,6 +150,7 @@ class LocaleList
 	{
 		return COMPLIANT_MASK;
 	}
-	
+
 } /* end class LocaleList */
 ?>
+

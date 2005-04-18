@@ -30,7 +30,7 @@ require_once BASEPATH.'classes/Locale.php';
 
 error_reporting(E_ALL);
 
-/** Représente un Langstring en particulier, ne créez pas un objet langstrings si wous n'en avez pas spécifiquement besoin 
+/** Représente un Langstring en particulier, ne créez pas un objet langstrings si vous n'en avez pas spécifiquement besoin 
  */
 class Langstring extends Content
 {
@@ -53,7 +53,7 @@ class Langstring extends Content
 		//Get user's prefered language
 
 		$sql = "SELECT value, locales_id, \n";
-		$sql .= Locale :: getSqlCaseStringSelect(User :: getCurrentUser()->getPreferedLocale());
+		$sql .= Locale :: getSqlCaseStringSelect(LocaleList::GetDefault());
 		$sql .= " as score FROM langstring_entries WHERE langstring_entries.langstrings_id = '{$this->id}' ORDER BY score LIMIT 1";
 		$this->mBd->ExecSqlUniqueRes($sql, $row, false);
 		if ($row == null)
@@ -168,7 +168,7 @@ class Langstring extends Content
 		}
 
 		//Nouvelles chaîne
-		$locale = User :: getCurrentUser()->getPreferedLocale();
+		$locale =  LocaleList::GetDefault();
 		$html .= "<li class='admin_section_list_item'>\n";
 		$html .= $liste_languages->GenererFormSelect($locale, "langstrings_".$this->id."_substring_new_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
 		$new_substring_name = "langstrings_".$this->id."_substring_new_string";

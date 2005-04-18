@@ -31,12 +31,12 @@ class ContentGroupElement extends Content
 {
 	private $content_group_element_row;
 
-	/** Thelike the same class as defined in Content, this methos will create a ContentGroupElement based on the content type specified by getNewContentInterface
+	/** Like the same method as defined in Content, this method will create a ContentGroupElement based on the content type specified by getNewContentUI
 	 * @param $user_prefix A identifier provided by the programmer to recognise it's generated form
 	 * @param $content_group Must be present
 	 * @return the ContentGroup object, or null if the user didn't greate one
 	 */
-	static function processNewContentInterface($user_prefix, ContentGroup $content_group)
+	static function processNewContentUI($user_prefix, ContentGroup $content_group)
 	{
 		global $db;
 		$content_group_element_object = null;
@@ -49,8 +49,6 @@ class ContentGroupElement extends Content
 			$display_order = $max_display_order_row['max_display_order'] + 1;
 
 			$name = "get_new_content_{$user_prefix}_content_type";
-			$content_type = FormSelectGenerator :: getResult($name, null);
-			$displayed_content_object = self :: createNewContent($content_type);
 
 			$content_id = get_guid();
 			$content_type = 'ContentGroupElement';
@@ -66,7 +64,13 @@ class ContentGroupElement extends Content
 				throw new Exception(_('Unable to insert new content into database!'));
 			}
 			$content_group_element_object = self :: getContent($content_id);
+			
+			$content_type = FormSelectGenerator :: getResult($name, null);
+			if($content_type!='ContentGroupElement')
+			{
+			$displayed_content_object = self :: createNewContent($content_type);
 			$content_group_element_object->replaceDisplayedContent($displayed_content_object);
+			}
 		}
 		return $content_group_element_object;
 	}
@@ -83,12 +87,7 @@ class ContentGroupElement extends Content
 		$db->ExecSqlUniqueRes($sql_select, $row, false);
 		if ($row == null)
 		{
-			$db->ExecSqlUniqueRes($sql_select, $row, false);
-			if ($row == null)
-			{
 				throw new Exception(_("The content with the following id could not be found in the database: ").$content_id);
-			}
-
 		}
 		$this->content_group_element_row = $row;
 
@@ -163,7 +162,7 @@ class ContentGroupElement extends Content
 		$html .= "<span class='admin_section_title'>"._("Displayed content:")."</span>\n";
 		if (empty ($this->content_group_element_row['displayed_content_id']))
 		{
-			$html .= self :: getNewContentInterface("content_group_element_{$this->id}_new_displayed_content");
+			$html .= self :: getNewContentUI("content_group_element_{$this->id}_new_displayed_content");
 		}
 		else
 		{
@@ -247,7 +246,7 @@ class ContentGroupElement extends Content
 		/* displayed_content_id */
 		if (empty ($this->content_group_element_row['displayed_content_id']))
 		{
-			$displayed_content = Content :: processNewContentInterface("content_group_element_{$this->id}_new_displayed_content");
+			$displayed_content = Content :: processNewContentUI("content_group_element_{$this->id}_new_displayed_content");
 			if ($displayed_content != null)
 			{
 				$displayed_content_id = $displayed_content->GetId();
@@ -290,6 +289,15 @@ class ContentGroupElement extends Content
 		}
 	}
 
+	/** Override the method in Content.  The owners of the content element are always considered to be the ContentGroup's
+	 * @param $user User object:  the user to be tested.
+	 * @return true if the user is a owner, false if he isn't of the user is null */
+	public function isOwner($user)
+	{
+		$content_group = Content::getContent($this->content_group_element_row['content_group_id']);
+		return $content_group->isOwner($user);
+	}
+	
 	/** Delete this Content from the database 
 	 * @todo Implement proper Access control */
 	public function delete()

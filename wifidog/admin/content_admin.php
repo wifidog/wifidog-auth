@@ -1,4 +1,5 @@
 <?php
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -24,7 +25,7 @@
  */
 define('BASEPATH', '../');
 require_once 'admin_common.php';
-define ('CONTENT_ADMIN_HREF', 'content_admin.php');
+define('CONTENT_ADMIN_HREF', 'content_admin.php');
 require_once BASEPATH.'classes/Content.php';
 require_once BASEPATH.'classes/Style.php';
 
@@ -33,44 +34,49 @@ $html = '';
 
 if (empty ($_REQUEST['action']))
 {
-	$_REQUEST['action']='list_all_content';
+	$_REQUEST['action'] = 'list_all_content';
 }
 
 if ($_REQUEST['action'] == 'list_all_content')
 {
-	$sql = "SELECT * FROM content";
+	$sql = "SELECT * FROM content WHERE is_persistent=TRUE";
 	$db->ExecSql($sql, $results, false);
-	if($results!=null)
+	if ($results != null)
 	{
-	echo "<table>\n";
-	echo "<tr><th>"._("Title")."</th><th>"._("Content type")."</th><th>"._("Description")."</th></tr>\n";
-		
-	foreach ($results as $row)
-	{
-		if(!empty($row['title']))
+		echo "<table>\n";
+		echo "<tr><th>"._("Title")."</th><th>"._("Content type")."</th><th>"._("Description")."</th></tr>\n";
+
+		foreach ($results as $row)
 		{
-		$title = Content::getContent($row['title']);
-		$title_ui = $title->getUserUI();
+			$content=Content :: getContent($row['content_id']);
+			if (!empty ($row['title']))
+			{
+				$title = Content :: getContent($row['title']);
+				$title_ui = $title->getUserUI();
+			}
+			else
+			{
+				$title_ui = null;
+			}
+
+			if (!empty ($row['description']))
+			{
+				$description = Content :: getContent($row['description']);
+				$description_ui = $description->getUserUI();
+			}
+			else
+			{
+				$description_ui = null;
+			}
+			$href = "?content_id=$row[content_id]&action=edit";
+			echo "<tr><td>$title_ui</td><td><a href='$href'>$row[content_type]</a></td><td>$description_ui</td>\n";
+			$href = "?content_id=$row[content_id]&action=delete";
+			if($content->isOwner(User::getCurrentUser()))
+			echo "<td><a href='$href'>Delete</a></td>";
+			echo "</tr>\n";
+
 		}
-		else
-		{
-			$title_ui =null;
-		}
-		
-				if(!empty($row['description']))
-		{
-		$description = Content::getContent($row['description']);
-		$description_ui = $description->getUserUI();
-		}
-		else
-		{
-			$description_ui =null;
-		}
-		$href = "?content_id=$row[content_id]&action=edit";
-		echo "<tr><td>$title_ui</td><td><a href='$href'>$row[content_type]</a></td><td>$description_ui</td></tr>\n";
-		
-	}
-			echo "</table>\n";
+		echo "</table>\n";
 	}
 	else
 	{
@@ -81,67 +87,42 @@ if ($_REQUEST['action'] == 'list_all_content')
 	$html .= "<input type=submit name='new_submit' value='"._("Add new content")."'>\n";
 	$html .= '</form>';
 }
-	if ($_REQUEST['action'] == 'save')
+if ($_REQUEST['action'] == 'save')
+{
+	$content = Content :: getContent($_REQUEST['content_id']);
+	$html .= $content->processAdminUI();
+	$_REQUEST['action'] = 'edit';
+}
+
+if ($_REQUEST['action'] == 'edit')
+{
+	if (!empty ($_REQUEST['new_submit']))
 	{
-			$content = Content :: getContent($_REQUEST['content_id']);
-			$html .= $content->processAdminUI();
-			$_REQUEST['action'] = 'edit';
+		$content = Content :: createNewContent();
+		$content->setIsPersistent(true);
 	}
-
-
-	if ($_REQUEST['action'] == 'edit')
+	else
 	{
-		if (!empty ($_REQUEST['new_submit']))
-		{
-			$content = Content :: createNewContent();
-		}
-		else
-		{
-			$content = Content :: getContent($_REQUEST['content_id']);
-		}
+		$content = Content :: getContent($_REQUEST['content_id']);
+	}
 	$html .= "<form action='".CONTENT_ADMIN_HREF."' method='post'>";
 	$html .= "<input type='hidden' name='content_id' value='".$content->GetId()."'>\n";
 	$html .= $content->getAdminUI();
 	$html .= "<input type='hidden' name='action' value='save'>\n";
 	$html .= "<input type=submit name='save_submit' value='"._("Save")."'>\n";
 	$html .= '</form>';
+}
 
-	}
-	
-	if(false)
-	{
-		if ($user == null)
-		{
-			echo "<H1>Erreur, l'usager ".$_REQUEST['user_admin_username_orig']." est introuvable</H1>\n";
-		}
-		else
-		{
-			if (!empty ($_REQUEST['action']) && $_REQUEST['action'] == 'save')
-			{
-				$user->TraiterInterfaceAdmin();
-			}
+if ($_REQUEST['action'] == 'delete')
+{
 
-			if ($_REQUEST['action'] == 'save' && !empty ($_REQUEST['delete_action']) && !empty ($_REQUEST['delete_confirm']) && $_REQUEST['delete_confirm'] == 'true')
-			{
-				echo "<H1>Je tente d'effacer la l'administrateur</H1>\n";
-				$user->Delete();
-				echo "<H1>Terminé, si vous ne voyez rien plus haut, c'est que l'administrateur a été effacée avec succès.</H1>\n";
-			}
-			else
-			{
-				echo '<form action="" method="get">';
-				$user->AfficherInterfaceAdmin();
-				echo "<input type='hidden' name='action' value='save'>\n";
-				echo "<input type='hidden' name='user_admin_username_orig' value='".$user->GetId()."'>\n";
-				echo "<input type=submit name='save_action' value='Enregistrer'>\n";
-				echo "<input type=submit name='delete_action' value='Effacer'><input type='checkbox' name='delete_confirm' value='true'>Oui, je suis certain.\n";
+		$content = Content :: getContent($_REQUEST['content_id']);
+	$content->delete();
+	$html .= "Content deleted";
+}
 
-				echo '</form>';
-			}
-		}
-
-	}
-			echo $html;
-		$smarty->display("templates/footer.html");
+echo $html;
+$smarty->display("templates/footer.html");
 ?>
+
 

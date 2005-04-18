@@ -110,10 +110,10 @@ class Content
 			{
 				if ($file != '.' && $file != '..')
 				{
-					if(preg_match("/^.*\.php$/", $file)>0)
-					{					
-					$tab[$i] = $file;
-					$i ++;
+					if (preg_match("/^.*\.php$/", $file) > 0)
+					{
+						$tab[$i] = $file;
+						$i ++;
 					}
 				}
 			}
@@ -133,7 +133,7 @@ class Content
 	 * @param $content_type If set, the created content will be of this type, otherwise, the user will have to chose
 	 * @return html markup
 	 */
-	static function getNewContentInterface($user_prefix, $content_type = null)
+	static function getNewContentUI($user_prefix, $content_type = null)
 	{
 		global $db;
 		$html = '';
@@ -178,7 +178,7 @@ class Content
 	 * @param $user_prefix A identifier provided by the programmer to recognise it's generated form
 	 * @return the Content object, or null if the user didn't greate one
 	 */
-	static function processNewContentInterface($user_prefix)
+	static function processNewContentUI($user_prefix)
 	{
 		$object = null;
 		$name = "get_new_content_{$user_prefix}_add";
@@ -244,36 +244,61 @@ class Content
 		global $db;
 		$content_id = "'".$this->id."'";
 		$user_id = "'".$db->EscapeString($user->getId())."'";
-		if ($is_author == true)
-		{
-			$is_author = 'TRUE';
-		}
-		else
-		{
-			$is_author = 'FALSE';
-		}
+		$is_author ? $is_author = 'TRUE' : $is_author = 'FALSE';
 		$sql = "INSERT INTO content_has_owners (content_id, user_id, is_author) VALUES ($content_id, $user_id, $is_author)";
 
 		if (!$db->ExecSqlUpdate($sql, false))
 		{
-			throw new Exception(_('Unable to insert the new Owner into database!'));
+			throw new Exception(_('Unable to insert the new Owner into database.'));
+		}
+
+		return true;
+	}
+
+	/** Remove an owner of the content
+	 * @param $user The user to be removed from the owners list
+	 */
+	public function deleteOwner(User $user, $is_author = false)
+	{
+		global $db;
+		$content_id = "'".$this->id."'";
+		$user_id = "'".$db->EscapeString($user->getId())."'";
+
+		$sql = "DELETE FROM content_has_owners WHERE content_id=$content_id AND user_id=$user_id";
+
+		if (!$db->ExecSqlUpdate($sql, false))
+		{
+			throw new Exception(_('Unable to remove the owner from the database.'));
 		}
 
 		return true;
 	}
 
 	/** Check if a user is one of the owners of the object
-	 * @return true on success, false on failure */
-	public function isOwner(User $user)
+	 * @param $user User object:  the user to be tested.
+	 * @return true if the user is a owner, false if he isn't of the user is null */
+	public function isOwner($user)
 	{
-		echo "<h1>WRITEME</h1>";
-		return false;
+		global $db;
+		$retval = false;
+		if ($user != null)
+		{
+			$user_id = $db->EscapeString($user->GetId());
+			$sql = "SELECT * FROM content_has_owners WHERE content_id='$this->id' AND user_id='$user_id'";
+			$db->ExecSqlUniqueRes($sql, $content_owner_row, false);
+			if ($content_owner_row != null)
+			{
+				$retval = true;
+			}
+		}
+
+		return $retval;
 	}
 	/** Get the authors of the Content
 	 * @return null or array of User objects */
 	public function getAuthors()
 	{
-		echo "<h1>WRITEME</h1>";
+		echo "<h1>getAuthors():WRITEME</h1>";
 		return false;
 	}
 	/** Retreives the id of the object 
@@ -295,20 +320,20 @@ class Content
 	 * @return The HTML fragment for this interface */
 	public function getUserUI($subclass_user_interface = null)
 	{
-				$html = '';
-						$html .= "<div class='user_ui_container'>\n";
+		$html = '';
+		$html .= "<div class='user_ui_container'>\n";
 		$html .= "<div class='user_ui_object_class'>Content (".get_class($this)." instance)</div>\n";
-						$html .= $subclass_user_interface;
+		$html .= $subclass_user_interface;
 		$html .= "</div>\n";
 		return $html;
 	}
-	
+
 	/** Retreives the admin interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
 	 * @param $subclass_admin_interface Html content of the interface element of a children
 	 * @return The HTML fragment for this interface */
 	public function getAdminUI($subclass_admin_interface = null)
 	{
-				global $db;
+		global $db;
 		$html = '';
 		$html .= "<div class='admin_container'>\n";
 		$html .= "<div class='admin_class'>Content (".get_class($this)." instance)</div>\n";
@@ -332,7 +357,7 @@ class Content
 				$html .= "<span class='admin_section_title'>"._("Title:")."</span>\n";
 				if (empty ($this->content_row['title']))
 				{
-					$html .= self :: getNewContentInterface("title_{$this->id}_new");
+					$html .= self :: getNewContentUI("title_{$this->id}_new");
 				}
 				else
 				{
@@ -344,23 +369,23 @@ class Content
 					$html .= "</div>\n";
 				}
 				$html .= "</div>\n";
-				
-		/* is_persistent */
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>Is persistent (reusable and read-only)?: </div>\n";		
-						$html .= "<div class='admin_section_data'>\n";		
-		$name = "content_".$this->id."_is_persistent";
-		$this->isPersistent()?$checked='CHECKED':$checked='';
-		$html .= "<input type='checkbox' name='$name' $checked>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
-		
+
+				/* is_persistent */
+				$html .= "<div class='admin_section_container'>\n";
+				$html .= "<div class='admin_section_title'>Is persistent (reusable and read-only)?: </div>\n";
+				$html .= "<div class='admin_section_data'>\n";
+				$name = "content_".$this->id."_is_persistent";
+				$this->isPersistent() ? $checked = 'CHECKED' : $checked = '';
+				$html .= "<input type='checkbox' name='$name' $checked>\n";
+				$html .= "</div>\n";
+				$html .= "</div>\n";
+
 				/* description */
 				$html .= "<div class='admin_section_container'>\n";
 				$html .= "<span class='admin_section_title'>"._("Description:")."</span>\n";
 				if (empty ($this->content_row['description']))
 				{
-					$html .= self :: getNewContentInterface("description_{$this->id}_new");
+					$html .= self :: getNewContentUI("description_{$this->id}_new");
 				}
 				else
 				{
@@ -378,7 +403,7 @@ class Content
 				$html .= "<span class='admin_section_title'>"._("Information on this project:")."</span>\n";
 				if (empty ($this->content_row['project_info']))
 				{
-					$html .= self :: getNewContentInterface("project_info_{$this->id}_new");
+					$html .= self :: getNewContentUI("project_info_{$this->id}_new");
 				}
 				else
 				{
@@ -396,7 +421,7 @@ class Content
 				$html .= "<span class='admin_section_title'>"._("Sponsor of this project:")."</span>\n";
 				if (empty ($this->content_row['sponsor_info']))
 				{
-					$html .= self :: getNewContentInterface("sponsor_info_{$this->id}_new");
+					$html .= self :: getNewContentUI("sponsor_info_{$this->id}_new");
 				}
 				else
 				{
@@ -409,6 +434,49 @@ class Content
 				}
 				$html .= "</div>\n";
 
+				/* content_has_owners */
+				$html .= "<div class='admin_section_container'>\n";
+				$html .= "<span class='admin_section_title'>"._("Content owner list")."</span>\n";
+				$html .= "<ul class='admin_section_list'>\n";
+
+				global $db;
+				$sql = "SELECT * FROM content_has_owners WHERE content_id='$this->id'";
+				$db->ExecSql($sql, $content_owner_rows, false);
+				if ($content_owner_rows != null)
+				{
+					foreach ($content_owner_rows as $content_owner_row)
+					{
+						$html .= "<li class='admin_section_list_item'>\n";
+						$html .= "<div class='admin_section_data'>\n";
+						$user = User :: getUserByID($content_owner_row['user_id']);
+
+						$html .= $user->getUserListUI();
+						$name = "content_".$this->id."_owner_".$user->GetId()."_is_author";
+						$html .= " Is content author? ";
+
+						$content_owner_row['is_author'] == 't' ? $checked = 'CHECKED' : $checked = '';
+						$html .= "<input type='checkbox' name='$name' $checked>\n";
+						$html .= "</div>\n";
+						$html .= "<div class='admin_section_tools'>\n";
+						$name = "content_".$this->id."_owner_".$user->GetId()."_remove";
+						$html .= "<input type='submit' name='$name' value='"._("Remove")."' onclick='submit();'>";
+						$html .= "</div>\n";
+						$html .= "</li>\n";
+					}
+				}
+
+				$html .= "<li class='admin_section_list_item'>\n";
+				$html .= "<div class='admin_section_data'>\n";
+				$html .= User :: getSelectUserUI("content_{$this->id}_new_owner");
+				$html .= "</div>\n";
+				$html .= "<div class='admin_section_tools'>\n";
+				$name = "content_{$this->id}_add_owner_submit";
+				$value = _("Add owner");
+				$html .= "<input type='submit' name='$name' value='$value' onclick='submit();'>";
+				$html .= "</div>\n";
+				$html .= "</li>\n";
+				$html .= "</ul>\n";
+				$html .= "</div>\n";
 			}
 		$html .= $subclass_admin_interface;
 		$html .= "</div>\n";
@@ -431,7 +499,7 @@ class Content
 				/* title */
 				if (empty ($this->content_row['title']))
 				{
-					$title = self :: processNewContentInterface("title_{$this->id}_new");
+					$title = self :: processNewContentUI("title_{$this->id}_new");
 					if ($title != null)
 					{
 						$title_id = $title->GetId();
@@ -452,15 +520,15 @@ class Content
 						$title->processAdminUI();
 					}
 				}
-				
-		/* is_persistent */
-		$name = "content_".$this->id."_is_persistent";
-		!empty($_REQUEST[$name])?$this->setIsPersistent(true):$this->setIsPersistent(false);
+
+				/* is_persistent */
+				$name = "content_".$this->id."_is_persistent";
+				!empty ($_REQUEST[$name]) ? $this->setIsPersistent(true) : $this->setIsPersistent(false);
 
 				/* description */
 				if (empty ($this->content_row['description']))
 				{
-					$description = self :: processNewContentInterface("description_{$this->id}_new");
+					$description = self :: processNewContentUI("description_{$this->id}_new");
 					if ($description != null)
 					{
 						$description_id = $description->GetId();
@@ -485,7 +553,7 @@ class Content
 				/* project_info */
 				if (empty ($this->content_row['project_info']))
 				{
-					$project_info = self :: processNewContentInterface("project_info_{$this->id}_new");
+					$project_info = self :: processNewContentUI("project_info_{$this->id}_new");
 					if ($project_info != null)
 					{
 						$project_info_id = $project_info->GetId();
@@ -510,7 +578,7 @@ class Content
 				/* sponsor_info */
 				if (empty ($this->content_row['sponsor_info']))
 				{
-					$sponsor_info = self :: processNewContentInterface("sponsor_info_{$this->id}_new");
+					$sponsor_info = self :: processNewContentUI("sponsor_info_{$this->id}_new");
 					if ($sponsor_info != null)
 					{
 						$sponsor_info_id = $sponsor_info->GetId();
@@ -531,10 +599,49 @@ class Content
 						$sponsor_info->processAdminUI();
 					}
 				}
+				/* content_has_owners */
+				$sql = "SELECT * FROM content_has_owners WHERE content_id='$this->id'";
+				$db->ExecSql($sql, $content_owner_rows, false);
+				if ($content_owner_rows != null)
+				{
+					foreach ($content_owner_rows as $content_owner_row)
+					{
+						$user = User :: getUserByID($content_owner_row['user_id']);
+						$user_id = $user->getId();
+						$name = "content_".$this->id."_owner_".$user->GetId()."_remove";
+						if (!empty ($_REQUEST[$name]))
+						{
+							$this->deleteOwner($user);
+						}
+						else
+						{
+													$name = "content_".$this->id."_owner_".$user->GetId()."_is_author";
+							$content_owner_row['is_author'] == 't' ? $is_author = true : $is_author = false;
+							!empty ($_REQUEST[$name]) ? $should_be_author = true : $should_be_author = false;
+							if ($is_author != $should_be_author)
+							{
+								$should_be_author ? $is_author_sql = 'TRUE' : $is_author_sql = 'FALSE';
+								$sql = "UPDATE content_has_owners SET is_author=$is_author_sql WHERE content_id='$this->id' AND user_id='$user_id'";
+
+								if (!$db->ExecSqlUpdate($sql, false))
+								{
+									throw new Exception(_('Unable to set as author in the database.'));
+								}
+
+							}
+
+						}
+					}
+				}
+				$user = User :: processSelectUserUI("content_{$this->id}_new_owner");
+				$name = "content_{$this->id}_add_owner_submit";
+				if (!empty ($_REQUEST[$name]) && $user != null)
+				{
+					$this->addOwner($user);
+				}
 
 			}
 	}
-
 	/** Subscribe to the project 
 	 * @return true on success, false on failure */
 	public function subscribe(User $user)
@@ -549,54 +656,58 @@ class Content
 		echo "<h1>WRITEME</h1>";
 		return false;
 	}
-	
-		/** Persistent (or read-only) content is meant for re-use.  It will not be deleted when the delete() method is called.  When a containing element (ContentGroup, ContentGroupElement) is deleted, it calls delete on all the content it includes.  If the content is persistent, only the association will be removed.
-	 * @return true or false */
+
+	/** Persistent (or read-only) content is meant for re-use.  It will not be deleted when the delete() method is called.  When a containing element (ContentGroup, ContentGroupElement) is deleted, it calls delete on all the content it includes.  If the content is persistent, only the association will be removed.
+	* @return true or false */
 	public function isPersistent()
 	{
-		if($this->content_row['is_persistent']=='t')
+		if ($this->content_row['is_persistent'] == 't')
 		{
 			$retval = true;
 		}
 		else
 		{
-			$retval=false;
+			$retval = false;
 		}
 		return $retval;
 	}
-	
+
 	/** Set if the content group is persistent
 	 * @param $is_locative_content true or false
 	 * */
 	public function setIsPersistent($is_persistent)
 	{
-		if($is_persistent!=$this->isPersistent())/* Only update database if there is an actual change */
+		if ($is_persistent != $this->isPersistent()) /* Only update database if there is an actual change */
 		{
-		$is_persistent?$is_persistent_sql='TRUE':$is_persistent_sql='FALSE';
+			$is_persistent ? $is_persistent_sql = 'TRUE' : $is_persistent_sql = 'FALSE';
 
-		global $db;
-		$db->ExecSqlUpdate("UPDATE content SET is_persistent = $is_persistent_sql WHERE content_id = '$this->id'", false);
-		$this->refresh();
+			global $db;
+			$db->ExecSqlUpdate("UPDATE content SET is_persistent = $is_persistent_sql WHERE content_id = '$this->id'", false);
+			$this->refresh();
 		}
 
 	}
-	
-		/** Reloads the object from the database.  Should normally be called after a set operation
-	 * @todo Implement proper Access control */
-		protected function refresh()
-	{	
+
+	/** Reloads the object from the database.  Should normally be called after a set operation
+	* @todo Implement proper Access control */
+	protected function refresh()
+	{
 		$this->__construct($this->id);
 	}
-	
+
 	/** Delete this Content from the database 
 	 * @todo Implement proper Access control */
-		public function delete()
-	{	
-		if($this->isPersistent()==false)
+	public function delete()
+	{
+		if ($this->isPersistent() == false)
 		{
-		global $db;
-		$sql = "DELETE FROM content WHERE content_id='$this->id'";
-		$db->ExecSqlUpdate($sql, false);
+			global $db;
+			if (!$this->isOwner(User :: getCurrentUser()))
+			{
+				throw new Exception(_("Access denied (not owner of content)"));
+			}
+			$sql = "DELETE FROM content WHERE content_id='$this->id'";
+			$db->ExecSqlUpdate($sql, false);
 		}
 	}
 

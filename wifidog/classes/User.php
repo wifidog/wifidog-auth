@@ -1,4 +1,5 @@
 <?php
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -23,7 +24,7 @@
  */
 
 require_once BASEPATH.'include/common.php';
-
+require_once BASEPATH.'classes/Network.php';
 /** Abstract a User. */
 class User
 {
@@ -40,7 +41,7 @@ class User
 		$object = new self($id);
 		return $object;
 	}
-	
+
 	/** Instantiate the current user
 	 * @return a User object, or null if there was an error
 	 */
@@ -48,19 +49,19 @@ class User
 	{
 		require_once BASEPATH.'classes/Session.php';
 		$session = new Session();
-		$user=null;
+		$user = null;
 		try
 		{
 			$user = new User($session->get(SESS_USER_ID_VAR));
 		}
-		catch(Exception $e)
+		catch (Exception $e)
 		{
 			/**If any problem occurs, the user should be considered logged out*/
 			$session->set(SESS_USER_ID_VAR, null);
 		}
 		return $user;
 	}
-	
+
 	/** Instantiate a user object 
 	 * @param $username The username of the user
 	 * @param $account_origin The account origin
@@ -75,11 +76,11 @@ class User
 		$account_origin_str = $db->EscapeString($account_origin);
 		$db->ExecSqlUniqueRes("SELECT user_id FROM users WHERE username = '$username_str' AND account_origin = '$account_origin_str'", $user_info, false);
 
-		if($user_info != null)
+		if ($user_info != null)
 			$object = new self($user_info['user_id']);
 		return $object;
 	}
-	
+
 	/** Instantiate a user object 
 	 * @param $email The email of the user
 	 * @param $account_origin The account origin
@@ -94,7 +95,7 @@ class User
 		$account_origin_str = $db->EscapeString($account_origin);
 		$db->ExecSqlUniqueRes("SELECT user_id FROM users WHERE email = '$email_str' AND account_origin = '$account_origin_str'", $user_info, false);
 
-		if($user_info != null)
+		if ($user_info != null)
 			$object = new self($user_info['user_id']);
 		return $object;
 	}
@@ -215,10 +216,10 @@ class User
 		$account_origin_str = $db->EscapeString($account_origin);
 		$email_str = $db->EscapeString($email);
 		/**
-         * utf8_decode is used for backward compatibility with old passwords
-         * containing special characters. 
-         * Conversion from UTF-8 to ISO-8859-1 is done to match the MD5 hash
-         */
+		 * utf8_decode is used for backward compatibility with old passwords
+		 * containing special characters. 
+		 * Conversion from UTF-8 to ISO-8859-1 is done to match the MD5 hash
+		 */
 		$password_hash = $db->EscapeString(User :: passwordHash(utf8_decode($password)));
 		$status = ACCOUNT_STATUS_VALIDATION;
 		$token = User :: generateToken();
@@ -238,7 +239,7 @@ class User
 		$db->ExecSqlUniqueRes($sql, $row, false);
 		if ($row == null)
 		{
-			throw new Exception(_("user_id '{$object_id_str}' could not be found in the database"));
+			throw new Exception(_("User id: ").$object_id_str._(" could not be found in the database"));
 		}
 		$this->mRow = $row;
 		$this->mId = $row['user_id'];
@@ -247,6 +248,14 @@ class User
 	function getId()
 	{
 		return $this->mId;
+	}
+
+/** Get a user display suitable for a user list.  Will include link to the user profile. */
+	function getUserListUI()
+	{
+						$html = '';
+						$html .= $this->getUserName();
+						return $html;
 	}
 
 	function getUsername()
@@ -259,16 +268,16 @@ class User
 		return $this->mRow['email'];
 	}
 
-/**What locale (language) does the user prefer?
- * @todo Save in the database */
+	/**What locale (language) does the user prefer?
+	 * @todo Save in the database */
 	public function getPreferedLocale()
 	{
 		global $session;
 		//return $this->mRow['prefered_locale'];
 		$locale = $session->get('SESS_LANGUAGE_VAR');
-		if(empty($locale))
+		if (empty ($locale))
 		{
-			$locale=DEFAULT_LANG;
+			$locale = DEFAULT_LANG;
 		}
 		return $locale;
 	}
@@ -302,7 +311,7 @@ class User
 	 $errmsg: Returs the reason why the account is or isn't valid */
 	function isUserValid(& $errmsg = null)
 	{
-        global $db;
+		global $db;
 		$retval = false;
 		$account_status = $this->getAccountStatus();
 		if ($account_status == ACCOUNT_STATUS_ALLOWED)
@@ -376,7 +385,7 @@ class User
 	function setPassword($password)
 	{
 		global $db;
-		
+
 		$new_password_hash = User :: passwordHash(utf8_decode($password));
 		if (!($update = $db->ExecSqlUpdate("UPDATE users SET pass='$new_password_hash' WHERE user_id='{$this->mId}'")))
 		{
@@ -409,12 +418,12 @@ class User
 	function sendLostUsername()
 	{
 		$username = $this->getUsername();
-		$headers  = 'MIME-Version: 1.0' . "\r\n";
-		$headers .= 'Content-type: text/plain; charset=UTF-8' . "\r\n";
+		$headers = 'MIME-Version: 1.0'."\r\n";
+		$headers .= 'Content-type: text/plain; charset=UTF-8'."\r\n";
 		$headers .= "From: ".VALIDATION_EMAIL_FROM_ADDRESS;
 		$subject = HOTSPOT_NETWORK_NAME._(" lost username request");
 		$body = _("Hello,\nYou have requested that the authentication server send you your username:\nUsername: ").$username._("\n\nHave a nice day,\nThe Team");
-		
+
 		mail($this->getEmail(), $subject, $body, $headers);
 	}
 
@@ -432,13 +441,13 @@ class User
 			}
 			else
 			{
-				$headers  = 'MIME-Version: 1.0' . "\r\n";
-				$headers .= 'Content-type: text/plain; charset=UTF-8' . "\r\n";
+				$headers = 'MIME-Version: 1.0'."\r\n";
+				$headers .= 'Content-type: text/plain; charset=UTF-8'."\r\n";
 				$headers .= "From: ".VALIDATION_EMAIL_FROM_ADDRESS;
 				$subject = HOTSPOT_NETWORK_NAME._(" new user validation");
 				$url = "http://".$_SERVER["SERVER_NAME"]."/validate.php?user_id=".$this->getId()."&token=".$this->getValidationToken();
 				$body = _("Hello,\nPlease follow the link below to validate your account.\n").$url._("\n\nThank you,\nThe Team.");
-				
+
 				mail($this->getEmail(), $subject, $body, $headers);
 			}
 		}
@@ -451,13 +460,13 @@ class User
 		$new_password = $this->randomPass();
 		$this->setPassword($new_password);
 		$username = $this->getUsername();
-		
-		$headers  = 'MIME-Version: 1.0' . "\r\n";
-		$headers .= 'Content-type: text/plain; charset=UTF-8' . "\r\n";
+
+		$headers = 'MIME-Version: 1.0'."\r\n";
+		$headers .= 'Content-type: text/plain; charset=UTF-8'."\r\n";
 		$headers .= "From: ".VALIDATION_EMAIL_FROM_ADDRESS;
 		$subject = HOTSPOT_NETWORK_NAME._(" new password request");
 		$body = _("Hello,\nYou have requested that the authentication server send you a new password:\nUsername: ").$username._("\nPassword: ").$new_password._("\n\nHave a nice day,\nThe Team");
-		
+
 		mail($this->getEmail(), $subject, $body, $headers);
 	}
 
@@ -470,7 +479,7 @@ class User
 		return $row;
 	}
 
-	function emailExists($id)
+	public static function emailExists($id)
 	{
 		global $db;
 		$id_str = $db->EscapeString($id);
@@ -509,5 +518,34 @@ class User
 		return md5(uniqid(rand(), 1));
 	}
 
+	/** Get an interface to add a user to a list
+	* @param $user_prefix A identifier provided by the programmer to recognise it's generated html form
+	* @return html markup
+	*/
+	static function getSelectUserUI($user_prefix)
+	{
+		global $db;
+		$html = '';
+		$html .= Network :: getSelectNetworkUI($user_prefix);
+		$name = "select_user_{$user_prefix}_username";
+		$html .= "Username: \n";
+		$html .= "<input type='text' name='$name' value=''>\n";
+		return $html;
+	}
+	/** Get the selected user, IF one was selected and is valid
+	 * @param $user_prefix A identifier provided by the programmer to recognise it's generated form
+	 * @return the User object, or null if the user is invalid or none was selected
+	 */
+	static function processSelectUserUI($user_prefix)
+	{
+		$object = null;
+		$network = Network :: processSelectNetworkUI($user_prefix);
+		$name = "select_user_{$user_prefix}_username";
+		$username = $_REQUEST[$name];
+		return self::getUserByUsernameAndOrigin($username, $network->GetId());
+	}
+
+
 } // End class
 ?>
+
