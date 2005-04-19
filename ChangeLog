@@ -1,3 +1,7 @@
+2005-04-19 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Working (beta...) content manager and portal.
+	* Add content preview mode
+	
 2005-04-18 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Hotspot and network content association, continue access control work.
 	* hotspot_owner.php: Fix wrong assignement of user_id that prevented the script from working.

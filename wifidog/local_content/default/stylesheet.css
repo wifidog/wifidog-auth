@@ -208,4 +208,25 @@ display: compact;
 .user_ui_object_class{ display: none;  }
 
 .list_ui_container{ display: inline; }
+
+/* Portal */
+
+#portal_container {
+margin: 3px;}
+
+.portal_network_section {/*background-color:	#FBFBFF;/*lighter blue*/
+margin: 3px;}
+.portal_node_section {/*background-color:	#FBFBFF;/*lighter blue*/
+margin: 3px;}
+.portal_user_section {/*background-color:	#FBFBFF;/*lighter blue*/
+margin: 3px;}
+
+.portal_section_logo{
+float: right;
+clear: right;
+ padding: 2px;
+max-height: 100px;
+max-width: 100px;
+}
+
 {/literal}

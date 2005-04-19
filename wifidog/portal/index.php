@@ -31,122 +31,83 @@ require_once BASEPATH.'classes/Node.php';
 if (CONF_USE_CRON_FOR_DB_CLEANUP == false) {
     garbage_collect();
 }
+$node = Node::getObject($_REQUEST['gw_id']);
 
-if (!isset($_REQUEST['gw_id'])) {
+if ($node==null) {
     $smarty->display("templates/message_unknown_hotspot.html");
     exit;
 }
+$node_id=$node->getId();
+$portal_template = $node_id . ".html";
 
-$portal_template = $_REQUEST['gw_id'] . ".html";
-$node_id = $db->EscapeString($_REQUEST['gw_id']);
-
-$node = Node::getObject($node_id);
 if ($node == null) {
     $smarty->assign("gw_id", $_REQUEST['gw_id']);
     $smarty->display("templates/message_unknown_hotspot.html");
     exit;
 }
 
+Node::setCurrentNode($node);
+
 $smarty->assign('hotspot_name', $node->getName());
-$hotspot_rss_url = $node->getRSSURL();
+$node_name= $node->getName();
 
 /* Find out who is online */
 $smarty->assign("online_users", $node->getOnlineUsers());
 
-if (RSS_SUPPORT) {
-    //      $old_error_level = error_reporting(E_ERROR);
-    define('MAGPIE_DIR', BASEPATH.MAGPIE_REL_PATH);
-    //    require_once(MAGPIE_DIR.'rss_fetch.inc');
-    //    define('MAGPIE_DEBUG', 0);
-    require_once BASEPATH.'classes/RssPressReview.inc';
-    $press_review=new RssPressReview;
-    $tokens = "/[\s,]+/";
-    $network_rss_sources = NETWORK_RSS_URL;
-    $network_rss_html = null;
-    if(!empty($network_rss_sources))
-      {
-
-	$extract_array=null;
-	$extract_array = preg_split($tokens, $network_rss_sources);
-	//print_r($extract_array);
-	foreach($extract_array as $source)
-	  {
-	    $network_rss_sources_array[] = array('url' => $source, 'default_publication_interval' => 7*24*3600);
-	  }
-	$network_rss_html=$press_review->get_rss_html($network_rss_sources_array, 5);
-      }
-		     
-    $hotspot_rss_html=null;
-    if(!empty($hotspot_rss_url))
-      {
-	$extract_array=null;
-	$extract_array = preg_split($tokens, $hotspot_rss_url);
-	//print_r($extract_array);
-	foreach($extract_array as $source)
-	  {
-	    $hotspot_rss_sources_array[] = array('url' => $source, 'default_publication_interval' => 7*24*3600);
-	  }
-	$hotspot_rss_html=$press_review->get_rss_html($hotspot_rss_sources_array, 5);     
-      }
-    /**
-     @return the generated html or the error message or an empty string if called without a URL.
-    */
-    function generate_rss_html ( $url ) {
-      $rss_html='';
-      if(!empty($url))
-	{
-	  $rss = fetch_rss( $url );
-	  $rss_html='';
-	  if ( !$rss )
-	    {
-	      $rss_html .= _("Error: ") . magpie_error() ;
-	    }
-	  else 
-	    {
-	      //$rss->show_channel();
-	      //$rss->show_list();
-	      $rss_html .= "<p>"._('Channel: ') . $rss->channel['title'] . "</p>\n";
-	      $rss_html .= "<ul>\n";
-	      foreach ($rss->items as $item)
-		{
-		  //echo '<pre>'; print_r($item); 	echo '</pre>';
-		  $href = $item['link'];
-		  $title = $item['title'];
-		  $summary =  $item['summary'];	
-		  $rss_html .= "<li><emp><a href=$href>$title</a></emp> $summary</li>\n";
-		}
-	      $rss_html .= "</ul>\n";
-	    }
-	}
-      return $rss_html;
-    }
-
-
-    //$network_rss_html=generate_rss_html(NETWORK_RSS_URL);    
-    //echo $networkrss_html;
-    $smarty->assign("network_rss_html", $network_rss_html);
-
-    
-    //$hotspot_rss_html=generate_rss_html($hotspot_rss_url);    
-    //echo $hotspot_rss_html;
-    $smarty->assign("hotspot_rss_html", $hotspot_rss_html);
-    //   error_reporting($old_error_level);
-}
 
 if (isset($session)) {
     $smarty->assign("original_url_requested", $session->get(SESS_ORIGINAL_URL_VAR));
 }
+	$hotspot_network_name=HOTSPOT_NETWORK_NAME;
+	$hotspot_network_url=HOTSPOT_NETWORK_URL;
+	$network_logo_url=COMMON_CONTENT_URL.NETWORK_LOGO_NAME;
+	$network_logo_banner_url=COMMON_CONTENT_URL.NETWORK_LOGO_BANNER_NAME;
+
+     $hotspot_logo_url= find_local_content_url(HOTSPOT_LOGO_NAME);
+     $hotspot_logo_banner_url=find_local_content_url(HOTSPOT_LOGO_BANNER_NAME);
+
 
 $smarty->display(DEFAULT_CONTENT_SMARTY_PATH."header.html");
+$html='';
+$html .= "<div id='portal_container'>\n";
 
+/* Network section */
+$html .= "<div class='portal_network_section'>\n";
+$html .= "<a href='{$hotspot_network_url}'><img class='portal_section_logo' src='{$network_logo_banner_url}' alt='{$hotspot_network_name} logo' border='0'></a>\n";
+$html .= "Content from \"<a href='{$hotspot_network_url}'>{$hotspot_network_name}</a>\"\n";
+$contents = Network::getCurrentNetwork()->getAllContent();
+foreach ($contents as $content)
+{
+	$html .= $content->getUserUI();
+}
+$html .= "</div>\n";
+
+/* Node section */
+$html .= "<div class='portal_node_section'>\n";
+$html .= "<img class='portal_section_logo' src='{$hotspot_logo_url}' alt=''>\n";
+$html .= "Content from \"<a href='{$hotspot_logo_url}'>{$node_name}</a>\"\n";
+$contents = $node->getAllContent();
+foreach ($contents as $content)
+{
+	$html .= $content->getUserUI();
+}
+$html .= "</div>\n";
+
+/* User section */
+$html .= "<div class='portal_user_section'>\n";
+$html .= _("My content")."\n";
+$html .= "</div>\n";
+$html .= "</div>\n"; /* end portal_container */
+		echo $html;
 /* If we have local content, display it. Otherwise, display default */
-if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.PORTAL_PAGE_NAME)) {
+/*if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.PORTAL_PAGE_NAME)) {
     $smarty->assign("local_content_path", NODE_CONTENT_SMARTY_PATH);
     $smarty->display(NODE_CONTENT_SMARTY_PATH.PORTAL_PAGE_NAME);
 } else {
     $smarty->assign("local_content_path", DEFAULT_CONTENT_SMARTY_PATH);
     $smarty->display(DEFAULT_CONTENT_SMARTY_PATH.PORTAL_PAGE_NAME);
 }
+*/
 
 $smarty->display(DEFAULT_CONTENT_SMARTY_PATH."footer.html");
 ?>

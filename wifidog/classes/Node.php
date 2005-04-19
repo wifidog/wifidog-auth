@@ -1,5 +1,6 @@
 <?php
 
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -29,6 +30,7 @@ class Node implements GenericObject
 {
 	private $mRow;
 	private $id;
+	private static $current_node_id = null;
 
 	/** Instantiate a node object 
 	 * @param $id The id of the requested node
@@ -41,24 +43,97 @@ class Node implements GenericObject
 		return $object;
 	}
 
+	/** Get the current node for which the portal is displayed or to which a user is physically connected.
+	 * @param $real_node_only true or false.  If true, the real physical node where the user is connected is returned, and the node set by setCurrentNode is ignored.
+	 * @return a Node object, or null if it can't be found.
+	 */
+	static function getCurrentNode($real_node_only = false)
+	{
+		$object = null;
+		if (self :: $current_node_id != null && $real_node_only == false)
+		{
+			$object = new self(self :: $current_node_id);
+		}
+		else
+		{
+			$object = getCurrentRealNode();
+		}
+		return $object;
+	}
+
+	/** Set the current node where the user is to be considered connected to.  (For portal and content display purpuses, among other.
+	 * @param $node Node.  The new current node.
+	 * @return true	 */
+	static function setCurrentNode(Node $node)
+	{
+		self :: $current_node_id = $node->GetId();
+		return true;
+	}
+
+	/** Get the current node to which a user is physically connected, if any.  This is done by an IP adress lookup against the last reported IP adress of the node
+	 * @param 	 * @return a Node object, or null if it can't be found.
+	 */
+	public function getCurrentRealNode()
+	{
+		global $db;
+		$retval = null;
+		$sql = "SELECT node_id, last_heartbeat_ip from nodes WHERE last_heartbeat_ip='$_SERVER[REMOTE_ADDR]'";
+		$db->ExecSql($sql, $node_rows, false);
+		$num_match = count($node_rows);
+		if ($num_match == 0)
+		{
+			// User is not physically connected to a node
+			$retval = null;
+		}
+		else
+			if ($num_match = 1)
+			{
+				// Only a single node matches, the user is presumed to be there
+				$retval = new self($node_rows[0]['node_id']);
+			}
+			else
+			{
+				/* We have more than one node matching the IP (the nodes are behind the same NAT).
+				 * We will try to discriminate by finding which node the user last authenticated against.
+				 * If the IP matches, we can be pretty certain the user is there. 
+				 */
+				$retval = null;
+				$current_user = User :: getCurrentUser();
+				if ($current_user != null)
+				{
+					$current_user_id = $current_user->getId();
+					$_SERVER['REMOTE_ADDR'];
+					$sql = "SELECT node_id, last_heartbeat_ip from connections NATURAL JOIN nodes WHERE user_id='$current_user_id' ORDER BY last_updated DESC ";
+					$db->ExecSql($sql, $node_rows, false);
+					$node_row = $node_rows[0];
+					if($node_row!=null && $node_row['last_heartbeat_ip']==$_SERVER['REMOTE_ADDR'])
+					{
+						$retval = new self($node_row['node_id']);
+					}
+				}
+			}
+return $retval;
+	}
+
 	public function delete(& $errmsg)
 	{
-		$retval=false;
-		$user = User::getCurrentUser();
-		if($this->isOwner($user)||$user->isSuperAdmin())
+		$retval = false;
+		$user = User :: getCurrentUser();
+		if ($this->isOwner($user) || $user->isSuperAdmin())
 		{
-			$errmsg=_('Access denied!');
+			$errmsg = _('Access denied!');
 		}
 		global $db;
 
 		if (!$db->ExecSqlUpdate("DELETE FROM nodes WHERE node_id='{$this->$id}'", false))
 		{
-			$errmsg=_('Could not delete node!');}
-			else
-			{
-				$retval=true;
-			}
-return $retval;
+			$errmsg = _('Could not delete node!');
+		}
+		else
+		{
+			$retval = true;
+		}
+		return $retval;
 	}
 
 	/** Create a new Node in the database
@@ -122,7 +197,7 @@ return $retval;
 	* @param $sql_additional_where Addidional where conditions to restrict the candidate objects
 	* @return html markup
 	*/
-	public static function getSelectNodeUI($user_prefix, $sql_additional_where=null)
+	public static function getSelectNodeUI($user_prefix, $sql_additional_where = null)
 	{
 		global $db;
 		$html = '';
@@ -289,12 +364,13 @@ return $retval;
 		$html .= "</div>\n";
 		return $html;
 	}
-	
+
 	/** Process admin interface of this object.
 	*/
 	public function processAdminUI()
 	{
-		if($this->isOwner($user)||$user->isSuperAdmin())
+		$user = User::getCurrentUser();
+		if (!$this->isOwner($user) || !$user->isSuperAdmin())
 		{
 			throw new Exception(_('Access denied!'));
 		}
@@ -316,25 +392,25 @@ return $retval;
 			$this->addContent($content);
 		}
 	}
-	
-/** Add content to this node */
+
+	/** Add content to this node */
 	public function addContent(Content $content)
 	{
 		global $db;
-		$content_id=$db->EscapeString($content->getId());
+		$content_id = $db->EscapeString($content->getId());
 		$sql = "INSERT INTO node_has_content (node_id, content_id) VALUES ('$this->id','$content_id')";
 		$db->ExecSqlUpdate($sql, false);
 	}
-	
-/** Remove content from this node */
+
+	/** Remove content from this node */
 	public function removeContent(Content $content)
 	{
 		global $db;
-		$content_id=$db->EscapeString($content->getId());
+		$content_id = $db->EscapeString($content->getId());
 		$sql = "DELETE FROM node_has_content WHERE node_id='$this->id' AND content_id='$content_id'";
 		$db->ExecSqlUpdate($sql, false);
 	}
-	
+
 	/**Get an array of all Content linked to this node
 	* @return an array of Content or an empty arrray */
 	function getAllContent()

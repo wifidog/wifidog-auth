@@ -42,6 +42,18 @@ class Network implements GenericObject
 		return new self($id);
 	}
 
+	/** Get the current network for which the portal is displayed or to which a user is physically connected.
+	 * @param $real_network_only true or false.  If true, the real physical network where the user is connected is returned, and the node set by setCurrentNode is ignored.
+	 * @return a Node object, or null if it can't be found.
+	 */
+	static function getCurrentNetwork($real_network_only = false)
+	{
+				global $AUTH_SOURCE_ARRAY;
+		$keys = array_keys ( $AUTH_SOURCE_ARRAY);
+		
+		return new self($keys[0]);
+	}
+
 	/** Create a new Content object in the database 
 	 * @see GenericObject
 	 * @return the newly created object, or null if there was an error

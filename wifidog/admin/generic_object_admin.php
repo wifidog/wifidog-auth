@@ -22,9 +22,10 @@
  \********************************************************************/
 /**@file generic_object_admin.php
  * A simple interface to edit any object that implements the GenericObject interface.  The php file takes the following params:
- * $_REQUEST['action']: new, edit, delete (also save, but not meant for calling from outside this file)
+ * $_REQUEST['action']: new, edit, delete, preview (also save, but not meant for calling from outside this file)
  * $_REQUEST['object_id']:  The id of the object ot be edited
  * $_REQUEST['object_class']:  The class name of the object ot be edited
+ * $_REQUEST['node_id']: In preview mode, the current node to simulate display
  * $_REQUEST['debug']:  If present and non empty, the $_REQUEST variables will be displayed
  * @author Copyright (C) 2005 Benoit Grégoire <bock@step.polymtl.ca>,
  * Technologies Coeus inc.
@@ -105,10 +106,57 @@ $html .= $common_input;
 	$html .= "<input type=submit name='save_submit' value='"._("Save")." ".get_class($object)."'>\n";
 	$html .= '</form>';
 	
+		$html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' method='post'>";
+		$html .= $common_input;
+	$html .= "<input type='hidden' name='action' value='preview'>\n";
+	$html .= "<input type=submit name='preview_submit' value='"._("Preview")." ".get_class($object)."'>\n";
+	$html .= '</form>';
+	
 	$html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' method='post'>";
 $html .= $common_input;
 	$html .= "<input type='hidden' name='action' value='delete'>\n";
 	$html .= "<input type=submit name='delete_submit' value='"._("Delete")." ".get_class($object)."'>\n";
+	$html .= '</form>';
+}
+
+
+if ($_REQUEST['action'] == 'preview')
+{
+	if(empty($_REQUEST['node_id']))
+	{
+		$node_id = null;
+		$node = null;
+	}
+	else
+	{
+	$node_id = $_REQUEST['node_id'];
+	$node= Node::getObject($node_id);
+	Node::setCurrentNode($node);
+	}
+$common_input = '';
+	if(!empty($_REQUEST['debug']))
+	{
+	$common_input .= "<input type=submit name='debug' value='true'>\n";
+	}
+		$common_input .= "<input type='hidden' name='object_id' value='".$object->GetId()."'>\n";
+	$common_input .= "<input type='hidden' name='object_class' value='".get_class($object)."'>\n";
+		$common_input .= "<input type='hidden' name='node_id' value='".$node_id."'>\n";
+		
+	$html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' method='post'>";
+$html .= $common_input;
+
+		$name = "node_id";
+		$html .= Node :: getSelectNodeUI($name);
+		
+	$html .= $object->getUserUI();
+	$html .= "<input type='hidden' name='action' value='preview'>\n";
+	$html .= "<input type=submit name='preview_submit' value='"._("Preview")." ".get_class($object)."'>\n";
+	$html .= '</form>';
+	
+	$html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' method='post'>";
+$html .= $common_input;
+	$html .= "<input type='hidden' name='action' value='edit'>\n";
+	$html .= "<input type=submit name='edit_submit' value='"._("Edit")." ".get_class($object)."'>\n";
 	$html .= '</form>';
 }
 

@@ -6,8 +6,13 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.32  2005/04/19 21:02:40  benoitg
+ *     2005-04-19 Benoit Grégoire  <bock@step.polymtl.ca>
+ *     	* Working (beta...) content manager and portal.
+ *     	* Add content preview mode
+ *
  *     Revision 1.31  2005/04/14 15:12:35  benoitg
- *     2005-04-14 Benoit Grégoire  <bock@step.polymtl.ca>
+ *     2005-04-14 Benoit Grï¿½goire  <bock@step.polymtl.ca>
  *     	* First part of the future content delivery infrastructure.  Many files added.
  *
  *     Revision 1.30  2005/04/01 21:38:23  fproulx
@@ -213,7 +218,7 @@ $AUTH_SOURCE_ARRAY[IDRC_ACCOUNT_ORIGIN]=array(
 /*These are the file names of the different templates that can be put in the CONTENT_PATH/(node_id)/ folders */
 define('STYLESHEET_NAME', 'stylesheet.css');
 define('LOGIN_PAGE_NAME', 'login.html');
-define('PORTAL_PAGE_NAME', 'portal.html');
+define('PORTAL_PAGE_NAME', 'portal.html');/**< @deprecated version - 19-Apr-2005*/
 define('PAGE_HEADER_NAME', 'header.html');
 define('PAGE_FOOTER_NAME', 'footer.html');
 define('HOTSPOT_STATUS_PAGE', 'hotspot_status.php');
