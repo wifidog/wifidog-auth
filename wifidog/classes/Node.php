@@ -82,6 +82,7 @@ class Node implements GenericObject
 		$num_match = count($node_rows);
 		if ($num_match == 0)
 		{
+
 			// User is not physically connected to a node
 			$retval = null;
 		}
@@ -112,7 +113,7 @@ class Node implements GenericObject
 					}
 				}
 			}
-return $retval;
+        return $retval;
 	}
 
 	public function delete(& $errmsg)

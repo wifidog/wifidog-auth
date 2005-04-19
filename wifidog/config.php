@@ -6,6 +6,11 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.33  2005/04/19 21:17:01  fproulx
+ *     2005-04-18 François Proulx <francois.proulx@gmail.com>
+ *     	* Added Flickr content support
+ *     	* Part of File object is done
+ *
  *     Revision 1.32  2005/04/19 21:02:40  benoitg
  *     2005-04-19 Benoit Grégoire  <bock@step.polymtl.ca>
  *     	* Working (beta...) content manager and portal.
@@ -150,7 +155,8 @@ define('CONF_DATABASE_PASSWORD',   'wifidogtest');
 /* The SYSTEM_PATH, must be set to the url path needed to reach the wifidog directory.  Normally '/' or '/wifidog/', depending on where configure your document root.  Gateway configuration must match this as well */
 define('SYSTEM_PATH', '/');
 /**< Set this to true if your server has SSL available, otherwise, passwords will be transmitted in clear text over the air */
-define('SSL_AVAILABLE', true); 
+define('SSL_AVAILABLE', true);
+/** @deprecated version - 2005-04-19 */
 define('HOTSPOT_NETWORK_NAME', 'ÃŽle sans fil');
 define('HOTSPOT_NETWORK_URL', 'http://www.ilesansfil.org/');
 define('TECH_SUPPORT_EMAIL', 'tech@ilesansfil.org');
@@ -159,7 +165,9 @@ define('UNKNOWN_HOSTPOT_NAME', 'Unknown HotSpot');
 define('VALIDATION_GRACE_TIME', 20); /**< Number of minutes after new account creation during which internet access is available to validate your account.  Once elapsed, you have to validate from home... */
 define('VALIDATION_EMAIL_FROM_ADDRESS', 'validation@ilesansfil.org');
 /* RSS support.  If set to true, MAGPIERSS must be installed in MAGPIE_REL_PATH */
-define('RSS_SUPPORT', true); 
+define('RSS_SUPPORT', true);
+/* Flickr Photostream content support. If set to true, Phlickr must be installed in PHLICKR_REL_PATH */
+define('PHLICKR_SUPPORT', true);
 /* Normally, the database cleanup routines will be called everytime a portal page is displayed.  If you set this to true, you must set a cron job on the server which will execute the script cron/cleanup.php. */
 define('CONF_USE_CRON_FOR_DB_CLEANUP', false);
 
@@ -180,6 +188,7 @@ define('WIFIDOG_VERSION', 'CVS');
 
 define('MAGPIE_REL_PATH',  'lib/magpie/');
 define('SMARTY_REL_PATH',  'lib/smarty/');
+define('PHLICKR_REL_PATH',  'lib/');
 //define('NETWORK_RSS_URL', 'http://wifinetnews.com/index.rdf');
 define('NETWORK_RSS_URL', 'http://patricktanguay.com/isf/atom.xml, http://auth.ilesansfil.org/hotspot_status.php?format=RSS');
 define('UNKNOWN_HOTSPOT_RSS_URL', '');
@@ -232,7 +241,7 @@ define('WIFIDOG_LOGO_NAME', 'wifidog_logo_banner.png');
 define('WIFIDOG_LOGO_BANNER_NAME', 'wifidog_logo_banner.png');
 
 define('DEFAULT_NODE_ID', 'default');
- define('DEFAULT_LANG', 'fr_FR');
+define('DEFAULT_LANG', 'fr_FR');
 
 
 }

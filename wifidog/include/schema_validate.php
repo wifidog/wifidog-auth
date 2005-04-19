@@ -28,7 +28,7 @@ error_reporting(E_ALL);
 require_once BASEPATH.'config.php';
 require_once BASEPATH.'classes/AbstractDb.php';
 require_once BASEPATH.'classes/Session.php';
-define('REQUIRED_SCHEMA_VERSION', 7);
+define('REQUIRED_SCHEMA_VERSION', 9);
 
 /** Check that the database schema is up to date.  If it isn't, offer to update it. */
 function validate_schema()
@@ -284,7 +284,51 @@ function update_schema()
 			$sql .= "ALTER TABLE content ADD COLUMN is_persistent bool;\n";
 			$sql .= "ALTER TABLE content ALTER COLUMN is_persistent SET DEFAULT FALSE;\n";
 			
-					}
+		}
+        
+        $new_schema_version = 8;
+        if($schema_version < $new_schema_version)
+        {
+            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>"; 
+            $sql .=
+            "CREATE TABLE flickr_photostream
+            (
+              flickr_photostream_id text NOT NULL,
+              api_key text,
+              photo_selection_mode text NOT NULL DEFAULT 'PSM_GROUP'::text,
+              user_id text,
+              user_name text,
+              tags text,
+              tag_mode varchar(10) DEFAULT 'any'::character varying,
+              group_id text,
+              random bool NOT NULL DEFAULT true,
+              min_taken_date timestamp,
+              max_taken_date timestamp,
+              photo_batch_size int4 DEFAULT 10,
+              photo_count int4 DEFAULT 1,
+              display_title bool NOT NULL DEFAULT true,
+              display_description bool NOT NULL DEFAULT false,
+              display_tags bool NOT NULL DEFAULT false,
+              CONSTRAINT flickr_photostream_pkey PRIMARY KEY (flickr_photostream_id),
+              CONSTRAINT flickr_photostream_content_group_fkey FOREIGN KEY (flickr_photostream_id) REFERENCES content_group (content_group_id) ON UPDATE CASCADE ON DELETE CASCADE
+            );";
+        }
+        
+        $new_schema_version = 9;
+        if($schema_version < $new_schema_version)
+        {
+            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>"; 
+            $sql .=
+            "CREATE TABLE files
+            (
+              files_id text NOT NULL,
+              filename text,
+              mime_type text,
+              binary_data bytea, 
+              CONSTRAINT files_pkey PRIMARY KEY (files_id)
+            );";
+        }
+        
 		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);
 		echo "</html></head>";
 		exit ();

@@ -208,7 +208,6 @@ display: compact;
 .user_ui_object_class{ display: none;  }
 
 .list_ui_container{ display: inline; }
-
 /* Portal */
 
 #portal_container {
@@ -228,5 +227,63 @@ clear: right;
 max-height: 100px;
 max-width: 100px;
 }
-
+.FlickrPhotoBlock {
+    margin:20px auto 20px auto;
+    width:400px;
+}
+.FlickrPhotoBlock:hover > * {
+    visibility: visible;
+}
+.FlickrTitle {
+    visibility: hidden;
+    width: 200px;
+    background: #696969;
+}
+.FlickrTitle h3 {
+    color: white;
+    padding: 5px;
+    margin: 0;
+}
+.FlickrPhoto {
+    float:left;
+}
+.FlickrPhoto img {
+    border: 10px solid black;
+}
+.FlickrTags {
+    visibility: hidden;
+    background-color: #696969;
+    color: white;
+    margin-left: 260px;
+}
+.FlickrTags h3 {
+    padding-left: 5px;
+    margin: 0;
+}
+.FlickrTags ul {
+    margin-left: 20px;
+    margin-top: 0px;
+    padding: 0px;
+}
+.FlickrTags li {
+    list-style: none;
+    list-style-image: none;
+}
+.FlickrTags li a {
+    color: white;
+    font-size: normal;
+    text-decoration: none;
+}
+.FlickrTags li a:hover {
+    text-decoration: underline;
+}
+.FlickrDescription {
+    visibility: hidden;
+    width: 180px;
+    background: #696969;
+    color: white;
+    padding: 5px;
+    margin-top: 0px;
+    clear: left;
+}
 {/literal}

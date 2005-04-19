@@ -99,7 +99,7 @@ $common_input = '';
 		$common_input .= "<input type='hidden' name='object_id' value='".$object->GetId()."'>\n";
 	$common_input .= "<input type='hidden' name='object_class' value='".get_class($object)."'>\n";
 	
-	$html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' method='post'>";
+	$html .= "<form enctype='multipart/form-data' action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' method='post'>";
 $html .= $common_input;
 	$html .= $object->getAdminUI();
 	$html .= "<input type='hidden' name='action' value='save'>\n";
