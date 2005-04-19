@@ -42,6 +42,8 @@ class Langstring extends Content
 		parent :: __construct($content_id);
 		global $db;
 		$this->mBd = & $db;
+				/* A langstring is NEVER persistent */
+		parent::setIsPersistent(false);
 	}
 
 	/**Retourne la première chaîne disponible dans la langue par défaut de l'usager (si disponible), sinon dans la même langue majeure, sinon la première chaîne disponible
@@ -170,6 +172,8 @@ class Langstring extends Content
 		//Nouvelles chaîne
 		$locale =  LocaleList::GetDefault();
 		$html .= "<li class='admin_section_list_item'>\n";
+										$html .= "<div class='admin_section_data'>\n";
+		
 		$html .= $liste_languages->GenererFormSelect($locale, "langstrings_".$this->id."_substring_new_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
 		$new_substring_name = "langstrings_".$this->id."_substring_new_string";
 		if ($type_interface == 'LARGE')
@@ -180,8 +184,12 @@ class Langstring extends Content
 		{
 			$html .= "<input type='text' name='$new_substring_name' size='44' value=''>\n";
 		}
+										$html .= "</div>\n";
+								$html .= "<div class='admin_section_tools'>\n";
+		
 		$new_substring_submit_name = "langstrings_".$this->id."_add_new_entry";
 		$html .= "<input type='submit' name='$new_substring_submit_name' value='"._("Add new string")."' onclick='submit();'>";
+		$html .= "</div>\n";
 		$html .= "</li>\n";
 
 		$html .= "</ul>\n";

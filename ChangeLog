@@ -1,4 +1,9 @@
 2005-04-18 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Hotspot and network content association, continue access control work.
+	* hotspot_owner.php: Fix wrong assignement of user_id that prevented the script from working.
+	* All files:  Remove whitespace and carriage return after the ?> closing tags.
+	
+2005-04-18 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Much more complete admin, initial access control work.
 
 2005-04-15 Benoit Grégoire  <bock@step.polymtl.ca>

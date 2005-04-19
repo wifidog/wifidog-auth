@@ -291,5 +291,3 @@ function update_schema()
 	}
 }
 ?>
-
-

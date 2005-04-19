@@ -1,4 +1,5 @@
 <?php
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -40,6 +41,12 @@ class TrivialLangstring extends Langstring
 	{
 		parent :: __construct($content_id);
 		$this->setIsTrivialContent(true);
+	}
+
+	/** A short string representation of the content */
+	public function __toString()
+	{
+		return $this->getString();
 	}
 
 } /* end class */

@@ -29,7 +29,7 @@ require_once BASEPATH.'classes/Network.php';
 class User
 {
 	private $mRow;
-	private $mId;
+	private $id;
 
 	/** Instantiate a user object 
 	 * @param $id The id of the requested user 
@@ -242,12 +242,12 @@ class User
 			throw new Exception(_("User id: ").$object_id_str._(" could not be found in the database"));
 		}
 		$this->mRow = $row;
-		$this->mId = $row['user_id'];
+		$this->id = $row['user_id'];
 	} //End class
 
 	function getId()
 	{
-		return $this->mId;
+		return $this->id;
 	}
 
 /** Get a user display suitable for a user list.  Will include link to the user profile. */
@@ -300,7 +300,7 @@ class User
 		global $db;
 
 		$status_str = $db->EscapeString($status);
-		if (!($update = $db->ExecSqlUpdate("UPDATE users SET account_status='{$status_str}' WHERE user_id='{$this->mId}'")))
+		if (!($update = $db->ExecSqlUpdate("UPDATE users SET account_status='{$status_str}' WHERE user_id='{$this->id}'")))
 		{
 			throw new Exception(_("Could not update status."));
 		}
@@ -321,7 +321,7 @@ class User
 		else
 			if ($account_status == ACCOUNT_STATUS_VALIDATION)
 			{
-				$sql = "SELECT CASE WHEN ((NOW() - reg_date) > interval '".VALIDATION_GRACE_TIME." minutes') THEN true ELSE false END AS validation_grace_time_expired FROM users WHERE (user_id='{$this->mId}')";
+				$sql = "SELECT CASE WHEN ((NOW() - reg_date) > interval '".VALIDATION_GRACE_TIME." minutes') THEN true ELSE false END AS validation_grace_time_expired FROM users WHERE (user_id='{$this->id}')";
 				$db->ExecSqlUniqueRes($sql, $user_info, false);
 
 				if ($user_info['validation_grace_time_expired'] == 't')
@@ -343,6 +343,18 @@ class User
 		return $retval;
 	}
 
+  public function isSuperAdmin() {
+    global $db;
+    //$this->session->dump();
+    
+    $db->ExecSqlUniqueRes("SELECT * FROM users NATURAL JOIN administrators WHERE (users.user_id='$this->id')", $user_info, false);
+    if (!empty($user_info)) {
+     return true;
+    } else {
+     return false;
+    }
+
+  }
 	function getValidationToken()
 	{
 		return $this->mRow['validation_token'];
@@ -387,7 +399,7 @@ class User
 		global $db;
 
 		$new_password_hash = User :: passwordHash(utf8_decode($password));
-		if (!($update = $db->ExecSqlUpdate("UPDATE users SET pass='$new_password_hash' WHERE user_id='{$this->mId}'")))
+		if (!($update = $db->ExecSqlUpdate("UPDATE users SET pass='$new_password_hash' WHERE user_id='{$this->id}'")))
 		{
 			throw new Exception(_("Could not change user's password."));
 		}
@@ -397,7 +409,7 @@ class User
 	function getConnections()
 	{
 		global $db;
-		$db->ExecSql("SELECT * FROM connections,nodes WHERE user_id='{$this->mId}' AND nodes.node_id=connections.node_id ORDER BY timestamp_in", $connections, false);
+		$db->ExecSql("SELECT * FROM connections,nodes WHERE user_id='{$this->id}' AND nodes.node_id=connections.node_id ORDER BY timestamp_in", $connections, false);
 		return $connections;
 	}
 
@@ -494,9 +506,9 @@ class User
 		for ($j = 0; $j < 3; $j ++)
 		{
 			$startnend = array ('b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z',);
-			$mid = array ('a', 'e', 'i', 'o', 'u', 'y',);
+			$id = array ('a', 'e', 'i', 'o', 'u', 'y',);
 			$count1 = count($startnend) - 1;
-			$count2 = count($mid) - 1;
+			$count2 = count($id) - 1;
 
 			for ($i = 0; $i < 3; $i ++)
 			{
@@ -506,7 +518,7 @@ class User
 				}
 				else
 				{
-					$rand_pass .= $mid[rand(0, $count2)];
+					$rand_pass .= $id[rand(0, $count2)];
 				}
 			}
 		}
@@ -548,4 +560,3 @@ class User
 
 } // End class
 ?>
-

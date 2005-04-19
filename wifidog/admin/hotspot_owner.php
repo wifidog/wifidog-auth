@@ -40,7 +40,7 @@ empty($_REQUEST['action'])        ? $action        = '' : $action        = $_REQ
 empty($_REQUEST['node_id'])       ? $node_id       = '' : $node_id       = $_REQUEST['node_id'];
 empty($_REQUEST['owner_user_id']) ? $owner_user_id = '' : $owner_user_id = $_REQUEST['owner_user_id'];
 
-$node = Node::getNode($_REQUEST['node_id']);
+$node = Node::getObject($_REQUEST['node_id']);
 
 if ($action) {
     switch ($action) {

@@ -26,15 +26,10 @@
  */
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'classes/FormSelectGenerator.php';
-
-$class_names = Content :: getAvailableContentTypes();
-foreach ($class_names as $class_name)
-{
-	require_once BASEPATH.'classes/Content/'.$class_name.'.php';
-}
+require_once BASEPATH.'classes/GenericObject.php';
 
 /** Any type of content */
-class Content
+class Content implements GenericObject
 {
 	protected $id;
 	protected $content_row;
@@ -46,7 +41,7 @@ class Content
 	 * @param $id Optionnal, the id to be given to the new Content.  If null, a new id will be assigned
 	 * @return the newly created Content object, or null if there was an error (an exception is also trown
 	 */
-	static function createNewContent($content_type = 'Content', $id = null)
+	static function createNewObject($content_type = 'Content', $id = null)
 	{
 		global $db;
 		if (empty ($id))
@@ -73,16 +68,20 @@ class Content
 			throw new Exception(_('Unable to insert new content into database!'));
 		}
 
-		$object = self :: getContent($content_id);
-		/** At least add the current user as the default owner */
+		$object = self :: getObject($content_id);
+		/* At least add the current user as the default owner */
 		$object->AddOwner(User :: getCurrentUser());
+		/* By default, make it persistent */
+		$object->setIsPersistent(true);
+
+		
 		return $object;
 	}
 	/** Get the Content object, specific to it's content type 
 	 * @param $content_id The content id
 	 * @return the Content object, or null if there was an error (an exception is also thrown)
 	 */
-	static function getContent($content_id)
+	static function getObject($content_id)
 	{
 		global $db;
 		$content_id = $db->EscapeString($content_id);
@@ -186,10 +185,57 @@ class Content
 		{
 			$name = "get_new_content_{$user_prefix}_content_type";
 			$content_type = FormSelectGenerator :: getResult($name, null);
-			$object = self :: createNewContent($content_type);
+			$object = self :: createNewObject($content_type);
 		}
 		return $object;
 	}
+
+	 /** Get an interface to pick content from all persistent content.
+	 * @param $user_prefix A identifier provided by the programmer to recognise it's generated html form
+	   @param $sql_additional_where Addidional where conditions to restrict the candidate objects
+	 * @return html markup
+	 */
+	public static function getSelectContentUI($user_prefix, $sql_additional_where=null)
+	{
+		global $AUTH_SOURCE_ARRAY;
+		$html = '';
+		$name = "{$user_prefix}";
+		$html .= "Select Content: \n";
+		global $db;
+		$retval = array();
+		$sql = "SELECT * FROM content WHERE is_persistent=TRUE $sql_additional_where ORDER BY creation_timestamp";
+		$db->ExecSql($sql, $content_rows, false);
+		if ($content_rows != null)
+		{
+			$i = 0;
+			foreach ($content_rows as $content_row)
+			{
+				$content = Content::getObject($content_row['content_id']);
+				$tab[$i][0] = $content->getId();
+				$tab[$i][1] = $content->__toString()." (".get_class($content).")";
+				$i ++;
+			}
+			$html .= FormSelectGenerator :: generateFromArray($tab, null, $name, null, false);
+
+		}
+		else
+		{
+					$html .= "<div class='warningmsg'>"._("Sorry, no content available in the database")."</div>\n";
+		}
+	return $html;
+	}
+
+	/** Get the selected Content object.
+	 * @param $user_prefix A identifier provided by the programmer to recognise it's generated form
+	 * @return the Content object
+	 */
+	static function processSelectContentUI($user_prefix)
+	{
+		$object = null;
+		$name = "{$user_prefix}";
+		return Content::getObject($_REQUEST[$name]);
+	}
+
 
 	private function __construct($content_id)
 	{
@@ -207,9 +253,25 @@ class Content
 		$this->content_type = $row['content_type'];
 	}
 
+/** A short string representation of the content */
+	public function __toString()
+	{
+		if (empty ($this->content_row['title']))
+		{
+			$string = _("Untitled content");		
+		}
+		else
+		{
+			$title = self :: getObject($this->content_row['title']);
+			$string = $title->__toString();
+		}
+	return $string;
+	}
+
+
 	/** Get the true object type represented by this isntance 
 	 * @return an array of class names */
-	public function getContentType()
+	public function getObjectType()
 	{
 		return $this->content_type;
 	}
@@ -301,7 +363,7 @@ class Content
 		echo "<h1>getAuthors():WRITEME</h1>";
 		return false;
 	}
-	/** Retreives the id of the object 
+	/** @see GenricObject
 	 * @return The id */
 	public function getId()
 	{
@@ -327,7 +389,20 @@ class Content
 		$html .= "</div>\n";
 		return $html;
 	}
-
+	
+	/** Retreives the list interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
+	 * @param $subclass_admin_interface Html content of the interface element of a children
+	 * @return The HTML fragment for this interface */
+	public function getListUI($subclass_list_interface = null)
+	{
+		$html = '';
+		$html .= "<div class='list_ui_container'>\n";
+		$html .= $this->__toString()." (".get_class($this).")\n";
+		$html .= $subclass_list_interface;
+		$html .= "</div>\n";
+		return $html;
+	}
+	
 	/** Retreives the admin interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
 	 * @param $subclass_admin_interface Html content of the interface element of a children
 	 * @return The HTML fragment for this interface */
@@ -337,7 +412,7 @@ class Content
 		$html = '';
 		$html .= "<div class='admin_container'>\n";
 		$html .= "<div class='admin_class'>Content (".get_class($this)." instance)</div>\n";
-		if ($this->getContentType() == 'Content') /* The object hasn't yet been typed */
+		if ($this->getObjectType() == 'Content') /* The object hasn't yet been typed */
 		{
 			$html .= _("You must select a content type: ");
 			$i = 0;
@@ -354,15 +429,18 @@ class Content
 			{
 				/* title */
 				$html .= "<div class='admin_section_container'>\n";
-				$html .= "<span class='admin_section_title'>"._("Title:")."</span>\n";
+				$html .= "<div class='admin_section_title'>"._("Title:")."</div>\n";
+				$html .= "<div class='admin_section_data'>\n";
 				if (empty ($this->content_row['title']))
 				{
 					$html .= self :: getNewContentUI("title_{$this->id}_new");
+										$html .= "</div>\n";
 				}
 				else
 				{
-					$title = self :: getContent($this->content_row['title']);
+					$title = self :: getObject($this->content_row['title']);
 					$html .= $title->getAdminUI();
+					$html .= "</div>\n";
 					$html .= "<div class='admin_section_tools'>\n";
 					$name = "content_".$this->id."_title_erase";
 					$html .= "<input type='submit' name='$name' value='"._("Delete")."' onclick='submit();'>";
@@ -382,15 +460,18 @@ class Content
 
 				/* description */
 				$html .= "<div class='admin_section_container'>\n";
-				$html .= "<span class='admin_section_title'>"._("Description:")."</span>\n";
+				$html .= "<div class='admin_section_title'>"._("Description:")."</div>\n";
+				$html .= "<div class='admin_section_data'>\n";
 				if (empty ($this->content_row['description']))
 				{
 					$html .= self :: getNewContentUI("description_{$this->id}_new");
+										$html .= "</div>\n";
 				}
 				else
 				{
-					$description = self :: getContent($this->content_row['description']);
+					$description = self :: getObject($this->content_row['description']);
 					$html .= $description->getAdminUI();
+					$html .= "</div>\n";
 					$html .= "<div class='admin_section_tools'>\n";
 					$name = "content_".$this->id."_description_erase";
 					$html .= "<input type='submit' name='$name' value='"._("Delete")."' onclick='submit();'>";
@@ -400,15 +481,18 @@ class Content
 
 				/* project_info */
 				$html .= "<div class='admin_section_container'>\n";
-				$html .= "<span class='admin_section_title'>"._("Information on this project:")."</span>\n";
-				if (empty ($this->content_row['project_info']))
+				$html .= "<div class='admin_section_title'>"._("Information on this project:")."</div>\n";
+				$html .= "<div class='admin_section_data'>\n";
+								if (empty ($this->content_row['project_info']))
 				{
 					$html .= self :: getNewContentUI("project_info_{$this->id}_new");
+										$html .= "</div>\n";
 				}
 				else
 				{
-					$project_info = self :: getContent($this->content_row['project_info']);
+					$project_info = self :: getObject($this->content_row['project_info']);
 					$html .= $project_info->getAdminUI();
+										$html .= "</div>\n";
 					$html .= "<div class='admin_section_tools'>\n";
 					$name = "content_".$this->id."_project_info_erase";
 					$html .= "<input type='submit' name='$name' value='"._("Delete")."' onclick='submit();'>";
@@ -418,15 +502,18 @@ class Content
 
 				/* sponsor_info */
 				$html .= "<div class='admin_section_container'>\n";
-				$html .= "<span class='admin_section_title'>"._("Sponsor of this project:")."</span>\n";
+				$html .= "<div class='admin_section_title'>"._("Sponsor of this project:")."</div>\n";
+								$html .= "<div class='admin_section_data'>\n";
 				if (empty ($this->content_row['sponsor_info']))
 				{
 					$html .= self :: getNewContentUI("sponsor_info_{$this->id}_new");
+										$html .= "</div>\n";
 				}
 				else
 				{
-					$sponsor_info = self :: getContent($this->content_row['sponsor_info']);
+					$sponsor_info = self :: getObject($this->content_row['sponsor_info']);
 					$html .= $sponsor_info->getAdminUI();
+										$html .= "</div>\n";
 					$html .= "<div class='admin_section_tools'>\n";
 					$name = "content_".$this->id."_sponsor_info_erase";
 					$html .= "<input type='submit' name='$name' value='"._("Delete")."' onclick='submit();'>";
@@ -488,7 +575,7 @@ class Content
 	public function processAdminUI()
 	{
 		global $db;
-		if ($this->getContentType() == 'Content') /* The object hasn't yet been typed */
+		if ($this->getObjectType() == 'Content') /* The object hasn't yet been typed */
 		{
 			$content_type = FormSelectGenerator :: getResult("content_".$this->id."_content_type", "Content");
 			$this->setContentType($content_type);
@@ -508,7 +595,7 @@ class Content
 				}
 				else
 				{
-					$title = self :: getContent($this->content_row['title']);
+					$title = self :: getObject($this->content_row['title']);
 					$name = "content_".$this->id."_title_erase";
 					if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
 					{
@@ -537,7 +624,7 @@ class Content
 				}
 				else
 				{
-					$description = self :: getContent($this->content_row['description']);
+					$description = self :: getObject($this->content_row['description']);
 					$name = "content_".$this->id."_description_erase";
 					if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
 					{
@@ -562,7 +649,7 @@ class Content
 				}
 				else
 				{
-					$project_info = self :: getContent($this->content_row['project_info']);
+					$project_info = self :: getObject($this->content_row['project_info']);
 					$name = "content_".$this->id."_project_info_erase";
 					if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
 					{
@@ -587,7 +674,7 @@ class Content
 				}
 				else
 				{
-					$sponsor_info = self :: getContent($this->content_row['sponsor_info']);
+					$sponsor_info = self :: getObject($this->content_row['sponsor_info']);
 					$name = "content_".$this->id."_sponsor_info_erase";
 					if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
 					{
@@ -615,7 +702,7 @@ class Content
 						}
 						else
 						{
-													$name = "content_".$this->id."_owner_".$user->GetId()."_is_author";
+							$name = "content_".$this->id."_owner_".$user->GetId()."_is_author";
 							$content_owner_row['is_author'] == 't' ? $is_author = true : $is_author = false;
 							!empty ($_REQUEST[$name]) ? $should_be_author = true : $should_be_author = false;
 							if ($is_author != $should_be_author)
@@ -641,6 +728,7 @@ class Content
 				}
 
 			}
+			$this->refresh();
 	}
 	/** Subscribe to the project 
 	 * @return true on success, false on failure */
@@ -688,28 +776,45 @@ class Content
 
 	}
 
-	/** Reloads the object from the database.  Should normally be called after a set operation
-	* @todo Implement proper Access control */
+	/** Reloads the object from the database.  Should normally be called after a set operation */
 	protected function refresh()
 	{
 		$this->__construct($this->id);
 	}
 
-	/** Delete this Content from the database 
-	 * @todo Implement proper Access control */
-	public function delete()
+	/** @see GenericObject
+	 * @note Persistent content will not be deleted
+	*/
+	public function delete(& $errmsg)
 	{
-		if ($this->isPersistent() == false)
+		$retval = false;
+		if ($this->isPersistent())
+		{
+			$errmsg = _("Content is persistent (you must make it non persistent before you can delete it)");
+		}
+		else
 		{
 			global $db;
-			if (!$this->isOwner(User :: getCurrentUser()))
+			if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
 			{
-				throw new Exception(_("Access denied (not owner of content)"));
+				$sql = "DELETE FROM content WHERE content_id='$this->id'";
+				$db->ExecSqlUpdate($sql, false);
+				$retval = true;
 			}
-			$sql = "DELETE FROM content WHERE content_id='$this->id'";
-			$db->ExecSqlUpdate($sql, false);
+			else
+			{
+				$errmsg = _("Access denied (not owner of content)");
+			}
 		}
+		return $retval;
 	}
 
 } // End class
+
+/* This allows the class to enumerate it's children properly */
+$class_names = Content :: getAvailableContentTypes();
+foreach ($class_names as $class_name)
+{
+	require_once BASEPATH.'classes/Content/'.$class_name.'.php';
+}
 ?>

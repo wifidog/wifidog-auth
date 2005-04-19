@@ -63,13 +63,13 @@ class ContentGroupElement extends Content
 			{
 				throw new Exception(_('Unable to insert new content into database!'));
 			}
-			$content_group_element_object = self :: getContent($content_id);
-			
+			$content_group_element_object = self :: getObject($content_id);
+
 			$content_type = FormSelectGenerator :: getResult($name, null);
-			if($content_type!='ContentGroupElement')
+			if ($content_type != 'ContentGroupElement')
 			{
-			$displayed_content_object = self :: createNewContent($content_type);
-			$content_group_element_object->replaceDisplayedContent($displayed_content_object);
+				$displayed_content_object = self :: createNewObject($content_type);
+				$content_group_element_object->replaceDisplayedContent($displayed_content_object);
 			}
 		}
 		return $content_group_element_object;
@@ -87,9 +87,11 @@ class ContentGroupElement extends Content
 		$db->ExecSqlUniqueRes($sql_select, $row, false);
 		if ($row == null)
 		{
-				throw new Exception(_("The content with the following id could not be found in the database: ").$content_id);
+			throw new Exception(_("The content with the following id could not be found in the database: ").$content_id);
 		}
 		$this->content_group_element_row = $row;
+		/* A content group element is NEVER persistent */
+		parent :: setIsPersistent(false);
 
 	}
 
@@ -101,10 +103,10 @@ class ContentGroupElement extends Content
 		/* display_order */
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>Display order: </div>\n";
-				$html .= "<div class='admin_section_data'>\n";			
+		$html .= "<div class='admin_section_data'>\n";
 		$name = "content_group_element_".$this->id."_display_order";
 		$html .= "<input type='text' name='$name' value='".$this->getDisplayOrder()."' size='2'>\n";
-				$html .= _("(Ignored if display type is random)")."\n";
+		$html .= _("(Ignored if display type is random)")."\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 
@@ -121,7 +123,7 @@ class ContentGroupElement extends Content
 		{
 			foreach ($allowed_node_rows as $allowed_node_row)
 			{
-				$node = Node :: getNode($allowed_node_row['node_id']);
+				$node = Node :: getObject($allowed_node_row['node_id']);
 				$html .= "<li class='admin_section_list_item'>\n";
 				$html .= "<div class='admin_section_data'>\n";
 				$html .= "".$node->GetId().": ".$node->GetName()."";
@@ -135,25 +137,15 @@ class ContentGroupElement extends Content
 			}
 		}
 
-		$sql = "SELECT node_id, name from nodes WHERE node_id NOT IN (SELECT node_id FROM content_group_element_has_allowed_nodes WHERE content_group_element_id='$this->id') ORDER BY node_id";
-		$db->ExecSql($sql, $not_allowed_node_rows, false);
-		if ($not_allowed_node_rows != null)
-		{
+		$html .= "<li class='admin_section_list_item'>\n";
 
-			$i = 0;
-			foreach ($not_allowed_node_rows as $not_allowed_node_row)
-			{
-				$tab[$i][0] = $not_allowed_node_row['node_id'];
-				$tab[$i][1] = $not_allowed_node_row['node_id'].": ".$not_allowed_node_row['name'];
-				$i ++;
-			}
-			$html .= "<li class='admin_section_list_item'>\n";
-			$name = "content_group_element_{$this->id}_new_allowed_node";
-			$html .= FormSelectGenerator :: generateFromArray($tab, null, $name, null, false);
-			$name = "content_group_element_{$this->id}_new_allowed_node_submit";
-			$html .= "<input type='submit' name='$name' value='"._("Add new allowed node")."' onclick='submit();'>";
-			$html .= "</li'>\n";
-		}
+		$sql_additional_where = "AND node_id NOT IN (SELECT node_id FROM content_group_element_has_allowed_nodes WHERE content_group_element_id='$this->id')";
+		$name = "content_group_element_{$this->id}_new_allowed_node";
+		$html .= Node :: getSelectNodeUI($name, $sql_additional_where);
+		$name = "content_group_element_{$this->id}_new_allowed_node_submit";
+		$html .= "<input type='submit' name='$name' value='"._("Add new allowed node")."' onclick='submit();'>";
+		$html .= "</li'>\n";
+
 		$html .= "</ul>\n";
 		$html .= "</div>\n";
 
@@ -166,7 +158,7 @@ class ContentGroupElement extends Content
 		}
 		else
 		{
-			$displayed_content = self :: getContent($this->content_group_element_row['displayed_content_id']);
+			$displayed_content = self :: getObject($this->content_group_element_row['displayed_content_id']);
 			$html .= $displayed_content->getAdminUI();
 			$html .= "<div class='admin_section_tools'>\n";
 			$name = "content_group_element_{$this->id}_erase_displayed_content";
@@ -188,7 +180,7 @@ class ContentGroupElement extends Content
 		$old_displayed_content = null;
 		if (!empty ($this->content_group_element_row['displayed_content_id']))
 		{
-			$old_displayed_content = self :: getContent($this->content_group_element_row['displayed_content_id']);
+			$old_displayed_content = self :: getObject($this->content_group_element_row['displayed_content_id']);
 		}
 		if ($new_displayed_content != null)
 		{
@@ -224,7 +216,7 @@ class ContentGroupElement extends Content
 		{
 			foreach ($allowed_node_rows as $allowed_node_row)
 			{
-				$node = Node :: getNode($allowed_node_row['node_id']);
+				$node = Node :: getObject($allowed_node_row['node_id']);
 				$name = "content_group_element_".$this->id."_allowed_node_".$node->GetId()."_remove";
 				if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
 				{
@@ -237,8 +229,7 @@ class ContentGroupElement extends Content
 		if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
 		{
 			$name = "content_group_element_{$this->id}_new_allowed_node";
-			$node_id = FormSelectGenerator :: getResult($name, null);
-			$node = Node :: getNode($node_id);
+			$node = Node :: processSelectNodeUI($name);
 			$node_id = $node->GetId();
 			$db->ExecSqlUpdate("INSERT INTO content_group_element_has_allowed_nodes (content_group_element_id, node_id) VALUES ('$this->id', '$node_id')", FALSE);
 		}
@@ -251,11 +242,12 @@ class ContentGroupElement extends Content
 			{
 				$displayed_content_id = $displayed_content->GetId();
 				$db->ExecSqlUpdate("UPDATE content_group_element SET displayed_content_id = '$displayed_content_id' WHERE content_group_element_id = '$this->id'", FALSE);
+				$displayed_content->setIsPersistent(false);
 			}
 		}
 		else
 		{
-			$displayed_content = self :: getContent($this->content_group_element_row['displayed_content_id']);
+			$displayed_content = self :: getObject($this->content_group_element_row['displayed_content_id']);
 			$name = "content_group_element_{$this->id}_erase_displayed_content";
 			if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
 			{
@@ -294,20 +286,20 @@ class ContentGroupElement extends Content
 	 * @return true if the user is a owner, false if he isn't of the user is null */
 	public function isOwner($user)
 	{
-		$content_group = Content::getContent($this->content_group_element_row['content_group_id']);
+		$content_group = Content :: getObject($this->content_group_element_row['content_group_id']);
 		return $content_group->isOwner($user);
 	}
-	
+
 	/** Delete this Content from the database 
 	 * @todo Implement proper Access control */
-	public function delete()
+	public function delete(& $errmsg)
 	{
-		if ($this->isPersistent()==false && !empty ($this->content_group_element_row['displayed_content_id']))
+		if ($this->isPersistent() == false && !empty ($this->content_group_element_row['displayed_content_id']))
 		{
-			$displayed_content = self :: getContent($this->content_group_element_row['displayed_content_id']);
-			$displayed_content->delete();
+			$displayed_content = self :: getObject($this->content_group_element_row['displayed_content_id']);
+			$displayed_content->delete($errmsg);
 		}
-		parent :: delete();
+		return parent :: delete($errmsg);
 	}
 } // End class
 ?>

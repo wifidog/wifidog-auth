@@ -27,7 +27,6 @@ define('BASEPATH', '../');
 require_once 'admin_common.php';
 define('CONTENT_ADMIN_HREF', 'content_admin.php');
 require_once BASEPATH.'classes/Content.php';
-require_once BASEPATH.'classes/Style.php';
 
 $smarty->display("templates/header.html");
 $html = '';
@@ -39,19 +38,19 @@ if (empty ($_REQUEST['action']))
 
 if ($_REQUEST['action'] == 'list_all_content')
 {
-	$sql = "SELECT * FROM content WHERE is_persistent=TRUE";
+	$sql = "SELECT * FROM content";
 	$db->ExecSql($sql, $results, false);
 	if ($results != null)
 	{
-		echo "<table>\n";
-		echo "<tr><th>"._("Title")."</th><th>"._("Content type")."</th><th>"._("Description")."</th></tr>\n";
+		$html.= "<table>\n";
+		$html.=  "<tr><th>"._("Title")."</th><th>"._("Content type")."</th><th>"._("Description")."</th></tr>\n";
 
 		foreach ($results as $row)
 		{
-			$content=Content :: getContent($row['content_id']);
+			$content=Content :: getObject($row['content_id']);
 			if (!empty ($row['title']))
 			{
-				$title = Content :: getContent($row['title']);
+				$title = Content :: getObject($row['title']);
 				$title_ui = $title->getUserUI();
 			}
 			else
@@ -61,64 +60,32 @@ if ($_REQUEST['action'] == 'list_all_content')
 
 			if (!empty ($row['description']))
 			{
-				$description = Content :: getContent($row['description']);
+				$description = Content :: getObject($row['description']);
 				$description_ui = $description->getUserUI();
 			}
 			else
 			{
 				$description_ui = null;
 			}
-			$href = "?content_id=$row[content_id]&action=edit";
-			echo "<tr><td>$title_ui</td><td><a href='$href'>$row[content_type]</a></td><td>$description_ui</td>\n";
-			$href = "?content_id=$row[content_id]&action=delete";
+			$href = GENERIC_OBJECT_ADMIN_ABS_HREF."?object_id=$row[content_id]&object_class=Content&action=edit";
+			$html.=  "<tr><td>$title_ui</td><td><a href='$href'>$row[content_type]</a></td><td>$description_ui</td>\n";
+			$href = GENERIC_OBJECT_ADMIN_ABS_HREF."?object_id=$row[content_id]&object_class=Content&action=delete";
 			if($content->isOwner(User::getCurrentUser()))
-			echo "<td><a href='$href'>Delete</a></td>";
-			echo "</tr>\n";
+			$html.=  "<td><a href='$href'>Delete</a></td>";
+			$html.= "</tr>\n";
 
 		}
-		echo "</table>\n";
+		$html.= "</table>\n";
 	}
 	else
 	{
-		echo "<p>No results found</p>";
+		$html.=  "<p>No results found</p>";
 	}
-	$html .= '<form action="" method="get">';
-	$html .= "<input type='hidden' name='action' value='edit'>\n";
+	$html .= '<form action="'.GENERIC_OBJECT_ADMIN_ABS_HREF.'" method="get">';
+	$html .= "<input type='hidden' name='action' value='new'>\n";
+	$html .= "<input type='hidden' name='object_class' value='Content'>\n";
 	$html .= "<input type=submit name='new_submit' value='"._("Add new content")."'>\n";
 	$html .= '</form>';
-}
-if ($_REQUEST['action'] == 'save')
-{
-	$content = Content :: getContent($_REQUEST['content_id']);
-	$html .= $content->processAdminUI();
-	$_REQUEST['action'] = 'edit';
-}
-
-if ($_REQUEST['action'] == 'edit')
-{
-	if (!empty ($_REQUEST['new_submit']))
-	{
-		$content = Content :: createNewContent();
-		$content->setIsPersistent(true);
-	}
-	else
-	{
-		$content = Content :: getContent($_REQUEST['content_id']);
-	}
-	$html .= "<form action='".CONTENT_ADMIN_HREF."' method='post'>";
-	$html .= "<input type='hidden' name='content_id' value='".$content->GetId()."'>\n";
-	$html .= $content->getAdminUI();
-	$html .= "<input type='hidden' name='action' value='save'>\n";
-	$html .= "<input type=submit name='save_submit' value='"._("Save")."'>\n";
-	$html .= '</form>';
-}
-
-if ($_REQUEST['action'] == 'delete')
-{
-
-		$content = Content :: getContent($_REQUEST['content_id']);
-	$content->delete();
-	$html .= "Content deleted";
 }
 
 echo $html;

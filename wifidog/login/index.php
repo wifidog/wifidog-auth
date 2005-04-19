@@ -68,7 +68,7 @@ if (isset ($_REQUEST['gw_id'])) {
 	$smarty->assign("gw_id", $_REQUEST['gw_id']);
 
 	try {
-		$node = Node :: getNode($db->EscapeString(CURRENT_NODE_ID));
+		$node = Node :: getObject($db->EscapeString(CURRENT_NODE_ID));
 		$smarty->assign('hotspot_name', $node->getName());
 	} catch (Exception $e) {
 		$smarty->assign("error", $e->getMessage());

@@ -34,6 +34,7 @@ class Security {
   }
 
 /**
+ * @todo:  Move to User
 */
   function login($user_id, $hash) {
     global $db;
@@ -51,13 +52,8 @@ class Security {
   }
 
   function requireAdmin() {
-    global $db;
-    //$this->session->dump();
-    $user_id = $this->session->get(SESS_USER_ID_VAR);
-    $password_hash = $this->session->get(SESS_PASSWORD_HASH_VAR);
-    
-    $db->ExecSqlUniqueRes("SELECT * FROM users NATURAL JOIN administrators WHERE (users.user_id='$user_id') AND pass='$password_hash'", $user_info, false);
-    if (empty($user_info)) {
+     if (!User::getCurrentUser()->isSuperAdmin())
+      {
       echo '<p class=error>'._("You do not have administrator privileges")."</p>\n";
       exit;
     } else {

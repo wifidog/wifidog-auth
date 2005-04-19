@@ -1,6 +1,5 @@
 <?php
 
-
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -162,7 +161,7 @@ class ContentGroup extends Content
 
 		/* content_group_element (table)*/
 		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<span class='admin_section_title'>"._("Content group elements:")."</span>\n";
+		$html .= "<div class='admin_section_title'>"._("Content group elements:")."</div>\n";
 
 		$html .= "<ul class='admin_section_list'>\n";
 			foreach ($this->getElements() as $element)
@@ -230,23 +229,23 @@ class ContentGroup extends Content
 		{
 			foreach ($element_rows as $element_row)
 			{
-				$retval[] = self :: getContent($element_row['content_group_element_id']);
+				$retval[] = self :: getObject($element_row['content_group_element_id']);
 			}
 		}
 		return $retval;
 }
 	/** Delete this Content from the database 
  */
-		public function delete()
+		public function delete(& $errmsg)
 	{	
 				if($this->isPersistent()==false)
 		{
 			foreach ($this->getElements() as $element)
 			{
-					$element->delete();
+					$element->delete($errmsg);
 			}
 		}
-		parent::delete();
+		return parent::delete($errmsg);
 	}
 
 } // End class

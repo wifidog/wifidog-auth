@@ -37,15 +37,15 @@ require_once 'admin_common.php';
 require_once BASEPATH.'classes/Node.php';
 require_once BASEPATH.'classes/User.php';
 
-$user_id = $session->get(SESS_USER_ID_VAR);
+$user_id = User::getCurrentUser()->getId();
 $smarty->assign("user_id", $user_id); // DEBUG
 
 empty($_REQUEST['action'])  ? $action  = '' : $action  = $_REQUEST['action'];
 empty($_REQUEST['node_id']) ? $node_id = '' : $node_id = $_REQUEST['node_id'];
 empty($_REQUEST['delfile']) ? $delfile = '' : $delfile = $_REQUEST['delfile'];
 
-$user_id = $session->get(SESS_USERNAME_VAR);
-$smarty->assign("user_id", $user_id); // DEBUG
+$username = User::getCurrentUser()->getUsername();
+$smarty->assign("username", $username); // DEBUG
 
 // TODO: Remplacer les constantes definit dans config.php pour $filesArray
 $filesArray = array (

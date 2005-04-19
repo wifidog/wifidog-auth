@@ -162,6 +162,19 @@ A:visited { font-size: 85% }
 #std_table th { font-size: 14pt; background-color: #e1f5da;}
 #std_table td.item { font-weight: bold; }
 
+/** Messages */
+.errormsg {font-weight: bold;  
+		color: red};
+
+.warningmsg {font-weight: bold;  
+		color: teal};
+
+.successmsg {font-weight: bold;  
+		color: green};
+
+.msg {font-weight: bold;  
+		font-color: black};
+
 /* The content container */
 .content { border: 2px solid gray; 
 			width:auto;}
@@ -193,4 +206,6 @@ display: compact;
 .admin_section_list_item {display: compact; }
 .user_ui_container{ border: none;  }
 .user_ui_object_class{ display: none;  }
+
+.list_ui_container{ display: inline; }
 {/literal}

@@ -41,7 +41,7 @@ if ($action == 'edit_node') { // Allow node creation or node edition
     $smarty->assign("title", _("Edit a hotspot"));
     
     if ($node_id != "new") { // Node creation
-        $node = Node::getNode($node_id);
+        $node = Node::getObject($node_id);
     }
 
     $smarty->assign('node_id', $node->getID());
@@ -68,7 +68,7 @@ if ($action == 'edit_node') { // Allow node creation or node edition
 } else if ($action == 'owner') { // Display hotspot owner list and add form
     $smarty->assign('title', _('Owner hotspot with'));
     try {
-        $node = Node::getNode($node_id);
+        $node = Node::getObject($node_id);
         $smarty->assign('node_id', $node->getName());
         $smarty->assign('owner_list', $node->getOwners());
         $smarty->display('admin/templates/hotspot_owner.html');
@@ -119,7 +119,7 @@ if ($action == 'edit_node') { // Allow node creation or node edition
             case 'update_node':
                 if ($new_node_id) {
                   try {
-                    $node = Node::getNode($new_node_id);
+                    $node = Node::getObject($new_node_id);
                     $node->setInfos( array(
                             'name'                   => $name,
                             'rss_url'                => $rss_url,
@@ -152,7 +152,8 @@ if ($action == 'edit_node') { // Allow node creation or node edition
 
     } elseif ($action == 'del_node') {
         try {
-            Node::deleteNode($node_id);
+        	$node = Node::getObject($node_id);
+            $node->delete();
         } catch (Exception $e) {
             echo '<p class="warning">'.$e->getMessage().'</p>'; 
         }
@@ -160,7 +161,7 @@ if ($action == 'edit_node') { // Allow node creation or node edition
     } elseif ($action == 'add_owner') {
         try {
             if (User::UserExists($_REQUEST['owner_user_id'])) {
-                $node = Node::getNode($_REQUEST['node_id']);
+                $node = Node::getObject($_REQUEST['node_id']);
                 $node->addOwner($_REQUEST['owner_user_id']);
             } else {
                 throw new Exception(_('Invalid user!'));
@@ -170,7 +171,7 @@ if ($action == 'edit_node') { // Allow node creation or node edition
         }
     } elseif ($action == 'del_owner') {
         try {
-            $node = Node::getNode($_REQUEST['node_id']);
+            $node = Node::getObject($_REQUEST['node_id']);
             $node->removeOwner($_REQUEST['owner_user_id']);
         } catch (Exception $e) {
             echo '<p class="warning">' . $e->getMessage() . '</p>';
