@@ -68,8 +68,8 @@ $object = call_user_func(array ($class, 'getObject'), $_REQUEST['object_id']);
 
 if ($_REQUEST['action'] == 'save')
 {
-
 	$html .= $object->processAdminUI();
+    $object = call_user_func(array ($class, 'getObject'), $_REQUEST['object_id']);
 	$_REQUEST['action'] = 'edit';
 }
 

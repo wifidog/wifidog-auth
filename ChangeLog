@@ -1,3 +1,9 @@
+2005-04-20 François Proulx <francois.proulx@gmail.com>
+	* Completed Flickr support ( explicit exceptions catching )
+	* Most of File object is done
+	* Fixed bug in generic_object_admin.php
+	* changed stylesheet class tags for Flickr
+	
 2005-04-18 François Proulx <francois.proulx@gmail.com>
 	* Added Flickr content support
 	* Part of File object is done

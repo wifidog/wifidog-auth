@@ -227,57 +227,57 @@ clear: right;
 max-height: 100px;
 max-width: 100px;
 }
-.FlickrPhotoBlock {
+.flickr_photo_block {
     margin:20px auto 20px auto;
     width:400px;
 }
-.FlickrPhotoBlock:hover > * {
+.flickr_photo_block:hover > * {
     visibility: visible;
 }
-.FlickrTitle {
+.flickr_title {
     visibility: hidden;
     width: 200px;
     background: #696969;
 }
-.FlickrTitle h3 {
+.flickr_title h3 {
     color: white;
     padding: 5px;
     margin: 0;
 }
-.FlickrPhoto {
+.flickr_photo {
     float:left;
 }
 .FlickrPhoto img {
     border: 10px solid black;
 }
-.FlickrTags {
+.flickr_tags {
     visibility: hidden;
     background-color: #696969;
     color: white;
     margin-left: 260px;
 }
-.FlickrTags h3 {
+.flickr_tags h3 {
     padding-left: 5px;
     margin: 0;
 }
-.FlickrTags ul {
+.flickr_tags ul {
     margin-left: 20px;
     margin-top: 0px;
     padding: 0px;
 }
-.FlickrTags li {
+.flickr_tags li {
     list-style: none;
     list-style-image: none;
 }
-.FlickrTags li a {
+.flickr_tags li a {
     color: white;
     font-size: normal;
     text-decoration: none;
 }
-.FlickrTags li a:hover {
+.flickr_tags li a:hover {
     text-decoration: underline;
 }
-.FlickrDescription {
+.flickr_description {
     visibility: hidden;
     width: 180px;
     background: #696969;

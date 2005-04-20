@@ -33,6 +33,12 @@ error_reporting(E_ALL);
  */
 class File extends Content
 {
+    /* File size units */
+    const UNIT_BYTES = 1;
+    const UNIT_KILOBYTES = 1024;
+    const UNIT_MEGABYTES = 1048576;
+    const UNIT_GIGABYTES = 1073741824;
+    
 	/**Constructeur
 	@param $content_id Content id
 	*/
@@ -44,7 +50,7 @@ class File extends Content
 		global $db;
 
 		$content_id = $db->EscapeString($content_id);
-		$sql = "SELECT files_id, filename, mime_type FROM files WHERE files_id='$content_id'";
+		$sql = "SELECT files_id, filename, mime_type, url, octet_length(binary_data) AS size FROM files WHERE files_id='$content_id'";
 		$db->ExecSqlUniqueRes($sql, $row, false);
 		if ($row == null)
 		{
@@ -52,7 +58,7 @@ class File extends Content
 			$sql = "INSERT INTO files (files_id) VALUES ('$content_id')";
 			$db->ExecSqlUpdate($sql, false);
 
-			$sql = "SELECT files_id, filename, mime_type FROM files WHERE files_id='$content_id'";
+			$sql = "SELECT files_id, filename, mime_type, url, octet_length(binary_data) AS size FROM files WHERE files_id='$content_id'";
 			$db->ExecSqlUniqueRes($sql, $row, false);
 			if ($row == null)
 			{
@@ -128,6 +134,42 @@ class File extends Content
 		$this->mBd->ExecSqlUpdate("UPDATE files SET filename ='".$file_name."' WHERE files_id='".$this->getId()."'", false);
 		$this->refresh();
 	}
+    
+    function getFileSize($unit = self::UNIT_BYTES)
+    {
+        switch($unit)
+        {
+            case self::UNIT_KILOBYTES;
+            case self::UNIT_MEGABYTES:
+            case self::UNIT_GIGABYTES:
+            case self::UNIT_BYTES:
+                return round($this->files_row['size'] / $unit, 2);
+            default:
+                return $this->files_row['size'];
+                break;
+        }
+    }
+    
+    function getFileUrl()
+    {
+        //TODO: build local url + file generator
+        if(!isLocalFile())
+            return $this->files_row['url'];
+        else
+            return "http://";
+    }
+    
+    function setURL($url)
+    {
+        $url = $this->mBd->EscapeString($url);
+        $this->mBd->execSqlUpdate("UPDATE files SET url = '$url' WHERE files_id='".$this->getId()."'", false);
+        $this->refresh();
+    }
+    
+    function isLocalFile()
+    {
+        return !empty($this->files_row['url']);
+    }
 
 	/**Affiche l'interface d'administration de l'objet */
 	function getAdminUI()
@@ -136,11 +178,22 @@ class File extends Content
 		$html .= "<div class='admin_class'>File (".get_class($this)." instance)</div>\n";
         
 		$html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Upload a new file (This will replace any existing file)")." : </div>\n";
+        $html .= "<div class='admin_section_title'>";
+        $html .= "<input type='radio' name='file_by_upload".$this->getId()."' value='true' ".(!$this->isLocalFile()?"CHECKED":"").">";
+        $html .= _("Upload a new file (This will replace any existing file)")." : </div>\n";
         $html .= "<div class='admin_section_data'>\n";
         $html .= '<input type="hidden" name="MAX_FILE_SIZE" value="1073741824" />';
         $html .= '<input name="file_file_upload'.$this->getId().'" type="file" />';
 		$html .= "</div>\n";
+        $html .= "</div>\n";
+        
+        $html .= "<div class='admin_section_container'>\n";
+        $html .= "<div class='admin_section_title'>";
+        $html .= "<input type='radio' name='file_by_url".$this->getId()."' value='true' ".($this->isLocalFile()?"CHECKED":"").">";
+        $html .= _("Remote file via URL")." : </div>\n";
+        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<input name='file_url".$this->getId()."' type='text' size='50'/>";
+        $html .= "</div>\n";
         $html .= "</div>\n";
         
         $html .= "<div class='admin_section_container'>\n";
@@ -157,6 +210,20 @@ class File extends Content
         $html .= "</div>\n";
         $html .= "</div>\n";
         
+        if($this->isLocalFile())
+        {
+            $html .= "<div class='admin_section_container'>\n";
+            $html .= "<div class='admin_section_title'>"._("File size")." : </div>\n";
+            $html .= "<div class='admin_section_data'>\n";
+            $html .= $this->getFileSize(self::UNIT_KILOBYTES)." "._("KB");
+            $html .= "</div>\n";
+            $html .= "</div>\n";
+        }
+        else
+        {
+            //TODO: implement user defined size
+        }
+        
 		return parent :: getAdminUI($html);
 	}
 
@@ -165,11 +232,17 @@ class File extends Content
 		parent :: processAdminUI();
         
         // If no file was uploaded, update filename and mime type
-        if(!$this->setBinaryDataFromPostVar("file_file_upload".$this->getId()))
+        if(!empty($_REQUEST["file_by_upload".$this->getId()]))
         {
-            $this->setMimeType($_REQUEST["file_mime_type".$this->getId()]);
-            $this->setFilename($_REQUEST["file_file_name".$this->getId()]);
+            $this->setBinaryDataFromPostVar("file_file_upload".$this->getId());
         }
+        else
+            if(!empty($_REQUEST["file_url".$this->getId()]))
+            {
+                $this->setURL($_REQUEST["file_url".$this->getId()]);
+            }
+        $this->setMimeType($_REQUEST["file_mime_type".$this->getId()]);
+        $this->setFilename($_REQUEST["file_file_name".$this->getId()]);
 	}
 
 	/**Affiche l'interface usager de l'objet
@@ -178,13 +251,12 @@ class File extends Content
 	/** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
 	 * @param $subclass_admin_interface Html content of the interface element of a children
 	 * @return The HTML fragment for this interface */
-	public function getUserUI($subclass_user_interface = null)
+	public function getUserUI()
 	{
 		$html = '';
 		$html .= "<div class='user_ui_container'>\n";
 		$html .= "<div class='user_ui_object_class'>Langstring (".get_class($this)." instance)</div>\n";
-		$html .= $this->getString();
-		$html .= $subclass_user_interface;
+		$html .= "<a href='".$this->getFileUrl()."'>"._("Download this file")." (".$this->getFileSize(UNIT_KILOBYTES)." "._("KB").")</a>";
 		$html .= "</div>\n";
 		return parent :: getUserUI($html);
 	}

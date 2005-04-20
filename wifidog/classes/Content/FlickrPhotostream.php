@@ -554,33 +554,52 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
                     $photo = $photos[mt_rand(0, count($photos) - 1)];
                     if(is_object($photo))
                     {
-                        $html .= '<div class="FlickrPhotoBlock">'."\n";
-                        $html .= '<div class="FlickrTitle"><h3>'.$photo->getTitle().'</h3></div>'."\n";
-                        $html .= '<div class="FlickrPhoto"><a href="'.$photo->buildUrl().'"><img src="'.$photo->buildImgUrl().'"></a></div>'."\n";
-                        $tags = $photo->getTags();
-                        if(!empty($tags))
+                        $html .= '<div class="flickr_photo_block">'."\n";
+                        if($this->shouldDisplayTitle())
+                            $html .= '<div class="flickr_title"><h3>'.$photo->getTitle().'</h3></div>'."\n";
+                        $html .= '<div class="flickr_photo"><a href="'.$photo->buildUrl().'"><img src="'.$photo->buildImgUrl().'"></a></div>'."\n";
+                        if($this->shouldDisplayTags())
                         {
-                            $html .= '<div class="FlickrTags">'."\n";
-                            $html .= '<h3>'._("Tags")."</h3>\n";
-                            $html .= '<ul>'."\n";
-                            foreach($tags as $tag)
+                            $tags = $photo->getTags();
+                            if(!empty($tags))
                             {
-                                $url_encoded_tag = urlencode($tag);
-                                $html .= '<li><a href="http://www.flickr.com/photos/tags/'.$url_encoded_tag.'/">'.$tag.'</a></li>'."\n";
+                                $html .= '<div class="flickr_tags">'."\n";
+                                $html .= '<h3>'._("Tags")."</h3>\n";
+                                $html .= '<ul>'."\n";
+                                foreach($tags as $tag)
+                                {
+                                    $url_encoded_tag = urlencode($tag);
+                                    $html .= '<li><a href="http://www.flickr.com/photos/tags/'.$url_encoded_tag.'/">'.$tag.'</a></li>'."\n";
+                                }
+                                $html .= '</ul>'."\n";
+                                $html .= '</div>'."\n";
                             }
-                            $html .= '</ul>'."\n";
-                            $html .= '</div>'."\n";
                         }
-                        $description = $photo->getDescription();
-                        if(!empty($description))
-                            $html .= '<div class="FlickrDescription">'.$description.'</div>'."\n";
+                        if($this->shouldDisplayDescription())
+                        {
+                            $description = $photo->getDescription();
+                            if(!empty($description))
+                                $html .= '<div class="flickr_description">'.$description.'</div>'."\n";
+                        }
                         $html .= '</div>'."\n";
                     }
                 }
 			}
+            catch (Phlickr_ConnectionException $e)
+            {
+                $html .= _("Unable to connect to Flickr API.");
+            }
+            catch (Phlickr_MethodFailureException $e)
+            {
+                $html .= _("Some of the request parameters provided to Flickr API are invalid.");
+            }
+            catch (Phlickr_XmlParseException $e)
+            {
+                $html .= _("Unable to parse Flickr's response.");
+            }
 			catch (Phlickr_Exception $e)
 			{
-				$html .= _("Could not complete succesfully the request to Flickr API.");
+				$html .= _("Could not get content from Flickr : ").$e;
 			}
 
 			$html .= $subclass_user_interface;
