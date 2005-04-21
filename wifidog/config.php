@@ -6,13 +6,18 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.34  2005/04/21 14:58:29  fproulx
+ *     2005-04-21 François Proulx <francois.proulx@gmail.com>
+ *     	* Added explicit admin UI exceptions support for Flickr
+ *     	* Completed File and Picture objects
+ *
  *     Revision 1.33  2005/04/19 21:17:01  fproulx
- *     2005-04-18 François Proulx <francois.proulx@gmail.com>
+ *     2005-04-18 Franï¿½ois Proulx <francois.proulx@gmail.com>
  *     	* Added Flickr content support
  *     	* Part of File object is done
  *
  *     Revision 1.32  2005/04/19 21:02:40  benoitg
- *     2005-04-19 Benoit Grégoire  <bock@step.polymtl.ca>
+ *     2005-04-19 Benoit Grï¿½goire  <bock@step.polymtl.ca>
  *     	* Working (beta...) content manager and portal.
  *     	* Add content preview mode
  *

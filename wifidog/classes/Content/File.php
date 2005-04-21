@@ -24,7 +24,6 @@
  * @author Copyright (C) 2005 François Proulx, Technologies Coeus inc.
 */
 
-require_once BASEPATH.'classes/FormSelectGenerator.php';
 require_once BASEPATH.'classes/Content.php';
 
 error_reporting(E_ALL);
@@ -33,24 +32,24 @@ error_reporting(E_ALL);
  */
 class File extends Content
 {
-    /* File size units */
-    const UNIT_BYTES = 1;
-    const UNIT_KILOBYTES = 1024;
-    const UNIT_MEGABYTES = 1048576;
-    const UNIT_GIGABYTES = 1073741824;
-    
+	/* File size units */
+	const UNIT_BYTES = 1;
+	const UNIT_KILOBYTES = 1024;
+	const UNIT_MEGABYTES = 1048576;
+	const UNIT_GIGABYTES = 1073741824;
+
 	/**Constructeur
 	@param $content_id Content id
 	*/
 	function __construct($content_id)
 	{
 		parent :: __construct($content_id);
-        $this->setIsPersistent(false);
-        $this->setIsTrivialContent(true);
+		$this->setIsPersistent(false);
+		$this->setIsTrivialContent(true);
 		global $db;
 
 		$content_id = $db->EscapeString($content_id);
-		$sql = "SELECT files_id, filename, mime_type, url, octet_length(binary_data) AS size FROM files WHERE files_id='$content_id'";
+		$sql = "SELECT files_id, filename, mime_type, url, octet_length(binary_data) AS local_binary_size, remote_size FROM files WHERE files_id='$content_id'";
 		$db->ExecSqlUniqueRes($sql, $row, false);
 		if ($row == null)
 		{
@@ -58,7 +57,7 @@ class File extends Content
 			$sql = "INSERT INTO files (files_id) VALUES ('$content_id')";
 			$db->ExecSqlUpdate($sql, false);
 
-			$sql = "SELECT files_id, filename, mime_type, url, octet_length(binary_data) AS size FROM files WHERE files_id='$content_id'";
+			$sql = "SELECT files_id, filename, mime_type, url, octet_length(binary_data) AS local_binary_size, remote_size FROM files WHERE files_id='$content_id'";
 			$db->ExecSqlUniqueRes($sql, $row, false);
 			if ($row == null)
 			{
@@ -70,11 +69,11 @@ class File extends Content
 		$this->files_row = $row;
 	}
 
-    /**
-     * Set Binary data from a POST form data field
-     * @param string $upload_field The form field that contains the data
-     * 
-     */
+	/**
+	 * Set Binary data from a POST form data field
+	 * @param string $upload_field The form field that contains the data
+	 * 
+	 */
 	function setBinaryDataFromPostVar($upload_field)
 	{
 		if (!empty ($_FILES[$upload_field]) && $_FILES[$upload_field]['error'] != UPLOAD_ERR_NO_FILE)
@@ -86,10 +85,10 @@ class File extends Content
 
 			// Updating database
 			$this->setBinaryData($buffer);
-            $this->setMimeType($_FILES[$upload_field]['type']);
-            $this->setFilename($_FILES[$upload_field]['name']);
-            $this->refresh();
-            return true;
+			$this->setMimeType($_FILES[$upload_field]['type']);
+			$this->setFilename($_FILES[$upload_field]['name']);
+			$this->refresh();
+			return true;
 		}
 		else
 		{
@@ -106,8 +105,11 @@ class File extends Content
 
 	function setBinaryData($data)
 	{
-		$data = $this->mBd->EscapeBinaryString($data);
-		$this->mBd->ExecSqlUpdate("UPDATE files SET binary_data ='".$data."' WHERE files_id='".$this->getId()."'", false);
+        if($data == null)
+            $data = "NULL";
+        else
+		  $data = "'".$this->mBd->EscapeBinaryString($data)."'";
+		$this->mBd->ExecSqlUpdate("UPDATE files SET binary_data = $data WHERE files_id='".$this->getId()."'", false);
 		$this->refresh();
 	}
 
@@ -134,119 +136,176 @@ class File extends Content
 		$this->mBd->ExecSqlUpdate("UPDATE files SET filename ='".$file_name."' WHERE files_id='".$this->getId()."'", false);
 		$this->refresh();
 	}
+
+	function getFileSize($unit = self :: UNIT_BYTES)
+	{
+        if($this->isLocalFile())
+            $size = $this->files_row['local_binary_size'];
+        else
+            $size = $this->files_row['remote_size'];
+        
+		switch ($unit)
+		{
+			case self :: UNIT_KILOBYTES;
+			case self :: UNIT_MEGABYTES :
+			case self :: UNIT_GIGABYTES :
+			case self :: UNIT_BYTES :
+				return round($size / $unit, 2);
+			default :
+				return $size;
+				break;
+		}
+	}
     
-    function getFileSize($unit = self::UNIT_BYTES)
+    function setRemoteFileSize($size, $unit = self::UNIT_KILOBYTES)
     {
-        switch($unit)
+        if(is_numeric($size))
         {
-            case self::UNIT_KILOBYTES;
-            case self::UNIT_MEGABYTES:
-            case self::UNIT_GIGABYTES:
-            case self::UNIT_BYTES:
-                return round($this->files_row['size'] / $unit, 2);
-            default:
-                return $this->files_row['size'];
-                break;
+            $octet_size = $size * $unit;
+            $this->mBd->execSqlUpdate("UPDATE files SET remote_size = $octet_size WHERE files_id='".$this->getId()."'", false);
+            $this->refresh();
         }
     }
-    
-    function getFileUrl()
-    {
-        //TODO: build local url + file generator
-        if(!isLocalFile())
-            return $this->files_row['url'];
-        else
-            return "http://";
-    }
-    
-    function setURL($url)
-    {
-        $url = $this->mBd->EscapeString($url);
-        $this->mBd->execSqlUpdate("UPDATE files SET url = '$url' WHERE files_id='".$this->getId()."'", false);
-        $this->refresh();
-    }
-    
-    function isLocalFile()
-    {
-        return !empty($this->files_row['url']);
-    }
+
+	function getFileUrl()
+	{
+		if (!$this->isLocalFile())
+			return $this->files_row['url'];
+		else
+			return BASE_SSL_PATH."file_download.php?file_id=".$this->getId();
+	}
+
+	function setURL($url)
+	{
+        if($url == null)
+            $url = "NULL";
+		else
+            $url = "'".$this->mBd->EscapeString($url)."'";
+		$this->mBd->execSqlUpdate("UPDATE files SET url = $url WHERE files_id='".$this->getId()."'", false);
+		$this->refresh();
+	}
+
+	function isLocalFile()
+	{
+		return is_null($this->files_row['url']);
+	}
 
 	/**Affiche l'interface d'administration de l'objet */
-	function getAdminUI()
+	function getAdminUI($subclass_admin_interface = null)
 	{
 		$html = '';
 		$html .= "<div class='admin_class'>File (".get_class($this)." instance)</div>\n";
-        
+
 		$html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>";
-        $html .= "<input type='radio' name='file_by_upload".$this->getId()."' value='true' ".(!$this->isLocalFile()?"CHECKED":"").">";
-        $html .= _("Upload a new file (This will replace any existing file)")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
-        $html .= '<input type="hidden" name="MAX_FILE_SIZE" value="1073741824" />';
-        $html .= '<input name="file_file_upload'.$this->getId().'" type="file" />';
+		$html .= "<div class='admin_section_title'>";
+		$html .= "<input type='radio' name='file_mode".$this->getId()."' value='by_upload' ". ($this->isLocalFile() ? "CHECKED" : "").">";
+		$html .= _("Upload a new file (Uploading a new one will replace any existing file)")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$html .= '<input type="hidden" name="MAX_FILE_SIZE" value="1073741824" />';
+		$html .= '<input name="file_file_upload'.$this->getId().'" type="file" />';
 		$html .= "</div>\n";
-        $html .= "</div>\n";
-        
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>";
-        $html .= "<input type='radio' name='file_by_url".$this->getId()."' value='true' ".($this->isLocalFile()?"CHECKED":"").">";
-        $html .= _("Remote file via URL")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
-        $html .= "<input name='file_url".$this->getId()."' type='text' size='50'/>";
-        $html .= "</div>\n";
-        $html .= "</div>\n";
-        
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Filename")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
-        $html .= '<input type="text" name="file_file_name'.$this->getId().'" value="'.$this->getFilename().'" />';
-        $html .= "</div>\n";
-        $html .= "</div>\n";
-        
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("MIME type")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
-        $html .= '<input type="text" name="file_mime_type'.$this->getId().'" value="'.$this->getMimeType().'" />';
-        $html .= "</div>\n";
-        $html .= "</div>\n";
-        
+		$html .= "</div>\n";
+
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>";
+		$html .= "<input type='radio' name='file_mode".$this->getId()."' value='remote' ". (!$this->isLocalFile() ? "CHECKED" : "").">";
+		$html .= _("Remote file via URL")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
         if($this->isLocalFile())
+            $html .= "<input name='file_url".$this->getId()."' type='text' size='50'/>";
+        else
+            $html .= "<input name='file_url".$this->getId()."' type='text' size='50' value='".$this->getFileUrl()."'/>";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+        
+        if (!$this->isLocalFile())
         {
             $html .= "<div class='admin_section_container'>\n";
-            $html .= "<div class='admin_section_title'>"._("File size")." : </div>\n";
+            $html .= "<div class='admin_section_title'>"._("File URL")." : </div>\n";
             $html .= "<div class='admin_section_data'>\n";
-            $html .= $this->getFileSize(self::UNIT_KILOBYTES)." "._("KB");
+            $html .= $this->getFileUrl();
             $html .= "</div>\n";
             $html .= "</div>\n";
         }
-        else
+
+        $html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Filename to display")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$html .= '<input type="text" name="file_file_name'.$this->getId().'" value="'.$this->getFilename().'" />';
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+
+		if ($this->isLocalFile())
         {
-            //TODO: implement user defined size
-        }
+            $html .= "<div class='admin_section_container'>\n";
+    		$html .= "<div class='admin_section_title'>"._("MIME type")." : </div>\n";
+    		$html .= "<div class='admin_section_data'>\n";
+    		$html .= '<input type="text" name="file_mime_type'.$this->getId().'" value="'.$this->getMimeType().'" />';
+    		$html .= "</div>\n";
+    		$html .= "</div>\n";
+
+			$html .= "<div class='admin_section_container'>\n";
+			$html .= "<div class='admin_section_title'>"._("Locally stored file size")." : </div>\n";
+			$html .= "<div class='admin_section_data'>\n";
+			$html .= $this->getFileSize(self :: UNIT_KILOBYTES)." "._("KB");
+			$html .= "</div>\n";
+			$html .= "</div>\n";
+		}
+		else
+		{
+			$html .= "<div class='admin_section_container'>\n";
+            $html .= "<div class='admin_section_title'>"._("Remote file size")." : </div>\n";
+            $html .= "<div class='admin_section_data'>\n";
+            // The hidden field contains old value to determine if we have to update ( this prevents unwanted successive floating point evaluation )
+            $html .= '<input type="hidden" name="file_old_remote_size'.$this->getId().'" value="'.$this->getFileSize().'" />';
+            $html .= '<input type="text" name="file_remote_size'.$this->getId().'" value="'.$this->getFileSize().'" />';
+            $html .= "</div>\n";
+            $html .= "</div>\n";
+		}
         
+        $html .= "<div class='admin_section_container'>\n";
+        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<a href='".$this->getFileUrl()."'>"._("Download")." ".$this->getFilename()." (".$this->getFileSize(self::UNIT_KILOBYTES)." "._("KB").")</a>";
+        $html .= "</div>\n";
+        $html .= "</div>\n";
+        
+        $html .= $subclass_admin_interface;
 		return parent :: getAdminUI($html);
 	}
 
 	function processAdminUI()
 	{
 		parent :: processAdminUI();
-        
-        // If no file was uploaded, update filename and mime type
-        if(!empty($_REQUEST["file_by_upload".$this->getId()]))
+		// If no file was uploaded, update filename and mime type
+        if(!empty($_REQUEST["file_mode".$this->getId()]))
         {
-            $this->setBinaryDataFromPostVar("file_file_upload".$this->getId());
+            $file_mode = $_REQUEST["file_mode".$this->getId()];
+    		if ($file_mode == "by_upload")
+    		{
+    			$this->setBinaryDataFromPostVar("file_file_upload".$this->getId());
+    			$this->setURL(null);
+                // Reset the remote file size ( not used )
+                $this->setRemoteFileSize(0);
+    		}
+    		else
+    		{
+    			if ($file_mode == "remote")
+    			{
+    				$this->setURL($_REQUEST["file_url".$this->getId()]);
+    				$this->setBinaryData(null);
+                    // When switching from local to remote, this field does not exist yet
+                    if(!empty($_REQUEST["file_old_remote_size".$this->getId()]))
+                    {
+                        if($_REQUEST["file_remote_size".$this->getId()] != $_REQUEST["file_old_remote_size".$this->getId()])
+                            $this->setRemoteFileSize($_REQUEST["file_remote_size".$this->getId()]);
+                    }
+                    else
+                        $this->setRemoteFileSize(0);
+    			}
+    			$this->setFilename($_REQUEST["file_file_name".$this->getId()]);
+    		}
         }
-        else
-            if(!empty($_REQUEST["file_url".$this->getId()]))
-            {
-                $this->setURL($_REQUEST["file_url".$this->getId()]);
-            }
-        $this->setMimeType($_REQUEST["file_mime_type".$this->getId()]);
-        $this->setFilename($_REQUEST["file_file_name".$this->getId()]);
 	}
-
-	/**Affiche l'interface usager de l'objet
-	        */
 
 	/** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
 	 * @param $subclass_admin_interface Html content of the interface element of a children
@@ -255,8 +314,8 @@ class File extends Content
 	{
 		$html = '';
 		$html .= "<div class='user_ui_container'>\n";
-		$html .= "<div class='user_ui_object_class'>Langstring (".get_class($this)." instance)</div>\n";
-		$html .= "<a href='".$this->getFileUrl()."'>"._("Download this file")." (".$this->getFileSize(UNIT_KILOBYTES)." "._("KB").")</a>";
+		$html .= "<div class='user_ui_object_class'>File (".get_class($this)." instance)</div>\n";
+		$html .= "<a href='".htmlentities($this->getFileUrl())."'>"._("Download")." ".$this->getFilename()." (".$this->getFileSize(self::UNIT_KILOBYTES)." "._("KB").")</a>";
 		$html .= "</div>\n";
 		return parent :: getUserUI($html);
 	}

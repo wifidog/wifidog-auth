@@ -324,7 +324,8 @@ function update_schema()
               files_id text NOT NULL,
               filename text,
               mime_type text,
-              binary_data bytea, 
+              binary_data bytea,
+              remote_size int8,
               CONSTRAINT files_pkey PRIMARY KEY (files_id)
             );";
         }

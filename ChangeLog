@@ -1,3 +1,7 @@
+2005-04-21 François Proulx <francois.proulx@gmail.com>
+	* Added explicit admin UI exceptions support for Flickr
+	* Completed File and Picture objects
+	
 2005-04-20 François Proulx <francois.proulx@gmail.com>
 	* Completed Flickr support ( explicit exceptions catching )
 	* Most of File object is done

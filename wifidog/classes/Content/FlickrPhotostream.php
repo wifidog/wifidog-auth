@@ -426,12 +426,22 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 					$html .= "</div>\n";
 					$html .= "</div>\n";
 				}
-				catch (Exception $e)
-				{
-					$html .= "<div class='admin_section_container'>\n";
-					$html .= "<div class='admin_section_title'>"._("The API Key you specified appears to be invalid.")."</div>\n";
-					$html .= "</div>\n";
-				}
+                catch (Phlickr_ConnectionException $e)
+                {
+                    $html .= _("Unable to connect to Flickr API.");
+                }
+                catch (Phlickr_MethodFailureException $e)
+                {
+                    $html .= _("Some of the request parameters provided to Flickr API are invalid.");
+                }
+                catch (Phlickr_XmlParseException $e)
+                {
+                    $html .= _("Unable to parse Flickr's response.");
+                }
+                catch (Phlickr_Exception $e)
+                {
+                    $html .= _("Could not get content from Flickr : ").$e;
+                }
 			}
 			else
 			{
@@ -550,7 +560,6 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
                 {
                     // Choose one photo at random
                     //TODO: manage multiple photos at once ( photo_count field in database )
-                    echo "Count photos ".count($photos);
                     $photo = $photos[mt_rand(0, count($photos) - 1)];
                     if(is_object($photo))
                     {
