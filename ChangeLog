@@ -1,3 +1,6 @@
+2005-04-22 François Proulx <francois.proulx@gmail.com>
+	* Fix schema version in François's commit
+	
 2005-04-21 François Proulx <francois.proulx@gmail.com>
 	* Added explicit admin UI exceptions support for Flickr
 	* Completed File and Picture objects

@@ -290,6 +290,7 @@ function update_schema()
         if($schema_version < $new_schema_version)
         {
             echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>"; 
+ 			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .=
             "CREATE TABLE flickr_photostream
             (
@@ -318,6 +319,7 @@ function update_schema()
         if($schema_version < $new_schema_version)
         {
             echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>"; 
+           	$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .=
             "CREATE TABLE files
             (
