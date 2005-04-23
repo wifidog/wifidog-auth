@@ -6,8 +6,17 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.35  2005/04/23 16:05:45  fproulx
+ *     2005-04-22 François Proulx <francois.proulx@gmail.com>
+ *     	* Fixed bug in FlickrPhotostream.php
+ *     	* Params did not match new methods requirements ( getUserByEmail )
+ *     	* Changed stylesheet class name for Flickr to match new changes
+ *     	* Fixed bugs in File
+ *     	* Wrote part of EmbeddedContent ( partially working )
+ *     	* TODO: add support for parameters and attributes in EmbeddedContent
+ *
  *     Revision 1.34  2005/04/21 14:58:29  fproulx
- *     2005-04-21 Fran�ois Proulx <francois.proulx@gmail.com>
+ *     2005-04-21 Fran�ois Proulx <francois.proulx@gmail.com>
  *     	* Added explicit admin UI exceptions support for Flickr
  *     	* Completed File and Picture objects
  *
@@ -160,7 +169,7 @@ define('CONF_DATABASE_PASSWORD',   'wifidogtest');
 /* The SYSTEM_PATH, must be set to the url path needed to reach the wifidog directory.  Normally '/' or '/wifidog/', depending on where configure your document root.  Gateway configuration must match this as well */
 define('SYSTEM_PATH', '/');
 /**< Set this to true if your server has SSL available, otherwise, passwords will be transmitted in clear text over the air */
-define('SSL_AVAILABLE', true);
+define('SSL_AVAILABLE', false);
 /** @deprecated version - 2005-04-19 */
 define('HOTSPOT_NETWORK_NAME', 'Île sans fil');
 define('HOTSPOT_NETWORK_URL', 'http://www.ilesansfil.org/');

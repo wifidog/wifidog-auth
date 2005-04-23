@@ -76,7 +76,7 @@ class File extends Content
 	 */
 	function setBinaryDataFromPostVar($upload_field)
 	{
-		if (!empty ($_FILES[$upload_field]) && $_FILES[$upload_field]['error'] != UPLOAD_ERR_NO_FILE)
+		if (!empty ($_FILES[$upload_field]) && $_FILES[$upload_field]['error'] == UPLOAD_ERR_OK)
 		{
 			// Getting binary data from file
 			$fp = fopen($_FILES[$upload_field]['tmp_name'], "rb");
@@ -92,6 +92,25 @@ class File extends Content
 		}
 		else
 		{
+			switch($_FILES[$upload_field]['error'])
+			{
+				case UPLOAD_ERR_INI_SIZE:
+					echo _("File size exceeds limit specified in PHP.ini");
+					break;
+				case UPLOAD_ERR_FORM_SIZE:
+					echo _("File size exceeds limit specified HTML form");
+					break;
+				case UPLOAD_ERR_PARTIAL:
+					echo _("File upload was interrupted");
+					break;
+				/*
+				case UPLOAD_ERR_NO_FILE:
+					echo _("No file was uploaded");
+					break;*/
+				case UPLOAD_ERR_NO_TMP_DIR:
+					echo _("Missing temp folder");
+					break;
+			}
 			return false;
 		}
 	}

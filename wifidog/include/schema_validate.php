@@ -28,7 +28,7 @@ error_reporting(E_ALL);
 require_once BASEPATH.'config.php';
 require_once BASEPATH.'classes/AbstractDb.php';
 require_once BASEPATH.'classes/Session.php';
-define('REQUIRED_SCHEMA_VERSION', 9);
+define('REQUIRED_SCHEMA_VERSION', 10);
 
 /** Check that the database schema is up to date.  If it isn't, offer to update it. */
 function validate_schema()
@@ -330,6 +330,21 @@ function update_schema()
               remote_size int8,
               CONSTRAINT files_pkey PRIMARY KEY (files_id)
             );";
+        }
+        
+        $new_schema_version = 10;
+        if($schema_version < $new_schema_version)
+        {
+            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>"; 
+           	$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+            $sql .= "ALTER TABLE files ADD COLUMN url text;";
+            $sql .= "CREATE TABLE embedded_content (
+				embedded_content_id text NOT NULL,
+				embedded_file_id text,
+				fallback_content_id text,
+			    parameters text,
+			    attributes text
+			);";
         }
         
 		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);

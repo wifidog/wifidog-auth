@@ -1,4 +1,12 @@
 2005-04-22 François Proulx <francois.proulx@gmail.com>
+	* Fixed bug in FlickrPhotostream.php
+	* Params did not match new methods requirements ( getUserByEmail )
+	* Changed stylesheet class name for Flickr to match new changes
+	* Fixed bugs in File
+	* Wrote part of EmbeddedContent ( partially working )
+	* TODO: add support for parameters and attributes in EmbeddedContent
+	
+2005-04-22 François Proulx <francois.proulx@gmail.com>
 	* Fix schema version in François's commit
 	
 2005-04-21 François Proulx <francois.proulx@gmail.com>

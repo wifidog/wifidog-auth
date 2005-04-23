@@ -247,7 +247,7 @@ max-width: 100px;
 .flickr_photo {
     float:left;
 }
-.FlickrPhoto img {
+.flickr_photo img {
     border: 10px solid black;
 }
 .flickr_tags {

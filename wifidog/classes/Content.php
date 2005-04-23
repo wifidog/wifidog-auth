@@ -169,7 +169,7 @@ class Content implements GenericObject
 		{
 			$value = _("Add");
 		}
-		$html .= "<input type='submit' name='$name' value='$value' onclick='submit();'>";
+		$html .= "<input type='submit' name='$name' value='$value'>"; // onclick='submit();'
 		return $html;
 	}
 

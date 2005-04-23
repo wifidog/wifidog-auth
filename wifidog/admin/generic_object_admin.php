@@ -35,126 +35,106 @@ require_once 'admin_common.php';
 require_once BASEPATH.'classes/GenericObject.php';
 
 $smarty->display("templates/header.html");
-if(!empty($_REQUEST['debug']))
-{
-echo "<pre>";print_r($_REQUEST);echo"</pre>";
+if (!empty ($_REQUEST['debug'])) {
+	echo "<pre>";
+	print_r($_REQUEST);
+	echo "</pre>";
 }
 $html = '';
 $html = '<h3>'._("Generic object editor").'</h3>';
-if(empty($_REQUEST['object_class']))
-{
-			echo "<div class='errormsg'>"._("Sorry, the 'object_class' parameter must be specified")."</div>\n";
-exit;
-}
-else
-{
+if (empty ($_REQUEST['object_class'])) {
+	echo "<div class='errormsg'>"._("Sorry, the 'object_class' parameter must be specified")."</div>\n";
+	exit;
+} else {
 	$class = $_REQUEST['object_class'];
 }
 
-if ($_REQUEST['action'] == 'new')
-{
+if ($_REQUEST['action'] == 'new') {
 	$object = call_user_func(array ($class, 'createNewObject'));
-		$_REQUEST['action'] = 'edit';
-}
-else
-{
-	if(empty($_REQUEST['object_id']))
-{
-			echo "<div class='errormsg'>"._("Sorry, the 'object_id' parameter must be specified")."</div>\n";
-exit;
-}
-$object = call_user_func(array ($class, 'getObject'), $_REQUEST['object_id']);
+	$_REQUEST['action'] = 'edit';
+} else {
+	if (empty ($_REQUEST['object_id'])) {
+		echo "<div class='errormsg'>"._("Sorry, the 'object_id' parameter must be specified")."</div>\n";
+		exit;
+	}
+	$object = call_user_func(array ($class, 'getObject'), $_REQUEST['object_id']);
 }
 
-if ($_REQUEST['action'] == 'save')
-{
+if ($_REQUEST['action'] == 'save') {
 	$html .= $object->processAdminUI();
-    $object = call_user_func(array ($class, 'getObject'), $_REQUEST['object_id']);
+	$object = call_user_func(array ($class, 'getObject'), $_REQUEST['object_id']);
 	$_REQUEST['action'] = 'edit';
 }
 
-
-if ($_REQUEST['action'] == 'delete')
-{
+if ($_REQUEST['action'] == 'delete') {
 	$errmsg = '';
 
-	if ($object->delete($errmsg))
-	{
+	if ($object->delete($errmsg)) {
 		$html .= "<div class='successmsg'>"._("Content successfully deleted")."</div>\n";
-	}
-	else
-	{
+	} else {
 		$html .= "<div class='errormsg'>"._("Deletion failed, error was: ")."$errmsg</div>\n";
 		$_REQUEST['action'] = 'edit';
 	}
 }
 
-if ($_REQUEST['action'] == 'edit')
-{
-$common_input = '';
-	if(!empty($_REQUEST['debug']))
-	{
-	$common_input .= "<input type=submit name='debug' value='true'>\n";
+if ($_REQUEST['action'] == 'edit') {
+	$common_input = '';
+	if (!empty ($_REQUEST['debug'])) {
+		$common_input .= "<input type=submit name='debug' value='true'>\n";
 	}
-		$common_input .= "<input type='hidden' name='object_id' value='".$object->GetId()."'>\n";
+	$common_input .= "<input type='hidden' name='object_id' value='".$object->GetId()."'>\n";
 	$common_input .= "<input type='hidden' name='object_class' value='".get_class($object)."'>\n";
-	
+
 	$html .= "<form enctype='multipart/form-data' action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' method='post'>";
-$html .= $common_input;
+	$html .= $common_input;
 	$html .= $object->getAdminUI();
 	$html .= "<input type='hidden' name='action' value='save'>\n";
 	$html .= "<input type=submit name='save_submit' value='"._("Save")." ".get_class($object)."'>\n";
 	$html .= '</form>';
-	
-		$html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' method='post'>";
-		$html .= $common_input;
+
+	$html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' method='post'>";
+	$html .= $common_input;
 	$html .= "<input type='hidden' name='action' value='preview'>\n";
 	$html .= "<input type=submit name='preview_submit' value='"._("Preview")." ".get_class($object)."'>\n";
 	$html .= '</form>';
-	
+
 	$html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' method='post'>";
-$html .= $common_input;
+	$html .= $common_input;
 	$html .= "<input type='hidden' name='action' value='delete'>\n";
 	$html .= "<input type=submit name='delete_submit' value='"._("Delete")." ".get_class($object)."'>\n";
 	$html .= '</form>';
 }
 
-
-if ($_REQUEST['action'] == 'preview')
-{
-	if(empty($_REQUEST['node_id']))
-	{
+if ($_REQUEST['action'] == 'preview') {
+	if (empty ($_REQUEST['node_id'])) {
 		$node_id = null;
 		$node = null;
+	} else {
+		$node_id = $_REQUEST['node_id'];
+		$node = Node :: getObject($node_id);
+		Node :: setCurrentNode($node);
 	}
-	else
-	{
-	$node_id = $_REQUEST['node_id'];
-	$node= Node::getObject($node_id);
-	Node::setCurrentNode($node);
+	$common_input = '';
+	if (!empty ($_REQUEST['debug'])) {
+		$common_input .= "<input type=submit name='debug' value='true'>\n";
 	}
-$common_input = '';
-	if(!empty($_REQUEST['debug']))
-	{
-	$common_input .= "<input type=submit name='debug' value='true'>\n";
-	}
-		$common_input .= "<input type='hidden' name='object_id' value='".$object->GetId()."'>\n";
+	$common_input .= "<input type='hidden' name='object_id' value='".$object->GetId()."'>\n";
 	$common_input .= "<input type='hidden' name='object_class' value='".get_class($object)."'>\n";
-		$common_input .= "<input type='hidden' name='node_id' value='".$node_id."'>\n";
-		
-	$html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' method='post'>";
-$html .= $common_input;
+	$common_input .= "<input type='hidden' name='node_id' value='".$node_id."'>\n";
 
-		$name = "node_id";
-		$html .= Node :: getSelectNodeUI($name);
-		
+	$html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' method='post'>";
+	$html .= $common_input;
+
+	$name = "node_id";
+	$html .= Node :: getSelectNodeUI($name);
+
 	$html .= $object->getUserUI();
 	$html .= "<input type='hidden' name='action' value='preview'>\n";
 	$html .= "<input type=submit name='preview_submit' value='"._("Preview")." ".get_class($object)."'>\n";
 	$html .= '</form>';
-	
+
 	$html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' method='post'>";
-$html .= $common_input;
+	$html .= $common_input;
 	$html .= "<input type='hidden' name='action' value='edit'>\n";
 	$html .= "<input type=submit name='edit_submit' value='"._("Edit")." ".get_class($object)."'>\n";
 	$html .= '</form>';
@@ -163,3 +143,4 @@ $html .= $common_input;
 echo $html;
 $smarty->display("templates/footer.html");
 ?>
+

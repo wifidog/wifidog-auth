@@ -178,7 +178,7 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 					$request = $this->getFlickrApi()->createRequest("flickr.people.findByEmail", array ("find_email" => $email));
 					$request->setExceptionThrownOnFailure(true);
 					$resp = $request->execute();
-					return new Phlickr_User($flickr_api, (string) $resp->xml->user['id']);
+					return new Phlickr_User($this->getFlickrApi(), (string) $resp->xml->user['id']);
 				}
 				catch (Phlickr_Exception $ex)
 				{
@@ -482,7 +482,7 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 							{
 								$this->setUserId(null);
 								$name = "flickr_photostream_".$this->id."_email";
-								if (!empty ($_REQUEST[$name]) && ($flickr_user = $this->getUserByEmail($this->getFlickrApi(), $_REQUEST[$name])) != null)
+								if (!empty ($_REQUEST[$name]) && ($flickr_user = $this->getUserByEmail($_REQUEST[$name])) != null)
 								{
 									$this->setUserId($flickr_user->getId());
 									$this->setUserName($flickr_user->getName());
@@ -629,7 +629,7 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 			{
 				$this->mBd->ExecSqlUpdate("DELETE FROM flickr_photostream WHERE flickr_photostream_id = '".$this->getId()."'", false);
 			}
-			parent :: delete();
+			parent :: delete($errmsg);
 		}
 
 	} // End class
