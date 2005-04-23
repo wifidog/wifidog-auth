@@ -52,8 +52,8 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 		/* Tags matching mode */
 		const TAG_MODE_ANY = 'ANY_TAG';
 		const TAG_MODE_ALL = 'ALL_TAGS';
-        
-        private $flickr_api;
+
+		private $flickr_api;
 
 		protected function __construct($content_id)
 		{
@@ -81,20 +81,20 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 			//TODO: Force no locative content until we find a better solution
 			$this->setIsLocativeContent(false);
 			$this->flickr_photostream_row = $row;
-			$this->mBd = &$db;
+			$this->mBd = & $db;
 		}
-        
-        public function getFlickrApi()
-        {
-            if($this->getApiKey() && $this->flickr_api == null)
-                $this->flickr_api = new Phlickr_Api($this->getApiKey());
-            return $this->flickr_api;
-        }
-        
-        public function setFlickrApi($api)
-        {
-            $this->flickr_api = $api;
-        }
+
+		public function getFlickrApi()
+		{
+			if ($this->getApiKey() && $this->flickr_api == null)
+				$this->flickr_api = new Phlickr_Api($this->getApiKey());
+			return $this->flickr_api;
+		}
+
+		public function setFlickrApi($api)
+		{
+			$this->flickr_api = $api;
+		}
 
 		public function getSelectionMode()
 		{
@@ -116,25 +116,25 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 					throw new Exception(_("Illegal Flickr Photostream selection mode."));
 			}
 		}
-        
-        public function getPhotoBatchSize()
-        {
-            return $this->flickr_photostream_row['photo_batch_size'];
-        }
-        
-        public function setPhotoBatchSize($size)
-        {
-            //TODO: Add photo batch size support in getAdminUI()
-            if(is_numeric($size))
-            {
-                $size = $this->mBd->EscapeString($size);
-                $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET photo_batch_size ='$size' WHERE flickr_photostream_id = '".$this->getId()."'");
-                $this->refresh();
-                return true;
-            }
-            else
-                return false;
-        }
+
+		public function getPhotoBatchSize()
+		{
+			return $this->flickr_photostream_row['photo_batch_size'];
+		}
+
+		public function setPhotoBatchSize($size)
+		{
+			//TODO: Add photo batch size support in getAdminUI()
+			if (is_numeric($size))
+			{
+				$size = $this->mBd->EscapeString($size);
+				$this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET photo_batch_size ='$size' WHERE flickr_photostream_id = '".$this->getId()."'");
+				$this->refresh();
+				return true;
+			}
+			else
+				return false;
+		}
 
 		public function getApiKey()
 		{
@@ -146,7 +146,7 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 			$api_key = $this->mBd->EscapeString($api_key);
 			$this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET api_key ='$api_key' WHERE flickr_photostream_id = '".$this->getId()."'");
 			$this->refresh();
-            $this->setFlickrApi(null);
+			$this->setFlickrApi(null);
 		}
 
 		public function pingFlickr()
@@ -417,31 +417,31 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 					$html .= "<input type='checkbox' name='$name' $checked>\n";
 					$html .= "</div>\n";
 					$html .= "</div>\n";
-                    
-                    //TODO: Add photo batch size support
-                    //TODO: Add photo count support ( number of photos to display at once )
-                    //TODO: Add random support (checkbox)
-                    //TODO: Add date range support
+
+					//TODO: Add photo batch size support
+					//TODO: Add photo count support ( number of photos to display at once )
+					//TODO: Add random support (checkbox)
+					//TODO: Add date range support
 
 					$html .= "</div>\n";
 					$html .= "</div>\n";
 				}
-                catch (Phlickr_ConnectionException $e)
-                {
-                    $html .= _("Unable to connect to Flickr API.");
-                }
-                catch (Phlickr_MethodFailureException $e)
-                {
-                    $html .= _("Some of the request parameters provided to Flickr API are invalid.");
-                }
-                catch (Phlickr_XmlParseException $e)
-                {
-                    $html .= _("Unable to parse Flickr's response.");
-                }
-                catch (Phlickr_Exception $e)
-                {
-                    $html .= _("Could not get content from Flickr : ").$e;
-                }
+				catch (Phlickr_ConnectionException $e)
+				{
+					$html .= _("Unable to connect to Flickr API.");
+				}
+				catch (Phlickr_MethodFailureException $e)
+				{
+					$html .= _("Some of the request parameters provided to Flickr API are invalid.");
+				}
+				catch (Phlickr_XmlParseException $e)
+				{
+					$html .= _("Unable to parse Flickr's response.");
+				}
+				catch (Phlickr_Exception $e)
+				{
+					$html .= _("Could not get content from Flickr : ").$e;
+				}
 			}
 			else
 			{
@@ -525,17 +525,17 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 			$html = '';
 			$html .= "<div class='user_ui_container'>\n";
 			$html .= "<div class='user_ui_object_class'>FlickrPhotostream (".get_class($this)." instance)</div>\n";
-            
+
 			// Initialize a Flickr API wrapper
 			try
 			{
-                $photos = null;
+				$photos = null;
 				switch ($this->getSelectionMode())
 				{
 					case self :: SELECT_BY_GROUP :
 						if ($this->getGroupId())
 						{
-							$photo_pool = new Phlickr_Group($this->getGroupId());
+							$photo_pool = new Phlickr_Group($this->getFlickrApi(), $this->getGroupId());
 							$photos = $photo_pool->getPhotoList($this->getPhotoBatchSize())->getPhotos();
 						}
 						break;
@@ -544,68 +544,72 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 						{
 							$request = $this->getFlickrApi()->createRequest('flickr.photos.search', array ('tags' => $this->getTags(), 'tag_mode' => $this->getTagMode()));
 							$photo_list = new Phlickr_PhotoList($request, $this->getPhotoBatchSize());
-                            $photos = $photo_list->getPhotos();
+							$photos = $photo_list->getPhotos();
 						}
 						break;
 					case self :: SELECT_BY_USER :
 						if ($this->getFlickrUserId())
 						{
-                            $user = new Phlickr_User($this->getFlickrApi(), $this->getFlickrUserId());
-                            $photos = $user->getPhotoList($this->getPhotoBatchSize())->getPhotos();
+							$user = new Phlickr_User($this->getFlickrApi(), $this->getFlickrUserId());
+							$photos = $user->getPhotoList($this->getPhotoBatchSize())->getPhotos();
 						}
 						break;
 				}
-                
-                if(is_array($photos) && !empty($photos))
-                {
-                    // Choose one photo at random
-                    //TODO: manage multiple photos at once ( photo_count field in database )
-                    $photo = $photos[mt_rand(0, count($photos) - 1)];
-                    if(is_object($photo))
-                    {
-                        $html .= '<div class="flickr_photo_block">'."\n";
-                        if($this->shouldDisplayTitle())
-                            $html .= '<div class="flickr_title"><h3>'.$photo->getTitle().'</h3></div>'."\n";
-                        $html .= '<div class="flickr_photo"><a href="'.$photo->buildUrl().'"><img src="'.$photo->buildImgUrl().'"></a></div>'."\n";
-                        if($this->shouldDisplayTags())
-                        {
-                            $tags = $photo->getTags();
-                            if(!empty($tags))
-                            {
-                                $html .= '<div class="flickr_tags">'."\n";
-                                $html .= '<h3>'._("Tags")."</h3>\n";
-                                $html .= '<ul>'."\n";
-                                foreach($tags as $tag)
-                                {
-                                    $url_encoded_tag = urlencode($tag);
-                                    $html .= '<li><a href="http://www.flickr.com/photos/tags/'.$url_encoded_tag.'/">'.$tag.'</a></li>'."\n";
-                                }
-                                $html .= '</ul>'."\n";
-                                $html .= '</div>'."\n";
-                            }
-                        }
-                        if($this->shouldDisplayDescription())
-                        {
-                            $description = $photo->getDescription();
-                            if(!empty($description))
-                                $html .= '<div class="flickr_description">'.$description.'</div>'."\n";
-                        }
-                        $html .= '</div>'."\n";
-                    }
-                }
+
+				if (is_array($photos) && !empty ($photos))
+				{
+					// Choose one photo at random
+					//TODO: manage multiple photos at once ( photo_count field in database )
+					$photo = $photos[mt_rand(0, count($photos) - 1)];
+					if (is_object($photo))
+					{
+						$html .= '<div class="flickr_photo_block">'."\n";
+						if ($this->shouldDisplayTitle())
+							$html .= '<div class="flickr_title"><h3>'.$photo->getTitle().'</h3></div>'."\n";
+						$html .= '<div class="flickr_photo"><a href="'.$photo->buildUrl().'"><img src="'.$photo->buildImgUrl().'"></a></div>'."\n";
+						if ($this->shouldDisplayTags())
+						{
+							$tags = $photo->getTags();
+							if (!empty ($tags))
+							{
+								$html .= '<div class="flickr_tags">'."\n";
+								$html .= '<h3>'._("Tags")."</h3>\n";
+								$html .= '<ul>'."\n";
+								foreach ($tags as $tag)
+								{
+									$url_encoded_tag = urlencode($tag);
+									$html .= '<li><a href="http://www.flickr.com/photos/tags/'.$url_encoded_tag.'/">'.$tag.'</a></li>'."\n";
+								}
+								$html .= '</ul>'."\n";
+								$html .= '</div>'."\n";
+							}
+						}
+						if ($this->shouldDisplayDescription())
+						{
+							$description = $photo->getDescription();
+							if (!empty ($description))
+								$html .= '<div class="flickr_description">'.$description.'</div>'."\n";
+						}
+						$html .= '</div>'."\n";
+					}
+				}
+				else
+				{
+					$html .= _("No Flickr content matches the request !");
+				}
 			}
-            catch (Phlickr_ConnectionException $e)
-            {
-                $html .= _("Unable to connect to Flickr API.");
-            }
-            catch (Phlickr_MethodFailureException $e)
-            {
-                $html .= _("Some of the request parameters provided to Flickr API are invalid.");
-            }
-            catch (Phlickr_XmlParseException $e)
-            {
-                $html .= _("Unable to parse Flickr's response.");
-            }
+			catch (Phlickr_ConnectionException $e)
+			{
+				$html .= _("Unable to connect to Flickr API.");
+			}
+			catch (Phlickr_MethodFailureException $e)
+			{
+				$html .= _("Some of the request parameters provided to Flickr API are invalid.");
+			}
+			catch (Phlickr_XmlParseException $e)
+			{
+				$html .= _("Unable to parse Flickr's response.");
+			}
 			catch (Phlickr_Exception $e)
 			{
 				$html .= _("Could not get content from Flickr : ").$e;

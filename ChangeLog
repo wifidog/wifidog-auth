@@ -1,3 +1,10 @@
+2005-04-23 François Proulx <francois.proulx@gmail.com>
+	* Fixed bugs in File and EmbeddedContent
+	* Completed first iteration of EmbeddedContent
+	* Can now play multimedia content
+	* Could not test fallback with my browser ( Safari and Firefox )
+	* Need help to test content in different browser to see how it reacts...
+	
 2005-04-22 François Proulx <francois.proulx@gmail.com>
 	* Fixed bug in FlickrPhotostream.php
 	* Params did not match new methods requirements ( getUserByEmail )

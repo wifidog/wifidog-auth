@@ -6,6 +6,14 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.36  2005/04/23 22:11:17  fproulx
+ *     2005-04-23 François Proulx <francois.proulx@gmail.com>
+ *     	* Fixed bugs in File and EmbeddedContent
+ *     	* Completed first iteration of EmbeddedContent
+ *     	* Can now play multimedia content
+ *     	* Could not test fallback with my browser ( Safari and Firefox )
+ *     	* Need help to test content in different browser to see how it reacts...
+ *
  *     Revision 1.35  2005/04/23 16:05:45  fproulx
  *     2005-04-22 François Proulx <francois.proulx@gmail.com>
  *     	* Fixed bug in FlickrPhotostream.php
@@ -169,7 +177,7 @@ define('CONF_DATABASE_PASSWORD',   'wifidogtest');
 /* The SYSTEM_PATH, must be set to the url path needed to reach the wifidog directory.  Normally '/' or '/wifidog/', depending on where configure your document root.  Gateway configuration must match this as well */
 define('SYSTEM_PATH', '/');
 /**< Set this to true if your server has SSL available, otherwise, passwords will be transmitted in clear text over the air */
-define('SSL_AVAILABLE', false);
+define('SSL_AVAILABLE', true);
 /** @deprecated version - 2005-04-19 */
 define('HOTSPOT_NETWORK_NAME', 'Île sans fil');
 define('HOTSPOT_NETWORK_URL', 'http://www.ilesansfil.org/');
