@@ -219,29 +219,16 @@ class EmbeddedContent extends Content
 			$fallback_content = self :: getObject($this->embedded_content_row['fallback_content_id']);
 
 		/*
-		 * 
-		 * <object classid="clsid:A12BCD3F-GH4I-56JK-xyz"
-		codebase="http://example.com/content.cab" 
-		width="100" height="80">
-		<param name="Movie" value="moviename.swf" />
-		<embed src="moviename.swf" width="100" height="80"
-		pluginspage="http://example.com/shockwave/download/" />
-		<noembed>
-		<img alt="Still from Movie" src="moviename.gif" 
-		width="100" height="80" />
-		</noembed>
-		</object>
-		 * 
-		 * 
+		 * Example
 		 * <object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" width="400" height="316" codebase="http://www.apple.com/qtactivex/qtplugin.cab">
-						<param name="SRC" value="/sponsors/airborne/400.mov">
-		
-						<param name="QTNEXT1" value="<http://stream.qtv.apple.com/qtv/endorphin/http/hydrogen3_ref.mov> T<myself>">
-						<param name="AUTOPLAY" value="true">
-						<param name="CONTROLLER" value="true">
-						<embed src="/sponsors/airborne/400.mov" qtnext1="<http://stream.qtv.apple.com/qtv/endorphin/http/hydrogen3_ref.mov> T<myself>" width="400" height="316" align="left" autoplay="true" controller="true" pluginspage="http://www.apple.com/quicktime/download/">
-						</embed>
-						</object>
+			<param name="SRC" value="/sponsors/airborne/400.mov">
+	
+			<param name="QTNEXT1" value="<http://stream.qtv.apple.com/qtv/endorphin/http/hydrogen3_ref.mov> T<myself>">
+			<param name="AUTOPLAY" value="true">
+			<param name="CONTROLLER" value="true">
+			<embed src="/sponsors/airborne/400.mov" qtnext1="<http://stream.qtv.apple.com/qtv/endorphin/http/hydrogen3_ref.mov> T<myself>" width="400" height="316" align="left" autoplay="true" controller="true" pluginspage="http://www.apple.com/quicktime/download/">
+			</embed>
+			</object>
 		 * 
 		 */
 		if ($embedded_content_file != null)

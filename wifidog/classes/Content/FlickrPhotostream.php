@@ -53,6 +53,13 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 		const TAG_MODE_ANY = 'ANY_TAG';
 		const TAG_MODE_ALL = 'ALL_TAGS';
 
+		/* Sizes */
+		const SIZE_SQUARED_75x75 = 's';
+		const SIZE_THUMB_100x75 = 't';
+		const SIZE_SMALL_240x180 = 'm';
+		const SIZE_MEDIUM_500x375 = '';
+		const SIZE_ORIGINAL = 'o';
+
 		private $flickr_api;
 
 		protected function __construct($content_id)
@@ -66,7 +73,7 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 			if ($row == null)
 			{
 				/*Since the parent Content exists, the necessary data in content_group had not yet been created */
-				$sql = "INSERT INTO flickr_photostream (flickr_photostream_id) VALUES ('$content_id')";
+				$sql = "INSERT INTO flickr_photostream (flickr_photostream_id, preferred_size) VALUES ('$content_id', '".self :: SIZE_SMALL_240x180."')";
 				$db->ExecSqlUpdate($sql, false);
 
 				$sql = "SELECT * FROM flickr_photostream WHERE flickr_photostream_id='$content_id'";
@@ -257,6 +264,29 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 			}
 		}
 
+		public function getPreferredSize()
+		{
+			return $this->flickr_photostream_row['preferred_size'];
+		}
+
+		public function setPreferredSize($size)
+		{
+			switch ($size)
+			{
+				case self :: SIZE_SQUARED_75x75 :
+				case self :: SIZE_THUMB_100x75 :
+				case self :: SIZE_SMALL_240x180 :
+				case self :: SIZE_MEDIUM_500x375 :
+				case self :: SIZE_ORIGINAL :
+					$size = $this->mBd->EscapeString($size);
+					$this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET preferred_size = '$size' WHERE flickr_photostream_id = '".$this->getId()."'");
+					$this->refresh();
+					break;
+				default :
+					throw new Exception("Illegal size.");
+			}
+		}
+
 		public function shouldDisplayTitle()
 		{
 			return $this->flickr_photostream_row['display_title'] == "t";
@@ -418,6 +448,14 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 					$html .= "</div>\n";
 					$html .= "</div>\n";
 
+					$html .= "<div class='admin_section_container'>\n";
+					$html .= "<div class='admin_section_title'>"._("Preferred size")." : </div>\n";
+					$html .= "<div class='admin_section_data'>\n";
+					$preferred_sizes = array (array (0 => self :: SIZE_SQUARED_75x75, 1 => _("Squared 75x75")), array (0 => self :: SIZE_THUMB_100x75, 1 => _("Thumbnail 100x75")), array (0 => self :: SIZE_SMALL_240x180, 1 => _("Small 240x180")), array (0 => self :: SIZE_MEDIUM_500x375, 1 => _("Medium 500x375")), array (0 => self :: SIZE_ORIGINAL, 1 => _("Original size")));
+					$html .= $generator->generateFromArray($preferred_sizes, $this->getPreferredSize(), "PreferredSize".$this->getID(), "FlickrPhotostream", false, null, "onChange='submit()'");
+					$html .= "</div>\n";
+					$html .= "</div>\n";
+
 					//TODO: Add photo batch size support
 					//TODO: Add photo count support ( number of photos to display at once )
 					//TODO: Add random support (checkbox)
@@ -513,8 +551,10 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 				!empty ($_REQUEST[$name]) ? $this->setDisplayTags(true) : $this->setDisplayTags(false);
 				$name = "flickr_photostream_".$this->id."_display_description";
 				!empty ($_REQUEST[$name]) ? $this->setDisplayDescription(true) : $this->setDisplayDescription(false);
+				
+				if ($generator->isPresent("PreferredSize".$this->getID(), "FlickrPhotostream"))
+					$this->setPreferredSize($generator->getResult("PreferredSize".$this->getID(), "FlickrPhotostream"));
 			}
-
 		}
 
 		/** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
@@ -566,7 +606,10 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 						$html .= '<div class="flickr_photo_block">'."\n";
 						if ($this->shouldDisplayTitle())
 							$html .= '<div class="flickr_title"><h3>'.$photo->getTitle().'</h3></div>'."\n";
-						$html .= '<div class="flickr_photo"><a href="'.$photo->buildUrl().'"><img src="'.$photo->buildImgUrl().'"></a></div>'."\n";
+							$size = $this->getPreferredSize();
+							if(empty($size))
+								$size = null;
+						$html .= '<div class="flickr_photo"><a href="'.$photo->buildUrl().'"><img src="'.$photo->buildImgUrl($size).'"></a></div>'."\n";
 						if ($this->shouldDisplayTags())
 						{
 							$tags = $photo->getTags();

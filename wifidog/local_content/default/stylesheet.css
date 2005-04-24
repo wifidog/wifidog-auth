@@ -254,7 +254,7 @@ max-width: 100px;
     visibility: hidden;
     background-color: #696969;
     color: white;
-    margin-left: 260px;
+	width: 140px;
 }
 .flickr_tags h3 {
     padding-left: 5px;
