@@ -1,4 +1,7 @@
 2005-04-23 François Proulx <francois.proulx@gmail.com>
+	* Completed missing translations
+	
+2005-04-23 François Proulx <francois.proulx@gmail.com>
 	* Fixed bugs in File and EmbeddedContent
 	* Completed first iteration of EmbeddedContent
 	* Can now play multimedia content
