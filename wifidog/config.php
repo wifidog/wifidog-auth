@@ -6,8 +6,12 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.40  2005/04/25 17:13:14  benoitg
+ *     2005-04-25 Benoit Grégoire  <bock@step.polymtl.ca>
+ *     	* UI fully functionnal
+ *
  *     Revision 1.39  2005/04/25 17:07:47  fproulx
- *     2005-04-25 François Proulx <francois.proulx@gmail.com
+ *     2005-04-25 Franï¿½ois Proulx <francois.proulx@gmail.com
  *     	* More interface work
  *
  *     Revision 1.38  2005/04/25 16:17:54  fproulx
@@ -204,7 +208,7 @@ define('VALIDATION_EMAIL_FROM_ADDRESS', 'validation@ilesansfil.org');
 /* RSS support.  If set to true, MAGPIERSS must be installed in MAGPIE_REL_PATH */
 define('RSS_SUPPORT', true);
 /* Flickr Photostream content support. If set to true, Phlickr must be installed in PHLICKR_REL_PATH */
-define('PHLICKR_SUPPORT', true);
+define('PHLICKR_SUPPORT', false);
 /* Normally, the database cleanup routines will be called everytime a portal page is displayed.  If you set this to true, you must set a cron job on the server which will execute the script cron/cleanup.php. */
 define('CONF_USE_CRON_FOR_DB_CLEANUP', false);
 

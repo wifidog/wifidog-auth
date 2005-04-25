@@ -347,7 +347,24 @@ function update_schema()
 			    attributes text
 			);";
         }
-        
+       
+               $new_schema_version = 11;
+        if($schema_version < $new_schema_version)
+        {
+            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>"; 
+           	$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+            $sql .= "DROP TABLE content_group_element_portal_display_log;\n";
+            $sql .= "CREATE TABLE content_display_log
+(
+  user_id text NOT NULL REFERENCES users ON UPDATE CASCADE ON DELETE CASCADE,
+  content_id text NOT NULL REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE,,
+  first_display_timestamp timestamp NOT NULL DEFAULT now(),
+  node_id text NOT NULL REFERENCES nodes ON UPDATE CASCADE ON DELETE CASCADE,
+  last_display_timestamp timestamp NOT NULL DEFAULT now(),
+  CONSTRAINT content_group_element_portal_display_log_pkey PRIMARY KEY (user_id, content_id, node_id)
+) \n";
+            
+        } 
 		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);
 		echo "</html></head>";
 		exit ();

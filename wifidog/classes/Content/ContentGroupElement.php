@@ -269,6 +269,69 @@ class ContentGroupElement extends Content
 		return $this->content_group_element_row['display_order'];
 	}
 
+
+	/** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
+	 * @param $subclass_admin_interface Html content of the interface element of a children
+	 * @return The HTML fragment for this interface */
+	public function getUserUI($subclass_user_interface = null)
+	{
+		
+		if(!empty($this->content_group_element_row['displayed_content_id']))
+		{
+		$displayed_content = self :: getObject($this->content_group_element_row['displayed_content_id']);
+		$displayed_content_html = $displayed_content->getUserUI();
+		}
+		
+		$html = '';
+		$html .= "<div class='user_ui_container'>\n";
+		$html .= "<div class='user_ui_object_class'>ContentGroupElement (".get_class($this)." instance)</div>\n";
+		$html .= $displayed_content_html;
+		$html .= $subclass_user_interface;
+		$html .= "</div>\n";
+		return parent :: getUserUI($html);
+	}
+
+
+
+	/** Is this Content element displayable at this hotspot
+	 * @param $node Node, optionnal
+	 * @return true or false */
+	public function isDisplayableAt($node)
+	{
+		$retval=false;
+		
+				global $db;
+		$sql = "SELECT * FROM content_group_element_has_allowed_nodes WHERE content_group_element_id='$this->id'";
+		$db->ExecSql($sql, $allowed_node_rows, false);
+		if ($allowed_node_rows != null)
+		{
+			if($node)
+			{
+				$node_id = $node->getId();
+				/** @todo:  Proper algorithm, this is a dirty and slow hack */
+			foreach ($allowed_node_rows as $allowed_node_row)
+			{
+				if($allowed_node_row['node_id']==$node_id)
+				{
+					$retval = true;
+				}
+			}
+			}
+			else
+			{
+				/* There are allowed nodes, but we don't know at which node we want to display */
+				$retval = false;
+			}
+		}
+		else
+		{
+			/* No allowed node means all nodes are allowed */
+			$retval = true;
+		}
+		
+		return $retval;
+	}
+	
 	/** Set the order of the element in the content group
 	 * @param $order*/
 	public function setDisplayOrder($order)

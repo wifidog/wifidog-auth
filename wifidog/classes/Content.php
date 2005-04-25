@@ -74,7 +74,6 @@ class Content implements GenericObject
 		/* By default, make it persistent */
 		$object->setIsPersistent(true);
 
-		
 		return $object;
 	}
 	/** Get the Content object, specific to it's content type 
@@ -190,19 +189,19 @@ class Content implements GenericObject
 		return $object;
 	}
 
-	 /** Get an interface to pick content from all persistent content.
-	 * @param $user_prefix A identifier provided by the programmer to recognise it's generated html form
-	   @param $sql_additional_where Addidional where conditions to restrict the candidate objects
-	 * @return html markup
-	 */
-	public static function getSelectContentUI($user_prefix, $sql_additional_where=null)
+	/** Get an interface to pick content from all persistent content.
+	* @param $user_prefix A identifier provided by the programmer to recognise it's generated html form
+	  @param $sql_additional_where Addidional where conditions to restrict the candidate objects
+	* @return html markup
+	*/
+	public static function getSelectContentUI($user_prefix, $sql_additional_where = null)
 	{
 		global $AUTH_SOURCE_ARRAY;
 		$html = '';
 		$name = "{$user_prefix}";
 		$html .= "Select Content: \n";
 		global $db;
-		$retval = array();
+		$retval = array ();
 		$sql = "SELECT * FROM content WHERE is_persistent=TRUE $sql_additional_where ORDER BY creation_timestamp";
 		$db->ExecSql($sql, $content_rows, false);
 		if ($content_rows != null)
@@ -210,7 +209,7 @@ class Content implements GenericObject
 			$i = 0;
 			foreach ($content_rows as $content_row)
 			{
-				$content = Content::getObject($content_row['content_id']);
+				$content = Content :: getObject($content_row['content_id']);
 				$tab[$i][0] = $content->getId();
 				$tab[$i][1] = $content->__toString()." (".get_class($content).")";
 				$i ++;
@@ -220,9 +219,9 @@ class Content implements GenericObject
 		}
 		else
 		{
-					$html .= "<div class='warningmsg'>"._("Sorry, no content available in the database")."</div>\n";
+			$html .= "<div class='warningmsg'>"._("Sorry, no content available in the database")."</div>\n";
 		}
-	return $html;
+		return $html;
 	}
 
 	/** Get the selected Content object.
@@ -233,9 +232,8 @@ class Content implements GenericObject
 	{
 		$object = null;
 		$name = "{$user_prefix}";
-		return Content::getObject($_REQUEST[$name]);
+		return Content :: getObject($_REQUEST[$name]);
 	}
-
 
 	private function __construct($content_id)
 	{
@@ -253,21 +251,20 @@ class Content implements GenericObject
 		$this->content_type = $row['content_type'];
 	}
 
-/** A short string representation of the content */
+	/** A short string representation of the content */
 	public function __toString()
 	{
 		if (empty ($this->content_row['title']))
 		{
-			$string = _("Untitled content");		
+			$string = _("Untitled content");
 		}
 		else
 		{
 			$title = self :: getObject($this->content_row['title']);
 			$string = $title->__toString();
 		}
-	return $string;
+		return $string;
 	}
-
 
 	/** Get the true object type represented by this isntance 
 	 * @return an array of class names */
@@ -360,8 +357,16 @@ class Content implements GenericObject
 	 * @return null or array of User objects */
 	public function getAuthors()
 	{
-		echo "<h1>getAuthors():WRITEME</h1>";
-		return false;
+		global $db;
+		$retval = array ();
+		$sql = "SELECT user_id FROM content_has_owners WHERE content_id='$this->id' AND is_author=TRUE";
+		$db->ExecSqlUniqueRes($sql, $content_owner_row, false);
+		if ($content_owner_row != null)
+		{
+			$retval[] = User :: getObject($content_owner_row['user_id']);
+		}
+
+		return $retval;
 	}
 	/** @see GenricObject
 	 * @return The id */
@@ -385,11 +390,49 @@ class Content implements GenericObject
 		$html = '';
 		$html .= "<div class='user_ui_container'>\n";
 		$html .= "<div class='user_ui_object_class'>Content (".get_class($this)." instance)</div>\n";
+		$authors = $this->getAuthors();
+		if (count($authors) > 0)
+		{
+			$html .= "<div class='authors'>"._("Author(s):")."\n";
+			foreach ($authors as $user)
+			{
+				$html .= $user->getUsername()." ";
+			}
+			$html .= "</div>\n";
+		}
+		if (!empty ($this->content_row['title']))
+		{
+			$html .= "<div class='user_ui_title'>\n";
+			$title = self :: getObject($this->content_row['title']);
+			$html .= $title->getUserUI();
+			$html .= "</div>\n";
+		}
+		
 		$html .= $subclass_user_interface;
+		
+		if (!empty ($this->content_row['project_info']))
+		{
+			$html .= "<div class='user_ui_projet_info'>\n";
+			$html .= _("Project information:");
+			$project_info = self :: getObject($this->content_row['project_info']);
+			$html .= $project_info->getUserUI();
+			$html .= "</div>\n";
+		}
+		
+		if (!empty ($this->content_row['sponsor_info']))
+		{
+			$html .= "<div class='user_ui_sponsor_info'>\n";
+						$html .= _("Project sponsor:");
+			$sponsor_info = self :: getObject($this->content_row['sponsor_info']);
+			$html .= $sponsor_info->getUserUI();
+			$html .= "</div>\n";
+		}
+		
+
 		$html .= "</div>\n";
 		return $html;
 	}
-	
+
 	/** Retreives the list interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
 	 * @param $subclass_admin_interface Html content of the interface element of a children
 	 * @return The HTML fragment for this interface */
@@ -402,7 +445,7 @@ class Content implements GenericObject
 		$html .= "</div>\n";
 		return $html;
 	}
-	
+
 	/** Retreives the admin interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
 	 * @param $subclass_admin_interface Html content of the interface element of a children
 	 * @return The HTML fragment for this interface */
@@ -434,7 +477,7 @@ class Content implements GenericObject
 				if (empty ($this->content_row['title']))
 				{
 					$html .= self :: getNewContentUI("title_{$this->id}_new");
-										$html .= "</div>\n";
+					$html .= "</div>\n";
 				}
 				else
 				{
@@ -465,7 +508,7 @@ class Content implements GenericObject
 				if (empty ($this->content_row['description']))
 				{
 					$html .= self :: getNewContentUI("description_{$this->id}_new");
-										$html .= "</div>\n";
+					$html .= "</div>\n";
 				}
 				else
 				{
@@ -483,16 +526,16 @@ class Content implements GenericObject
 				$html .= "<div class='admin_section_container'>\n";
 				$html .= "<div class='admin_section_title'>"._("Information on this project:")."</div>\n";
 				$html .= "<div class='admin_section_data'>\n";
-								if (empty ($this->content_row['project_info']))
+				if (empty ($this->content_row['project_info']))
 				{
 					$html .= self :: getNewContentUI("project_info_{$this->id}_new");
-										$html .= "</div>\n";
+					$html .= "</div>\n";
 				}
 				else
 				{
 					$project_info = self :: getObject($this->content_row['project_info']);
 					$html .= $project_info->getAdminUI();
-										$html .= "</div>\n";
+					$html .= "</div>\n";
 					$html .= "<div class='admin_section_tools'>\n";
 					$name = "content_".$this->id."_project_info_erase";
 					$html .= "<input type='submit' name='$name' value='"._("Delete")."' onclick='submit();'>";
@@ -503,17 +546,17 @@ class Content implements GenericObject
 				/* sponsor_info */
 				$html .= "<div class='admin_section_container'>\n";
 				$html .= "<div class='admin_section_title'>"._("Sponsor of this project:")."</div>\n";
-								$html .= "<div class='admin_section_data'>\n";
+				$html .= "<div class='admin_section_data'>\n";
 				if (empty ($this->content_row['sponsor_info']))
 				{
 					$html .= self :: getNewContentUI("sponsor_info_{$this->id}_new");
-										$html .= "</div>\n";
+					$html .= "</div>\n";
 				}
 				else
 				{
 					$sponsor_info = self :: getObject($this->content_row['sponsor_info']);
 					$html .= $sponsor_info->getAdminUI();
-										$html .= "</div>\n";
+					$html .= "</div>\n";
 					$html .= "<div class='admin_section_tools'>\n";
 					$name = "content_".$this->id."_sponsor_info_erase";
 					$html .= "<input type='submit' name='$name' value='"._("Delete")."' onclick='submit();'>";
@@ -644,7 +687,7 @@ class Content implements GenericObject
 					if ($project_info != null)
 					{
 						$project_info_id = $project_info->GetId();
-						$this->db->ExecSqlUpdate("UPDATE content SET project_info = '$project_info_id' WHERE content_id = '$this->id'", FALSE);
+						$db->ExecSqlUpdate("UPDATE content SET project_info = '$project_info_id' WHERE content_id = '$this->id'", FALSE);
 					}
 				}
 				else
@@ -653,7 +696,7 @@ class Content implements GenericObject
 					$name = "content_".$this->id."_project_info_erase";
 					if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
 					{
-						$this->db->ExecSqlUpdate("UPDATE content SET project_info = NULL WHERE content_id = '$this->id'", FALSE);
+						$db->ExecSqlUpdate("UPDATE content SET project_info = NULL WHERE content_id = '$this->id'", FALSE);
 						$project_info->delete();
 					}
 					else
@@ -669,7 +712,7 @@ class Content implements GenericObject
 					if ($sponsor_info != null)
 					{
 						$sponsor_info_id = $sponsor_info->GetId();
-						$this->db->ExecSqlUpdate("UPDATE content SET sponsor_info = '$sponsor_info_id' WHERE content_id = '$this->id'", FALSE);
+						$db->ExecSqlUpdate("UPDATE content SET sponsor_info = '$sponsor_info_id' WHERE content_id = '$this->id'", FALSE);
 					}
 				}
 				else
@@ -678,7 +721,7 @@ class Content implements GenericObject
 					$name = "content_".$this->id."_sponsor_info_erase";
 					if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
 					{
-						$this->db->ExecSqlUpdate("UPDATE content SET sponsor_info = NULL WHERE content_id = '$this->id'", FALSE);
+						$db->ExecSqlUpdate("UPDATE content SET sponsor_info = NULL WHERE content_id = '$this->id'", FALSE);
 						$sponsor_info->delete();
 					}
 					else
@@ -728,7 +771,7 @@ class Content implements GenericObject
 				}
 
 			}
-			$this->refresh();
+		$this->refresh();
 	}
 	/** Subscribe to the project 
 	 * @return true on success, false on failure */

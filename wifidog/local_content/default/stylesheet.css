@@ -209,7 +209,10 @@ width:auto; }
 display: compact;
 }
 .admin_section_list_item {display: compact; }
-.user_ui_container{ border: none;  }
+.user_ui_container{ border: none; 
+border: 1px solid #DDDDFF; /*light blue*/
+margin: 1px;
+background-color:	white; }
 .user_ui_object_class{ display: none;  }
 
 .list_ui_container{ display: inline; }
@@ -218,11 +221,11 @@ display: compact;
 #portal_container {
 margin: 3px;}
 
-.portal_network_section {/*background-color:	#FBFBFF;/*lighter blue*/
+.portal_network_section {background-color:	#FBFBFF;/*lighter blue*/
 margin: 3px;}
-.portal_node_section {/*background-color:	#FBFBFF;/*lighter blue*/
+.portal_node_section {background-color:	#FBFBFF;/*lighter blue*/
 margin: 3px;}
-.portal_user_section {/*background-color:	#FBFBFF;/*lighter blue*/
+.portal_user_section {background-color:	#FBFBFF;/*lighter blue*/
 margin: 3px;}
 
 .portal_section_logo{

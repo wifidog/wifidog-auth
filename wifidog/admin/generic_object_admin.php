@@ -34,7 +34,6 @@ define('BASEPATH', '../');
 require_once 'admin_common.php';
 require_once BASEPATH.'classes/GenericObject.php';
 
-//$smarty->display("templates/header.html");
 if (!empty ($_REQUEST['debug'])) {
 	echo "<pre>";
 	print_r($_REQUEST);
@@ -140,12 +139,11 @@ if ($_REQUEST['action'] == 'preview') {
 	$html .= '</form>';
 }
 
-//echo $html;
 require_once BASEPATH.'classes/MainUI.php';
 $ui=new MainUI();
 $ui->setToolSection('ADMIN');
+$ui->setTitle(_("Generic object editor"));
 $ui->setMainContent($html);
 $ui->display();
-//$smarty->display("templates/footer.html");
 ?>
 
