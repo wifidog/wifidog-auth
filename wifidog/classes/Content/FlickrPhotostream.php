@@ -42,7 +42,7 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 	 * A Flickr Photostreams wrapper
 	 * 	- Flexible administrative options
 	 */
-	class FlickrPhotostream extends ContentGroup
+	class FlickrPhotostream extends Content
 	{
 		/* Photo selection modes */
 		const SELECT_BY_GROUP = 'PSM_GROUP';
@@ -85,8 +85,6 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 
 			}
 
-			//TODO: Force no locative content until we find a better solution
-			$this->setIsLocativeContent(false);
 			$this->flickr_photostream_row = $row;
 			$this->mBd = & $db;
 		}

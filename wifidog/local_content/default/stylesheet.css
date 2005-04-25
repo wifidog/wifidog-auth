@@ -25,7 +25,7 @@ body{
 	padding: 5px;
 }
 
-div.tool_user_info{
+div.tool_user_info {
 	background: #C8FF7A;
 	background-color: #C8FF7A;
 	padding: 2px;
@@ -59,8 +59,9 @@ form.language{
 	padding: 0px 5px 0px 5px;
 }
 .tool_content ul {
-	list-style: square;
+	list-style-type: square;
 	padding: 20px;
+	margin: 0px;
 }
 div.avis{
 	padding: 20px 10px 10px 10px;
@@ -103,7 +104,7 @@ img.separator{
 img.administration{
 	vertical-align: middle;
 }
-a{
+a {
 	font-family: arial, sans-serif;
 	color: #616756;
 	font-size: 11px;
@@ -115,7 +116,7 @@ a:hover{
 	font-size: 11px;
 	text-decoration: underline;
 }
-a.administration{
+a.administration {
 	margin: 5px;
 	font-family: arial, sans-serif;
 	color: #616756;
@@ -188,7 +189,7 @@ background-color:	#FBFBFF;/*lighter blue*/
 margin: 5px;
 width:auto; 
 }
-.admin_section_container select {
+#NodeSelector select {
 	width: 100%;
 }
 .admin_section_title { display: inline;

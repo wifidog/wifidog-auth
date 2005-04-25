@@ -80,7 +80,9 @@ class MainUI
 			{
 				$sql_additional_where = "AND node_id IN (SELECT node_id from node_owners WHERE user_id='".$current_user->getId()."')";
 			}
+            $html .= "<div id='NodeSelector'>\n";
 			$html .= Node :: getSelectNodeUI('object_id', $sql_additional_where);
+            $html .= "</div>\n";
 			$html .= "</div>\n";
 			$html .= "<div class='admin_section_tools'>\n";
 
@@ -139,15 +141,15 @@ class MainUI
 			if ($user != null)
 			{
 				$html .= '<p>'._("Logged in as:").' '.$user->getUsername().'</p>'."\n";
-				$html .= '<a class="administration" HREF="?content=myprofile"><img class="administration" src="/images/profile.gif" border="0"> My profile</a>'."\n";
-				$html .= '<a class="administration" HREF="/login/?logout=true"><img class="administration" src="/images/logout.gif" border="0"> Logout</a>'."\n";
+				$html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'?content=myprofile"><img class="administration" src="/images/profile.gif" border="0"> My profile</a>'."\n";
+				$html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'login/?logout=true"><img class="administration" src="/images/logout.gif" border="0"> Logout</a>'."\n";
 
 			}
 			else
 			{
 				$html .= '<p>'._("NOT logged in.").' <a href="'.BASE_SSL_PATH.'login/">'. ("Login?").'</a></p>'."\n";
 				$html .= '<a class="administration" HREF="'.Network :: getCurrentNetwork()->getHomepageURL().'"><img class="administration" src="/images/lien_ext.gif"> '.Network :: getCurrentNetwork()->getName().'</a>'."\n";
-				$html .= '<a class="administration" HREF="'.BASE_NON_SSL_PATH.'/faq.php"><img class="administration" src="'.BASE_NON_SSL_PATH.'/images/where.gif"> '._("Where am I?").'</a>'."\n";
+				$html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'faq.php"><img class="administration" src="/images/where.gif"> '._("Where am I?").'</a>'."\n";
 			}
 
 			$html .= "</span>"."\n"; //End tool_user_info

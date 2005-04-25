@@ -28,7 +28,7 @@ error_reporting(E_ALL);
 require_once BASEPATH.'config.php';
 require_once BASEPATH.'classes/AbstractDb.php';
 require_once BASEPATH.'classes/Session.php';
-define('REQUIRED_SCHEMA_VERSION', 11);
+define('REQUIRED_SCHEMA_VERSION', 12);
 
 /** Check that the database schema is up to date.  If it isn't, offer to update it. */
 function validate_schema()
@@ -365,6 +365,16 @@ function update_schema()
 ); \n";
             
         } 
+        
+        $new_schema_version = 12;
+        if($schema_version < $new_schema_version)
+        {
+            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n"; 
+            $sql .= "ALTER TABLE flickr_photostream DROP CONSTRAINT flickr_photostream_content_group_fkey;";
+            $sql .= "ALTER TABLE flickr_photostream ADD CONSTRAINT flickr_photostream_content_fkey FOREIGN KEY (flickr_photostream_id) REFERENCES content (content_id) ON UPDATE CASCADE ON DELETE CASCADE;";
+        }
+        
 		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);
 		echo "</html></head>";
 		exit ();
