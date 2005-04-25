@@ -24,6 +24,7 @@
    */
 define('BASEPATH','../');
 require_once 'admin_common.php';
+require_once BASEPATH.'classes/MainUI.php';
 
 $security = new Security();
 $security->requireAdmin();
@@ -49,7 +50,11 @@ if ($action == 'edit_node') { // Allow node creation or node edition
     $smarty->assign('node_info', $node->getInfoArray());
     $smarty->assign('all_deployment_status', Node::getAllDeploymentStatus());
 
-    $smarty->display('admin/templates/hotspot_edit.html');
+    $ui = new MainUI();
+    $ui->setToolSection('ADMIN');
+    $ui->setMainContent($smarty->fetch("admin/templates/hotspot_edit.html"));
+    $ui->display();
+    //$smarty->display('admin/templates/hotspot_edit.html');
 
 } else if ($action == 'add_node') { // Display hotspot creation form
     /* max() + 1 doesn't work well when max() returns a String
@@ -63,7 +68,11 @@ if ($action == 'edit_node') { // Allow node creation or node edition
 
     $smarty->assign('title', _('Add a new hotspot'));
     $smarty->assign('all_deployment_status', Node::getAllDeploymentStatus());
-    $smarty->display('admin/templates/hotspot_edit.html');
+    $ui = new MainUI();
+    $ui->setToolSection('ADMIN');
+    $ui->setMainContent($smarty->fetch("admin/templates/hotspot_edit.html"));
+    $ui->display();
+    //$smarty->display('admin/templates/hotspot_edit.html');
 
 } else if ($action == 'owner') { // Display hotspot owner list and add form
     $smarty->assign('title', _('Owner hotspot with'));
@@ -71,7 +80,11 @@ if ($action == 'edit_node') { // Allow node creation or node edition
         $node = Node::getObject($node_id);
         $smarty->assign('node_id', $node->getName());
         $smarty->assign('owner_list', $node->getOwners());
-        $smarty->display('admin/templates/hotspot_owner.html');
+        $ui = new MainUI();
+        $ui->setToolSection('ADMIN');
+        $ui->setMainContent($smarty->fetch("admin/templates/hotspot_owner.html"));
+        $ui->display();
+     //   $smarty->display('admin/templates/hotspot_owner.html');
     } catch (Exception $e) {
         echo $e->getMessage();
         exit;
@@ -185,7 +198,6 @@ if ($action == 'edit_node') { // Allow node creation or node edition
         $smarty->assign('error_message', _('There are no hotspot on this network.'));
     }
     
-    require_once BASEPATH.'classes/MainUI.php';
     $ui = new MainUI();
     $ui->setToolSection('ADMIN');
     $ui->setMainContent($smarty->fetch("admin/templates/hotspot_display.html"));

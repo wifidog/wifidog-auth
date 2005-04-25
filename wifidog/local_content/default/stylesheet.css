@@ -5,57 +5,45 @@ body{
 	font-family: arial, sans-serif;
 	color: #616756;
 	font-size: 11px;
-	overflow: hidden;
 }
 
 .outer_container
 {
-	margin-left: 252px;  /* L+2*left border */
-	border-left: 1px solid #000;
-	background-color: #fcd;
+	background-color: white;
 }
 
-#tool_section{
+#tool_section {
 	border: 1px solid #E9E9E9;
 	float:left;
-	float: left;
 	position: relative;
 	width: 250px;  /* L */
-	margin-left: -254px;  /* -L-1-2*left border- 2* right border */
-	margin-right: 2px;
 }
 
 #main_section{
 	border: 1px solid #E9E9E9;
-	float:right;
-	width: 100%;
-	margin-left: -1px;
+	margin-left: 252px;
+	padding: 5px;
 }
 
 div.tool_user_info{
 	background: #C8FF7A;
 	background-color: #C8FF7A;
-	vertical-align: middle;
+	padding: 2px;
 }
 span.tool_user_info{
-	position: relative;
-	top: 3px;
-	bottom: 3px;
 }
 div.navigation{
-	width: 250px;
-	height: 38px;
 	text-align: center;
     {/literal}
 	background-image: url(../images/01_nav.gif);
     {literal}
 	background-repeat: repeat;
 	background-position: left top;
-	overflow: hidden;
+	padding-top: 10px;
+	padding: 10px 5px 10px 5px;
 }
 span.navigation{
-	position: relative;
-	top: 10px;
+
 }
 div.language{
 	width: 250px;
@@ -68,13 +56,14 @@ form.language{
 	text-align: right;
 }
 .tool_content{
-	width: 250px;
-	overflow: hidden;
+	padding: 0px 5px 0px 5px;
 }
-
+.tool_content ul {
+	list-style: square;
+	padding: 20px;
+}
 div.avis{
-	width: 250px;
-	height: 200px;
+	padding: 20px 10px 10px 10px;
     {/literal}
 	background-image: url(../images/03_avis.gif);
     {literal}
@@ -83,9 +72,7 @@ div.avis{
 	background-color: #FDFDFD;
 }
 span.avis{
-	position: relative;
-	top: 20px;
-	left: 10px;
+	padding-top: 20px;
 }
 div.anysection{
 	padding: 0px 5px 0px 5px;
@@ -199,10 +186,14 @@ display: none;
 border: 1px solid #DDDDFF; /*light blue*/
 background-color:	#FBFBFF;/*lighter blue*/
 margin: 5px;
-width:auto; }
+width:auto; 
+}
+.admin_section_container select {
+	width: 100%;
+}
 .admin_section_title { display: inline;
 						font-weight: bold;  }
-.admin_section_data { display: inline;  }
+.admin_section_data { display: inline;}
 .admin_section_tools { display: inline;}
 
 .admin_section_list { /* list of elements inside a section */

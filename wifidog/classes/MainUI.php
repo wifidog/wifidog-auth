@@ -70,7 +70,7 @@ class MainUI
 
 			$html .= "<div class='admin_section_data'>\n";
 			$html .= "<input type='hidden' name='action' value='edit'>\n";
-			$html .= "<input type='hidden' name='object_class' value='Node'>\n";
+			$html .= "<input type='hidden' name='object_class' value='Node'><br>\n";
 
 			if ($current_user->isSuperAdmin())
 			{
@@ -96,7 +96,7 @@ class MainUI
 
 			$html .= "<div class='admin_section_data'>\n";
 			$html .= "<input type='hidden' name='action' value='edit'>\n";
-			$html .= "<input type='hidden' name='object_class' value='Network'>\n";
+			$html .= "<input type='hidden' name='object_class' value='Network'><br>\n";
 			$html .= Network :: getSelectNetworkUI('object_id');
 			$html .= "</div>\n";
 			$html .= "<div class='admin_section_tools'>\n";
@@ -249,19 +249,16 @@ class MainUI
 
 		$html .= "<body>"."\n";
 		$html .= '<div class="outer_container">'."\n";
-
+        /**** Tools ******/
+        $html .= $this->getToolContent();
+        
 		/**** Main section ****/
 		$html .= "<div id='main_section'>"."\n";
 		$html .= $this->main_content;
 		$html .= "</div>"."\n"; //End main_section
-
-		/**** Tool section ****/
-		$html .= $this->getToolContent();
-
 		$html .= '</div>'."\n"; //End outer_container
 		$html .= "</body>"."\n";
 		$html .= "</html>"."\n";
-		/******************************/
 		echo $html;
 
 		//$this->smarty->display(DEFAULT_CONTENT_SMARTY_PATH."footer.html");
