@@ -494,7 +494,7 @@ class Node implements GenericObject
 		{
 			foreach ($users as $user_row)
 			{
-				$retval[]=getObject($user_row['user_id']);
+				$retval[]=User::getObject($user_row['user_id']);
 			}
 		}
 		return $users;
