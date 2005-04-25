@@ -28,7 +28,7 @@ error_reporting(E_ALL);
 require_once BASEPATH.'config.php';
 require_once BASEPATH.'classes/AbstractDb.php';
 require_once BASEPATH.'classes/Session.php';
-define('REQUIRED_SCHEMA_VERSION', 10);
+define('REQUIRED_SCHEMA_VERSION', 11);
 
 /** Check that the database schema is up to date.  If it isn't, offer to update it. */
 function validate_schema()
@@ -357,7 +357,7 @@ function update_schema()
             $sql .= "CREATE TABLE content_display_log
 (
   user_id text NOT NULL REFERENCES users ON UPDATE CASCADE ON DELETE CASCADE,
-  content_id text NOT NULL REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE,,
+  content_id text NOT NULL REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE,
   first_display_timestamp timestamp NOT NULL DEFAULT now(),
   node_id text NOT NULL REFERENCES nodes ON UPDATE CASCADE ON DELETE CASCADE,
   last_display_timestamp timestamp NOT NULL DEFAULT now(),
