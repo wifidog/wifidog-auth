@@ -362,7 +362,7 @@ function update_schema()
   node_id text NOT NULL REFERENCES nodes ON UPDATE CASCADE ON DELETE CASCADE,
   last_display_timestamp timestamp NOT NULL DEFAULT now(),
   CONSTRAINT content_group_element_portal_display_log_pkey PRIMARY KEY (user_id, content_id, node_id)
-) \n";
+); \n";
             
         } 
 		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);
