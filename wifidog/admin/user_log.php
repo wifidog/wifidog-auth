@@ -105,7 +105,7 @@ else
 
 	require_once BASEPATH.'classes/MainUI.php';
 $ui=new MainUI();
-	$ui->setToolSection('ADMIN');
+$ui->setToolSection('ADMIN');
 $ui->setMainContent($smarty->fetch("admin/templates/user_log.html"));
 $ui->display();
 }

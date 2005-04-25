@@ -32,8 +32,18 @@ require_once BASEPATH.'classes/MainUI.php';
 $smarty->assign("num_valid_users", $stats->getNumValidUsers());
 $smarty->assign("num_online_users", $stats->getNumOnlineUsers($node_id = null));
 
-$smarty->assign("title", _("authentication server"));
+$html = '<ul>'."\n";
+$html .= '<li><a href="'.BASE_SSL_PATH.'lost_username.php">'._("I Forgot my username").'</a><br>'."\n";
+$html .= '<li><a href="'.BASE_SSL_PATH.'lost_password.php">'._("I Forgot my password").'</a>'."\n";
+$html .= '<li><a href="'.BASE_SSL_PATH.'resend_validation.php">'._("Re-send the validation email").'</a><br>'."\n";
+$html .= '<li><a href="'.BASE_SSL_PATH.'resend_validation.php">'._("Change password").'</a><br>'."\n";
+$html .= '<li><a href="'.BASE_SSL_PATH.'faq.php">'._("I have trouble connecting and I would like some help").'</a><br>'."\n";
+$html .= '</ul>'."\n";
+
 $ui=new MainUI();
+$ui->setToolContent($html);
+$smarty->assign("title", _("authentication server"));
 $ui->setMainContent($smarty->fetch("templates/main.html"));
 $ui->display();
+
 ?>

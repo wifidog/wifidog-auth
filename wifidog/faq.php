@@ -26,5 +26,10 @@
 define('BASEPATH','./');
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'include/common_interface.php';
-$smarty->display("templates/faq.html");
+require_once BASEPATH.'classes/MainUI.php';
+
+//$smarty->display("templates/faq.html");
+$ui = new MainUI();
+$ui->setMainContent($smarty->fetch("templates/faq.html"));
+$ui->display();
 ?>

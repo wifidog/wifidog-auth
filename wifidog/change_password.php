@@ -77,5 +77,9 @@ isset ($sources) && $smarty->assign('auth_sources', $sources);
 // Pass the account_origin along, if it's set
 isset ($_REQUEST["auth_source"]) && $smarty->assign('selected_auth_source', $_REQUEST["auth_source"]);
 
-$smarty->display("templates/change_password.html");
+$ui = new MainUI();
+$smarty->assign('SelectNetworkUI', Network::getSelectNetworkUI('auth_source'));
+$ui->setMainContent($smarty->fetch("templates/change_password.html"));
+$ui->display();
+//$smarty->display("templates/change_password.html");
 ?>

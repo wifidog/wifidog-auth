@@ -1,3 +1,6 @@
+2005-04-25 François Proulx <francois.proulx@gmail.com
+	* Completed integration of new interface with new objects
+	
 2005-04-25 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Integration merge, should work, but there will be display problems everywhere.  Expect further commits today.
 	* Almost 100% complete Network abstraction

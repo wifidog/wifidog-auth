@@ -27,6 +27,7 @@ define('BASEPATH','./');
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'include/common_interface.php';
 require_once BASEPATH.'classes/User.php';
+require_once BASEPATH.'classes/MainUI.php';
 
 if (isset($_REQUEST['submit'])) {
     if (!$_REQUEST['username'] && !$_REQUEST['email']) {
@@ -53,7 +54,10 @@ if (isset($_REQUEST['submit'])) {
 	        	throw new Exception(_("This username or email could not be found in our database"));
             	
             $smarty->assign('message', _('A new password has been emailed to you.'));
-            $smarty->display('templates/validate.html');
+            //$smarty->display('templates/validate.html');
+            $ui = new MainUI();
+            $ui->setMainContent($smarty->fetch("templates/validate.html"));
+            $ui->display();
             exit;
         } catch (Exception $e) {
             $smarty->assign("error", $e->getMessage());
@@ -72,5 +76,9 @@ isset ($sources) && $smarty->assign('auth_sources', $sources);
 // Pass the account_origin along, if it's set
 isset ($_REQUEST["auth_source"]) && $smarty->assign('selected_auth_source', $_REQUEST["auth_source"]);
 
-$smarty->display("templates/lost_password.html");
+//$smarty->display("templates/lost_password.html");
+$ui = new MainUI();
+$smarty->assign('SelectNetworkUI', Network::getSelectNetworkUI('auth_source'));
+$ui->setMainContent($smarty->fetch("templates/lost_password.html"));
+$ui->display();
 ?>

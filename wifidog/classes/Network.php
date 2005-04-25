@@ -121,7 +121,7 @@ class Network implements GenericObject
 		}
 		if (!$found)
 		{
-			throw new Exception(_("The secified network doesn't exist: ").$p_network_id);
+			throw new Exception(_("The specified network doesn't exist: ").$p_network_id);
 		}
 		$this->id = $p_network_id;
 	}

@@ -3,7 +3,9 @@
 
         <form name="signup_form" method="post">
         <table>
-        {include file="templates/auth_sources_selection.html"}
+        {if $SelectNetworkUI}
+        {$SelectNetworkUI}
+        {/if}
         <tr>
             <td>{"Username desired"|_}:</td>
             <td><input type="text" name="username" value="{$username}" size="20"></td>

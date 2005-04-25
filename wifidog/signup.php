@@ -1,5 +1,4 @@
 <?php
-
 // $Id$
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
@@ -28,6 +27,7 @@ define('BASEPATH', './');
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'include/common_interface.php';
 require_once BASEPATH.'classes/User.php';
+require_once BASEPATH.'classes/MainUI.php';
 
 if (defined("CUSTOM_SIGNUP_URL"))
 {
@@ -84,9 +84,9 @@ if (isset ($_REQUEST["submit"]))
 
 	try
 	{
-		if(empty($account_origin))
+		if (empty ($account_origin))
 			throw new Exception(_("Sorry, this network does not exist !"));
-			
+
 		validate_username($username);
 		validate_email($email);
 		validate_passwords($password, $password_again);
@@ -100,7 +100,11 @@ if (isset ($_REQUEST["submit"]))
 		$user = User :: CreateUser(get_guid(), $username, $account_origin, $email, $password);
 		$user->sendValidationEmail();
 		$smarty->assign('message', _('An email with confirmation instructions was sent to your email address.  Your account has been granted 15 minutes of access to retrieve your email and validate your account.  You may now open a browser window and go to any remote Internet address to obtain the login page.'));
-		$smarty->display("templates/validate.html");
+		//$smarty->display("templates/validate.html");
+        
+        $ui = new MainUI();
+        $ui->setMainContent($smarty->fetch("templates/validate.html"));
+        $ui->display();
 		exit;
 	}
 	catch (Exception $e)
@@ -120,6 +124,9 @@ isset ($sources) && $smarty->assign('auth_sources', $sources);
 // Pass the account_origin along, if it's set
 isset ($_REQUEST["auth_source"]) && $smarty->assign('selected_auth_source', $_REQUEST["auth_source"]);
 
-$smarty->display("templates/signup.html");
+//$smarty->display("templates/signup.html");
+$ui = new MainUI();
+$smarty->assign('SelectNetworkUI', Network::getSelectNetworkUI('auth_source'));
+$ui->setMainContent($smarty->fetch("templates/signup.html"));
+$ui->display();
 ?>
-

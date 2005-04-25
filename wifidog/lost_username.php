@@ -27,6 +27,7 @@ define('BASEPATH','./');
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'include/common_interface.php';
 require_once BASEPATH.'classes/User.php';
+require_once BASEPATH.'classes/MainUI.php';
 
 if (isset($_REQUEST["submit"])) {
 	// If the source is present and that it's in our AUTH_SOURCE_ARRAY, save it to a var for later use
@@ -46,7 +47,10 @@ if (isset($_REQUEST["submit"])) {
         $user->sendLostUsername();
         	
         $smarty->assign("message", _("Your username has been emailed to you."));
-        $smarty->display("templates/validate.html");
+        //$smarty->display("templates/validate.html");
+        $ui = new MainUI();
+        $ui->setMainContent($smarty->fetch("templates/validate.html"));
+        $ui->display();
         exit;
     } catch (Exception $e) {
         $smarty->assign("error", $e->getMessage());
@@ -64,5 +68,9 @@ isset ($sources) && $smarty->assign('auth_sources', $sources);
 // Pass the account_origin along, if it's set
 isset ($_REQUEST["auth_source"]) && $smarty->assign('selected_auth_source', $_REQUEST["auth_source"]);
 
-$smarty->display("templates/lost_username.html");
+//$smarty->display("templates/lost_username.html");
+$ui = new MainUI();
+$smarty->assign('SelectNetworkUI', Network::getSelectNetworkUI('auth_source'));
+$ui->setMainContent($smarty->fetch("templates/lost_username.html"));
+$ui->display();
 ?>

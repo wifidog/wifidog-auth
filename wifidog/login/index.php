@@ -1,6 +1,4 @@
 <?php
-
-
 // $Id$
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
@@ -33,6 +31,11 @@ require_once BASEPATH.'classes/Node.php';
 require_once BASEPATH.'classes/User.php';
 require_once BASEPATH.'classes/Network.php';
 
+if (!empty ($_REQUEST['logout']) && $_REQUEST['logout'] == true)
+{
+    $session->destroy();
+}
+
 if (!empty ($_REQUEST['url']))
 {
 	$session->set(SESS_ORIGINAL_URL_VAR, $_REQUEST['url']);
@@ -44,9 +47,9 @@ if (!empty ($_REQUEST['username']) && !empty ($_REQUEST['password']) && !empty (
 	$username = $db->EscapeString($_REQUEST['username']);
 
 	// Authenticating the user through the selected auth source.
-$network = Network::processSelectNetworkUI('auth_source');
-
-$user = $network->getAuthenticator()->login($_REQUEST['username'], $_REQUEST['password'], $errmsg);
+	$network = Network :: processSelectNetworkUI('auth_source');
+    
+	$user = $network->getAuthenticator()->login($_REQUEST['username'], $_REQUEST['password'], $errmsg);
 	if ($user != null)
 	{
 		if (isset ($_REQUEST['gw_address']) && isset ($_REQUEST['gw_port']) && ($token = $user->generateConnectionToken()))
@@ -75,10 +78,10 @@ isset ($AUTH_SOURCE_ARRAY) && $smarty->assign('auth_sources', $AUTH_SOURCE_ARRAY
 // Pass the account_origin along, if it's set
 isset ($_REQUEST["auth_source"]) && $smarty->assign('selected_auth_source', $_REQUEST["auth_source"]);
 
-$node=null;
+$node = null;
 if (!empty ($_REQUEST['gw_id']))
 {
-	$gw_id=$_REQUEST['gw_id'];
+	$gw_id = $_REQUEST['gw_id'];
 
 	try
 	{
@@ -110,40 +113,38 @@ $html = '';
 $html .= '<div id="form">'."\n";
 if (empty ($_REQUEST['gw_id']))
 {
-	$html .= '<h3>'._("This is the 'virtual login' page you can use to get the credentials which will then give you access to management functions on the network without being at a hotspot.").'</h3>'."\n";
+	$html .= '<h1>'._("Virtual login").'</h1'."\n";
 }
 else
 {
-	$html .= '<h3>'._("Welcome! Hotspot:")." $hotspot_name</h3>\n";
+	$html .= '<h1>'._("Welcome! Hotspot:")." $hotspot_name</h1>\n";
 }
 
-$html .= '<h3>'._("Please log-in or").'<br><a href="'.BASE_SSL_PATH.'signup.php">'._("Sign-up, it's free!").'</a></h3>'."\n";
+$html .= '<h1>'._("Sign up : ").'</h1>';
+$html .= '<p class="indent">'."\n";
+$html .= '<a href="'.BASE_SSL_PATH.'signup.php">'._("Get an account here.").'</a><br><a href="'.BASE_SSL_PATH.'faq.php">'._("Why is this service free ?").'</a>'."\n";
+$html .= '</p>';
 
 $html .= '<form name="login_form" method="post">'."\n";
-if($node!=null)
+if ($node != null)
 {
 	$html .= '<input type="hidden" name="gw_address" value="'.$gw_address.'">'."\n";
-$html .= '<input type="hidden" name="gw_port" value="'.$gw_port.'">'."\n";
-$html .= '<input type="hidden" name="gw_id" value="'.$gw_id.'">'."\n";
+	$html .= '<input type="hidden" name="gw_port" value="'.$gw_port.'">'."\n";
+	$html .= '<input type="hidden" name="gw_id" value="'.$gw_id.'">'."\n";
 }
-$html .= '<table>'."\n";
-$html .= Network::getSelectNetworkUI('auth_source');
-$html .= '<tr>'."\n";
-$html .= '<td>'._("Username (or email)").':</td>'."\n";
-$html .= '<td><input type="text" name="username" value="'.$username.'" size="20"></td>'."\n";
-$html .= '</tr>'."\n";
-$html .= '<tr>'."\n";
-$html .= '<td>'._("Password").':</td>'."\n";
-$html .= '<td><input type="password" name="password" size="20"></td>'."\n";
-$html .= '</tr>'."\n";
-$html .= '<tr>'."\n";
-$html .= '<td></td>'."\n";
-$html .= '<td><input class="submit" type="submit" name="submit" value="'._("Login").'"></td>'."\n";
-$html .= '</tr>'."\n";
-$html .= '</table>'."\n";
+$html .= '<h1>'._("Log in : ").'</h1>';
+$html .= '<p class="indent">'."\n";
+$html .= Network::getSelectNetworkUI('auth_source')."<br>\n";
+$html .= _("Username (or email)").'<br>'."\n";
+$html .= '<input type="text" name="username" value="'.$username.'" size="20"><br>'."\n";
+$html .= _("Password").':<br>'."\n";
+$html .= '<input type="password" name="password" size="20"><br>'."\n";
+$html .= '<input class="submit" type="submit" name="submit" value="'._("Login").'"><br>'."\n";
+;
 $html .= '</form>'."\n";
+$html .= '</p>';
 
-$html .= '<h3>'._("I already have an account, but").':</h3>'."\n";
+$html .= '<h1>'._("I already have an account, but").':</h1>'."\n";
 $html .= '<ul>'."\n";
 $html .= '<li><a href="'.BASE_SSL_PATH.'lost_username.php">'._("I Forgot my username").'</a><br>'."\n";
 $html .= '<li><a href="'.BASE_SSL_PATH.'lost_password.php">'._("I Forgot my password").'</a>'."\n";
@@ -169,9 +170,6 @@ if ($error)
 
 require_once BASEPATH.'classes/MainUI.php';
 $ui = new MainUI();
-$ui->setMainContent($html);
+$ui->setToolContent($html);
 $ui->display();
 ?>
-
-
-

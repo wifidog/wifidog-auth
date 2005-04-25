@@ -326,7 +326,7 @@ class User
 
 				if ($user_info['validation_grace_time_expired'] == 't')
 				{
-					$errmsg = _("Sorry, your ").$validation_grace_time._(" minutes grace period to retrieve your email and validate your account has now expired. You will have to connect to the internet and validate your account from another location or create a new account. For help, please ").'<a href="'.BASEPATH.'faq.php'.'">'._("click here.").'</a>';
+					$errmsg = _("Sorry, your ").VALIDATION_GRACE_TIME._(" minutes grace period to retrieve your email and validate your account has now expired. You will have to connect to the internet and validate your account from another location or create a new account. For help, please ").'<a href="'.BASEPATH.'faq.php'.'">'._("click here.").'</a>';
 					$retval = false;
 				}
 				else
