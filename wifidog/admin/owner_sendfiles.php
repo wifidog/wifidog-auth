@@ -36,6 +36,7 @@ define('BASEPATH','../');
 require_once 'admin_common.php';
 require_once BASEPATH.'classes/Node.php';
 require_once BASEPATH.'classes/User.php';
+require_once BASEPATH.'classes/MainUI.php';
 
 $user_id = User::getCurrentUser()->getId();
 $smarty->assign("user_id", $user_id); // DEBUG
@@ -65,7 +66,11 @@ if (!is_writable(BASEPATH.LOCAL_CONTENT_REL_PATH)) {
       */
     $fileinfo = posix_getpwuid(posix_getuid());
     $smarty->assign("error_message", _("Can not write to directory '" . BASEPATH.LOCAL_CONTENT_REL_PATH . "', ownership should be set to user ") . $fileinfo['name'] . " (uid=" . $fileinfo['uid'] . ")");
-    $smarty->display("admin/templates/owner_display.html");
+    $ui=new MainUI();
+    $ui->setToolSection('ADMIN');
+    $ui->setMainContent($smarty->fetch("admin/templates/owner_display.html"));
+    $ui->display();
+    //$smarty->display("admin/templates/owner_display.html");
     exit();
 }
 
@@ -117,7 +122,11 @@ if ("$action" == 'uploadform') {
 
     $smarty->assign("file_list", $filesArray);
     $smarty->assign("node_id", $node_id);
-    $smarty->display("admin/templates/owner_upload.html");
+    $ui=new MainUI();
+    $ui->setToolSection('ADMIN');
+    $ui->setMainContent($smarty->fetch("admin/templates/owner_display.html"));
+    $ui->display();
+    //$smarty->display("admin/templates/owner_upload.html");
 } else {
     $db->ExecSql("SELECT nodes.node_id,name FROM nodes NATURAL JOIN node_owners WHERE node_owners.user_id='$user_id'", $node_results, false);
 
@@ -130,6 +139,10 @@ if ("$action" == 'uploadform') {
         $smarty->assign("error_message", _('You are not a hotspot owner'));
     }
     $smarty->assign("node_id", $node_id);
-    $smarty->display("admin/templates/owner_display.html");
+    $ui=new MainUI();
+    $ui->setToolSection('ADMIN');
+    $ui->setMainContent($smarty->fetch("admin/templates/owner_display.html"));
+    $ui->display();
+    //$smarty->display("admin/templates/owner_display.html");
 }
 ?>

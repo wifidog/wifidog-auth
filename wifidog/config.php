@@ -6,8 +6,12 @@
  * Log history:
  *
  *     $Log$
- *     Revision 1.38  2005/04/25 16:17:54  fproulx
+ *     Revision 1.39  2005/04/25 17:07:47  fproulx
  *     2005-04-25 François Proulx <francois.proulx@gmail.com
+ *     	* More interface work
+ *
+ *     Revision 1.38  2005/04/25 16:17:54  fproulx
+ *     2005-04-25 Franï¿½ois Proulx <francois.proulx@gmail.com
  *     	* Completed integration of new interface with new objects
  *
  *     Revision 1.37  2005/04/25 13:16:06  benoitg
@@ -188,7 +192,7 @@ define('CONF_DATABASE_PASSWORD',   'wifidogtest');
 /* The SYSTEM_PATH, must be set to the url path needed to reach the wifidog directory.  Normally '/' or '/wifidog/', depending on where configure your document root.  Gateway configuration must match this as well */
 define('SYSTEM_PATH', '/');
 /**< Set this to true if your server has SSL available, otherwise, passwords will be transmitted in clear text over the air */
-define('SSL_AVAILABLE', false);
+define('SSL_AVAILABLE', true);
 /** @deprecated version - 2005-04-19 */
 define('HOTSPOT_NETWORK_NAME', 'ÃŽle sans fil');
 define('HOTSPOT_NETWORK_URL', 'http://www.ilesansfil.org/');

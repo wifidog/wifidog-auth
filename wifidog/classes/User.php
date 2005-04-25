@@ -435,7 +435,10 @@ class User
 		$headers .= "From: ".VALIDATION_EMAIL_FROM_ADDRESS;
 		$subject = HOTSPOT_NETWORK_NAME._(" lost username request");
 		$body = _("Hello,\nYou have requested that the authentication server send you your username:\nUsername: ").$username._("\n\nHave a nice day,\nThe Team");
-
+        
+        //TODO: Find a way to use correctly mb_encode_mimeheader 
+        $subject = mb_convert_encoding($subject, "ISO-8859-1","AUTO");
+        
 		mail($this->getEmail(), $subject, $body, $headers);
 	}
 
@@ -459,7 +462,10 @@ class User
 				$subject = HOTSPOT_NETWORK_NAME._(" new user validation");
 				$url = "http://".$_SERVER["SERVER_NAME"]."/validate.php?user_id=".$this->getId()."&token=".$this->getValidationToken();
 				$body = _("Hello,\nPlease follow the link below to validate your account.\n").$url._("\n\nThank you,\nThe Team.");
-
+                
+                //TODO: Find a way to use correctly mb_encode_mimeheader 
+                $subject = mb_convert_encoding($subject, "ISO-8859-1","AUTO");
+        
 				mail($this->getEmail(), $subject, $body, $headers);
 			}
 		}
@@ -475,10 +481,13 @@ class User
 
 		$headers = 'MIME-Version: 1.0'."\r\n";
 		$headers .= 'Content-type: text/plain; charset=UTF-8'."\r\n";
-		$headers .= "From: ".VALIDATION_EMAIL_FROM_ADDRESS;
+        $headers .= "From: ".VALIDATION_EMAIL_FROM_ADDRESS;
 		$subject = HOTSPOT_NETWORK_NAME._(" new password request");
 		$body = _("Hello,\nYou have requested that the authentication server send you a new password:\nUsername: ").$username._("\nPassword: ").$new_password._("\n\nHave a nice day,\nThe Team");
-
+        
+        //TODO: Find a way to use correctly mb_encode_mimeheader 
+        $subject = mb_convert_encoding($subject, "ISO-8859-1","AUTO");
+        
 		mail($this->getEmail(), $subject, $body, $headers);
 	}
 

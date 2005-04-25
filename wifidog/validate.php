@@ -25,7 +25,6 @@ define('BASEPATH','./');
 require_once (BASEPATH.'/include/common.php');
 require_once (BASEPATH.'/include/common_interface.php');
 require_once (BASEPATH.'/classes/User.php');
-require_once BASEPATH.'classes/MainUI.php';
 
 try {
     if (!isset($_REQUEST["token"]))
@@ -48,6 +47,7 @@ try {
     $smarty->assign('message', $e->getMessage());
 }
 
+require_once BASEPATH.'classes/MainUI.php';
 $ui = new MainUI();
 $ui->setMainContent($smarty->fetch("templates/validate.html"));
 $ui->display();

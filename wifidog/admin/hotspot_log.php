@@ -113,5 +113,10 @@ $db->ExecSqlUniqueRes("SELECT SUM(incoming)/1048576 as in, SUM(outgoing)/1048576
 $smarty->assign("total_network_in", $results['in']);
 $smarty->assign("total_network_out", $results['out']);
 
-$smarty->display("admin/templates/hotspot_log.html");
+require_once BASEPATH.'classes/MainUI.php';
+$ui=new MainUI();
+$ui->setToolSection('ADMIN');
+$ui->setMainContent($smarty->fetch("admin/templates/hotspot_log.html"));
+$ui->display();
+//$smarty->display("admin/templates/hotspot_log.html");
 ?>

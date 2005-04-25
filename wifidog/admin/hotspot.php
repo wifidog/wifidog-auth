@@ -184,7 +184,13 @@ if ($action == 'edit_node') { // Allow node creation or node edition
     } else {
         $smarty->assign('error_message', _('There are no hotspot on this network.'));
     }
-    $smarty->display('admin/templates/hotspot_display.html');
+    
+    require_once BASEPATH.'classes/MainUI.php';
+    $ui = new MainUI();
+    $ui->setToolSection('ADMIN');
+    $ui->setMainContent($smarty->fetch("admin/templates/hotspot_display.html"));
+    $ui->display();
+    //$smarty->display('admin/templates/hotspot_display.html');
 }
 
 ?>

@@ -35,5 +35,10 @@ try {
 	$smarty->assign("error", $e->getMessage());
 }
 
-$smarty->display("admin/templates/online_users.html");
+require_once BASEPATH.'classes/MainUI.php';
+$ui=new MainUI();
+$ui->setToolSection('ADMIN');
+$ui->setMainContent($smarty->fetch("admin/templates/online_users.html"));
+$ui->display();
+//$smarty->display("admin/templates/online_users.html");
 ?>
