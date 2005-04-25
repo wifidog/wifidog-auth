@@ -71,8 +71,8 @@ class Network implements GenericObject
 	{
 		global $AUTH_SOURCE_ARRAY;
 		$html = '';
-		$name = "{$user_prefix}";
-		$html .= "Network: \n";
+		$name = $user_prefix;
+		$html .= _("Network:")." \n";
 		$number_of_networks = count($AUTH_SOURCE_ARRAY);
 		if ($number_of_networks > 1)
 		{
@@ -132,6 +132,29 @@ class Network implements GenericObject
 	{
 		return $this->id;
 	}
+
+	/** Retreives the network name 
+	 * @return The id */
+	public function getTechSupportEmail()
+	{
+		return TECH_SUPPORT_EMAIL;
+	}
+
+	/** Retreives the network name 
+	 * @return The id */
+	public function getName()
+	{
+		return HOTSPOT_NETWORK_NAME;
+	}
+
+	/** Retreives the network's homepage url 
+	 * @return The id */
+	public function getHomepageURL()
+	{
+		return HOTSPOT_NETWORK_URL;
+	}
+
+
 	/**Get an array of all Content linked to the network
 	* @return an array of Content or an empty arrray */
 	function getAllContent()
@@ -152,6 +175,14 @@ class Network implements GenericObject
 
 	/** Retreives the admin interface of this object.
 	 * @return The HTML fragment for this interface */
+	 
+	 /** Get the Authenticator object for this network */
+	 public function getAuthenticator()
+	 {
+	 	global $AUTH_SOURCE_ARRAY;
+	 return $AUTH_SOURCE_ARRAY[$this->id]['authenticator'];
+	 }
+	 
 	public function getAdminUI()
 	{
 		$html = '';

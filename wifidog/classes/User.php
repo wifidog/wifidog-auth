@@ -32,10 +32,10 @@ class User
 	private $id;
 
 	/** Instantiate a user object 
-	 * @param $id The id of the requested user 
+	 * @param $id The user id of the requested user 
 	 * @return a User object, or null if there was an error
 	 */
-	public static function getUserByID($id)
+	public static function getObject($id)
 	{
 		$object = null;
 		$object = new self($id);

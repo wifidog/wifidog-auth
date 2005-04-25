@@ -44,13 +44,6 @@ class LocaleList
 		$this->mBd = & $db; //for backward compatibility
 	}
 
-	/**Indique si la clef primaire de l'objet est une chaîne de caractère.
-	*/
-	function PrimaryKeyIsString()
-	{
-		return true;
-	}
-
 	/**Permet de générer un élément HTML select et de récupérer le résultat.
 	 *
 	 * @param string selectedClefPrimaire Optionnel.  Quelle entrée doit-on sélectionner par défaut.  Entrer "null" pour que le choix vide soit choisi.
@@ -122,34 +115,6 @@ class LocaleList
 		return $retval;
 	}
 
-	/**Exporte l'élément dans un format d'échange
-	@param $export_format format de la sortie
-	@param $document Le document auquel la sortie doit être ajouté.  Le type peut varier
-	@param $parent Le parent de l'élément à ajouter.  Le type peut varier	
-	@param $entree ID de l'entree de vocabulaire
-	*/
-	function Export($export_format, & $document, $parent, $entree = null)
-	{
-		if ($entree != null)
-		{
-			$langue = new Locale($entree);
-			$langue->Export($export_format, $document, $parent);
-		}
-	}
-
-	function isEmpty()
-	{
-		return false;
-	}
-
-	/**
-	 * By definition it cannot be considerend empty, so it's always compliant'
-	 * @return boolean
-	 */
-	function isCompliant($profile, $lom_element)
-	{
-		return COMPLIANT_MASK;
-	}
 
 } /* end class LocaleList */
 ?>

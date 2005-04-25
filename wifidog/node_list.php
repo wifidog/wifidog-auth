@@ -20,7 +20,7 @@
    \********************************************************************/
   /**@file node_list.php
    * Network status page
-   * @author Copyright (C) 2004 Benoit Grégoire
+   * @author Copyright (C) 2004 Benoit Grï¿½goire
    */
 
 define('BASEPATH','./');
@@ -34,5 +34,9 @@ foreach(Node::getAllNodesWithStatus("node_id") as $node) {
     $smarty->append("nodes", $node);
 }
 
-$smarty->display("templates/node_list.html");
+require_once BASEPATH.'classes/MainUI.php';
+$ui=new MainUI();
+//$ui->setToolSection('ADMIN');
+$ui->setMainContent($smarty->fetch("templates/node_list.html"));
+$ui->display();
 ?>

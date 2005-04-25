@@ -19,6 +19,7 @@
    *                                                                  *
    \********************************************************************/
   /**@file index.php
+   * Authserver home page
    * @author Copyright (C) 2004 Benoit Gr�goire
    */
 
@@ -26,10 +27,13 @@ define('BASEPATH', './');
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'include/common_interface.php';
 require_once BASEPATH.'classes/Node.php';
+require_once BASEPATH.'classes/MainUI.php';
 
 $smarty->assign("num_valid_users", $stats->getNumValidUsers());
 $smarty->assign("num_online_users", $stats->getNumOnlineUsers($node_id = null));
 
 $smarty->assign("title", _("authentication server"));
-$smarty->display("templates/main.html");
+$ui=new MainUI();
+$ui->setMainContent($smarty->fetch("templates/main.html"));
+$ui->display();
 ?>

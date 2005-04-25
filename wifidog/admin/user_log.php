@@ -38,7 +38,7 @@ if (!empty ($_REQUEST['user_id']))
 {
 	try
 	{
-		$user = User :: getUserByID($_REQUEST['user_id']);
+		$user = User :: getObject($_REQUEST['user_id']);
 		$userinfo = $user->getInfoArray();
 		$userinfo['account_status_description'] = $account_status_to_text[$userinfo['account_status']];
 		$smarty->assign("userinfo", $userinfo);
@@ -102,7 +102,12 @@ else
 	}
 
 	$smarty->assign("account_status_to_text", $account_status_to_text);
-	$smarty->display("admin/templates/user_log.html");
+
+	require_once BASEPATH.'classes/MainUI.php';
+$ui=new MainUI();
+	$ui->setToolSection('ADMIN');
+$ui->setMainContent($smarty->fetch("admin/templates/user_log.html"));
+$ui->display();
 }
 ?>
 

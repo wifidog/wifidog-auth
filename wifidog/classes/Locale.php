@@ -1,5 +1,6 @@
 <?php
 
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -34,7 +35,90 @@ class Locale
 	//prive:
 	private $mLang;
 	private $mPays;
-	// Associations
+
+	/** Get the Locale object
+	 * @param $content_id The content id
+	 * @return the Content object, or null if there was an error (an exception is also thrown)
+	 */
+	static function getObject($locale_id)
+	{
+
+		return new self($locale_id);
+	}
+
+	public static function getCurrentLocale()
+	{
+		global $session;
+		$object = null;
+		$locale_id = $session->get(SESS_LANGUAGE_VAR);
+		if (empty ($locale_id))
+		{
+			$object = new self(DEFAULT_LANG);
+		}
+		else
+		{
+			$object = new self($locale_id);
+		}
+		return $object;
+
+	}
+
+	/**
+	 * @return true on success, false on failure
+	 */
+	public static function setCurrentLocale($locale)
+	{
+		global $session;
+		$retval = false;
+		if ($locale != null)
+		{
+			$locale_id = $locale->getId();
+			$session->set(SESS_LANGUAGE_VAR, $locale_id);
+			$retval = true;
+		}
+		else
+		{
+			$locale_id = DEFAULT_LANG;
+			$session->set(SESS_LANGUAGE_VAR, $locale_id);
+			$retval = false;
+		}
+		/* Gettext support */
+		if (!function_exists('gettext'))
+		{
+			define('GETTEXT_AVAILABLE', false);
+			/* Redefine the gettext functions if gettext isn't installed */
+			function gettext($string)
+			{
+				return $string;
+			}
+			function _($string)
+			{
+				return $string;
+			}
+		}
+		else
+		{
+			define('GETTEXT_AVAILABLE', true);
+		}
+
+		if (GETTEXT_AVAILABLE)
+		{
+			$current_locale = setlocale(LC_ALL, $locale_id);
+			if (setlocale(LC_ALL, $locale_id) != $locale_id)
+			{
+				echo "Warning: language.php: Unable to setlocale() to ".$locale_id.", return value: $current_locale, current locale: ".setlocale(LC_ALL, 0);
+			}
+
+			bindtextdomain('messages', BASEPATH.'/locale');
+			bind_textdomain_codeset('messages', 'UTF-8');
+			textDomain('messages');
+
+			putenv("LC_ALL=".$locale_id);
+			putenv("LANGUAGE=".$locale_id);
+		}
+		return $retval;
+
+	}
 
 	/** Example: 'fr_CA_montreal' will give
 	$matches[0]=fr_CA_montreal
@@ -67,10 +151,9 @@ class Locale
 	/** Used by Langstring::GetString() (and other functions) to help select the best langstring_entry to display to the user.
 	 * @return A sql fragment
 	 */
-		public static function getSqlCaseStringSelect($locale_id)
+	public static function getSqlCaseStringSelect($locale_id)
 	{
-				$decomposed_locale = Locale :: decomposeLocaleId($locale_id);
-		
+		$decomposed_locale = Locale :: decomposeLocaleId($locale_id);
 
 		$sql = " (CASE\n";
 		//On cherche une chaine ou le locale complet correspond au locale par défaut de l'usager
@@ -87,12 +170,12 @@ class Locale
 		}
 		//On cherche une chaine n'ayant pas de locale associée, elle a plue de chance d'être lisible qu'une chaîne prise au hasard
 		$sql .= " WHEN locales_id IS NULL THEN 5\n";
-		
+
 		$sql .= "      ELSE 20 ";
 		$sql .= "  END)\n";
 		return $sql;
 	}
-	
+
 	/**Constructeur
 	@param string locale Locale in POSIX format (excluding charset), such as fr ou fr_CA: "xx(x)_YY_(n*z)".  Both '_' and '-' are acceptable as separator.
 	*/
@@ -126,10 +209,10 @@ class Locale
 		$this->mId = $locale;
 	}
 
-public function GetId()
-{
-	return $this->mId;
-}
+	public function GetId()
+	{
+		return $this->mId;
+	}
 	/**Indique si la clef primaire de l'objet est une chaîne de caractère.
 	*/
 	function PrimaryKeyIsString()
@@ -181,15 +264,15 @@ public function GetId()
 	*/
 	function Export($export_format, & $document, $parent, $entree = null)
 	{
-//		$sql = "SELECT locales_id FROM locales WHERE locales_id='$this->mId'";
-//		$this->mBd->executerSqlResUnique($sql, $locales_row, false);
-		
-			$language = $document->createElementNS(LOM_EXPORT_NS, "Language");
-			$parent->appendChild($language);
-			$textnode = $document->createTextNode($this->mId);
-			$language->appendChild($textnode);
+			//		$sql = "SELECT locales_id FROM locales WHERE locales_id='$this->mId'";
+		//		$this->mBd->executerSqlResUnique($sql, $locales_row, false);
+
+	$language = $document->createElementNS(LOM_EXPORT_NS, "Language");
+		$parent->appendChild($language);
+		$textnode = $document->createTextNode($this->mId);
+		$language->appendChild($textnode);
 	}
-	
+
 	/*
 	 * Returns a HTML formatted string for output to string ( with an image )
 	 */
@@ -241,7 +324,7 @@ public function GetId()
 	{
 		echo $this->GetString();
 	}
-	
+
 	/**
 	 * By definition a Locale cannot be empty
 	 */
@@ -249,7 +332,7 @@ public function GetId()
 	{
 		return false;
 	}
-	
+
 	/**
 	 * Checks if the object complies with the specified profile settings
 	 * @param obligation
@@ -257,14 +340,14 @@ public function GetId()
 	 */
 	function IsCompliant($obligation)
 	{
-		switch($obligation)
+		switch ($obligation)
 		{
-			case 'MANDATORY':
-				if($this->isEmpty())
+			case 'MANDATORY' :
+				if ($this->isEmpty())
 					return NOT_COMPLIANT_MASK;
 				break;
-			case 'RECOMMENDED':
-				if($this->isEmpty())
+			case 'RECOMMENDED' :
+				if ($this->isEmpty())
 					return NOT_ALL_RECOMMENDED;
 				break;
 		}

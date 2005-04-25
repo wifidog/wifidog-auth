@@ -37,5 +37,9 @@ $smarty->assign("registrations", Statistics::getRegistrationsPerMonth());
 $smarty->assign("most_mobile_users", Statistics::getMostMobileUsers(10));
 $smarty->assign("most_frequent_users", Statistics::getMostFrequentUsers(10));
 $smarty->assign("most_greedy_users", Statistics::getMostGreedyUsers(10));
-$smarty->display("admin/templates/user_stats.html");
+	require_once BASEPATH.'classes/MainUI.php';
+$ui=new MainUI();
+	$ui->setToolSection('ADMIN');
+$ui->setMainContent($smarty->fetch("admin/templates/user_stats.html"));
+$ui->display();
 ?>

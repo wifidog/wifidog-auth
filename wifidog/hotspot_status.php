@@ -21,7 +21,7 @@
  \********************************************************************/
 /**@file hotspot_status.php
  * Network status page
- * @author Copyright (C) 2004 Benoit Grégoire
+ * @author Copyright (C) 2004 Benoit Grï¿½goire
  */
 
 define('BASEPATH', './');
@@ -524,8 +524,14 @@ if ($format == 'RSS') {
 				$smarty->append("nodes", $node_row);
 			}
 		$smarty->assign("num_deployed_nodes", count($node_results));
-		$smarty->assign("title", "hotspot_status");
-		$smarty->display("templates/hotspot_status.html");
+
+		
+		require_once BASEPATH.'classes/MainUI.php';
+$ui=new MainUI();
+//$ui->setToolSection('ADMIN');
+		$ui->setTitle(_("Hotspot list"));
+$ui->setMainContent($smarty->fetch("templates/hotspot_status.html"));
+$ui->display();
 	}
 ?>
 

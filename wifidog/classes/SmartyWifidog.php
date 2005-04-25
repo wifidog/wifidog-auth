@@ -38,7 +38,7 @@ require_once(BASEPATH.'lib/smarty/Smarty.class.php');
 
 class SmartyWifidog extends Smarty {
 
-   function SmartyWifidog()
+   function __construct()
    {
    
         // Class Constructor. These automatically get set with each new instance.

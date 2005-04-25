@@ -56,7 +56,7 @@ class Node implements GenericObject
 		}
 		else
 		{
-			$object = getCurrentRealNode();
+			$object = self::getCurrentRealNode();
 		}
 		return $object;
 	}
@@ -73,7 +73,7 @@ class Node implements GenericObject
 	/** Get the current node to which a user is physically connected, if any.  This is done by an IP adress lookup against the last reported IP adress of the node
 	 * @param 	 * @return a Node object, or null if it can't be found.
 	 */
-	public function getCurrentRealNode()
+	public static function getCurrentRealNode()
 	{
 		global $db;
 		$retval = null;
@@ -483,11 +483,20 @@ class Node implements GenericObject
 		return $statuses_array;
 	}
 
+/** The list of users online at this node
+ * @return An array of User object, or en empty array */
 	function getOnlineUsers()
 	{
 		global $db;
-
-		$db->ExecSql("SELECT users.user_id, users.username, users.account_origin FROM users,connections WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}'", $users, false);
+		$retval=array();
+		$db->ExecSql("SELECT users.user_id FROM users,connections WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}'", $users, false);
+		if($users!=null)
+		{
+			foreach ($users as $user_row)
+			{
+				$retval[]=getObject($user_row['user_id']);
+			}
+		}
 		return $users;
 	}
 
@@ -547,6 +556,7 @@ class Node implements GenericObject
 		return $this->mRow;
 	}
 
+/** Warning, the semantics of this function will change */
 	public static function getAllOnlineUsers()
 	{
 		global $db;

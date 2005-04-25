@@ -27,8 +27,8 @@ define('BASEPATH', '../');
 require_once 'admin_common.php';
 define('CONTENT_ADMIN_HREF', 'content_admin.php');
 require_once BASEPATH.'classes/Content.php';
-
-$smarty->display("templates/header.html");
+require_once BASEPATH.'classes/MainUI.php';
+$ui=new MainUI();
 $html = '';
 
 if (empty ($_REQUEST['action']))
@@ -88,8 +88,9 @@ if ($_REQUEST['action'] == 'list_all_content')
 	$html .= '</form>';
 }
 
-echo $html;
-$smarty->display("templates/footer.html");
+$ui->setToolSection('ADMIN');
+$ui->setMainContent($html);
+$ui->display();
 ?>
 
 

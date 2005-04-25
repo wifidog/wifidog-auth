@@ -27,74 +27,19 @@
 define('BASEPATH', '../');
 require_once 'admin_common.php';
 require_once BASEPATH.'classes/Content.php';
-
-$smarty->display("templates/header.html");
-
+require_once BASEPATH.'classes/MainUI.php';
+$ui=new MainUI();
+$html = '';
 $current_user = User :: getCurrentUser();
 if(!$current_user)
 {
-    $html = _('You must be logged in to access the administration panel.');
+    $html = '<p class="errormsg">'._('You must be logged in to access the administration panel.')."</p>\n";
 }
 else
 {
-    $html = '';
-    $html .= "<ul>\n";
-    $html .= "<li><a href='user_log.php'>"._("User logs")."</a></li>\n";
-    $html .= "<li><a href='online_users.php'>"._("Online Users")."</a></li>\n";
-    $html .= "<li><a href='user_stats.php'>"._("Cumulative user statistics")."</a></li>\n";
-    $html .= "<li><a href='hotspot_log.php'>"._("Hotspot logs")."</a></li>\n";
-    $html .= "<li><a href='import_user_database.php'>"._("Import NoCat user database")."</a></li>\n";
-    $html .= "<li><a href='hotspot.php'>"._("Hotspot creation and configuration")."</a> - Beta</li>\n";
-    $html .= "<li><a href='owner_sendfiles.php'>"._("Hotspot owner administration")."</a> - Beta</li>\n";
-    
-    /* Node admin */
-    $html .= "<div class='admin_section_container'>\n";
-    $html .= '<form action="'.GENERIC_OBJECT_ADMIN_ABS_HREF.'" method="get">';
-    $html .= "<div class='admin_section_title'>"._("Node administration:")." </div>\n";
-    
-    $html .= "<div class='admin_section_data'>\n";
-    $html .= "<input type='hidden' name='action' value='edit'>\n";
-    $html .= "<input type='hidden' name='object_class' value='Node'>\n";
-    
-    if ($current_user->isSuperAdmin())
-    {
-    	$sql_additional_where = '';
-    }
-    else
-    {
-    	$sql_additional_where = "AND node_id IN (SELECT node_id from node_owners WHERE user_id='".$current_user->getId()."')";
-    }
-    $html .= Node :: getSelectNodeUI('object_id', $sql_additional_where);
-    $html .= "</div>\n";
-    $html .= "<div class='admin_section_tools'>\n";
-    
-    $html .= "<input type=submit name='edit_submit' value='"._("Edit")."'>\n";
-    $html .= "</div>\n";
-    $html .= '</form>';
-    $html .= "</div>\n";
-    
-    /* Network admin */
-    $html .= "<div class='admin_section_container'>\n";
-    $html .= '<form action="'.GENERIC_OBJECT_ADMIN_ABS_HREF.'" method="post">';
-    $html .= "<div class='admin_section_title'>"._("Network administration:")." </div>\n";
-    
-    $html .= "<div class='admin_section_data'>\n";
-    $html .= "<input type='hidden' name='action' value='edit'>\n";
-    $html .= "<input type='hidden' name='object_class' value='Network'>\n";
-    $html .= Network :: getSelectNetworkUI('object_id');
-    $html .= "</div>\n";
-    $html .= "<div class='admin_section_tools'>\n";
-    
-    $html .= "<input type=submit name='edit_submit' value='"._("Edit")."'>\n";
-    $html .= "</div>\n";
-    $html .= '</form>';
-    $html .= "</div>\n";
-    
-    $html .= "<li><a href='content_admin.php'>"._("Content manager")."</a></li>\n";
-    $html .= "</ul>\n";
+	$ui->setToolSection('ADMIN');
 }
 
-echo $html;
-
-$smarty->display("templates/footer.html");
+$ui->setMainContent($html);
+$ui->display();
 ?>

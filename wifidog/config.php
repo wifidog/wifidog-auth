@@ -6,6 +6,13 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.37  2005/04/25 13:16:06  benoitg
+ *     2005-04-25 Benoit Gr�goire  <bock@step.polymtl.ca>
+ *     	* Integration merge, should work, but there will be display problems everywhere.  Expect further commits today.
+ *     	* Almost 100% complete Network abstraction
+ *     	* Much better object encapsulation.  Deprecated methods not removed yet.
+ *     	* Add MainUI class.  Used to display the interface.  Inner workings still need work.
+ *
  *     Revision 1.36  2005/04/23 22:11:17  fproulx
  *     2005-04-23 François Proulx <francois.proulx@gmail.com>
  *     	* Fixed bugs in File and EmbeddedContent
@@ -204,6 +211,10 @@ define('DBMS_POSTGRES','AbstractDbPostgres.php');
 /** Defines which Database management software you want to use */
 define('CONF_DBMS',DBMS_POSTGRES);
 
+/* Available Locales (Languages) */
+$AVAIL_LOCALE_ARRAY=array('fr'=>'Français',
+            			'en'=>'English');
+            					
 /***** You should normally not have to edit anything below this ******/
 define('WIFIDOG_NAME', 'WiFiDog Authentication server');
 define('WIFIDOG_VERSION', 'CVS');
@@ -250,8 +261,8 @@ $AUTH_SOURCE_ARRAY[IDRC_ACCOUNT_ORIGIN]=array(
 define('STYLESHEET_NAME', 'stylesheet.css');
 define('LOGIN_PAGE_NAME', 'login.html');
 define('PORTAL_PAGE_NAME', 'portal.html');/**< @deprecated version - 19-Apr-2005*/
-define('PAGE_HEADER_NAME', 'header.html');
-define('PAGE_FOOTER_NAME', 'footer.html');
+define('PAGE_HEADER_NAME', 'header.html');/**< @deprecated version - 19-Apr-2005*/
+define('PAGE_FOOTER_NAME', 'footer.html');/**< @deprecated version - 19-Apr-2005*/
 define('HOTSPOT_STATUS_PAGE', 'hotspot_status.php');
 define('HOTSPOT_LOGO_NAME', 'hotspot_logo.jpg');
 define('HOTSPOT_LOGO_BANNER_NAME', 'hotspot_logo_banner.jpg');
@@ -263,7 +274,7 @@ define('WIFIDOG_LOGO_NAME', 'wifidog_logo_banner.png');
 define('WIFIDOG_LOGO_BANNER_NAME', 'wifidog_logo_banner.png');
 
 define('DEFAULT_NODE_ID', 'default');
-define('DEFAULT_LANG', 'fr_FR');
+define('DEFAULT_LANG', 'fr');
 
 
 }

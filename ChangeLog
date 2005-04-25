@@ -1,3 +1,9 @@
+2005-04-25 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Integration merge, should work, but there will be display problems everywhere.  Expect further commits today.
+	* Almost 100% complete Network abstraction
+	* Much better object encapsulation.  Deprecated methods not removed yet.
+	* Add MainUI class.  Used to display the interface.  Inner workings still need work.
+	
 2005-04-23 François Proulx <francois.proulx@gmail.com>
 	* Added Preferred Size support for Flickr pictures
 	

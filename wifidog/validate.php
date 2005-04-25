@@ -19,7 +19,7 @@
    *                                                                  *
    \********************************************************************/
   /**@file
-   * @author Copyright (C) 2004 Benoit Grégoire, Philippe April.
+   * @author Copyright (C) 2004 Benoit Grï¿½goire, Philippe April.
    */
 define('BASEPATH','./');
 require_once (BASEPATH.'/include/common.php');
@@ -33,7 +33,7 @@ try {
     if (!isset($_REQUEST["user_id"]))
         throw new Exception(_('No user ID specified!'));
 
-    $user = User::getUserByID($_REQUEST['user_id']);
+    $user = User::getObject($_REQUEST['user_id']);
 
     if ($db->EscapeString($_REQUEST['token']) != $user->getValidationToken())
         throw new Exception(_('The validation token does not match the one in the database.'));

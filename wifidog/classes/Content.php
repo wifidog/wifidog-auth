@@ -535,7 +535,7 @@ class Content implements GenericObject
 					{
 						$html .= "<li class='admin_section_list_item'>\n";
 						$html .= "<div class='admin_section_data'>\n";
-						$user = User :: getUserByID($content_owner_row['user_id']);
+						$user = User :: getObject($content_owner_row['user_id']);
 
 						$html .= $user->getUserListUI();
 						$name = "content_".$this->id."_owner_".$user->GetId()."_is_author";
@@ -693,7 +693,7 @@ class Content implements GenericObject
 				{
 					foreach ($content_owner_rows as $content_owner_row)
 					{
-						$user = User :: getUserByID($content_owner_row['user_id']);
+						$user = User :: getObject($content_owner_row['user_id']);
 						$user_id = $user->getId();
 						$name = "content_".$this->id."_owner_".$user->GetId()."_remove";
 						if (!empty ($_REQUEST[$name]))
