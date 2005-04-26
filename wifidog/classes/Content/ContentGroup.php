@@ -59,6 +59,10 @@ class ContentGroup extends Content
 
 		}
 		$this->content_group_row = $row;
+		if(empty($this->getContentSelectionMode()))
+		{
+			$this->setContentSelectionMode('RANDOM');
+		}
 	}
 
 	/** Is the content group artistic in nature?
@@ -331,7 +335,7 @@ $element_rows = array ();
 		}
 		else
 		{
-			throw new Exception(_("Unsupported selection mode: %s"), $this->getContentSelectionMode());
+			echo _("Unsupported selection mode: "). $this->getContentSelectionMode();
 		}
 
 		//echo count($retval).' returned <br>';
