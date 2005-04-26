@@ -31,9 +31,9 @@ require_once BASEPATH.'classes/Node.php';
 require_once BASEPATH.'classes/User.php';
 require_once BASEPATH.'classes/Network.php';
 
-if (!empty ($_REQUEST['logout']) && $_REQUEST['logout'] == true)
+if ((!empty ($_REQUEST['logout']) && $_REQUEST['logout'] == true) && ($user = User::getCurrentUser()) != null)
 {
-    $session->destroy();
+    $user->logout();
 }
 
 if (!empty ($_REQUEST['url']))

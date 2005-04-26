@@ -48,7 +48,7 @@ class Network implements GenericObject
 	 */
 	static function getCurrentNetwork($real_network_only = false)
 	{
-				global $AUTH_SOURCE_ARRAY;
+		global $AUTH_SOURCE_ARRAY;
 		$keys = array_keys ( $AUTH_SOURCE_ARRAY);
 		
 		return new self($keys[0]);

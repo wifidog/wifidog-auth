@@ -4,7 +4,8 @@ body{
 	padding: 0px;
 	font-family: arial, sans-serif;
 	color: #616756;
-	font-size: 11px;
+	/*font-size: 11px;*/
+	font-size: small;
 }
 
 .outer_container
@@ -34,12 +35,12 @@ span.tool_user_info{
 }
 div.navigation{
 	text-align: center;
+	font-size: 11px;
     {/literal}
 	background-image: url(../images/01_nav.gif);
     {literal}
 	background-repeat: repeat;
 	background-position: left top;
-	padding-top: 10px;
 	padding: 10px 5px 10px 5px;
 }
 span.navigation{
@@ -201,31 +202,78 @@ width:auto;
 display: compact;
 }
 .admin_section_list_item {display: compact; }
-.user_ui_container{ border: none; 
-border: 1px solid #DDDDFF; /*light blue*/
-margin: 1px;
-background-color:	white; }
+.user_ui_main {
+	border: 1px solid gray;
+	margin: 2px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 2px;
+}
 .user_ui_object_class{ display: none;  }
+.user_ui_container {
+}
+.user_ui_title {
+	padding: 5px;
+	margin-bottom: 5px;
+	background-color: rgb(213, 219, 225);
+}
+.user_ui_authors {
+	padding: 5px;
+	margin-bottom: 5px;
+	background-color: rgb(213, 219, 225);
+}
+.user_ui_description {
+	float: left;
+	width: 33%;
+	margin: 0;
+	margin-right: 5px;
+	padding: 5px;
+	background-color: rgb(235, 235, 235);
+}
+.user_ui_footer {
+/*	clear: both;*/
+	padding: 5px;
+	margin-top: 5px;
+	background-color: rgb(213, 219, 225);
+}
+.user_ui_picture {
+	height: 250px;
+}
+.user_ui_projet_info {}
+.user_ui_sponsor_info {}
 
-.list_ui_container{ display: inline; }
+.list_ui_container { 
+	display: inline; 
+}
 /* Portal */
 
 #portal_container {
 margin: 3px;}
 
-.portal_network_section {background-color:	#FBFBFF;/*lighter blue*/
-margin: 3px;}
-.portal_node_section {background-color:	#FBFBFF;/*lighter blue*/
-margin: 3px;}
+.portal_network_section {
+	background-color:	#FBFBFF;/*lighter blue*/
+	margin: 3px;
+}
+.portal_node_section {
+background-color:	#FBFBFF;/*lighter blue*/
+margin: 3px;
+}
+.portal_node_section h1, .portal_node_section h1 a {
+	font-family: verdana, sans-serif;
+	color: #88AA4B;
+	font-size: 14px;
+}
+.portal_network_section h1, .portal_network_section h1 a {
+	font-family: verdana, sans-serif;
+	color: #88AA4B;
+	font-size: 14px;
+}
 .portal_user_section {background-color:	#FBFBFF;/*lighter blue*/
 margin: 3px;}
-
-.portal_section_logo{
-float: right;
-clear: right;
- padding: 2px;
-max-height: 100px;
-max-width: 100px;
+.portal_section_logo {
+	padding: 2px;
+	height: 100px;
+	display: inline;
 }
 .flickr_photo_block {
     margin:20px auto 20px auto;
@@ -284,9 +332,11 @@ max-width: 100px;
     color: white;
     padding: 5px;
     margin-top: 0px;
-    clear: left;
 }
-
+.flickr_description a {
+	color: white;
+	text-decoration: underline;
+}
 .spreadsheet { border: thin solid lightblue  ; text-align:left}
 TH.spreadsheet { background-color: lightgrey}
 TABLE.spreadsheet { border: solid darkblue  ; text-align:left}

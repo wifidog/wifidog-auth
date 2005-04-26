@@ -412,6 +412,11 @@ class User
 		$db->ExecSql("SELECT * FROM connections,nodes WHERE user_id='{$this->id}' AND nodes.node_id=connections.node_id ORDER BY timestamp_in", $connections, false);
 		return $connections;
 	}
+    
+    function getAccountOrigin()
+    {
+        return $this->mRow['account_origin'];
+    }
 
 	/** Return all the users
 	 */
@@ -426,6 +431,27 @@ class User
 		}
 		return $objects;
 	}
+    
+    /**
+     * Logout the current user
+     * Destroying session and cleaning tokens
+     */
+    function logout()
+    {
+        global $session;
+        $session->destroy();
+        //TODO: Completed this part with Network::getObject()
+        /*
+        try {
+            $connections = $this->getConnections();
+            foreach($connections as $connection)
+                if($connection['token_status'] == TOKEN_UNUSED || $connection['token_status'] == TOKEN_INUSE)
+                    Network::getCurrentNetwork()->getAuthenticator()->logout(array('conn_id' => $connection['conn_id']), $errmsg);
+        } catch(Exception $e)
+        {
+            //TODO: Error management ( MainUI )
+        }*/
+    }
 
 	function sendLostUsername()
 	{

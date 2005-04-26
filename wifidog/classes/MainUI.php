@@ -265,5 +265,14 @@ class MainUI
 
 		//$this->smarty->display(DEFAULT_CONTENT_SMARTY_PATH."footer.html");
 	}
+    
+    function displayError($errmsg)
+    {
+        $html = "<p>$errmsg</p>\n";
+        $html .= "<p>"._("Please get in touch with ")."<a href='{TECH_SUPPORT_EMAIL}'>{TECH_SUPPORT_EMAIL}</a></p>";
+        $this->setMainContent($html);
+        $this->display();    
+    }
+    
 } //End class
 ?>

@@ -393,6 +393,12 @@ class Node implements GenericObject
 			$this->addContent($content);
 		}
 	}
+    
+    // Redirect to this node's portal page
+    public function getUserUI()
+    {
+        header("Location: ".BASE_SSL_PATH."portal/?gw_id=".$this->getId());
+    }
 
 	/** Add content to this node */
 	public function addContent(Content $content)

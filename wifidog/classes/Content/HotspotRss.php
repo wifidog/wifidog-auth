@@ -75,7 +75,12 @@ class HotspotRss extends Content
 				{
 					$network_rss_sources_array[] = array ('url' => $source, 'default_publication_interval' => 7 * 24 * 3600);
 				}
-				$network_rss_html = $press_review->get_rss_html($network_rss_sources_array, 5);
+                try {
+				    $network_rss_html = $press_review->get_rss_html($network_rss_sources_array, 5);
+                } catch(Exception $e)
+                {
+                    $network_rss_html = _("Could not get network RSS feed");
+                }
 			}
 
 			$hotspot_rss_html = null;
@@ -88,7 +93,12 @@ class HotspotRss extends Content
 				{
 					$hotspot_rss_sources_array[] = array ('url' => $source, 'default_publication_interval' => 7 * 24 * 3600);
 				}
-				$hotspot_rss_html = $press_review->get_rss_html($hotspot_rss_sources_array, 5);
+                try {
+				    $hotspot_rss_html = $press_review->get_rss_html($hotspot_rss_sources_array, 5);
+                } catch(Exception $e)
+                {
+                    $hotspot_rss_html = _("Could not get hotspot RSS feed");
+                }
 			}
 			/**
 			 @return the generated html or the error message or an empty string if called without a URL.

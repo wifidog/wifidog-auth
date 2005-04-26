@@ -123,6 +123,7 @@ class Content implements GenericObject
 			throw new Exception(_('Unable to open directory ').$dir);
 		}
 		$tab = str_ireplace('.php', '', $tab);
+        sort($tab);
 		return $tab;
 	}
 
@@ -388,46 +389,60 @@ class Content implements GenericObject
 	public function getUserUI($subclass_user_interface = null)
 	{
 		$html = '';
-		$html .= "<div class='user_ui_container'>\n";
+		$html .= "<div class='user_ui_main'>\n";
 		$html .= "<div class='user_ui_object_class'>Content (".get_class($this)." instance)</div>\n";
+        if (!empty ($this->content_row['title']))
+        {
+            $html .= "<div class='user_ui_title'>\n";
+            $title = self :: getObject($this->content_row['title']);
+            $html .= $title->getUserUI();
+            $html .= "</div>\n";
+        }
+        
 		$authors = $this->getAuthors();
 		if (count($authors) > 0)
 		{
-			$html .= "<div class='authors'>"._("Author(s):")."\n";
+			$html .= "<div class='user_ui_authors'>\n";
+            $html .= _("Author(s):");
 			foreach ($authors as $user)
 			{
 				$html .= $user->getUsername()." ";
 			}
 			$html .= "</div>\n";
 		}
-		if (!empty ($this->content_row['title']))
-		{
-			$html .= "<div class='user_ui_title'>\n";
-			$title = self :: getObject($this->content_row['title']);
-			$html .= $title->getUserUI();
-			$html .= "</div>\n";
-		}
+
+        if (!empty ($this->content_row['description']))
+        {
+            $html .= "<div class='user_ui_description'>\n";
+            $title = self :: getObject($this->content_row['description']);
+            $html .= $title->getUserUI();
+            $html .= "</div>\n";
+        }
+        
+        $html .= $subclass_user_interface;
 		
-		$html .= $subclass_user_interface;
-		
-		if (!empty ($this->content_row['project_info']))
-		{
-			$html .= "<div class='user_ui_projet_info'>\n";
-			$html .= _("Project information:");
-			$project_info = self :: getObject($this->content_row['project_info']);
-			$html .= $project_info->getUserUI();
-			$html .= "</div>\n";
-		}
-		
-		if (!empty ($this->content_row['sponsor_info']))
-		{
-			$html .= "<div class='user_ui_sponsor_info'>\n";
-						$html .= _("Project sponsor:");
-			$sponsor_info = self :: getObject($this->content_row['sponsor_info']);
-			$html .= $sponsor_info->getUserUI();
-			$html .= "</div>\n";
-		}
-		
+        if(!empty ($this->content_row['project_info']) || !empty ($this->content_row['sponsor_info']))
+        {
+            $html .= "<div class='user_ui_footer'>";
+    		if (!empty ($this->content_row['project_info']))
+    		{
+    			$html .= "<div class='user_ui_projet_info'>\n";
+    			$html .= _("Project information:");
+    			$project_info = self :: getObject($this->content_row['project_info']);
+    			$html .= $project_info->getUserUI();
+    			$html .= "</div>\n";
+    		}
+    		
+    		if (!empty ($this->content_row['sponsor_info']))
+    		{
+    			$html .= "<div class='user_ui_sponsor_info'>\n";
+    						$html .= _("Project sponsor:");
+    			$sponsor_info = self :: getObject($this->content_row['sponsor_info']);
+    			$html .= $sponsor_info->getUserUI();
+    			$html .= "</div>\n";
+    		}
+            $html .= "</div>";
+        }
 
 		$html .= "</div>\n";
 		return $html;

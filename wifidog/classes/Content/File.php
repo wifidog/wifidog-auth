@@ -94,20 +94,20 @@ class File extends Content
 		{
 			switch ($_FILES[$upload_field]['error'])
 			{
-				case UPLOAD_ERR_INI_SIZE :
+				case 'UPLOAD_ERR_INI_SIZE' :
 					echo _("File size exceeds limit specified in PHP.ini");
 					break;
-				case UPLOAD_ERR_FORM_SIZE :
+				case 'UPLOAD_ERR_FORM_SIZE' :
 					echo _("File size exceeds limit specified HTML form");
 					break;
-				case UPLOAD_ERR_PARTIAL :
+				case 'UPLOAD_ERR_PARTIAL' :
 					echo _("File upload was interrupted");
 					break;
 					/*
 					case UPLOAD_ERR_NO_FILE:
 						echo _("No file was uploaded");
 						break;*/
-				case UPLOAD_ERR_NO_TMP_DIR :
+				case 'UPLOAD_ERR_NO_TMP_DIR' :
 					echo _("Missing temp folder");
 					break;
 			}

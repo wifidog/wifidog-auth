@@ -66,7 +66,7 @@ class Picture extends File
         $html = '';
 		$html .= "<div class='user_ui_container'>\n";
 		$html .= "<div class='user_ui_object_class'>Picture (".get_class($this)." instance)</div>\n";
-		$html .= "<img src='".htmlentities($this->getFileUrl())."' alt='".$this->getFileName()."''>";
+		$html .= "<img class='user_ui_picture' src='".htmlentities($this->getFileUrl())."' alt='".$this->getFileName()."''>";
 		$html .= "</div>\n";
         return $html;
 	}
