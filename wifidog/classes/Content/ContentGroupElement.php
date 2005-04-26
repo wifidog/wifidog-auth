@@ -51,13 +51,8 @@ class ContentGroupElement extends Content
 
 			$content_id = get_guid();
 			$content_type = 'ContentGroupElement';
-			$sql = "INSERT INTO content (content_id, content_type) VALUES ('$content_id', '$content_type')";
-
-			if (!$db->ExecSqlUpdate($sql, false))
-			{
-				throw new Exception(_('Unable to insert new content into database!'));
-			}
-			$sql = "INSERT INTO content_group_element (content_group_element_id, content_group_id, display_order) VALUES ('$content_id', '".$content_group->GetId()."', $display_order)";
+			$sql = "INSERT INTO content (content_id, content_type) VALUES ('$content_id', '$content_type');";
+			$sql = "INSERT INTO content_group_element (content_group_element_id, content_group_id, display_order) VALUES ('$content_id', '".$content_group->GetId()."', $display_order);";
 			if (!$db->ExecSqlUpdate($sql, false))
 			{
 				throw new Exception(_('Unable to insert new content into database!'));
@@ -86,7 +81,9 @@ class ContentGroupElement extends Content
 		$db->ExecSqlUniqueRes($sql_select, $row, false);
 		if ($row == null)
 		{
-			throw new Exception(_("The content with the following id could not be found in the database: ").$content_id);
+			$sql = "--The database was corrupted, let's fix it \n" .
+					"DELETE FROM content WHERE content_id='$content_id'";
+			$db->ExecSqlUpdate($sql, true);
 		}
 		$this->content_group_element_row = $row;
 		/* A content group element is NEVER persistent */
@@ -280,7 +277,6 @@ class ContentGroupElement extends Content
 		$displayed_content = self :: getObject($this->content_group_element_row['displayed_content_id']);
 		$displayed_content_html = $displayed_content->getUserUI();
 		}
-		
 		$html = '';
 		$html .= "<div class='user_ui_container'>\n";
 		$html .= "<div class='user_ui_object_class'>ContentGroupElement (".get_class($this)." instance)</div>\n";

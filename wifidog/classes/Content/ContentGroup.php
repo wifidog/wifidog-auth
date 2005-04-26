@@ -60,7 +60,7 @@ class ContentGroup extends Content
 		}
 		$this->content_group_row = $row;
 		$content_selection_mode = $this->getContentSelectionMode();
-		if(empty($content_selection_mode))
+		if (empty ($content_selection_mode))
 		{
 			$this->setContentSelectionMode('RANDOM');
 		}
@@ -302,7 +302,7 @@ class ContentGroup extends Content
 			$db->ExecSql($sql, $element_rows, false);
 			if ($element_rows == null)
 			{
-$element_rows = array ();
+				$element_rows = array ();
 			}
 
 			foreach ($element_rows as $element_row)
@@ -317,9 +317,9 @@ $element_rows = array ();
 				}
 			}
 			shuffle($retval);
-			if(!empty($retval))
+			if (!empty ($retval))
 			{
-			$retval = array ($retval[0]); //Pick one
+				$retval = array ($retval[0]); //Pick one
 			}
 
 		}
@@ -336,7 +336,7 @@ $element_rows = array ();
 		}
 		else
 		{
-			echo _("Unsupported selection mode: "). $this->getContentSelectionMode();
+			echo _("Unsupported selection mode: ").$this->getContentSelectionMode();
 		}
 
 		//echo count($retval).' returned <br>';

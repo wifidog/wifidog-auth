@@ -55,8 +55,8 @@ class Langstring extends Content
 		//Get user's prefered language
 
 		$sql = "SELECT value, locales_id, \n";
-		$sql .= Locale :: getSqlCaseStringSelect(LocaleList::GetDefault());
-		$sql .= " as score FROM langstring_entries WHERE langstring_entries.langstrings_id = '{$this->id}' ORDER BY score LIMIT 1";
+		$sql .= Locale :: getSqlCaseStringSelect(Locale::getCurrentLocale()->getId());
+		$sql .= " as score FROM langstring_entries WHERE langstring_entries.langstrings_id = '{$this->id}' AND value!='' ORDER BY score LIMIT 1";
 		$this->mBd->ExecSqlUniqueRes($sql, $row, false);
 		if ($row == null)
 		{

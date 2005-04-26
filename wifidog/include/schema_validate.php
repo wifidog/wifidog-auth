@@ -374,7 +374,7 @@ function update_schema()
             $sql .= "ALTER TABLE flickr_photostream DROP CONSTRAINT flickr_photostream_content_group_fkey;";
             $sql .= "ALTER TABLE flickr_photostream ADD CONSTRAINT flickr_photostream_content_fkey FOREIGN KEY (flickr_photostream_id) REFERENCES content (content_id) ON UPDATE CASCADE ON DELETE CASCADE;";
         }
-        
+	
 		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);
 		echo "</html></head>";
 		exit ();
