@@ -251,6 +251,7 @@ class MainUI
 
 		$html .= "<body>"."\n";
 		$html .= '<div class="outer_container">'."\n";
+        
         /**** Tools ******/
         $html .= $this->getToolContent();
         
@@ -258,6 +259,7 @@ class MainUI
 		$html .= "<div id='main_section'>"."\n";
 		$html .= $this->main_content;
 		$html .= "</div>"."\n"; //End main_section
+        
 		$html .= '</div>'."\n"; //End outer_container
 		$html .= "</body>"."\n";
 		$html .= "</html>"."\n";

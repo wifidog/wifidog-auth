@@ -202,37 +202,56 @@ width:auto;
 display: compact;
 }
 .admin_section_list_item {display: compact; }
-.user_ui_main {
+/*.user_ui_main {
 	border: 1px solid gray;
 	margin: 2px;
-	margin-left: auto;
-	margin-right: auto;
+	float: left;
+	display: inline;
+	padding: 2px;
+}*/
+
+.portal_content {
+	display: inline;
+	float: left;
+	border: 1px solid black;
+	margin: 2px;
+/*	background-color: #d0d0d0;*/
+	background-color: white;
+}
+.user_ui_main_outer {
+	display: block;
+}
+.user_ui_main_inner {
+	display: block;
+
+/*	border: 1px solid gray;*/
+	margin: 2px;
 	padding: 2px;
 }
 .user_ui_object_class{ display: none;  }
 .user_ui_container {
 }
 .user_ui_title {
+	display:block;
 	font-size: medium;
 	font-weight: bold;
 	color: white;
-	padding: 5px;
-/*	background-color: rgb(213, 219, 225);*/
-	background-color: #9d9d9d;
+	background-color: #777777;
 }
 .user_ui_authors {
-	padding: 5px;
+	display:block;
 	font-weight: bold;
-	background-color: rgb(235, 235, 235);
+	background-color: #777777;
+	color: white;
 }
 .user_ui_description {
+	display:block;
 	margin: 0;
-	margin-right: 5px;
-	padding: 5px;
 	text-align: justify;
 	background-color: rgb(235, 235, 235);
 }
 .user_ui_footer {
+	display:block;
 	padding: 5px;
 	background-color: #9d9d9d;
 }
@@ -240,10 +259,10 @@ display: compact;
 	height: 250px;
 }
 .user_ui_projet_info {
-	color: white;
+	background-color: rgb(235, 235, 235);	
 }
 .user_ui_sponsor_info {
-	color: white;
+	background-color: rgb(235, 235, 235);
 }
 
 .list_ui_container { 
@@ -252,15 +271,15 @@ display: compact;
 /* Portal */
 
 #portal_container {
-margin: 3px;}
-
+	margin: 3px;
+}
 .portal_network_section {
-	background-color:	#FBFBFF;/*lighter blue*/
+/*	background-color:	#CFDCE6;*/
 	margin: 3px;
 }
 .portal_node_section {
-background-color:	#FBFBFF;/*lighter blue*/
-margin: 3px;
+/*	background-color:	#CFDCE6;*/
+	margin: 3px;
 }
 .portal_node_section h1, .portal_node_section h1 a {
 	font-family: verdana, sans-serif;
@@ -272,8 +291,11 @@ margin: 3px;
 	color: #88AA4B;
 	font-size: 14px;
 }
-.portal_user_section {background-color:	#FBFBFF;/*lighter blue*/
-margin: 3px;}
+.portal_user_section {
+/*	background-color:	#CFDCE6;*/
+	margin: 3px;
+	clear: left;
+}
 .portal_section_logo {
 	padding: 2px;
 	height: 100px;

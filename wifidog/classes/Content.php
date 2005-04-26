@@ -390,8 +390,10 @@ class Content implements GenericObject
 	public function getUserUI($subclass_user_interface = null)
 	{
 		$html = '';
-		$html .= "<div class='user_ui_main'>\n";
+		$html .= "<div class='user_ui_main_outer'>\n";
+        $html .= "<div class='user_ui_main_inner'>\n";
 		$html .= "<div class='user_ui_object_class'>Content (".get_class($this)." instance)</div>\n";
+        
         if (!empty ($this->content_row['title']))
         {
             $html .= "<div class='user_ui_title'>\n";
@@ -400,55 +402,54 @@ class Content implements GenericObject
             $html .= "</div>\n";
         }
         
-		$authors = $this->getAuthors();
-		if (count($authors) > 0)
-		{
-			$html .= "<div class='user_ui_authors'>\n";
+        $html .= "<table><tr><td>\n";
+        $authors = $this->getAuthors();
+        if (count($authors) > 0)
+        {
+            $html .= "<div class='user_ui_authors'>\n";
             $html .= _("Author(s):");
-			foreach ($authors as $user)
-			{
-				$html .= $user->getUsername()." ";
-			}
-			$html .= "</div>\n";
-		}
-
-        $html .= "<table><tr>\n";
+            foreach ($authors as $user)
+            {
+                $html .= $user->getUsername()." ";
+            }
+            $html .= "</div>\n";
+        }
+        
         if (!empty ($this->content_row['description']))
         {
-            $html .= "<td>\n";
             $html .= "<div class='user_ui_description'>\n";
             $title = self :: getObject($this->content_row['description']);
             $html .= $title->getUserUI();
             $html .= "</div>\n";
-            $html .= "</td>\n";
         }
+        
+        if(!empty ($this->content_row['project_info']) || !empty ($this->content_row['sponsor_info']))
+        { 
+            if (!empty ($this->content_row['project_info']))
+            {
+                $html .= "<div class='user_ui_projet_info'>\n";
+                $html .= _("Project information:");
+                $project_info = self :: getObject($this->content_row['project_info']);
+                $html .= $project_info->getUserUI();
+                $html .= "</div>\n";
+            }
+            
+            if (!empty ($this->content_row['sponsor_info']))
+            {
+                $html .= "<div class='user_ui_sponsor_info'>\n";
+                            $html .= _("Project sponsor:");
+                $sponsor_info = self :: getObject($this->content_row['sponsor_info']);
+                $html .= $sponsor_info->getUserUI();
+                $html .= "</div>\n";
+            }
+        }
+        
+        $html .= "</td>\n";
         
         $html .= "<td>\n$subclass_user_interface</td>\n";
         $html .= "</tr></table>\n";
-		
-        if(!empty ($this->content_row['project_info']) || !empty ($this->content_row['sponsor_info']))
-        { 
-            $html .= "<table class='user_ui_footer'><tr>\n";
-    		if (!empty ($this->content_row['project_info']))
-    		{
-    			$html .= "<td><div class='user_ui_projet_info'>\n";
-    			$html .= _("Project information:");
-    			$project_info = self :: getObject($this->content_row['project_info']);
-    			$html .= $project_info->getUserUI();
-    			$html .= "</div></td>\n";
-    		}
-    		
-    		if (!empty ($this->content_row['sponsor_info']))
-    		{
-    			$html .= "<td><div class='user_ui_sponsor_info'>\n";
-    						$html .= _("Project sponsor:");
-    			$sponsor_info = self :: getObject($this->content_row['sponsor_info']);
-    			$html .= $sponsor_info->getUserUI();
-    			$html .= "</div></td>\n";
-    		}
-            $html .= "</tr></table>\n";
-        }
 
+        $html .= "</div>\n";
 		$html .= "</div>\n";
 		$this->logContentDisplay();
 		return $html;

@@ -51,7 +51,7 @@ if ($_REQUEST['action'] == 'list_all_content')
 			if (!empty ($row['title']))
 			{
 				$title = Content :: getObject($row['title']);
-				$title_ui = $title->getUserUI();
+				$title_ui = $title->__toString();
 			}
 			else
 			{
@@ -61,7 +61,7 @@ if ($_REQUEST['action'] == 'list_all_content')
 			if (!empty ($row['description']))
 			{
 				$description = Content :: getObject($row['description']);
-				$description_ui = $description->getUserUI();
+				$description_ui = $description->__toString();
 			}
 			else
 			{

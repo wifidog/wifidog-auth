@@ -1,3 +1,7 @@
+2005-04-26 François Proulx <francois.proulx@gmail.com>
+	* Changed back File to non trivial
+	* portal page stylesheet
+	
 2005-04-26 Benoit Grégoire  <bock@step.polymtl.ca>
 	* ContentGroupElement.php:  It shouldn't be allowed to create a new content element in isolation.  Unfortunately the UI allows if for now.  Such content will now be deleted.
 	* Locale:  Fix string selection algorithm to pick the right language.

@@ -101,6 +101,7 @@ $html = '';
 $html .= "<div id='portal_container'>\n";
 
 /* Network section */
+$html .= "<table width='100%'><tr><td>";
 $html .= "<div class='portal_network_section'>\n";
 $html .= "<a href='{$hotspot_network_url}'><img class='portal_section_logo' src='{$network_logo_banner_url}' alt='{$hotspot_network_name} logo' border='0'></a>\n";
 $html .= "<span class='portal_section_title'><a href='{$hotspot_network_url}'>{$hotspot_network_name}</a></span>\n";
@@ -109,12 +110,16 @@ if($contents)
 {
     foreach ($contents as $content)
     {
-    	$html .= $content->getUserUI();
+    $html .= "<div class='portal_content'>\n";
+    $html .= $content->getUserUI();
+    $html .= "</div>\n";
     }
 }
 $html .= "</div>\n";
+$html .= "</td></tr></table>";
 
 /* Node section */
+$html .= "<table width='100%'><tr><td>";
 $html .= "<div class='portal_node_section'>\n";
 $html .= "<img class='portal_section_logo' src='{$hotspot_logo_url}' alt=''>\n";
 $html .= "<span class='portal_section_title'>"._("Content from:")."</span>";
@@ -131,9 +136,12 @@ if(!empty($node_homepage))
 }
 foreach ($contents as $content)
 {
+    $html .= "<div class='portal_content'>\n";
 	$html .= $content->getUserUI();
+    $html .= "</div>\n";
 }
 $html .= "</div>\n";
+$html .= "</td></tr></table>";
 $html .= "<div style='clear:both;'></div>";
 /* User section */
 //TODO: Add user content support
@@ -141,6 +149,12 @@ $html .= "<div style='clear:both;'></div>";
 $contents = User::getCurrentUser()->getAllContent();
 $html .= "<div class='portal_user_section'>\n";
 $html .= _("My content")."\n";
+foreach ($contents as $content)
+{
+    $html .= "<div class='portal_content'>\n";
+	$html .= $content->getUserUI();
+    $html .= "</div>\n";
+}
 $html .= "</div>\n";
 $html .= "</div>\n";
 */

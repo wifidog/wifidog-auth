@@ -44,8 +44,6 @@ class File extends Content
 	function __construct($content_id)
 	{
 		parent :: __construct($content_id);
-		$this->setIsPersistent(false);
-		$this->setIsTrivialContent(true);
 		global $db;
 
 		$content_id = $db->EscapeString($content_id);
