@@ -59,7 +59,8 @@ class ContentGroup extends Content
 
 		}
 		$this->content_group_row = $row;
-		if(empty($this->getContentSelectionMode()))
+		$content_selection_mode = $this->getContentSelectionMode();
+		if(empty($content_selection_mode))
 		{
 			$this->setContentSelectionMode('RANDOM');
 		}

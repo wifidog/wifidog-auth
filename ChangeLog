@@ -1,4 +1,7 @@
-2005-04-25 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-04-26 Benoit Grégoire  <bock@step.polymtl.ca>
+	* ContentGroup.php:  Previous fix didn't work.  New fix.
+
+2005-04-26 Benoit Grégoire  <bock@step.polymtl.ca>
 	* ContentGroup.php:  Make bad selection mode eror non-fatal.
 
 2005-04-25 Benoit Grégoire  <bock@step.polymtl.ca>
