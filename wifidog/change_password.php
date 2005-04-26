@@ -27,6 +27,7 @@ define('BASEPATH','./');
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'include/common_interface.php';
 require_once BASEPATH.'classes/User.php';
+require_once BASEPATH.'classes/MainUI.php';
 
 isset($_REQUEST["username"]) && $smarty->assign("username", $_REQUEST["username"]);
 
@@ -58,8 +59,10 @@ if (isset($_REQUEST["submit"])) {
             throw new Exception(_("Wrong password."));
 
         $user->SetPassword($new_password);
+        $ui = new MainUI();
         $smarty->assign("message", _("Your password has been changed succesfully."));
-        $smarty->display("templates/validate.html");
+        $ui->setMainContent($smarty->fetch("templates/validate.html"));
+        $ui->display();
         exit;
     } catch (Exception $e) {
         $smarty->assign("error", $e->getMessage());

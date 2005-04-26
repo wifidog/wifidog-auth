@@ -33,7 +33,7 @@ $smarty->assign("num_valid_users", $stats->getNumValidUsers());
 $smarty->assign("num_online_users", $stats->getNumOnlineUsers($node_id = null));
 
 $html = '<ul>'."\n";
-$html .= '<li><a href="'.BASE_SSL_PATH.'resend_validation.php">'._("Change password").'</a><br>'."\n";
+$html .= '<li><a href="'.BASE_SSL_PATH.'change_password.php">'._("Change password").'</a><br>'."\n";
 $html .= '<li><a href="'.BASE_SSL_PATH.'faq.php">'._("I have trouble connecting and I would like some help").'</a><br>'."\n";
 $html .= '</ul>'."\n";
 
