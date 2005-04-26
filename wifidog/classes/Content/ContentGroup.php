@@ -295,29 +295,28 @@ class ContentGroup extends Content
 		{
 			$sql = "SELECT content_group_element_id FROM content_group_element "."WHERE content_group_id='$this->id' "."AND content_group_element_id NOT IN (SELECT content_id FROM content_display_log WHERE user_id = '$user_id') "."ORDER BY display_order";
 			$db->ExecSql($sql, $element_rows, false);
-			if($element_rows!=null)
+			if ($element_rows == null)
 			{
+$element_rows = array ();
+			}
 
-			}
-			else
-			{
-				$element_rows=array();
-			}
-			
-						foreach ($element_rows as $element_row)
+			foreach ($element_rows as $element_row)
 			{
 				$retval[] = self :: getObject($element_row['content_group_element_id']);
 			}
-		foreach ($retval as $id => $content_group_element)
-		{
-			if ($content_group_element->isDisplayableAt(Node :: GetCurrentNode()) == false)
+			foreach ($retval as $id => $content_group_element)
 			{
-				unset ($retval[$id]); /** Drop this content from consideration */
+				if ($content_group_element->isDisplayableAt(Node :: GetCurrentNode()) == false)
+				{
+					unset ($retval[$id]); /** Drop this content from consideration */
+				}
 			}
-		}
-					shuffle($retval);
-			$retval = array($retval[0]);//Pick one
-		
+			shuffle($retval);
+			if(!empty($retval))
+			{
+			$retval = array ($retval[0]); //Pick one
+			}
+
 		}
 		elseif ($this->getContentSelectionMode() == 'SEQUENTIAL')
 		{
@@ -334,7 +333,6 @@ class ContentGroup extends Content
 		{
 			throw new Exception(_("Unsupported selection mode: %s"), $this->getContentSelectionMode());
 		}
-
 
 		//echo count($retval).' returned <br>';
 		return $retval;

@@ -1,3 +1,6 @@
+2005-04-25 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Fix bug in ContentGroup enumeration
+
 2005-04-25 François Proulx <francois.proulx@gmail.com>
 	* More stylesheets work
 	
