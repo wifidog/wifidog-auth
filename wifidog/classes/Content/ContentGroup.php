@@ -25,7 +25,7 @@
  * Technologies Coeus inc.
  */
 require_once BASEPATH.'classes/Content.php';
-
+require_once BASEPATH.'classes/ContentGroupElement.php';
 /** A generic content group */
 class ContentGroup extends Content
 {

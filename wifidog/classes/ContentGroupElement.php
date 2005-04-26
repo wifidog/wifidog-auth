@@ -52,6 +52,10 @@ class ContentGroupElement extends Content
 			$content_id = get_guid();
 			$content_type = 'ContentGroupElement';
 			$sql = "INSERT INTO content (content_id, content_type) VALUES ('$content_id', '$content_type');";
+			if (!$db->ExecSqlUpdate($sql, false))
+			{
+				throw new Exception(_('Unable to insert new content into database!'));
+			}
 			$sql = "INSERT INTO content_group_element (content_group_element_id, content_group_id, display_order) VALUES ('$content_id', '".$content_group->GetId()."', $display_order);";
 			if (!$db->ExecSqlUpdate($sql, false))
 			{
