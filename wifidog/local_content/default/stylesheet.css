@@ -213,34 +213,38 @@ display: compact;
 .user_ui_container {
 }
 .user_ui_title {
+	font-size: medium;
+	font-weight: bold;
+	color: white;
 	padding: 5px;
-	margin-bottom: 5px;
-	background-color: rgb(213, 219, 225);
+/*	background-color: rgb(213, 219, 225);*/
+	background-color: #9d9d9d;
 }
 .user_ui_authors {
 	padding: 5px;
-	margin-bottom: 5px;
-	background-color: rgb(213, 219, 225);
+	font-weight: bold;
+	background-color: rgb(235, 235, 235);
 }
 .user_ui_description {
-	float: left;
-	width: 33%;
 	margin: 0;
 	margin-right: 5px;
 	padding: 5px;
+	text-align: justify;
 	background-color: rgb(235, 235, 235);
 }
 .user_ui_footer {
-/*	clear: both;*/
 	padding: 5px;
-	margin-top: 5px;
-	background-color: rgb(213, 219, 225);
+	background-color: #9d9d9d;
 }
 .user_ui_picture {
 	height: 250px;
 }
-.user_ui_projet_info {}
-.user_ui_sponsor_info {}
+.user_ui_projet_info {
+	color: white;
+}
+.user_ui_sponsor_info {
+	color: white;
+}
 
 .list_ui_container { 
 	display: inline; 
@@ -283,9 +287,13 @@ margin: 3px;}
     visibility: visible;
 }
 .flickr_title {
+	color: white;
     visibility: hidden;
     width: 200px;
     background: #696969;
+}
+.flickr_title a {
+	color: white;
 }
 .flickr_title h3 {
     color: white;

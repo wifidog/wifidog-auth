@@ -608,12 +608,13 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 							if (!empty ($title))
 							{
 								$html .= '<div class="flickr_title"><h3>'.$photo->getTitle().'</h3></div>'."\n";
-								$size = $this->getPreferredSize();
-								if (empty ($size))
-									$size = null;
-								$html .= '<div class="flickr_photo"><a href="'.$photo->buildUrl().'"><img src="'.$photo->buildImgUrl($size).'"></a></div>'."\n";
 							}
 						}
+						$size = $this->getPreferredSize();
+						if (empty ($size))
+							$size = null;
+						$html .= '<div class="flickr_photo"><a href="'.$photo->buildUrl().'"><img src="'.$photo->buildImgUrl($size).'"></a></div>'."\n";
+
 						if ($this->shouldDisplayTags())
 						{
 							$tags = $photo->getTags();
@@ -637,8 +638,9 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 							if (!empty ($description))
 								$html .= '<div class="flickr_description">'.$description.'</div>'."\n";
 						}
-                        $author = new Phlickr_User($this->getFlickrApi(), $photo->getOwnerId());
-                        $html .= '<div class="flickr_description"><a href="'.$author->buildUrl().'">'.$author->getName().'</a></div>'."\n";
+
+						$author = new Phlickr_User($this->getFlickrApi(), $photo->getOwnerId());
+						$html .= '<div class="flickr_description"><a href="'.$author->buildUrl().'">'.$author->getName().'</a></div>'."\n";
 						$html .= '</div>'."\n";
 					}
 				}
