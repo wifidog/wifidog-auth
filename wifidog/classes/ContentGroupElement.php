@@ -20,12 +20,13 @@
  *                                                                  *
  \********************************************************************/
 /**@file ContentGroupElement.php
+ * This file isn't in Content because it must only be instanciated as part of a ContentGroup
  * @author Copyright (C) 2005 Benoit Grégoire <bock@step.polymtl.ca>,
  * Technologies Coeus inc.
  */
 require_once BASEPATH.'classes/Content/ContentGroup.php';
 require_once BASEPATH.'classes/Node.php';
-/** A content content group where the user must subscribe to the project */
+/** the elements of a ContentGroup */
 class ContentGroupElement extends Content
 {
 	private $content_group_element_row;
@@ -264,7 +265,7 @@ class ContentGroupElement extends Content
 
 	/** Get the order of the element in the content group
 	 * @return the order of the element in the content group */
-	public function getDisplayOrder()
+	public function 	getDisplayOrder	()
 	{
 		return $this->content_group_element_row['display_order'];
 	}

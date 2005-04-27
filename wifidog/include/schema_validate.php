@@ -28,7 +28,7 @@ error_reporting(E_ALL);
 require_once BASEPATH.'config.php';
 require_once BASEPATH.'classes/AbstractDb.php';
 require_once BASEPATH.'classes/Session.php';
-define('REQUIRED_SCHEMA_VERSION', 12);
+define('REQUIRED_SCHEMA_VERSION', 13);
 
 /** Check that the database schema is up to date.  If it isn't, offer to update it. */
 function validate_schema()
@@ -374,6 +374,34 @@ function update_schema()
             $sql .= "ALTER TABLE flickr_photostream DROP CONSTRAINT flickr_photostream_content_group_fkey;";
             $sql .= "ALTER TABLE flickr_photostream ADD CONSTRAINT flickr_photostream_content_fkey FOREIGN KEY (flickr_photostream_id) REFERENCES content (content_id) ON UPDATE CASCADE ON DELETE CASCADE;";
         }
+	
+        $new_schema_version = 13;
+        if($schema_version < $new_schema_version)
+        {
+            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n"; 
+  			$sql .= "ALTER TABLE content_group DROP COLUMN content_selection_mode;\n";
+  			$sql .= "ALTER TABLE content_group ADD COLUMN content_changes_on_mode text;\n";
+  			$sql .= "UPDATE content_group SET content_changes_on_mode='ALWAYS';\n";
+			$sql .= "ALTER TABLE content_group ALTER COLUMN content_changes_on_mode SET DEFAULT 'ALWAYS';\n";
+			$sql .= "ALTER TABLE content_group ALTER COLUMN content_changes_on_mode SET NOT NULL;\n";
+			$sql .= "ALTER TABLE content_group ADD COLUMN content_ordering_mode text;\n";
+			$sql .= "UPDATE content_group SET content_ordering_mode='RANDOM';\n";
+			$sql .= "ALTER TABLE content_group ALTER COLUMN content_ordering_mode SET DEFAULT 'RANDOM';\n";
+			$sql .= "ALTER TABLE content_group ALTER COLUMN content_ordering_mode SET NOT NULL;\n";
+
+			$sql .= "ALTER TABLE content_group ADD COLUMN display_num_elements int;\n";
+						$sql .= "UPDATE content_group SET display_num_elements=1;\n";
+			$sql .= "ALTER TABLE content_group ALTER COLUMN display_num_elements SET DEFAULT '1';\n";
+			$sql .= "ALTER TABLE content_group ALTER COLUMN display_num_elements SET NOT NULL;\n";
+			$sql .= "ALTER TABLE content_group ADD CONSTRAINT display_at_least_one_element CHECK (display_num_elements > 0);\n";
+			
+			$sql .= "ALTER TABLE content_group ADD COLUMN allow_repeat text;\n";
+						$sql .= "UPDATE content_group SET allow_repeat='YES';\n";
+			$sql .= "ALTER TABLE content_group ALTER COLUMN allow_repeat SET DEFAULT 'YES';\n";
+			$sql .= "ALTER TABLE content_group ALTER COLUMN allow_repeat SET NOT NULL;\n";
+	        }	
+	
 	
 		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);
 		echo "</html></head>";

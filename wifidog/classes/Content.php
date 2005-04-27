@@ -28,7 +28,6 @@ require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'classes/FormSelectGenerator.php';
 require_once BASEPATH.'classes/GenericObject.php';
 
-
 /** Any type of content */
 class Content implements GenericObject
 {
@@ -124,7 +123,7 @@ class Content implements GenericObject
 			throw new Exception(_('Unable to open directory ').$dir);
 		}
 		$tab = str_ireplace('.php', '', $tab);
-        sort($tab);
+		sort($tab);
 		return $tab;
 	}
 
@@ -391,94 +390,94 @@ class Content implements GenericObject
 	{
 		$html = '';
 		$html .= "<div class='user_ui_main_outer'>\n";
-        $html .= "<div class='user_ui_main_inner'>\n";
+		$html .= "<div class='user_ui_main_inner'>\n";
 		$html .= "<div class='user_ui_object_class'>Content (".get_class($this)." instance)</div>\n";
-        
-        if (!empty ($this->content_row['title']))
-        {
-            $html .= "<div class='user_ui_title'>\n";
-            $title = self :: getObject($this->content_row['title']);
-            $html .= $title->getUserUI();
-            $html .= "</div>\n";
-        }
-        
-        $html .= "<table><tr><td>\n";
-        $authors = $this->getAuthors();
-        if (count($authors) > 0)
-        {
-            $html .= "<div class='user_ui_authors'>\n";
-            $html .= _("Author(s):");
-            foreach ($authors as $user)
-            {
-                $html .= $user->getUsername()." ";
-            }
-            $html .= "</div>\n";
-        }
-        
-        if (!empty ($this->content_row['description']))
-        {
-            $html .= "<div class='user_ui_description'>\n";
-            $title = self :: getObject($this->content_row['description']);
-            $html .= $title->getUserUI();
-            $html .= "</div>\n";
-        }
-        
-        if(!empty ($this->content_row['project_info']) || !empty ($this->content_row['sponsor_info']))
-        { 
-            if (!empty ($this->content_row['project_info']))
-            {
-                $html .= "<div class='user_ui_projet_info'>\n";
-                $html .= _("Project information:");
-                $project_info = self :: getObject($this->content_row['project_info']);
-                $html .= $project_info->getUserUI();
-                $html .= "</div>\n";
-            }
-            
-            if (!empty ($this->content_row['sponsor_info']))
-            {
-                $html .= "<div class='user_ui_sponsor_info'>\n";
-                            $html .= _("Project sponsor:");
-                $sponsor_info = self :: getObject($this->content_row['sponsor_info']);
-                $html .= $sponsor_info->getUserUI();
-                $html .= "</div>\n";
-            }
-        }
-        
-        $html .= "</td>\n";
-        
-        $html .= "<td>\n$subclass_user_interface</td>\n";
-        $html .= "</tr></table>\n";
 
-        $html .= "</div>\n";
+		if (!empty ($this->content_row['title']))
+		{
+			$html .= "<div class='user_ui_title'>\n";
+			$title = self :: getObject($this->content_row['title']);
+			$html .= $title->getUserUI();
+			$html .= "</div>\n";
+		}
+
+		$html .= "<table><tr><td>\n";
+		$authors = $this->getAuthors();
+		if (count($authors) > 0)
+		{
+			$html .= "<div class='user_ui_authors'>\n";
+			$html .= _("Author(s):");
+			foreach ($authors as $user)
+			{
+				$html .= $user->getUsername()." ";
+			}
+			$html .= "</div>\n";
+		}
+
+		if (!empty ($this->content_row['description']))
+		{
+			$html .= "<div class='user_ui_description'>\n";
+			$title = self :: getObject($this->content_row['description']);
+			$html .= $title->getUserUI();
+			$html .= "</div>\n";
+		}
+
+		if (!empty ($this->content_row['project_info']) || !empty ($this->content_row['sponsor_info']))
+		{
+			if (!empty ($this->content_row['project_info']))
+			{
+				$html .= "<div class='user_ui_projet_info'>\n";
+				$html .= _("Project information:");
+				$project_info = self :: getObject($this->content_row['project_info']);
+				$html .= $project_info->getUserUI();
+				$html .= "</div>\n";
+			}
+
+			if (!empty ($this->content_row['sponsor_info']))
+			{
+				$html .= "<div class='user_ui_sponsor_info'>\n";
+				$html .= _("Project sponsor:");
+				$sponsor_info = self :: getObject($this->content_row['sponsor_info']);
+				$html .= $sponsor_info->getUserUI();
+				$html .= "</div>\n";
+			}
+		}
+
+		$html .= "</td>\n";
+
+		$html .= "<td>\n$subclass_user_interface</td>\n";
+		$html .= "</tr></table>\n";
+
+		$html .= "</div>\n";
 		$html .= "</div>\n";
 		$this->logContentDisplay();
 		return $html;
 	}
 
-/** Log that this content has just been displayed to the user.  Will only log if the user is logged in */
-private function logContentDisplay()
-{
-$user = User::getCurrentUser();
-$node = Node::getCurrentNode();
-if($user!=null&&$node !=null)
-{
-	$user_id = $user->getId();
-	$node_id = $node->getId();
-		global $db;
+	/** Log that this content has just been displayed to the user.  Will only log if the user is logged in */
+	private function logContentDisplay()
+	{
+		$user = User :: getCurrentUser();
+		$node = Node :: getCurrentNode();
+		if ($user != null && $node != null)
+		{
+			$user_id = $user->getId();
+			$node_id = $node->getId();
+			global $db;
 
-		$sql = "SELECT * FROM content_display_log WHERE user_id='$user_id' AND node_id='$node_id' AND content_id='$this->id'";
-		$db->ExecSql($sql, $log_rows, false);
-		if($log_rows!=null)
-		{
-		$sql = "UPDATE content_display_log SET last_display_timestamp = NOW() WHERE user_id='$user_id' AND content_id='$this->id' AND node_id='$node_id'";
+			$sql = "SELECT * FROM content_display_log WHERE user_id='$user_id' AND node_id='$node_id' AND content_id='$this->id'";
+			$db->ExecSql($sql, $log_rows, false);
+			if ($log_rows != null)
+			{
+				$sql = "UPDATE content_display_log SET last_display_timestamp = NOW() WHERE user_id='$user_id' AND content_id='$this->id' AND node_id='$node_id'";
+			}
+			else
+			{
+				$sql = "INSERT INTO content_display_log (user_id, content_id, node_id) VALUES ('$user_id', '$this->id', '$node_id')";
+			}
+			$db->ExecSqlUpdate($sql, false);
 		}
-		else
-		{
-		$sql = "INSERT INTO content_display_log (user_id, content_id, node_id) VALUES ('$user_id', '$this->id', '$node_id')";
-		}
-		$db->ExecSqlUpdate($sql, false);
-}
-}
+	}
 
 	/** Retreives the list interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
 	 * @param $subclass_admin_interface Html content of the interface element of a children

@@ -29,8 +29,10 @@ require_once BASEPATH.'classes/ContentGroupElement.php';
 /** A generic content group */
 class ContentGroup extends Content
 {
-	/* Content selection modes */
-	private $CONTENT_SELECTION_MODES = array ('RANDOM' => "Pick content elements randomly", 'RANDOM_NO_REPEAT' => "Pick content elements randomly, but do not display the same one twice", 'SEQUENTIAL' => "Pick content elements in sequential order, and then roll over", 'SEQUENTIAL_NO_REPEAT' => "Pick content elements in sequential order, and stop once they have all been shown", 'ALL_AT_ONCE' => "Display all content elements at once");
+
+	private $CONTENT_ORDERING_MODES = array ('RANDOM' => "Pick content elements randomly", 'SEQUENTIAL' => "Pick content elements in sequential order");
+	private $CONTENT_CHANGES_ON_MODES = array ('ALWAYS' => "Content always rotates", 'NEXT_DAY' => "Content rotates once per day", 'NEXT_LOGIN' => "Content rotates once per session", 'NEXT_NODE' => "Content rotates each time you change node");
+	private $ALLOW_REPEAT_MODES = array ('YES' => "Content can be shown more than once", 'NO' => "Content can only be shown once", 'ONCE_PER_NODE' => "Content can be shown more than once, but not at the same node");
 
 	protected $is_artistic_content;
 	protected $is_locative_content;
@@ -59,11 +61,6 @@ class ContentGroup extends Content
 
 		}
 		$this->content_group_row = $row;
-		$content_selection_mode = $this->getContentSelectionMode();
-		if (empty ($content_selection_mode))
-		{
-			$this->setContentSelectionMode('RANDOM');
-		}
 	}
 
 	/** Is the content group artistic in nature?
@@ -129,29 +126,29 @@ class ContentGroup extends Content
 
 	/** In what order is the content displayed to the user 
 	* @return string, a key of CONTENT_SELECTION_MODES */
-	public function getContentSelectionMode()
+	public function getContentOrderingMode()
 	{
-		return $this->content_group_row['content_selection_mode'];
+		return $this->content_group_row['content_ordering_mode'];
 	}
 
-	/** How is the content displayed to the user
-	 * @param $content_selection_mode One of the CSM_* constants defined in the class
+	/** In what order is the content displayed to the user
+	 * @param $content_ordering_mode One of the CONTENT_ORDERING_MODES constants defined in the class
 	 * @return true if successfull
 	 * */
-	protected function setContentSelectionMode($content_selection_mode, & $errormsg = null)
+	protected function setContentOrderingMode($content_ordering_mode, & $errormsg = null)
 	{
 		$retval = false;
-		if (isset ($this->CONTENT_SELECTION_MODES[$content_selection_mode]) && $content_selection_mode != $this->getContentSelectionMode()) /* Only update database if the mode is valid and there is an actual change */
+		if (isset ($this->CONTENT_ORDERING_MODES[$content_ordering_mode]) && $content_ordering_mode != $this->getContentOrderingMode()) /* Only update database if the mode is valid and there is an actual change */
 		{
 			global $db;
-			$content_selection_mode = $db->EscapeString($content_selection_mode);
-			$db->ExecSqlUpdate("UPDATE content_group SET content_selection_mode = '$content_selection_mode' WHERE content_group_id = '$this->id'", false);
+			$content_ordering_mode = $db->EscapeString($content_ordering_mode);
+			$db->ExecSqlUpdate("UPDATE content_group SET content_ordering_mode = '$content_ordering_mode' WHERE content_group_id = '$this->id'", false);
 			$this->refresh();
 			$retval = true;
 		}
-		elseif (!isset ($this->CONTENT_SELECTION_MODES[$content_selection_mode]))
+		elseif (!isset ($this->CONTENT_ORDERING_MODES[$content_ordering_mode]))
 		{
-			$errormsg = _("Invalid content selection mode (must be part of CONTENT_SELECTION_MODES)");
+			$errormsg = _("Invalid content selection mode (must be part of CONTENT_ORDERING_MODES)");
 			$retval = false;
 		}
 		else
@@ -161,6 +158,112 @@ class ContentGroup extends Content
 		}
 		return $retval;
 	}
+
+	/** When does the content rotate? 
+	* @return string, a key of CONTENT_SELECTION_MODES */
+	public function getContentChangesOnMode()
+	{
+		return $this->content_group_row['content_changes_on_mode'];
+	}
+
+	/** When does the content rotate?
+	 * @param $content_changes_on_mode One of the content_changes_on_modeS constants defined in the class
+	 * @return true if successfull
+	 * */
+	protected function setContentChangesOnMode($content_changes_on_mode, & $errormsg = null)
+	{
+		$retval = false;
+		if (isset ($this->CONTENT_CHANGES_ON_MODES[$content_changes_on_mode]) && $content_changes_on_mode != $this->getContentChangesOnMode()) /* Only update database if the mode is valid and there is an actual change */
+		{
+			global $db;
+			$content_changes_on_mode = $db->EscapeString($content_changes_on_mode);
+			$db->ExecSqlUpdate("UPDATE content_group SET content_changes_on_mode = '$content_changes_on_mode' WHERE content_group_id = '$this->id'", false);
+			$this->refresh();
+			$retval = true;
+		}
+		elseif (!isset ($this->CONTENT_CHANGES_ON_MODES[$content_changes_on_mode]))
+		{
+			$errormsg = _("Invalid content selection mode (must be part of CONTENT_CHANGES_ON_MODES)");
+			$retval = false;
+		}
+		else
+		{
+			/* Successfull, but nothing modified */
+			$retval = true;
+		}
+		return $retval;
+	}
+
+	/** Can the same content be shown twice
+	 * @return 'YES', 'NO', 'ONCE_PER_NODE' */
+	public function getAllowRepeat()
+	{
+		return $this->content_group_row['allow_repeat'];
+	}
+
+	/** When does the content rotate?
+	 * @param $allow_repeat One of the allow_repeatS constants defined in the class
+	 * @return true if successfull
+	 * */
+	protected function setAllowRepeat($allow_repeat, & $errormsg = null)
+	{
+		$retval = false;
+		if (isset ($this->ALLOW_REPEAT_MODES[$allow_repeat]) && $allow_repeat != $this->getAllowRepeat()) /* Only update database if the mode is valid and there is an actual change */
+		{
+			global $db;
+			$allow_repeat = $db->EscapeString($allow_repeat);
+			$db->ExecSqlUpdate("UPDATE content_group SET allow_repeat = '$allow_repeat' WHERE content_group_id = '$this->id'", false);
+			$this->refresh();
+			$retval = true;
+		}
+		elseif (!isset ($this->ALLOW_REPEAT_MODES[$allow_repeat]))
+		{
+			$errormsg = _("Invalid content selection mode (must be part of ALLOW_REPEAT_MODES)");
+			$retval = false;
+		}
+		else
+		{
+			/* Successfull, but nothing modified */
+			$retval = true;
+		}
+		return $retval;
+	}
+
+	/** How many element should be picked for display at once?
+	* @return integer */
+	public function getDisplayNumElements()
+	{
+		return $this->content_group_row['display_num_elements'];
+	}
+
+	/** How many element should be picked for display at once?
+	* @param $display_num_elements integer, must be greater than zero.
+	* @return true if successfull
+	* */
+	protected function setDisplayNumElements($display_num_elements, & $errormsg = null)
+	{
+		$retval = false;
+		if (($display_num_elements > 0) && $display_num_elements != $this->getDisplayNumElements()) /* Only update database if the mode is valid and there is an actual change */
+		{
+			global $db;
+			$allow_repeat = $db->EscapeString($allow_repeat);
+			$db->ExecSqlUpdate("UPDATE content_group SET display_num_elements = '$display_num_elements' WHERE content_group_id = '$this->id'", false);
+			$this->refresh();
+			$retval = true;
+		}
+		elseif ($display_num_elements <= 0)
+		{
+			$errormsg = _("You must display at least one element");
+			$retval = false;
+		}
+		else
+		{
+			/* Successfull, but nothing modified */
+			$retval = true;
+		}
+		return $retval;
+	}
+
 	public function getAdminUI($subclass_admin_interface = null)
 	{
 		$html = '';
@@ -186,21 +289,66 @@ class ContentGroup extends Content
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 
-		/* content_selection_mode */
+		/* content_ordering_mode */
 		global $AUTH_SOURCE_ARRAY;
 		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Content selection mode").": </div>\n";
+		$html .= "<div class='admin_section_title'>"._("In what order should the content displayed?").": </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
-		$name = "content_group_".$this->id."_content_selection_mode";
+		$name = "content_group_".$this->id."_content_ordering_mode";
 
 		$i = 0;
-		foreach ($this->CONTENT_SELECTION_MODES as $select_mode_id => $select_mode_descr)
+		$tab = null;
+		foreach ($this->CONTENT_ORDERING_MODES as $select_mode_id => $select_mode_descr)
 		{
 			$tab[$i][0] = $select_mode_id;
 			$tab[$i][1] = $select_mode_descr;
 			$i ++;
 		}
-		$html .= FormSelectGenerator :: generateFromArray($tab, $this->getContentSelectionMode(), $name, null, false);
+		$html .= FormSelectGenerator :: generateFromArray($tab, $this->getContentOrderingMode(), $name, null, false);
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+
+		/*content_changes_on_mode */
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("When does the content rotate?").": </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "content_group_".$this->id."_content_changes_on_mode";
+		$i = 0;
+		$tab = null;
+		foreach ($this->CONTENT_CHANGES_ON_MODES as $select_mode_id => $select_mode_descr)
+		{
+			$tab[$i][0] = $select_mode_id;
+			$tab[$i][1] = $select_mode_descr;
+			$i ++;
+		}
+		$html .= FormSelectGenerator :: generateFromArray($tab, $this->getContentChangesOnMode(), $name, null, false);
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+
+		/* allow_repeat*/
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Can content be shown more than once to the same user?").": </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "content_group_".$this->id."_allow_repeat";
+		$i = 0;
+		$tab = null;
+		foreach ($this->ALLOW_REPEAT_MODES as $select_mode_id => $select_mode_descr)
+		{
+			$tab[$i][0] = $select_mode_id;
+			$tab[$i][1] = $select_mode_descr;
+			$i ++;
+		}
+		$html .= FormSelectGenerator :: generateFromArray($tab, $this->getAllowRepeat(), $name, null, false);
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+
+		/*display_num_elements*/
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>". ("Pick how many elements for each display?").": </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "content_group_".$this->id."_display_num_elements";
+		$value = $this->getDisplayNumElements();
+		$html .= "<input type='text' size='2' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 
@@ -243,12 +391,21 @@ class ContentGroup extends Content
 		$name = "content_group_".$this->id."_is_locative_content";
 		!empty ($_REQUEST[$name]) ? $this->setIsLocativeContent(true) : $this->setIsLocativeContent(false);
 
-		/* content_selection_mode */
-		global $AUTH_SOURCE_ARRAY;
+		/* content_ordering_mode */
+		$name = "content_group_".$this->id."_content_ordering_mode";
+		$this->setContentOrderingMode(FormSelectGenerator :: getResult($name, null));
 
-		$name = "content_group_".$this->id."_content_selection_mode";
-		$content_selection_mode = FormSelectGenerator :: getResult($name, null);
-		$this->setContentSelectionMode($content_selection_mode);
+		/*content_changes_on_mode */
+		$name = "content_group_".$this->id."_content_changes_on_mode";
+		$this->setContentChangesOnMode(FormSelectGenerator :: getResult($name, null));
+
+		/* allow_repeat*/
+		$name = "content_group_".$this->id."_allow_repeat";
+		$this->setAllowRepeat(FormSelectGenerator :: getResult($name, null));
+
+		/*display_num_elements*/
+		$name = "content_group_".$this->id."_display_num_elements";
+		$this->setDisplayNumElements($_REQUEST[$name]);
 
 		/* content_group_element */
 		foreach ($this->getElements() as $element)
@@ -292,53 +449,143 @@ class ContentGroup extends Content
 		{
 			$node_id = '';
 		}
+		$display_num_elements = $this->getDisplayNumElements();
 
-		if ($this->getContentSelectionMode() == 'RANDOM')
+		/** First, find if we have content to display again because we haven't passed the rotation period */
+		/*  'ALWAYS' => "Content always rotates"
+		 *  'NEXT_DAY' => "Content rotates once per day"
+		 *  'NEXT_LOGIN' => "Content rotates once per session"
+		 *  'NEXT_NODE' => "Content rotates each time you change node"*/
+		$content_changes_on_mode = $this->getContentChangesOnMode();
+
+		$redisplay_objects = array ();
+		if ($content_changes_on_mode != 'ALWAYS')
 		{
+			$sql = "SELECT content_group_element_id FROM content_group_element \n";
+			$sql .= "JOIN content_display_log ON (content_group_element_id=content_id) \n";
+			$sql .= " WHERE content_group_id='$this->id' \n";
+
+			if ($content_changes_on_mode == 'NEXT_DAY')
+			{
+				$sql .= "AND date_trunc('day', last_display_timestamp) = date_trunc('day', CURRENT_DATE) \n";
+			}
+			if ($content_changes_on_mode == 'NEXT_LOGIN')
+			{
+				/**@todo Must fix, this will fail if the user never really connected from a hotspot... */
+				$sql .= "AND last_display_timestamp > (SELECT timestamp_in FROM connections WHERE user_id='$user_id' ORDER BY timestamp_in DESC LIMIT 1) \n";
+			}
+			if ($content_changes_on_mode == 'NEXT_NODE')
+			{
+				/** We find the close time of the last connection from another node */
+				$sql .= "AND last_display_timestamp > (SELECT timestamp_out FROM connections WHERE user_id='$user_id' AND node_id != '$node_id' ORDER BY timestamp_in DESC LIMIT 1) \n";
+			}
+			/* There usually won't be more than one, but if there is, we want the most recents */
+			$sql .= " ORDER BY last_display_timestamp DESC ";
+			$db->ExecSql($sql, $redisplay_rows, false);
+			$redisplay_objects = array ();
+			if ($redisplay_rows != null)
+			{
+				foreach ($redisplay_rows as $redisplay_row)
+				{
+					$object = self :: getObject($redisplay_row['content_group_element_id']);
+					if ($object->isDisplayableAt(Node :: GetCurrentNode()) == true) /** Only content available at this hotspot are considered */
+					{
+						$redisplay_objects[] = $object;
+					}
+				}
+			}
+			/* Pick the proper number of elements to be re-displayed */
+			$redisplay_objects = array_slice($redisplay_objects, 0, $display_num_elements);
+
 		}
-		elseif ($this->getContentSelectionMode() == 'RANDOM_NO_REPEAT')
+
+		$new_objects = array ();
+		if (count($redisplay_objects) < $display_num_elements)
 		{
-			$sql = "SELECT content_group_element_id FROM content_group_element "."WHERE content_group_id='$this->id' "."AND content_group_element_id NOT IN (SELECT content_id FROM content_display_log WHERE user_id = '$user_id') "."ORDER BY display_order";
+			/* We need new content */
+
+			$sql = "SELECT content_group_element_id FROM content_group_element WHERE content_group_id='$this->id' \n";
+
+			/*'YES' => "Content can be shown more than once", 'NO' => "Content can only be shown once", 'ONCE_PER_NODE' => "Content can be shown more than once, but not at the same node"*/
+			$allow_repeat = $this->getAllowRepeat();
+
+			if ($allow_repeat == 'NO')
+			{
+				$sql .= "AND content_group_element_id NOT IN (SELECT content_id FROM content_display_log WHERE user_id = '$user_id') \n";
+			}
+			elseif ($allow_repeat == 'ONCE_PER_NODE')
+			{
+				$sql .= "AND content_group_element_id NOT IN (SELECT content_id FROM content_display_log WHERE user_id = '$user_id' AND  node_id = '$node_id') \n";
+			}
+
+			/* 'RANDOM' => "Pick content elements randomly",'SEQUENTIAL' => "Pick content elements in sequential order" */
+			$content_ordering_mode = $this->getContentOrderingMode();
+
+			if ($content_ordering_mode == 'SEQUENTIAL')
+			{
+				$order_by = ' ORDER BY display_order ';
+			$sql_last_order = "SELECT display_order FROM content_group_element \n";
+			$sql_last_order .= "JOIN content_display_log ON (content_group_element_id=content_id) \n";
+			$sql_last_order .= " WHERE content_group_id='$this->id' \n";
+			$sql_last_order .= " ORDER BY last_display_timestamp DESC LIMIT 1";
+			$db->ExecSqlUniqueRes($sql_last_order, $last_order_row, false);
+			if($last_order_row['display_order']!=null)
+			{
+			$last_order=$last_order_row['display_order'];
+			}
+			else
+			{
+			$last_order=0;
+			}
+			}
+			else
+			{
+				$order_by = ' ';
+			}
+			$sql .= $order_by;
+
 			$db->ExecSql($sql, $element_rows, false);
 			if ($element_rows == null)
 			{
 				$element_rows = array ();
 			}
-
 			foreach ($element_rows as $element_row)
 			{
-				$retval[] = self :: getObject($element_row['content_group_element_id']);
-			}
-			foreach ($retval as $id => $content_group_element)
-			{
-				if ($content_group_element->isDisplayableAt(Node :: GetCurrentNode()) == false)
+				$object = self :: getObject($element_row['content_group_element_id']);
+				if ($object->isDisplayableAt(Node :: GetCurrentNode()) == true) /** Only content available at this hotspot are considered */
 				{
-					unset ($retval[$id]); /** Drop this content from consideration */
+					$new_objects[] = $object;
 				}
 			}
-			shuffle($retval);
-			if (!empty ($retval))
+
+			if ($content_ordering_mode == 'RANDOM')
 			{
-				$retval = array ($retval[0]); //Pick one
+				shuffle($new_objects);
 			}
-
+			elseif($content_ordering_mode == 'SEQUENTIAL')
+			{
+				foreach($new_objects as $object)
+				{
+					if($object->getDisplayOrder()<=$last_order)
+					{
+						array_push ( $new_objects, array_shift ( $new_objects ));
+						//echo " Pushed ".$object->getDisplayOrder();
+					}
+				}
+			}
+			
+			/** Pick the proper number of elements */
+			$num_to_pick = $display_num_elements -count($redisplay_objects);
+			$new_objects = array_slice($new_objects, 0, $num_to_pick);
 		}
-		elseif ($this->getContentSelectionMode() == 'SEQUENTIAL')
-		{
-		}
-		elseif ($this->getContentSelectionMode() == 'SEQUENTIAL_NO_REPEAT')
-		{
-		}
-		elseif ($this->getContentSelectionMode() == 'ALL_AT_ONCE')
-		{
-			$sql = "SELECT content_group_element_id FROM content_group_element WHERE content_group_id='$this->id' ORDER BY display_order";
-
-		}
-		else
-		{
-			echo _("Unsupported selection mode: ").$this->getContentSelectionMode();
-		}
-
+		/*
+		echo "<pre>Redisplay: ";
+		print_r($redisplay_objects);
+		echo "New objects: ";
+		print_r($new_objects);
+		echo "</pre>";
+*/
+		$retval = array_merge($new_objects, $redisplay_objects);
 		//echo count($retval).' returned <br>';
 		return $retval;
 	}
