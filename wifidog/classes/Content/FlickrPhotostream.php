@@ -689,4 +689,26 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 
 	} // End class
 }
+else
+{
+		class FlickrPhotostream extends Content
+	{
+				protected function __construct($content_id)
+		{
+			parent :: __construct($content_id);
+		}		
+				public function getAdminUI($subclass_admin_interface = null)
+		{
+			$generator = new FormSelectGenerator();
+
+			$html = '';
+			$html .= "<div class='errormsg'>"._("Flickr support isn't enabled in the config file")."</div>\n";
+
+			$html .= $subclass_admin_interface;
+			return parent :: getAdminUI($html);
+		}
+		
+
+	}
+}
 ?>

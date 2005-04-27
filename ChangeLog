@@ -1,5 +1,8 @@
 2005-04-27 Benoit Grégoire  <bock@step.polymtl.ca>
-	* ContentGroup.php:  Fully functionnal content rotation engine, with all options supported.    Rotation based on session may not be reliable if the user isn't truly logged in.
+	* FlickrPhotostream.php:  Fix the object so it doesn't crash when flicker is disabled.
+	
+2005-04-27 Benoit Grégoire  <bock@step.polymtl.ca>
+	* ContentGroup.php:  Fully functionnal content rotation engine, with all options supported.    Rotation based on session may not be reliable if the user isn't truly logged in (from a node). 
 
 2005-04-26 François Proulx <francois.proulx@gmail.com>
 	* Most of the missing translations
