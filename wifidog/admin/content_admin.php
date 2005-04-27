@@ -41,23 +41,23 @@ $html .= '</form>';
 
 // By default show only content groups
 if (empty ($_REQUEST['action']))
-	$_REQUEST['action'] = 'list_content_groups';
+	$_REQUEST['action'] = 'list_persistent_content';
 
-if ($_REQUEST['action'] == 'list_all_content' || $_REQUEST['action'] == 'list_content_groups')
+if ($_REQUEST['action'] == 'list_all_content' || $_REQUEST['action'] == 'list_persistent_content')
 {
     $html .= '<form action="'.CONTENT_ADMIN_ABS_HREF.'" method="get">';
     
-    if($_REQUEST['action'] == 'list_content_groups')
+    if($_REQUEST['action'] == 'list_persistent_content')
     {
-        $sql = "SELECT * FROM content JOIN content_group ON (content.content_id = content_group.content_group_id) ORDER BY content_type";
+        $sql = "SELECT * FROM content WHERE is_persistent = true ORDER BY content_type";
         $html .= "<input type='hidden' name='action' value='list_all_content'>\n";
         $html .= "<input type=submit name='list_submit' value='"._("Show all content")."'>\n";
     }
     else
     {
         $sql = "SELECT * FROM content ORDER BY content_type";
-        $html .= "<input type='hidden' name='action' value='list_content_groups'>\n";
-        $html .= "<input type=submit name='list_submit' value='"._("Show only content groups")."'>\n";
+        $html .= "<input type='hidden' name='action' value='list_persistent_content'>\n";
+        $html .= "<input type=submit name='list_submit' value='"._("Show only persistent content")."'>\n";
     }   
 	$db->ExecSql($sql, $results, false);
     
