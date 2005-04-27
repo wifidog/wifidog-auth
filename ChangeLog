@@ -1,4 +1,7 @@
 2005-04-26 François Proulx <francois.proulx@gmail.com>
+	* Added missing /content directory
+	
+2005-04-26 François Proulx <francois.proulx@gmail.com>
 	* Added /content/ for displaying all content elements
 		* Logging is disable when viewing them
 		* All content elements will expand
