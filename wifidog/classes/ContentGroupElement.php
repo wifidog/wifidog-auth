@@ -1,5 +1,6 @@
 <?php
 
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -26,6 +27,7 @@
  */
 require_once BASEPATH.'classes/Content/ContentGroup.php';
 require_once BASEPATH.'classes/Node.php';
+
 /** the elements of a ContentGroup */
 class ContentGroupElement extends Content
 {
@@ -86,8 +88,7 @@ class ContentGroupElement extends Content
 		$db->ExecSqlUniqueRes($sql_select, $row, false);
 		if ($row == null)
 		{
-			$sql = "--The database was corrupted, let's fix it \n" .
-					"DELETE FROM content WHERE content_id='$content_id'";
+			$sql = "--The database was corrupted, let's fix it \n"."DELETE FROM content WHERE content_id='$content_id'";
 			$db->ExecSqlUpdate($sql, true);
 		}
 		$this->content_group_element_row = $row;
@@ -265,22 +266,23 @@ class ContentGroupElement extends Content
 
 	/** Get the order of the element in the content group
 	 * @return the order of the element in the content group */
-	public function 	getDisplayOrder	()
+	public function getDisplayOrder()
 	{
 		return $this->content_group_element_row['display_order'];
 	}
-
 
 	/** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
 	 * @param $subclass_admin_interface Html content of the interface element of a children
 	 * @return The HTML fragment for this interface */
 	public function getUserUI($subclass_user_interface = null)
 	{
-		
-		if(!empty($this->content_group_element_row['displayed_content_id']))
+		if (!empty ($this->content_group_element_row['displayed_content_id']))
 		{
-		$displayed_content = self :: getObject($this->content_group_element_row['displayed_content_id']);
-		$displayed_content_html = $displayed_content->getUserUI();
+			$displayed_content = self :: getObject($this->content_group_element_row['displayed_content_id']);
+            // If the content group logging is disabled, all the children will inherit this property temporarly
+            if($this->getLoggingStatus() == false)
+                $displayed_content->setLoggingStatus(false);
+			$displayed_content_html = $displayed_content->getUserUI();
 		}
 		$html = '';
 		$html .= "<div class='user_ui_container'>\n";
@@ -291,31 +293,29 @@ class ContentGroupElement extends Content
 		return parent :: getUserUI($html);
 	}
 
-
-
 	/** Is this Content element displayable at this hotspot
 	 * @param $node Node, optionnal
 	 * @return true or false */
 	public function isDisplayableAt($node)
 	{
-		$retval=false;
-		
-				global $db;
+		$retval = false;
+
+		global $db;
 		$sql = "SELECT * FROM content_group_element_has_allowed_nodes WHERE content_group_element_id='$this->id'";
 		$db->ExecSql($sql, $allowed_node_rows, false);
 		if ($allowed_node_rows != null)
 		{
-			if($node)
+			if ($node)
 			{
 				$node_id = $node->getId();
 				/** @todo:  Proper algorithm, this is a dirty and slow hack */
-			foreach ($allowed_node_rows as $allowed_node_row)
-			{
-				if($allowed_node_row['node_id']==$node_id)
+				foreach ($allowed_node_rows as $allowed_node_row)
 				{
-					$retval = true;
+					if ($allowed_node_row['node_id'] == $node_id)
+					{
+						$retval = true;
+					}
 				}
-			}
 			}
 			else
 			{
@@ -328,10 +328,10 @@ class ContentGroupElement extends Content
 			/* No allowed node means all nodes are allowed */
 			$retval = true;
 		}
-		
+
 		return $retval;
 	}
-	
+
 	/** Set the order of the element in the content group
 	 * @param $order*/
 	public function setDisplayOrder($order)

@@ -39,6 +39,9 @@ class PatternLanguage extends ContentGroup
 	function __construct($content_id)
 	{
 		parent :: __construct($content_id);
+        
+        // A Pattern language can NEVER be expandable
+        $this->setIsExpandable(false);
 	}
 
 	/** Display the narrative

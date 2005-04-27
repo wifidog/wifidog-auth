@@ -1,5 +1,6 @@
 <?php
 
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -25,72 +26,92 @@
  */
 define('BASEPATH', '../');
 require_once 'admin_common.php';
+
 define('CONTENT_ADMIN_HREF', 'content_admin.php');
 require_once BASEPATH.'classes/Content.php';
 require_once BASEPATH.'classes/MainUI.php';
-$ui=new MainUI();
+$ui = new MainUI();
 $html = '';
 
-if (empty ($_REQUEST['action']))
-{
-	$_REQUEST['action'] = 'list_all_content';
-}
+$html .= '<form action="'.GENERIC_OBJECT_ADMIN_ABS_HREF.'" method="get">';
+$html .= "<input type=submit name='new_submit' value='"._("Add new content")."'>\n";
+$html .= "<input type='hidden' name='action' value='new'>\n";
+$html .= "<input type='hidden' name='object_class' value='Content'>\n";
+$html .= '</form>';
 
-if ($_REQUEST['action'] == 'list_all_content')
+// By default show only content groups
+if (empty ($_REQUEST['action']))
+	$_REQUEST['action'] = 'list_content_groups';
+
+if ($_REQUEST['action'] == 'list_all_content' || $_REQUEST['action'] == 'list_content_groups')
 {
-	$sql = "SELECT * FROM content";
+    $html .= '<form action="'.CONTENT_ADMIN_ABS_HREF.'" method="get">';
+    
+    if($_REQUEST['action'] == 'list_content_groups')
+    {
+        $sql = "SELECT * FROM content JOIN content_group ON (content.content_id = content_group.content_group_id) ORDER BY content_type";
+        $html .= "<input type='hidden' name='action' value='list_all_content'>\n";
+        $html .= "<input type=submit name='list_submit' value='"._("Show all content")."'>\n";
+    }
+    else
+    {
+        $sql = "SELECT * FROM content ORDER BY content_type";
+        $html .= "<input type='hidden' name='action' value='list_content_groups'>\n";
+        $html .= "<input type=submit name='list_submit' value='"._("Show only content groups")."'>\n";
+    }   
 	$db->ExecSql($sql, $results, false);
+    
+    $html .= '</form>';
+    
 	if ($results != null)
 	{
-		$html.= "<table>\n";
-		$html.=  "<tr><th>"._("Title")."</th><th>"._("Content type")."</th><th>"._("Description")."</th></tr>\n";
-
+		$html .= "<table>\n";
+		$html .= "<tr><th>"._("Title")."</th><th>"._("Content type")."</th><th>"._("Description")."</th></tr>\n";
+        
+        // Get the current user
+        $user = User :: getCurrentUser();
+        
 		foreach ($results as $row)
 		{
-			$content=Content :: getObject($row['content_id']);
-			if (!empty ($row['title']))
-			{
-				$title = Content :: getObject($row['title']);
-				$title_ui = $title->__toString();
-			}
-			else
-			{
-				$title_ui = null;
-			}
-
-			if (!empty ($row['description']))
-			{
-				$description = Content :: getObject($row['description']);
-				$description_ui = $description->__toString();
-			}
-			else
-			{
-				$description_ui = null;
-			}
-			$href = GENERIC_OBJECT_ADMIN_ABS_HREF."?object_id=$row[content_id]&object_class=Content&action=edit";
-			$html.=  "<tr><td>$title_ui</td><td><a href='$href'>$row[content_type]</a></td><td>$description_ui</td>\n";
-			$href = GENERIC_OBJECT_ADMIN_ABS_HREF."?object_id=$row[content_id]&object_class=Content&action=delete";
-			if($content->isOwner(User::getCurrentUser()))
-			$html.=  "<td><a href='$href'>Delete</a></td>";
-			$html.= "</tr>\n";
-
+			$content = Content :: getObject($row['content_id']);
+            if ($user->isSuperAdmin() || $content->isOwner(User :: getCurrentUser()))
+            {
+    			if (!empty ($row['title']))
+    			{
+    				$title = Content :: getObject($row['title']);
+    				$title_ui = $title->__toString();
+    			}
+    			else
+    			{
+    				$title_ui = null;
+    			}
+    
+    			if (!empty ($row['description']))
+    			{
+    				$description = Content :: getObject($row['description']);
+    				$description_ui = $description->__toString();
+    			}
+    			else
+    			{
+    				$description_ui = null;
+    			}
+    			$href = GENERIC_OBJECT_ADMIN_ABS_HREF."?object_id=$row[content_id]&object_class=Content&action=edit";
+    			$html .= "<tr><td>$title_ui</td><td><a href='$href'>$row[content_type]</a></td><td>$description_ui</td>\n";
+    			$href = GENERIC_OBJECT_ADMIN_ABS_HREF."?object_id=$row[content_id]&object_class=Content&action=delete";
+    			$html .= "<td><a href='$href'>Delete</a></td>";
+    
+    			$html .= "</tr>\n";
+            }
 		}
-		$html.= "</table>\n";
+		$html .= "</table>\n";
 	}
 	else
 	{
-		$html.=  "<p>No results found</p>";
+		$html .= "<p>No results found</p>";
 	}
-	$html .= '<form action="'.GENERIC_OBJECT_ADMIN_ABS_HREF.'" method="get">';
-	$html .= "<input type='hidden' name='action' value='new'>\n";
-	$html .= "<input type='hidden' name='object_class' value='Content'>\n";
-	$html .= "<input type=submit name='new_submit' value='"._("Add new content")."'>\n";
-	$html .= '</form>';
 }
 
 $ui->setToolSection('ADMIN');
 $ui->setMainContent($html);
 $ui->display();
 ?>
-
-

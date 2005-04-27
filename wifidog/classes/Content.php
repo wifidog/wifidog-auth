@@ -35,6 +35,7 @@ class Content implements GenericObject
 	protected $content_row;
 	private $content_type;
 	private $is_trivial_content;
+    private $is_logging_enabled;
 
 	/** Create a new Content object in the database 
 	 * @param $content_type Optionnal, the content type to be given to the new object
@@ -73,7 +74,7 @@ class Content implements GenericObject
 		$object->AddOwner(User :: getCurrentUser());
 		/* By default, make it persistent */
 		$object->setIsPersistent(true);
-
+        
 		return $object;
 	}
 	/** Get the Content object, specific to it's content type 
@@ -94,6 +95,7 @@ class Content implements GenericObject
 		$object = new $content_type ($content_id);
 		return $object;
 	}
+    
 	/** Get the list of available content type on the system 
 	 * @return an array of class names */
 	public static function getAvailableContentTypes()
@@ -250,6 +252,9 @@ class Content implements GenericObject
 		$this->content_row = $row;
 		$this->id = $row['content_id'];
 		$this->content_type = $row['content_type'];
+        
+        // By default Content display logging is enabled
+        $this->setLoggingStatus(true);
 	}
 
 	/** A short string representation of the content */
@@ -333,6 +338,23 @@ class Content implements GenericObject
 
 		return true;
 	}
+    
+    /**
+     * Indicates display logging status
+     */
+    public function getLoggingStatus()
+    {
+        return $this->is_logging_enabled;
+    }
+    
+    /**
+     * Sets display logging status
+     */
+    public function setLoggingStatus($status)
+    {
+        if(is_bool($status))
+            $this->is_logging_enabled = $status;
+    }
 
 	/** Is this Content element displayable at this hotspot, many classer override this
 	 * @param $node Node, optionnal
@@ -374,7 +396,8 @@ class Content implements GenericObject
 		$db->ExecSqlUniqueRes($sql, $content_owner_row, false);
 		if ($content_owner_row != null)
 		{
-			$retval[] = User :: getObject($content_owner_row['user_id']);
+            $user = User :: getObject($content_owner_row['user_id']);
+			$retval[] = $user; 
 		}
 
 		return $retval;
@@ -407,6 +430,9 @@ class Content implements GenericObject
 		{
 			$html .= "<div class='user_ui_title'>\n";
 			$title = self :: getObject($this->content_row['title']);
+            // If the content logging is disabled, all the children will inherit this property temporarly
+            if($this->getLoggingStatus() == false)
+                $title->setLoggingStatus(false);
 			$html .= $title->getUserUI();
 			$html .= "</div>\n";
 		}
@@ -427,8 +453,11 @@ class Content implements GenericObject
 		if (!empty ($this->content_row['description']))
 		{
 			$html .= "<div class='user_ui_description'>\n";
-			$title = self :: getObject($this->content_row['description']);
-			$html .= $title->getUserUI();
+			$description = self :: getObject($this->content_row['description']);
+            // If the content logging is disabled, all the children will inherit this property temporarly
+            if($this->getLoggingStatus() == false)
+                $description->setLoggingStatus(false);
+			$html .= $description->getUserUI();
 			$html .= "</div>\n";
 		}
 
@@ -439,6 +468,9 @@ class Content implements GenericObject
 				$html .= "<div class='user_ui_projet_info'>\n";
 				$html .= _("Project information:");
 				$project_info = self :: getObject($this->content_row['project_info']);
+                // If the content logging is disabled, all the children will inherit this property temporarly
+                if($this->getLoggingStatus() == false)
+                    $project_info->setLoggingStatus(false);
 				$html .= $project_info->getUserUI();
 				$html .= "</div>\n";
 			}
@@ -448,6 +480,9 @@ class Content implements GenericObject
 				$html .= "<div class='user_ui_sponsor_info'>\n";
 				$html .= _("Project sponsor:");
 				$sponsor_info = self :: getObject($this->content_row['sponsor_info']);
+                // If the content logging is disabled, all the children will inherit this property temporarly
+                if($this->getLoggingStatus() == false)
+                    $sponsor_info->setLoggingStatus(false);
 				$html .= $sponsor_info->getUserUI();
 				$html .= "</div>\n";
 			}
@@ -467,26 +502,31 @@ class Content implements GenericObject
 	/** Log that this content has just been displayed to the user.  Will only log if the user is logged in */
 	private function logContentDisplay()
 	{
-		$user = User :: getCurrentUser();
-		$node = Node :: getCurrentNode();
-		if ($user != null && $node != null)
-		{
-			$user_id = $user->getId();
-			$node_id = $node->getId();
-			global $db;
-
-			$sql = "SELECT * FROM content_display_log WHERE user_id='$user_id' AND node_id='$node_id' AND content_id='$this->id'";
-			$db->ExecSql($sql, $log_rows, false);
-			if ($log_rows != null)
-			{
-				$sql = "UPDATE content_display_log SET last_display_timestamp = NOW() WHERE user_id='$user_id' AND content_id='$this->id' AND node_id='$node_id'";
-			}
-			else
-			{
-				$sql = "INSERT INTO content_display_log (user_id, content_id, node_id) VALUES ('$user_id', '$this->id', '$node_id')";
-			}
-			$db->ExecSqlUpdate($sql, false);
-		}
+        if($this->getLoggingStatus() == true)
+        {
+            // DEBUG::
+            //echo "Logging ".get_class($this)." :: ".$this->__toString()."<br>";
+    		$user = User :: getCurrentUser();
+    		$node = Node :: getCurrentNode();
+    		if ($user != null && $node != null)
+    		{
+    			$user_id = $user->getId();
+    			$node_id = $node->getId();
+    			global $db;
+    
+    			$sql = "SELECT * FROM content_display_log WHERE user_id='$user_id' AND node_id='$node_id' AND content_id='$this->id'";
+    			$db->ExecSql($sql, $log_rows, false);
+    			if ($log_rows != null)
+    			{
+    				$sql = "UPDATE content_display_log SET last_display_timestamp = NOW() WHERE user_id='$user_id' AND content_id='$this->id' AND node_id='$node_id'";
+    			}
+    			else
+    			{
+    				$sql = "INSERT INTO content_display_log (user_id, content_id, node_id) VALUES ('$user_id', '$this->id', '$node_id')";
+    			}
+    			$db->ExecSqlUpdate($sql, false);
+    		}
+        }
 	}
 
 	/** Retreives the list interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.

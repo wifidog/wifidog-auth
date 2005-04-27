@@ -34,13 +34,15 @@ if (CONF_USE_CRON_FOR_DB_CLEANUP == false)
 {
 	garbage_collect();
 }
-$node = Node :: getObject($_REQUEST['gw_id']);
+
+$node = null;
+if(!empty($_REQUEST['gw_id']))
+    $node = Node :: getObject($_REQUEST['gw_id']);
 
 if ($node == null)
 {
-	$smarty->assign("gw_id", $_REQUEST['gw_id']);
-	$smarty->display("templates/message_unknown_hotspot.html");
-	exit;
+    $smarty->display("templates/message_unknown_hotspot.html");
+    exit;
 }
 
 $node_id = $node->getId();
@@ -85,7 +87,7 @@ $tool_html .= "</p>"."\n";
 
 $tool_html .= '<p class="indent">'."\n";
 
-$tool_html .= "<a href='content.php?gw_id={$current_node_id}' target='_blank.right'><img src='/images/start.gif'></a>"."\n";
+$tool_html .= "<a href='/content/?gw_id={$current_node_id}' target='_blank.right'><img src='/images/start.gif'></a>"."\n";
 $tool_html .= "</p>"."\n";
 $ui->setToolContent($tool_html);
 
@@ -101,6 +103,9 @@ $html = '';
 $html .= "<div id='portal_container'>\n";
 
 /* Network section */
+
+// This table ( width 100% ) force each section to display on top of each other, even though the content will float
+// Until we find a better solution CSS only...
 $html .= "<table width='100%'><tr><td>";
 $html .= "<div class='portal_network_section'>\n";
 $html .= "<a href='{$hotspot_network_url}'><img class='portal_section_logo' src='{$network_logo_banner_url}' alt='{$hotspot_network_name} logo' border='0'></a>\n";
@@ -148,7 +153,10 @@ foreach ($contents as $content)
 }
 $html .= "</div>\n";
 $html .= "</td></tr></table>";
+
+$html .= "<a href='/content/?gw_id={$current_node_id}'>"._("Show all available contents for this hotspot")."</a>"."\n";
 $html .= "<div style='clear:both;'></div>";
+
 /* User section */
 //TODO: Add user content support
 /*
@@ -167,15 +175,5 @@ $html .= "</div>\n";
 
 $ui->setMainContent($html);
 $ui->display();
-/* If we have local content, display it. Otherwise, display default */
-/*if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.PORTAL_PAGE_NAME)) {
-    $smarty->assign("local_content_path", NODE_CONTENT_SMARTY_PATH);
-    $smarty->display(NODE_CONTENT_SMARTY_PATH.PORTAL_PAGE_NAME);
-} else {
-    $smarty->assign("local_content_path", DEFAULT_CONTENT_SMARTY_PATH);
-    $smarty->display(DEFAULT_CONTENT_SMARTY_PATH.PORTAL_PAGE_NAME);
-}
-*/
+
 ?>
-
-

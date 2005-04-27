@@ -34,7 +34,7 @@ class Security {
   }
 
 /**
- * @todo:  Move to User
+ * @deprecated   Moved to User
 */
   function login($user_id, $hash) {
     global $db;

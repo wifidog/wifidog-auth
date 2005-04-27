@@ -23,7 +23,9 @@
 /**@file Node.php
  * @author Copyright (C) 2005 Benoit Gr�goire <bock@step.polymtl.ca>
  */
+ 
 require_once BASEPATH.'include/common.php';
+require_once 'Content/ContentGroup.php';
 
 /** Abstract a Node.  A Node is an actual physical transmitter. */
 class Node implements GenericObject
@@ -435,6 +437,32 @@ class Node implements GenericObject
 		}
 		return $retval;
 	}
+    
+    /** Get an array of all artistic and locative Content for this hotspot
+    * @return an array of Content or an empty arrray */
+    function getAllLocativeArtisticContent()
+    {
+        global $db;
+        $retval = array ();
+        $sql = "SELECT * FROM content_group WHERE is_artistic_content = true AND is_locative_content = true";
+        $db->ExecSql($sql, $content_rows, false);
+        if ($content_rows != null)
+        {
+            foreach ($content_rows as $content_row)
+            {
+                // Create a content group object and grab only those that have content for the current Node
+                $content_group = Content::getObject($content_row['content_group_id']);
+                if($content_group->getDisplayNumElements() >= 1)
+                {
+                    // Disable logging and allow content to expand ( if possible )
+                    $content_group->setExpandStatus(true);
+                    $content_group->setLoggingStatus(false);
+                    $retval[] = $content_group;
+                }
+            }
+        }
+        return $retval;
+    }
 
 	/** Return all the nodes
 	 */

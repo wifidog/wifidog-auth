@@ -36,6 +36,13 @@ class ContentGroup extends Content
 
 	protected $is_artistic_content;
 	protected $is_locative_content;
+    
+    // is_expandable is ONLY for internal use, it use normally only set by the constructor
+    private $is_expandable = true;
+    // this is the actual publicly available status ( so if is_expandable == true it CANNOT be true )
+    private $expand_status = false;
+    private $temporary_display_num_elements;
+    
 	private $content_selection_mode;
 	private $content_group_row;
 
@@ -60,7 +67,11 @@ class ContentGroup extends Content
 			}
 
 		}
+        
 		$this->content_group_row = $row;
+        
+        // These are for internal use only ( private and protected methods ) for dealing with expanding content
+        $this->setTemporaryDisplayNumElements(null);
 	}
 
 	/** Is the content group artistic in nature?
@@ -233,7 +244,10 @@ class ContentGroup extends Content
 	* @return integer */
 	public function getDisplayNumElements()
 	{
-		return $this->content_group_row['display_num_elements'];
+        if($this->temporary_display_num_elements == null)
+            return $this->content_group_row['display_num_elements'];
+        else
+            return $this->temporary_display_num_elements;
 	}
 
 	/** How many element should be picked for display at once?
@@ -263,6 +277,16 @@ class ContentGroup extends Content
 		}
 		return $retval;
 	}
+    
+    /**
+     * This will a temporary limit ( NOT ACTUALLY STORED IN DATABASE )
+     * Use getDisplayNumElements to get the number of elements that can be shown
+     * at once
+     */
+    private function setTemporaryDisplayNumElements($temporary_num_elements)
+    {
+        $this->temporary_display_num_elements = $temporary_num_elements;
+    }
 
 	public function getAdminUI($subclass_admin_interface = null)
 	{
@@ -599,7 +623,7 @@ class ContentGroup extends Content
 			}
 			
 			/** Pick the proper number of elements */
-			$num_to_pick = $display_num_elements -count($redisplay_objects);
+			$num_to_pick = $display_num_elements - count($redisplay_objects);
 			$new_objects = array_slice($new_objects, 0, $num_to_pick);
 		}
 		/*
@@ -613,6 +637,55 @@ class ContentGroup extends Content
 		//echo count($retval).' returned <br>';
 		return $retval;
 	}
+    
+    /**
+     * This attribute is for internal use ( to tell if a certain class could be
+     * expanded )
+     * @param $status boolean
+     */
+    protected function setIsExpandable($status)
+    {
+        if(is_bool($status))
+            $this->is_expandable = $status;
+    }
+    
+    /**
+     * Tells if this object could be expanded
+     */
+    protected function isExpandable()
+    {
+        return $this->is_expandable;
+    }
+    
+    /**
+     * Will expand content ONLY if allowed by isExpandable (which is protected)
+     * @param $status boolean
+     */
+    public function setExpandStatus($status)
+    {
+        if($this->isExpandable() && is_bool($status))
+        {
+            //TODO: Try to find a better solution to this problem...
+            if($status == true)
+                $this->setTemporaryDisplayNumElements(3000);
+            else
+                $this->setTemporaryDisplayNumElements(null);
+            $this->expand_status = $status;
+        }
+    }
+    
+    /**
+     * Get the expand status 
+     * 
+     * WARNING
+     * NON expandable contents ie PatternLanguage will NEVER return true
+     */
+    public function getExpandStatus()
+    {
+        if($this->expand_status == null)
+            return false;
+        return $this->expand_status;
+    }
 
 	/** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
 	 * @param $subclass_admin_interface Html content of the interface element of a children
@@ -628,6 +701,9 @@ class ContentGroup extends Content
 		{
 			foreach ($display_elements as $display_element)
 			{
+                // If the content group logging is disabled, all the children will inherit this property temporarly
+                if($this->getLoggingStatus() == false)
+                    $display_element->setLoggingStatus(false);
 				$html .= $display_element->getUserUI();
 			}
 		}
@@ -641,6 +717,7 @@ class ContentGroup extends Content
 
 		return parent :: getUserUI($html);
 	}
+    
 	/**Get all elements
 	 * @return an array of ContentGroupElement or an empty arrray */
 	function getElements()
@@ -658,6 +735,7 @@ class ContentGroup extends Content
 		}
 		return $retval;
 	}
+    
 	/** Delete this Content from the database 
 	*/
 	public function delete(& $errmsg)

@@ -293,9 +293,13 @@ class File extends Content
 	function processAdminUI()
 	{
 		parent :: processAdminUI();
+        
 		// If no file was uploaded, update filename and mime type
 		if (!empty ($_REQUEST["file_mode".$this->getId()]))
 		{
+            $this->setFilename($_REQUEST["file_file_name".$this->getId()]);
+            $this->setMimeType($_REQUEST["file_mime_type".$this->getId()]);
+            
 			$file_mode = $_REQUEST["file_mode".$this->getId()];
 			if ($file_mode == "by_upload")
 			{
@@ -319,9 +323,9 @@ class File extends Content
 					else
 						$this->setRemoteFileSize(0);
 				}
-				$this->setFilename($_REQUEST["file_file_name".$this->getId()]);
 			}
 		}
+        
 	}
 
 	/** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.

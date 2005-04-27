@@ -1,3 +1,11 @@
+2005-04-26 François Proulx <francois.proulx@gmail.com>
+	* Added /content/ for displaying all content elements
+		* Logging is disable when viewing them
+		* All content elements will expand
+		* Pattern languages won't display everything ( special property ) isExpandable
+	* Added a link in portal pages to go to /content/
+	* Added Show all contents button in content_admin.php
+	
 2005-04-27 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Content.php, ContentGroup.php:  All Content now implement the isDisplayableAt($node).  Used by the portal, if content has nothing displayabel, the entire content is skipped.
 	
