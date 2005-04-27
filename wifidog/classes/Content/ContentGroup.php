@@ -425,6 +425,30 @@ class ContentGroup extends Content
 		$new_element = ContentGroupElement :: processNewContentUI("content_group_{$this->id}_new_element", $this);
 	}
 
+
+
+
+
+	/** Is this Content element displayable at this hotspot
+	 * @param $node Node, optionnal
+	 * @return true or false */
+	public function isDisplayableAt($node)
+	{
+		$old_curent_node=Node::getCurrentNode();
+		Node::setCurrentNode($node);
+		if(count($this->getDisplayElements())>0)
+		{
+			$retval = true;
+		}
+		else
+		{
+			$retval = false;
+		}
+				Node::setCurrentNode($old_curent_node);
+		return $retval;
+	}
+
+
 	/**Get the next element or elements to be displayed, depending on the display mode
 	* @return an array of ContentGroupElement or an empty arrray */
 	function getDisplayElements()

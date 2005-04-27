@@ -334,6 +334,16 @@ class Content implements GenericObject
 		return true;
 	}
 
+	/** Is this Content element displayable at this hotspot, many classer override this
+	 * @param $node Node, optionnal
+	 * @return true or false */
+	public function isDisplayableAt($node)
+	{
+		
+		return true;
+	}
+
+
 	/** Check if a user is one of the owners of the object
 	 * @param $user User object:  the user to be tested.
 	 * @return true if the user is a owner, false if he isn't of the user is null */

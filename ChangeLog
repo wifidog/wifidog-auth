@@ -1,4 +1,7 @@
 2005-04-27 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Content.php, ContentGroup.php:  All Content now implement the isDisplayableAt($node).  Used by the portal, if content has nothing displayabel, the entire content is skipped.
+	
+2005-04-27 Benoit Grégoire  <bock@step.polymtl.ca>
 	* FlickrPhotostream.php:  Fix the object so it doesn't crash when flicker is disabled.
 	
 2005-04-27 Benoit Grégoire  <bock@step.polymtl.ca>

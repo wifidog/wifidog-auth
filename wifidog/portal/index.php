@@ -110,9 +110,12 @@ if($contents)
 {
     foreach ($contents as $content)
     {
+    	if($content->isDisplayableAt($node))
+    	{
     $html .= "<div class='portal_content'>\n";
     $html .= $content->getUserUI();
     $html .= "</div>\n";
+    	}
     }
 }
 $html .= "</div>\n";
@@ -136,9 +139,12 @@ if(!empty($node_homepage))
 }
 foreach ($contents as $content)
 {
+	    	if($content->isDisplayableAt($node))
+    	{
     $html .= "<div class='portal_content'>\n";
 	$html .= $content->getUserUI();
     $html .= "</div>\n";
+    	}
 }
 $html .= "</div>\n";
 $html .= "</td></tr></table>";
