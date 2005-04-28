@@ -147,7 +147,10 @@ class MainUI
 			}
 			else
 			{
-				$html .= '<p>'._("NOT logged in.").' <a href="'.BASE_SSL_PATH.'login/">'. ("Login?").'</a></p>'."\n";
+				$append_gateway = "";
+				if(!empty($_REQUEST['gw_id']))
+					$append_gateway .= "?gw_id=".$_REQUEST['gw_id'];
+				$html .= '<p>'._("NOT logged in.").' <a href="'.BASE_SSL_PATH.'login/'.$append_gateway.'">'. ("Login?").'</a></p>'."\n";
 				$html .= '<a class="administration" HREF="'.Network :: getCurrentNetwork()->getHomepageURL().'"><img class="administration" src="/images/lien_ext.gif"> '.Network :: getCurrentNetwork()->getName().'</a>'."\n";
 				$html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'faq.php"><img class="administration" src="/images/where.gif"> '._("Where am I?").'</a>'."\n";
 			}

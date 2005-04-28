@@ -6,8 +6,12 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.41  2005/04/28 03:14:48  fproulx
+ *     *** empty log message ***
+ *
  *     Revision 1.40  2005/04/25 17:13:14  benoitg
- *     2005-04-25 Benoit Grégoire  <bock@step.polymtl.ca>
+ *
+ *     2005-04-25 Benoit Grï¿½goire  <bock@step.polymtl.ca>
  *     	* UI fully functionnal
  *
  *     Revision 1.39  2005/04/25 17:07:47  fproulx
