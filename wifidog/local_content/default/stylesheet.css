@@ -209,7 +209,12 @@ display: compact;
 	display: inline;
 	padding: 2px;
 }*/
-
+.login_body {
+	text-align: center;
+}
+.login_body h1 {
+	font-size: large;
+}
 .portal_content {
 	display: inline;
 	float: left;

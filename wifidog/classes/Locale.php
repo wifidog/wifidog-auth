@@ -53,11 +53,15 @@ class Locale
 		$locale_id = $session->get(SESS_LANGUAGE_VAR);
 		if (empty ($locale_id))
 		{
-			$object = new self(DEFAULT_LANG);
+			//$object = new self(DEFAULT_LANG);
+            $object = self::getObject(DEFAULT_LANG);
+            self::setCurrentLocale($object);
 		}
 		else
 		{
-			$object = new self($locale_id);
+			//$object = new self($locale_id);
+            $object = self::getObject($locale_id);
+            self::setCurrentLocale($object);
 		}
 		return $object;
 
@@ -98,7 +102,8 @@ class Locale
 		}
 		else
 		{
-			define('GETTEXT_AVAILABLE', true);
+            if(!defined('GETTEXT_AVAILABLE'))
+                define('GETTEXT_AVAILABLE', true);
 		}
 
 		if (GETTEXT_AVAILABLE)

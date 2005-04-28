@@ -168,8 +168,24 @@ if ($error)
 	$html .= '</div>'."\n";
 }
 
+// HTML body
+$hotspot_network_name = HOTSPOT_NETWORK_NAME;
+$hotspot_network_url = HOTSPOT_NETWORK_URL;
+$network_logo_banner_url = COMMON_CONTENT_URL.NETWORK_LOGO_BANNER_NAME;
+
+$html_body = "<div class='login_body'>";
+$html_body .= "<a href='{$hotspot_network_url}'><img src='{$network_logo_banner_url}' alt='{$hotspot_network_name} logo' border='0'></a><p>\n";
+if(!empty($node))
+{
+    $hotspot_logo_url = find_local_content_url(HOTSPOT_LOGO_NAME);
+    $html_body .= "<h1>{$hotspot_name}</h1>";
+    $html_body .= "<a href='{$node->getHomePageURL()}'><img src='{$hotspot_logo_url}' alt='{$hotspot_name}'></a>\n";
+}
+$html_body .= "</div>";
+
 require_once BASEPATH.'classes/MainUI.php';
 $ui = new MainUI();
 $ui->setToolContent($html);
+$ui->setMainContent($html_body);
 $ui->display();
 ?>
