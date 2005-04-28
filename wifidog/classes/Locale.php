@@ -105,7 +105,7 @@ class Locale
             if(!defined('GETTEXT_AVAILABLE'))
                 define('GETTEXT_AVAILABLE', true);
 		}
-
+        
 		if (GETTEXT_AVAILABLE)
 		{
 			$current_locale = setlocale(LC_ALL, $locale_id);

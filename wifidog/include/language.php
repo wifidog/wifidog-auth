@@ -10,8 +10,9 @@ if (!empty ($_REQUEST['lang']))
 
 $locale = Locale::getCurrentLocale();
 $locale_id = $locale->getId();
-		if (isset ($smarty))
-		{
-			$smarty->assign("lang_id", $locale_id);
-		}
+if (isset ($smarty))
+{
+	$smarty->assign("lang_id", $locale_id);
+}
+
 ?>
