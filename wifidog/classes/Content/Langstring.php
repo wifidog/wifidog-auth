@@ -199,47 +199,50 @@ class Langstring extends Content
 
 	function processAdminUI()
 	{
-		parent :: processAdminUI();
-		$generateur_form_select = new FormSelectGenerator();
-		$sql = "SELECT * FROM langstring_entries WHERE langstring_entries.langstrings_id = '$this->id'";
-		$this->mBd->ExecSql($sql, $result, FALSE);
-		if ($result != null)
-		{
-			while (list ($key, $value) = each($result))
-			{ //	print_r($value);
-				if (!empty ($_REQUEST["langstrings_".$this->id."_substring_$value[langstring_entries_id]_erase"]) && $_REQUEST["langstrings_".$this->id."_substring_$value[langstring_entries_id]_erase"] == true)
-				{
-					$this->mBd->ExecSqlUpdate("DELETE FROM langstring_entries WHERE langstrings_id = '$this->id' AND langstring_entries_id='$value[langstring_entries_id]'", FALSE);
-				}
-				else
-				{
-					$language = $generateur_form_select->getResult("langstrings_".$this->id."_substring_$value[langstring_entries_id]_language", 'Langstring::AfficherInterfaceAdmin');
-					if (empty ($language))
-					{
-						$language = 'NULL';
-					}
-					else
-					{
-						$language = "'".$language."'";
-					}
-					$string = $this->mBd->EscapeString($_REQUEST["langstrings_".$this->id."_substring_$value[langstring_entries_id]_string"]);
-					$this->mBd->ExecSqlUpdate("UPDATE langstring_entries SET locales_id = $language , value = '$string' WHERE langstrings_id = '$this->id' AND langstring_entries_id='$value[langstring_entries_id]'", FALSE);
-				}
-			}
-		}
-		//Ajouter nouvelles chaîne(s) si champ non vide ou si l'usager a appuyé sur le bouton ajouter
-		$new_substring_name = "langstrings_".$this->id."_substring_new_string";
-		$new_substring_submit_name = "langstrings_".$this->id."_add_new_entry";
-		if ((isset ($_REQUEST[$new_substring_submit_name]) && $_REQUEST[$new_substring_submit_name] == true) || !empty ($_REQUEST[$new_substring_name]))
-		{
-
-			$language = $generateur_form_select->getResult("langstrings_".$this->id."_substring_new_language", 'Langstring::AfficherInterfaceAdmin');
-			if (empty ($language))
-			{
-				$language = null;
-			}
-			$this->addString($_REQUEST[$new_substring_name], $language, true);
-		}
+        if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
+        {
+    		parent :: processAdminUI();
+    		$generateur_form_select = new FormSelectGenerator();
+    		$sql = "SELECT * FROM langstring_entries WHERE langstring_entries.langstrings_id = '$this->id'";
+    		$this->mBd->ExecSql($sql, $result, FALSE);
+    		if ($result != null)
+    		{
+    			while (list ($key, $value) = each($result))
+    			{ //	print_r($value);
+    				if (!empty ($_REQUEST["langstrings_".$this->id."_substring_$value[langstring_entries_id]_erase"]) && $_REQUEST["langstrings_".$this->id."_substring_$value[langstring_entries_id]_erase"] == true)
+    				{
+    					$this->mBd->ExecSqlUpdate("DELETE FROM langstring_entries WHERE langstrings_id = '$this->id' AND langstring_entries_id='$value[langstring_entries_id]'", FALSE);
+    				}
+    				else
+    				{
+    					$language = $generateur_form_select->getResult("langstrings_".$this->id."_substring_$value[langstring_entries_id]_language", 'Langstring::AfficherInterfaceAdmin');
+    					if (empty ($language))
+    					{
+    						$language = 'NULL';
+    					}
+    					else
+    					{
+    						$language = "'".$language."'";
+    					}
+    					$string = $this->mBd->EscapeString($_REQUEST["langstrings_".$this->id."_substring_$value[langstring_entries_id]_string"]);
+    					$this->mBd->ExecSqlUpdate("UPDATE langstring_entries SET locales_id = $language , value = '$string' WHERE langstrings_id = '$this->id' AND langstring_entries_id='$value[langstring_entries_id]'", FALSE);
+    				}
+    			}
+    		}
+    		//Ajouter nouvelles chaîne(s) si champ non vide ou si l'usager a appuyé sur le bouton ajouter
+    		$new_substring_name = "langstrings_".$this->id."_substring_new_string";
+    		$new_substring_submit_name = "langstrings_".$this->id."_add_new_entry";
+    		if ((isset ($_REQUEST[$new_substring_submit_name]) && $_REQUEST[$new_substring_submit_name] == true) || !empty ($_REQUEST[$new_substring_name]))
+    		{
+    
+    			$language = $generateur_form_select->getResult("langstrings_".$this->id."_substring_new_language", 'Langstring::AfficherInterfaceAdmin');
+    			if (empty ($language))
+    			{
+    				$language = null;
+    			}
+    			$this->addString($_REQUEST[$new_substring_name], $language, true);
+    		}
+        }
 	}
 
 	/**Affiche l'interface usager de l'objet

@@ -68,7 +68,7 @@ if ($_REQUEST['action'] == 'save') {
 if ($_REQUEST['action'] == 'delete') {
 	$errmsg = '';
 
-	if ($object->delete($errmsg)) {
+	if ($object->delete($errmsg) == true) {
 		$html .= "<div class='successmsg'>"._("Content successfully deleted")."</div>\n";
 	} else {
 		$html .= "<div class='errormsg'>"._("Deletion failed, error was: ")."$errmsg</div>\n";

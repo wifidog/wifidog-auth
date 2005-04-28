@@ -492,67 +492,70 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 
 		function processAdminUI()
 		{
-			parent :: processAdminUI();
-			$generator = new FormSelectGenerator();
-
-			$name = "flickr_photostream_".$this->id."_api_key";
-			!empty ($_REQUEST[$name]) ? $this->setApiKey($_REQUEST[$name]) : $this->setApiKey(null);
-
-			if ($generator->isPresent("SelectionMode".$this->getID(), "FlickrPhotostream"))
-				$this->setSelectionMode($generator->getResult("SelectionMode".$this->getID(), "FlickrPhotostream"));
-
-			// Check for existing API key
-			if ($this->getAPIKey() && $this->getSelectionMode())
-			{
-				try
-				{
-					switch ($this->getSelectionMode())
-					{
-						// Process common data for groups and users
-						case self :: SELECT_BY_GROUP :
-							if ($generator->isPresent("GroupPhotoPool".$this->getID(), "FlickrPhotostream"))
-								$this->setGroupId($generator->getResult("GroupPhotoPool".$this->getID(), "FlickrPhotostream"));
-						case self :: SELECT_BY_USER :
-							$name = "flickr_photostream_".$this->id."_reset_user_id";
-							if (!empty ($_REQUEST[$name]) || !$this->getFlickrUserId())
-							{
-								$this->setUserId(null);
-								$name = "flickr_photostream_".$this->id."_email";
-								if (!empty ($_REQUEST[$name]) && ($flickr_user = $this->getUserByEmail($_REQUEST[$name])) != null)
-								{
-									$this->setUserId($flickr_user->getId());
-									$this->setUserName($flickr_user->getName());
-								}
-								else
-									echo _("Could not find a Flickr user with this e-mail.");
-							}
-							break;
-						case self :: SELECT_BY_TAGS :
-							$name = "flickr_photostream_".$this->id."_tags";
-							if (!empty ($_REQUEST[$name]))
-								$this->setTags($_REQUEST[$name]);
-							else
-								$this->setTags(null);
-							if ($generator->isPresent("TagMode".$this->getID(), "FlickrPhotostream"))
-								$this->setTagMode($generator->getResult("TagMode".$this->getID(), "FlickrPhotostream"));
-							break;
-					}
-				}
-				catch (Exception $e)
-				{
-					echo _("Could not complete successfully the saving procedure.");
-				}
-
-				$name = "flickr_photostream_".$this->id."_display_title";
-				!empty ($_REQUEST[$name]) ? $this->setDisplayTitle(true) : $this->setDisplayTitle(false);
-				$name = "flickr_photostream_".$this->id."_display_tags";
-				!empty ($_REQUEST[$name]) ? $this->setDisplayTags(true) : $this->setDisplayTags(false);
-				$name = "flickr_photostream_".$this->id."_display_description";
-				!empty ($_REQUEST[$name]) ? $this->setDisplayDescription(true) : $this->setDisplayDescription(false);
-
-				if ($generator->isPresent("PreferredSize".$this->getID(), "FlickrPhotostream"))
-					$this->setPreferredSize($generator->getResult("PreferredSize".$this->getID(), "FlickrPhotostream"));
-			}
+            if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
+            {
+    			parent :: processAdminUI();
+    			$generator = new FormSelectGenerator();
+    
+    			$name = "flickr_photostream_".$this->id."_api_key";
+    			!empty ($_REQUEST[$name]) ? $this->setApiKey($_REQUEST[$name]) : $this->setApiKey(null);
+    
+    			if ($generator->isPresent("SelectionMode".$this->getID(), "FlickrPhotostream"))
+    				$this->setSelectionMode($generator->getResult("SelectionMode".$this->getID(), "FlickrPhotostream"));
+    
+    			// Check for existing API key
+    			if ($this->getAPIKey() && $this->getSelectionMode())
+    			{
+    				try
+    				{
+    					switch ($this->getSelectionMode())
+    					{
+    						// Process common data for groups and users
+    						case self :: SELECT_BY_GROUP :
+    							if ($generator->isPresent("GroupPhotoPool".$this->getID(), "FlickrPhotostream"))
+    								$this->setGroupId($generator->getResult("GroupPhotoPool".$this->getID(), "FlickrPhotostream"));
+    						case self :: SELECT_BY_USER :
+    							$name = "flickr_photostream_".$this->id."_reset_user_id";
+    							if (!empty ($_REQUEST[$name]) || !$this->getFlickrUserId())
+    							{
+    								$this->setUserId(null);
+    								$name = "flickr_photostream_".$this->id."_email";
+    								if (!empty ($_REQUEST[$name]) && ($flickr_user = $this->getUserByEmail($_REQUEST[$name])) != null)
+    								{
+    									$this->setUserId($flickr_user->getId());
+    									$this->setUserName($flickr_user->getName());
+    								}
+    								else
+    									echo _("Could not find a Flickr user with this e-mail.");
+    							}
+    							break;
+    						case self :: SELECT_BY_TAGS :
+    							$name = "flickr_photostream_".$this->id."_tags";
+    							if (!empty ($_REQUEST[$name]))
+    								$this->setTags($_REQUEST[$name]);
+    							else
+    								$this->setTags(null);
+    							if ($generator->isPresent("TagMode".$this->getID(), "FlickrPhotostream"))
+    								$this->setTagMode($generator->getResult("TagMode".$this->getID(), "FlickrPhotostream"));
+    							break;
+    					}
+    				}
+    				catch (Exception $e)
+    				{
+    					echo _("Could not complete successfully the saving procedure.");
+    				}
+    
+    				$name = "flickr_photostream_".$this->id."_display_title";
+    				!empty ($_REQUEST[$name]) ? $this->setDisplayTitle(true) : $this->setDisplayTitle(false);
+    				$name = "flickr_photostream_".$this->id."_display_tags";
+    				!empty ($_REQUEST[$name]) ? $this->setDisplayTags(true) : $this->setDisplayTags(false);
+    				$name = "flickr_photostream_".$this->id."_display_description";
+    				!empty ($_REQUEST[$name]) ? $this->setDisplayDescription(true) : $this->setDisplayDescription(false);
+    
+    				if ($generator->isPresent("PreferredSize".$this->getID(), "FlickrPhotostream"))
+    					$this->setPreferredSize($generator->getResult("PreferredSize".$this->getID(), "FlickrPhotostream"));
+    			}
+            }
 		}
 
 		/** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
@@ -684,7 +687,7 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 			{
 				$this->mBd->ExecSqlUpdate("DELETE FROM flickr_photostream WHERE flickr_photostream_id = '".$this->getId()."'", false);
 			}
-			parent :: delete($errmsg);
+			return parent :: delete($errmsg);
 		}
 
 	} // End class

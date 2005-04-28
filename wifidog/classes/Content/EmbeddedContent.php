@@ -135,69 +135,72 @@ class EmbeddedContent extends Content
 
 	function processAdminUI()
 	{
-		parent :: processAdminUI();
-
-		global $db;
-		if (empty ($this->embedded_content_row['embedded_file_id']))
-		{
-			$embedded_content_file = self :: processNewContentUI("embedded_file_{$this->id}_new");
-			if ($embedded_content_file != null)
-			{
-				$embedded_content_file_id = $embedded_content_file->GetId();
-				$db->ExecSqlUpdate("UPDATE embedded_content SET embedded_file_id = '$embedded_content_file_id' WHERE embedded_content_id = '$this->id'", FALSE);
-			}
-			else
-			{
-				echo _("You MUST choose a File object or any of its siblings.");
-				$embedded_content_file->delete($errmsg);
-			}
-		}
-		else
-		{
-			$embedded_content_file = self :: getObject($this->embedded_content_row['embedded_file_id']);
-			$name = "embeddedcontent_".$this->id."_embedded_file_erase";
-			if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
-			{
-				$db->ExecSqlUpdate("UPDATE embedded_content SET embedded_file_id = NULL WHERE embedded_content_id = '$this->id'", FALSE);
-				$embedded_content_file->delete($errmsg);
-			}
-			else
-			{
-				$embedded_content_file->processAdminUI();
-				
-				$name = "embedded_content_attributes".$this->getId();
-				$this->setAttributes($_REQUEST[$name]);
-				
-				$name = "embedded_content_parameters".$this->getId();
-				$this->setParameters($_REQUEST[$name]);
-			}
-		}
-
-		if (empty ($this->embedded_content_row['fallback_content_id']))
-		{
-			$fallback_content = self :: processNewContentUI("fallback_content_{$this->id}_new");
-			if ($fallback_content != null)
-			{
-				$fallback_content_id = $fallback_content->GetId();
-				$db->ExecSqlUpdate("UPDATE embedded_content SET fallback_content_id = '$fallback_content_id' WHERE embedded_content_id = '$this->id'", FALSE);
-			}
-		}
-		else
-		{
-			$fallback_content = self :: getObject($this->embedded_content_row['fallback_content_id']);
-			$name = "fallback_content_".$this->id."_fallback_content_erase";
-			if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
-			{
-				$db->ExecSqlUpdate("UPDATE embedded_content SET fallback_content_id = NULL WHERE embedded_content_id = '$this->id'", FALSE);
-				$fallback_content->delete($errmsg);
-			}
-			else
-			{
-				$fallback_content->processAdminUI();
-			}
-		}
-
-		$this->refresh();
+        if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
+        {
+    		parent :: processAdminUI();
+    
+    		global $db;
+    		if (empty ($this->embedded_content_row['embedded_file_id']))
+    		{
+    			$embedded_content_file = self :: processNewContentUI("embedded_file_{$this->id}_new");
+    			if ($embedded_content_file != null)
+    			{
+    				$embedded_content_file_id = $embedded_content_file->GetId();
+    				$db->ExecSqlUpdate("UPDATE embedded_content SET embedded_file_id = '$embedded_content_file_id' WHERE embedded_content_id = '$this->id'", FALSE);
+    			}
+    			else
+    			{
+    				echo _("You MUST choose a File object or any of its siblings.");
+    				$embedded_content_file->delete($errmsg);
+    			}
+    		}
+    		else
+    		{
+    			$embedded_content_file = self :: getObject($this->embedded_content_row['embedded_file_id']);
+    			$name = "embeddedcontent_".$this->id."_embedded_file_erase";
+    			if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
+    			{
+    				$db->ExecSqlUpdate("UPDATE embedded_content SET embedded_file_id = NULL WHERE embedded_content_id = '$this->id'", FALSE);
+    				$embedded_content_file->delete($errmsg);
+    			}
+    			else
+    			{
+    				$embedded_content_file->processAdminUI();
+    				
+    				$name = "embedded_content_attributes".$this->getId();
+    				$this->setAttributes($_REQUEST[$name]);
+    				
+    				$name = "embedded_content_parameters".$this->getId();
+    				$this->setParameters($_REQUEST[$name]);
+    			}
+    		}
+    
+    		if (empty ($this->embedded_content_row['fallback_content_id']))
+    		{
+    			$fallback_content = self :: processNewContentUI("fallback_content_{$this->id}_new");
+    			if ($fallback_content != null)
+    			{
+    				$fallback_content_id = $fallback_content->GetId();
+    				$db->ExecSqlUpdate("UPDATE embedded_content SET fallback_content_id = '$fallback_content_id' WHERE embedded_content_id = '$this->id'", FALSE);
+    			}
+    		}
+    		else
+    		{
+    			$fallback_content = self :: getObject($this->embedded_content_row['fallback_content_id']);
+    			$name = "fallback_content_".$this->id."_fallback_content_erase";
+    			if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
+    			{
+    				$db->ExecSqlUpdate("UPDATE embedded_content SET fallback_content_id = NULL WHERE embedded_content_id = '$this->id'", FALSE);
+    				$fallback_content->delete($errmsg);
+    			}
+    			else
+    			{
+    				$fallback_content->processAdminUI();
+    			}
+    		}
+    
+    		$this->refresh();
+        }
 	}
 
 	/** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.

@@ -1,3 +1,15 @@
+2005-04-28 François Proulx <francois.proulx@gmail.com>
+	* Added check in MainUI toolbar so that it won't show "NOT logged in ?" message when connect to a real hotspot ( not virtual )
+		* This message confused many users ( they clicked and got the virtual login instead ! )
+	* Hide adminstration features ( statistics, hotspot creation, network wide content etc...) from all but Super admins
+	* Fixed getAllLocativeArtisticContent in Node.php added is_persistent check
+	* Added $associate_existing_content parameter to processNewContentUI to allows reuse for existing content ( in ContentGroup )
+	* Fixed bug in FlickrPhotoStream delete ( missing return from parent )
+	* Added security check in all content classes ( ProcessAdminUI )
+	
+2005-04-26 François Proulx <francois.proulx@gmail.com>
+	* Replaced show only content groups by show persistent
+	
 2005-04-26 François Proulx <francois.proulx@gmail.com>
 	* Added missing /content directory
 	

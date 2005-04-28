@@ -394,8 +394,11 @@ class ContentGroup extends Content
 			$html .= "</li>\n";
 		}
 		$html .= "<li class='admin_section_list_item'>\n";
-		$html .= self :: getNewContentUI("content_group_{$this->id}_new_element");
-		$html .= "</li>\n";
+        $html .= "<b>"._("Add a new content OR select previously created content")."</b><br>";
+		$html .= self :: getNewContentUI("content_group_{$this->id}_new_element")."<br>";
+        $html .= self :: getSelectContentUI("content_group_{$this->id}_existing_element");
+        $html .= "<input type='submit' name='content_group_{$this->id}_existing_element_add' value='"._("Add")."'>";
+        $html .= "</li>\n";
 		$html .= "</ul>\n";
 		$html .= "</div>\n";
 
@@ -405,53 +408,55 @@ class ContentGroup extends Content
 
 	function processAdminUI()
 	{
-		parent :: processAdminUI();
-
-		/* is_artistic_content */
-		$name = "content_group_".$this->id."_is_artistic_content";
-		!empty ($_REQUEST[$name]) ? $this->setIsArtisticContent(true) : $this->setIsArtisticContent(false);
-
-		/* is_locative_content */
-		$name = "content_group_".$this->id."_is_locative_content";
-		!empty ($_REQUEST[$name]) ? $this->setIsLocativeContent(true) : $this->setIsLocativeContent(false);
-
-		/* content_ordering_mode */
-		$name = "content_group_".$this->id."_content_ordering_mode";
-		$this->setContentOrderingMode(FormSelectGenerator :: getResult($name, null));
-
-		/*content_changes_on_mode */
-		$name = "content_group_".$this->id."_content_changes_on_mode";
-		$this->setContentChangesOnMode(FormSelectGenerator :: getResult($name, null));
-
-		/* allow_repeat*/
-		$name = "content_group_".$this->id."_allow_repeat";
-		$this->setAllowRepeat(FormSelectGenerator :: getResult($name, null));
-
-		/*display_num_elements*/
-		$name = "content_group_".$this->id."_display_num_elements";
-		$this->setDisplayNumElements($_REQUEST[$name]);
-
-		/* content_group_element */
-		foreach ($this->getElements() as $element)
-		{
-			$name = "content_group_".$this->id."_element_".$element->GetId()."_erase";
-			if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
-			{
-				$element->delete();
-			}
-			else
-			{
-				$element->processAdminUI();
-			}
-		}
-
-		/* We explicitely call the ContentGroupElement version of processNewContentUI */
-		$new_element = ContentGroupElement :: processNewContentUI("content_group_{$this->id}_new_element", $this);
+        if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
+        {
+    		parent :: processAdminUI();
+    
+    		/* is_artistic_content */
+    		$name = "content_group_".$this->id."_is_artistic_content";
+    		!empty ($_REQUEST[$name]) ? $this->setIsArtisticContent(true) : $this->setIsArtisticContent(false);
+    
+    		/* is_locative_content */
+    		$name = "content_group_".$this->id."_is_locative_content";
+    		!empty ($_REQUEST[$name]) ? $this->setIsLocativeContent(true) : $this->setIsLocativeContent(false);
+    
+    		/* content_ordering_mode */
+    		$name = "content_group_".$this->id."_content_ordering_mode";
+    		$this->setContentOrderingMode(FormSelectGenerator :: getResult($name, null));
+    
+    		/*content_changes_on_mode */
+    		$name = "content_group_".$this->id."_content_changes_on_mode";
+    		$this->setContentChangesOnMode(FormSelectGenerator :: getResult($name, null));
+    
+    		/* allow_repeat*/
+    		$name = "content_group_".$this->id."_allow_repeat";
+    		$this->setAllowRepeat(FormSelectGenerator :: getResult($name, null));
+    
+    		/*display_num_elements*/
+    		$name = "content_group_".$this->id."_display_num_elements";
+    		$this->setDisplayNumElements($_REQUEST[$name]);
+    
+    		/* content_group_element */
+    		foreach ($this->getElements() as $element)
+    		{
+    			$name = "content_group_".$this->id."_element_".$element->GetId()."_erase";
+    			if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
+    			{
+    				$element->delete($errmsg);
+    			}
+    			else
+    			{
+    				$element->processAdminUI();
+    			}
+    		}
+    
+            // The two following calls will either add a new element or add an existing one ( depending on what button the user clicked
+            /* We explicitely call the ContentGroupElement version of processNewContentUI */
+            ContentGroupElement :: processNewContentUI("content_group_{$this->id}_new_element", $this);
+            // Last parameters allows for existing content ( if any was selected )
+            ContentGroupElement :: processNewContentUI("content_group_{$this->id}_existing_element", $this, true);
+        }
 	}
-
-
-
-
 
 	/** Is this Content element displayable at this hotspot
 	 * @param $node Node, optionnal

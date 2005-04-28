@@ -55,13 +55,17 @@ class MainUI
 			$current_user = User :: getCurrentUser();
 			$html = '';
 			$html .= "<ul>\n";
-			$html .= "<li><a href='user_log.php'>"._("User logs")."</a></li>\n";
-			$html .= "<li><a href='online_users.php'>"._("Online Users")."</a></li>\n";
-			$html .= "<li><a href='user_stats.php'>"._("Cumulative user statistics")."</a></li>\n";
-			$html .= "<li><a href='hotspot_log.php'>"._("Hotspot logs")."</a></li>\n";
-			$html .= "<li><a href='import_user_database.php'>"._("Import NoCat user database")."</a></li>\n";
-			$html .= "<li><a href='hotspot.php'>"._("Hotspot creation and configuration")."</a> - Beta</li>\n";
-			$html .= "<li><a href='owner_sendfiles.php'>"._("Hotspot owner administration")."</a> - Beta</li>\n";
+            
+            if($current_user->isSuperAdmin())
+            {
+    			$html .= "<li><a href='user_log.php'>"._("User logs")."</a></li>\n";
+    			$html .= "<li><a href='online_users.php'>"._("Online Users")."</a></li>\n";
+    			$html .= "<li><a href='user_stats.php'>"._("Cumulative user statistics")."</a></li>\n";
+    			$html .= "<li><a href='hotspot_log.php'>"._("Hotspot logs")."</a></li>\n";
+    			$html .= "<li><a href='import_user_database.php'>"._("Import NoCat user database")."</a></li>\n";
+    			$html .= "<li><a href='hotspot.php'>"._("Hotspot creation and configuration")."</a> - Beta</li>\n";
+    			$html .= "<li><a href='owner_sendfiles.php'>"._("Hotspot owner administration")."</a> - Beta</li>\n";
+            }
 
 			/* Node admin */
 			$html .= "<div class='admin_section_container'>\n";
@@ -92,21 +96,24 @@ class MainUI
 			$html .= "</div>\n";
 
 			/* Network admin */
-			$html .= "<div class='admin_section_container'>\n";
-			$html .= '<form action="'.GENERIC_OBJECT_ADMIN_ABS_HREF.'" method="post">';
-			$html .= "<div class='admin_section_title'>"._("Network administration:")." </div>\n";
-
-			$html .= "<div class='admin_section_data'>\n";
-			$html .= "<input type='hidden' name='action' value='edit'>\n";
-			$html .= "<input type='hidden' name='object_class' value='Network'><br>\n";
-			$html .= Network :: getSelectNetworkUI('object_id');
-			$html .= "</div>\n";
-			$html .= "<div class='admin_section_tools'>\n";
-
-			$html .= "<input type=submit name='edit_submit' value='"._("Edit")."'>\n";
-			$html .= "</div>\n";
-			$html .= '</form>';
-			$html .= "</div>\n";
+            if($current_user->isSuperAdmin())
+            {
+    			$html .= "<div class='admin_section_container'>\n";
+    			$html .= '<form action="'.GENERIC_OBJECT_ADMIN_ABS_HREF.'" method="post">';
+    			$html .= "<div class='admin_section_title'>"._("Network administration:")." </div>\n";
+    
+    			$html .= "<div class='admin_section_data'>\n";
+    			$html .= "<input type='hidden' name='action' value='edit'>\n";
+    			$html .= "<input type='hidden' name='object_class' value='Network'><br>\n";
+    			$html .= Network :: getSelectNetworkUI('object_id');
+    			$html .= "</div>\n";
+    			$html .= "<div class='admin_section_tools'>\n";
+    
+    			$html .= "<input type=submit name='edit_submit' value='"._("Edit")."'>\n";
+    			$html .= "</div>\n";
+    			$html .= '</form>';
+    			$html .= "</div>\n";
+            }
 
 			$html .= "<li><a href='content_admin.php'>"._("Content manager")."</a></li>\n";
 			$html .= "</ul>\n";
@@ -147,10 +154,9 @@ class MainUI
 			}
 			else
 			{
-				$append_gateway = "";
-				if(!empty($_REQUEST['gw_id']))
-					$append_gateway .= "?gw_id=".$_REQUEST['gw_id'];
-				$html .= '<p>'._("NOT logged in.").' <a href="'.BASE_SSL_PATH.'login/'.$append_gateway.'">'. ("Login?").'</a></p>'."\n";
+                // If the user connects physically ( through a gateway don't show the confusing login message ) 
+                if(empty($_REQUEST['gw_id']) || empty($_REQUEST['gw_address']) || empty($_REQUEST['gw_port'])) 
+                    $html .= '<p>'._("NOT logged in.").' <a href="'.BASE_SSL_PATH.'login/">'. ("Login?").'</a></p>'."\n";
 				$html .= '<a class="administration" HREF="'.Network :: getCurrentNetwork()->getHomepageURL().'"><img class="administration" src="/images/lien_ext.gif"> '.Network :: getCurrentNetwork()->getName().'</a>'."\n";
 				$html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'faq.php"><img class="administration" src="/images/where.gif"> '._("Where am I?").'</a>'."\n";
 			}

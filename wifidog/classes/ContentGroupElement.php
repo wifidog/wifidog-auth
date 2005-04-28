@@ -34,15 +34,21 @@ class ContentGroupElement extends Content
 	private $content_group_element_row;
 
 	/** Like the same method as defined in Content, this method will create a ContentGroupElement based on the content type specified by getNewContentUI
+     * OR get an existing element by getSelectContentUI
 	 * @param $user_prefix A identifier provided by the programmer to recognise it's generated form
 	 * @param $content_group Must be present
+     * @param $associate_existing_content boolean : If set to true, will get an
+     * existing element instead of creating a new content.
 	 * @return the ContentGroup object, or null if the user didn't greate one
 	 */
-	static function processNewContentUI($user_prefix, ContentGroup $content_group)
+	static function processNewContentUI($user_prefix, ContentGroup $content_group, $associate_existing_content = false)
 	{
 		global $db;
 		$content_group_element_object = null;
-		$name = "get_new_content_{$user_prefix}_add";
+        if($associate_existing_content == true)
+            $name = "{$user_prefix}_add";
+		else
+            $name = "get_new_content_{$user_prefix}_add";
 		if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
 		{
 			/* Get the display order to add the GontentGroupElement at the end */
@@ -50,7 +56,10 @@ class ContentGroupElement extends Content
 			$db->execSqlUniqueRes($sql, $max_display_order_row, false);
 			$display_order = $max_display_order_row['max_display_order'] + 1;
 
-			$name = "get_new_content_{$user_prefix}_content_type";
+            if($associate_existing_content == true)
+                $name = "{$user_prefix}";
+			else
+                $name = "get_new_content_{$user_prefix}_content_type";
 
 			$content_id = get_guid();
 			$content_type = 'ContentGroupElement';
@@ -66,12 +75,12 @@ class ContentGroupElement extends Content
 			}
 			$content_group_element_object = self :: getObject($content_id);
 
-			$content_type = FormSelectGenerator :: getResult($name, null);
-			if ($content_type != 'ContentGroupElement')
-			{
-				$displayed_content_object = self :: createNewObject($content_type);
-				$content_group_element_object->replaceDisplayedContent($displayed_content_object);
-			}
+            $content_ui_result = FormSelectGenerator :: getResult($name, null);
+            if($associate_existing_content == true)
+                $displayed_content_object = self :: getObject($content_ui_result);
+            else
+                $displayed_content_object = self :: createNewObject($content_ui_result);
+			$content_group_element_object->replaceDisplayedContent($displayed_content_object);
 		}
 		return $content_group_element_object;
 	}
@@ -156,7 +165,10 @@ class ContentGroupElement extends Content
 		$html .= "<span class='admin_section_title'>"._("Displayed content:")."</span>\n";
 		if (empty ($this->content_group_element_row['displayed_content_id']))
 		{
-			$html .= self :: getNewContentUI("content_group_element_{$this->id}_new_displayed_content");
+            $html .= "<b>"._("Add a new displayed content OR select an existing one")."</b><br>";
+			$html .= self :: getNewContentUI("content_group_element_{$this->id}_new_displayed_content")."<br>";
+            $html .= self :: getSelectContentUI("content_group_element_{$this->id}_new_displayed_existing_element");
+            $html .= "<input type='submit' name='content_group_element_{$this->id}_new_displayed_existing_element_add' value='"._("Add")."'>";
 		}
 		else
 		{
@@ -197,7 +209,7 @@ class ContentGroupElement extends Content
 
 		if ($old_displayed_content != null)
 		{
-			$old_displayed_conten->delete();
+			$old_displayed_conten->delete($errmsg);
 		}
 
 	}
@@ -239,7 +251,11 @@ class ContentGroupElement extends Content
 		/* displayed_content_id */
 		if (empty ($this->content_group_element_row['displayed_content_id']))
 		{
+            // Could be either a new content or existing content ( try both successively )
 			$displayed_content = Content :: processNewContentUI("content_group_element_{$this->id}_new_displayed_content");
+            if ($displayed_content == null)
+                $displayed_content = Content :: processNewContentUI("content_group_element_{$this->id}_new_displayed_existing_element", true);
+                
 			if ($displayed_content != null)
 			{
 				$displayed_content_id = $displayed_content->GetId();
@@ -254,7 +270,7 @@ class ContentGroupElement extends Content
 			if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
 			{
 				$db->ExecSqlUpdate("UPDATE content_group_element SET displayed_content_id = NULL WHERE content_group_element_id = '$this->id'", FALSE);
-				$displayed_content->delete();
+				$displayed_content->delete($errmsg);
 			}
 			else
 			{

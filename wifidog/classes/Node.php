@@ -444,7 +444,7 @@ class Node implements GenericObject
     {
         global $db;
         $retval = array ();
-        $sql = "SELECT * FROM content_group WHERE is_artistic_content = true AND is_locative_content = true";
+        $sql = "SELECT * FROM content_group JOIN content ON (content.content_id = content_group.content_group_id) WHERE is_persistent = true AND is_artistic_content = true AND is_locative_content = true";
         $db->ExecSql($sql, $content_rows, false);
         if ($content_rows != null)
         {
