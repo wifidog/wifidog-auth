@@ -1,5 +1,6 @@
 <?php
 
+
 // $Id$
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
@@ -36,13 +37,13 @@ if (CONF_USE_CRON_FOR_DB_CLEANUP == false)
 }
 
 $node = null;
-if(!empty($_REQUEST['gw_id']))
-    $node = Node :: getObject($_REQUEST['gw_id']);
+if (!empty ($_REQUEST['gw_id']))
+	$node = Node :: getObject($_REQUEST['gw_id']);
 
 if ($node == null)
 {
-    $smarty->display("templates/message_unknown_hotspot.html");
-    exit;
+	$smarty->display("templates/message_unknown_hotspot.html");
+	exit;
 }
 
 $node_id = $node->getId();
@@ -56,12 +57,15 @@ if (isset ($session))
 }
 
 $tool_html = '';
-$tool_html .= "<h1>At this Hotspot</h1>"."\n";
+
+//TODO: Write this ?
+/*
+$tool_html .= "<h1>"._("At this Hotspot")."</h1>"."\n";
 $tool_html .= '<p class="indent">'."\n";
 $tool_html .= "Local content..."."\n";
-$tool_html .= "</p>"."\n";
+$tool_html .= "</p>"."\n";*/
 
-$tool_html .= "<h1>Users Online</h1>"."\n";
+$tool_html .= "<h1>"._("Online users")."</h1>"."\n";
 $tool_html .= '<p class="indent">'."\n";
 $current_node = Node :: getCurrentNode();
 if ($current_node != null)
@@ -71,7 +75,11 @@ if ($current_node != null)
 	$num_online_users = count($online_users);
 	if ($num_online_users > 0)
 	{
-		$tool_html .= $num_online_users.' '._("other users online at this hotspot...");
+		//$tool_html .= $num_online_users.' '._("other users online at this hotspot...");
+        $tool_html .= "<ul class='users_list'>\n";
+        foreach($online_users as $online_user)
+            $tool_html .= "<li>{$online_user->getUsername()}</li>\n";
+        $tool_html .= "</ul>\n";
 	}
 	else
 	{
@@ -102,6 +110,9 @@ $hotspot_logo_banner_url = find_local_content_url(HOTSPOT_LOGO_BANNER_NAME);
 $html = '';
 $html .= "<div id='portal_container'>\n";
 
+// Get the current user
+$current_user = User :: getCurrentUser();
+
 /* Network section */
 
 // This table ( width 100% ) force each section to display on top of each other, even though the content will float
@@ -110,70 +121,87 @@ $html .= "<table width='100%'><tr><td>";
 $html .= "<div class='portal_network_section'>\n";
 $html .= "<a href='{$hotspot_network_url}'><img class='portal_section_logo' src='{$network_logo_banner_url}' alt='{$hotspot_network_name} logo' border='0'></a>\n";
 $html .= "<span class='portal_section_title'><a href='{$hotspot_network_url}'>{$hotspot_network_name}</a></span>\n";
-$contents = Network :: getCurrentNetwork()->getAllContent();
-if($contents)
+// Get all network content and EXCLUDE user subscribed content
+if($current_user)
+    $contents = Network :: getCurrentNetwork()->getAllContent(true, $current_user);
+else
+    $contents = Network :: getCurrentNetwork()->getAllContent();
+if ($contents)
 {
-    foreach ($contents as $content)
-    {
-    	if($content->isDisplayableAt($node))
-    	{
-    $html .= "<div class='portal_content'>\n";
-    $html .= $content->getUserUI();
-    $html .= "</div>\n";
-    	}
-    }
+	foreach ($contents as $content)
+	{
+		if ($content->isDisplayableAt($node))
+		{
+			$html .= "<div class='portal_content'>\n";
+			$html .= $content->getUserUI();
+			$html .= "</div>\n";
+		}
+	}
 }
 $html .= "</div>\n";
 $html .= "</td></tr></table>";
 
 /* Node section */
-$html .= "<table width='100%'><tr><td>";
-$html .= "<div class='portal_node_section'>\n";
-$html .= "<img class='portal_section_logo' src='{$hotspot_logo_url}' alt=''>\n";
-$html .= "<span class='portal_section_title'>"._("Content from:")."</span>";
-$contents = $node->getAllContent();
-$node_homepage = $node->getHomePageURL();
-if(!empty($node_homepage))
+// Get all node content and EXCLUDE user subscribed content
+if($current_user)
+    $contents = $node->getAllContent(true, $current_user);
+else
+    $contents = $node->getAllContent();
+if($contents)
 {
-	$html .= "<a href='$node_homepage'>";
-}
-$html .= $node->getName();
-if(!empty($node_homepage))
-{
-	$html .= "</a>\n";
-}
-foreach ($contents as $content)
-{
-	    	if($content->isDisplayableAt($node))
+    $html .= "<table width='100%'><tr><td>";
+    $html .= "<div class='portal_node_section'>\n";
+    $html .= "<img class='portal_section_logo' src='{$hotspot_logo_url}' alt=''>\n";
+    $html .= "<span class='portal_section_title'>"._("Content from:")."</span>";
+    $node_homepage = $node->getHomePageURL();
+    if (!empty ($node_homepage))
+    {
+    	$html .= "<a href='$node_homepage'>";
+    }
+    $html .= $node->getName();
+    if (!empty ($node_homepage))
+    {
+    	$html .= "</a>\n";
+    }
+    foreach ($contents as $content)
+    {
+    	if ($content->isDisplayableAt($node))
     	{
-    $html .= "<div class='portal_content'>\n";
-	$html .= $content->getUserUI();
-    $html .= "</div>\n";
+    		$html .= "<div class='portal_content'>\n";
+    		$html .= $content->getUserUI();
+    		$html .= "</div>\n";
     	}
+    }
+    $html .= "</div>\n";
+    $html .= "</td></tr></table>";
 }
-$html .= "</div>\n";
-$html .= "</td></tr></table>";
 
+/* User section */
+if($current_user)
+{
+    $contents = User :: getCurrentUser()->getAllContent();
+    if($contents)
+    {
+        $html .= "<table width='100%'><tr><td>";
+        $html .= "<div class='portal_user_section'>\n";
+        $html .= _("My content")."\n";
+        foreach ($contents as $content)
+        {
+        	$html .= "<div class='portal_content'>\n";
+        	$html .= $content->getUserUI();
+        	$html .= "</div>\n";
+        }
+        $html .= "</div>\n";
+        $html .= "</td></tr></table>";
+    }
+}
+
+// Hyperlinks to full content display page
 $html .= "<a href='/content/?gw_id={$current_node_id}'>"._("Show all available contents for this hotspot")."</a>"."\n";
 $html .= "<div style='clear:both;'></div>";
 
-/* User section */
-//TODO: Add user content support
-/*
-$contents = User::getCurrentUser()->getAllContent();
-$html .= "<div class='portal_user_section'>\n";
-$html .= _("My content")."\n";
-foreach ($contents as $content)
-{
-    $html .= "<div class='portal_content'>\n";
-	$html .= $content->getUserUI();
-    $html .= "</div>\n";
-}
 $html .= "</div>\n";
-$html .= "</div>\n";
-*/
 
 $ui->setMainContent($html);
 $ui->display();
-
 ?>

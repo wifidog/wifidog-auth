@@ -256,7 +256,6 @@ class EmbeddedContent extends Content
 		return parent :: getUserUI($html);
 	}
 
-	//TODO: Add support for attributes and parameters
 	public function getAttributes()
 	{
 		return $this->embedded_content_row['attributes'];

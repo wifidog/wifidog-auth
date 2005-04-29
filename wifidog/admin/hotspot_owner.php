@@ -23,7 +23,10 @@
    * @author Copyright (C) 2005 Pascal Leclerc
    */
 
-// TODO : Permettre la recherche de users directement dans l'interface
+// TODO : URGENT create a search field to get user_id based on Network + username 
+// All the needed methods should already be in User.php
+// See very good example in /Classes/Content.php around line 708
+// User::getSelectUserUI()
 define('BASEPATH','../');
 require_once 'admin_common.php';
 

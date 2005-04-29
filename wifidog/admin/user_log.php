@@ -24,6 +24,7 @@
  */
 define('BASEPATH', '../');
 require_once 'admin_common.php';
+require_once BASEPATH.'classes/MainUI.php';
 
 $security = new Security();
 $security->requireAdmin();
@@ -60,7 +61,11 @@ if (!empty ($_REQUEST['user_id']))
 	{
 		$smarty->assign("error", $e->getMessage());
 	}
-	$smarty->display("admin/templates/user_log_detailed.html");
+    
+    $ui=new MainUI();
+    $ui->setToolSection('ADMIN');
+    $ui->setMainContent($smarty->fetch("admin/templates/user_log_detailed.html"));
+    $ui->display();
 }
 else
 {
@@ -103,11 +108,9 @@ else
 
 	$smarty->assign("account_status_to_text", $account_status_to_text);
 
-	require_once BASEPATH.'classes/MainUI.php';
-$ui=new MainUI();
-$ui->setToolSection('ADMIN');
-$ui->setMainContent($smarty->fetch("admin/templates/user_log.html"));
-$ui->display();
+    $ui=new MainUI();
+    $ui->setToolSection('ADMIN');
+    $ui->setMainContent($smarty->fetch("admin/templates/user_log.html"));
+    $ui->display();
 }
 ?>
-

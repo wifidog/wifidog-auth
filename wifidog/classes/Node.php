@@ -26,6 +26,7 @@
  
 require_once BASEPATH.'include/common.php';
 require_once 'Content/ContentGroup.php';
+require_once BASEPATH.'classes/User.php';
 
 /** Abstract a Node.  A Node is an actual physical transmitter. */
 class Node implements GenericObject
@@ -373,7 +374,7 @@ class Node implements GenericObject
 	public function processAdminUI()
 	{
 		$user = User::getCurrentUser();
-		if (!$this->isOwner($user) || !$user->isSuperAdmin())
+		if (!$this->isOwner($user) && !$user->isSuperAdmin())
 		{
 			throw new Exception(_('Access denied!'));
 		}
@@ -392,7 +393,8 @@ class Node implements GenericObject
 		{
 			$name = "node_{$this->id}_new_content";
 			$content = Content :: processSelectContentUI($name);
-			$this->addContent($content);
+            if($content)
+                $this->addContent($content);
 		}
 	}
     
@@ -421,13 +423,20 @@ class Node implements GenericObject
 	}
 
 	/**Get an array of all Content linked to this node
-	* @return an array of Content or an empty arrray */
-	function getAllContent()
+     * @param boolean $exclude_subscribed_content
+	* @param User $subscriber The User object used to discriminate the content
+    * @return an array of Content or an empty arrray */
+    function getAllContent($exclude_subscribed_content = false, $subscriber = null)
 	{
 		global $db;
 		$retval = array ();
-		$sql = "SELECT * FROM node_has_content WHERE node_id='$this->id' ORDER BY subscribe_timestamp";
+        // Get all network, but exclude user subscribed content if asked
+        if ($exclude_subscribed_content == true && $subscriber)
+            $sql = "SELECT content_id FROM node_has_content WHERE node_id='$this->id' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$subscriber->getId()}') ORDER BY subscribe_timestamp";
+        else
+            $sql = "SELECT content_id FROM node_has_content WHERE node_id='$this->id' ORDER BY subscribe_timestamp";
 		$db->ExecSql($sql, $content_rows, false);
+        
 		if ($content_rows != null)
 		{
 			foreach ($content_rows as $content_row)
@@ -517,21 +526,21 @@ class Node implements GenericObject
 		return $statuses_array;
 	}
 
-/** The list of users online at this node
- * @return An array of User object, or en empty array */
+    /** The list of users online at this node
+     * @return An array of User object, or en empty array */
 	function getOnlineUsers()
 	{
 		global $db;
 		$retval=array();
 		$db->ExecSql("SELECT users.user_id FROM users,connections WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}'", $users, false);
-		if($users!=null)
+		if($users != null)
 		{
 			foreach ($users as $user_row)
 			{
-				$retval[]=User::getObject($user_row['user_id']);
+				$retval[] = User::getObject($user_row['user_id']);
 			}
 		}
-		return $users;
+		return $retval;
 	}
 
 	function getOwners()
@@ -590,7 +599,9 @@ class Node implements GenericObject
 		return $this->mRow;
 	}
 
-/** Warning, the semantics of this function will change */
+    /** Warning, the semantics of this function will change *
+     * @deprecated version - 2005-04-29 USE getOnlineUsers instead
+     * */
 	public static function getAllOnlineUsers()
 	{
 		global $db;

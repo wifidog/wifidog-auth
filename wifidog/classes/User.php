@@ -579,6 +579,7 @@ class User
 		$html .= "<input type='text' name='$name' value=''>\n";
 		return $html;
 	}
+    
 	/** Get the selected user, IF one was selected and is valid
 	 * @param $user_prefix A identifier provided by the programmer to recognise it's generated form
 	 * @return the User object, or null if the user is invalid or none was selected
@@ -591,7 +592,44 @@ class User
 		$username = $_REQUEST[$name];
 		return self::getUserByUsernameAndOrigin($username, $network->GetId());
 	}
+    
+    /** Add content to this user ( subscription ) */
+    public function addContent(Content $content)
+    {
+        global $db;
+        $content_id = $db->EscapeString($content->getId());
+        $sql = "INSERT INTO user_has_content (user_id, content_id) VALUES ('$this->id','$content_id')";
+        $db->ExecSqlUpdate($sql, false);
+        return true;
+    }
 
+    /** Remove content from this node */
+    public function removeContent(Content $content)
+    {
+        global $db;
+        $content_id = $db->EscapeString($content->getId());
+        $sql = "DELETE FROM user_has_content WHERE user_id='$this->id' AND content_id='$content_id'";
+        $db->ExecSqlUpdate($sql, false);
+        return true;
+    }
 
+    /**Get an array of all Content linked to this node
+    * @return an array of Content or an empty arrray */
+    function getAllContent()
+    {
+        global $db;
+        $retval = array ();
+        $sql = "SELECT * FROM user_has_content WHERE user_id='$this->id' ORDER BY subscribe_timestamp";
+        $db->ExecSql($sql, $content_rows, false);
+        if ($content_rows != null)
+        {
+            foreach ($content_rows as $content_row)
+            {
+                $retval[] = Content :: getObject($content_row['content_id']);
+            }
+        }
+        return $retval;
+    }
+    
 } // End class
 ?>

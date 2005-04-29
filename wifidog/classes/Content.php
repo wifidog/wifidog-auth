@@ -247,9 +247,11 @@ class Content implements GenericObject
 	 */
 	static function processSelectContentUI($user_prefix)
 	{
-		$object = null;
 		$name = "{$user_prefix}";
-		return Content :: getObject($_REQUEST[$name]);
+        if(!empty($_REQUEST[$name]))
+            return Content :: getObject($_REQUEST[$name]);
+        else
+            return null;
 	}
 
 	private function __construct($content_id)
@@ -889,15 +891,13 @@ class Content implements GenericObject
 	 * @return true on success, false on failure */
 	public function subscribe(User $user)
 	{
-		echo "<h1>WRITEME</h1>";
-		return false;
+		return $user->addContent($this);
 	}
 	/** Unsubscribe to the project
 	 * @return true on success, false on failure */
 	public function unsubscribe(User $user)
 	{
-		echo "<h1>WRITEME</h1>";
-		return false;
+		return $user->removeContent($this);
 	}
 
 	/** Persistent (or read-only) content is meant for re-use.  It will not be deleted when the delete() method is called.  When a containing element (ContentGroup, ContentGroupElement) is deleted, it calls delete on all the content it includes.  If the content is persistent, only the association will be removed.

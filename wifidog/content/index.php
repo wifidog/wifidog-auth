@@ -54,34 +54,42 @@ if (isset ($session))
 }
 
 $tool_html = '';
+
+//TODO: Write this
+/*
 $tool_html .= "<h1>"._("At this Hotspot")."</h1>"."\n";
 $tool_html .= '<p class="indent">'."\n";
 $tool_html .= _("Local content...")."\n";
-$tool_html .= "</p>"."\n";
+$tool_html .= "</p>"."\n";*/
 
-$tool_html .= "<h1>"._("Users Online")."</h1>"."\n";
+$tool_html .= "<h1>"._("Online users")."</h1>"."\n";
 $tool_html .= '<p class="indent">'."\n";
 $current_node = Node :: getCurrentNode();
 if ($current_node != null)
 {
-	$current_node_id = $current_node->getId();
-	$online_users = $current_node->getOnlineUsers();
-	$num_online_users = count($online_users);
-	if ($num_online_users > 0)
-	{
-		$tool_html .= $num_online_users.' '._("other users online at this hotspot...");
-	}
-	else
-	{
-		$tool_html .= _("Nobody is online at this hotspot...");
-	}
+    $current_node_id = $current_node->getId();
+    $online_users = $current_node->getOnlineUsers();
+    $num_online_users = count($online_users);
+    if ($num_online_users > 0)
+    {
+        //$tool_html .= $num_online_users.' '._("other users online at this hotspot...");
+        $tool_html .= "<ul class='users_list'>\n";
+        foreach($online_users as $online_user)
+            $tool_html .= "<li>{$online_user->getUsername()}</li>\n";
+        $tool_html .= "</ul>\n";
+    }
+    else
+    {
+        $tool_html .= _("Nobody is online at this hotspot...");
+    }
 }
 else
 {
-	$current_node_id = null;
-	$tool_html .= _("You are not currently at a hotspot...");
+    $current_node_id = null;
+    $tool_html .= _("You are not currently at a hotspot...");
 }
 $tool_html .= "</p>"."\n";
+
 
 $tool_html .= '<p class="indent">'."\n";
 

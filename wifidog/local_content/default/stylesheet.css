@@ -59,10 +59,13 @@ form.language{
 .tool_content{
 	padding: 0px 5px 0px 5px;
 }
-.tool_content ul {
+.tool_content .admin_menu_list {
 	list-style-type: square;
 	padding: 20px;
 	margin: 0px;
+}
+.tool_content .users_list {
+	list-style-type: square;
 }
 div.avis{
 	padding: 20px 10px 10px 10px;

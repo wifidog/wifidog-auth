@@ -1,6 +1,4 @@
 <?php
-
-
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -26,6 +24,7 @@
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'classes/GenericObject.php';
 require_once BASEPATH.'classes/Content.php';
+require_once BASEPATH.'classes/User.php';
 
 /** Abstract a Network.  A network is an administrative entity with it's own users, nodes and authenticator. */
 class Network implements GenericObject
@@ -49,8 +48,8 @@ class Network implements GenericObject
 	static function getCurrentNetwork($real_network_only = false)
 	{
 		global $AUTH_SOURCE_ARRAY;
-		$keys = array_keys ( $AUTH_SOURCE_ARRAY);
-		
+		$keys = array_keys($AUTH_SOURCE_ARRAY);
+
 		return new self($keys[0]);
 	}
 
@@ -154,15 +153,21 @@ class Network implements GenericObject
 		return HOTSPOT_NETWORK_URL;
 	}
 
-
 	/**Get an array of all Content linked to the network
+	* @param boolean $exclude_subscribed_content
+    * @param User $subscriber The User object used to discriminate the content
 	* @return an array of Content or an empty arrray */
-	function getAllContent()
+	function getAllContent($exclude_subscribed_content = false, $subscriber = null)
 	{
-		global $db;
+	   global $db;
 		$retval = array ();
-		$sql = "SELECT * FROM network_has_content WHERE network_id='$this->id' ORDER BY subscribe_timestamp";
+        // Get all network, but exclude user subscribed content if asked
+		if ($exclude_subscribed_content == true && $subscriber)
+			$sql = "SELECT content_id FROM network_has_content WHERE network_id='$this->id' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$subscriber->getId()}') ORDER BY subscribe_timestamp";
+		else
+			$sql = "SELECT content_id FROM network_has_content WHERE network_id='$this->id' ORDER BY subscribe_timestamp";
 		$db->ExecSql($sql, $content_rows, false);
+        
 		if ($content_rows != null)
 		{
 			foreach ($content_rows as $content_row)
@@ -175,14 +180,14 @@ class Network implements GenericObject
 
 	/** Retreives the admin interface of this object.
 	 * @return The HTML fragment for this interface */
-	 
-	 /** Get the Authenticator object for this network */
-	 public function getAuthenticator()
-	 {
-	 	global $AUTH_SOURCE_ARRAY;
-	 return $AUTH_SOURCE_ARRAY[$this->id]['authenticator'];
-	 }
-	 
+
+	/** Get the Authenticator object for this network */
+	public function getAuthenticator()
+	{
+		global $AUTH_SOURCE_ARRAY;
+		return $AUTH_SOURCE_ARRAY[$this->id]['authenticator'];
+	}
+
 	public function getAdminUI()
 	{
 		$html = '';
@@ -220,7 +225,12 @@ class Network implements GenericObject
 	*/
 	public function processAdminUI()
 	{
-
+        $user = User::getCurrentUser();
+        if (!$this->isOwner($user) && !$user->isSuperAdmin())
+        {
+            throw new Exception(_('Access denied!'));
+        }
+        
 		foreach ($this->getAllContent() as $content)
 		{
 			$name = "content_group_".$this->id."_element_".$content->GetId()."_erase";
@@ -235,24 +245,25 @@ class Network implements GenericObject
 		{
 			$name = "network_{$this->id}_new_content";
 			$content = Content :: processSelectContentUI($name);
-			$this->addContent($content);
+            if($content)
+                $this->addContent($content);
 		}
 	}
 
-/** Add network-wide content to this network */
+	/** Add network-wide content to this network */
 	public function addContent(Content $content)
 	{
 		global $db;
-		$content_id=$db->EscapeString($content->getId());
+		$content_id = $db->EscapeString($content->getId());
 		$sql = "INSERT INTO network_has_content (network_id, content_id) VALUES ('$this->id','$content_id')";
 		$db->ExecSqlUpdate($sql, false);
 	}
-	
-/** Remove network-wide content from this network */
+
+	/** Remove network-wide content from this network */
 	public function removeContent(Content $content)
 	{
 		global $db;
-		$content_id=$db->EscapeString($content->getId());
+		$content_id = $db->EscapeString($content->getId());
 		$sql = "DELETE FROM network_has_content WHERE network_id='$this->id' AND content_id='$content_id'";
 		$db->ExecSqlUpdate($sql, false);
 	}

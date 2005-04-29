@@ -1,3 +1,12 @@
+2005-04-29 François Proulx <francois.proulx@gmail.com>
+	* Wrote User.php addcontent, removeContent, getAllContent()
+	* Wrote Content.php subscrite() and unsubscribe()
+	* Added parameters to getAllContent() in Node and Network ( exclude_subscribed_content )
+	* These will be used for subscribing a to some content
+	* Pattern Language will be the first to use it
+	* Online users lists
+	* Fixed bugs in Node and Network ( isOwner check )
+	
 2005-04-28 François Proulx <francois.proulx@gmail.com>
 	* Logout button build a query string containing gw_id, gw_address, gw_port ( if available ), so that a user at a physical hotspot will get the login page from the hotspot he is.
 	* Fixed but in Locale ( did not propertly set the locale in the session )
