@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-26 20:51-0400\n"
-"PO-Revision-Date: 2005-04-26 21:00-0500\n"
+"POT-Creation-Date: 2005-04-28 19:36-0400\n"
+"PO-Revision-Date: 2005-04-28 19:54-0500\n"
 "Last-Translator: fproulx <*Set Email address in Preferences*>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -911,23 +911,24 @@ msgstr ""
 #: ../classes/Node.php:190 ../classes/Node.php:202 ../classes/Node.php:217
 #: ../classes/Node.php:442 ../classes/Node.php:454 ../classes/Node.php:466
 #: ../classes/Node.php:448 ../classes/Node.php:460 ../classes/Node.php:472
+#: ../classes/Node.php:476 ../classes/Node.php:488 ../classes/Node.php:500
 msgid "No nodes could not be found in the database"
 msgstr ""
 "Aucun point d'acc&egrave;s n'a &eacute;t&eacute; trouv&eacute; dans la base "
 "de donn&eacute;es"
 
 #: ../classes/Node.php:153 ../classes/Node.php:207 ../classes/Node.php:228
-#: ../classes/Node.php:477 ../classes/Node.php:483
+#: ../classes/Node.php:477 ../classes/Node.php:483 ../classes/Node.php:511
 msgid "No deployment statues  could be found in the database"
 msgstr ""
 
 #: smarty.txt:24 smarty.txt:2 smarty.txt:22 smarty.txt:23
-#: ../classes/MainUI.php:143
+#: ../classes/MainUI.php:143 ../classes/MainUI.php:151
 msgid "Logged in as:"
 msgstr "Connect&eacute; en tant que:"
 
 #: smarty.txt:25 smarty.txt:3 smarty.txt:23 smarty.txt:24
-#: ../classes/MainUI.php:150
+#: ../classes/MainUI.php:150 ../classes/MainUI.php:168
 msgid "NOT logged in."
 msgstr "Vous n'ETES PAS connect&eacute;."
 
@@ -952,7 +953,7 @@ msgstr "Aucun point d'acc&egrave;s sp&eacute;cifi&eacute;!"
 
 #: smarty.txt:41 smarty.txt:95 smarty.txt:107 smarty.txt:21 smarty.txt:76
 #: smarty.txt:74 smarty.txt:22 smarty.txt:75 ../classes/MainUI.php:274
-#: smarty.txt:47
+#: smarty.txt:47 ../classes/MainUI.php:292
 msgid "Please get in touch with "
 msgstr "Veuillez contacter "
 
@@ -996,6 +997,8 @@ msgstr ""
 #: ../classes/Node.php:125 ../classes/Node.php:376 smarty.txt:69
 #: ../classes/Content/FlickrPhotostream.php:629
 #: ../classes/Content/FlickrPhotostream.php:680 smarty.txt:41
+#: ../classes/Node.php:127 ../classes/Node.php:378
+#: ../classes/Content/FlickrPhotostream.php:683
 msgid "Access denied!"
 msgstr "Acc&egrave;s refus&eacute;!"
 
@@ -1038,43 +1041,43 @@ msgstr "nouveaux utilisateurs"
 
 #: smarty.txt:99 smarty.txt:111 smarty.txt:113 smarty.txt:119 smarty.txt:145
 #: smarty.txt:146 smarty.txt:144 ../admin/index.php:42
-#: ../classes/MainUI.php:58
+#: ../classes/MainUI.php:58 ../classes/MainUI.php:61
 msgid "User logs"
 msgstr "Logs des utilisateurs"
 
 #: smarty.txt:100 smarty.txt:112 smarty.txt:114 smarty.txt:108 smarty.txt:120
 #: smarty.txt:146 smarty.txt:147 smarty.txt:145 ../admin/index.php:43
-#: ../classes/MainUI.php:59
+#: ../classes/MainUI.php:59 ../classes/MainUI.php:62
 msgid "Online Users"
 msgstr "Usagers en ligne"
 
 #: smarty.txt:101 smarty.txt:113 smarty.txt:115 smarty.txt:121 smarty.txt:147
 #: smarty.txt:148 smarty.txt:146 ../admin/index.php:44
-#: ../classes/MainUI.php:60
+#: ../classes/MainUI.php:60 ../classes/MainUI.php:63
 msgid "Cumulative user statistics"
 msgstr "Statistiques cumulatives des utilisateurs"
 
 #: smarty.txt:102 smarty.txt:114 smarty.txt:116 smarty.txt:122 smarty.txt:148
 #: smarty.txt:149 smarty.txt:147 ../admin/index.php:45
-#: ../classes/MainUI.php:61
+#: ../classes/MainUI.php:61 ../classes/MainUI.php:64
 msgid "Hotspot logs"
 msgstr "Logs des noeuds"
 
 #: smarty.txt:103 smarty.txt:115 smarty.txt:117 smarty.txt:123 smarty.txt:149
 #: smarty.txt:150 smarty.txt:148 ../admin/index.php:46
-#: ../classes/MainUI.php:62
+#: ../classes/MainUI.php:62 ../classes/MainUI.php:65
 msgid "Import NoCat user database"
 msgstr "Importer la base d'utilisateur NoCat"
 
 #: smarty.txt:104 smarty.txt:116 smarty.txt:118 smarty.txt:124 smarty.txt:150
 #: smarty.txt:151 smarty.txt:149 ../admin/index.php:47
-#: ../classes/MainUI.php:63
+#: ../classes/MainUI.php:63 ../classes/MainUI.php:66
 msgid "Hotspot creation and configuration"
 msgstr "Cr&eacute;ation et configuration d'un point d'acc&egrave;s"
 
 #: smarty.txt:105 smarty.txt:117 smarty.txt:119 smarty.txt:125 smarty.txt:151
 #: smarty.txt:152 smarty.txt:150 ../admin/index.php:48
-#: ../classes/MainUI.php:64
+#: ../classes/MainUI.php:64 ../classes/MainUI.php:67
 msgid "Hotspot owner administration"
 msgstr "Administrateur du propri&eacute;taire de point d'acc&egrave;s"
 
@@ -1102,7 +1105,8 @@ msgstr "Action"
 #: smarty.txt:123 smarty.txt:121 ../admin/generic_object_admin.php:139
 #: ../admin/index.php:71 ../admin/index.php:88 smarty.txt:118
 #: ../admin/generic_object_admin.php:138 ../classes/MainUI.php:89
-#: ../classes/MainUI.php:106 smarty.txt:90
+#: ../classes/MainUI.php:106 smarty.txt:90 ../classes/MainUI.php:93
+#: ../classes/MainUI.php:112
 msgid "Edit"
 msgstr "Modifier"
 
@@ -1123,6 +1127,10 @@ msgstr "Propri&eacute;taire"
 #: ../classes/Content.php:567 ../classes/Content.php:588
 #: ../classes/Content.php:609 ../classes/ContentGroupElement.php:165
 #: ../classes/Content/ContentGroup.php:220 smarty.txt:92
+#: ../classes/Content.php:598 ../classes/Content.php:629
+#: ../classes/Content.php:650 ../classes/Content.php:671
+#: ../classes/ContentGroupElement.php:179
+#: ../classes/Content/ContentGroup.php:392
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -1143,7 +1151,7 @@ msgstr "Adresse URL de la page d'accueil"
 
 #: smarty.txt:120 smarty.txt:133 smarty.txt:136 smarty.txt:142 smarty.txt:130
 #: smarty.txt:131 smarty.txt:129 ../admin/content_admin.php:46 smarty.txt:126
-#: smarty.txt:98
+#: smarty.txt:98 ../admin/content_admin.php:69
 msgid "Description"
 msgstr "Description"
 
@@ -1324,7 +1332,9 @@ msgstr "Donner &agrave; un utilisateur acc&egrave;s d'administrer ce noeud"
 #: smarty.txt:144 smarty.txt:149 smarty.txt:155 smarty.txt:143 smarty.txt:142
 #: ../classes/Content.php:170 ../classes/Network.php:181
 #: ../classes/Node.php:361 smarty.txt:139 ../classes/Content.php:171
-#: ../classes/Network.php:212 smarty.txt:111
+#: ../classes/Network.php:212 smarty.txt:111 ../classes/Content.php:172
+#: ../classes/ContentGroupElement.php:171 ../classes/Node.php:363
+#: ../classes/Content/ContentGroup.php:400
 msgid "Add"
 msgstr "Ajouter"
 
@@ -1442,32 +1452,35 @@ msgstr "Vous n'&ecirc;tes pas propri&eacute;taire d'un point d'acc&egrave;s"
 msgid "Could not delete node owners!"
 msgstr "Impossible de supprimer les propri&eacute;taires de noeud !"
 
-#: ../classes/Node.php:50 ../classes/Node.php:131
+#: ../classes/Node.php:50 ../classes/Node.php:131 ../classes/Node.php:133
 msgid "Could not delete node!"
 msgstr "Impossible de supprimer le noeud !"
 
-#: ../classes/Node.php:74 ../classes/Node.php:184
+#: ../classes/Node.php:74 ../classes/Node.php:184 ../classes/Node.php:186
 msgid "This node already exists."
 msgstr "Ce noeud existe d&eacute;j&agrave;."
 
 #: ../classes/Node.php:79 ../classes/Node.php:156 ../classes/Node.php:190
+#: ../classes/Node.php:158 ../classes/Node.php:192
 msgid "Unable to insert new node into database!"
 msgstr ""
 "Impossible d'ins&eacute;rer le nouveau noeud dans la base de donn&eacute;es !"
 
-#: ../classes/Node.php:174 ../classes/Node.php:324
+#: ../classes/Node.php:174 ../classes/Node.php:324 ../classes/Node.php:326
 msgid "Unable to update database!"
 msgstr "Impossible de mettre &agrave; jour la base de donn&eacute;es !"
 
-#: ../classes/Node.php:177 ../classes/Node.php:329
+#: ../classes/Node.php:177 ../classes/Node.php:329 ../classes/Node.php:331
 msgid "No info to update node with!"
 msgstr "Pas d'informations pour mettre &agrave; jour le noeud !"
 
 #: ../classes/Node.php:257 ../classes/Node.php:508 ../classes/Node.php:523
+#: ../classes/Node.php:551
 msgid "Could not add owner"
 msgstr "Impossible d'ajouter le propri&eacute;taire"
 
 #: ../classes/Node.php:263 ../classes/Node.php:515 ../classes/Node.php:530
+#: ../classes/Node.php:558
 msgid "Could not remove owner"
 msgstr "Impossible de retirer le propri&eacute;taire"
 
@@ -1703,15 +1716,15 @@ msgstr "Ce courriel n'a pu être trouvé dans notre base de données."
 msgid "This username could not be found in our database"
 msgstr "Ce nom d'utilisateur n'a pu être trouvé dans notre base de données."
 
-#: ../admin/content_admin.php:46
+#: ../admin/content_admin.php:46 ../admin/content_admin.php:69
 msgid "Title"
 msgstr "Titre"
 
-#: ../admin/content_admin.php:46
+#: ../admin/content_admin.php:46 ../admin/content_admin.php:69
 msgid "Content type"
 msgstr "Type de contenu"
 
-#: ../admin/content_admin.php:87
+#: ../admin/content_admin.php:87 ../admin/content_admin.php:37
 msgid "Add new content"
 msgstr "Ajouter un nouveau contenu"
 
@@ -1749,15 +1762,15 @@ msgstr "Prévisualiser"
 msgid "You must be logged in to access the administration panel."
 msgstr "Vous devez être connecté pour accéder au panneau d'administration."
 
-#: ../admin/index.php:53 ../classes/MainUI.php:69
+#: ../admin/index.php:53 ../classes/MainUI.php:69 ../classes/MainUI.php:73
 msgid "Node administration:"
 msgstr "Gestion du noeud:"
 
-#: ../admin/index.php:79 ../classes/MainUI.php:97
+#: ../admin/index.php:79 ../classes/MainUI.php:97 ../classes/MainUI.php:103
 msgid "Network administration:"
 msgstr "Gestion du réseau:"
 
-#: ../admin/index.php:93 ../classes/MainUI.php:111
+#: ../admin/index.php:93 ../classes/MainUI.php:111 ../classes/MainUI.php:118
 msgid "Content manager"
 msgstr "Gestionnaire de contenu"
 
@@ -1768,6 +1781,7 @@ msgstr "Le type de contenu est optionnel, mais ne peut être vide !"
 #: ../classes/Content.php:68 ../classes/Content/ContentGroupElement.php:59
 #: ../classes/Content/ContentGroupElement.php:64 ../classes/Content.php:69
 #: ../classes/ContentGroupElement.php:57 ../classes/ContentGroupElement.php:62
+#: ../classes/ContentGroupElement.php:69 ../classes/ContentGroupElement.php:74
 msgid "Unable to insert new content into database!"
 msgstr "Impossible d'insérer le nouveau contenu dans la base de données !"
 
@@ -1777,88 +1791,106 @@ msgstr "Impossible d'insérer le nouveau contenu dans la base de données !"
 #: ../classes/Content/EmbeddedContent.php:57 ../classes/Content/File.php:64
 #: ../classes/Content/FlickrPhotostream.php:76
 #: ../classes/Content/ContentGroup.php:57 ../classes/Content/File.php:62
-#: ../classes/Content/FlickrPhotostream.php:83
+#: ../classes/Content/FlickrPhotostream.php:83 ../classes/Content.php:264
+#: ../classes/Content/ContentGroup.php:66
 msgid "The content with the following id could not be found in the database: "
 msgstr ""
 "Le contenu avec l'ID suivant n'a pu être trouvé dans la base de données:"
 
-#: ../classes/Content.php:124
+#: ../classes/Content.php:124 ../classes/Content.php:125
 msgid "Unable to open directory "
 msgstr "Impossible d'ouvrir le répertoire"
 
 #: ../classes/Content.php:144 ../classes/Content.php:145
+#: ../classes/Content.php:146
 msgid "Content type: "
 msgstr "Type de contenu:"
 
 #: ../classes/Content.php:158 ../classes/Content.php:289
 #: ../classes/Content.php:159 ../classes/Content.php:288
+#: ../classes/Content.php:160 ../classes/Content.php:306
 msgid "The following content type isn't valid: "
 msgstr "Le type de contenu suivant est invalide:"
 
 #: ../classes/Content.php:166 ../classes/Content.php:167
+#: ../classes/Content.php:168
 msgid "Add a"
 msgstr "Ajouter un"
 
 #: ../classes/Content.php:223 ../classes/Content.php:224
+#: ../classes/Content.php:239
 msgid "Sorry, no content available in the database"
 msgstr "Désolé, aucun contenu disponible dans la base de données"
 
-#: ../classes/Content.php:261
+#: ../classes/Content.php:261 ../classes/Content.php:279
 msgid "Untitled content"
 msgstr "Contenu sans titre"
 
 #: ../classes/Content.php:295 ../classes/Content.php:294
+#: ../classes/Content.php:312
 msgid "Update was unsuccessfull (database error)"
 msgstr "La mise à jour a échouée (erreur de base de données)"
 
 #: ../classes/Content.php:314 ../classes/Content.php:313
+#: ../classes/Content.php:331
 msgid "Unable to insert the new Owner into database."
 msgstr "Impossible d'insérer un nouveau propriétaire dans la base de données."
 
 #: ../classes/Content.php:333 ../classes/Content.php:332
+#: ../classes/Content.php:350
 msgid "Unable to remove the owner from the database."
 msgstr "Impossible de supprimer le propriétaire de la base de données."
 
 #: ../classes/Content.php:417 ../classes/Content.php:507
+#: ../classes/Content.php:569
 msgid "You must select a content type: "
 msgstr "Vous devez sélectionner un type de contenu:"
 
 #: ../classes/Content.php:432 ../classes/Content.php:522
+#: ../classes/Content.php:584
 msgid "Title:"
 msgstr "Titre:"
 
 #: ../classes/Content.php:463 ../classes/Content.php:553
+#: ../classes/Content.php:615
 msgid "Description:"
 msgstr "Description:"
 
 #: ../classes/Content.php:484 ../classes/Content.php:574
+#: ../classes/Content.php:636
 msgid "Information on this project:"
 msgstr "Informations sur ce projet:"
 
 #: ../classes/Content.php:505 ../classes/Content.php:595
+#: ../classes/Content.php:657
 msgid "Sponsor of this project:"
 msgstr "Commanditaires de ce projet:"
 
 #: ../classes/Content.php:526 ../classes/Content.php:616
+#: ../classes/Content.php:678
 msgid "Content owner list"
 msgstr "Liste des propriétaires de contenu"
 
 #: ../classes/Content.php:549 ../classes/Network.php:173
 #: ../classes/Node.php:353 ../classes/Content/ContentGroupElement.php:133
 #: ../classes/Content.php:639 ../classes/ContentGroupElement.php:133
-#: ../classes/Network.php:204
+#: ../classes/Network.php:204 ../classes/Content.php:701
+#: ../classes/ContentGroupElement.php:144 ../classes/Node.php:355
 msgid "Remove"
 msgstr "Enlever"
 
 #: ../classes/Content.php:561 ../classes/Content.php:651
+#: ../classes/Content.php:713
 msgid "Add owner"
 msgstr "Ajouter un propriétaire"
 
 #: ../classes/Content.php:715 ../classes/Content.php:805
+#: ../classes/Content.php:869
 msgid "Unable to set as author in the database."
 msgstr "Impossible de définir en tant qu'auteur dans la base de données."
 
 #: ../classes/Content.php:793 ../classes/Content.php:883
+#: ../classes/Content.php:948
 msgid ""
 "Content is persistent (you must make it non persistent before you can delete "
 "it)"
@@ -1867,6 +1899,7 @@ msgstr ""
 "supprimer)"
 
 #: ../classes/Content.php:806 ../classes/Content.php:896
+#: ../classes/Content.php:961
 msgid "Access denied (not owner of content)"
 msgstr "Accès refusé (vous n'êtes pas propriétaire du contenu)"
 
@@ -1882,7 +1915,7 @@ msgstr "Contenu réseau:"
 msgid "Network::delete() not supported"
 msgstr "Network::delete() non supporté"
 
-#: ../classes/Node.php:342
+#: ../classes/Node.php:342 ../classes/Node.php:344
 msgid "Node content:"
 msgstr "Contenu du noeud:"
 
@@ -1917,21 +1950,25 @@ msgstr "Mon contenu"
 
 #: ../classes/Content/ContentGroup.php:164
 #: ../classes/Content/ContentGroup.php:209
+#: ../classes/Content/ContentGroup.php:381
 msgid "Content group elements:"
 msgstr "Éléments du groupe de contenus:"
 
 #: ../classes/Content/ContentGroupElement.php:109
 #: ../classes/ContentGroupElement.php:109
+#: ../classes/ContentGroupElement.php:120
 msgid "(Ignored if display type is random)"
 msgstr "(Ignoré si le type d'affichage est aléatoire)"
 
 #: ../classes/Content/ContentGroupElement.php:115
 #: ../classes/ContentGroupElement.php:115
+#: ../classes/ContentGroupElement.php:126
 msgid "AllowedNodes:"
 msgstr "Noeuds permis:"
 
 #: ../classes/Content/ContentGroupElement.php:116
 #: ../classes/ContentGroupElement.php:116
+#: ../classes/ContentGroupElement.php:127
 msgid ""
 "(Content can be displayed on ANY node unless one or more nodes are selected)"
 msgstr ""
@@ -1940,11 +1977,13 @@ msgstr ""
 
 #: ../classes/Content/ContentGroupElement.php:146
 #: ../classes/ContentGroupElement.php:146
+#: ../classes/ContentGroupElement.php:157
 msgid "Add new allowed node"
 msgstr "Ajouter un nouveau noeud permis"
 
 #: ../classes/Content/ContentGroupElement.php:154
 #: ../classes/ContentGroupElement.php:154
+#: ../classes/ContentGroupElement.php:165
 msgid "Displayed content:"
 msgstr "Contenu affiché:"
 
@@ -1976,12 +2015,14 @@ msgstr ""
 "hiérarchie de contenus alternatifs)"
 
 #: ../classes/Content/EmbeddedContent.php:151
+#: ../classes/Content/EmbeddedContent.php:153
 msgid "You MUST choose a File object or any of its siblings."
 msgstr "Vous devez choisir un objet File ou un contenu apparenté."
 
 #: ../classes/Content/EmbeddedContent.php:260 ../classes/Content/File.php:287
 #: ../classes/Content/File.php:337 ../classes/Content/EmbeddedContent.php:247
 #: ../classes/Content/File.php:285 ../classes/Content/File.php:335
+#: ../classes/Content/EmbeddedContent.php:250 ../classes/Content/File.php:341
 msgid "Download"
 msgstr "Télécharger"
 
@@ -1989,6 +2030,7 @@ msgstr "Télécharger"
 #: ../classes/Content/File.php:287 ../classes/Content/File.php:337
 #: ../classes/Content/EmbeddedContent.php:247 ../classes/Content/File.php:267
 #: ../classes/Content/File.php:285 ../classes/Content/File.php:335
+#: ../classes/Content/EmbeddedContent.php:250 ../classes/Content/File.php:341
 msgid "KB"
 msgstr "Ko"
 
@@ -2040,6 +2082,7 @@ msgid "Remote file size"
 msgstr "Taille du fichier distant"
 
 #: ../classes/Content/File.php:350 ../classes/Content/File.php:348
+#: ../classes/Content/File.php:354
 msgid "Could not delete this file, since it is persistent"
 msgstr "Impossible de supprimer ce fichier, puisqu'il est persistent"
 
@@ -2137,6 +2180,7 @@ msgstr "Afficher la description de la photo Flickr ?"
 #: ../classes/Content/FlickrPhotostream.php:603
 #: ../classes/Content/FlickrPhotostream.php:467
 #: ../classes/Content/FlickrPhotostream.php:654
+#: ../classes/Content/FlickrPhotostream.php:657
 msgid "Unable to connect to Flickr API."
 msgstr "Impossible de se connecter à l'API Flickr."
 
@@ -2144,6 +2188,7 @@ msgstr "Impossible de se connecter à l'API Flickr."
 #: ../classes/Content/FlickrPhotostream.php:607
 #: ../classes/Content/FlickrPhotostream.php:471
 #: ../classes/Content/FlickrPhotostream.php:658
+#: ../classes/Content/FlickrPhotostream.php:661
 msgid "Some of the request parameters provided to Flickr API are invalid."
 msgstr "Un moins un des paramètres de la requête à l'API Flickr est invalide."
 
@@ -2151,6 +2196,7 @@ msgstr "Un moins un des paramètres de la requête à l'API Flickr est invalide.
 #: ../classes/Content/FlickrPhotostream.php:611
 #: ../classes/Content/FlickrPhotostream.php:475
 #: ../classes/Content/FlickrPhotostream.php:662
+#: ../classes/Content/FlickrPhotostream.php:665
 msgid "Unable to parse Flickr's response."
 msgstr "Impossible d'analyser la réponse de Flickr"
 
@@ -2158,6 +2204,7 @@ msgstr "Impossible d'analyser la réponse de Flickr"
 #: ../classes/Content/FlickrPhotostream.php:615
 #: ../classes/Content/FlickrPhotostream.php:479
 #: ../classes/Content/FlickrPhotostream.php:666
+#: ../classes/Content/FlickrPhotostream.php:669
 msgid "Could not get content from Flickr : "
 msgstr "Impossible d'obtenir le contenu de Flickr :"
 
@@ -2168,21 +2215,25 @@ msgstr "VOUS DEVEZ ENTRER UNE CLÉ D'API AVANT DE POURSUIVRE"
 
 #: ../classes/Content/FlickrPhotostream.php:491
 #: ../classes/Content/FlickrPhotostream.php:527
+#: ../classes/Content/FlickrPhotostream.php:529
 msgid "Could not find a Flickr user with this e-mail."
 msgstr "Impossible de trouver un usager Flickr avec ce courriel."
 
 #: ../classes/Content/FlickrPhotostream.php:507
 #: ../classes/Content/FlickrPhotostream.php:543
+#: ../classes/Content/FlickrPhotostream.php:545
 msgid "Could not complete successfully the saving procedure."
 msgstr "Impossible de compléter correctement la procédure de sauvegarde."
 
 #: ../classes/Content/FlickrPhotostream.php:576
 #: ../classes/Content/FlickrPhotostream.php:624
+#: ../classes/Content/FlickrPhotostream.php:627
 msgid "Tags"
 msgstr "«Tags»"
 
 #: ../classes/Content/FlickrPhotostream.php:598
 #: ../classes/Content/FlickrPhotostream.php:649
+#: ../classes/Content/FlickrPhotostream.php:652
 msgid "No Flickr content matches the request !"
 msgstr "Aucune photo Flickr correspond à la requête !"
 
@@ -2202,38 +2253,39 @@ msgstr "Aperçu de l'image"
 msgid "Hotspot list"
 msgstr "Liste des points d'accès"
 
-#: ../classes/Content.php:410
+#: ../classes/Content.php:410 ../classes/Content.php:458
 msgid "Author(s):"
 msgstr "Auteur(s) : "
 
-#: ../classes/Content.php:431
+#: ../classes/Content.php:431 ../classes/Content.php:482
 msgid "Project information:"
 msgstr "Informations sur le projet : "
 
-#: ../classes/Content.php:440
+#: ../classes/Content.php:440 ../classes/Content.php:494
 msgid "Project sponsor:"
 msgstr "Commanditaires du projet :"
 
-#: ../classes/MainUI.php:117
+#: ../classes/MainUI.php:117 ../classes/MainUI.php:124
 msgid "Unknown section:"
 msgstr "Section inconnue : "
 
-#: ../classes/MainUI.php:152
+#: ../classes/MainUI.php:152 ../classes/MainUI.php:170
 msgid "Where am I?"
 msgstr "Oû suis-je ?"
 
-#: ../classes/MainUI.php:175
+#: ../classes/MainUI.php:175 ../classes/MainUI.php:193
 msgid "Language:"
 msgstr "Langue : "
 
-#: ../classes/MainUI.php:202
+#: ../classes/MainUI.php:202 ../classes/MainUI.php:220
 #, php-format
 msgid "Accounts on %s are and will stay completely free."
 msgstr "Les comptes sont et resteront complètement gratuits."
 
-#: ../classes/MainUI.php:203
+#: ../classes/MainUI.php:203 ../classes/MainUI.php:221
 msgid "Please inform us of any problem or service interruption at:"
-msgstr "Veuillez nous informer de tout problème ou interruption de service à : "
+msgstr ""
+"Veuillez nous informer de tout problème ou interruption de service à : "
 
 #: ../classes/Network.php:75
 msgid "Network:"
@@ -2263,26 +2315,28 @@ msgstr "Pourquoi ce service est-il gratuit ?"
 msgid "Log in : "
 msgstr "Ouverture de session :"
 
-#: ../portal/index.php:72
+#: ../portal/index.php:72 ../portal/index.php:74
 msgid "other users online at this hotspot..."
 msgstr "autres usagers en ligne à ce point d'accès..."
 
-#: ../portal/index.php:76
+#: ../portal/index.php:76 ../portal/index.php:78
 msgid "Nobody is online at this hotspot..."
 msgstr "Personne n'est en ligne à ce point d'accès..."
 
-#: ../portal/index.php:82
+#: ../portal/index.php:82 ../portal/index.php:84
 msgid "You are not currently at a hotspot..."
 msgstr "Vous n'êtes pas actuellement à ce point d'accès"
 
-#: ../portal/index.php:125
+#: ../portal/index.php:125 ../portal/index.php:133
 msgid "Content from:"
 msgstr "Contenu de :"
 
 #: ../classes/Content/ContentGroup.php:154
 msgid ""
 "Invalid content selection mode (must be part of CONTENT_SELECTION_MODES)"
-msgstr "Mode de sélection du contenu invalide (doit faire partie de CONTENT_SELECTION_MODES)"
+msgstr ""
+"Mode de sélection du contenu invalide (doit faire partie de "
+"CONTENT_SELECTION_MODES)"
 
 #: ../classes/Content/ContentGroup.php:192
 msgid "Content selection mode"
@@ -2293,10 +2347,13 @@ msgid "Unsupported selection mode: "
 msgstr "Mode de sélection non-supporté :"
 
 #: ../classes/Content/ContentGroup.php:365
+#: ../classes/Content/ContentGroup.php:717
 msgid ""
 "Sorry, no elements available at this hotspot or all elements of the content "
 "group have already been shown"
-msgstr "Désolé, aucun élément n'est disponible à ce point d'accès ou tous les éléments ont déjà été affichés."
+msgstr ""
+"Désolé, aucun élément n'est disponible à ce point d'accès ou tous les "
+"éléments ont déjà été affichés."
 
 #: ../classes/Content/FlickrPhotostream.php:450
 msgid "Preferred size"
@@ -2329,3 +2386,72 @@ msgstr "Impossible d'obtenir le fil RSS du réseau"
 #: ../classes/Content/HotspotRss.php:100
 msgid "Could not get hotspot RSS feed"
 msgstr "Impossible d'obtenir le fil RSS du point d'accès"
+
+#: ../admin/content_admin.php:54
+msgid "Show all content"
+msgstr "Afficher tout le contenu"
+
+#: ../admin/content_admin.php:60
+msgid "Show only persistent content"
+msgstr "Afficher uniquement le contenu persistent"
+
+#: ../classes/Content.php:219
+msgid "Select existing Content : "
+msgstr "Sélectionner du contenu existant :"
+
+#: ../classes/ContentGroupElement.php:168
+msgid "Add a new displayed content OR select an existing one"
+msgstr "Ajoutez un nouveau contenu OU sélectionnez du contenu existant"
+
+#: ../classes/MainUI.php:152
+msgid "My profile"
+msgstr "Mon profile"
+
+#: ../classes/MainUI.php:159 ../classes/MainUI.php:161
+msgid "Logout"
+msgstr "Déconnexion"
+
+#: ../classes/MainUI.php:187
+msgid "Building your wireless community"
+msgstr ""
+
+#: ../portal/index.php:157
+msgid "Show all available contents for this hotspot"
+msgstr "Afficher tout le contenu disponible à ce point d'accès."
+
+#: ../classes/Content/ContentGroup.php:162
+msgid "Invalid content selection mode (must be part of CONTENT_ORDERING_MODES)"
+msgstr "Mode de sélection invalide (doit faire partie de CONTENT_ORDERING_MODES)"
+
+#: ../classes/Content/ContentGroup.php:197
+msgid ""
+"Invalid content selection mode (must be part of CONTENT_CHANGES_ON_MODES)"
+msgstr ""
+
+#: ../classes/Content/ContentGroup.php:232
+msgid "Invalid content selection mode (must be part of ALLOW_REPEAT_MODES)"
+msgstr ""
+
+#: ../classes/Content/ContentGroup.php:270
+msgid "You must display at least one element"
+msgstr "Vous devez afficher au moins un élément"
+
+#: ../classes/Content/ContentGroup.php:319
+msgid "In what order should the content displayed?"
+msgstr "Dans quel ordre les éléments doivent-ils être affichés ?"
+
+#: ../classes/Content/ContentGroup.php:337
+msgid "When does the content rotate?"
+msgstr "Quand le contenu doit-il être changé ?"
+
+#: ../classes/Content/ContentGroup.php:354
+msgid "Can content be shown more than once to the same user?"
+msgstr "Le contenu peut-il être affiché plus d'une fois au même usager ?"
+
+#: ../classes/Content/ContentGroup.php:397
+msgid "Add a new content OR select previously created content"
+msgstr "Ajoutez un nouveau contenu OU sélectionnez du contenu créé précedemment"
+
+#: ../classes/Content/FlickrPhotostream.php:708
+msgid "Flickr support isn't enabled in the config file"
+msgstr "Le support de l'objet Flickr est désactivé dans le fichier de configuration"

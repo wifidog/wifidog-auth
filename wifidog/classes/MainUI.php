@@ -149,16 +149,16 @@ class MainUI
 			if ($user != null)
 			{
 				$html .= '<p>'._("Logged in as:").' '.$user->getUsername().'</p>'."\n";
-				$html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'?content=myprofile"><img class="administration" src="/images/profile.gif" border="0"> My profile</a>'."\n";
+				$html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'?content=myprofile"><img class="administration" src="/images/profile.gif" border="0"> '._("My profile").'</a>'."\n";
                 
                 $gw_id = $session->get(SESS_GW_ID_VAR);
                 $gw_address = $session->get(SESS_GW_ADDRESS_VAR);
                 $gw_port = $session->get(SESS_GW_PORT_VAR);
                 
                 if($gw_id && $gw_address && $gw_port)
-                    $html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'login/?logout=true&gw_id='.$gw_id.'&gw_address='.$gw_address.'&gw_port='.$gw_port.'"><img class="administration" src="/images/logout.gif" border="0"> Logout</a>'."\n";
+                    $html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'login/?logout=true&gw_id='.$gw_id.'&gw_address='.$gw_address.'&gw_port='.$gw_port.'"><img class="administration" src="/images/logout.gif" border="0"> '._("Logout").'</a>'."\n";
                 else
-				    $html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'login/?logout=true"><img class="administration" src="/images/logout.gif" border="0"> Logout</a>'."\n";
+				    $html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'login/?logout=true"><img class="administration" src="/images/logout.gif" border="0"> '._("Logout").'</a>'."\n";
 
 			}
 			else
@@ -184,7 +184,7 @@ class MainUI
 			$html .= '<a href="hotspots.php" class="navigation">'._("Hotspots").'</a>'."\n";
 			*/
 			$html .= '<span class="navigation">';
-			$html .= Network :: getCurrentNetwork()->getName().". Building your wireless community";
+			$html .= Network :: getCurrentNetwork()->getName()." "._("Building your wireless community");
 			$html .= '</span>';
 			$html .= "</div>"."\n"; //End navigation
 

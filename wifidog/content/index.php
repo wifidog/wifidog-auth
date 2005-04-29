@@ -54,12 +54,12 @@ if (isset ($session))
 }
 
 $tool_html = '';
-$tool_html .= "<h1>At this Hotspot</h1>"."\n";
+$tool_html .= "<h1>"._("At this Hotspot")."</h1>"."\n";
 $tool_html .= '<p class="indent">'."\n";
-$tool_html .= "Local content..."."\n";
+$tool_html .= _("Local content...")."\n";
 $tool_html .= "</p>"."\n";
 
-$tool_html .= "<h1>Users Online</h1>"."\n";
+$tool_html .= "<h1>"._("Users Online")."</h1>"."\n";
 $tool_html .= '<p class="indent">'."\n";
 $current_node = Node :: getCurrentNode();
 if ($current_node != null)
