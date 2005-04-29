@@ -389,14 +389,14 @@ class ContentGroup extends Content
 			$html .= "</div'>\n";
 			$html .= "<div class='admin_section_tools'>\n";
 			$name = "content_group_".$this->id."_element_".$element->GetId()."_erase";
-			$html .= "<input type='submit' name='$name' value='"._("Delete")."' onclick='submit();'>";
+			$html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
 			$html .= "</div>\n";
 			$html .= "</li>\n";
 		}
 		$html .= "<li class='admin_section_list_item'>\n";
         $html .= "<b>"._("Add a new content OR select previously created content")."</b><br>";
 		$html .= self :: getNewContentUI("content_group_{$this->id}_new_element")."<br>";
-        $html .= self :: getSelectContentUI("content_group_{$this->id}_existing_element");
+        $html .= self :: getSelectContentUI("content_group_{$this->id}_existing_element", "AND content_id != '$this->id'");
         $html .= "<input type='submit' name='content_group_{$this->id}_existing_element_add' value='"._("Add")."'>";
         $html .= "</li>\n";
 		$html .= "</ul>\n";
@@ -694,28 +694,34 @@ class ContentGroup extends Content
 
 	/** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
 	 * @param $subclass_admin_interface Html content of the interface element of a children
+     * @param boolean $hide_elements allows the child class ( for example
+     * Pattern Language) to tell the content group not to display elements ) for
+     * elements that need to be hidden before subscription
 	 * @return The HTML fragment for this interface */
-	public function getUserUI($subclass_user_interface = null)
+	public function getUserUI($subclass_user_interface = null, $hide_elements = false)
 	{
 		$html = '';
 		$html .= "<div class='user_ui_container'>\n";
 		$html .= "<div class='user_ui_object_class'>ContentGroup (".get_class($this)." instance)</div>\n";
 
-		$display_elements = $this->getDisplayElements();
-		if (count($display_elements) > 0)
-		{
-			foreach ($display_elements as $display_element)
-			{
-                // If the content group logging is disabled, all the children will inherit this property temporarly
-                if($this->getLoggingStatus() == false)
-                    $display_element->setLoggingStatus(false);
-				$html .= $display_element->getUserUI();
-			}
-		}
-		else
-		{
-			$html .= '<p class="warningmsg">'._("Sorry, no elements available at this hotspot or all elements of the content group have already been shown")."</p>\n";
-		}
+		if($hide_elements == false)
+        {
+            $display_elements = $this->getDisplayElements();
+    		if (count($display_elements) > 0)
+    		{
+    			foreach ($display_elements as $display_element)
+    			{
+                    // If the content group logging is disabled, all the children will inherit this property temporarly
+                    if($this->getLoggingStatus() == false)
+                        $display_element->setLoggingStatus(false);
+    				$html .= $display_element->getUserUI();
+    			}
+    		}
+    		else
+    		{
+    			$html .= '<p class="warningmsg">'._("Sorry, no elements available at this hotspot or all elements of the content group have already been shown")."</p>\n";
+    		}
+        }
 
 		$html .= $subclass_user_interface;
 		$html .= "</div>\n";

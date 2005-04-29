@@ -171,7 +171,7 @@ class Content implements GenericObject
 		{
 			$value = _("Add");
 		}
-		$html .= "<input type='submit' name='$name' value='$value'>"; // onclick='submit();'
+		$html .= "<input type='submit' name='$name' value='$value'>";
 		return $html;
 	}
 
@@ -377,7 +377,6 @@ class Content implements GenericObject
 	 * @return true or false */
 	public function isDisplayableAt($node)
 	{
-
 		return true;
 	}
 
@@ -597,7 +596,7 @@ class Content implements GenericObject
 					$html .= "</div>\n";
 					$html .= "<div class='admin_section_tools'>\n";
 					$name = "content_".$this->id."_title_erase";
-					$html .= "<input type='submit' name='$name' value='"._("Delete")."' onclick='submit();'>";
+					$html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
 					$html .= "</div>\n";
 				}
 				$html .= "</div>\n";
@@ -628,7 +627,7 @@ class Content implements GenericObject
 					$html .= "</div>\n";
 					$html .= "<div class='admin_section_tools'>\n";
 					$name = "content_".$this->id."_description_erase";
-					$html .= "<input type='submit' name='$name' value='"._("Delete")."' onclick='submit();'>";
+					$html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
 					$html .= "</div>\n";
 				}
 				$html .= "</div>\n";
@@ -649,7 +648,7 @@ class Content implements GenericObject
 					$html .= "</div>\n";
 					$html .= "<div class='admin_section_tools'>\n";
 					$name = "content_".$this->id."_project_info_erase";
-					$html .= "<input type='submit' name='$name' value='"._("Delete")."' onclick='submit();'>";
+					$html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
 					$html .= "</div>\n";
 				}
 				$html .= "</div>\n";
@@ -670,7 +669,7 @@ class Content implements GenericObject
 					$html .= "</div>\n";
 					$html .= "<div class='admin_section_tools'>\n";
 					$name = "content_".$this->id."_sponsor_info_erase";
-					$html .= "<input type='submit' name='$name' value='"._("Delete")."' onclick='submit();'>";
+					$html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
 					$html .= "</div>\n";
 				}
 				$html .= "</div>\n";
@@ -700,7 +699,7 @@ class Content implements GenericObject
 						$html .= "</div>\n";
 						$html .= "<div class='admin_section_tools'>\n";
 						$name = "content_".$this->id."_owner_".$user->GetId()."_remove";
-						$html .= "<input type='submit' name='$name' value='"._("Remove")."' onclick='submit();'>";
+						$html .= "<input type='submit' name='$name' value='"._("Remove")."'>";
 						$html .= "</div>\n";
 						$html .= "</li>\n";
 					}
@@ -713,7 +712,7 @@ class Content implements GenericObject
 				$html .= "<div class='admin_section_tools'>\n";
 				$name = "content_{$this->id}_add_owner_submit";
 				$value = _("Add owner");
-				$html .= "<input type='submit' name='$name' value='$value' onclick='submit();'>";
+				$html .= "<input type='submit' name='$name' value='$value'>";
 				$html .= "</div>\n";
 				$html .= "</li>\n";
 				$html .= "</ul>\n";
@@ -756,7 +755,7 @@ class Content implements GenericObject
     					if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
     					{
     						$db->ExecSqlUpdate("UPDATE content SET title = NULL WHERE content_id = '$this->id'", FALSE);
-    						$title->delete();
+    						$title->delete($errmsg);
     					}
     					else
     					{
@@ -785,7 +784,7 @@ class Content implements GenericObject
     					if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
     					{
     						$db->ExecSqlUpdate("UPDATE content SET description = NULL WHERE content_id = '$this->id'", FALSE);
-    						$description->delete();
+    						$description->delete($errmsg);
     					}
     					else
     					{
@@ -810,7 +809,7 @@ class Content implements GenericObject
     					if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
     					{
     						$db->ExecSqlUpdate("UPDATE content SET project_info = NULL WHERE content_id = '$this->id'", FALSE);
-    						$project_info->delete();
+    						$project_info->delete($errmsg);
     					}
     					else
     					{
@@ -835,7 +834,7 @@ class Content implements GenericObject
     					if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
     					{
     						$db->ExecSqlUpdate("UPDATE content SET sponsor_info = NULL WHERE content_id = '$this->id'", FALSE);
-    						$sponsor_info->delete();
+    						$sponsor_info->delete($errmsg);
     					}
     					else
     					{
@@ -887,6 +886,24 @@ class Content implements GenericObject
     		$this->refresh();
         }
 	}
+    
+    /**
+     * Tell if a given user is already subscribed to this content
+     * @param User the given user
+     * @return boolean
+     */
+    public function isUserSubscribed(User $user)
+    {
+        global $db;
+        $sql = "SELECT content_id FROM user_has_content WHERE user_id = '{$user->getId()}' AND content_id = '{$this->getId()}';";
+        $db->ExecSqlUniqueRes($sql, $row, false);
+        
+        if($row)
+            return true;
+        else
+            return false;
+    }
+    
 	/** Subscribe to the project 
 	 * @return true on success, false on failure */
 	public function subscribe(User $user)

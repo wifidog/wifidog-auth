@@ -24,6 +24,7 @@
  * Technologies Coeus inc.
  */
 require_once BASEPATH.'classes/Content/ContentGroup.php';
+require_once BASEPATH.'classes/User.php';
 
 /** Pattern Language is a location-aware fiction project by Kate Armstrong that attaches patterns of narrative to individuals as they move through the city of Montreal. Each person's path is logged in the system and compiled into a document that can be read online. The work is meant to engage with the rhythms of the city: by evolving according to the patterns of an individual, each story forms both a map or trace of movement and a fabric of sound. 
 
@@ -43,6 +44,44 @@ class PatternLanguage extends ContentGroup
         // A Pattern language can NEVER be expandable
         $this->setIsExpandable(false);
 	}
+    
+    /** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
+     * @param $subclass_admin_interface Html content of the interface element of a children
+     * @return The HTML fragment for this interface */
+     
+     //TODO: complete this
+     /*
+    public function getUserUI($subclass_user_interface = null)
+    {
+        $html = '';
+        $html .= "<div class='user_ui_container'>\n";
+        $html .= "<div class='user_ui_object_class'>PatternLanguage (".get_class($this)." instance)</div>\n";
+        
+        // Check if the user has already subscribed to Pattern language
+        $current_user = User::getCurrentUser();
+        if($current_user == null || $this->isUserSubscribed($current_user) == false)
+        {
+            // hyperlink to all users narrative
+            
+            // Until subscription is done DO NOT log this !
+            $this->setLoggingStatus(false);
+            // Tell the content group not to display elements until subscription is done
+            $parent_output = parent :: getUserUI($html, true);
+        }
+        else
+        {
+            // The user is subscribed to the pattern language show an element !
+            // hyperlink to user's narrative
+            
+            // Display the random pattern
+            $parent_output = parent :: getUserUI($html);
+        }
+        
+        $html .= $subclass_user_interface;
+        $html .= "</div>\n";
+        
+        return $parent_output;
+    }*/
 
 	/** Display the narrative
 	 * @param $user The user who's narrative you want to grab

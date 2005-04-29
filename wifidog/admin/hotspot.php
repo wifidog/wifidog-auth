@@ -166,7 +166,7 @@ if ($action == 'edit_node') { // Allow node creation or node edition
     } elseif ($action == 'del_node') {
         try {
         	$node = Node::getObject($node_id);
-            $node->delete();
+            $node->delete($errmsg);
         } catch (Exception $e) {
             echo '<p class="warning">'.$e->getMessage().'</p>'; 
         }

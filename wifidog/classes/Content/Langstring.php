@@ -163,7 +163,7 @@ class Langstring extends Content
 								$html .= "</div>\n";
 								$html .= "<div class='admin_section_tools'>\n";
 				$name = "langstrings_".$this->id."_substring_$value[langstring_entries_id]_erase";
-				$html .= "<input type='submit' name='$name' value='"._("Delete string")."' onclick='submit();'>";
+				$html .= "<input type='submit' name='$name' value='"._("Delete string")."'>";
 								$html .= "</div>\n";
 								$html .= "</li>\n";
 			}
@@ -188,7 +188,7 @@ class Langstring extends Content
 								$html .= "<div class='admin_section_tools'>\n";
 		
 		$new_substring_submit_name = "langstrings_".$this->id."_add_new_entry";
-		$html .= "<input type='submit' name='$new_substring_submit_name' value='"._("Add new string")."' onclick='submit();'>";
+		$html .= "<input type='submit' name='$new_substring_submit_name' value='"._("Add new string")."'>";
 		$html .= "</div>\n";
 		$html .= "</li>\n";
 

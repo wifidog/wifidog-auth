@@ -206,7 +206,7 @@ class Network implements GenericObject
 			$html .= "</div'>\n";
 			$html .= "<div class='admin_section_tools'>\n";
 			$name = "content_group_".$this->id."_element_".$content->GetId()."_erase";
-			$html .= "<input type='submit' name='$name' value='"._("Remove")."' onclick='submit();'>";
+			$html .= "<input type='submit' name='$name' value='"._("Remove")."'>";
 			$html .= "</div>\n";
 			$html .= "</li>\n";
 		}
@@ -214,7 +214,7 @@ class Network implements GenericObject
 		$name = "network_{$this->id}_new_content";
 		$html .= Content :: getSelectContentUI($name, "AND content_id NOT IN (SELECT content_id FROM network_has_content WHERE network_id='$this->id')");
 		$name = "network_{$this->id}_new_content_submit";
-		$html .= "<input type='submit' name='$name' value='"._("Add")."' onclick='submit();'>";
+		$html .= "<input type='submit' name='$name' value='"._("Add")."'>";
 		$html .= "</li>\n";
 		$html .= "</ul>\n";
 		$html .= "</div>\n";
@@ -226,7 +226,7 @@ class Network implements GenericObject
 	public function processAdminUI()
 	{
         $user = User::getCurrentUser();
-        if (!$this->isOwner($user) && !$user->isSuperAdmin())
+        if (!$user->isSuperAdmin())
         {
             throw new Exception(_('Access denied!'));
         }

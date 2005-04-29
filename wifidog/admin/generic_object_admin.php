@@ -112,6 +112,8 @@ if ($_REQUEST['action'] == 'preview') {
 		$node_id = $_REQUEST['node_id'];
 		$node = Node :: getObject($node_id);
 		Node :: setCurrentNode($node);
+        
+        $html .= "<h1>"._("Showing preview as it would appear at ").$node->getName()."</h1><p>"; 
 	}
 	$common_input = '';
 	if (!empty ($_REQUEST['debug'])) {
@@ -126,7 +128,7 @@ if ($_REQUEST['action'] == 'preview') {
 
 	$name = "node_id";
 	$html .= Node :: getSelectNodeUI($name);
-
+    
 	$html .= $object->getUserUI();
 	$html .= "<input type='hidden' name='action' value='preview'>\n";
 	$html .= "<input type=submit name='preview_submit' value='"._("Preview")." ".get_class($object)."'>\n";

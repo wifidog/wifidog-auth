@@ -141,7 +141,7 @@ class ContentGroupElement extends Content
 				$html .= "</div>\n";
 				$html .= "<div class='admin_section_tools'>\n";
 				$name = "content_group_element_".$this->id."_allowed_node_".$node->GetId()."_remove";
-				$html .= "<input type='submit' name='$name' value='"._("Remove")."' onclick='submit();'>";
+				$html .= "<input type='submit' name='$name' value='"._("Remove")."'>";
 				$html .= "</div>\n";
 				$html .= "</li>\n";
 
@@ -154,7 +154,7 @@ class ContentGroupElement extends Content
 		$name = "content_group_element_{$this->id}_new_allowed_node";
 		$html .= Node :: getSelectNodeUI($name, $sql_additional_where);
 		$name = "content_group_element_{$this->id}_new_allowed_node_submit";
-		$html .= "<input type='submit' name='$name' value='"._("Add new allowed node")."' onclick='submit();'>";
+		$html .= "<input type='submit' name='$name' value='"._("Add new allowed node")."'>";
 		$html .= "</li'>\n";
 
 		$html .= "</ul>\n";
@@ -167,7 +167,7 @@ class ContentGroupElement extends Content
 		{
             $html .= "<b>"._("Add a new displayed content OR select an existing one")."</b><br>";
 			$html .= self :: getNewContentUI("content_group_element_{$this->id}_new_displayed_content")."<br>";
-            $html .= self :: getSelectContentUI("content_group_element_{$this->id}_new_displayed_existing_element");
+            $html .= self :: getSelectContentUI("content_group_element_{$this->id}_new_displayed_existing_element", "AND content_id != '$this->id'");
             $html .= "<input type='submit' name='content_group_element_{$this->id}_new_displayed_existing_element_add' value='"._("Add")."'>";
 		}
 		else
@@ -176,7 +176,7 @@ class ContentGroupElement extends Content
 			$html .= $displayed_content->getAdminUI();
 			$html .= "<div class='admin_section_tools'>\n";
 			$name = "content_group_element_{$this->id}_erase_displayed_content";
-			$html .= "<input type='submit' name='$name' value='"._("Delete")."' onclick='submit();'>";
+			$html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
 			$html .= "</div>\n";
 		}
 		$html .= "</div>\n";

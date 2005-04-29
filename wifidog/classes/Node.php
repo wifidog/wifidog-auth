@@ -353,7 +353,7 @@ class Node implements GenericObject
 			$html .= "</div'>\n";
 			$html .= "<div class='admin_section_tools'>\n";
 			$name = "node_".$this->id."_content_".$content->GetId()."_erase";
-			$html .= "<input type='submit' name='$name' value='"._("Remove")."' onclick='submit();'>";
+			$html .= "<input type='submit' name='$name' value='"._("Remove")."'>";
 			$html .= "</div>\n";
 			$html .= "</li>\n";
 		}
@@ -361,7 +361,7 @@ class Node implements GenericObject
 		$name = "node_{$this->id}_new_content";
 		$html .= Content :: getSelectContentUI($name, "AND content_id NOT IN (SELECT content_id FROM node_has_content WHERE node_id='$this->id')");
 		$name = "node_{$this->id}_new_content_submit";
-		$html .= "<input type='submit' name='$name' value='"._("Add")."' onclick='submit();'>";
+		$html .= "<input type='submit' name='$name' value='"._("Add")."'>";
 		$html .= "</li>\n";
 		$html .= "</ul>\n";
 		$html .= "</div>\n";

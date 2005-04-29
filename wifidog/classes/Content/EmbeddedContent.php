@@ -103,7 +103,7 @@ class EmbeddedContent extends Content
 			$html .= "</div>\n";
 			$html .= "</div>\n";
 			
-			$html .= "<input type='submit' name='$name' value='"._("Delete")."'>"; //  onclick='submit();'
+			$html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
 			$html .= "</div>\n";
 		}
 		$html .= "</div>\n";
@@ -124,7 +124,7 @@ class EmbeddedContent extends Content
 			$html .= "</div>\n";
 			$html .= "<div class='admin_section_tools'>\n";
 			$name = "fallback_content_".$this->id."_fallback_content_erase";
-			$html .= "<input type='submit' name='$name' value='"._("Delete")."'>"; // onclick='submit();'
+			$html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
 			$html .= "</div>\n";
 		}
 		$html .= "</div>\n";

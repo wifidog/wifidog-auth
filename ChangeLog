@@ -1,4 +1,11 @@
 2005-04-29 François Proulx <francois.proulx@gmail.com>
+	* Removed all inline unuseful javascript code on submit buttons onclick='submit()'
+	* This conflicted with the actual click on the submit button in Safari
+	* Fixed check in Network for isOwner, only check superAdmin
+	* Fixed bug so you can't add an existing content group to itself ( deadlock )
+	* Started coding Pattern language narrative display
+
+2005-04-29 François Proulx <francois.proulx@gmail.com>
 	* Wrote User.php addcontent, removeContent, getAllContent()
 	* Wrote Content.php subscrite() and unsubscribe()
 	* Added parameters to getAllContent() in Node and Network ( exclude_subscribed_content )
