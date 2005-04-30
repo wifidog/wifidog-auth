@@ -1,4 +1,8 @@
 2005-04-30 François Proulx <francois.proulx@gmail.com>
+	* Fixed locale bug ( now decomposing locale id with underscore, which is POSIX way )
+	* Tested on Mac OS X : although you must use fr_CA, en_CA or fr_FR, en_US for example
+	
+2005-04-30 François Proulx <francois.proulx@gmail.com>
 	* Trying to solve RSS encoding bug...
 	* Testing on live server
 	

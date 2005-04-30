@@ -108,8 +108,9 @@ class Locale
         
 		if (GETTEXT_AVAILABLE)
 		{
-			$current_locale = setlocale(LC_ALL, $locale_id);
-			if (setlocale(LC_ALL, $locale_id) != $locale_id)
+			setlocale(LC_ALL, $locale_id);
+			$current_locale = setlocale(LC_ALL, 0);
+			if ($current_locale != $locale_id)
 			{
 				echo "Warning: language.php: Unable to setlocale() to ".$locale_id.", return value: $current_locale, current locale: ".setlocale(LC_ALL, 0);
 			}
@@ -135,7 +136,7 @@ class Locale
 	public static function decomposeLocaleId($locale_id)
 	{
 		//echo "<p>: ";
-		//print_r($p_locale);
+		//print_r($locale_id);
 		$regex = '/^([^-_]*)(?:[-_]([^-_]*))?(?:[-_]([^-_]*))?$/';
 		/*
 		echo "<h1>Locale: $p_locale</h1>";
@@ -150,7 +151,7 @@ class Locale
 		echo "<pre>".print_r($matches)."</pre>\n";
 		*/
 		$match_retval = preg_match($regex, $locale_id, $matches);
-		//print_r($matches[1]);
+		//print_r($matches);
 		return $matches;
 	}
 	/** Used by Langstring::GetString() (and other functions) to help select the best langstring_entry to display to the user.
@@ -200,7 +201,7 @@ class Locale
 		}
 		else
 		{
-			$locale .= '-'.$matches[2];
+			$locale .= '_'.$matches[2];
 			$this->mPays = $matches[2];
 		}
 		if (empty ($matches[3]))
@@ -209,7 +210,7 @@ class Locale
 		}
 		else
 		{
-			$locale .= '-'.$matches[3];
+			$locale .= '_'.$matches[3];
 		}
 		$this->mId = $locale;
 	}
@@ -233,7 +234,7 @@ class Locale
 		$retval = $this->mLang->GetShort();
 		if ($this->mPays != null) //$mPays != null)
 		{
-			$retval .= '-'.$this->mPays->GetShort();
+			$retval .= '_'.$this->mPays->GetShort();
 		}
 		return $retval;
 	}
@@ -259,23 +260,6 @@ class Locale
 	function GetPays()
 	{
 		return $this->mPays;
-	}
-
-	/**Exporte l'élément dans un format d'échange
-	@param $export_format format de la sortie
-	@param $document Le document auquel la sortie doit être ajouté.  Le type peut varier
-	@param $parent Le parent de l'élément à ajouter.  Le type peut varier	
-	@param $entree ID de l'entree de vocabulaire
-	*/
-	function Export($export_format, & $document, $parent, $entree = null)
-	{
-			//		$sql = "SELECT locales_id FROM locales WHERE locales_id='$this->mId'";
-		//		$this->mBd->executerSqlResUnique($sql, $locales_row, false);
-
-	$language = $document->createElementNS(LOM_EXPORT_NS, "Language");
-		$parent->appendChild($language);
-		$textnode = $document->createTextNode($this->mId);
-		$language->appendChild($textnode);
 	}
 
 	/*
@@ -321,42 +305,6 @@ class Locale
 		};
 		return $str;
 	}
-
-	/** Affiche l'interface usager de l'objet
-	*
-	*/
-	function AfficherInterfaceUsager()
-	{
-		echo $this->GetString();
-	}
-
-	/**
-	 * By definition a Locale cannot be empty
-	 */
-	function isEmpty()
-	{
-		return false;
-	}
-
-	/**
-	 * Checks if the object complies with the specified profile settings
-	 * @param obligation
-	 * @return Compliance constant
-	 */
-	function IsCompliant($obligation)
-	{
-		switch ($obligation)
-		{
-			case 'MANDATORY' :
-				if ($this->isEmpty())
-					return NOT_COMPLIANT_MASK;
-				break;
-			case 'RECOMMENDED' :
-				if ($this->isEmpty())
-					return NOT_ALL_RECOMMENDED;
-				break;
-		}
-		return COMPLIANT_MASK;
-	}
+	
 } /* end class Locale */
 ?>
