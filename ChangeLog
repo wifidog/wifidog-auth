@@ -1,3 +1,7 @@
+2005-04-30 François Proulx <francois.proulx@gmail.com>
+	* Trying to solve RSS encoding bug...
+	* Testing on live server
+	
 2005-04-29 François Proulx <francois.proulx@gmail.com>
 	* Removed all inline unuseful javascript code on submit buttons onclick='submit()'
 	* This conflicted with the actual click on the submit button in Safari

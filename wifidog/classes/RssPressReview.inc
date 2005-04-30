@@ -168,7 +168,7 @@ class RssPressReview
                     throw new Exception(_('uasort() failed'));
                 }
                 /* foreach  ($rss->items as $item) {echo "$item[title] ". self::get_item_date($item) . "<br>\n";}*/
-
+                
                 /* Calculate the publication interval for this source */
                 foreach ($rss->items as $item) {
                     $date = self::get_item_date($item);
@@ -245,6 +245,7 @@ class RssPressReview
                 unset($rss_info_tmp);
                 $rss_info_tmp['title'] = $rss->channel['title'];
                 $rss_info_tmp['link'] = $rss->channel['link'];
+                $rss_info_tmp['encoding'] = $rss->encoding;
 
                 $i = 0;
                 /* Sort the items by date, so we get the most recent first */
@@ -279,7 +280,7 @@ class RssPressReview
                         } elseif (!empty($item['author_name'])) {
                             $author = trim($item['author_name']);
                         }
- 
+                       
                         array_push($rss_info_tmp['items'], array(
                                 "title"     => $item['title'],
                                 "summary"   => $item['summary'],
@@ -295,6 +296,7 @@ class RssPressReview
                 $rss_info[] = $rss_info_tmp;
             }
         }// End foreach rss feeds
+        
         return $rss_info;
         error_reporting($old_error_level);
     }
@@ -353,14 +355,15 @@ function changeclass(objet, myClass)
 
         $html = '';
         foreach ($rss_result as $feed) {
-            $html .= "<p class=textegris>"._('Source: ')."<b>";
+        		$feed_html = '';
+            $feed_html .= "<p class=textegris>"._('Source: ')."<b>";
             if(!empty($feed['link'])) {
-                $html .= "<a class='y' href='".$feed['link']."'>" . $feed['title'] . "</a>";
+                $feed_html .= "<a class='y' href='".$feed['link']."'>" . $feed['title'] . "</a>";
             } else {
-                $html .= $channel_title;
+                $feed_html .= $channel_title;
             }
-            $html .= "</b></p>\n";
-            $html .= "<ul>\n";
+            $feed_html .= "</b></p>\n";
+            $feed_html .= "<ul>\n";
 
             foreach ($feed['items'] as $item) {
                 if ($item['date'] != -1) {
@@ -371,23 +374,32 @@ function changeclass(objet, myClass)
                 }
 
                 $dhtml_id = "summary_".mt_rand(1, 10000). "_".$sidx;
-                $html .= "<li>\n";
-                $html .= "<span class='textegrispetit'>$display_date</span>";
-                $html .= "<span class='y' onMouseOver=\"changestyle('$dhtml_id','visible');\" onMouseOut=\"changestyle('$dhtml_id','hidden');\">\n";
+                $feed_html .= "<li>\n";
+                $feed_html .= "<span class='textegrispetit'>$display_date</span>";
+                $feed_html .= "<span class='y' onMouseOver=\"changestyle('$dhtml_id','visible');\" onMouseOut=\"changestyle('$dhtml_id','hidden');\">\n";
                 if ($item['link']) {
-                    $html .= "<a class='y' href='{$item['link']}'><b>{$item['title']}</b></span></a><br />";
+                    $feed_html .= "<a class='y' href='{$item['link']}'><b>{$item['title']}</b></span></a><br />";
                 } else {
-                    $html .= "<b>{$item['title']}</b></span><br />";
+                    $feed_html .= "<b>{$item['title']}</b></span><br />";
                 }
-                $html .= "<div style='z-index: 1000; position: relative'>\n";
-                $html .= "<div style='z-index: 1000;' id='$dhtml_id' class='introduction'><p>{$item['author']} ({$feed['title']}) $display_date</p>\n";
-                $html .= "<p>{$item['summary']}</p></div>\n"; 
-                $html .= "</div>\n";
-                $html .= "</li>\n";
+                $feed_html .= "<div style='z-index: 1000; position: relative'>\n";
+                $feed_html .= "<div style='z-index: 1000;' id='$dhtml_id' class='introduction'><p>{$item['author']} ({$feed['title']}) $display_date</p>\n";
+                $feed_html .= "<p>{$item['summary']}</p></div>\n"; 
+                $feed_html .= "</div>\n";
+                $feed_html .= "</li>\n";
             }
-            $html .= "</ul>\n";
+            $feed_html .= "</ul>\n";
+            
+            if($feed['encoding'] != OUTPUT_ENCODING)
+            {
+            		$html .= mb_convert_encoding($feed_html, OUTPUT_ENCODING, $feed['encoding']);
+            }
+            else
+            {
+            		$html .= $feed_html;
+            }
         }
-        return $this->convert_string_encoding($this->get_rss_header() . $html);
+        return $this->get_rss_header().$html;
     }
 }
 ?>

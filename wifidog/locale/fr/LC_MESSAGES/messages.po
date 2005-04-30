@@ -330,7 +330,7 @@ msgstr ""
 #: ../hotspot_status.php:94 ../hotspot_status.php:93 ../hotspot_status.php:86
 #: ../hotspot_status.php:339 ../hotspot_status.php:328
 msgid "Copyright "
-msgstr "Tous droits r&eacute;serv&eacute;s "
+msgstr "Tous droits réservés "
 
 #: ../hotspot_status.php:235 ../hotspot_status.php:234
 #: ../hotspot_status.php:227 ../hotspot_status.php:231
@@ -352,7 +352,7 @@ msgstr "ouvert"
 
 #: ../hotspot_status_thomas.php:43
 msgid "HotSpots"
-msgstr "Points d'acc&egrave;s"
+msgstr "Points d'accès"
 
 #: ../hotspot_status_thomas.php:89
 msgid "Opened on "
@@ -1341,14 +1341,14 @@ msgstr "Ajouter"
 #: ../hotspot_status.php:60 ../hotspot_status.php:313
 #: ../hotspot_status.php:302
 msgid ": Newest HotSpots"
-msgstr ": Points d'acc&egrave;s les plus r&eacute;cents"
+msgstr ": Points d'accès les plus récents"
 
 #: ../hotspot_status.php:72 ../hotspot_status.php:325
 #: ../hotspot_status.php:314
 msgid "WiFiDog list of the most recent HotSpots opened by the network: "
 msgstr ""
-"La liste WiFiDog des points d'acc&egrave;s les plus r&eacute;cents ouverts "
-"par le r&eacute;seau: "
+"La liste WiFiDog des points d'accès les plus récents ouverts "
+"par le réseau: "
 
 #: ../hotspot_status.php:235 ../hotspot_status.php:488
 #: ../hotspot_status.php:228 ../hotspot_status.php:469

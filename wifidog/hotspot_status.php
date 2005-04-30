@@ -1,5 +1,4 @@
 <?php
-
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -40,7 +39,7 @@ if ($format == 'RSS') {
 	Header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); # Past date
 	Header("Pragma: no-cache");
 	Header("Content-Type: text/xml; charset=UTF-8");
-
+	
 	$xmldoc = new DOMDocument();
 	$xmldoc->formatOutput = true;
 	//$xmldoc->encoding="iso-8859-15";
@@ -57,19 +56,19 @@ if ($format == 'RSS') {
 	$title = $xmldoc->createElement("title");
 	$title = $channel->appendChild($title);
 
-	$textnode = $xmldoc->createTextNode(utf8_encode(HOTSPOT_NETWORK_NAME._(": Newest HotSpots")));
+	$textnode = $xmldoc->createTextNode(HOTSPOT_NETWORK_NAME._(": Newest HotSpots"));
 	$title->appendChild($textnode);
 
 	/* link */
 	$link = $xmldoc->createElement("link");
 	$channel->appendChild($link);
-	$textnode = $xmldoc->createTextNode(utf8_encode(HOTSPOT_NETWORK_URL));
+	$textnode = $xmldoc->createTextNode(HOTSPOT_NETWORK_URL);
 	$link->appendChild($textnode);
 
 	/* description */
 	$description = $xmldoc->createElement("description");
 	$channel->appendChild($description);
-	$textnode = $xmldoc->createTextNode(utf8_encode(_("WiFiDog list of the most recent HotSpots opened by the network: ").HOTSPOT_NETWORK_NAME));
+	$textnode = $xmldoc->createTextNode(_("WiFiDog list of the most recent HotSpots opened by the network: ").HOTSPOT_NETWORK_NAME);
 	$description->appendChild($textnode);
 
 	/****************** Optional channel elements *******************/
@@ -83,7 +82,7 @@ if ($format == 'RSS') {
 	/* copyright */
 	$copyright = $xmldoc->createElement("copyright");
 	$channel->appendChild($copyright);
-	$textnode = $xmldoc->createTextNode(utf8_encode(_("Copyright ").HOTSPOT_NETWORK_NAME));
+	$textnode = $xmldoc->createTextNode(_("Copyright ").HOTSPOT_NETWORK_NAME);
 	$copyright->appendChild($textnode);
 
 	/* managingEditor */
@@ -92,13 +91,13 @@ if ($format == 'RSS') {
 
 	$webMaster = $xmldoc->createElement("webMaster");
 	$channel->appendChild($webMaster);
-	$textnode = $xmldoc->createTextNode(utf8_encode(TECH_SUPPORT_EMAIL));
+	$textnode = $xmldoc->createTextNode(TECH_SUPPORT_EMAIL);
 	$webMaster->appendChild($textnode);
 
 	/* pubDate */
 	$pubDate = $xmldoc->createElement("pubDate");
 	$channel->appendChild($pubDate);
-	$textnode = $xmldoc->createTextNode(utf8_encode(gmdate("D, d M Y H:i:s \G\M\T", time())));
+	$textnode = $xmldoc->createTextNode(gmdate("D, d M Y H:i:s \G\M\T", time()));
 	$pubDate->appendChild($textnode);
 
 	/* lastBuildDate */
@@ -119,13 +118,13 @@ if ($format == 'RSS') {
 	/* generator */
 	$generator = $xmldoc->createElement("generator");
 	$channel->appendChild($generator);
-	$textnode = $xmldoc->createTextNode(utf8_encode(WIFIDOG_NAME." ".WIFIDOG_VERSION));
+	$textnode = $xmldoc->createTextNode(WIFIDOG_NAME." ".WIFIDOG_VERSION);
 	$generator->appendChild($textnode);
 
 	/* docs */
 	$docs = $xmldoc->createElement("docs");
 	$channel->appendChild($docs);
-	$textnode = $xmldoc->createTextNode(utf8_encode("http://blogs.law.harvard.edu/tech/rss"));
+	$textnode = $xmldoc->createTextNode("http://blogs.law.harvard.edu/tech/rss");
 	$docs->appendChild($textnode);
 
 	/* cloud */
@@ -141,17 +140,17 @@ if ($format == 'RSS') {
 	/* title */
 	$title = $xmldoc->createElement("title");
 	$image->appendChild($title);
-	$textnode = $xmldoc->createTextNode(utf8_encode(HOTSPOT_NETWORK_NAME));
+	$textnode = $xmldoc->createTextNode(HOTSPOT_NETWORK_NAME);
 	$title->appendChild($textnode);
 	/* url */
 	$url = $xmldoc->createElement("url");
 	$image->appendChild($url);
-	$textnode = $xmldoc->createTextNode(utf8_encode(COMMON_CONTENT_URL.NETWORK_LOGO_NAME));
+	$textnode = $xmldoc->createTextNode(COMMON_CONTENT_URL.NETWORK_LOGO_NAME);
 	$url->appendChild($textnode);
 	/* link */
 	$link = $xmldoc->createElement("link");
 	$image->appendChild($link);
-	$textnode = $xmldoc->createTextNode(utf8_encode(HOTSPOT_NETWORK_URL));
+	$textnode = $xmldoc->createTextNode(HOTSPOT_NETWORK_URL);
 	$link->appendChild($textnode);
 	/* width */
 	/*
@@ -192,14 +191,14 @@ if ($format == 'RSS') {
 		$title = $xmldoc->createElement("title");
 		$item->appendChild($title);
 		$title_str = $node_row['name'];
-		$textnode = $xmldoc->createTextNode(utf8_encode($title_str));
+		$textnode = $xmldoc->createTextNode($title_str);
 		$title->appendChild($textnode);
 
 		/* link */
 		if (!empty ($node_row['home_page_url'])) {
 			$link = $xmldoc->createElement("link");
 			$item->appendChild($link);
-			$textnode = $xmldoc->createTextNode(utf8_encode($node_row['home_page_url']));
+			$textnode = $xmldoc->createTextNode($node_row['home_page_url']);
 			$link->appendChild($textnode);
 		}
 
@@ -243,7 +242,7 @@ if ($format == 'RSS') {
 			}
 			$description_text .= "</p>\n";
 		}
-		$textnode = $xmldoc->createTextNode(utf8_encode($description_text));
+		$textnode = $xmldoc->createTextNode($description_text);
 		$description->appendChild($textnode);
 
 		/* author */
@@ -263,13 +262,13 @@ if ($format == 'RSS') {
 		$guid = $xmldoc->createElement("guid");
 		$guid->setAttribute('isPermaLink', 'false');
 		$item->appendChild($guid);
-		$textnode = $xmldoc->createTextNode(utf8_encode(HOTSPOT_NETWORK_URL.$node_row['node_id']));
+		$textnode = $xmldoc->createTextNode(HOTSPOT_NETWORK_URL.$node_row['node_id']);
 		$guid->appendChild($textnode);
 
 		/* pubDate */
 		$pubDate = $xmldoc->createElement("pubDate");
 		$item->appendChild($pubDate);
-		$textnode = $xmldoc->createTextNode(utf8_encode(gmdate("D, d M Y H:i:s \G\M\T", $node_row['creation_date_epoch'])));
+		$textnode = $xmldoc->createTextNode(gmdate("D, d M Y H:i:s \G\M\T", $node_row['creation_date_epoch']));
 		$pubDate->appendChild($textnode);
 
 		/* source */
@@ -534,4 +533,3 @@ $ui->setMainContent($smarty->fetch("templates/hotspot_status.html"));
 $ui->display();
 	}
 ?>
-
