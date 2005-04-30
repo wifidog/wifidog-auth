@@ -108,9 +108,8 @@ class Locale
         
 		if (GETTEXT_AVAILABLE)
 		{
-			setlocale(LC_ALL, $locale_id);
-			$current_locale = setlocale(LC_ALL, 0);
-			if ($current_locale != $locale_id)
+			$current_locale = setlocale(LC_ALL, $locale_id);
+			if (setlocale(LC_ALL, $locale_id) != $locale_id)
 			{
 				echo "Warning: language.php: Unable to setlocale() to ".$locale_id.", return value: $current_locale, current locale: ".setlocale(LC_ALL, 0);
 			}
@@ -136,7 +135,7 @@ class Locale
 	public static function decomposeLocaleId($locale_id)
 	{
 		//echo "<p>: ";
-		//print_r($locale_id);
+		//print_r($p_locale);
 		$regex = '/^([^-_]*)(?:[-_]([^-_]*))?(?:[-_]([^-_]*))?$/';
 		/*
 		echo "<h1>Locale: $p_locale</h1>";
@@ -151,7 +150,7 @@ class Locale
 		echo "<pre>".print_r($matches)."</pre>\n";
 		*/
 		$match_retval = preg_match($regex, $locale_id, $matches);
-		//print_r($matches);
+		//print_r($matches[1]);
 		return $matches;
 	}
 	/** Used by Langstring::GetString() (and other functions) to help select the best langstring_entry to display to the user.
@@ -218,12 +217,6 @@ class Locale
 	public function GetId()
 	{
 		return $this->mId;
-	}
-	/**Indique si la clef primaire de l'objet est une chaîne de caractère.
-	*/
-	function PrimaryKeyIsString()
-	{
-		return true;
 	}
 
 	/**Retourne le Locale en format POSIX, tel que fr ou fr_CA "xx_YY".
@@ -305,6 +298,6 @@ class Locale
 		};
 		return $str;
 	}
-	
+
 } /* end class Locale */
 ?>
