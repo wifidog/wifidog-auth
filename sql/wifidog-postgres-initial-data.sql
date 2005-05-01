@@ -12,7 +12,7 @@ SET SESSION AUTHORIZATION 'wifidog';
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 2 (OID 192400)
+-- Data for TOC entry 2 (OID 706682)
 -- Name: token_status; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
@@ -33,7 +33,7 @@ SET SESSION AUTHORIZATION 'wifidog';
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 2 (OID 192434)
+-- Data for TOC entry 2 (OID 706717)
 -- Name: venue_types; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
@@ -85,7 +85,7 @@ SET SESSION AUTHORIZATION 'wifidog';
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 2 (OID 192432)
+-- Data for TOC entry 2 (OID 706715)
 -- Name: node_deployment_status; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
@@ -110,11 +110,11 @@ SET SESSION AUTHORIZATION 'wifidog';
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 2 (OID 192444)
+-- Data for TOC entry 2 (OID 706727)
 -- Name: schema_info; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
-INSERT INTO schema_info (tag, value) VALUES ('schema_version', '6');
+INSERT INTO schema_info (tag, value) VALUES ('schema_version', '13');
 
 
 --
@@ -129,7 +129,7 @@ SET SESSION AUTHORIZATION 'wifidog';
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 2 (OID 214063)
+-- Data for TOC entry 2 (OID 728649)
 -- Name: locales; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
