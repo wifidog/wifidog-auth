@@ -221,45 +221,49 @@ display: compact;
 .portal_content {
 	display: inline;
 	float: left;
-	border: 1px solid black;
+	border: outset #999999;
+	background: blue;
+	background: #fafff3;
 	margin: 2px;
-/*	background-color: #d0d0d0;*/
-	background-color: white;
 }
 .user_ui_main_outer {
 	display: block;
 }
 .user_ui_main_inner {
 	display: block;
-
-/*	border: 1px solid gray;*/
+	/*	border: 1px solid gray;*/
 	margin: 2px;
 	padding: 2px;
 }
-.user_ui_object_class{ display: none;  }
+.user_ui_object_class {
+	display: none;
+}
 .user_ui_container {
+
 }
 .user_ui_title {
-	display:block;
+	display: block;
 	font-size: medium;
 	font-weight: bold;
-	color: white;
-	background-color: #777777;
+	background-color: #cafd84;
+	color: #336600;
+	text-transform: none;
 }
 .user_ui_authors {
-	display:block;
+	display: block;
 	font-weight: bold;
-	background-color: #777777;
-	color: white;
+	color: #386b04;
+	padding: 5px;
+	background: #cafd84;
 }
 .user_ui_description {
-	display:block;
+	display: block;
 	margin: 0;
 	text-align: justify;
-	background-color: rgb(235, 235, 235);
+	background-color: #e6e6e6;
 }
 .user_ui_footer {
-	display:block;
+	display: block;
 	padding: 5px;
 	background-color: #9d9d9d;
 }
@@ -267,14 +271,13 @@ display: compact;
 	height: 250px;
 }
 .user_ui_projet_info {
-	background-color: rgb(235, 235, 235);	
+	background-color: rgb(235, 235, 235);
 }
 .user_ui_sponsor_info {
 	background-color: rgb(235, 235, 235);
 }
-
-.list_ui_container { 
-	display: inline; 
+.list_ui_container {
+	display: inline;
 }
 /* Portal */
 
@@ -303,6 +306,9 @@ display: compact;
 /*	background-color:	#CFDCE6;*/
 	margin: 3px;
 	clear: left;
+}
+.portal_section_title, .portal_section_title a {
+	font-size: medium;
 }
 .portal_section_logo {
 	padding: 2px;

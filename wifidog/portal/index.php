@@ -119,8 +119,7 @@ $current_user = User :: getCurrentUser();
 // Until we find a better solution CSS only...
 $html .= "<table width='100%'><tr><td>";
 $html .= "<div class='portal_network_section'>\n";
-$html .= "<a href='{$hotspot_network_url}'><img class='portal_section_logo' src='{$network_logo_banner_url}' alt='{$hotspot_network_name} logo' border='0'></a>\n";
-$html .= "<span class='portal_section_title'><a href='{$hotspot_network_url}'>{$hotspot_network_name}</a></span>\n";
+$html .= "<a href='{$hotspot_network_url}'><img class='portal_section_logo' alt='{$hotspot_network_name} logo' src='{$network_logo_banner_url}' border='0'></a>\n";
 // Get all network content and EXCLUDE user subscribed content
 if($current_user)
     $contents = Network :: getCurrentNetwork()->getAllContent(true, $current_user);
@@ -152,7 +151,7 @@ if($contents)
     $html .= "<table width='100%'><tr><td>";
     $html .= "<div class='portal_node_section'>\n";
     $html .= "<img class='portal_section_logo' src='{$hotspot_logo_url}' alt=''>\n";
-    $html .= "<span class='portal_section_title'>"._("Content from:")."</span>";
+    $html .= "<span class='portal_section_title'>"._("Content from:")." ";
     $node_homepage = $node->getHomePageURL();
     if (!empty ($node_homepage))
     {
@@ -163,6 +162,7 @@ if($contents)
     {
     	$html .= "</a>\n";
     }
+    $html .= "</span>";
     foreach ($contents as $content)
     {
     	if ($content->isDisplayableAt($node))
