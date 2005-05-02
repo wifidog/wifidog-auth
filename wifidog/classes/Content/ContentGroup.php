@@ -473,7 +473,7 @@ class ContentGroup extends Content
 		{
 			$retval = false;
 		}
-				Node::setCurrentNode($old_curent_node);
+		Node::setCurrentNode($old_curent_node);
 		return $retval;
 	}
 

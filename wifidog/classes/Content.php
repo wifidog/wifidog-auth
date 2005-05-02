@@ -128,6 +128,26 @@ class Content implements GenericObject
 		sort($tab);
 		return $tab;
 	}
+    
+    /**
+     * Get all content, can be restricted to a given content type
+     */
+    public static function getAllContent($content_type = "")
+    {
+        global $db;
+        $where_clause = "";
+        if(!empty($content_type))
+        {
+            $content_type = $db->EscapeString($content_type);
+            $where_clause = "WHERE content_type = '$content_type'";
+        } 
+        $db->ExecSql("SELECT content_id FROM content $where_clause", $rows, false);
+        $objects = array();
+        if($rows)
+            foreach($rows as $row)
+                $objects[] = self::getObject($row['content_id']);
+        return $objects;
+    }
 
 	/** Get a flexible interface to generate new content objects
 	 * @param $user_prefix A identifier provided by the programmer to recognise it's generated html form

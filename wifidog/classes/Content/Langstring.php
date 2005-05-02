@@ -42,7 +42,8 @@ class Langstring extends Content
 		parent :: __construct($content_id);
 		global $db;
 		$this->mBd = & $db;
-				/* A langstring is NEVER persistent */
+        
+		/* A langstring is NEVER persistent */
 		parent::setIsPersistent(false);
 	}
 

@@ -222,7 +222,6 @@ display: compact;
 	display: inline;
 	float: left;
 	border: outset #999999;
-	background: blue;
 	background: #fafff3;
 	margin: 2px;
 }
@@ -378,6 +377,34 @@ display: compact;
 .flickr_description a {
 	color: white;
 	text-decoration: underline;
+}
+.pattern_language_menu {
+	list-style-type: square;
+}
+.pattern_language_big_links {
+	font-family: verdana, sans-serif;
+	color: #88AA4B;
+	font-size: medium;
+	font-weight: bold;
+}
+.pattern_language_big_links:hover {
+	font-family: verdana, sans-serif;
+	color: #88AA4B;
+	font-size: medium;
+	font-weight: bold;
+}
+.pattern_language_body {
+	border: outset #999999;
+	background: #fafff3;
+	margin: 5px;
+	padding: 10px;
+	text-align: justify;
+}
+.pattern_language_credits {
+	border: 1px solid #999999;
+	background: #fafff3;
+	margin: 5px;
+	padding: 5px;
 }
 .spreadsheet { border: thin solid lightblue  ; text-align:left}
 TH.spreadsheet { background-color: lightgrey}

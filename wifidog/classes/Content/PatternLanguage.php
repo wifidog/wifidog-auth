@@ -37,6 +37,14 @@ Once the fragments have been delivered they are compiled in real time into a doc
  */
 class PatternLanguage extends ContentGroup
 {
+    /**
+     * Get all pattern language objects
+     */
+    public static function getAllContent() 
+    {
+       return parent::getAllContent("PatternLanguage"); 
+    }   
+     
 	function __construct($content_id)
 	{
 		parent :: __construct($content_id);
@@ -48,9 +56,6 @@ class PatternLanguage extends ContentGroup
     /** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
      * @param $subclass_admin_interface Html content of the interface element of a children
      * @return The HTML fragment for this interface */
-     
-     //TODO: complete this
-     /*
     public function getUserUI($subclass_user_interface = null)
     {
         $html = '';
@@ -62,6 +67,10 @@ class PatternLanguage extends ContentGroup
         if($current_user == null || $this->isUserSubscribed($current_user) == false)
         {
             // hyperlink to all users narrative
+            $html .= "<ul class='pattern_language_menu'>";
+            $html .= "<li><a class='pattern_language_big_links' href='/content/PatternLanguage/subscription.php'>"._("Subscribe to Pattern Language")."</a></li>";
+            $html .= "<li><a class='pattern_language_big_links' href='/content/PatternLanguage/archives.php'>"._("Read narratives archives")."</a></li>";
+            $html .= "</ul>";
             
             // Until subscription is done DO NOT log this !
             $this->setLoggingStatus(false);
@@ -72,6 +81,11 @@ class PatternLanguage extends ContentGroup
         {
             // The user is subscribed to the pattern language show an element !
             // hyperlink to user's narrative
+            $html .= "<ul class='pattern_language_menu'>";
+            $html .= "<li><a href='/content/PatternLanguage/narrative.php'>"._("Read my narrative")."</a></li>";
+            $html .= "<li><a href='/content/PatternLanguage/archives.php'>"._("Read narratives archives")."</a></li>";
+            $html .= "<li><a href='/content/PatternLanguage/subscription.php'>"._("Unsubscribe")."</a></li>";
+            $html .= "</ul>";
             
             // Display the random pattern
             $parent_output = parent :: getUserUI($html);
@@ -81,22 +95,47 @@ class PatternLanguage extends ContentGroup
         $html .= "</div>\n";
         
         return $parent_output;
-    }*/
+    }
+    
+    /** Is this pattern displayable at a certain Node
+     * @param $node Node, optionnal
+     * @return true or false */
+    public function isDisplayableAt($node)
+    {
+        // Pattern language will always be displayable 
+        return true;
+    }
 
 	/** Display the narrative
 	 * @param $user The user who's narrative you want to grab
 	 * @return the archive page HTML */
 	public function displayNarrative(User $user)
 	{
-		return "<h1>displayNarrative(): WRITEME</h1>";
-	}
+        global $db;
+        $sql = "SELECT content_group_element_id FROM content_display_log AS cdl JOIN content_group_element AS cge ON (cdl.content_id = cge.content_group_element_id) WHERE cge.content_group_id = '{$this->getId()}'";
+        $db->ExecSql($sql, $rows, false);
+        $html = "";
+        if($rows)
+            foreach($rows as $row)
+            {
+                $cge = Content::getObject($row['content_group_element_id']);
+                $html .= $cge->getUserUI()."<p>";
+            } 
+	   return $html;
+    }
 	
 	/** Get the list of all narratives
-	 * @param $user The user who's narrative you want to grab
 	 * @return the archive page HTML */
 	public function getNarrativeList()
 	{
-		return "<h1>displayNarrative(): WRITEME</h1>";
+		global $db;
+        $sql = "SELECT DISTINCT user_id FROM content_display_log AS cdl JOIN content_group_element AS cge ON (cdl.content_id = cge.content_group_element_id) JOIN content ON (content.content_id = cge.content_group_id) WHERE content_type = 'PatternLanguage'";
+        $db->ExecSql($sql , $rows, false);
+        $narratives = array();
+        if($rows)
+            foreach($rows as $row)
+                $narratives[] = User::getObject($row['user_id']);
+        return $narratives;
 	}
 
 } // End class

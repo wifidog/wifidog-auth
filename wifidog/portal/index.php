@@ -53,6 +53,8 @@ Node :: setCurrentNode($node);
 $ui = new MainUI();
 if (isset ($session))
 {
+    if(!empty($_REQUEST['gw_id']))
+        $session->set(SESS_GW_ID_VAR, $_REQUEST['gw_id']);
 	$smarty->assign("original_url_requested", $session->get(SESS_ORIGINAL_URL_VAR));
 }
 
@@ -184,7 +186,7 @@ if($current_user)
     {
         $html .= "<table width='100%'><tr><td>";
         $html .= "<div class='portal_user_section'>\n";
-        $html .= _("My content")."\n";
+        $html .= "<h1>"._("My content")."</h1>\n";
         foreach ($contents as $content)
         {
         	$html .= "<div class='portal_content'>\n";
@@ -201,7 +203,6 @@ $html .= "<a href='/content/?gw_id={$current_node_id}'>"._("Show all available c
 $html .= "<div style='clear:both;'></div>";
 
 $html .= "</div>\n";
-
 $ui->setMainContent($html);
 $ui->display();
 ?>
