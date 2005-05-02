@@ -115,8 +115,8 @@ class PatternLanguage extends ContentGroup
         // Debug values
         // 8a90b1ea56cf27a0c61f9304da73bcd5
         // SELECT DISTINCT content_group_element_id FROM content_display_log AS cdl JOIN content_group_element AS cge ON (cdl.content_id = cge.content_group_element_id) WHERE cge.content_group_id = '3a3ea73dd2e2d03729e62b95d2574fc6' AND cdl.user_id = '8a90b1ea56cf27a0c61f9304da73bcd5'
-        $sql = "SELECT DISTINCT content_group_element_id,first_display_timestamp FROM content_display_log AS cdl JOIN content_group_element AS cge ON (cdl.content_id = cge.content_group_element_id) WHERE cge.content_group_id = '{$this->getId()}' AND cdl.user_id = '{$user->getId()}' ORDER BY first_display_timestamp";
-        $db->ExecSql($sql, $rows, true);
+        $sql = "SELECT DISTINCT content_group_element_id FROM content_display_log AS cdl JOIN content_group_element AS cge ON (cdl.content_id = cge.content_group_element_id) WHERE cge.content_group_id = '{$this->getId()}' AND cdl.user_id = '{$user->getId()}';";
+        $db->ExecSql($sql, $rows, false);
         $html = "";
         if($rows)
             foreach($rows as $row)
