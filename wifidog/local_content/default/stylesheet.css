@@ -324,7 +324,6 @@ display: compact;
 }
 .flickr_title {
 	color: white;
-    visibility: hidden;
     width: 200px;
     background: #696969;
 }
@@ -370,7 +369,6 @@ display: compact;
     text-decoration: underline;
 }
 .flickr_description {
-    visibility: hidden;
     width: 180px;
     background: #696969;
     color: white;

@@ -1,4 +1,7 @@
 2005-04-30 Francois Proulx <francois.proulx@gmail.com>
+	* Logout button will now destroy session AND render token USED
+	
+2005-04-30 Francois Proulx <francois.proulx@gmail.com>
 	* Fixed bug that could potentially let non owners add content in /content through content groups
 	* Admin menu won't show node selector if the user is not owner of at least one hotspot
 	* Added Width, height support for Picture

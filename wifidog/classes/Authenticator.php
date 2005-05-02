@@ -81,7 +81,7 @@ abstract class Authenticator
 	{
 		// Stop traffic counters update
 		global $db;
-		$db->ExecSqlUpdate("UPDATE connections SET "."timestamp_out=NOW(),"."token_status='".TOKEN_USED."' "."WHERE conn_id='{$info['conn_id']}';\n");
+		$db->ExecSqlUpdate("UPDATE connections SET "."timestamp_out=NOW(),"."token_status='".TOKEN_USED."' "."WHERE conn_id='{$info['conn_id']}';\n", false);
 	}
 	
 	/**

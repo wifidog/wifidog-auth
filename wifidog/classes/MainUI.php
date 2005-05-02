@@ -56,7 +56,7 @@ class MainUI
 			$html = '';
 			$html .= "<ul class='admin_menu_list'>\n";
             
-            if($current_user->isSuperAdmin())
+            if($current_user && $current_user->isSuperAdmin())
             {
     			$html .= "<li><a href='user_log.php'>"._("User logs")."</a></li>\n";
     			$html .= "<li><a href='online_users.php'>"._("Online Users")."</a></li>\n";
@@ -68,7 +68,7 @@ class MainUI
             }
 
 			// If the user is super admin OR owner of at least one hotspot show the menu
-			if($current_user->isSuperAdmin() || $current_user->isOwner())
+			if($current_user && ($current_user->isSuperAdmin() || $current_user->isOwner()))
 			{
 				/* Node admin */
 				$html .= "<div class='admin_section_container'>\n";
@@ -96,7 +96,7 @@ class MainUI
 			}
 
 			/* Network admin */
-            if($current_user->isSuperAdmin())
+            if($current_user && $current_user->isSuperAdmin())
             {
     			$html .= "<div class='admin_section_container'>\n";
     			$html .= '<form action="'.GENERIC_OBJECT_ADMIN_ABS_HREF.'" method="post">';

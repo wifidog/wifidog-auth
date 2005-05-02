@@ -6,6 +6,10 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.42  2005/05/02 01:22:02  fproulx
+ *     2005-04-30 Francois Proulx <francois.proulx@gmail.com>
+ *     	* Logout button will now destroy session AND render token USED
+ *
  *     Revision 1.41  2005/04/28 03:14:48  fproulx
  *     *** empty log message ***
  *
@@ -44,7 +48,7 @@
  *     	* Changed stylesheet class name for Flickr to match new changes
  *     	* Fixed bugs in File
  *     	* Wrote part of EmbeddedContent ( partially working )
- *     	* TODO: add support for parameters and attributes in EmbeddedContent
+ *     	* add support for parameters and attributes in EmbeddedContent
  *
  *     Revision 1.34  2005/04/21 14:58:29  fproulx
  *     2005-04-21 Fran�ois Proulx <francois.proulx@gmail.com>

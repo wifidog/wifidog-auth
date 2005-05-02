@@ -53,7 +53,8 @@ class User
 		$user = null;
 		try
 		{
-			$user = new User($session->get(SESS_USER_ID_VAR));
+			$user = self :: getObject($session->get(SESS_USER_ID_VAR));
+			//$user = new User($session->get(SESS_USER_ID_VAR));
 		}
 		catch (Exception $e)
 		{
@@ -373,7 +374,7 @@ class User
 		return false;
 
 	}
-	
+
 	function getValidationToken()
 	{
 		return $this->mRow['validation_token'];
@@ -459,17 +460,17 @@ class User
 	{
 		global $session;
 		$session->destroy();
-		//TODO: Completed this part with Network::getObject()
-		/*
-		try {
-		    $connections = $this->getConnections();
-		    foreach($connections as $connection)
-		        if($connection['token_status'] == TOKEN_UNUSED || $connection['token_status'] == TOKEN_INUSE)
-		            Network::getCurrentNetwork()->getAuthenticator()->logout(array('conn_id' => $connection['conn_id']), $errmsg);
-		} catch(Exception $e)
+		try
 		{
-		    //TODO: Error management ( MainUI )
-		}*/
+			$connections = $this->getConnections();
+			if ($connections)
+				foreach ($connections as $connection)
+					if ($connection['token_status'] == TOKEN_UNUSED || $connection['token_status'] == TOKEN_INUSE)
+						Network :: getCurrentNetwork()->getAuthenticator()->logout(array ('conn_id' => $connection['conn_id']), $errmsg);
+		}
+		catch (Exception $e)
+		{
+		}
 	}
 
 	function sendLostUsername()

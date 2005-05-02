@@ -22,15 +22,8 @@
    * Node owner upload file
    * @author Copyright (C) 2005 Pascal Leclerc
    */
+//TODO: Move to Node getAdminUI
 
-/*
-  Notes/TODO :
-    Valider les donnees passees en arguments
-    Utiliser smarty
-    Permettre la recherche de user directement dans l'interface owner
-    156.486 / 5120.0 MB Used
-	
-*/
 
 define('BASEPATH','../');
 require_once 'admin_common.php';

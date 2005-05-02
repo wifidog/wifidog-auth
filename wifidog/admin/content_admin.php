@@ -45,63 +45,66 @@ if (empty ($_REQUEST['action']))
 
 if ($_REQUEST['action'] == 'list_all_content' || $_REQUEST['action'] == 'list_persistent_content')
 {
-    $html .= '<form action="'.CONTENT_ADMIN_ABS_HREF.'" method="get">';
-    
-    if($_REQUEST['action'] == 'list_persistent_content')
-    {
-        $sql = "SELECT * FROM content WHERE is_persistent = true ORDER BY content_type";
-        $html .= "<input type='hidden' name='action' value='list_all_content'>\n";
-        $html .= "<input type=submit name='list_submit' value='"._("Show all content")."'>\n";
-    }
-    else
-    {
-        $sql = "SELECT * FROM content ORDER BY content_type";
-        $html .= "<input type='hidden' name='action' value='list_persistent_content'>\n";
-        $html .= "<input type=submit name='list_submit' value='"._("Show only persistent content")."'>\n";
-    }   
+	$html .= '<form action="'.CONTENT_ADMIN_ABS_HREF.'" method="get">';
+
+	if ($_REQUEST['action'] == 'list_persistent_content')
+	{
+		$sql = "SELECT * FROM content WHERE is_persistent = true ORDER BY content_type";
+		$html .= "<input type='hidden' name='action' value='list_all_content'>\n";
+		$html .= "<input type=submit name='list_submit' value='"._("Show all content")."'>\n";
+	}
+	else
+	{
+		$sql = "SELECT * FROM content ORDER BY content_type";
+		$html .= "<input type='hidden' name='action' value='list_persistent_content'>\n";
+		$html .= "<input type=submit name='list_submit' value='"._("Show only persistent content")."'>\n";
+	}
 	$db->ExecSql($sql, $results, false);
-    
-    $html .= '</form>';
-    
+
+	$html .= '</form>';
+
 	if ($results != null)
 	{
 		$html .= "<table>\n";
 		$html .= "<tr><th>"._("Title")."</th><th>"._("Content type")."</th><th>"._("Description")."</th></tr>\n";
-        
-        // Get the current user
-        $user = User :: getCurrentUser();
-        
-		foreach ($results as $row)
+
+		// Get the current user
+		$user = User :: getCurrentUser();
+
+		if ($user)
 		{
-			$content = Content :: getObject($row['content_id']);
-            if ($user->isSuperAdmin() || $content->isOwner(User :: getCurrentUser()))
-            {
-    			if (!empty ($row['title']))
-    			{
-    				$title = Content :: getObject($row['title']);
-    				$title_ui = $title->__toString();
-    			}
-    			else
-    			{
-    				$title_ui = null;
-    			}
-    
-    			if (!empty ($row['description']))
-    			{
-    				$description = Content :: getObject($row['description']);
-    				$description_ui = $description->__toString();
-    			}
-    			else
-    			{
-    				$description_ui = null;
-    			}
-    			$href = GENERIC_OBJECT_ADMIN_ABS_HREF."?object_id=$row[content_id]&object_class=Content&action=edit";
-    			$html .= "<tr><td>$title_ui</td><td><a href='$href'>$row[content_type]</a></td><td>$description_ui</td>\n";
-    			$href = GENERIC_OBJECT_ADMIN_ABS_HREF."?object_id=$row[content_id]&object_class=Content&action=delete";
-    			$html .= "<td><a href='$href'>Delete</a></td>";
-    
-    			$html .= "</tr>\n";
-            }
+			foreach ($results as $row)
+			{
+				$content = Content :: getObject($row['content_id']);
+				if ($user->isSuperAdmin() || $content->isOwner(User :: getCurrentUser()))
+				{
+					if (!empty ($row['title']))
+					{
+						$title = Content :: getObject($row['title']);
+						$title_ui = $title->__toString();
+					}
+					else
+					{
+						$title_ui = null;
+					}
+
+					if (!empty ($row['description']))
+					{
+						$description = Content :: getObject($row['description']);
+						$description_ui = $description->__toString();
+					}
+					else
+					{
+						$description_ui = null;
+					}
+					$href = GENERIC_OBJECT_ADMIN_ABS_HREF."?object_id=$row[content_id]&object_class=Content&action=edit";
+					$html .= "<tr><td>$title_ui</td><td><a href='$href'>$row[content_type]</a></td><td>$description_ui</td>\n";
+					$href = GENERIC_OBJECT_ADMIN_ABS_HREF."?object_id=$row[content_id]&object_class=Content&action=delete";
+					$html .= "<td><a href='$href'>Delete</a></td>";
+
+					$html .= "</tr>\n";
+				}
+			}
 		}
 		$html .= "</table>\n";
 	}
