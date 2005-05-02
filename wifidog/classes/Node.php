@@ -453,7 +453,7 @@ class Node implements GenericObject
     {
         global $db;
         $retval = array ();
-        $sql = "SELECT * FROM content_group JOIN content ON (content.content_id = content_group.content_group_id) WHERE is_persistent = true AND is_artistic_content = true AND is_locative_content = true";
+        $sql = "SELECT * FROM content_group JOIN content ON (content.content_id = content_group.content_group_id) JOIN node_has_content ON (node_has_content.content_id = content_group.content_group_id AND node_has_content.node_id = '{$this->getId()}') WHERE is_persistent = true AND is_artistic_content = true AND is_locative_content = true";
         $db->ExecSql($sql, $content_rows, false);
         if ($content_rows != null)
         {
@@ -463,10 +463,13 @@ class Node implements GenericObject
                 $content_group = Content::getObject($content_row['content_group_id']);
                 if($content_group->getDisplayNumElements() >= 1)
                 {
-                    // Disable logging and allow content to expand ( if possible )
-                    $content_group->setExpandStatus(true);
-                    $content_group->setLoggingStatus(false);
-                    $retval[] = $content_group;
+                		if($content_group->isDisplayableAt($this))
+                		{
+						// Disable logging and allow content to expand ( if possible )
+						$content_group->setExpandStatus(true);
+						$content_group->setLoggingStatus(false);
+						$retval[] = $content_group;
+                		}
                 }
             }
         }

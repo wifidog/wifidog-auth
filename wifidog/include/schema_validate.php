@@ -28,7 +28,7 @@ error_reporting(E_ALL);
 require_once BASEPATH.'config.php';
 require_once BASEPATH.'classes/AbstractDb.php';
 require_once BASEPATH.'classes/Session.php';
-define('REQUIRED_SCHEMA_VERSION', 13);
+define('REQUIRED_SCHEMA_VERSION', 14);
 
 /** Check that the database schema is up to date.  If it isn't, offer to update it. */
 function validate_schema()
@@ -400,7 +400,20 @@ function update_schema()
 						$sql .= "UPDATE content_group SET allow_repeat='YES';\n";
 			$sql .= "ALTER TABLE content_group ALTER COLUMN allow_repeat SET DEFAULT 'YES';\n";
 			$sql .= "ALTER TABLE content_group ALTER COLUMN allow_repeat SET NOT NULL;\n";
-	        }	
+		}
+		
+		$new_schema_version = 14;
+        if($schema_version < $new_schema_version)
+        {
+            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n"; 
+            $sql .= "CREATE TABLE pictures " .
+            		"( " .
+            		"pictures_id text NOT NULL PRIMARY KEY REFERENCES files ON DELETE CASCADE ON UPDATE CASCADE, " .
+            		"width int4, ".
+            		"height int4".
+            		");\n";
+        }	
 	
 	
 		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);

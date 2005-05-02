@@ -480,7 +480,7 @@ class Content implements GenericObject
 			if (!empty ($this->content_row['project_info']))
 			{
 				$html .= "<div class='user_ui_projet_info'>\n";
-				$html .= _("Project information:");
+				$html .= "<b>"._("Project information:")."</b>";
 				$project_info = self :: getObject($this->content_row['project_info']);
 				// If the content logging is disabled, all the children will inherit this property temporarly
 				if ($this->getLoggingStatus() == false)
@@ -492,7 +492,7 @@ class Content implements GenericObject
 			if (!empty ($this->content_row['sponsor_info']))
 			{
 				$html .= "<div class='user_ui_sponsor_info'>\n";
-				$html .= _("Project sponsor:");
+				$html .= "<b>"._("Project sponsor:")."</b>";
 				$sponsor_info = self :: getObject($this->content_row['sponsor_info']);
 				// If the content logging is disabled, all the children will inherit this property temporarly
 				if ($this->getLoggingStatus() == false)

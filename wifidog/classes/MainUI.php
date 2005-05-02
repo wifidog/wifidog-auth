@@ -67,33 +67,33 @@ class MainUI
     			$html .= "<li><a href='owner_sendfiles.php'>"._("Hotspot owner administration")."</a> - Beta</li>\n";
             }
 
-			/* Node admin */
-			$html .= "<div class='admin_section_container'>\n";
-			$html .= '<form action="'.GENERIC_OBJECT_ADMIN_ABS_HREF.'" method="get">';
-			$html .= "<div class='admin_section_title'>"._("Node administration:")." </div>\n";
-
-			$html .= "<div class='admin_section_data'>\n";
-			$html .= "<input type='hidden' name='action' value='edit'>\n";
-			$html .= "<input type='hidden' name='object_class' value='Node'><br>\n";
-
-			if ($current_user->isSuperAdmin())
+			// If the user is super admin OR owner of at least one hotspot show the menu
+			if($current_user->isSuperAdmin() || $current_user->isOwner())
 			{
-				$sql_additional_where = '';
-			}
-			else
-			{
-				$sql_additional_where = "AND node_id IN (SELECT node_id from node_owners WHERE user_id='".$current_user->getId()."')";
-			}
-            $html .= "<div id='NodeSelector'>\n";
-			$html .= Node :: getSelectNodeUI('object_id', $sql_additional_where);
-            $html .= "</div>\n";
-			$html .= "</div>\n";
-			$html .= "<div class='admin_section_tools'>\n";
+				/* Node admin */
+				$html .= "<div class='admin_section_container'>\n";
+				$html .= '<form action="'.GENERIC_OBJECT_ADMIN_ABS_HREF.'" method="get">';
+				$html .= "<div class='admin_section_title'>"._("Node administration:")." </div>\n";
+	
+				$html .= "<div class='admin_section_data'>\n";
+				$html .= "<input type='hidden' name='action' value='edit'>\n";
+				$html .= "<input type='hidden' name='object_class' value='Node'><br>\n";
 
-			$html .= "<input type=submit name='edit_submit' value='"._("Edit")."'>\n";
-			$html .= "</div>\n";
-			$html .= '</form>';
-			$html .= "</div>\n";
+				if ($current_user->isSuperAdmin())
+					$sql_additional_where = '';
+				else
+					$sql_additional_where = "AND node_id IN (SELECT node_id from node_owners WHERE user_id='".$current_user->getId()."')";
+	            $html .= "<div id='NodeSelector'>\n";
+				$html .= Node :: getSelectNodeUI('object_id', $sql_additional_where);
+	            $html .= "</div>\n";
+				$html .= "</div>\n";
+				$html .= "<div class='admin_section_tools'>\n";
+	
+				$html .= "<input type=submit name='edit_submit' value='"._("Edit")."'>\n";
+				$html .= "</div>\n";
+				$html .= '</form>';
+				$html .= "</div>\n";
+			}
 
 			/* Network admin */
             if($current_user->isSuperAdmin())

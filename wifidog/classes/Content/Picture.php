@@ -38,6 +38,57 @@ class Picture extends File
 	function __construct($content_id)
 	{
 		parent :: __construct($content_id);
+		global $db;
+
+		$content_id = $db->EscapeString($content_id);
+		$sql = "SELECT * FROM pictures WHERE pictures_id='$content_id'";
+		$db->ExecSqlUniqueRes($sql, $row, false);
+		if ($row == null)
+		{
+			/*Since the parent Content exists, the necessary data in content_group had not yet been created */
+			$sql = "INSERT INTO pictures (pictures_id) VALUES ('$content_id')";
+			$db->ExecSqlUpdate($sql, false);
+
+			$sql = "SELECT * FROM pictures WHERE pictures_id='$content_id'";
+			$db->ExecSqlUniqueRes($sql, $row, false);
+			if ($row == null)
+			{
+				throw new Exception(_("The content with the following id could not be found in the database: ").$content_id);
+			}
+
+		}
+		$this->mBd = & $db;
+		$this->pictures_row = $row;
+	}
+	
+	function getWidth()
+	{
+		return $this->pictures_row['width'];
+	}
+	
+	function setWidth($width)
+	{
+		if(empty($width) || is_numeric($width))
+		{
+			empty($width) ? $width = "NULL" : $width = $this->mBd->EscapeString($width) ;
+			$this->mBd->ExecSqlUpdate("UPDATE pictures SET width =".$width." WHERE pictures_id='".$this->getId()."'", false);
+			$this->refresh();
+		}
+	}
+	
+	function getHeight()
+	{
+		return $this->pictures_row['height'];
+	}
+	
+	function setHeight($height)
+	{
+		if(empty($height) || is_numeric($height))
+		{
+			empty($height) ? $height = "NULL" : $height = $this->mBd->EscapeString($height) ;
+			$this->mBd->ExecSqlUpdate("UPDATE pictures SET height =".$height." WHERE pictures_id='".$this->getId()."'", false);
+			$this->refresh();
+		}
 	}
 
 	/**Affiche l'interface d'administration de l'objet */
@@ -46,16 +97,55 @@ class Picture extends File
         $html = '';
         $html .= "<div class='admin_class'>Picture (".get_class($this)." instance)</div>\n";
         
+        $html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_data'>\n";
+        $html .= "<div class='admin_section_title'>"._("Width (leave empty if you want to keep original width)")." : </div>\n";
+		$html .= "<input type='text' name='pictures_{$this->getId()}_width' value='{$this->getWidth()}'>";
+		$html .= "</div>\n";
+        $html .= "</div>\n";
+        
+        $html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_data'>\n";
+        $html .= "<div class='admin_section_title'>"._("Height (leave empty if you want to keep original height)")." : </div>\n";
+		$html .= "<input type='text' name='pictures_{$this->getId()}_height' value='{$this->getHeight()}'>";
+		$html .= "</div>\n";
+        $html .= "</div>\n";
+        
         // Show File admin UI + display the picture
         $html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_data'>\n";
         $html .= "<div class='admin_section_title'>"._("Picture preview")." : </div>\n";
-		$html .= "<img src='".htmlentities($this->getFileUrl())."' alt='".$this->getFileName()."''>";
+        
+        $width = $this->getWidth();
+		$height = $this->getHeight();
+		
+		if(empty($width))
+			$width = "";
+		else
+			$width = "width='$width'";
+		
+		if(empty($height))
+			$height = "";
+		else
+			$height = "height='$height'";
+			
+		$html .= "<img src='".htmlentities($this->getFileUrl())."' $width $height alt='".$this->getFileName()."''>";
 		$html .= "</div>\n";
         $html .= "</div>\n";
 
         $html .= $subclass_admin_interface;
         return parent :: getAdminUI($html);
+	}
+	
+	function processAdminUI()
+	{
+        if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
+        {
+	    		parent :: processAdminUI();
+	    		
+	    		$this->setWidth(intval($_REQUEST["pictures_{$this->getId()}_width"]));
+	    		$this->setHeight(intval($_REQUEST["pictures_{$this->getId()}_height"]));
+        }
 	}
 
 	/** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
@@ -66,7 +156,21 @@ class Picture extends File
         $html = '';
 		$html .= "<div class='user_ui_container'>\n";
 		$html .= "<div class='user_ui_object_class'>Picture (".get_class($this)." instance)</div>\n";
-		$html .= "<img class='user_ui_picture' src='".htmlentities($this->getFileUrl())."' alt='".$this->getFileName()."''>";
+		
+		$width = $this->getWidth();
+		$height = $this->getHeight();
+		
+		if(empty($width))
+			$width = "";
+		else
+			$width = "width='$width'";
+		
+		if(empty($height))
+			$height = "";
+		else
+			$height = "height='$height'";
+			
+		$html .= "<img src='".htmlentities($this->getFileUrl())."' $width $height alt='".$this->getFileName()."''>";
 		$html .= "</div>\n";
         return $html;
 	}

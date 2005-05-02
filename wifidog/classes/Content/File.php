@@ -294,39 +294,39 @@ class File extends Content
 	{
         if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
         {
-    		parent :: processAdminUI();
-            
-    		// If no file was uploaded, update filename and mime type
-    		if (!empty ($_REQUEST["file_mode".$this->getId()]))
-    		{
-                $this->setFilename($_REQUEST["file_file_name".$this->getId()]);
-                $this->setMimeType($_REQUEST["file_mime_type".$this->getId()]);
-                
-    			$file_mode = $_REQUEST["file_mode".$this->getId()];
-    			if ($file_mode == "by_upload")
-    			{
-    				$this->setBinaryDataFromPostVar("file_file_upload".$this->getId());
-    				$this->setURL(null);
-    				// Reset the remote file size ( not used )
-    				$this->setRemoteFileSize(0);
-    			}
-    			else
-    			{
-    				if ($file_mode == "remote")
-    				{
-    					$this->setURL($_REQUEST["file_url".$this->getId()]);
-    					$this->setBinaryData(null);
-    					// When switching from local to remote, this field does not exist yet
-    					if (!empty ($_REQUEST["file_old_remote_size".$this->getId()]))
-    					{
-    						if ($_REQUEST["file_remote_size".$this->getId()] != $_REQUEST["file_old_remote_size".$this->getId()])
-    							$this->setRemoteFileSize($_REQUEST["file_remote_size".$this->getId()]);
-    					}
-    					else
-    						$this->setRemoteFileSize(0);
-    				}
-    			}
-    		}
+	    		parent :: processAdminUI();
+	            
+	    		// If no file was uploaded, update filename and mime type
+	    		if (!empty ($_REQUEST["file_mode".$this->getId()]))
+	    		{
+	    			$this->setFilename($_REQUEST["file_file_name".$this->getId()]);
+	                
+	    			$file_mode = $_REQUEST["file_mode".$this->getId()];
+	    			if ($file_mode == "by_upload")
+	    			{
+	    				$this->setMimeType($_REQUEST["file_mime_type".$this->getId()]);
+	    				$this->setBinaryDataFromPostVar("file_file_upload".$this->getId());
+	    				$this->setURL(null);
+	    				// Reset the remote file size ( not used )
+	    				$this->setRemoteFileSize(0);
+	    			}
+	    			else
+	    			{
+	    				if ($file_mode == "remote")
+	    				{
+	    					$this->setURL($_REQUEST["file_url".$this->getId()]);
+	    					$this->setBinaryData(null);
+	    					// When switching from local to remote, this field does not exist yet
+	    					if (!empty ($_REQUEST["file_old_remote_size".$this->getId()]))
+	    					{
+	    						if ($_REQUEST["file_remote_size".$this->getId()] != $_REQUEST["file_old_remote_size".$this->getId()])
+	    							$this->setRemoteFileSize($_REQUEST["file_remote_size".$this->getId()]);
+	    					}
+	    					else
+	    						$this->setRemoteFileSize(0);
+	    				}
+	    			}
+	    		}
         }
 	}
 

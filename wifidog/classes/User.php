@@ -1,5 +1,6 @@
 <?php
 
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -250,12 +251,12 @@ class User
 		return $this->id;
 	}
 
-/** Get a user display suitable for a user list.  Will include link to the user profile. */
+	/** Get a user display suitable for a user list.  Will include link to the user profile. */
 	function getUserListUI()
 	{
-						$html = '';
-						$html .= $this->getUserName();
-						return $html;
+		$html = '';
+		$html .= $this->getUserName();
+		return $html;
 	}
 
 	function getUsername()
@@ -343,18 +344,36 @@ class User
 		return $retval;
 	}
 
-  public function isSuperAdmin() {
-    global $db;
-    //$this->session->dump();
-    
-    $db->ExecSqlUniqueRes("SELECT * FROM users NATURAL JOIN administrators WHERE (users.user_id='$this->id')", $user_info, false);
-    if (!empty($user_info)) {
-     return true;
-    } else {
-     return false;
-    }
+	public function isSuperAdmin()
+	{
+		global $db;
+		//$this->session->dump();
 
-  }
+		$db->ExecSqlUniqueRes("SELECT * FROM users NATURAL JOIN administrators WHERE (users.user_id='$this->id')", $user_info, false);
+		if (!empty ($user_info))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+
+	}
+
+	/**
+	 * Tells if the current user is owner of at least one hotspot.
+	 */
+	public function isOwner()
+	{
+		global $db;
+		$db->ExecSqlUniqueRes("SELECT * FROM node_owners WHERE user_id='{$this->getId()}'", $row, false);
+		if ($row != null)
+			return true;
+		return false;
+
+	}
+	
 	function getValidationToken()
 	{
 		return $this->mRow['validation_token'];
@@ -412,11 +431,11 @@ class User
 		$db->ExecSql("SELECT * FROM connections,nodes WHERE user_id='{$this->id}' AND nodes.node_id=connections.node_id ORDER BY timestamp_in", $connections, false);
 		return $connections;
 	}
-    
-    function getAccountOrigin()
-    {
-        return $this->mRow['account_origin'];
-    }
+
+	function getAccountOrigin()
+	{
+		return $this->mRow['account_origin'];
+	}
 
 	/** Return all the users
 	 */
@@ -431,27 +450,27 @@ class User
 		}
 		return $objects;
 	}
-    
-    /**
-     * Logout the current user
-     * Destroying session and cleaning tokens
-     */
-    function logout()
-    {
-        global $session;
-        $session->destroy();
-        //TODO: Completed this part with Network::getObject()
-        /*
-        try {
-            $connections = $this->getConnections();
-            foreach($connections as $connection)
-                if($connection['token_status'] == TOKEN_UNUSED || $connection['token_status'] == TOKEN_INUSE)
-                    Network::getCurrentNetwork()->getAuthenticator()->logout(array('conn_id' => $connection['conn_id']), $errmsg);
-        } catch(Exception $e)
-        {
-            //TODO: Error management ( MainUI )
-        }*/
-    }
+
+	/**
+	 * Logout the current user
+	 * Destroying session and cleaning tokens
+	 */
+	function logout()
+	{
+		global $session;
+		$session->destroy();
+		//TODO: Completed this part with Network::getObject()
+		/*
+		try {
+		    $connections = $this->getConnections();
+		    foreach($connections as $connection)
+		        if($connection['token_status'] == TOKEN_UNUSED || $connection['token_status'] == TOKEN_INUSE)
+		            Network::getCurrentNetwork()->getAuthenticator()->logout(array('conn_id' => $connection['conn_id']), $errmsg);
+		} catch(Exception $e)
+		{
+		    //TODO: Error management ( MainUI )
+		}*/
+	}
 
 	function sendLostUsername()
 	{
@@ -461,10 +480,10 @@ class User
 		$headers .= "From: ".VALIDATION_EMAIL_FROM_ADDRESS;
 		$subject = HOTSPOT_NETWORK_NAME._(" lost username request");
 		$body = _("Hello,\nYou have requested that the authentication server send you your username:\nUsername: ").$username._("\n\nHave a nice day,\nThe Team");
-        
-        //TODO: Find a way to use correctly mb_encode_mimeheader 
-        $subject = mb_convert_encoding($subject, "ISO-8859-1","AUTO");
-        
+
+		//TODO: Find a way to use correctly mb_encode_mimeheader 
+		$subject = mb_convert_encoding($subject, "ISO-8859-1", "AUTO");
+
 		mail($this->getEmail(), $subject, $body, $headers);
 	}
 
@@ -488,10 +507,10 @@ class User
 				$subject = HOTSPOT_NETWORK_NAME._(" new user validation");
 				$url = "http://".$_SERVER["SERVER_NAME"]."/validate.php?user_id=".$this->getId()."&token=".$this->getValidationToken();
 				$body = _("Hello,\nPlease follow the link below to validate your account.\n").$url._("\n\nThank you,\nThe Team.");
-                
-                //TODO: Find a way to use correctly mb_encode_mimeheader 
-                $subject = mb_convert_encoding($subject, "ISO-8859-1","AUTO");
-        
+
+				//TODO: Find a way to use correctly mb_encode_mimeheader 
+				$subject = mb_convert_encoding($subject, "ISO-8859-1", "AUTO");
+
 				mail($this->getEmail(), $subject, $body, $headers);
 			}
 		}
@@ -507,13 +526,13 @@ class User
 
 		$headers = 'MIME-Version: 1.0'."\r\n";
 		$headers .= 'Content-type: text/plain; charset=UTF-8'."\r\n";
-        $headers .= "From: ".VALIDATION_EMAIL_FROM_ADDRESS;
+		$headers .= "From: ".VALIDATION_EMAIL_FROM_ADDRESS;
 		$subject = HOTSPOT_NETWORK_NAME._(" new password request");
 		$body = _("Hello,\nYou have requested that the authentication server send you a new password:\nUsername: ").$username._("\nPassword: ").$new_password._("\n\nHave a nice day,\nThe Team");
-        
-        //TODO: Find a way to use correctly mb_encode_mimeheader 
-        $subject = mb_convert_encoding($subject, "ISO-8859-1","AUTO");
-        
+
+		//TODO: Find a way to use correctly mb_encode_mimeheader 
+		$subject = mb_convert_encoding($subject, "ISO-8859-1", "AUTO");
+
 		mail($this->getEmail(), $subject, $body, $headers);
 	}
 
@@ -579,7 +598,7 @@ class User
 		$html .= "<input type='text' name='$name' value=''>\n";
 		return $html;
 	}
-    
+
 	/** Get the selected user, IF one was selected and is valid
 	 * @param $user_prefix A identifier provided by the programmer to recognise it's generated form
 	 * @return the User object, or null if the user is invalid or none was selected
@@ -590,46 +609,46 @@ class User
 		$network = Network :: processSelectNetworkUI($user_prefix);
 		$name = "select_user_{$user_prefix}_username";
 		$username = $_REQUEST[$name];
-		return self::getUserByUsernameAndOrigin($username, $network->GetId());
+		return self :: getUserByUsernameAndOrigin($username, $network->GetId());
 	}
-    
-    /** Add content to this user ( subscription ) */
-    public function addContent(Content $content)
-    {
-        global $db;
-        $content_id = $db->EscapeString($content->getId());
-        $sql = "INSERT INTO user_has_content (user_id, content_id) VALUES ('$this->id','$content_id')";
-        $db->ExecSqlUpdate($sql, false);
-        return true;
-    }
 
-    /** Remove content from this node */
-    public function removeContent(Content $content)
-    {
-        global $db;
-        $content_id = $db->EscapeString($content->getId());
-        $sql = "DELETE FROM user_has_content WHERE user_id='$this->id' AND content_id='$content_id'";
-        $db->ExecSqlUpdate($sql, false);
-        return true;
-    }
+	/** Add content to this user ( subscription ) */
+	public function addContent(Content $content)
+	{
+		global $db;
+		$content_id = $db->EscapeString($content->getId());
+		$sql = "INSERT INTO user_has_content (user_id, content_id) VALUES ('$this->id','$content_id')";
+		$db->ExecSqlUpdate($sql, false);
+		return true;
+	}
 
-    /**Get an array of all Content linked to this node
-    * @return an array of Content or an empty arrray */
-    function getAllContent()
-    {
-        global $db;
-        $retval = array ();
-        $sql = "SELECT * FROM user_has_content WHERE user_id='$this->id' ORDER BY subscribe_timestamp";
-        $db->ExecSql($sql, $content_rows, false);
-        if ($content_rows != null)
-        {
-            foreach ($content_rows as $content_row)
-            {
-                $retval[] = Content :: getObject($content_row['content_id']);
-            }
-        }
-        return $retval;
-    }
-    
+	/** Remove content from this node */
+	public function removeContent(Content $content)
+	{
+		global $db;
+		$content_id = $db->EscapeString($content->getId());
+		$sql = "DELETE FROM user_has_content WHERE user_id='$this->id' AND content_id='$content_id'";
+		$db->ExecSqlUpdate($sql, false);
+		return true;
+	}
+
+	/**Get an array of all Content linked to this node
+	* @return an array of Content or an empty arrray */
+	function getAllContent()
+	{
+		global $db;
+		$retval = array ();
+		$sql = "SELECT * FROM user_has_content WHERE user_id='$this->id' ORDER BY subscribe_timestamp";
+		$db->ExecSql($sql, $content_rows, false);
+		if ($content_rows != null)
+		{
+			foreach ($content_rows as $content_row)
+			{
+				$retval[] = Content :: getObject($content_row['content_id']);
+			}
+		}
+		return $retval;
+	}
+
 } // End class
 ?>

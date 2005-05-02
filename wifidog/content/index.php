@@ -109,33 +109,36 @@ $html = '';
 $html .= "<div id='portal_container'>\n";
 
 /* Node section */
-$html .= "<div class='portal_node_section'>\n";
-$html .= "<img class='portal_section_logo' src='{$hotspot_logo_url}' alt=''>\n";
-$html .= "<span class='portal_section_title'>"._("Content from:")."</span>";
-
-$node_homepage = $node->getHomePageURL();
-if(!empty($node_homepage))
-{
-	$html .= "<a href='$node_homepage'>";
-}
-$html .= $node->getName();
-if(!empty($node_homepage))
-{
-	$html .= "</a>\n";
-}
-
 // Get all locative artistic content for this node
 $contents = $node->getAllLocativeArtisticContent();
-$html .= "<ul>\n";
-foreach ($contents as $content)
+if($contents)
 {
-    $html .= "<li>\n";
-	$html .= $content->getUserUI();
-    $html .= "</li>\n";
+	$html .= "<table width='100%'><tr><td>";
+	$html .= "<div class='portal_node_section'>\n";
+	$html .= "<img class='portal_section_logo' src='{$hotspot_logo_url}' alt=''>\n";
+	$html .= "<span class='portal_section_title'>"._("Content from:")." ";
+	
+	$node_homepage = $node->getHomePageURL();
+	if(!empty($node_homepage))
+	{
+		$html .= "<a href='$node_homepage'>";
+	}
+	$html .= $node->getName();
+	if(!empty($node_homepage))
+	{
+		$html .= "</a>\n";
+	}
+	$html .= "</span>";
+	$html .= "</td></tr></table>";
+	
+	foreach ($contents as $content)
+	{
+		$html .= "<div class='portal_content'>\n";
+		$html .= $content->getUserUI();
+		$html .= "</div>";
+	}
+	$html .= "</div>\n";
 }
-$html .= "</ul>\n";
-
-$html .= "</div>\n";
 
 $ui->setMainContent($html);
 $ui->display();
