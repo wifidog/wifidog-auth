@@ -463,13 +463,13 @@ class Node implements GenericObject
                 $content_group = Content::getObject($content_row['content_group_id']);
                 if($content_group->getDisplayNumElements() >= 1)
                 {
-                		if($content_group->isDisplayableAt($this))
-                		{
+            		if($content_group->isDisplayableAt($this))
+            		{
 						// Disable logging and allow content to expand ( if possible )
 						$content_group->setExpandStatus(true);
 						$content_group->setLoggingStatus(false);
 						$retval[] = $content_group;
-                		}
+            		}
                 }
             }
         }
