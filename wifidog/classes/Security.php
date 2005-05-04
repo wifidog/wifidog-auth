@@ -52,7 +52,8 @@ class Security {
   }
 
   function requireAdmin() {
-     if (!User::getCurrentUser()->isSuperAdmin())
+       $current_user = User::getCurrentUser();
+     if (!$current_user || ($current_user && !User::getCurrentUser()->isSuperAdmin()))
       {
       echo '<p class=error>'._("You do not have administrator privileges")."</p>\n";
       exit;
