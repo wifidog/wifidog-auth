@@ -119,7 +119,7 @@ $current_user = User :: getCurrentUser();
 
 // This table ( width 100% ) force each section to display on top of each other, even though the content will float
 // Until we find a better solution CSS only...
-$html .= "<table width='100%'><tr><td>";
+$html .= "<table><tr><td>";
 $html .= "<div class='portal_network_section'>\n";
 $html .= "<a href='{$hotspot_network_url}'><img class='portal_section_logo' alt='{$hotspot_network_name} logo' src='{$network_logo_banner_url}' border='0'></a>\n";
 // Get all network content and EXCLUDE user subscribed content
@@ -150,7 +150,7 @@ else
     $contents = $node->getAllContent();
 if($contents)
 {
-    $html .= "<table width='100%'><tr><td>";
+    $html .= "<table><tr><td>";
     $html .= "<div class='portal_node_section'>\n";
     $html .= "<img class='portal_section_logo' src='{$hotspot_logo_url}' alt=''>\n";
     $html .= "<span class='portal_section_title'>"._("Content from:")." ";
@@ -184,7 +184,7 @@ if($current_user)
     $contents = User :: getCurrentUser()->getAllContent();
     if($contents)
     {
-        $html .= "<table width='100%'><tr><td>";
+        $html .= "<table><tr><td>";
         $html .= "<div class='portal_user_section'>\n";
         $html .= "<h1>"._("My content")."</h1>\n";
         foreach ($contents as $content)
@@ -200,9 +200,10 @@ if($current_user)
 
 // Hyperlinks to full content display page
 $html .= "<a href='/content/?gw_id={$current_node_id}'>"._("Show all available contents for this hotspot")."</a>"."\n";
-$html .= "<div style='clear:both;'></div>";
 
+$html .= "<div style='clear:both;'></div>";
 $html .= "</div>\n";
+
 $ui->setMainContent($html);
 $ui->display();
 ?>

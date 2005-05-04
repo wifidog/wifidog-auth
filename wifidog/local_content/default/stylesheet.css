@@ -226,7 +226,7 @@ display: compact;
 	margin: 2px;
 }
 .user_ui_main_outer {
-	display: block;
+	display: inline;
 }
 .user_ui_main_inner {
 	display: block;
@@ -246,7 +246,6 @@ display: compact;
 	font-weight: bold;
 	background-color: #cafd84;
 	color: #336600;
-	text-transform: none;
 }
 .user_ui_authors {
 	display: block;
@@ -257,7 +256,6 @@ display: compact;
 }
 .user_ui_description {
 	display: block;
-	margin: 0;
 	text-align: justify;
 	background-color: #e6e6e6;
 }
@@ -304,7 +302,6 @@ display: compact;
 .portal_user_section {
 /*	background-color:	#CFDCE6;*/
 	margin: 3px;
-	clear: left;
 }
 .portal_section_title, .portal_section_title a {
 	font-size: medium;
