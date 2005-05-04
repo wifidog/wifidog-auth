@@ -112,9 +112,10 @@ class PatternLanguage extends ContentGroup
 	public function displayNarrative(User $user)
 	{
         global $db;
-        // Debug values
-        //$sql = "SELECT DISTINCT content_group_element_id, first_display_timestamp FROM content_display_log AS cdl JOIN content_group_element AS cge ON (cdl.content_id = cge.content_group_element_id) WHERE cge.content_group_id = '{$this->getId()}' AND cdl.user_id = '{$user->getId()}' ORDER BY first_display_timestamp;";
-        $sql = "SELECT DISTINCT ON (content_group_element_id) content_group_element_id, first_display_timestamp FROM content_display_log AS cdl JOIN content_group_element AS cge ON (cdl.content_id = cge.content_group_element_id) JOIN content ON (content.content_id = cge.content_group_id) where user_id = '{$user->getId()}' AND content.content_type = 'PatternLanguage' ORDER BY content_group_element_id";
+        // Debug values user_id = 8a90b1ea56cf27a0c61f9304da73bcd5
+        // PL : 3a3ea73dd2e2d03729e62b95d2574fc6
+        $sql = "SELECT * FROM (SELECT DISTINCT ON (content_group_element_id) content_group_element_id, first_display_timestamp FROM content_display_log AS cdl JOIN content_group_element AS cge ON (cdl.content_id = cge.content_group_element_id) JOIN content ON (content.content_id = cge.content_group_id) where user_id = '{$user->getId()}' AND cge.content_group_id = '{$this->getId()}' AND content.content_type = 'PatternLanguage') AS patterns ORDER BY first_display_timestamp";
+        // OLD QUERY $sql = "SELECT DISTINCT ON (content_group_element_id) content_group_element_id, first_display_timestamp FROM content_display_log AS cdl JOIN content_group_element AS cge ON (cdl.content_id = cge.content_group_element_id) JOIN content ON (content.content_id = cge.content_group_id) where user_id = '{$user->getId()}' AND content.content_type = 'PatternLanguage' ORDER BY content_group_element_id";
         $db->ExecSql($sql, $rows, false);
         $html = "";
         if($rows)
