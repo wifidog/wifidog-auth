@@ -269,8 +269,10 @@ class ContentGroupElement extends Content
 			$name = "content_group_element_{$this->id}_erase_displayed_content";
 			if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
 			{
-				$db->ExecSqlUpdate("UPDATE content_group_element SET displayed_content_id = NULL WHERE content_group_element_id = '$this->id'", FALSE);
-				$displayed_content->delete($errmsg);
+                if($displayed_content->delete($errmsg) != false)
+				    $db->ExecSqlUpdate("UPDATE content_group_element SET displayed_content_id = NULL WHERE content_group_element_id = '$this->id'", FALSE);
+                else
+                    echo $errmsg;
 			}
 			else
 			{
@@ -376,9 +378,11 @@ class ContentGroupElement extends Content
 		if ($this->isPersistent() == false && !empty ($this->content_group_element_row['displayed_content_id']))
 		{
 			$displayed_content = self :: getObject($this->content_group_element_row['displayed_content_id']);
-			$displayed_content->delete($errmsg);
+            print_r($displayed_content);
+			/*if(!$displayed_content->delete($errmsg))
+               return false;*/
 		}
-		return parent :: delete($errmsg);
+		//return parent :: delete($errmsg);
 	}
 } // End class
 ?>

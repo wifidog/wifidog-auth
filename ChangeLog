@@ -1,4 +1,12 @@
 2005-05-04 Francois Proulx <francois.proulx@gmail.com>
+	* Added BLOB support
+	* modified file_download.php to support new header attributes
+	* Added ImportLargeObject, UnlinkLargeObject to PG SQL abtraction
+	* Make sure your PHP.ini contains the right value to allow big downloads
+	* Check : http://ca3.php.net/manual/en/features.file-upload.common-pitfalls.php
+	* ISF Live server is now configured to support 100 megabytes files
+	
+2005-05-04 Francois Proulx <francois.proulx@gmail.com>
 	* Fixed CSS IE Bug
 	* Fixed SQL query
 	* NEED HELP FROM A WEB DESIGNER !!!!!

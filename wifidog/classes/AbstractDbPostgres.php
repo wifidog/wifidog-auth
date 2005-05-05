@@ -319,6 +319,44 @@ class AbstractDb
 		}
 		return $result;
 	}
+    
+    /**
+     * Read entire large object and send it to the browser
+     */
+    function ReadAndFlushLargeObject($lo_oid)
+    {
+        $connection = $this->connexionDb(NULL);
+        // Large objects calls MUST be enclosed in transaction block
+        // remember, large objects must be obtained from within a transaction
+        pg_query ($connection, "begin");        
+        $handle_lo = pg_lo_open($connection, $lo_oid, "r") or die("<h1>Error.. can't get handle</h1>");
+        
+        pg_lo_read_all($handle_lo) or die("<h1>Error, can't read large object.</h1>");
+        
+        // committing the data transaction
+        pg_query ($connection, "commit");
+    }
+    
+    function ImportLargeObject($path)
+    {
+        $connection = $this->connexionDb(NULL);
+        // Large objects calls MUST be enclosed in transaction block
+        // remember, large objects must be obtained from within a transaction
+        pg_query ($connection, "begin");        
+        
+        $new_oid = pg_lo_import($connection, $path);
+        
+        // committing the data transaction
+        pg_query ($connection, "commit");
+        
+        return $new_oid;
+    }
+    
+    function UnlinkLargeObject($oid)
+    {
+        return $this->ExecSqlUpdate("BEGIN; SELECT lo_unlink($oid);  COMMIT;", false);
+    }
+    
 
 	/** Builds a string suitable for the databases interval datatype and returns it.
 	 @param $duration The source Duration object

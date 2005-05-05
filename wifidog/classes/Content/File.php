@@ -1,6 +1,4 @@
 <?php
-
-
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -47,7 +45,7 @@ class File extends Content
 		global $db;
 
 		$content_id = $db->EscapeString($content_id);
-		$sql = "SELECT files_id, filename, mime_type, url, octet_length(binary_data) AS local_binary_size, remote_size FROM files WHERE files_id='$content_id'";
+		$sql = "SELECT * FROM files WHERE files_id='$content_id'";
 		$db->ExecSqlUniqueRes($sql, $row, false);
 		if ($row == null)
 		{
@@ -55,7 +53,7 @@ class File extends Content
 			$sql = "INSERT INTO files (files_id) VALUES ('$content_id')";
 			$db->ExecSqlUpdate($sql, false);
 
-			$sql = "SELECT files_id, filename, mime_type, url, octet_length(binary_data) AS local_binary_size, remote_size FROM files WHERE files_id='$content_id'";
+			$sql = "SELECT * FROM files WHERE files_id='$content_id'";
 			$db->ExecSqlUniqueRes($sql, $row, false);
 			if ($row == null)
 			{
@@ -76,13 +74,16 @@ class File extends Content
 	{
 		if (!empty ($_FILES[$upload_field]) && $_FILES[$upload_field]['error'] == UPLOAD_ERR_OK)
 		{
-			// Getting binary data from file
-			$fp = fopen($_FILES[$upload_field]['tmp_name'], "rb");
-			$buffer = fread($fp, filesize($_FILES[$upload_field]['tmp_name']));
-			fclose($fp);
+			// Unlink BLOB if any exists
+			$blob_oid = $this->getBinaryDataOid();
+			if ($blob_oid)
+				$this->mBd->UnlinkLargeObject($blob_oid);
 
 			// Updating database
-			$this->setBinaryData($buffer);
+			// Create a new BLOB
+			$new_oid = $this->mBd->ImportLargeObject($_FILES[$upload_field]['tmp_name']);
+			$this->setBinaryDataOid($new_oid);
+			$this->setLocalFileSize($_FILES[$upload_field]['size']);
 			$this->setMimeType($_FILES[$upload_field]['type']);
 			$this->setFilename($_FILES[$upload_field]['name']);
 			$this->refresh();
@@ -114,19 +115,14 @@ class File extends Content
 	}
 
 	/** Returns the DateTime object representing the date of the contribution */
-	function getBinaryData()
+	function getBinaryDataOid()
 	{
-		$this->mBd->ExecSqlUniqueRes("SELECT binary_data FROM files WHERE files_id ='".$this->getId()."';", $row, false);
-		return $this->mBd->UnescapeBinaryString($row['binary_data']);
+		return $this->mBd->UnescapeBinaryString($this->files_row['data_blob']);
 	}
 
-	function setBinaryData($data)
+	function setBinaryDataOid($oid)
 	{
-		if ($data == null)
-			$data = "NULL";
-		else
-			$data = "'".$this->mBd->EscapeBinaryString($data)."'";
-		$this->mBd->ExecSqlUpdate("UPDATE files SET binary_data = $data WHERE files_id='".$this->getId()."'", false);
+		$this->mBd->ExecSqlUpdate("UPDATE files SET data_blob = $oid WHERE files_id='".$this->getId()."'", false);
 		$this->refresh();
 	}
 
@@ -171,6 +167,16 @@ class File extends Content
 			default :
 				return $size;
 				break;
+		}
+	}
+
+	function setLocalFileSize($size, $unit = self :: UNIT_KILOBYTES)
+	{
+		if (is_numeric($size))
+		{
+			$octet_size = $size * $unit;
+			$this->mBd->execSqlUpdate("UPDATE files SET local_binary_size = $octet_size WHERE files_id='".$this->getId()."'", false);
+			$this->refresh();
 		}
 	}
 
@@ -292,42 +298,42 @@ class File extends Content
 
 	function processAdminUI()
 	{
-        if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
-        {
-	    		parent :: processAdminUI();
-	            
-	    		// If no file was uploaded, update filename and mime type
-	    		if (!empty ($_REQUEST["file_mode".$this->getId()]))
-	    		{
-	    			$this->setFilename($_REQUEST["file_file_name".$this->getId()]);
-	                
-	    			$file_mode = $_REQUEST["file_mode".$this->getId()];
-	    			if ($file_mode == "by_upload")
-	    			{
-	    				$this->setMimeType($_REQUEST["file_mime_type".$this->getId()]);
-	    				$this->setBinaryDataFromPostVar("file_file_upload".$this->getId());
-	    				$this->setURL(null);
-	    				// Reset the remote file size ( not used )
-	    				$this->setRemoteFileSize(0);
-	    			}
-	    			else
-	    			{
-	    				if ($file_mode == "remote")
-	    				{
-	    					$this->setURL($_REQUEST["file_url".$this->getId()]);
-	    					$this->setBinaryData(null);
-	    					// When switching from local to remote, this field does not exist yet
-	    					if (!empty ($_REQUEST["file_old_remote_size".$this->getId()]))
-	    					{
-	    						if ($_REQUEST["file_remote_size".$this->getId()] != $_REQUEST["file_old_remote_size".$this->getId()])
-	    							$this->setRemoteFileSize($_REQUEST["file_remote_size".$this->getId()]);
-	    					}
-	    					else
-	    						$this->setRemoteFileSize(0);
-	    				}
-	    			}
-	    		}
-        }
+		if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
+		{
+			parent :: processAdminUI();
+
+			// If no file was uploaded, update filename and mime type
+			if (!empty ($_REQUEST["file_mode".$this->getId()]))
+			{
+				$this->setFilename($_REQUEST["file_file_name".$this->getId()]);
+
+				$file_mode = $_REQUEST["file_mode".$this->getId()];
+				if ($file_mode == "by_upload")
+				{
+					$this->setMimeType($_REQUEST["file_mime_type".$this->getId()]);
+					$this->setBinaryDataFromPostVar("file_file_upload".$this->getId());
+					$this->setURL(null);
+					// Reset the remote file size ( not used )
+					$this->setRemoteFileSize(0);
+				}
+				else
+				{
+					if ($file_mode == "remote")
+					{
+						$this->setURL($_REQUEST["file_url".$this->getId()]);
+						$this->setBinaryData(null);
+						// When switching from local to remote, this field does not exist yet
+						if (!empty ($_REQUEST["file_old_remote_size".$this->getId()]))
+						{
+							if ($_REQUEST["file_remote_size".$this->getId()] != $_REQUEST["file_old_remote_size".$this->getId()])
+								$this->setRemoteFileSize($_REQUEST["file_remote_size".$this->getId()]);
+						}
+						else
+							$this->setRemoteFileSize(0);
+					}
+				}
+			}
+		}
 	}
 
 	/** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
@@ -348,6 +354,17 @@ class File extends Content
 	{
 		if ($this->isPersistent() == false)
 		{
+		    // Unlink BLOB if any exists
+		    $blob_oid = $this->getBinaryDataOid();
+		    if($blob_oid)
+            {
+                $errmsg = "Deleting BLOB OID : $blob_oid";
+		        if($this->mBd->UnlinkLargeObject($blob_oid) == false)
+		        {
+		            $errmsg = _("Unable to successfully unlink BLOB OID : $blob_oid !");
+		            return false;
+		        }
+            }
 			$this->mBd->ExecSqlUpdate("DELETE FROM files WHERE files_id = '".$this->getId()."'", false);
 		}
 		else

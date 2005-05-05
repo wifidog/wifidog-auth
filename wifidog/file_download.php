@@ -29,14 +29,29 @@ require_once 'include/common.php';
 if (!empty ($_REQUEST['file_id']))
 {
 	global $db;
-	$sql = "SELECT * FROM files WHERE files_id = '".$_REQUEST['file_id']."'";
-	$db->execSqlUniqueRes($sql, $file_row, false);
-	ob_clean();
-	if ($file_row && $file_row['binary_data'])
-	{
-		header('Content-Type: '.$file_row['mime_type']);
-		header('Content-Disposition: attachment; filename="'.$file_row['filename'].'"');
-		echo $db->UnescapeBinaryString($file_row['binary_data']);
-	}
+    $file_id = $db->EscapeString($_REQUEST['file_id']);
+    $sql = "SELECT * FROM files WHERE files_id = '$file_id'";
+    $db->ExecSqlUniqueRes($sql, $file_row, false);
+
+    ob_clean();
+    
+    if ($file_row && $file_row['data_blob'])
+    {
+        //headers to send to the browser before beginning the binary download
+        header("Pragma: public");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Cache-Control: public");
+        header("Content-Description: File Transfer");
+        header('Content-Type: '.$file_row['mime_type']);
+        header("Content-Transfer-Encoding: binary");
+        header('Accept-Ranges: bytes');
+        if(strpos($file_row['mime_type'], "image") === false)
+            header('Content-Length: '.$file_row['local_binary_size']); //this is the size of the zipped file
+        header('Keep-Alive: timeout=15, max=100');
+        header('Content-Disposition: inline; filename="'.$file_row['filename'].'"');
+        
+        $db->ReadAndFlushLargeObject($file_row['data_blob']);
+    }
 }
 ?>
