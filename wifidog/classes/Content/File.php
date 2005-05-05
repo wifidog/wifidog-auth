@@ -170,7 +170,7 @@ class File extends Content
 		}
 	}
 
-	function setLocalFileSize($size, $unit = self :: UNIT_KILOBYTES)
+	function setLocalFileSize($size, $unit = self :: UNIT_BYTES)
 	{
 		if (is_numeric($size))
 		{

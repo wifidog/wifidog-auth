@@ -1,4 +1,8 @@
 2005-05-04 Francois Proulx <francois.proulx@gmail.com>
+	* Fixed bug concerning Content-Length header
+	* Changed default Unit size for setLocalFileSize to bytes
+	
+2005-05-04 Francois Proulx <francois.proulx@gmail.com>
 	* Added BLOB support
 	* modified file_download.php to support new header attributes
 	* Added ImportLargeObject, UnlinkLargeObject to PG SQL abtraction
