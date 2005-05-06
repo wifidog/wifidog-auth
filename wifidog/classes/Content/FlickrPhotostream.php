@@ -58,9 +58,12 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 		const SIZE_SMALL_240x180 = 'm';
 		const SIZE_MEDIUM_500x375 = '';
 		const SIZE_ORIGINAL = 'o';
+		
+		const GRID_X = 3;
+		const GRID_Y = 3;
 
 		/* 15 minutes cache age SHOULD ADD cron tab */
-		const MAX_CACHE_AGE = 0;
+		const MAX_CACHE_AGE = 600;
 
 		/* Private Phlickr objects */
 		private $flickr_api;
@@ -89,35 +92,33 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 			}
 
 			$this->flickr_photostream_row = $row;
-            $this->flickr_api = null;
+			$this->flickr_api = null;
 			$this->mBd = & $db;
 		}
 
 		private function loadCacheFromDatabase()
 		{
-			echo "<h2>DEBUG :: Cache Age :: {$this->flickr_photostream_row['cache_age']}</h2>";
+			//echo "<h2>DEBUG :: Cache Age :: {$this->flickr_photostream_row['cache_age']}</h2>";
 			if (!is_null($this->flickr_photostream_row['requests_cache']) && !is_null($this->flickr_photostream_row['cache_age']) && ($this->flickr_photostream_row['cache_age'] < self :: MAX_CACHE_AGE))
 			{
 				//echo "<h2>DEBUG :: Loading Flickr cache from database</h2>";
-                $this->getFlickrApi()->getCache()->_values = unserialize($this->flickr_photostream_row['requests_cache']);
-                //$obj = unserialize($this->flickr_photostream_row['requests_cache']);
-                //$this->getFlickrApi()->setCache($obj);
-                /*echo "<pre>CACHE\n";
-                print_r($this->getFlickrApi()->getCache()->_values);
-                echo "</pre>";*/
+				$this->getFlickrApi()->getCache()->setCacheValues(unserialize($this->flickr_photostream_row['requests_cache']));
+				//$obj = unserialize($this->flickr_photostream_row['requests_cache']);
+				//$this->getFlickrApi()->setCache($obj);
 			}
 		}
 
-		private function writeCacheToDatabase()
+		private function writeCacheToDatabase($force_overwrite = false)
 		{
 			//echo "<h2>DEBUG :: Writing cache to database</h2>";
 			$api = $this->getFlickrApi();
 			if ($api)
 			{
-				$cache = $this->mBd->EscapeString(serialize($api->getCache()->_values));
-                //$cache = $this->mBd->EscapeString(serialize($api->getCache()));
-                if($cache != $this->flickr_photostream_row['requests_cache'])
-				    $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET cache_update_timestamp = NOW(), requests_cache = '".$cache."' WHERE flickr_photostream_id = '".$this->getId()."'", false);
+				$new_cache = $this->mBd->EscapeString(serialize($api->getCache()->getCacheValues()));
+				$old_cache = $this->mBd->EscapeString($this->flickr_photostream_row['requests_cache']);
+				$age = is_null($this->flickr_photostream_row['cache_age']) ? self :: MAX_CACHE_AGE : $this->flickr_photostream_row['cache_age'];
+				if ($force_overwrite === true || ($age >= self :: MAX_CACHE_AGE) || ($new_cache !== $old_cache))
+					$this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET cache_update_timestamp = NOW(), requests_cache = '".$new_cache."' WHERE flickr_photostream_id = '".$this->getId()."'", false);
 			}
 		}
 
@@ -497,6 +498,7 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 				catch (Phlickr_ConnectionException $e)
 				{
 					$html .= _("Unable to connect to Flickr API.");
+					echo $e;
 				}
 				catch (Phlickr_MethodFailureException $e)
 				{
@@ -593,136 +595,169 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 		/** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
 		* @param $subclass_admin_interface Html content of the interface element of a children
 		* @return The HTML fragment for this interface */
-		public function getUserUI($subclass_user_interface = null)
+		public function getUserUI($subclass_user_interface = null, $force_data_refresh = false)
 		{
-            // Load cache only on the User UI side
-            //$this->loadCacheFromDatabase();
-            
 			$html = '';
 			$html .= "<div class='user_ui_container'>\n";
 			$html .= "<div class='user_ui_object_class'>FlickrPhotostream (".get_class($this)." instance)</div>\n";
-            
-            $api = $this->getFlickrApi();
-            if(!is_null($api))
-            {
-    			try
-    			{
-    				$photos = null;
-    				switch ($this->getSelectionMode())
-    				{
-    					case self :: SELECT_BY_GROUP :
-    						if ($this->getGroupId())
-    						{
-    							$photo_pool = new Phlickr_Group($api, $this->getGroupId());
-    							$photos = $photo_pool->getPhotoList($this->getPhotoBatchSize())->getPhotos();
-    						}
-    						break;
-    					case self :: SELECT_BY_TAGS :
-    						if ($this->getTags())
-    						{
-    							$request = $api->createRequest('flickr.photos.search', array ('tags' => $this->getTags(), 'tag_mode' => $this->getTagMode()));
-    							$photo_list = new Phlickr_PhotoList($request, $this->getPhotoBatchSize());
-    							$photos = $photo_list->getPhotos();
-    						}
-    						break;
-    					case self :: SELECT_BY_USER :
-    						if ($this->getFlickrUserId())
-    						{
-    							$user = new Phlickr_User($api, $this->getFlickrUserId());
-    							$photos = $user->getPhotoList($this->getPhotoBatchSize())->getPhotos();
-    						}
-    						break;
-    				}
-    
-    				if (is_array($photos) && !empty ($photos))
-    				{
-    					// Choose one photo at random
-    					//TODO: manage multiple photos at once ( photo_count field in database )
-    
-    					// Get a photo at random
-    					$photo = $photos[mt_rand(0, count($photos) - 1)];
-    					// Get the first photo
-    					//$photo = $photos[0];
-    
-    					if (is_object($photo))
-    					{
-    						$html .= '<div class="flickr_photo_block">'."\n";
-    						if ($this->shouldDisplayTitle())
-    						{
-    							$title = $photo->getTitle();
-    							if (!empty ($title))
-    							{
-    								$html .= '<div class="flickr_title"><h3>'.$photo->getTitle().'</h3></div>'."\n";
-    							}
-    						}
-    						$size = $this->getPreferredSize();
-    						if (empty ($size))
-    							$size = null;
-    						$html .= '<div class="flickr_photo"><a href="'.$photo->buildUrl().'"><img src="'.$photo->buildImgUrl($size).'"></a></div>'."\n";
-    
-    						if ($this->shouldDisplayTags())
-    						{
-    							$tags = $photo->getTags();
-    							if (!empty ($tags))
-    							{
-    								$html .= '<div class="flickr_tags">'."\n";
-    								$html .= '<h3>'._("Tags")."</h3>\n";
-    								$html .= '<ul>'."\n";
-    								foreach ($tags as $tag)
-    								{
-    									$url_encoded_tag = urlencode($tag);
-    									$html .= '<li><a href="http://www.flickr.com/photos/tags/'.$url_encoded_tag.'/">'.$tag.'</a></li>'."\n";
-    								}
-    								$html .= '</ul>'."\n";
-    								$html .= '</div>'."\n";
-    							}
-    						}
-    						if ($this->shouldDisplayDescription())
-    						{
-    							$description = $photo->getDescription();
-    							if (!empty ($description))
-    								$html .= '<div class="flickr_description">'.$description.'</div>'."\n";
-    						}
-    
-    						$author = new Phlickr_User($api, $photo->getOwnerId());
-    						$html .= '<div class="flickr_description"><a href="'.$author->buildUrl().'">'.$author->getName().'</a></div>'."\n";
-    						$html .= '</div>'."\n";
-    					}
-    				}
-    				else
-    				{
-    					$html .= _("No Flickr content matches the request !");
-    				}
-    			}
-    			catch (Phlickr_ConnectionException $e)
-    			{
-    				$html .= _("Unable to connect to Flickr API.");
-    			}
-    			catch (Phlickr_MethodFailureException $e)
-    			{
-    				$html .= _("Some of the request parameters provided to Flickr API are invalid.");
-    			}
-    			catch (Phlickr_XmlParseException $e)
-    			{
-    				$html .= _("Unable to parse Flickr's response.");
-    			}
-    			catch (Phlickr_Exception $e)
-    			{
-    				$html .= _("Could not get content from Flickr : ").$e;
-    			}
-    
-                // Overwrite cache if needed
-                //$this->writeCacheToDatabase();
-            }
-            
-            $html .= $subclass_user_interface;
-            $html .= "</div>\n";
+
+			$api = $this->getFlickrApi();
+			if (!is_null($api))
+			{
+				// Load cache only on the User UI side
+				if ($force_data_refresh === false)
+					$this->loadCacheFromDatabase();
+				
+				try
+				{
+					$photos = null;
+					switch ($this->getSelectionMode())
+					{
+						case self :: SELECT_BY_GROUP :
+							if ($this->getGroupId())
+							{
+								$photo_pool = new Phlickr_Group($api, $this->getGroupId());
+								$photos = $photo_pool->getPhotoList($this->getPhotoBatchSize())->getPhotos();
+							}
+							break;
+						case self :: SELECT_BY_TAGS :
+							if ($this->getTags())
+							{
+								$request = $api->createRequest('flickr.photos.search', array ('tags' => $this->getTags(), 'tag_mode' => $this->getTagMode()));
+								$photo_list = new Phlickr_PhotoList($request, $this->getPhotoBatchSize());
+								$photos = $photo_list->getPhotos();
+							}
+							break;
+						case self :: SELECT_BY_USER :
+							if ($this->getFlickrUserId())
+							{
+								$user = new Phlickr_User($api, $this->getFlickrUserId());
+								$photos = $user->getPhotoList($this->getPhotoBatchSize())->getPhotos();
+							}
+							break;
+					}
+
+					if (is_array($photos) && !empty($photos))
+					{
+						$size = $this->getPreferredSize();
+						if (empty ($size))
+							$size = null;
+							
+						// Preload authors ( this will be cached )
+						foreach ($photos as $cache_authors)
+							$author = new Phlickr_User($api, $cache_authors->getOwnerId());
+									
+						// If there's enough photo show a grid
+						if(count($photos) >= self::GRID_X * self::GRID_Y)
+						{
+							$grid_photos_idx = array();
+							$html .= "<table>\n";
+							for($i=0;$i<self::GRID_X;$i++)
+							{
+								$html .= "<tr>\n";
+								for($j=0;$j<self::GRID_Y;$j++)
+								{
+									// Get random values for each grid positions (assert no double)
+									$idx = mt_rand(0, count($photos) - 1);
+									while(in_array($idx, $grid_photos_idx))
+										$idx = mt_rand(0, count($photos) - 1);
+									$grid_photos_idx[] = $idx;
+									$photo = $photos[$idx];
+									if (is_object($photo))
+									{
+										$author = new Phlickr_User($api, $photo->getOwnerId());
+										$html .= '<td><div class="flickr_photo"><a href="'.$photo->buildUrl().'"><img title="['.$author->getName()."] ".$photo->getTitle().'" src="'.$photo->buildImgUrl($size).'"></a></div></td>'."\n";
+									}
+								}
+								$html .= "</tr>\n";
+							}		
+							$html .= "</table>\n";
+						}
+						else
+						{
+							// Get a photo at random
+							$photo = $photos[mt_rand(0, count($photos) - 1)];
+							if (is_object($photo))
+							{
+								$html .= '<div class="flickr_photo_block">'."\n";
+								if ($this->shouldDisplayTitle())
+								{
+									$title = $photo->getTitle();
+									if (!empty ($title))
+									{
+										$html .= '<div class="flickr_title"><h3>'.$photo->getTitle().'</h3></div>'."\n";
+									}
+								}
+								
+								$html .= '<div class="flickr_photo"><a href="'.$photo->buildUrl().'"><img src="'.$photo->buildImgUrl($size).'"></a></div>'."\n";
+								
+								if ($this->shouldDisplayTags())
+								{
+									$tags = $photo->getTags();
+									if (!empty ($tags))
+									{
+										$html .= '<div class="flickr_tags">'."\n";
+										$html .= '<h3>'._("Tags")."</h3>\n";
+										$html .= '<ul>'."\n";
+										foreach ($tags as $tag)
+										{
+											$url_encoded_tag = urlencode($tag);
+											$html .= '<li><a href="http://www.flickr.com/photos/tags/'.$url_encoded_tag.'/">'.$tag.'</a></li>'."\n";
+										}
+										$html .= '</ul>'."\n";
+										$html .= '</div>'."\n";
+									}
+								}
+								if ($this->shouldDisplayDescription())
+								{
+									$description = $photo->getDescription();
+									if (!empty ($description))
+										$html .= '<div class="flickr_description">'.$description.'</div>'."\n";
+								}
+	
+								foreach ($photos as $cache_authors)
+									$author = new Phlickr_User($api, $cache_authors->getOwnerId());
+	
+								$author = new Phlickr_User($api, $photo->getOwnerId());
+								$html .= '<div class="flickr_description"><a href="'.$author->buildUrl().'">'.$author->getName().'</a></div>'."\n";
+								$html .= '</div>'."\n";
+							}
+						}
+					}
+					else
+					{
+						$html .= _("No Flickr content matches the request !");
+					}
+				}
+				catch (Phlickr_ConnectionException $e)
+				{
+					$html .= _("Unable to connect to Flickr API.");
+				}
+				catch (Phlickr_MethodFailureException $e)
+				{
+					$html .= _("Some of the request parameters provided to Flickr API are invalid.");
+				}
+				catch (Phlickr_XmlParseException $e)
+				{
+					$html .= _("Unable to parse Flickr's response.");
+				}
+				catch (Phlickr_Exception $e)
+				{
+					$html .= _("Could not get content from Flickr : ").$e;
+				}
+
+				// Overwrite cache if needed
+				$this->writeCacheToDatabase($force_data_refresh);
+			}
+
+			$html .= $subclass_user_interface;
+			$html .= "</div>\n";
 			return parent :: getUserUI($html);
 		}
 
 		public function refresh()
 		{
-			$this->writeCacheToDatabase();
+			// Local refresh, ( not used anymore )
 			parent :: refresh();
 		}
 

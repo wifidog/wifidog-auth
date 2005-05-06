@@ -247,6 +247,10 @@ display: compact;
 	background-color: #cafd84;
 	color: #336600;
 }
+.user_ui_title a {
+	font-size: medium;
+	font-weight: bold;
+}
 .user_ui_authors {
 	display: block;
 	font-weight: bold;
@@ -255,7 +259,6 @@ display: compact;
 	background: #cafd84;
 }
 .user_ui_description {
-	display: block;
 	text-align: justify;
 	background-color: #e6e6e6;
 }
@@ -335,7 +338,7 @@ display: compact;
     float:left;
 }
 .flickr_photo img {
-    border: 10px solid black;
+    border: 5px solid black;
 }
 .flickr_tags {
     visibility: hidden;
