@@ -1,4 +1,6 @@
 2005-05-04 Francois Proulx <francois.proulx@gmail.com>
+	* Fixed serialization issue ( flickr)
+2005-05-04 Francois Proulx <francois.proulx@gmail.com>
 	* Improved caching
 	* Wrote very basic gridview code for Flickr
 	

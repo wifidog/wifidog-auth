@@ -102,9 +102,8 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 			if (!is_null($this->flickr_photostream_row['requests_cache']) && !is_null($this->flickr_photostream_row['cache_age']) && ($this->flickr_photostream_row['cache_age'] < self :: MAX_CACHE_AGE))
 			{
 				//echo "<h2>DEBUG :: Loading Flickr cache from database</h2>";
-				$this->getFlickrApi()->getCache()->setCacheValues(unserialize($this->flickr_photostream_row['requests_cache']));
-				//$obj = unserialize($this->flickr_photostream_row['requests_cache']);
-				//$this->getFlickrApi()->setCache($obj);
+				$obj = unserialize($this->mBd->UnescapeBinaryString($this->flickr_photostream_row['requests_cache']));
+				$this->getFlickrApi()->setCache($obj);
 			}
 		}
 
@@ -114,11 +113,11 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 			$api = $this->getFlickrApi();
 			if ($api)
 			{
-				$new_cache = $this->mBd->EscapeString(serialize($api->getCache()->getCacheValues()));
-				$old_cache = $this->mBd->EscapeString($this->flickr_photostream_row['requests_cache']);
+                $new_cache = serialize($api->getCache());
+                $old_cache = $this->mBd->UnescapeBinaryString($this->flickr_photostream_row['requests_cache']);
 				$age = is_null($this->flickr_photostream_row['cache_age']) ? self :: MAX_CACHE_AGE : $this->flickr_photostream_row['cache_age'];
 				if ($force_overwrite === true || ($age >= self :: MAX_CACHE_AGE) || ($new_cache !== $old_cache))
-					$this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET cache_update_timestamp = NOW(), requests_cache = '".$new_cache."' WHERE flickr_photostream_id = '".$this->getId()."'", false);
+					$this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET cache_update_timestamp = NOW(), requests_cache = '".$this->mBd->EscapeBinaryString($new_cache)."' WHERE flickr_photostream_id = '".$this->getId()."'", false);
 			}
 		}
 
@@ -502,7 +501,7 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 				}
 				catch (Phlickr_MethodFailureException $e)
 				{
-					$html .= _("Some of the request parameters provided to Flickr API are invalid.");
+					$html .= _("Some of the request parameters provided to Flickr API are invalid.");;
 				}
 				catch (Phlickr_XmlParseException $e)
 				{
@@ -736,6 +735,7 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 				catch (Phlickr_MethodFailureException $e)
 				{
 					$html .= _("Some of the request parameters provided to Flickr API are invalid.");
+                    $html .= "<br>".$e->getMessage();
 				}
 				catch (Phlickr_XmlParseException $e)
 				{
