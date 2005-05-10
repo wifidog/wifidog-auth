@@ -347,7 +347,11 @@ class File extends Content
 		$html = '';
 		$html .= "<div class='user_ui_container'>\n";
 		$html .= "<div class='user_ui_object_class'>File (".get_class($this)." instance)</div>\n";
-		$html .= "<a href='".htmlentities($this->getFileUrl())."'>"._("Download")." ".$this->getFilename()." (".$this->getFileSize(self :: UNIT_KILOBYTES)." "._("KB").")</a>";
+        if($this->getFileSize() > 0)
+            $append_size = " (".$this->getFileSize(self :: UNIT_KILOBYTES)." "._("KB").")";
+        else
+            $append_size = "";
+		$html .= "<div class='download_button'><a href='".htmlentities($this->getFileUrl())."'>"._("Download")." ".$this->getFilename()."$append_size</a></div>";
 		$html .= "</div>\n";
 		return parent :: getUserUI($html);
 	}

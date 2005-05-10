@@ -279,6 +279,13 @@ display: compact;
 .list_ui_container {
 	display: inline;
 }
+.download_button {
+	padding: 10px 10px 10px 10px;
+	background-color: #cafd84;
+	color: #336600;
+	font-weight: bold;
+	border: outset #999999;
+}
 /* Portal */
 
 #portal_container {

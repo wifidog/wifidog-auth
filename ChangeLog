@@ -1,4 +1,7 @@
-2005-05-04 Francois Proulx <francois.proulx@gmail.com>
+2005-05-10 Francois Proulx <francois.proulx@gmail.com>
+	* Added download button CSS class to style button
+	
+2005-05-10 Francois Proulx <francois.proulx@gmail.com>
 	* Fixed wrong method name in File.php
 	* Added strip tags to Langstring
 	* Basic styling of content_admin table
