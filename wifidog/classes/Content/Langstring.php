@@ -34,7 +34,7 @@ error_reporting(E_ALL);
  */
 class Langstring extends Content
 {
-    const ALLOWED_HTML_TAGS = "<a><br><br><h1><h2><h3><h4><i><img><li><ol><p><strong><u><ul><li>";
+    const ALLOWED_HTML_TAGS = "<a><br><b><h1><h2><h3><h4><i><img><li><ol><p><strong><u><ul><li>";
     
 	/**Constructeur
 	@param $content_id Content id
