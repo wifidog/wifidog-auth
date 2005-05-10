@@ -34,6 +34,8 @@ error_reporting(E_ALL);
  */
 class Langstring extends Content
 {
+    const ALLOWED_HTML_TAGS = "<a><br><br><h1><h2><h3><h4><i><img><li><ol><p><strong><u><ul><li>";
+    
 	/**Constructeur
 	@param $content_id Content id
 	*/
@@ -111,7 +113,7 @@ class Langstring extends Content
 		{
 			$string = $this->mBd->EscapeString($string);
 			// If the update returns 0 ( no update ), try inserting the record
-			$this->mBd->ExecSqlResUnique("SELECT * FROM langstring_entries WHERE locales_id = $id AND langstrings_id = '$this->id'", $row, false);
+			$this->mBd->ExecSqlUniqueRes("SELECT * FROM langstring_entries WHERE locales_id = $id AND langstrings_id = '$this->id'", $row, false);
 			if ($row != null)
 				$this->mBd->ExecSqlUpdate("UPDATE langstring_entries SET value = '$string' WHERE langstrings_id = '$this->id' AND locales_id = $id", false);
 			else
@@ -133,6 +135,7 @@ class Langstring extends Content
 
 		
 
+        $html .= _("Only these HTML tags are allowed : ").htmlentities(self::ALLOWED_HTML_TAGS);
 		$liste_languages = new LocaleList();
 		$sql = "SELECT * FROM langstring_entries WHERE langstring_entries.langstrings_id = '$this->id' ORDER BY locales_id";
 		$this->mBd->ExecSql($sql, $result, FALSE); //echo "type_interface: $type_interface\n";
@@ -218,15 +221,18 @@ class Langstring extends Content
     				{
     					$language = $generateur_form_select->getResult("langstrings_".$this->id."_substring_$value[langstring_entries_id]_language", 'Langstring::AfficherInterfaceAdmin');
     					if (empty ($language))
-    					{
-    						$language = 'NULL';
-    					}
-    					else
-    					{
-    						$language = "'".$language."'";
-    					}
-    					$string = $this->mBd->EscapeString($_REQUEST["langstrings_".$this->id."_substring_$value[langstring_entries_id]_string"]);
+                        {
+                            $language = 'NULL';
+                        }
+                        else
+                        {
+                            $language = "'".$language."'";
+                        }
+                        // Strip HTML tags !
+                        $string = $_REQUEST["langstrings_".$this->id."_substring_$value[langstring_entries_id]_string"];
+                        $string = $this->mBd->EscapeString(strip_tags($string, self::ALLOWED_HTML_TAGS));
     					$this->mBd->ExecSqlUpdate("UPDATE langstring_entries SET locales_id = $language , value = '$string' WHERE langstrings_id = '$this->id' AND langstring_entries_id='$value[langstring_entries_id]'", FALSE);
+                        //$this->UpdateString($string, $language);
     				}
     			}
     		}

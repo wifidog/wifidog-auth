@@ -1,4 +1,9 @@
 2005-05-04 Francois Proulx <francois.proulx@gmail.com>
+	* Fixed wrong method name in File.php
+	* Added strip tags to Langstring
+	* Basic styling of content_admin table
+	
+2005-05-04 Francois Proulx <francois.proulx@gmail.com>
 	* Fixed serialization issue ( flickr)
 2005-05-04 Francois Proulx <francois.proulx@gmail.com>
 	* Improved caching

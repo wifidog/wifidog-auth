@@ -122,6 +122,8 @@ class File extends Content
 
 	function setBinaryDataOid($oid)
 	{
+        if(is_null($oid))
+            $oid = "NULL";
 		$this->mBd->ExecSqlUpdate("UPDATE files SET data_blob = $oid WHERE files_id='".$this->getId()."'", false);
 		$this->refresh();
 	}
@@ -277,7 +279,7 @@ class File extends Content
 		else
 		{
 			$html .= "<div class='admin_section_container'>\n";
-			$html .= "<div class='admin_section_title'>"._("Remote file size")." : </div>\n";
+			$html .= "<div class='admin_section_title'>"._("Remote file size (Automatically converted from KB to Bytes)")." : </div>\n";
 			$html .= "<div class='admin_section_data'>\n";
 			// The hidden field contains old value to determine if we have to update ( this prevents unwanted successive floating point evaluation )
 			$html .= '<input type="hidden" name="file_old_remote_size'.$this->getId().'" value="'.$this->getFileSize().'" />';
@@ -310,7 +312,8 @@ class File extends Content
 				$file_mode = $_REQUEST["file_mode".$this->getId()];
 				if ($file_mode == "by_upload")
 				{
-					$this->setMimeType($_REQUEST["file_mime_type".$this->getId()]);
+					if(isset($_REQUEST["file_mime_type".$this->getId()]))
+                        $this->setMimeType($_REQUEST["file_mime_type".$this->getId()]);
 					$this->setBinaryDataFromPostVar("file_file_upload".$this->getId());
 					$this->setURL(null);
 					// Reset the remote file size ( not used )
@@ -321,9 +324,9 @@ class File extends Content
 					if ($file_mode == "remote")
 					{
 						$this->setURL($_REQUEST["file_url".$this->getId()]);
-						$this->setBinaryData(null);
+						$this->setBinaryDataOid(null);
 						// When switching from local to remote, this field does not exist yet
-						if (!empty ($_REQUEST["file_old_remote_size".$this->getId()]))
+						if (isset($_REQUEST["file_old_remote_size".$this->getId()]))
 						{
 							if ($_REQUEST["file_remote_size".$this->getId()] != $_REQUEST["file_old_remote_size".$this->getId()])
 								$this->setRemoteFileSize($_REQUEST["file_remote_size".$this->getId()]);

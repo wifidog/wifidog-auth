@@ -1,6 +1,4 @@
 <?php
-
-
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -65,7 +63,7 @@ if ($_REQUEST['action'] == 'list_all_content' || $_REQUEST['action'] == 'list_pe
 
 	if ($results != null)
 	{
-		$html .= "<table>\n";
+		$html .= "<table class='content_admin'>\n";
 		$html .= "<tr><th>"._("Title")."</th><th>"._("Content type")."</th><th>"._("Description")."</th></tr>\n";
 
 		// Get the current user

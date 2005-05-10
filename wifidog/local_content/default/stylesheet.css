@@ -177,7 +177,7 @@ select{
 			width:auto;}
 /* The admin container */
 .admin_container { display: block;
-border: 2px solid blue; 
+/*border: 2px solid grey; */
 background-color:	white;
 margin: 3px;
 width:auto; }
@@ -405,6 +405,16 @@ display: compact;
 	background: #fafff3;
 	margin: 5px;
 	padding: 5px;
+}
+table.content_admin {
+	margin-top: 5px;
+	border: 1px solid grey;
+}
+table.content_admin th {
+	background-color: lightgrey;
+}
+table.content_admin td {
+	border: 1px solid grey;
 }
 .spreadsheet { border: thin solid lightblue  ; text-align:left}
 TH.spreadsheet { background-color: lightgrey}
