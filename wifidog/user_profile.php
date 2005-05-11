@@ -18,29 +18,45 @@
    * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
    *                                                                  *
    \********************************************************************/
-  /**@file index.php
-   * Authserver home page
-   * @author Copyright (C) 2004 Benoit Gr�goire
+  /**@file user_profile.php
+   * User profile
+   * @author 2005 François Proulx
    */
 
 define('BASEPATH', './');
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'include/common_interface.php';
-require_once BASEPATH.'classes/Node.php';
+require_once BASEPATH.'classes/User.php';
 require_once BASEPATH.'classes/MainUI.php';
 
-$smarty->assign("num_valid_users", $stats->getNumValidUsers());
-$smarty->assign("num_online_users", $stats->getNumOnlineUsers($node_id = null));
-
+// Prepare tools menu
 $tool_html = '<ul>'."\n";
 $tool_html .= '<li><a href="'.BASE_SSL_PATH.'change_password.php">'._("Change password").'</a><br>'."\n";
 $tool_html .= '<li><a href="'.BASE_SSL_PATH.'faq.php">'._("I have trouble connecting and I would like some help").'</a><br>'."\n";
 $tool_html .= '</ul>'."\n";
-$body_html = $smarty->fetch("templates/main.html");
+$body_html = "";
+
+// Prepare User object
+if(!empty($_REQUEST['user_id']))
+    $user = User::getObject($_REQUEST['user_id']);
+else
+    $user = User::getCurrentUser();
+
+if($user)
+{
+    if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'save')
+        $body_html = $user->processAdminUI();
+        
+    // If the current user is the same show admin menu otherwise just show the profile
+    if($user->getId() == User::getCurrentUser()->getId())
+        $body_html .= $user->getAdminUI();
+    else
+        $body_html .= $user->getUserUI();
+}
 
 $ui=new MainUI();
 $ui->setToolContent($tool_html);
-$smarty->assign("title", _("authentication server"));
+$smarty->assign("title", _("User Profile"));
 $ui->setMainContent($body_html);
 $ui->display();
 

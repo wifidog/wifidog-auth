@@ -27,7 +27,7 @@
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'classes/Network.php';
 /** Abstract a User. */
-class User
+class User implements GenericObject
 {
 	private $mRow;
 	private $id;
@@ -42,6 +42,11 @@ class User
 		$object = new self($id);
 		return $object;
 	}
+    
+    static function createNewObject()
+    {
+        echo "<h1>Use User::createUser() instead</h1>";
+    }
 
 	/** Instantiate the current user
 	 * @return a User object, or null if there was an error
@@ -269,6 +274,24 @@ class User
 	{
 		return $this->mRow['email'];
 	}
+    
+    public function getRealName()
+    {
+        return $this->mRow['real_name'];
+    }
+    
+    public function setRealName()
+    {
+    }
+    
+    public function getWebsiteURL()
+    {
+        return $this->mRow['website'];
+    }
+    
+    public function setWebsiteURL()
+    {
+    }
 
 	/**What locale (language) does the user prefer?
 	 * @todo Save in the database */
@@ -612,6 +635,64 @@ class User
 		$username = $_REQUEST[$name];
 		return self :: getUserByUsernameAndOrigin($username, $network->GetId());
 	}
+    
+    public function getAdminUI()
+    {
+        global $db;
+        $html = '';
+        $html .= "<div class='admin_container'>\n";
+        $html .= "<div class='admin_class'>User instance</div>\n";
+        
+        $html .= "<div class='admin_section_container'>\n";
+        $html .= "<div class='admin_section_title'>"._("Username")." : </div>\n";
+        $html .= "<div class='admin_section_data'>\n";
+        //$name = "user_".$this->getId()."_username";
+        //$html .= "<input type='text' name='$name' value='".htmlentities($this->getUsername())."' size=30 readonly>\n";
+        $html .= $this->getUsername()."\n";
+        $html .= "</div>\n";
+        $html .= "</div>\n";
+        
+        //TODO: implement this when Network abstraction is completed
+        /*
+        $html .= "<div class='admin_section_container'>\n";
+        $html .= "<div class='admin_section_title'>"._("Network")." : </div>\n";
+        $html .= "<div class='admin_section_data'>\n";
+        $name = "user_".$this->getId()."_username";
+        // Show network name here
+        $html .= "</div>\n";
+        $html .= "</div>\n";*/
+        
+        $html .= "<div class='admin_section_container'>\n";
+        $html .= "<div class='admin_section_title'>"._("Real name")." : </div>\n";
+        $html .= "<div class='admin_section_data'>\n";
+        $name = "user_".$this->getId()."_real_name";
+        $html .= "<input type='text' name='$name' value='".htmlentities($this->getRealName())."' size=30 readonly>\n";
+        $html .= "</div>\n";
+        $html .= "</div>\n";
+        
+        $html .= "<div class='admin_section_container'>\n";
+        $html .= "<div class='admin_section_title'>"._("Website URL")." : </div>\n";
+        $html .= "<div class='admin_section_data'>\n";
+        $name = "user_".$this->getId()."_website";
+        $html .= "<input type='text' name='$name' value='".htmlentities($this->getWebsiteURL())."' size=30 readonly>\n";
+        $html .= "</div>\n";
+        $html .= "</div>\n";
+        
+        $html .= "</div>\n";
+        return $html;
+    }
+    
+    public function processAdminUI()
+    {
+    }
+    
+    public function delete(& $errmsg)
+    {
+    }
+    
+    public function getUserUI()
+    {
+    }
 
 	/** Add content to this user ( subscription ) */
 	public function addContent(Content $content)

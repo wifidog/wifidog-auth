@@ -149,7 +149,7 @@ class MainUI
 			if ($user != null)
 			{
 				$html .= '<p>'._("Logged in as:").' '.$user->getUsername().'</p>'."\n";
-				$html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'?content=myprofile"><img class="administration" src="/images/profile.gif" border="0"> '._("My Profile").'</a>'."\n";
+				$html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'user_profile.php"><img class="administration" src="/images/profile.gif" border="0"> '._("My Profile").'</a>'."\n";
                 
                 $gw_id = $session->get(SESS_GW_ID_VAR);
                 $gw_address = $session->get(SESS_GW_ADDRESS_VAR);
