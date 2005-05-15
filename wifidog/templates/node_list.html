@@ -29,7 +29,9 @@
     <a href='{$smarty.const.BASE_SSL_PATH}login/index.php?gw_id={$nodes[node].node_id}&gw_address=127.0.0.1&gw_port=80'>{"Login page"|_}</a><br />
     <a href='{$smarty.const.BASE_URL_PATH}portal/index.php?gw_id={$nodes[node].node_id}'>{"Portal page"|_}</a>
     </td>
-    <td>{$nodes[node].creation_date}</td>
+    <td style="font-size: 8pt;">{$nodes[node].creation_date}<br>
+    {$nodes[node].node_deployment_status}
+    </td>
     <td>
     {if $nodes[node].num_online_users != 0}
     {$nodes[node].num_online_users}
