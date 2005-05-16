@@ -1,20 +1,20 @@
-# translation of messages.po to 
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
-# François Proulx <francois.proulx@gmail.com>, 2005.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: messages\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-02 15:21-0400\n"
-"PO-Revision-Date: 2005-05-02 15:24-0400\n"
-"Last-Translator: François Proulx <francois.proulx@gmail.com>\n"
-"Language-Team:  <en@li.org>\n"
+"POT-Creation-Date: 2005-05-16 10:22-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.3.1\n"
 
 #: smarty.txt:2 smarty.txt:20 smarty.txt:19 smarty.txt:22 smarty.txt:102
 #: smarty.txt:103 smarty.txt:100 smarty.txt:98 smarty.txt:70
@@ -60,6 +60,7 @@ msgstr "Mot de passe perdu"
 
 #: smarty.txt:9 smarty.txt:27 smarty.txt:26 smarty.txt:29 smarty.txt:109
 #: smarty.txt:110 smarty.txt:107 smarty.txt:105 ../index.php:36 smarty.txt:77
+#: ../user_profile.php:34
 msgid "Change password"
 msgstr "Changer mon mot de passe"
 
@@ -205,7 +206,8 @@ msgstr "Envoyer fichier"
 
 #: ../admin/import_user_database.php:62 ../admin/import_user_database.php:58
 #: ../admin/import_user_database.php:54 ../admin/import_user_database.php:57
-msgid "I am sure I want to import (Otherwise, the import will only be simulated)."
+msgid ""
+"I am sure I want to import (Otherwise, the import will only be simulated)."
 msgstr ""
 "Je suis certain de vouloir importer (autrement, l'importation sera seulement "
 "simule&eacute;)"
@@ -235,6 +237,7 @@ msgstr "Votre nom d'utilisateur et mot de passe ne sont pas valides"
 
 #: ../classes/Security.php:69 ../classes/Security.php:60
 #: ../classes/Security.php:61 ../classes/Security.php:57
+#: ../classes/Security.php:58
 msgid "You do not have administrator privileges"
 msgstr "Vous n'avez pas les privileges d'administrateur"
 
@@ -324,7 +327,8 @@ msgstr "Points d'acc&egrave;s"
 
 #: ../hotspot_status.php:80 ../hotspot_status.php:79 ../hotspot_status.php:72
 msgid "WiFiDog list of the most recent HotSpots opened by "
-msgstr "Liste WiFiDog des points d'acc&egrave;s les plus r&eacute;cents ouverts par "
+msgstr ""
+"Liste WiFiDog des points d'acc&egrave;s les plus r&eacute;cents ouverts par "
 
 #: ../hotspot_status.php:94 ../hotspot_status.php:93 ../hotspot_status.php:86
 #: ../hotspot_status.php:339 ../hotspot_status.php:328
@@ -504,7 +508,8 @@ msgstr "Souscrire"
 #: smarty.txt:50 smarty.txt:55 smarty.txt:49 smarty.txt:48 smarty.txt:58
 #: smarty.txt:59 smarty.txt:101 smarty.txt:102 smarty.txt:99 smarty.txt:97
 #: smarty.txt:69
-msgid "Your email address must be valid in order for your account to be activated"
+msgid ""
+"Your email address must be valid in order for your account to be activated"
 msgstr ""
 "Votre adresse de courriel doit &ecirc;tre valide afin que votre compte "
 "puisse &ecirc;tre activ&eacute;"
@@ -526,7 +531,7 @@ msgstr " dans la base de donn&eacute;e."
 #: ../include/mgmt_helpers.php:39 ../classes/User.php:157
 #: ../classes/User.php:167 ../classes/User.php:365 ../classes/User.php:367
 #: ../classes/User.php:387 ../classes/User.php:386 ../classes/User.php:446
-#: ../classes/User.php:475 ../classes/User.php:495
+#: ../classes/User.php:475 ../classes/User.php:495 ../classes/User.php:518
 msgid "The user is not in validation period."
 msgstr "L'utilisateur n'est pas en p&eacute;riode de validation."
 
@@ -534,7 +539,7 @@ msgstr "L'utilisateur n'est pas en p&eacute;riode de validation."
 #: ../include/mgmt_helpers.php:42 ../classes/User.php:160
 #: ../classes/User.php:170 ../classes/User.php:371 ../classes/User.php:373
 #: ../classes/User.php:393 ../classes/User.php:392 ../classes/User.php:452
-#: ../classes/User.php:481 ../classes/User.php:501
+#: ../classes/User.php:481 ../classes/User.php:501 ../classes/User.php:524
 msgid "The validation token is empty."
 msgstr "Le jeton de validation est vide."
 
@@ -571,7 +576,8 @@ msgstr "Une adresse courriel est requise."
 
 #: ../signup.php:86 ../signup.php:49 ../signup.php:44 ../signup.php:53
 msgid "The email address must be of the form user@domain.com."
-msgstr "L'adresse courriel doit &ecirc;tre de la forme utilisateur@domaine.com."
+msgstr ""
+"L'adresse courriel doit &ecirc;tre de la forme utilisateur@domaine.com."
 
 #: ../signup.php:88 ../signup.php:51 ../signup.php:49 ../signup.php:54
 #: ../signup.php:59
@@ -631,11 +637,13 @@ msgstr "Aucun nom d'utilisateur sp&eacute;cifi&eacute;!"
 
 #: ../validate.php:42 ../validate.php:43
 msgid "Your account has already been activated."
-msgstr "Votre compte &agrave; d&eacute;j&agrave; &eacute;t&eacute; activ&eacute;."
+msgstr ""
+"Votre compte &agrave; d&eacute;j&agrave; &eacute;t&eacute; activ&eacute;."
 
 #: ../validate.php:47 ../validate.php:48 ../validate.php:49
 msgid "Your account has been succesfully activated!"
-msgstr "Votre compte &agrave; &eacute;t&eacute; activ&eacute; avec succ&egrave;s!"
+msgstr ""
+"Votre compte &agrave; &eacute;t&eacute; activ&eacute; avec succ&egrave;s!"
 
 #: ../validate.php:48 ../validate.php:49 ../validate.php:50
 msgid ""
@@ -660,7 +668,8 @@ msgstr "Erreur Interne"
 
 #: ../validate.php:55 ../validate.php:56 ../validate.php:57
 msgid "Sorry, your validation token is not valid!"
-msgstr "D&eacute;sol&eacute;, votre jeton de validation n'est pas accept&eacute;!"
+msgstr ""
+"D&eacute;sol&eacute;, votre jeton de validation n'est pas accept&eacute;!"
 
 #: ../resend_validation.php:39 ../resend_validation.php:33
 #: ../resend_validation.php:34
@@ -717,7 +726,8 @@ msgstr "Mauvais mot de passe."
 #: ../change_password.php:50 ../change_password.php:56
 #: ../change_password.php:61 ../change_password.php:63
 msgid "Your password has been changed succesfully."
-msgstr "Votre mot de passe a &eacute;t&eacute; chang&eacute; avec succ&egrave;s."
+msgstr ""
+"Votre mot de passe a &eacute;t&eacute; chang&eacute; avec succ&egrave;s."
 
 #: ../change_password.php:66
 msgid "Could not change your password"
@@ -813,6 +823,7 @@ msgid "Welcome! Hotspot:"
 msgstr "Bienvenue! Noeud sans-fil:"
 
 #: ../index.php:34 ../index.php:33 ../index.php:42 ../classes/MainUI.php:37
+#: ../index.php:43
 msgid "authentication server"
 msgstr "serveur d'authentification"
 
@@ -867,7 +878,8 @@ msgstr "Impossible d'&eacute;crire dans le r&eacute;pertoire '"
 #: ../admin/owner_sendfiles.php:74 ../admin/owner_sendfiles.php:67
 #: ../admin/owner_sendfiles.php:68 ../admin/owner_sendfiles.php:61
 msgid "', ownership should be set to user "
-msgstr "', le propr&eacute;taire n'a pu &ecirc;tre assign&eacute; &agrave; l'usager "
+msgstr ""
+"', le propr&eacute;taire n'a pu &ecirc;tre assign&eacute; &agrave; l'usager "
 
 #: ../classes/User.php:79
 msgid "{$field_id} '{$object_id_str}' could not be found in the database"
@@ -875,25 +887,26 @@ msgstr ""
 
 #: ../classes/User.php:110 ../classes/User.php:114 ../classes/User.php:325
 #: ../classes/User.php:345 ../classes/User.php:344 ../classes/User.php:404
-#: ../classes/User.php:424
+#: ../classes/User.php:424 ../classes/User.php:447
 msgid "Could not change user's password."
 msgstr "Impossible de changer le mot de passe de l'utilisateur"
 
 #: ../classes/User.php:120 ../classes/User.php:130 ../classes/User.php:239
 #: ../classes/User.php:259 ../classes/User.php:257 ../classes/User.php:305
-#: ../classes/User.php:307
+#: ../classes/User.php:307 ../classes/User.php:330
 msgid "Could not update status."
 msgstr "Impossible de mettre &agrave; jour le statut."
 
 #: ../classes/User.php:132 ../classes/User.php:142 ../classes/User.php:346
 #: ../classes/User.php:366 ../classes/User.php:365 ../classes/User.php:425
-#: ../classes/User.php:430 ../classes/User.php:450
+#: ../classes/User.php:430 ../classes/User.php:450 ../classes/User.php:473
 msgid "No users could not be found in the database"
 msgstr ""
 "Aucun utilisateur n'a pu &ecirc;tre trouv&eacute; dans la base de "
 "donn&eacute;e"
 
 #: ../classes/Security.php:78 ../classes/Security.php:74
+#: ../classes/Security.php:75
 msgid "You do not have owner privileges"
 msgstr "Vous n'avez pas les privil&egrave;ges d'administrateur"
 
@@ -928,6 +941,7 @@ msgstr "Connect&eacute; en tant que:"
 
 #: smarty.txt:25 smarty.txt:3 smarty.txt:23 smarty.txt:24
 #: ../classes/MainUI.php:150 ../classes/MainUI.php:168
+#: ../classes/MainUI.php:174
 msgid "NOT logged in."
 msgstr "Vous n'ETES PAS connect&eacute;."
 
@@ -952,7 +966,7 @@ msgstr "Aucun point d'acc&egrave;s sp&eacute;cifi&eacute;!"
 
 #: smarty.txt:41 smarty.txt:95 smarty.txt:107 smarty.txt:21 smarty.txt:76
 #: smarty.txt:74 smarty.txt:22 smarty.txt:75 ../classes/MainUI.php:274
-#: smarty.txt:47 ../classes/MainUI.php:292
+#: smarty.txt:47 ../classes/MainUI.php:292 ../classes/MainUI.php:298
 msgid "Please get in touch with "
 msgstr "Veuillez contacter "
 
@@ -999,6 +1013,7 @@ msgstr ""
 #: ../classes/Node.php:127 ../classes/Node.php:378
 #: ../classes/Content/FlickrPhotostream.php:683 ../classes/Node.php:128
 #: ../classes/Node.php:379 ../classes/Network.php:231
+#: ../classes/Content/FlickrPhotostream.php:770
 msgid "Access denied!"
 msgstr "Acc&egrave;s refus&eacute;!"
 
@@ -1132,7 +1147,7 @@ msgstr "Propri&eacute;taire"
 #: ../classes/Content.php:650 ../classes/Content.php:671
 #: ../classes/ContentGroupElement.php:179
 #: ../classes/Content/ContentGroup.php:392 ../classes/Content.php:619
-#: ../classes/Content.php:692
+#: ../classes/Content.php:692 ../admin/generic_object_admin.php:101
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -1153,7 +1168,7 @@ msgstr "Adresse URL de la page d'accueil"
 
 #: smarty.txt:120 smarty.txt:133 smarty.txt:136 smarty.txt:142 smarty.txt:130
 #: smarty.txt:131 smarty.txt:129 ../admin/content_admin.php:46 smarty.txt:126
-#: smarty.txt:98 ../admin/content_admin.php:69
+#: smarty.txt:98 ../admin/content_admin.php:69 ../admin/content_admin.php:67
 msgid "Description"
 msgstr "Description"
 
@@ -1202,11 +1217,13 @@ msgstr "Modifier un point d'acc&egrave;s"
 
 #: ../login/index.php:46 ../classes/User.php:262 ../classes/User.php:282
 #: ../classes/User.php:281 ../classes/User.php:329 ../classes/User.php:331
+#: ../classes/User.php:354
 msgid "Sorry, your "
 msgstr "D&eacute;sol&eacute;, votre p&eacute;riode de validation de "
 
 #: ../login/index.php:46 ../classes/User.php:262 ../classes/User.php:282
 #: ../classes/User.php:281 ../classes/User.php:329 ../classes/User.php:331
+#: ../classes/User.php:354
 msgid ""
 " minutes grace period to retrieve your email and validate your account has "
 "now expired. You will have to connect to the internet and validate your "
@@ -1219,13 +1236,15 @@ msgstr ""
 
 #: ../login/index.php:46 ../classes/User.php:262 ../classes/User.php:282
 #: ../classes/User.php:281 ../classes/User.php:329 ../classes/User.php:331
+#: ../classes/User.php:354
 msgid "click here."
 msgstr "cliquer ici."
 
 #: smarty.txt:52 smarty.txt:48 smarty.txt:38 smarty.txt:37 ../index.php:37
-#: ../login/index.php:160
+#: ../login/index.php:160 ../user_profile.php:35
 msgid "I have trouble connecting and I would like some help"
-msgstr "J'ai des difficult&eacute; &agrave; me brancher et je voudrais de l'aide"
+msgstr ""
+"J'ai des difficult&eacute; &agrave; me brancher et je voudrais de l'aide"
 
 #: smarty.txt:96 smarty.txt:10 smarty.txt:11
 msgid "Frequently Asked Questions"
@@ -1236,7 +1255,8 @@ msgid "Do I have to pay to get access to the Internet"
 msgstr "Dois-je payer pour avoir acc&egrave;s &agrave; l'Internet"
 
 #: smarty.txt:98 smarty.txt:12 smarty.txt:13
-msgid "No, Internet access is provided for free by the venue you are actually at"
+msgid ""
+"No, Internet access is provided for free by the venue you are actually at"
 msgstr ""
 "Non, l'acc&egrave;s Internet vous est offert gratuitement par l'endroit "
 "o&ugrave; vous &ecirc;tes pr&eacute;sentement"
@@ -1349,7 +1369,8 @@ msgstr ": Points d'accès les plus récents"
 #: ../hotspot_status.php:314 ../hotspot_status.php:71
 #: ../hotspot_status.php:313
 msgid "WiFiDog list of the most recent HotSpots opened by the network: "
-msgstr "La liste WiFiDog des points d'accès les plus récents ouverts par le réseau: "
+msgstr ""
+"La liste WiFiDog des points d'accès les plus récents ouverts par le réseau: "
 
 #: ../hotspot_status.php:235 ../hotspot_status.php:488
 #: ../hotspot_status.php:228 ../hotspot_status.php:469
@@ -1416,7 +1437,8 @@ msgstr ""
 
 #: ../admin/import_user_database.php:45 ../admin/import_user_database.php:48
 msgid "Please select the NoCat passwd file you want to import."
-msgstr "Veuillez choisir le fichier de mot de passe de NoCat que vous voulez importer"
+msgstr ""
+"Veuillez choisir le fichier de mot de passe de NoCat que vous voulez importer"
 
 #: ../admin/import_user_database.php:149 ../admin/import_user_database.php:152
 msgid "Sorry, a user account is already associated to the email address: "
@@ -1469,7 +1491,8 @@ msgstr "Ce noeud existe d&eacute;j&agrave;."
 #: ../classes/Node.php:158 ../classes/Node.php:192 ../classes/Node.php:159
 #: ../classes/Node.php:193
 msgid "Unable to insert new node into database!"
-msgstr "Impossible d'ins&eacute;rer le nouveau noeud dans la base de donn&eacute;es !"
+msgstr ""
+"Impossible d'ins&eacute;rer le nouveau noeud dans la base de donn&eacute;es !"
 
 #: ../classes/Node.php:174 ../classes/Node.php:324 ../classes/Node.php:326
 #: ../classes/Node.php:327
@@ -1496,7 +1519,7 @@ msgstr "Impossible de retirer le propri&eacute;taire"
 msgid "Channel: "
 msgstr "Canal: "
 
-#: smarty.txt:109 smarty.txt:90 smarty.txt:88
+#: smarty.txt:109 smarty.txt:90 smarty.txt:88 ../classes/User.php:647
 msgid "Username"
 msgstr "Nom d'usager"
 
@@ -1544,33 +1567,35 @@ msgstr "Le syst&egrave;me n'a pu initialiser la classe PEAR RADIUS."
 #: ../classes/AuthenticatorRadius.php:148
 #: ../classes/AuthenticatorRadius.php:153
 msgid "Failed to send authentication request to the RADIUS server. : "
-msgstr "Impossible d'envoyer la requ&ecirc;te d'authentification au serveur RADIUS."
+msgstr ""
+"Impossible d'envoyer la requ&ecirc;te d'authentification au serveur RADIUS."
 
 #: ../classes/AuthenticatorRadius.php:180
 #: ../classes/AuthenticatorRadius.php:191
 #: ../classes/AuthenticatorRadius.php:189
 #: ../classes/AuthenticatorRadius.php:194
 msgid "The RADIUS server rejected this username/password combination."
-msgstr "Le serveur RADIUS a rejet&eacute; votre requ&ecirc;te d'authentification."
+msgstr ""
+"Le serveur RADIUS a rejet&eacute; votre requ&ecirc;te d'authentification."
 
 #: ../classes/Security.php:44 ../classes/Security.php:45
 msgid "Your user_id and password do not match"
 msgstr "La combinaison nom d'usager / mot de passe est invalide."
 
 #: ../classes/User.php:267 ../classes/User.php:287 ../classes/User.php:286
-#: ../classes/User.php:334 ../classes/User.php:336
+#: ../classes/User.php:334 ../classes/User.php:336 ../classes/User.php:359
 msgid "Your account is currently valid."
 msgstr "Votre compte est actuellement valide."
 
 #: ../classes/User.php:273 ../classes/User.php:293 ../classes/User.php:292
-#: ../classes/User.php:340 ../classes/User.php:342
+#: ../classes/User.php:340 ../classes/User.php:342 ../classes/User.php:365
 msgid "Sorry, your account is not valid: "
 msgstr "D&eacute;sol&eacute;, votre compte n'est pas valide."
 
 #: ../include/schema_validate.php:38 ../include/schema_validate.php:77
 #: ../include/schema_validate.php:40 ../include/schema_validate.php:39
 #: ../include/schema_validate.php:76 ../include/schema_validate.php:42
-#: ../include/schema_validate.php:118
+#: ../include/schema_validate.php:118 ../include/schema_validate.php:116
 msgid ""
 "Unable to retrieve schema version.  The database schema is too old to be "
 "updated."
@@ -1581,6 +1606,7 @@ msgstr ""
 
 #: ../include/schema_validate.php:50 ../include/schema_validate.php:52
 #: ../include/schema_validate.php:51 ../include/schema_validate.php:55
+#: ../include/schema_validate.php:53
 msgid ""
 "The database schema is not up to date.  Do you want to try to update it?  "
 "This operation is irreversible."
@@ -1591,16 +1617,19 @@ msgstr ""
 
 #: ../include/schema_validate.php:52 ../include/schema_validate.php:54
 #: ../include/schema_validate.php:53 ../include/schema_validate.php:57
+#: ../include/schema_validate.php:55
 msgid "Try to update database schema"
-msgstr "Tenter de mettre &agrave; jour le sch&eacute;ma de la base de donn&eacute;es."
+msgstr ""
+"Tenter de mettre &agrave; jour le sch&eacute;ma de la base de donn&eacute;es."
 
 #: ../include/schema_validate.php:53 ../include/schema_validate.php:55
 #: ../include/schema_validate.php:54 ../include/schema_validate.php:58
+#: ../include/schema_validate.php:56
 msgid "Yes, I am sure:"
 msgstr "Oui, je suis certain:"
 
 #: ../include/schema_validate.php:71 ../include/schema_validate.php:72
-#: ../include/schema_validate.php:113
+#: ../include/schema_validate.php:113 ../include/schema_validate.php:111
 msgid "Trying to update the database schema."
 msgstr ""
 "Le syst&egrave;me tente de mettre &agrave; jour le sch&eacute;ma de la base "
@@ -1620,6 +1649,7 @@ msgstr "Usagers en ligne"
 
 #: ../classes/User.php:358 ../classes/User.php:378 ../classes/User.php:377
 #: ../classes/User.php:437 ../classes/User.php:463 ../classes/User.php:483
+#: ../classes/User.php:506
 msgid ""
 "Hello,\n"
 "You have requested that the authentication server send you your username:\n"
@@ -1633,6 +1663,7 @@ msgstr ""
 #: ../classes/User.php:421 ../classes/User.php:377 ../classes/User.php:420
 #: ../classes/User.php:437 ../classes/User.php:480 ../classes/User.php:463
 #: ../classes/User.php:512 ../classes/User.php:483 ../classes/User.php:532
+#: ../classes/User.php:506 ../classes/User.php:555
 msgid ""
 "\n"
 "\n"
@@ -1645,6 +1676,7 @@ msgstr ""
 
 #: ../classes/User.php:382 ../classes/User.php:402 ../classes/User.php:401
 #: ../classes/User.php:461 ../classes/User.php:490 ../classes/User.php:510
+#: ../classes/User.php:533
 msgid ""
 "Hello,\n"
 "Please follow the link below to validate your account.\n"
@@ -1655,6 +1687,7 @@ msgstr ""
 
 #: ../classes/User.php:382 ../classes/User.php:402 ../classes/User.php:401
 #: ../classes/User.php:461 ../classes/User.php:490 ../classes/User.php:510
+#: ../classes/User.php:533
 msgid ""
 "\n"
 "\n"
@@ -1667,6 +1700,7 @@ msgstr ""
 
 #: ../classes/User.php:401 ../classes/User.php:421 ../classes/User.php:420
 #: ../classes/User.php:480 ../classes/User.php:512 ../classes/User.php:532
+#: ../classes/User.php:555
 msgid ""
 "Hello,\n"
 "You have requested that the authentication server send you a new password:\n"
@@ -1678,24 +1712,25 @@ msgstr ""
 
 #: ../config.php:111 ../classes/User.php:380 ../classes/User.php:400
 #: ../classes/User.php:399 ../classes/User.php:459 ../classes/User.php:488
-#: ../classes/User.php:508
+#: ../classes/User.php:508 ../classes/User.php:531
 msgid " new user validation"
 msgstr " validation de l'enregistrement"
 
 #: ../config.php:113 ../classes/User.php:400 ../classes/User.php:420
 #: ../classes/User.php:419 ../classes/User.php:479 ../classes/User.php:511
-#: ../classes/User.php:531
+#: ../classes/User.php:531 ../classes/User.php:554
 msgid " new password request"
 msgstr " demande de changement de mot de passe"
 
 #: ../config.php:114 ../classes/User.php:357 ../classes/User.php:377
 #: ../classes/User.php:376 ../classes/User.php:436 ../classes/User.php:462
-#: ../classes/User.php:482
+#: ../classes/User.php:482 ../classes/User.php:505
 msgid " lost username request"
 msgstr " demande de nom d'utilisateur perdu"
 
 #: ../classes/User.php:401 ../classes/User.php:421 ../classes/User.php:420
 #: ../classes/User.php:480 ../classes/User.php:512 ../classes/User.php:532
+#: ../classes/User.php:555
 msgid ""
 "\n"
 "Password: "
@@ -1724,45 +1759,54 @@ msgid "This username could not be found in our database"
 msgstr "Ce nom d'utilisateur n'a pu être trouvé dans notre base de données."
 
 #: ../admin/content_admin.php:46 ../admin/content_admin.php:69
+#: ../admin/content_admin.php:67
 msgid "Title"
 msgstr "Titre"
 
 #: ../admin/content_admin.php:46 ../admin/content_admin.php:69
+#: ../admin/content_admin.php:67
 msgid "Content type"
 msgstr "Type de contenu"
 
 #: ../admin/content_admin.php:87 ../admin/content_admin.php:37
+#: ../admin/content_admin.php:35
 msgid "Add new content"
 msgstr "Ajouter un nouveau contenu"
 
 #: ../admin/generic_object_admin.php:44 ../admin/generic_object_admin.php:43
 #: ../admin/generic_object_admin.php:145 ../admin/generic_object_admin.php:147
+#: ../admin/generic_object_admin.php:41
 msgid "Generic object editor"
 msgstr "Éditeur générique d'objets"
 
 #: ../admin/generic_object_admin.php:46 ../admin/generic_object_admin.php:45
+#: ../admin/generic_object_admin.php:43
 msgid "Sorry, the 'object_class' parameter must be specified"
 msgstr "Désolé, le paramètre 'object_class' est obligatoire"
 
 #: ../admin/generic_object_admin.php:57 ../admin/generic_object_admin.php:56
+#: ../admin/generic_object_admin.php:54
 msgid "Sorry, the 'object_id' parameter must be specified"
 msgstr "Désolé, le paramètre 'object_id' est obligatoire"
 
 #: ../admin/generic_object_admin.php:73 ../admin/generic_object_admin.php:72
+#: ../admin/generic_object_admin.php:70
 msgid "Content successfully deleted"
 msgstr "Contenu supprimé correctement"
 
 #: ../admin/generic_object_admin.php:75 ../admin/generic_object_admin.php:74
+#: ../admin/generic_object_admin.php:72
 msgid "Deletion failed, error was: "
 msgstr "La suppression a échouée, l'erreur était:"
 
 #: ../admin/generic_object_admin.php:92 ../admin/generic_object_admin.php:91
+#: ../admin/generic_object_admin.php:89
 msgid "Save"
 msgstr "Enregistrer"
 
 #: ../admin/generic_object_admin.php:98 ../admin/generic_object_admin.php:133
 #: ../admin/generic_object_admin.php:97 ../admin/generic_object_admin.php:132
-#: ../admin/generic_object_admin.php:134
+#: ../admin/generic_object_admin.php:134 ../admin/generic_object_admin.php:95
 msgid "Preview"
 msgstr "Prévisualiser"
 
@@ -1802,9 +1846,11 @@ msgstr "Impossible d'insérer le nouveau contenu dans la base de données !"
 #: ../classes/Content/ContentGroup.php:57 ../classes/Content/File.php:62
 #: ../classes/Content/FlickrPhotostream.php:83 ../classes/Content.php:264
 #: ../classes/Content/ContentGroup.php:66 ../classes/Content.php:286
-#: ../classes/Content/Picture.php:56
+#: ../classes/Content/Picture.php:56 ../classes/Content/File.php:60
+#: ../classes/Content/FlickrPhotostream.php:89
 msgid "The content with the following id could not be found in the database: "
-msgstr "Le contenu avec l'ID suivant n'a pu être trouvé dans la base de données:"
+msgstr ""
+"Le contenu avec l'ID suivant n'a pu être trouvé dans la base de données:"
 
 #: ../classes/Content.php:124 ../classes/Content.php:125
 msgid "Unable to open directory "
@@ -1934,15 +1980,15 @@ msgstr "Network::delete() non supporté"
 msgid "Node content:"
 msgstr "Contenu du noeud:"
 
-#: ../classes/User.php:242 ../classes/User.php:244
+#: ../classes/User.php:242 ../classes/User.php:244 ../classes/User.php:249
 msgid "User id: "
 msgstr "Identifiant d'usager"
 
-#: ../classes/User.php:242 ../classes/User.php:244
+#: ../classes/User.php:242 ../classes/User.php:244 ../classes/User.php:249
 msgid " could not be found in the database"
 msgstr "impossible de trouver dans la base de données"
 
-#: ../include/schema_validate.php:91
+#: ../include/schema_validate.php:91 ../include/schema_validate.php:89
 msgid ""
 "No user matches the default account origin, a new user admin/admin will be "
 "created. Change the password as soon as possible !"
@@ -1951,7 +1997,7 @@ msgstr ""
 "utilisateur admin/admin sera créé. Changer le mot de passe aussitôt que "
 "possible !"
 
-#: ../include/schema_validate.php:104
+#: ../include/schema_validate.php:104 ../include/schema_validate.php:102
 msgid ""
 "Could not get a default account origin, make sure you config.php has at "
 "least one AUTH_SOURCE_ARRAY entry."
@@ -1984,7 +2030,8 @@ msgstr "Noeuds permis:"
 #: ../classes/Content/ContentGroupElement.php:116
 #: ../classes/ContentGroupElement.php:116
 #: ../classes/ContentGroupElement.php:127
-msgid "(Content can be displayed on ANY node unless one or more nodes are selected)"
+msgid ""
+"(Content can be displayed on ANY node unless one or more nodes are selected)"
 msgstr ""
 "(Le contenu peut être affiché sur n'importe quel noeud, à moins qu'un noeud "
 "ou plus sont sélectionnés)"
@@ -2013,7 +2060,8 @@ msgstr "Attributs"
 msgid ""
 "It is recommended to specify at least <b>width='x' height='y'</b> as "
 "attributes"
-msgstr "Il est fortement recommandé d'entrer les attributs <b>width='x' height=y'</b>"
+msgstr ""
+"Il est fortement recommandé d'entrer les attributs <b>width='x' height=y'</b>"
 
 #: ../classes/Content/EmbeddedContent.php:100
 msgid "Parameters"
@@ -2036,6 +2084,7 @@ msgstr "Vous devez choisir un objet File ou un contenu apparenté."
 #: ../classes/Content/File.php:337 ../classes/Content/EmbeddedContent.php:247
 #: ../classes/Content/File.php:285 ../classes/Content/File.php:335
 #: ../classes/Content/EmbeddedContent.php:250 ../classes/Content/File.php:341
+#: ../classes/Content/File.php:293 ../classes/Content/File.php:354
 msgid "Download"
 msgstr "Télécharger"
 
@@ -2044,48 +2093,61 @@ msgstr "Télécharger"
 #: ../classes/Content/EmbeddedContent.php:247 ../classes/Content/File.php:267
 #: ../classes/Content/File.php:285 ../classes/Content/File.php:335
 #: ../classes/Content/EmbeddedContent.php:250 ../classes/Content/File.php:341
+#: ../classes/Content/File.php:275 ../classes/Content/File.php:293
+#: ../classes/Content/File.php:351
 msgid "KB"
 msgstr "Ko"
 
 #: ../classes/Content/File.php:98 ../classes/Content/File.php:96
+#: ../classes/Content/File.php:97
 msgid "File size exceeds limit specified in PHP.ini"
 msgstr "La taille du fichier excède celle spécifiée dans PHP.ini"
 
 #: ../classes/Content/File.php:101 ../classes/Content/File.php:99
+#: ../classes/Content/File.php:100
 msgid "File size exceeds limit specified HTML form"
-msgstr "La taille du fichier excède la limite spécifiée dans le formulaire HTML."
+msgstr ""
+"La taille du fichier excède la limite spécifiée dans le formulaire HTML."
 
 #: ../classes/Content/File.php:104 ../classes/Content/File.php:102
+#: ../classes/Content/File.php:103
 msgid "File upload was interrupted"
 msgstr "Le transfert du fichier a été interrrompu"
 
 #: ../classes/Content/File.php:111 ../classes/Content/File.php:109
+#: ../classes/Content/File.php:110
 msgid "Missing temp folder"
 msgstr "Répertoire temporaire absent"
 
 #: ../classes/Content/File.php:221 ../classes/Content/File.php:219
+#: ../classes/Content/File.php:227
 msgid "Upload a new file (Uploading a new one will replace any existing file)"
 msgstr ""
 "Télécharger un nouveau fichier (Le téléchargement d'un nouveau fichier "
 "écrasera le fichier existant)"
 
 #: ../classes/Content/File.php:231 ../classes/Content/File.php:229
+#: ../classes/Content/File.php:237
 msgid "Remote file via URL"
 msgstr "Fichier distant à partir d'un URL"
 
 #: ../classes/Content/File.php:243 ../classes/Content/File.php:241
+#: ../classes/Content/File.php:249
 msgid "File URL"
 msgstr "URL du fichier"
 
 #: ../classes/Content/File.php:251 ../classes/Content/File.php:249
+#: ../classes/Content/File.php:257
 msgid "Filename to display"
 msgstr "Nom de fichier à afficher"
 
 #: ../classes/Content/File.php:260 ../classes/Content/File.php:258
+#: ../classes/Content/File.php:266
 msgid "MIME type"
 msgstr "Type MIME"
 
 #: ../classes/Content/File.php:267 ../classes/Content/File.php:265
+#: ../classes/Content/File.php:273
 msgid "Locally stored file size"
 msgstr "Taille du fichier stocké localement"
 
@@ -2094,97 +2156,115 @@ msgid "Remote file size"
 msgstr "Taille du fichier distant"
 
 #: ../classes/Content/File.php:350 ../classes/Content/File.php:348
-#: ../classes/Content/File.php:354
+#: ../classes/Content/File.php:354 ../classes/Content/File.php:378
 msgid "Could not delete this file, since it is persistent"
 msgstr "Impossible de supprimer ce fichier, puisqu'il est persistent"
 
 #: ../classes/Content/FlickrPhotostream.php:116
 #: ../classes/Content/FlickrPhotostream.php:121
+#: ../classes/Content/FlickrPhotostream.php:153
 msgid "Illegal Flickr Photostream selection mode."
 msgstr "Mode de sélection des photos Flickr illégal"
 
 #: ../classes/Content/FlickrPhotostream.php:304
 #: ../classes/Content/FlickrPhotostream.php:332
+#: ../classes/Content/FlickrPhotostream.php:364
 msgid "Flickr API key"
 msgstr "Clé de l'API Flickr"
 
 #: ../classes/Content/FlickrPhotostream.php:312
 #: ../classes/Content/FlickrPhotostream.php:340
+#: ../classes/Content/FlickrPhotostream.php:372
 msgid "Flick photo selection mode :"
 msgstr "Mode de sélection des photos Flickr :"
 
 #: ../classes/Content/FlickrPhotostream.php:315
 #: ../classes/Content/FlickrPhotostream.php:343
+#: ../classes/Content/FlickrPhotostream.php:375
 msgid "Select by group"
 msgstr "Sélectionner par groupe"
 
 #: ../classes/Content/FlickrPhotostream.php:315
 #: ../classes/Content/FlickrPhotostream.php:343
+#: ../classes/Content/FlickrPhotostream.php:375
 msgid "Select by tags"
 msgstr "Sélectionner par «tags»"
 
 #: ../classes/Content/FlickrPhotostream.php:315
 #: ../classes/Content/FlickrPhotostream.php:343
+#: ../classes/Content/FlickrPhotostream.php:375
 msgid "Select by user"
 msgstr "Sélectionner par usager"
 
 #: ../classes/Content/FlickrPhotostream.php:331
 #: ../classes/Content/FlickrPhotostream.php:359
+#: ../classes/Content/FlickrPhotostream.php:391
 msgid "Flickr User ID + Username"
 msgstr "Identifiant de l'usager Flickr + Surnom"
 
 #: ../classes/Content/FlickrPhotostream.php:335
 #: ../classes/Content/FlickrPhotostream.php:363
+#: ../classes/Content/FlickrPhotostream.php:395
 msgid "Reset Flickr User ID"
 msgstr "Réinitialiser l'identifiant d'usager Flickr"
 
 #: ../classes/Content/FlickrPhotostream.php:342
 #: ../classes/Content/FlickrPhotostream.php:370
+#: ../classes/Content/FlickrPhotostream.php:402
 msgid "Flickr User E-mail"
 msgstr "Courriel de l'usager Flickr"
 
 #: ../classes/Content/FlickrPhotostream.php:358
 #: ../classes/Content/FlickrPhotostream.php:386
+#: ../classes/Content/FlickrPhotostream.php:418
 msgid "Group Photo Pool"
 msgstr "Groupe de photos"
 
 #: ../classes/Content/FlickrPhotostream.php:371
 #: ../classes/Content/FlickrPhotostream.php:399
+#: ../classes/Content/FlickrPhotostream.php:431
 msgid "Could not find any group photo pool."
 msgstr "Impossible de trouver un groupe de photos."
 
 #: ../classes/Content/FlickrPhotostream.php:379
 #: ../classes/Content/FlickrPhotostream.php:407
+#: ../classes/Content/FlickrPhotostream.php:439
 msgid "Tags (comma-separated)"
 msgstr "«Tags» (séparés par des virgules)"
 
 #: ../classes/Content/FlickrPhotostream.php:383
 #: ../classes/Content/FlickrPhotostream.php:411
+#: ../classes/Content/FlickrPhotostream.php:443
 msgid "Match any tag"
 msgstr "N'importe quel «tag»"
 
 #: ../classes/Content/FlickrPhotostream.php:383
 #: ../classes/Content/FlickrPhotostream.php:411
+#: ../classes/Content/FlickrPhotostream.php:443
 msgid "Match all tags"
 msgstr "Tous les «tags»"
 
 #: ../classes/Content/FlickrPhotostream.php:391
 #: ../classes/Content/FlickrPhotostream.php:419
+#: ../classes/Content/FlickrPhotostream.php:451
 msgid "Flickr photo display options"
 msgstr "Options d'affichage des photos Flickr"
 
 #: ../classes/Content/FlickrPhotostream.php:395
 #: ../classes/Content/FlickrPhotostream.php:423
+#: ../classes/Content/FlickrPhotostream.php:455
 msgid "Show Flickr photo title ?"
 msgstr "Afficher le titre de la photo Flickr ?"
 
 #: ../classes/Content/FlickrPhotostream.php:404
 #: ../classes/Content/FlickrPhotostream.php:432
+#: ../classes/Content/FlickrPhotostream.php:464
 msgid "Show Flickr tags ?"
 msgstr "Afficher les «tags» Flickr ?"
 
 #: ../classes/Content/FlickrPhotostream.php:413
 #: ../classes/Content/FlickrPhotostream.php:441
+#: ../classes/Content/FlickrPhotostream.php:473
 msgid "Show Flickr photo description ?"
 msgstr "Afficher la description de la photo Flickr ?"
 
@@ -2193,6 +2273,8 @@ msgstr "Afficher la description de la photo Flickr ?"
 #: ../classes/Content/FlickrPhotostream.php:467
 #: ../classes/Content/FlickrPhotostream.php:654
 #: ../classes/Content/FlickrPhotostream.php:657
+#: ../classes/Content/FlickrPhotostream.php:499
+#: ../classes/Content/FlickrPhotostream.php:733
 msgid "Unable to connect to Flickr API."
 msgstr "Impossible de se connecter à l'API Flickr."
 
@@ -2201,6 +2283,8 @@ msgstr "Impossible de se connecter à l'API Flickr."
 #: ../classes/Content/FlickrPhotostream.php:471
 #: ../classes/Content/FlickrPhotostream.php:658
 #: ../classes/Content/FlickrPhotostream.php:661
+#: ../classes/Content/FlickrPhotostream.php:504
+#: ../classes/Content/FlickrPhotostream.php:737
 msgid "Some of the request parameters provided to Flickr API are invalid."
 msgstr "Un moins un des paramètres de la requête à l'API Flickr est invalide."
 
@@ -2209,6 +2293,8 @@ msgstr "Un moins un des paramètres de la requête à l'API Flickr est invalide.
 #: ../classes/Content/FlickrPhotostream.php:475
 #: ../classes/Content/FlickrPhotostream.php:662
 #: ../classes/Content/FlickrPhotostream.php:665
+#: ../classes/Content/FlickrPhotostream.php:508
+#: ../classes/Content/FlickrPhotostream.php:742
 msgid "Unable to parse Flickr's response."
 msgstr "Impossible d'analyser la réponse de Flickr"
 
@@ -2217,43 +2303,52 @@ msgstr "Impossible d'analyser la réponse de Flickr"
 #: ../classes/Content/FlickrPhotostream.php:479
 #: ../classes/Content/FlickrPhotostream.php:666
 #: ../classes/Content/FlickrPhotostream.php:669
+#: ../classes/Content/FlickrPhotostream.php:512
+#: ../classes/Content/FlickrPhotostream.php:746
 msgid "Could not get content from Flickr : "
 msgstr "Impossible d'obtenir le contenu de Flickr :"
 
 #: ../classes/Content/FlickrPhotostream.php:449
 #: ../classes/Content/FlickrPhotostream.php:485
+#: ../classes/Content/FlickrPhotostream.php:518
 msgid "YOU MUST SPECIFY AN API KEY BEFORE YOU CAN GO ON."
 msgstr "VOUS DEVEZ ENTRER UNE CLÉ D'API AVANT DE POURSUIVRE"
 
 #: ../classes/Content/FlickrPhotostream.php:491
 #: ../classes/Content/FlickrPhotostream.php:527
 #: ../classes/Content/FlickrPhotostream.php:529
+#: ../classes/Content/FlickrPhotostream.php:562
 msgid "Could not find a Flickr user with this e-mail."
 msgstr "Impossible de trouver un usager Flickr avec ce courriel."
 
 #: ../classes/Content/FlickrPhotostream.php:507
 #: ../classes/Content/FlickrPhotostream.php:543
 #: ../classes/Content/FlickrPhotostream.php:545
+#: ../classes/Content/FlickrPhotostream.php:578
 msgid "Could not complete successfully the saving procedure."
 msgstr "Impossible de compléter correctement la procédure de sauvegarde."
 
 #: ../classes/Content/FlickrPhotostream.php:576
 #: ../classes/Content/FlickrPhotostream.php:624
 #: ../classes/Content/FlickrPhotostream.php:627
+#: ../classes/Content/FlickrPhotostream.php:699
 msgid "Tags"
 msgstr "«Tags»"
 
 #: ../classes/Content/FlickrPhotostream.php:598
 #: ../classes/Content/FlickrPhotostream.php:649
 #: ../classes/Content/FlickrPhotostream.php:652
+#: ../classes/Content/FlickrPhotostream.php:728
 msgid "No Flickr content matches the request !"
 msgstr "Aucune photo Flickr correspond à la requête !"
 
 #: ../classes/Content/Langstring.php:166 ../classes/Content/Langstring.php:167
+#: ../classes/Content/Langstring.php:170
 msgid "Delete string"
 msgstr "Supprimer la chaîne"
 
 #: ../classes/Content/Langstring.php:191 ../classes/Content/Langstring.php:192
+#: ../classes/Content/Langstring.php:195
 msgid "Add new string"
 msgstr "Ajouter un nouvelle chaîne"
 
@@ -2285,21 +2380,26 @@ msgid "Unknown section:"
 msgstr "Section inconnue : "
 
 #: ../classes/MainUI.php:152 ../classes/MainUI.php:170
+#: ../classes/MainUI.php:176
 msgid "Where am I?"
 msgstr "Oû suis-je ?"
 
 #: ../classes/MainUI.php:175 ../classes/MainUI.php:193
+#: ../classes/MainUI.php:199
 msgid "Language:"
 msgstr "Langue : "
 
 #: ../classes/MainUI.php:202 ../classes/MainUI.php:220
+#: ../classes/MainUI.php:226
 #, php-format
 msgid "Accounts on %s are and will stay completely free."
 msgstr "Les comptes sont et resteront complètement gratuits."
 
 #: ../classes/MainUI.php:203 ../classes/MainUI.php:221
+#: ../classes/MainUI.php:227
 msgid "Please inform us of any problem or service interruption at:"
-msgstr "Veuillez nous informer de tout problème ou interruption de service à : "
+msgstr ""
+"Veuillez nous informer de tout problème ou interruption de service à : "
 
 #: ../classes/Network.php:75 ../classes/Network.php:74
 msgid "Network:"
@@ -2349,7 +2449,8 @@ msgid "Content from:"
 msgstr "Contenu de :"
 
 #: ../classes/Content/ContentGroup.php:154
-msgid "Invalid content selection mode (must be part of CONTENT_SELECTION_MODES)"
+msgid ""
+"Invalid content selection mode (must be part of CONTENT_SELECTION_MODES)"
 msgstr ""
 "Mode de sélection du contenu invalide (doit faire partie de "
 "CONTENT_SELECTION_MODES)"
@@ -2373,26 +2474,32 @@ msgstr ""
 "éléments ont déjà été affichés."
 
 #: ../classes/Content/FlickrPhotostream.php:450
+#: ../classes/Content/FlickrPhotostream.php:482
 msgid "Preferred size"
 msgstr "Taille préférée"
 
 #: ../classes/Content/FlickrPhotostream.php:452
+#: ../classes/Content/FlickrPhotostream.php:484
 msgid "Squared 75x75"
 msgstr "Carrée 75x75"
 
 #: ../classes/Content/FlickrPhotostream.php:452
+#: ../classes/Content/FlickrPhotostream.php:484
 msgid "Thumbnail 100x75"
 msgstr "Vignette 100x75"
 
 #: ../classes/Content/FlickrPhotostream.php:452
+#: ../classes/Content/FlickrPhotostream.php:484
 msgid "Small 240x180"
 msgstr "Petite 240x180"
 
 #: ../classes/Content/FlickrPhotostream.php:452
+#: ../classes/Content/FlickrPhotostream.php:484
 msgid "Medium 500x375"
 msgstr "Moyenne 50x375"
 
 #: ../classes/Content/FlickrPhotostream.php:452
+#: ../classes/Content/FlickrPhotostream.php:484
 msgid "Original size"
 msgstr "Taille originale"
 
@@ -2404,11 +2511,11 @@ msgstr "Impossible d'obtenir le fil RSS du réseau"
 msgid "Could not get hotspot RSS feed"
 msgstr "Impossible d'obtenir le fil RSS du point d'accès"
 
-#: ../admin/content_admin.php:54
+#: ../admin/content_admin.php:54 ../admin/content_admin.php:52
 msgid "Show all content"
 msgstr "Afficher tout le contenu"
 
-#: ../admin/content_admin.php:60
+#: ../admin/content_admin.php:60 ../admin/content_admin.php:58
 msgid "Show only persistent content"
 msgstr "Afficher uniquement le contenu persistent"
 
@@ -2428,7 +2535,7 @@ msgstr "Mon profile"
 msgid "Logout"
 msgstr "Déconnexion"
 
-#: ../classes/MainUI.php:187
+#: ../classes/MainUI.php:187 ../classes/MainUI.php:193
 msgid "Building your wireless community"
 msgstr ""
 
@@ -2438,10 +2545,12 @@ msgstr "Afficher tout le contenu disponible à ce point d'accès."
 
 #: ../classes/Content/ContentGroup.php:162
 msgid "Invalid content selection mode (must be part of CONTENT_ORDERING_MODES)"
-msgstr "Mode de sélection invalide (doit faire partie de CONTENT_ORDERING_MODES)"
+msgstr ""
+"Mode de sélection invalide (doit faire partie de CONTENT_ORDERING_MODES)"
 
 #: ../classes/Content/ContentGroup.php:197
-msgid "Invalid content selection mode (must be part of CONTENT_CHANGES_ON_MODES)"
+msgid ""
+"Invalid content selection mode (must be part of CONTENT_CHANGES_ON_MODES)"
 msgstr ""
 
 #: ../classes/Content/ContentGroup.php:232
@@ -2466,13 +2575,16 @@ msgstr "Le contenu peut-il être affiché plus d'une fois au même usager ?"
 
 #: ../classes/Content/ContentGroup.php:397
 msgid "Add a new content OR select previously created content"
-msgstr "Ajoutez un nouveau contenu OU sélectionnez du contenu créé précedemment"
+msgstr ""
+"Ajoutez un nouveau contenu OU sélectionnez du contenu créé précedemment"
 
 #: ../classes/Content/FlickrPhotostream.php:708
+#: ../classes/Content/FlickrPhotostream.php:795
 msgid "Flickr support isn't enabled in the config file"
-msgstr "Le support de l'objet Flickr est désactivé dans le fichier de configuration"
+msgstr ""
+"Le support de l'objet Flickr est désactivé dans le fichier de configuration"
 
-#: ../admin/generic_object_admin.php:116
+#: ../admin/generic_object_admin.php:116 ../admin/generic_object_admin.php:114
 msgid "Showing preview as it would appear at "
 msgstr "Prévisualisation tel que le contenu apparaîtrait à "
 
@@ -2501,7 +2613,8 @@ msgstr ""
 
 #: ../classes/Content/Picture.php:109
 msgid "Height (leave empty if you want to keep original height)"
-msgstr "Hauteur (laissez la case vide, si vous désirez conserver la hauteuroriginale)"
+msgstr ""
+"Hauteur (laissez la case vide, si vous désirez conserver la hauteuroriginale)"
 
 #: ../content/PatternLanguage/archives.php:35
 #: ../content/PatternLanguage/subscription.php:35
@@ -2773,5 +2886,40 @@ msgstr "Récit de "
 msgid ""
 " with funding from the New Media Research Networks Fund at the Department of "
 "Canadian Heritage."
-msgstr " avec la participation financière de New Media Research Networks Fund du Département de l'héritage Canadien."
+msgstr ""
+" avec la participation financière de New Media Research Networks Fund du "
+"Département de l'héritage Canadien."
 
+#: ../user_profile.php:59
+msgid "User Profile"
+msgstr "Profil d'usager"
+
+#: ../classes/MainUI.php:172
+msgid "I'm NOT at a hotspot."
+msgstr "Je ne suis PAS à un point d'accès."
+
+#: ../classes/User.php:666
+msgid "Real name"
+msgstr "Nom complet"
+
+#: ../classes/User.php:674
+msgid "Website URL"
+msgstr "URL de mon site Web"
+
+#: ../classes/Content/File.php:282
+msgid "Remote file size (Automatically converted from KB to Bytes)"
+msgstr ""
+"Taille du fichier distant (La taille sera automatiquement convertie de kilo-"
+"octets en octets)"
+
+#: ../classes/Content/Langstring.php:138
+msgid "Only these HTML tags are allowed : "
+msgstr "Seulement ces balises HTML sont permises : "
+
+#: ../classes/MainUI.php:172
+msgid "I would like to login virtually."
+msgstr "Je désire me connecter virtuellement."
+
+#: ../classes/MainUI.php:174
+msgid "Login to this hotspot."
+msgstr "Je désire me connecter à ce point d'accès."

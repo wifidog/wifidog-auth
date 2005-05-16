@@ -158,14 +158,20 @@ class MainUI
                 if($gw_id && $gw_address && $gw_port)
                     $html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'login/?logout=true&gw_id='.$gw_id.'&gw_address='.$gw_address.'&gw_port='.$gw_port.'"><img class="administration" src="/images/logout.gif" border="0"> '._("Logout").'</a>'."\n";
                 else
-				    $html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'login/?logout=true"><img class="administration" src="/images/logout.gif" border="0"> '._("Logout").'</a>'."\n";
+				   $html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'login/?logout=true"><img class="administration" src="/images/logout.gif" border="0"> '._("Logout").'</a>'."\n";
 
 			}
 			else
 			{
+			    $gw_id =  !empty($_REQUEST['gw_id']) ? $_REQUEST['gw_id'] : $session->get(SESS_GW_ID_VAR);
+                $gw_address = !empty($_REQUEST['gw_address']) ? $_REQUEST['gw_address'] : $session->get(SESS_GW_ADDRESS_VAR);
+                $gw_port = !empty($_REQUEST['gw_port']) ? $_REQUEST['gw_port'] : $session->get(SESS_GW_PORT_VAR);
+                
                 // If the user connects physically ( through a gateway don't show the confusing login message ) 
-                if(empty($_REQUEST['gw_id']) || empty($_REQUEST['gw_address']) || empty($_REQUEST['gw_port'])) 
-                    $html .= '<p>'._("NOT logged in.").' <a href="'.BASE_SSL_PATH.'login/">'. ("Login?").'</a></p>'."\n";
+                if(empty($gw_id) || empty($gw_address) || empty($gw_port))
+                    $html .= '<p>'._("I'm NOT at a hotspot.").'<br><a href="'.BASE_SSL_PATH.'login/">'._("I would like to login virtually.").'</a></p>'."\n";
+                 else
+                 	$html .= '<p>'._("NOT logged in.").'<br><a href="'.BASE_SSL_PATH.'login/?gw_id='.$gw_id.'&gw_address='.$gw_address.'&gw_port='.$gw_port.'">'._("Login to this hotspot.").'</a></p>'."\n";
 				$html .= '<a class="administration" HREF="'.Network :: getCurrentNetwork()->getHomepageURL().'"><img class="administration" src="/images/lien_ext.gif"> '.Network :: getCurrentNetwork()->getName().'</a>'."\n";
 				$html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'faq.php"><img class="administration" src="/images/where.gif"> '._("Where am I?").'</a>'."\n";
 			}

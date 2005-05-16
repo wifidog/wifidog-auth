@@ -1,6 +1,13 @@
+2005-05-16 Francois Proulx <francois.proulx@gmail.com>
+	* Changed login message in MainUI to make it clearer what the login button will do
+
 2005-05-13 Philippe April <philippe@ilesansfil.org>
 	* Added deployment status to node_list
 
+2005-05-10 Francois Proulx <francois.proulx@gmail.com>
+	* Fixed Login link in signup page ( MainUI.php ) if the Session has gw_id, gw_address, gw_port 
+	  show physical login link
+	  
 2005-05-10 Francois Proulx <francois.proulx@gmail.com>
 	* Added download button CSS class to style button
 	
