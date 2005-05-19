@@ -33,8 +33,6 @@ if (!empty ($_REQUEST['file_id']))
     $sql = "SELECT * FROM files WHERE files_id = '$file_id'";
     $db->ExecSqlUniqueRes($sql, $file_row, false);
 
-    ob_clean();
-    
     if ($file_row && $file_row['data_blob'])
     {
         //headers to send to the browser before beginning the binary download
