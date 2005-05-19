@@ -1,3 +1,6 @@
+2005-05-18 Francois Proulx <francois.proulx@gmail.com>
+	* Added strip_tags in RssPreview ( some malformed HTML would break the page layout )
+	
 2005-05-16 Francois Proulx <francois.proulx@gmail.com>
 	* Changed login message in MainUI to make it clearer what the login button will do
 

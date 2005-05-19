@@ -384,7 +384,8 @@ function changeclass(objet, myClass)
                 }
                 $feed_html .= "<div style='z-index: 1000; position: relative'>\n";
                 $feed_html .= "<div style='z-index: 1000;' id='$dhtml_id' class='introduction'><p>{$item['author']} ({$feed['title']}) $display_date</p>\n";
-                $feed_html .= "<p>{$item['summary']}</p></div>\n"; 
+                $summary = strip_tags($item['summary'], "<p><a><img><b><i>");
+                $feed_html .= "<p>{$summary}</p></div>\n"; 
                 $feed_html .= "</div>\n";
                 $feed_html .= "</li>\n";
             }
