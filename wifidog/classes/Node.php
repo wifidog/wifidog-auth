@@ -342,6 +342,14 @@ class Node implements GenericObject
 		$html .= "<div class='admin_class'>Node (".get_class($this)." instance)</div>\n";
 
 		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Statistics:")."</div>\n";
+		
+		$name = "node_".$this->id."_get_stats";
+		$html .= "<input type='submit' name='$name' value='"._("Get access statistics")."'>";
+		
+		$html .= "</div>\n";
+		
+		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Node content:")."</div>\n";
 
 		$html .= "<ul class='admin_section_list'>\n";
@@ -379,6 +387,10 @@ class Node implements GenericObject
 			throw new Exception(_('Access denied!'));
 		}
 
+		$name = "node_{$this->id}_get_stats";
+		if (!empty ($_REQUEST[$name]))
+			header("Location: hotspot_log.php?node_id=".urlencode($this->getId()));
+		
 		foreach ($this->getAllContent() as $content)
 		{
 			$name = "node_".$this->id."_content_".$content->GetId()."_erase";

@@ -104,7 +104,10 @@ class Network implements GenericObject
 	{
 		$object = null;
 		$name = "{$user_prefix}";
-		return new self($_REQUEST[$name]);
+		if(!empty($_REQUEST[$name]))
+			return new self($_REQUEST[$name]);
+		else
+			return null;
 	}
 
 	private function __construct($p_network_id)

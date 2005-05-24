@@ -630,10 +630,21 @@ class User implements GenericObject
 	static function processSelectUserUI($user_prefix)
 	{
 		$object = null;
-		$network = Network :: processSelectNetworkUI($user_prefix);
-		$name = "select_user_{$user_prefix}_username";
-		$username = $_REQUEST[$name];
-		return self :: getUserByUsernameAndOrigin($username, $network->GetId());
+		try {
+			$network = Network :: processSelectNetworkUI($user_prefix);
+			$name = "select_user_{$user_prefix}_username";
+			if(!empty($_REQUEST[$name]))
+			{
+				$username = $_REQUEST[$name];
+				return self :: getUserByUsernameAndOrigin($username, $network->GetId());
+			}
+			else
+				return null;
+		}
+		catch(Exception $e)
+		{
+			return null;
+		}
 	}
     
     public function getAdminUI()

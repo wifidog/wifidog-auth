@@ -90,6 +90,7 @@ class MainUI
 				$html .= "<div class='admin_section_tools'>\n";
 	
 				$html .= "<input type=submit name='edit_submit' value='"._("Edit")."'>\n";
+				
 				$html .= "</div>\n";
 				$html .= '</form>';
 				$html .= "</div>\n";

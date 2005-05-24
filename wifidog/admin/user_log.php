@@ -35,11 +35,16 @@ $total = array ();
 $total['incoming'] = 0;
 $total['outgoing'] = 0;
 
-if (!empty ($_REQUEST['user_id']))
+// Process user ID searchbox
+$user = User::processSelectUserUI("user_id_searchbox");
+
+if (!empty ($_REQUEST['user_id']) || !empty($user))
 {
 	try
 	{
-		$user = User :: getObject($_REQUEST['user_id']);
+		// If it comes from a link get that user ID
+		if(empty($user))
+			$user = User :: getObject($_REQUEST['user_id']);
 		$userinfo = $user->getInfoArray();
 		$userinfo['account_status_description'] = $account_status_to_text[$userinfo['account_status']];
 		$smarty->assign("userinfo", $userinfo);
@@ -107,10 +112,18 @@ else
 	}
 
 	$smarty->assign("account_status_to_text", $account_status_to_text);
-
+	
+	// Display user selection form
+	$html = "<b>"._("Find a User ID : ")."</b><br>\n";
+	$html .= "<form method='POST' action=''>\n";
+	$html .= User::getSelectUserUI("user_id_searchbox")."<br>\n";
+	$html .= "<input type='submit'>\n";
+	$html .= "</form><p>\n";
+	$html .= $smarty->fetch("admin/templates/user_log.html");
+	
     $ui=new MainUI();
     $ui->setToolSection('ADMIN');
-    $ui->setMainContent($smarty->fetch("admin/templates/user_log.html"));
+    $ui->setMainContent($html);
     $ui->display();
 }
 ?>

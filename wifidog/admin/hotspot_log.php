@@ -28,7 +28,14 @@ require_once 'admin_common.php';
 $security = new Security();
 $security->requireAdmin();
 
-$db->ExecSql("SELECT node_id, name, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up, creation_date FROM nodes ORDER BY node_id", $node_results, false);
+$specific_node_where = "";
+if(!empty($_REQUEST["node_id"]))
+{
+	$node_id = $db->EscapeString($_REQUEST["node_id"]);
+	$specific_node_where = "WHERE node_id = '$node_id'";
+}
+	
+$db->ExecSql("SELECT node_id, name, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up, creation_date FROM nodes $specific_node_where ORDER BY node_id", $node_results, false);
 
 foreach($node_results as $node_row) {
 	$node_row['duration'] = $db->GetDurationArrayFromIntervalStr($node_row['since_last_heartbeat']);
@@ -114,9 +121,10 @@ $smarty->assign("total_network_in", $results['in']);
 $smarty->assign("total_network_out", $results['out']);
 
 require_once BASEPATH.'classes/MainUI.php';
+
 $ui=new MainUI();
 $ui->setToolSection('ADMIN');
 $ui->setMainContent($smarty->fetch("admin/templates/hotspot_log.html"));
 $ui->display();
-//$smarty->display("admin/templates/hotspot_log.html");
+
 ?>

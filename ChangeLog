@@ -1,4 +1,8 @@
 2005-05-24 Francois Proulx <francois.proulx@gmail.com>
+	* Added "Get access statistics" button to Node admin to get hotspot specific stats
+	* Added search box in Users log to get a specific user stats quickly
+	
+2005-05-24 Francois Proulx <francois.proulx@gmail.com>
 	* Fixed typo in some translations
 	* Cleaned-up todos
 	
