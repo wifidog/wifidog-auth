@@ -23,7 +23,7 @@
  \********************************************************************/
 /**@file index.php
  * This is the main auth handler, be very carefull while editing this file.
- * @author Copyright (C) 2004 Benoit Grégoire et Philippe April
+ * @author Copyright (C) 2004 Benoit GrÃ©goire et Philippe April
  */
 define('BASEPATH', '../');
 require_once BASEPATH.'include/common.php';
@@ -57,6 +57,11 @@ if ($info != null)
 					$auth_response = ACCOUNT_STATUS_DENIED;
 				
 			}
+		}
+		else if($info['token_status'] == TOKEN_INUSE && $info['gw_id'] == $_REQUEST['gw_id'] && $info['mac'] == $_REQUEST['mac'] && $info['ip'] == $_REQUEST['ip'])
+		{
+			// This solves the bug where the user clicks twice before getting the portal page
+			$auth_response = ACCOUNT_STATUS_ALLOWED;
 		}
 		else
 		{

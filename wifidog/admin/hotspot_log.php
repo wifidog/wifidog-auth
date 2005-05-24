@@ -26,13 +26,19 @@ define('BASEPATH','../');
 require_once 'admin_common.php';
 
 $security = new Security();
-$security->requireAdmin();
 
+// If a node is has been specified get it and check if the user has super powers or it's the owner...
 $specific_node_where = "";
 if(!empty($_REQUEST["node_id"]))
 {
 	$node_id = $db->EscapeString($_REQUEST["node_id"]);
 	$specific_node_where = "WHERE node_id = '$node_id'";
+	
+	$security->requireOwner($node_id);
+}
+else
+{
+	$security->requireAdmin();
 }
 	
 $db->ExecSql("SELECT node_id, name, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up, creation_date FROM nodes $specific_node_where ORDER BY node_id", $node_results, false);

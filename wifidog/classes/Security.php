@@ -65,6 +65,11 @@ class Security {
   }
 
   function requireOwner($node_id) {
+  	// If the user has super power let him it !
+  	$current_user = User::getCurrentUser();
+  	if ($current_user && User::getCurrentUser()->isSuperAdmin())
+  		return true;
+  	
     global $db;
     //$this->session->dump();
     $user = $this->session->get(SESS_USER_ID_VAR);
