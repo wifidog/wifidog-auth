@@ -1529,7 +1529,7 @@ msgstr "Le site web que j'ai demand&eacute;"
 
 #: smarty.txt:112 ../classes/MainUI.php:152
 msgid "My Profile"
-msgstr "Mon profile"
+msgstr "Mon profil"
 
 #: ../validate.php:34
 msgid "No user ID specified!"
@@ -2529,7 +2529,7 @@ msgstr "Ajoutez un nouveau contenu OU sélectionnez du contenu existant"
 
 #: ../classes/MainUI.php:152
 msgid "My profile"
-msgstr "Mon profile"
+msgstr "Mon profil"
 
 #: ../classes/MainUI.php:159 ../classes/MainUI.php:161
 msgid "Logout"

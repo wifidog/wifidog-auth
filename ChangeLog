@@ -1,3 +1,7 @@
+2005-05-24 Francois Proulx <francois.proulx@gmail.com>
+	* Fixed typo in some translations
+	* Cleaned-up todos
+	
 2005-05-18 Francois Proulx <francois.proulx@gmail.com>
 	* Added strip_tags in RssPreview ( some malformed HTML would break the page layout )
 	
@@ -6,6 +10,11 @@
 
 2005-05-13 Philippe April <philippe@ilesansfil.org>
 	* Added deployment status to node_list
+
+2005-05-11 Francois Proulx <francois.proulx@gmail.com>
+	* Began writing user profiles
+	* Added many methods to User class
+	* Added node quota fields in DB ( bandwidth, throttling ...)
 
 2005-05-10 Francois Proulx <francois.proulx@gmail.com>
 	* Fixed Login link in signup page ( MainUI.php ) if the Session has gw_id, gw_address, gw_port 

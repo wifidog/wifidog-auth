@@ -55,13 +55,6 @@ if (isset ($session))
 
 $tool_html = '';
 
-//TODO: Write this
-/*
-$tool_html .= "<h1>"._("At this Hotspot")."</h1>"."\n";
-$tool_html .= '<p class="indent">'."\n";
-$tool_html .= _("Local content...")."\n";
-$tool_html .= "</p>"."\n";*/
-
 $tool_html .= "<h1>"._("Online users")."</h1>"."\n";
 $tool_html .= '<p class="indent">'."\n";
 $current_node = Node :: getCurrentNode();
