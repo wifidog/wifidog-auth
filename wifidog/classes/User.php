@@ -68,6 +68,25 @@ class User implements GenericObject
 		}
 		return $user;
 	}
+	
+	/** Associates the user passed in parameter with the session
+	 * @param User a user object
+	 * @return boolean true if everything went well setting the session...
+	 */
+	public static function setCurrentUser(User $user)
+	{
+		try
+		{
+			$session = new Session();
+			$session->set(SESS_USER_ID_VAR, $user->getId());
+			$session->set(SESS_PASSWORD_HASH_VAR, $user->getPasswordHash());
+			return true;
+		}
+		catch(Exception $e)
+		{
+			return false;
+		}
+	}
 
 	/** Instantiate a user object 
 	 * @param $username The username of the user
@@ -416,14 +435,17 @@ class User implements GenericObject
 		if ($this->isUserValid())
 		{
 			global $db;
+			global $session;
+			
 			$token = self :: generateToken();
 			if ($_SERVER['REMOTE_ADDR'])
 			{
 				$node_ip = $db->EscapeString($_SERVER['REMOTE_ADDR']);
 			}
-			if (isset ($_REQUEST['gw_id']) && $_REQUEST['gw_id'])
+			
+			if ($session && $node_ip && $session->get(SESS_GW_ID_VAR))
 			{
-				$node_id = $db->EscapeString($_REQUEST['gw_id']);
+				$node_id = $db->EscapeString($session->get(SESS_GW_ID_VAR));
 				$db->ExecSqlUpdate("INSERT INTO connections (user_id, token, token_status, timestamp_in, node_id, node_ip, last_updated) VALUES ('".$this->getId()."', '$token', '".TOKEN_UNUSED."', NOW(), '$node_id', '$node_ip', NOW())", false);
 				$retval = $token;
 			}

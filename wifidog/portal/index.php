@@ -102,11 +102,17 @@ $network_logo_banner_url = COMMON_CONTENT_URL.NETWORK_LOGO_BANNER_NAME;
 $hotspot_logo_url = find_local_content_url(HOTSPOT_LOGO_NAME);
 $hotspot_logo_banner_url = find_local_content_url(HOTSPOT_LOGO_BANNER_NAME);
 
-$html = '';
-$html .= "<div id='portal_container'>\n";
-
 // Get the current user
 $current_user = User :: getCurrentUser();
+
+$html = '';
+
+// While in validation period, alert user that he should validate his account ASAP
+if($current_user && $current_user->getAccountStatus() == ACCOUNT_STATUS_VALIDATION)
+	$html .= "<div id='warning_message_area'>"._('An email with confirmation instructions was sent to your email address.  Your account has been granted 15 minutes of access to retrieve your email and validate your account.')."</div>";
+	
+$html .= "<div id='portal_container'>\n";
+
 
 /* Network section */
 

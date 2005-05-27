@@ -31,16 +31,20 @@ require_once BASEPATH.'classes/Node.php';
 require_once BASEPATH.'classes/User.php';
 require_once BASEPATH.'classes/Network.php';
 
+// Logout process
 if ((!empty ($_REQUEST['logout']) && $_REQUEST['logout'] == true) && ($user = User::getCurrentUser()) != null)
 {
     $user->logout();
 }
 
+// Store original URL typed by user.
+//TODO: manage this...
 if (!empty ($_REQUEST['url']))
 {
 	$session->set(SESS_ORIGINAL_URL_VAR, $_REQUEST['url']);
 }
 
+// Actual login process
 if (!empty ($_REQUEST['username']) && !empty ($_REQUEST['password']) && !empty ($_REQUEST['auth_source']))
 {
 	$errmsg = '';

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-16 10:22-0400\n"
+"POT-Creation-Date: 2005-05-27 10:24-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -137,7 +137,8 @@ msgstr "Ouvert le"
 
 #: smarty.txt:20 smarty.txt:16 smarty.txt:15 smarty.txt:18 smarty.txt:84
 #: smarty.txt:82 smarty.txt:83 smarty.txt:55 ../portal/index.php:68
-#: ../portal/index.php:70 ../content/index.php:65
+#: ../portal/index.php:70 ../content/index.php:65 ../portal/index.php:63
+#: ../content/index.php:58
 msgid "Online users"
 msgstr "Usagers en ligne"
 
@@ -286,7 +287,7 @@ msgstr "Langue"
 #: smarty.txt:44 smarty.txt:36 smarty.txt:51 smarty.txt:52 smarty.txt:41
 #: smarty.txt:57 smarty.txt:35 smarty.txt:78 smarty.txt:45 smarty.txt:88
 #: smarty.txt:89 smarty.txt:85 smarty.txt:31 smarty.txt:30
-#: ../login/index.php:138
+#: ../login/index.php:138 ../login/index.php:142
 msgid "Username (or email)"
 msgstr "Utilisateur (ou courriel)"
 
@@ -295,7 +296,7 @@ msgstr "Utilisateur (ou courriel)"
 #: smarty.txt:42 smarty.txt:58 smarty.txt:36 smarty.txt:46 smarty.txt:79
 #: smarty.txt:55 smarty.txt:89 smarty.txt:56 smarty.txt:90 smarty.txt:86
 #: smarty.txt:32 smarty.txt:98 smarty.txt:99 smarty.txt:31 smarty.txt:96
-#: smarty.txt:94 ../login/index.php:140 smarty.txt:66
+#: smarty.txt:94 ../login/index.php:140 smarty.txt:66 ../login/index.php:144
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -393,7 +394,7 @@ msgstr "Point d'acc&egrave;s"
 #: smarty.txt:35 smarty.txt:36 smarty.txt:38 smarty.txt:43 smarty.txt:37
 #: smarty.txt:47 smarty.txt:90 smarty.txt:91 smarty.txt:87 smarty.txt:33
 #: smarty.txt:46 smarty.txt:32 smarty.txt:44 smarty.txt:45
-#: ../login/index.php:142
+#: ../login/index.php:142 ../login/index.php:146
 msgid "Login"
 msgstr "Ouvrir une session"
 
@@ -452,25 +453,25 @@ msgstr "Inscrivez-vous, c'est gratuit!"
 
 #: smarty.txt:39 smarty.txt:44 smarty.txt:38 smarty.txt:48 smarty.txt:91
 #: smarty.txt:92 smarty.txt:88 smarty.txt:34 smarty.txt:47 smarty.txt:33
-#: smarty.txt:45 smarty.txt:46 ../login/index.php:147
+#: smarty.txt:45 smarty.txt:46 ../login/index.php:147 ../login/index.php:151
 msgid "I already have an account, but"
 msgstr "J'ai d&eacute;j&agrave; un compte, mais"
 
 #: smarty.txt:40 smarty.txt:45 smarty.txt:39 smarty.txt:49 smarty.txt:92
 #: smarty.txt:93 smarty.txt:89 smarty.txt:35 smarty.txt:48 smarty.txt:34
-#: smarty.txt:46 smarty.txt:47 ../login/index.php:149
+#: smarty.txt:46 smarty.txt:47 ../login/index.php:149 ../login/index.php:153
 msgid "I Forgot my username"
 msgstr "J'ai oubli&eacute; mon nom d'utilisateur"
 
 #: smarty.txt:41 smarty.txt:46 smarty.txt:40 smarty.txt:50 smarty.txt:93
 #: smarty.txt:94 smarty.txt:90 smarty.txt:36 smarty.txt:49 smarty.txt:35
-#: smarty.txt:47 smarty.txt:48 ../login/index.php:150
+#: smarty.txt:47 smarty.txt:48 ../login/index.php:150 ../login/index.php:154
 msgid "I Forgot my password"
 msgstr "J'ai oubli&eacute; mon mot de passe"
 
 #: smarty.txt:42 smarty.txt:47 smarty.txt:41 smarty.txt:51 smarty.txt:94
 #: smarty.txt:95 smarty.txt:91 smarty.txt:37 smarty.txt:50 smarty.txt:36
-#: smarty.txt:48 smarty.txt:49 ../login/index.php:151
+#: smarty.txt:48 smarty.txt:49 ../login/index.php:151 ../login/index.php:155
 msgid "Re-send the validation email"
 msgstr "Envoyez-moi de nouveau le courriel de validation"
 
@@ -532,6 +533,7 @@ msgstr " dans la base de donn&eacute;e."
 #: ../classes/User.php:167 ../classes/User.php:365 ../classes/User.php:367
 #: ../classes/User.php:387 ../classes/User.php:386 ../classes/User.php:446
 #: ../classes/User.php:475 ../classes/User.php:495 ../classes/User.php:518
+#: ../classes/User.php:540
 msgid "The user is not in validation period."
 msgstr "L'utilisateur n'est pas en p&eacute;riode de validation."
 
@@ -540,12 +542,13 @@ msgstr "L'utilisateur n'est pas en p&eacute;riode de validation."
 #: ../classes/User.php:170 ../classes/User.php:371 ../classes/User.php:373
 #: ../classes/User.php:393 ../classes/User.php:392 ../classes/User.php:452
 #: ../classes/User.php:481 ../classes/User.php:501 ../classes/User.php:524
+#: ../classes/User.php:546
 msgid "The validation token is empty."
 msgstr "Le jeton de validation est vide."
 
 #: ../signup.php:66 ../include/validation.php:32
 #: ../include/mgmt_helpers.php:58 ../signup.php:85 ../signup.php:90
-#: ../signup.php:99 ../signup.php:102
+#: ../signup.php:99 ../signup.php:102 ../signup.php:124
 msgid ""
 "An email with confirmation instructions was sent to your email address.  "
 "Your account has been granted 15 minutes of access to retrieve your email "
@@ -560,7 +563,7 @@ msgstr ""
 "d'obtenir une page de saisie de mot de passe."
 
 #: ../signup.php:80 ../signup.php:43 ../signup.php:33 ../signup.php:38
-#: ../signup.php:41
+#: ../signup.php:41 ../signup.php:42
 msgid "Username is required."
 msgstr "Le nom d'utilisateur est requis."
 
@@ -570,42 +573,45 @@ msgid "Username contains invalid characters."
 msgstr "Le nom d'utilisateur contient des caract&egrave;res invalides."
 
 #: ../signup.php:84 ../signup.php:47 ../signup.php:41 ../signup.php:46
-#: ../signup.php:50
+#: ../signup.php:50 ../signup.php:51
 msgid "A valid email address is required."
 msgstr "Une adresse courriel est requise."
 
 #: ../signup.php:86 ../signup.php:49 ../signup.php:44 ../signup.php:53
+#: ../signup.php:54
 msgid "The email address must be of the form user@domain.com."
 msgstr ""
 "L'adresse courriel doit &ecirc;tre de la forme utilisateur@domaine.com."
 
 #: ../signup.php:88 ../signup.php:51 ../signup.php:49 ../signup.php:54
-#: ../signup.php:59
+#: ../signup.php:59 ../signup.php:60
 msgid "A password of at least 6 characters is required."
 msgstr "Un mot de passe d'au moins 6 caract&egrave;res est requis."
 
 #: ../signup.php:90 ../signup.php:53 ../signup.php:52 ../signup.php:57
-#: ../signup.php:62
+#: ../signup.php:62 ../signup.php:63
 msgid "Password contains invalid characters."
 msgstr "Le mot de passe contient des caract&egrave;res invalides."
 
 #: ../signup.php:92 ../signup.php:55 ../signup.php:60 ../signup.php:65
+#: ../signup.php:66
 msgid "You must type your password twice."
 msgstr "Vous devez entrer votre mot de passe deux fois pour le confirmer."
 
 #: ../signup.php:94 ../signup.php:57 ../change_password.php:57
 #: ../signup.php:58 ../change_password.php:42 ../signup.php:63
 #: ../signup.php:68 ../change_password.php:48 ../change_password.php:49
+#: ../signup.php:69
 msgid "Passwords do not match."
 msgstr "Les mots de passe ne sont pas identiques."
 
 #: ../signup.php:96 ../signup.php:59 ../signup.php:61 ../signup.php:66
-#: ../signup.php:71
+#: ../signup.php:71 ../signup.php:72
 msgid "Password is too short, it must be 6 characters minimum."
 msgstr "Mot de passe trop court, il doit contenir 6 caract&egrave;res minimum."
 
 #: ../signup.php:105 ../signup.php:68 ../signup.php:78 ../signup.php:83
-#: ../signup.php:92 ../signup.php:95
+#: ../signup.php:92 ../signup.php:95 ../signup.php:96
 msgid ""
 "Sorry, a user account is already associated to this username. Pick another "
 "one."
@@ -627,7 +633,7 @@ msgstr "Envoyez moi mon nom d'utilisateur"
 msgid "An internal error occured, please contact us."
 msgstr "Une erreur interne est survenue, veuillez nous contacter."
 
-#: ../validate.php:34 ../validate.php:35 ../validate.php:31
+#: ../validate.php:34 ../validate.php:35 ../validate.php:31 ../validate.php:32
 msgid "No token specified!"
 msgstr "Aucun jeton sp&eacute;cifi&eacute;!"
 
@@ -753,7 +759,7 @@ msgstr "Un nouveau mot de passe vous &agrave; &eacute;t&eacute; envoy&eacute;."
 
 #: ../include/mgmt_helpers.php:125 ../admin/user_log.php:84
 #: ../admin/user_log.php:97 ../admin/user_log.php:101
-#: ../admin/user_log.php:106
+#: ../admin/user_log.php:106 ../admin/user_log.php:111
 msgid "Internal error."
 msgstr "Erreur Interne."
 
@@ -818,7 +824,7 @@ msgstr "Il n'y a personne en ligne!"
 
 #: smarty.txt:32 smarty.txt:42 smarty.txt:38 smarty.txt:109 smarty.txt:114
 #: smarty.txt:115 smarty.txt:27 smarty.txt:113 smarty.txt:112 smarty.txt:28
-#: ../login/index.php:120 smarty.txt:81
+#: ../login/index.php:120 smarty.txt:81 ../login/index.php:124
 msgid "Welcome! Hotspot:"
 msgstr "Bienvenue! Noeud sans-fil:"
 
@@ -828,6 +834,7 @@ msgid "authentication server"
 msgstr "serveur d'authentification"
 
 #: ../signup.php:81 ../signup.php:86 ../signup.php:95 ../signup.php:98
+#: ../signup.php:99
 msgid "Sorry, a user account is already associated to this email address."
 msgstr ""
 "D&eacute;sol&eacute;, un compte existant est d&eacute;j&agrave; "
@@ -840,7 +847,7 @@ msgstr ""
 "Un courriel avec les instructions pour confirmer votre inscription a &eacute;"
 "t&eacute; envoy&eacute; &agrave; votre adresse courriel."
 
-#: ../validate.php:45
+#: ../validate.php:45 ../validate.php:55
 msgid ""
 "Your account has been succesfully activated!\n"
 "\n"
@@ -855,7 +862,7 @@ msgstr ""
 "Vous pouvez maintenant vous connecter n'importe quel site et prendre "
 "avantage de votre acc&egrave;s Internet gratuit!\n"
 "\n"
-"Lorsque l'on vous demandera de vous enregistrer, entez le nom d'usager et le "
+"Lorsque l'on vous demandera de vous enregistrer, entrez le nom d'usager et le "
 "mot de passe que vous venez de cr&eacute;er."
 
 #: ../admin/hotspot.php:36
@@ -887,26 +894,27 @@ msgstr ""
 
 #: ../classes/User.php:110 ../classes/User.php:114 ../classes/User.php:325
 #: ../classes/User.php:345 ../classes/User.php:344 ../classes/User.php:404
-#: ../classes/User.php:424 ../classes/User.php:447
+#: ../classes/User.php:424 ../classes/User.php:447 ../classes/User.php:469
 msgid "Could not change user's password."
 msgstr "Impossible de changer le mot de passe de l'utilisateur"
 
 #: ../classes/User.php:120 ../classes/User.php:130 ../classes/User.php:239
 #: ../classes/User.php:259 ../classes/User.php:257 ../classes/User.php:305
-#: ../classes/User.php:307 ../classes/User.php:330
+#: ../classes/User.php:307 ../classes/User.php:330 ../classes/User.php:349
 msgid "Could not update status."
 msgstr "Impossible de mettre &agrave; jour le statut."
 
 #: ../classes/User.php:132 ../classes/User.php:142 ../classes/User.php:346
 #: ../classes/User.php:366 ../classes/User.php:365 ../classes/User.php:425
 #: ../classes/User.php:430 ../classes/User.php:450 ../classes/User.php:473
+#: ../classes/User.php:495
 msgid "No users could not be found in the database"
 msgstr ""
 "Aucun utilisateur n'a pu &ecirc;tre trouv&eacute; dans la base de "
 "donn&eacute;e"
 
 #: ../classes/Security.php:78 ../classes/Security.php:74
-#: ../classes/Security.php:75
+#: ../classes/Security.php:75 ../classes/Security.php:80
 msgid "You do not have owner privileges"
 msgstr "Vous n'avez pas les privil&egrave;ges d'administrateur"
 
@@ -922,7 +930,7 @@ msgstr ""
 #: ../classes/Node.php:442 ../classes/Node.php:454 ../classes/Node.php:466
 #: ../classes/Node.php:448 ../classes/Node.php:460 ../classes/Node.php:472
 #: ../classes/Node.php:476 ../classes/Node.php:488 ../classes/Node.php:500
-#: ../classes/Node.php:512
+#: ../classes/Node.php:512 ../classes/Node.php:524
 msgid "No nodes could not be found in the database"
 msgstr ""
 "Aucun point d'acc&egrave;s n'a &eacute;t&eacute; trouv&eacute; dans la base "
@@ -930,18 +938,19 @@ msgstr ""
 
 #: ../classes/Node.php:153 ../classes/Node.php:207 ../classes/Node.php:228
 #: ../classes/Node.php:477 ../classes/Node.php:483 ../classes/Node.php:511
-#: ../classes/Node.php:523
+#: ../classes/Node.php:523 ../classes/Node.php:535
 msgid "No deployment statues  could be found in the database"
 msgstr ""
 
 #: smarty.txt:24 smarty.txt:2 smarty.txt:22 smarty.txt:23
 #: ../classes/MainUI.php:143 ../classes/MainUI.php:151
+#: ../classes/MainUI.php:152
 msgid "Logged in as:"
 msgstr "Connect&eacute; en tant que:"
 
 #: smarty.txt:25 smarty.txt:3 smarty.txt:23 smarty.txt:24
 #: ../classes/MainUI.php:150 ../classes/MainUI.php:168
-#: ../classes/MainUI.php:174
+#: ../classes/MainUI.php:174 ../classes/MainUI.php:175
 msgid "NOT logged in."
 msgstr "Vous n'ETES PAS connect&eacute;."
 
@@ -967,6 +976,7 @@ msgstr "Aucun point d'acc&egrave;s sp&eacute;cifi&eacute;!"
 #: smarty.txt:41 smarty.txt:95 smarty.txt:107 smarty.txt:21 smarty.txt:76
 #: smarty.txt:74 smarty.txt:22 smarty.txt:75 ../classes/MainUI.php:274
 #: smarty.txt:47 ../classes/MainUI.php:292 ../classes/MainUI.php:298
+#: ../classes/MainUI.php:299
 msgid "Please get in touch with "
 msgstr "Veuillez contacter "
 
@@ -1013,7 +1023,8 @@ msgstr ""
 #: ../classes/Node.php:127 ../classes/Node.php:378
 #: ../classes/Content/FlickrPhotostream.php:683 ../classes/Node.php:128
 #: ../classes/Node.php:379 ../classes/Network.php:231
-#: ../classes/Content/FlickrPhotostream.php:770
+#: ../classes/Content/FlickrPhotostream.php:770 ../classes/Node.php:387
+#: ../classes/Network.php:234
 msgid "Access denied!"
 msgstr "Acc&egrave;s refus&eacute;!"
 
@@ -1122,7 +1133,7 @@ msgstr "Action"
 #: ../admin/generic_object_admin.php:138 ../classes/MainUI.php:89
 #: ../classes/MainUI.php:106 smarty.txt:90 ../classes/MainUI.php:93
 #: ../classes/MainUI.php:112 ../admin/generic_object_admin.php:140
-#: ../classes/MainUI.php:92
+#: ../classes/MainUI.php:92 ../classes/MainUI.php:113
 msgid "Edit"
 msgstr "Modifier"
 
@@ -1217,13 +1228,13 @@ msgstr "Modifier un point d'acc&egrave;s"
 
 #: ../login/index.php:46 ../classes/User.php:262 ../classes/User.php:282
 #: ../classes/User.php:281 ../classes/User.php:329 ../classes/User.php:331
-#: ../classes/User.php:354
+#: ../classes/User.php:354 ../classes/User.php:373
 msgid "Sorry, your "
 msgstr "D&eacute;sol&eacute;, votre p&eacute;riode de validation de "
 
 #: ../login/index.php:46 ../classes/User.php:262 ../classes/User.php:282
 #: ../classes/User.php:281 ../classes/User.php:329 ../classes/User.php:331
-#: ../classes/User.php:354
+#: ../classes/User.php:354 ../classes/User.php:373
 msgid ""
 " minutes grace period to retrieve your email and validate your account has "
 "now expired. You will have to connect to the internet and validate your "
@@ -1236,12 +1247,12 @@ msgstr ""
 
 #: ../login/index.php:46 ../classes/User.php:262 ../classes/User.php:282
 #: ../classes/User.php:281 ../classes/User.php:329 ../classes/User.php:331
-#: ../classes/User.php:354
+#: ../classes/User.php:354 ../classes/User.php:373
 msgid "click here."
 msgstr "cliquer ici."
 
 #: smarty.txt:52 smarty.txt:48 smarty.txt:38 smarty.txt:37 ../index.php:37
-#: ../login/index.php:160 ../user_profile.php:35
+#: ../login/index.php:160 ../user_profile.php:35 ../login/index.php:164
 msgid "I have trouble connecting and I would like some help"
 msgstr ""
 "J'ai des difficult&eacute; &agrave; me brancher et je voudrais de l'aide"
@@ -1356,6 +1367,7 @@ msgstr "Donner &agrave; un utilisateur acc&egrave;s d'administrer ce noeud"
 #: ../classes/ContentGroupElement.php:171 ../classes/Node.php:363
 #: ../classes/Content/ContentGroup.php:400 ../classes/Node.php:364
 #: ../classes/Content.php:192 ../classes/Network.php:217
+#: ../classes/Node.php:372 ../classes/Network.php:220
 msgid "Add"
 msgstr "Ajouter"
 
@@ -1398,7 +1410,7 @@ msgstr "Ajouter un nouveau noeud"
 msgid "Update node"
 msgstr "Mettre &agrave; jour le noeud"
 
-#: ../validate.php:39
+#: ../validate.php:39 ../validate.php:40
 msgid "The validation token does not match the one in the database."
 msgstr ""
 "Le jeton de validation ne correspond pas &agrave; celui dans la base de "
@@ -1505,12 +1517,12 @@ msgid "No info to update node with!"
 msgstr "Pas d'informations pour mettre &agrave; jour le noeud !"
 
 #: ../classes/Node.php:257 ../classes/Node.php:508 ../classes/Node.php:523
-#: ../classes/Node.php:551 ../classes/Node.php:563
+#: ../classes/Node.php:551 ../classes/Node.php:563 ../classes/Node.php:575
 msgid "Could not add owner"
 msgstr "Impossible d'ajouter le propri&eacute;taire"
 
 #: ../classes/Node.php:263 ../classes/Node.php:515 ../classes/Node.php:530
-#: ../classes/Node.php:558 ../classes/Node.php:570
+#: ../classes/Node.php:558 ../classes/Node.php:570 ../classes/Node.php:582
 msgid "Could not remove owner"
 msgstr "Impossible de retirer le propri&eacute;taire"
 
@@ -1520,6 +1532,7 @@ msgid "Channel: "
 msgstr "Canal: "
 
 #: smarty.txt:109 smarty.txt:90 smarty.txt:88 ../classes/User.php:647
+#: ../classes/User.php:680
 msgid "Username"
 msgstr "Nom d'usager"
 
@@ -1527,11 +1540,11 @@ msgstr "Nom d'usager"
 msgid "The website I requested"
 msgstr "Le site web que j'ai demand&eacute;"
 
-#: smarty.txt:112 ../classes/MainUI.php:152
+#: smarty.txt:112 ../classes/MainUI.php:152 ../classes/MainUI.php:153
 msgid "My Profile"
 msgstr "Mon profil"
 
-#: ../validate.php:34
+#: ../validate.php:34 ../validate.php:35
 msgid "No user ID specified!"
 msgstr "Aucun nom d'usager sp&eacutecifi&eacute;!"
 
@@ -1584,11 +1597,13 @@ msgstr "La combinaison nom d'usager / mot de passe est invalide."
 
 #: ../classes/User.php:267 ../classes/User.php:287 ../classes/User.php:286
 #: ../classes/User.php:334 ../classes/User.php:336 ../classes/User.php:359
+#: ../classes/User.php:378
 msgid "Your account is currently valid."
 msgstr "Votre compte est actuellement valide."
 
 #: ../classes/User.php:273 ../classes/User.php:293 ../classes/User.php:292
 #: ../classes/User.php:340 ../classes/User.php:342 ../classes/User.php:365
+#: ../classes/User.php:384
 msgid "Sorry, your account is not valid: "
 msgstr "D&eacute;sol&eacute;, votre compte n'est pas valide."
 
@@ -1635,7 +1650,7 @@ msgstr ""
 "Le syst&egrave;me tente de mettre &agrave; jour le sch&eacute;ma de la base "
 "de donn&eacute;es."
 
-#: ../login/index.php:59 ../login/index.php:73
+#: ../login/index.php:59 ../login/index.php:73 ../login/index.php:77
 msgid "Your must specify your username and password"
 msgstr "Veuillez entrer un nom d'usager et un mot de passe"
 
@@ -1649,7 +1664,7 @@ msgstr "Usagers en ligne"
 
 #: ../classes/User.php:358 ../classes/User.php:378 ../classes/User.php:377
 #: ../classes/User.php:437 ../classes/User.php:463 ../classes/User.php:483
-#: ../classes/User.php:506
+#: ../classes/User.php:506 ../classes/User.php:528
 msgid ""
 "Hello,\n"
 "You have requested that the authentication server send you your username:\n"
@@ -1663,7 +1678,8 @@ msgstr ""
 #: ../classes/User.php:421 ../classes/User.php:377 ../classes/User.php:420
 #: ../classes/User.php:437 ../classes/User.php:480 ../classes/User.php:463
 #: ../classes/User.php:512 ../classes/User.php:483 ../classes/User.php:532
-#: ../classes/User.php:506 ../classes/User.php:555
+#: ../classes/User.php:506 ../classes/User.php:555 ../classes/User.php:528
+#: ../classes/User.php:577
 msgid ""
 "\n"
 "\n"
@@ -1676,7 +1692,7 @@ msgstr ""
 
 #: ../classes/User.php:382 ../classes/User.php:402 ../classes/User.php:401
 #: ../classes/User.php:461 ../classes/User.php:490 ../classes/User.php:510
-#: ../classes/User.php:533
+#: ../classes/User.php:533 ../classes/User.php:555
 msgid ""
 "Hello,\n"
 "Please follow the link below to validate your account.\n"
@@ -1687,7 +1703,7 @@ msgstr ""
 
 #: ../classes/User.php:382 ../classes/User.php:402 ../classes/User.php:401
 #: ../classes/User.php:461 ../classes/User.php:490 ../classes/User.php:510
-#: ../classes/User.php:533
+#: ../classes/User.php:533 ../classes/User.php:555
 msgid ""
 "\n"
 "\n"
@@ -1700,7 +1716,7 @@ msgstr ""
 
 #: ../classes/User.php:401 ../classes/User.php:421 ../classes/User.php:420
 #: ../classes/User.php:480 ../classes/User.php:512 ../classes/User.php:532
-#: ../classes/User.php:555
+#: ../classes/User.php:555 ../classes/User.php:577
 msgid ""
 "Hello,\n"
 "You have requested that the authentication server send you a new password:\n"
@@ -1712,25 +1728,25 @@ msgstr ""
 
 #: ../config.php:111 ../classes/User.php:380 ../classes/User.php:400
 #: ../classes/User.php:399 ../classes/User.php:459 ../classes/User.php:488
-#: ../classes/User.php:508 ../classes/User.php:531
+#: ../classes/User.php:508 ../classes/User.php:531 ../classes/User.php:553
 msgid " new user validation"
 msgstr " validation de l'enregistrement"
 
 #: ../config.php:113 ../classes/User.php:400 ../classes/User.php:420
 #: ../classes/User.php:419 ../classes/User.php:479 ../classes/User.php:511
-#: ../classes/User.php:531 ../classes/User.php:554
+#: ../classes/User.php:531 ../classes/User.php:554 ../classes/User.php:576
 msgid " new password request"
 msgstr " demande de changement de mot de passe"
 
 #: ../config.php:114 ../classes/User.php:357 ../classes/User.php:377
 #: ../classes/User.php:376 ../classes/User.php:436 ../classes/User.php:462
-#: ../classes/User.php:482 ../classes/User.php:505
+#: ../classes/User.php:482 ../classes/User.php:505 ../classes/User.php:527
 msgid " lost username request"
 msgstr " demande de nom d'utilisateur perdu"
 
 #: ../classes/User.php:401 ../classes/User.php:421 ../classes/User.php:420
 #: ../classes/User.php:480 ../classes/User.php:512 ../classes/User.php:532
-#: ../classes/User.php:555
+#: ../classes/User.php:555 ../classes/User.php:577
 msgid ""
 "\n"
 "Password: "
@@ -1741,6 +1757,7 @@ msgstr ""
 #: ../change_password.php:45 ../lost_password.php:42 ../lost_username.php:37
 #: ../resend_validation.php:40 ../signup.php:88 ../change_password.php:46
 #: ../lost_password.php:43 ../lost_username.php:38 ../resend_validation.php:41
+#: ../signup.php:89
 msgid "Sorry, this network does not exist !"
 msgstr "Désolé ce réseau n'existe pas !"
 
@@ -1820,10 +1837,12 @@ msgid "Node administration:"
 msgstr "Gestion du noeud:"
 
 #: ../admin/index.php:79 ../classes/MainUI.php:97 ../classes/MainUI.php:103
+#: ../classes/MainUI.php:104
 msgid "Network administration:"
 msgstr "Gestion du réseau:"
 
 #: ../admin/index.php:93 ../classes/MainUI.php:111 ../classes/MainUI.php:118
+#: ../classes/MainUI.php:119
 msgid "Content manager"
 msgstr "Gestionnaire de contenu"
 
@@ -1934,7 +1953,8 @@ msgstr "Liste des propriétaires de contenu"
 #: ../classes/Network.php:204 ../classes/Content.php:701
 #: ../classes/ContentGroupElement.php:144 ../classes/Node.php:355
 #: ../classes/Node.php:356 ../classes/Content.php:722
-#: ../classes/Network.php:209
+#: ../classes/Network.php:209 ../classes/Node.php:364
+#: ../classes/Network.php:212
 msgid "Remove"
 msgstr "Enlever"
 
@@ -1967,24 +1987,27 @@ msgid "The secified network doesn't exist: "
 msgstr "Le réseau spécifié n'existe pas:"
 
 #: ../classes/Network.php:162 ../classes/Network.php:193
-#: ../classes/Network.php:198
+#: ../classes/Network.php:198 ../classes/Network.php:201
 msgid "Network content:"
 msgstr "Contenu réseau:"
 
 #: ../classes/Network.php:234 ../classes/Network.php:265
-#: ../classes/Network.php:276
+#: ../classes/Network.php:276 ../classes/Network.php:279
 msgid "Network::delete() not supported"
 msgstr "Network::delete() non supporté"
 
 #: ../classes/Node.php:342 ../classes/Node.php:344 ../classes/Node.php:345
+#: ../classes/Node.php:353
 msgid "Node content:"
 msgstr "Contenu du noeud:"
 
 #: ../classes/User.php:242 ../classes/User.php:244 ../classes/User.php:249
+#: ../classes/User.php:268
 msgid "User id: "
 msgstr "Identifiant d'usager"
 
 #: ../classes/User.php:242 ../classes/User.php:244 ../classes/User.php:249
+#: ../classes/User.php:268
 msgid " could not be found in the database"
 msgstr "impossible de trouver dans la base de données"
 
@@ -2006,6 +2029,7 @@ msgstr ""
 "config.php contient au moins un élément de AUTH_SOURCE_ARRAY."
 
 #: ../portal/index.php:98 ../portal/index.php:187 ../portal/index.php:189
+#: ../portal/index.php:188
 msgid "My content"
 msgstr "Mon contenu"
 
@@ -2376,27 +2400,28 @@ msgid "Project sponsor:"
 msgstr "Commanditaires du projet :"
 
 #: ../classes/MainUI.php:117 ../classes/MainUI.php:124
+#: ../classes/MainUI.php:125
 msgid "Unknown section:"
 msgstr "Section inconnue : "
 
 #: ../classes/MainUI.php:152 ../classes/MainUI.php:170
-#: ../classes/MainUI.php:176
+#: ../classes/MainUI.php:176 ../classes/MainUI.php:177
 msgid "Where am I?"
 msgstr "Oû suis-je ?"
 
 #: ../classes/MainUI.php:175 ../classes/MainUI.php:193
-#: ../classes/MainUI.php:199
+#: ../classes/MainUI.php:199 ../classes/MainUI.php:200
 msgid "Language:"
 msgstr "Langue : "
 
 #: ../classes/MainUI.php:202 ../classes/MainUI.php:220
-#: ../classes/MainUI.php:226
+#: ../classes/MainUI.php:226 ../classes/MainUI.php:227
 #, php-format
 msgid "Accounts on %s are and will stay completely free."
 msgstr "Les comptes sont et resteront complètement gratuits."
 
 #: ../classes/MainUI.php:203 ../classes/MainUI.php:221
-#: ../classes/MainUI.php:227
+#: ../classes/MainUI.php:227 ../classes/MainUI.php:228
 msgid "Please inform us of any problem or service interruption at:"
 msgstr ""
 "Veuillez nous informer de tout problème ou interruption de service à : "
@@ -2406,26 +2431,27 @@ msgid "Network:"
 msgstr "Réseau :"
 
 #: ../classes/Network.php:124 ../classes/Network.php:123
+#: ../classes/Network.php:126
 msgid "The specified network doesn't exist: "
 msgstr "Le réseau spécifié n'existe pas :"
 
-#: ../login/index.php:116
+#: ../login/index.php:116 ../login/index.php:120
 msgid "Virtual login"
 msgstr "Connexion virtuelle :"
 
-#: ../login/index.php:123
+#: ../login/index.php:123 ../login/index.php:127
 msgid "Sign up : "
 msgstr "Inscrivez-vous :"
 
-#: ../login/index.php:125
+#: ../login/index.php:125 ../login/index.php:129
 msgid "Get an account here."
 msgstr "Créer votre compte ici."
 
-#: ../login/index.php:125
+#: ../login/index.php:125 ../login/index.php:129
 msgid "Why is this service free ?"
 msgstr "Pourquoi ce service est-il gratuit ?"
 
-#: ../login/index.php:135
+#: ../login/index.php:135 ../login/index.php:139
 msgid "Log in : "
 msgstr "Ouverture de session :"
 
@@ -2434,17 +2460,20 @@ msgid "other users online at this hotspot..."
 msgstr "autres usagers en ligne à ce point d'accès..."
 
 #: ../portal/index.php:76 ../portal/index.php:78 ../portal/index.php:86
-#: ../portal/index.php:88 ../content/index.php:83
+#: ../portal/index.php:88 ../content/index.php:83 ../portal/index.php:81
+#: ../content/index.php:76
 msgid "Nobody is online at this hotspot..."
 msgstr "Personne n'est en ligne à ce point d'accès..."
 
 #: ../portal/index.php:82 ../portal/index.php:84 ../portal/index.php:92
-#: ../portal/index.php:94 ../content/index.php:89
+#: ../portal/index.php:94 ../content/index.php:89 ../portal/index.php:87
+#: ../content/index.php:82
 msgid "You are not currently at a hotspot..."
 msgstr "Vous n'êtes pas actuellement à ce point d'accès"
 
 #: ../portal/index.php:125 ../portal/index.php:133 ../portal/index.php:154
-#: ../portal/index.php:156 ../content/index.php:119
+#: ../portal/index.php:156 ../content/index.php:119 ../portal/index.php:155
+#: ../content/index.php:112
 msgid "Content from:"
 msgstr "Contenu de :"
 
@@ -2532,14 +2561,17 @@ msgid "My profile"
 msgstr "Mon profil"
 
 #: ../classes/MainUI.php:159 ../classes/MainUI.php:161
+#: ../classes/MainUI.php:160 ../classes/MainUI.php:162
 msgid "Logout"
 msgstr "Déconnexion"
 
 #: ../classes/MainUI.php:187 ../classes/MainUI.php:193
+#: ../classes/MainUI.php:194
 msgid "Building your wireless community"
 msgstr ""
 
 #: ../portal/index.php:157 ../portal/index.php:200 ../portal/index.php:202
+#: ../portal/index.php:201
 msgid "Show all available contents for this hotspot"
 msgstr "Afficher tout le contenu disponible à ce point d'accès."
 
@@ -2631,6 +2663,12 @@ msgstr ""
 #: ../content/PatternLanguage/hotspots.php:34
 #: ../content/PatternLanguage/narrative.php:37
 #: ../content/PatternLanguage/index.php:50
+#: ../content/PatternLanguage/archives.php:40
+#: ../content/PatternLanguage/subscription.php:40
+#: ../content/PatternLanguage/index.php:37
+#: ../content/PatternLanguage/index.php:53
+#: ../content/PatternLanguage/hotspots.php:37
+#: ../content/PatternLanguage/narrative.php:40
 msgid "About Pattern Language"
 msgstr "À propos de Pattern Language"
 
@@ -2639,6 +2677,11 @@ msgstr "À propos de Pattern Language"
 #: ../content/PatternLanguage/index.php:35
 #: ../content/PatternLanguage/hotspots.php:35
 #: ../content/PatternLanguage/narrative.php:38
+#: ../content/PatternLanguage/archives.php:41
+#: ../content/PatternLanguage/subscription.php:41
+#: ../content/PatternLanguage/index.php:38
+#: ../content/PatternLanguage/hotspots.php:38
+#: ../content/PatternLanguage/narrative.php:41
 msgid "Read narrative"
 msgstr "Lire mon récit"
 
@@ -2647,6 +2690,11 @@ msgstr "Lire mon récit"
 #: ../content/PatternLanguage/index.php:36
 #: ../content/PatternLanguage/hotspots.php:36
 #: ../content/PatternLanguage/narrative.php:39
+#: ../content/PatternLanguage/archives.php:42
+#: ../content/PatternLanguage/subscription.php:42
+#: ../content/PatternLanguage/index.php:39
+#: ../content/PatternLanguage/hotspots.php:39
+#: ../content/PatternLanguage/narrative.php:42
 msgid "Archives"
 msgstr ""
 
@@ -2656,6 +2704,12 @@ msgstr ""
 #: ../content/PatternLanguage/hotspots.php:37
 #: ../content/PatternLanguage/hotspots.php:50
 #: ../content/PatternLanguage/narrative.php:40
+#: ../content/PatternLanguage/archives.php:43
+#: ../content/PatternLanguage/subscription.php:43
+#: ../content/PatternLanguage/index.php:40
+#: ../content/PatternLanguage/hotspots.php:40
+#: ../content/PatternLanguage/hotspots.php:53
+#: ../content/PatternLanguage/narrative.php:43
 msgid "Participating hotspots"
 msgstr "Points d'accès participants"
 
@@ -2664,6 +2718,11 @@ msgstr "Points d'accès participants"
 #: ../content/PatternLanguage/hotspots.php:38
 #: ../content/PatternLanguage/narrative.php:41
 #: ../content/PatternLanguage/index.php:38
+#: ../content/PatternLanguage/archives.php:44
+#: ../content/PatternLanguage/subscription.php:44
+#: ../content/PatternLanguage/index.php:41
+#: ../content/PatternLanguage/hotspots.php:41
+#: ../content/PatternLanguage/narrative.php:44
 msgid "Subscription"
 msgstr "Inscription"
 
@@ -2673,6 +2732,11 @@ msgstr "Inscription"
 #: ../content/PatternLanguage/hotspots.php:42
 #: ../content/PatternLanguage/narrative.php:45
 #: ../content/PatternLanguage/index.php:42
+#: ../content/PatternLanguage/archives.php:48
+#: ../content/PatternLanguage/subscription.php:48
+#: ../content/PatternLanguage/index.php:45
+#: ../content/PatternLanguage/hotspots.php:45
+#: ../content/PatternLanguage/narrative.php:48
 msgid "Programming by Benoît Grégoire and François Proulx"
 msgstr "Programmation par Benoît Grégoire et François Proulx"
 
@@ -2682,6 +2746,11 @@ msgstr "Programmation par Benoît Grégoire et François Proulx"
 #: ../content/PatternLanguage/hotspots.php:43
 #: ../content/PatternLanguage/narrative.php:46
 #: ../content/PatternLanguage/index.php:43
+#: ../content/PatternLanguage/archives.php:49
+#: ../content/PatternLanguage/subscription.php:49
+#: ../content/PatternLanguage/index.php:46
+#: ../content/PatternLanguage/hotspots.php:46
+#: ../content/PatternLanguage/narrative.php:49
 msgid "French translation by TBD"
 msgstr "Traduction française par TBD"
 
@@ -2691,6 +2760,11 @@ msgstr "Traduction française par TBD"
 #: ../content/PatternLanguage/hotspots.php:44
 #: ../content/PatternLanguage/narrative.php:47
 #: ../content/PatternLanguage/index.php:44
+#: ../content/PatternLanguage/archives.php:50
+#: ../content/PatternLanguage/subscription.php:50
+#: ../content/PatternLanguage/index.php:47
+#: ../content/PatternLanguage/hotspots.php:47
+#: ../content/PatternLanguage/narrative.php:50
 msgid "With thanks to tobias v. van Veen & Michael Longford"
 msgstr "Merci à Tobia V. Van Veen et Michael Longford"
 
@@ -2700,6 +2774,11 @@ msgstr "Merci à Tobia V. Van Veen et Michael Longford"
 #: ../content/PatternLanguage/hotspots.php:45
 #: ../content/PatternLanguage/narrative.php:48
 #: ../content/PatternLanguage/index.php:45
+#: ../content/PatternLanguage/archives.php:51
+#: ../content/PatternLanguage/subscription.php:51
+#: ../content/PatternLanguage/index.php:48
+#: ../content/PatternLanguage/hotspots.php:48
+#: ../content/PatternLanguage/narrative.php:51
 msgid "Pattern Language is a commission by the Locative Media Lab and the "
 msgstr "Pattern Language est un projet du Locative Media Lab et de "
 
@@ -2709,35 +2788,53 @@ msgstr "Pattern Language est un projet du Locative Media Lab et de "
 #: ../content/PatternLanguage/hotspots.php:46
 #: ../content/PatternLanguage/narrative.php:49
 #: ../content/PatternLanguage/index.php:46
+#: ../content/PatternLanguage/archives.php:52
+#: ../content/PatternLanguage/subscription.php:52
+#: ../content/PatternLanguage/index.php:49
+#: ../content/PatternLanguage/hotspots.php:49
+#: ../content/PatternLanguage/narrative.php:52
 msgid "Contact Kate Armstrong"
 msgstr "Visiter le site de Kate Armstrong"
 
 #: ../content/PatternLanguage/archives.php:53
+#: ../content/PatternLanguage/archives.php:56
 msgid "Narratives Archives"
 msgstr "Archives des récits"
 
 #: ../content/PatternLanguage/archives.php:72
+#: ../content/PatternLanguage/archives.php:75
 msgid "Pattern Language - Narratives Archives"
 msgstr "Pattern Language - Archives des récits"
 
 #: ../content/PatternLanguage/subscription.php:53
+#: ../content/PatternLanguage/subscription.php:56
 msgid "Pattern Language Subscription"
 msgstr "Pattern Language - Inscription"
 
 #: ../content/PatternLanguage/subscription.php:67
+#: ../content/PatternLanguage/subscription.php:70
 msgid "Thank you for subscribing"
 msgstr "Merci pour votre inscription"
 
 #: ../content/PatternLanguage/subscription.php:71
 #: ../content/PatternLanguage/subscription.php:83
+#: ../content/PatternLanguage/archives.php:39
+#: ../content/PatternLanguage/subscription.php:39
+#: ../content/PatternLanguage/subscription.php:73
+#: ../content/PatternLanguage/subscription.php:84
+#: ../content/PatternLanguage/index.php:36
+#: ../content/PatternLanguage/hotspots.php:36
+#: ../content/PatternLanguage/narrative.php:39
 msgid "Go back to this hotspot portal page"
 msgstr "Retourner au portail de ce point d'accès"
 
 #: ../content/PatternLanguage/subscription.php:79
+#: ../content/PatternLanguage/subscription.php:81
 msgid "You are now unsubscribed"
 msgstr "Vous n'êtes plus inscrit à Pattern Language"
 
 #: ../content/PatternLanguage/subscription.php:94
+#: ../content/PatternLanguage/subscription.php:95
 msgid ""
 "By clicking the link below you will subscribe to Pattern Language. Pattern "
 "Language will appear in the user subscribed content section at the bottom of "
@@ -2753,10 +2850,12 @@ msgstr ""
 "lire les récits créés par les autres usagers."
 
 #: ../content/PatternLanguage/subscription.php:95
+#: ../content/PatternLanguage/subscription.php:96
 msgid "Subscribe now"
 msgstr "Inscrivez-vous maintenant"
 
 #: ../content/PatternLanguage/subscription.php:100
+#: ../content/PatternLanguage/subscription.php:101
 msgid ""
 "You are already subscribed to Pattern Language, you can terminate your "
 "participation by clicking below."
@@ -2765,19 +2864,23 @@ msgstr ""
 "inscription en cliquant sur le lien ci-dessous."
 
 #: ../content/PatternLanguage/subscription.php:101
+#: ../content/PatternLanguage/subscription.php:102
 msgid "Unsubscribe now"
 msgstr "Terminer l'inscription maintenant"
 
 #: ../content/PatternLanguage/subscription.php:108
+#: ../content/PatternLanguage/subscription.php:109
 msgid "You must be logged in to subscribe !"
 msgstr "Vous devez être connecté pour vous inscrire !"
 
 #: ../content/PatternLanguage/subscription.php:115
+#: ../content/PatternLanguage/subscription.php:116
 msgid "Pattern Language - Subscription"
 msgstr "Pattern Language - Inscription"
 
 #: ../content/PatternLanguage/index.php:51
 #: ../content/PatternLanguage/index.php:52
+#: ../content/PatternLanguage/index.php:55
 msgid ""
 "Pattern Language is a location-aware fiction project by Kate Armstrong that "
 "attaches patterns of narrative to individuals as they move through the city "
@@ -2796,6 +2899,7 @@ msgstr ""
 
 #: ../content/PatternLanguage/index.php:52
 #: ../content/PatternLanguage/index.php:53
+#: ../content/PatternLanguage/index.php:56
 msgid ""
 "Pattern Language is activated through the login system of the Île Sans Fil "
 "network. Once a user subscribes to Pattern Language , a piece of the story "
@@ -2810,6 +2914,7 @@ msgstr ""
 
 #: ../content/PatternLanguage/index.php:53
 #: ../content/PatternLanguage/index.php:54
+#: ../content/PatternLanguage/index.php:57
 msgid ""
 "Narrative fragments associated with each hotspot correspond to the point of "
 "view of one character, so that repeatedly logging into the system from a "
@@ -2825,6 +2930,7 @@ msgstr ""
 
 #: ../content/PatternLanguage/index.php:54
 #: ../content/PatternLanguage/index.php:55
+#: ../content/PatternLanguage/index.php:58
 msgid ""
 "Users may choose to actively engage Pattern Language by deliberately "
 "travelling between points in the city in order to generate narrative "
@@ -2841,6 +2947,7 @@ msgstr ""
 
 #: ../content/PatternLanguage/index.php:55
 #: ../content/PatternLanguage/index.php:56
+#: ../content/PatternLanguage/index.php:59
 msgid ""
 "Once the fragments have been delivered they are compiled into a document "
 "that is unique to each participant. Each individual narrative is archived "
@@ -2859,10 +2966,12 @@ msgstr ""
 
 #: ../content/PatternLanguage/index.php:61
 #: ../content/PatternLanguage/index.php:62
+#: ../content/PatternLanguage/index.php:65
 msgid "Pattern Language - About"
 msgstr "À propos de Pattern Language"
 
 #: ../content/PatternLanguage/hotspots.php:68
+#: ../content/PatternLanguage/hotspots.php:71
 msgid "Pattern Language - Hotspots list"
 msgstr "Pattern Language - Liste des points d'accès participants"
 
@@ -2871,18 +2980,22 @@ msgid "Narrative"
 msgstr "Récit"
 
 #: ../content/PatternLanguage/narrative.php:76
+#: ../content/PatternLanguage/narrative.php:79
 msgid "You must be logged in to read your narrative"
 msgstr "Vous devez être connecté pour lire votre récit"
 
 #: ../content/PatternLanguage/narrative.php:86
+#: ../content/PatternLanguage/narrative.php:89
 msgid "Pattern Language - Narrative"
 msgstr "Pattern Language - Récit"
 
 #: ../content/PatternLanguage/narrative.php:63
+#: ../content/PatternLanguage/narrative.php:66
 msgid "Narrative for "
 msgstr "Récit de "
 
 #: ../content/PatternLanguage/index.php:45
+#: ../content/PatternLanguage/index.php:48
 msgid ""
 " with funding from the New Media Research Networks Fund at the Department of "
 "Canadian Heritage."
@@ -2894,15 +3007,15 @@ msgstr ""
 msgid "User Profile"
 msgstr "Profil d'usager"
 
-#: ../classes/MainUI.php:172
+#: ../classes/MainUI.php:172 ../classes/MainUI.php:173
 msgid "I'm NOT at a hotspot."
 msgstr "Je ne suis PAS à un point d'accès."
 
-#: ../classes/User.php:666
+#: ../classes/User.php:666 ../classes/User.php:699
 msgid "Real name"
 msgstr "Nom complet"
 
-#: ../classes/User.php:674
+#: ../classes/User.php:674 ../classes/User.php:707
 msgid "Website URL"
 msgstr "URL de mon site Web"
 
@@ -2916,10 +3029,33 @@ msgstr ""
 msgid "Only these HTML tags are allowed : "
 msgstr "Seulement ces balises HTML sont permises : "
 
-#: ../classes/MainUI.php:172
+#: ../classes/MainUI.php:172 ../classes/MainUI.php:173
 msgid "I would like to login virtually."
 msgstr "Je désire me connecter virtuellement."
 
-#: ../classes/MainUI.php:174
+#: ../classes/MainUI.php:174 ../classes/MainUI.php:175
 msgid "Login to this hotspot."
 msgstr "Je désire me connecter à ce point d'accès."
+
+#: ../admin/user_log.php:117
+msgid "Find a User ID : "
+msgstr ""
+
+#: ../classes/Node.php:345
+msgid "Statistics:"
+msgstr ""
+
+#: ../classes/Node.php:348
+msgid "Get access statistics"
+msgstr ""
+
+#: ../portal/index.php:112
+msgid ""
+"An email with confirmation instructions was sent to your email address.  "
+"Your account has been granted 15 minutes of access to retrieve your email "
+"and validate your account."
+msgstr ""
+"Un courriel incluant les instructions pour confirmer votre compte &agrave; "
+"&eacute;t&eacute; envoy&eacute; &agrave; votre adresse courriel. Votre "
+"compte &agrave; &eacute;t&eacute; accord&eacute; 15 minutes d'acc&egrave;s "
+"afin que vous puissiez allez lire vos courriels et valider votre compte. "

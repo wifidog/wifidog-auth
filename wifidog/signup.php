@@ -27,6 +27,7 @@ define('BASEPATH', './');
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'include/common_interface.php';
 require_once BASEPATH.'classes/User.php';
+require_once BASEPATH.'classes/Security.php';
 require_once BASEPATH.'classes/MainUI.php';
 
 if (defined("CUSTOM_SIGNUP_URL"))
@@ -97,9 +98,31 @@ if (isset ($_REQUEST["submit"]))
 		if (User :: getUserByEmailAndOrigin($email, $account_origin))
 			throw new Exception(_("Sorry, a user account is already associated to this email address."));
 
-		$user = User :: CreateUser(get_guid(), $username, $account_origin, $email, $password);
-		$user->sendValidationEmail();
-		$smarty->assign('message', _('An email with confirmation instructions was sent to your email address.  Your account has been granted 15 minutes of access to retrieve your email and validate your account.  You may now open a browser window and go to any remote Internet address to obtain the login page.'));
+		$created_user = User :: CreateUser(get_guid(), $username, $account_origin, $email, $password);
+		$created_user->sendValidationEmail();
+		
+		// If the user is at a REAL hotspot, give him his 15 minutes right away
+		$gw_id = $session->get(SESS_GW_ID_VAR);
+        $gw_address = $session->get(SESS_GW_ADDRESS_VAR);
+        $gw_port = $session->get(SESS_GW_PORT_VAR);
+        
+		if($gw_id && $gw_address && $gw_port)
+		{
+			// Authenticate this new user automatically
+	        $network = Network::getObject($account_origin);
+	        $authenticated_user = $network->getAuthenticator()->login($username, $password, $errmsg);
+	        
+	        // Make sure the user IDs match
+			if(($created_user->getId() == $authenticated_user->getId()) && ($token = $created_user->generateConnectionToken()))
+			{
+				header("Location: http://{$gw_address}:{$gw_port}/wifidog/auth?token={$token}");
+			}
+			else
+				header("Location: ".BASE_NON_SSL_PATH);
+		}
+		else
+			$smarty->assign('message', _('An email with confirmation instructions was sent to your email address.  Your account has been granted 15 minutes of access to retrieve your email and validate your account.  You may now open a browser window and go to any remote Internet address to obtain the login page.'));
+			
 		//$smarty->display("templates/validate.html");
         
         $ui = new MainUI();

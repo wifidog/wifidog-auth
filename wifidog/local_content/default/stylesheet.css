@@ -218,6 +218,16 @@ display: compact;
 .login_body h1 {
 	font-size: large;
 }
+
+/* This is the warning message area ( Alerting the user to validation his account ASAP ) */
+#warning_message_area {
+	background-color: red;
+	color: white;
+	font-size: large;
+	font-weight: bold;
+	text-align: center;
+}
+
 .portal_content {
 	display: inline;
 	float: left;

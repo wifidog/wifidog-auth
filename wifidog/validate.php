@@ -25,6 +25,7 @@ define('BASEPATH','./');
 require_once (BASEPATH.'/include/common.php');
 require_once (BASEPATH.'/include/common_interface.php');
 require_once (BASEPATH.'/classes/User.php');
+require_once (BASEPATH.'/classes/Node.php');
 
 try {
     if (!isset($_REQUEST["token"]))
@@ -33,15 +34,24 @@ try {
     if (!isset($_REQUEST["user_id"]))
         throw new Exception(_('No user ID specified!'));
 
-    $user = User::getObject($_REQUEST['user_id']);
+    $validated_user = User::getObject($_REQUEST['user_id']);
 
-    if ($db->EscapeString($_REQUEST['token']) != $user->getValidationToken())
+    if ($db->EscapeString($_REQUEST['token']) != $validated_user->getValidationToken())
         throw new Exception(_('The validation token does not match the one in the database.'));
 
-    if ($user->getAccountStatus() == ACCOUNT_STATUS_ALLOWED)
+    if ($validated_user->getAccountStatus() == ACCOUNT_STATUS_ALLOWED)
         throw new Exception(_('Your account has already been activated.'));
 
-    $user->SetAccountStatus(ACCOUNT_STATUS_ALLOWED);
+	// This user wants to validate his account, the token is OK and he's not trying to pass the same token more than once
+	// Activate his account and let him in NOW
+    $validated_user->SetAccountStatus(ACCOUNT_STATUS_ALLOWED);
+    User::setCurrentUser($validated_user);
+    
+    // Try to current physical node:  if possible it will regenerate the session accordingly with the connection token. 
+    $current_user_node = Node::getCurrentRealNode();
+    $gw_id = $session->set(SESS_GW_ID_VAR, $current_user_node->getId());
+    
+    // Show activation message
     $smarty->assign('message', _("Your account has been succesfully activated!\n\nYou may now browse to a remote Internet address and take advantage of the free Internet access!\n\nIf you get prompted for a login, enter the username and password you have just created."));
 } catch (Exception $e) {
     $smarty->assign('message', $e->getMessage());
