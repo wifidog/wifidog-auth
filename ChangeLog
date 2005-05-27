@@ -1,3 +1,6 @@
+2005-05-26 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Someone moved the fallback gettext functions definition (for when gettext isn't installed) inside the static setCurrentLocale method, completely breaking the system when PHP doesn't have gettext support.  This is an untested fix.
+	
 2005-05-24 Francois Proulx <francois.proulx@gmail.com>
 	* Fixed bug in auth.php to let users go through when the click twice on the login button
 	* Fixed bug in hotspot_log.php

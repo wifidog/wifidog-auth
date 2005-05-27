@@ -26,6 +26,25 @@
 
 error_reporting(E_ALL);
 
+/* Gettext support */
+if (!function_exists('gettext'))
+{
+	define('GETTEXT_AVAILABLE', false);
+	/* Redefine the gettext functions if gettext isn't installed */
+	function gettext($string)
+	{
+		return $string;
+	}
+	function _($string)
+	{
+		return $string;
+	}
+}
+else
+{
+	define('GETTEXT_AVAILABLE', true);
+}
+
 /** Représente un langage humain, possiblement localisé, tel que fr_CA
  */
 class Locale
@@ -54,14 +73,14 @@ class Locale
 		if (empty ($locale_id))
 		{
 			//$object = new self(DEFAULT_LANG);
-            $object = self::getObject(DEFAULT_LANG);
-            self::setCurrentLocale($object);
+			$object = self :: getObject(DEFAULT_LANG);
+			self :: setCurrentLocale($object);
 		}
 		else
 		{
 			//$object = new self($locale_id);
-            $object = self::getObject($locale_id);
-            self::setCurrentLocale($object);
+			$object = self :: getObject($locale_id);
+			self :: setCurrentLocale($object);
 		}
 		return $object;
 
@@ -86,26 +105,7 @@ class Locale
 			$session->set(SESS_LANGUAGE_VAR, $locale_id);
 			$retval = false;
 		}
-		/* Gettext support */
-		if (!function_exists('gettext'))
-		{
-			define('GETTEXT_AVAILABLE', false);
-			/* Redefine the gettext functions if gettext isn't installed */
-			function gettext($string)
-			{
-				return $string;
-			}
-			function _($string)
-			{
-				return $string;
-			}
-		}
-		else
-		{
-            if(!defined('GETTEXT_AVAILABLE'))
-                define('GETTEXT_AVAILABLE', true);
-		}
-        
+
 		if (GETTEXT_AVAILABLE)
 		{
 			$current_locale = setlocale(LC_ALL, $locale_id);
@@ -184,7 +184,7 @@ class Locale
 	/**Constructeur
 	@param string locale Locale in POSIX format (excluding charset), such as fr ou fr_CA: "xx(x)_YY_(n*z)".  Both '_' and '-' are acceptable as separator.
 	*/
-	function Locale($p_locale)
+	function __construct($p_locale)
 	{
 		//parent :: __construct();
 		$matches = self :: decomposeLocaleId($p_locale);
