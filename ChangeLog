@@ -1,3 +1,6 @@
+2005-05-29 Francois Proulx <francois.proulx@gmail.com>
+	* Missing null check in validate.php
+	
 2005-05-27 Francois Proulx <francois.proulx@gmail.com>
 	* Changed the signup process to make it smoother for users
 		* The user will automatically be granted the 15 minutes if he's signing up at a real hotspot
