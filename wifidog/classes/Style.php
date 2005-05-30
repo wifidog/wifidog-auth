@@ -20,6 +20,8 @@
    \********************************************************************/
   /**@file Style.php
    * @author Copyright (C) 2004 Technologies Coeus inc.
+   * @deprecated 2005-05-30 This file is NOT used anymore, kept until we move
+   * SQL stats somewhere else.
    */
   /*Prevent caching*/
 Header("Cache-control: private, no-cache, must-revalidate");

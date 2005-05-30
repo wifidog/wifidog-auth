@@ -83,7 +83,6 @@ class Locale
 			self :: setCurrentLocale($object);
 		}
 		return $object;
-
 	}
 
 	/**
@@ -93,6 +92,8 @@ class Locale
 	{
 		global $session;
 		$retval = false;
+
+		// Get new locale ID, assume default if null
 		if ($locale != null)
 		{
 			$locale_id = $locale->getId();
@@ -105,24 +106,31 @@ class Locale
 			$session->set(SESS_LANGUAGE_VAR, $locale_id);
 			$retval = false;
 		}
-
+				
 		if (GETTEXT_AVAILABLE)
-		{
+		{					
+			// Try to set locale
 			$current_locale = setlocale(LC_ALL, $locale_id);
-			if (setlocale(LC_ALL, $locale_id) != $locale_id)
+			// Test it against current PHP locale
+			if ($current_locale != $locale_id)
 			{
 				echo "Warning: language.php: Unable to setlocale() to ".$locale_id.", return value: $current_locale, current locale: ".setlocale(LC_ALL, 0);
+				$retval = false;
 			}
-
-			bindtextdomain('messages', BASEPATH.'/locale');
-			bind_textdomain_codeset('messages', 'UTF-8');
-			textDomain('messages');
-
-			putenv("LC_ALL=".$locale_id);
-			putenv("LANGUAGE=".$locale_id);
+			else
+			{
+				bindtextdomain('messages', BASEPATH.'/locale');
+				bind_textdomain_codeset('messages', 'UTF-8');
+				textDomain('messages');
+	
+				putenv("LC_ALL=".$locale_id);
+				putenv("LANGUAGE=".$locale_id);
+				$session->set(SESS_LANGUAGE_VAR, $locale_id);
+				$retval = true;
+			}
 		}
+		
 		return $retval;
-
 	}
 
 	/** Example: 'fr_CA_montreal' will give

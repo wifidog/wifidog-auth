@@ -1,3 +1,7 @@
+2005-05-30 Francois Proulx <francois.proulx@gmail.com>
+	* Changed language selectbox name so it does not clash with ISF's domain cookie
+	* Fixed setlocale algorithm in Locale.php
+	
 2005-05-29 Francois Proulx <francois.proulx@gmail.com>
 	* Missing null check in validate.php
 	

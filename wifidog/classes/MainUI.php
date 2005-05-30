@@ -198,7 +198,7 @@ class MainUI
 			$html .= '<div class="language">'."\n";
 			$html .= '<form class="language" name="lang_form" method="post" action="'.$_SERVER['REQUEST_URI'].'">'."\n";
 			$html .= _("Language:")."\n";
-			$html .= "<select name='lang' onChange='javascript: document.lang_form.submit();'>"."\n";
+			$html .= "<select name='wifidog_language' onChange='javascript: document.lang_form.submit();'>"."\n";
 			global $AVAIL_LOCALE_ARRAY; //From config file
 			foreach ($AVAIL_LOCALE_ARRAY as $lang_ids => $lang_names)
 			{
