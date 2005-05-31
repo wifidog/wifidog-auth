@@ -16,15 +16,13 @@ Direction: <select name="direction">{html_options values=$direction_ids selected
 <tr>
 	<th>Username</th>
 	<th>Origin</th>
-	<th>User IDs</th>
 	<th>Registered On</th>
 	<th>Account Status</th>
 </tr>
 {section name=i loop=$users_array}
 <tr>
-	<td>{$users_array[i].username}</a></td>
+	<td><a href="?user_id={$users_array[i].user_id}">{$users_array[i].username}</a></td>
 	<td>{$users_array[i].account_origin}</td>
-	<td><a href="?user_id={$users_array[i].user_id}">{$users_array[i].user_id}</a></td>
     <td>{$users_array[i].reg_date|date_format:"%Y/%m/%d"}</td>
     {* hack, need to put info in variable before we can use $account_status_to_text *}
     {assign var="info" value="$users_array[i]"}

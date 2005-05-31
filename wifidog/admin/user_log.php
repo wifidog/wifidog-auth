@@ -77,7 +77,7 @@ else
 	$smarty->assign('sort_ids', array ('username', 'account_origin', 'reg_date'));
 	$smarty->assign('direction_ids', array ('asc', 'desc'));
 
-	$sort = isset ($_REQUEST['sort']) ? $_REQUEST['sort'] : "user_id";
+	$sort = isset ($_REQUEST['sort']) ? $_REQUEST['sort'] : "username";
 	$direction = isset ($_REQUEST['direction']) ? $_REQUEST['direction'] : "asc";
 
 	$smarty->assign("sort", $sort);
