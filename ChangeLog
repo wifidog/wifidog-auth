@@ -2,6 +2,7 @@
 	* Added long description field to content table
 	* MUST use schema_validate
 	* Modified Pattern Language to be more generic
+	* resend changelog
 	
 2005-06-06 Francois Proulx <francois.proulx@gmail.com>
 	* Made changes to Pattern Language ( Kate Armstrong )
