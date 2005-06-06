@@ -46,14 +46,14 @@ $tool_html .= '</ul>'."\n";
 
 $tool_html .= "<div class='pattern_language_credits'>";
 $tool_html .= _("Programming by Benoît Grégoire and François Proulx")."<p>";
-$tool_html .= _("French translation by TBD")."<p>";
-$tool_html .= _("With thanks to tobias v. van Veen & Michael Longford")."<p>";
+$tool_html .= _("French translation by Bernard Schutze")."<p>";
+$tool_html .= _("With thanks to tobias c. van Veen & Michael Longford")."<p>";
 $tool_html .= _("Pattern Language is a commission by the Locative Media Lab and the ")."<a href='http://www.mdcn.ca/'>Mobile Digital Commons Network</a>". (" with funding from the New Media Research Networks Fund at the Department of Canadian Heritage.")."<p>";
 $tool_html .= "<a href='http://www.katearmstrong.com/'>"._("Contact Kate Armstrong")."</a><p>";
 $tool_html .= "</div>";
 
 // Body
-$body_html = "<h1>"._("Narratives Archives")."</h1>\n";
+$body_html = "<h1>"._("Archives")."</h1>\n";
 $body_html .= "<div class='pattern_language_body'>\n";
 
 $pattern_languages = PatternLanguage :: getAllContent();
@@ -72,7 +72,7 @@ $body_html .= "</div>\n";
 
 $ui = new MainUI();
 $ui->setToolContent($tool_html);
-$ui->setTitle(_("Pattern Language - Narratives Archives"));
+$ui->setTitle(_("Pattern Language - Archives"));
 $ui->setMainContent($body_html);
 $ui->display();
 ?>

@@ -1,3 +1,6 @@
+2005-06-06 Francois Proulx <francois.proulx@gmail.com>
+	* Made changes to Pattern Language ( Kate Armstrong )
+	
 2005-05-30 Philippe April <philippe@ilesansfil.org>
 	* Show username in user_stats.php instead of user_id
 	  and in other admin pages

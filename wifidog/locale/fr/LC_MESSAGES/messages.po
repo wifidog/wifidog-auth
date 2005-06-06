@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-27 10:24-0400\n"
+"POT-Creation-Date: 2005-06-06 10:35-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -847,7 +847,7 @@ msgstr ""
 "Un courriel avec les instructions pour confirmer votre inscription a &eacute;"
 "t&eacute; envoy&eacute; &agrave; votre adresse courriel."
 
-#: ../validate.php:45 ../validate.php:55
+#: ../validate.php:45 ../validate.php:55 ../validate.php:56
 msgid ""
 "Your account has been succesfully activated!\n"
 "\n"
@@ -862,8 +862,8 @@ msgstr ""
 "Vous pouvez maintenant vous connecter n'importe quel site et prendre "
 "avantage de votre acc&egrave;s Internet gratuit!\n"
 "\n"
-"Lorsque l'on vous demandera de vous enregistrer, entrez le nom d'usager et le "
-"mot de passe que vous venez de cr&eacute;er."
+"Lorsque l'on vous demandera de vous enregistrer, entrez le nom d'usager et "
+"le mot de passe que vous venez de cr&eacute;er."
 
 #: ../admin/hotspot.php:36
 msgid "Edit a hotspot with"
@@ -2695,6 +2695,7 @@ msgstr "Lire mon récit"
 #: ../content/PatternLanguage/index.php:39
 #: ../content/PatternLanguage/hotspots.php:39
 #: ../content/PatternLanguage/narrative.php:42
+#: ../content/PatternLanguage/archives.php:56
 msgid "Archives"
 msgstr ""
 
@@ -2739,34 +2740,6 @@ msgstr "Inscription"
 #: ../content/PatternLanguage/narrative.php:48
 msgid "Programming by Benoît Grégoire and François Proulx"
 msgstr "Programmation par Benoît Grégoire et François Proulx"
-
-#: ../content/PatternLanguage/archives.php:46
-#: ../content/PatternLanguage/subscription.php:46
-#: ../content/PatternLanguage/index.php:42
-#: ../content/PatternLanguage/hotspots.php:43
-#: ../content/PatternLanguage/narrative.php:46
-#: ../content/PatternLanguage/index.php:43
-#: ../content/PatternLanguage/archives.php:49
-#: ../content/PatternLanguage/subscription.php:49
-#: ../content/PatternLanguage/index.php:46
-#: ../content/PatternLanguage/hotspots.php:46
-#: ../content/PatternLanguage/narrative.php:49
-msgid "French translation by TBD"
-msgstr "Traduction française par TBD"
-
-#: ../content/PatternLanguage/archives.php:47
-#: ../content/PatternLanguage/subscription.php:47
-#: ../content/PatternLanguage/index.php:43
-#: ../content/PatternLanguage/hotspots.php:44
-#: ../content/PatternLanguage/narrative.php:47
-#: ../content/PatternLanguage/index.php:44
-#: ../content/PatternLanguage/archives.php:50
-#: ../content/PatternLanguage/subscription.php:50
-#: ../content/PatternLanguage/index.php:47
-#: ../content/PatternLanguage/hotspots.php:47
-#: ../content/PatternLanguage/narrative.php:50
-msgid "With thanks to tobias v. van Veen & Michael Longford"
-msgstr "Merci à Tobia V. Van Veen et Michael Longford"
 
 #: ../content/PatternLanguage/archives.php:48
 #: ../content/PatternLanguage/subscription.php:48
@@ -3039,15 +3012,15 @@ msgstr "Je désire me connecter à ce point d'accès."
 
 #: ../admin/user_log.php:117
 msgid "Find a User ID : "
-msgstr ""
+msgstr "Recherche un utilisateur"
 
 #: ../classes/Node.php:345
 msgid "Statistics:"
-msgstr ""
+msgstr "Statistiques:"
 
 #: ../classes/Node.php:348
 msgid "Get access statistics"
-msgstr ""
+msgstr "Voir les statistiques"
 
 #: ../portal/index.php:112
 msgid ""
@@ -3059,3 +3032,43 @@ msgstr ""
 "&eacute;t&eacute; envoy&eacute; &agrave; votre adresse courriel. Votre "
 "compte &agrave; &eacute;t&eacute; accord&eacute; 15 minutes d'acc&egrave;s "
 "afin que vous puissiez allez lire vos courriels et valider votre compte. "
+
+#: ../content/PatternLanguage/archives.php:49
+#: ../content/PatternLanguage/hotspots.php:46
+#: ../content/PatternLanguage/index.php:46
+#: ../content/PatternLanguage/narrative.php:49
+#: ../content/PatternLanguage/subscription.php:49
+msgid "French translation by Bernard Schutze"
+msgstr "Tranduction française par Bernard Schutze"
+
+#: ../content/PatternLanguage/archives.php:50
+#: ../content/PatternLanguage/hotspots.php:47
+#: ../content/PatternLanguage/index.php:47
+#: ../content/PatternLanguage/narrative.php:50
+#: ../content/PatternLanguage/subscription.php:50
+msgid "With thanks to tobias c. van Veen & Michael Longford"
+msgstr "Merci à tobias c. van Veen & Michael Longford"
+
+#: ../content/PatternLanguage/archives.php:75
+msgid "Pattern Language - Archives"
+msgstr ""
+
+#: ../content/PatternLanguage/index.php:32
+msgid "Pattern Language by Kate Armstrong"
+msgstr ""
+
+#: ../content/PatternLanguage/subscription.php:95
+msgid ""
+"Subscribe to Pattern Language by clicking the link below. Once you have "
+"subscribed you will receive a fragment of text each time you log in to a "
+"participating hotspot in the city of Montreal. These text fragments will "
+"accumulate to form a unique narrative for every user. You can read your "
+"narrative anytime by clicking on \"Read Narrative\", or you can read the "
+"narratives generated by other users by going to \"Archives\"."
+msgstr ""
+"Inscrivez-vous à Pattern Language en cliquant le lien ci-dessous. Une fois que vous "
+"serez inscrits vous recevrez un fragment de texte à chaque ouverture de session dans un "
+"point d'accès participant dans la ville de Montréal. Ces fragments de texte s'accumuleront "
+"pour former un récit unique pour chaque usager. Vous pouvez lire votre récit à tout moment "
+"en cliquant sur \"Lire mon récit\", our vous pouvez lire les récits créés par les autres usagers "
+"en cliquant \"Archives\"."
