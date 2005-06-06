@@ -26,7 +26,7 @@ error_reporting(E_ALL);
 require_once BASEPATH.'config.php';
 require_once BASEPATH.'classes/AbstractDb.php';
 require_once BASEPATH.'classes/Session.php';
-define('REQUIRED_SCHEMA_VERSION', 17);
+define('REQUIRED_SCHEMA_VERSION', 18);
 
 /** Check that the database schema is up to date.  If it isn't, offer to update it. */
 function validate_schema()
@@ -440,6 +440,14 @@ function update_schema()
             $sql .= "ALTER TABLE nodes ADD COLUMN max_monthly_incoming int8; \n";
             $sql .= "ALTER TABLE nodes ADD COLUMN max_monthly_outgoing int8; \n";
             $sql .= "ALTER TABLE nodes ADD COLUMN quota_reset_day_of_month int4; \n";
+        }
+        
+        $new_schema_version = 18;
+        if($schema_version < $new_schema_version)
+        {
+            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n"; 
+            $sql .= "ALTER TABLE content ADD COLUMN long_description text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE;\n";
         }
         
 		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);

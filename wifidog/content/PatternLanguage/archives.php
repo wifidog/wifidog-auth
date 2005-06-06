@@ -31,43 +31,49 @@ require_once BASEPATH.'classes/User.php';
 require_once BASEPATH.'classes/Content/PatternLanguage.php';
 require_once BASEPATH.'classes/MainUI.php';
 
+// This trick is done to allow displaying of Pattern Language right away if there is only one available.
+if(!empty($_REQUEST['content_id']))
+{
+	$content_id = $_REQUEST['content_id'];
+	$pattern_language = PatternLanguage::getObject($content_id);
+}
+else
+{
+	$content_id = "";
+	$pattern_languages = PatternLanguage :: getAllContent();
+	if(count($pattern_languages) >= 1)
+		$pattern_language = $pattern_languages[0];
+	else
+		exit;
+}
+	
 // The Pattern Language toolbar
-$tool_html = "<h1>"._("Pattern Language")."</h1>";
+$tool_html = "<h1>{$pattern_language->getTitle()->__toString()}</h1>";
 $tool_html .= '<ul class="pattern_language_menu">'."\n";
 $gw_id = $session->get(SESS_GW_ID_VAR);
 if(!empty($gw_id))
     $tool_html .= "<li><a href='/portal/?gw_id=$gw_id'>"._("Go back to this hotspot portal page")."</a></li>";
-$tool_html .= '<li><a href="'.BASE_SSL_PATH.'content/PatternLanguage/index.php">'._("About Pattern Language").'</a><br>'."\n";
-$tool_html .= '<li><a href="'.BASE_SSL_PATH.'content/PatternLanguage/narrative.php">'._("Read narrative").'</a><br>'."\n";
-$tool_html .= '<li><a href="'.BASE_SSL_PATH.'content/PatternLanguage/archives.php">'._("Archives").'</a><br>'."\n";
-$tool_html .= '<li><a href="'.BASE_SSL_PATH.'content/PatternLanguage/hotspots.php">'._("Participating hotspots").'</a><br>'."\n";
-$tool_html .= '<li><a href="'.BASE_SSL_PATH.'content/PatternLanguage/subscription.php">'._("Subscription").'</a><br>'."\n";
+$tool_html .= '<li><a href="'.BASE_SSL_PATH.'content/PatternLanguage/index.php?content_id='.$content_id.'">'._("About Pattern Language").'</a><br>'."\n";
+$tool_html .= '<li><a href="'.BASE_SSL_PATH.'content/PatternLanguage/narrative.php?content_id='.$content_id.'">'._("Read narrative").'</a><br>'."\n";
+$tool_html .= '<li><a href="'.BASE_SSL_PATH.'content/PatternLanguage/archives.php?content_id='.$content_id.'">'._("Archives").'</a><br>'."\n";
+$tool_html .= '<li><a href="'.BASE_SSL_PATH.'content/PatternLanguage/hotspots.php?content_id='.$content_id.'">'._("Participating hotspots").'</a><br>'."\n";
+$tool_html .= '<li><a href="'.BASE_SSL_PATH.'content/PatternLanguage/subscription.php?content_id='.$content_id.'">'._("Subscription").'</a><br>'."\n";
 $tool_html .= '</ul>'."\n";
 
 $tool_html .= "<div class='pattern_language_credits'>";
-$tool_html .= _("Programming by Benoît Grégoire and François Proulx")."<p>";
-$tool_html .= _("French translation by Bernard Schutze")."<p>";
-$tool_html .= _("With thanks to tobias c. van Veen & Michael Longford")."<p>";
-$tool_html .= _("Pattern Language is a commission by the Locative Media Lab and the ")."<a href='http://www.mdcn.ca/'>Mobile Digital Commons Network</a>". (" with funding from the New Media Research Networks Fund at the Department of Canadian Heritage.")."<p>";
-$tool_html .= "<a href='http://www.katearmstrong.com/'>"._("Contact Kate Armstrong")."</a><p>";
+$tool_html .=  $pattern_language->getSponsorInfo()->__toString();
 $tool_html .= "</div>";
 
 // Body
-$body_html = "<h1>"._("Archives")."</h1>\n";
+$body_html = "<img src='header.gif'>\n";
+$body_html .= "<h1>"._("Archives")."</h1>\n";
 $body_html .= "<div class='pattern_language_body'>\n";
-
-$pattern_languages = PatternLanguage :: getAllContent();
-if($pattern_languages)
-    foreach ($pattern_languages as $pattern_language)
-    {
-        $body_html .= "<ul class='pattern_language_menu'>";
-        $users = $pattern_language->getNarrativeList();
-        if($users)
-            foreach($users as $user)
-                $body_html .= "<li><a href='/content/PatternLanguage/narrative.php?user_id={$user->getId()}'>{$user->getUsername()}</a></li>";
-        $body_html .= "</ul>";
-    }
-
+$body_html .= "<ul class='pattern_language_menu'>";
+$users = $pattern_language->getNarrativeList();
+if($users)
+    foreach($users as $user)
+        $body_html .= "<li><a href='/content/PatternLanguage/narrative.php?user_id={$user->getId()}'>{$user->getUsername()}</a></li>";
+$body_html .= "</ul>";
 $body_html .= "</div>\n";
 
 $ui = new MainUI();

@@ -1,6 +1,5 @@
 <?php
 
-
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -313,6 +312,86 @@ class Content implements GenericObject
 	public function getObjectType()
 	{
 		return $this->content_type;
+	}
+	
+	/**
+	 * Get content title
+	 * @return content a content sub-class
+	 */
+	public function getTitle()
+	{
+		try 
+		{
+			return self :: getObject($this->content_row['title']);
+		}
+		catch(Exception $e)
+		{
+			return null;
+		}
+	}
+	
+	/**
+	 * Get content description
+	 * @return content a content sub-class
+	 */
+	public function getDescription()
+	{
+		try 
+		{
+			return self :: getObject($this->content_row['description']);
+		}
+		catch(Exception $e)
+		{
+			return null;
+		}
+	}
+	
+	/**
+	 * Get content long description
+	 * @return content a content sub-class
+	 */
+	public function getLongDescription()
+	{
+		try 
+		{
+			return self :: getObject($this->content_row['long_description']);
+		}
+		catch(Exception $e)
+		{
+			return null;
+		}
+	}
+	
+	/**
+	 * Get content project info
+	 * @return content a content sub-class
+	 */
+	public function getProjectInfo()
+	{
+		try 
+		{
+			return self :: getObject($this->content_row['project_info']);
+		}
+		catch(Exception $e)
+		{
+			return null;
+		}
+	}
+	
+	/**
+	 * Get content sponsor info
+	 * @return content a content sub-class
+	 */
+	public function getSponsorInfo()
+	{
+		try 
+		{
+			return self :: getObject($this->content_row['sponsor_info']);
+		}
+		catch(Exception $e)
+		{
+			return null;
+		}
 	}
 
 	/** Set the object type of this object 
@@ -651,6 +730,27 @@ class Content implements GenericObject
 					$html .= "</div>\n";
 				}
 				$html .= "</div>\n";
+				
+				/* long description */
+				$html .= "<div class='admin_section_container'>\n";
+				$html .= "<div class='admin_section_title'>"._("Long description:")."</div>\n";
+				$html .= "<div class='admin_section_data'>\n";
+				if (empty ($this->content_row['long_description']))
+				{
+					$html .= self :: getNewContentUI("long_description_{$this->id}_new");
+					$html .= "</div>\n";
+				}
+				else
+				{
+					$description = self :: getObject($this->content_row['long_description']);
+					$html .= $description->getAdminUI();
+					$html .= "</div>\n";
+					$html .= "<div class='admin_section_tools'>\n";
+					$name = "content_".$this->id."_long_description_erase";
+					$html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
+					$html .= "</div>\n";
+				}
+				$html .= "</div>\n";
 
 				/* project_info */
 				$html .= "<div class='admin_section_container'>\n";
@@ -809,6 +909,31 @@ class Content implements GenericObject
     					else
     					{
     						$description->processAdminUI();
+    					}
+    				}
+    				
+    				/* long description */
+    				if (empty ($this->content_row['long_description']))
+    				{
+    					$long_description = self :: processNewContentUI("long_description_{$this->id}_new");
+    					if ($long_description != null)
+    					{
+    						$long_description_id = $long_description->GetId();
+    						$db->ExecSqlUpdate("UPDATE content SET long_description = '$long_description_id' WHERE content_id = '$this->id'", FALSE);
+    					}
+    				}
+    				else
+    				{
+    					$long_description = self :: getObject($this->content_row['long_description']);
+    					$name = "content_".$this->id."_long_description_erase";
+    					if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
+    					{
+    						$db->ExecSqlUpdate("UPDATE content SET long_description = NULL WHERE content_id = '$this->id'", FALSE);
+    						$long_description->delete($errmsg);
+    					}
+    					else
+    					{
+    						$long_description->processAdminUI();
     					}
     				}
     
