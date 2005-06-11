@@ -1,3 +1,7 @@
+2005-06-17 Francois Proulx <francois.proulx@gmail.com>
+	* Removed forced Pattern Language on all hotspots
+	* Do not show hotspot logo in portal page, only on login, until we find a better layout
+
 2005-06-06 Francois Proulx <francois.proulx@gmail.com>
 	* Added long description field to content table
 	* MUST use schema_validate

@@ -87,15 +87,6 @@ class PatternLanguage extends ContentGroup
         
         return $parent_output;
     }
-    
-    /** Is this pattern displayable at a certain Node
-     * @param $node Node, optionnal
-     * @return true or false */
-    public function isDisplayableAt($node)
-    {
-        // Pattern language will always be displayable 
-        return true;
-    }
 
 	/** Display the narrative
 	 * @param $user The user who's narrative you want to grab

@@ -151,7 +151,7 @@ if($contents)
 {
     $html .= "<table><tr><td>";
     $html .= "<div class='portal_node_section'>\n";
-    $html .= "<img class='portal_section_logo' src='{$hotspot_logo_url}' alt=''>\n";
+    //$html .= "<img class='portal_section_logo' src='{$hotspot_logo_url}' alt=''>\n";
     $html .= "<span class='portal_section_title'>"._("Content from:")." ";
     $node_homepage = $node->getHomePageURL();
     if (!empty ($node_homepage))
