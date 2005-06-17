@@ -6,6 +6,15 @@
  * Log history:
  *
  *     $Log$
+ *     Revision 1.43  2005/06/17 02:18:08  fproulx
+ *     2005-06-16 Francois Proulx <francois.proulx@gmail.com>
+ *     	* Added XML output format for hotspot_status.php
+ *     	* Rough draft v1.0
+ *     	* TODO move to different classes once stabilized
+ *     	* Can use XSLT, if activated ( XSLT_SUPPORT constant )
+ *     	* ie : http://wifidog-auth.org/hotspot_status.php?format=XML&xslt=http://wifidog-auth.org/xslt/hotspot_status.xsl
+ *     	* or simply : http://wifidog-auth.org/hotspot_status.php?format=XML
+ *
  *     Revision 1.42  2005/05/02 01:22:02  fproulx
  *     2005-04-30 Francois Proulx <francois.proulx@gmail.com>
  *     	* Logout button will now destroy session AND render token USED
@@ -219,6 +228,8 @@ define('RSS_SUPPORT', true);
 define('PHLICKR_SUPPORT', false);
 /* Normally, the database cleanup routines will be called everytime a portal page is displayed.  If you set this to true, you must set a cron job on the server which will execute the script cron/cleanup.php. */
 define('CONF_USE_CRON_FOR_DB_CLEANUP', false);
+/* XSLT for Hotspot status page*/
+//define('XSLT_SUPPORT', false);
 
 
 /* Use a custom signup system instead of the built in signup page. */
