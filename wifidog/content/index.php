@@ -84,10 +84,11 @@ else
 $tool_html .= "</p>"."\n";
 
 
+/*
 $tool_html .= '<p class="indent">'."\n";
-
 $tool_html .= "<a href='content.php?gw_id={$current_node_id}' target='_blank.right'><img src='/images/start.gif'></a>"."\n";
 $tool_html .= "</p>"."\n";
+*/
 $ui->setToolContent($tool_html);
 
 $hotspot_network_name = HOTSPOT_NETWORK_NAME;

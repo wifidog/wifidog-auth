@@ -1,5 +1,4 @@
 -Allow user to change his username (once a week to prevent abuse?)
--Node manager
 -User profile
 -Make config.php a config_template.php instead, installing the auth server would
  mean to copy config_template.php to config.php and then change the appropriate values.
@@ -18,3 +17,5 @@ mymailoasis.com
 spamcon.org
 spamgourmet.com
 spammotel.com
+
+-Make error messages much more visible, especially in lost password.

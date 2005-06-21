@@ -1,6 +1,5 @@
 <?php
 
-
 // $Id$
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
@@ -30,6 +29,7 @@ require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'include/common_interface.php';
 require_once BASEPATH.'classes/Node.php';
 require_once BASEPATH.'classes/MainUI.php';
+define('TOOLBAR_WIDTH','250');//Must match the stylesheet for the tool section width
 
 if (CONF_USE_CRON_FOR_DB_CLEANUP == false)
 {
@@ -55,7 +55,7 @@ if (isset ($session))
 {
     if(!empty($_REQUEST['gw_id']))
         $session->set(SESS_GW_ID_VAR, $_REQUEST['gw_id']);
-	$smarty->assign("original_url_requested", $session->get(SESS_ORIGINAL_URL_VAR));
+
 }
 
 $tool_html = '';
@@ -88,10 +88,119 @@ else
 }
 $tool_html .= "</p>"."\n";
 
-$tool_html .= '<p class="indent">'."\n";
+$tool_html .= '<script type="text/javascript">
+function getElementById(id) {
+    if (document.all) {
+	return document.getElementById(id);
+    }
+    for (i=0;i<document.forms.length;i++) {
+	if (document.forms[i].elements[id]) {return document.forms[i].elements[id]; }
+    }
+}
 
-$tool_html .= "<a href='/content/?gw_id={$current_node_id}' target='_blank.right'><img src='/images/start.gif'></a>"."\n";
+function getWindowSize(window) {
+var size_array = new Array(2);
+  var myWidth = 0, myHeight = 0;
+  if( typeof( window.innerWidth ) == "number" ) {
+    //Non-IE
+    myWidth = window.innerWidth;
+    myHeight = window.innerHeight;
+  } else if( document.documentElement &&
+      ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+    //IE 6+ in "standards compliant mode"
+    myWidth = document.documentElement.clientWidth;
+    myHeight = document.documentElement.clientHeight;
+  } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+    //IE 4 compatible
+    myWidth = document.body.clientWidth;
+    myHeight = document.body.clientHeight;
+  }
+  size_array[0] = myWidth;
+  size_array[1] = myHeight;
+//  window.alert( "Width = " + myWidth );
+//  window.alert( "Height = " + myHeight );
+return size_array;
+}
+
+
+</script>';
+
+
+$tool_html .= '<p class="indent">'."\n";
+$tool_html .= "<a  id='wifidog_portal_expand' onclick=\"
+var wifidog_portal_expand = getElementById('wifidog_portal_expand');
+var wifidog_portal_collapse = getElementById('wifidog_portal_collapse');
+
+wifidog_portal_expand.style.display = 'none';
+wifidog_portal_collapse.style.display = 'inline';
+var size_array = getWindowSize(window.opener);
+window.resizeTo(size_array[0],size_array[1]);
+\">"._("Expand portal")."</a>"."\n";
+
+$tool_html .= "<a id='wifidog_portal_collapse' onclick=\"
+var wifidog_portal_expand = getElementById('wifidog_portal_expand');
+var wifidog_portal_collapse = getElementById('wifidog_portal_collapse');
+
+wifidog_portal_expand.style.display = 'inline';
+wifidog_portal_collapse.style.display = 'none';
+var size_array = getWindowSize(window.opener);
+window.resizeTo('".TOOLBAR_WIDTH."',size_array[1]);
+
+\">"._("Collapse portal")."</a>"."\n";
 $tool_html .= "</p>"."\n";
+
+
+
+
+	$original_url_requested=$session->get(SESS_ORIGINAL_URL_VAR);
+	if(empty($original_url_requested))
+	{
+		$url="missing_original_url.php";
+	}
+	else
+	{
+		$url=$original_url_requested;
+	}
+$tool_html .= '<p class="indent">'."\n";
+$tool_html .= "<a id='wifidog_use_internet' href='$url' onclick=\"
+var size_array = getWindowSize(window);
+var original_location=window.location.href;
+//this.target='_blank';
+var old_window = window;
+var new_window = window.open('".CURRENT_REQUEST_URL."','wifidog_portal');
+new_window.blur();
+old_window.focus();
+new_window.resizeTo('".TOOLBAR_WIDTH."',size_array[1]);
+
+//old_window.location.href='test';
+//window.moveBy(300, 300);
+/*if(window.open){alert('window.open enabled');}
+else{alert('window.open DISABLED');}*/
+
+\"><img src='/images/start.gif'></a>\n";
+$tool_html .= "</p>"."\n";
+
+$tool_html .= '<script type="text/javascript">
+//Set up if expand/collapse functionnality is to be enabled by checking if we were called from another portal window.
+
+window.is_wifidog_portal=true; //This assignement may be read by another window
+
+var wifidog_portal_expand = document.getElementById("wifidog_portal_expand");
+var wifidog_portal_collapse = document.getElementById("wifidog_portal_collapse");
+var wifidog_use_internet = document.getElementById("wifidog_use_internet");
+if(window.opener && window.opener.is_wifidog_portal==true)
+{
+wifidog_portal_expand.style.display = "inline";
+wifidog_portal_collapse.style.display = "none";
+wifidog_use_internet.style.display = "none";
+}
+else
+{
+wifidog_portal_expand.style.display = "none";
+wifidog_portal_collapse.style.display = "none";
+}
+</script>';
+
 $ui->setToolContent($tool_html);
 
 $hotspot_network_name = HOTSPOT_NETWORK_NAME;

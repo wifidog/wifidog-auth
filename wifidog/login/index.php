@@ -117,7 +117,7 @@ $html = '';
 $html .= '<div id="form">'."\n";
 if (empty ($_REQUEST['gw_id']))
 {
-	$html .= '<h1>'._("Virtual login").'</h1'."\n";
+	$html .= '<h1>'._("Virtual login").'</h1>'."\n";
 }
 else
 {

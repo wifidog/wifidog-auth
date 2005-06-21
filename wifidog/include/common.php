@@ -54,6 +54,17 @@ define('SESS_GW_ID_VAR', 'SESS_GW_ID');
 /* This section deals with PATHs */
 define('BASE_NON_SSL_PATH', 'http://' . $_SERVER['SERVER_NAME'] . SYSTEM_PATH);
 
+//echo "<pre>";print_r($_SERVER);echo "</pre>";
+
+$curent_url='http';
+if($_SERVER['SERVER_PORT']=='443'){$curent_url.='s';}
+$curent_url.= '://'.$_SERVER['HTTP_HOST'];
+if($_SERVER['SERVER_PORT']!=80 && $_SERVER['SERVER_PORT']!=443) $curent_url.=':'.$_SERVER['SERVER_PORT'];
+$curent_url.=$_SERVER['REQUEST_URI'];
+define('CURRENT_REQUEST_URL', $curent_url);
+
+
+
 if(SSL_AVAILABLE)
   {
     define('BASE_SSL_PATH', 'https://' . $_SERVER['SERVER_NAME'] . SYSTEM_PATH);
