@@ -41,6 +41,8 @@ class TrivialLangstring extends Langstring
 	{
 		parent :: __construct($content_id);
 		$this->setIsTrivialContent(true);
+		/* A TrivialLangstring is NEVER persistent */
+		parent::setIsPersistent(false);
 	}
 
 	/** A short string representation of the content */

@@ -45,8 +45,6 @@ class Langstring extends Content
 		global $db;
 		$this->mBd = & $db;
         
-		/* A langstring is NEVER persistent */
-		parent::setIsPersistent(false);
 	}
 
 	/**Retourne la première chaîne disponible dans la langue par défaut de l'usager (si disponible), sinon dans la même langue majeure, sinon la première chaîne disponible

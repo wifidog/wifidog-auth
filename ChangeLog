@@ -1,5 +1,8 @@
+2005-06-28 Benoit Grégoire  <bock@step.polymtl.ca>
+	* classes/Content/Langstring.php:  Bug fix:  Langstring was always non-persistent, no matter the checkbox.  Move the code to TrivialLangstring.php where it belongs. 
+
 2005-06-21 Benoit Grégoire  <bock@step.polymtl.ca>
-	* portal/inted.pgp:  Implement the start button functionnality (maybe it would be better to call it
+	* portal/inted.php:  Implement the start button functionnality (maybe it would be better to call it
 	 "use the Internet").  From now on, once authenticated and when pressing the start
 	  button on the portal, the user will be sent to the page he originally tried to 
 	  access.  A second window will be popped with the portal page so he can come back
@@ -8,7 +11,7 @@
 	  
 	  At the same time, this fixes the goof reported by Rob Kelley of nycwireless.net
 
-	* portal/mission_ooriginal_url.php:  Displayed when the user tries to use the start button but for some reason the original url is unavailable
+	* portal/missing_original_url.php:  Displayed when the user tries to use the start button but for some reason the original url is unavailable
 	* common.php:  New define CURRENT_REQUEST_URL, hopefully containing the full URL in 
 	the user's URL bar.
 
