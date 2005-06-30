@@ -26,7 +26,7 @@ error_reporting(E_ALL);
 require_once BASEPATH.'config.php';
 require_once BASEPATH.'classes/AbstractDb.php';
 require_once BASEPATH.'classes/Session.php';
-define('REQUIRED_SCHEMA_VERSION', 18);
+define('REQUIRED_SCHEMA_VERSION', 19);
 
 /** Check that the database schema is up to date.  If it isn't, offer to update it. */
 function validate_schema()
@@ -448,6 +448,19 @@ function update_schema()
             echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n"; 
             $sql .= "ALTER TABLE content ADD COLUMN long_description text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE;\n";
+        }
+        
+        $new_schema_version = 19;
+        if($schema_version < $new_schema_version)
+        {
+            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n"; 
+            $sql .= "CREATE TABLE iframes (";
+            $sql .= "iframes_id text NOT NULL PRIMARY KEY REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,";
+            $sql .= "url text,";
+            $sql .= "width int4,";
+            $sql .= "height int4";
+            $sql .= ");\n";
         }
         
 		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);

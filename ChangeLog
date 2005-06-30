@@ -1,3 +1,6 @@
+2005-06-17 Francois Proulx <francois.proulx@gmail.com>
+	* Added IFrame and SimpleIFrame content types.
+	
 2005-06-28 Benoit Grégoire  <bock@step.polymtl.ca>
 	* classes/Content/Langstring.php:  Bug fix:  Langstring was always non-persistent, no matter the checkbox.  Move the code to TrivialLangstring.php where it belongs. 
 
@@ -15,9 +18,18 @@
 	* common.php:  New define CURRENT_REQUEST_URL, hopefully containing the full URL in 
 	the user's URL bar.
 
+
 2005-06-17 Francois Proulx <francois.proulx@gmail.com>
 	* Removed forced Pattern Language on all hotspots
 	* Do not show hotspot logo in portal page, only on login, until we find a better layout
+
+2005-06-16 Francois Proulx <francois.proulx@gmail.com>
+	* Added XML output format for hotspot_status.php
+	* Rough draft v1.0
+	* TODO move to different classes once stabilized
+	* Can use XSLT, if activated ( XSLT_SUPPORT constant )
+	* ie : http://wifidog-auth.org/hotspot_status.php?format=XML&xslt=http://wifidog-auth.org/xslt/hotspot_status.xsl
+	* or simply : http://wifidog-auth.org/hotspot_status.php?format=XML
 
 2005-06-06 Francois Proulx <francois.proulx@gmail.com>
 	* Added long description field to content table

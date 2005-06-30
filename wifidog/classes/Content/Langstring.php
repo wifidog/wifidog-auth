@@ -277,22 +277,5 @@ class Langstring extends Content
 		return $row['count'];
 	}
 
-	/**La chaîne est-elle vide?
-	@return true or false
-	*/
-	function IsEmpty()
-	{
-		$retval = true;
-		$sql = "SELECT count(langstring_entries_id) FROM langstring_entries WHERE langstring_entries.langstrings_id = $this->id AND value IS NOT NULL AND value!=''";
-		$this->mBd->ExecSqlResUnique($sql, $row, false);
-
-		if ($row != null && $row['count'] > 0)
-		{
-			$retval = false;
-		}
-
-		return $retval;
-	}
-
 } /* end class Langstring */
 ?>
