@@ -53,29 +53,26 @@ switch ($format)
 		$xmldoc->formatOutput = true;
 		
 		// Root node
-		$hotspot_status_root_node = $xmldoc->createElement("HotspotStatus");
+		$hotspot_status_root_node = $xmldoc->createElement("wifidogVenuesStatus");
+		$hotspot_status_root_node->setAttribute('version', '1.0');
 		$xmldoc->appendChild($hotspot_status_root_node);
 		
 		// Document metadata
-		$document_gendate_node = $xmldoc->createElement("GenerationDateTime", gmdate("Y-m-d\Th:m:s\Z"));
+		$document_gendate_node = $xmldoc->createElement("generationDateTime", gmdate("Y-m-d\Th:m:s\Z"));
 		$hotspot_status_root_node->appendChild($document_gendate_node);
-		$document_title_node = $xmldoc->createElement("Title", HOTSPOT_NETWORK_NAME._(": Newest HotSpots"));
-		$hotspot_status_root_node->appendChild($document_title_node);
-		$document_desc_node = $xmldoc->createElement("Description", _("WiFiDog list of the most recent HotSpots opened by the network: ").HOTSPOT_NETWORK_NAME);
-		$hotspot_status_root_node->appendChild($document_desc_node);
-		$document_version_node = $xmldoc->createElement("DocumentVersion", "1.0");
-		$hotspot_status_root_node->appendChild($document_version_node);
 		
 		// Network metadata
-		$network_metadata_node = $xmldoc->createElement("NetworkMetadata");
+		$network_metadata_node = $xmldoc->createElement("networkMetadata");
 		$network_metadata_node = $hotspot_status_root_node->appendChild($network_metadata_node);
-		$network_name_node = $xmldoc->createElement("Name", HOTSPOT_NETWORK_NAME);
+		$network_name_node = $xmldoc->createElement("name", HOTSPOT_NETWORK_NAME);
 		$network_metadata_node->appendChild($network_name_node);
-		$network_url_node = $xmldoc->createElement("WebsiteUrl", HOTSPOT_NETWORK_URL);
+		$network_url_node = $xmldoc->createElement("websiteUrl", HOTSPOT_NETWORK_URL);
 		$network_metadata_node->appendChild($network_url_node);
-		$network_mail_node = $xmldoc->createElement("TechnicalEmail", TECH_SUPPORT_EMAIL);
+		$network_mail_node = $xmldoc->createElement("techSupportEmail", TECH_SUPPORT_EMAIL);
 		$network_metadata_node->appendChild($network_mail_node);
-		$network_validusers_node = $xmldoc->createElement("ValidUsersCount", $stats->getNumValidUsers());
+		$nodes_count_node = $xmldoc->createElement("venuesCount", count($node_results));
+		$network_metadata_node->appendChild($nodes_count_node);
+		$network_validusers_node = $xmldoc->createElement("validSubscribedUsersCount", $stats->getNumValidUsers());
 		$network_metadata_node->appendChild($network_validusers_node);
 		
 		// Get number of online users
@@ -84,37 +81,36 @@ switch ($format)
 			foreach ($node_results as $node_row)
 				$online_users_count = $stats->getNumOnlineUsers($node_row['node_id']);
 			
-		$network_onlineusers_node = $xmldoc->createElement("OnlineUsersCount", $online_users_count);
+		$network_onlineusers_node = $xmldoc->createElement("onlineUsersCount", $online_users_count);
 		$network_metadata_node->appendChild($network_onlineusers_node);
 		
-		// Nodes metadata
-		$nodes_metadata_node = $xmldoc->createElement("NodesMetadata");
-		$nodes_metadata_node = $hotspot_status_root_node->appendChild($nodes_metadata_node);
-		$nodes_count_node = $xmldoc->createElement("NodesCount", count($node_results));
-		$nodes_metadata_node->appendChild($nodes_count_node);
 		
 		if ($node_results)
 		{
 			// Nodes statusadata
-			$nodes_status_node = $xmldoc->createElement("NodesStatus");
+			$nodes_status_node = $xmldoc->createElement("venuesMetadata");
 			$nodes_status_node = $hotspot_status_root_node->appendChild($nodes_status_node);
 			
 			foreach ($node_results as $node_row)
 			{
-				$node = $xmldoc->createElement("Node");
+				$node = $xmldoc->createElement("venue");
 				$node = $nodes_status_node->appendChild($node);
-
+				
+				// Node ID
+				$id = $xmldoc->createElement("venueId", $node_row['node_id']);
+				$node->appendChild($id);
+				
 				// Node name
 				if (!empty ($node_row['name']))
 				{
-					$name = $xmldoc->createElement("Name", $node_row['name']);
+					$name = $xmldoc->createElement("name", $node_row['name']);
 					$node->appendChild($name);
 				}
 
 				// Node Website URL
 				if (!empty ($node_row['home_page_url']))
 				{
-					$url = $xmldoc->createElement("WebSiteUrl", $node_row['home_page_url']);
+					$url = $xmldoc->createElement("webSiteUrl", $node_row['home_page_url']);
 					$node->appendChild($url);
 				}
 				
@@ -122,59 +118,61 @@ switch ($format)
 				if (!empty ($node_row['node_deployment_status']) && $node_row['node_deployment_status'] != 'NON_WIFIDOG_NODE')
 				{
 					if ($node_row['is_up'] == 't')
-						$status = $xmldoc->createElement("Status", "up");
+						$status = $xmldoc->createElement("status", "up");
 					else
-						$status = $xmldoc->createElement("Status", "down");
+						$status = $xmldoc->createElement("status", "down");
 					$node->appendChild($status);
 				}
 				
 				// Description
 				if (!empty ($node_row['description']))
 				{
-					$desc = $xmldoc->createElement("Description", $node_row['description']);
+					$desc = $xmldoc->createElement("description", $node_row['description']);
 					$node->appendChild($desc);
-				}
-				
-				// Street address
-				if (!empty ($node_row['street_address']))
-				{
-					$street_addr = $xmldoc->createElement("StreetAddress", $node_row['street_address']);
-					$node->appendChild($street_addr);
 				}
 
 				// Map Url
 				if (!empty ($node_row['map_url']))
 				{
-					$map_url = $xmldoc->createElement("MapUrl", htmlspecialchars($node_row['map_url'], ENT_QUOTES));
+					$map_url = $xmldoc->createElement("mapUrl", htmlspecialchars($node_row['map_url'], ENT_QUOTES));
 					$node->appendChild($map_url);
 				}
 				
 				// Mass transit info
 				if (!empty ($node_row['mass_transit_info']))
 				{
-					$transit = $xmldoc->createElement("MassTransitInfo", $node_row['mass_transit_info']);
+					$transit = $xmldoc->createElement("massTransitInfo", $node_row['mass_transit_info']);
 					$node->appendChild($transit);
 				}
 				
 				// Contact e-mail
 				if (!empty ($node_row['public_email']))
 				{
-					$contact_email = $xmldoc->createElement("ContactEmail", $node_row['public_email']);
+					$contact_email = $xmldoc->createElement("contactEmail", $node_row['public_email']);
 					$node->appendChild($contact_email);
 				}
 				
 				// Contact phone
 				if (!empty ($node_row['public_phone_number']))
 				{
-					$contact_phone = $xmldoc->createElement("ContactPhoneNumber", $node_row['public_phone_number']);
+					$contact_phone = $xmldoc->createElement("contactPhoneNumber", $node_row['public_phone_number']);
 					$node->appendChild($contact_phone);
 				}
 				
 				// Street address
 				if (!empty ($node_row['street_address']))
 				{
-					$street_addr = $xmldoc->createElement("StreetAddress", $node_row['street_address']);
+					$street_addr = $xmldoc->createElement("streetAddress", $node_row['street_address']);
 					$node->appendChild($street_addr);
+				}
+				
+				// Long / Lat
+				if (!empty ($node_row['longitude']) && !empty ($node_row['latitude']))
+				{
+					$gis = $xmldoc->createElement("gisLatLong");
+					$gis->setAttribute("lat",  $node_row['latitude']);
+					$gis->setAttribute("long",  $node_row['longitude']);
+					$node->appendChild($long);
 				}
 			}
 		}

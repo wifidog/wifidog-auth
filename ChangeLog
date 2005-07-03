@@ -1,3 +1,7 @@
+2005-07-03 Francois Proulx <francois.proulx@gmail.com>
+	* Updated the XML venues status format ( version 1.0, once approved )
+	* Added long / lat fields to nodes table ( for mapping purposes )
+	
 2005-06-17 Francois Proulx <francois.proulx@gmail.com>
 	* Added IFrame and SimpleIFrame content types.
 	
