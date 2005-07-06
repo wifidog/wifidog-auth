@@ -172,7 +172,7 @@ switch ($format)
 					$gis = $xmldoc->createElement("gisLatLong");
 					$gis->setAttribute("lat",  $node_row['latitude']);
 					$gis->setAttribute("long",  $node_row['longitude']);
-					$node->appendChild($long);
+					$node->appendChild($gis);
 				}
 			}
 		}

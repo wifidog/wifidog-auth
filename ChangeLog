@@ -1,3 +1,8 @@
+2005-07-05 Francois Proulx <francois.proulx@gmail.com>
+	* Added Google Maps mapping venues_map.php
+	* /js/venues_status_map.js  JavaScript code for Mapping
+	* In beta : tested successfuly with 48 nodes in the Montreal area, loads in a snap
+	
 2005-07-03 Francois Proulx <francois.proulx@gmail.com>
 	* Updated the XML venues status format ( version 1.0, once approved )
 	* Added long / lat fields to nodes table ( for mapping purposes )

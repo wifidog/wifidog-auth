@@ -481,4 +481,16 @@ TD.spreadsheet_user { /*background-color: lightgray;*/ }
 #std_table th { font-size: 14pt; background-color: #e1f5da;}
 #std_table td.item { font-weight: bold; }
 
+/* Google Maps stuff */
+#map_venues_list { 
+	width: 25%; 
+	height: 500px; 
+	float: right; 
+}
+
+#map_frame {
+	width: 72%; 
+	height: 500px
+ }
+
 {/literal}

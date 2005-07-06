@@ -31,6 +31,7 @@ class MainUI
 	private $tool_content; /**<Content to be displayed in the tool pane */
 	private $smarty;
 	private $title;
+	private $html_headers;
 	function __construct()
 	{
 		$this->smarty = new SmartyWifidog();
@@ -42,11 +43,19 @@ class MainUI
 	{
 		$this->main_content = $html;
 	}
+	
 	/** Set the title of the page */
 	public function setTitle($title_string)
 	{
 		$this->title = $title_string;
 	}
+	
+	/** Set the HTML page headers */
+	public function setHtmlHeader($headers_string)
+	{
+		$this->html_headers = $headers_string;
+	}
+	
 	/** Set the section to be displayed in the tool pane */
 	public function setToolSection($section)
 	{
@@ -258,6 +267,8 @@ class MainUI
 		$html .= '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">'."\n";
 		$html .= '<meta http-equiv="Pragma" CONTENT="no-cache">'."\n";
 		$html .= '<meta http-equiv="Expires" CONTENT="-1">'."\n";
+		// Add HTML headers
+		$html .= "{$this->html_headers}";
 		$html .= "<html>\n";
 		$html .= "<head>\n";
 		$html .= "<title>{$this->title}</title>\n";
