@@ -1,4 +1,7 @@
 2005-07-05 Francois Proulx <francois.proulx@gmail.com>
+	* Changed google maps marker icons
+	
+2005-07-05 Francois Proulx <francois.proulx@gmail.com>
 	* Added missing elements in XML exchange format
 	* Stable v1.0 for XML exchange format and Google Maps mapping
 	* Added GMaps constants to config file

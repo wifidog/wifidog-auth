@@ -77,15 +77,15 @@ function parseVenuesStatus(map, venuesList, xmlDoc)
 {
 	var venuesListHtml = "";
 	// Init marker icons
-	var upIcon = createIcon("../images/venues_status_map_up.png", new GSize(22, 34),
-	                        "../images/venues_status_map_blank.png", new GSize(22, 34),
-	                        new GPoint(11, 30), new GPoint(11, 1));
-	var downIcon = createIcon("../images/venues_status_map_down.png", new GSize(22, 34),
-	                          "../images/venues_status_map_blank.png", new GSize(22, 34),
-	                          new GPoint(11, 30), new GPoint(11, 1));
+	var upIcon = createIcon("../images/venues_status_map_up.png", new GSize(20, 34),
+	                        "../images/venues_status_map_shadow.png", new GSize(37, 34),
+	                        new GPoint(10, 20), new GPoint(10, 2));
+	var downIcon = createIcon("../images/venues_status_map_down.png", new GSize(20, 34),
+	                          "../images/venues_status_map_blank.png", new GSize(37, 34),
+	                          new GPoint(10, 20), new GPoint(10, 2));
 	var unknownIcon = createIcon("../images/venues_status_map_unknown.png", new GSize(22, 34),
 	                          "../images/venues_status_map_blank.png", new GSize(22, 34),
-	                          new GPoint(11, 30), new GPoint(11, 1));
+	                          new GPoint(11, 30), new GPoint(11, 2));
 	                          
 	// Parse the XML DOM
 	var venues = xmlDoc.documentElement.getElementsByTagName("venue");
