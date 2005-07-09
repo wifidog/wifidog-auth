@@ -474,7 +474,7 @@ class User implements GenericObject
 	function getConnections()
 	{
 		global $db;
-		$db->ExecSql("SELECT * FROM connections,nodes WHERE user_id='{$this->id}' AND nodes.node_id=connections.node_id ORDER BY timestamp_in", $connections, false);
+		$db->ExecSql("SELECT DISTINCT ON (conn_id) NOW(), * FROM connections NATURAL JOIN users, nodes WHERE users.user_id='{$this->id}' AND nodes.node_id=connections.node_id ORDER BY conn_id, timestamp_in", $connections, false);
 		return $connections;
 	}
 
@@ -511,7 +511,7 @@ class User implements GenericObject
 			if ($connections)
 				foreach ($connections as $connection)
 					if ($connection['token_status'] == TOKEN_UNUSED || $connection['token_status'] == TOKEN_INUSE)
-						Network :: getCurrentNetwork()->getAuthenticator()->logout(array ('conn_id' => $connection['conn_id']), $errmsg);
+						Network :: getCurrentNetwork()->getAuthenticator()->logout($connection, $errmsg);
 		}
 		catch (Exception $e)
 		{
