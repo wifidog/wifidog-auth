@@ -482,7 +482,7 @@ TD.spreadsheet_user { /*background-color: lightgray;*/ }
 #std_table td.item { font-weight: bold; }
 
 /* Google Maps stuff */
-#map_venues_list {
+#map_hotspots_list {
 	width: 25%; 
 	height: 500px;
 	overflow: scroll;

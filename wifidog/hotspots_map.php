@@ -41,7 +41,7 @@ $ui->setHtmlHeader($html_headers);
 // Create HTML body
 $html = "<h1>"._("Hotspots status map")."</h1>\n";
 $html .= _("This page displays a map of the deployed hotspots.")."<br>";
-$html .= _("Legend")." : <img src='images/hotspots_status_map_up.png'> <i>"._("the hotspot is operationnal")."</i> <img src='images/hotspots_status_map_down.png'> <i>"._("the hotspot is down (closed or  maintenance)")."</i><br>";
+$html .= _("Legend")." : <img src='images/hotspots_status_map_up.png'> <i>"._("the hotspot is operationnal")."</i> <img src='images/hotspots_status_map_down.png'> <i>"._("the hotspot is down (closed or under maintenance)")."</i><br>";
 $html .= "<div id=\"map_hotspots_list\"></div>\n";
 $html .= "<div id=\"map_frame\"></div>\n";
 // The onLoad code should only be called once all DIV are created.
