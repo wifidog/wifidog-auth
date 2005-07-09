@@ -25,11 +25,6 @@
  */
 
 define('BASEPATH', './');
-//TODO: Move these constants in Network class, once in database (I guess)
-define('GOOGLE_MAPS_API_KEY', 'ENTER_YOUR_KEY_HERE');
-// Enter center coords ( ie. Montréal )
-define('CENTER_LATITUDE', '45.494511');
-define('CENTER_LONGITUDE', '-73.560285');
 
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'include/common_interface.php';
@@ -38,16 +33,25 @@ require_once BASEPATH.'classes/MainUI.php';
 $ui = new MainUI();
 $ui->setTitle(_("Venues map"));
 
-// Add Google Maps JavaScript
-$html_headers = "<script src=\"http://maps.google.com/maps?file=api&v=1&key=".GOOGLE_MAPS_API_KEY."\" type=\"text/javascript\"></script>";
-$html_headers .= "<script src=\"js/venues_status_map.js\" type=\"text/javascript\"></script>";
+// Add Google Maps JavaScript ( must set config values )
+$html_headers = "<script src=\"http://maps.google.com/maps?file=api&v=1&key=".GMAPS_API_KEY."\" type=\"text/javascript\"></script>";
+$html_headers .= "<script src=\"js/gmaps_venues_status_map.js\" type=\"text/javascript\"></script>";
 $ui->setHtmlHeader($html_headers);
 
 // Create HTML body
-$html = "<div id=\"map_venues_list\"></div>\n";
+$html = "<h1>"._("Venues status map")."</h1>\n";
+$html .= "<div id=\"map_venues_list\"></div>\n";
 $html .= "<div id=\"map_frame\"></div>\n";
 // The onLoad code should only be called once all DIV are created.
-$html .= "<script type=\"text/javascript\">onLoad('hotspot_status.php?format=XML', ".CENTER_LATITUDE.", ".CENTER_LONGITUDE.");</script>\n";
+$html .= "<script type=\"text/javascript\">onLoad('".GMAPS_XML_SOURCE_URL."', ".GMAPS_INITIAL_LATITUDE.", ".GMAPS_INITIAL_LONGITUDE.", ".GMAPS_INITIAL_ZOOM_LEVEL.");</script>\n";
+
+$tool_html = '<p class="indent">'."\n";
+$tool_html .= "<ul class='users_list'>\n";
+$tool_html .= "<li><a href='hotspot_status.php'>"._('Deployed HotSpots status with coordinates')."</a></li>";
+$tool_html .= "</ul>\n";
+$tool_html .= '</p>'."\n";
+
+$ui->setToolContent($tool_html);		
 $ui->setMainContent($html);
 
 $ui->display();

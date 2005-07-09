@@ -29,14 +29,22 @@ require_once BASEPATH.'include/common_interface.php';
 require_once BASEPATH.'classes/Node.php';
 require_once BASEPATH.'classes/MainUI.php';
 
-$smarty->assign("num_valid_users", $stats->getNumValidUsers());
-$smarty->assign("num_online_users", $stats->getNumOnlineUsers($node_id = null));
+$num_valid_users = $stats->getNumValidUsers();
+$num_online_users = $stats->getNumOnlineUsers($node_id = null);
 
 $tool_html = '<ul>'."\n";
 $tool_html .= '<li><a href="'.BASE_SSL_PATH.'change_password.php">'._("Change password").'</a><br>'."\n";
 $tool_html .= '<li><a href="'.BASE_SSL_PATH.'faq.php">'._("I have trouble connecting and I would like some help").'</a><br>'."\n";
 $tool_html .= '</ul>'."\n";
-$body_html = $smarty->fetch("templates/main.html");
+
+$body_html = "<p>"._("The network currently has")." {$num_valid_users} "._("valid users")." {$num_online_users} "._("user(s) are currently online")."</p>";
+$body_html .= "<ul>\n";
+if(defined('GMAPS_VENUES_STATUS_MAP_ENABLED') && GMAPS_VENUES_STATUS_MAP_ENABLED == true)
+	$body_html .= "<li><a href='venues_map.php'>"._('Deployed HotSpots map')."</a></li>";
+$body_html .= "<li><a href='hotspot_status.php'>"._('Deployed HotSpots status with coordinates')."</a></li>";
+$body_html .= "<li><a href='node_list.php'>"._("Full node technical status (includes non-deployed nodes)")."</a></li>";
+$body_html .= "<li><a href='".BASE_SSL_PATH."admin/index.php'>"._("Administration")."</a></li>";
+$body_html .= "</ul>\n";
 
 $ui=new MainUI();
 $ui->setToolContent($tool_html);

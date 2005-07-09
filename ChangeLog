@@ -1,4 +1,13 @@
 2005-07-05 Francois Proulx <francois.proulx@gmail.com>
+	* Added missing elements in XML exchange format
+	* Stable v1.0 for XML exchange format and Google Maps mapping
+	* Added GMaps constants to config file
+	* Unsmartied index.php , added link to map
+	* Check config.php to set corresponding values
+	* You can now use hotspot_status.php?format=XML along with xslt query string parament to convert your XML document
+	* For this to work, You need to have activated XSLT ( see config file )
+	
+2005-07-05 Francois Proulx <francois.proulx@gmail.com>
 	* Added Google Maps mapping venues_map.php
 	* /js/venues_status_map.js  JavaScript code for Mapping
 	* In beta : tested successfuly with 48 nodes in the Montreal area, loads in a snap

@@ -106,6 +106,27 @@ switch ($format)
 					$name = $xmldoc->createElement("name", $node_row['name']);
 					$node->appendChild($name);
 				}
+				
+				// Node deployment status
+				if (!empty ($node_row['node_deployment_status']))
+				{
+					$dep_status = $xmldoc->createElement("deploymentStatus", $node_row['node_deployment_status']);
+					$node->appendChild($dep_status);
+				}
+				
+				// Creation date
+				if (!empty ($node_row['creation_date']))
+				{
+					$creation_date = $xmldoc->createElement("creationDate", $node_row['creation_date']);
+					$node->appendChild($creation_date);
+				}
+				
+				// Last heartbeat
+				if (!empty ($node_row['last_heartbeat_timestamp']))
+				{
+					$creation_date = $xmldoc->createElement("lastHeartbeat", $node_row['last_heartbeat_timestamp']);
+					$node->appendChild($creation_date);
+				}
 
 				// Node Website URL
 				if (!empty ($node_row['home_page_url']))
@@ -180,7 +201,7 @@ switch ($format)
 		ob_clean();
 		
 		// If a XSL transform stylesheet has been specified, try to us it.
-		if(defined('XSLT_SUPPORT') && !empty($_REQUEST['xslt']) && ($xslt_dom = @DomDocument::load($_REQUEST['xslt'])) !== false)
+		if(defined('XSLT_SUPPORT') && XSLT_SUPPORT == true && !empty($_REQUEST['xslt']) && ($xslt_dom = @DomDocument::load($_REQUEST['xslt'])) !== false)
 		{
 			// Load the XSLT
 			$xslt_proc = new XsltProcessor();
@@ -718,8 +739,20 @@ switch ($format)
 		$smarty->assign("num_deployed_nodes", count($node_results));
 
 		require_once BASEPATH.'classes/MainUI.php';
+		
+		if(defined('GMAPS_VENUES_STATUS_MAP_ENABLED') && GMAPS_VENUES_STATUS_MAP_ENABLED == true)
+		{
+			$tool_html = '<p class="indent">'."\n";
+			$tool_html .= "<ul class='users_list'>\n";
+			$tool_html .= "<li><a href='venues_map.php'>"._('Deployed HotSpots map')."</a></li>";
+			$tool_html .= "</ul>\n";
+			$tool_html .= '</p>'."\n";
+		}
+		else
+			$tool_html = "";
+		
 		$ui = new MainUI();
-		//$ui->setToolSection('ADMIN');
+		$ui->setToolContent($tool_html);
 		$ui->setTitle(_("Hotspot list"));
 		$ui->setMainContent($smarty->fetch("templates/hotspot_status.html"));
 		$ui->display();
