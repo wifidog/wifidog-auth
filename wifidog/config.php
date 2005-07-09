@@ -32,16 +32,7 @@ define('PHLICKR_SUPPORT', false);
 /* Normally, the database cleanup routines will be called everytime a portal page is displayed.  If you set this to true, you must set a cron job on the server which will execute the script cron/cleanup.php. */
 define('CONF_USE_CRON_FOR_DB_CLEANUP', false);
 
-/* XSLT for Hotspot status page */
-define('XSLT_SUPPORT', false);
-/* Google Maps mapping hotspots_map.php */
-define('GMAPS_VENUES_HOTSPOTS_MAP_ENABLED', false);
-define('GMAPS_XML_SOURCE_URL', 'hotspot_status.php?format=XML');
-define('GMAPS_API_KEY', 'ENTER_YOUR_KEY_HERE');
-// Enter center coords ( ie. Montréal )
-define('GMAPS_INITIAL_LATITUDE', '45.494511');
-define('GMAPS_INITIAL_LONGITUDE', '-73.560285');
-define('GMAPS_INITIAL_ZOOM_LEVEL', '5');
+
 
 /* Use a custom signup system instead of the built in signup page. */
 //define("CUSTOM_SIGNUP_URL","https://www.bcwireless.net/hotspot/signup.php");
