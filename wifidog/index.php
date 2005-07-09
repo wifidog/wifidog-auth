@@ -39,7 +39,7 @@ $tool_html .= '</ul>'."\n";
 
 $body_html = "<p>"._("The network currently has")." {$num_valid_users} "._("valid users")." {$num_online_users} "._("user(s) are currently online")."</p>";
 $body_html .= "<ul>\n";
-if(defined('GMAPS_VENUES_HOTSPOTS_MAP_ENABLED') && GMAPS_VENUES_HOTSPOTS_MAP_ENABLED == true)
+if(defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED == true)
 	$body_html .= "<li><a href='hotspots_map.php'>"._('Deployed HotSpots map')."</a></li>";
 $body_html .= "<li><a href='hotspot_status.php'>"._('Deployed HotSpots status with coordinates')."</a></li>";
 $body_html .= "<li><a href='node_list.php'>"._("Full node technical status (includes non-deployed nodes)")."</a></li>";

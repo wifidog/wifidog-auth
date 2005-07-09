@@ -740,7 +740,7 @@ switch ($format)
 
 		require_once BASEPATH.'classes/MainUI.php';
 		
-		if(defined('GMAPS_VENUES_HOTSPOTS_MAP_ENABLED') && GMAPS_VENUES_HOTSPOTS_MAP_ENABLED == true)
+		if(defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED == true)
 		{
 			$tool_html = '<p class="indent">'."\n";
 			$tool_html .= "<ul class='users_list'>\n";
