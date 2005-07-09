@@ -19,7 +19,7 @@
  * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
  *                                                                  *
  \********************************************************************/
-/**@file hotspot_status.php
+/**@file hotspots_map.php
  * Network status page
  * @author Copyright (C) 2005 François Proulx
  */
@@ -31,16 +31,18 @@ require_once BASEPATH.'include/common_interface.php';
 require_once BASEPATH.'classes/MainUI.php';
 
 $ui = new MainUI();
-$ui->setTitle(_("Venues map"));
+$ui->setTitle(_("Hotspots status map"));
 
 // Add Google Maps JavaScript ( must set config values )
 $html_headers = "<script src=\"http://maps.google.com/maps?file=api&v=1&key=".GMAPS_API_KEY."\" type=\"text/javascript\"></script>";
-$html_headers .= "<script src=\"js/gmaps_venues_status_map.js\" type=\"text/javascript\"></script>";
+$html_headers .= "<script src=\"js/gmaps_hotspots_status_map.js\" type=\"text/javascript\"></script>";
 $ui->setHtmlHeader($html_headers);
 
 // Create HTML body
-$html = "<h1>"._("Venues status map")."</h1>\n";
-$html .= "<div id=\"map_venues_list\"></div>\n";
+$html = "<h1>"._("Hotspots status map")."</h1>\n";
+$html .= _("This page displays a map of the deployed hotspots.")."<br>";
+$html .= _("Legend")." : <img src='images/hotspots_status_map_up.png'> <i>"._("the hotspot is operationnal")."</i> <img src='images/hotspots_status_map_down.png'> <i>"._("the hotspot is down (closed or  maintenance)")."</i><br>";
+$html .= "<div id=\"map_hotspots_list\"></div>\n";
 $html .= "<div id=\"map_frame\"></div>\n";
 // The onLoad code should only be called once all DIV are created.
 $html .= "<script type=\"text/javascript\">onLoad('".GMAPS_XML_SOURCE_URL."', ".GMAPS_INITIAL_LATITUDE.", ".GMAPS_INITIAL_LONGITUDE.", ".GMAPS_INITIAL_ZOOM_LEVEL.");</script>\n";

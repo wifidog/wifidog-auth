@@ -17,7 +17,7 @@
  * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
  *                                                                  *
  \********************************************************************/
-/**@file gmaps_venues_status_map.js
+/**@file gmaps_hotspots_status_map.js
  * JavaScript functions to display a hotspot status map using Google Maps
  * @author Copyright (C) 2005 François Proulx
  */
@@ -25,12 +25,12 @@
 // Global vars
 var markers = Array();
 
-function onLoad(venues_status_xml_url, lat, lng, zoom) 
+function onLoad(hotspots_status_xml_url, lat, lng, zoom) 
 { 
 	// Create the map
 	var map = createMap(new GPoint(lng, lat), zoom);
-	var venuesList = document.getElementById("map_venues_list");
-	loadVenuesStatus(map, venuesList, venues_status_xml_url);
+	var hotspotsList = document.getElementById("map_hotspots_list");
+	loadVenuesStatus(map, hotspotsList, hotspots_status_xml_url);
 }
 
 function createMap(centerPoint, zoomLevel)
@@ -59,7 +59,7 @@ function activateShowCoords(map)
 	});
 }
 
-function loadVenuesStatus(map, venuesList, document_url)
+function loadVenuesStatus(map, hotspotsList, document_url)
 {
 	// Download the data in venues status XML
 	var request = GXmlHttp.create();
@@ -68,23 +68,23 @@ function loadVenuesStatus(map, venuesList, document_url)
 	request.onreadystatechange = function() 
 	{
 		if (request.readyState == 4)
-			parseVenuesStatus(map, venuesList, request.responseXML);
+			parseVenuesStatus(map, hotspotsList, request.responseXML);
 	}
 	request.send(null);
 }
 
-function parseVenuesStatus(map, venuesList, xmlDoc)
+function parseVenuesStatus(map, hotspotsList, xmlDoc)
 {
 	var venuesListHtml = "";
 	// Init marker icons
-	var upIcon = createIcon("../images/venues_status_map_up.png", new GSize(20, 34),
-	                        "../images/venues_status_map_shadow.png", new GSize(37, 34),
+	var upIcon = createIcon("../images/hotspots_status_map_up.png", new GSize(20, 34),
+	                        "../images/hotspots_status_map_shadow.png", new GSize(37, 34),
 	                        new GPoint(10, 20), new GPoint(10, 1));
-	var downIcon = createIcon("../images/venues_status_map_down.png", new GSize(20, 34),
-	                          "../images/venues_status_map_shadow.png", new GSize(37, 34),
+	var downIcon = createIcon("../images/hotspots_status_map_down.png", new GSize(20, 34),
+	                          "../images/hotspots_status_map_shadow.png", new GSize(37, 34),
 	                          new GPoint(10, 20), new GPoint(10, 1));
-	var unknownIcon = createIcon("../images/venues_status_map_unknown.png", new GSize(22, 34),
-	                          "../images/venues_status_map_blank.png", new GSize(22, 34),
+	var unknownIcon = createIcon("../images/hotspots_status_map_unknown.png", new GSize(22, 34),
+	                          "../images/hotspots_status_map_blank.png", new GSize(22, 34),
 	                          new GPoint(11, 30), new GPoint(11, 1));
 	                          
 	// Parse the XML DOM
@@ -104,17 +104,17 @@ function parseVenuesStatus(map, venuesList, xmlDoc)
 				switch(status[0].firstChild.nodeValue)
 				{
 					case "up":
-						markerIcon = upIcon; // Venus is up
+						markerIcon = upIcon; // Hotspot is up
 						break;
 					case "down":
-						markerIcon = downIcon; // Venus is down
+						markerIcon = downIcon; // Hotspot is down
 						break;
 					default:
-						markerIcon = unknownIcon; // Unknown venue status
+						markerIcon = unknownIcon; // Unknown hotspot status
 				}
 			}
 			else
-				markerIcon = unknownIcon; // Unknown venue status
+				markerIcon = unknownIcon; // Unknown hotspot status
 			
 			// Prepare fragment that will go in the sidebar
 			var html = createHtmlFromVenueNode(venues[i], markerIcon);
@@ -129,7 +129,7 @@ function parseVenuesStatus(map, venuesList, xmlDoc)
 	}
 
 	// Load the prepared HTML fragment in the right-hand listphoto
-	venuesList.innerHTML = venuesListHtml;
+	hotspotsList.innerHTML = venuesListHtml;
 }
 
 function createIcon(imageUrl, iSize, shadowUrl, sSize, iconAnchor, bubbleAnchor)
