@@ -740,11 +740,11 @@ switch ($format)
 
 		require_once BASEPATH.'classes/MainUI.php';
 		
-		if(defined('GMAPS_VENUES_STATUS_MAP_ENABLED') && GMAPS_VENUES_STATUS_MAP_ENABLED == true)
+		if(defined('GMAPS_VENUES_HOTSPOTS_MAP_ENABLED') && GMAPS_VENUES_HOTSPOTS_MAP_ENABLED == true)
 		{
 			$tool_html = '<p class="indent">'."\n";
 			$tool_html .= "<ul class='users_list'>\n";
-			$tool_html .= "<li><a href='venues_map.php'>"._('Deployed HotSpots map')."</a></li>";
+			$tool_html .= "<li><a href='hotspots_map.php'>"._('Deployed HotSpots map')."</a></li>";
 			$tool_html .= "</ul>\n";
 			$tool_html .= '</p>'."\n";
 		}
