@@ -44,8 +44,12 @@ $html .= _("This page displays a map of the deployed hotspots.")."<br>";
 $html .= _("Legend")." : <img src='images/hotspots_status_map_up.png'> <i>"._("the hotspot is operational")."</i> <img src='images/hotspots_status_map_down.png'> <i>"._("the hotspot is down (closed or under maintenance)")."</i><br>";
 $html .= "<div id=\"map_hotspots_list\"></div>\n";
 $html .= "<div id=\"map_frame\"></div>\n";
+$ui->setMainContent($html);
+
+
 // The onLoad code should only be called once all DIV are created.
-$html .= "<script type=\"text/javascript\">onLoad('".GMAPS_XML_SOURCE_URL."', ".GMAPS_INITIAL_LATITUDE.", ".GMAPS_INITIAL_LONGITUDE.", ".GMAPS_INITIAL_ZOOM_LEVEL.");</script>\n";
+$script = "<script type=\"text/javascript\">onLoad('".GMAPS_XML_SOURCE_URL."', ".GMAPS_INITIAL_LATITUDE.", ".GMAPS_INITIAL_LONGITUDE.", ".GMAPS_INITIAL_ZOOM_LEVEL.");</script>\n";
+$ui->addFooterScript($script);
 
 $tool_html = '<p class="indent">'."\n";
 $tool_html .= "<ul class='users_list'>\n";
@@ -54,7 +58,6 @@ $tool_html .= "</ul>\n";
 $tool_html .= '</p>'."\n";
 
 $ui->setToolContent($tool_html);		
-$ui->setMainContent($html);
 
 $ui->display();
 

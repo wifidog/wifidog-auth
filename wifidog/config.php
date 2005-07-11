@@ -65,7 +65,7 @@ define('MAGPIE_REL_PATH',  'lib/magpie/');
 define('SMARTY_REL_PATH',  'lib/smarty/');
 define('PHLICKR_REL_PATH',  'lib/');
 //define('NETWORK_RSS_URL', 'http://wifinetnews.com/index.rdf');
-define('NETWORK_RSS_URL', 'http://patricktanguay.com/isf/atom.xml, http://auth.ilesansfil.org/hotspot_status.php?format=RSS');
+define('NETWORK_RSS_URL', 'http://www.ilesansfil.org/tiki-articles_rss.php?ver=2, http://auth.ilesansfil.org/hotspot_status.php?format=RSS');
 define('UNKNOWN_HOTSPOT_RSS_URL', '');
 
 define('LOCAL_CONTENT_REL_PATH', 'local_content/');//Path to the directory containing the different node specific directories.  Relative to BASE_URL_PATH

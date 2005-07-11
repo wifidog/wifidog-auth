@@ -32,6 +32,7 @@ class MainUI
 	private $smarty;
 	private $title;
 	private $html_headers;
+	private $footer_scripts = array();
 	function __construct()
 	{
 		$this->smarty = new SmartyWifidog();
@@ -48,6 +49,14 @@ class MainUI
 	public function setTitle($title_string)
 	{
 		$this->title = $title_string;
+	}
+	
+	
+	/** Add content at the very end of the <body>.  This is NOT meant to add footers or other display content, it is meant to add <script></script> tag pairs that have to be executed only once the page is loaded.
+	 * @param $script A piece of script surrounded by <script></script> tags. */
+	public function addFooterScript($script)
+	{
+		$this->footer_scripts[] = $script;
 	}
 	
 	/** Set the HTML page headers */
@@ -297,11 +306,15 @@ class MainUI
 		$html .= "</div>"."\n"; //End main_section
         
 		$html .= '</div>'."\n"; //End outer_container
+		
+		foreach ($this->footer_scripts as $script)
+		{
+			$html .= "$script\n";
+		}
 		$html .= "</body>"."\n";
 		$html .= "</html>"."\n";
 		echo $html;
 
-		//$this->smarty->display(DEFAULT_CONTENT_SMARTY_PATH."footer.html");
 	}
     
     function displayError($errmsg)

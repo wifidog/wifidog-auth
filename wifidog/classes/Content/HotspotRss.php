@@ -56,12 +56,12 @@ class HotspotRss extends Content
 			$node=Node::getCurrentNode();
 			$hotspot_rss_url = $node->getRSSURL();
 			
-			//      $old_error_level = error_reporting(E_ERROR);
-			define('MAGPIE_DIR', BASEPATH.MAGPIE_REL_PATH);
-			//    require_once(MAGPIE_DIR.'rss_fetch.inc');
-			//    define('MAGPIE_DEBUG', 0);
 			require_once BASEPATH.'classes/RssPressReview.inc';
+			RssPressReview::setMagpieDir(BASEPATH.MAGPIE_REL_PATH);
+						RssPressReview::setOutputEncoding("UTF-8");
 			$press_review = new RssPressReview;
+
+			
 			$tokens = "/[\s,]+/";
 			$network_rss_sources = NETWORK_RSS_URL;
 			$network_rss_html = null;
@@ -73,16 +73,17 @@ class HotspotRss extends Content
 				//print_r($extract_array);
 				foreach ($extract_array as $source)
 				{
-					$network_rss_sources_array[] = array ('url' => $source, 'default_publication_interval' => 7 * 24 * 3600);
+				$press_review->addSourceFeed($source,  7 * 24 * 3600);
 				}
                 try {
-				    $network_rss_html = $press_review->get_rss_html($network_rss_sources_array, 5);
+				    $network_rss_html = $press_review->get_rss_html(5);
                 } catch(Exception $e)
                 {
                     $network_rss_html = _("Could not get network RSS feed");
                 }
 			}
-
+			
+			$press_review = new RssPressReview;
 			$hotspot_rss_html = null;
 			if (!empty ($hotspot_rss_url))
 			{
@@ -91,54 +92,19 @@ class HotspotRss extends Content
 				//print_r($extract_array);
 				foreach ($extract_array as $source)
 				{
-					$hotspot_rss_sources_array[] = array ('url' => $source, 'default_publication_interval' => 7 * 24 * 3600);
+					$press_review->addSourceFeed($source,  7 * 24 * 3600);
 				}
                 try {
-				    $hotspot_rss_html = $press_review->get_rss_html($hotspot_rss_sources_array, 5);
+				    $hotspot_rss_html = $press_review->get_rss_html(5);
                 } catch(Exception $e)
                 {
                     $hotspot_rss_html = _("Could not get hotspot RSS feed");
                 }
 			}
-			/**
-			 @return the generated html or the error message or an empty string if called without a URL.
-			*/
-			function generate_rss_html($url)
-			{
-				$rss_html = '';
-				if (!empty ($url))
-				{
-					$rss = fetch_rss($url);
-					$rss_html = '';
-					if (!$rss)
-					{
-						$rss_html .= _("Error: ").magpie_error();
-					}
-					else
-					{
-						//$rss->show_channel();
-						//$rss->show_list();
-						$rss_html .= "<p>"._('Channel: ').$rss->channel['title']."</p>\n";
-						$rss_html .= "<ul>\n";
-						foreach ($rss->items as $item)
-						{
-							//echo '<pre>'; print_r($item); 	echo '</pre>';
-							$href = $item['link'];
-							$title = $item['title'];
-							$summary = $item['summary'];
-							$rss_html .= "<li><emp><a href=$href>$title</a></emp> $summary</li>\n";
-						}
-						$rss_html .= "</ul>\n";
-					}
-				}
-				return $rss_html;
-			}
 
-			//$network_rss_html=generate_rss_html(NETWORK_RSS_URL);    
 			//echo $networkrss_html;
 			$html .= $network_rss_html;
 
-			//$hotspot_rss_html=generate_rss_html($hotspot_rss_url);    
 			//echo $hotspot_rss_html;
 			$html .= $hotspot_rss_html;
 			//   error_reporting($old_error_level);

@@ -153,4 +153,11 @@ function get_guid()
   return  md5(uniqid(rand(), true));
 }
 
+/** like the php function print_r(), but the way it was meant to be... */
+function pretty_print_r($param)
+{
+	echo "\n<pre>\n";
+	print_r($param);
+	echo "\n</pre>\n";
+}
 ?>

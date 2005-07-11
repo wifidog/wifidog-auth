@@ -1,3 +1,8 @@
+2005-07-11 Benoit Grégoire  <bock@step.polymtl.ca>
+	* classes/RssPressReview.php: Begin rewrite. 
+	* classes/MainUI.php: Add addFooterScript() function.
+	* venues_map.php:  Workaround the IE DOM problem. 
+
 2005-07-05 Francois Proulx <francois.proulx@gmail.com>
 	* Changed wording in hotspots status page added legend
 	
