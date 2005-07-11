@@ -36,8 +36,7 @@ else
 $db->ExecSql("SELECT *, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, EXTRACT(epoch FROM creation_date) as creation_date_epoch, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up FROM nodes WHERE node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE' ORDER BY creation_date", $node_results, false);
 switch ($format)
 {
-	// XML format v1.0 by Françcois proulx <francois.proulx@gmail.com>
-	//TODO: rough draft, should be moved to different classes once stabilized
+	// XML format v1.0 by François proulx <francois.proulx@gmail.com>
 	case "XML":
 		require_once BASEPATH.'classes/Network.php';
 		require_once BASEPATH.'classes/Node.php';
@@ -744,7 +743,7 @@ switch ($format)
 		{
 			$tool_html = '<p class="indent">'."\n";
 			$tool_html .= "<ul class='users_list'>\n";
-			$tool_html .= "<li><a href='hotspots_map.php'>"._('Deployed HotSpots map')."</a></li>";
+			$tool_html .= "<li><a href='".BASE_NON_SSL_PATH."hotspots_map.php'>"._('Deployed HotSpots map')."</a></li>";
 			$tool_html .= "</ul>\n";
 			$tool_html .= '</p>'."\n";
 		}

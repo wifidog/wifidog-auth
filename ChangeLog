@@ -1,3 +1,6 @@
+2005-07-11 Francois Proulx <francois.proulx@gmail.com>
+	* Changed link to hotspots map using NON ssl because Google Keys are sensitive to the whole path.
+	
 2005-07-11 Benoit Grégoire  <bock@step.polymtl.ca>
 	* classes/RssPressReview.php: Begin rewrite. 
 	* classes/MainUI.php: Add addFooterScript() function.
