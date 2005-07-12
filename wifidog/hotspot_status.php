@@ -52,7 +52,7 @@ switch ($format)
 		$xmldoc->formatOutput = true;
 		
 		// Root node
-		$hotspot_status_root_node = $xmldoc->createElement("wifidogVenuesStatus");
+		$hotspot_status_root_node = $xmldoc->createElement("wifidogHotspotsStatus");
 		$hotspot_status_root_node->setAttribute('version', '1.0');
 		$xmldoc->appendChild($hotspot_status_root_node);
 		
@@ -69,130 +69,151 @@ switch ($format)
 		$network_metadata_node->appendChild($network_url_node);
 		$network_mail_node = $xmldoc->createElement("techSupportEmail", TECH_SUPPORT_EMAIL);
 		$network_metadata_node->appendChild($network_mail_node);
-		$nodes_count_node = $xmldoc->createElement("venuesCount", count($node_results));
+		$nodes_count_node = $xmldoc->createElement("hotspotsCount", count($node_results));
 		$network_metadata_node->appendChild($nodes_count_node);
 		$network_validusers_node = $xmldoc->createElement("validSubscribedUsersCount", $stats->getNumValidUsers());
 		$network_metadata_node->appendChild($network_validusers_node);
 		
 		// Get number of online users
-		$online_users_count = 0;
-		if ($node_results)
-			foreach ($node_results as $node_row)
-				$online_users_count = $stats->getNumOnlineUsers($node_row['node_id']);
-			
+		$online_users_count = $stats->getNumOnlineUsers($node_id = null);
 		$network_onlineusers_node = $xmldoc->createElement("onlineUsersCount", $online_users_count);
 		$network_metadata_node->appendChild($network_onlineusers_node);
 		
-		
 		if ($node_results)
 		{
-			// Nodes statusadata
-			$nodes_status_node = $xmldoc->createElement("venuesMetadata");
-			$nodes_status_node = $hotspot_status_root_node->appendChild($nodes_status_node);
+			// Hotspots metadata
+			$hotspots_metadata_node = $xmldoc->createElement("hotspotsMetadata");
+			$hotspots_metadata_node = $hotspot_status_root_node->appendChild($hotspots_metadata_node);
 			
 			foreach ($node_results as $node_row)
 			{
-				$node = $xmldoc->createElement("venue");
-				$node = $nodes_status_node->appendChild($node);
+				$hotspot = $xmldoc->createElement("hotspot");
+				$hotspot = $hotspots_metadata_node->appendChild($hotspot);
 				
-				// Node ID
-				$id = $xmldoc->createElement("venueId", $node_row['node_id']);
-				$node->appendChild($id);
+				// Hotspot ID
+				$id = $xmldoc->createElement("hotspotId", $node_row['node_id']);
+				$hotspot->appendChild($id);
 				
-				// Node name
+				// Hotspot name
 				if (!empty ($node_row['name']))
 				{
 					$name = $xmldoc->createElement("name", $node_row['name']);
-					$node->appendChild($name);
+					$hotspot->appendChild($name);
 				}
 				
-				// Node deployment status
-				if (!empty ($node_row['node_deployment_status']))
+				// (1..n) A Hotspot has many node
+				// WARNING For now, we are simply duplicating the hotspot data in node
+				// Until wifidog implements full abstractiong hotspot vs nodes
+				$nodes = $xmldoc->createElement("nodesMetadata");
+				$hotspot->appendChild($nodes);
+				if($nodes)
 				{
-					$dep_status = $xmldoc->createElement("deploymentStatus", $node_row['node_deployment_status']);
-					$node->appendChild($dep_status);
+					$node = $xmldoc->createElement("node");
+					$nodes->appendChild($node);
+					
+					// Node ID
+					$id = $xmldoc->createElement("nodeId", $node_row['node_id']);
+					$node->appendChild($id, $node_row['node_id']);
+					
+					if (!empty ($node_row['creation_date']))
+					{
+						$creation_date = $xmldoc->createElement("creationDate", $node_row['creation_date']);
+						$node->appendChild($creation_date);
+					}
+					
+					if (!empty ($node_row['node_deployment_status']) && $node_row['node_deployment_status'] != 'NON_WIFIDOG_NODE')
+					{
+						if ($node_row['is_up'] == 't')
+							$status = $xmldoc->createElement("status", "up");
+						else
+							$status = $xmldoc->createElement("status", "down");
+						$node->appendChild($status);
+					}
+					
+					if (!empty ($node_row['longitude']) && !empty ($node_row['latitude']))
+					{
+						$gis = $xmldoc->createElement("gisLatLong");
+						$gis->setAttribute("lat",  $node_row['latitude']);
+						$gis->setAttribute("long",  $node_row['longitude']);
+						$node->appendChild($gis);
+					}
 				}
 				
-				// Creation date
+				// Hotspot opening date ( for now it's called creation_date )
 				if (!empty ($node_row['creation_date']))
 				{
-					$creation_date = $xmldoc->createElement("creationDate", $node_row['creation_date']);
-					$node->appendChild($creation_date);
-				}
-				
-				// Last heartbeat
-				if (!empty ($node_row['last_heartbeat_timestamp']))
-				{
-					$creation_date = $xmldoc->createElement("lastHeartbeat", $node_row['last_heartbeat_timestamp']);
-					$node->appendChild($creation_date);
+					$opening_date = $xmldoc->createElement("openingDate", $node_row['creation_date']);
+					$hotspot->appendChild($opening_date);
 				}
 
-				// Node Website URL
+				// Hotspot Website URL
 				if (!empty ($node_row['home_page_url']))
 				{
 					$url = $xmldoc->createElement("webSiteUrl", $node_row['home_page_url']);
-					$node->appendChild($url);
+					$hotspot->appendChild($url);
 				}
 				
-				// Node heartbeat
+				// Hotspot global status
 				if (!empty ($node_row['node_deployment_status']) && $node_row['node_deployment_status'] != 'NON_WIFIDOG_NODE')
 				{
+					// Until we implement the complete node / hotspot paradigm, 
+					// we are simply stating that up = 100% and down = 0%
 					if ($node_row['is_up'] == 't')
-						$status = $xmldoc->createElement("status", "up");
+						$status = $xmldoc->createElement("globalStatus", "100");
 					else
-						$status = $xmldoc->createElement("status", "down");
-					$node->appendChild($status);
+						$status = $xmldoc->createElement("globalStatus", "0");
+					$hotspot->appendChild($status);
 				}
 				
 				// Description
 				if (!empty ($node_row['description']))
 				{
 					$desc = $xmldoc->createElement("description", $node_row['description']);
-					$node->appendChild($desc);
+					$hotspot->appendChild($desc);
 				}
 
 				// Map Url
 				if (!empty ($node_row['map_url']))
 				{
 					$map_url = $xmldoc->createElement("mapUrl", htmlspecialchars($node_row['map_url'], ENT_QUOTES));
-					$node->appendChild($map_url);
+					$hotspot->appendChild($map_url);
 				}
 				
 				// Mass transit info
 				if (!empty ($node_row['mass_transit_info']))
 				{
 					$transit = $xmldoc->createElement("massTransitInfo", $node_row['mass_transit_info']);
-					$node->appendChild($transit);
+					$hotspot->appendChild($transit);
 				}
 				
 				// Contact e-mail
 				if (!empty ($node_row['public_email']))
 				{
 					$contact_email = $xmldoc->createElement("contactEmail", $node_row['public_email']);
-					$node->appendChild($contact_email);
+					$hotspot->appendChild($contact_email);
 				}
 				
 				// Contact phone
 				if (!empty ($node_row['public_phone_number']))
 				{
 					$contact_phone = $xmldoc->createElement("contactPhoneNumber", $node_row['public_phone_number']);
-					$node->appendChild($contact_phone);
+					$hotspot->appendChild($contact_phone);
 				}
 				
 				// Street address
 				if (!empty ($node_row['street_address']))
 				{
 					$street_addr = $xmldoc->createElement("streetAddress", $node_row['street_address']);
-					$node->appendChild($street_addr);
+					$hotspot->appendChild($street_addr);
 				}
 				
 				// Long / Lat
 				if (!empty ($node_row['longitude']) && !empty ($node_row['latitude']))
 				{
-					$gis = $xmldoc->createElement("gisLatLong");
-					$gis->setAttribute("lat",  $node_row['latitude']);
-					$gis->setAttribute("long",  $node_row['longitude']);
-					$node->appendChild($gis);
+					$gisCenter = $xmldoc->createElement("gisCenterLatLong");
+					$gisCenter->setAttribute("lat",  $node_row['latitude']);
+					$gisCenter->setAttribute("long",  $node_row['longitude']);
+					$hotspot->appendChild($gisCenter);
 				}
 			}
 		}

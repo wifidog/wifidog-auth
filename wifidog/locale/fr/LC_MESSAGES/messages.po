@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-06 10:35-0400\n"
+"POT-Creation-Date: 2005-07-12 18:16-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,6 +61,7 @@ msgstr "Mot de passe perdu"
 #: smarty.txt:9 smarty.txt:27 smarty.txt:26 smarty.txt:29 smarty.txt:109
 #: smarty.txt:110 smarty.txt:107 smarty.txt:105 ../index.php:36 smarty.txt:77
 #: ../user_profile.php:34
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/index.php:36
 msgid "Change password"
 msgstr "Changer mon mot de passe"
 
@@ -159,26 +160,32 @@ msgstr "Portail"
 
 #: smarty.txt:24 smarty.txt:2 smarty.txt:27 smarty.txt:5 smarty.txt:60
 #: smarty.txt:58 smarty.txt:59 smarty.txt:31
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/index.php:40
 msgid "The network currently has"
 msgstr "Le r&eacute;seau a pr&eacute;sentement"
 
 #: smarty.txt:25 smarty.txt:3 smarty.txt:28 smarty.txt:6 smarty.txt:61
 #: smarty.txt:59 smarty.txt:60 smarty.txt:32
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/index.php:40
 msgid "valid users"
 msgstr "utilisateurs valides"
 
 #: smarty.txt:26 smarty.txt:4 smarty.txt:29 smarty.txt:7 smarty.txt:62
 #: smarty.txt:60 smarty.txt:61 smarty.txt:33
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/index.php:40
 msgid "user(s) are currently online"
 msgstr "utilisateurs pr&eacute;sentement en ligne"
 
 #: smarty.txt:27 smarty.txt:5 smarty.txt:30 smarty.txt:8 smarty.txt:63
 #: smarty.txt:61 smarty.txt:62 smarty.txt:34
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspots_map.php:56
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/index.php:44
 msgid "Deployed HotSpots status with coordinates"
 msgstr "Noeuds sans-fil d&eacute;ploy&eacute;s avec coordonn&eacute;es"
 
 #: smarty.txt:28 smarty.txt:6 smarty.txt:31 smarty.txt:9 smarty.txt:64
 #: smarty.txt:62 smarty.txt:63 smarty.txt:35
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/index.php:45
 msgid "Full node technical status (includes non-deployed nodes)"
 msgstr ""
 "Status technique compl&egrave;te des noeuds (incluant les noeuds non-"
@@ -190,6 +197,7 @@ msgstr "Gestion de mon compte"
 
 #: smarty.txt:30 smarty.txt:8 smarty.txt:7 smarty.txt:32 smarty.txt:10
 #: smarty.txt:65 smarty.txt:63 smarty.txt:64 smarty.txt:36
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/index.php:46
 msgid "Administration"
 msgstr ""
 
@@ -334,6 +342,8 @@ msgstr ""
 #: ../hotspot_status.php:94 ../hotspot_status.php:93 ../hotspot_status.php:86
 #: ../hotspot_status.php:339 ../hotspot_status.php:328
 #: ../hotspot_status.php:85 ../hotspot_status.php:327
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspot_status.php:289
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspot_status.php:545
 msgid "Copyright "
 msgstr "Tous droits réservés "
 
@@ -342,6 +352,8 @@ msgstr "Tous droits réservés "
 #: ../hotspot_status.php:484 ../hotspot_status.php:225
 #: ../hotspot_status.php:466 ../hotspot_status.php:224
 #: ../hotspot_status.php:465
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspot_status.php:437
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspot_status.php:692
 msgid "Address:"
 msgstr "Adresse:"
 
@@ -349,6 +361,8 @@ msgstr "Adresse:"
 #: ../hotspot_status.php:231 ../hotspot_status.php:240
 #: ../hotspot_status.php:493 ../hotspot_status.php:232
 #: ../hotspot_status.php:473 ../hotspot_status.php:472
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspot_status.php:446
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspot_status.php:701
 msgid "Mass transit:"
 msgstr "Transport en commun:"
 
@@ -829,7 +843,7 @@ msgid "Welcome! Hotspot:"
 msgstr "Bienvenue! Noeud sans-fil:"
 
 #: ../index.php:34 ../index.php:33 ../index.php:42 ../classes/MainUI.php:37
-#: ../index.php:43
+#: ../index.php:43 /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/index.php:51
 msgid "authentication server"
 msgstr "serveur d'authentification"
 
@@ -1253,6 +1267,7 @@ msgstr "cliquer ici."
 
 #: smarty.txt:52 smarty.txt:48 smarty.txt:38 smarty.txt:37 ../index.php:37
 #: ../login/index.php:160 ../user_profile.php:35 ../login/index.php:164
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/index.php:37
 msgid "I have trouble connecting and I would like some help"
 msgstr ""
 "J'ai des difficult&eacute; &agrave; me brancher et je voudrais de l'aide"
@@ -1374,12 +1389,16 @@ msgstr "Ajouter"
 #: ../hotspot_status.php:60 ../hotspot_status.php:313
 #: ../hotspot_status.php:302 ../hotspot_status.php:59
 #: ../hotspot_status.php:301
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspot_status.php:263
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspot_status.php:519
 msgid ": Newest HotSpots"
 msgstr ": Points d'accès les plus récents"
 
 #: ../hotspot_status.php:72 ../hotspot_status.php:325
 #: ../hotspot_status.php:314 ../hotspot_status.php:71
 #: ../hotspot_status.php:313
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspot_status.php:275
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspot_status.php:531
 msgid "WiFiDog list of the most recent HotSpots opened by the network: "
 msgstr ""
 "La liste WiFiDog des points d'accès les plus récents ouverts par le réseau: "
@@ -1387,12 +1406,16 @@ msgstr ""
 #: ../hotspot_status.php:235 ../hotspot_status.php:488
 #: ../hotspot_status.php:228 ../hotspot_status.php:469
 #: ../hotspot_status.php:227 ../hotspot_status.php:468
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspot_status.php:441
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspot_status.php:696
 msgid "See Map"
 msgstr "Voir carte"
 
 #: ../hotspot_status.php:245 ../hotspot_status.php:498
 #: ../hotspot_status.php:236 ../hotspot_status.php:477
 #: ../hotspot_status.php:235 ../hotspot_status.php:476
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspot_status.php:451
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspot_status.php:706
 msgid "Contact:"
 msgstr "Contact :"
 
@@ -2381,6 +2404,7 @@ msgid "Picture preview"
 msgstr "Aperçu de l'image"
 
 #: ../hotspot_status.php:532 ../hotspot_status.php:531
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspot_status.php:776
 msgid "Hotspot list"
 msgstr "Liste des points d'accès"
 
@@ -3066,9 +3090,40 @@ msgid ""
 "narrative anytime by clicking on \"Read Narrative\", or you can read the "
 "narratives generated by other users by going to \"Archives\"."
 msgstr ""
-"Inscrivez-vous à Pattern Language en cliquant le lien ci-dessous. Une fois que vous "
-"serez inscrits vous recevrez un fragment de texte à chaque ouverture de session dans un "
-"point d'accès participant dans la ville de Montréal. Ces fragments de texte s'accumuleront "
-"pour former un récit unique pour chaque usager. Vous pouvez lire votre récit à tout moment "
-"en cliquant sur \"Lire mon récit\", our vous pouvez lire les récits créés par les autres usagers "
-"en cliquant \"Archives\"."
+"Inscrivez-vous à Pattern Language en cliquant le lien ci-dessous. Une fois "
+"que vous serez inscrits vous recevrez un fragment de texte à chaque "
+"ouverture de session dans un point d'accès participant dans la ville de "
+"Montréal. Ces fragments de texte s'accumuleront pour former un récit unique "
+"pour chaque usager. Vous pouvez lire votre récit à tout moment en cliquant "
+"sur \"Lire mon récit\", our vous pouvez lire les récits créés par les autres "
+"usagers en cliquant \"Archives\"."
+
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspots_map.php:34
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspots_map.php:42
+msgid "Hotspots status map"
+msgstr "Carte des points d'accès déployés"
+
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspots_map.php:43
+msgid "This page displays a map of the deployed hotspots."
+msgstr "Cette page propose une carte des points d'accès déployés."
+
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspots_map.php:44
+msgid "Legend"
+msgstr "Légende"
+
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspots_map.php:44
+msgid "the hotspot is operational"
+msgstr "le point d'accès est opérationnel"
+
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspots_map.php:44
+msgid "the hotspot is down"
+msgstr "le point d'accès est hors service"
+
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspots_map.php:44
+msgid "not monitored"
+msgstr "non surveillé"
+
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/index.php:43
+#: /home/fproulx/wifidog_cvs/wifidog-auth/wifidog/hotspot_status.php:767
+msgid "Deployed HotSpots map"
+msgstr "Carte des point d'accès déployés"

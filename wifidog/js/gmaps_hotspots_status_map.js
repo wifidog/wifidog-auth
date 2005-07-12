@@ -30,7 +30,7 @@ function onLoad(hotspots_status_xml_url, lat, lng, zoom)
 	// Create the map
 	var map = createMap(new GPoint(lng, lat), zoom);
 	var hotspotsList = document.getElementById("map_hotspots_list");
-	loadVenuesStatus(map, hotspotsList, hotspots_status_xml_url);
+	loadHotspotsStatus(map, hotspotsList, hotspots_status_xml_url);
 }
 
 function createMap(centerPoint, zoomLevel)
@@ -59,23 +59,23 @@ function activateShowCoords(map)
 	});
 }
 
-function loadVenuesStatus(map, hotspotsList, document_url)
+function loadHotspotsStatus(map, hotspotsList, document_url)
 {
-	// Download the data in venues status XML
+	// Download the data in hotspots status XML
 	var request = GXmlHttp.create();
 	request.open("GET", document_url, true);
 	// Once finished, start parsing
 	request.onreadystatechange = function() 
 	{
 		if (request.readyState == 4)
-			parseVenuesStatus(map, hotspotsList, request.responseXML);
+			parseHotspotsStatus(map, hotspotsList, request.responseXML);
 	}
 	request.send(null);
 }
 
-function parseVenuesStatus(map, hotspotsList, xmlDoc)
+function parseHotspotsStatus(map, hotspotsList, xmlDoc)
 {
-	var venuesListHtml = "";
+	var hotspotsListHtml = "";
 	// Init marker icons
 	var upIcon = createIcon("../images/hotspots_status_map_up.png", new GSize(20, 34),
 	                        "../images/hotspots_status_map_shadow.png", new GSize(37, 34),
@@ -88,25 +88,25 @@ function parseVenuesStatus(map, hotspotsList, xmlDoc)
 	                          new GPoint(11, 30), new GPoint(11, 1));
 	                          
 	// Parse the XML DOM
-	var venues = xmlDoc.documentElement.getElementsByTagName("venue");
-	for (var i = 0; i < venues.length; i++) 
+	var hotspots = xmlDoc.documentElement.getElementsByTagName("hotspot");
+	for (var i = 0; i < hotspots.length; i++)
 	{
-		var venueId = venues[i].getElementsByTagName("venueId");
-		var gis = venues[i].getElementsByTagName("gisLatLong");
-		if(venueId.length ==1 && gis.length == 1)
+		var hotspotId = hotspots[i].getElementsByTagName("hotspotId");
+		var gis = hotspots[i].getElementsByTagName("gisCenterLatLong");
+		if(hotspotId.length == 1 && gis.length == 1)
 		{
 			// Extract GIS data
 			var point = new GPoint(parseFloat(gis[0].getAttribute("long")), parseFloat(gis[0].getAttribute("lat")));
-			var status = venues[i].getElementsByTagName("status");
+			var status = hotspots[i].getElementsByTagName("globalStatus");
 			var markerIcon;
 			if(status.length == 1)
 			{
 				switch(status[0].firstChild.nodeValue)
 				{
-					case "up":
+					case "100":
 						markerIcon = upIcon; // Hotspot is up
 						break;
-					case "down":
+					case "0":
 						markerIcon = downIcon; // Hotspot is down
 						break;
 					default:
@@ -117,19 +117,19 @@ function parseVenuesStatus(map, hotspotsList, xmlDoc)
 				markerIcon = unknownIcon; // Unknown hotspot status
 			
 			// Prepare fragment that will go in the sidebar
-			var html = createHtmlFromVenueNode(venues[i], markerIcon);
-			venuesListHtml += html + "<p/><a href=\"#\" onClick=\"openInfoBubble('" + venueId[0].firstChild.nodeValue + "');\">Show me on the map</a><hr width='95%'/>";
+			var html = createHtmlFromHotspot(hotspots[i], markerIcon);
+			hotspotsListHtml += html + "<p/><a href=\"#\" onClick=\"openInfoBubble('" + hotspotId[0].firstChild.nodeValue + "');\">Show me on the map</a><hr width='95%'/>";
 			
 			// Create, save as ID and add the marker
 			var marker = createInfoBubble(point, markerIcon, html);
 			// markers is a global var
-			markers[venueId[0].firstChild.nodeValue] = marker;
+			markers[hotspotId[0].firstChild.nodeValue] = marker;
 			map.addOverlay(marker);
 		}
 	}
 
 	// Load the prepared HTML fragment in the right-hand listphoto
-	hotspotsList.innerHTML = venuesListHtml;
+	hotspotsList.innerHTML = hotspotsListHtml;
 }
 
 function createIcon(imageUrl, iSize, shadowUrl, sSize, iconAnchor, bubbleAnchor)
@@ -144,34 +144,34 @@ function createIcon(imageUrl, iSize, shadowUrl, sSize, iconAnchor, bubbleAnchor)
 	return icon;
 }
 
-function createHtmlFromVenueNode(venue_node, icon)
+function createHtmlFromHotspot(hotspot_element, icon)
 {
 	var html = "<table><tr><td><img src='" + icon.image + "'></td><td>";
 	
-	var name = venue_node.getElementsByTagName("name");
+	var name = hotspot_element.getElementsByTagName("name");
 	if(name.length == 1)
 		html += "<b>" + name[0].firstChild.nodeValue + "</b><br/>";
 		
 	/* Too long ... ?!
-	var desc = venue_node.getElementsByTagName("description");
+	var desc = hotspot_element.getElementsByTagName("description");
 	if(desc.length == 1)
 		html += "<i>" + desc[0].firstChild.nodeValue + "</i><br/>";*/
 		
-	var streetAddress = venue_node.getElementsByTagName("streetAddress");
+	var streetAddress = hotspot_element.getElementsByTagName("streetAddress");
 	if(streetAddress.length == 1)
 		html += "<i>" + streetAddress[0].firstChild.nodeValue + "</i><br/>";
 		
-	var phone = venue_node.getElementsByTagName("contactPhoneNumber");
+	var phone = hotspot_element.getElementsByTagName("contactPhoneNumber");
 	if(phone.length == 1)
 		html += "<i>" + phone[0].firstChild.nodeValue + "</i><br/>";
 		
-	var transit = venue_node.getElementsByTagName("massTransitInfo");
+	var transit = hotspot_element.getElementsByTagName("massTransitInfo");
 	if(transit.length == 1)
 		html += "<b>" + transit[0].firstChild.nodeValue + "</b><br/>";
 		
-	var websiteUrl = venue_node.getElementsByTagName("webSiteUrl");
+	var websiteUrl = hotspot_element.getElementsByTagName("webSiteUrl");
 	if(websiteUrl.length == 1)
-		html += "<a href='" + websiteUrl[0].firstChild.nodeValue + "'>Visit their Website</a>";
+		html += "<a href='" + websiteUrl[0].firstChild.nodeValue + "'>URL (WWW)</a>";
 	
 	html += "</td></tr></table>";
 	
