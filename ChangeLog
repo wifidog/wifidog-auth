@@ -1,4 +1,7 @@
 2005-07-12 Francois Proulx <francois.proulx@gmail.com>
+	* Changed XML element from hotspotsMetadata to hotspots and added networkUri element to networkMetadata
+	
+2005-07-12 Francois Proulx <francois.proulx@gmail.com>
 	* Fixed XML protocol for exchanging hotspots status.
 		* Should now be considered stable (stamped v1.0)
 	* Fixed hotspots status map to reflect the changes

@@ -63,6 +63,8 @@ switch ($format)
 		// Network metadata
 		$network_metadata_node = $xmldoc->createElement("networkMetadata");
 		$network_metadata_node = $hotspot_status_root_node->appendChild($network_metadata_node);
+		$network_name_node = $xmldoc->createElement("networkUri", HOTSPOT_NETWORK_URL);
+		$network_metadata_node->appendChild($network_name_node);
 		$network_name_node = $xmldoc->createElement("name", HOTSPOT_NETWORK_NAME);
 		$network_metadata_node->appendChild($network_name_node);
 		$network_url_node = $xmldoc->createElement("websiteUrl", HOTSPOT_NETWORK_URL);
@@ -82,7 +84,7 @@ switch ($format)
 		if ($node_results)
 		{
 			// Hotspots metadata
-			$hotspots_metadata_node = $xmldoc->createElement("hotspotsMetadata");
+			$hotspots_metadata_node = $xmldoc->createElement("hotspots");
 			$hotspots_metadata_node = $hotspot_status_root_node->appendChild($hotspots_metadata_node);
 			
 			foreach ($node_results as $node_row)
@@ -104,7 +106,7 @@ switch ($format)
 				// (1..n) A Hotspot has many node
 				// WARNING For now, we are simply duplicating the hotspot data in node
 				// Until wifidog implements full abstractiong hotspot vs nodes
-				$nodes = $xmldoc->createElement("nodesMetadata");
+				$nodes = $xmldoc->createElement("nodes");
 				$hotspot->appendChild($nodes);
 				if($nodes)
 				{
