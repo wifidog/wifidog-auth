@@ -114,8 +114,8 @@ switch ($format)
 					$nodes->appendChild($node);
 					
 					// Node ID
-					$id = $xmldoc->createElement("nodeId", $node_row['node_id']);
-					$node->appendChild($id, $node_row['node_id']);
+					$nodeId = $xmldoc->createElement("nodeId", $node_row['node_id']);
+					$node->appendChild($nodeId);
 					
 					if (!empty ($node_row['creation_date']))
 					{
