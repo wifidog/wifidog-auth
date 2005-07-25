@@ -63,11 +63,11 @@ switch ($format)
 		// Network metadata
 		$network_metadata_node = $xmldoc->createElement("networkMetadata");
 		$network_metadata_node = $hotspot_status_root_node->appendChild($network_metadata_node);
-		$network_name_node = $xmldoc->createElement("networkUri", HOTSPOT_NETWORK_URL);
+		$network_name_node = $xmldoc->createElement("networkUri", htmlspecialchars(HOTSPOT_NETWORK_URL, ENT_QUOTES));
 		$network_metadata_node->appendChild($network_name_node);
-		$network_name_node = $xmldoc->createElement("name", HOTSPOT_NETWORK_NAME);
+		$network_name_node = $xmldoc->createElement("name", htmlspecialchars(HOTSPOT_NETWORK_NAME, ENT_QUOTES));
 		$network_metadata_node->appendChild($network_name_node);
-		$network_url_node = $xmldoc->createElement("websiteUrl", HOTSPOT_NETWORK_URL);
+		$network_url_node = $xmldoc->createElement("websiteUrl", htmlspecialchars(HOTSPOT_NETWORK_URL, ENT_QUOTES));
 		$network_metadata_node->appendChild($network_url_node);
 		$network_mail_node = $xmldoc->createElement("techSupportEmail", TECH_SUPPORT_EMAIL);
 		$network_metadata_node->appendChild($network_mail_node);
@@ -99,7 +99,7 @@ switch ($format)
 				// Hotspot name
 				if (!empty ($node_row['name']))
 				{
-					$name = $xmldoc->createElement("name", $node_row['name']);
+					$name = $xmldoc->createElement("name", htmlspecialchars($node_row['name'], ENT_QUOTES));
 					$hotspot->appendChild($name);
 				}
 				
@@ -151,7 +151,7 @@ switch ($format)
 				// Hotspot Website URL
 				if (!empty ($node_row['home_page_url']))
 				{
-					$url = $xmldoc->createElement("webSiteUrl", $node_row['home_page_url']);
+					$url = $xmldoc->createElement("webSiteUrl", htmlspecialchars($node_row['home_page_url'], ENT_QUOTES));
 					$hotspot->appendChild($url);
 				}
 				
@@ -170,7 +170,7 @@ switch ($format)
 				// Description
 				if (!empty ($node_row['description']))
 				{
-					$desc = $xmldoc->createElement("description", $node_row['description']);
+					$desc = $xmldoc->createElement("description", htmlspecialchars($node_row['description'], ENT_QUOTES));
 					$hotspot->appendChild($desc);
 				}
 
@@ -184,7 +184,7 @@ switch ($format)
 				// Mass transit info
 				if (!empty ($node_row['mass_transit_info']))
 				{
-					$transit = $xmldoc->createElement("massTransitInfo", $node_row['mass_transit_info']);
+					$transit = $xmldoc->createElement("massTransitInfo", htmlspecialchars($node_row['mass_transit_info'], ENT_QUOTES));
 					$hotspot->appendChild($transit);
 				}
 				

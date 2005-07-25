@@ -1,3 +1,7 @@
+2005-07-25 Francois Proulx <francois.proulx@gmail.com>
+	* Fixed bug in hotspot_status , added htmlspecialchars();
+	* This solved the bug where ampersands would break the XML
+	
 2005-07-17 Francois Proulx <francois.proulx@gmail.com>
 	* Fixed bugs in gen.sh, compile.sh locale scripts
 	
