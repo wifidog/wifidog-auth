@@ -168,16 +168,16 @@ class MainUI
 			if ($user != null)
 			{
 				$html .= '<p>'._("Logged in as:").' '.$user->getUsername().'</p>'."\n";
-				$html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'user_profile.php"><img class="administration" src="/images/profile.gif" border="0"> '._("My Profile").'</a>'."\n";
+				$html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'user_profile.php"><img class="administration" src="'.BASE_SSL_PATH.'images/profile.gif" border="0"> '._("My Profile").'</a>'."\n";
                 
                 $gw_id = $session->get(SESS_GW_ID_VAR);
                 $gw_address = $session->get(SESS_GW_ADDRESS_VAR);
                 $gw_port = $session->get(SESS_GW_PORT_VAR);
 
                 if($gw_id && $gw_address && $gw_port)
-                    $html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'login/?logout=true&gw_id='.$gw_id.'&gw_address='.$gw_address.'&gw_port='.$gw_port.'"><img class="administration" src="/images/logout.gif" border="0"> '._("Logout").'</a>'."\n";
+                    $html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'login/?logout=true&gw_id='.$gw_id.'&gw_address='.$gw_address.'&gw_port='.$gw_port.'"><img class="administration" src="'.BASE_SSL_PATH.'images/logout.gif" border="0"> '._("Logout").'</a>'."\n";
                 else
-				   $html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'login/?logout=true"><img class="administration" src="/images/logout.gif" border="0"> '._("Logout").'</a>'."\n";
+				   $html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'login/?logout=true"><img class="administration" src="'.BASE_SSL_PATH.'images/logout.gif" border="0"> '._("Logout").'</a>'."\n";
 
 			}
 			else
@@ -191,8 +191,8 @@ class MainUI
                     $html .= '<p>'._("I'm NOT at a hotspot.").'<br><a href="'.BASE_SSL_PATH.'login/">'._("I would like to login virtually.").'</a></p>'."\n";
                  else
                  	$html .= '<p>'._("NOT logged in.").'<br><a href="'.BASE_SSL_PATH.'login/?gw_id='.$gw_id.'&gw_address='.$gw_address.'&gw_port='.$gw_port.'">'._("Login to this hotspot.").'</a></p>'."\n";
-				$html .= '<a class="administration" HREF="'.Network :: getCurrentNetwork()->getHomepageURL().'"><img class="administration" src="/images/lien_ext.gif"> '.Network :: getCurrentNetwork()->getName().'</a>'."\n";
-				$html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'faq.php"><img class="administration" src="/images/where.gif"> '._("Where am I?").'</a>'."\n";
+				$html .= '<a class="administration" HREF="'.Network :: getCurrentNetwork()->getHomepageURL().'"><img class="administration" src="'.BASE_SSL_PATH.'images/lien_ext.gif"> '.Network :: getCurrentNetwork()->getName().'</a>'."\n";
+				$html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'faq.php"><img class="administration" src="'.BASE_SSL_PATH.'images/where.gif"> '._("Where am I?").'</a>'."\n";
 			}
 
 			$html .= "</span>"."\n"; //End tool_user_info
