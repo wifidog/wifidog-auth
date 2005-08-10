@@ -1,4 +1,7 @@
-2005-07-25 Francois Proulx <francois.proulx@gmail.com>
+2005-08-10 Francois Proulx <francois.proulx@gmail.com>
+	* More GIS stuff
+	
+2005-08-10 Francois Proulx <francois.proulx@gmail.com>
 	* Added Geocoders
 		* /classes/AbstractGeocoder.php
 		* /classes/Geocoders/GeocoderCanada.php

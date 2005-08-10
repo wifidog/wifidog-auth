@@ -1,5 +1,6 @@
 <?php
 
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -31,7 +32,7 @@ class GeocoderCanada extends AbstractGeocoder
 {
 	private $cached_latitude;
 	private $cached_longitude;
-	
+
 	public function __construct()
 	{
 		$this->setCountry("Canada");
@@ -46,14 +47,22 @@ class GeocoderCanada extends AbstractGeocoder
 		// Match canadian postal code (ex. J4D 3D9)
 		return preg_match("/^[A-Z]\d[A-Z]\s?\d[A-Z]\d$/i", $this->getPostalCode());
 	}
-	
+
+	/** Validates province code
+	 * @return boolean
+	 */
+	private function validateProvince()
+	{
+		return in_array($this->getProvince(), array ("AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT"));
+	}
+
 	/** Validate address, making sure we don't send an HTTP for nothing
 	 * @return boolean 
 	 */
 	public function validateAddress()
 	{
 		// Make sure a city or a postal code has been entered
-		if(($this->getCivicNumber() || $this->getStreetName() == "" || $this->getCity() == "" || $this->getProvince() == "") && !$this->validatePostalCode())
+		if (($this->getCivicNumber() == "" || $this->getStreetName() == "" || $this->getCity() == "" || !$this->validateProvince()) && !$this->validatePostalCode())
 			return false;
 		return true;
 	}
@@ -74,21 +83,22 @@ class GeocoderCanada extends AbstractGeocoder
 	private function executeQuery()
 	{
 		// Don't send multiple queries when the input has not changed
-		if($this->shouldExecuteQuery() == true)
+		if ($this->shouldExecuteQuery() == true)
 		{
+			
 			// Load the XML document
 			if (($dom = DOMDocument :: load($this->buildQuery())) !== false)
 			{
 				$xpath = new DOMXpath($dom);
-				
+
 				// Skip if there was an error
-				if($xpath->query("/geodata/error")->length >= 1)
+				if ($xpath->query("/geodata/error")->length >= 1)
 					return false;
-			
+
 				// Run XPath quries to extract data		
 				$this->cached_latitude = $xpath->query("//geodata/latt")->item(0)->nodeValue;
 				$this->cached_longitude = $xpath->query("//geodata/longt")->item(0)->nodeValue;
-				
+
 				// Prevent from sending multiple queries.
 				$this->keepResponse();
 			}
