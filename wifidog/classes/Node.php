@@ -141,7 +141,6 @@ class Node implements GenericObject
 	}
 
 	/** Create a new Node in the database
-	 * @deprecated version - 18-Apr-2005
 	 * @param $id The id to be given to the new node
 	 * @return the newly created Node object, or null if there was an error
 	 */
