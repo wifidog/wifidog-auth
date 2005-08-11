@@ -194,12 +194,29 @@ class Network implements GenericObject
 	public function getAdminUI()
 	{
 		$html = '';
+		$html .= "<h3>"._("Network management")."</h3>\n";
 		$html .= "<div class='admin_container'>\n";
 		$html .= "<div class='admin_class'>Network (".get_class($this)." instance)</div>\n";
 
+		// Create new nodes
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("New node ID")." : </div>\n";
+		
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "network_{$this->getId()}_new_node_id";
+		$html .= "<input type='text' size='10' name='{$name}'>\n";
+		
+		$html .= "<div class='admin_section_tools'>\n";
+		$name = "network_{$this->getId()}_create_node";
+		$html .= "<input type='submit' name='{$name}' value='"._("Create a new node")."'>\n";
+		$html .= "</div>\n";
+		
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		// Content management		
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Network content:")."</div>\n";
-
 		$html .= "<ul class='admin_section_list'>\n";
 		foreach ($this->getAllContent() as $content)
 		{
@@ -222,8 +239,10 @@ class Network implements GenericObject
 		$html .= "</ul>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
+		
 		return $html;
 	}
+	
 	/** Process admin interface of this object.
 	*/
 	public function processAdminUI()
@@ -234,6 +253,20 @@ class Network implements GenericObject
             throw new Exception(_('Access denied!'));
         }
         
+        // Node creation
+        $create_new_node = "network_{$this->getId()}_create_node";
+        $new_node_id = "network_{$this->getId()}_new_node_id";
+        if (!empty ($_REQUEST[$create_new_node]))
+        	if(!empty ($_REQUEST[$new_node_id]))
+        	{
+				Node::createNode($_REQUEST[$new_node_id], _("Default node name"));
+				$url = GENERIC_OBJECT_ADMIN_ABS_HREF."?".http_build_query(array("object_class" => "Node", "action" => "edit", "object_id" => $_REQUEST[$new_node_id]));
+				header("Location: {$url}");
+        	}
+			else
+				echo _("You MUST enter a node ID.");
+		
+        // Content management
 		foreach ($this->getAllContent() as $content)
 		{
 			$name = "content_group_".$this->id."_element_".$content->GetId()."_erase";

@@ -37,8 +37,8 @@ if (!empty ($_REQUEST['debug'])) {
 	print_r($_REQUEST);
 	echo "</pre>";
 }
-$html = '';
-$html = '<h3>'._("Generic object editor").'</h3>';
+
+$html = "<div>";
 if (empty ($_REQUEST['object_class'])) {
 	echo "<div class='errormsg'>"._("Sorry, the 'object_class' parameter must be specified")."</div>\n";
 	exit;
@@ -67,7 +67,7 @@ if ($_REQUEST['action'] == 'delete') {
 	$errmsg = '';
 
 	if ($object->delete($errmsg) == true) {
-		$html .= "<div class='successmsg'>"._("Content successfully deleted")."</div>\n";
+		$html .= "<div class='successmsg'>"._("Object successfully deleted")."</div>\n";
 	} else {
 		$html .= "<div class='errormsg'>"._("Deletion failed, error was: ")."$errmsg</div>\n";
 		$_REQUEST['action'] = 'edit';
@@ -138,6 +138,7 @@ if ($_REQUEST['action'] == 'preview') {
 	$html .= "<input type=submit name='edit_submit' value='"._("Edit")." ".get_class($object)."'>\n";
 	$html .= '</form>';
 }
+$html .= "</div>";
 
 require_once BASEPATH.'classes/MainUI.php';
 $ui=new MainUI();

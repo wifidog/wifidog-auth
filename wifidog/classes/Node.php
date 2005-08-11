@@ -1,6 +1,4 @@
 <?php
-
-
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -127,9 +125,10 @@ class Node implements GenericObject
 		{
 			$errmsg = _('Access denied!');
 		}
+		
 		global $db;
-
-		if (!$db->ExecSqlUpdate("DELETE FROM nodes WHERE node_id='{$this->$id}'", false))
+		$id = $db->EscapeString($this->getId());
+		if (!$db->ExecSqlUpdate("DELETE FROM nodes WHERE node_id='{$id}'", false))
 		{
 			$errmsg = _('Could not delete node!');
 		}
@@ -137,10 +136,12 @@ class Node implements GenericObject
 		{
 			$retval = true;
 		}
+		
 		return $retval;
 	}
 
 	/** Create a new Node in the database
+	 * @deprecated version - 18-Apr-2005
 	 * @param $id The id to be given to the new node
 	 * @return the newly created Node object, or null if there was an error
 	 */
@@ -166,7 +167,7 @@ class Node implements GenericObject
 	 * @param $id The id to be given to the new node
 	 * @return the newly created Node object, or null if there was an error
 	 */
-	static function createNode($node_id, $name, $rss_url, $home_page_url, $description, $map_url, $street_address, $public_phone_number, $public_email, $mass_transit_info, $node_deployment_status)
+	static function createNode($node_id, $name, $rss_url = "", $home_page_url = "", $description = "", $map_url = "", $street_address = "", $public_phone_number = "", $public_email = "", $mass_transit_info = "", $node_deployment_status = "IN_PLANNING")
 	{
 		global $db;
 
@@ -224,13 +225,44 @@ class Node implements GenericObject
 
 	/** Get the selected Network object.
 	 * @param $user_prefix A identifier provided by the programmer to recognise it's generated form
-	 * @return the Network object
+	 * @return the node object
 	 */
 	static function processSelectNodeUI($user_prefix)
 	{
 		$object = null;
 		$name = "{$user_prefix}";
 		return new self($_REQUEST[$name]);
+	}
+	
+	/** Get an interface to select the deployment status
+	* @param $user_prefix A identifier provided by the programmer to recognise it's generated html form
+	* @return html markup
+	*/
+	public function getSelectDeploymentStatus($user_prefix)
+	{
+		global $db;
+		$html = '';
+		$name = "{$user_prefix}";
+		$status_list = self::getAllDeploymentStatus();
+		if ($status_list != null)
+		{
+			$tab = array();
+			foreach ($status_list as $status)
+				$tab[] = array($status, $status);
+			$html .= FormSelectGenerator :: generateFromArray($tab, $this->getDeploymentStatus(), $name, null, false);
+		}
+		return $html;
+	}
+
+	/** Get the selected deployment status
+	 * @param $user_prefix A identifier provided by the programmer to recognise it's generated form
+	 * @return the deployment status
+	 */
+	public function processSelectDeploymentStatus($user_prefix)
+	{
+		$object = null;
+		$name = "{$user_prefix}";
+		return $_REQUEST[$name];
 	}
 
 	/** @param $node_id The id of the node */
@@ -246,106 +278,297 @@ class Node implements GenericObject
 			throw new Exception(_("The id $node_id_str could not be found in the database"));
 		}
 		$this->mRow = $row;
+		$this->mDb = &$db;
 		$this->id = $row['node_id'];
 	}
-
+	
+	function getID()
+	{
+		return $this->mRow['node_id'];
+	}
+	
 	/** Return the name of the node 
 	 */
 	function getName()
 	{
 		return $this->mRow['name'];
 	}
-
-	function getID()
+	
+	function setName($name)
 	{
-		return $this->mRow['node_id'];
+		$name = $this->mDb->EscapeString($name);
+		$this->mDb->ExecSqlUpdate("UPDATE nodes SET name = '{$name}' WHERE node_id = '{$this->getId()}'");
+		$this->refresh();
 	}
 
-	function getRSSURL()
+	function getRssUrl()
 	{
 		return $this->mRow['rss_url'];
+	}
+	
+	function setRssUrl($url)
+	{
+		$url = $this->mDb->EscapeString($url);
+		$this->mDb->ExecSqlUpdate("UPDATE nodes SET rss_url = '{$url}' WHERE node_id = '{$this->getId()}'");
+		$this->refresh();
 	}
 
 	function getHomePageURL()
 	{
 		return $this->mRow['home_page_url'];
 	}
+	
+	function setHomePageUrl($url)
+	{
+		$url = $this->mDb->EscapeString($url);
+		$this->mDb->ExecSqlUpdate("UPDATE nodes SET home_page_url = '{$url}' WHERE node_id = '{$this->getId()}'");
+		$this->refresh();
+	}
 
 	function getDescription()
 	{
 		return $this->mRow['description'];
+	}
+	
+	function setDescription($description)
+	{
+		$description = $this->mDb->EscapeString($description);
+		$this->mDb->ExecSqlUpdate("UPDATE nodes SET description = '{$description}' WHERE node_id = '{$this->getId()}'");
+		$this->refresh();
 	}
 
 	function getMapURL()
 	{
 		return $this->mRow['map_url'];
 	}
+	
+	function setMapURL($url)
+	{
+		$url = $this->mDb->EscapeString($url);
+		$this->mDb->ExecSqlUpdate("UPDATE nodes SET map_url = '{$url}' WHERE node_id = '{$this->getId()}'");
+		$this->refresh();
+	}
 
 	function getAddress()
 	{
 		return $this->mRow['street_address'];
+	}
+	
+	function setAddress($address)
+	{
+		$address = $this->mDb->EscapeString($address);
+		$this->mDb->ExecSqlUpdate("UPDATE nodes SET street_address = '{$address}' WHERE node_id = '{$this->getId()}'");
+		$this->refresh();
 	}
 
 	function getTelephone()
 	{
 		return $this->mRow['public_phone_number'];
 	}
+	
+	function setTelephone($phone)
+	{
+		$phone = $this->mDb->EscapeString($phone);
+		$this->mDb->ExecSqlUpdate("UPDATE nodes SET public_phone_number = '{$phone}' WHERE node_id = '{$this->getId()}'");
+		$this->refresh();
+	}
 
 	function getTransitInfo()
 	{
 		return $this->mRow['mass_transit_info'];
+	}
+	
+	function setTransitInfo($transit_info)
+	{
+		$transit_info = $this->mDb->EscapeString($transit_info);
+		$this->mDb->ExecSqlUpdate("UPDATE nodes SET mass_transit_info = '{$transit_info}' WHERE node_id = '{$this->getId()}'");
+		$this->refresh();
 	}
 
 	function getEmail()
 	{
 		return $this->mRow['public_email'];
 	}
+	
+	function setEmail($email)
+	{
+		$email = $this->mDb->EscapeString($email);
+		$this->mDb->ExecSqlUpdate("UPDATE nodes SET public_email = '{$email}' WHERE node_id = '{$this->getId()}'");
+		$this->refresh();
+	}
 
 	function getDeploymentStatus()
 	{
 		return $this->mRow['node_deployment_status'];
 	}
-
-	function setInfos($info_array)
+	
+	function setDeploymentStatus($status)
 	{
-		global $db;
-
-		$infos_to_add = array ();
-		if ($info_array)
-		{
-			foreach ($info_array as $column => $value)
-			{
-				$value = $db->EscapeString($value);
-				array_push($infos_to_add, "$column='$value'");
-			}
-			$sql = "UPDATE nodes SET ";
-			$sql .= implode(",", $infos_to_add);
-			$sql .= " WHERE node_id='{$this->id}'";
-			if (!$db->ExecSqlUpdate($sql, false))
-			{
-				throw new Exception(_('Unable to update database!'));
-			}
-		}
-		else
-		{
-			throw new Exception(_('No info to update node with!'));
-		}
+		$status = $this->mDb->EscapeString($status);
+		$this->mDb->ExecSqlUpdate("UPDATE nodes SET node_deployment_status = '{$status}' WHERE node_id = '{$this->getId()}'");
+		$this->refresh();
 	}
 
 	/** Retreives the admin interface of this object.
 	 * @return The HTML fragment for this interface */
 	public function getAdminUI()
 	{
+		//TODO: Most of this code will be moved to Hotspot class when the abtraction will be completed
+		
 		$html = '';
 		$html .= "<div class='admin_container'>\n";
 		$html .= "<div class='admin_class'>Node (".get_class($this)." instance)</div>\n";
+		$html .= "<h3>"._("Edit a hotspot")."</h3>\n";
+		
+		// Information about the node
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Information about the node:")."</div>\n";
+		
+		// Node ID
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("ID")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "node_".$this->getId()."_id";
+		$value = htmlspecialchars($this->getId(), ENT_QUOTES);
+		$html .= "<input type='text' readonly='' size='10' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
 
+		// Name
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Name")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "node_".$this->getId()."_name";
+		$value = htmlspecialchars($this->getName(), ENT_QUOTES);
+		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		// RSS URL
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("RSS URL")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "node_".$this->getId()."_rss_url";
+		$value = htmlspecialchars($this->getRSSUrl(), ENT_QUOTES);
+		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		// Homepage URL
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Homepage URL")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "node_".$this->getId()."_homepage_url";
+		$value = htmlspecialchars($this->getHomePageURL(), ENT_QUOTES);
+		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		// Description
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Description")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "node_".$this->getId()."_description";
+		$value = htmlspecialchars($this->getDescription(), ENT_QUOTES);
+		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		// Map URL
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Map URL")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "node_".$this->getId()."_map_url";
+		$value = htmlspecialchars($this->getMapURL(), ENT_QUOTES);
+		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		// Street address
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Street address")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "node_".$this->getId()."_street_address";
+		$value = htmlspecialchars($this->getAddress(), ENT_QUOTES);
+		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		// Public phone #
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Public phone number")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "node_".$this->getId()."_public_phone";
+		$value = htmlspecialchars($this->getTelephone(), ENT_QUOTES);
+		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		// Public mail
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Public email")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "node_".$this->getId()."_public_email";
+		$value = htmlspecialchars($this->getEmail(), ENT_QUOTES);
+		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		// Mass transit info
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Mass transit info")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "node_".$this->getId()."_mass_transit_info";
+		$value = htmlspecialchars($this->getTransitInfo(), ENT_QUOTES);
+		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		// Deployment status
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Node deployment status")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "node_".$this->getId()."_deployment_status";		
+		$html .= self::getSelectDeploymentStatus($name);
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		// End of information section
+		$html .= "</div>\n";
+		
+		// Owners management
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Node owners")." : </div>\n";
+		$html .= "<ul class='admin_section_list'>\n";
+		foreach ($this->getOwners() as $owner)
+		{
+			$html .= "<li class='admin_section_list_item'>\n";
+			$html .= "<div class='admin_section_data'>\n";
+			$html .= "{$owner->getUsername()}";
+			$html .= "</div>\n";
+			$html .= "<div class='admin_section_tools'>\n";
+			$name = "node_{$this->getId()}_owner_{$owner->GetId()}_remove";
+			$html .= "<input type='submit' name='$name' value='"._("Remove owner")."'>";
+			$html .= "</div>\n";
+			$html .= "</li>\n";
+		}
+		$html .= "<li class='admin_section_list_item'>\n";
+		$name = "node_{$this->getId()}_new_owner";
+		$html .= User :: getSelectUserUI($name);
+		$name = "node_{$this->getId()}_new_owner_submit";
+		$html .= "<input type='submit' name='$name' value='"._("Add owner")."'>";
+		$html .= "</li>\n";
+		$html .= "</ul>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		// Display stats
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Statistics:")."</div>\n";
-		
+		$html .= "<div class='admin_section_data'>\n";
 		$name = "node_".$this->id."_get_stats";
 		$html .= "<input type='submit' name='$name' value='"._("Get access statistics")."'>";
-		
+		$html .= "</div>\n";
 		$html .= "</div>\n";
 		
 		$html .= "<div class='admin_section_container'>\n";
@@ -357,7 +580,7 @@ class Node implements GenericObject
 			$html .= "<li class='admin_section_list_item'>\n";
 			$html .= "<div class='admin_section_data'>\n";
 			$html .= $content->getListUI();
-			$html .= "</div'>\n";
+			$html .= "</div>\n";
 			$html .= "<div class='admin_section_tools'>\n";
 			$name = "node_".$this->id."_content_".$content->GetId()."_erase";
 			$html .= "<input type='submit' name='$name' value='"._("Remove")."'>";
@@ -385,11 +608,84 @@ class Node implements GenericObject
 		{
 			throw new Exception(_('Access denied!'));
 		}
+		
+		// Information about the node
+		
+		// Name
+		$name = "node_".$this->getId()."_name";
+		$this->setName($_REQUEST[$name]);
+		
+		// RSS URL
+		$name = "node_".$this->getId()."_rss_url";
+		$this->setRssUrl($_REQUEST[$name]);
+			
+		// Homepage URL
+		$name = "node_".$this->getId()."_homepage_url";
+		$this->setHomePageUrl($_REQUEST[$name]);
+		
+		// Description
+		$name = "node_".$this->getId()."_description";
+		$this->setDescription($_REQUEST[$name]);
+		
+		// Map URL
+		$name = "node_".$this->getId()."_map_url";
+		$this->setMapUrl($_REQUEST[$name]);
+		
+		// Street address
+		$name = "node_".$this->getId()."_street_address";
+		$this->setAddress($_REQUEST[$name]);
+		
+		// Public phone #
+		$name = "node_".$this->getId()."_public_phone";
+		$this->setTelephone($_REQUEST[$name]);
+		
+		// Public mail
+		$name = "node_".$this->getId()."_public_email";
+		$this->setEmail($_REQUEST[$name]);
+		
+		// Mass transit info
+		$name = "node_".$this->getId()."_mass_transit_info";
+		$this->setTransitInfo($_REQUEST[$name]);
+		
+		// Deployment status
+		$name = "node_".$this->getId()."_deployment_status";
+		$this->setDeploymentStatus(self::processSelectDeploymentStatus($name));
 
+		// Statistics
 		$name = "node_{$this->id}_get_stats";
 		if (!empty ($_REQUEST[$name]))
 			header("Location: hotspot_log.php?node_id=".urlencode($this->getId()));
+			
+		// Owners processing
+		// Rebuild user id, and delete if it was selected
+		foreach ($this->getOwners() as $owner)
+		{
+			$name = "node_{$this->getId()}_owner_{$owner->GetId()}_remove";
+			if (!empty ($_REQUEST[$name]))
+			{
+				if($this->isOwner($owner))
+					$this->removeOwner($owner);
+				else
+					echo _("Invalid user!");
+			}
+		}
+
+		$name = "node_{$this->getId()}_new_owner_submit";
+		if (!empty ($_REQUEST[$name]))
+		{
+			$name = "node_{$this->getId()}_new_owner";
+			$owner = User :: processSelectUserUI($name);
+            if($owner)
+            {
+            	if($this->isOwner($owner))
+            		echo _("The user is already an owner of this node.");
+            	else
+                	$this->addOwner($owner);
+            }
+		}
 		
+		// Content processing 
+		// Rebuild content id and deleting if it was selected for deletion )
 		foreach ($this->getAllContent() as $content)
 		{
 			$name = "node_".$this->id."_content_".$content->GetId()."_erase";
@@ -558,26 +854,31 @@ class Node implements GenericObject
 	}
 
 	function getOwners()
-	{
+	{		
 		global $db;
-
+		$retval = array();
 		$db->ExecSql("SELECT user_id FROM node_owners WHERE node_id='{$this->id}'", $owners, false);
-		return $owners;
+		if($owners != null)
+		{
+			foreach ($owners as $owner_row)
+			{
+				$retval[] = User::getObject($owner_row['user_id']);
+			}
+		}
+		return $retval;
 	}
 
-	function addOwner($user_id)
+	function addOwner($user)
 	{
-		/* TODO: VALIDER les champs de donnees node_id et user_id */
-
 		global $db;
-		if (!$db->ExecSqlUpdate("INSERT INTO node_owners (node_id, user_id) VALUES ('{$this->id}','{$user_id}')", false))
+		if (!$db->ExecSqlUpdate("INSERT INTO node_owners (node_id, user_id) VALUES ('{$this->getId()}','{$user->getId()}')", false))
 			throw new Exception(_('Could not add owner'));
 	}
 
-	function removeOwner($user_id)
+	function removeOwner($user)
 	{
 		global $db;
-		if (!$db->ExecSqlUpdate("DELETE FROM node_owners WHERE node_id='{$this->id}' AND user_id='{$user_id}'", false))
+		if (!$db->ExecSqlUpdate("DELETE FROM node_owners WHERE node_id='{$this->getId()}' AND user_id='{$user->getId()}'", false))
 			throw new Exception(_('Could not remove owner'));
 	}
 
@@ -608,11 +909,6 @@ class Node implements GenericObject
 		return $row;
 	}
 
-	function getInfoArray()
-	{
-		return $this->mRow;
-	}
-
     /** Warning, the semantics of this function will change *
      * @deprecated version - 2005-04-29 USE getOnlineUsers instead
      * */
@@ -621,6 +917,12 @@ class Node implements GenericObject
 		global $db;
 		$db->ExecSql("SELECT * FROM connections,users,nodes WHERE token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND nodes.node_id=connections.node_id ORDER BY timestamp_in DESC", $online_users);
 		return $online_users;
+	}
+	
+	/** Reloads the object from the database.  Should normally be called after a set operation */
+	protected function refresh()
+	{
+		$this->__construct($this->id);
 	}
 
 } // End class

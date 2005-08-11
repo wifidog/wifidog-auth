@@ -54,7 +54,7 @@ class HotspotRss extends Content
 		if (RSS_SUPPORT)
 		{
 			$node=Node::getCurrentNode();
-			$hotspot_rss_url = $node->getRSSURL();
+			$hotspot_rss_url = $node->getRssUrl();
 			
 			require_once BASEPATH.'classes/RssPressReview.inc';
 			RssPressReview::setMagpieDir(BASEPATH.MAGPIE_REL_PATH);

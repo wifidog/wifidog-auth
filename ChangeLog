@@ -1,3 +1,7 @@
+2005-08-11 Francois Proulx <francois.proulx@gmail.com>
+	* Refactored the Admin UI.
+	* I need to write the upload form and rewrite statistics
+	
 2005-08-10 Francois Proulx <francois.proulx@gmail.com>
 	* More GIS stuff
 	
