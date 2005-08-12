@@ -3,7 +3,8 @@ body{
 	margin: 0px;
 	padding: 0px;
 	font-family: arial, sans-serif;
-	color: #616756;
+	/*color: #616756;*/
+color: black;
 	/*font-size: 11px;*/
 	font-size: small;
 }
@@ -117,8 +118,6 @@ a {
 a:hover{
 	font-family: arial, sans-serif;
 	color: #88AA4B;
-	font-size: 11px;
-	text-decoration: underline;
 }
 a.administration {
 	margin: 5px;

@@ -23,6 +23,7 @@
  */
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'include/common_interface.php';
+
 /** Style contains functions managing headers, footers, stylesheet, etc.
  */
 class MainUI
@@ -33,8 +34,15 @@ class MainUI
 	private $title;
 	private $html_headers;
 	private $footer_scripts = array();
+	
+	/** @note We put a call to validate_schema() here so it systematically called
+ * from any UI page, but not from any machine readable pages 
+ */ 
 	function __construct()
 	{
+		require_once BASEPATH.'include/schema_validate.php';
+		validate_schema();
+
 		$this->smarty = new SmartyWifidog();
 		$this->title = Network :: getCurrentNetwork()->getName().' '._("authentication server"); //Default title
 	}

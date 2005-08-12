@@ -4,25 +4,36 @@
 
 SET client_encoding = 'UNICODE';
 SET check_function_bodies = false;
+SET client_min_messages = warning;
 
 --
--- TOC entry 2 (OID 0)
 -- Name: wifidog; Type: DATABASE; Schema: -; Owner: wifidog
 --
 
 CREATE DATABASE wifidog WITH TEMPLATE = template0 ENCODING = 'UNICODE';
 
 
-\connect wifidog wifidog
+\connect wifidog
 
 SET client_encoding = 'UNICODE';
 SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON SCHEMA public IS 'Standard public schema';
+
 
 SET search_path = public, pg_catalog;
 
+SET default_tablespace = '';
+
+SET default_with_oids = true;
+
 --
--- TOC entry 5 (OID 706679)
--- Name: administrators; Type: TABLE; Schema: public; Owner: wifidog
+-- Name: administrators; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
 
 CREATE TABLE administrators (
@@ -31,18 +42,7 @@ CREATE TABLE administrators (
 
 
 --
--- TOC entry 6 (OID 706682)
--- Name: token_status; Type: TABLE; Schema: public; Owner: wifidog
---
-
-CREATE TABLE token_status (
-    token_status character varying(10) NOT NULL
-);
-
-
---
--- TOC entry 7 (OID 706686)
--- Name: connections; Type: TABLE; Schema: public; Owner: wifidog
+-- Name: connections; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
 
 CREATE TABLE connections (
@@ -63,14 +63,256 @@ CREATE TABLE connections (
 
 
 --
--- TOC entry 8 (OID 706692)
--- Name: nodes; Type: TABLE; Schema: public; Owner: wifidog
+-- Name: content; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE content (
+    content_id text NOT NULL,
+    content_type text NOT NULL,
+    title text,
+    description text,
+    project_info text,
+    sponsor_info text,
+    creation_timestamp timestamp without time zone DEFAULT now(),
+    is_persistent boolean DEFAULT false,
+    long_description text,
+    CONSTRAINT content_type_not_empty_string CHECK ((content_type <> ''::text))
+);
+
+
+--
+-- Name: content_display_log; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE content_display_log (
+    user_id text NOT NULL,
+    content_id text NOT NULL,
+    first_display_timestamp timestamp without time zone DEFAULT now() NOT NULL,
+    node_id text NOT NULL,
+    last_display_timestamp timestamp without time zone DEFAULT now() NOT NULL
+);
+
+
+--
+-- Name: content_group; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE content_group (
+    content_group_id text NOT NULL,
+    is_artistic_content boolean DEFAULT false NOT NULL,
+    is_locative_content boolean DEFAULT false NOT NULL,
+    content_changes_on_mode text DEFAULT 'ALWAYS'::text NOT NULL,
+    content_ordering_mode text DEFAULT 'RANDOM'::text NOT NULL,
+    display_num_elements integer DEFAULT 1 NOT NULL,
+    allow_repeat text DEFAULT 'YES'::text NOT NULL,
+    CONSTRAINT display_at_least_one_element CHECK ((display_num_elements > 0))
+);
+
+
+--
+-- Name: content_group_element; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE content_group_element (
+    content_group_element_id text NOT NULL,
+    content_group_id text NOT NULL,
+    display_order integer DEFAULT 1,
+    displayed_content_id text,
+    force_only_allowed_node boolean
+);
+
+
+--
+-- Name: content_group_element_has_allowed_nodes; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE content_group_element_has_allowed_nodes (
+    content_group_element_id text NOT NULL,
+    node_id text NOT NULL,
+    allowed_since timestamp without time zone DEFAULT now()
+);
+
+
+--
+-- Name: content_has_owners; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE content_has_owners (
+    content_id text NOT NULL,
+    user_id text NOT NULL,
+    is_author boolean DEFAULT false NOT NULL,
+    owner_since timestamp without time zone DEFAULT now()
+);
+
+
+--
+-- Name: content_rss_aggregator; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE content_rss_aggregator (
+    content_id text NOT NULL,
+    number_of_display_items integer DEFAULT 10 NOT NULL,
+    algorithm_strength real DEFAULT 0.75 NOT NULL,
+    max_item_age interval
+);
+
+
+--
+-- Name: content_rss_aggregator_feeds; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE content_rss_aggregator_feeds (
+    content_id text NOT NULL,
+    url text NOT NULL,
+    bias real DEFAULT 1 NOT NULL,
+    default_publication_interval integer
+);
+
+
+--
+-- Name: embedded_content; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE embedded_content (
+    embedded_content_id text NOT NULL,
+    embedded_file_id text,
+    fallback_content_id text,
+    parameters text,
+    attributes text
+);
+
+
+--
+-- Name: files; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE files (
+    files_id text NOT NULL,
+    filename text,
+    mime_type text,
+    remote_size bigint,
+    url text,
+    data_blob oid,
+    local_binary_size bigint
+);
+
+
+--
+-- Name: flickr_photostream; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE flickr_photostream (
+    flickr_photostream_id text NOT NULL,
+    api_key text,
+    photo_selection_mode text DEFAULT 'PSM_GROUP'::text NOT NULL,
+    user_id text,
+    user_name text,
+    tags text,
+    tag_mode character varying(10) DEFAULT 'any'::character varying,
+    group_id text,
+    random boolean DEFAULT true NOT NULL,
+    min_taken_date timestamp without time zone,
+    max_taken_date timestamp without time zone,
+    photo_batch_size integer DEFAULT 10,
+    photo_count integer DEFAULT 1,
+    display_title boolean DEFAULT true NOT NULL,
+    display_description boolean DEFAULT false NOT NULL,
+    display_tags boolean DEFAULT false NOT NULL,
+    preferred_size text,
+    requests_cache text,
+    cache_update_timestamp timestamp without time zone
+);
+
+
+--
+-- Name: iframes; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE iframes (
+    iframes_id text NOT NULL,
+    url text,
+    width integer,
+    height integer
+);
+
+
+--
+-- Name: langstring_entries; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE langstring_entries (
+    langstring_entries_id text NOT NULL,
+    langstrings_id text,
+    locales_id text,
+    value text DEFAULT ''::text
+);
+
+
+--
+-- Name: locales; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE locales (
+    locales_id text NOT NULL
+);
+
+
+--
+-- Name: network_has_content; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE network_has_content (
+    network_id text NOT NULL,
+    content_id text NOT NULL,
+    subscribe_timestamp timestamp without time zone DEFAULT now() NOT NULL
+);
+
+
+SET default_with_oids = false;
+
+--
+-- Name: node_deployment_status; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE node_deployment_status (
+    node_deployment_status character varying(32) NOT NULL
+);
+
+
+SET default_with_oids = true;
+
+--
+-- Name: node_has_content; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE node_has_content (
+    node_id text NOT NULL,
+    content_id text NOT NULL,
+    subscribe_timestamp timestamp without time zone DEFAULT now() NOT NULL
+);
+
+
+SET default_with_oids = false;
+
+--
+-- Name: node_owners; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE node_owners (
+    node_id character varying(32) NOT NULL,
+    user_id character varying(45) NOT NULL
+);
+
+
+SET default_with_oids = true;
+
+--
+-- Name: nodes; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
 
 CREATE TABLE nodes (
     node_id character varying(32) DEFAULT ''::character varying NOT NULL,
     name text,
-    rss_url text,
     last_heartbeat_ip character varying(16),
     last_heartbeat_timestamp timestamp without time zone DEFAULT now(),
     creation_date date DEFAULT now(),
@@ -83,13 +325,58 @@ CREATE TABLE nodes (
     public_email text,
     mass_transit_info text,
     node_deployment_status character varying(32) DEFAULT 'IN_PLANNING'::character varying NOT NULL,
-    venue_type text DEFAULT 'Other'::text
+    venue_type text DEFAULT 'Other'::text,
+    max_monthly_incoming bigint,
+    max_monthly_outgoing bigint,
+    quota_reset_day_of_month integer,
+    latitude numeric(16,6),
+    longitude numeric(16,6)
 );
 
 
 --
--- TOC entry 9 (OID 706702)
--- Name: users; Type: TABLE; Schema: public; Owner: wifidog
+-- Name: pictures; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE pictures (
+    pictures_id text NOT NULL,
+    width integer,
+    height integer
+);
+
+
+--
+-- Name: schema_info; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE schema_info (
+    tag text NOT NULL,
+    value text
+);
+
+
+--
+-- Name: token_status; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE token_status (
+    token_status character varying(10) NOT NULL
+);
+
+
+--
+-- Name: user_has_content; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE user_has_content (
+    user_id text NOT NULL,
+    content_id text NOT NULL,
+    subscribe_timestamp timestamp without time zone DEFAULT now() NOT NULL
+);
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
 
 CREATE TABLE users (
@@ -110,296 +397,29 @@ CREATE TABLE users (
 );
 
 
---
--- TOC entry 10 (OID 706713)
--- Name: node_owners; Type: TABLE; Schema: public; Owner: wifidog
---
-
-CREATE TABLE node_owners (
-    node_id character varying(32) NOT NULL,
-    user_id character varying(45) NOT NULL
-) WITHOUT OIDS;
-
+SET default_with_oids = false;
 
 --
--- TOC entry 11 (OID 706715)
--- Name: node_deployment_status; Type: TABLE; Schema: public; Owner: wifidog
---
-
-CREATE TABLE node_deployment_status (
-    node_deployment_status character varying(32) NOT NULL
-) WITHOUT OIDS;
-
-
---
--- TOC entry 12 (OID 706717)
--- Name: venue_types; Type: TABLE; Schema: public; Owner: wifidog
+-- Name: venue_types; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
 
 CREATE TABLE venue_types (
     venue_type text NOT NULL
-) WITHOUT OIDS;
+);
 
 
 --
--- TOC entry 13 (OID 706722)
--- Name: venues; Type: TABLE; Schema: public; Owner: wifidog
+-- Name: venues; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
 
 CREATE TABLE venues (
     name text NOT NULL,
     description text
-) WITHOUT OIDS;
-
-
---
--- TOC entry 14 (OID 706727)
--- Name: schema_info; Type: TABLE; Schema: public; Owner: wifidog
---
-
-CREATE TABLE schema_info (
-    tag text NOT NULL,
-    value text
 );
 
 
 --
--- TOC entry 15 (OID 728649)
--- Name: locales; Type: TABLE; Schema: public; Owner: wifidog
---
-
-CREATE TABLE locales (
-    locales_id text NOT NULL
-);
-
-
---
--- TOC entry 16 (OID 728663)
--- Name: content; Type: TABLE; Schema: public; Owner: wifidog
---
-
-CREATE TABLE content (
-    content_id text NOT NULL,
-    content_type text NOT NULL,
-    title text,
-    description text,
-    project_info text,
-    sponsor_info text,
-    creation_timestamp timestamp without time zone DEFAULT now(),
-    is_persistent boolean DEFAULT false,
-    CONSTRAINT content_type_not_empty_string CHECK ((content_type <> ''::text))
-);
-
-
---
--- TOC entry 17 (OID 728688)
--- Name: content_has_owners; Type: TABLE; Schema: public; Owner: wifidog
---
-
-CREATE TABLE content_has_owners (
-    content_id text NOT NULL,
-    user_id text NOT NULL,
-    is_author boolean NOT NULL,
-    owner_since timestamp without time zone DEFAULT now()
-);
-
-
---
--- TOC entry 18 (OID 728704)
--- Name: langstring_entries; Type: TABLE; Schema: public; Owner: wifidog
---
-
-CREATE TABLE langstring_entries (
-    langstring_entries_id text NOT NULL,
-    langstrings_id text,
-    locales_id text,
-    value text DEFAULT ''::text
-);
-
-
---
--- TOC entry 19 (OID 728720)
--- Name: content_group; Type: TABLE; Schema: public; Owner: wifidog
---
-
-CREATE TABLE content_group (
-    content_group_id text NOT NULL,
-    is_artistic_content boolean DEFAULT false NOT NULL,
-    is_locative_content boolean DEFAULT false NOT NULL,
-    content_changes_on_mode text DEFAULT 'ALWAYS'::text NOT NULL,
-    content_ordering_mode text DEFAULT 'RANDOM'::text NOT NULL,
-    display_num_elements integer DEFAULT 1 NOT NULL,
-    allow_repeat text DEFAULT 'YES'::text NOT NULL,
-    CONSTRAINT display_at_least_one_element CHECK ((display_num_elements > 0))
-);
-
-
---
--- TOC entry 20 (OID 728733)
--- Name: content_group_element; Type: TABLE; Schema: public; Owner: wifidog
---
-
-CREATE TABLE content_group_element (
-    content_group_element_id text NOT NULL,
-    content_group_id text NOT NULL,
-    display_order integer DEFAULT 1,
-    displayed_content_id text,
-    force_only_allowed_node boolean
-);
-
-
---
--- TOC entry 21 (OID 728754)
--- Name: content_group_element_has_allowed_nodes; Type: TABLE; Schema: public; Owner: wifidog
---
-
-CREATE TABLE content_group_element_has_allowed_nodes (
-    content_group_element_id text NOT NULL,
-    node_id text NOT NULL,
-    allowed_since timestamp without time zone DEFAULT now()
-);
-
-
---
--- TOC entry 22 (OID 728790)
--- Name: user_has_content; Type: TABLE; Schema: public; Owner: wifidog
---
-
-CREATE TABLE user_has_content (
-    user_id text NOT NULL,
-    content_id text NOT NULL,
-    subscribe_timestamp timestamp without time zone DEFAULT now() NOT NULL
-);
-
-
---
--- TOC entry 23 (OID 728806)
--- Name: node_has_content; Type: TABLE; Schema: public; Owner: wifidog
---
-
-CREATE TABLE node_has_content (
-    node_id text NOT NULL,
-    content_id text NOT NULL,
-    subscribe_timestamp timestamp without time zone DEFAULT now() NOT NULL
-);
-
-
---
--- TOC entry 24 (OID 728822)
--- Name: network_has_content; Type: TABLE; Schema: public; Owner: wifidog
---
-
-CREATE TABLE network_has_content (
-    network_id text NOT NULL,
-    content_id text NOT NULL,
-    subscribe_timestamp timestamp without time zone DEFAULT now() NOT NULL
-);
-
-
---
--- TOC entry 25 (OID 741741)
--- Name: flickr_photostream; Type: TABLE; Schema: public; Owner: wifidog
---
-
-CREATE TABLE flickr_photostream (
-    flickr_photostream_id text NOT NULL,
-    api_key text,
-    photo_selection_mode text DEFAULT 'PSM_GROUP'::text NOT NULL,
-    user_id text,
-    user_name text,
-    tags text,
-    tag_mode character varying(10) DEFAULT 'any'::character varying,
-    group_id text,
-    random boolean DEFAULT true NOT NULL,
-    min_taken_date timestamp without time zone,
-    max_taken_date timestamp without time zone,
-    photo_batch_size integer DEFAULT 10,
-    photo_count integer DEFAULT 1,
-    display_title boolean DEFAULT true NOT NULL,
-    display_description boolean DEFAULT false NOT NULL,
-    display_tags boolean DEFAULT false NOT NULL,
-    preferred_size text
-);
-
-
---
--- TOC entry 26 (OID 741760)
--- Name: files; Type: TABLE; Schema: public; Owner: wifidog
---
-
-CREATE TABLE files (
-    files_id text NOT NULL,
-    filename text,
-    mime_type text,
-    binary_data bytea,
-    remote_size bigint,
-    url text
-);
-
-
---
--- TOC entry 27 (OID 741767)
--- Name: embedded_content; Type: TABLE; Schema: public; Owner: wifidog
---
-
-CREATE TABLE embedded_content (
-    embedded_content_id text NOT NULL,
-    embedded_file_id text,
-    fallback_content_id text,
-    parameters text,
-    attributes text
-);
-
-
---
--- TOC entry 28 (OID 741772)
--- Name: content_display_log; Type: TABLE; Schema: public; Owner: wifidog
---
-
-CREATE TABLE content_display_log (
-    user_id text NOT NULL,
-    content_id text NOT NULL,
-    first_display_timestamp timestamp without time zone DEFAULT now() NOT NULL,
-    node_id text NOT NULL,
-    last_display_timestamp timestamp without time zone DEFAULT now() NOT NULL
-);
-
-
---
--- TOC entry 32 (OID 728596)
--- Name: idx_token; Type: INDEX; Schema: public; Owner: wifidog
---
-
-CREATE INDEX idx_token ON connections USING btree (token);
-
-
---
--- TOC entry 33 (OID 728597)
--- Name: idx_token_status_and_user_id; Type: INDEX; Schema: public; Owner: wifidog
---
-
-CREATE INDEX idx_token_status_and_user_id ON connections USING btree (token_status, user_id);
-
-
---
--- TOC entry 35 (OID 728598)
--- Name: idx_unique_username_and_account_origin; Type: INDEX; Schema: public; Owner: wifidog
---
-
-CREATE UNIQUE INDEX idx_unique_username_and_account_origin ON users USING btree (username, account_origin);
-
-
---
--- TOC entry 47 (OID 728753)
--- Name: idx_content_group_element_content_group_id; Type: INDEX; Schema: public; Owner: wifidog
---
-
-CREATE INDEX idx_content_group_element_content_group_id ON content_group_element USING btree (content_group_id);
-
-
---
--- TOC entry 29 (OID 728599)
--- Name: administrators_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: administrators_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
 --
 
 ALTER TABLE ONLY administrators
@@ -407,17 +427,7 @@ ALTER TABLE ONLY administrators
 
 
 --
--- TOC entry 30 (OID 728601)
--- Name: token_status_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY token_status
-    ADD CONSTRAINT token_status_pkey PRIMARY KEY (token_status);
-
-
---
--- TOC entry 31 (OID 728603)
--- Name: connections_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: connections_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
 --
 
 ALTER TABLE ONLY connections
@@ -425,116 +435,7 @@ ALTER TABLE ONLY connections
 
 
 --
--- TOC entry 34 (OID 728605)
--- Name: nodes_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY nodes
-    ADD CONSTRAINT nodes_pkey PRIMARY KEY (node_id);
-
-
---
--- TOC entry 36 (OID 728607)
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
-
-
---
--- TOC entry 37 (OID 728609)
--- Name: node_owners_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY node_owners
-    ADD CONSTRAINT node_owners_pkey PRIMARY KEY (node_id, user_id);
-
-
---
--- TOC entry 38 (OID 728611)
--- Name: node_deployment_status_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY node_deployment_status
-    ADD CONSTRAINT node_deployment_status_pkey PRIMARY KEY (node_deployment_status);
-
-
---
--- TOC entry 39 (OID 728613)
--- Name: venue_types_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY venue_types
-    ADD CONSTRAINT venue_types_pkey PRIMARY KEY (venue_type);
-
-
---
--- TOC entry 40 (OID 728615)
--- Name: schema_info_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY schema_info
-    ADD CONSTRAINT schema_info_pkey PRIMARY KEY (tag);
-
-
---
--- TOC entry 41 (OID 728654)
--- Name: locales_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY locales
-    ADD CONSTRAINT locales_pkey PRIMARY KEY (locales_id);
-
-
---
--- TOC entry 42 (OID 728670)
--- Name: content_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY content
-    ADD CONSTRAINT content_pkey PRIMARY KEY (content_id);
-
-
---
--- TOC entry 43 (OID 728694)
--- Name: content_has_owners_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY content_has_owners
-    ADD CONSTRAINT content_has_owners_pkey PRIMARY KEY (content_id, user_id);
-
-
---
--- TOC entry 44 (OID 728710)
--- Name: langstring_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY langstring_entries
-    ADD CONSTRAINT langstring_entries_pkey PRIMARY KEY (langstring_entries_id);
-
-
---
--- TOC entry 45 (OID 728727)
--- Name: content_group_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY content_group
-    ADD CONSTRAINT content_group_pkey PRIMARY KEY (content_group_id);
-
-
---
--- TOC entry 46 (OID 728739)
--- Name: content_group_element_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY content_group_element
-    ADD CONSTRAINT content_group_element_pkey PRIMARY KEY (content_group_element_id);
-
-
---
--- TOC entry 48 (OID 728760)
--- Name: content_group_element_has_allowed_nodes_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: content_group_element_has_allowed_nodes_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
 --
 
 ALTER TABLE ONLY content_group_element_has_allowed_nodes
@@ -542,53 +443,15 @@ ALTER TABLE ONLY content_group_element_has_allowed_nodes
 
 
 --
--- TOC entry 49 (OID 728796)
--- Name: user_has_content_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: content_group_element_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
 --
 
-ALTER TABLE ONLY user_has_content
-    ADD CONSTRAINT user_has_content_pkey PRIMARY KEY (user_id, content_id);
-
-
---
--- TOC entry 50 (OID 728812)
--- Name: node_has_content_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY node_has_content
-    ADD CONSTRAINT node_has_content_pkey PRIMARY KEY (node_id, content_id);
+ALTER TABLE ONLY content_group_element
+    ADD CONSTRAINT content_group_element_pkey PRIMARY KEY (content_group_element_id);
 
 
 --
--- TOC entry 51 (OID 728828)
--- Name: network_has_content_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY network_has_content
-    ADD CONSTRAINT network_has_content_pkey PRIMARY KEY (network_id, content_id);
-
-
---
--- TOC entry 52 (OID 741754)
--- Name: flickr_photostream_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY flickr_photostream
-    ADD CONSTRAINT flickr_photostream_pkey PRIMARY KEY (flickr_photostream_id);
-
-
---
--- TOC entry 53 (OID 741765)
--- Name: files_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY files
-    ADD CONSTRAINT files_pkey PRIMARY KEY (files_id);
-
-
---
--- TOC entry 54 (OID 741779)
--- Name: content_group_element_portal_display_log_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: content_group_element_portal_display_log_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
 --
 
 ALTER TABLE ONLY content_display_log
@@ -596,7 +459,202 @@ ALTER TABLE ONLY content_display_log
 
 
 --
--- TOC entry 56 (OID 728617)
+-- Name: content_group_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY content_group
+    ADD CONSTRAINT content_group_pkey PRIMARY KEY (content_group_id);
+
+
+--
+-- Name: content_has_owners_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY content_has_owners
+    ADD CONSTRAINT content_has_owners_pkey PRIMARY KEY (content_id, user_id);
+
+
+--
+-- Name: content_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY content
+    ADD CONSTRAINT content_pkey PRIMARY KEY (content_id);
+
+
+--
+-- Name: content_rss_aggregator_feeds_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY content_rss_aggregator_feeds
+    ADD CONSTRAINT content_rss_aggregator_feeds_pkey PRIMARY KEY (content_id, url);
+
+
+--
+-- Name: content_rss_aggregator_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY content_rss_aggregator
+    ADD CONSTRAINT content_rss_aggregator_pkey PRIMARY KEY (content_id);
+
+
+--
+-- Name: files_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY files
+    ADD CONSTRAINT files_pkey PRIMARY KEY (files_id);
+
+
+--
+-- Name: flickr_photostream_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY flickr_photostream
+    ADD CONSTRAINT flickr_photostream_pkey PRIMARY KEY (flickr_photostream_id);
+
+
+--
+-- Name: iframes_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY iframes
+    ADD CONSTRAINT iframes_pkey PRIMARY KEY (iframes_id);
+
+
+--
+-- Name: langstring_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY langstring_entries
+    ADD CONSTRAINT langstring_entries_pkey PRIMARY KEY (langstring_entries_id);
+
+
+--
+-- Name: locales_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY locales
+    ADD CONSTRAINT locales_pkey PRIMARY KEY (locales_id);
+
+
+--
+-- Name: network_has_content_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY network_has_content
+    ADD CONSTRAINT network_has_content_pkey PRIMARY KEY (network_id, content_id);
+
+
+--
+-- Name: node_deployment_status_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY node_deployment_status
+    ADD CONSTRAINT node_deployment_status_pkey PRIMARY KEY (node_deployment_status);
+
+
+--
+-- Name: node_has_content_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY node_has_content
+    ADD CONSTRAINT node_has_content_pkey PRIMARY KEY (node_id, content_id);
+
+
+--
+-- Name: node_owners_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY node_owners
+    ADD CONSTRAINT node_owners_pkey PRIMARY KEY (node_id, user_id);
+
+
+--
+-- Name: nodes_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY nodes
+    ADD CONSTRAINT nodes_pkey PRIMARY KEY (node_id);
+
+
+--
+-- Name: pictures_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY pictures
+    ADD CONSTRAINT pictures_pkey PRIMARY KEY (pictures_id);
+
+
+--
+-- Name: schema_info_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY schema_info
+    ADD CONSTRAINT schema_info_pkey PRIMARY KEY (tag);
+
+
+--
+-- Name: token_status_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY token_status
+    ADD CONSTRAINT token_status_pkey PRIMARY KEY (token_status);
+
+
+--
+-- Name: user_has_content_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY user_has_content
+    ADD CONSTRAINT user_has_content_pkey PRIMARY KEY (user_id, content_id);
+
+
+--
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
+
+
+--
+-- Name: venue_types_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY venue_types
+    ADD CONSTRAINT venue_types_pkey PRIMARY KEY (venue_type);
+
+
+--
+-- Name: idx_content_group_element_content_group_id; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE INDEX idx_content_group_element_content_group_id ON content_group_element USING btree (content_group_id);
+
+
+--
+-- Name: idx_token; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE INDEX idx_token ON connections USING btree (token);
+
+
+--
+-- Name: idx_token_status_and_user_id; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE INDEX idx_token_status_and_user_id ON connections USING btree (token_status, user_id);
+
+
+--
+-- Name: idx_unique_username_and_account_origin; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE UNIQUE INDEX idx_unique_username_and_account_origin ON users USING btree (username, account_origin);
+
+
+--
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -605,70 +663,6 @@ ALTER TABLE ONLY connections
 
 
 --
--- TOC entry 55 (OID 728621)
--- Name: administrators_ibfk_1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY administrators
-    ADD CONSTRAINT administrators_ibfk_1 FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- TOC entry 57 (OID 728625)
--- Name: fk_users; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY connections
-    ADD CONSTRAINT fk_users FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE RESTRICT;
-
-
---
--- TOC entry 58 (OID 728629)
--- Name: fk_nodes; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY connections
-    ADD CONSTRAINT fk_nodes FOREIGN KEY (node_id) REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE RESTRICT;
-
-
---
--- TOC entry 62 (OID 728633)
--- Name: fk_users; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY node_owners
-    ADD CONSTRAINT fk_users FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- TOC entry 63 (OID 728637)
--- Name: fk_nodes; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY node_owners
-    ADD CONSTRAINT fk_nodes FOREIGN KEY (node_id) REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- TOC entry 59 (OID 728641)
--- Name: fk_node_deployment_status; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY nodes
-    ADD CONSTRAINT fk_node_deployment_status FOREIGN KEY (node_deployment_status) REFERENCES node_deployment_status(node_deployment_status) ON UPDATE CASCADE ON DELETE RESTRICT;
-
-
---
--- TOC entry 60 (OID 728645)
--- Name: fk_venue_types; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY nodes
-    ADD CONSTRAINT fk_venue_types FOREIGN KEY (venue_type) REFERENCES venue_types(venue_type) ON UPDATE CASCADE ON DELETE RESTRICT;
-
-
---
--- TOC entry 61 (OID 728659)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -677,7 +671,6 @@ ALTER TABLE ONLY users
 
 
 --
--- TOC entry 64 (OID 728672)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -686,34 +679,6 @@ ALTER TABLE ONLY content
 
 
 --
--- TOC entry 65 (OID 728676)
--- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY content
-    ADD CONSTRAINT "$2" FOREIGN KEY (description) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE RESTRICT;
-
-
---
--- TOC entry 66 (OID 728680)
--- Name: $3; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY content
-    ADD CONSTRAINT "$3" FOREIGN KEY (project_info) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE RESTRICT;
-
-
---
--- TOC entry 67 (OID 728684)
--- Name: $4; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY content
-    ADD CONSTRAINT "$4" FOREIGN KEY (sponsor_info) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE RESTRICT;
-
-
---
--- TOC entry 68 (OID 728696)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -722,16 +687,6 @@ ALTER TABLE ONLY content_has_owners
 
 
 --
--- TOC entry 69 (OID 728700)
--- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY content_has_owners
-    ADD CONSTRAINT "$2" FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- TOC entry 70 (OID 728712)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -740,16 +695,6 @@ ALTER TABLE ONLY langstring_entries
 
 
 --
--- TOC entry 71 (OID 728716)
--- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY langstring_entries
-    ADD CONSTRAINT "$2" FOREIGN KEY (locales_id) REFERENCES locales(locales_id) ON UPDATE CASCADE ON DELETE RESTRICT;
-
-
---
--- TOC entry 72 (OID 728729)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -758,7 +703,6 @@ ALTER TABLE ONLY content_group
 
 
 --
--- TOC entry 73 (OID 728741)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -767,25 +711,6 @@ ALTER TABLE ONLY content_group_element
 
 
 --
--- TOC entry 74 (OID 728745)
--- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY content_group_element
-    ADD CONSTRAINT "$2" FOREIGN KEY (content_group_id) REFERENCES content_group(content_group_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- TOC entry 75 (OID 728749)
--- Name: $3; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY content_group_element
-    ADD CONSTRAINT "$3" FOREIGN KEY (displayed_content_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- TOC entry 76 (OID 728762)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -794,16 +719,6 @@ ALTER TABLE ONLY content_group_element_has_allowed_nodes
 
 
 --
--- TOC entry 77 (OID 728766)
--- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY content_group_element_has_allowed_nodes
-    ADD CONSTRAINT "$2" FOREIGN KEY (node_id) REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- TOC entry 78 (OID 728798)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -812,16 +727,6 @@ ALTER TABLE ONLY user_has_content
 
 
 --
--- TOC entry 79 (OID 728802)
--- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY user_has_content
-    ADD CONSTRAINT "$2" FOREIGN KEY (content_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- TOC entry 80 (OID 728814)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -830,16 +735,6 @@ ALTER TABLE ONLY node_has_content
 
 
 --
--- TOC entry 81 (OID 728818)
--- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY node_has_content
-    ADD CONSTRAINT "$2" FOREIGN KEY (content_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- TOC entry 82 (OID 728830)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -848,7 +743,6 @@ ALTER TABLE ONLY network_has_content
 
 
 --
--- TOC entry 84 (OID 741781)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -857,7 +751,70 @@ ALTER TABLE ONLY content_display_log
 
 
 --
--- TOC entry 85 (OID 741785)
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY pictures
+    ADD CONSTRAINT "$1" FOREIGN KEY (pictures_id) REFERENCES files(files_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY content
+    ADD CONSTRAINT "$2" FOREIGN KEY (description) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY content_has_owners
+    ADD CONSTRAINT "$2" FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY langstring_entries
+    ADD CONSTRAINT "$2" FOREIGN KEY (locales_id) REFERENCES locales(locales_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY content_group_element
+    ADD CONSTRAINT "$2" FOREIGN KEY (content_group_id) REFERENCES content_group(content_group_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY content_group_element_has_allowed_nodes
+    ADD CONSTRAINT "$2" FOREIGN KEY (node_id) REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY user_has_content
+    ADD CONSTRAINT "$2" FOREIGN KEY (content_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY node_has_content
+    ADD CONSTRAINT "$2" FOREIGN KEY (content_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -866,7 +823,22 @@ ALTER TABLE ONLY content_display_log
 
 
 --
--- TOC entry 86 (OID 741789)
+-- Name: $3; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY content
+    ADD CONSTRAINT "$3" FOREIGN KEY (project_info) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: $3; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY content_group_element
+    ADD CONSTRAINT "$3" FOREIGN KEY (displayed_content_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: $3; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -875,7 +847,94 @@ ALTER TABLE ONLY content_display_log
 
 
 --
--- TOC entry 83 (OID 741866)
+-- Name: $4; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY content
+    ADD CONSTRAINT "$4" FOREIGN KEY (sponsor_info) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: $5; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY content
+    ADD CONSTRAINT "$5" FOREIGN KEY (long_description) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: administrators_ibfk_1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY administrators
+    ADD CONSTRAINT administrators_ibfk_1 FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: content_rss_aggregator_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY content_rss_aggregator
+    ADD CONSTRAINT content_rss_aggregator_content_id_fkey FOREIGN KEY (content_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: content_rss_aggregator_feeds_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY content_rss_aggregator_feeds
+    ADD CONSTRAINT content_rss_aggregator_feeds_content_id_fkey FOREIGN KEY (content_id) REFERENCES content_rss_aggregator(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_node_deployment_status; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY nodes
+    ADD CONSTRAINT fk_node_deployment_status FOREIGN KEY (node_deployment_status) REFERENCES node_deployment_status(node_deployment_status) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: fk_nodes; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY connections
+    ADD CONSTRAINT fk_nodes FOREIGN KEY (node_id) REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: fk_nodes; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY node_owners
+    ADD CONSTRAINT fk_nodes FOREIGN KEY (node_id) REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_users; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY connections
+    ADD CONSTRAINT fk_users FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: fk_users; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY node_owners
+    ADD CONSTRAINT fk_users FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_venue_types; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY nodes
+    ADD CONSTRAINT fk_venue_types FOREIGN KEY (venue_type) REFERENCES venue_types(venue_type) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
 -- Name: flickr_photostream_content_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -884,10 +943,14 @@ ALTER TABLE ONLY flickr_photostream
 
 
 --
--- TOC entry 3 (OID 2200)
--- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
+-- Name: iframes_iframes_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
-COMMENT ON SCHEMA public IS 'Standard public schema';
+ALTER TABLE ONLY iframes
+    ADD CONSTRAINT iframes_iframes_id_fkey FOREIGN KEY (iframes_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
+
+--
+-- PostgreSQL database dump complete
+--
 

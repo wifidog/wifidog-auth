@@ -1,3 +1,12 @@
+2005-08-12 Benoit Grégoire  <bock@step.polymtl.ca>
+	* classes/MainUI.php: Move the call to schema_validate() in MainUI's constructor
+	* lib/RssPressReview/RssPressReview.php: Finish rewrite. Move there to reflect 
+	it's independently maintained status 
+	* wifidog/classes/Content/HotspotRss.php:  Delete the class, obsolete
+	* wifidog/classes/Content/RssAggregator.php:  Functionnal, but needs it's admin UI written.
+	* wifidog/include/schema_validate.php:  Create the table structure for the new RssAggregator.
+	Remove rss_url in nodes table, no longer needed.  Move it's data to the new Content class.
+	
 2005-08-11 Francois Proulx <francois.proulx@gmail.com>
 	* Refactored the Admin UI.
 	* I need to write the upload form and rewrite statistics

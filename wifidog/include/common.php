@@ -3,10 +3,9 @@ error_reporting(E_ALL);
 require_once BASEPATH.'config.php';
 require_once BASEPATH.'classes/AbstractDb.php';
 require_once BASEPATH.'classes/Session.php';
-require_once BASEPATH.'include/schema_validate.php';
+
 global $db;
 $db = new AbstractDb();
-validate_schema();
 
 /* NEVER edit these, as they mush match the C code of the gateway */
 define('ACCOUNT_STATUS_ERROR',		-1);

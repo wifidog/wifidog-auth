@@ -1,4 +1,5 @@
 <?php
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -21,7 +22,7 @@
 /**@file Node.php
  * @author Copyright (C) 2005 Benoit Gr�goire <bock@step.polymtl.ca>
  */
- 
+
 require_once BASEPATH.'include/common.php';
 require_once 'Content/ContentGroup.php';
 require_once BASEPATH.'classes/User.php';
@@ -57,7 +58,7 @@ class Node implements GenericObject
 		}
 		else
 		{
-			$object = self::getCurrentRealNode();
+			$object = self :: getCurrentRealNode();
 		}
 		return $object;
 	}
@@ -108,13 +109,13 @@ class Node implements GenericObject
 					$sql = "SELECT node_id, last_heartbeat_ip from connections NATURAL JOIN nodes WHERE user_id='$current_user_id' ORDER BY last_updated DESC ";
 					$db->ExecSql($sql, $node_rows, false);
 					$node_row = $node_rows[0];
-					if($node_row!=null && $node_row['last_heartbeat_ip']==$_SERVER['REMOTE_ADDR'])
+					if ($node_row != null && $node_row['last_heartbeat_ip'] == $_SERVER['REMOTE_ADDR'])
 					{
 						$retval = new self($node_row['node_id']);
 					}
 				}
 			}
-        return $retval;
+		return $retval;
 	}
 
 	public function delete(& $errmsg)
@@ -125,7 +126,7 @@ class Node implements GenericObject
 		{
 			$errmsg = _('Access denied!');
 		}
-		
+
 		global $db;
 		$id = $db->EscapeString($this->getId());
 		if (!$db->ExecSqlUpdate("DELETE FROM nodes WHERE node_id='{$id}'", false))
@@ -136,7 +137,7 @@ class Node implements GenericObject
 		{
 			$retval = true;
 		}
-		
+
 		return $retval;
 	}
 
@@ -173,7 +174,6 @@ class Node implements GenericObject
 
 		$node_id = $db->EscapeString($node_id);
 		$name = $db->EscapeString($name);
-		$rss_url = $db->EscapeString($rss_url);
 		$home_page_url = $db->EscapeString($home_page_url);
 		$description = $db->EscapeString($description);
 		$map_url = $db->EscapeString($map_url);
@@ -186,7 +186,7 @@ class Node implements GenericObject
 		if (Node :: nodeExists($node_id))
 			throw new Exception(_('This node already exists.'));
 
-		$sql = "INSERT INTO nodes (node_id, name, rss_url, creation_date, home_page_url, description, map_url, street_address, public_phone_number, public_email, mass_transit_info, node_deployment_status) VALUES ('$node_id','$name','$rss_url',NOW(),'$home_page_url','$description','$map_url','$street_address','$public_phone_number','$public_email','$mass_transit_info','$node_deployment_status')";
+		$sql = "INSERT INTO nodes (node_id, name, creation_date, home_page_url, description, map_url, street_address, public_phone_number, public_email, mass_transit_info, node_deployment_status) VALUES ('$node_id','$name',NOW(),'$home_page_url','$description','$map_url','$street_address','$public_phone_number','$public_email','$mass_transit_info','$node_deployment_status')";
 
 		if (!$db->ExecSqlUpdate($sql, false))
 		{
@@ -233,7 +233,7 @@ class Node implements GenericObject
 		$name = "{$user_prefix}";
 		return new self($_REQUEST[$name]);
 	}
-	
+
 	/** Get an interface to select the deployment status
 	* @param $user_prefix A identifier provided by the programmer to recognise it's generated html form
 	* @return html markup
@@ -243,12 +243,12 @@ class Node implements GenericObject
 		global $db;
 		$html = '';
 		$name = "{$user_prefix}";
-		$status_list = self::getAllDeploymentStatus();
+		$status_list = self :: getAllDeploymentStatus();
 		if ($status_list != null)
 		{
-			$tab = array();
+			$tab = array ();
 			foreach ($status_list as $status)
-				$tab[] = array($status, $status);
+				$tab[] = array ($status, $status);
 			$html .= FormSelectGenerator :: generateFromArray($tab, $this->getDeploymentStatus(), $name, null, false);
 		}
 		return $html;
@@ -278,22 +278,22 @@ class Node implements GenericObject
 			throw new Exception(_("The id $node_id_str could not be found in the database"));
 		}
 		$this->mRow = $row;
-		$this->mDb = &$db;
+		$this->mDb = & $db;
 		$this->id = $row['node_id'];
 	}
-	
+
 	function getID()
 	{
 		return $this->mRow['node_id'];
 	}
-	
+
 	/** Return the name of the node 
 	 */
 	function getName()
 	{
 		return $this->mRow['name'];
 	}
-	
+
 	function setName($name)
 	{
 		$name = $this->mDb->EscapeString($name);
@@ -301,23 +301,11 @@ class Node implements GenericObject
 		$this->refresh();
 	}
 
-	function getRssUrl()
-	{
-		return $this->mRow['rss_url'];
-	}
-	
-	function setRssUrl($url)
-	{
-		$url = $this->mDb->EscapeString($url);
-		$this->mDb->ExecSqlUpdate("UPDATE nodes SET rss_url = '{$url}' WHERE node_id = '{$this->getId()}'");
-		$this->refresh();
-	}
-
 	function getHomePageURL()
 	{
 		return $this->mRow['home_page_url'];
 	}
-	
+
 	function setHomePageUrl($url)
 	{
 		$url = $this->mDb->EscapeString($url);
@@ -329,7 +317,7 @@ class Node implements GenericObject
 	{
 		return $this->mRow['description'];
 	}
-	
+
 	function setDescription($description)
 	{
 		$description = $this->mDb->EscapeString($description);
@@ -341,7 +329,7 @@ class Node implements GenericObject
 	{
 		return $this->mRow['map_url'];
 	}
-	
+
 	function setMapURL($url)
 	{
 		$url = $this->mDb->EscapeString($url);
@@ -353,7 +341,7 @@ class Node implements GenericObject
 	{
 		return $this->mRow['street_address'];
 	}
-	
+
 	function setAddress($address)
 	{
 		$address = $this->mDb->EscapeString($address);
@@ -365,7 +353,7 @@ class Node implements GenericObject
 	{
 		return $this->mRow['public_phone_number'];
 	}
-	
+
 	function setTelephone($phone)
 	{
 		$phone = $this->mDb->EscapeString($phone);
@@ -377,7 +365,7 @@ class Node implements GenericObject
 	{
 		return $this->mRow['mass_transit_info'];
 	}
-	
+
 	function setTransitInfo($transit_info)
 	{
 		$transit_info = $this->mDb->EscapeString($transit_info);
@@ -389,7 +377,7 @@ class Node implements GenericObject
 	{
 		return $this->mRow['public_email'];
 	}
-	
+
 	function setEmail($email)
 	{
 		$email = $this->mDb->EscapeString($email);
@@ -401,7 +389,7 @@ class Node implements GenericObject
 	{
 		return $this->mRow['node_deployment_status'];
 	}
-	
+
 	function setDeploymentStatus($status)
 	{
 		$status = $this->mDb->EscapeString($status);
@@ -414,16 +402,16 @@ class Node implements GenericObject
 	public function getAdminUI()
 	{
 		//TODO: Most of this code will be moved to Hotspot class when the abtraction will be completed
-		
+
 		$html = '';
 		$html .= "<div class='admin_container'>\n";
 		$html .= "<div class='admin_class'>Node (".get_class($this)." instance)</div>\n";
 		$html .= "<h3>"._("Edit a hotspot")."</h3>\n";
-		
+
 		// Information about the node
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Information about the node:")."</div>\n";
-		
+
 		// Node ID
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("ID")." : </div>\n";
@@ -443,17 +431,7 @@ class Node implements GenericObject
 		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
-		// RSS URL
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("RSS URL")." : </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$this->getId()."_rss_url";
-		$value = htmlspecialchars($this->getRSSUrl(), ENT_QUOTES);
-		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
-		
+
 		// Homepage URL
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Homepage URL")." : </div>\n";
@@ -463,7 +441,7 @@ class Node implements GenericObject
 		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		// Description
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Description")." : </div>\n";
@@ -473,7 +451,7 @@ class Node implements GenericObject
 		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		// Map URL
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Map URL")." : </div>\n";
@@ -483,7 +461,7 @@ class Node implements GenericObject
 		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		// Street address
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Street address")." : </div>\n";
@@ -493,7 +471,7 @@ class Node implements GenericObject
 		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		// Public phone #
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Public phone number")." : </div>\n";
@@ -503,7 +481,7 @@ class Node implements GenericObject
 		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		// Public mail
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Public email")." : </div>\n";
@@ -513,7 +491,7 @@ class Node implements GenericObject
 		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		// Mass transit info
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Mass transit info")." : </div>\n";
@@ -523,19 +501,19 @@ class Node implements GenericObject
 		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		// Deployment status
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Node deployment status")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$this->getId()."_deployment_status";		
-		$html .= self::getSelectDeploymentStatus($name);
+		$name = "node_".$this->getId()."_deployment_status";
+		$html .= self :: getSelectDeploymentStatus($name);
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		// End of information section
 		$html .= "</div>\n";
-		
+
 		// Owners management
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Node owners")." : </div>\n";
@@ -561,7 +539,7 @@ class Node implements GenericObject
 		$html .= "</ul>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		// Display stats
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Statistics:")."</div>\n";
@@ -570,7 +548,7 @@ class Node implements GenericObject
 		$html .= "<input type='submit' name='$name' value='"._("Get access statistics")."'>";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Node content:")."</div>\n";
 
@@ -603,59 +581,55 @@ class Node implements GenericObject
 	*/
 	public function processAdminUI()
 	{
-		$user = User::getCurrentUser();
+		$user = User :: getCurrentUser();
 		if (!$this->isOwner($user) && !$user->isSuperAdmin())
 		{
 			throw new Exception(_('Access denied!'));
 		}
-		
+
 		// Information about the node
-		
+
 		// Name
 		$name = "node_".$this->getId()."_name";
 		$this->setName($_REQUEST[$name]);
-		
-		// RSS URL
-		$name = "node_".$this->getId()."_rss_url";
-		$this->setRssUrl($_REQUEST[$name]);
-			
+
 		// Homepage URL
 		$name = "node_".$this->getId()."_homepage_url";
 		$this->setHomePageUrl($_REQUEST[$name]);
-		
+
 		// Description
 		$name = "node_".$this->getId()."_description";
 		$this->setDescription($_REQUEST[$name]);
-		
+
 		// Map URL
 		$name = "node_".$this->getId()."_map_url";
 		$this->setMapUrl($_REQUEST[$name]);
-		
+
 		// Street address
 		$name = "node_".$this->getId()."_street_address";
 		$this->setAddress($_REQUEST[$name]);
-		
+
 		// Public phone #
 		$name = "node_".$this->getId()."_public_phone";
 		$this->setTelephone($_REQUEST[$name]);
-		
+
 		// Public mail
 		$name = "node_".$this->getId()."_public_email";
 		$this->setEmail($_REQUEST[$name]);
-		
+
 		// Mass transit info
 		$name = "node_".$this->getId()."_mass_transit_info";
 		$this->setTransitInfo($_REQUEST[$name]);
-		
+
 		// Deployment status
 		$name = "node_".$this->getId()."_deployment_status";
-		$this->setDeploymentStatus(self::processSelectDeploymentStatus($name));
+		$this->setDeploymentStatus(self :: processSelectDeploymentStatus($name));
 
 		// Statistics
 		$name = "node_{$this->id}_get_stats";
 		if (!empty ($_REQUEST[$name]))
 			header("Location: hotspot_log.php?node_id=".urlencode($this->getId()));
-			
+
 		// Owners processing
 		// Rebuild user id, and delete if it was selected
 		foreach ($this->getOwners() as $owner)
@@ -663,7 +637,7 @@ class Node implements GenericObject
 			$name = "node_{$this->getId()}_owner_{$owner->GetId()}_remove";
 			if (!empty ($_REQUEST[$name]))
 			{
-				if($this->isOwner($owner))
+				if ($this->isOwner($owner))
 					$this->removeOwner($owner);
 				else
 					echo _("Invalid user!");
@@ -675,15 +649,15 @@ class Node implements GenericObject
 		{
 			$name = "node_{$this->getId()}_new_owner";
 			$owner = User :: processSelectUserUI($name);
-            if($owner)
-            {
-            	if($this->isOwner($owner))
-            		echo _("The user is already an owner of this node.");
-            	else
-                	$this->addOwner($owner);
-            }
+			if ($owner)
+			{
+				if ($this->isOwner($owner))
+					echo _("The user is already an owner of this node.");
+				else
+					$this->addOwner($owner);
+			}
 		}
-		
+
 		// Content processing 
 		// Rebuild content id and deleting if it was selected for deletion )
 		foreach ($this->getAllContent() as $content)
@@ -700,16 +674,16 @@ class Node implements GenericObject
 		{
 			$name = "node_{$this->id}_new_content";
 			$content = Content :: processSelectContentUI($name);
-            if($content)
-                $this->addContent($content);
+			if ($content)
+				$this->addContent($content);
 		}
 	}
-    
-    // Redirect to this node's portal page
-    public function getUserUI()
-    {
-        header("Location: ".BASE_SSL_PATH."portal/?gw_id=".$this->getId());
-    }
+
+	// Redirect to this node's portal page
+	public function getUserUI()
+	{
+		header("Location: ".BASE_SSL_PATH."portal/?gw_id=".$this->getId());
+	}
 
 	/** Add content to this node */
 	public function addContent(Content $content)
@@ -730,20 +704,20 @@ class Node implements GenericObject
 	}
 
 	/**Get an array of all Content linked to this node
-     * @param boolean $exclude_subscribed_content
+	 * @param boolean $exclude_subscribed_content
 	* @param User $subscriber The User object used to discriminate the content
-    * @return an array of Content or an empty arrray */
-    function getAllContent($exclude_subscribed_content = false, $subscriber = null)
+	* @return an array of Content or an empty arrray */
+	function getAllContent($exclude_subscribed_content = false, $subscriber = null)
 	{
 		global $db;
 		$retval = array ();
-        // Get all network, but exclude user subscribed content if asked
-        if ($exclude_subscribed_content == true && $subscriber)
-            $sql = "SELECT content_id FROM node_has_content WHERE node_id='$this->id' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$subscriber->getId()}') ORDER BY subscribe_timestamp";
-        else
-            $sql = "SELECT content_id FROM node_has_content WHERE node_id='$this->id' ORDER BY subscribe_timestamp";
+		// Get all network, but exclude user subscribed content if asked
+		if ($exclude_subscribed_content == true && $subscriber)
+			$sql = "SELECT content_id FROM node_has_content WHERE node_id='$this->id' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$subscriber->getId()}') ORDER BY subscribe_timestamp";
+		else
+			$sql = "SELECT content_id FROM node_has_content WHERE node_id='$this->id' ORDER BY subscribe_timestamp";
 		$db->ExecSql($sql, $content_rows, false);
-        
+
 		if ($content_rows != null)
 		{
 			foreach ($content_rows as $content_row)
@@ -753,35 +727,35 @@ class Node implements GenericObject
 		}
 		return $retval;
 	}
-    
-    /** Get an array of all artistic and locative Content for this hotspot
-    * @return an array of Content or an empty arrray */
-    function getAllLocativeArtisticContent()
-    {
-        global $db;
-        $retval = array ();
-        $sql = "SELECT * FROM content_group JOIN content ON (content.content_id = content_group.content_group_id) JOIN node_has_content ON (node_has_content.content_id = content_group.content_group_id AND node_has_content.node_id = '{$this->getId()}') WHERE is_persistent = true AND is_artistic_content = true AND is_locative_content = true";
-        $db->ExecSql($sql, $content_rows, false);
-        if ($content_rows != null)
-        {
-            foreach ($content_rows as $content_row)
-            {
-                // Create a content group object and grab only those that have content for the current Node
-                $content_group = Content::getObject($content_row['content_group_id']);
-                if($content_group->getDisplayNumElements() >= 1)
-                {
-            		if($content_group->isDisplayableAt($this))
-            		{
+
+	/** Get an array of all artistic and locative Content for this hotspot
+	* @return an array of Content or an empty arrray */
+	function getAllLocativeArtisticContent()
+	{
+		global $db;
+		$retval = array ();
+		$sql = "SELECT * FROM content_group JOIN content ON (content.content_id = content_group.content_group_id) JOIN node_has_content ON (node_has_content.content_id = content_group.content_group_id AND node_has_content.node_id = '{$this->getId()}') WHERE is_persistent = true AND is_artistic_content = true AND is_locative_content = true";
+		$db->ExecSql($sql, $content_rows, false);
+		if ($content_rows != null)
+		{
+			foreach ($content_rows as $content_row)
+			{
+				// Create a content group object and grab only those that have content for the current Node
+				$content_group = Content :: getObject($content_row['content_group_id']);
+				if ($content_group->getDisplayNumElements() >= 1)
+				{
+					if ($content_group->isDisplayableAt($this))
+					{
 						// Disable logging and allow content to expand ( if possible )
 						$content_group->setExpandStatus(true);
 						$content_group->setLoggingStatus(false);
 						$retval[] = $content_group;
-            		}
-                }
-            }
-        }
-        return $retval;
-    }
+					}
+				}
+			}
+		}
+		return $retval;
+	}
 
 	/** Return all the nodes
 	 */
@@ -836,33 +810,33 @@ class Node implements GenericObject
 		return $statuses_array;
 	}
 
-    /** The list of users online at this node
-     * @return An array of User object, or en empty array */
+	/** The list of users online at this node
+	 * @return An array of User object, or en empty array */
 	function getOnlineUsers()
 	{
 		global $db;
-		$retval=array();
+		$retval = array ();
 		$db->ExecSql("SELECT users.user_id FROM users,connections WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}'", $users, false);
-		if($users != null)
+		if ($users != null)
 		{
 			foreach ($users as $user_row)
 			{
-				$retval[] = User::getObject($user_row['user_id']);
+				$retval[] = User :: getObject($user_row['user_id']);
 			}
 		}
 		return $retval;
 	}
 
 	function getOwners()
-	{		
+	{
 		global $db;
-		$retval = array();
+		$retval = array ();
 		$db->ExecSql("SELECT user_id FROM node_owners WHERE node_id='{$this->id}'", $owners, false);
-		if($owners != null)
+		if ($owners != null)
 		{
 			foreach ($owners as $owner_row)
 			{
-				$retval[] = User::getObject($owner_row['user_id']);
+				$retval[] = User :: getObject($owner_row['user_id']);
 			}
 		}
 		return $retval;
@@ -909,16 +883,16 @@ class Node implements GenericObject
 		return $row;
 	}
 
-    /** Warning, the semantics of this function will change *
-     * @deprecated version - 2005-04-29 USE getOnlineUsers instead
-     * */
+	/** Warning, the semantics of this function will change *
+	 * @deprecated version - 2005-04-29 USE getOnlineUsers instead
+	 * */
 	public static function getAllOnlineUsers()
 	{
 		global $db;
 		$db->ExecSql("SELECT * FROM connections,users,nodes WHERE token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND nodes.node_id=connections.node_id ORDER BY timestamp_in DESC", $online_users);
 		return $online_users;
 	}
-	
+
 	/** Reloads the object from the database.  Should normally be called after a set operation */
 	protected function refresh()
 	{

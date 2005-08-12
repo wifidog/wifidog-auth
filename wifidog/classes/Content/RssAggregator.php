@@ -20,8 +20,8 @@
  * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
  *                                                                  *
 \********************************************************************/
-/**@file HotspotRss.php
- * @author Copyright (C) 2004-2005 Benoit Grégoire, Technologies Coeus inc.
+/**@file RssAggregator.php
+ * @author Copyright (C) 2005 Benoit Grégoire, Technologies Coeus inc.
 */
 
 require_once BASEPATH.'classes/FormSelectGenerator.php';
@@ -33,14 +33,47 @@ error_reporting(E_ALL);
 
 /** Interim code to display the RSS feed for a hotspot
  */
-class HotspotRss extends Content
+class RssAggregator extends Content
 {
+	private $content_rss_aggregator_row;
+	private $content_rss_aggregator_feeds_rows;	
 	/**Constructeur
 	@param $content_id Content id
 	*/
 	function __construct($content_id)
 	{
 		parent :: __construct($content_id);
+		global $db;
+		$content_id = $db->EscapeString($content_id);
+
+		$sql = "SELECT * FROM content_rss_aggregator WHERE content_id='$content_id'";
+		$row=null;
+		$db->ExecSqlUniqueRes($sql, $row, false);
+		if ($row == null)
+		{
+			/*Since the parent Content exists, the necessary data in content_group had not yet been created */
+			$sql_new = "INSERT INTO content_rss_aggregator (content_id) VALUES ('$content_id')";
+			$db->ExecSqlUpdate($sql_new, false);
+			$db->ExecSqlUniqueRes($sql, $row, false);
+			if ($row == null)
+			{
+				throw new Exception(_("The RssAggregator content with the following id could not be found in the database: ").$content_id);
+			}
+		}
+        $this->content_rss_aggregator_row = $row;
+
+		$sql = "SELECT * FROM content_rss_aggregator_feeds WHERE content_id='$content_id'";
+		$content_rss_aggregator_rows=null;
+        $db->ExecSql($sql, $content_rss_aggregator_rows, false);
+        if($content_rss_aggregator_rows!=null)
+        {
+        	        $this->content_rss_aggregator_feeds_rows = $content_rss_aggregator_rows;
+        }
+        else
+        {
+        	        $this->content_rss_aggregator_feeds_rows = array();
+        }
+        
 		$this->setIsTrivialContent(true);
 	}
 
@@ -53,15 +86,10 @@ class HotspotRss extends Content
 		$html .= "<div class='user_ui_object_class'>Content (".get_class($this)." instance)</div>\n";
 		if (RSS_SUPPORT)
 		{
-			$node=Node::getCurrentNode();
-			$hotspot_rss_url = $node->getRssUrl();
-			
-			require_once BASEPATH.'classes/RssPressReview.inc';
-			RssPressReview::setMagpieDir(BASEPATH.MAGPIE_REL_PATH);
-						RssPressReview::setOutputEncoding("UTF-8");
-			$press_review = new RssPressReview;
+			require_once BASEPATH.'lib/RssPressReview/RssPressReview.php';
+			$press_review = new RssPressReview(BASEPATH.MAGPIE_REL_PATH, "UTF-8");
 
-			
+			/*
 			$tokens = "/[\s,]+/";
 			$network_rss_sources = NETWORK_RSS_URL;
 			$network_rss_html = null;
@@ -82,31 +110,20 @@ class HotspotRss extends Content
                     $network_rss_html = _("Could not get network RSS feed");
                 }
 			}
-			
-			$press_review = new RssPressReview;
-			$hotspot_rss_html = null;
-			if (!empty ($hotspot_rss_url))
-			{
-				$extract_array = null;
-				$extract_array = preg_split($tokens, $hotspot_rss_url);
-				//print_r($extract_array);
-				foreach ($extract_array as $source)
+			*/
+			$press_review = new RssPressReview(BASEPATH.MAGPIE_REL_PATH, "UTF-8");
+			$press_review->setAlgorithmStrength($this->content_rss_aggregator_row['algorithm_strength']);
+			$press_review->setMaxItemAge($this->content_rss_aggregator_row['max_item_age']);
+				foreach ($this->content_rss_aggregator_feeds_rows as $feed_row)
 				{
-					$press_review->addSourceFeed($source,  7 * 24 * 3600);
+					$press_review->addSourceFeed($feed_row['url'],  $feed_row['default_publication_interval'], $feed_row['bias']);
 				}
                 try {
-				    $hotspot_rss_html = $press_review->get_rss_html(5);
+				    $html = $press_review->get_rss_html($this->content_rss_aggregator_row['number_of_display_items']);
                 } catch(Exception $e)
                 {
-                    $hotspot_rss_html = _("Could not get hotspot RSS feed");
+                    $html = sprintf(_("Could not get RSS feed: %s"), $feed_row['url']);
                 }
-			}
-
-			//echo $networkrss_html;
-			$html .= $network_rss_html;
-
-			//echo $hotspot_rss_html;
-			$html .= $hotspot_rss_html;
 			//   error_reporting($old_error_level);
 		}
 

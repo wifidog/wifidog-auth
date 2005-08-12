@@ -26,7 +26,7 @@ error_reporting(E_ALL);
 require_once BASEPATH.'config.php';
 require_once BASEPATH.'classes/AbstractDb.php';
 require_once BASEPATH.'classes/Session.php';
-define('REQUIRED_SCHEMA_VERSION', 20);
+define('REQUIRED_SCHEMA_VERSION', 21);
 
 /** Check that the database schema is up to date.  If it isn't, offer to update it. */
 function validate_schema()
@@ -472,7 +472,55 @@ function update_schema()
             $sql .= "ALTER TABLE nodes ADD COLUMN longitude NUMERIC(16, 6);\n";
         }
         
+        		
+		$new_schema_version = 21;
+        if($schema_version < $new_schema_version)
+        {
+            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n"; 
+            $sql .= "CREATE TABLE content_rss_aggregator " .
+            		"( " .
+            		"content_id text NOT NULL PRIMARY KEY REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE, " .
+            		"number_of_display_items integer NOT NULL DEFAULT 10, " .
+            		"algorithm_strength real NOT NULL DEFAULT 0.75, ".
+            		"max_item_age interval DEFAULT NULL".
+            		");\n";
+           	$sql .= "CREATE TABLE content_rss_aggregator_feeds " .
+            		"( " .
+            		"content_id text NOT NULL REFERENCES content_rss_aggregator ON UPDATE CASCADE ON DELETE CASCADE, " .
+            		"url text, ".
+            		"bias real NOT NULL DEFAULT 1, ".
+            		"default_publication_interval int DEFAULT NULL, ".
+            		"PRIMARY KEY(content_id, url) " .
+            		");\n";
+            $sql .= "ALTER TABLE content_has_owners ALTER COLUMN is_author SET DEFAULT 'f';\n";
+            $results=null;
+            $db->ExecSql("SELECT node_id, rss_url FROM nodes", $results, false);
+			foreach ($results as $row)
+			{
+				if(!empty($row['rss_url']))
+{
+				//$user_id = $db->EscapeString($row['user_id']);
+				$content_id = get_guid();
+				$sql .= "\nINSERT INTO content (content_id, content_type) VALUES ('$content_id', 'RssAggregator');\n";
+				$sql .= "INSERT INTO content_rss_aggregator (content_id) VALUES ('$content_id');\n";
+				$sql .= "INSERT INTO content_rss_aggregator_feeds (content_id, url) VALUES ('$content_id', '".$row['rss_url']."');\n";
+				$node = Node::getObject ($row['node_id']);
+				$owners = $node->getOwners();
+				foreach ($owners as $owner)
+				{
+					$sql .= "INSERT INTO content_has_owners (content_id, user_id) VALUES ('$content_id', '".$owner->getId()."');\n";
+				}
+				$sql .= "INSERT INTO node_has_content (content_id, node_id) VALUES ('$content_id', '".$row['node_id']."');\n";
+				}
+			}
+			$sql .= "\nALTER TABLE nodes DROP COLUMN rss_url;\n";
+			$sql .= "\nDELETE FROM content WHERE content_type='HotspotRss';\n";			
+			
+            		
+        }
 		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);
+		//$db->ExecSqlUpdate("BEGIN;\n$sql\nROLLBACK;\n", true);
 		echo "</html></head>";
 		exit ();
 	}

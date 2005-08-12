@@ -6,14 +6,12 @@ BEGIN;
 
 SET client_encoding = 'UNICODE';
 SET check_function_bodies = false;
-
-SET SESSION AUTHORIZATION 'wifidog';
+SET client_min_messages = warning;
 
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 2 (OID 706682)
--- Name: token_status; Type: TABLE DATA; Schema: public; Owner: wifidog
+-- Data for Name: token_status; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
 INSERT INTO token_status (token_status) VALUES ('UNUSED');
@@ -22,19 +20,21 @@ INSERT INTO token_status (token_status) VALUES ('USED');
 
 
 --
+-- PostgreSQL database dump complete
+--
+
+--
 -- PostgreSQL database dump
 --
 
 SET client_encoding = 'UNICODE';
 SET check_function_bodies = false;
-
-SET SESSION AUTHORIZATION 'wifidog';
+SET client_min_messages = warning;
 
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 2 (OID 706717)
--- Name: venue_types; Type: TABLE DATA; Schema: public; Owner: wifidog
+-- Data for Name: venue_types; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
 INSERT INTO venue_types (venue_type) VALUES ('Airline');
@@ -74,19 +74,21 @@ INSERT INTO venue_types (venue_type) VALUES ('Wi-Fi Zone');
 
 
 --
+-- PostgreSQL database dump complete
+--
+
+--
 -- PostgreSQL database dump
 --
 
 SET client_encoding = 'UNICODE';
 SET check_function_bodies = false;
-
-SET SESSION AUTHORIZATION 'wifidog';
+SET client_min_messages = warning;
 
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 2 (OID 706715)
--- Name: node_deployment_status; Type: TABLE DATA; Schema: public; Owner: wifidog
+-- Data for Name: node_deployment_status; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
 INSERT INTO node_deployment_status (node_deployment_status) VALUES ('DEPLOYED');
@@ -97,6 +99,10 @@ INSERT INTO node_deployment_status (node_deployment_status) VALUES ('PERMANENTLY
 INSERT INTO node_deployment_status (node_deployment_status) VALUES ('TEMPORARILY_CLOSED');
 
 
+--
+-- PostgreSQL database dump complete
+--
+
 INSERT INTO nodes (node_id, name, rss_url) VALUES ('default', 'Unknown node', NULL);
 --
 -- PostgreSQL database dump
@@ -104,18 +110,20 @@ INSERT INTO nodes (node_id, name, rss_url) VALUES ('default', 'Unknown node', NU
 
 SET client_encoding = 'UNICODE';
 SET check_function_bodies = false;
-
-SET SESSION AUTHORIZATION 'wifidog';
+SET client_min_messages = warning;
 
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 2 (OID 706727)
--- Name: schema_info; Type: TABLE DATA; Schema: public; Owner: wifidog
+-- Data for Name: schema_info; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
-INSERT INTO schema_info (tag, value) VALUES ('schema_version', '13');
+INSERT INTO schema_info (tag, value) VALUES ('schema_version', '21');
 
+
+--
+-- PostgreSQL database dump complete
+--
 
 --
 -- PostgreSQL database dump
@@ -123,18 +131,20 @@ INSERT INTO schema_info (tag, value) VALUES ('schema_version', '13');
 
 SET client_encoding = 'UNICODE';
 SET check_function_bodies = false;
-
-SET SESSION AUTHORIZATION 'wifidog';
+SET client_min_messages = warning;
 
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 2 (OID 728649)
--- Name: locales; Type: TABLE DATA; Schema: public; Owner: wifidog
+-- Data for Name: locales; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
 INSERT INTO locales (locales_id) VALUES ('fr');
 INSERT INTO locales (locales_id) VALUES ('en');
 
+
+--
+-- PostgreSQL database dump complete
+--
 
 COMMIT;
