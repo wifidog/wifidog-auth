@@ -1,6 +1,4 @@
 <?php
-
-
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -26,6 +24,7 @@
 
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'classes/Network.php';
+
 /** Abstract a User. */
 class User implements GenericObject
 {

@@ -24,7 +24,6 @@
 
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'classes/FormSelectGenerator.php';
-require_once BASEPATH.'classes/GenericObject.php';
 
 // Implementation classes loading is done after abstract class definition
 

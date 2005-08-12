@@ -203,9 +203,9 @@ switch ($format)
 				}
 				
 				// Street address
-				if (!empty ($node_row['street_address']))
+				if (!empty ($node_row['street_name']))
 				{
-					$street_addr = $xmldoc->createElement("streetAddress", $node_row['street_address']);
+					$street_addr = $xmldoc->createElement("streetAddress", $node_row['street_name']);
 					$hotspot->appendChild($street_addr);
 				}
 				

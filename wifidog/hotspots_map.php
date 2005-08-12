@@ -34,7 +34,7 @@ $ui = new MainUI();
 $ui->setTitle(_("Hotspots status map"));
 
 // Add Google Maps JavaScript ( must set config values )
-$html_headers = "<script src=\"http://maps.google.com/maps?file=api&v=1&key=".GMAPS_API_KEY."\" type=\"text/javascript\"></script>";
+$html_headers = "<script src=\"http://maps.google.com/maps?file=api&v=1&key=".GMAPS_PUBLIC_API_KEY."\" type=\"text/javascript\"></script>";
 $html_headers .= "<script src=\"js/gmaps_hotspots_status_map.js\" type=\"text/javascript\"></script>";
 $ui->setHtmlHeader($html_headers);
 

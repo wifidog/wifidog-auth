@@ -1,3 +1,12 @@
+2005-08-12 Francois Proulx <francois.proulx@gmail.com>
+	* Changed config.php GMAPS_API_KEY to GMAPS_PUBLIC_API_KEY
+	* Added GMAPS_ADMIN_API_KEY, needed for admin UI
+	* This is a stupid limitation of the Google Maps API which matches the complete URL path
+	* Added /classes/GisPoint.php class
+	* Will add geocode + Google Maps capabilities very soon
+	* Notice : the XML schema will change very soon...
+		* I will try to keep the streetAddress field intact so I won't break backward compat.
+	
 2005-08-12 Benoit Grégoire  <bock@step.polymtl.ca>
 	* classes/MainUI.php: Move the call to schema_validate() in MainUI's constructor
 	* lib/RssPressReview/RssPressReview.php: Finish rewrite. Move there to reflect 

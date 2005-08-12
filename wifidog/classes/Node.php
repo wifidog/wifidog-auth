@@ -25,7 +25,9 @@
 
 require_once BASEPATH.'include/common.php';
 require_once 'Content/ContentGroup.php';
-require_once BASEPATH.'classes/User.php';
+require_once 'User.php';
+require_once 'GisPoint.php';
+require_once 'AbstractGeocoder.php';
 
 /** Abstract a Node.  A Node is an actual physical transmitter. */
 class Node implements GenericObject
@@ -168,7 +170,7 @@ class Node implements GenericObject
 	 * @param $id The id to be given to the new node
 	 * @return the newly created Node object, or null if there was an error
 	 */
-	static function createNode($node_id, $name, $rss_url = "", $home_page_url = "", $description = "", $map_url = "", $street_address = "", $public_phone_number = "", $public_email = "", $mass_transit_info = "", $node_deployment_status = "IN_PLANNING")
+	static function createNode($node_id, $name, $home_page_url = "", $description = "", $map_url = "", $street_address = "", $public_phone_number = "", $public_email = "", $mass_transit_info = "", $node_deployment_status = "IN_PLANNING")
 	{
 		global $db;
 
@@ -186,7 +188,7 @@ class Node implements GenericObject
 		if (Node :: nodeExists($node_id))
 			throw new Exception(_('This node already exists.'));
 
-		$sql = "INSERT INTO nodes (node_id, name, creation_date, home_page_url, description, map_url, street_address, public_phone_number, public_email, mass_transit_info, node_deployment_status) VALUES ('$node_id','$name',NOW(),'$home_page_url','$description','$map_url','$street_address','$public_phone_number','$public_email','$mass_transit_info','$node_deployment_status')";
+		$sql = "INSERT INTO nodes (node_id, name, creation_date, home_page_url, description, map_url, street_address, public_phone_number, public_email, mass_transit_info, node_deployment_status) VALUES ('$node_id','$name', NOW(),'$home_page_url','$description','$map_url','$street_address','$public_phone_number','$public_email','$mass_transit_info','$node_deployment_status')";
 
 		if (!$db->ExecSqlUpdate($sql, false))
 		{
@@ -282,9 +284,29 @@ class Node implements GenericObject
 		$this->id = $row['node_id'];
 	}
 
-	function getID()
+	function getId()
 	{
 		return $this->mRow['node_id'];
+	}
+
+	/** Get a GisPoint object ; altide is not supported yet
+	 */
+	function getGisLocation()
+	{
+		// Altitude is not supported yet
+		return new GisPoint($this->mRow['latitude'], $this->mRow['longitude'], 0);
+	}
+	
+	function setGisLocation($pt)
+	{
+		if(!empty($pt))
+		{
+			$lat = $this->mDb->EscapeString($pt->getLatitude());
+			$long = $this->mDb->EscapeString($pt->getLongitude());
+			
+			$this->mDb->ExecSqlUpdate("UPDATE nodes SET latitude = $lat, longitude = $long WHERE node_id = '{$this->getId()}'");
+			$this->refresh();
+		}
 	}
 
 	/** Return the name of the node 
@@ -336,16 +358,76 @@ class Node implements GenericObject
 		$this->mDb->ExecSqlUpdate("UPDATE nodes SET map_url = '{$url}' WHERE node_id = '{$this->getId()}'");
 		$this->refresh();
 	}
-
-	function getAddress()
+	
+	public function getCivicNumber()
 	{
-		return $this->mRow['street_address'];
+		return $this->mRow['civic_number'];
 	}
 
-	function setAddress($address)
+	public function setCivicNumber($civic_number)
 	{
-		$address = $this->mDb->EscapeString($address);
-		$this->mDb->ExecSqlUpdate("UPDATE nodes SET street_address = '{$address}' WHERE node_id = '{$this->getId()}'");
+		$civic_number = $this->mDb->EscapeString($civic_number);
+		$this->mDb->ExecSqlUpdate("UPDATE nodes SET civic_number = '{$civic_number}' WHERE node_id = '{$this->getId()}'");
+		$this->refresh();
+	}
+
+	public function getStreetName()
+	{
+		return $this->mRow['street_name'];
+	}
+
+	public function setStreetName($street_name)
+	{
+		$street_name = $this->mDb->EscapeString($street_name);
+		$this->mDb->ExecSqlUpdate("UPDATE nodes SET street_name = '{$street_name}' WHERE node_id = '{$this->getId()}'");
+		$this->refresh();
+	}
+
+	public function getCity()
+	{
+		return $this->mRow['city'];
+	}
+
+	public function setCity($city)
+	{
+		$city = $this->mDb->EscapeString($city);
+		$this->mDb->ExecSqlUpdate("UPDATE nodes SET city = '{$city}' WHERE node_id = '{$this->getId()}'");
+		$this->refresh();
+	}
+
+	public function getProvince()
+	{
+		return $this->mRow['province'];
+	}
+
+	public function setProvince($province)
+	{
+		$province = $this->mDb->EscapeString($province);
+		$this->mDb->ExecSqlUpdate("UPDATE nodes SET province = '{$province}' WHERE node_id = '{$this->getId()}'");
+		$this->refresh();
+	}
+
+	public function getCountry()
+	{
+		return $this->mRow['country'];
+	}
+
+	protected function setCountry($country)
+	{
+		$country = $this->mDb->EscapeString($country);
+		$this->mDb->ExecSqlUpdate("UPDATE nodes SET country = '{$country}' WHERE node_id = '{$this->getId()}'");
+		$this->refresh();
+	}
+
+	public function getPostalCode()
+	{
+		return $this->mRow['postal_code'];
+	}
+
+	public function setPostalCode($postal_code)
+	{
+		$postal_code = $this->mDb->EscapeString($postal_code);
+		$this->mDb->ExecSqlUpdate("UPDATE nodes SET postal_code = '{$postal_code}' WHERE node_id = '{$this->getId()}'");
 		$this->refresh();
 	}
 
@@ -413,13 +495,13 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_title'>"._("Information about the node:")."</div>\n";
 
 		// Node ID
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("ID")." : </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$this->getId()."_id";
 		$value = htmlspecialchars($this->getId(), ENT_QUOTES);
-		$html .= "<input type='text' readonly='' size='10' value='$value' name='$name'>\n";
-		$html .= "</div>\n";
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("ID")." : {$value}</div>\n";
+		//$html .= "<div class='admin_section_data'>\n";
+		//$name = "node_".$this->getId()."_id";
+		//$html .= "<input type='text' readonly='' size='10' value='$value' name='$name'>\n";
+		//$html .= "</div>\n";
 		$html .= "</div>\n";
 
 		// Name
@@ -462,12 +544,62 @@ class Node implements GenericObject
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 
-		// Street address
+		// Civic number
 		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Street address")." : </div>\n";
+		$html .= "<div class='admin_section_title'>"._("Civic number")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$this->getId()."_street_address";
-		$value = htmlspecialchars($this->getAddress(), ENT_QUOTES);
+		$name = "node_".$this->getId()."_civic_number";
+		$value = htmlspecialchars($this->getCivicNumber(), ENT_QUOTES);
+		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		// Street name
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Street name")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "node_".$this->getId()."_street_name";
+		$value = htmlspecialchars($this->getStreetName(), ENT_QUOTES);
+		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		// City
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("City")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "node_".$this->getId()."_city";
+		$value = htmlspecialchars($this->getCity(), ENT_QUOTES);
+		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		// Province
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Province / State")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "node_".$this->getId()."_province";
+		$value = htmlspecialchars($this->getProvince(), ENT_QUOTES);
+		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		// Postal Code
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Postal code")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "node_".$this->getId()."_postal_code";
+		$value = htmlspecialchars($this->getPostalCode(), ENT_QUOTES);
+		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		// Country
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Country")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "node_".$this->getId()."_country";
+		$value = htmlspecialchars($this->getCountry(), ENT_QUOTES);
 		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
@@ -509,6 +641,62 @@ class Node implements GenericObject
 		$name = "node_".$this->getId()."_deployment_status";
 		$html .= self :: getSelectDeploymentStatus($name);
 		$html .= "</div>\n";
+		$html .= "</div>\n";
+
+		// Node GIS data
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("GIS data")." : </div>\n";
+		
+		// Build HTML form fields names & values
+		$gis_point = $this->getGisLocation();
+		$gis_lat_name = "node_".$this->getId()."_gis_latitude";
+		$gis_lat_value = htmlspecialchars($gis_point->getLatitude(), ENT_QUOTES);
+		$gis_long_name = "node_".$this->getId()."_gis_longitude";
+		$gis_long_value = htmlspecialchars($gis_point->getLongitude(), ENT_QUOTES);
+		
+		$html .= "<div class='admin_section_container'>\n";	
+		$html .= "<div class='admin_section_title'>"._("Latitude")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$html .= "<input type='text' size ='50' value='$gis_lat_value' name='$gis_lat_name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		$html .= "<div class='admin_section_container'>\n";	
+		$html .= "<div class='admin_section_title'>"._("Longitude")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$html .= "<input type='text' size ='50' value='$gis_long_value' name='$gis_long_name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		/*
+		 * If Google Maps is enabled, call the geocoding service, 
+		 * then use Google Maps to let the user choose a more precise location
+		 * 
+		 * otherwise
+		 * 
+		 * Simply use a geocoding service.
+		 */
+		 /*
+		if(defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED === true)
+		{
+			$html .= "<div class='admin_section_container'>\n";	
+			$html .= "<div class='admin_section_data'>\n";
+			$html .= "<input type='button' name='google_maps_geocode' value='"._("Geocode location")."' onClick='alert();'>\n";
+			$html .=" ("._("Use a geocoding service + Google Maps to extract precise GIS data").")";	
+			$html .= "</div>\n";
+			$html .= "</div>\n";
+		}
+		else
+		{*/
+			$html .= "<div class='admin_section_container'>\n";	
+			$html .= "<div class='admin_section_data'>\n";
+			$html .= "<input type='submit' name='geocode_only' value='"._("Geocode location")."'>\n";
+			$html .=" ("._("Use a geocoding service").")";	
+			$html .= "</div>\n";
+			$html .= "</div>\n";
+		//}
+		
+		// End of GIS data
 		$html .= "</div>\n";
 
 		// End of information section
@@ -604,10 +792,30 @@ class Node implements GenericObject
 		// Map URL
 		$name = "node_".$this->getId()."_map_url";
 		$this->setMapUrl($_REQUEST[$name]);
-
-		// Street address
-		$name = "node_".$this->getId()."_street_address";
-		$this->setAddress($_REQUEST[$name]);
+		
+		// Civic number
+		$name = "node_".$this->getId()."_civic_number";
+		$this->setCivicNumber($_REQUEST[$name]);
+		
+		// Street name
+		$name = "node_".$this->getId()."_street_name";
+		$this->setStreetName($_REQUEST[$name]);
+		
+		// City
+		$name = "node_".$this->getId()."_city";
+		$this->setCity($_REQUEST[$name]);
+		
+		// Province
+		$name = "node_".$this->getId()."_province";
+		$this->setProvince($_REQUEST[$name]);
+		
+		// Postal Code
+		$name = "node_".$this->getId()."_postal_code";
+		$this->setPostalCode($_REQUEST[$name]);
+		
+		// Country
+		$name = "node_".$this->getId()."_country";
+		$this->setCountry($_REQUEST[$name]);
 
 		// Public phone #
 		$name = "node_".$this->getId()."_public_phone";
@@ -624,6 +832,32 @@ class Node implements GenericObject
 		// Deployment status
 		$name = "node_".$this->getId()."_deployment_status";
 		$this->setDeploymentStatus(self :: processSelectDeploymentStatus($name));
+		
+		// GIS data
+		// Get a geocoder for a given country
+		if(!empty($_REQUEST['geocode_only']))
+		{
+			$geocoder = AbstractGeocoder::getGeocoder($this->getCountry());
+			if($geocoder != null)
+			{
+				$geocoder->setCivicNumber($this->getCivicNumber());
+				$geocoder->setStreetName($this->getStreetName());
+				$geocoder->setCity($this->getCity());
+				$geocoder->setProvince($this->getProvince()); 
+				$geocoder->setPostalCode($this->getPostalCode());
+				if($geocoder->validateAddress() === true)	
+					$this->setGisLocation(new GisPoint($geocoder->getLatitude(), $geocoder->getLongitude(), .0));
+				else
+					echo _("You must enter a valid address.");
+			}
+		}
+		else
+		{
+			// Use what has been set by the user.	
+			$gis_lat_name = "node_".$this->getId()."_gis_latitude";
+			$gis_long_name = "node_".$this->getId()."_gis_longitude";
+			$this->setGisLocation(new GisPoint($_REQUEST[$gis_lat_name], $_REQUEST[$gis_long_name], .0));	
+		}
 
 		// Statistics
 		$name = "node_{$this->id}_get_stats";

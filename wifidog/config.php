@@ -37,7 +37,8 @@ define('XSLT_SUPPORT', false);
 /* Google Maps mapping hotspots_map.php */
 define('GMAPS_HOTSPOTS_MAP_ENABLED', false);
 define('GMAPS_XML_SOURCE_URL', 'hotspot_status.php?format=XML');
-define('GMAPS_API_KEY', 'ENTER_YOUR_KEY_HERE');
+define('GMAPS_PUBLIC_API_KEY', 'ENTER_YOUR_KEY_HERE');
+define('GMAPS_ADMIN_API_KEY', 'ENTER_YOUR_KEY_HERE');
 // Enter center coords ( ie. Montréal )
 define('GMAPS_INITIAL_LATITUDE', '45.494511');
 define('GMAPS_INITIAL_LONGITUDE', '-73.560285');

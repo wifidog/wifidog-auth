@@ -1,6 +1,4 @@
 <?php
-
-
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -53,7 +51,30 @@ class GeocoderCanada extends AbstractGeocoder
 	 */
 	private function validateProvince()
 	{
-		return in_array($this->getProvince(), array ("AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT"));
+		return in_array($this->getProvince(), array ("ab", "bc", "mb", "nb", "nl", "ns", "nt", "nu", "on", "pe", "qc", "sk", "yt"));
+	}
+
+	/**
+	 * Overriden setProvince from abstract class
+	 * Canadian specific tests
+	 */
+	public function setProvince($province)
+	{
+		parent :: setProvince($province);
+		if (!$this->validateProvince())
+		{
+			$province = trim(strtolower($province));
+			$provinces_variants = array ("quebec" => "qc", "québec" => "qc", "ontario" => "on", "alberta" => "ab", "british columbia" => "bc", "manitoba" => "mb", "new brunswick" => "nb", "nouveau brunswick" => "nb", "saskatchewan" => "sk", "nunavut" => "nt", "nova scotia" => "ns", "nouvelle écosse" => "ns");
+			if (($province_code = array_search($province, $provinces_variants)) != false)
+				parent :: setProvince($province_code);
+			else
+			{
+				// Not a valid province
+				parent :: setProvince("");
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/** Validate address, making sure we don't send an HTTP for nothing
@@ -85,7 +106,7 @@ class GeocoderCanada extends AbstractGeocoder
 		// Don't send multiple queries when the input has not changed
 		if ($this->shouldExecuteQuery() == true)
 		{
-			
+
 			// Load the XML document
 			if (($dom = DOMDocument :: load($this->buildQuery())) !== false)
 			{
@@ -146,4 +167,4 @@ class GeocoderCanada extends AbstractGeocoder
 	}
 
 } // End class
-?> 
+?>

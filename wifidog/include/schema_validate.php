@@ -1,4 +1,5 @@
 <?php
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -26,7 +27,7 @@ error_reporting(E_ALL);
 require_once BASEPATH.'config.php';
 require_once BASEPATH.'classes/AbstractDb.php';
 require_once BASEPATH.'classes/Session.php';
-define('REQUIRED_SCHEMA_VERSION', 21);
+define('REQUIRED_SCHEMA_VERSION', 22);
 
 /** Check that the database schema is up to date.  If it isn't, offer to update it. */
 function validate_schema()
@@ -192,87 +193,87 @@ function update_schema()
 			$sql .= "ALTER TABLE users ADD COLUMN prefered_locale text REFERENCES locales ON DELETE SET NULL ON UPDATE CASCADE;\n";
 
 			$sql .= "			
-			CREATE TABLE content
-			(
-			content_id text NOT NULL PRIMARY KEY,
-			content_type text NOT NULL  CONSTRAINT content_type_not_empty_string CHECK (content_type != ''),
-			title text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
-			description text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
-			project_info text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
-			sponsor_info text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
-			creation_timestamp timestamp DEFAULT now()
-			);
-
-			CREATE TABLE content_has_owners
-			(
-			content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-			user_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,
-			is_author bool NOT NULL,
-			owner_since timestamp DEFAULT now(),
-			PRIMARY KEY  (content_id, user_id)
-			);
+						CREATE TABLE content
+						(
+						content_id text NOT NULL PRIMARY KEY,
+						content_type text NOT NULL  CONSTRAINT content_type_not_empty_string CHECK (content_type != ''),
+						title text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
+						description text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
+						project_info text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
+						sponsor_info text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
+						creation_timestamp timestamp DEFAULT now()
+						);
 			
-			CREATE TABLE langstring_entries (
-			  langstring_entries_id text NOT NULL PRIMARY KEY,
-			  langstrings_id text REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-			  locales_id text REFERENCES locales ON DELETE RESTRICT ON UPDATE CASCADE,
-			  value text  DEFAULT ''
-			);
-			
-			CREATE TABLE content_group (
-			  content_group_id text NOT NULL PRIMARY KEY REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-			  is_artistic_content bool NOT NULL DEFAULT FALSE,
-			  is_locative_content bool NOT NULL DEFAULT FALSE,
-			  content_selection_mode text
-			);
-			
-			CREATE TABLE content_group_element (
-			  content_group_element_id text NOT NULL PRIMARY KEY REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-			  content_group_id text NOT NULL REFERENCES content_group ON DELETE CASCADE ON UPDATE CASCADE,
-			  display_order integer DEFAULT '1',
-			  displayed_content_id text REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-			  force_only_allowed_node bool
-			);
-			CREATE INDEX idx_content_group_element_content_group_id ON content_group_element (content_group_id);
-			
-			CREATE TABLE content_group_element_has_allowed_nodes
-			(
-			content_group_element_id text NOT NULL REFERENCES content_group_element ON DELETE CASCADE ON UPDATE CASCADE,
-			node_id text NOT NULL REFERENCES nodes ON DELETE CASCADE ON UPDATE CASCADE,
-			allowed_since timestamp DEFAULT now(),
-			PRIMARY KEY  (content_group_element_id, node_id)
-			);
-			
-			CREATE TABLE content_group_element_portal_display_log (
-			  user_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,
-			  content_group_element_id text NOT NULL REFERENCES content_group_element ON DELETE CASCADE ON UPDATE CASCADE,
-			  display_timestamp timestamp NOT NULL DEFAULT now(),
-			  node_id text REFERENCES nodes ON DELETE CASCADE ON UPDATE CASCADE,
-			  PRIMARY KEY  (user_id,content_group_element_id, display_timestamp)
-			);
-			
-			CREATE TABLE user_has_content (
-			  user_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,
-			  content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-			  subscribe_timestamp timestamp NOT NULL DEFAULT now(),
-			  PRIMARY KEY  (user_id,content_id)
-			);
-			
-			CREATE TABLE node_has_content (
-			  node_id text NOT NULL REFERENCES nodes ON DELETE CASCADE ON UPDATE CASCADE,
-			  content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-			  subscribe_timestamp timestamp NOT NULL DEFAULT now(),
-			  PRIMARY KEY  (node_id,content_id)
-			);
-			
-			CREATE TABLE network_has_content (
-			  network_id text NOT NULL,
-			  content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-			  subscribe_timestamp timestamp NOT NULL DEFAULT now(),
-			  PRIMARY KEY  (network_id,content_id)
-			);";
+						CREATE TABLE content_has_owners
+						(
+						content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+						user_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,
+						is_author bool NOT NULL,
+						owner_since timestamp DEFAULT now(),
+						PRIMARY KEY  (content_id, user_id)
+						);
+						
+						CREATE TABLE langstring_entries (
+						  langstring_entries_id text NOT NULL PRIMARY KEY,
+						  langstrings_id text REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+						  locales_id text REFERENCES locales ON DELETE RESTRICT ON UPDATE CASCADE,
+						  value text  DEFAULT ''
+						);
+						
+						CREATE TABLE content_group (
+						  content_group_id text NOT NULL PRIMARY KEY REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+						  is_artistic_content bool NOT NULL DEFAULT FALSE,
+						  is_locative_content bool NOT NULL DEFAULT FALSE,
+						  content_selection_mode text
+						);
+						
+						CREATE TABLE content_group_element (
+						  content_group_element_id text NOT NULL PRIMARY KEY REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+						  content_group_id text NOT NULL REFERENCES content_group ON DELETE CASCADE ON UPDATE CASCADE,
+						  display_order integer DEFAULT '1',
+						  displayed_content_id text REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+						  force_only_allowed_node bool
+						);
+						CREATE INDEX idx_content_group_element_content_group_id ON content_group_element (content_group_id);
+						
+						CREATE TABLE content_group_element_has_allowed_nodes
+						(
+						content_group_element_id text NOT NULL REFERENCES content_group_element ON DELETE CASCADE ON UPDATE CASCADE,
+						node_id text NOT NULL REFERENCES nodes ON DELETE CASCADE ON UPDATE CASCADE,
+						allowed_since timestamp DEFAULT now(),
+						PRIMARY KEY  (content_group_element_id, node_id)
+						);
+						
+						CREATE TABLE content_group_element_portal_display_log (
+						  user_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,
+						  content_group_element_id text NOT NULL REFERENCES content_group_element ON DELETE CASCADE ON UPDATE CASCADE,
+						  display_timestamp timestamp NOT NULL DEFAULT now(),
+						  node_id text REFERENCES nodes ON DELETE CASCADE ON UPDATE CASCADE,
+						  PRIMARY KEY  (user_id,content_group_element_id, display_timestamp)
+						);
+						
+						CREATE TABLE user_has_content (
+						  user_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,
+						  content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+						  subscribe_timestamp timestamp NOT NULL DEFAULT now(),
+						  PRIMARY KEY  (user_id,content_id)
+						);
+						
+						CREATE TABLE node_has_content (
+						  node_id text NOT NULL REFERENCES nodes ON DELETE CASCADE ON UPDATE CASCADE,
+						  content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+						  subscribe_timestamp timestamp NOT NULL DEFAULT now(),
+						  PRIMARY KEY  (node_id,content_id)
+						);
+						
+						CREATE TABLE network_has_content (
+						  network_id text NOT NULL,
+						  content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+						  subscribe_timestamp timestamp NOT NULL DEFAULT now(),
+						  PRIMARY KEY  (network_id,content_id)
+						);";
 		}
-		
+
 		$new_schema_version = 7;
 		if ($schema_version < $new_schema_version)
 		{
@@ -281,106 +282,104 @@ function update_schema()
 			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
 			$sql .= "ALTER TABLE content ADD COLUMN is_persistent bool;\n";
 			$sql .= "ALTER TABLE content ALTER COLUMN is_persistent SET DEFAULT FALSE;\n";
-			
+
 		}
-        
-        $new_schema_version = 8;
-        if($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>"; 
- 			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
-            $sql .=
-            "CREATE TABLE flickr_photostream
-            (
-              flickr_photostream_id text NOT NULL,
-              api_key text,
-              photo_selection_mode text NOT NULL DEFAULT 'PSM_GROUP'::text,
-              user_id text,
-              user_name text,
-              tags text,
-              tag_mode varchar(10) DEFAULT 'any'::character varying,
-              group_id text,
-              random bool NOT NULL DEFAULT true,
-              min_taken_date timestamp,
-              max_taken_date timestamp,
-              photo_batch_size int4 DEFAULT 10,
-              photo_count int4 DEFAULT 1,
-              display_title bool NOT NULL DEFAULT true,
-              display_description bool NOT NULL DEFAULT false,
-              display_tags bool NOT NULL DEFAULT false,
-              CONSTRAINT flickr_photostream_pkey PRIMARY KEY (flickr_photostream_id),
-              CONSTRAINT flickr_photostream_content_group_fkey FOREIGN KEY (flickr_photostream_id) REFERENCES content_group (content_group_id) ON UPDATE CASCADE ON DELETE CASCADE
-            );";
-        }
-        
-        $new_schema_version = 9;
-        if($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>"; 
-           	$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
-            $sql .=
-            "CREATE TABLE files
-            (
-              files_id text NOT NULL,
-              filename text,
-              mime_type text,
-              binary_data bytea,
-              remote_size int8,
-              CONSTRAINT files_pkey PRIMARY KEY (files_id)
-            );";
-        }
-        
-        $new_schema_version = 10;
-        if($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>"; 
-           	$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
-            $sql .= "ALTER TABLE files ADD COLUMN url text;";
-            $sql .= "ALTER TABLE flickr_photostream ADD COLUMN preferred_size text;";
-            $sql .= "CREATE TABLE embedded_content (
-				embedded_content_id text NOT NULL,
-				embedded_file_id text,
-				fallback_content_id text,
-			    parameters text,
-			    attributes text
-			);";
-        }
-       
-               $new_schema_version = 11;
-        if($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>"; 
-           	$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
-            $sql .= "DROP TABLE content_group_element_portal_display_log;\n";
-            $sql .= "CREATE TABLE content_display_log
-(
-  user_id text NOT NULL REFERENCES users ON UPDATE CASCADE ON DELETE CASCADE,
-  content_id text NOT NULL REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE,
-  first_display_timestamp timestamp NOT NULL DEFAULT now(),
-  node_id text NOT NULL REFERENCES nodes ON UPDATE CASCADE ON DELETE CASCADE,
-  last_display_timestamp timestamp NOT NULL DEFAULT now(),
-  CONSTRAINT content_group_element_portal_display_log_pkey PRIMARY KEY (user_id, content_id, node_id)
-); \n";
-            
-        } 
-        
-        $new_schema_version = 12;
-        if($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
-            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n"; 
-            $sql .= "ALTER TABLE flickr_photostream DROP CONSTRAINT flickr_photostream_content_group_fkey;";
-            $sql .= "ALTER TABLE flickr_photostream ADD CONSTRAINT flickr_photostream_content_fkey FOREIGN KEY (flickr_photostream_id) REFERENCES content (content_id) ON UPDATE CASCADE ON DELETE CASCADE;";
-        }
-	
-        $new_schema_version = 13;
-        if($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
-            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n"; 
-  			$sql .= "ALTER TABLE content_group DROP COLUMN content_selection_mode;\n";
-  			$sql .= "ALTER TABLE content_group ADD COLUMN content_changes_on_mode text;\n";
-  			$sql .= "UPDATE content_group SET content_changes_on_mode='ALWAYS';\n";
+
+		$new_schema_version = 8;
+		if ($schema_version < $new_schema_version)
+		{
+			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>";
+			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+			$sql .= "CREATE TABLE flickr_photostream
+			            (
+			              flickr_photostream_id text NOT NULL,
+			              api_key text,
+			              photo_selection_mode text NOT NULL DEFAULT 'PSM_GROUP'::text,
+			              user_id text,
+			              user_name text,
+			              tags text,
+			              tag_mode varchar(10) DEFAULT 'any'::character varying,
+			              group_id text,
+			              random bool NOT NULL DEFAULT true,
+			              min_taken_date timestamp,
+			              max_taken_date timestamp,
+			              photo_batch_size int4 DEFAULT 10,
+			              photo_count int4 DEFAULT 1,
+			              display_title bool NOT NULL DEFAULT true,
+			              display_description bool NOT NULL DEFAULT false,
+			              display_tags bool NOT NULL DEFAULT false,
+			              CONSTRAINT flickr_photostream_pkey PRIMARY KEY (flickr_photostream_id),
+			              CONSTRAINT flickr_photostream_content_group_fkey FOREIGN KEY (flickr_photostream_id) REFERENCES content_group (content_group_id) ON UPDATE CASCADE ON DELETE CASCADE
+			            );";
+		}
+
+		$new_schema_version = 9;
+		if ($schema_version < $new_schema_version)
+		{
+			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>";
+			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+			$sql .= "CREATE TABLE files
+			            (
+			              files_id text NOT NULL,
+			              filename text,
+			              mime_type text,
+			              binary_data bytea,
+			              remote_size int8,
+			              CONSTRAINT files_pkey PRIMARY KEY (files_id)
+			            );";
+		}
+
+		$new_schema_version = 10;
+		if ($schema_version < $new_schema_version)
+		{
+			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>";
+			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+			$sql .= "ALTER TABLE files ADD COLUMN url text;";
+			$sql .= "ALTER TABLE flickr_photostream ADD COLUMN preferred_size text;";
+			$sql .= "CREATE TABLE embedded_content (
+							embedded_content_id text NOT NULL,
+							embedded_file_id text,
+							fallback_content_id text,
+						    parameters text,
+						    attributes text
+						);";
+		}
+
+		$new_schema_version = 11;
+		if ($schema_version < $new_schema_version)
+		{
+			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>";
+			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+			$sql .= "DROP TABLE content_group_element_portal_display_log;\n";
+			$sql .= "CREATE TABLE content_display_log
+			(
+			  user_id text NOT NULL REFERENCES users ON UPDATE CASCADE ON DELETE CASCADE,
+			  content_id text NOT NULL REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE,
+			  first_display_timestamp timestamp NOT NULL DEFAULT now(),
+			  node_id text NOT NULL REFERENCES nodes ON UPDATE CASCADE ON DELETE CASCADE,
+			  last_display_timestamp timestamp NOT NULL DEFAULT now(),
+			  CONSTRAINT content_group_element_portal_display_log_pkey PRIMARY KEY (user_id, content_id, node_id)
+			); \n";
+
+		}
+
+		$new_schema_version = 12;
+		if ($schema_version < $new_schema_version)
+		{
+			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+			$sql .= "ALTER TABLE flickr_photostream DROP CONSTRAINT flickr_photostream_content_group_fkey;";
+			$sql .= "ALTER TABLE flickr_photostream ADD CONSTRAINT flickr_photostream_content_fkey FOREIGN KEY (flickr_photostream_id) REFERENCES content (content_id) ON UPDATE CASCADE ON DELETE CASCADE;";
+		}
+
+		$new_schema_version = 13;
+		if ($schema_version < $new_schema_version)
+		{
+			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+			$sql .= "ALTER TABLE content_group DROP COLUMN content_selection_mode;\n";
+			$sql .= "ALTER TABLE content_group ADD COLUMN content_changes_on_mode text;\n";
+			$sql .= "UPDATE content_group SET content_changes_on_mode='ALWAYS';\n";
 			$sql .= "ALTER TABLE content_group ALTER COLUMN content_changes_on_mode SET DEFAULT 'ALWAYS';\n";
 			$sql .= "ALTER TABLE content_group ALTER COLUMN content_changes_on_mode SET NOT NULL;\n";
 			$sql .= "ALTER TABLE content_group ADD COLUMN content_ordering_mode text;\n";
@@ -389,136 +388,133 @@ function update_schema()
 			$sql .= "ALTER TABLE content_group ALTER COLUMN content_ordering_mode SET NOT NULL;\n";
 
 			$sql .= "ALTER TABLE content_group ADD COLUMN display_num_elements int;\n";
-						$sql .= "UPDATE content_group SET display_num_elements=1;\n";
+			$sql .= "UPDATE content_group SET display_num_elements=1;\n";
 			$sql .= "ALTER TABLE content_group ALTER COLUMN display_num_elements SET DEFAULT '1';\n";
 			$sql .= "ALTER TABLE content_group ALTER COLUMN display_num_elements SET NOT NULL;\n";
 			$sql .= "ALTER TABLE content_group ADD CONSTRAINT display_at_least_one_element CHECK (display_num_elements > 0);\n";
-			
+
 			$sql .= "ALTER TABLE content_group ADD COLUMN allow_repeat text;\n";
-						$sql .= "UPDATE content_group SET allow_repeat='YES';\n";
+			$sql .= "UPDATE content_group SET allow_repeat='YES';\n";
 			$sql .= "ALTER TABLE content_group ALTER COLUMN allow_repeat SET DEFAULT 'YES';\n";
 			$sql .= "ALTER TABLE content_group ALTER COLUMN allow_repeat SET NOT NULL;\n";
 		}
-		
+
 		$new_schema_version = 14;
-        if($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
-            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n"; 
-            $sql .= "CREATE TABLE pictures " .
-            		"( " .
-            		"pictures_id text NOT NULL PRIMARY KEY REFERENCES files ON DELETE CASCADE ON UPDATE CASCADE, " .
-            		"width int4, ".
-            		"height int4".
-            		");\n";
-        }
-        
-        $new_schema_version = 15;
-        if($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
-            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n"; 
-            $sql .= "ALTER TABLE files ADD COLUMN data_blob oid;
-                    ALTER TABLE files ADD COLUMN local_binary_size int8;
-                    ALTER TABLE files DROP COLUMN binary_data;\n";
-        }   	
-        
-        $new_schema_version = 16;
-        if($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
-            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n"; 
-            $sql .= "ALTER TABLE flickr_photostream ADD COLUMN requests_cache text; \n";
-            $sql .= "ALTER TABLE flickr_photostream ADD COLUMN cache_update_timestamp timestamp; \n";
-        }
-        
-        $new_schema_version = 17;
-        if($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
-            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n"; 
-            $sql .= "ALTER TABLE nodes ADD COLUMN max_monthly_incoming int8; \n";
-            $sql .= "ALTER TABLE nodes ADD COLUMN max_monthly_outgoing int8; \n";
-            $sql .= "ALTER TABLE nodes ADD COLUMN quota_reset_day_of_month int4; \n";
-        }
-        
-        $new_schema_version = 18;
-        if($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
-            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n"; 
-            $sql .= "ALTER TABLE content ADD COLUMN long_description text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE;\n";
-        }
-        
-        $new_schema_version = 19;
-        if($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
-            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n"; 
-            $sql .= "CREATE TABLE iframes (";
-            $sql .= "iframes_id text NOT NULL PRIMARY KEY REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,";
-            $sql .= "url text,";
-            $sql .= "width int4,";
-            $sql .= "height int4";
-            $sql .= ");\n";
-        }
-        
-        $new_schema_version = 20;
-        if($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
-            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n"; 
-            $sql .= "ALTER TABLE nodes ADD COLUMN latitude NUMERIC(16, 6);\n";
-            $sql .= "ALTER TABLE nodes ADD COLUMN longitude NUMERIC(16, 6);\n";
-        }
-        
-        		
+		if ($schema_version < $new_schema_version)
+		{
+			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+			$sql .= "CREATE TABLE pictures "."( "."pictures_id text NOT NULL PRIMARY KEY REFERENCES files ON DELETE CASCADE ON UPDATE CASCADE, "."width int4, "."height int4".");\n";
+		}
+
+		$new_schema_version = 15;
+		if ($schema_version < $new_schema_version)
+		{
+			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+			$sql .= "ALTER TABLE files ADD COLUMN data_blob oid;
+			                    ALTER TABLE files ADD COLUMN local_binary_size int8;
+			                    ALTER TABLE files DROP COLUMN binary_data;\n";
+		}
+
+		$new_schema_version = 16;
+		if ($schema_version < $new_schema_version)
+		{
+			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+			$sql .= "ALTER TABLE flickr_photostream ADD COLUMN requests_cache text; \n";
+			$sql .= "ALTER TABLE flickr_photostream ADD COLUMN cache_update_timestamp timestamp; \n";
+		}
+
+		$new_schema_version = 17;
+		if ($schema_version < $new_schema_version)
+		{
+			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+			$sql .= "ALTER TABLE nodes ADD COLUMN max_monthly_incoming int8; \n";
+			$sql .= "ALTER TABLE nodes ADD COLUMN max_monthly_outgoing int8; \n";
+			$sql .= "ALTER TABLE nodes ADD COLUMN quota_reset_day_of_month int4; \n";
+		}
+
+		$new_schema_version = 18;
+		if ($schema_version < $new_schema_version)
+		{
+			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+			$sql .= "ALTER TABLE content ADD COLUMN long_description text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE;\n";
+		}
+
+		$new_schema_version = 19;
+		if ($schema_version < $new_schema_version)
+		{
+			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+			$sql .= "CREATE TABLE iframes (";
+			$sql .= "iframes_id text NOT NULL PRIMARY KEY REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,";
+			$sql .= "url text,";
+			$sql .= "width int4,";
+			$sql .= "height int4";
+			$sql .= ");\n";
+		}
+
+		$new_schema_version = 20;
+		if ($schema_version < $new_schema_version)
+		{
+			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+			$sql .= "ALTER TABLE nodes ADD COLUMN latitude NUMERIC(16, 6);\n";
+			$sql .= "ALTER TABLE nodes ADD COLUMN longitude NUMERIC(16, 6);\n";
+		}
+
 		$new_schema_version = 21;
-        if($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
-            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n"; 
-            $sql .= "CREATE TABLE content_rss_aggregator " .
-            		"( " .
-            		"content_id text NOT NULL PRIMARY KEY REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE, " .
-            		"number_of_display_items integer NOT NULL DEFAULT 10, " .
-            		"algorithm_strength real NOT NULL DEFAULT 0.75, ".
-            		"max_item_age interval DEFAULT NULL".
-            		");\n";
-           	$sql .= "CREATE TABLE content_rss_aggregator_feeds " .
-            		"( " .
-            		"content_id text NOT NULL REFERENCES content_rss_aggregator ON UPDATE CASCADE ON DELETE CASCADE, " .
-            		"url text, ".
-            		"bias real NOT NULL DEFAULT 1, ".
-            		"default_publication_interval int DEFAULT NULL, ".
-            		"PRIMARY KEY(content_id, url) " .
-            		");\n";
-            $sql .= "ALTER TABLE content_has_owners ALTER COLUMN is_author SET DEFAULT 'f';\n";
-            $results=null;
-            $db->ExecSql("SELECT node_id, rss_url FROM nodes", $results, false);
+		if ($schema_version < $new_schema_version)
+		{
+			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+			$sql .= "CREATE TABLE content_rss_aggregator "."( "."content_id text NOT NULL PRIMARY KEY REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE, "."number_of_display_items integer NOT NULL DEFAULT 10, "."algorithm_strength real NOT NULL DEFAULT 0.75, "."max_item_age interval DEFAULT NULL".");\n";
+			$sql .= "CREATE TABLE content_rss_aggregator_feeds "."( "."content_id text NOT NULL REFERENCES content_rss_aggregator ON UPDATE CASCADE ON DELETE CASCADE, "."url text, "."bias real NOT NULL DEFAULT 1, "."default_publication_interval int DEFAULT NULL, "."PRIMARY KEY(content_id, url) ".");\n";
+			$sql .= "ALTER TABLE content_has_owners ALTER COLUMN is_author SET DEFAULT 'f';\n";
+			$results = null;
+			$db->ExecSql("SELECT node_id, rss_url FROM nodes", $results, false);
 			foreach ($results as $row)
 			{
-				if(!empty($row['rss_url']))
-{
-				//$user_id = $db->EscapeString($row['user_id']);
-				$content_id = get_guid();
-				$sql .= "\nINSERT INTO content (content_id, content_type) VALUES ('$content_id', 'RssAggregator');\n";
-				$sql .= "INSERT INTO content_rss_aggregator (content_id) VALUES ('$content_id');\n";
-				$sql .= "INSERT INTO content_rss_aggregator_feeds (content_id, url) VALUES ('$content_id', '".$row['rss_url']."');\n";
-				$node = Node::getObject ($row['node_id']);
-				$owners = $node->getOwners();
-				foreach ($owners as $owner)
+				if (!empty ($row['rss_url']))
 				{
-					$sql .= "INSERT INTO content_has_owners (content_id, user_id) VALUES ('$content_id', '".$owner->getId()."');\n";
-				}
-				$sql .= "INSERT INTO node_has_content (content_id, node_id) VALUES ('$content_id', '".$row['node_id']."');\n";
+					//$user_id = $db->EscapeString($row['user_id']);
+					$content_id = get_guid();
+					$sql .= "\nINSERT INTO content (content_id, content_type) VALUES ('$content_id', 'RssAggregator');\n";
+					$sql .= "INSERT INTO content_rss_aggregator (content_id) VALUES ('$content_id');\n";
+					$sql .= "INSERT INTO content_rss_aggregator_feeds (content_id, url) VALUES ('$content_id', '".$row['rss_url']."');\n";
+					$node = Node :: getObject($row['node_id']);
+					$owners = $node->getOwners();
+					foreach ($owners as $owner)
+					{
+						$sql .= "INSERT INTO content_has_owners (content_id, user_id) VALUES ('$content_id', '".$owner->getId()."');\n";
+					}
+					$sql .= "INSERT INTO node_has_content (content_id, node_id) VALUES ('$content_id', '".$row['node_id']."');\n";
 				}
 			}
 			$sql .= "\nALTER TABLE nodes DROP COLUMN rss_url;\n";
-			$sql .= "\nDELETE FROM content WHERE content_type='HotspotRss';\n";			
-			
-            		
-        }
+			$sql .= "\nDELETE FROM content WHERE content_type='HotspotRss';\n";
+
+		}
+
+		$new_schema_version = 22;
+		if ($schema_version < $new_schema_version)
+		{
+			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+			$sql .= "ALTER TABLE nodes ADD COLUMN civic_number text;\n";
+			// Dropping street_address and copying data to street_name for the sake of backward compatibility
+			$sql .= "ALTER TABLE nodes ADD COLUMN street_name text;\n";
+			$sql .= "UPDATE nodes SET street_name = street_address;\n";
+			$sql .= "ALTER TABLE nodes DROP COLUMN street_address;\n";
+			$sql .= "ALTER TABLE nodes ADD COLUMN city text;\n";
+			$sql .= "ALTER TABLE nodes ADD COLUMN province text;\n";
+			$sql .= "ALTER TABLE nodes ADD COLUMN country text;\n";
+			$sql .= "ALTER TABLE nodes ADD COLUMN postal_code text;\n";
+		}
+
 		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);
 		//$db->ExecSqlUpdate("BEGIN;\n$sql\nROLLBACK;\n", true);
 		echo "</html></head>";
