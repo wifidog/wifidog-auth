@@ -676,7 +676,7 @@ class Node implements GenericObject
 		 * 
 		 * Simply use a geocoding service.
 		 */
-		 /*
+		 
 		if(defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED === true)
 		{
 			$html .= "<div class='admin_section_container'>\n";	
@@ -687,14 +687,14 @@ class Node implements GenericObject
 			$html .= "</div>\n";
 		}
 		else
-		{*/
+		{
 			$html .= "<div class='admin_section_container'>\n";	
 			$html .= "<div class='admin_section_data'>\n";
 			$html .= "<input type='submit' name='geocode_only' value='"._("Geocode location")."'>\n";
 			$html .=" ("._("Use a geocoding service").")";	
 			$html .= "</div>\n";
 			$html .= "</div>\n";
-		//}
+		}
 		
 		// End of GIS data
 		$html .= "</div>\n";
@@ -723,6 +723,32 @@ class Node implements GenericObject
 		$html .= User :: getSelectUserUI($name);
 		$name = "node_{$this->getId()}_new_owner_submit";
 		$html .= "<input type='submit' name='$name' value='"._("Add owner")."'>";
+		$html .= "</li>\n";
+		$html .= "</ul>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		// Tech officers management
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Technical officers")." : </div>\n";
+		$html .= "<ul class='admin_section_list'>\n";
+		foreach ($this->getTechnicalOfficers() as $tech_officer)
+		{
+			$html .= "<li class='admin_section_list_item'>\n";
+			$html .= "<div class='admin_section_data'>\n";
+			$html .= "{$tech_officer->getUsername()}";
+			$html .= "</div>\n";
+			$html .= "<div class='admin_section_tools'>\n";
+			$name = "node_{$this->getId()}_tech_officer_{$tech_officer->GetId()}_remove";
+			$html .= "<input type='submit' name='$name' value='"._("Remove technical officer")."'>";
+			$html .= "</div>\n";
+			$html .= "</li>\n";
+		}
+		$html .= "<li class='admin_section_list_item'>\n";
+		$name = "node_{$this->getId()}_new_tech_officer";
+		$html .= User :: getSelectUserUI($name);
+		$name = "node_{$this->getId()}_new_tech_officer_submit";
+		$html .= "<input type='submit' name='$name' value='"._("Add technical officer")."'>";
 		$html .= "</li>\n";
 		$html .= "</ul>\n";
 		$html .= "</div>\n";
@@ -877,18 +903,32 @@ class Node implements GenericObject
 					echo _("Invalid user!");
 			}
 		}
+		
+		// Technical officers processing
+		// Rebuild user id, and delete if it was selected
+		foreach ($this->getTechnicalOfficers() as $tech_officer)
+		{
+			$name = "node_{$this->getId()}_tech_officer_{$tech_officer->GetId()}_remove";
+			if (!empty ($_REQUEST[$name]))
+			{
+				if ($this->isTechnicalOfficer($tech_officer))
+					$this->removeTechnicalOfficer($tech_officer);
+				else
+					echo _("Invalid user!");
+			}
+		}
 
-		$name = "node_{$this->getId()}_new_owner_submit";
+		$name = "node_{$this->getId()}_new_tech_officer_submit";
 		if (!empty ($_REQUEST[$name]))
 		{
-			$name = "node_{$this->getId()}_new_owner";
-			$owner = User :: processSelectUserUI($name);
-			if ($owner)
+			$name = "node_{$this->getId()}_new_tech_officer";
+			$tech_officer = User :: processSelectUserUI($name);
+			if ($tech_officer)
 			{
-				if ($this->isOwner($owner))
-					echo _("The user is already an owner of this node.");
+				if ($this->isTechnicalOfficer($tech_officer))
+					echo _("The user is already a technical officer of this node.");
 				else
-					$this->addOwner($owner);
+					$this->addTechnicalOfficer($tech_officer);
 			}
 		}
 
@@ -1075,18 +1115,59 @@ class Node implements GenericObject
 		}
 		return $retval;
 	}
+	
+	function getTechnicalOfficers()
+	{
+		global $db;
+		$retval = array ();
+		$db->ExecSql("SELECT user_id FROM node_tech_officers WHERE node_id='{$this->id}'", $officers, false);
+		if ($officers != null)
+		{
+			foreach ($officers as $officer_row)
+			{
+				$retval[] = User :: getObject($officer_row['user_id']);
+			}
+		}
+		return $retval;
+	}
 
-	function addOwner($user)
+	/** Associates an owner to this node
+	 * @param User
+	 */
+	function addOwner(User $user)
 	{
 		global $db;
 		if (!$db->ExecSqlUpdate("INSERT INTO node_owners (node_id, user_id) VALUES ('{$this->getId()}','{$user->getId()}')", false))
 			throw new Exception(_('Could not add owner'));
 	}
+	
+	/** Associates a technical officer ( tech support ) to this node
+	 * @param User
+	 */
+	function addTechnicalOfficer(User $user)
+	{
+		global $db;
+		if (!$db->ExecSqlUpdate("INSERT INTO node_tech_officers (node_id, user_id) VALUES ('{$this->getId()}','{$user->getId()}')", false))
+			throw new Exception(_('Could not add technical officer'));
+	}
 
-	function removeOwner($user)
+	/** Remove a technical officer ( tech support ) from this node
+	 * @param User
+	 */
+	function removeOwner(User $user)
 	{
 		global $db;
 		if (!$db->ExecSqlUpdate("DELETE FROM node_owners WHERE node_id='{$this->getId()}' AND user_id='{$user->getId()}'", false))
+			throw new Exception(_('Could not remove owner'));
+	}
+	
+	/** Remove a technical officer ( tech support ) from this node
+	 * @param User
+	 */
+	function removeTechnicalOfficer(User $user)
+	{
+		global $db;
+		if (!$db->ExecSqlUpdate("DELETE FROM node_tech_officers WHERE node_id='{$this->getId()}' AND user_id='{$user->getId()}'", false))
 			throw new Exception(_('Could not remove owner'));
 	}
 
@@ -1100,6 +1181,24 @@ class Node implements GenericObject
 			$user_id = $user->getId();
 			$retval = false;
 			$db->ExecSqlUniqueRes("SELECT * FROM node_owners WHERE node_id='{$this->id}' AND user_id='{$user_id}'", $row, false);
+			if ($row != null)
+			{
+				$retval = true;
+			}
+		}
+		return $retval;
+	}
+	
+	/** Is the user a technical officer of the Node? 
+	 * @return true our false*/
+	function isTechnicalOfficer(User $user)
+	{
+		global $db;
+		if ($user != null)
+		{
+			$user_id = $user->getId();
+			$retval = false;
+			$db->ExecSqlUniqueRes("SELECT * FROM node_tech_officers WHERE node_id='{$this->id}' AND user_id='{$user_id}'", $row, false);
 			if ($row != null)
 			{
 				$retval = true;

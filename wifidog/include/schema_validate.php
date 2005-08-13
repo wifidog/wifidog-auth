@@ -27,7 +27,7 @@ error_reporting(E_ALL);
 require_once BASEPATH.'config.php';
 require_once BASEPATH.'classes/AbstractDb.php';
 require_once BASEPATH.'classes/Session.php';
-define('REQUIRED_SCHEMA_VERSION', 22);
+define('REQUIRED_SCHEMA_VERSION', 23);
 
 /** Check that the database schema is up to date.  If it isn't, offer to update it. */
 function validate_schema()
@@ -513,6 +513,18 @@ function update_schema()
 			$sql .= "ALTER TABLE nodes ADD COLUMN province text;\n";
 			$sql .= "ALTER TABLE nodes ADD COLUMN country text;\n";
 			$sql .= "ALTER TABLE nodes ADD COLUMN postal_code text;\n";
+		}
+		
+		$new_schema_version = 23;
+		if ($schema_version < $new_schema_version)
+		{
+			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+			$sql .= "CREATE TABLE node_tech_officers (\n";
+			$sql .= "  node_id VARCHAR(32) REFERENCES nodes (node_id),\n";
+			$sql .= "  user_id VARCHAR(45) REFERENCES users (user_id),\n";
+			$sql .= "PRIMARY KEY (node_id, user_id)\n";
+			$sql .= ");\n";
 		}
 
 		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);

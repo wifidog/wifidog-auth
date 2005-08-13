@@ -1,4 +1,10 @@
 2005-08-12 Francois Proulx <francois.proulx@gmail.com>
+	* Added missing GisPoint fille to CVS
+	* Fixed some bugs
+	* Added Technical officer table
+	* Added technical officer management to node UI
+	
+2005-08-12 Francois Proulx <francois.proulx@gmail.com>
 	* Changed config.php GMAPS_API_KEY to GMAPS_PUBLIC_API_KEY
 	* Added GMAPS_ADMIN_API_KEY, needed for admin UI
 	* This is a stupid limitation of the Google Maps API which matches the complete URL path
