@@ -1,3 +1,9 @@
+2005-08-15 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Run sync_sql_for_cvs.sh
+	* sql/dump_initial_data_postgres.sh:  Fix a hardcoded reference to rss_url which no longer exists
+	* .project:  Remove mistakenly commited file in last commit
+	* .cvsignore:  Add file to avoid previous error
+	
 2005-08-12 Francois Proulx <francois.proulx@gmail.com>
 	* Added missing GisPoint fille to CVS
 	* Fixed some bugs
@@ -11,7 +17,7 @@
 	* Added /classes/GisPoint.php class
 	* Will add geocode + Google Maps capabilities very soon
 	* Notice : the XML schema will change very soon...
-		* I will try to keep the streetAddress field intact so I won't break backward compat.
+	* I will try to keep the streetAddress field intact so I won't break backward compat.
 	
 2005-08-12 Benoit Grégoire  <bock@step.polymtl.ca>
 	* classes/MainUI.php: Move the call to schema_validate() in MainUI's constructor
