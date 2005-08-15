@@ -307,6 +307,16 @@ CREATE TABLE node_owners (
 SET default_with_oids = true;
 
 --
+-- Name: node_tech_officers; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE node_tech_officers (
+    node_id character varying(32) NOT NULL,
+    user_id character varying(45) NOT NULL
+);
+
+
+--
 -- Name: nodes; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
 
@@ -320,7 +330,6 @@ CREATE TABLE nodes (
     last_heartbeat_user_agent text,
     description text,
     map_url text,
-    street_address text,
     public_phone_number text,
     public_email text,
     mass_transit_info text,
@@ -330,7 +339,13 @@ CREATE TABLE nodes (
     max_monthly_outgoing bigint,
     quota_reset_day_of_month integer,
     latitude numeric(16,6),
-    longitude numeric(16,6)
+    longitude numeric(16,6),
+    civic_number text,
+    street_name text,
+    city text,
+    province text,
+    country text,
+    postal_code text
 );
 
 
@@ -568,6 +583,14 @@ ALTER TABLE ONLY node_has_content
 
 ALTER TABLE ONLY node_owners
     ADD CONSTRAINT node_owners_pkey PRIMARY KEY (node_id, user_id);
+
+
+--
+-- Name: node_tech_officers_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY node_tech_officers
+    ADD CONSTRAINT node_tech_officers_pkey PRIMARY KEY (node_id, user_id);
 
 
 --
@@ -948,6 +971,22 @@ ALTER TABLE ONLY flickr_photostream
 
 ALTER TABLE ONLY iframes
     ADD CONSTRAINT iframes_iframes_id_fkey FOREIGN KEY (iframes_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: node_tech_officers_node_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY node_tech_officers
+    ADD CONSTRAINT node_tech_officers_node_id_fkey FOREIGN KEY (node_id) REFERENCES nodes(node_id);
+
+
+--
+-- Name: node_tech_officers_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY node_tech_officers
+    ADD CONSTRAINT node_tech_officers_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(user_id);
 
 
 --

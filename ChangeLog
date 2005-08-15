@@ -1,4 +1,7 @@
 2005-08-15 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Re-Run sync_sql_for_cvs.sh, did not run to completion last time.
+
+2005-08-15 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Run sync_sql_for_cvs.sh
 	* sql/dump_initial_data_postgres.sh:  Fix a hardcoded reference to rss_url which no longer exists
 	* .project:  Remove mistakenly commited file in last commit
