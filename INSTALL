@@ -8,23 +8,10 @@ Prerequisites:
 -PostgreSQL (mysql code also exists, but is looking for a maintainer)
 -PEAR ( if you need RADIUS auth support, see below )
 
-Install files:
+Installation
 
--Uncompress the tarball on your web server.
--Copy the content of the libs directory of the smarty tarball in lib/smarty/
--Copy the content of the magpierss-0.xx directory of the magpierss tarball in lib/magpie.  If you do not wish to install RSS support, you must set define('RSS_SUPPORT', false) in config.php.
-
--portal/cache/, and everything in tmp/smarty must be at least writable by your web server.  Run "sh permissions.sh" to set them 777
-
-Database:
--Create the user wifidog (both in postgres and on your system).
--Import the schema:
-	psql -d template1 -U wifidog -W -f sql/wifidog-postgres-schema.sql
--Import initial data:
-	psql -d template1 -U wifidog -W -f sql/wifidog-postgres-initial-data.sql
-
-Configure the system:	
--Edit wifidog/config.php to suit your environment.
+Open with your browser the following URL : http://myHost.com/wifidogPATH/install.php (replace myHost by your domain and wifidogPATH by the right PATH)
+install.php will validate, install, create and configure all the stuff uoy need to have a working auth-server.
 
 *************************************
 RADIUS authentication support section
