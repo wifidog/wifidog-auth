@@ -1,3 +1,6 @@
+2005-08-17 Pascal Leclerc  <pascal@plec.ca>
+        * Added install script + minor changes in schema_validate.php
+
 2005-08-15 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Re-Run sync_sql_for_cvs.sh, did not run to completion last time.
 
