@@ -44,10 +44,10 @@ function validate_schema()
 	else
 		if ($row['value'] < REQUIRED_SCHEMA_VERSION)
 		{
-			if (!empty ($_REQUEST['schema_update_confirm']) && $_REQUEST['schema_update_confirm'] == 'on')
-			{
+//			if (!empty ($_REQUEST['schema_update_confirm']) && $_REQUEST['schema_update_confirm'] == 'on')
+//			{
 				update_schema();
-			}
+/*			}
 			else
 			{
 				echo "<html><head><h1>";
@@ -58,7 +58,7 @@ function validate_schema()
 				echo "</form>\n";
 				echo "</html></head>";
 				exit ();
-			}
+			} */
 		}
 		else
 		{
@@ -86,6 +86,11 @@ function check_users_not_empty()
 		$db->ExecSqlUniqueRes("SELECT user_id FROM users WHERE account_origin = '$default_account_origin' LIMIT 1", $row, false);
 		if ($row == null)
 		{
+            $exploded_path = explode("/", $_SERVER['SCRIPT_NAME']);     # Split directories in token
+            array_pop($exploded_path);                                  # Remove install.php from the list
+            $system_path = implode("/", $exploded_path);                # Build the system_path for the auth-server
+            print "<META HTTP-EQUIV=Refresh CONTENT=\"0; URL=$system_path/install.php\">";
+            exit();
 			echo "<html><head><h1>";
 			echo _("No user matches the default account origin, a new user admin/admin will be created. Change the password as soon as possible !");
 			echo "</html></head>";
