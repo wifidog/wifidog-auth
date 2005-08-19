@@ -127,7 +127,7 @@ $requiredMySQLVersion     = '0.0.0'; // Todo
 $requiredPostgeSQLVersion = '0.0.0'; // Todo
 
 # Needed files/directories with write access
-$dir_array = array('tmp', 'portal/cache', 'lib/smarty', 'tmp/smarty/templates_c', 'lib/magpie', 'lib/Phlickr', 'config.php'); #, 'lib/jpgraph'); 
+$dir_array = array('tmp', 'tmp/magpie_cache', 'lib/smarty', 'tmp/smarty/templates_c', 'lib/magpie', 'lib/Phlickr', 'config.php'); #, 'lib/jpgraph'); 
 
 $smarty_full_url    = 'http://smarty.php.net/do_download.php?download_file=Smarty-2.6.7.tar.gz';
 $magpierss_full_url = 'http://easynews.dl.sourceforge.net/sourceforge/magpierss/magpierss-0.71.1.tar.gz';

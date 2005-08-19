@@ -23,7 +23,7 @@
 /**@file RssPressReview.inc
  * @author Copyright (C) 2004-2005 Benoit Grégoire (http://benoitg.coeus.ca/) et Technologies Coeus inc.
  */
-define('MAGPIE_DEBUG', 0);
+//define('MAGPIE_DEBUG', 0);
 define('DEFAULT_PUBLICATION_INTERVAL', (1 * 24 * 3600));
 
 class RssPressReview
@@ -100,7 +100,7 @@ class RssPressReview
 
 	/** Set the oldest entries you are willing to see.  Any entries older than this will not
 	 *  be considered at all for display.  Note that they will still be considered for 
-	 * publication interval calculations.  Most peuple do NOT want to set this, it's only usefull if
+	 * publication interval calculations.  Most people do NOT want to set this, it's only usefull if
 	 *  all your feed publish very rarely, and you don't want entries older than a month, even if 
 	 * there aren't enough items left to reach the number of items you asked for.
 	 * @param $max_item_age: Age in seconds or null.   null means no limit (the default), a typical value would be 3600 * 24 * 30 (a month) 
@@ -108,7 +108,7 @@ class RssPressReview
 	function setMaxItemAge($max_item_age = null)
 	{
 		$retval = false;
-		if ($max_item_age >= 0)
+		if (is_numeric($max_item_age) && $max_item_age >= 0)
 		{
 			$this->max_item_age = $max_item_age;
 			$retval = true;
@@ -257,8 +257,40 @@ class RssPressReview
 		return $retval;
 	}
 
+	/** Is the feed in rss_sources.  Equivalent to checking the 
+	 * return of addSourceFeed(), but can be called at any time.  Will
+	 * return false if the feed could not be retrieven or coulsdn't be parsed.
+	 * @param $url 
+	 * @return true if the feed has been successfully retrieved */
+	function isFeedAvailable($url)
+	{
+		if (isset ($this->rss_sources[$url]))
+		{
+			$retval = true;
+		}
+		else
+		{
+			$retval = false;
+		}
+		return $retval;
+	}
+	
+	/** Return the title of the feed, if the feed contains title information.
+	 * @param $url 
+	 * @return Title or false if unavailable */
+	function getFeedTitle($url)
+	{
+		$retval = false;
+		if (isset ($this->rss_sources[$url])&& isset ($this->rss_sources[$url]['magpie_array']->channel['title']))
+		{
+			$retval = $this->rss_sources[$url]['magpie_array']->channel['title'];
+		}
+		return $retval;
+	}
+
 	/** Return the computed publication interval of the feed, if the feed contained date information.
-	 * @param $url */
+	 * @param $url
+	 * @return publication interval in seconds or false if unavailable */
 	function getFeedPublicationInterval($url)
 	{
 		if (isset ($this->rss_sources[$url]['rpr_real_publication_interval']))
@@ -350,7 +382,7 @@ class RssPressReview
 		return true;
 	}
 
-	/** Return the combined RSS of all the sources, in magpie format
+	/** Return the combined RSS of all the sources, in an extended magpie format
 	 @param $number_of_items_to_display The total number of items to display.
 	 @param $last_visit:  Optionnal, timestamp.  The date of the user's last visit.  If set, allows the system to set the rpr_is_new field.  
 	 Note that it will only do it for items that have the are 
@@ -359,7 +391,6 @@ class RssPressReview
 	*/
 	function get_rss_info($number_of_items_to_display = 20, $last_visit = null)
 	{
-
 		$debug = false;
 		//echo "<pre>"; print_r($this->rss_sources);echo "</pre>";
 		if ($debug)
@@ -429,6 +460,32 @@ class RssPressReview
 						$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_is_today'] = false;
 					}
 				}
+				$content = null;
+				if(!empty($item['atom_content']))
+				{
+					$content = $item['atom_content'];
+				}
+				else if(!empty($item['content']['encoded']))
+				{
+					$content = $item['content']['encoded'];
+				}
+				else if(!empty($item['summary']))
+				{	
+				$content = $item['summary'];
+				}
+				$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_content'] = $content;
+				
+				$summary = null;
+				if(!empty($item['summary']))
+				{	
+				$summary = $item['summary'];
+				}
+				else
+				{
+					$summary = $content;
+				}
+				$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_summary'] = $summary;
+				
 			}
 
 			//echo "<p>$i items, average_publication_interval (days) = ". $this->rss_sources[$rss_sources_key]['average_publication_interval']/(3600 * 24) . "</p>\n";
@@ -440,7 +497,6 @@ class RssPressReview
 		/*echo "<pre>";
 		print_r($item_date_array);
 		echo "</pre>";*/
-
 		/* Find the "oldest" adjusted date to display */
 		if (count($item_date_array) < $number_of_items_to_display)
 		{
@@ -602,7 +658,7 @@ z-index: 1000;
 display: inline;
 padding: 0.5em;
 border: 2px outset #324C48;
-background-color: #e6e6e6;
+background-color: #f9f9f9;
 visibility: hidden;
 position: absolute;
 left: 4em;
@@ -615,7 +671,7 @@ width: 350px;
 margin:  0.5em 1em 0em 1em;
 padding: 0.5em;
 border: 2px outset #324C48;
-background-color: #e6e6e6;
+background-color: #f9f9f9;
 } 
 .rpr_popup_outer_div { 
 z-index: 1000;
@@ -710,7 +766,7 @@ z-index: 1000;
 					$item['rpr_is_today'] ? $class = 'rpr_popup_inner_div_expanded':$class = 'rpr_popup_inner_div';
 					$feed_html .= "<div class='$class' id='$dhtml_id'>\n";
 					$feed_html .= "<p class='rpr_text'>{$item['rpr_author']} ({$feed['channel']['title']}) $display_date</p>\n";
-					$summary = strip_tags($item['summary'], "<p><a><img><b><i>");
+					$summary = strip_tags($item['rpr_content'], "<br><p><a><img><b><i>");
 					$feed_html .= "<p class='rpr_text'>{$summary}</p></div>\n";
 					$feed_html .= "</div>\n";
 					$feed_html .= "</li>\n";

@@ -166,9 +166,9 @@ class Network implements GenericObject
 		$retval = array ();
         // Get all network, but exclude user subscribed content if asked
 		if ($exclude_subscribed_content == true && $subscriber)
-			$sql = "SELECT content_id FROM network_has_content WHERE network_id='$this->id' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$subscriber->getId()}') ORDER BY subscribe_timestamp";
+			$sql = "SELECT content_id FROM network_has_content WHERE network_id='$this->id' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$subscriber->getId()}') ORDER BY subscribe_timestamp DESC";
 		else
-			$sql = "SELECT content_id FROM network_has_content WHERE network_id='$this->id' ORDER BY subscribe_timestamp";
+			$sql = "SELECT content_id FROM network_has_content WHERE network_id='$this->id' ORDER BY subscribe_timestamp DESC";
 		$db->ExecSql($sql, $content_rows, false);
         
 		if ($content_rows != null)

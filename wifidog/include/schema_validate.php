@@ -27,7 +27,7 @@ error_reporting(E_ALL);
 require_once BASEPATH.'config.php';
 require_once BASEPATH.'classes/AbstractDb.php';
 require_once BASEPATH.'classes/Session.php';
-define('REQUIRED_SCHEMA_VERSION', 23);
+define('REQUIRED_SCHEMA_VERSION', 24);
 
 /** Check that the database schema is up to date.  If it isn't, offer to update it. */
 function validate_schema()
@@ -476,8 +476,22 @@ function update_schema()
 		{
 			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
 			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
-			$sql .= "CREATE TABLE content_rss_aggregator "."( "."content_id text NOT NULL PRIMARY KEY REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE, "."number_of_display_items integer NOT NULL DEFAULT 10, "."algorithm_strength real NOT NULL DEFAULT 0.75, "."max_item_age interval DEFAULT NULL".");\n";
-			$sql .= "CREATE TABLE content_rss_aggregator_feeds "."( "."content_id text NOT NULL REFERENCES content_rss_aggregator ON UPDATE CASCADE ON DELETE CASCADE, "."url text, "."bias real NOT NULL DEFAULT 1, "."default_publication_interval int DEFAULT NULL, "."PRIMARY KEY(content_id, url) ".");\n";
+			$sql .= "CREATE TABLE content_rss_aggregator \n";
+			$sql .= "( \n";
+			$sql .= "content_id text NOT NULL PRIMARY KEY REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE, \n";
+			$sql .= "number_of_display_items integer NOT NULL DEFAULT 10, \n";
+			$sql .= "algorithm_strength real NOT NULL DEFAULT 0.75, \n";
+			$sql .= "max_item_age interval DEFAULT NULL \n";
+			$sql .= "); \n";
+			
+			$sql .= "CREATE TABLE content_rss_aggregator_feeds \n";
+			$sql .= "( ";
+			$sql .= "content_id text NOT NULL REFERENCES content_rss_aggregator ON UPDATE CASCADE ON DELETE CASCADE, \n";
+			$sql .= "url text, \n";
+			$sql .= "bias real NOT NULL DEFAULT 1, \n";
+			$sql .= "default_publication_interval int DEFAULT NULL, \n";
+			$sql .= "PRIMARY KEY(content_id, url) \n";
+			$sql .= "); \n";
 			$sql .= "ALTER TABLE content_has_owners ALTER COLUMN is_author SET DEFAULT 'f';\n";
 			$results = null;
 			$db->ExecSql("SELECT node_id, rss_url FROM nodes", $results, false);
@@ -501,7 +515,6 @@ function update_schema()
 			}
 			$sql .= "\nALTER TABLE nodes DROP COLUMN rss_url;\n";
 			$sql .= "\nDELETE FROM content WHERE content_type='HotspotRss';\n";
-
 		}
 
 		$new_schema_version = 22;
@@ -531,7 +544,14 @@ function update_schema()
 			$sql .= "PRIMARY KEY (node_id, user_id)\n";
 			$sql .= ");\n";
 		}
-
+		
+		$new_schema_version = 24;
+		if ($schema_version < $new_schema_version)
+		{
+			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+			$sql .= "ALTER TABLE content_rss_aggregator_feeds ADD COLUMN title text; \n";
+		}
 		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);
 		//$db->ExecSqlUpdate("BEGIN;\n$sql\nROLLBACK;\n", true);
 		echo "</html></head>";

@@ -282,7 +282,9 @@ class MainUI
 		return $html;
 	}
 
-	/** Display the page */
+	/** Display the page
+	 * @note:  Uses a few request parameters to displaty debug information
+	 * if $_REQUEST['debug_request'] is present, it will print out the $_REQUEST array at the top of the page */
 	public function display()
 	{
 		$html = '';
@@ -314,6 +316,12 @@ class MainUI
 		$html .= "</head>\n";
 
 		$html .= "<body>"."\n";
+		if(isset($_REQUEST['debug_request']))
+		{
+			$html .= '<pre>';
+			$html .= print_r($_REQUEST,true);
+			$html .= '</pre>';
+		}
 		$html .= '<div class="outer_container">'."\n";
 
 		

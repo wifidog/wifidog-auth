@@ -170,7 +170,7 @@ class Content implements GenericObject
 				$tab[$i][1] = $classname;
 				$i ++;
 			}
-			$html .= FormSelectGenerator :: generateFromArray($tab, null, $name, null, false);
+			$html .= FormSelectGenerator :: generateFromArray($tab, 'TrivialLangstring', $name, null, false);
 		}
 		else
 		{

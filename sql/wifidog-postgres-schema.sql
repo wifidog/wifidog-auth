@@ -165,7 +165,8 @@ CREATE TABLE content_rss_aggregator_feeds (
     content_id text NOT NULL,
     url text NOT NULL,
     bias real DEFAULT 1 NOT NULL,
-    default_publication_interval integer
+    default_publication_interval integer,
+    title text
 );
 
 

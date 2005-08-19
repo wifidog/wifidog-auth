@@ -987,9 +987,9 @@ class Node implements GenericObject
 		$retval = array ();
 		// Get all network, but exclude user subscribed content if asked
 		if ($exclude_subscribed_content == true && $subscriber)
-			$sql = "SELECT content_id FROM node_has_content WHERE node_id='$this->id' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$subscriber->getId()}') ORDER BY subscribe_timestamp";
+			$sql = "SELECT content_id FROM node_has_content WHERE node_id='$this->id' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$subscriber->getId()}') ORDER BY subscribe_timestamp DESC";
 		else
-			$sql = "SELECT content_id FROM node_has_content WHERE node_id='$this->id' ORDER BY subscribe_timestamp";
+			$sql = "SELECT content_id FROM node_has_content WHERE node_id='$this->id' ORDER BY subscribe_timestamp DESC";
 		$db->ExecSql($sql, $content_rows, false);
 
 		if ($content_rows != null)
@@ -1008,7 +1008,7 @@ class Node implements GenericObject
 	{
 		global $db;
 		$retval = array ();
-		$sql = "SELECT * FROM content_group JOIN content ON (content.content_id = content_group.content_group_id) JOIN node_has_content ON (node_has_content.content_id = content_group.content_group_id AND node_has_content.node_id = '{$this->getId()}') WHERE is_persistent = true AND is_artistic_content = true AND is_locative_content = true";
+		$sql = "SELECT * FROM content_group JOIN content ON (content.content_id = content_group.content_group_id) JOIN node_has_content ON (node_has_content.content_id = content_group.content_group_id AND node_has_content.node_id = '{$this->getId()}') WHERE is_persistent = true AND is_artistic_content = true AND is_locative_content = true ORDER BY subscribe_timestamp DESC";
 		$db->ExecSql($sql, $content_rows, false);
 		if ($content_rows != null)
 		{
