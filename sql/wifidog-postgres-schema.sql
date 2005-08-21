@@ -293,27 +293,15 @@ CREATE TABLE node_has_content (
 );
 
 
-SET default_with_oids = false;
-
 --
--- Name: node_owners; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: node_stakeholders; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
 
-CREATE TABLE node_owners (
+CREATE TABLE node_stakeholders (
     node_id character varying(32) NOT NULL,
-    user_id character varying(45) NOT NULL
-);
-
-
-SET default_with_oids = true;
-
---
--- Name: node_tech_officers; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
---
-
-CREATE TABLE node_tech_officers (
-    node_id character varying(32) NOT NULL,
-    user_id character varying(45) NOT NULL
+    user_id character varying(45) NOT NULL,
+    is_owner boolean DEFAULT false NOT NULL,
+    is_tech_officer boolean DEFAULT false NOT NULL
 );
 
 
@@ -579,19 +567,11 @@ ALTER TABLE ONLY node_has_content
 
 
 --
--- Name: node_owners_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: node_stakeholders_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
 --
 
-ALTER TABLE ONLY node_owners
-    ADD CONSTRAINT node_owners_pkey PRIMARY KEY (node_id, user_id);
-
-
---
--- Name: node_tech_officers_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
---
-
-ALTER TABLE ONLY node_tech_officers
-    ADD CONSTRAINT node_tech_officers_pkey PRIMARY KEY (node_id, user_id);
+ALTER TABLE ONLY node_stakeholders
+    ADD CONSTRAINT node_stakeholders_pkey PRIMARY KEY (node_id, user_id);
 
 
 --
@@ -783,6 +763,30 @@ ALTER TABLE ONLY pictures
 
 
 --
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY iframes
+    ADD CONSTRAINT "$1" FOREIGN KEY (iframes_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY content_rss_aggregator
+    ADD CONSTRAINT "$1" FOREIGN KEY (content_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY content_rss_aggregator_feeds
+    ADD CONSTRAINT "$1" FOREIGN KEY (content_id) REFERENCES content_rss_aggregator(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -895,22 +899,6 @@ ALTER TABLE ONLY administrators
 
 
 --
--- Name: content_rss_aggregator_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY content_rss_aggregator
-    ADD CONSTRAINT content_rss_aggregator_content_id_fkey FOREIGN KEY (content_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: content_rss_aggregator_feeds_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY content_rss_aggregator_feeds
-    ADD CONSTRAINT content_rss_aggregator_feeds_content_id_fkey FOREIGN KEY (content_id) REFERENCES content_rss_aggregator(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
 -- Name: fk_node_deployment_status; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -927,27 +915,11 @@ ALTER TABLE ONLY connections
 
 
 --
--- Name: fk_nodes; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY node_owners
-    ADD CONSTRAINT fk_nodes FOREIGN KEY (node_id) REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
 -- Name: fk_users; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
 ALTER TABLE ONLY connections
     ADD CONSTRAINT fk_users FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE RESTRICT;
-
-
---
--- Name: fk_users; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY node_owners
-    ADD CONSTRAINT fk_users FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -967,27 +939,19 @@ ALTER TABLE ONLY flickr_photostream
 
 
 --
--- Name: iframes_iframes_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: node_stakeholders_node_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
-ALTER TABLE ONLY iframes
-    ADD CONSTRAINT iframes_iframes_id_fkey FOREIGN KEY (iframes_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: node_tech_officers_node_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY node_tech_officers
-    ADD CONSTRAINT node_tech_officers_node_id_fkey FOREIGN KEY (node_id) REFERENCES nodes(node_id);
+ALTER TABLE ONLY node_stakeholders
+    ADD CONSTRAINT node_stakeholders_node_id_fkey FOREIGN KEY (node_id) REFERENCES nodes(node_id);
 
 
 --
--- Name: node_tech_officers_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: node_stakeholders_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
-ALTER TABLE ONLY node_tech_officers
-    ADD CONSTRAINT node_tech_officers_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(user_id);
+ALTER TABLE ONLY node_stakeholders
+    ADD CONSTRAINT node_stakeholders_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(user_id);
 
 
 --

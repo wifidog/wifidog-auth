@@ -1,3 +1,8 @@
+2005-08-21 Francois Proulx <francois.proulx@gmail.com>
+	* Node admin UI should now be completed.
+	* Minor bug fixes in Geocoder
+	* Merged node_owners and node_tech_officers table into node_stakeholders
+	
 2005-08-19 Benoit Grégoire  <bock@step.polymtl.ca>
 	* New schema version
 	* install.php, tmp/magpie_cache/:  Move all magpie caches 

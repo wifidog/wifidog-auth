@@ -165,6 +165,19 @@ class GeocoderCanada extends AbstractGeocoder
 		// Not supported by geocode.ca
 		return null;
 	}
+	
+	/** Get a GIS Point instance 
+	 * @return GisPoint
+	 */
+	public function getGisLocation()
+	{
+		$lat = $this->getLatitude();
+		$long = $this->getLongitude();
+		
+		if($lat !== null && $long !== null)
+			return new GisPoint($lat, $long, 0);
+		return null;
+	}
 
 } // End class
 ?>

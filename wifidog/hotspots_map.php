@@ -48,7 +48,7 @@ $ui->setMainContent($html);
 
 
 // The onLoad code should only be called once all DIV are created.
-$script = "<script type=\"text/javascript\">onLoad('".GMAPS_XML_SOURCE_URL."', ".GMAPS_INITIAL_LATITUDE.", ".GMAPS_INITIAL_LONGITUDE.", ".GMAPS_INITIAL_ZOOM_LEVEL.");</script>\n";
+$script = "<script type=\"text/javascript\">loadHotspotsMap('".GMAPS_XML_SOURCE_URL."', ".GMAPS_INITIAL_LATITUDE.", ".GMAPS_INITIAL_LONGITUDE.", ".GMAPS_INITIAL_ZOOM_LEVEL.");</script>\n";
 $ui->addFooterScript($script);
 
 $tool_html = '<p class="indent">'."\n";

@@ -1,0 +1,93 @@
+<?php
+/********************************************************************\
+ * This program is free software; you can redistribute it and/or    *
+ * modify it under the terms of the GNU General Public License as   *
+ * published by the Free Software Foundation; either version 2 of   *
+ * the License, or (at your option) any later version.              *
+ *                                                                  *
+ * This program is distributed in the hope that it will be useful,  *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of   *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the    *
+ * GNU General Public License for more details.                     *
+ *                                                                  *
+ * You should have received a copy of the GNU General Public License*
+ * along with this program; if not, contact:                        *
+ *                                                                  *
+ * Free Software Foundation           Voice:  +1-617-542-5942       *
+ * 59 Temple Place - Suite 330        Fax:    +1-617-542-2652       *
+ * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
+ *                                                                  *
+ \********************************************************************/
+/**@file hotspot_location.php
+ * This page displays location of a hotspot on a map, it can be used to set the precise location
+ * @author Copyright (C) 2005 François Proulx <francois.proulx@gmail.com>
+ */
+define('BASEPATH', '../');
+require_once 'admin_common.php';
+require_once BASEPATH.'classes/Node.php';
+require_once BASEPATH.'classes/AbstractGeocoder.php';
+require_once BASEPATH.'classes/MainUI.php';
+
+$ui = new MainUI();
+$ui->setTitle(_("Hotspot location map"));
+
+if(!empty($_REQUEST['node_id']))
+{
+	$node = Node::getObject($_REQUEST['node_id']);
+	
+	// Add Google Maps JavaScript ( must set config values )
+	$html_headers = "<script src=\"http://maps.google.com/maps?file=api&v=1&key=".GMAPS_ADMIN_API_KEY."\" type=\"text/javascript\"></script>";
+	$html_headers .= "<script src=\"../js/gmaps_hotspots_status_map.js\" type=\"text/javascript\"></script>";
+	$ui->setHtmlHeader($html_headers);
+	
+	// Create HTML body
+	$html = _("Click anywhere on the map to extract the GIS location, then click on the 'Save location' button.")."<br>";
+	$html .= "<div id=\"map_frame\"></div>\n";
+	$html .= "<input type='button' value='"._("Use these coordinates")."' onClick='setLocationInOriginalWindow();'>\n";
+	$ui->setMainContent($html);
+	
+	if($node->getGisLocation() !== null)
+	{
+		$lat = $node->getGisLocation()->getLatitude();
+		$long = $node->getGisLocation()->getLongitude();
+	}
+	else
+	{
+		$lat = "null";
+		$long = "null";
+	}
+	
+	// The onLoad code should only be called once all DIV are created.
+	$script = "<script type=\"text/javascript\">\n";
+	$script .= "var map = loadHotspotsMap(null, $lat, $long, 1);\n";
+	$script .= "var current_marker_point = new GPoint($long, $lat);\n";
+	$script .= "var current_marker = new GMarker(current_marker_point);\n";
+	$script .= "map.addOverlay(current_marker);\n";
+	$gis_lat_name = "node_".$node->getId()."_gis_latitude";
+	$gis_long_name = "node_".$node->getId()."_gis_longitude";
+	$script .= "function setLocationInOriginalWindow() {\n";
+	$script .= "  window.opener.document.getElementById(\"$gis_lat_name\").value = current_marker_point.y;\n";
+	$script .= "  window.opener.document.getElementById(\"$gis_long_name\").value = current_marker_point.x;";
+	$script .= "}\n";
+	$script .= "setMapClickCallback(map, function(overlay, point) {
+				if (point)
+				{
+					if(current_marker != null)
+						map.removeOverlay(current_marker);
+					current_marker_point = point;
+					current_marker = new GMarker(point);
+					map.addOverlay(current_marker);
+				}
+				else if(overlay)
+					map.removeOverlay(overlay);
+				});\n";
+	$script .= "</script>\n";
+	$ui->addFooterScript($script);
+}
+else
+	echo _("You need to set a node ID.");
+
+$ui->setToolSectionEnabled(false);
+$ui->display();
+
+?>

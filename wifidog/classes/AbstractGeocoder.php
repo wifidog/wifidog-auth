@@ -181,6 +181,7 @@ abstract class AbstractGeocoder
 	abstract public function getLatitude();
 	abstract public function getLongitude();
 	abstract public function getAltitude();
+	abstract public function getGisLocation();
 
 } // End class
 

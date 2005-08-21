@@ -1,5 +1,6 @@
 <?php
 
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -296,15 +297,18 @@ class Node implements GenericObject
 		// Altitude is not supported yet
 		return new GisPoint($this->mRow['latitude'], $this->mRow['longitude'], 0);
 	}
-	
+
 	function setGisLocation($pt)
 	{
-		if(!empty($pt))
+		if (!empty ($pt))
 		{
 			$lat = $this->mDb->EscapeString($pt->getLatitude());
 			$long = $this->mDb->EscapeString($pt->getLongitude());
-			
-			$this->mDb->ExecSqlUpdate("UPDATE nodes SET latitude = $lat, longitude = $long WHERE node_id = '{$this->getId()}'");
+
+			if (!empty ($lat) && !empty ($long))
+				$this->mDb->ExecSqlUpdate("UPDATE nodes SET latitude = $lat, longitude = $long WHERE node_id = '{$this->getId()}'");
+			else
+				$this->mDb->ExecSqlUpdate("UPDATE nodes SET latitude = NULL, longitude = NULL WHERE node_id = '{$this->getId()}'");
 			$this->refresh();
 		}
 	}
@@ -358,7 +362,7 @@ class Node implements GenericObject
 		$this->mDb->ExecSqlUpdate("UPDATE nodes SET map_url = '{$url}' WHERE node_id = '{$this->getId()}'");
 		$this->refresh();
 	}
-	
+
 	public function getCivicNumber()
 	{
 		return $this->mRow['civic_number'];
@@ -553,7 +557,7 @@ class Node implements GenericObject
 		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		// Street name
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Street name")." : </div>\n";
@@ -563,7 +567,7 @@ class Node implements GenericObject
 		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		// City
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("City")." : </div>\n";
@@ -573,7 +577,7 @@ class Node implements GenericObject
 		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		// Province
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Province / State")." : </div>\n";
@@ -583,7 +587,7 @@ class Node implements GenericObject
 		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		// Postal Code
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Postal code")." : </div>\n";
@@ -593,7 +597,7 @@ class Node implements GenericObject
 		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		// Country
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Country")." : </div>\n";
@@ -643,31 +647,34 @@ class Node implements GenericObject
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 
+		// End of information section
+		$html .= "</div>\n";
+
 		// Node GIS data
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("GIS data")." : </div>\n";
-		
+
 		// Build HTML form fields names & values
 		$gis_point = $this->getGisLocation();
 		$gis_lat_name = "node_".$this->getId()."_gis_latitude";
 		$gis_lat_value = htmlspecialchars($gis_point->getLatitude(), ENT_QUOTES);
 		$gis_long_name = "node_".$this->getId()."_gis_longitude";
 		$gis_long_value = htmlspecialchars($gis_point->getLongitude(), ENT_QUOTES);
-		
-		$html .= "<div class='admin_section_container'>\n";	
+
+		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Latitude")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
-		$html .= "<input type='text' size ='50' value='$gis_lat_value' name='$gis_lat_name'>\n";
+		$html .= "<input type='text' size ='50' value='$gis_lat_value' id='$gis_lat_name' name='$gis_lat_name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
-		$html .= "<div class='admin_section_container'>\n";	
+
+		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Longitude")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
-		$html .= "<input type='text' size ='50' value='$gis_long_value' name='$gis_long_name'>\n";
+		$html .= "<input type='text' size ='50' value='$gis_long_value' id='$gis_long_name' name='$gis_long_name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		/*
 		 * If Google Maps is enabled, call the geocoding service, 
 		 * then use Google Maps to let the user choose a more precise location
@@ -676,30 +683,28 @@ class Node implements GenericObject
 		 * 
 		 * Simply use a geocoding service.
 		 */
-		 
-		if(defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED === true)
+
+		if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED === true)
 		{
-			$html .= "<div class='admin_section_container'>\n";	
+			$html .= "<div class='admin_section_container'>\n";
 			$html .= "<div class='admin_section_data'>\n";
-			$html .= "<input type='button' name='google_maps_geocode' value='"._("Geocode location")."' onClick='alert();'>\n";
-			$html .=" ("._("Use a geocoding service + Google Maps to extract precise GIS data").")";	
+			$html .= "<input type='submit' name='geocode_only' value='"._("Geocode only")."'>\n";
+			$html .= "<input type='button' name='google_maps_geocode' value='"._("Check using Google Maps")."' onClick='window.open(\"hotspot_location_map.php?node_id={$this->getId()}\", \"hotspot_location\", \"toolbar=0,scrollbars=1,resizable=1,location=0,statusbar=0,menubar=0,width=600,height=600\");'>\n";
+			$html .= " ("._("Use a geocoding service, then use Google Maps to pinpoint the exact location.").")";
 			$html .= "</div>\n";
 			$html .= "</div>\n";
 		}
 		else
 		{
-			$html .= "<div class='admin_section_container'>\n";	
+			$html .= "<div class='admin_section_container'>\n";
 			$html .= "<div class='admin_section_data'>\n";
 			$html .= "<input type='submit' name='geocode_only' value='"._("Geocode location")."'>\n";
-			$html .=" ("._("Use a geocoding service").")";	
+			$html .= " ("._("Use a geocoding service").")";
 			$html .= "</div>\n";
 			$html .= "</div>\n";
 		}
-		
-		// End of GIS data
-		$html .= "</div>\n";
 
-		// End of information section
+		// End of GIS data
 		$html .= "</div>\n";
 
 		// Owners management
@@ -727,7 +732,7 @@ class Node implements GenericObject
 		$html .= "</ul>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		// Tech officers management
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Technical officers")." : </div>\n";
@@ -787,7 +792,7 @@ class Node implements GenericObject
 		$html .= "</li>\n";
 		$html .= "</ul>\n";
 		$html .= "</div>\n";
-		$html .= "</div>\n";
+
 		return $html;
 	}
 
@@ -818,27 +823,27 @@ class Node implements GenericObject
 		// Map URL
 		$name = "node_".$this->getId()."_map_url";
 		$this->setMapUrl($_REQUEST[$name]);
-		
+
 		// Civic number
 		$name = "node_".$this->getId()."_civic_number";
 		$this->setCivicNumber($_REQUEST[$name]);
-		
+
 		// Street name
 		$name = "node_".$this->getId()."_street_name";
 		$this->setStreetName($_REQUEST[$name]);
-		
+
 		// City
 		$name = "node_".$this->getId()."_city";
 		$this->setCity($_REQUEST[$name]);
-		
+
 		// Province
 		$name = "node_".$this->getId()."_province";
 		$this->setProvince($_REQUEST[$name]);
-		
+
 		// Postal Code
 		$name = "node_".$this->getId()."_postal_code";
 		$this->setPostalCode($_REQUEST[$name]);
-		
+
 		// Country
 		$name = "node_".$this->getId()."_country";
 		$this->setCountry($_REQUEST[$name]);
@@ -858,21 +863,26 @@ class Node implements GenericObject
 		// Deployment status
 		$name = "node_".$this->getId()."_deployment_status";
 		$this->setDeploymentStatus(self :: processSelectDeploymentStatus($name));
-		
+
 		// GIS data
 		// Get a geocoder for a given country
-		if(!empty($_REQUEST['geocode_only']))
+		if (!empty ($_REQUEST['geocode_only']))
 		{
-			$geocoder = AbstractGeocoder::getGeocoder($this->getCountry());
-			if($geocoder != null)
+			$geocoder = AbstractGeocoder :: getGeocoder($this->getCountry());
+			if ($geocoder != null)
 			{
 				$geocoder->setCivicNumber($this->getCivicNumber());
 				$geocoder->setStreetName($this->getStreetName());
 				$geocoder->setCity($this->getCity());
-				$geocoder->setProvince($this->getProvince()); 
+				$geocoder->setProvince($this->getProvince());
 				$geocoder->setPostalCode($this->getPostalCode());
-				if($geocoder->validateAddress() === true)	
-					$this->setGisLocation(new GisPoint($geocoder->getLatitude(), $geocoder->getLongitude(), .0));
+				if ($geocoder->validateAddress() === true)
+				{
+					if (($point = $geocoder->getGisLocation()) !== null)
+						$this->setGisLocation($point);
+					else
+						echo _("It appears that the Geocoder could not be reached or could not geocode the given address.");
+				}
 				else
 					echo _("You must enter a valid address.");
 			}
@@ -882,7 +892,7 @@ class Node implements GenericObject
 			// Use what has been set by the user.	
 			$gis_lat_name = "node_".$this->getId()."_gis_latitude";
 			$gis_long_name = "node_".$this->getId()."_gis_longitude";
-			$this->setGisLocation(new GisPoint($_REQUEST[$gis_lat_name], $_REQUEST[$gis_long_name], .0));	
+			$this->setGisLocation(new GisPoint($_REQUEST[$gis_lat_name], $_REQUEST[$gis_long_name], .0));
 		}
 
 		// Statistics
@@ -904,6 +914,20 @@ class Node implements GenericObject
 			}
 		}
 		
+		$name = "node_{$this->getId()}_new_owner_submit";
+		if (!empty ($_REQUEST[$name]))
+		{
+			$name = "node_{$this->getId()}_new_owner";
+			$owner = User :: processSelectUserUI($name);
+			if ($owner)
+			{
+				if ($this->isOwner($owner))
+					echo _("The user is already an owner of this node.");
+				else
+					$this->addOwner($owner);
+			}
+		}
+
 		// Technical officers processing
 		// Rebuild user id, and delete if it was selected
 		foreach ($this->getTechnicalOfficers() as $tech_officer)
@@ -1105,7 +1129,7 @@ class Node implements GenericObject
 	{
 		global $db;
 		$retval = array ();
-		$db->ExecSql("SELECT user_id FROM node_owners WHERE node_id='{$this->id}'", $owners, false);
+		$db->ExecSql("SELECT user_id FROM node_stakeholders WHERE is_owner = true AND node_id='{$this->id}'", $owners, false);
 		if ($owners != null)
 		{
 			foreach ($owners as $owner_row)
@@ -1115,12 +1139,12 @@ class Node implements GenericObject
 		}
 		return $retval;
 	}
-	
+
 	function getTechnicalOfficers()
 	{
 		global $db;
 		$retval = array ();
-		$db->ExecSql("SELECT user_id FROM node_tech_officers WHERE node_id='{$this->id}'", $officers, false);
+		$db->ExecSql("SELECT user_id FROM node_stakeholders WHERE is_tech_officer = true AND node_id='{$this->id}'", $officers, false);
 		if ($officers != null)
 		{
 			foreach ($officers as $officer_row)
@@ -1137,18 +1161,32 @@ class Node implements GenericObject
 	function addOwner(User $user)
 	{
 		global $db;
-		if (!$db->ExecSqlUpdate("INSERT INTO node_owners (node_id, user_id) VALUES ('{$this->getId()}','{$user->getId()}')", false))
-			throw new Exception(_('Could not add owner'));
+		$db->ExecSql("SELECT * FROM node_stakeholders WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}'", $rows, false);
+		if (!$rows)
+		{
+			if (!$db->ExecSqlUpdate("INSERT INTO node_stakeholders (node_id, user_id, is_owner) VALUES ('{$this->getId()}','{$user->getId()}', true)", false))
+				throw new Exception(_('Could not add owner'));
+		}
+		else
+			if (!$db->ExecSqlUpdate("UPDATE node_stakeholders SET is_owner = true WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}';", false))
+				throw new Exception(_('Could not add owner'));
 	}
-	
+
 	/** Associates a technical officer ( tech support ) to this node
 	 * @param User
 	 */
 	function addTechnicalOfficer(User $user)
 	{
 		global $db;
-		if (!$db->ExecSqlUpdate("INSERT INTO node_tech_officers (node_id, user_id) VALUES ('{$this->getId()}','{$user->getId()}')", false))
-			throw new Exception(_('Could not add technical officer'));
+		$db->ExecSql("SELECT * FROM node_stakeholders WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}'", $rows, false);
+		if (!$rows)
+		{
+			if (!$db->ExecSqlUpdate("INSERT INTO node_stakeholders (node_id, user_id, is_tech_officer) VALUES ('{$this->getId()}','{$user->getId()}', true)", false))
+				throw new Exception(_('Could not add tech officer'));
+		}
+		else
+			if (!$db->ExecSqlUpdate("UPDATE node_stakeholders SET is_tech_officer = true WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}';", false))
+				throw new Exception(_('Could not add tech officer'));
 	}
 
 	/** Remove a technical officer ( tech support ) from this node
@@ -1157,18 +1195,18 @@ class Node implements GenericObject
 	function removeOwner(User $user)
 	{
 		global $db;
-		if (!$db->ExecSqlUpdate("DELETE FROM node_owners WHERE node_id='{$this->getId()}' AND user_id='{$user->getId()}'", false))
+		if (!$db->ExecSqlUpdate("UPDATE node_stakeholders SET is_owner = false WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}';", false))
 			throw new Exception(_('Could not remove owner'));
 	}
-	
+
 	/** Remove a technical officer ( tech support ) from this node
 	 * @param User
 	 */
 	function removeTechnicalOfficer(User $user)
 	{
 		global $db;
-		if (!$db->ExecSqlUpdate("DELETE FROM node_tech_officers WHERE node_id='{$this->getId()}' AND user_id='{$user->getId()}'", false))
-			throw new Exception(_('Could not remove owner'));
+		if (!$db->ExecSqlUpdate("UPDATE node_stakeholders SET is_tech_officer = false WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}';", false))
+			throw new Exception(_('Could not remove tech officer'));
 	}
 
 	/** Is the user an owner of the Node? 
@@ -1180,7 +1218,7 @@ class Node implements GenericObject
 		{
 			$user_id = $user->getId();
 			$retval = false;
-			$db->ExecSqlUniqueRes("SELECT * FROM node_owners WHERE node_id='{$this->id}' AND user_id='{$user_id}'", $row, false);
+			$db->ExecSqlUniqueRes("SELECT * FROM node_stakeholders WHERE is_owner = true AND node_id='{$this->id}' AND user_id='{$user_id}'", $row, false);
 			if ($row != null)
 			{
 				$retval = true;
@@ -1188,7 +1226,7 @@ class Node implements GenericObject
 		}
 		return $retval;
 	}
-	
+
 	/** Is the user a technical officer of the Node? 
 	 * @return true our false*/
 	function isTechnicalOfficer(User $user)
@@ -1198,7 +1236,7 @@ class Node implements GenericObject
 		{
 			$user_id = $user->getId();
 			$retval = false;
-			$db->ExecSqlUniqueRes("SELECT * FROM node_tech_officers WHERE node_id='{$this->id}' AND user_id='{$user_id}'", $row, false);
+			$db->ExecSqlUniqueRes("SELECT * FROM node_stakeholders WHERE is_tech_officer = true AND node_id='{$this->id}' AND user_id='{$user_id}'", $row, false);
 			if ($row != null)
 			{
 				$retval = true;

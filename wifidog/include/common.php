@@ -102,8 +102,8 @@ define('NODE_CONTENT_PHP_RELATIVE_PATH', BASEPATH.LOCAL_CONTENT_REL_PATH.CURRENT
 
 define('COMMON_CONTENT_URL', BASE_URL_PATH.LOCAL_CONTENT_REL_PATH.'common/');
 
-define('GENERIC_OBJECT_ADMIN_ABS_HREF', BASE_URL_PATH.'/admin/generic_object_admin.php');
-define('CONTENT_ADMIN_ABS_HREF', BASE_URL_PATH.'/admin/content_admin.php');
+define('GENERIC_OBJECT_ADMIN_ABS_HREF', BASE_URL_PATH.'admin/generic_object_admin.php');
+define('CONTENT_ADMIN_ABS_HREF', BASE_URL_PATH.'admin/content_admin.php');
 
 /** Convert a password hash form a NoCat passwd file into the same format as get_password_hash().
 * @return The 32 character hash.

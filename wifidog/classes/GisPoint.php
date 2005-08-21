@@ -65,7 +65,6 @@
  	{
  		$this->altitude = $alt;
  	}
-
  }
  
  ?>

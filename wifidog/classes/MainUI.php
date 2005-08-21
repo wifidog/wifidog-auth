@@ -124,7 +124,7 @@ class MainUI
 					if ($current_user->isSuperAdmin())
 						$sql_additional_where = '';
 					else
-						$sql_additional_where = "AND node_id IN (SELECT node_id from node_owners WHERE user_id='".$current_user->getId()."')";
+						$sql_additional_where = "AND node_id IN (SELECT node_id from node_stakeholders WHERE is_owner = true AND user_id='".$current_user->getId()."')";
 					$html .= "<div id='NodeSelector'>\n";
 					$html .= Node :: getSelectNodeUI('object_id', $sql_additional_where);
 					$html .= "</div>\n";

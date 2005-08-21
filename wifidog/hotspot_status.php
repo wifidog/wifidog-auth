@@ -202,11 +202,47 @@ switch ($format)
 					$hotspot->appendChild($contact_phone);
 				}
 				
+				// Civic number
+				if (!empty ($node_row['civic_number']))
+				{
+					$civic_nbr = $xmldoc->createElement("civicNumber", $node_row['civic_number']);
+					$hotspot->appendChild($civic_nbr);
+				}
+				
 				// Street address
 				if (!empty ($node_row['street_name']))
 				{
 					$street_addr = $xmldoc->createElement("streetAddress", $node_row['street_name']);
 					$hotspot->appendChild($street_addr);
+				}
+				
+				// City
+				if (!empty ($node_row['city']))
+				{
+					$city = $xmldoc->createElement("city", $node_row['city']);
+					$hotspot->appendChild($city);
+				}
+				
+				
+				// Province
+				if (!empty ($node_row['province']))
+				{
+					$province = $xmldoc->createElement("province", $node_row['province']);
+					$hotspot->appendChild($province);
+				}
+				
+				// Postal code
+				if (!empty ($node_row['postal_code']))
+				{
+					$postal_code = $xmldoc->createElement("postalCode", $node_row['postal_code']);
+					$hotspot->appendChild($postal_code);
+				}
+				
+				// Country
+				if (!empty ($node_row['country']))
+				{
+					$country = $xmldoc->createElement("country", $node_row['country']);
+					$hotspot->appendChild($country);
 				}
 				
 				// Long / Lat
@@ -434,10 +470,44 @@ switch ($format)
 				}
 				$description_text .= "</p>\n";
 				$description_text .= "<p>\n";
-				if (!empty ($node_row['street_address']))
+				$description_text .= ""._("Address:")." ";
+				
+				// Civic number
+				if (!empty ($node_row['civic_number']))
 				{
-					$description_text .= ""._("Address:")." ".$node_row['street_address']." ";
+					$description_text .= $node_row['civic_number'].", ";
 				}
+				
+				if (!empty ($node_row['street_name']))
+				{
+					$description_text .= $node_row['street_name'].", ";
+				}
+				
+				// City
+				if (!empty ($node_row['city']))
+				{
+					$description_text .= $node_row['city'].", ";
+				}
+				
+				
+				// Province
+				if (!empty ($node_row['province']))
+				{
+					$description_text .= $node_row['province'].", ";
+				}
+				
+				// Postal code
+				if (!empty ($node_row['postal_code']))
+				{
+					$description_text .= $node_row['postal_code'].", ";
+				}
+				
+				// Country
+				if (!empty ($node_row['country']))
+				{
+					$description_text .= $node_row['country'];
+				}
+				
 				if (!empty ($node_row['map_url']))
 				{
 					$description_text .= " <a href='".$node_row['map_url']."'>"._("See Map")."</a> ";

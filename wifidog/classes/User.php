@@ -409,7 +409,7 @@ class User implements GenericObject
 	public function isOwner()
 	{
 		global $db;
-		$db->ExecSqlUniqueRes("SELECT * FROM node_owners WHERE user_id='{$this->getId()}'", $row, false);
+		$db->ExecSqlUniqueRes("SELECT * FROM node_stakeholders WHERE is_owner = true AND user_id='{$this->getId()}'", $row, false);
 		if ($row != null)
 			return true;
 		return false;

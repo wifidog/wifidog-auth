@@ -75,7 +75,7 @@ class Security {
     $user = $this->session->get(SESS_USER_ID_VAR);
     $password_hash = $this->session->get(SESS_PASSWORD_HASH_VAR);
 
-    $db->ExecSqlUniqueRes("SELECT * FROM users NATURAL JOIN node_owners WHERE (users.user_id='$user') AND pass='$password_hash' AND node_owners.node_id='$node_id'", $user_info, false);
+    $db->ExecSqlUniqueRes("SELECT * FROM users NATURAL JOIN node_stakeholders WHERE is_owner = true AND (users.user_id='$user') AND pass='$password_hash' AND node_stakeholders.node_id='$node_id'", $user_info, false);
     if(empty($user_info)) {
         echo '<p class=error>'._("You do not have owner privileges")."</p>\n";
         exit;

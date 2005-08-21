@@ -114,7 +114,7 @@ class Locale
 			// Test it against current PHP locale
 			if ($current_locale != $locale_id)
 			{
-				echo "Warning: language.php: Unable to setlocale() to ".$locale_id.", return value: $current_locale, current locale: ".setlocale(LC_ALL, 0);
+				echo "Warning in /classes/Locale.php : Unable to setlocale() to ".$locale_id.", return value: $current_locale, current locale: ".setlocale(LC_ALL, 0);
 				$retval = false;
 			}
 			else

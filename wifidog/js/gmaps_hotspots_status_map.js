@@ -19,18 +19,24 @@
  \********************************************************************/
 /**@file gmaps_hotspots_status_map.js
  * JavaScript functions to display a hotspot status map using Google Maps
- * @author Copyright (C) 2005 François Proulx
+ * @author Copyright (C) 2005 Francois Proulx <francois.proulx@gmail.com>
  */
 
 // Global vars
 var markers = Array();
 
-function onLoad(hotspots_status_xml_url, lat, lng, zoom) 
+function loadHotspotsMap(hotspots_status_xml_url, lat, lng, zoom) 
 { 
 	// Create the map
-	var map = createMap(new GPoint(lng, lat), zoom);
+	if(lat != null && lng != null)
+		point = new GPoint(lng, lat);
+	else
+		point = null;
+	var map = createMap(point, zoom);
 	var hotspotsList = document.getElementById("map_hotspots_list");
-	loadHotspotsStatus(map, hotspotsList, hotspots_status_xml_url);
+	if(hotspots_status_xml_url != null)
+		loadHotspotsStatus(map, hotspotsList, hotspots_status_xml_url);
+	return map;
 }
 
 function createMap(centerPoint, zoomLevel)
@@ -39,24 +45,14 @@ function createMap(centerPoint, zoomLevel)
 	var map = new GMap(document.getElementById("map_frame"));
 	map.addControl(new GLargeMapControl());
 	map.addControl(new GMapTypeControl());
-	map.centerAndZoom(centerPoint, zoomLevel);
+	if(centerPoint != null && zoomLevel != null)
+		map.centerAndZoom(centerPoint, zoomLevel);
 	return map;
 }
 
-// Debug function
-function activateShowCoords(map)
+function setMapClickCallback(map, callback)
 {
-	GEvent.addListener(map, 'click', function(overlay, point) {
-		if (point)
-		{
-			var marker = new GMarker(point);
-			marker.open
-			GEvent.addListener(marker, "click", function() {
-				marker.openInfoWindowHtml(point.x + " " + point.y);
-			});
-			map.addOverlay(marker);
-		}
-	});
+	GEvent.addListener(map, 'click', callback);
 }
 
 function loadHotspotsStatus(map, hotspotsList, document_url)

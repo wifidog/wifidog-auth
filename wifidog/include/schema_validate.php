@@ -27,7 +27,7 @@ error_reporting(E_ALL);
 require_once BASEPATH.'config.php';
 require_once BASEPATH.'classes/AbstractDb.php';
 require_once BASEPATH.'classes/Session.php';
-define('REQUIRED_SCHEMA_VERSION', 24);
+define('REQUIRED_SCHEMA_VERSION', 25);
 
 /** Check that the database schema is up to date.  If it isn't, offer to update it. */
 function validate_schema()
@@ -552,6 +552,26 @@ function update_schema()
 			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
 			$sql .= "ALTER TABLE content_rss_aggregator_feeds ADD COLUMN title text; \n";
 		}
+		
+		$new_schema_version = 25;
+		if ($schema_version < $new_schema_version)
+		{
+			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+			$sql .= "CREATE TABLE node_stakeholders ( \n";
+			$sql .= "  node_id VARCHAR(32) REFERENCES nodes (node_id),\n";
+			$sql .= "  user_id VARCHAR(45) REFERENCES users (user_id),\n";
+			$sql .= "  is_owner BOOLEAN NOT NULL DEFAULT FALSE,\n";
+			$sql .= "  is_tech_officer BOOLEAN NOT NULL DEFAULT FALSE,\n";
+			$sql .= "PRIMARY KEY (node_id, user_id)\n";
+			$sql .= ");\n";
+			$sql .= "INSERT INTO node_stakeholders (node_id, user_id) SELECT node_id, user_id FROM node_owners UNION SELECT node_id, user_id FROM node_tech_officers;\n";
+			$sql .= "UPDATE node_stakeholders SET is_owner = true FROM node_owners WHERE node_stakeholders.node_id = node_owners.node_id AND node_stakeholders.user_id = node_owners.user_id;\n";
+			$sql .= "UPDATE node_stakeholders SET is_tech_officer = true FROM node_tech_officers WHERE node_stakeholders.node_id = node_tech_officers.node_id AND node_stakeholders.user_id = node_tech_officers.user_id;";
+			$sql .= "DROP TABLE node_owners;\n";
+			$sql .= "DROP TABLE node_tech_officers;\n";
+		}
+		
 		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);
 		//$db->ExecSqlUpdate("BEGIN;\n$sql\nROLLBACK;\n", true);
 		echo "</html></head>";
