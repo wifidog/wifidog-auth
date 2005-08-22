@@ -34,7 +34,7 @@ function validate_schema()
 {
 	global $db;
 
-	check_users_not_empty();
+	//check_users_not_empty();
 	$db->ExecSqlUniqueRes("SELECT * FROM schema_info WHERE tag='schema_version'", $row, false);
 	if (empty ($row))
 	{
@@ -86,11 +86,6 @@ function check_users_not_empty()
 		$db->ExecSqlUniqueRes("SELECT user_id FROM users WHERE account_origin = '$default_account_origin' LIMIT 1", $row, false);
 		if ($row == null)
 		{
-            $exploded_path = explode("/", $_SERVER['SCRIPT_NAME']);     # Split directories in token
-            array_pop($exploded_path);                                  # Remove install.php from the list
-            $system_path = implode("/", $exploded_path);                # Build the system_path for the auth-server
-            print "<META HTTP-EQUIV=Refresh CONTENT=\"0; URL=$system_path/install.php\">";
-            exit();
 			echo "<html><head><h1>";
 			echo _("No user matches the default account origin, a new user admin/admin will be created. Change the password as soon as possible !");
 			echo "</html></head>";
@@ -575,7 +570,7 @@ function update_schema()
 		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);
 		//$db->ExecSqlUpdate("BEGIN;\n$sql\nROLLBACK;\n", true);
 		echo "</html></head>";
-		exit ();
+		//exit ();
 	}
 }
 ?>
