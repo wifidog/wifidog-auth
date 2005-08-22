@@ -28,8 +28,16 @@ define('DEFAULT_CONTENT_SMARTY_PATH', LOCAL_CONTENT_REL_PATH.DEFAULT_NODE_ID.'/'
 define('NODE_CONTENT_SMARTY_PATH', LOCAL_CONTENT_REL_PATH.CURRENT_NODE_ID.'/');
 define('COMMON_CONTENT_SMARTY_PATH', LOCAL_CONTENT_REL_PATH.'common/');
 
-// load Smarty library
-require_once(BASEPATH.'lib/smarty/Smarty.class.php');
+# Check if Smarty installed, if not redirect user to web-base installation
+if (file_exists(BASEPATH.'lib/smarty/Smarty.class.php')) {
+  require_once(BASEPATH.'lib/smarty/Smarty.class.php');       # load Smarty library
+} else {
+  $exploded_path = explode("/", $_SERVER['SCRIPT_NAME']);     # Split directories in token
+  array_pop($exploded_path);                                  # Remove install.php from the list
+  $system_path = implode("/", $exploded_path);                # Build the system_path for the auth-server
+  print "Redirection to Wifidog web-base install <META HTTP-EQUIV=Refresh CONTENT=\"1; URL=$system_path/install.php\">";
+  exit();
+}
 
 // The setup.php file is a good place to load
 // required application library files, and you
