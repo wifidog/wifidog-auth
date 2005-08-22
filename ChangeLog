@@ -1,4 +1,9 @@
 2005-08-21 Francois Proulx <francois.proulx@gmail.com>
+	* Added reference to new street address fields in mapping page and on status template
+	* Fix bug on line 756 of RssPressReview , added check for empty var.
+	* Flickr support is broken, added  bug to sf.net tracker
+	
+2005-08-21 Francois Proulx <francois.proulx@gmail.com>
 	* Node admin UI should now be completed.
 	* Minor bug fixes in Geocoder
 	* Merged node_owners and node_tech_officers table into node_stakeholders

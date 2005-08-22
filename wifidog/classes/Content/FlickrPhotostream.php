@@ -1,5 +1,4 @@
 <?php
-
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -58,7 +57,7 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 		const SIZE_SMALL_240x180 = 'm';
 		const SIZE_MEDIUM_500x375 = '';
 		const SIZE_ORIGINAL = 'o';
-		
+
 		const GRID_X = 3;
 		const GRID_Y = 3;
 
@@ -109,12 +108,12 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 
 		private function writeCacheToDatabase($force_overwrite = false)
 		{
-			//echo "<h2>DEBUG :: Writing cache to database</h2>";
-			$api = $this->getFlickrApi();
+				//echo "<h2>DEBUG :: Writing cache to database</h2>";
+	$api = $this->getFlickrApi();
 			if ($api)
 			{
-                $new_cache = serialize($api->getCache());
-                $old_cache = $this->mBd->UnescapeBinaryString($this->flickr_photostream_row['requests_cache']);
+				$new_cache = serialize($api->getCache());
+				$old_cache = $this->mBd->UnescapeBinaryString($this->flickr_photostream_row['requests_cache']);
 				$age = is_null($this->flickr_photostream_row['cache_age']) ? self :: MAX_CACHE_AGE : $this->flickr_photostream_row['cache_age'];
 				if ($force_overwrite === true || ($age >= self :: MAX_CACHE_AGE) || ($new_cache !== $old_cache))
 					$this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET cache_update_timestamp = NOW(), requests_cache = '".$this->mBd->EscapeBinaryString($new_cache)."' WHERE flickr_photostream_id = '".$this->getId()."'", false);
@@ -501,7 +500,7 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 				}
 				catch (Phlickr_MethodFailureException $e)
 				{
-					$html .= _("Some of the request parameters provided to Flickr API are invalid.");;
+					$html .= _("Some of the request parameters provided to Flickr API are invalid.");
 				}
 				catch (Phlickr_XmlParseException $e)
 				{
@@ -606,7 +605,7 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 				// Load cache only on the User UI side
 				if ($force_data_refresh === false)
 					$this->loadCacheFromDatabase();
-				
+
 				try
 				{
 					$photos = null;
@@ -636,29 +635,29 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 							break;
 					}
 
-					if (is_array($photos) && !empty($photos))
+					if (is_array($photos) && !empty ($photos))
 					{
 						$size = $this->getPreferredSize();
 						if (empty ($size))
 							$size = null;
-							
+
 						// Preload authors ( this will be cached )
 						foreach ($photos as $cache_authors)
 							$author = new Phlickr_User($api, $cache_authors->getOwnerId());
-									
+
 						// If there's enough photo show a grid
-						if(count($photos) >= self::GRID_X * self::GRID_Y)
+						if (count($photos) >= self :: GRID_X * self :: GRID_Y)
 						{
-							$grid_photos_idx = array();
+							$grid_photos_idx = array ();
 							$html .= "<table>\n";
-							for($i=0;$i<self::GRID_X;$i++)
+							for ($i = 0; $i < self :: GRID_X; $i ++)
 							{
 								$html .= "<tr>\n";
-								for($j=0;$j<self::GRID_Y;$j++)
+								for ($j = 0; $j < self :: GRID_Y; $j ++)
 								{
 									// Get random values for each grid positions (assert no double)
 									$idx = mt_rand(0, count($photos) - 1);
-									while(in_array($idx, $grid_photos_idx))
+									while (in_array($idx, $grid_photos_idx))
 										$idx = mt_rand(0, count($photos) - 1);
 									$grid_photos_idx[] = $idx;
 									$photo = $photos[$idx];
@@ -669,7 +668,7 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 									}
 								}
 								$html .= "</tr>\n";
-							}		
+							}
 							$html .= "</table>\n";
 						}
 						else
@@ -687,9 +686,9 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 										$html .= '<div class="flickr_title"><h3>'.$photo->getTitle().'</h3></div>'."\n";
 									}
 								}
-								
+
 								$html .= '<div class="flickr_photo"><a href="'.$photo->buildUrl().'"><img src="'.$photo->buildImgUrl($size).'"></a></div>'."\n";
-								
+
 								if ($this->shouldDisplayTags())
 								{
 									$tags = $photo->getTags();
@@ -713,10 +712,10 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 									if (!empty ($description))
 										$html .= '<div class="flickr_description">'.$description.'</div>'."\n";
 								}
-	
+
 								foreach ($photos as $cache_authors)
 									$author = new Phlickr_User($api, $cache_authors->getOwnerId());
-	
+
 								$author = new Phlickr_User($api, $photo->getOwnerId());
 								$html .= '<div class="flickr_description"><a href="'.$author->buildUrl().'">'.$author->getName().'</a></div>'."\n";
 								$html .= '</div>'."\n";
@@ -735,7 +734,7 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 				catch (Phlickr_MethodFailureException $e)
 				{
 					$html .= _("Some of the request parameters provided to Flickr API are invalid.");
-                    $html .= "<br>".$e->getMessage();
+					$html .= "<br>".$e->getMessage();
 				}
 				catch (Phlickr_XmlParseException $e)
 				{

@@ -152,10 +152,30 @@ function createHtmlFromHotspot(hotspot_element, icon)
 	var desc = hotspot_element.getElementsByTagName("description");
 	if(desc.length == 1)
 		html += "<i>" + desc[0].firstChild.nodeValue + "</i><br/>";*/
-		
+	
+	var civicNumber = hotspot_element.getElementsByTagName("civicNumber");
+	if(civicNumber == 1)
+		html += "<i>" + civicNumber[0].firstChild.nodeValue + ",&nbsp;</i>";
+			
 	var streetAddress = hotspot_element.getElementsByTagName("streetAddress");
 	if(streetAddress.length == 1)
-		html += "<i>" + streetAddress[0].firstChild.nodeValue + "</i><br/>";
+		html += "<i>" + streetAddress[0].firstChild.nodeValue + ",&nbsp;</i><br/>";
+		
+	var city = hotspot_element.getElementsByTagName("city");
+	if(city.length == 1)
+		html += "<i>" + city[0].firstChild.nodeValue + ",&nbsp;</i>";
+	
+	var province = hotspot_element.getElementsByTagName("province");
+	if(province.length == 1)
+		html += "<i>" + province[0].firstChild.nodeValue + ",&nbsp;</i>";
+		
+	var postalCode = hotspot_element.getElementsByTagName("postalCode");
+	if(postalCode.length == 1)
+		html += "<i>" + postalCode[0].firstChild.nodeValue + ",&nbsp;</i>";
+	
+	var country = hotspot_element.getElementsByTagName("country");
+	if(country.length == 1)
+		html += "<i>" + country[0].firstChild.nodeValue + "</i><br/>";
 		
 	var phone = hotspot_element.getElementsByTagName("contactPhoneNumber");
 	if(phone.length == 1)

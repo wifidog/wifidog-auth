@@ -52,7 +52,12 @@
     </td>
 
     <td>
-    {if $nodes[node].street_address}{$nodes[node].street_address}{/if}
+    {if $nodes[node].civic_number}{$nodes[node].civic_number}, {/if}
+    {if $nodes[node].street_name}{$nodes[node].street_name}, {/if}
+    {if $nodes[node].city}{$nodes[node].city}, {/if}
+    {if $nodes[node].province}{$nodes[node].province}, {/if}
+    {if $nodes[node].postal_code}{$nodes[node].postal_code}, {/if}
+    {if $nodes[node].country}{$nodes[node].country}{/if}	
     {if $nodes[node].map_url} - <a href='{$nodes[node].map_url}' target='_new'>Map</a>{/if}
     {if $nodes[node].mass_transit_info}<br />{$nodes[node].mass_transit_info}{/if}
     {if $nodes[node].public_phone_number}<br />{$nodes[node].public_phone_number}{/if}

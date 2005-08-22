@@ -1,6 +1,4 @@
 <?php
-
-
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -31,8 +29,8 @@ class RssPressReview
 	var $output_encoding;
 	var $magpie_dir = '';
 	var $rss_sources; /**<
-					$rss_sources is an array of arrays, each of which must contain:
-					);*/
+							$rss_sources is an array of arrays, each of which must contain:
+							);*/
 
 	var $algorithm_strength_modifier = 0.75;
 	var $max_item_age = null;
@@ -231,10 +229,10 @@ class RssPressReview
 	{
 			//echo "RssPressReview::addSourceFeed($url, $estimated_publication_interval)<br>\n";
 	$retval = false;
-	if(empty($estimated_publication_interval))
-	{
-		$estimated_publication_interval = DEFAULT_PUBLICATION_INTERVAL;
-	}
+		if (empty ($estimated_publication_interval))
+		{
+			$estimated_publication_interval = DEFAULT_PUBLICATION_INTERVAL;
+		}
 		if (!empty ($url))
 		{
 			$old_error_level = error_reporting(E_ERROR);
@@ -274,14 +272,14 @@ class RssPressReview
 		}
 		return $retval;
 	}
-	
+
 	/** Return the title of the feed, if the feed contains title information.
 	 * @param $url 
 	 * @return Title or false if unavailable */
 	function getFeedTitle($url)
 	{
 		$retval = false;
-		if (isset ($this->rss_sources[$url])&& isset ($this->rss_sources[$url]['magpie_array']->channel['title']))
+		if (isset ($this->rss_sources[$url]) && isset ($this->rss_sources[$url]['magpie_array']->channel['title']))
 		{
 			$retval = $this->rss_sources[$url]['magpie_array']->channel['title'];
 		}
@@ -396,184 +394,190 @@ class RssPressReview
 		if ($debug)
 			echo "RssPressReview::get_rss_info($number_of_items_to_display)<br>\n";
 
-		/* Calculate the average publication interval for all feeds */
-		$all_feed_publication_interval_total = null;
-		reset($this->rss_sources);
-		foreach ($this->rss_sources as $rss_source)
+		if (!empty ($this->rss_sources))
 		{
-			$all_feed_publication_interval_total += $rss_source['rpr_computed_publication_interval'];
-		}
-		$all_feed_publication_interval = $all_feed_publication_interval_total / count($this->rss_sources);
-
-		/*Calculate the adjusted dates and create the date list array. */
-		$item_date_array = array ();
-		$item_date_array_index = 0;
-
-		foreach ($this->rss_sources as $rss_sources_key => $rss_source)
-		{
-			foreach ($rss_source['magpie_array']->items as $item_key => $item)
+			/* Calculate the average publication interval for all feeds */
+			$all_feed_publication_interval_total = null;
+			reset($this->rss_sources);
+			foreach ($this->rss_sources as $rss_source)
 			{
-				/* Calculate the adjusted date */
-				$feed_publication_interval = $rss_source['rpr_computed_publication_interval'];
-				$source_bias = $rss_source['source_bias'];
-				$distance_to_today = abs(time() - $item['rpr_computed_phpdate']);
-				/* With no strength modifier, a feed with a publication twice as long will get a 2x bonus on the distance to today */
-				$original_adjust_factor = $all_feed_publication_interval / $feed_publication_interval;
-				if ($original_adjust_factor < 1)
-				{
-					$algorithm_strength_modifier = 1 / $this->algorithm_strength_modifier;
-				}
-
-				/*Algorithm strength modifier doit modifier la difference de lécart du ratio 
-				 $all_feed_publication_interval / $feed_publication_interval avec 1/1.*/
-				$adjust_factor = 1 - (1 - $original_adjust_factor) * $this->algorithm_strength_modifier;
-
-				$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_adjusted_date'] = time() - ($distance_to_today * $adjust_factor) / $source_bias;
-
-				/* Memorize each date, and publication intervals so we can determine the "oldest" item to publish
-				 * Only consider items whose date is not farther from today than max_item_age */
-				if ($this->max_item_age == null || abs(time() - $item['rpr_computed_phpdate']) < $this->max_item_age)
-				{
-					$item_date_array[$item_date_array_index]['rpr_adjusted_date'] = $this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_adjusted_date'];
-					$item_date_array[$item_date_array_index]['rpr_computed_phpdate'] = $this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_computed_phpdate'];
-					$item_date_array[$item_date_array_index]['rss_sources_key'] = $rss_sources_key;
-					$item_date_array_index ++;
-				}
-
-				if (isset ($this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_realphpdate']))
-				{
-					/* Check if the item is newer than the last visit */
-					if ($last_visit != null && $item['rpr_realphpdate'] > $last_visit)
-					{
-						$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_is_new'] = true;
-					}
-
-					/* Check if the item has been published today */
-					$item_getdate = getdate($this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_realphpdate']);
-					$today_getdate = getdate();
-					if ($item_getdate['year'] == $today_getdate['year'] && $item_getdate['yday'] == $today_getdate['yday'])
-					{
-						$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_is_today'] = true;
-					}
-					else
-					{
-						$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_is_today'] = false;
-					}
-				}
-				$content = null;
-				if(!empty($item['atom_content']))
-				{
-					$content = $item['atom_content'];
-				}
-				else if(!empty($item['content']['encoded']))
-				{
-					$content = $item['content']['encoded'];
-				}
-				else if(!empty($item['summary']))
-				{	
-				$content = $item['summary'];
-				}
-				$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_content'] = $content;
-				
-				$summary = null;
-				if(!empty($item['summary']))
-				{	
-				$summary = $item['summary'];
-				}
-				else
-				{
-					$summary = $content;
-				}
-				$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_summary'] = $summary;
-				
+				$all_feed_publication_interval_total += $rss_source['rpr_computed_publication_interval'];
 			}
+			$all_feed_publication_interval = $all_feed_publication_interval_total / count($this->rss_sources);
 
-			//echo "<p>$i items, average_publication_interval (days) = ". $this->rss_sources[$rss_sources_key]['average_publication_interval']/(3600 * 24) . "</p>\n";
-		} // End foreach rss feeds
+			/*Calculate the adjusted dates and create the date list array. */
+			$item_date_array = array ();
+			$item_date_array_index = 0;
 
-		/* Sort the item date array by adjusted date. */
-		usort($item_date_array, array ("RssPressReview", "_cmp_rpr_adjusted_date"));
-
-		/*echo "<pre>";
-		print_r($item_date_array);
-		echo "</pre>";*/
-		/* Find the "oldest" adjusted date to display */
-		if (count($item_date_array) < $number_of_items_to_display)
-		{
-			$number_of_items_to_display = count($item_date_array);
-		}
-		$min_rpr_adjusted_date_to_display = $item_date_array[$number_of_items_to_display -1]['rpr_adjusted_date'];
-
-		if ($debug)
-			echo "min_rpr_adjusted_date_to_display: $min_rpr_adjusted_date_to_display<br>\n";
-		/************** Now we actually display the feeds **************/
-		reset($this->rss_sources);
-		$rss_info_tmp = null;
-		foreach ($this->rss_sources as $rss_sources_key => $rss_source)
-		{
-			if (!$rss_source['magpie_array'])
+			foreach ($this->rss_sources as $rss_sources_key => $rss_source)
 			{
-				echo _('get_rss_info(): Feed missing');
-				return false;
-			}
-			else
-			{
-				unset ($rss_info_tmp);
-				$rss_info_tmp['channel'] = $this->rss_sources[$rss_sources_key]['magpie_array']->channel;
-
-				$i = 0;
-				/* Sort the items by date, so we get the most recent first */
-				if (!uasort($this->rss_sources[$rss_sources_key]['magpie_array']->items, array ("RssPressReview", "_cmp_date_item")))
+				foreach ($rss_source['magpie_array']->items as $item_key => $item)
 				{
-					echo _('get_rss_info(): uasort() failed!');
-					return false;
-				}
-
-				$rss_info_tmp['items'] = array ();
-				foreach ($this->rss_sources[$rss_sources_key]['magpie_array']->items as $item_key => $item)
-				{
-					if ($debug)
-						echo "Is item with rpr_adjusted_date: ".$item['rpr_adjusted_date']." after the minimum date: $min_rpr_adjusted_date_to_display?<br>\n";
-
-					if ($item['rpr_adjusted_date'] >= $min_rpr_adjusted_date_to_display)
+					/* Calculate the adjusted date */
+					$feed_publication_interval = $rss_source['rpr_computed_publication_interval'];
+					$source_bias = $rss_source['source_bias'];
+					$distance_to_today = abs(time() - $item['rpr_computed_phpdate']);
+					/* With no strength modifier, a feed with a publication twice as long will get a 2x bonus on the distance to today */
+					$original_adjust_factor = $all_feed_publication_interval / $feed_publication_interval;
+					if ($original_adjust_factor < 1)
 					{
-						if ($debug)
-							echo "YES!<br>\n";
-						if (!empty ($item['dc']['creator']))
+						$algorithm_strength_modifier = 1 / $this->algorithm_strength_modifier;
+					}
+
+					/*Algorithm strength modifier doit modifier la difference de lécart du ratio 
+					 $all_feed_publication_interval / $feed_publication_interval avec 1/1.*/
+					$adjust_factor = 1 - (1 - $original_adjust_factor) * $this->algorithm_strength_modifier;
+
+					$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_adjusted_date'] = time() - ($distance_to_today * $adjust_factor) / $source_bias;
+
+					/* Memorize each date, and publication intervals so we can determine the "oldest" item to publish
+					 * Only consider items whose date is not farther from today than max_item_age */
+					if ($this->max_item_age == null || abs(time() - $item['rpr_computed_phpdate']) < $this->max_item_age)
+					{
+						$item_date_array[$item_date_array_index]['rpr_adjusted_date'] = $this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_adjusted_date'];
+						$item_date_array[$item_date_array_index]['rpr_computed_phpdate'] = $this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_computed_phpdate'];
+						$item_date_array[$item_date_array_index]['rss_sources_key'] = $rss_sources_key;
+						$item_date_array_index ++;
+					}
+
+					if (isset ($this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_realphpdate']))
+					{
+						/* Check if the item is newer than the last visit */
+						if ($last_visit != null && $item['rpr_realphpdate'] > $last_visit)
 						{
-							$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_author'] = trim($item['dc']['creator']);
+							$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_is_new'] = true;
 						}
-						elseif (!empty ($item['author']))
+
+						/* Check if the item has been published today */
+						$item_getdate = getdate($this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_realphpdate']);
+						$today_getdate = getdate();
+						if ($item_getdate['year'] == $today_getdate['year'] && $item_getdate['yday'] == $today_getdate['yday'])
 						{
-							$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_author'] = trim($item['author']);
-						}
-						elseif (!empty ($item['author_name']))
-						{
-							$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_author'] = trim($item['author_name']);
+							$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_is_today'] = true;
 						}
 						else
 						{
-							$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_author'] = '';
+							$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_is_today'] = false;
 						}
-
-						$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_id'] = "summary_".mt_rand(1, 10000);
-						array_push($rss_info_tmp['items'], $this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]);
 					}
-					$i ++;
-				} // End foreach items
+					$content = null;
+					if (!empty ($item['atom_content']))
+					{
+						$content = $item['atom_content'];
+					}
+					else
+						if (!empty ($item['content']['encoded']))
+						{
+							$content = $item['content']['encoded'];
+						}
+						else
+							if (!empty ($item['summary']))
+							{
+								$content = $item['summary'];
+							}
+					$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_content'] = $content;
 
-				if ($debug)
-					echo count($rss_info_tmp['items'])." items (out of ".count($rss->items).") are after the minimum date in feed $rss_sources_key<br>\n";
+					$summary = null;
+					if (!empty ($item['summary']))
+					{
+						$summary = $item['summary'];
+					}
+					else
+					{
+						$summary = $content;
+					}
+					$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_summary'] = $summary;
 
-				$rss_info[$rss_sources_key] = $rss_info_tmp;
+				}
+
+				//echo "<p>$i items, average_publication_interval (days) = ". $this->rss_sources[$rss_sources_key]['average_publication_interval']/(3600 * 24) . "</p>\n";
+			} // End foreach rss feeds
+
+			/* Sort the item date array by adjusted date. */
+			usort($item_date_array, array ("RssPressReview", "_cmp_rpr_adjusted_date"));
+
+			/*echo "<pre>";
+			print_r($item_date_array);
+			echo "</pre>";*/
+			/* Find the "oldest" adjusted date to display */
+			if (count($item_date_array) < $number_of_items_to_display)
+			{
+				$number_of_items_to_display = count($item_date_array);
 			}
-		} // End foreach rss feeds
-		/*echo "\n<pre>\n";
-		print_r($rss_info);
-		echo "\n</pre>\n";
-		*/
-		return $rss_info;
+			$min_rpr_adjusted_date_to_display = $item_date_array[$number_of_items_to_display -1]['rpr_adjusted_date'];
 
+			if ($debug)
+				echo "min_rpr_adjusted_date_to_display: $min_rpr_adjusted_date_to_display<br>\n";
+			/************** Now we actually display the feeds **************/
+			reset($this->rss_sources);
+			$rss_info_tmp = null;
+			foreach ($this->rss_sources as $rss_sources_key => $rss_source)
+			{
+				if (!$rss_source['magpie_array'])
+				{
+					echo _('get_rss_info(): Feed missing');
+					return false;
+				}
+				else
+				{
+					unset ($rss_info_tmp);
+					$rss_info_tmp['channel'] = $this->rss_sources[$rss_sources_key]['magpie_array']->channel;
+
+					$i = 0;
+					/* Sort the items by date, so we get the most recent first */
+					if (!uasort($this->rss_sources[$rss_sources_key]['magpie_array']->items, array ("RssPressReview", "_cmp_date_item")))
+					{
+						echo _('get_rss_info(): uasort() failed!');
+						return false;
+					}
+
+					$rss_info_tmp['items'] = array ();
+					foreach ($this->rss_sources[$rss_sources_key]['magpie_array']->items as $item_key => $item)
+					{
+						if ($debug)
+							echo "Is item with rpr_adjusted_date: ".$item['rpr_adjusted_date']." after the minimum date: $min_rpr_adjusted_date_to_display?<br>\n";
+
+						if ($item['rpr_adjusted_date'] >= $min_rpr_adjusted_date_to_display)
+						{
+							if ($debug)
+								echo "YES!<br>\n";
+							if (!empty ($item['dc']['creator']))
+							{
+								$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_author'] = trim($item['dc']['creator']);
+							}
+							elseif (!empty ($item['author']))
+							{
+								$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_author'] = trim($item['author']);
+							}
+							elseif (!empty ($item['author_name']))
+							{
+								$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_author'] = trim($item['author_name']);
+							}
+							else
+							{
+								$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_author'] = '';
+							}
+
+							$this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]['rpr_id'] = "summary_".mt_rand(1, 10000);
+							array_push($rss_info_tmp['items'], $this->rss_sources[$rss_sources_key]['magpie_array']->items[$item_key]);
+						}
+						$i ++;
+					} // End foreach items
+
+					if ($debug)
+						echo count($rss_info_tmp['items'])." items (out of ".count($rss->items).") are after the minimum date in feed $rss_sources_key<br>\n";
+
+					$rss_info[$rss_sources_key] = $rss_info_tmp;
+				}
+			} // End foreach rss feeds
+			/*echo "\n<pre>\n";
+			print_r($rss_info);
+			echo "\n</pre>\n";
+			*/
+			return $rss_info;
+		}
+		else
+			return null;
 	}
 
 	function get_rss_header()
@@ -584,106 +588,105 @@ class RssPressReview
 		{
 			$done_header = true;
 			return '
-																					
-<script language="JavaScript" type="text/javascript">
-function MM_findObj(n, d) { //v4.0
-var p,i,x;
-if(!d) d=document; 
-if((p=n.indexOf("?"))>0&&parent.frames.length) {
-d=parent.frames[n.substring(p+1)].document; 
-n=n.substring(0,p);
-}
-if(!(x=d[n])&&d.all) x=d.all[n]; 
-for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
-for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
-if(!x && document.getElementById) x=document.getElementById(n); return x;
-}
-																							
-function changestyle(couche, style) {
-if (!(layer = MM_findObj(couche))) return;
-if(layer.className != "rpr_popup_inner_div_expanded")
-{
-layer.style.visibility = style;
-}
-}
-																							
-function changeclass(objet, myClass)
-{ 
-objet.className = myClass;
-}
-
-function toggleItemVisibility(item_id)
-{
-if (!(layer = MM_findObj(item_id))) return;
-if(layer.className != "rpr_popup_inner_div_expanded")
-{
-layer.style.visibility = "visible";
-layer.className = "rpr_popup_inner_div_expanded";
-}
-else
-{
-layer.style.visibility = "hidden";
-layer.className = "rpr_popup_inner_div";
-}
-}
-</script>
-
-<style type="text/css">
-
-/*h2 {color: green}*/
-.rpr_header {margin: 0em 0em 0em 0em;
-padding: 0em 0em 0em 0em;}
-.rpr_title { font-weight: bold; 
-             font-size: 90%}
-.rpr_title_date { font-weight: lighter; }
-
-.rpr_item_list {
-padding: 0em 1em 0em 1em;
-margin: 0em 1em 0em 1em;}
-.rpr_item { list-style-type: none; 
-}
-.rpr_item_title {
-margin: 0em 0em 0em 0em;
-padding: 0em 0em 0em 0em;}
-
-
-.rpr_item_link { }
-.rpr_expand_switch { font-weight: bolder;
-text-decoration: none;
-/*border: 1px solid black*/ }
-/*.rpr_expand_switch:before { content: "+"; }*/
-
-.rpr_popup_inner_div { 
-z-index: 1000;
-display: inline;
-padding: 0.5em;
-border: 2px outset #324C48;
-background-color: #f9f9f9;
-visibility: hidden;
-position: absolute;
-left: 4em;
-top: 1.5em;
-width: 350px;
--moz-opacity: 0.95; filter: alpha(opacity=95);
-}
-
-.rpr_popup_inner_div_expanded {
-margin:  0.5em 1em 0em 1em;
-padding: 0.5em;
-border: 2px outset #324C48;
-background-color: #f9f9f9;
-} 
-.rpr_popup_outer_div { 
-z-index: 1000;
- position: relative;
- display: inline;
-}
-
-
-</style>
-
-';
-
+																											
+						<script language="JavaScript" type="text/javascript">
+						function MM_findObj(n, d) { //v4.0
+						var p,i,x;
+						if(!d) d=document; 
+						if((p=n.indexOf("?"))>0&&parent.frames.length) {
+						d=parent.frames[n.substring(p+1)].document; 
+						n=n.substring(0,p);
+						}
+						if(!(x=d[n])&&d.all) x=d.all[n]; 
+						for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+						for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+						if(!x && document.getElementById) x=document.getElementById(n); return x;
+						}
+																													
+						function changestyle(couche, style) {
+						if (!(layer = MM_findObj(couche))) return;
+						if(layer.className != "rpr_popup_inner_div_expanded")
+						{
+						layer.style.visibility = style;
+						}
+						}
+																													
+						function changeclass(objet, myClass)
+						{ 
+						objet.className = myClass;
+						}
+						
+						function toggleItemVisibility(item_id)
+						{
+						if (!(layer = MM_findObj(item_id))) return;
+						if(layer.className != "rpr_popup_inner_div_expanded")
+						{
+						layer.style.visibility = "visible";
+						layer.className = "rpr_popup_inner_div_expanded";
+						}
+						else
+						{
+						layer.style.visibility = "hidden";
+						layer.className = "rpr_popup_inner_div";
+						}
+						}
+						</script>
+						
+						<style type="text/css">
+						
+						/*h2 {color: green}*/
+						.rpr_header {margin: 0em 0em 0em 0em;
+						padding: 0em 0em 0em 0em;}
+						.rpr_title { font-weight: bold; 
+						             font-size: 90%}
+						.rpr_title_date { font-weight: lighter; }
+						
+						.rpr_item_list {
+						padding: 0em 1em 0em 1em;
+						margin: 0em 1em 0em 1em;}
+						.rpr_item { list-style-type: none; 
+						}
+						.rpr_item_title {
+						margin: 0em 0em 0em 0em;
+						padding: 0em 0em 0em 0em;}
+						
+						
+						.rpr_item_link { }
+						.rpr_expand_switch { font-weight: bolder;
+						text-decoration: none;
+						/*border: 1px solid black*/ }
+						/*.rpr_expand_switch:before { content: "+"; }*/
+						
+						.rpr_popup_inner_div { 
+						z-index: 1000;
+						display: inline;
+						padding: 0.5em;
+						border: 2px outset #324C48;
+						background-color: #f9f9f9;
+						visibility: hidden;
+						position: absolute;
+						left: 4em;
+						top: 1.5em;
+						width: 350px;
+						-moz-opacity: 0.95; filter: alpha(opacity=95);
+						}
+						
+						.rpr_popup_inner_div_expanded {
+						margin:  0.5em 1em 0em 1em;
+						padding: 0.5em;
+						border: 2px outset #324C48;
+						background-color: #f9f9f9;
+						} 
+						.rpr_popup_outer_div { 
+						z-index: 1000;
+						 position: relative;
+						 display: inline;
+						}
+						
+						
+						</style>
+						
+						';
 
 		}
 	}
@@ -693,97 +696,92 @@ z-index: 1000;
 	*/
 	function get_rss_html($number_of_items_to_display = 20, $last_visit = null, $show_empty_sources = true)
 	{
-		$rss_result = $this->get_rss_info($number_of_items_to_display, $last_visit);
-
 		$html = '';
-		foreach ($rss_result as $feed_id => $feed)
+		if (($rss_result = $this->get_rss_info($number_of_items_to_display, $last_visit)) !== null)
 		{
-			if (count($feed['items']) > 0 || $show_empty_sources == true)
+			foreach ($rss_result as $feed_id => $feed)
 			{
-				$feed_html = '';
-				$dhtml_id = "feed_".md5($feed_id);
-				$feed_html .= "<p class='rpr_header'>"._('Source: ');
-				$feed_html .= "<span class='rpr_title' onMouseOver=\"changestyle('$dhtml_id','visible');\" onMouseOut=\"changestyle('$dhtml_id','hidden');\">\n";
-				if (!empty ($feed['link']))
+				if (count($feed['items']) > 0 || $show_empty_sources == true)
 				{
-					$feed_html .= "<a class='y' href='".$feed['link']."'>".$feed['channel']['title']."</a>";
-				}
-				else
-				{
-					$feed_html .= $feed['channel']['title'];
-				}
-				$feed_html .= "</span>\n";
-				$feed_html .= "</p>\n";
-
-				$feed_html .= "<div class='rpr_popup_outer_div'>\n";
-				$feed_html .= "<div id='$dhtml_id' class='rpr_popup_inner_div'>\n";
-				$feed_html .= "<p class='rpr_text'>{$feed['channel']['title']}  </p>\n";
-				if(!empty($feed['channel']['description']))
-				{
-				$description = strip_tags($feed['channel']['description'], "<p><a><img><b><i>");
-				$feed_html .= "<p class='rpr_text'>{$description}</p>\n";
-				}
-				$feed_html .= "<p class='rpr_text'>{$feed_id}</p>\n";
-				$feed_html .= "</div></div>\n";
-
-				$feed_html .= "<ul class='rpr_item_list'>\n";
-
-				foreach ($feed['items'] as $item)
-				{
-					if ($item['rpr_is_today'])
-					{
-						$display_date = _("Today");
-					}
-					else if ($item['rpr_realphpdate'] != -1)
-					{
-						setlocale(LC_TIME, "fr_CA");
-						$display_date = strftime("%x", $item['rpr_realphpdate']);
-					}
-					else
-					{
-						$display_date = '';
-						//$display_date = "Estimated: ".strftime("%x", $item['rpr_computed_phpdate']);
-					}
-
-					$dhtml_id = "summary_".mt_rand(1, 10000);
-					$feed_html .= "<li class='rpr_item'>\n";
-					$feed_html .= "<p class='rpr_item_title'>\n";
-					$item['rpr_is_today'] ? $switch_content = '-':$switch_content = '+';
-					
-					$feed_html .= "<a class='rpr_expand_switch' href='#dummy' onClick=\"toggleItemVisibility('$dhtml_id'); if(this.innerHTML=='+'){this.innerHTML='-';}else{this.innerHTML='+';}\">$switch_content</a> ";
-					$feed_html .= "<span class='rpr_title_date'>$display_date</span>";
+					$feed_html = '';
+					$dhtml_id = "feed_".md5($feed_id);
+					$feed_html .= "<p class='rpr_header'>"._('Source: ');
 					$feed_html .= "<span class='rpr_title' onMouseOver=\"changestyle('$dhtml_id','visible');\" onMouseOut=\"changestyle('$dhtml_id','hidden');\">\n";
-					if ($item['link'])
+					if (!empty ($feed['link']))
 					{
-						$feed_html .= "<a class='rpr_item_link' href='{$item['link']}'>{$item['title']}</a>";
+						$feed_html .= "<a class='y' href='".$feed['link']."'>".$feed['channel']['title']."</a>";
 					}
 					else
 					{
-						$feed_html .= "{$item['title']}";
+						$feed_html .= $feed['channel']['title'];
 					}
-					$feed_html .= "</span></p>\n";
-					$feed_html .= "<div class='rpr_popup_outer_div'>\n";
-					$item['rpr_is_today'] ? $class = 'rpr_popup_inner_div_expanded':$class = 'rpr_popup_inner_div';
-					$feed_html .= "<div class='$class' id='$dhtml_id'>\n";
-					$feed_html .= "<p class='rpr_text'>{$item['rpr_author']} ({$feed['channel']['title']}) $display_date</p>\n";
-					$summary = strip_tags($item['rpr_content'], "<br><p><a><img><b><i>");
-					$feed_html .= "<p class='rpr_text'>{$summary}</p></div>\n";
-					$feed_html .= "</div>\n";
-					$feed_html .= "</li>\n";
-				}
-				$feed_html .= "</ul>\n";
+					$feed_html .= "</span>\n";
+					$feed_html .= "</p>\n";
 
-				$html .= $feed_html;
+					$feed_html .= "<div class='rpr_popup_outer_div'>\n";
+					$feed_html .= "<div id='$dhtml_id' class='rpr_popup_inner_div'>\n";
+					$feed_html .= "<p class='rpr_text'>{$feed['channel']['title']}  </p>\n";
+					if (!empty ($feed['channel']['description']))
+					{
+						$description = strip_tags($feed['channel']['description'], "<p><a><img><b><i>");
+						$feed_html .= "<p class='rpr_text'>{$description}</p>\n";
+					}
+					$feed_html .= "<p class='rpr_text'>{$feed_id}</p>\n";
+					$feed_html .= "</div></div>\n";
+
+					$feed_html .= "<ul class='rpr_item_list'>\n";
+
+					foreach ($feed['items'] as $item)
+					{
+						if ($item['rpr_is_today'])
+						{
+							$display_date = _("Today");
+						}
+						else
+							if ($item['rpr_realphpdate'] != -1)
+							{
+								setlocale(LC_TIME, "fr_CA");
+								$display_date = strftime("%x", $item['rpr_realphpdate']);
+							}
+							else
+							{
+								$display_date = '';
+								//$display_date = "Estimated: ".strftime("%x", $item['rpr_computed_phpdate']);
+							}
+
+						$dhtml_id = "summary_".mt_rand(1, 10000);
+						$feed_html .= "<li class='rpr_item'>\n";
+						$feed_html .= "<p class='rpr_item_title'>\n";
+						$item['rpr_is_today'] ? $switch_content = '-' : $switch_content = '+';
+
+						$feed_html .= "<a class='rpr_expand_switch' href='#dummy' onClick=\"toggleItemVisibility('$dhtml_id'); if(this.innerHTML=='+'){this.innerHTML='-';}else{this.innerHTML='+';}\">$switch_content</a> ";
+						$feed_html .= "<span class='rpr_title_date'>$display_date</span>";
+						$feed_html .= "<span class='rpr_title' onMouseOver=\"changestyle('$dhtml_id','visible');\" onMouseOut=\"changestyle('$dhtml_id','hidden');\">\n";
+						if (!empty ($item['link']))
+						{
+							$feed_html .= "<a class='rpr_item_link' href='{$item['link']}'>{$item['title']}</a>";
+						}
+						else
+						{
+							$feed_html .= "{$item['title']}";
+						}
+						$feed_html .= "</span></p>\n";
+						$feed_html .= "<div class='rpr_popup_outer_div'>\n";
+						$item['rpr_is_today'] ? $class = 'rpr_popup_inner_div_expanded' : $class = 'rpr_popup_inner_div';
+						$feed_html .= "<div class='$class' id='$dhtml_id'>\n";
+						$feed_html .= "<p class='rpr_text'>{$item['rpr_author']} ({$feed['channel']['title']}) $display_date</p>\n";
+						$summary = strip_tags($item['rpr_content'], "<br><p><a><img><b><i>");
+						$feed_html .= "<p class='rpr_text'>{$summary}</p></div>\n";
+						$feed_html .= "</div>\n";
+						$feed_html .= "</li>\n";
+					}
+					$feed_html .= "</ul>\n";
+
+					$html .= $feed_html;
+				}
 			}
 		}
 		return $this->get_rss_header().$html;
 	}
 }
 ?>
-
-
-
-
-
-
-
