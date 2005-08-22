@@ -185,7 +185,7 @@ $loadedExtensions = array_flip(get_loaded_extensions()); # Debug : An empty arra
 $neededPEARPackages = array(
   'radius'      => array('needed' => 0, 'available' => 0, 'command' => "return dl('radius.so');",                'message' => 'Try in command line : pear install radius'),
   'Auth_RADIUS' => array('needed' => 0, 'available' => 0, 'command' => "return include_once 'Auth/RADIUS.php';", 'message' => 'Try in command line : pear install Auth_RADIUS'),
-  'Crypt_CHAP'  => array('needed' => 0, 'available' => 0, 'command' => "return include_once 'Crypt/CHAP.php';",  'message' => 'Try in command line : pear install Crypt_CHAP')
+  'Crypt_CHAP'  => array('needed' => 0, 'available' => 0, 'command' => "return include_once 'Crypt/CHAP.php';",  'message' => 'Try in command line : pear install Crypt_CHAP (mhash and mcrypt extensions are needed)')
 );
 
 $optionsInfo = array(
@@ -282,7 +282,7 @@ function navigation($dataArray) {
     $page   = $navArray['page'];
     empty($navArray['action']) ? $action = '' : $action = $navArray['action'];
     print <<<EndHTML
-<A HREF="javascript: document.myform.page.value = '$page'; document.myform.action.value = '$action'; document.myform.submit();" CLASS="button">$title</A>
+<A HREF="#" ONCLICK="document.myform.page.value = '$page'; document.myform.action.value = '$action'; document.myform.submit();" CLASS="button">$title</A>
 
 EndHTML;
     if (array_key_exists($num+1, $dataArray))
@@ -296,7 +296,7 @@ EndHTML;
 function refreshButton() {
   print <<<EndHTML
 
-<P><A HREF="javascript: window.location.reload(true);" CLASS="button">Refresh</A></P>
+<P><A HREF="#" ONCLICK="javascript: window.location.reload(true);" CLASS="button">Refresh</A></P>
 EndHTML;
 }
 
@@ -492,7 +492,8 @@ switch ($page) {
     $error     = 0;
 
     print "<P><B>Home</B>: $basepath</P>";
-    print "<P><B>HTTPD username</B>: $process_username</P>";
+    print "<P><B>HTTPD username/group</B>: $process_username/$process_group</P>";
+#    print "<P><B>HTTPD group</B>: $process_group<BR</P>";
     print "<P><TABLE BORDER=\"1\"><TR><TD><B>Directory</B></TD></TD><TD><B>Owner</B></TD><TD><B>Writable</B></TD></TR>\n";
 
     foreach($dir_array as $dir) {
@@ -769,7 +770,7 @@ EndHTML;
 
     navigation(array(array("title" => "Back", "page" => "magpierss"))); #, array("title" => "Next", "page" => "testdatabase")));
     print <<< EndHTML
-<P><A HREF="javascript: document.myform.page.value='testdatabase'; submitDatabaseValue(); document.myform.submit();" CLASS="button">Next</A></P>
+<P><A HREF="#" ONCLICK="javascript: document.myform.page.value='testdatabase'; submitDatabaseValue(); document.myform.submit();" CLASS="button">Next</A></P>
 
 EndHTML;
 
@@ -1118,7 +1119,7 @@ EndHTML;
     navigation(array(array("title" => "Back", "page" => "dbinit")));
 
     print <<< EndHTML
-<P><A HREF="javascript: document.myform.page.value='languages'; submitOptionsValue(); document.myform.submit();" CLASS="button">Next</A></P>
+<P><A HREF="#" ONCLICK="javascript: document.myform.page.value='languages'; submitOptionsValue(); document.myform.submit();" CLASS="button">Next</A></P>
 EndHTML;
 
   break;
@@ -1227,7 +1228,7 @@ EndHTML;
 
 EndHTML;
     navigation(array(array("title" => "Back", "page" => "radius")));
-    print "<P><A HREF=\"javascript: submitValue();\" CLASS=\"button\">Next</A></P>\n";
+    print "<P><A HREF=\"#\" ONCLICK=\"javascript: submitValue();\" CLASS=\"button\">Next</A></P>\n";
     }
   break;
 
@@ -1279,7 +1280,7 @@ EndHTML;
     navigation(array(array("title" => "Back", "page" => "admin")));
 
     print <<< EndHTML
-<P><A HREF="javascript: document.myform.page.value='hotspot'; submitOptionsValue(); document.myform.submit();" CLASS="button">Next</A></P>
+<P><A HREF="#" ONCLICK="javascript: document.myform.page.value='hotspot'; submitOptionsValue(); document.myform.submit();" CLASS="button">Next</A></P>
 EndHTML;
     #navigation(array(array("title" => "Back", "page" => "admin"), array("title" => "Next", "page" => "hotspot")));
   break;
