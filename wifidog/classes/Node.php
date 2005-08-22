@@ -1,6 +1,4 @@
 <?php
-
-
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -534,7 +532,7 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_data'>\n";
 		$name = "node_".$this->getId()."_description";
 		$value = htmlspecialchars($this->getDescription(), ENT_QUOTES);
-		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "<textarea cols='50' rows='5' name='$name'>$value</textarea>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 
@@ -554,7 +552,7 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_data'>\n";
 		$name = "node_".$this->getId()."_civic_number";
 		$value = htmlspecialchars($this->getCivicNumber(), ENT_QUOTES);
-		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "<input type='text' size ='10' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 
@@ -564,7 +562,7 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_data'>\n";
 		$name = "node_".$this->getId()."_street_name";
 		$value = htmlspecialchars($this->getStreetName(), ENT_QUOTES);
-		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "<input type='text' size ='25' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 
@@ -574,7 +572,7 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_data'>\n";
 		$name = "node_".$this->getId()."_city";
 		$value = htmlspecialchars($this->getCity(), ENT_QUOTES);
-		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "<input type='text' size ='25' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 
@@ -584,7 +582,7 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_data'>\n";
 		$name = "node_".$this->getId()."_province";
 		$value = htmlspecialchars($this->getProvince(), ENT_QUOTES);
-		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "<input type='text' size ='15' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 
@@ -594,7 +592,7 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_data'>\n";
 		$name = "node_".$this->getId()."_postal_code";
 		$value = htmlspecialchars($this->getPostalCode(), ENT_QUOTES);
-		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "<input type='text' size ='10' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 
@@ -604,7 +602,7 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_data'>\n";
 		$name = "node_".$this->getId()."_country";
 		$value = htmlspecialchars($this->getCountry(), ENT_QUOTES);
-		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "<input type='text' size ='15' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 
@@ -614,7 +612,7 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_data'>\n";
 		$name = "node_".$this->getId()."_public_phone";
 		$value = htmlspecialchars($this->getTelephone(), ENT_QUOTES);
-		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "<input type='text' size ='20' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 
@@ -664,14 +662,14 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Latitude")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
-		$html .= "<input type='text' size ='50' value='$gis_lat_value' id='$gis_lat_name' name='$gis_lat_name'>\n";
+		$html .= "<input type='text' size ='15' value='$gis_lat_value' id='$gis_lat_name' name='$gis_lat_name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Longitude")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
-		$html .= "<input type='text' size ='50' value='$gis_long_value' id='$gis_long_name' name='$gis_long_name'>\n";
+		$html .= "<input type='text' size ='15' value='$gis_long_value' id='$gis_long_name' name='$gis_long_name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 
@@ -779,6 +777,8 @@ class Node implements GenericObject
 			$html .= $content->getListUI();
 			$html .= "</div>\n";
 			$html .= "<div class='admin_section_tools'>\n";
+			$name = "node_".$this->id."_content_".$content->GetId()."_edit";
+			$html .= "<input type='button' name='$name' value='"._("Edit")."' onClick='window.location.href = \"".GENERIC_OBJECT_ADMIN_ABS_HREF."?object_class=Content&action=edit&object_id=".$content->GetId()."\";'>\n";
 			$name = "node_".$this->id."_content_".$content->GetId()."_erase";
 			$html .= "<input type='submit' name='$name' value='"._("Remove")."'>";
 			$html .= "</div>\n";

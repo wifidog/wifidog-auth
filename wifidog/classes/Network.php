@@ -225,6 +225,8 @@ class Network implements GenericObject
 			$html .= $content->getListUI();
 			$html .= "</div'>\n";
 			$html .= "<div class='admin_section_tools'>\n";
+			$name = "node_".$this->id."_content_".$content->GetId()."_edit";
+			$html .= "<input type='button' name='$name' value='"._("Edit")."' onClick='window.location.href = \"".GENERIC_OBJECT_ADMIN_ABS_HREF."?object_class=Content&action=edit&object_id=".$content->GetId()."\";'>\n";
 			$name = "content_group_".$this->id."_element_".$content->GetId()."_erase";
 			$html .= "<input type='submit' name='$name' value='"._("Remove")."'>";
 			$html .= "</div>\n";
