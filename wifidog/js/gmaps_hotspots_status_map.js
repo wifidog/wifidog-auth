@@ -154,7 +154,7 @@ function createHtmlFromHotspot(hotspot_element, icon)
 		html += "<i>" + desc[0].firstChild.nodeValue + "</i><br/>";*/
 	
 	var civicNumber = hotspot_element.getElementsByTagName("civicNumber");
-	if(civicNumber == 1)
+	if(civicNumber.length == 1)
 		html += "<i>" + civicNumber[0].firstChild.nodeValue + ",&nbsp;</i>";
 			
 	var streetAddress = hotspot_element.getElementsByTagName("streetAddress");

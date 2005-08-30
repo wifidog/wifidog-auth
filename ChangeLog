@@ -1,3 +1,7 @@
+2005-08-29 Philippe April <philippe@ilesansfil.org>
+	* js/gmaps_hotspots_status_map.js: Fixed small bug in that makes prevents
+	IE to see the map properly.
+
 2005-08-22 Pascal Leclerc  <pascal@plec.ca>
 	* install.php, Change javascript to OnClick + dependencie note
 	* schema_validate.php, Fix broken DB update for install.php
