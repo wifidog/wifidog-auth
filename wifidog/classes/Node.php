@@ -169,7 +169,7 @@ class Node implements GenericObject
 	 * @param $id The id to be given to the new node
 	 * @return the newly created Node object, or null if there was an error
 	 */
-	static function createNode($node_id, $name, $home_page_url = "", $description = "", $map_url = "", $street_address = "", $public_phone_number = "", $public_email = "", $mass_transit_info = "", $node_deployment_status = "IN_PLANNING")
+	static function createNode($node_id, $name, $home_page_url = "", $description = "", $map_url = "", $street_name = "", $public_phone_number = "", $public_email = "", $mass_transit_info = "", $node_deployment_status = "IN_PLANNING")
 	{
 		global $db;
 
@@ -178,7 +178,7 @@ class Node implements GenericObject
 		$home_page_url = $db->EscapeString($home_page_url);
 		$description = $db->EscapeString($description);
 		$map_url = $db->EscapeString($map_url);
-		$street_address = $db->EscapeString($street_address);
+		$street_name = $db->EscapeString($street_name);
 		$public_phone_number = $db->EscapeString($public_phone_number);
 		$public_email = $db->EscapeString($public_email);
 		$mass_transit_info = $db->EscapeString($mass_transit_info);
@@ -187,7 +187,7 @@ class Node implements GenericObject
 		if (Node :: nodeExists($node_id))
 			throw new Exception(_('This node already exists.'));
 
-		$sql = "INSERT INTO nodes (node_id, name, creation_date, home_page_url, description, map_url, street_address, public_phone_number, public_email, mass_transit_info, node_deployment_status) VALUES ('$node_id','$name', NOW(),'$home_page_url','$description','$map_url','$street_address','$public_phone_number','$public_email','$mass_transit_info','$node_deployment_status')";
+		$sql = "INSERT INTO nodes (node_id, name, creation_date, home_page_url, description, map_url, street_name, public_phone_number, public_email, mass_transit_info, node_deployment_status) VALUES ('$node_id','$name', NOW(),'$home_page_url','$description','$map_url','$street_name','$public_phone_number','$public_email','$mass_transit_info','$node_deployment_status')";
 
 		if (!$db->ExecSqlUpdate($sql, false))
 		{
