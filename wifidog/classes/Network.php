@@ -261,7 +261,7 @@ class Network implements GenericObject
         if (!empty ($_REQUEST[$create_new_node]))
         	if(!empty ($_REQUEST[$new_node_id]))
         	{
-				Node::createNode($_REQUEST[$new_node_id], _("Default node name"));
+				Node::createNewNode($_REQUEST[$new_node_id], $this);
 				$url = GENERIC_OBJECT_ADMIN_ABS_HREF."?".http_build_query(array("object_class" => "Node", "action" => "edit", "object_id" => $_REQUEST[$new_node_id]));
 				header("Location: {$url}");
         	}

@@ -26,9 +26,6 @@
  */
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'classes/Content.php';
-/*function __autoload($class_name) {
-   require_once BASEPATH.'classes/'.$class_name . '.php';
-}*/
 
 /** Any object that implement this interface can be administered in a generic way. */
 interface GenericObject

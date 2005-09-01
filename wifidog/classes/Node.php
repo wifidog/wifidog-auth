@@ -143,7 +143,6 @@ class Node implements GenericObject
 	}
 
 	/** Create a new Node in the database
-	 * @deprecated version - 18-Apr-2005
 	 * @param $id The id to be given to the new node
 	 * @return the newly created Node object, or null if there was an error
 	 */
@@ -152,42 +151,26 @@ class Node implements GenericObject
 		global $db;
 
 		$node_id = $db->EscapeString(get_guid());
-		$name = $db->EscapeString('New node');
-
-		$sql = "INSERT INTO nodes (node_id, name) VALUES ('$node_id','$name')";
-
-		if (!$db->ExecSqlUpdate($sql, false))
-		{
-			throw new Exception(_('Unable to insert new node into database!'));
-		}
-		$object = new self($node_id);
+		$object = self::createNewNode($node_id, Network::getCurrentNetwork());
 		return $object;
 	}
 
 	/** Create a new Node in the database 
-	 * @deprecated version - 18-Apr-2005
-	 * @param $id The id to be given to the new node
+	 * @param $node_id The id to be given to the new node
+	 * @param $network Network object.  The node's network 
+	 * @todo Implement network 
 	 * @return the newly created Node object, or null if there was an error
 	 */
-	static function createNode($node_id, $name, $home_page_url = "", $description = "", $map_url = "", $street_name = "", $public_phone_number = "", $public_email = "", $mass_transit_info = "", $node_deployment_status = "IN_PLANNING")
+	static function createNewNode($node_id, Network $network)
 	{
 		global $db;
-
 		$node_id = $db->EscapeString($node_id);
-		$name = $db->EscapeString($name);
-		$home_page_url = $db->EscapeString($home_page_url);
-		$description = $db->EscapeString($description);
-		$map_url = $db->EscapeString($map_url);
-		$street_name = $db->EscapeString($street_name);
-		$public_phone_number = $db->EscapeString($public_phone_number);
-		$public_email = $db->EscapeString($public_email);
-		$mass_transit_info = $db->EscapeString($mass_transit_info);
-		$node_deployment_status = $db->EscapeString($node_deployment_status);
-
+		$node_deployment_status = $db->EscapeString("IN_PLANNING");
+		$node_name = _("New node");
 		if (Node :: nodeExists($node_id))
 			throw new Exception(_('This node already exists.'));
 
-		$sql = "INSERT INTO nodes (node_id, name, creation_date, home_page_url, description, map_url, street_name, public_phone_number, public_email, mass_transit_info, node_deployment_status) VALUES ('$node_id','$name', NOW(),'$home_page_url','$description','$map_url','$street_name','$public_phone_number','$public_email','$mass_transit_info','$node_deployment_status')";
+		$sql = "INSERT INTO nodes (node_id, creation_date, node_deployment_status, name) VALUES ('$node_id', NOW(),'$node_deployment_status', '$node_name')";
 
 		if (!$db->ExecSqlUpdate($sql, false))
 		{
@@ -1245,13 +1228,19 @@ class Node implements GenericObject
 		return $retval;
 	}
 
-	function nodeExists($id)
+	/** Check if an node exists */
+	private function nodeExists($id)
 	{
 		global $db;
+		$retval = false;
 		$id_str = $db->EscapeString($id);
 		$sql = "SELECT * FROM nodes WHERE node_id='{$id_str}'";
 		$db->ExecSqlUniqueRes($sql, $row, false);
-		return $row;
+		if($row!=null)
+		{
+			$retval = true;
+		}
+		return $retval;
 	}
 
 	/** Warning, the semantics of this function will change *

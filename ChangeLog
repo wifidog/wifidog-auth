@@ -1,6 +1,9 @@
+2005-08-31 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Node.php:  Fix node creation
+
 2005-08-31 Francois Proulx <francois.proulx@gmail.com>
 	* Fixed new node creation bug
-	
+
 2005-08-29 Philippe April <philippe@ilesansfil.org>
 	* js/gmaps_hotspots_status_map.js: Fixed small bug in that makes prevents
 	IE to see the map properly.
