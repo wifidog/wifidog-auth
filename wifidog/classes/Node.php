@@ -489,11 +489,14 @@ class Node implements GenericObject
 		//$html .= "</div>\n";
 		$html .= "</div>\n";
 
+		// Hashed node_id (this is a workaround since PHP auto-converts HTTP vars var periods, spaces or underscores )
+		$hashed_node_id = md5($this->getId());
+		
 		// Name
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Name")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$this->getId()."_name";
+		$name = "node_".$hashed_node_id."_name";
 		$value = htmlspecialchars($this->getName(), ENT_QUOTES);
 		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
@@ -503,7 +506,7 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Homepage URL")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$this->getId()."_homepage_url";
+		$name = "node_".$hashed_node_id."_homepage_url";
 		$value = htmlspecialchars($this->getHomePageURL(), ENT_QUOTES);
 		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
@@ -513,7 +516,7 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Description")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$this->getId()."_description";
+		$name = "node_".$hashed_node_id."_description";
 		$value = htmlspecialchars($this->getDescription(), ENT_QUOTES);
 		$html .= "<textarea cols='50' rows='5' name='$name'>$value</textarea>\n";
 		$html .= "</div>\n";
@@ -523,7 +526,7 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Map URL")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$this->getId()."_map_url";
+		$name = "node_".$hashed_node_id."_map_url";
 		$value = htmlspecialchars($this->getMapURL(), ENT_QUOTES);
 		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
@@ -533,7 +536,7 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Civic number")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$this->getId()."_civic_number";
+		$name = "node_".$hashed_node_id."_civic_number";
 		$value = htmlspecialchars($this->getCivicNumber(), ENT_QUOTES);
 		$html .= "<input type='text' size ='10' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
@@ -543,7 +546,7 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Street name")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$this->getId()."_street_name";
+		$name = "node_".$hashed_node_id."_street_name";
 		$value = htmlspecialchars($this->getStreetName(), ENT_QUOTES);
 		$html .= "<input type='text' size ='25' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
@@ -553,7 +556,7 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("City")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$this->getId()."_city";
+		$name = "node_".$hashed_node_id."_city";
 		$value = htmlspecialchars($this->getCity(), ENT_QUOTES);
 		$html .= "<input type='text' size ='25' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
@@ -563,7 +566,7 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Province / State")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$this->getId()."_province";
+		$name = "node_".$hashed_node_id."_province";
 		$value = htmlspecialchars($this->getProvince(), ENT_QUOTES);
 		$html .= "<input type='text' size ='15' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
@@ -573,7 +576,7 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Postal code")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$this->getId()."_postal_code";
+		$name = "node_".$hashed_node_id."_postal_code";
 		$value = htmlspecialchars($this->getPostalCode(), ENT_QUOTES);
 		$html .= "<input type='text' size ='10' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
@@ -583,7 +586,7 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Country")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$this->getId()."_country";
+		$name = "node_".$hashed_node_id."_country";
 		$value = htmlspecialchars($this->getCountry(), ENT_QUOTES);
 		$html .= "<input type='text' size ='15' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
@@ -593,7 +596,7 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Public phone number")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$this->getId()."_public_phone";
+		$name = "node_".$hashed_node_id."_public_phone";
 		$value = htmlspecialchars($this->getTelephone(), ENT_QUOTES);
 		$html .= "<input type='text' size ='20' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
@@ -603,7 +606,7 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Public email")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$this->getId()."_public_email";
+		$name = "node_".$hashed_node_id."_public_email";
 		$value = htmlspecialchars($this->getEmail(), ENT_QUOTES);
 		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
@@ -613,7 +616,7 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Mass transit info")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$this->getId()."_mass_transit_info";
+		$name = "node_".$hashed_node_id."_mass_transit_info";
 		$value = htmlspecialchars($this->getTransitInfo(), ENT_QUOTES);
 		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
@@ -623,7 +626,7 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Node deployment status")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$this->getId()."_deployment_status";
+		$name = "node_".$hashed_node_id."_deployment_status";
 		$html .= self :: getSelectDeploymentStatus($name);
 		$html .= "</div>\n";
 		$html .= "</div>\n";
@@ -637,9 +640,9 @@ class Node implements GenericObject
 
 		// Build HTML form fields names & values
 		$gis_point = $this->getGisLocation();
-		$gis_lat_name = "node_".$this->getId()."_gis_latitude";
+		$gis_lat_name = "node_".$hashed_node_id."_gis_latitude";
 		$gis_lat_value = htmlspecialchars($gis_point->getLatitude(), ENT_QUOTES);
-		$gis_long_name = "node_".$this->getId()."_gis_longitude";
+		$gis_long_name = "node_".$hashed_node_id."_gis_longitude";
 		$gis_long_value = htmlspecialchars($gis_point->getLongitude(), ENT_QUOTES);
 
 		$html .= "<div class='admin_section_container'>\n";
@@ -790,61 +793,64 @@ class Node implements GenericObject
 		}
 
 		// Information about the node
-
+		
+		// Hashed node_id (this is a workaround since PHP auto-converts HTTP vars var periods, spaces or underscores )
+		$hashed_node_id = md5($this->getId());
+		
 		// Name
-		$name = "node_".$this->getId()."_name";
+		$name = "node_".$hashed_node_id."_name";
 		$this->setName($_REQUEST[$name]);
 
 		// Homepage URL
-		$name = "node_".$this->getId()."_homepage_url";
+		$name = "node_".$hashed_node_id."_homepage_url";
 		$this->setHomePageUrl($_REQUEST[$name]);
 
 		// Description
-		$name = "node_".$this->getId()."_description";
+		$name = "node_".$hashed_node_id."_description";
 		$this->setDescription($_REQUEST[$name]);
 
 		// Map URL
-		$name = "node_".$this->getId()."_map_url";
+		$name = "node_".$hashed_node_id."_map_url";
 		$this->setMapUrl($_REQUEST[$name]);
 
 		// Civic number
-		$name = "node_".$this->getId()."_civic_number";
+		$name = "node_".$hashed_node_id."_civic_number";
 		$this->setCivicNumber($_REQUEST[$name]);
 
 		// Street name
-		$name = "node_".$this->getId()."_street_name";
+		$name = "node_".$hashed_node_id."_street_name";
 		$this->setStreetName($_REQUEST[$name]);
 
 		// City
-		$name = "node_".$this->getId()."_city";
+		$name = "node_".$hashed_node_id."_city";
 		$this->setCity($_REQUEST[$name]);
 
 		// Province
-		$name = "node_".$this->getId()."_province";
+		$name = "node_".$hashed_node_id."_province";
 		$this->setProvince($_REQUEST[$name]);
 
 		// Postal Code
-		$name = "node_".$this->getId()."_postal_code";
+		$name = "node_".$hashed_node_id."_postal_code";
 		$this->setPostalCode($_REQUEST[$name]);
 
 		// Country
-		$name = "node_".$this->getId()."_country";
+		$name = "node_".$hashed_node_id."_country";
 		$this->setCountry($_REQUEST[$name]);
 
 		// Public phone #
-		$name = "node_".$this->getId()."_public_phone";
+		$name = "node_".$hashed_node_id."_public_phone";
 		$this->setTelephone($_REQUEST[$name]);
 
 		// Public mail
-		$name = "node_".$this->getId()."_public_email";
+		$name = "node_".$hashed_node_id."_public_email";
 		$this->setEmail($_REQUEST[$name]);
 
 		// Mass transit info
-		$name = "node_".$this->getId()."_mass_transit_info";
+		$name = "node_".$hashed_node_id."_mass_transit_info";
 		$this->setTransitInfo($_REQUEST[$name]);
 
 		// Deployment status
-		$name = "node_".$this->getId()."_deployment_status";
+		$name = "node_".$hashed_node_id."_deployment_status";
 		$this->setDeploymentStatus(self :: processSelectDeploymentStatus($name));
 
 		// GIS data
@@ -873,8 +879,8 @@ class Node implements GenericObject
 		else
 		{
 			// Use what has been set by the user.	
-			$gis_lat_name = "node_".$this->getId()."_gis_latitude";
-			$gis_long_name = "node_".$this->getId()."_gis_longitude";
+			$gis_lat_name = "node_".$hashed_node_id."_gis_latitude";
+			$gis_long_name = "node_".$hashed_node_id."_gis_longitude";
 			$this->setGisLocation(new GisPoint($_REQUEST[$gis_lat_name], $_REQUEST[$gis_long_name], .0));
 		}
 

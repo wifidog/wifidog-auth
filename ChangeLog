@@ -1,6 +1,11 @@
+2005-08-31 Francois Proulx <francois.proulx@gmail.com>
+	* Fixed bug where node ID containing periods, whitespaces or underscores would confuse PHP
+	* MD5 hash is used to make sur the http vars are unique
+	* This is only valid for Node administration
+	
 2005-08-31 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Node.php:  Fix node creation
-
+	
 2005-08-31 Francois Proulx <francois.proulx@gmail.com>
 	* Fixed new node creation bug
 
