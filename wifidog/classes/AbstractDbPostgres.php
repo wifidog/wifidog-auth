@@ -270,6 +270,7 @@ class AbstractDb
 	/**Exécute une requête visant à modifier la base de donnée, et donc ne retournant aucun résultat.
 	 @param $sql requête SELECT à exécuter
 	 @param $debug Si TRUE, affiche la requête brute
+	 @return false on failure, true otherwise
 	 */
 	function ExecSqlUpdate($sql, $debug=false)
 	{

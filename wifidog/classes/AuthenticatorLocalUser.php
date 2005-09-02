@@ -48,16 +48,6 @@ class AuthenticatorLocalUser extends Authenticator
 		return get_class($account_origin['authenticator']) == "AuthenticatorLocalUser";
 	}
 
-	/**
-	 * Returns in array containing only Local User account origins
-	 * @return array
-	 */
-	public static function getAllLocalUserAccountOrigins()
-	{
-		global $AUTH_SOURCE_ARRAY;
-		return array_filter($AUTH_SOURCE_ARRAY, array("self", "isLocalUserAccountOrigin"));
-	}
-
 	/** Attempts to login a user against the authentication source.  If successfull, returns a User object
 	 * @param username:  A valid identifying token for the source.  Not necessarily unique.  For local user, bots username and email are valid.
 	 * @param password:  Clear text password.

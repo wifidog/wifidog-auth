@@ -61,16 +61,21 @@ switch ($format)
 		$hotspot_status_root_node->appendChild($document_gendate_node);
 		
 		// Network metadata
+		$network = Network::getCurrentNetwork();
 		$network_metadata_node = $xmldoc->createElement("networkMetadata");
 		$network_metadata_node = $hotspot_status_root_node->appendChild($network_metadata_node);
-		$network_name_node = $xmldoc->createElement("networkUri", htmlspecialchars(HOTSPOT_NETWORK_URL, ENT_QUOTES));
+		$network_name_node = $xmldoc->createElement("networkUri", htmlspecialchars($network->getHomepageURL(), ENT_QUOTES));
 		$network_metadata_node->appendChild($network_name_node);
-		$network_name_node = $xmldoc->createElement("name", htmlspecialchars(HOTSPOT_NETWORK_NAME, ENT_QUOTES));
+		$network_name_node = $xmldoc->createElement("name", htmlspecialchars($network->getName(), ENT_QUOTES));
 		$network_metadata_node->appendChild($network_name_node);
-		$network_url_node = $xmldoc->createElement("websiteUrl", htmlspecialchars(HOTSPOT_NETWORK_URL, ENT_QUOTES));
+		$network_url_node = $xmldoc->createElement("websiteUrl", htmlspecialchars($network->getHomepageURL(), ENT_QUOTES));
 		$network_metadata_node->appendChild($network_url_node);
-		$network_mail_node = $xmldoc->createElement("techSupportEmail", TECH_SUPPORT_EMAIL);
-		$network_metadata_node->appendChild($network_mail_node);
+		$email = Network::GetCurrentNetwork()->getTechSupportEmail();
+		if(!empty($email))
+		{
+			$network_mail_node = $xmldoc->createElement("techSupportEmail", $email);
+			$network_metadata_node->appendChild($network_mail_node);
+		}
 		$nodes_count_node = $xmldoc->createElement("hotspotsCount", count($node_results));
 		$network_metadata_node->appendChild($nodes_count_node);
 		$network_validusers_node = $xmldoc->createElement("validSubscribedUsersCount", $stats->getNumValidUsers());
@@ -89,6 +94,8 @@ switch ($format)
 			
 			foreach ($node_results as $node_row)
 			{
+				$node=Node::getObject($node_row['node_id']);
+				$network=$node->getNetwork();
 				$hotspot = $xmldoc->createElement("hotspot");
 				$hotspot = $hotspots_metadata_node->appendChild($hotspot);
 				
@@ -298,19 +305,19 @@ switch ($format)
 		$title = $xmldoc->createElement("title");
 		$title = $channel->appendChild($title);
 
-		$textnode = $xmldoc->createTextNode(HOTSPOT_NETWORK_NAME._(": Newest HotSpots"));
+		$textnode = $xmldoc->createTextNode($network->getName()._(": Newest HotSpots"));
 		$title->appendChild($textnode);
 
 		/* link */
 		$link = $xmldoc->createElement("link");
 		$channel->appendChild($link);
-		$textnode = $xmldoc->createTextNode(HOTSPOT_NETWORK_URL);
+		$textnode = $xmldoc->createTextNode($network->getHomepageURL());
 		$link->appendChild($textnode);
 
 		/* description */
 		$description = $xmldoc->createElement("description");
 		$channel->appendChild($description);
-		$textnode = $xmldoc->createTextNode(_("WiFiDog list of the most recent HotSpots opened by the network: ").HOTSPOT_NETWORK_NAME);
+		$textnode = $xmldoc->createTextNode(_("WiFiDog list of the most recent HotSpots opened by the network: ").$network->getName());
 		$description->appendChild($textnode);
 
 		/****************** Optional channel elements *******************/
@@ -324,17 +331,21 @@ switch ($format)
 		/* copyright */
 		$copyright = $xmldoc->createElement("copyright");
 		$channel->appendChild($copyright);
-		$textnode = $xmldoc->createTextNode(_("Copyright ").HOTSPOT_NETWORK_NAME);
+		$textnode = $xmldoc->createTextNode(_("Copyright ").$network->getName());
 		$copyright->appendChild($textnode);
 
 		/* managingEditor */
 
-		/* webMaster */
 
-		$webMaster = $xmldoc->createElement("webMaster");
-		$channel->appendChild($webMaster);
-		$textnode = $xmldoc->createTextNode(TECH_SUPPORT_EMAIL);
-		$webMaster->appendChild($textnode);
+		/* webMaster */
+		$email = Network::GetCurrentNetwork()->getTechSupportEmail();
+		if(!empty($email))
+		{
+			$webMaster = $xmldoc->createElement("webMaster");
+			$channel->appendChild($webMaster);
+			$textnode = $xmldoc->createTextNode($email);
+			$webMaster->appendChild($textnode);
+		}
 
 		/* pubDate */
 		$pubDate = $xmldoc->createElement("pubDate");
@@ -382,7 +393,7 @@ switch ($format)
 		/* title */
 		$title = $xmldoc->createElement("title");
 		$image->appendChild($title);
-		$textnode = $xmldoc->createTextNode(HOTSPOT_NETWORK_NAME);
+		$textnode = $xmldoc->createTextNode($network->getName());
 		$title->appendChild($textnode);
 		/* url */
 		$url = $xmldoc->createElement("url");
@@ -392,7 +403,7 @@ switch ($format)
 		/* link */
 		$link = $xmldoc->createElement("link");
 		$image->appendChild($link);
-		$textnode = $xmldoc->createTextNode(HOTSPOT_NETWORK_URL);
+		$textnode = $xmldoc->createTextNode($network->getHomepageURL());
 		$link->appendChild($textnode);
 		/* width */
 		/*
@@ -552,7 +563,7 @@ switch ($format)
 				$guid = $xmldoc->createElement("guid");
 				$guid->setAttribute('isPermaLink', 'false');
 				$item->appendChild($guid);
-				$textnode = $xmldoc->createTextNode(HOTSPOT_NETWORK_URL.$node_row['node_id']);
+				$textnode = $xmldoc->createTextNode($network->getHomepageURL().$node_row['node_id']);
 				$guid->appendChild($textnode);
 
 				/* pubDate */
@@ -588,19 +599,19 @@ switch ($format)
 		$title = $xmldoc->createElement("title");
 		$title = $channel->appendChild($title);
 
-		$textnode = $xmldoc->createTextNode(utf8_encode(HOTSPOT_NETWORK_NAME._(": Newest HotSpots")));
+		$textnode = $xmldoc->createTextNode(utf8_encode($network->getName()._(": Newest HotSpots")));
 		$title->appendChild($textnode);
 
 		/* link */
 		$link = $xmldoc->createElement("link");
 		$channel->appendChild($link);
-		$textnode = $xmldoc->createTextNode(utf8_encode(HOTSPOT_NETWORK_URL));
+		$textnode = $xmldoc->createTextNode(utf8_encode($network->getHomepageURL()));
 		$link->appendChild($textnode);
 
 		/* description */
 		$description = $xmldoc->createElement("description");
 		$channel->appendChild($description);
-		$textnode = $xmldoc->createTextNode(utf8_encode(_("WiFiDog list of the most recent HotSpots opened by the network: ").HOTSPOT_NETWORK_NAME));
+		$textnode = $xmldoc->createTextNode(utf8_encode(_("WiFiDog list of the most recent HotSpots opened by the network: ").$network->getName()));
 		$description->appendChild($textnode);
 
 		/****************** Optional channel elements *******************/
@@ -614,18 +625,21 @@ switch ($format)
 		/* copyright */
 		$copyright = $xmldoc->createElement("copyright");
 		$channel->appendChild($copyright);
-		$textnode = $xmldoc->createTextNode(utf8_encode(_("Copyright ").HOTSPOT_NETWORK_NAME));
+		$textnode = $xmldoc->createTextNode(utf8_encode(_("Copyright ").$network->getName()));
 		$copyright->appendChild($textnode);
 
 		/* managingEditor */
 
 		/* webMaster */
-
-		$webMaster = $xmldoc->createElement("webMaster");
-		$channel->appendChild($webMaster);
-		$textnode = $xmldoc->createTextNode(utf8_encode(TECH_SUPPORT_EMAIL));
-		$webMaster->appendChild($textnode);
-
+		$email = Network::GetCurrentNetwork()->getTechSupportEmail();
+		if(!empty($email))
+		{
+			$webMaster = $xmldoc->createElement("webMaster");
+			$channel->appendChild($webMaster);
+			$textnode = $xmldoc->createTextNode($email);
+			$webMaster->appendChild($textnode);
+		}
+		
 		/* pubDate */
 		$pubDate = $xmldoc->createElement("pubDate");
 		$channel->appendChild($pubDate);
@@ -672,7 +686,7 @@ switch ($format)
 		/* title */
 		$title = $xmldoc->createElement("title");
 		$image->appendChild($title);
-		$textnode = $xmldoc->createTextNode(utf8_encode(HOTSPOT_NETWORK_NAME));
+		$textnode = $xmldoc->createTextNode(utf8_encode($network->getName()));
 		$title->appendChild($textnode);
 		/* url */
 		$url = $xmldoc->createElement("url");
@@ -682,7 +696,7 @@ switch ($format)
 		/* link */
 		$link = $xmldoc->createElement("link");
 		$image->appendChild($link);
-		$textnode = $xmldoc->createTextNode(utf8_encode(HOTSPOT_NETWORK_URL));
+		$textnode = $xmldoc->createTextNode(utf8_encode($network->getHomepageURL()));
 		$link->appendChild($textnode);
 		/* width */
 		/*
@@ -807,7 +821,7 @@ switch ($format)
 				$guid = $xmldoc->createElement("guid");
 				$guid->setAttribute('isPermaLink', 'false');
 				$item->appendChild($guid);
-				$textnode = $xmldoc->createTextNode(utf8_encode(HOTSPOT_NETWORK_URL.$node_row['node_id']));
+				$textnode = $xmldoc->createTextNode(utf8_encode($network->getHomepageURL().$node_row['node_id']));
 				$guid->appendChild($textnode);
 
 				/* pubDate */

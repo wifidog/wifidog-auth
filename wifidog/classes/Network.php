@@ -1,4 +1,5 @@
 <?php
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -30,6 +31,7 @@ require_once BASEPATH.'classes/User.php';
 class Network implements GenericObject
 {
 	private $id; /**< The network id */
+	private $mRow;
 
 	/** Get an instance of the object
 	* @see GenericObject
@@ -41,16 +43,65 @@ class Network implements GenericObject
 		return new self($id);
 	}
 
+	/** Get all the Networks configured on this server
+	 * @return an array of Network objects.  The default network is returned
+	 * first
+	 */
+	static function getAllNetworks()
+	{
+		$retval = array ();
+		global $db;
+		$sql = "SELECT network_id FROM networks ORDER BY is_default_network DESC";
+		$network_rows = null;
+		$db->ExecSql($sql, $network_rows, false);
+		if ($network_rows == null)
+		{
+			throw new Exception(_("Network::getAllNetworks:  Fatal error: No networks in the database!"));
+		}
+		foreach ($network_rows as $network_row)
+		{
+			$retval[] = new self($network_row['network_id']);
+		}
+		return $retval;
+	}
+
+	/** Get the default network
+	 * @return a Network object, NEVER returns null.
+	 */
+	static function getDefaultNetwork($real_network_only = false)
+	{
+		$retval = null;
+			global $db;
+			$sql = "SELECT network_id FROM networks WHERE is_default_network=TRUE ORDER BY creation_date LIMIT 1";
+			$network_row = null;
+			$db->ExecSqlUniqueRes($sql, $network_row, false);
+			if ($network_row == null)
+			{
+				throw new Exception(_("Network::getDefaultNetwork:  Fatal error: Unable to find the default network!"));
+			}
+			$retval = new self($network_row['network_id']);
+		return $retval;
+	}
+	
 	/** Get the current network for which the portal is displayed or to which a user is physically connected.
-	 * @param $real_network_only true or false.  If true, the real physical network where the user is connected is returned, and the node set by setCurrentNode is ignored.
-	 * @return a Node object, or null if it can't be found.
+	 * @param $real_network_only NOT IMPLEMENTED YET true or false.  If true,
+	 * the real physical network where the user is connected is returned, and
+	 * the node set by setCurrentNode is ignored.
+	 * @return a Network object, NEVER returns null.
 	 */
 	static function getCurrentNetwork($real_network_only = false)
 	{
-		global $AUTH_SOURCE_ARRAY;
-		$keys = array_keys($AUTH_SOURCE_ARRAY);
-
-		return new self($keys[0]);
+		$retval = null;
+		$current_node = Node :: getCurrentNode();
+		if ($current_node != null)
+		{
+			$retval = $current_node->getNetwork();
+		}
+		else
+		{
+			$retval = Network::getDefaultNetwork();
+		}
+		return $retval;
 	}
 
 	/** Create a new Content object in the database 
@@ -68,18 +119,28 @@ class Network implements GenericObject
 	*/
 	public static function getSelectNetworkUI($user_prefix)
 	{
-		global $AUTH_SOURCE_ARRAY;
 		$html = '';
 		$name = $user_prefix;
 		$html .= _("Network:")." \n";
-		$number_of_networks = count($AUTH_SOURCE_ARRAY);
+
+		global $db;
+		$sql = "SELECT network_id, name FROM networks ORDER BY is_default_network DESC";
+		$network_rows = null;
+		$db->ExecSql($sql, $network_rows, false);
+		if ($network_rows == null)
+		{
+			throw new Exception(_("Network::getAllNetworks:  Fatal error: No networks in the database!"));
+		}
+
+		$network_array = self :: getAllNetworks();
+		$number_of_networks = count($network_rows);
 		if ($number_of_networks > 1)
 		{
 			$i = 0;
-			foreach ($AUTH_SOURCE_ARRAY as $network_id => $network_info)
+			foreach ($network_rows as $network_row)
 			{
-				$tab[$i][0] = $network_id;
-				$tab[$i][1] = $network_info['name'];
+				$tab[$i][0] = $network_row['network_id'];
+				$tab[$i][1] = $network_row['name'];
 				$i ++;
 			}
 			$html .= FormSelectGenerator :: generateFromArray($tab, null, $name, null, false);
@@ -87,10 +148,10 @@ class Network implements GenericObject
 		}
 		else
 		{
-			foreach ($AUTH_SOURCE_ARRAY as $network_id => $network_info) //iterates only once...
+			foreach ($network_rows as $network_row) //iterates only once...
 			{
-				$html .= " $network_info[name] ";
-				$html .= "<input type='hidden' name='$name' value='$network_id'>";
+				$html .= " $network_row[name] ";
+				$html .= "<input type='hidden' name='$name' value='$network_row[network_id]'>";
 			}
 		}
 		return $html;
@@ -104,7 +165,7 @@ class Network implements GenericObject
 	{
 		$object = null;
 		$name = "{$user_prefix}";
-		if(!empty($_REQUEST[$name]))
+		if (!empty ($_REQUEST[$name]))
 			return new self($_REQUEST[$name]);
 		else
 			return null;
@@ -112,20 +173,18 @@ class Network implements GenericObject
 
 	private function __construct($p_network_id)
 	{
-		global $AUTH_SOURCE_ARRAY;
-		$found = false;
-		foreach ($AUTH_SOURCE_ARRAY as $network_id => $network_info)
+		global $db;
+
+		$network_id_str = $db->EscapeString($p_network_id);
+		$sql = "SELECT *, EXTRACT(EPOCH FROM validation_grace_time) as validation_grace_time_seconds FROM networks WHERE network_id='$network_id_str'";
+		$row = null;
+		$db->ExecSqlUniqueRes($sql, $row, false);
+		if ($row == null)
 		{
-			if ($p_network_id == $network_id)
-			{
-				$found = true;
-			}
+			throw new Exception("The network with id $network_id_str could not be found in the database");
 		}
-		if (!$found)
-		{
-			throw new Exception(_("The specified network doesn't exist: ").$p_network_id);
-		}
-		$this->id = $p_network_id;
+		$this->mRow = $row;
+		$this->id = $db->EscapeString($row['network_id']);
 	}
 
 	/** Retreives the id of the object 
@@ -139,38 +198,287 @@ class Network implements GenericObject
 	 * @return The id */
 	public function getTechSupportEmail()
 	{
-		return TECH_SUPPORT_EMAIL;
+		return $this->mRow['tech_support_email'];
 	}
 
+	/** Set the network's tech support and information email address
+	 * @param $value The new value 
+	 * @return true on success, false on failure */
+	function setTechSupportEmail($value)
+	{
+		$retval = true;
+		if ($value != $this->getName())
+		{
+			global $db;
+			$value = $db->EscapeString($value);
+			$retval = $db->ExecSqlUpdate("UPDATE networks SET tech_support_email = '{$value}' WHERE network_id = '{$this->getId()}'", false);
+			$this->refresh();
+		}
+		return $retval;
+	}
+	
 	/** Retreives the network name 
-	 * @return The id */
+	 * @return A string */
 	public function getName()
 	{
-		return HOTSPOT_NETWORK_NAME;
+		return $this->mRow['name'];
+	}
+
+	/** Set the network's name
+	 * @param $value The new value 
+	 * @return true on success, false on failure */
+	function setName($value)
+	{
+		$retval = true;
+		if ($value != $this->getName())
+		{
+			global $db;
+			$value = $db->EscapeString($value);
+			$retval = $db->ExecSqlUpdate("UPDATE networks SET name = '{$value}' WHERE network_id = '{$this->getId()}'", false);
+			$this->refresh();
+		}
+		return $retval;
 	}
 
 	/** Retreives the network's homepage url 
 	 * @return The id */
 	public function getHomepageURL()
 	{
-		return HOTSPOT_NETWORK_URL;
+		return $this->mRow['homepage_url'];
 	}
+
+	/** Set the network's homepage url
+	 * @param $value The new value 
+	 * @return true on success, false on failure */
+	function setHomepageURL($value)
+	{
+		$retval = true;
+		if ($value != $this->getName())
+		{
+			global $db;
+			$value = $db->EscapeString($value);
+			$retval = $db->ExecSqlUpdate("UPDATE networks SET homepage_url = '{$value}' WHERE network_id = '{$this->getId()}'", false);
+			$this->refresh();
+		}
+		return $retval;
+	}
+
+	/** Retreives the network's authenticator's class.
+	 *  @return    A string */
+	public function getAuthenticatorClassName()
+	{
+		return $this->mRow['network_authenticator_class'];
+	}
+
+	/** Set the network's authenticator's class.  The subclass of Authenticator to be used for user authentication (ex: AuthenticatorRadius)
+	 * @param $value a string, the class name of a  subclass of Authenticator 
+	 * @return true on success, false on failure */
+	function setAuthenticatorClassName($value)
+	{
+		$retval = true;
+		if ($value != $this->getAuthenticatorClassName())
+		{
+			global $db;
+			$value = $db->EscapeString($value);
+			$retval = $db->ExecSqlUpdate("UPDATE networks SET network_authenticator_class = '{$value}' WHERE network_id = '{$this->getId()}'", false);
+			$this->refresh();
+		}
+		return $retval;
+	}
+		
+	/** Retreives the authenticator's parameters
+	 * @return A string */
+	public function getAuthenticatorConstructorParams()
+	{
+		return $this->mRow['network_authenticator_params'];
+	}
+
+	/** The explicit parameters to be passed to the authenticator's constructor (ex: 'my_network_id', '192.168.0.11', 1812, 1813, 'secret_key', 'CHAP_MD5')
+	 * @param $value The new value 
+	 * @return true on success, false on failure */
+	function setAuthenticatorConstructorParams($value)
+	{
+		$retval = true;
+		if ($value != $this->getAuthenticatorConstructorParams())
+		{
+			global $db;
+			$value = $db->EscapeString($value);
+			$retval = $db->ExecSqlUpdate("UPDATE networks SET network_authenticator_params = '{$value}' WHERE network_id = '{$this->getId()}'", false);
+			$this->refresh();
+		}
+		return $retval;
+	}
+	
+	/** Get the Authenticator object for this network 
+	 * @return a subclass of Authenticator */
+	public function getAuthenticator()
+	{
+		require_once BASEPATH.'classes/Authenticator.php';
+		if (strpos($this->mRow['network_authenticator_params'], ';') != false)
+		{
+			throw new Exception("Network::getAuthenticator():  Security error:  The parameters passed to the constructor of the authenticator are potentially unsafe");
+		}
+		$objstring = 'return new '.$this->mRow['network_authenticator_class'].'('.$this->mRow['network_authenticator_params'].');';
+		return eval ($objstring);
+	}
+		
+	/** Is the network the default network?
+	 * @return true or false */
+	public function isDefaultNetwork()
+	{
+		($this->mRow['is_default_network']=='t')?$retval=true:$retval=false;
+		return $retval;
+	}
+
+	/** Set as the default network.  The can only be one default network, so this method will unset is_default_network for all other network 
+	 * @return true on success, false on failure */
+	function setAsDefaultNetwork()
+	{
+		$retval = true;
+		if (!$this->isDefaultNetwork())
+		{
+			global $db;
+			$sql = "UPDATE networks SET is_default_network = FALSE;\n";
+			$sql .= "UPDATE networks SET is_default_network = TRUE WHERE network_id = '{$this->getId()}';\n";
+			$retval = $db->ExecSqlUpdate($sql, false);
+			$this->refresh();
+		}
+		return $retval;
+	}
+
+	/** Retreives the network's validation grace period
+	 * @return An integer (seconds) */
+	public function getValidationGraceTime()
+	{
+		return $this->mRow['validation_grace_time_seconds'];
+	}
+
+	/** Set the network's validation grace period in seconds.  A new user is granted Internet access for this period check his email and validate his account.
+	 * @param $value The new value 
+	 * @return true on success, false on failure */
+	function setValidationGraceTime($value)
+	{
+		$retval = true;
+		if ($value != $this->getValidationGraceTime())
+		{
+			global $db;
+			$value = $db->EscapeString($value);
+			$retval = $db->ExecSqlUpdate("UPDATE networks SET validation_grace_time = '{$value} seconds' WHERE network_id = '{$this->getId()}'", false);
+			$this->refresh();
+		}
+		return $retval;
+	}
+			
+	/** Retreives the FROM adress of the validation email
+	 * @return A string */
+	public function getValidationEmailFromAddress()
+	{
+		return $this->mRow['validation_email_from_address'];
+	}
+
+	/** Set the FROM adress of the validation email
+	 * @param $value The new value 
+	 * @return true on success, false on failure */
+	function setValidationEmailFromAddress($value)
+	{
+		$retval = true;
+		if ($value != $this->getValidationEmailFromAddress())
+		{
+			global $db;
+			$value = $db->EscapeString($value);
+			$retval = $db->ExecSqlUpdate("UPDATE networks SET validation_email_from_address = '{$value}' WHERE network_id = '{$this->getId()}'", false);
+			$this->refresh();
+		}
+		return $retval;
+	}
+		
+	/** Can an account be connected more than once at the same time?
+	 * @return true or false */
+	public function getMultipleLoginAllowed()
+	{
+		($this->mRow['allow_multiple_login']=='t')?$retval=true:$retval=false;
+		return $retval;
+	}
+
+	/** Set if a account be connected more than once at the same time?
+	 * @param $value The new value, true or false
+	 * @return true on success, false on failure */
+	function setMultipleLoginAllowed($value)
+	{
+		$retval = true;
+		if ($value != $this->getMultipleLoginAllowed())
+		{
+			global $db;
+			$value?$value='TRUE':$value='FALSE';
+			$retval = $db->ExecSqlUpdate("UPDATE networks SET allow_multiple_login = {$value} WHERE network_id = '{$this->getId()}'", false);
+			$this->refresh();
+		}
+		return $retval;
+	}
+
+	/** Are nodes allowed to be set as splash-only (no login)?
+	 * @return true or false */
+	public function getSplashOnlyNodesAllowed()
+	{
+		($this->mRow['allow_splash_only_nodes']=='t')?$retval=true:$retval=false;
+		return $retval;
+	}
+
+	/** Set if nodes are allowed to be set as splash-only (no login)
+	 * @param $value The new value, true or false
+	 * @return true on success, false on failure */
+	function setSplashOnlyNodesAllowed($value)
+	{
+		$retval = true;
+		if ($value != $this->getSplashOnlyNodesAllowed())
+		{
+			global $db;
+			$value?$value='TRUE':$value='FALSE';
+			$retval = $db->ExecSqlUpdate("UPDATE networks SET allow_splash_only_nodes = {$value} WHERE network_id = '{$this->getId()}'", false);
+			$this->refresh();
+		}
+		return $retval;
+	}		
+	
+	/** Are nodes allowed to redirect users to an arbitrary web page instead of the portal?
+	 * @return true or false */
+	public function getCustomPortalRedirectAllowed()
+	{
+		($this->mRow['allow_custom_portal_redirect']=='t')?$retval=true:$retval=false;
+		return $retval;
+	}
+
+	/** Set if nodes are allowed to redirect users to an arbitrary web page instead of the portal?
+	 * @param $value The new value, true or false
+	 * @return true on success, false on failure */
+	function setCustomPortalRedirectAllowed($value)
+	{
+		$retval = true;
+		if ($value != $this->getCustomPortalRedirectAllowed())
+		{
+			global $db;
+			$value?$value='TRUE':$value='FALSE';
+			$retval = $db->ExecSqlUpdate("UPDATE networks SET allow_custom_portal_redirect = {$value} WHERE network_id = '{$this->getId()}'", false);
+			$this->refresh();
+		}
+		return $retval;
+	}		
 
 	/**Get an array of all Content linked to the network
 	* @param boolean $exclude_subscribed_content
-    * @param User $subscriber The User object used to discriminate the content
+	* @param User $subscriber The User object used to discriminate the content
 	* @return an array of Content or an empty arrray */
 	function getAllContent($exclude_subscribed_content = false, $subscriber = null)
 	{
-	   global $db;
+		global $db;
 		$retval = array ();
-        // Get all network, but exclude user subscribed content if asked
+		// Get all network, but exclude user subscribed content if asked
 		if ($exclude_subscribed_content == true && $subscriber)
 			$sql = "SELECT content_id FROM network_has_content WHERE network_id='$this->id' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$subscriber->getId()}') ORDER BY subscribe_timestamp DESC";
 		else
 			$sql = "SELECT content_id FROM network_has_content WHERE network_id='$this->id' ORDER BY subscribe_timestamp DESC";
 		$db->ExecSql($sql, $content_rows, false);
-        
+
 		if ($content_rows != null)
 		{
 			foreach ($content_rows as $content_row)
@@ -184,13 +492,6 @@ class Network implements GenericObject
 	/** Retreives the admin interface of this object.
 	 * @return The HTML fragment for this interface */
 
-	/** Get the Authenticator object for this network */
-	public function getAuthenticator()
-	{
-		global $AUTH_SOURCE_ARRAY;
-		return $AUTH_SOURCE_ARRAY[$this->id]['authenticator'];
-	}
-
 	public function getAdminUI()
 	{
 		$html = '';
@@ -198,22 +499,155 @@ class Network implements GenericObject
 		$html .= "<div class='admin_container'>\n";
 		$html .= "<div class='admin_class'>Network (".get_class($this)." instance)</div>\n";
 
+		// network_id
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Network ID")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "network_".$this->getId()."_name";
+		$value = htmlspecialchars($this->getId(), ENT_QUOTES);
+		$html .= $value;
+		//$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		// name
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Network name")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "network_".$this->getId()."_name";
+		$value = htmlspecialchars($this->getName(), ENT_QUOTES);
+		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+
+		// homepage_url
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Network's web site")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "network_".$this->getId()."_homepage_url";
+		$value = htmlspecialchars($this->getHomepageURL(), ENT_QUOTES);
+		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+
+		// tech_support_email
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Technical support email")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "network_".$this->getId()."_tech_support_email";
+		$value = htmlspecialchars($this->getTechSupportEmail(), ENT_QUOTES);
+		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+
+
+		//  network_authenticator_class
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Network authenticator class.  The subclass of Authenticator to be used for user authentication (ex: AuthenticatorRadius)")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "network_".$this->getId()."_network_authenticator_class";
+		$value = htmlspecialchars($this->getAuthenticatorClassName(), ENT_QUOTES);
+		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+
+		//  network_authenticator_params
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("The explicit parameters to be passed to the authenticator (ex: 'my_network_id', '192.168.0.11', 1812, 1813, 'secret_key', 'CHAP_MD5')")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "network_".$this->getId()."_network_authenticator_params";
+		$value = htmlspecialchars($this->getAuthenticatorConstructorParams(), ENT_QUOTES);
+		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";		
+		
+		//  is_default_network
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Is this network the default network?")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "network_".$this->getId()."_is_default_network";
+		$this->isDefaultNetwork()? $checked='CHECKED': $checked='';
+		$html .= "<input type='checkbox' name='$name' $checked>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";			
+	
+		//  validation_grace_time
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("The length of the validation grace period in seconds.  A new user is granted Internet access for this period check his email and validate his account.")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "network_".$this->getId()."_validation_grace_time";
+		$value = htmlspecialchars($this->getValidationGraceTime(), ENT_QUOTES);
+		$html .= "<input type='text' size ='5' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+			
+		//  validation_email_from_address
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("This will be the from adress of the validation email")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "network_".$this->getId()."_validation_email_from_address";
+		$value = htmlspecialchars($this->getValidationEmailFromAddress(), ENT_QUOTES);
+		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		//  allow_multiple_login
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Can an account be connected more than once at the same time?")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "network_".$this->getId()."_allow_multiple_login";
+		$this->getMultipleLoginAllowed()? $checked='CHECKED': $checked='';
+		$html .= "<input type='checkbox' name='$name' $checked>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		//  allow_splash_only_nodes
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Are nodes allowed to be set as splash-only (no login)?")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "network_".$this->getId()."_allow_splash_only_nodes";
+		$this->getSplashOnlyNodesAllowed()? $checked='CHECKED': $checked='';
+		$html .= "<input type='checkbox' name='$name' $checked>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		//  allow_custom_portal_redirect
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Are nodes allowed to redirect users to an arbitrary web page instead of the portal?")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "network_".$this->getId()."_allow_custom_portal_redirect";
+		$this->getCustomPortalRedirectAllowed()? $checked='CHECKED': $checked='';
+		$html .= "<input type='checkbox' name='$name' $checked>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
+		//	network_stakeholders
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Network stakeholders")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		//$name = "network_".$this->getId()."_allow_custom_portal_redirect";
+		//$this->getCustomPortalRedirectAllowed()? $checked='CHECKED': $checked='';
+		//$html .= "<input type='checkbox' name='$name' $checked>\n";
+		$html .= "WRITEME!";
+		$html .= "</div>\n";
+		$html .= "</div>\n";		
+				
 		// Create new nodes
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("New node ID")." : </div>\n";
-		
+
 		$html .= "<div class='admin_section_data'>\n";
 		$name = "network_{$this->getId()}_new_node_id";
 		$html .= "<input type='text' size='10' name='{$name}'>\n";
-		
+
 		$html .= "<div class='admin_section_tools'>\n";
 		$name = "network_{$this->getId()}_create_node";
 		$html .= "<input type='submit' name='{$name}' value='"._("Create a new node")."'>\n";
 		$html .= "</div>\n";
-		
+
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		// Content management		
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Network content:")."</div>\n";
@@ -241,34 +675,81 @@ class Network implements GenericObject
 		$html .= "</ul>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		return $html;
 	}
-	
+
 	/** Process admin interface of this object.
 	*/
 	public function processAdminUI()
 	{
-        $user = User::getCurrentUser();
-        if (!$user->isSuperAdmin())
-        {
-            throw new Exception(_('Access denied!'));
-        }
-        
-        // Node creation
-        $create_new_node = "network_{$this->getId()}_create_node";
-        $new_node_id = "network_{$this->getId()}_new_node_id";
-        if (!empty ($_REQUEST[$create_new_node]))
-        	if(!empty ($_REQUEST[$new_node_id]))
-        	{
-				Node::createNewNode($_REQUEST[$new_node_id], $this);
-				$url = GENERIC_OBJECT_ADMIN_ABS_HREF."?".http_build_query(array("object_class" => "Node", "action" => "edit", "object_id" => $_REQUEST[$new_node_id]));
+		//pretty_print_r($_REQUEST);
+		$user = User :: getCurrentUser();
+		if (!$user->isSuperAdmin())
+		{
+			throw new Exception(_('Access denied!'));
+		}
+
+		// name
+		$name = "network_".$this->getId()."_name";
+		$this->setName($_REQUEST[$name]);
+		
+		// homepage_url
+		$name = "network_".$this->getId()."_homepage_url";
+		$this->setHomepageURL($_REQUEST[$name]);
+
+
+		// tech_support_email
+		$name = "network_".$this->getId()."_tech_support_email";
+		$this->setTechSupportEmail($_REQUEST[$name]);
+
+		//  network_authenticator_class
+		$name = "network_".$this->getId()."_network_authenticator_class";
+		$this->setAuthenticatorClassName($_REQUEST[$name]);
+
+		//  network_authenticator_params
+		$name = "network_".$this->getId()."_network_authenticator_params";
+		$this->setAuthenticatorConstructorParams($_REQUEST[$name]);
+		
+		//  is_default_network
+		$name = "network_".$this->getId()."_is_default_network";
+		if($_REQUEST[$name]=='on')
+			$this->setAsDefaultNetwork();
+	
+		//  validation_grace_time
+		$name = "network_".$this->getId()."_validation_grace_time";
+		$this->setValidationGraceTime($_REQUEST[$name]);
+			
+		//  validation_email_from_address
+		$name = "network_".$this->getId()."_validation_email_from_address";
+		$this->setValidationEmailFromAddress($_REQUEST[$name]);	
+		
+		//  allow_multiple_login
+		$name = "network_".$this->getId()."_allow_multiple_login";
+		$this->setMultipleLoginAllowed(empty($_REQUEST[$name])?false:true);	
+		
+		//  allow_splash_only_nodes
+		$name = "network_".$this->getId()."_allow_splash_only_nodes";
+		$this->setSplashOnlyNodesAllowed(empty($_REQUEST[$name])?false:true);	
+
+		//  allow_custom_portal_redirect
+		$name = "network_".$this->getId()."_allow_custom_portal_redirect";
+		$this->setCustomPortalRedirectAllowed(empty($_REQUEST[$name])?false:true);	
+				
+		// Node creation
+		$create_new_node = "network_{$this->getId()}_create_node";
+		$new_node_id = "network_{$this->getId()}_new_node_id";
+		if (!empty ($_REQUEST[$create_new_node]))
+			if (!empty ($_REQUEST[$new_node_id]))
+			{
+				Node :: createNewNode($_REQUEST[$new_node_id], $this);
+				$url = GENERIC_OBJECT_ADMIN_ABS_HREF."?".http_build_query(array ("object_class" => "Node", "action" => "edit", "object_id" => $_REQUEST[$new_node_id]));
 				header("Location: {$url}");
-        	}
+			}
 			else
 				echo _("You MUST enter a node ID.");
-		
-        // Content management
+
+		// Content management
 		foreach ($this->getAllContent() as $content)
 		{
 			$name = "content_group_".$this->id."_element_".$content->GetId()."_erase";
@@ -283,8 +764,8 @@ class Network implements GenericObject
 		{
 			$name = "network_{$this->id}_new_content";
 			$content = Content :: processSelectContentUI($name);
-            if($content)
-                $this->addContent($content);
+			if ($content)
+				$this->addContent($content);
 		}
 	}
 

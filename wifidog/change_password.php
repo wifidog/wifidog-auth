@@ -25,16 +25,16 @@
    */
 define('BASEPATH','./');
 require_once BASEPATH.'include/common.php';
+require_once BASEPATH.'classes/MainUI.php';
 require_once BASEPATH.'include/common_interface.php';
 require_once BASEPATH.'classes/User.php';
-require_once BASEPATH.'classes/MainUI.php';
 
 isset($_REQUEST["username"]) && $smarty->assign("username", $_REQUEST["username"]);
 
 if (isset($_REQUEST["submit"])) {
     try {
-    	// If the source is present and that it's in our AUTH_SOURCE_ARRAY, save it to a var for later use
-		$_REQUEST['auth_source'] && in_array($_REQUEST['auth_source'], array_keys($AUTH_SOURCE_ARRAY)) && $account_origin = $_REQUEST['auth_source'];
+    	// If the source is present and that it's in our, save it to a var for later use
+		$account_origin = Networt::getObject($_REQUEST['auth_source']);
 		
         if (!$account_origin || !$_REQUEST["username"] || !$_REQUEST["oldpassword"] || !$_REQUEST["newpassword"] || !$_REQUEST["newpassword_again"])
             throw new Exception(_('You MUST fill in all the fields.'));
@@ -72,9 +72,10 @@ if (isset($_REQUEST["submit"])) {
 // Add the auth servers list to smarty variables
 $sources = array ();
 // Preserve keys
-foreach (array_keys($AUTH_SOURCE_ARRAY) as $auth_source_key)
-	if ($AUTH_SOURCE_ARRAY[$auth_source_key]['authenticator']->isRegistrationPermitted())
-		$sources[$auth_source_key] = $AUTH_SOURCE_ARRAY[$auth_source_key];
+$network_array=Network::getAllNetworks();
+foreach ($network_array as $network)
+	if ($network->getAuthenticator()->isRegistrationPermitted())
+		$sources[$network->getId()] = $network->getName();
 		
 isset ($sources) && $smarty->assign('auth_sources', $sources);
 // Pass the account_origin along, if it's set

@@ -24,9 +24,9 @@
 
 define('BASEPATH', '../');
 require_once BASEPATH.'include/common.php';
+require_once BASEPATH.'classes/MainUI.php';
 require_once BASEPATH.'include/common_interface.php';
 require_once BASEPATH.'classes/Node.php';
-require_once BASEPATH.'classes/MainUI.php';
 
 if (CONF_USE_CRON_FOR_DB_CLEANUP == false)
 {
@@ -91,13 +91,7 @@ $tool_html .= "</p>"."\n";
 */
 $ui->setToolContent($tool_html);
 
-$hotspot_network_name = HOTSPOT_NETWORK_NAME;
-$hotspot_network_url = HOTSPOT_NETWORK_URL;
-$network_logo_url = COMMON_CONTENT_URL.NETWORK_LOGO_NAME;
-$network_logo_banner_url = COMMON_CONTENT_URL.NETWORK_LOGO_BANNER_NAME;
-
 $hotspot_logo_url = find_local_content_url(HOTSPOT_LOGO_NAME);
-$hotspot_logo_banner_url = find_local_content_url(HOTSPOT_LOGO_BANNER_NAME);
 
 $html = '';
 $html .= "<div id='portal_container'>\n";

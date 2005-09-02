@@ -32,6 +32,7 @@ require_once 'AbstractGeocoder.php';
 class Node implements GenericObject
 {
 	private $mRow;
+	private $mdB; /**< An AbstractDb instance */
 	private $id;
 	private static $current_node_id = null;
 
@@ -250,10 +251,11 @@ class Node implements GenericObject
 	}
 
 	/** @param $node_id The id of the node */
-	function __construct($node_id)
+	private function __construct($node_id)
 	{
 		global $db;
-
+		$this->mDb = & $db;
+		
 		$node_id_str = $db->EscapeString($node_id);
 		$sql = "SELECT * FROM nodes WHERE node_id='$node_id_str'";
 		$db->ExecSqlUniqueRes($sql, $row, false);
@@ -262,13 +264,20 @@ class Node implements GenericObject
 			throw new Exception(_("The id $node_id_str could not be found in the database"));
 		}
 		$this->mRow = $row;
-		$this->mDb = & $db;
 		$this->id = $row['node_id'];
 	}
 
 	function getId()
 	{
-		return $this->mRow['node_id'];
+		return $this->id;
+	}
+
+	/** Gets the Network to which the node belongs 
+	 * @return Network object (never returns null)
+	 */
+	public function getNetwork()
+	{
+			return Network::getObject($this->mRow['network_id']);
 	}
 
 	/** Get a GisPoint object ; altide is not supported yet

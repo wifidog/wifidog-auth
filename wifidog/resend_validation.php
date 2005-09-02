@@ -33,9 +33,7 @@ if (isset($_REQUEST["submit"])) {
     if (!$_REQUEST["username"]) {
         $smarty->assign("error", _("Please specify a username"));
     } else {
-    	// If the source is present and that it's in our AUTH_SOURCE_ARRAY, save it to a var for later use
-		$_REQUEST['auth_source'] && in_array($_REQUEST['auth_source'], array_keys($AUTH_SOURCE_ARRAY)) && $account_origin = $_REQUEST['auth_source'];
-		
+ 		$account_origin = Networt::getObject($_REQUEST['auth_source']);		
         try {
         	if(empty($account_origin))
 				throw new Exception(_("Sorry, this network does not exist !"));
@@ -61,9 +59,10 @@ if (isset($_REQUEST["submit"])) {
 // Add the auth servers list to smarty variables
 $sources = array ();
 // Preserve keys
-foreach (array_keys($AUTH_SOURCE_ARRAY) as $auth_source_key)
-	if ($AUTH_SOURCE_ARRAY[$auth_source_key]['authenticator']->isRegistrationPermitted())
-		$sources[$auth_source_key] = $AUTH_SOURCE_ARRAY[$auth_source_key];
+$network_array=Network::getAllNetworks();
+foreach ($network_array as $network)
+	if ($network->getAuthenticator()->isRegistrationPermitted())
+		$sources[$network->getId()] = $network->getName();
 		
 isset ($sources) && $smarty->assign('auth_sources', $sources);
 // Pass the account_origin along, if it's set

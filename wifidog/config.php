@@ -16,15 +16,8 @@ define('CONF_DATABASE_PASSWORD',   'wifidogtest');
 /* The SYSTEM_PATH, must be set to the url path needed to reach the wifidog directory.  Normally '/' or '/wifidog/', depending on where configure your document root.  Gateway configuration must match this as well */
 define('SYSTEM_PATH', '/');
 /**< Set this to true if your server has SSL available, otherwise, passwords will be transmitted in clear text over the air */
-define('SSL_AVAILABLE', true);
-/** @deprecated version - 2005-04-19 */
-define('HOTSPOT_NETWORK_NAME', 'Île sans fil');
-define('HOTSPOT_NETWORK_URL', 'http://www.ilesansfil.org/');
-define('TECH_SUPPORT_EMAIL', 'tech@ilesansfil.org');
-define('UNKNOWN_HOSTPOT_NAME', 'Unknown HotSpot');
+define('SSL_AVAILABLE', false);
 
-define('VALIDATION_GRACE_TIME', 20); /**< Number of minutes after new account creation during which internet access is available to validate your account.  Once elapsed, you have to validate from home... */
-define('VALIDATION_EMAIL_FROM_ADDRESS', 'validation@ilesansfil.org');
 /* RSS support.  If set to true, MAGPIERSS must be installed in MAGPIE_REL_PATH */
 define('RSS_SUPPORT', true);
 /* Flickr Photostream content support. If set to true, Phlickr must be installed in PHLICKR_REL_PATH */
@@ -69,35 +62,6 @@ define('PHLICKR_REL_PATH',  'lib/');
 //DEPRECATED, use the new RssAggregator content type define('UNKNOWN_HOTSPOT_RSS_URL', '');
 
 define('LOCAL_CONTENT_REL_PATH', 'local_content/');//Path to the directory containing the different node specific directories.  Relative to BASE_URL_PATH
-
-// Authentication sources section
-/* The array index for the source must match the account_origin in the user table */
-
-// Local User authenticators
-require_once BASEPATH.'classes/AuthenticatorLocalUser.php';
-
-/**********************************************
- * BIG FAT WARNING
- * DO NOT remove this authenticator under any circumstance
- * you SHOULD NOT change its name either
- * The system relies heavily on its main authenticator to do
- * multiple tasks with users...
- * ********************************************
- */
-define('LOCAL_USER_ACCOUNT_ORIGIN', 'LOCAL_USER');
-$AUTH_SOURCE_ARRAY[LOCAL_USER_ACCOUNT_ORIGIN]=array(
-			     'name'=>HOTSPOT_NETWORK_NAME,
-			     'authenticator'=>new AuthenticatorLocalUser(LOCAL_USER_ACCOUNT_ORIGIN));
-			     
-// RADIUS authenticators ( see AuthenticatorRadius constuctor doc for details )
-/*
-require_once BASEPATH.'classes/AuthenticatorRadius.php';
-
-define('IDRC_ACCOUNT_ORIGIN', 'IDRC_RADIUS_USER');
-$AUTH_SOURCE_ARRAY[IDRC_ACCOUNT_ORIGIN]=array(
-			     'name'=>"IDRC RADIUS Server",
-			     'authenticator'=>new AuthenticatorRadius(IDRC_ACCOUNT_ORIGIN, "192.168.0.11", 1812, 1813, "secret_key", "CHAP_MD5"));
-*/
 
 /*These are the file names of the different templates that can be put in the CONTENT_PATH/(node_id)/ folders */
 define('STYLESHEET_NAME', 'stylesheet.css');

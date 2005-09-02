@@ -25,9 +25,9 @@
 
 define('BASEPATH', './');
 require_once BASEPATH.'include/common.php';
+require_once BASEPATH.'classes/MainUI.php';
 require_once BASEPATH.'include/common_interface.php';
 require_once BASEPATH.'classes/Node.php';
-require_once BASEPATH.'classes/MainUI.php';
 
 $num_valid_users = $stats->getNumValidUsers();
 $num_online_users = $stats->getNumOnlineUsers($node_id = null);

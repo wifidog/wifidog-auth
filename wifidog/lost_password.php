@@ -35,8 +35,8 @@ if (isset($_REQUEST['submit'])) {
     } else {
         $username = $db->EscapeString($_REQUEST['username']);
         $email = $db->EscapeString($_REQUEST['email']);
-        // If the source is present and that it's in our AUTH_SOURCE_ARRAY, save it to a var for later use
-		$_REQUEST['auth_source'] && in_array($_REQUEST['auth_source'], array_keys($AUTH_SOURCE_ARRAY)) && $account_origin = $_REQUEST['auth_source'];
+
+		$account_origin = Network::getObject($_REQUEST['auth_source']);
 
         try {
         	if(empty($account_origin))
@@ -68,15 +68,15 @@ if (isset($_REQUEST['submit'])) {
 // Add the auth servers list to smarty variables
 $sources = array ();
 // Preserve keys
-foreach (array_keys($AUTH_SOURCE_ARRAY) as $auth_source_key)
-	if ($AUTH_SOURCE_ARRAY[$auth_source_key]['authenticator']->isRegistrationPermitted())
-		$sources[$auth_source_key] = $AUTH_SOURCE_ARRAY[$auth_source_key];
-
+$network_array=Network::getAllNetworks();
+foreach ($network_array as $network)
+	if ($network->getAuthenticator()->isRegistrationPermitted())
+		$sources[$network->getId()] = $network->getName();
+		
 isset ($sources) && $smarty->assign('auth_sources', $sources);
 // Pass the account_origin along, if it's set
 isset ($_REQUEST["auth_source"]) && $smarty->assign('selected_auth_source', $_REQUEST["auth_source"]);
 
-//$smarty->display("templates/lost_password.html");
 $ui = new MainUI();
 $smarty->assign('SelectNetworkUI', Network::getSelectNetworkUI('auth_source'));
 $ui->setMainContent($smarty->fetch("templates/lost_password.html"));

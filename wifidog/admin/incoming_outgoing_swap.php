@@ -20,12 +20,12 @@
    \********************************************************************/
   /**@file node_list.php
    * Network status page
-   * @author Copyright (C) 2004 Benoit Grégoire
+   * @author Copyright (C) 2004 Benoit Grï¿½goire
    */
 define('BASEPATH','../');
 require_once 'admin_common.php';
 
-echo "<div id='head'><h1>". HOTSPOT_NETWORK_NAME ._(' cumulative user statistics')."</h1></div>\n";    
+echo "<div id='head'><h1>incoming_outgoing_swap</h1></div>\n";    
 echo "<div id='navLeft'>\n";
 //echo get_user_management_menu();
 echo "</div>\n";

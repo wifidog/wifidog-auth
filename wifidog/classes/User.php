@@ -125,100 +125,6 @@ class User implements GenericObject
 		return $object;
 	}
 
-	/**
-	 * Get the list of users associated with a username 
-	 * Since we cannot guarantee the uniqueness of (user, e-mail) key this will
-	 * return an array.
-	 * 
-	 * NB : This function will only extract users who authenticate
-	 * through a LocalUserAuthenticator 
-	 * (see AuthenticatorLocalUser::getAllLocalUserAccountOrigins)
-	 * 
-	 * @param $username : the username criterion
-	 * @return array : array of User objects
-	 */
-	public static function getUsersByUsername($username)
-	{
-		$users_list = array ();
-
-		// E-mail cannot be empty, will return an empty array.
-		if (!empty ($username))
-		{
-			// Build SQL query, excluding users who do not authenticate through LocalUserAuth
-			global $db;
-			$username_str = $db->EscapeString($username);
-			$sql = "SELECT user_id FROM users WHERE username = '$username_str'";
-			$first = true;
-			foreach (array_keys(AuthenticatorLocalUser :: getAllLocalUserAccountOrigins()) as $account_origin)
-			{
-				if ($first === true)
-				{
-					$sql .= " AND (account_origin = '$account_origin'";
-					$first = false;
-				}
-				else
-					$sql .= " OR account_origin = '$account_origin'";
-			}
-			if ($first === false)
-				$sql .= ")";
-			$db->ExecSql($sql, $users_rows, false);
-
-			// Fill an array with User objects corresponding to those we just got
-			if (!empty ($users_rows))
-				foreach ($users_rows as $user_row)
-					$users_list[] = new User($user_row['user_id']);
-		}
-
-		return $users_list;
-	}
-
-	/**
-	 * Get the list of users associated with an e-mail address
-	 * Since we cannot guarantee the unicity of (user, e-mail) key
-	 * this will return an array.
-	 * 
-	 * NB : This function will only extract users who authenticate
-	 * through a LocalUserAuthenticator 
-	 * (see AuthenticatorLocalUser::getAllLocalUserAccountOrigins)
-	 * 
-	 * @param $email : the e-mail criterion
-	 * @return array : array of User objects
-	 */
-	public static function getUsersByEmail($email)
-	{
-		$users_list = array ();
-
-		// E-mail cannot be empty, will return an empty array.
-		if (!empty ($email))
-		{
-			// Build SQL query, excluding users who do not authenticate through LocalUserAuth
-			global $db;
-			$email_str = $db->EscapeString($email);
-			$sql = "SELECT user_id FROM users WHERE email = '$email_str'";
-			$first = true;
-			foreach (array_keys(AuthenticatorLocalUser :: getAllLocalUserAccountOrigins()) as $account_origin)
-			{
-				if ($first === true)
-				{
-					$sql .= " AND (account_origin = '$account_origin'";
-					$first = false;
-				}
-				else
-					$sql .= " OR account_origin = '$account_origin'";
-			}
-			if ($first === false)
-				$sql .= ")";
-			$db->ExecSql($sql, $users_rows, false);
-
-			// Fill an array with User objects corresponding to those we just got
-			if (!empty ($users_rows))
-				foreach ($users_rows as $user_row)
-					$users_list[] = new User($user_row['user_id']);
-		}
-
-		return $users_list;
-	}
-
 	/** Returns the hash of the password suitable for storing or comparing in the database.  This hash is the same one as used in NoCat
 	 * @return The 32 character hash.
 	 */
@@ -274,6 +180,15 @@ class User implements GenericObject
 	{
 		return $this->id;
 	}
+	
+	/** Gets the Network to which the user belongs 
+	 * @return Network object (never returns null)
+	 */
+	public function getNetwork()
+	{
+			return Network::getObject($this->mRow['account_origin']);
+	}
+
 
 	/** Get a user display suitable for a user list.  Will include link to the user profile. */
 	function getUserListUI()
@@ -364,12 +279,12 @@ class User implements GenericObject
 		else
 			if ($account_status == ACCOUNT_STATUS_VALIDATION)
 			{
-				$sql = "SELECT CASE WHEN ((NOW() - reg_date) > interval '".VALIDATION_GRACE_TIME." minutes') THEN true ELSE false END AS validation_grace_time_expired FROM users WHERE (user_id='{$this->id}')";
+				$sql = "SELECT CASE WHEN ((NOW() - reg_date) > interval networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired, networks.validation_grace_time FROM users  JOIN networks ON (users.account_origin = networks.network_id) WHERE (user_id='{$this->id}')";
 				$db->ExecSqlUniqueRes($sql, $user_info, false);
 
 				if ($user_info['validation_grace_time_expired'] == 't')
 				{
-					$errmsg = _("Sorry, your ").VALIDATION_GRACE_TIME._(" minutes grace period to retrieve your email and validate your account has now expired. You will have to connect to the internet and validate your account from another location or create a new account. For help, please ").'<a href="'.BASEPATH.'faq.php'.'">'._("click here.").'</a>';
+					$errmsg = sprintf(_("Sorry, your %s minutes grace period to retrieve your email and validate your account has now expired. You will have to connect to the internet and validate your account from another location or create a new account. For help, please %s click here %s."), $user_info['validation_grace_time_expired'], '<a href="'.BASEPATH.'faq.php'.'">', '</a>');
 					$retval = false;
 				}
 				else
@@ -519,11 +434,12 @@ class User implements GenericObject
 
 	function sendLostUsername()
 	{
+		$network = $this->getNetwork();
 		$username = $this->getUsername();
 		$headers = 'MIME-Version: 1.0'."\r\n";
 		$headers .= 'Content-type: text/plain; charset=UTF-8'."\r\n";
-		$headers .= "From: ".VALIDATION_EMAIL_FROM_ADDRESS;
-		$subject = HOTSPOT_NETWORK_NAME._(" lost username request");
+		$headers .= "From: ".$network->getValidationEmailFromAddress();
+		$subject = $network->getName()._(" lost username request");
 		$body = _("Hello,\nYou have requested that the authentication server send you your username:\nUsername: ").$username._("\n\nHave a nice day,\nThe Team");
 
 		//TODO: Find a way to use correctly mb_encode_mimeheader 
@@ -546,10 +462,11 @@ class User implements GenericObject
 			}
 			else
 			{
+				$network = $this->getNetwork();
 				$headers = 'MIME-Version: 1.0'."\r\n";
 				$headers .= 'Content-type: text/plain; charset=UTF-8'."\r\n";
-				$headers .= "From: ".VALIDATION_EMAIL_FROM_ADDRESS;
-				$subject = HOTSPOT_NETWORK_NAME._(" new user validation");
+				$headers .= "From: ".$network->getValidationEmailFromAddress();
+				$subject = $network->getName()._(" new user validation");
 				$url = "http://".$_SERVER["SERVER_NAME"]."/validate.php?user_id=".$this->getId()."&token=".$this->getValidationToken();
 				$body = _("Hello,\nPlease follow the link below to validate your account.\n").$url._("\n\nThank you,\nThe Team.");
 
@@ -564,15 +481,15 @@ class User implements GenericObject
 	function sendLostPasswordEmail()
 	{
 		global $db;
-
+		$network = $this->getNetwork();
 		$new_password = $this->randomPass();
 		$this->setPassword($new_password);
 		$username = $this->getUsername();
 
 		$headers = 'MIME-Version: 1.0'."\r\n";
 		$headers .= 'Content-type: text/plain; charset=UTF-8'."\r\n";
-		$headers .= "From: ".VALIDATION_EMAIL_FROM_ADDRESS;
-		$subject = HOTSPOT_NETWORK_NAME._(" new password request");
+		$headers .= "From: ".$network->getValidationEmailFromAddress();
+		$subject = $network->getName()._(" new password request");
 		$body = _("Hello,\nYou have requested that the authentication server send you a new password:\nUsername: ").$username._("\nPassword: ").$new_password._("\n\nHave a nice day,\nThe Team");
 
 		//TODO: Find a way to use correctly mb_encode_mimeheader 

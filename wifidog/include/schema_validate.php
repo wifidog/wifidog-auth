@@ -27,14 +27,12 @@ error_reporting(E_ALL);
 require_once BASEPATH.'config.php';
 require_once BASEPATH.'classes/AbstractDb.php';
 require_once BASEPATH.'classes/Session.php';
-define('REQUIRED_SCHEMA_VERSION', 25);
+define('REQUIRED_SCHEMA_VERSION', 26);
 
 /** Check that the database schema is up to date.  If it isn't, offer to update it. */
 function validate_schema()
 {
 	global $db;
-
-	//check_users_not_empty();
 	$db->ExecSqlUniqueRes("SELECT * FROM schema_info WHERE tag='schema_version'", $row, false);
 	if (empty ($row))
 	{
@@ -73,21 +71,15 @@ function validate_schema()
 function check_users_not_empty()
 {
 	// Extract the first account origin, assume it's the default
-	global $AUTH_SOURCE_ARRAY;
-	if (!empty ($AUTH_SOURCE_ARRAY))
-	{
-		$default_account_origin = array_values(array_keys($AUTH_SOURCE_ARRAY));
-		$default_account_origin = $default_account_origin[0];
-	}
-
-	if (!empty ($default_account_origin))
+	$network = Network::getDefaultNetwork();
+	if (!empty ($network))
 	{
 		global $db;
-		$db->ExecSqlUniqueRes("SELECT user_id FROM users WHERE account_origin = '$default_account_origin' LIMIT 1", $row, false);
+		$db->ExecSqlUniqueRes("SELECT user_id FROM users WHERE account_origin = '{$network->getId()}' LIMIT 1", $row, false);
 		if ($row == null)
 		{
 			echo "<html><head><h1>";
-			echo _("No user matches the default account origin, a new user admin/admin will be created. Change the password as soon as possible !");
+			echo _("No user matches the default network, a new user admin/admin will be created. Change the password as soon as possible !");
 			echo "</html></head>";
 			$sql = "BEGIN;";
 			$sql .= "INSERT INTO users (user_id, username, pass, email, account_status, validation_token, account_origin) VALUES ('admin_original_user_delete_me', 'admin', 'ISMvKXpXpadDiUoOSoAfww==', 'test_user_please@delete.me', 1, 'df16cc4b1d0975e267f3425eaac31950', '$default_account_origin');";
@@ -100,7 +92,7 @@ function check_users_not_empty()
 	else
 	{
 		echo "<html><head><h1>";
-		echo _("Could not get a default account origin, make sure you config.php has at least one AUTH_SOURCE_ARRAY entry.");
+		echo _("Could not get a default network!");
 		echo "</html></head>";
 		exit ();
 	}
@@ -133,7 +125,7 @@ function update_schema()
 			foreach ($results as $row)
 			{
 				$user_id = $db->EscapeString($row['user_id']);
-				$sql .= "UPDATE users SET username='$user_id', user_id='".get_guid()."', account_origin='".LOCAL_USER_ACCOUNT_ORIGIN."' WHERE user_id='$user_id';\n";
+				$sql .= "UPDATE users SET username='$user_id', user_id='".get_guid()."', account_origin='LOCAL_USER' WHERE user_id='$user_id';\n";
 			}
 			$sql .= "CREATE UNIQUE INDEX idx_unique_username_and_account_origin ON users (username, account_origin);\n";
 			$sql .= "CREATE UNIQUE INDEX idx_unique_email_and_account_origin ON users USING btree (email, account_origin);\n";
@@ -566,7 +558,44 @@ function update_schema()
 			$sql .= "DROP TABLE node_owners;\n";
 			$sql .= "DROP TABLE node_tech_officers;\n";
 		}
-		
+			
+		$new_schema_version = 26;
+		if ($schema_version < $new_schema_version)
+		{
+			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+			$sql .= "CREATE TABLE networks ( \n";
+			$sql .= "  network_id text NOT NULL PRIMARY KEY,\n";
+			$sql .= "  network_authenticator_class text NOT NULL CHECK (network_authenticator_class<>''),\n";
+			$sql .= "  network_authenticator_params text,\n";
+			$sql .= "  is_default_network boolean NOT NULL DEFAULT FALSE,\n";
+			$sql .= "  name text NOT NULL DEFAULT 'Unnamed network' CHECK (name<>''),\n";
+			$sql .= "  creation_date date NOT NULL DEFAULT now(),\n";
+			$sql .= "  homepage_url text,\n";
+			$sql .= "  tech_support_email text,\n";
+			$sql .= "  validation_grace_time interval NOT NULL DEFAULT '1200 seconds',\n";
+			$sql .= "  validation_email_from_address text NOT NULL CHECK (validation_email_from_address<>'') DEFAULT 'validation@wifidognetwork',\n";
+			$sql .= "  allow_multiple_login BOOLEAN NOT NULL DEFAULT FALSE,\n";
+			$sql .= "  allow_splash_only_nodes BOOLEAN NOT NULL DEFAULT FALSE,\n";
+			$sql .= "  allow_custom_portal_redirect BOOLEAN NOT NULL DEFAULT FALSE\n";
+			$sql .= ");\n";
+			$sql .= "INSERT INTO networks (network_id, network_authenticator_class, network_authenticator_params) SELECT  account_origin, COALESCE('AuthenticatorLocalUser') as network_authenticator_class, account_origin FROM users GROUP BY (account_origin) ORDER BY min(reg_date);\n";
+			$sql .= "UPDATE networks SET is_default_network=TRUE WHERE network_id=(SELECT account_origin FROM users GROUP BY (account_origin) ORDER BY min(reg_date) LIMIT 1);\n";
+			$sql .= "ALTER TABLE users ADD CONSTRAINT account_origin_fkey FOREIGN KEY (account_origin) REFERENCES networks (network_id) ON UPDATE CASCADE ON DELETE RESTRICT;\n";
+			$sql .= "ALTER TABLE nodes ADD COLUMN network_id text; \n";
+			$sql .= "UPDATE nodes SET network_id=(SELECT account_origin FROM users GROUP BY (account_origin) ORDER BY min(reg_date) LIMIT 1);\n";			
+			$sql .= "ALTER TABLE nodes ALTER COLUMN network_id SET NOT NULL; \n";
+			$sql .= "ALTER TABLE nodes ADD CONSTRAINT network_id_fkey FOREIGN KEY (network_id) REFERENCES networks ON UPDATE CASCADE ON DELETE RESTRICT;\n";
+			$sql .= "ALTER TABLE network_has_content ADD CONSTRAINT network_id_fkey FOREIGN KEY (network_id) REFERENCES networks ON UPDATE CASCADE ON DELETE CASCADE;\n";
+
+			$sql .= "CREATE TABLE network_stakeholders ( \n";
+			$sql .= "  network_id text REFERENCES networks,\n";
+			$sql .= "  user_id VARCHAR(45) REFERENCES users,\n";
+			$sql .= "  is_admin BOOLEAN NOT NULL DEFAULT FALSE,\n";
+			$sql .= "  is_stat_viewer BOOLEAN NOT NULL DEFAULT FALSE,\n";
+			$sql .= "PRIMARY KEY (network_id, user_id)\n";
+			$sql .= ");\n";
+		}
 		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);
 		//$db->ExecSqlUpdate("BEGIN;\n$sql\nROLLBACK;\n", true);
 		echo "</html></head>";

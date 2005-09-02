@@ -58,6 +58,17 @@ pear install Crypt_CHAP
 End RADIUS authentication support section
 *****************************************
 
+*****************************************
+Backup and restore
+*****************************************
+
+To backup:
+	pg_dump wifidog --blobs --file=wifidog_backup.sql --format=c --ignore-version --no-owner -v --compress=3 -U wifidog
+
+To restore from a backup:
+	dropdb wifidog
+	createdb wifidog --encoding=UTF-8 --owner=wifidog
+	pg_restore -U wifidog -d wifidog -v wifidog_backup.sql
 
 Enjoy!
 

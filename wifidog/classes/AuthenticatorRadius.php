@@ -45,6 +45,8 @@ class AuthenticatorRadius extends Authenticator
 
 	/**
 	 * AuthenticatorRadius constructor
+	 * Example:  new AuthenticatorRadius(IDRC_ACCOUNT_ORIGIN, "192.168.0.11",
+	 * 1812, 1813, "secret_key", "CHAP_MD5");
 	 * @param $account_orgin : The origin of the account
 	 * @param $host : hostname of the RADIUS server
 	 * @param $auth_port : Authentication port of the RADIUS server

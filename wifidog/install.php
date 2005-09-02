@@ -1236,12 +1236,11 @@ EndHTML;
   case 'network':
     print "<H1>Network</H1>";
 
-    $HOTSPOT_NETWORK_NAME          = $configArray['HOTSPOT_NETWORK_NAME'];
-    $HOTSPOT_NETWORK_URL           = $configArray['HOTSPOT_NETWORK_URL'];
-    $TECH_SUPPORT_EMAIL            = $configArray['TECH_SUPPORT_EMAIL'];
-    //$UNKNOWN_HOSTPOT_NAME          = $configArray['UNKNOWN_HOSTPOT_NAME'];
-    $VALIDATION_GRACE_TIME         = $configArray['VALIDATION_GRACE_TIME'];
-    $VALIDATION_EMAIL_FROM_ADDRESS = $configArray['VALIDATION_EMAIL_FROM_ADDRESS'];    
+    //$HOTSPOT_NETWORK_NAME          = $configArray['HOTSPOT_NETWORK_NAME'];
+    //$HOTSPOT_NETWORK_URL           = $configArray['HOTSPOT_NETWORK_URL'];
+    //$TECH_SUPPORT_EMAIL            = $configArray['TECH_SUPPORT_EMAIL'];
+    //$VALIDATION_GRACE_TIME         = $configArray['VALIDATION_GRACE_TIME'];
+    //$VALIDATION_EMAIL_FROM_ADDRESS = $configArray['VALIDATION_EMAIL_FROM_ADDRESS'];    
 
     print <<< EndHTML
   <P>
@@ -1265,12 +1264,11 @@ EndHTML;
 
 <script type="text/javascript">
   function submitOptionsValue() {
-    newConfig("HOTSPOT_NETWORK_NAME='" + document.myform.HOTSPOT_NETWORK_NAME.value + "'");
-    newConfig("HOTSPOT_NETWORK_URL='" + document.myform.HOTSPOT_NETWORK_URL.value + "'");
-    newConfig("TECH_SUPPORT_EMAIL='" + document.myform.TECH_SUPPORT_EMAIL.value + "'");
-   /* newConfig("UNKNOWN_HOSTPOT_NAME='" + document.myform.UNKNOWN_HOSTPOT_NAME.value + "'"); */
-    newConfig("VALIDATION_GRACE_TIME=" + document.myform.VALIDATION_GRACE_TIME.value);
-    newConfig("VALIDATION_EMAIL_FROM_ADDRESS='" + document.myform.VALIDATION_EMAIL_FROM_ADDRESS.value + "'");
+    //newConfig("HOTSPOT_NETWORK_NAME='" + document.myform.HOTSPOT_NETWORK_NAME.value + "'");
+    //newConfig("HOTSPOT_NETWORK_URL='" + document.myform.HOTSPOT_NETWORK_URL.value + "'");
+    //newConfig("TECH_SUPPORT_EMAIL='" + document.myform.TECH_SUPPORT_EMAIL.value + "'");
+    //newConfig("VALIDATION_GRACE_TIME=" + document.myform.VALIDATION_GRACE_TIME.value);
+    //newConfig("VALIDATION_EMAIL_FROM_ADDRESS='" + document.myform.VALIDATION_EMAIL_FROM_ADDRESS.value + "'");
   }
 </script>
 
@@ -1418,7 +1416,7 @@ The current auth-server version is <B>$WIFIDOG_VERSION</B>. The installation is 
 </PRE>
 
 <B>Create the wifidog database</B>
-<PRE>  <I>postgres@yourserver $></I> createdb -O wifidog wifidog
+<PRE>  <I>postgres@yourserver $></I> createdb wifidog --encoding=UTF-8 --owner=wifidog
   CREATE DATABASE 
 </PRE>
 

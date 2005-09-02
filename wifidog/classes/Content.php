@@ -232,7 +232,6 @@ class Content implements GenericObject
 	*/
 	public static function getSelectContentUI($user_prefix, $sql_additional_where = null)
 	{
-		global $AUTH_SOURCE_ARRAY;
 		$html = '';
 		$name = "{$user_prefix}";
 		$html .= _("Select existing Content : ")."\n";

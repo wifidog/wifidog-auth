@@ -65,6 +65,7 @@ $tool_html .= '<p class="indent">'."\n";
 $current_node = Node :: getCurrentNode();
 if ($current_node != null)
 {
+	$network = $node->getNetwork();
 	$current_node_id = $current_node->getId();
 	$online_users = $current_node->getOnlineUsers();
 	$num_online_users = count($online_users);
@@ -83,6 +84,7 @@ if ($current_node != null)
 }
 else
 {
+	$network = Network::getCurrentNetwork();
 	$current_node_id = null;
 	$tool_html .= _("You are not currently at a hotspot...");
 }
@@ -203,8 +205,8 @@ wifidog_portal_collapse.style.display = "none";
 
 $ui->setToolContent($tool_html);
 
-$hotspot_network_name = HOTSPOT_NETWORK_NAME;
-$hotspot_network_url = HOTSPOT_NETWORK_URL;
+$hotspot_network_name = $network->getName();
+$hotspot_network_url = $network->getHomepageURL();
 $network_logo_url = COMMON_CONTENT_URL.NETWORK_LOGO_NAME;
 $network_logo_banner_url = COMMON_CONTENT_URL.NETWORK_LOGO_BANNER_NAME;
 

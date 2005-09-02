@@ -1,8 +1,21 @@
+2005-09-01 Benoit Grégoire  <bock@step.polymtl.ca>
+	WARNING:  DO NOT use the CVS auth server in production until further notice.  
+	Massive internal changes are underway.  
+	Use the release tagged 1.0m1 in production.
+	* Network abstraction mostly complete, including UI.  
+	All that is missing is new network creation, network stakeholder UI and testing.  
+	* Cleanup the config file of all the now unneeded constants. 
+	 Note that the install script is currently broken.  
+	There can now be multiple networks on the server.  
+	The install script will have to make sure that there is at least one, with one super-admin
+
 2005-08-31 Francois Proulx <francois.proulx@gmail.com>
 	* Fixed bug where node ID containing periods, whitespaces or underscores would confuse PHP
 	* MD5 hash is used to make sur the http vars are unique
 	* This is only valid for Node administration
-	
+
+NOTE:  the 1.0m1 release was tagged here
+		
 2005-08-31 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Node.php:  Fix node creation
 	

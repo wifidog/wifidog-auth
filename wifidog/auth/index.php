@@ -31,14 +31,25 @@ require_once BASEPATH.'include/common.php';
 $auth_response = ACCOUNT_STATUS_DENIED;
 $auth_message = '';
 
+$token = null;
+if(!empty($_REQUEST['token']))
+{
 $token = $db->EscapeString($_REQUEST['token']);
-$db->ExecSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > interval '".VALIDATION_GRACE_TIME." minutes') THEN true ELSE false END AS validation_grace_time_expired FROM users,connections WHERE users.user_id=connections.user_id AND connections.token='$token'", $info, false);
+}
+
+$db->ExecSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.token='$token'", $info, false);
 if ($info != null)
 {
 	// Retrieve the associated authenticator
-	$authenticator = $AUTH_SOURCE_ARRAY[$info['account_origin']]['authenticator'];
-
-	if ($_REQUEST['stage'] == STAGE_LOGIN)
+	$authenticator = Network::getObject($info['account_origin'])->getAuthenticator();
+if(!$authenticator)
+{
+			$auth_message .= "| Error: Unable to instanciate authenticator. ";
+			$auth_response = ACCOUNT_STATUS_ERROR;
+}
+else
+{
+if ($_REQUEST['stage'] == STAGE_LOGIN)
 	{
 		if ($info['token_status'] == TOKEN_UNUSED)
 		{
@@ -121,6 +132,7 @@ if ($info != null)
 			$auth_message .= "| Error: Unknown stage. ";
 			$auth_response = ACCOUNT_STATUS_ERROR;
 		}
+}
 }
 else
 {

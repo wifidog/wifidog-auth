@@ -24,6 +24,12 @@
  * @author Copyright (C) 2005 Technologies Coeus inc.
  */
 require_once BASEPATH.'include/common.php';
+	/** @note We put a call to validate_schema() here so it systematically called
+ * from any UI page, but not from any machine readable pages 
+ */ 
+ 		require_once BASEPATH.'include/schema_validate.php';
+ 		validate_schema();
+		
 require_once BASEPATH.'include/common_interface.php';
 
 /** Style contains functions managing headers, footers, stylesheet, etc.
@@ -38,15 +44,8 @@ class MainUI
 	private $tool_section_enabled = true;
 	private $footer_scripts = array ();
 
-	
-	/** @note We put a call to validate_schema() here so it systematically called
- * from any UI page, but not from any machine readable pages 
- */ 
 	function __construct()
 	{
-		require_once BASEPATH.'include/schema_validate.php';
-		validate_schema();
-
 		$this->smarty = new SmartyWifidog();
 		$this->title = Network :: getCurrentNetwork()->getName().' '._("authentication server"); //Default title
 	}
@@ -356,7 +355,11 @@ class MainUI
 	function displayError($errmsg)
 	{
 		$html = "<p>$errmsg</p>\n";
-		$html .= "<p>"._("Please get in touch with ")."<a href='{TECH_SUPPORT_EMAIL}'>{TECH_SUPPORT_EMAIL}</a></p>";
+		$email = Network::getCurrentNetwork()->getTechSupportEmail();
+		if(!empty($email))
+		{
+		$html .= "<p>"._("Please get in touch with ")."<a href='{$email}'>{$email}</a></p>";
+		}
 		$this->setMainContent($html);
 		$this->display();
 	}

@@ -77,11 +77,6 @@ else
 	$error = _('Your must specify your username and password');
 }
 
-// Add the auth servers list to smarty variables
-isset ($AUTH_SOURCE_ARRAY) && $smarty->assign('auth_sources', $AUTH_SOURCE_ARRAY);
-// Pass the account_origin along, if it's set
-isset ($_REQUEST["auth_source"]) && $smarty->assign('selected_auth_source', $_REQUEST["auth_source"]);
-
 $node = null;
 if (!empty ($_REQUEST['gw_id']))
 {
@@ -91,6 +86,7 @@ if (!empty ($_REQUEST['gw_id']))
 	{
 		$node = Node :: getObject($_REQUEST['gw_id']);
 		$hotspot_name = $node->getName();
+		$network = $node->getNetwork();
 	}
 	catch (Exception $e)
 	{
@@ -102,6 +98,7 @@ if (!empty ($_REQUEST['gw_id']))
 else
 {
 	/* Gateway ID is not set... Virtual login */
+	$network = Network::getCurrentNetwork();
 }
 
 isset ($_REQUEST["username"]) && $username = $_REQUEST["username"];
@@ -173,8 +170,8 @@ if ($error)
 }
 
 // HTML body
-$hotspot_network_name = HOTSPOT_NETWORK_NAME;
-$hotspot_network_url = HOTSPOT_NETWORK_URL;
+$hotspot_network_name = $network->getName();
+$hotspot_network_url = $network->getHomepageURL();
 $network_logo_banner_url = COMMON_CONTENT_URL.NETWORK_LOGO_BANNER_NAME;
 
 $html_body = "<div class='login_body'>";

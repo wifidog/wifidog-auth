@@ -314,7 +314,6 @@ class ContentGroup extends Content
 		$html .= "</div>\n";
 
 		/* content_ordering_mode */
-		global $AUTH_SOURCE_ARRAY;
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("In what order should the content displayed?").": </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
