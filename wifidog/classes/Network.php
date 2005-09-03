@@ -217,8 +217,10 @@ class Network implements GenericObject
 		return $retval;
 	}
 	
-	/** Retreives the network name 
-	 * @return A string */
+	/**
+     * Retrieves the network name 
+	 * @return A string
+     */
 	public function getName()
 	{
 		return $this->mRow['name'];
@@ -226,7 +228,8 @@ class Network implements GenericObject
 
 	/** Set the network's name
 	 * @param $value The new value 
-	 * @return true on success, false on failure */
+	 * @return true on success, false on failure
+     */
 	function setName($value)
 	{
 		$retval = true;
@@ -420,8 +423,7 @@ class Network implements GenericObject
 	 * @return true or false */
 	public function getSplashOnlyNodesAllowed()
 	{
-		($this->mRow['allow_splash_only_nodes']=='t')?$retval=true:$retval=false;
-		return $retval;
+		return (($this->mRow['allow_splash_only_nodes']=='t') ? true : false);
 	}
 
 	/** Set if nodes are allowed to be set as splash-only (no login)
@@ -444,8 +446,7 @@ class Network implements GenericObject
 	 * @return true or false */
 	public function getCustomPortalRedirectAllowed()
 	{
-		($this->mRow['allow_custom_portal_redirect']=='t')?$retval=true:$retval=false;
-		return $retval;
+		return (($this->mRow['allow_custom_portal_redirect']=='t') ? true : false);
 	}
 
 	/** Set if nodes are allowed to redirect users to an arbitrary web page instead of the portal?
