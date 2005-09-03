@@ -34,7 +34,7 @@ isset($_REQUEST["username"]) && $smarty->assign("username", $_REQUEST["username"
 if (isset($_REQUEST["submit"])) {
     try {
     	// If the source is present and that it's in our, save it to a var for later use
-		$account_origin = Networt::getObject($_REQUEST['auth_source']);
+		$account_origin = Network::getObject($_REQUEST['auth_source']);
 		
         if (!$account_origin || !$_REQUEST["username"] || !$_REQUEST["oldpassword"] || !$_REQUEST["newpassword"] || !$_REQUEST["newpassword_again"])
             throw new Exception(_('You MUST fill in all the fields.'));

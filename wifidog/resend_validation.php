@@ -33,7 +33,7 @@ if (isset($_REQUEST["submit"])) {
     if (!$_REQUEST["username"]) {
         $smarty->assign("error", _("Please specify a username"));
     } else {
- 		$account_origin = Networt::getObject($_REQUEST['auth_source']);		
+ 		$account_origin = Network::getObject($_REQUEST['auth_source']);		
         try {
         	if(empty($account_origin))
 				throw new Exception(_("Sorry, this network does not exist !"));
