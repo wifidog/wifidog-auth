@@ -30,7 +30,7 @@ require_once BASEPATH.'classes/User.php';
 require_once BASEPATH.'classes/MainUI.php';
 
 if (isset($_REQUEST["submit"])) {
-		$account_origin = Networt::getObject($_REQUEST['auth_source']);	
+		$account_origin = Network::getObject($_REQUEST['auth_source']);	
     try {
     	if(empty($account_origin))
 				throw new Exception(_("Sorry, this network does not exist !"));
