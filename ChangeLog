@@ -2,6 +2,7 @@
 	* Schema change: Added last_paged column to nodes table
 	* Replaced HOTSPOT_NETWORK_NAME with hotspot_network_name in all templates
 	* s/Networt/Network/
+	* Fixed signing up and validation, typos
 
 2005-09-01 Benoit Grégoire  <bock@step.polymtl.ca>
 	WARNING:  DO NOT use the CVS auth server in production until further notice.  

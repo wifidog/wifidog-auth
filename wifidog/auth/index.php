@@ -27,6 +27,7 @@
  */
 define('BASEPATH', '../');
 require_once BASEPATH.'include/common.php';
+require_once BASEPATH.'classes/Network.php';
 
 $auth_response = ACCOUNT_STATUS_DENIED;
 $auth_message = '';

@@ -80,10 +80,10 @@ if (isset ($_REQUEST["submit"]))
 	$password_again = trim($_REQUEST['password_again']);
 	$smarty->assign('username', $username);
 	$smarty->assign('email', $email);
-		$account_origin = Network::getObject($_REQUEST['auth_source']);
+    $account_origin = Network::getObject($_REQUEST['auth_source'])->getId();
 	try
 	{
-		if (empty ($account_origin))
+		if (!isset($account_origin))
 			throw new Exception(_("Sorry, this network does not exist !"));
 
 		validate_username($username);
