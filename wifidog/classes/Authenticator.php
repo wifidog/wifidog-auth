@@ -22,8 +22,6 @@
  * @author Copyright (C) 2005 Benoit Grégoire <bock@step.polymtl.ca>,
  * Technologies Coeus inc.
  */
-require_once 'AuthenticatorLocalUser.php';
-require_once 'AuthenticatorRadius.php';
 
 /** Abstract class to represent an authentication source */
 abstract class Authenticator

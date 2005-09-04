@@ -1,3 +1,7 @@
+2005-08-31 Francois Proulx <francois.proulx@gmail.com>
+	* Removed update.php script ( should not have been in CVS )
+	* Moved authenticator require in Network getAuthenticator()
+	
 2005-09-03 Philippe April  <philippe@ilesansfil.org>
 	* Schema change: Added last_paged column to nodes table
 	* Replaced HOTSPOT_NETWORK_NAME with hotspot_network_name in all templates

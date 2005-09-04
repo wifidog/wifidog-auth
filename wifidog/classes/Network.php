@@ -317,6 +317,8 @@ class Network implements GenericObject
 	public function getAuthenticator()
 	{
 		require_once BASEPATH.'classes/Authenticator.php';
+		// Include only the authenticator we are about to use
+		require_once BASEPATH.'classes/'.$this->mRow['network_authenticator_class'].'.php';
 		if (strpos($this->mRow['network_authenticator_params'], ';') != false)
 		{
 			throw new Exception("Network::getAuthenticator():  Security error:  The parameters passed to the constructor of the authenticator are potentially unsafe");
