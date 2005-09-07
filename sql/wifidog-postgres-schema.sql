@@ -28,6 +28,31 @@ COMMENT ON SCHEMA public IS 'Standard public schema';
 
 SET search_path = public, pg_catalog;
 
+--
+-- Name: plpgsql_call_handler(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION plpgsql_call_handler() RETURNS language_handler
+    AS '$libdir/plpgsql', 'plpgsql_call_handler'
+    LANGUAGE c;
+
+
+--
+-- Name: plpgsql_validator(oid); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION plpgsql_validator(oid) RETURNS void
+    AS '$libdir/plpgsql', 'plpgsql_validator'
+    LANGUAGE c;
+
+
+--
+-- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: public; Owner: 
+--
+
+CREATE TRUSTED PROCEDURAL LANGUAGE plpgsql HANDLER plpgsql_call_handler VALIDATOR plpgsql_validator;
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = true;
@@ -269,6 +294,42 @@ CREATE TABLE network_has_content (
 );
 
 
+--
+-- Name: network_stakeholders; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE network_stakeholders (
+    network_id text NOT NULL,
+    user_id character varying(45) NOT NULL,
+    is_admin boolean DEFAULT false NOT NULL,
+    is_stat_viewer boolean DEFAULT false NOT NULL
+);
+
+
+--
+-- Name: networks; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE networks (
+    network_id text NOT NULL,
+    network_authenticator_class text NOT NULL,
+    network_authenticator_params text,
+    is_default_network boolean DEFAULT false NOT NULL,
+    name text DEFAULT 'Unnamed network'::text NOT NULL,
+    creation_date date DEFAULT now() NOT NULL,
+    homepage_url text,
+    tech_support_email text,
+    validation_grace_time interval DEFAULT '00:20:00'::interval NOT NULL,
+    validation_email_from_address text DEFAULT 'validation@wifidognetwork'::text NOT NULL,
+    allow_multiple_login boolean DEFAULT false NOT NULL,
+    allow_splash_only_nodes boolean DEFAULT false NOT NULL,
+    allow_custom_portal_redirect boolean DEFAULT false NOT NULL,
+    CONSTRAINT networks_name_check CHECK ((name <> ''::text)),
+    CONSTRAINT networks_network_authenticator_class_check CHECK ((network_authenticator_class <> ''::text)),
+    CONSTRAINT networks_validation_email_from_address_check CHECK ((validation_email_from_address <> ''::text))
+);
+
+
 SET default_with_oids = false;
 
 --
@@ -334,7 +395,11 @@ CREATE TABLE nodes (
     city text,
     province text,
     country text,
-    postal_code text
+    postal_code text,
+    network_id text NOT NULL,
+    last_paged timestamp without time zone,
+    is_splash_only_node boolean DEFAULT false,
+    custom_portal_redirect_url text
 );
 
 
@@ -548,6 +613,22 @@ ALTER TABLE ONLY locales
 
 ALTER TABLE ONLY network_has_content
     ADD CONSTRAINT network_has_content_pkey PRIMARY KEY (network_id, content_id);
+
+
+--
+-- Name: network_stakeholders_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY network_stakeholders
+    ADD CONSTRAINT network_stakeholders_pkey PRIMARY KEY (network_id, user_id);
+
+
+--
+-- Name: networks_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY networks
+    ADD CONSTRAINT networks_pkey PRIMARY KEY (network_id);
 
 
 --
@@ -787,6 +868,14 @@ ALTER TABLE ONLY content_rss_aggregator_feeds
 
 
 --
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY node_stakeholders
+    ADD CONSTRAINT "$1" FOREIGN KEY (node_id) REFERENCES nodes(node_id);
+
+
+--
 -- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -851,6 +940,14 @@ ALTER TABLE ONLY content_display_log
 
 
 --
+-- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY node_stakeholders
+    ADD CONSTRAINT "$2" FOREIGN KEY (user_id) REFERENCES users(user_id);
+
+
+--
 -- Name: $3; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -888,6 +985,14 @@ ALTER TABLE ONLY content
 
 ALTER TABLE ONLY content
     ADD CONSTRAINT "$5" FOREIGN KEY (long_description) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: account_origin_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT account_origin_fkey FOREIGN KEY (account_origin) REFERENCES networks(network_id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
@@ -939,19 +1044,35 @@ ALTER TABLE ONLY flickr_photostream
 
 
 --
--- Name: node_stakeholders_node_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: network_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
-ALTER TABLE ONLY node_stakeholders
-    ADD CONSTRAINT node_stakeholders_node_id_fkey FOREIGN KEY (node_id) REFERENCES nodes(node_id);
+ALTER TABLE ONLY nodes
+    ADD CONSTRAINT network_id_fkey FOREIGN KEY (network_id) REFERENCES networks(network_id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
--- Name: node_stakeholders_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: network_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
-ALTER TABLE ONLY node_stakeholders
-    ADD CONSTRAINT node_stakeholders_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(user_id);
+ALTER TABLE ONLY network_has_content
+    ADD CONSTRAINT network_id_fkey FOREIGN KEY (network_id) REFERENCES networks(network_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: network_stakeholders_network_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY network_stakeholders
+    ADD CONSTRAINT network_stakeholders_network_id_fkey FOREIGN KEY (network_id) REFERENCES networks(network_id);
+
+
+--
+-- Name: network_stakeholders_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY network_stakeholders
+    ADD CONSTRAINT network_stakeholders_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(user_id);
 
 
 --

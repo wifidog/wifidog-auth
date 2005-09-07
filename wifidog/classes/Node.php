@@ -28,7 +28,9 @@ require_once 'User.php';
 require_once 'GisPoint.php';
 require_once 'AbstractGeocoder.php';
 
-/** Abstract a Node.  A Node is an actual physical transmitter. */
+/** Abstract a Node.  A Node is an actual physical transmitter.
+ * @todo:  Make all the setter functions no-op if the value is the same as what
+ * was already stored Use setCustomPortelReduirectUrl as an example*/
 class Node implements GenericObject
 {
 	private $mRow;
@@ -473,12 +475,72 @@ class Node implements GenericObject
 		$this->refresh();
 	}
 
+	/** Is the node a Splash Only node?  Will only return true if the Network configuration allows it.
+	 * @return true or false */
+	public function isSplashOnly()
+	{
+		return $this->getNetwork()->getSplashOnlyNodesAllowed() && $this->isConfiguredSplashOnly();
+	}
+
+	/** Is the node configured as a Splash Only node?  This is NOT the same as isSplashOnly().  
+	 * This is the getter for the configuration set in the database for this node.  
+	 * For the node to actually be splash only, this AND the network
+	 * gonfiguration must match.
+	 * @return true or false */
+	public function isConfiguredSplashOnly()
+	{
+		return (($this->mRow['is_splash_only_node']=='t') ? true : false);
+	}
+
+	/** Set if this node should be a splash-only (no login) node (if enabled in Network configuration)
+	 * @param $value The new value, true or false
+	 * @return true on success, false on failure */
+	function setIsConfiguredSplashOnly($value)
+	{
+		$retval = true;
+		if ($value != $this->isConfiguredSplashOnly())
+		{
+			global $db;
+			$value?$value='TRUE':$value='FALSE';
+			$retval = $db->ExecSqlUpdate("UPDATE nodes SET is_splash_only_node = {$value} WHERE node_id = '{$this->getId()}'", false);
+			$this->refresh();
+		}
+		return $retval;
+	}		
+	
+	
+	/** The url to show instead of the portal.  If empty, the portal is shown
+	 Must be enabled in the Network configuration to have any effect
+	 @return a string */
+	function getCustomPortalRedirectUrl()
+	{
+		return $this->mRow['custom_portal_redirect_url'];
+	}
+	
+	/** The url to show instead of the portal.  If empty, the portal is shown
+	 Must be enabled in the Network configuration to have any effect
+	 @return true on success, false on failure */
+	function setCustomPortalRedirectUrl($value)
+	{
+		$retval = true;
+		if ($value != $this->getCustomPortalRedirectUrl())
+		{
+			global $db;
+			$value = $db->EscapeString($value);
+			$retval = $db->ExecSqlUpdate("UPDATE nodes SET custom_portal_redirect_url = '{$value}' WHERE node_id = '{$this->getId()}'", false);
+			$this->refresh();
+		}
+		return $retval;
+	}
+	
 	/** Retreives the admin interface of this object.
 	 * @return The HTML fragment for this interface */
 	public function getAdminUI()
 	{
 		//TODO: Most of this code will be moved to Hotspot class when the abtraction will be completed
 
+//pretty_print_r($_REQUEST);
+//pretty_print_r($this->mRow);
 		$html = '';
 		$html .= "<div class='admin_container'>\n";
 		$html .= "<div class='admin_class'>Node (".get_class($this)." instance)</div>\n";
@@ -631,15 +693,6 @@ class Node implements GenericObject
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 
-		// Deployment status
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Node deployment status")." : </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$hashed_node_id."_deployment_status";
-		$html .= self :: getSelectDeploymentStatus($name);
-		$html .= "</div>\n";
-		$html .= "</div>\n";
-
 		// End of information section
 		$html .= "</div>\n";
 
@@ -700,6 +753,49 @@ class Node implements GenericObject
 		// End of GIS data
 		$html .= "</div>\n";
 
+		// Node configuration section
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Node configuration:")."</div>\n";
+		
+		$network = $this->getNetwork();
+		
+		// Deployment status
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Node deployment status")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "node_".$hashed_node_id."_deployment_status";
+		$html .= self :: getSelectDeploymentStatus($name);
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+
+		//  is_splash_only_node
+		if($network->getSplashOnlyNodesAllowed())
+		{
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Is this node splash-only (no login)?")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "node_".$hashed_node_id."_is_splash_only_node";
+		$this->isConfiguredSplashOnly()? $checked='CHECKED': $checked='';
+		$html .= "<input type='checkbox' name='$name' $checked>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		}
+		
+				// custom_portal_redirect_url
+		if($network->getCustomPortalRedirectAllowed())
+		{
+			$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("URL to show instead of the portal (if this is not empty, the portal will be disabled and this URL will be shown instead)")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "node_".$hashed_node_id."_custom_portal_redirect_url";
+		$value = htmlspecialchars($this->getCustomPortalRedirectUrl(), ENT_QUOTES);
+		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		}
+		// End Node configuration section
+		$html .= "</div>\n";
+		
 		// Owners management
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Node owners")." : </div>\n";
@@ -858,10 +954,6 @@ class Node implements GenericObject
 		$name = "node_".$hashed_node_id."_mass_transit_info";
 		$this->setTransitInfo($_REQUEST[$name]);
 
-		// Deployment status
-		$name = "node_".$hashed_node_id."_deployment_status";
-		$this->setDeploymentStatus(self :: processSelectDeploymentStatus($name));
-
 		// GIS data
 		// Get a geocoder for a given country
 		if (!empty ($_REQUEST['geocode_only']))
@@ -897,6 +989,30 @@ class Node implements GenericObject
 		$name = "node_{$this->id}_get_stats";
 		if (!empty ($_REQUEST[$name]))
 			header("Location: hotspot_log.php?node_id=".urlencode($this->getId()));
+
+		// Node configuration section
+		
+		$network = $this->getNetwork();
+
+		// Deployment status
+		$name = "node_".$hashed_node_id."_deployment_status";
+		$this->setDeploymentStatus(self :: processSelectDeploymentStatus($name));
+
+		//  is_splash_only_node
+		if($network->getSplashOnlyNodesAllowed())
+		{
+		$name = "node_".$hashed_node_id."_is_splash_only_node";
+		$this->setIsConfiguredSplashOnly(empty($_REQUEST[$name])?false:true);	
+		}
+		
+		// custom_portal_redirect_url
+		if($network->getCustomPortalRedirectAllowed())
+		{
+		$name = "node_".$hashed_node_id."_custom_portal_redirect_url";
+		$this->setCustomPortalRedirectUrl($_REQUEST[$name]);
+		}
+		
+		// End Node configuration section
 
 		// Owners processing
 		// Rebuild user id, and delete if it was selected

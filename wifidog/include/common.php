@@ -1,6 +1,31 @@
 <?php
 error_reporting(E_ALL);
 require_once BASEPATH.'config.php';
+
+function undo_magic_quotes()
+{
+	if (get_magic_quotes_gpc())
+	{
+		$_GET = array_map_recursive('stripslashes', $_GET);
+		$_POST = array_map_recursive('stripslashes', $_POST);
+		$_COOKIE = array_map_recursive('stripslashes', $_COOKIE);
+		$_REQUEST = array_map_recursive('stripslashes', $_REQUEST);
+	}
+}
+
+if (!function_exists('array_map_recursive'))
+{
+	function array_map_recursive($function, $data)
+	{
+		foreach ($data as $i => $item)
+		{
+			$data[$i] = is_array($item) ? array_map_recursive($function, $item) : $function ($item);
+		}
+		return $data;
+	}
+}
+undo_magic_quotes();
+
 require_once BASEPATH.'classes/AbstractDb.php';
 require_once BASEPATH.'classes/Session.php';
 

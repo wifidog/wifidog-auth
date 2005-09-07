@@ -1,4 +1,9 @@
-2005-08-31 Francois Proulx <francois.proulx@gmail.com>
+2005-09-05 Benoit Grégoire  <bock@step.polymtl.ca>
+	* include/common.php:  Add code to undo the effect of magic_quote if enabled in the server config.  It is still strongly recommended to disable magic_quote
+	* Node.php:  Add UI for splash only node and custom portal
+	* Update schema
+	
+2005-09-04 Francois Proulx <francois.proulx@gmail.com>
 	* Removed update.php script ( should not have been in CVS )
 	* Moved authenticator require in Network getAuthenticator()
 	
