@@ -449,7 +449,7 @@ class Network implements GenericObject
 	 * @param $account_origin The account origin
 	 * @return a User object
 	 */
-	public static function getSplashOnlyUser()
+	public function getSplashOnlyUser()
 	{
 		$username = 'SPLASH_ONLY_USER';
 
