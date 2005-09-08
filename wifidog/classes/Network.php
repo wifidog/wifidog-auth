@@ -456,7 +456,7 @@ class Network implements GenericObject
 		$user = User::getUserByUsernameAndOrigin($username, $this);
 		if(!$user)
 		{
-			$user = User::createUser($id, $username, $this, '', '');
+			$user = User::createUser(get_guid(), $username, $this, '', '');
 			$user->setAccountStatus(ACCOUNT_STATUS_ALLOWED);	
 		}	
 		return $user;
