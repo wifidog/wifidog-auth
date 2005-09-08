@@ -81,7 +81,7 @@ if (!empty ($_REQUEST['url']))
 /*  If this is a splash-only node, skip the login interface and log-in using the splash_only user */ 
 if($node && $node->isSplashOnly())
 {
-	$user = getSplashOnlyUser();
+	$user = $network-> getSplashOnlyUser();
 	$token = $user->generateConnectionToken();
 	User::setCurrentUser($user);
 	header("Location: http://".$_REQUEST['gw_address'].":".$_REQUEST['gw_port']."/wifidog/auth?token=$token");

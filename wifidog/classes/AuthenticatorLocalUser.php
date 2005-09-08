@@ -99,9 +99,9 @@ class AuthenticatorLocalUser extends Authenticator
 	}
 
 	/** Logs out the user */
-	function logout($info, & $errmsg = null)
+	function logout($conn_id, & $errmsg = null)
 	{
-		$this->acctStop($info);
+		$this->acctStop($conn_id);
 		return true;
 	}
 

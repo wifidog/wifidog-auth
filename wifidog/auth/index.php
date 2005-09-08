@@ -86,7 +86,7 @@ if ($_REQUEST['stage'] == STAGE_LOGIN)
 		{
 			if ($_REQUEST['stage'] == STAGE_LOGOUT)
 			{
-				$authenticator->logout($info);
+				$authenticator->logout($info['conn_id']);
 				$auth_message .= "| User is now logged out. ";
 			}
 
