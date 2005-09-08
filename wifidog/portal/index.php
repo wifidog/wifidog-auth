@@ -43,9 +43,10 @@ if ($node == null)
 $network = $node->getNetwork();
 
 /*  If this node has a custom portal defined, and the network config allows it, redirect to the custom portal */ 
-if(!empty($node->getCustomPortalRedirectUrl()) && $network->getCustomPortalRedirectAllowed())
+$custom_portal_url = $node->getCustomPortalRedirectUrl();
+if(!empty($custom_portal_url) && $network->getCustomPortalRedirectAllowed())
 {
-	header("Location: {$node->getCustomPortalRedirectUrl()}");
+	header("Location: {$custom_portal_url}");
 }
 
 

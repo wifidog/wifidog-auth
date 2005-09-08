@@ -1,4 +1,7 @@
 2005-09-08 Benoit Grégoire  <bock@step.polymtl.ca>
+	* portal/index.php:  Custom portal redirect now operational.
+	
+2005-09-08 Benoit Grégoire  <bock@step.polymtl.ca>
 	* MainUI:  Move call to garbage_collect() here.
 	* portal/index.php:  New feature:  Custom portal redirect.
 	* rework much of the logout code
