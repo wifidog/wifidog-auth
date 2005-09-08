@@ -31,11 +31,6 @@ require_once BASEPATH.'classes/Node.php';
 require_once BASEPATH.'classes/MainUI.php';
 define('TOOLBAR_WIDTH','250');//Must match the stylesheet for the tool section width
 
-if (CONF_USE_CRON_FOR_DB_CLEANUP == false)
-{
-	garbage_collect();
-}
-
 $node = null;
 if (!empty ($_REQUEST['gw_id']))
 	$node = Node :: getObject($_REQUEST['gw_id']);
@@ -45,6 +40,14 @@ if ($node == null)
 	$smarty->display("templates/message_unknown_hotspot.html");
 	exit;
 }
+$network = $node->getNetwork();
+
+/*  If this node has a custom portal defined, and the network config allows it, redirect to the custom portal */ 
+if(!empty($node->getCustomPortalRedirectUrl()) && $network->getCustomPortalRedirectAllowed())
+{
+	header("Location: {$node->getCustomPortalRedirectUrl()}");
+}
+
 
 $node_id = $node->getId();
 $portal_template = $node_id.".html";
@@ -65,7 +68,6 @@ $tool_html .= '<p class="indent">'."\n";
 $current_node = Node :: getCurrentNode();
 if ($current_node != null)
 {
-	$network = $node->getNetwork();
 	$current_node_id = $current_node->getId();
 	$online_users = $current_node->getOnlineUsers();
 	$num_online_users = count($online_users);

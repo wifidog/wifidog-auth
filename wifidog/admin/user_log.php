@@ -48,8 +48,9 @@ if (!empty ($_REQUEST['user_id']) || !empty($user))
 		$userinfo = $user->getInfoArray();
 		$userinfo['account_status_description'] = $account_status_to_text[$userinfo['account_status']];
 		$smarty->assign("userinfo", $userinfo);
+		global $db;
+		$db->ExecSql("SELECT DISTINCT ON (conn_id) NOW(), * FROM connections NATURAL JOIN users, nodes WHERE users.user_id='{$user->getId()}' AND nodes.node_id=connections.node_id ORDER BY conn_id, timestamp_in", $connections, false);
 
-		$connections = $user->getConnections();
 		if ($connections)
 		{
 			foreach ($connections as $connection)

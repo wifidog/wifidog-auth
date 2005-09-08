@@ -187,7 +187,7 @@ class User implements GenericObject
 	 */
 	public function getNetwork()
 	{
-			return Network::getObject($this->mRow['account_origin']);
+		return Network::getObject($this->mRow['account_origin']);
 	}
 
 
@@ -387,13 +387,6 @@ class User implements GenericObject
 		$this->mRow['pass'] = $password;
 	}
 
-	function getConnections()
-	{
-		global $db;
-		$db->ExecSql("SELECT DISTINCT ON (conn_id) NOW(), * FROM connections NATURAL JOIN users, nodes WHERE users.user_id='{$this->id}' AND nodes.node_id=connections.node_id ORDER BY conn_id, timestamp_in", $connections, false);
-		return $connections;
-	}
-
 	function getAccountOrigin()
 	{
 		return $this->mRow['account_origin'];
@@ -411,27 +404,6 @@ class User implements GenericObject
 			throw new Exception(_("No users could not be found in the database"));
 		}
 		return $objects;
-	}
-
-	/**
-	 * Logout the current user
-	 * Destroying session and cleaning tokens
-	 */
-	function logout()
-	{
-		global $session;
-		$session->destroy();
-		try
-		{
-			$connections = $this->getConnections();
-			if ($connections)
-				foreach ($connections as $connection)
-					if ($connection['token_status'] == TOKEN_UNUSED || $connection['token_status'] == TOKEN_INUSE)
-						Network :: getCurrentNetwork()->getAuthenticator()->logout($connection, $errmsg);
-		}
-		catch (Exception $e)
-		{
-		}
 	}
 
 	function sendLostUsername()

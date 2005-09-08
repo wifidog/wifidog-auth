@@ -1,3 +1,8 @@
+2005-09-08 Benoit Grégoire  <bock@step.polymtl.ca>
+	* MainUI:  Move call to garbage_collect() here.
+	* portal/index.php:  New feature:  Custom portal redirect.
+	* rework much of the logout code
+	
 2005-09-07 Benoit Grégoire  <bock@step.polymtl.ca>
 	* login/index.php:  Fix getSplashOnlyUser() method call.
 

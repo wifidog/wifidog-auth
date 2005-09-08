@@ -129,7 +129,7 @@ else
  * Once logged out, we display the login page */
 if ((!empty ($_REQUEST['logout']) && $_REQUEST['logout'] == true) && ($user = User::getCurrentUser()) != null)
 {
-    $user->logout();
+    $network->getAuthenticator()->logout();
 }
 /* End logout process section. */
 

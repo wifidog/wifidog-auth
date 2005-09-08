@@ -98,13 +98,6 @@ class AuthenticatorLocalUser extends Authenticator
 		return $retval;
 	}
 
-	/** Logs out the user */
-	function logout($conn_id, & $errmsg = null)
-	{
-		$this->acctStop($conn_id);
-		return true;
-	}
-
 	/** Start accounting traffic for the user */
 	function acctStart($info, & $errmsg = null)
 	{

@@ -195,13 +195,6 @@ class AuthenticatorRadius extends Authenticator
 		$radius_server->close();
 	}
 
-	/** Logs out the user */
-	function logout($conn_id, & $errmsg = null)
-	{
-		// RADIUS logout actually means to stop accounting
-		return $this->acctStop($conn_id);
-	}
-
 	/** Start accounting traffic for the user 
 	 * $conn_id:  The connection id for the connection to work on */
 	function acctStart($conn_id, & $errmsg = null)

@@ -30,6 +30,11 @@ require_once BASEPATH.'include/common.php';
  		require_once BASEPATH.'include/schema_validate.php';
  		validate_schema();
 		
+if (CONF_USE_CRON_FOR_DB_CLEANUP == false)
+{
+	garbage_collect();
+}
+
 require_once BASEPATH.'include/common_interface.php';
 
 /** Style contains functions managing headers, footers, stylesheet, etc.
