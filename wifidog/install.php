@@ -1171,7 +1171,7 @@ EndHTML;
       define('BASEPATH', './');
       require_once BASEPATH.'classes/User.php';
 
-      $created_user = User :: CreateUser(get_guid(), $username, 'LOCAL_USER', $email, $password);
+      $created_user = User :: createUser(get_guid(), $username, Network::getDefaultNetwork(), $email, $password);
       $user_id = $created_user->getId();
 
       # Add user to admin table, hide his username and set his account status to 1 (allowed)

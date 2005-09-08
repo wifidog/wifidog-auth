@@ -655,11 +655,8 @@ class RssPressReview
 						.rpr_expand_switch { font-weight: bolder;
 						text-decoration: none;
 						/*border: 1px solid black*/ }
-						/*.rpr_expand_switch:before { content: "+"; }*/
 						
 						.rpr_popup_inner_div { 
-						z-index: 1000;
-						display: inline;
 						padding: 0.5em;
 						border: 2px outset #324C48;
 						background-color: #f9f9f9;
@@ -669,6 +666,7 @@ class RssPressReview
 						top: 1.5em;
 						width: 350px;
 						-moz-opacity: 0.95; filter: alpha(opacity=95);
+						z-index: 1;
 						}
 						
 						.rpr_popup_inner_div_expanded {
@@ -677,10 +675,9 @@ class RssPressReview
 						border: 2px outset #324C48;
 						background-color: #f9f9f9;
 						} 
+
 						.rpr_popup_outer_div { 
-						z-index: 1000;
 						 position: relative;
-						 display: inline;
 						}
 						
 						
@@ -767,8 +764,13 @@ class RssPressReview
 						}
 						$feed_html .= "</span></p>\n";
 						$feed_html .= "<div class='rpr_popup_outer_div'>\n";
+						$class = 'rpr_popup_inner_div';
 						$item['rpr_is_today'] ? $class = 'rpr_popup_inner_div_expanded' : $class = 'rpr_popup_inner_div';
-						$feed_html .= "<div class='$class' id='$dhtml_id'>\n";
+						$style = '';
+						//$item['rpr_is_today'] ? $style = 'z-index: 1000;' : $style = '';
+						$item['rpr_is_today'] ? $script= "changestyle('$dhtml_id','visible');" : $script = '';
+						$feed_html .= "<div class='$class' style='$style' id='$dhtml_id'>\n";
+						//$feed_html .= "<script type=\"text/javascript\">$script</script>\n";
 						$feed_html .= "<p class='rpr_text'>{$item['rpr_author']} ({$feed['channel']['title']}) $display_date</p>\n";
 						$summary = strip_tags($item['rpr_content'], "<br><p><a><img><b><i>");
 						$feed_html .= "<p class='rpr_text'>{$summary}</p></div>\n";

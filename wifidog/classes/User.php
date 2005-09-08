@@ -68,7 +68,7 @@ class User implements GenericObject
 		return $user;
 	}
 	
-	/** Associates the user passed in parameter with the session
+	/** Associates the user passed in parameter with the session.  This should NOT be called by anything except the Authenticators
 	 * @param User a user object
 	 * @return boolean true if everything went well setting the session...
 	 */
@@ -89,16 +89,16 @@ class User implements GenericObject
 
 	/** Instantiate a user object 
 	 * @param $username The username of the user
-	 * @param $account_origin The account origin
+	 * @param $account_origin Network:  The account origin
 	 * @return a User object, or null if there was an error
 	 */
-	public static function getUserByUsernameAndOrigin($username, $account_origin)
+	public static function getUserByUsernameAndOrigin($username, Network $account_origin)
 	{
 		global $db;
 		$object = null;
 
 		$username_str = $db->EscapeString($username);
-		$account_origin_str = $db->EscapeString($account_origin);
+		$account_origin_str = $db->EscapeString($account_origin->getId());
 		$db->ExecSqlUniqueRes("SELECT user_id FROM users WHERE username = '$username_str' AND account_origin = '$account_origin_str'", $user_info, false);
 
 		if ($user_info != null)
@@ -108,16 +108,16 @@ class User implements GenericObject
 
 	/** Instantiate a user object 
 	 * @param $email The email of the user
-	 * @param $account_origin The account origin
+	 * @param $account_origin Network:  The account origin
 	 * @return a User object, or null if there was an error
 	 */
-	public static function getUserByEmailAndOrigin($email, $account_origin)
+	public static function getUserByEmailAndOrigin($email, Network $account_origin)
 	{
 		global $db;
 		$object = null;
 
 		$email_str = $db->EscapeString($email);
-		$account_origin_str = $db->EscapeString($account_origin);
+		$account_origin_str = $db->EscapeString($account_origin->getId());
 		$db->ExecSqlUniqueRes("SELECT user_id FROM users WHERE email = '$email_str' AND account_origin = '$account_origin_str'", $user_info, false);
 
 		if ($user_info != null)
@@ -130,28 +130,29 @@ class User implements GenericObject
 	 */
 	public static function passwordHash($password)
 	{
-		return base64_encode(pack("H*", md5($password)));
+		/**
+		 * utf8_decode is used for backward compatibility with old passwords
+		 * containing special characters. 
+		 * Conversion from UTF-8 to ISO-8859-1 is done to match the MD5 hash
+		 */
+		return base64_encode(pack("H*", md5(utf8_decode($password))));
 	}
 
 	/** Create a new User in the database 
 	 * @param $id The id to be given to the new user
 	 * @return the newly created User object, or null if there was an error
 	 */
-	static function createUser($id, $username, $account_origin, $email, $password)
+	static function createUser($id, $username, Network $account_origin, $email, $password)
 	{
 		global $db;
 
 		$object = null;
 		$id_str = $db->EscapeString($id);
 		$username_str = $db->EscapeString($username);
-		$account_origin_str = $db->EscapeString($account_origin);
+		$account_origin_str = $db->EscapeString($account_origin->getId());
 		$email_str = $db->EscapeString($email);
-		/**
-		 * utf8_decode is used for backward compatibility with old passwords
-		 * containing special characters. 
-		 * Conversion from UTF-8 to ISO-8859-1 is done to match the MD5 hash
-		 */
-		$password_hash = $db->EscapeString(User :: passwordHash(utf8_decode($password)));
+
+		$password_hash = $db->EscapeString(User :: passwordHash($password));
 		$status = ACCOUNT_STATUS_VALIDATION;
 		$token = User :: generateToken();
 
@@ -240,6 +241,7 @@ class User implements GenericObject
 		return $locale;
 	}
 
+/** get the hashed password stored in the database */
 	public function getPasswordHash()
 	{
 		return $this->mRow['pass'];
@@ -377,7 +379,7 @@ class User implements GenericObject
 	{
 		global $db;
 
-		$new_password_hash = User :: passwordHash(utf8_decode($password));
+		$new_password_hash = User :: passwordHash($password);
 		if (!($update = $db->ExecSqlUpdate("UPDATE users SET pass='$new_password_hash' WHERE user_id='{$this->id}'")))
 		{
 			throw new Exception(_("Could not change user's password."));
@@ -574,7 +576,7 @@ class User implements GenericObject
 			if(!empty($_REQUEST[$name]))
 			{
 				$username = $_REQUEST[$name];
-				return self :: getUserByUsernameAndOrigin($username, $network->GetId());
+				return self :: getUserByUsernameAndOrigin($username, $network);
 			}
 			else
 				return null;

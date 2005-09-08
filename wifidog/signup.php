@@ -96,7 +96,7 @@ if (isset ($_REQUEST["submit"]))
 		if (User :: getUserByEmailAndOrigin($email, $account_origin))
 			throw new Exception(_("Sorry, a user account is already associated to this email address."));
 
-		$created_user = User :: CreateUser(get_guid(), $username, $account_origin, $email, $password);
+		$created_user = User :: createUser(get_guid(), $username, $account_origin, $email, $password);
 		$created_user->sendValidationEmail();
 		
 		// If the user is at a REAL hotspot, give him his 15 minutes right away
@@ -111,8 +111,9 @@ if (isset ($_REQUEST["submit"]))
 	        $authenticated_user = $network->getAuthenticator()->login($username, $password, $errmsg);
 	        
 	        // Make sure the user IDs match
-			if(($created_user->getId() == $authenticated_user->getId()) && ($token = $created_user->generateConnectionToken()))
+			if(($created_user->getId() == $authenticated_user->getId()))
 			{
+				$token = $created_user->generateConnectionToken();
 				header("Location: http://{$gw_address}:{$gw_port}/wifidog/auth?token={$token}");
 			}
 			else

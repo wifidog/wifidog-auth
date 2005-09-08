@@ -50,12 +50,7 @@ if (isset($_REQUEST["submit"])) {
 
         // Warning for now, password change only works for local users, registered through our signup process.
         $user = User::getUserByUsernameAndOrigin($username, $account_origin);
-        /**
-         * utf8_decode is used for backward compatibility with old passwords
-         * containing special characters. 
-         * Conversion from UTF-8 to ISO-8859-1 is done to match the MD5 hash 
-         */
-        if ($user->getPasswordHash() != User::passwordHash(utf8_decode($current_password)))
+        if ($user->getPasswordHash() != User::passwordHash($current_password))
             throw new Exception(_("Wrong password."));
 
         $user->SetPassword($new_password);

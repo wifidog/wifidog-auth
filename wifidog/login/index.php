@@ -20,7 +20,8 @@
  *                                                                  *
  \********************************************************************/
 /**@file
- * Login page
+ * Login page, will both display the login page, and process login and logout
+ * requests.
  * @author Copyright (C) 2004 Benoit Grégoire et Philippe April
  */
 define('BASEPATH', '../');
@@ -31,52 +32,8 @@ require_once BASEPATH.'classes/Node.php';
 require_once BASEPATH.'classes/User.php';
 require_once BASEPATH.'classes/Network.php';
 
-// Logout process
-if ((!empty ($_REQUEST['logout']) && $_REQUEST['logout'] == true) && ($user = User::getCurrentUser()) != null)
-{
-    $user->logout();
-}
 
-// Store original URL typed by user.
-//TODO: manage this...
-if (!empty ($_REQUEST['url']))
-{
-	$session->set(SESS_ORIGINAL_URL_VAR, $_REQUEST['url']);
-}
-
-// Actual login process
-if (!empty ($_REQUEST['username']) && !empty ($_REQUEST['password']) && !empty ($_REQUEST['auth_source']))
-{
-	$errmsg = '';
-	$username = $db->EscapeString($_REQUEST['username']);
-
-	// Authenticating the user through the selected auth source.
-	$network = Network :: processSelectNetworkUI('auth_source');
-    
-	$user = $network->getAuthenticator()->login($_REQUEST['username'], $_REQUEST['password'], $errmsg);
-	if ($user != null)
-	{
-		if (isset ($_REQUEST['gw_address']) && isset ($_REQUEST['gw_port']) && ($token = $user->generateConnectionToken()))
-		{
-			header("Location: http://".$_REQUEST['gw_address'].":".$_REQUEST['gw_port']."/wifidog/auth?token=$token");
-		}
-		else
-		{
-			/* Virtual login */
-			header("Location: ".BASE_NON_SSL_PATH);
-		}
-		exit;
-	}
-	else
-	{
-		$error = $errmsg;
-	}
-}
-else
-{
-	$error = _('Your must specify your username and password');
-}
-
+/* Start general request parameter processing section */
 $node = null;
 if (!empty ($_REQUEST['gw_id']))
 {
@@ -110,6 +67,73 @@ isset ($_REQUEST["gw_address"]) && $session->set(SESS_GW_ADDRESS_VAR, $_REQUEST[
 isset ($_REQUEST["gw_port"]) && $session->set(SESS_GW_PORT_VAR, $_REQUEST['gw_port']);
 isset ($_REQUEST["gw_id"]) && $session->set(SESS_GW_ID_VAR, $_REQUEST['gw_id']);
 
+// Store original URL typed by user.
+//TODO: manage this...
+if (!empty ($_REQUEST['url']))
+{
+	$session->set(SESS_ORIGINAL_URL_VAR, $_REQUEST['url']);
+}
+/* End general request parameter processing section */
+
+/* Start login process section.
+ * If  successfull, the browser is redirected to another page */
+
+/*  If this is a splash-only node, skip the login interface and log-in using the splash_only user */ 
+if($node && $node->isSplashOnly())
+{
+	$user = getSplashOnlyUser();
+	$token = $user->generateConnectionToken();
+	User::setCurrentUser($user);
+	header("Location: http://".$_REQUEST['gw_address'].":".$_REQUEST['gw_port']."/wifidog/auth?token=$token");
+}
+
+/* Normal login process */
+if (!empty ($_REQUEST['username']) && !empty ($_REQUEST['password']) && !empty ($_REQUEST['auth_source']))
+{
+
+	$errmsg = '';
+	$username = $db->EscapeString($_REQUEST['username']);
+
+	// Authenticating the user through the selected auth source.
+	$network = Network :: processSelectNetworkUI('auth_source');
+    
+	$user = $network->getAuthenticator()->login($_REQUEST['username'], $_REQUEST['password'], $errmsg);
+	if ($user != null)
+	{
+		if (isset ($_REQUEST['gw_address']) && isset ($_REQUEST['gw_port']))
+		{
+			/* Login from a gateway, redirect to the gateway to activate the token */
+			$token = $user->generateConnectionToken();
+			header("Location: http://".$_REQUEST['gw_address'].":".$_REQUEST['gw_port']."/wifidog/auth?token=$token");
+		}
+		else
+		{
+			/* Virtual login, redirect to the auth server homepage */
+			header("Location: ".BASE_SSL_PATH);
+		}
+		exit;
+	}
+	else
+	{
+		$error = $errmsg;
+	}
+}
+else
+{
+	//Note that this is executed even when we have just arrived at the login page, so the user is reminded to supply a username and password
+	$error = _('Your must specify your username and password');
+}
+/* End login process section.*/
+
+/* Start logout process section.
+ * Once logged out, we display the login page */
+if ((!empty ($_REQUEST['logout']) && $_REQUEST['logout'] == true) && ($user = User::getCurrentUser()) != null)
+{
+    $user->logout();
+}
+/* End logout process section. */
+
+/* Start login interface section */
 $html = '';
 $html .= '<div id="form">'."\n";
 if (empty ($_REQUEST['gw_id']))
@@ -140,6 +164,13 @@ $html .= _("Username (or email)").'<br>'."\n";
 $html .= '<input type="text" name="username" value="'.$username.'" size="20"><br>'."\n";
 $html .= _("Password").':<br>'."\n";
 $html .= '<input type="password" name="password" size="20"><br>'."\n";
+if ($error)
+{
+	$html .= '<div class="errormsg">'."\n";
+	$html .= "$error\n";
+	$html .= '</div>'."\n";
+}
+
 $html .= '<input class="submit" type="submit" name="submit" value="'._("Login").'"><br>'."\n";
 ;
 $html .= '</form>'."\n";
@@ -162,13 +193,6 @@ $html .= '<li><a href="'.BASE_SSL_PATH.'faq.php">'._("I have trouble connecting 
 $html .= '</ul>'."\n";
 $html .= '</div>'."\n";
 
-if ($error)
-{
-	$html .= '<div id="help">'."\n";
-	$html .= "$error\n";
-	$html .= '</div>'."\n";
-}
-
 // HTML body
 $hotspot_network_name = $network->getName();
 $hotspot_network_url = $network->getHomepageURL();
@@ -189,4 +213,5 @@ $ui = new MainUI();
 $ui->setToolContent($html);
 $ui->setMainContent($html_body);
 $ui->display();
+/* End login interface section */
 ?>

@@ -1,3 +1,12 @@
+2005-09-07 Benoit Grégoire  <bock@step.polymtl.ca>
+	* RssPressReview.php:  Fix z-index so the hovers will overlap the expanded news.
+	* login/index.php:  Reorganise code to make it more legible and comment what it does.  
+	Emphasise error messages and put them right above where they clicked so users can actually see them.  
+	* Security.php:  Remove deprecated login code
+	* Authenticator.php: Change calling convention for better encapsulation
+	* New feature:  Support multiple simultaneous logins if enabled in network configuration
+	* New feature (in testing): Splash-only node support
+	  
 2005-09-05 Benoit Grégoire  <bock@step.polymtl.ca>
 	* include/common.php:  Add code to undo the effect of magic_quote if enabled in the server config.  It is still strongly recommended to disable magic_quote
 	* Node.php:  Add UI for splash only node and custom portal

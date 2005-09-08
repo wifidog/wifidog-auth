@@ -36,7 +36,7 @@ $security->requireAdmin();
 require_once BASEPATH.'classes/Node.php';
 require_once BASEPATH.'classes/User.php';
 
-$user_id = $session->get(SESS_USER_ID_VAR);
+$user_id = User::getCurrentUser()->getId();
 $smarty->assign("user_id", $user_id); // DEBUG
 
 empty($_REQUEST['action'])        ? $action        = '' : $action        = $_REQUEST['action'];

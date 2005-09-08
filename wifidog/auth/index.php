@@ -42,7 +42,8 @@ $db->ExecSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks
 if ($info != null)
 {
 	// Retrieve the associated authenticator
-	$authenticator = Network::getObject($info['account_origin'])->getAuthenticator();
+	$network = Network::getObject($info['account_origin']);
+	$authenticator = $network->getAuthenticator();
 if(!$authenticator)
 {
 			$auth_message .= "| Error: Unable to instanciate authenticator. ";
@@ -63,7 +64,7 @@ if ($_REQUEST['stage'] == STAGE_LOGIN)
 			else
 			{
 				// Start accounting
-				if($authenticator->acctStart($info, $auth_message))
+				if($authenticator->acctStart($info['conn_id'], $auth_message))
 					$auth_response = ACCOUNT_STATUS_ALLOWED;
 				else
 					$auth_response = ACCOUNT_STATUS_DENIED;
@@ -93,7 +94,7 @@ if ($_REQUEST['stage'] == STAGE_LOGIN)
 			{
 				if ($info['token_status'] == TOKEN_INUSE)
 				{
-					/* This is for the 15 minutes validation period, the exact same code is also present in when the stage is login.  If you update this one don't forget to update the other one! */
+					/* This is for the 15 minutes validation period, the exact same code is also present when the stage is login.  If you update this one don't forget to update the other one! */
 					if (($info['account_status'] == ACCOUNT_STATUS_VALIDATION) && ($info['validation_grace_time_expired'] == 't'))
 					{
 						$auth_response = ACCOUNT_STATUS_VALIDATION_FAILED;
@@ -114,7 +115,7 @@ if ($_REQUEST['stage'] == STAGE_LOGIN)
 
 				if (($incoming >= $info['incoming']) && ($outgoing >= $info['outgoing']))
 				{
-					$authenticator->acctUpdate($info, $incoming, $outgoing);
+					$authenticator->acctUpdate($info['conn_id'], $incoming, $outgoing);
 					$auth_message .= "| Updated counters. ";
 				}
 				else

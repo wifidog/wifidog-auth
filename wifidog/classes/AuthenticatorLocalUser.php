@@ -60,12 +60,7 @@ class AuthenticatorLocalUser extends Authenticator
 		$retval = false;
 		$username = $db->EscapeString($username);
 		$password = $db->EscapeString($password);
-		/**
-         * utf8_decode is used for backward compatibility with old passwords
-         * containing special characters. 
-         * Conversion from UTF-8 to ISO-8859-1 is done to match the MD5 hash
-         */
-		$password_hash = User :: passwordHash(utf8_decode($_REQUEST['password']));
+		$password_hash = User :: passwordHash($_REQUEST['password']);
 
 		$sql = "SELECT user_id FROM users WHERE (username='$username' OR email='$username') AND account_origin='".$this->getAccountOrigin()."' AND pass='$password_hash'";
 		$db->ExecSqlUniqueRes($sql, $user_info, false);
@@ -76,7 +71,7 @@ class AuthenticatorLocalUser extends Authenticator
 			if ($user->isUserValid($errmsg))
 			{
 				$retval = & $user;
-				$security->login($user->getId(), $password_hash);
+				User::setCurrentUser($user);
 				$errmsg = _("Login successfull");
 			}
 			else

@@ -48,40 +48,54 @@ abstract class Authenticator
 	{
 	}
 
-	/** Start accounting traffic for the user */
-	function acctStart($info)
-	{
+	/** Start accounting traffic for the user 
+	 * $conn_id:  The connection id for the connection to work on */
+	function acctStart($conn_id)
+	{//$info['conn_id']
 		global $db;
+		$conn_id = $db->escapeString($conn_id);
+		$db->ExecSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id='$conn_id'", $info, false);
+		$network= Network::getObject($info['network_id']);
+		$splash_user_id = $network->getSplashOnlyUser()->getId();
 		$auth_response = $info['account_status'];
 		/* Login the user */
 		$mac = $db->EscapeString($_REQUEST['mac']);
 		$ip = $db->EscapeString($_REQUEST['ip']);
-		$sql = "UPDATE connections SET "."token_status='".TOKEN_INUSE."',"."user_mac='$mac',"."user_ip='$ip',"."last_updated=NOW()"."WHERE conn_id='{$info['conn_id']}';\n";
+		$sql = "UPDATE connections SET "."token_status='".TOKEN_INUSE."',"."user_mac='$mac',"."user_ip='$ip',"."last_updated=NOW()"."WHERE conn_id='{$conn_id}';\n";
 		$db->ExecSqlUpdate($sql, false);
-
-		/* Logging in with a new token implies that all other active tokens should expire */
-		$token = $db->EscapeString($_REQUEST['token']);
-		$sql = "UPDATE connections SET "."timestamp_out=NOW(), token_status='".TOKEN_USED."' "."WHERE user_id = '{$info['user_id']}' AND token_status='".TOKEN_INUSE."' AND token!='$token';\n";
-		$db->ExecSqlUpdate($sql, false);
+		if($splash_user_id != $info['user_id'] && $network->getMultipleLoginAllowed()==false)
+		{
+			/* The user isn't the splash_only user and the network config does not allow multiple logins.  
+			 * Logging in with a new token implies that all other active tokens should expire */
+			$token = $db->EscapeString($_REQUEST['token']);
+			$sql = "UPDATE connections SET "."timestamp_out=NOW(), token_status='".TOKEN_USED."' "."WHERE user_id = '{$info['user_id']}' AND token_status='".TOKEN_INUSE."' AND token!='$token';\n";
+			$db->ExecSqlUpdate($sql, false);
+		}
+		
 		/* Delete all unused tokens for this user, so we don't fill the database with them */
 		$sql = "DELETE FROM connections "."WHERE token_status='".TOKEN_UNUSED."' AND user_id = '{$info['user_id']}';\n";
 		$db->ExecSqlUpdate($sql, false);
 	}
 
-	/** Update traffic counters */
-	function acctUpdate($info, $incoming, $outgoing)
+	/** Update traffic counters
+	 * $conn_id: The connection id for the connection to work on */
+	function acctUpdate($conn_id, $incoming, $outgoing)
 	{
 		// Write traffic counters to database
 		global $db;
-		$db->ExecSqlUpdate("UPDATE connections SET "."incoming='$incoming',"."outgoing='$outgoing',"."last_updated=NOW() "."WHERE conn_id='{$info['conn_id']}'");
+		$conn_id = $db->escapeString($conn_id);
+		$db->ExecSqlUpdate("UPDATE connections SET "."incoming='$incoming',"."outgoing='$outgoing',"."last_updated=NOW() "."WHERE conn_id='{$conn_id}'");
 	}
 
-	/** Final update and stop accounting */
-	function acctStop($info)
+	/** Final update and stop accounting
+	 * $conn_id:  The connection id (the token id) for the connection to work on
+	 * */
+	 function acctStop($conn_id)
 	{
 		// Stop traffic counters update
 		global $db;
-		$db->ExecSqlUpdate("UPDATE connections SET "."timestamp_out=NOW(),"."token_status='".TOKEN_USED."' "."WHERE conn_id='{$info['conn_id']}';\n", false);
+		$conn_id = $db->escapeString($conn_id);
+		$db->ExecSqlUpdate("UPDATE connections SET "."timestamp_out=NOW(),"."token_status='".TOKEN_USED."' "."WHERE conn_id='{$conn_id}';\n", false);
 	}
 	
 	/**

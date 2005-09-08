@@ -444,6 +444,23 @@ class Network implements GenericObject
 		return $retval;
 	}		
 	
+		/** Get's the splash-only user.  This is the user that people logged-in at a splash-only hotspot will show up as.  This user always has multiple-login capabilities.
+	 * @param $username The username of the user
+	 * @param $account_origin The account origin
+	 * @return a User object
+	 */
+	public static function getSplashOnlyUser()
+	{
+		$username = 'SPLASH_ONLY_USER';
+
+		$user = getUserByUsernameAndOrigin($username, $this);
+		if(!$user)
+		{
+			$user = User::createUser($id, $username, $this, '', '');
+			$user->setAccountStatus(ACCOUNT_STATUS_ALLOWED);	
+		}	
+		return $user;
+	}
 	/** Are nodes allowed to redirect users to an arbitrary web page instead of the portal?
 	 * @return true or false */
 	public function getCustomPortalRedirectAllowed()

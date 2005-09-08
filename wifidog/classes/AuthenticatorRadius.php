@@ -73,7 +73,7 @@ class AuthenticatorRadius extends Authenticator
 	/** Attempts to login a user against the authentication source.  If successfull, returns a User object
 	 * @param username:  A valid identifying token for the source.  Not necessarily unique.  For local user, bots username and email are valid.
 	 * @param password:  Clear text password.
-	 * @retval The actual User object if sogin was successfull, false otherwise.
+	 * @retval The actual User object if login was successfull, false otherwise.
 	 */
 	function login($username, $password, & $errmsg = null)
 	{
@@ -82,12 +82,6 @@ class AuthenticatorRadius extends Authenticator
 		$retval = false;
 		$username = $db->EscapeString($username);
 		$password = $db->EscapeString($password);
-		// Local database password hashing is based on an empty string ( we do not store remote passwords )
-		/**
-		 * Backward compatibility conversion is not needed since the password is
-		 * blank ( we do not keep RADIUS passwords
-		 */
-		$password_hash = User :: passwordHash("");
 
 		/*
 		 * Supported encryption methods are :
@@ -160,7 +154,7 @@ class AuthenticatorRadius extends Authenticator
 			{
 				// RADIUS authentication succeeded !
 				// Now checking for local copy of this user
-				$sql = "SELECT user_id FROM users WHERE (username='$username') AND account_origin='".$this->getAccountOrigin()."' AND pass='$password_hash'";
+				$sql = "SELECT user_id, pass FROM users WHERE (username='$username') AND account_origin='".$this->getAccountOrigin()."'";
 				$db->ExecSqlUniqueRes($sql, $user_info, false);
 
 				if ($user_info != null)
@@ -169,7 +163,7 @@ class AuthenticatorRadius extends Authenticator
 					if ($user->isUserValid($errmsg))
 					{
 						$retval = $user;
-						$security->login($user->getId(), $password_hash);
+						User::setCurrentUser($user);
 						$errmsg = _("Login successfull");
 					}
 					else
@@ -182,11 +176,12 @@ class AuthenticatorRadius extends Authenticator
 				{
 					// This user has been succcessfully authenticated through remote RADIUS, but it's not yet in our local database
 					// Creating the user with a Global Unique ID, empty email and password
+					// Local database password hashing is based on an empty string ( we do not store remote passwords )
 					$user = User :: createUser(get_guid(), $username, $this->getAccountOrigin(), "", "");
 					$retval = & $user;
 					// Validate the user right away !
 					$user->setAccountStatus(ACCOUNT_STATUS_ALLOWED);
-					$security->login($user->getId(), $password_hash);
+					User::setCurrentUser($user);
 					$errmsg = _("Login successfull");
 				}
 				return $retval;
@@ -207,9 +202,14 @@ class AuthenticatorRadius extends Authenticator
 		return $this->acctStop($info);
 	}
 
-	/** Start accounting traffic for the user */
-	function acctStart($info, & $errmsg = null)
+	/** Start accounting traffic for the user 
+	 * $conn_id:  The connection id for the connection to work on */
+	function acctStart($conn_id, & $errmsg = null)
 	{
+		global $db;
+		$conn_id = $db->escapeString($conn_id);
+		$db->ExecSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id='$conn_id'", $info, false);
+		
 		// RADIUS accounting start
 		$radius_acct = new Auth_RADIUS_Acct_Start;
 		$radius_acct->addServer($this->mRadius_hostname, $this->mRadius_acct_port, $this->mRadius_secret_key);
@@ -245,12 +245,16 @@ class AuthenticatorRadius extends Authenticator
 		return true;
 	}
 
-	/** Update traffic counters */
-	function acctUpdate($info, $incoming, $outgoing, & $errmsg = null)
+	/** Update traffic counters
+	 * $conn_id: The connection id for the connection to work on */
+	function acctUpdate($conn_id, $incoming, $outgoing, & $errmsg = null)
 	{
 		// Call generic traffic updater ( local database )
-		parent :: acctUpdate($info, $incoming, $outgoing);
-
+		parent :: acctUpdate($conn_id, $incoming, $outgoing);
+		global $db;
+		$conn_id = $db->escapeString($conn_id);
+		$db->ExecSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id='$conn_id'", $info, false);
+		
 		// RADIUS accounting ping
 		// Session is completely based on Database time
 		$session_time = strtotime($info['now']) - strtotime($info['timestamp_in']);
@@ -289,10 +293,15 @@ class AuthenticatorRadius extends Authenticator
 		return true;
 	}
 
-	/** Final update and stop accounting */
-	function acctStop($info, & $errmsg = null)
+	/** Final update and stop accounting
+	 * $conn_id:  The connection id (the token id) for the connection to work on
+	 * */
+	function acctStop($conn_id, & $errmsg = null)
 	{
-		parent :: acctStop($info);
+		parent :: acctStop($conn_id);
+		global $db;
+		$conn_id = $db->escapeString($conn_id);
+		$db->ExecSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id='$conn_id'", $info, false);
 
 		// RADIUS accounting stop
 		// Session is completely based on Database time

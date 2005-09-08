@@ -33,24 +33,6 @@ class Security {
     $this->session = new Session();
   }
 
-/**
- * @deprecated   Moved to User
-*/
-  function login($user_id, $hash) {
-    global $db;
-    $user_id = $db->EscapeString($user_id);
-    $hash = $db->EscapeString($hash);
-    $db->ExecSqlUniqueRes("SELECT * FROM users WHERE user_id='$user_id' AND pass='$hash'", $user_info, false);
-    if (empty($user_info)) {
-	echo '<p class=error>'._("Your user_id and password do not match")."</p>\n";
-	exit;
-    } else {
-      /* Access granted */
-      $this->session->set(SESS_USER_ID_VAR, $user_id);
-      $this->session->set(SESS_PASSWORD_HASH_VAR, $hash);
-    }
-  }
-
   function requireAdmin() {
        $current_user = User::getCurrentUser();
      if (!$current_user || ($current_user && !User::getCurrentUser()->isSuperAdmin()))
@@ -65,18 +47,14 @@ class Security {
   }
 
   function requireOwner($node_id) {
-  	// If the user has super power let him it !
+  	// If the user has super power let him in !
   	$current_user = User::getCurrentUser();
   	if ($current_user && User::getCurrentUser()->isSuperAdmin())
   		return true;
   	
-    global $db;
-    //$this->session->dump();
-    $user = $this->session->get(SESS_USER_ID_VAR);
-    $password_hash = $this->session->get(SESS_PASSWORD_HASH_VAR);
-
-    $db->ExecSqlUniqueRes("SELECT * FROM users NATURAL JOIN node_stakeholders WHERE is_owner = true AND (users.user_id='$user') AND pass='$password_hash' AND node_stakeholders.node_id='$node_id'", $user_info, false);
-    if(empty($user_info)) {
+  	$node=Node::getObject($node_id);
+    
+    if(!$node->isOwner($current_user)) {
         echo '<p class=error>'._("You do not have owner privileges")."</p>\n";
         exit;
     } else {
