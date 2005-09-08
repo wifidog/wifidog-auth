@@ -453,7 +453,7 @@ class Network implements GenericObject
 	{
 		$username = 'SPLASH_ONLY_USER';
 
-		$user = getUserByUsernameAndOrigin($username, $this);
+		$user = User::getUserByUsernameAndOrigin($username, $this);
 		if(!$user)
 		{
 			$user = User::createUser($id, $username, $this, '', '');
