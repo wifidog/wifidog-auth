@@ -485,6 +485,12 @@ class Node implements GenericObject
 		return $this->mRow['last_paged'];
 	}
 
+	function setLastPaged($last_paged)
+	{
+		$this->mDb->ExecSqlUpdate("UPDATE nodes SET last_paged = {$last_paged}::abstime WHERE node_id = '{$this->getId()}'");
+		$this->refresh();
+	}
+
 	function getLastHeartbeatIP()
 	{
 		return $this->mRow['last_heartbeat_ip'];
@@ -502,7 +508,6 @@ class Node implements GenericObject
 
 	function setLastHeartbeatTimestamp($timestamp)
 	{
-		$status = $this->mDb->EscapeString($status);
 		$this->mDb->ExecSqlUpdate("UPDATE nodes SET last_heartbeat_timestamp = '{$timestamp}' WHERE node_id = '{$this->getId()}'");
 		$this->refresh();
 	}
