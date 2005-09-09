@@ -18,26 +18,23 @@
    * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
    *                                                                  *
    \********************************************************************/
-  /**@file
-   * @author Copyright (C) 2004 Philippe April.
+  /**@file graph_common.inc.php
+   * @author Copyright (C) 2005 Philippe April
    */
+
 define('BASEPATH','../');
 require_once 'admin_common.php';
-require_once BASEPATH.'classes/Node.php';
+require_once 'Image/Graph.php';
+require_once 'Image/Canvas.php';
 
-$security = new Security();
-$security->requireAdmin();
+if (!$_REQUEST["date_from"])
+    $_REQUEST["date_from"] = strftime("%Y-%m-%d 00:00");
+if (!$_REQUEST["date_to"])
+    $_REQUEST["date_to"] = strftime("%Y-%m-%d 11:59");
 
-try {
-    $online_users = Node::getAllOnlineUsers();
-	$smarty->assign("users_array", $online_users);
-} catch (Exception $e) {
-	$smarty->assign("error", $e->getMessage());
-}
+$date_constraint = "AND timestamp_in >= '{$_REQUEST['date_from']}' AND timestamp_in <= '{$_REQUEST['date_to']}'";
 
-require_once BASEPATH.'classes/MainUI.php';
-$ui=new MainUI();
-$ui->setToolSection('ADMIN');
-$ui->setMainContent($smarty->fetch("admin/templates/online_users.html"));
-$ui->display();
+$node_id = $db->EscapeString($_REQUEST["node_id"]);
+$user_id = $db->EscapeString($_REQUEST["user_id"]);
+$network_id = $db->EscapeString($_REQUEST["network_id"]);
 ?>

@@ -243,6 +243,15 @@ class Network implements GenericObject
 		return $retval;
 	}
 
+	/**
+     * Retrieves the network's creation date
+	 * @return A string
+     */
+	public function getCreationDate()
+	{
+		return $this->mRow['creation_date'];
+	}
+
 	/** Retreives the network's homepage url 
 	 * @return The id */
 	public function getHomepageURL()
@@ -401,8 +410,7 @@ class Network implements GenericObject
 	 * @return true or false */
 	public function getMultipleLoginAllowed()
 	{
-		($this->mRow['allow_multiple_login']=='t')?$retval=true:$retval=false;
-		return $retval;
+		return ($this->mRow['allow_multiple_login'] == 't') ? true : false;
 	}
 
 	/** Set if a account be connected more than once at the same time?

@@ -90,27 +90,75 @@ class Statistics{
     return $row['timestamp_in'];
   }
 
-  public static function getRegistrationsPerMonth() {
+  public static function getRegistrationsPerMonth($from = '', $to = '', $order = "DESC") {
     global $db;
-    $db->ExecSql("SELECT COUNT(users) AS num_users, date_trunc('month', reg_date) AS month FROM users  WHERE account_status = ".ACCOUNT_STATUS_ALLOWED." GROUP BY date_trunc('month', reg_date) ORDER BY month DESC",$results, false);
+
+    if ($from != '' && $to != '')
+        $date_constraint = "AND reg_date >= '$from' AND reg_date <= '$to'";
+    else
+        $date_constraint = '';
+
+    $db->ExecSql("SELECT COUNT(users) AS num_users, date_trunc('month', reg_date) AS month FROM users  WHERE account_status = ".ACCOUNT_STATUS_ALLOWED." ${date_constraint} GROUP BY date_trunc('month', reg_date) ORDER BY month $order",$results, false);
     return $results;
   }
 
-  public static function getMostMobileUsers($limit) {
+  public static function getRegistrationsPerNode($from = '', $to = '') {
     global $db;
-    $db->ExecSql("SELECT COUNT(DISTINCT node_id) AS num_hotspots_visited, user_id, username, account_origin FROM users NATURAL JOIN connections WHERE (incoming!=0 OR outgoing!=0) GROUP BY account_origin, username,user_id ORDER BY num_hotspots_visited DESC LIMIT $limit", $results, false);
+
+    if ($from != '' && $to != '')
+        $date_constraint = "AND timestamp_in BETWEEN '$from' AND '$to'";
+    else
+        $date_constraint = '';
+
+    $db->ExecSql("SELECT nodes.name,connections.node_id,COUNT(user_id) as registrations FROM connections,nodes WHERE timestamp_in IN (SELECT MIN(timestamp_in) as first_connection FROM connections GROUP BY user_id) ${date_constraint} AND nodes.node_id=connections.node_id GROUP BY connections.node_id,nodes.name ORDER BY registrations DESC", $results, false);
     return $results;
   }
 
-  public static function getMostFrequentUsers($limit) {
+  public static function getNodesUsage($from = '', $to = '') {
     global $db;
-    $db->ExecSql("SELECT COUNT(user_active_days.user_id) AS active_days, user_active_days.user_id, username, account_origin FROM (SELECT DISTINCT user_id, date_trunc('day', timestamp_in) AS date FROM connections WHERE (incoming!=0 OR outgoing!=0) GROUP BY date,user_id) user_active_days JOIN users ON (users.user_id = user_active_days.user_id) GROUP BY account_origin, username, user_active_days.user_id ORDER BY active_days DESC LIMIT $limit",$results, false);
+
+    if ($from != '' && $to != '')
+        $date_constraint = "AND timestamp_in BETWEEN '$from' AND '$to'";
+    else
+        $date_constraint = '';
+
+    $db->ExecSql("SELECT nodes.name,connections.node_id,COUNT(connections.node_id) AS connections FROM connections,nodes WHERE nodes.node_id=connections.node_id ${date_constraint} GROUP BY connections.node_id,nodes.name ORDER BY connections DESC;", $results, false);
     return $results;
   }
 
-  public static function getMostGreedyUsers($limit) {
+  public static function getMostMobileUsers($limit, $from = '', $to = '') {
     global $db;
-    $db->ExecSql("SELECT DISTINCT connections.user_id, SUM((incoming+outgoing)/1048576) AS total, SUM((incoming/1048576)) AS total_incoming, SUM((outgoing/1048576)) AS total_outgoing, username, account_origin FROM connections JOIN users ON (users.user_id = connections.user_id) WHERE incoming IS NOT NULL AND outgoing IS NOT NULL GROUP BY account_origin, username,connections.user_id ORDER BY total DESC limit $limit", $results, false);
+
+    if ($from != '' && $to != '')
+        $date_constraint = "AND timestamp_in >= '$from' AND timestamp_out <= '$to'";
+    else
+        $date_constraint = '';
+
+    $db->ExecSql("SELECT COUNT(DISTINCT node_id) AS num_hotspots_visited, user_id, username, account_origin FROM users NATURAL JOIN connections WHERE (incoming!=0 OR outgoing!=0) ${date_constraint} GROUP BY account_origin, username,user_id ORDER BY num_hotspots_visited DESC LIMIT $limit", $results, false);
+    return $results;
+  }
+
+  public static function getMostFrequentUsers($limit, $from = '', $to = '') {
+    global $db;
+
+    if ($from != '' && $to != '')
+        $date_constraint = "AND timestamp_in >= '$from' AND timestamp_out <= '$to'";
+    else
+        $date_constraint = '';
+
+    $db->ExecSql("SELECT COUNT(user_active_days.user_id) AS active_days, user_active_days.user_id, username, account_origin FROM (SELECT DISTINCT user_id, date_trunc('day', timestamp_in) AS date FROM connections WHERE (incoming!=0 OR outgoing!=0)  ${date_constraint} GROUP BY date,user_id) user_active_days JOIN users ON (users.user_id = user_active_days.user_id) GROUP BY account_origin, username, user_active_days.user_id ORDER BY active_days DESC LIMIT $limit",$results, false);
+    return $results;
+  }
+
+  public static function getMostGreedyUsers($limit, $from = '', $to = '') {
+    global $db;
+
+    if ($from != '' && $to != '')
+        $date_constraint = "AND timestamp_in >= '$from' AND timestamp_out <= '$to'";
+    else
+        $date_constraint = '';
+
+    $db->ExecSql("SELECT DISTINCT connections.user_id, SUM(incoming+outgoing) AS total, SUM(incoming) AS total_incoming, SUM(outgoing) AS total_outgoing, username, account_origin FROM connections JOIN users ON (users.user_id = connections.user_id) WHERE incoming IS NOT NULL AND outgoing IS NOT NULL  ${date_constraint} GROUP BY account_origin, username,connections.user_id ORDER BY total DESC limit $limit", $results, false);
     return $results;
   }
   

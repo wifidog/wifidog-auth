@@ -319,6 +319,11 @@ class Node implements GenericObject
 		$this->refresh();
 	}
 
+    function getCreationDate()
+    {
+        return $this->mRow['creation_date'];
+    }
+
 	function getHomePageURL()
 	{
 		return $this->mRow['home_page_url'];
@@ -475,6 +480,33 @@ class Node implements GenericObject
 		$this->refresh();
 	}
 
+	function getLastPaged()
+	{
+		return $this->mRow['last_paged'];
+	}
+
+	function getLastHeartbeatIP()
+	{
+		return $this->mRow['last_heartbeat_ip'];
+	}
+
+	function getLastHeartbeatUserAgent()
+	{
+		return $this->mRow['last_heartbeat_user_agent'];
+	}
+
+	function getLastHeartbeatTimestamp()
+	{
+		return $this->mRow['last_heartbeat_timestamp'];
+	}
+
+	function setLastHeartbeatTimestamp($timestamp)
+	{
+		$status = $this->mDb->EscapeString($status);
+		$this->mDb->ExecSqlUpdate("UPDATE nodes SET last_heartbeat_timestamp = '{$timestamp}' WHERE node_id = '{$this->getId()}'");
+		$this->refresh();
+	}
+
 	/** Is the node a Splash Only node?  Will only return true if the Network configuration allows it.
 	 * @return true or false */
 	public function isSplashOnly()
@@ -533,7 +565,7 @@ class Node implements GenericObject
 		return $retval;
 	}
 	
-	/** Retreives the admin interface of this object.
+	/** Retrieves the admin interface of this object.
 	 * @return The HTML fragment for this interface */
 	public function getAdminUI()
 	{
@@ -988,7 +1020,7 @@ class Node implements GenericObject
 		// Statistics
 		$name = "node_{$this->id}_get_stats";
 		if (!empty ($_REQUEST[$name]))
-			header("Location: hotspot_log.php?node_id=".urlencode($this->getId()));
+			header("Location: stats.php?node_id=".urlencode($this->getId()));
 
 		// Node configuration section
 		

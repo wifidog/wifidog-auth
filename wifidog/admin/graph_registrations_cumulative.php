@@ -18,26 +18,25 @@
    * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
    *                                                                  *
    \********************************************************************/
-  /**@file
-   * @author Copyright (C) 2004 Philippe April.
+  /**@file graph_registrations_cumulative.php
+   * @author Copyright (C) 2005 Philippe April
    */
-define('BASEPATH','../');
-require_once 'admin_common.php';
-require_once BASEPATH.'classes/Node.php';
 
-$security = new Security();
-$security->requireAdmin();
+require_once 'graph_common.inc.php';
 
-try {
-    $online_users = Node::getAllOnlineUsers();
-	$smarty->assign("users_array", $online_users);
-} catch (Exception $e) {
-	$smarty->assign("error", $e->getMessage());
+$Graph =& Image_Graph::factory("Image_Graph", array(600, 200));
+$Plotarea =& $Graph->add(Image_Graph::factory("Image_Graph_Plotarea"));
+$Dataset =& Image_Graph::factory("Image_Graph_Dataset_Trivial");
+$Area =& Image_Graph::factory("Image_Graph_Plot_Area", &$Dataset);
+$Area->setFillColor("#9db8d2");
+$Plot =& $Plotarea->add(&$Area);
+
+$total = 0;
+$registration_stats = Statistics::getRegistrationsPerMonth($_REQUEST['date_from'], $_REQUEST['date_to'], "ASC");
+foreach ($registration_stats as $row) {
+    $total += $row['num_users'];
+    $Dataset->addPoint(substr($row['month'],0,7), $total);
 }
 
-require_once BASEPATH.'classes/MainUI.php';
-$ui=new MainUI();
-$ui->setToolSection('ADMIN');
-$ui->setMainContent($smarty->fetch("admin/templates/online_users.html"));
-$ui->display();
+$Graph->done();
 ?>

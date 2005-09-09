@@ -18,29 +18,24 @@
    * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
    *                                                                  *
    \********************************************************************/
-  /**@file node_list.php
-   * Network status page
-   * @author Copyright (C) 2004 Benoit Gr�goire
+  /**@file stats_all_networks.inc.php
+   * @author Copyright (C) 2005 Philippe April
    */
-define('BASEPATH','../');
-require_once 'admin_common.php';
 
-$security = new Security();
-$security->requireAdmin();
+$html .= "<fieldset class='pretty_fieldset'>";
+$html .= "<legend>" . _("All networks") . "</legend>";
+$html .= "<table>";
 
-require_once BASEPATH.'classes/Statistics.php';
-
-$smarty->assign("total_users",  $stats->getNumUsers());
-$smarty->assign("total_valid",  $stats->getNumValidUsers());
-
-$smarty->assign("registrations", Statistics::getRegistrationsPerMonth());
-$smarty->assign("most_mobile_users", Statistics::getMostMobileUsers(10));
-$smarty->assign("most_frequent_users", Statistics::getMostFrequentUsers(10));
-$smarty->assign("most_greedy_users", Statistics::getMostGreedyUsers(10));
-
-require_once BASEPATH.'classes/MainUI.php';
-$ui=new MainUI();
-$ui->setToolSection('ADMIN');
-$ui->setMainContent($smarty->fetch("admin/templates/user_stats.html"));
-$ui->display();
+$even = 0;
+foreach (Network::getAllNetworks() as $network) {
+    $html .= $even ? "<tr>\n" : "<tr class='odd'>\n";
+    if ($even == 0)
+        $even = 1;
+    else
+        $even = 0;
+    $html .= "  <td><a href='?network_id={$network->getId()}'>{$network->getName()}</a></td>\n";
+    $html .= "</tr>";
+}
+$html .= "</table>";
+$html .= "</fieldset>";
 ?>

@@ -1,3 +1,8 @@
+2005-09-08 Philippe April  <philippe@ilesansfil.org>
+	* New stats system with graphs
+	* Changed the UI a bit to reflect this change
+	* Updated stylesheet
+
 2005-09-08 Benoit Grégoire  <bock@step.polymtl.ca>
 	* portal/index.php:  Custom portal redirect now operational.
 	

@@ -480,6 +480,39 @@ TD.spreadsheet_user { /*background-color: lightgray;*/ }
 #std_table th { font-size: 14pt; background-color: #e1f5da;}
 #std_table td.item { font-weight: bold; }
 
+.pretty_fieldset {
+    background-color: #e1f5da;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    }
+.pretty_fieldset legend {
+    font-size: 14pt;
+    }
+.pretty_fieldset table {
+    width: 100%;
+    border-collapse: collapse;
+    }
+.pretty_fieldset tr.odd {
+    background-color: #d1e5ca;
+    }
+.pretty_fieldset th {
+    text-align: left;
+    text-transform: uppercase;
+    width: 200px;
+    }
+
+.pretty_fieldset div {
+    border: 1px dotted black;
+    background-color: #fff;
+    }
+
+.pretty_fieldset .red {
+    background-color: red;
+    }
+
+.smaller {
+    font-size: 80%;
+    }
+
 /* Google Maps stuff */
 #map_hotspots_list {
 	width: 25%; 

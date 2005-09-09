@@ -4,17 +4,22 @@
 	</div>
 {else}
 
-<div id="node_list">
+<fieldset class='pretty_fieldset'>
+<legend>Online users</legend>
 <table>
+
+<thead>
 <tr>
-	<th>Node</th>
-	<th>Username</th>
-	<th>Origin</th>
-	<th>Logged in Since</th>
-	<th>Traffic IN/OUT</th>
+  <th>Node</th>
+  <th>Username</th>
+  <th>Origin</th>
+  <th>Logged in Since</th>
+  <th>Traffic IN/OUT</th>
 </tr>
+</thead>
+
 {section name=i loop=$users_array}
-<tr>
+<tr class='{cycle values="odd,even"}'>
     <td>{$users_array[i].name}</td>
     <td><a href="user_log.php?user_id={$users_array[i].user_id}">{$users_array[i].username}</a></td>
     <td>{$users_array[i].account_origin}</td>
@@ -24,7 +29,6 @@
 </tr>
 {/section}
 </table>
-</div>
-<br>
+</fieldset>
 
 {/if}

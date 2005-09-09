@@ -18,26 +18,23 @@
    * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
    *                                                                  *
    \********************************************************************/
-  /**@file
-   * @author Copyright (C) 2004 Philippe April.
+  /**@file graph_registrations.php
+   * @author Copyright (C) 2005 Philippe April
    */
-define('BASEPATH','../');
-require_once 'admin_common.php';
-require_once BASEPATH.'classes/Node.php';
 
-$security = new Security();
-$security->requireAdmin();
+require_once 'graph_common.inc.php';
 
-try {
-    $online_users = Node::getAllOnlineUsers();
-	$smarty->assign("users_array", $online_users);
-} catch (Exception $e) {
-	$smarty->assign("error", $e->getMessage());
+$Graph =& Image_Graph::factory("Image_Graph", array(600, 200));
+$Plotarea =& $Graph->add(Image_Graph::factory("Image_Graph_Plotarea"));
+$Dataset =& Image_Graph::factory("Image_Graph_Dataset_Trivial");
+$Bar =& Image_Graph::factory("Image_Graph_Plot_Bar", &$Dataset);
+$Bar->setFillColor("#9db8d2");
+$Plot =& $Plotarea->add(&$Bar);
+
+$registration_stats = Statistics::getRegistrationsPerMonth($_REQUEST['date_from'], $_REQUEST['date_to'], "ASC");
+foreach ($registration_stats as $row) {
+    $Dataset->addPoint(substr($row['month'],0,7), $row['num_users']);
 }
 
-require_once BASEPATH.'classes/MainUI.php';
-$ui=new MainUI();
-$ui->setToolSection('ADMIN');
-$ui->setMainContent($smarty->fetch("admin/templates/online_users.html"));
-$ui->display();
+$Graph->done();
 ?>
