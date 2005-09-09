@@ -88,10 +88,6 @@ $html .= "<tr class='even'>";
 $html .= "  <th>" . _("Transit Info") . "</th>";
 $html .= "  <td>" . $nodeObject->getTransitInfo() . "</td>";
 $html .= "</tr>";
-$html .= "<tr class='odd'>";
-$html .= "  <th>" . _("IP Address") . "</th>";
-$html .= "  <td>" . $nodeObject->getLastHeartbeatIP() . "</td>";
-$html .= "</tr>";
 $html .= "</table>";
 $html .= "</fieldset>";
 
