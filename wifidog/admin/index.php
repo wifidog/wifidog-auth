@@ -25,7 +25,7 @@
  */
 
 define('BASEPATH', '../');
-require_once BASEPATH.'admin_common.php';
+require_once BASEPATH.'admin/admin_common.php';
 require_once BASEPATH.'classes/Content.php';
 require_once BASEPATH.'classes/MainUI.php';
 $ui=new MainUI();
