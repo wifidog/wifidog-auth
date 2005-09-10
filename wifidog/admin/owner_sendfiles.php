@@ -26,7 +26,7 @@
 
 
 define('BASEPATH','../');
-require_once 'admin_common.php';
+require_once BASEPATH.'admin/admin_common.php';
 require_once BASEPATH.'classes/Node.php';
 require_once BASEPATH.'classes/User.php';
 require_once BASEPATH.'classes/MainUI.php';

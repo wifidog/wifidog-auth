@@ -22,8 +22,7 @@
    * @author Copyright (C) 2005 Philippe April
    */
 
-require_once 'Image/Graph.php';
-require_once 'Image/Canvas.php';
+require_once BASEPATH."admin/graph_common.inc.php";
 
 $html .= "<fieldset class='pretty_fieldset'>";
 $html .= "<legend>" . _("Network Profile") . "</legend>";
@@ -92,12 +91,20 @@ $html .= "</fieldset>";
  */
 $html .= "<fieldset class='pretty_fieldset'>";
 $html .= "<legend>" . _("Registrations per month") . "</legend>";
-$html .= "<div><img src='graph_registrations.php?network_id={$network_id}&date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}'></div>";
+if (Dependencies::check("ImageGraph", $errmsg)) {
+    $html .= "<div><img src='graph_registrations.php?network_id={$network_id}&date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}'></div>";
+} else {
+    $html .= $errmsg;
+}
 $html .= "</fieldset>";
 
 $html .= "<fieldset class='pretty_fieldset'>";
 $html .= "<legend>" . _("Most registrations per node") . "</legend>";
-$html .= "<div><img src='graph_registrations_cumulative.php?network_id={$network_id}&date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}'></div>";
+if (Dependencies::check("ImageGraph", $errmsg)) {
+    $html .= "<div><img src='graph_registrations_cumulative.php?network_id={$network_id}&date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}'></div>";
+} else {
+    $html .= $errmsg;
+}
 $html .= "</fieldset>";
 
 $html .= "<fieldset class='pretty_fieldset'>";

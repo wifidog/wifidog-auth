@@ -29,7 +29,7 @@
  * Technologies Coeus inc.
  */
 define('BASEPATH', '../');
-require_once 'admin_common.php';
+require_once BASEPATH.'admin/admin_common.php';
 require_once BASEPATH.'classes/GenericObject.php';
 
 if (!empty ($_REQUEST['debug'])) {

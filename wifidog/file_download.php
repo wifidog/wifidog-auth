@@ -24,7 +24,7 @@
 */
 
 define('BASEPATH', './');
-require_once 'include/common.php';
+require_once BASEPATH.'include/common.php';
 
 if (!empty ($_REQUEST['file_id']))
 {

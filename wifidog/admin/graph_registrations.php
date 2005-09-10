@@ -22,7 +22,8 @@
    * @author Copyright (C) 2005 Philippe April
    */
 
-require_once 'graph_common.inc.php';
+define('BASEPATH',"../");
+require_once BASEPATH.'admin/graph_common.inc.php';
 
 $Graph =& Image_Graph::factory("Image_Graph", array(600, 200));
 $Plotarea =& $Graph->add(Image_Graph::factory("Image_Graph_Plotarea"));

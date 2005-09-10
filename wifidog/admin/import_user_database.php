@@ -22,7 +22,7 @@
    * @author Copyright (C) 2004 Technologies Coeus inc.
    */
 define('BASEPATH','../');
-require_once 'admin_common.php';
+require_once BASEPATH.'admin/admin_common.php';
 
 $security = new Security();
 $security->requireAdmin();

@@ -22,7 +22,7 @@
    * @author Copyright (C) 2004 Philippe April.
    */
 define('BASEPATH','../');
-require_once 'admin_common.php';
+require_once BASEPATH.'admin/admin_common.php';
 require_once BASEPATH.'classes/Node.php';
 
 $security = new Security();

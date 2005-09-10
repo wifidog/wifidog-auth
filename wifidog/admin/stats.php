@@ -21,13 +21,13 @@
   /**@file stats.php
    * @author Copyright (C) 2005 Philippe April
    */
-/*
+   /*
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', true);
 */
 
 define('BASEPATH','../');
-require_once 'admin_common.php';
+require_once BASEPATH.'admin/admin_common.php';
 require_once BASEPATH.'classes/MainUI.php';
 
 function bytes_in_words($bytes) {

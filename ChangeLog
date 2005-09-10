@@ -3,6 +3,8 @@
 	network.
 	* classes/{Authenticator,Network,Node}.php: isset, and issues preventing
 	users from logging out.
+	* add BASEPATH to most files with require_once
+	* Added dependency checking class
 
 2005-09-10 Francois Proulx <francois.proulx@gmail.com>
 	* Automatically redirect user to login form when trying to access admin

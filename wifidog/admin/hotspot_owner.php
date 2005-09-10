@@ -28,7 +28,7 @@
 // See very good example in /Classes/Content.php around line 708
 // User::getSelectUserUI()
 define('BASEPATH','../');
-require_once 'admin_common.php';
+require_once BASEPATH.'admin/admin_common.php';
 
 $security = new Security();
 $security->requireAdmin();

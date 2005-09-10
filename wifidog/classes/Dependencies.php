@@ -1,6 +1,4 @@
 <?php
-
-
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -20,28 +18,40 @@
  * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
  *                                                                  *
  \********************************************************************/
-/**@file index.php
- * @author Copyright (C) 2005 Philippe April
+/**@file Dependencies.php
+ * @author Copyright (C) 2005 Philippe April <philippe@ilesansfil.org>
  */
 
-define('BASEPATH', '../');
-require_once BASEPATH.'admin_common.php';
-require_once BASEPATH.'classes/Content.php';
-require_once BASEPATH.'classes/MainUI.php';
-$ui=new MainUI();
-$html = '';
-$current_user = User :: getCurrentUser();
-if(!$current_user)
+class Dependencies
 {
-	// Redirect to login form automatically
-	header("Location: ../login/");
-	exit;
-}
-else
-{
-	$ui->setToolSection('ADMIN');
-}
+    static public function check($component, & $errmsg) {
+        $components = array(
+            "ImageGraph" => array(
+                "name" => "PEAR::Image_Graph",
+                "file" => "Image/Graph.php"
+            )
+        );
 
-$ui->setMainContent($html);
-$ui->display();
+        if (isset($components[$component])) {
+            $component_info = $components[$component];
+
+            if (file_exists($component_info["file"])) {
+
+                if (include_once($component_info["file"])) {
+                    return true;
+                } else {
+                    $errmsg = $component_info["name"] . _(" is not working properly");
+                    return false;
+                }
+
+            } else {
+                $errmsg = $component_info["name"] . _(" is not installed");
+                return false;
+            }
+        } else {
+            throw new Exception("Component not found");
+        }
+    }
+
+} // End class
 ?>

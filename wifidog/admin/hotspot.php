@@ -23,7 +23,7 @@
    * @author Copyright (C) 2005 Pascal Leclerc
    */
 define('BASEPATH','../');
-require_once 'admin_common.php';
+require_once BASEPATH.'admin/admin_common.php';
 require_once BASEPATH.'classes/MainUI.php';
 
 $security = new Security();

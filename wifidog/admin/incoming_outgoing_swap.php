@@ -23,7 +23,7 @@
    * @author Copyright (C) 2004 Benoit Gr�goire
    */
 define('BASEPATH','../');
-require_once 'admin_common.php';
+require_once BASEPATH.'admin/admin_common.php';
 
 echo "<div id='head'><h1>incoming_outgoing_swap</h1></div>\n";    
 echo "<div id='navLeft'>\n";

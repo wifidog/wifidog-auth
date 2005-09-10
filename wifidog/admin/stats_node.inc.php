@@ -22,8 +22,7 @@
    * @author Copyright (C) 2005 Philippe April
    */
 
-require_once 'Image/Graph.php';
-require_once 'Image/Canvas.php';
+require_once BASEPATH."admin/graph_common.inc.php";
 
 $html .= "<fieldset class='pretty_fieldset'>";
 $html .= "<legend>Profile</legend>";
@@ -144,17 +143,29 @@ $html .= "</fieldset>";
 
 $html .= "<fieldset class='pretty_fieldset'>";
 $html .= "<legend>" . _("Connections per hour of the day") . "</legend>";
-$html .= "<div><img src='graph_per_hour.php?node_id={$node_id}&date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}'></div>";
+if (Dependencies::check("ImageGraph", $errmsg)) {
+    $html .= "<div><img src='graph_per_hour.php?node_id={$node_id}&date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}'></div>";
+} else {
+    $html .= $errmsg;
+}
 $html .= "</fieldset>";
 
 $html .= "<fieldset class='pretty_fieldset'>";
 $html .= "<legend>" . _("Connections per week day") . "</legend>";
-$html .= "<div><img src='graph_per_weekday.php?node_id={$node_id}&date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}'></div>";
+if (Dependencies::check("ImageGraph", $errmsg)) {
+    $html .= "<div><img src='graph_per_weekday.php?node_id={$node_id}&date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}'></div>";
+} else {
+    $html .= $errmsg;
+}
 $html .= "</fieldset>";
 
 $html .= "<fieldset class='pretty_fieldset'>";
 $html .= "<legend>" . _("Connections per month") . "</legend>";
-$html .= "<div><img src='graph_per_month.php?node_id={$node_id}&date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}'></div>";
+if (Dependencies::check("ImageGraph", $errmsg)) {
+    $html .= "<div><img src='graph_per_month.php?node_id={$node_id}&date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}'></div>";
+} else {
+    $html .= $errmsg;
+}
 $html .= "</fieldset>";
 
 if (isset($_REQUEST['group_connections']) && $_REQUEST['group_connections'] == "group_connections_by_mac") {

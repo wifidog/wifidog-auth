@@ -27,6 +27,7 @@ if (!function_exists('array_map_recursive'))
 undo_magic_quotes();
 
 require_once BASEPATH.'classes/AbstractDb.php';
+require_once BASEPATH.'classes/Dependencies.php';
 require_once BASEPATH.'classes/Session.php';
 
 global $db;

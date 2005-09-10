@@ -23,7 +23,7 @@
  * Technologies Coeus inc.
  */
 define('BASEPATH', '../');
-require_once 'admin_common.php';
+require_once BASEPATH.'admin_common.php';
 
 define('CONTENT_ADMIN_HREF', 'content_admin.php');
 require_once BASEPATH.'classes/Content.php';

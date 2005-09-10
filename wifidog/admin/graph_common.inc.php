@@ -22,10 +22,7 @@
    * @author Copyright (C) 2005 Philippe April
    */
 
-define('BASEPATH','../');
-require_once 'admin_common.php';
-require_once 'Image/Graph.php';
-require_once 'Image/Canvas.php';
+require_once BASEPATH.'admin/admin_common.php';
 
 if (!$_REQUEST["date_from"])
     $_REQUEST["date_from"] = strftime("%Y-%m-%d 00:00");
