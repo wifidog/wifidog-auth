@@ -34,7 +34,8 @@ if (!$_REQUEST["date_to"])
 
 $date_constraint = "AND timestamp_in >= '{$_REQUEST['date_from']}' AND timestamp_in <= '{$_REQUEST['date_to']}'";
 
-$node_id = $db->EscapeString($_REQUEST["node_id"]);
-$user_id = $db->EscapeString($_REQUEST["user_id"]);
-$network_id = $db->EscapeString($_REQUEST["network_id"]);
+$node_id = isset($_REQUEST["node_id"]) ? $db->EscapeString($_REQUEST["node_id"]) : null;
+$user_id = isset($_REQUEST["user_id"]) ? $db->EscapeString($_REQUEST["user_id"]) : null;
+$network_id = isset($_REQUEST["network_id"]) ? $db->EscapeString($_REQUEST["network_id"]) : null;
+
 ?>

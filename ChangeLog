@@ -1,3 +1,7 @@
+2005-09-10 Francois Proulx <francois.proulx@gmail.com>
+	* Automatically redirect user to login form when trying to access admin
+	* Added various isset, empty tests, vars init in stats (to avoid php warning)
+
 2005-09-08 Philippe April  <philippe@ilesansfil.org>
 	* New stats system with graphs
 	* Changed the UI a bit to reflect this change

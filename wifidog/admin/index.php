@@ -33,7 +33,9 @@ $html = '';
 $current_user = User :: getCurrentUser();
 if(!$current_user)
 {
-    $html = '<p class="errormsg">'._('You must be logged in to access the administration panel.')."</p>\n";
+	// Redirect to login form automatically
+	header("Location: ../login/");
+	exit;
 }
 else
 {

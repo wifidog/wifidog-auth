@@ -92,9 +92,9 @@ try {
         $stats_title = _("Network information for") . " '" . $networkObject->getName() . "'";
     }
 
-    if (!$_REQUEST["date_from"])
+    if (!isset($_REQUEST["date_from"]))
         $_REQUEST["date_from"] = strftime("%Y-%m-%d 00:00");
-    if (!$_REQUEST["date_to"])
+    if (!isset($_REQUEST["date_to"]))
         $_REQUEST["date_to"] = strftime("%Y-%m-%d 11:59");
 
     $date_constraint = "AND timestamp_in >= '{$_REQUEST['date_from']}' AND timestamp_in <= '{$_REQUEST['date_to']}'";
@@ -207,15 +207,15 @@ EOF;
             $html .= "<em>" . _("Group connections") . "?</em><br>";
 
             $html .= "<input type=\"radio\" name=\"group_connections\" value=\"\"";
-            $html .= $_REQUEST['group_connections'] == "" ? 'CHECKED' : '';
+            $html .= empty($_REQUEST['group_connections']) ? 'CHECKED' : '';
             $html .= ">No<br>";
 
             $html .= "<input type=\"radio\" name=\"group_connections\" value=\"group_connections_by_mac\"";
-            $html .= $_REQUEST['group_connections'] == "group_connections_by_mac" ? 'CHECKED' : '';
+            $html .= isset($_REQUEST['group_connections']) && $_REQUEST['group_connections'] == "group_connections_by_mac" ? 'CHECKED' : '';
             $html .= ">By unique MACs<br>";
 
             $html .= "<input type=\"radio\" name=\"group_connections\" value=\"group_connections_by_user\"";
-            $html .= $_REQUEST['group_connections'] == "group_connections_by_user" ? 'CHECKED' : '';
+            $html .= isset($_REQUEST['group_connections']) && $_REQUEST['group_connections'] == "group_connections_by_user" ? 'CHECKED' : '';
             $html .= ">By unique usernames<br>";
         }
 
