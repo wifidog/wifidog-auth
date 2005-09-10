@@ -537,6 +537,7 @@ class User implements GenericObject
 		global $db;
 		$html = '';
 		$html .= Network :: getSelectNetworkUI($user_prefix);
+		$html .= "<br>";
 		$name = "select_user_{$user_prefix}_username";
 		$html .= "Username: \n";
 		$html .= "<input type='text' name='$name' value=''>\n";
