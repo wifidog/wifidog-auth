@@ -333,6 +333,14 @@ class User implements GenericObject
 
 	}
 
+    public function isNobody() {
+		global $db;
+		$db->ExecSqlUniqueRes("SELECT DISTINCT user_id FROM (SELECT user_id FROM network_stakeholders WHERE user_id='{$this->getId()}' UNION SELECT user_id FROM node_stakeholders WHERE user_id='{$this->getId()}' UNION SELECT user_id FROM administrators WHERE user_id='{$this->getId()}') as tmp", $row, false);
+		if ($row == null)
+			return true;
+		return false;
+    }
+
 	function getValidationToken()
 	{
 		return $this->mRow['validation_token'];

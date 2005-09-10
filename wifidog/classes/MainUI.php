@@ -101,67 +101,74 @@ class MainUI
 			case "ADMIN" :
 				$current_user = User :: getCurrentUser();
 				$html = '';
-				$html .= "<ul class='admin_menu_list'>\n";
 
-				if ($current_user && $current_user->isSuperAdmin())
-				{
-					$html .= "<li><a href='user_log.php'>"._("User logs")."</a></li>\n";
-					$html .= "<li><a href='online_users.php'>"._("Online Users")."</a></li>\n";
-					$html .= "<li><a href='stats.php'>"._("Statistics")."</a></li>\n";
-					$html .= "<li><a href='import_user_database.php'>"._("Import NoCat user database")."</a></li>\n";
-					$html .= "<li><a href='content_admin.php'>"._("Content manager")."</a></li>\n";
-				}
+                if ($current_user && $current_user->isNobody())
+                {
+                    $html .= _("You do not have permissions to access any administration functions.");
+                } else {
 
-				$html .= "</ul>\n";
+                    $html .= "<ul class='admin_menu_list'>\n";
 
-				// If the user is super admin OR owner of at least one hotspot show the menu
-				if ($current_user && ($current_user->isSuperAdmin() || $current_user->isOwner()))
-				{
-					/* Node admin */
-					$html .= "<div class='admin_section_container'>\n";
-					$html .= '<form action="'.GENERIC_OBJECT_ADMIN_ABS_HREF.'" method="post">';
-					$html .= "<div class='admin_section_title'>"._("Node administration:")." </div>\n";
+                    if ($current_user && $current_user->isSuperAdmin())
+                    {
+                        $html .= "<li><a href='user_log.php'>"._("User logs")."</a></li>\n";
+                        $html .= "<li><a href='online_users.php'>"._("Online Users")."</a></li>\n";
+                        $html .= "<li><a href='stats.php'>"._("Statistics")."</a></li>\n";
+                        $html .= "<li><a href='import_user_database.php'>"._("Import NoCat user database")."</a></li>\n";
+                        $html .= "<li><a href='content_admin.php'>"._("Content manager")."</a></li>\n";
+                    }
 
-					$html .= "<div class='admin_section_data'>\n";
+                    $html .= "</ul>\n";
 
-					if ($current_user->isSuperAdmin())
-						$sql_additional_where = '';
-					else
-						$sql_additional_where = "AND node_id IN (SELECT node_id from node_stakeholders WHERE is_owner = true AND user_id='".$current_user->getId()."')";
-					$html .= "<div id='NodeSelector'>\n";
-					$html .= Node :: getSelectNodeUI('object_id', $sql_additional_where);
-					$html .= "</div>\n";
-					$html .= "</div>\n";
-					$html .= "<div class='admin_section_tools'>\n";
+                    // If the user is super admin OR owner of at least one hotspot show the menu
+                    if ($current_user && ($current_user->isSuperAdmin() || $current_user->isOwner()))
+                    {
+                        /* Node admin */
+                        $html .= "<div class='admin_section_container'>\n";
+                        $html .= '<form action="'.GENERIC_OBJECT_ADMIN_ABS_HREF.'" method="post">';
+                        $html .= "<div class='admin_section_title'>"._("Node administration:")." </div>\n";
 
-					$html .= "<input type='hidden' name='object_class' value='Node'>\n";
-					$html .= "<input type='hidden' name='action' value='edit'>\n";
-					$html .= "<input type='submit' name='edit_submit' value='"._("Edit")."'>\n";
+                        $html .= "<div class='admin_section_data'>\n";
 
-					$html .= "</div>\n";
-					$html .= '</form>';
-					$html .= "</div>\n";
-				}
+                        if ($current_user->isSuperAdmin())
+                            $sql_additional_where = '';
+                        else
+                            $sql_additional_where = "AND node_id IN (SELECT node_id from node_stakeholders WHERE is_owner = true AND user_id='".$current_user->getId()."')";
+                        $html .= "<div id='NodeSelector'>\n";
+                        $html .= Node :: getSelectNodeUI('object_id', $sql_additional_where);
+                        $html .= "</div>\n";
+                        $html .= "</div>\n";
+                        $html .= "<div class='admin_section_tools'>\n";
 
-				/* Network admin */
-				if ($current_user && $current_user->isSuperAdmin())
-				{
-					$html .= "<div class='admin_section_container'>\n";
-					$html .= '<form action="'.GENERIC_OBJECT_ADMIN_ABS_HREF.'" method="post">';
-					$html .= "<div class='admin_section_title'>"._("Network administration:")." </div>\n";
+                        $html .= "<input type='hidden' name='object_class' value='Node'>\n";
+                        $html .= "<input type='hidden' name='action' value='edit'>\n";
+                        $html .= "<input type='submit' name='edit_submit' value='"._("Edit")."'>\n";
 
-					$html .= "<div class='admin_section_data'>\n";
-					$html .= "<input type='hidden' name='action' value='edit'>\n";
-					$html .= "<input type='hidden' name='object_class' value='Network'><br>\n";
-					$html .= Network :: getSelectNetworkUI('object_id');
-					$html .= "</div>\n";
-					$html .= "<div class='admin_section_tools'>\n";
+                        $html .= "</div>\n";
+                        $html .= '</form>';
+                        $html .= "</div>\n";
+                    }
 
-					$html .= "<input type=submit name='edit_submit' value='"._("Edit")."'>\n";
-					$html .= "</div>\n";
-					$html .= '</form>';
-					$html .= "</div>\n";
-				}
+                    /* Network admin */
+                    if ($current_user && $current_user->isSuperAdmin())
+                    {
+                        $html .= "<div class='admin_section_container'>\n";
+                        $html .= '<form action="'.GENERIC_OBJECT_ADMIN_ABS_HREF.'" method="post">';
+                        $html .= "<div class='admin_section_title'>"._("Network administration:")." </div>\n";
+
+                        $html .= "<div class='admin_section_data'>\n";
+                        $html .= "<input type='hidden' name='action' value='edit'>\n";
+                        $html .= "<input type='hidden' name='object_class' value='Network'><br>\n";
+                        $html .= Network :: getSelectNetworkUI('object_id');
+                        $html .= "</div>\n";
+                        $html .= "<div class='admin_section_tools'>\n";
+
+                        $html .= "<input type=submit name='edit_submit' value='"._("Edit")."'>\n";
+                        $html .= "</div>\n";
+                        $html .= '</form>';
+                        $html .= "</div>\n";
+                    }
+                }
 				break;
 			default :
 				$html .= "<p class='errormsg'>"._("Unknown section:")." $section</p>\n";

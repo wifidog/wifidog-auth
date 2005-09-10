@@ -5,6 +5,7 @@
 	users from logging out.
 	* add BASEPATH to most files with require_once
 	* Added dependency checking class
+	* Don't show the admin menu if user does not have access
 
 2005-09-10 Francois Proulx <francois.proulx@gmail.com>
 	* Automatically redirect user to login form when trying to access admin
