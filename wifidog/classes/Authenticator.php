@@ -71,7 +71,7 @@ abstract class Authenticator
 			if ($splash_user_id != $user->getId() && $node = Node :: getCurrentNode())
 			{
 				//Try to destroy all connections tied to the current node
-				$sql = "SELECT conn_id FROM connections WHERE user_id = '{$user->getId()}' AND node_id={$node->getId()} AND token_status='".TOKEN_INUSE."';\n";
+				$sql = "SELECT conn_id FROM connections WHERE user_id = '{$user->getId()}' AND node_id='{$node->getId()}' AND token_status='".TOKEN_INUSE."';\n";
 			$conn_rows = null;
 				$db->ExecSql($sql, $conn_rows, false);
 			if($conn_rows)
@@ -128,10 +128,12 @@ abstract class Authenticator
 			$sql = "SELECT * FROM connections WHERE user_id = '{$info['user_id']}' AND token_status='".TOKEN_INUSE."' AND token!='$token';\n";
 			$conn_rows = array ();
 			$db->ExecSql($sql, $conn_rows, true);
-			foreach ($conn_rows as $conn_row)
-			{
-				$this->acctStop($conn_row['conn_id']);
-			}
+			if (isset($conn_rows)) {
+                foreach ($conn_rows as $conn_row)
+			    {
+				    $this->acctStop($conn_row['conn_id']);
+			    }
+            }
 		}
 
 		/* Delete all unused tokens for this user, so we don't fill the database with them */
