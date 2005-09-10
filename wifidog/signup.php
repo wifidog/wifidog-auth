@@ -80,23 +80,23 @@ if (isset ($_REQUEST["submit"]))
 	$password_again = trim($_REQUEST['password_again']);
 	$smarty->assign('username', $username);
 	$smarty->assign('email', $email);
-    $account_origin = Network::getObject($_REQUEST['auth_source'])->getId();
+    $network = Network::getObject($_REQUEST['auth_source']);
 	try
 	{
-		if (!isset($account_origin))
+		if (!isset($network))
 			throw new Exception(_("Sorry, this network does not exist !"));
 
 		validate_username($username);
 		validate_email($email);
 		validate_passwords($password, $password_again);
 
-		if (User :: getUserByUsernameAndOrigin($username, $account_origin))
+		if (User :: getUserByUsernameAndOrigin($username, $network))
 			throw new Exception(_("Sorry, a user account is already associated to this username. Pick another one."));
 
-		if (User :: getUserByEmailAndOrigin($email, $account_origin))
+		if (User :: getUserByEmailAndOrigin($email, $network))
 			throw new Exception(_("Sorry, a user account is already associated to this email address."));
 
-		$created_user = User :: createUser(get_guid(), $username, $account_origin, $email, $password);
+		$created_user = User :: createUser(get_guid(), $username, $network, $email, $password);
 		$created_user->sendValidationEmail();
 		
 		// If the user is at a REAL hotspot, give him his 15 minutes right away
@@ -107,7 +107,6 @@ if (isset ($_REQUEST["submit"]))
 		if($gw_id && $gw_address && $gw_port)
 		{
 			// Authenticate this new user automatically
-	        $network = Network::getObject($account_origin);
 	        $authenticated_user = $network->getAuthenticator()->login($username, $password, $errmsg);
 	        
 	        // Make sure the user IDs match
