@@ -23,7 +23,7 @@
  * @author Copyright (C) 2004 Philippe April.
  */
 define('BASEPATH', '../');
-require_once 'admin_common.php';
+require_once BASEPATH.'admin/admin_common.php';
 require_once BASEPATH.'classes/MainUI.php';
 
 $security = new Security();
@@ -115,11 +115,13 @@ else
 	$smarty->assign("account_status_to_text", $account_status_to_text);
 	
 	// Display user selection form
-	$html = "<b>"._("Find a User ID : ")."</b><br>\n";
+	$html .= "<fieldset class=\"pretty_fieldset\">";
+	$html .= "<legend>" . _("Find a user ID : ") . "</legend>";
 	$html .= "<form method='POST' action=''>\n";
 	$html .= User::getSelectUserUI("user_id_searchbox")."<br>\n";
 	$html .= "<input type='submit'>\n";
 	$html .= "</form><p>\n";
+	$html .= "</fieldset>";
 	$html .= $smarty->fetch("admin/templates/user_log.html");
 	
     $ui=new MainUI();

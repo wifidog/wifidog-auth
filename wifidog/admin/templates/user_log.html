@@ -1,17 +1,16 @@
+<fieldset class="pretty_fieldset">
+<legend>User list</legend>
 {if $error}
 	<div id="help">
 	{$error}
 	</div>
 {else}
-<div>
 <form method="get">
 Sort: <select name="sort">{html_options values=$sort_ids selected=$sort output=$sort_ids}</select>
 Direction: <select name="direction">{html_options values=$direction_ids selected=$direction output=$direction_ids}</select>
 <input type="submit" value="{"Sort"|_}">
 </form>
-</div>
 
-<div>
 <table>
 <tr>
 	<th>Username</th>
@@ -30,7 +29,7 @@ Direction: <select name="direction">{html_options values=$direction_ids selected
 </tr>
 {/section}
 </table>
-</div>
+</fieldset>
 <br>
 
 {if $pages}
@@ -39,7 +38,6 @@ Page:
 {section name=i loop=$pages}
 <a {if $pages[i].selected}style="font-weight: bold;" {/if}href="?sort={$sort}&direction={$direction}&page={$pages[i].number}">{$pages[i].number}</a>
 {/section}
-</div>
 {/if}
 
 {/if}
