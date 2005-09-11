@@ -85,6 +85,7 @@ else
 	$smarty->assign("account_status_to_text", $account_status_to_text);
 	
 	// Display user selection form
+	$html = "";
 	$html .= "<fieldset class=\"pretty_fieldset\">";
 	$html .= "<legend>" . _("Find a user ID : ") . "</legend>";
 	$html .= "<form method='POST' action=''>\n";

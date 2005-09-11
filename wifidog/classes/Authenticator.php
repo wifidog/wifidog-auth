@@ -1,5 +1,4 @@
 <?php
-
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -72,15 +71,15 @@ abstract class Authenticator
 			{
 				//Try to destroy all connections tied to the current node
 				$sql = "SELECT conn_id FROM connections WHERE user_id = '{$user->getId()}' AND node_id='{$node->getId()}' AND token_status='".TOKEN_INUSE."';\n";
-			$conn_rows = null;
+				$conn_rows = null;
 				$db->ExecSql($sql, $conn_rows, false);
-			if($conn_rows)
-			{
-				foreach ($conn_rows as $conn_row)
+				if ($conn_rows)
 				{
-					$this->acctStop($conn_row['conn_id']);
+					foreach ($conn_rows as $conn_row)
+					{
+						$this->acctStop($conn_row['conn_id']);
+					}
 				}
-			}
 			}
 		}
 
@@ -91,12 +90,12 @@ abstract class Authenticator
 			$sql = "SELECT conn_id FROM connections WHERE user_id = '{$user->getId()}' AND token_status='".TOKEN_INUSE."';\n";
 			$conn_rows = null;
 			$db->ExecSql($sql, $conn_rows, false);
-			if($conn_rows)
+			if ($conn_rows)
 			{
 				foreach ($conn_rows as $conn_row)
-			{
-				$this->acctStop($conn_row['conn_id']);
-			}
+				{
+					$this->acctStop($conn_row['conn_id']);
+				}
 			}
 		}
 		global $session;
@@ -128,12 +127,13 @@ abstract class Authenticator
 			$sql = "SELECT * FROM connections WHERE user_id = '{$info['user_id']}' AND token_status='".TOKEN_INUSE."' AND token!='$token';\n";
 			$conn_rows = array ();
 			$db->ExecSql($sql, $conn_rows, true);
-			if (isset($conn_rows)) {
-                foreach ($conn_rows as $conn_row)
-			    {
-				    $this->acctStop($conn_row['conn_id']);
-			    }
-            }
+			if (isset ($conn_rows))
+			{
+				foreach ($conn_rows as $conn_row)
+				{
+					$this->acctStop($conn_row['conn_id']);
+				}
+			}
 		}
 
 		/* Delete all unused tokens for this user, so we don't fill the database with them */

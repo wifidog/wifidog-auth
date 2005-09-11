@@ -1,6 +1,4 @@
 <?php
-
-
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -199,6 +197,7 @@ else
 		$name = "{$user_prefix}";
 		$html .= "Node: \n";
 		$sql = "SELECT node_id, name from nodes WHERE 1=1 $sql_additional_where ORDER BY node_id";
+		$node_rows = null;
 		$db->ExecSql($sql, $node_rows, false);
 		if ($node_rows != null)
 		{
@@ -1284,6 +1283,7 @@ else
 	{
 		global $db;
 
+		$nodes = null;
 		$db->ExecSql("SELECT * FROM nodes ORDER BY $order_by", $nodes, false);
 
 		if ($nodes == null)
@@ -1295,8 +1295,9 @@ else
 	static function getAllNodesWithStatus()
 	{
 		global $db;
-
-		$db->ExecSql("SELECT node_id, name, last_heartbeat_user_agent, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS online, creation_date, node_deployment_status FROM nodes ORDER BY node_id", $nodes, false);
+		
+		$nodes = null;
+		$db->ExecSql("SELECT node_id, name, last_heartbeat_user_agent, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS online, creation_date, node_deployment_status FROM nodes ORDER BY name", $nodes, false);
 
 		if ($nodes == null)
 			throw new Exception(_("No nodes could not be found in the database"));
@@ -1307,7 +1308,8 @@ else
 	static function getAllDeploymentStatus()
 	{
 		global $db;
-
+		
+		$statuses = null;
 		$db->ExecSql("SELECT * FROM node_deployment_status", $statuses, false);
 		if ($statuses == null)
 			throw new Exception(_("No deployment statues  could be found in the database"));
@@ -1489,5 +1491,3 @@ else
 
 } // End class
 ?>
-
-

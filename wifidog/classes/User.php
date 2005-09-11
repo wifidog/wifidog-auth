@@ -1,4 +1,5 @@
 <?php
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -41,12 +42,12 @@ class User implements GenericObject
 		$object = new self($id);
 		return $object;
 	}
-    
-    static function createNewObject()
-    {
-        echo "<h1>Use User::createUser() instead</h1>";
-    }
-		/** Get an interface to create a new object.
+
+	static function createNewObject()
+	{
+		echo "<h1>Use User::createUser() instead</h1>";
+	}
+	/** Get an interface to create a new object.
 	* @return html markup
 	*/
 	public static function getCreateNewObjectUI()
@@ -61,9 +62,9 @@ class User implements GenericObject
 	 * @return the node object or null if no new node was created.
 	 */
 	static function processCreateNewObjectUI()
-{
-	return self::createNewObject();
-}
+	{
+		return self :: createNewObject();
+	}
 	/** Instantiate the current user
 	 * @return a User object, or null if there was an error
 	 */
@@ -84,7 +85,7 @@ class User implements GenericObject
 		}
 		return $user;
 	}
-	
+
 	/** Associates the user passed in parameter with the session.  This should NOT be called by anything except the Authenticators
 	 * @param User a user object
 	 * @return boolean true if everything went well setting the session...
@@ -98,7 +99,7 @@ class User implements GenericObject
 			$session->set(SESS_PASSWORD_HASH_VAR, $user->getPasswordHash());
 			return true;
 		}
-		catch(Exception $e)
+		catch (Exception $e)
 		{
 			return false;
 		}
@@ -198,15 +199,14 @@ class User implements GenericObject
 	{
 		return $this->id;
 	}
-	
+
 	/** Gets the Network to which the user belongs 
 	 * @return Network object (never returns null)
 	 */
 	public function getNetwork()
 	{
-		return Network::getObject($this->mRow['account_origin']);
+		return Network :: getObject($this->mRow['account_origin']);
 	}
-
 
 	/** Get a user display suitable for a user list.  Will include link to the user profile. */
 	function getUserListUI()
@@ -225,24 +225,24 @@ class User implements GenericObject
 	{
 		return $this->mRow['email'];
 	}
-    
-    public function getRealName()
-    {
-        return $this->mRow['real_name'];
-    }
-    
-    public function setRealName()
-    {
-    }
-    
-    public function getWebsiteURL()
-    {
-        return $this->mRow['website'];
-    }
-    
-    public function setWebsiteURL()
-    {
-    }
+
+	public function getRealName()
+	{
+		return $this->mRow['real_name'];
+	}
+
+	public function setRealName()
+	{
+	}
+
+	public function getWebsiteURL()
+	{
+		return $this->mRow['website'];
+	}
+
+	public function setWebsiteURL()
+	{
+	}
 
 	/**What locale (language) does the user prefer?
 	 * @todo Save in the database */
@@ -258,7 +258,7 @@ class User implements GenericObject
 		return $locale;
 	}
 
-/** get the hashed password stored in the database */
+	/** get the hashed password stored in the database */
 	public function getPasswordHash()
 	{
 		return $this->mRow['pass'];
@@ -350,13 +350,14 @@ class User implements GenericObject
 
 	}
 
-    public function isNobody() {
+	public function isNobody()
+	{
 		global $db;
 		$db->ExecSqlUniqueRes("SELECT DISTINCT user_id FROM (SELECT user_id FROM network_stakeholders WHERE user_id='{$this->getId()}' UNION SELECT user_id FROM node_stakeholders WHERE user_id='{$this->getId()}' UNION SELECT user_id FROM administrators WHERE user_id='{$this->getId()}') as tmp", $row, false);
 		if ($row == null)
 			return true;
 		return false;
-    }
+	}
 
 	function getValidationToken()
 	{
@@ -377,13 +378,13 @@ class User implements GenericObject
 		{
 			global $db;
 			global $session;
-			
+
 			$token = self :: generateToken();
 			if ($_SERVER['REMOTE_ADDR'])
 			{
 				$node_ip = $db->EscapeString($_SERVER['REMOTE_ADDR']);
 			}
-			
+
 			if ($session && $node_ip && $session->get(SESS_GW_ID_VAR))
 			{
 				$node_id = $db->EscapeString($session->get(SESS_GW_ID_VAR));
@@ -568,10 +569,11 @@ class User implements GenericObject
 	static function processSelectUserUI($user_prefix)
 	{
 		$object = null;
-		try {
+		try
+		{
 			$network = Network :: processSelectNetworkUI($user_prefix);
 			$name = "select_user_{$user_prefix}_username";
-			if(!empty($_REQUEST[$name]))
+			if (!empty ($_REQUEST[$name]))
 			{
 				$username = $_REQUEST[$name];
 				return self :: getUserByUsernameAndOrigin($username, $network);
@@ -579,69 +581,69 @@ class User implements GenericObject
 			else
 				return null;
 		}
-		catch(Exception $e)
+		catch (Exception $e)
 		{
 			return null;
 		}
 	}
-    
-    public function getAdminUI()
-    {
-        global $db;
-        $html = '';
-        $html .= "<div class='admin_container'>\n";
-        $html .= "<div class='admin_class'>User instance</div>\n";
-        
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Username")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
-        //$name = "user_".$this->getId()."_username";
-        //$html .= "<input type='text' name='$name' value='".htmlentities($this->getUsername())."' size=30 readonly>\n";
-        $html .= $this->getUsername()."\n";
-        $html .= "</div>\n";
-        $html .= "</div>\n";
-        
-        //TODO: implement this when Network abstraction is completed
-        /*
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Network")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
-        $name = "user_".$this->getId()."_username";
-        // Show network name here
-        $html .= "</div>\n";
-        $html .= "</div>\n";*/
-        
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Real name")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
-        $name = "user_".$this->getId()."_real_name";
-        $html .= "<input type='text' name='$name' value='".htmlentities($this->getRealName())."' size=30 readonly>\n";
-        $html .= "</div>\n";
-        $html .= "</div>\n";
-        
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Website URL")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
-        $name = "user_".$this->getId()."_website";
-        $html .= "<input type='text' name='$name' value='".htmlentities($this->getWebsiteURL())."' size=30 readonly>\n";
-        $html .= "</div>\n";
-        $html .= "</div>\n";
-        
-        $html .= "</div>\n";
-        return $html;
-    }
-    
-    public function processAdminUI()
-    {
-    }
-    
-    public function delete(& $errmsg)
-    {
-    }
-    
-    public function getUserUI()
-    {
-    }
+
+	public function getAdminUI()
+	{
+		global $db;
+		$html = '';
+		$html .= "<div class='admin_container'>\n";
+		$html .= "<div class='admin_class'>User instance</div>\n";
+
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Username")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		//$name = "user_".$this->getId()."_username";
+		//$html .= "<input type='text' name='$name' value='".htmlentities($this->getUsername())."' size=30 readonly>\n";
+		$html .= $this->getUsername()."\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+
+		//TODO: implement this when Network abstraction is completed
+		/*
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Network")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "user_".$this->getId()."_username";
+		// Show network name here
+		$html .= "</div>\n";
+		$html .= "</div>\n";*/
+
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Real name")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "user_".$this->getId()."_real_name";
+		$html .= "<input type='text' name='$name' value='".htmlentities($this->getRealName())."' size=30 readonly>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Website URL")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "user_".$this->getId()."_website";
+		$html .= "<input type='text' name='$name' value='".htmlentities($this->getWebsiteURL())."' size=30 readonly>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+
+		$html .= "</div>\n";
+		return $html;
+	}
+
+	public function processAdminUI()
+	{
+	}
+
+	public function delete(& $errmsg)
+	{
+	}
+
+	public function getUserUI()
+	{
+	}
 
 	/** Add content to this user ( subscription ) */
 	public function addContent(Content $content)

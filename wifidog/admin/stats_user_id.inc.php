@@ -58,7 +58,7 @@ $html .= "</tr>\n";
 
 $html .= "<tr>\n";
 $html .= "  <th>"._("Member since").":</th>\n";
-$html .= "  <td>".utf8_encode(strftime("%c", strtotime($userinfo['reg_date'])))."</td>\n";
+$html .= "  <td>".strftime("%c", strtotime($userinfo['reg_date']))."</td>\n";
 $html .= "</tr>\n";
 
 $html .= "<tr class='odd'>\n";
@@ -107,17 +107,17 @@ $html .= "</thead>\n";
 $sql = "select * from connections where user_id = '{$user_id}' {$date_constraint} ORDER BY timestamp_in DESC";
 $db->ExecSql($sql, $connections, false);
 
+// Variables init
+$even = 0;
+$total = array ();
+$total['incoming'] = 0;
+$total['outgoing'] = 0;
 if ($connections)
 {
-	// Variables init
-	$even = 0;
-	$total = array ();
-	$total['incoming'] = 0;
-	$total['outgoing'] = 0;
 	foreach ($connections as $connection)
 	{
-		$timestamp_in = strtotime($connection['timestamp_in']);
-		$timestamp_out = strtotime($connection['timestamp_out']);
+		$timestamp_in = !empty($connection['timestamp_out']) ? strtotime($connection['timestamp_in']) : null;
+		$timestamp_out = !empty($connection['timestamp_out']) ? strtotime($connection['timestamp_out']) : null;
 
 		$nodeObject = Node :: getObject($connection['node_id']);
 		$total['incoming'] += $connection['incoming'];
@@ -129,14 +129,14 @@ if ($connections)
 			$even = 1;
 		else
 			$even = 0;
-		$html .= "  <td>".utf8_encode(strftime("%c", $timestamp_in))."</td>\n";
-		if ($timestamp_in != -1 && $timestamp_out != -1)
+		$html .= "  <td>".strftime("%c", $timestamp_in)."</td>\n";
+		if (!empty($timestamp_in) && !empty($timestamp_out))
 		{
 			$html .= "<td>".seconds_in_words($timestamp_out - $timestamp_in)."</td>\n";
 		}
 		else
 		{
-			$html .= "<td></td>\n";
+			$html .= "<td>"._("N/A")."</td>\n";
 		}
 		$html .= "  <td>".$connection['token_status']."</td>\n";
 		$html .= "  <td><a href='?date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}&node_id={$nodeObject->getId()}'>{$nodeObject->getName()}</a></td>\n";
@@ -159,7 +159,7 @@ $html .= "</tr>\n";
 $html .= "</table>\n";
 $html .= "</fieldset>\n";
 
-$sql = "select distinct user_mac,count(user_mac) as nb from connections where user_id = '{$user_id}' ${date_constraint} group by user_mac order by nb desc";
+$sql = "select distinct user_mac,count(user_mac) as nb from connections where user_id = '{$user_id}' {$date_constraint} group by user_mac order by nb desc";
 $db->ExecSql($sql, $rows, false);
 
 $html .= "<fieldset class='pretty_fieldset'>\n";
@@ -173,20 +173,21 @@ $html .= "</tr>\n";
 $html .= "</thead>\n";
 
 $even = 0;
-foreach ($rows as $row)
-{
-	if ($row['user_mac'])
+if($rows)
+	foreach ($rows as $row)
 	{
-		$html .= $even ? "<tr>\n" : "<tr class='odd'>\n";
-		if ($even == 0)
-			$even = 1;
-		else
-			$even = 0;
-		$html .= "  <td><a href='?date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}&user_mac={$row['user_mac']}'>{$row['user_mac']}</a></td>\n";
-		$html .= "  <td>".$row['nb']."</td>\n";
-		$html .= "</tr>\n";
+		if ($row['user_mac'])
+		{
+			$html .= $even ? "<tr>\n" : "<tr class='odd'>\n";
+			if ($even == 0)
+				$even = 1;
+			else
+				$even = 0;
+			$html .= "  <td><a href='?date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}&user_mac={$row['user_mac']}'>{$row['user_mac']}</a></td>\n";
+			$html .= "  <td>".$row['nb']."</td>\n";
+			$html .= "</tr>\n";
+		}
 	}
-}
 
 $html .= "</table>\n";
 $html .= "</fieldset>\n";

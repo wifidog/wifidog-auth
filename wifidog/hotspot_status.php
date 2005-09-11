@@ -33,11 +33,13 @@ if (!empty ($_REQUEST['format']))
 else
 	$format = null;
 
-$db->ExecSql("SELECT *, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, EXTRACT(epoch FROM creation_date) as creation_date_epoch, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up FROM nodes WHERE node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE' ORDER BY creation_date", $node_results, false);
 switch ($format)
 {
 	// XML format v1.0 by François proulx <francois.proulx@gmail.com>
 	case "XML":
+		// Query the database, sorting by node name
+		$db->ExecSql("SELECT *, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, EXTRACT(epoch FROM creation_date) as creation_date_epoch, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up FROM nodes WHERE node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE' ORDER BY name", $node_results, false);
+		
 		require_once BASEPATH.'classes/Network.php';
 		require_once BASEPATH.'classes/Node.php';
 		
@@ -284,11 +286,16 @@ switch ($format)
 		
 		break;
 	case "RSS" :
+		// Query the database, sorting by creation date
+		$db->ExecSql("SELECT *, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, EXTRACT(epoch FROM creation_date) as creation_date_epoch, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up FROM nodes WHERE node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE' ORDER BY creation_date", $node_results, false);
+		
 		Header("Cache-control: private, no-cache, must-revalidate");
 		Header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); # Past date
 		Header("Pragma: no-cache");
 		Header("Content-Type: text/xml; charset=UTF-8");
-
+		
+		// Network metadata
+		$network = Network::getCurrentNetwork();
 		$xmldoc = new DOMDocument();
 		$xmldoc->formatOutput = true;
 		//$xmldoc->encoding="iso-8859-15";
@@ -578,6 +585,9 @@ switch ($format)
 		echo $xmldoc->saveXML();
 		break;
 	case "WIFI411_CSV" :
+		// Query the database, sorting by creation date
+		$db->ExecSql("SELECT *, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, EXTRACT(epoch FROM creation_date) as creation_date_epoch, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up FROM nodes WHERE node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE' ORDER BY name", $node_results, false);
+		
 		/* Header("Cache-control: private, no-cache, must-revalidate");
 		 Header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); # Past date
 		 Header("Pragma: no-cache");
@@ -836,6 +846,9 @@ switch ($format)
 		echo $xmldoc->saveXML();
 		break;
 	default :
+		// Query the database, sorting by node name
+		$db->ExecSql("SELECT *, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, EXTRACT(epoch FROM creation_date) as creation_date_epoch, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up FROM nodes WHERE node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE' ORDER BY name", $node_results, false);
+		
 		if ($node_results)
 			foreach ($node_results as $node_row)
 			{

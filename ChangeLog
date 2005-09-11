@@ -1,3 +1,8 @@
+2005-09-10 Francois Proulx <francois.proulx@gmail.com>
+	* Removed many blank lines after php tags
+	* added more checks, for dates etc...
+	* changed sorting mode
+	
 2005-09-10 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Add UI to add a new Network
 	* Improve UI to add a new Node and new Content

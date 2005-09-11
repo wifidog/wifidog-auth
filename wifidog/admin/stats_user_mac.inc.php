@@ -48,8 +48,8 @@ $total['outgoing'] = 0;
 $total['time_spent'] = 0;
 foreach ($rows as $row)
 {
-	$timestamp_in = strtotime($row['timestamp_in']);
-	$timestamp_out = strtotime($row['timestamp_out']);
+	$timestamp_in = !empty($row['timestamp_out']) ? strtotime($row['timestamp_in']) : null;
+	$timestamp_out = !empty($row['timestamp_out']) ? strtotime($row['timestamp_out']) : null;
 
 	$total['incoming'] += $row['incoming'];
 	$total['outgoing'] += $row['outgoing'];
@@ -60,9 +60,9 @@ foreach ($rows as $row)
 	else
 		$even = 0;
 	$html .= "  <td><a href='?date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}&user_id={$row['user_id']}'>{$row['username']}</a></td>\n";
-	$html .= "  <td>".utf8_encode(strftime("%c", strtotime($row['timestamp_in'])))."</td>";
+	$html .= "  <td>".strftime("%c", strtotime($row['timestamp_in']))."</td>";
 	$html .= "  <td><a href='?date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}&node_id={$row['node_id']}'>{$row['name']}</a></td>";
-	if ($timestamp_in != -1 && $timestamp_out != -1)
+	if (!empty($timestamp_in) && !empty($timestamp_out))
 	{
 		$total['time_spent'] += ($timestamp_out - $timestamp_in);
 		$html .= "  <td>".seconds_in_words($timestamp_out - $timestamp_in)."</td>";
