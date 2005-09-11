@@ -1,5 +1,5 @@
-    <div id="form">
-        <h3>{"Register a free account with"|_} {$hotspot_network_name}</h3>
+<fieldset class="pretty_fieldset">
+        <legend>{"Register a free account with"|_} {$hotspot_network_name}</legend>
 
         <form name="signup_form" method="post">
         <table>
@@ -7,29 +7,29 @@
         {$SelectNetworkUI}
         {/if}
         <tr>
-            <td>{"Username desired"|_}:</td>
+            <th>{"Username desired"|_}:</th>
             <td><input type="text" name="username" value="{$username}" size="20"></td>
         </tr>
         <tr>
-            <td>{"Your email address"|_}:</td>
+            <th>{"Your email address"|_}:</th>
             <td><input type="text" name="email" value="{$email}" size="30"></td>
         </tr>
         <tr>
-            <td>{"Password"|_}:</td>
+            <th>{"Password"|_}:</th>
             <td><input type="password" name="password" size="20"></td>
         </tr>
         <tr>
-            <td>{"Password (again)"|_}:</td>
+            <th>{"Password (again)"|_}:</th>
             <td><input type="password" name="password_again" size="20"></td>
         </tr>
         <tr>
-            <td></td>
+            <th></th>
             <td><input class="submit" type="submit" name="submit" value="{"Sign-up"|_}"></td>
         </tr>
         </table>
         </form>
 
-    </div>
+</fieldset>
     
     <div id="help">
         {if $error}

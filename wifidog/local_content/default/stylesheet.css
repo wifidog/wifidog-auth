@@ -497,7 +497,6 @@ TD.spreadsheet_user { /*background-color: lightgray;*/ }
 .pretty_fieldset th {
     text-align: left;
     text-transform: uppercase;
-    width: 200px;
     }
 
 .pretty_fieldset div {

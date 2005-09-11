@@ -23,40 +23,42 @@
    */
 define('BASEPATH','../');
 require_once BASEPATH.'admin/admin_common.php';
+require_once BASEPATH.'classes/MainUI.php';
 
 $security = new Security();
 $security->requireAdmin();
+
+$html = '';
 
 /** Affiche les informations sur le fichier envoy� par le client
  */
 function PrintUploadedFileInfo($form_name_file)
 {
-  echo "Nom du fichier envoy�:".$_FILES[$form_name_file]['name']."<br>";
-  echo "Taille: ".$_FILES[$form_name_file]['size']." octets"."<br>";
-  echo "Mime type: ".$_FILES[$form_name_file]['type']."<br>";
-  echo "Nom du fichier temporaire sur le serveur: ".$_FILES[$form_name_file]['tmp_name']."<br>";
-  echo "Erreurs au cours du transfert: ".$_FILES[$form_name_file]['error']."<br>";
+  $html .=  "Nom du fichier envoy�:".$_FILES[$form_name_file]['name']."<br>";
+  $html .=  "Taille: ".$_FILES[$form_name_file]['size']." octets"."<br>";
+  $html .=  "Mime type: ".$_FILES[$form_name_file]['type']."<br>";
+  $html .=  "Nom du fichier temporaire sur le serveur: ".$_FILES[$form_name_file]['tmp_name']."<br>";
+  $html .=  "Erreurs au cours du transfert: ".$_FILES[$form_name_file]['error']."<br>";
 }
 
-    echo "<div id='head'><h1>"._('NoCat passwd file (user database) import')."</h1></div>\n";
-    echo "<div id='content'>\n";	
+$html .=  "<fieldset class=\"pretty_fieldset\">";
+$html .=  "<legend>"._("NoCat user database import")."</legend>";
 
 if(empty($_REQUEST['action']))
   {
-    echo "<form name=upload_file enctype='multipart/form-data' action='' method='post'>\n";
+    $html .=  "<form name=upload_file enctype='multipart/form-data' action='' method='post'>\n";
     
-    echo "<p>"._('Please select the NoCat passwd file you want to import.')."</p>\n";
-    echo "<input name='userfile' type='file' />\n";
-    echo "<input type='hidden' name='action' value='upload_file' />\n";
-    echo "<input type='hidden' name='MAX_FILE_SIZE' value='300000' />\n";
-    echo "<p>"._("Accept users with no email adresses (Normally, NoCat usernames are expected to be the user's email adress, and the username is generated from the prefix.")."\n";
-    echo "<input type='checkbox' name='accept_empty_email' value='true' /></p>\n";
-    echo "<p><input name='upload' type='submit' value='"._("Upload file")."' />\n";
+    $html .=  "<p>"._('Please select the NoCat passwd file you want to import.')."</p>\n";
+    $html .=  "<input name='userfile' type='file' />\n";
+    $html .=  "<input type='hidden' name='action' value='upload_file' />\n";
+    $html .=  "<input type='hidden' name='MAX_FILE_SIZE' value='300000' />\n";
+    $html .=  "<p>"._("Accept users with no email adresses (Normally, NoCat usernames are expected to be the user's email adress, and the username is generated from the prefix.")."\n";
+    $html .=  "<input type='checkbox' name='accept_empty_email' value='true' /></p>\n";
+    $html .=  "<p><input name='upload' type='submit' value='"._("Upload file")."' />\n";
 
-    echo "<input type='checkbox' name='import_confirm' value='true' />\n";
-    echo _("I am sure I want to import (Otherwise, the import will only be simulated).")."</p>\n";
-    echo "</form>\n";
-        echo "</div>\n";
+    $html .=  "<input type='checkbox' name='import_confirm' value='true' />\n";
+    $html .=  _("I am sure I want to import (Otherwise, the import will only be simulated).")."</p>\n";
+    $html .=  "</form>\n";
   }
 else if ($_REQUEST['action'] == 'upload_file')
   {
@@ -82,11 +84,11 @@ else if ($_REQUEST['action'] == 'upload_file')
 	  {
 	  $data = fgets ($fp);
 	  $num = count($data);
-	  echo "<hr><p>Line $row: $data<br />\n";
+	  $html .=  "<hr><p>Line $row: $data<br />\n";
 	   
 	  if(preg_match("/^(.*):(.*)$/", $data, $matches))
 	    {
-	      //echo "<p><pre>". print_r($matches)."</pre></p>\n";
+	      //$html .=  "<p><pre>". print_r($matches)."</pre></p>\n";
 	      $nocat_username = $matches[1];
 	      $nocat_password_hash=$matches[2];
 	      $matches = null;
@@ -97,12 +99,12 @@ else if ($_REQUEST['action'] == 'upload_file')
 		}
 	      else
 		{
-		  echo "<p class=info>NoCat username isn't an email</p>";
+		  $html .=  "<p class=info>NoCat username isn't an email</p>";
 		  $email = '';
 		  $original_username = $nocat_username;
 		}
 	      
-	      echo "<p class=info>Generating temporary user from:  $original_username; Checking internal duplicates (duplicate usernames in the imported file)</p>\n";
+	      $html .=  "<p class=info>Generating temporary user from:  $original_username; Checking internal duplicates (duplicate usernames in the imported file)</p>\n";
 	      $username_modified_because_of=null;
 	      $username=$original_username;
 	      if(isset($import_user[$username]))
@@ -111,15 +113,15 @@ else if ($_REQUEST['action'] == 'upload_file')
 		  while(isset($import_user[$username]))
 		    {
 		      $username_modified_because_of=$username;
-		      echo "<p class=warning>Can't use $username because it was already generated from the imported file</p>\n";
+		      $html .=  "<p class=warning>Can't use $username because it was already generated from the imported file</p>\n";
 		      $username=$original_username."_$index";
 		      $index++;
 		    }
-		  echo "<p class=info>Final username is now $username</p>\n";
+		  $html .=  "<p class=info>Final username is now $username</p>\n";
 		}
 	      else
 		{
-		  echo "<p class=info>Final username is still $username</p>\n";
+		  $html .=  "<p class=info>Final username is still $username</p>\n";
 		}
 
 	      $import_user[$username]['email']=$email;
@@ -131,15 +133,15 @@ else if ($_REQUEST['action'] == 'upload_file')
 	    }
 	  else
 	    {
-	      echo "<p class=info>Line skipped</p>\n";
+	      $html .=  "<p class=info>Line skipped</p>\n";
 	    }
 	  $row++;
 	  }
-	echo "<hr><p>Total of ". ($row-1) ." lines read and ".count($import_user)." candidate users generated.<br />\n";
+	$html .=  "<hr><p>Total of ". ($row-1) ." lines read and ".count($import_user)." candidate users generated.<br />\n";
 	foreach($import_user as $username => $user)
 	{
-	  //echo "<p>$username</pre></p>\n";
-	  //echo "<p><pre>". print_r($user)."</pre></p>\n";
+	  //$html .=  "<p>$username</pre></p>\n";
+	  //$html .=  "<p><pre>". print_r($user)."</pre></p>\n";
 	  $import_user[$username]['is_rejected']=false;
 	  
 	  if(!empty($user['email']))
@@ -192,9 +194,9 @@ else if ($_REQUEST['action'] == 'upload_file')
 	}
 	
 
-	echo "<h2>"._('Report')."</h2>\n";
+	$html .=  "<h2>"._('Report')."</h2>\n";
 	/* List rejected users */
-	echo "<table class='spreadsheet'>\n";
+	$html .=  "<table class='spreadsheet'>\n";
 	$count_reject=0;
 	$count_success=0;
 	foreach($import_user as $username => $user)
@@ -202,40 +204,44 @@ else if ($_REQUEST['action'] == 'upload_file')
 	  if($user['is_rejected']==true)
 	    {
 	      $count_reject++;
-	      echo "<tr class='spreadsheet'>\n";
-	      echo "<td class='spreadsheet'>$username</td><td class='spreadsheet'>$user[reject_reason]</td>\n";
-	      echo "</tr>\n";
+	      $html .=  "<tr class='spreadsheet'>\n";
+	      $html .=  "<td class='spreadsheet'>$username</td><td class='spreadsheet'>$user[reject_reason]</td>\n";
+	      $html .=  "</tr>\n";
 	    }
 	  else
 	    {
 	      $count_success++;
 	    }
 	}
-	echo "<thead><tr class='spreadsheet'><th class='spreadsheet' colspan=2>$count_reject rejected users</th></tr>\n";
-	echo "<tr class='spreadsheet'><th class='spreadsheet'>Username</th><th class='spreadsheet'>Reason for rejection</th></tr></thead>\n";
-	echo "</table>\n";
+	$html .=  "<thead><tr class='spreadsheet'><th class='spreadsheet' colspan=2>$count_reject rejected users</th></tr>\n";
+	$html .=  "<tr class='spreadsheet'><th class='spreadsheet'>Username</th><th class='spreadsheet'>Reason for rejection</th></tr></thead>\n";
+	$html .=  "</table>\n";
 
 	/* List users imported with mangled usernames */
-	echo "<table class='spreadsheet'>\n";
+	$html .=  "<table class='spreadsheet'>\n";
  $count_mangled=0;
 	foreach($import_user as $username => $user)
 	{
 	  if($user['is_rejected']==false&&!empty($user['username_modified_because_of']))
 	    {
 	      $count_mangled++;
-	      echo "<tr class='spreadsheet'>\n";
-	      echo "<td class='spreadsheet'>$username</td><td class='spreadsheet'>$user[original_username]</td><td class='spreadsheet'>$user[username_modified_because_of]</td>\n";
-	      echo "</tr>\n";
+	      $html .=  "<tr class='spreadsheet'>\n";
+	      $html .=  "<td class='spreadsheet'>$username</td><td class='spreadsheet'>$user[original_username]</td><td class='spreadsheet'>$user[username_modified_because_of]</td>\n";
+	      $html .=  "</tr>\n";
 	    }
 	}
-	echo "<thead><tr class='spreadsheet'><th class='spreadsheet' colspan=3>$count_mangled users were imported with modified usernames</th></tr>\n";
-	echo "<tr class='spreadsheet'><th class='spreadsheet'>Username</th><th class='spreadsheet'>Original username</th><th class='spreadsheet'>Changed because of user</th></tr></thead\n";
-	echo "</table>\n";
+	$html .=  "<thead><tr class='spreadsheet'><th class='spreadsheet' colspan=3>$count_mangled users were imported with modified usernames</th></tr>\n";
+	$html .=  "<tr class='spreadsheet'><th class='spreadsheet'>Username</th><th class='spreadsheet'>Original username</th><th class='spreadsheet'>Changed because of user</th></tr></thead\n";
+	$html .=  "</table>\n";
 	
-	echo "<h2>$count_success user(s) successfully imported ($count_mangled of them had their username modified), $count_reject user(s)rejected</h2>\n";
+	$html .=  "<h2>$count_success user(s) successfully imported ($count_mangled of them had their username modified), $count_reject user(s)rejected</h2>\n";
       }
   }
-        echo "</div>\n";
+        $html .=  "</div>\n";
+        $html .=  "</fieldset>\n";
    
-      ?>
-     
+    $ui=new MainUI();
+    $ui->setToolSection('ADMIN');
+    $ui->setMainContent($html);
+    $ui->display();
+?>
