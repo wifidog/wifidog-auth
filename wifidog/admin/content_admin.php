@@ -33,7 +33,7 @@ $html = '';
 
 $html .= '<form action="'.GENERIC_OBJECT_ADMIN_ABS_HREF.'" method="get">';
 $html .= "<input type=submit name='new_submit' value='"._("Add new content")."'>\n";
-$html .= "<input type='hidden' name='action' value='new'>\n";
+$html .= "<input type='hidden' name='action' value='new_ui'>\n";
 $html .= "<input type='hidden' name='object_class' value='Content'>\n";
 $html .= '</form>';
 

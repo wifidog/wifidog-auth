@@ -46,7 +46,24 @@ class User implements GenericObject
     {
         echo "<h1>Use User::createUser() instead</h1>";
     }
+		/** Get an interface to create a new object.
+	* @return html markup
+	*/
+	public static function getCreateNewObjectUI()
+	{
+		return null;
+	}
 
+	/** Process the new object interface. 
+	 *  Will       return the new object if the user has the credentials
+	 * necessary (Else an exception is thrown) and and the form was fully
+	 * filled (Else the object returns null).
+	 * @return the node object or null if no new node was created.
+	 */
+	static function processCreateNewObjectUI()
+{
+	return self::createNewObject();
+}
 	/** Instantiate the current user
 	 * @return a User object, or null if there was an error
 	 */

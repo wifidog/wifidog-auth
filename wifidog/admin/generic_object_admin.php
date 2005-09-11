@@ -20,11 +20,12 @@
  \********************************************************************/
 /**@file generic_object_admin.php
  * A simple interface to edit any object that implements the GenericObject interface.  The php file takes the following params:
- * $_REQUEST['action']: new, edit, delete, preview (also save, but not meant for calling from outside this file)
- * $_REQUEST['object_id']:  The id of the object ot be edited
- * $_REQUEST['object_class']:  The class name of the object ot be edited
- * $_REQUEST['node_id']: In preview mode, the current node to simulate display
- * $_REQUEST['debug']:  If present and non empty, the $_REQUEST variables will be displayed
+ * $_REQUEST['action']: new, edit, delete, preview, process_new_ui, new_ui (also
+ * save, but not meant for calling from outside this file) $_REQUEST
+ * ['object_id']: The id of the object ot be edited $_REQUEST['object_class']:
+ * The class name of the object ot be edited $_REQUEST['node_id']: In preview
+ * mode, the current node to simulate display $_REQUEST['debug']:  If present
+ * and non empty, the $_REQUEST variables will be displayed
  * @author Copyright (C) 2005 Benoit Grégoire <bock@step.polymtl.ca>,
  * Technologies Coeus inc.
  */
@@ -49,17 +50,25 @@ if (empty ($_REQUEST['object_class'])) {
 if ($_REQUEST['action'] == 'new') {
 	$object = call_user_func(array ($class, 'createNewObject'));
 	$_REQUEST['action'] = 'edit';
-} else {
-	if (empty ($_REQUEST['object_id'])) {
-		echo "<div class='errormsg'>"._("Sorry, the 'object_id' parameter must be specified")."</div>\n";
+}
+else if ($_REQUEST['action'] == 'process_new_ui') {
+	$object = call_user_func(array ($class, 'processCreateNewObjectUI'));
+		if (!$object) {
+		echo "<div class='errormsg'>"._("Sorry, the object couldn't be created.  You probably didn't fill the form properly")."</div>\n";
 		exit;
 	}
+	$_REQUEST['action'] = 'edit';
+}
+else if ($_REQUEST['action'] == 'new_ui') {
+	//No need for an object
+}
+ else {
 	$object = call_user_func(array ($class, 'getObject'), $_REQUEST['object_id']);
 }
 
 if ($_REQUEST['action'] == 'save') {
-	$html .= $object->processAdminUI();
-	$object = call_user_func(array ($class, 'getObject'), $_REQUEST['object_id']);
+	$object->processAdminUI();
+	//$object = call_user_func(array ($class, 'getObject'), $_REQUEST['object_id']);
 	$_REQUEST['action'] = 'edit';
 }
 
@@ -73,8 +82,22 @@ if ($_REQUEST['action'] == 'delete') {
 		$_REQUEST['action'] = 'edit';
 	}
 }
+if ($_REQUEST['action'] == 'new_ui') {
+		
+		$html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' method='post'>";
+	$html .= "<input type='hidden' name='object_class' value='".$class."'>\n";
+		$html .= call_user_func(array ($class, 'getCreateNewObjectUI'));
+	$html .= "<input type='hidden' name='action' value='process_new_ui'>\n";
+	$html .= "<input type=submit name='new_ui_submit' value='"._("Create")." ".$class."'>\n";
+	$html .= '</form>';
+	
 
-if ($_REQUEST['action'] == 'edit') {
+}
+else if ($_REQUEST['action'] == 'edit') {
+		if (!$object) {
+		echo "<div class='errormsg'>"._("Sorry, the 'object_id' parameter must be specified")."</div>\n";
+		exit;
+	}
 	$common_input = '';
 	if (!empty ($_REQUEST['debug'])) {
 		$common_input .= "<input type=submit name='debug' value='true'>\n";
@@ -101,8 +124,7 @@ if ($_REQUEST['action'] == 'edit') {
 	$html .= "<input type=submit name='delete_submit' value='"._("Delete")." ".get_class($object)."'>\n";
 	$html .= '</form>';
 }
-
-if ($_REQUEST['action'] == 'preview') {
+else if ($_REQUEST['action'] == 'preview') {
 	if (empty ($_REQUEST['node_id'])) {
 		$node_id = null;
 		$node = null;

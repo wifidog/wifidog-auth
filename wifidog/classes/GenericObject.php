@@ -36,11 +36,25 @@ interface GenericObject
 	 * @return the Content object, or null if there was an error (an exception is also thrown)
 	 */
 	static public function getObject($id);
-	/** Create a new Content object in the database 
+	/** Create a new object in the database 
 	 * @see GenericObject
 	 * @return the newly created object, or null if there was an error
 	 */
 	static function createNewObject();
+
+	/** Get an interface to create a new object.
+	* @return html markup
+	*/
+	public static function getCreateNewObjectUI();
+
+	/** Process the new object interface. 
+	 *  Will       return the new object if the user has the credentials
+	 * necessary (Else an exception is thrown) and and the form was fully
+	 * filled (Else the object returns null).
+	 * @return the node object or null if no new node was created.
+	 */
+	static function processCreateNewObjectUI();
+
 
 	/** Retreives the id of the object 
 	 * @return The id, a string */

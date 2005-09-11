@@ -1,4 +1,6 @@
 <?php
+
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -127,10 +129,7 @@ class Node implements GenericObject
 		$retval = false;
 		$user = User :: getCurrentUser();
 		if ($this->isOwner($user) || $user->isSuperAdmin())
-		{
-			$errmsg = _('Access denied!');
-		}
-
+{
 		global $db;
 		$id = $db->EscapeString($this->getId());
 		if (!$db->ExecSqlUpdate("DELETE FROM nodes WHERE node_id='{$id}'", false))
@@ -141,39 +140,44 @@ class Node implements GenericObject
 		{
 			$retval = true;
 		}
+}
+else
+		{
+			$errmsg = _('Access denied!');
+		}
 
 		return $retval;
 	}
 
-	/** Create a new Node in the database
-	 * @param $id The id to be given to the new node
-	 * @return the newly created Node object, or null if there was an error
-	 */
-	static function createNewObject()
-	{
-		global $db;
-
-		$node_id = $db->EscapeString(get_guid());
-		$object = self::createNewNode($node_id, Network::getCurrentNetwork());
-		return $object;
-	}
-
 	/** Create a new Node in the database 
-	 * @param $node_id The id to be given to the new node
-	 * @param $network Network object.  The node's network 
-	 * @todo Implement network 
+	 * @param $node_id The id to be given to the new node.  If not present, a
+	 * guid will be assigned.
+	 * @param $network Network object.  The node's network.  If not present,
+	 * the current Network will be assigned
+	 * 
 	 * @return the newly created Node object, or null if there was an error
 	 */
-	static function createNewNode($node_id, Network $network)
+	static function createNewObject($node_id = null, $network = null)
 	{
 		global $db;
+		if(empty($node_id))
+		{
+			$node_id = get_guid();
+		}
 		$node_id = $db->EscapeString($node_id);
+		
+		if(empty($network))
+		{
+			$network = Network :: getCurrentNetwork();
+		}
+		$network_id = $db->EscapeString($network->getId());
+		
 		$node_deployment_status = $db->EscapeString("IN_PLANNING");
 		$node_name = _("New node");
 		if (Node :: nodeExists($node_id))
 			throw new Exception(_('This node already exists.'));
 
-		$sql = "INSERT INTO nodes (node_id, creation_date, node_deployment_status, name) VALUES ('$node_id', NOW(),'$node_deployment_status', '$node_name')";
+		$sql = "INSERT INTO nodes (node_id, network_id, creation_date, node_deployment_status, name) VALUES ('$node_id', '$network_id', NOW(),'$node_deployment_status', '$node_name')";
 
 		if (!$db->ExecSqlUpdate($sql, false))
 		{
@@ -221,6 +225,63 @@ class Node implements GenericObject
 		return new self($_REQUEST[$name]);
 	}
 
+	/** Get an interface to create a new node.
+	* @param $network Optional:  The network to which the new node will belong,
+	* if absent, the user will be prompted.
+	* @return html markup
+	*/
+	public static function getCreateNewObjectUI($network = null)
+	{
+		$html = '';
+		$html .= _("Create new node with id")." \n";
+		$name = "new_node_id";
+		$html .= "<input type='text' size='10' name='{$name}'>\n";
+		if ($network)
+		{
+			$name = "new_node_network_id";
+			$html .= "<input type='hidden' name='{$name}' value='{$network->getId()}'>\n";
+		}
+		else
+		{
+			$html .= " "._("in network:")." \n";
+			$html .= Network :: getSelectNetworkUI('new_node');
+		}
+		return $html;
+
+	}
+
+	/** Process the new object interface. 
+	 *  Will return the new object if the user has the credentials and the form was fully filled.
+	 * @return the node object or null if no new node was created.
+	 */
+	static function processCreateNewObjectUI()
+	{
+		$retval = null;
+		$name = "new_node_id";
+		if (!empty ($_REQUEST[$name]))
+		{
+			$node_id = $_REQUEST[$name];
+			$name = "new_node_network_id";
+			if (!empty ($_REQUEST[$name]))
+			{
+				$network = Network :: getObject($_REQUEST[$name]);
+			}
+			else
+			{
+				$network = Network :: processSelectNetworkUI('new_node');
+			}
+			if ($node_id && $network)
+			{
+				if (!$network->hasAdminAccess(User :: getCurrentUser()))
+				{
+					throw new Exception(_("Access denied"));
+				}
+				$retval = self :: createNewObject($node_id, $network);
+			}
+		}
+		return $retval;
+	}
+
 	/** Get an interface to select the deployment status
 	* @param $user_prefix A identifier provided by the programmer to recognise it's generated html form
 	* @return html markup
@@ -257,7 +318,7 @@ class Node implements GenericObject
 	{
 		global $db;
 		$this->mDb = & $db;
-		
+
 		$node_id_str = $db->EscapeString($node_id);
 		$sql = "SELECT * FROM nodes WHERE node_id='$node_id_str'";
 		$db->ExecSqlUniqueRes($sql, $row, false);
@@ -279,7 +340,7 @@ class Node implements GenericObject
 	 */
 	public function getNetwork()
 	{
-			return Network::getObject($this->mRow['network_id']);
+		return Network :: getObject($this->mRow['network_id']);
 	}
 
 	/** Get a GisPoint object ; altide is not supported yet
@@ -319,10 +380,10 @@ class Node implements GenericObject
 		$this->refresh();
 	}
 
-    function getCreationDate()
-    {
-        return $this->mRow['creation_date'];
-    }
+	function getCreationDate()
+	{
+		return $this->mRow['creation_date'];
+	}
 
 	function getHomePageURL()
 	{
@@ -526,7 +587,7 @@ class Node implements GenericObject
 	 * @return true or false */
 	public function isConfiguredSplashOnly()
 	{
-		return (($this->mRow['is_splash_only_node']=='t') ? true : false);
+		return (($this->mRow['is_splash_only_node'] == 't') ? true : false);
 	}
 
 	/** Set if this node should be a splash-only (no login) node (if enabled in Network configuration)
@@ -538,14 +599,13 @@ class Node implements GenericObject
 		if ($value != $this->isConfiguredSplashOnly())
 		{
 			global $db;
-			$value?$value='TRUE':$value='FALSE';
+			$value ? $value = 'TRUE' : $value = 'FALSE';
 			$retval = $db->ExecSqlUpdate("UPDATE nodes SET is_splash_only_node = {$value} WHERE node_id = '{$this->getId()}'", false);
 			$this->refresh();
 		}
 		return $retval;
-	}		
-	
-	
+	}
+
 	/** The url to show instead of the portal.  If empty, the portal is shown
 	 Must be enabled in the Network configuration to have any effect
 	 @return a string */
@@ -553,7 +613,7 @@ class Node implements GenericObject
 	{
 		return $this->mRow['custom_portal_redirect_url'];
 	}
-	
+
 	/** The url to show instead of the portal.  If empty, the portal is shown
 	 Must be enabled in the Network configuration to have any effect
 	 @return true on success, false on failure */
@@ -569,15 +629,15 @@ class Node implements GenericObject
 		}
 		return $retval;
 	}
-	
+
 	/** Retrieves the admin interface of this object.
 	 * @return The HTML fragment for this interface */
 	public function getAdminUI()
 	{
 		//TODO: Most of this code will be moved to Hotspot class when the abtraction will be completed
 
-//pretty_print_r($_REQUEST);
-//pretty_print_r($this->mRow);
+		//pretty_print_r($_REQUEST);
+		//pretty_print_r($this->mRow);
 		$html = '';
 		$html .= "<div class='admin_container'>\n";
 		$html .= "<div class='admin_class'>Node (".get_class($this)." instance)</div>\n";
@@ -599,7 +659,7 @@ class Node implements GenericObject
 
 		// Hashed node_id (this is a workaround since PHP auto-converts HTTP vars var periods, spaces or underscores )
 		$hashed_node_id = md5($this->getId());
-		
+
 		// Name
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Name")." : </div>\n";
@@ -793,9 +853,9 @@ class Node implements GenericObject
 		// Node configuration section
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Node configuration:")."</div>\n";
-		
+
 		$network = $this->getNetwork();
-		
+
 		// Deployment status
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Node deployment status")." : </div>\n";
@@ -806,33 +866,33 @@ class Node implements GenericObject
 		$html .= "</div>\n";
 
 		//  is_splash_only_node
-		if($network->getSplashOnlyNodesAllowed())
-		{
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Is this node splash-only (no login)?")." : </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$hashed_node_id."_is_splash_only_node";
-		$this->isConfiguredSplashOnly()? $checked='CHECKED': $checked='';
-		$html .= "<input type='checkbox' name='$name' $checked>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
-		}
-		
-				// custom_portal_redirect_url
-		if($network->getCustomPortalRedirectAllowed())
+		if ($network->getSplashOnlyNodesAllowed())
 		{
 			$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("URL to show instead of the portal (if this is not empty, the portal will be disabled and this URL will be shown instead)")." : </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$hashed_node_id."_custom_portal_redirect_url";
-		$value = htmlspecialchars($this->getCustomPortalRedirectUrl(), ENT_QUOTES);
-		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
+			$html .= "<div class='admin_section_title'>"._("Is this node splash-only (no login)?")." : </div>\n";
+			$html .= "<div class='admin_section_data'>\n";
+			$name = "node_".$hashed_node_id."_is_splash_only_node";
+			$this->isConfiguredSplashOnly() ? $checked = 'CHECKED' : $checked = '';
+			$html .= "<input type='checkbox' name='$name' $checked>\n";
+			$html .= "</div>\n";
+			$html .= "</div>\n";
+		}
+
+		// custom_portal_redirect_url
+		if ($network->getCustomPortalRedirectAllowed())
+		{
+			$html .= "<div class='admin_section_container'>\n";
+			$html .= "<div class='admin_section_title'>"._("URL to show instead of the portal (if this is not empty, the portal will be disabled and this URL will be shown instead)")." : </div>\n";
+			$html .= "<div class='admin_section_data'>\n";
+			$name = "node_".$hashed_node_id."_custom_portal_redirect_url";
+			$value = htmlspecialchars($this->getCustomPortalRedirectUrl(), ENT_QUOTES);
+			$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+			$html .= "</div>\n";
+			$html .= "</div>\n";
 		}
 		// End Node configuration section
 		$html .= "</div>\n";
-		
+
 		// Owners management
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Node owners")." : </div>\n";
@@ -935,10 +995,10 @@ class Node implements GenericObject
 		}
 
 		// Information about the node
-		
+
 		// Hashed node_id (this is a workaround since PHP auto-converts HTTP vars var periods, spaces or underscores )
 		$hashed_node_id = md5($this->getId());
-		
+
 		// Name
 		$name = "node_".$hashed_node_id."_name";
 		$this->setName($_REQUEST[$name]);
@@ -1028,7 +1088,7 @@ class Node implements GenericObject
 			header("Location: stats.php?node_id=".urlencode($this->getId()));
 
 		// Node configuration section
-		
+
 		$network = $this->getNetwork();
 
 		// Deployment status
@@ -1036,19 +1096,19 @@ class Node implements GenericObject
 		$this->setDeploymentStatus(self :: processSelectDeploymentStatus($name));
 
 		//  is_splash_only_node
-		if($network->getSplashOnlyNodesAllowed())
+		if ($network->getSplashOnlyNodesAllowed())
 		{
-		$name = "node_".$hashed_node_id."_is_splash_only_node";
-		$this->setIsConfiguredSplashOnly(empty($_REQUEST[$name])?false:true);	
+			$name = "node_".$hashed_node_id."_is_splash_only_node";
+			$this->setIsConfiguredSplashOnly(empty ($_REQUEST[$name]) ? false : true);
 		}
-		
+
 		// custom_portal_redirect_url
-		if($network->getCustomPortalRedirectAllowed())
+		if ($network->getCustomPortalRedirectAllowed())
 		{
-		$name = "node_".$hashed_node_id."_custom_portal_redirect_url";
-		$this->setCustomPortalRedirectUrl($_REQUEST[$name]);
+			$name = "node_".$hashed_node_id."_custom_portal_redirect_url";
+			$this->setCustomPortalRedirectUrl($_REQUEST[$name]);
 		}
-		
+
 		// End Node configuration section
 
 		// Owners processing
@@ -1064,7 +1124,7 @@ class Node implements GenericObject
 					echo _("Invalid user!");
 			}
 		}
-		
+
 		$name = "node_{$this->getId()}_new_owner_submit";
 		if (!empty ($_REQUEST[$name]))
 		{
@@ -1404,7 +1464,7 @@ class Node implements GenericObject
 		$id_str = $db->EscapeString($id);
 		$sql = "SELECT * FROM nodes WHERE node_id='{$id_str}'";
 		$db->ExecSqlUniqueRes($sql, $row, false);
-		if($row!=null)
+		if ($row != null)
 		{
 			$retval = true;
 		}
@@ -1429,3 +1489,5 @@ class Node implements GenericObject
 
 } // End class
 ?>
+
+

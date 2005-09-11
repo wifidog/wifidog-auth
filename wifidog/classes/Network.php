@@ -1,5 +1,6 @@
 <?php
 
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -71,18 +72,18 @@ class Network implements GenericObject
 	static function getDefaultNetwork($real_network_only = false)
 	{
 		$retval = null;
-			global $db;
-			$sql = "SELECT network_id FROM networks WHERE is_default_network=TRUE ORDER BY creation_date LIMIT 1";
-			$network_row = null;
-			$db->ExecSqlUniqueRes($sql, $network_row, false);
-			if ($network_row == null)
-			{
-				throw new Exception(_("Network::getDefaultNetwork:  Fatal error: Unable to find the default network!"));
-			}
-			$retval = new self($network_row['network_id']);
+		global $db;
+		$sql = "SELECT network_id FROM networks WHERE is_default_network=TRUE ORDER BY creation_date LIMIT 1";
+		$network_row = null;
+		$db->ExecSqlUniqueRes($sql, $network_row, false);
+		if ($network_row == null)
+		{
+			throw new Exception(_("Network::getDefaultNetwork:  Fatal error: Unable to find the default network!"));
+		}
+		$retval = new self($network_row['network_id']);
 		return $retval;
 	}
-	
+
 	/** Get the current network for which the portal is displayed or to which a user is physically connected.
 	 * @param $real_network_only NOT IMPLEMENTED YET true or false.  If true,
 	 * the real physical network where the user is connected is returned, and
@@ -99,18 +100,35 @@ class Network implements GenericObject
 		}
 		else
 		{
-			$retval = Network::getDefaultNetwork();
+			$retval = Network :: getDefaultNetwork();
 		}
 		return $retval;
 	}
 
 	/** Create a new Content object in the database 
 	 * @see GenericObject
+	 * @param $network_id The network id of the new network.  If absent, will be
+	 * assigned a guid.
 	 * @return the newly created object, or null if there was an error
 	 */
-	static function createNewObject()
+	static function createNewObject($network_id = null)
 	{
-		return null; /* Unsupported */
+		global $db;
+		if(empty($network_id))
+		{
+			$network_id = get_guid();
+		}
+		$network_id = $db->EscapeString($network_id);
+		
+		$sql = "INSERT INTO networks (network_id, network_authenticator_class) VALUES ('$network_id', 'AuthenticatorLocalUser')";
+
+		if (!$db->ExecSqlUpdate($sql, false))
+		{
+			throw new Exception(_('Unable to insert the new network in the database!'));
+		}
+		$object = new self($network_id);
+		return $object;
+
 	}
 
 	/** Get an interface to pick a network.  If there is only one network available, no interface is actually shown
@@ -171,6 +189,42 @@ class Network implements GenericObject
 			return null;
 	}
 
+	/** Get an interface to create a new network.
+	* @return html markup
+	*/
+	public static function getCreateNewObjectUI()
+	{
+		$html = '';
+		$html .= _("Create new network with id")." \n";
+		$name = "new_network_id";
+		$html .= "<input type='text' size='10' name='{$name}'>\n";
+		return $html;
+
+	}
+
+	/** Process the new object interface. 
+	 *  Will return the new object if the user has the credentials and the form was fully filled.
+	 * @return the Network object or null if no new Network was created.
+	 */
+	static function processCreateNewObjectUI()
+	{
+		$retval = null;
+		$name = "new_network_id";
+		if (!empty ($_REQUEST[$name]))
+		{
+			$network_id = $_REQUEST[$name];
+			if ($network_id)
+			{
+				if (!User :: getCurrentUser()->isSuperAdmin())
+				{
+					throw new Exception(_("Access denied"));
+				}
+				$retval = self :: createNewObject($network_id);
+			}
+		}
+		return $retval;
+	}
+
 	private function __construct($p_network_id)
 	{
 		global $db;
@@ -216,11 +270,11 @@ class Network implements GenericObject
 		}
 		return $retval;
 	}
-	
+
 	/**
-     * Retrieves the network name 
+	 * Retrieves the network name 
 	 * @return A string
-     */
+	 */
 	public function getName()
 	{
 		return $this->mRow['name'];
@@ -229,7 +283,7 @@ class Network implements GenericObject
 	/** Set the network's name
 	 * @param $value The new value 
 	 * @return true on success, false on failure
-     */
+	 */
 	function setName($value)
 	{
 		$retval = true;
@@ -244,9 +298,9 @@ class Network implements GenericObject
 	}
 
 	/**
-     * Retrieves the network's creation date
+	 * Retrieves the network's creation date
 	 * @return A string
-     */
+	 */
 	public function getCreationDate()
 	{
 		return $this->mRow['creation_date'];
@@ -297,7 +351,7 @@ class Network implements GenericObject
 		}
 		return $retval;
 	}
-		
+
 	/** Retreives the authenticator's parameters
 	 * @return A string */
 	public function getAuthenticatorConstructorParams()
@@ -320,8 +374,10 @@ class Network implements GenericObject
 		}
 		return $retval;
 	}
-	
+
 	/** Get the Authenticator object for this network 
+	 * @todo:  Reimplement this using the muich safer call_user_func_array
+	 * instead of eval()  Benoitg 2005-09-10
 	 * @return a subclass of Authenticator */
 	public function getAuthenticator()
 	{
@@ -335,12 +391,12 @@ class Network implements GenericObject
 		$objstring = 'return new '.$this->mRow['network_authenticator_class']."('".$this->mRow['network_authenticator_params']."');";
 		return eval ($objstring);
 	}
-		
+
 	/** Is the network the default network?
 	 * @return true or false */
 	public function isDefaultNetwork()
 	{
-		($this->mRow['is_default_network']=='t')?$retval=true:$retval=false;
+		($this->mRow['is_default_network'] == 't') ? $retval = true : $retval = false;
 		return $retval;
 	}
 
@@ -382,7 +438,7 @@ class Network implements GenericObject
 		}
 		return $retval;
 	}
-			
+
 	/** Retreives the FROM adress of the validation email
 	 * @return A string */
 	public function getValidationEmailFromAddress()
@@ -405,7 +461,7 @@ class Network implements GenericObject
 		}
 		return $retval;
 	}
-		
+
 	/** Can an account be connected more than once at the same time?
 	 * @return true or false */
 	public function getMultipleLoginAllowed()
@@ -422,7 +478,7 @@ class Network implements GenericObject
 		if ($value != $this->getMultipleLoginAllowed())
 		{
 			global $db;
-			$value?$value='TRUE':$value='FALSE';
+			$value ? $value = 'TRUE' : $value = 'FALSE';
 			$retval = $db->ExecSqlUpdate("UPDATE networks SET allow_multiple_login = {$value} WHERE network_id = '{$this->getId()}'", false);
 			$this->refresh();
 		}
@@ -433,7 +489,7 @@ class Network implements GenericObject
 	 * @return true or false */
 	public function getSplashOnlyNodesAllowed()
 	{
-		return (($this->mRow['allow_splash_only_nodes']=='t') ? true : false);
+		return (($this->mRow['allow_splash_only_nodes'] == 't') ? true : false);
 	}
 
 	/** Set if nodes are allowed to be set as splash-only (no login)
@@ -445,35 +501,35 @@ class Network implements GenericObject
 		if ($value != $this->getSplashOnlyNodesAllowed())
 		{
 			global $db;
-			$value?$value='TRUE':$value='FALSE';
+			$value ? $value = 'TRUE' : $value = 'FALSE';
 			$retval = $db->ExecSqlUpdate("UPDATE networks SET allow_splash_only_nodes = {$value} WHERE network_id = '{$this->getId()}'", false);
 			$this->refresh();
 		}
 		return $retval;
-	}		
-	
-		/** Get's the splash-only user.  This is the user that people logged-in at a splash-only hotspot will show up as.  This user always has multiple-login capabilities.
-	 * @param $username The username of the user
-	 * @param $account_origin The account origin
-	 * @return a User object
-	 */
+	}
+
+	/** Get's the splash-only user.  This is the user that people logged-in at a splash-only hotspot will show up as.  This user always has multiple-login capabilities.
+	* @param $username The username of the user
+	* @param $account_origin The account origin
+	* @return a User object
+	*/
 	public function getSplashOnlyUser()
 	{
 		$username = 'SPLASH_ONLY_USER';
 
-		$user = User::getUserByUsernameAndOrigin($username, $this);
-		if(!$user)
+		$user = User :: getUserByUsernameAndOrigin($username, $this);
+		if (!$user)
 		{
-			$user = User::createUser(get_guid(), $username, $this, '', '');
-			$user->setAccountStatus(ACCOUNT_STATUS_ALLOWED);	
-		}	
+			$user = User :: createUser(get_guid(), $username, $this, '', '');
+			$user->setAccountStatus(ACCOUNT_STATUS_ALLOWED);
+		}
 		return $user;
 	}
 	/** Are nodes allowed to redirect users to an arbitrary web page instead of the portal?
 	 * @return true or false */
 	public function getCustomPortalRedirectAllowed()
 	{
-		return (($this->mRow['allow_custom_portal_redirect']=='t') ? true : false);
+		return (($this->mRow['allow_custom_portal_redirect'] == 't') ? true : false);
 	}
 
 	/** Set if nodes are allowed to redirect users to an arbitrary web page instead of the portal?
@@ -485,12 +541,36 @@ class Network implements GenericObject
 		if ($value != $this->getCustomPortalRedirectAllowed())
 		{
 			global $db;
-			$value?$value='TRUE':$value='FALSE';
+			$value ? $value = 'TRUE' : $value = 'FALSE';
 			$retval = $db->ExecSqlUpdate("UPDATE networks SET allow_custom_portal_redirect = {$value} WHERE network_id = '{$this->getId()}'", false);
 			$this->refresh();
 		}
 		return $retval;
-	}		
+	}
+
+	/** Does the user have admin access to this network? 
+	 * @return true our false*/
+	function hasAdminAccess(User $user)
+	{
+		global $db;
+		$retval = false;
+		if ($user != null)
+		{
+			$user_id = $user->getId();
+			$retval = false;
+			$db->ExecSqlUniqueRes("SELECT * FROM network_stakeholders WHERE is_admin = true AND network_id='{$this->id}' AND user_id='{$user_id}'", $row, false);
+			if ($row != null)
+			{
+				$retval = true;
+			}
+			else
+				if ($user->isSuperAdmin())
+				{
+					$retval = true;
+				}
+		}
+		return $retval;
+	}
 
 	/**Get an array of all Content linked to the network
 	* @param boolean $exclude_subscribed_content
@@ -537,7 +617,7 @@ class Network implements GenericObject
 		//$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		// name
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Network name")." : </div>\n";
@@ -568,7 +648,6 @@ class Network implements GenericObject
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 
-
 		//  network_authenticator_class
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Network authenticator class.  The subclass of Authenticator to be used for user authentication (ex: AuthenticatorRadius)")." : </div>\n";
@@ -587,18 +666,18 @@ class Network implements GenericObject
 		$value = htmlspecialchars($this->getAuthenticatorConstructorParams(), ENT_QUOTES);
 		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
-		$html .= "</div>\n";		
-		
+		$html .= "</div>\n";
+
 		//  is_default_network
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Is this network the default network?")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
 		$name = "network_".$this->getId()."_is_default_network";
-		$this->isDefaultNetwork()? $checked='CHECKED': $checked='';
+		$this->isDefaultNetwork() ? $checked = 'CHECKED' : $checked = '';
 		$html .= "<input type='checkbox' name='$name' $checked>\n";
 		$html .= "</div>\n";
-		$html .= "</div>\n";			
-	
+		$html .= "</div>\n";
+
 		//  validation_grace_time
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("The length of the validation grace period in seconds.  A new user is granted Internet access for this period check his email and validate his account.")." : </div>\n";
@@ -608,7 +687,7 @@ class Network implements GenericObject
 		$html .= "<input type='text' size ='5' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-			
+
 		//  validation_email_from_address
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("This will be the from adress of the validation email")." : </div>\n";
@@ -618,37 +697,37 @@ class Network implements GenericObject
 		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		//  allow_multiple_login
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Can an account be connected more than once at the same time?")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
 		$name = "network_".$this->getId()."_allow_multiple_login";
-		$this->getMultipleLoginAllowed()? $checked='CHECKED': $checked='';
+		$this->getMultipleLoginAllowed() ? $checked = 'CHECKED' : $checked = '';
 		$html .= "<input type='checkbox' name='$name' $checked>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		//  allow_splash_only_nodes
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Are nodes allowed to be set as splash-only (no login)?")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
 		$name = "network_".$this->getId()."_allow_splash_only_nodes";
-		$this->getSplashOnlyNodesAllowed()? $checked='CHECKED': $checked='';
+		$this->getSplashOnlyNodesAllowed() ? $checked = 'CHECKED' : $checked = '';
 		$html .= "<input type='checkbox' name='$name' $checked>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		//  allow_custom_portal_redirect
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Are nodes allowed to redirect users to an arbitrary web page instead of the portal?")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
 		$name = "network_".$this->getId()."_allow_custom_portal_redirect";
-		$this->getCustomPortalRedirectAllowed()? $checked='CHECKED': $checked='';
+		$this->getCustomPortalRedirectAllowed() ? $checked = 'CHECKED' : $checked = '';
 		$html .= "<input type='checkbox' name='$name' $checked>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
-		
+
 		//	network_stakeholders
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Network stakeholders")." : </div>\n";
@@ -658,15 +737,15 @@ class Network implements GenericObject
 		//$html .= "<input type='checkbox' name='$name' $checked>\n";
 		$html .= "WRITEME!";
 		$html .= "</div>\n";
-		$html .= "</div>\n";		
-				
+		$html .= "</div>\n";
+
 		// Create new nodes
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("New node ID")." : </div>\n";
 
 		$html .= "<div class='admin_section_data'>\n";
-		$name = "network_{$this->getId()}_new_node_id";
-		$html .= "<input type='text' size='10' name='{$name}'>\n";
+
+		$html .= Node :: getCreateNewObjectUI($this);
 
 		$html .= "<div class='admin_section_tools'>\n";
 		$name = "network_{$this->getId()}_create_node";
@@ -713,7 +792,7 @@ class Network implements GenericObject
 	{
 		//pretty_print_r($_REQUEST);
 		$user = User :: getCurrentUser();
-		if (!$user->isSuperAdmin())
+		if (!$this->hasAdminAccess($user))
 		{
 			throw new Exception(_('Access denied!'));
 		}
@@ -721,11 +800,10 @@ class Network implements GenericObject
 		// name
 		$name = "network_".$this->getId()."_name";
 		$this->setName($_REQUEST[$name]);
-		
+
 		// homepage_url
 		$name = "network_".$this->getId()."_homepage_url";
 		$this->setHomepageURL($_REQUEST[$name]);
-
 
 		// tech_support_email
 		$name = "network_".$this->getId()."_tech_support_email";
@@ -738,45 +816,39 @@ class Network implements GenericObject
 		//  network_authenticator_params
 		$name = "network_".$this->getId()."_network_authenticator_params";
 		$this->setAuthenticatorConstructorParams($_REQUEST[$name]);
-		
+
 		//  is_default_network
 		$name = "network_".$this->getId()."_is_default_network";
-		if($_REQUEST[$name]=='on')
+		if ($_REQUEST[$name] == 'on')
 			$this->setAsDefaultNetwork();
-	
+
 		//  validation_grace_time
 		$name = "network_".$this->getId()."_validation_grace_time";
 		$this->setValidationGraceTime($_REQUEST[$name]);
-			
+
 		//  validation_email_from_address
 		$name = "network_".$this->getId()."_validation_email_from_address";
-		$this->setValidationEmailFromAddress($_REQUEST[$name]);	
-		
+		$this->setValidationEmailFromAddress($_REQUEST[$name]);
+
 		//  allow_multiple_login
 		$name = "network_".$this->getId()."_allow_multiple_login";
-		$this->setMultipleLoginAllowed(empty($_REQUEST[$name])?false:true);	
-		
+		$this->setMultipleLoginAllowed(empty ($_REQUEST[$name]) ? false : true);
+
 		//  allow_splash_only_nodes
 		$name = "network_".$this->getId()."_allow_splash_only_nodes";
-		$this->setSplashOnlyNodesAllowed(empty($_REQUEST[$name])?false:true);	
+		$this->setSplashOnlyNodesAllowed(empty ($_REQUEST[$name]) ? false : true);
 
 		//  allow_custom_portal_redirect
 		$name = "network_".$this->getId()."_allow_custom_portal_redirect";
-		$this->setCustomPortalRedirectAllowed(empty($_REQUEST[$name])?false:true);	
-				
-		// Node creation
-		$create_new_node = "network_{$this->getId()}_create_node";
-		$new_node_id = "network_{$this->getId()}_new_node_id";
-		if (!empty ($_REQUEST[$create_new_node]))
-			if (!empty ($_REQUEST[$new_node_id]))
-			{
-				Node :: createNewNode($_REQUEST[$new_node_id], $this);
-				$url = GENERIC_OBJECT_ADMIN_ABS_HREF."?".http_build_query(array ("object_class" => "Node", "action" => "edit", "object_id" => $_REQUEST[$new_node_id]));
-				header("Location: {$url}");
-			}
-			else
-				echo _("You MUST enter a node ID.");
+		$this->setCustomPortalRedirectAllowed(empty ($_REQUEST[$name]) ? false : true);
 
+		// Node creation
+		$new_node = Node :: processCreateNewObjectUI();
+		if ($new_node)
+		{
+			$url = GENERIC_OBJECT_ADMIN_ABS_HREF."?".http_build_query(array ("object_class" => "Node", "action" => "edit", "object_id" => $new_node->getId()));
+			header("Location: {$url}");
+		}
 		// Content management
 		foreach ($this->getAllContent() as $content)
 		{
@@ -820,10 +892,27 @@ class Network implements GenericObject
 	 * @return true on success, false on failure or access denied */
 	public function delete(& $errmsg)
 	{
-		$errmsg = _("Network::delete() not supported");
-		return false;
+		$retval = false;
+		$user = User :: getCurrentUser();
+		if (!$user->isSuperAdmin())
+		{
+			$errmsg = _('Access denied (must have super admin access)');
+		}
+		else
+		{
+		global $db;
+		$id = $db->EscapeString($this->getId());
+		if (!$db->ExecSqlUpdate("DELETE FROM networks WHERE network_id='{$id}'", false))
+		{
+			$errmsg = _('Could not delete network!');
+		}
+		else
+		{
+			$retval = true;
+		}
+		}
+		return $retval;
 	}
-
 	/** Reloads the object from the database.  Should normally be called after a set operation */
 	protected function refresh()
 	{
@@ -832,3 +921,4 @@ class Network implements GenericObject
 
 } //End class
 ?>
+

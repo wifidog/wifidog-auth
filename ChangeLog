@@ -1,3 +1,7 @@
+2005-09-10 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Add UI to add a new Network
+	* Improve UI to add a new Node and new Content
+
 2005-09-10 Philippe April  <philippe@ilesansfil.org>
 	* signup.php: Fixed bug in detecting is the user is already part of the
 	network.

@@ -76,6 +76,47 @@ class Content implements GenericObject
 
 		return $object;
 	}
+	
+		/** Get an interface to create a new object.
+	* @return html markup
+	*/
+	public static function getCreateNewObjectUI()
+	{
+			$html ='';
+			$html .= _("You must select a content type: ");
+			$i = 0;
+			foreach (self :: getAvailableContentTypes() as $classname)
+			{
+				$tab[$i][0] = $classname;
+				$tab[$i][1] = $classname;
+				$i ++;
+			}
+			$name = "new_content_content_type";
+			$default = 'TrivialLangstring';
+			$html .= FormSelectGenerator :: generateFromArray($tab, $default, $name, "Content", false);
+		
+		return $html;
+	}
+
+	/** Process the new object interface. 
+	 *  Will       return the new object if the user has the credentials
+	 * necessary (Else an exception is thrown) and and the form was fully
+	 * filled (Else the object returns null).
+	 * @return the node object or null if no new node was created.
+	 */
+	static function processCreateNewObjectUI()
+{
+	$retval = null;
+	$name = "new_content_content_type";
+	$content_type = FormSelectGenerator :: getResult($name, "Content");
+    if($content_type)
+    {
+    	$retval = self::createNewObject($content_type);
+    }
+	
+	return $retval;
+}
+	
 	/** Get the Content object, specific to it's content type 
 	 * @param $content_id The content id
 	 * @return the Content object, or null if there was an error (an exception is also thrown)
