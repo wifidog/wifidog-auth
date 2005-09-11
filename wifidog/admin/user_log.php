@@ -40,38 +40,8 @@ $user = User::processSelectUserUI("user_id_searchbox");
 
 if (!empty ($_REQUEST['user_id']) || !empty($user))
 {
-	try
-	{
-		// If it comes from a link get that user ID
-		if(empty($user))
-			$user = User :: getObject($_REQUEST['user_id']);
-		$userinfo = $user->getInfoArray();
-		$userinfo['account_status_description'] = $account_status_to_text[$userinfo['account_status']];
-		$smarty->assign("userinfo", $userinfo);
-		global $db;
-		$db->ExecSql("SELECT DISTINCT ON (conn_id) NOW(), * FROM connections NATURAL JOIN users, nodes WHERE users.user_id='{$user->getId()}' AND nodes.node_id=connections.node_id ORDER BY conn_id, timestamp_in", $connections, false);
-
-		if ($connections)
-		{
-			foreach ($connections as $connection)
-			{
-				$total['incoming'] += $connection['incoming'];
-				$total['outgoing'] += $connection['outgoing'];
-				$connection['token_status_description'] = $token_to_text[$connection['token_status']];
-				$smarty->append("connections", $connection);
-			}
-		}
-		$smarty->assign("total", $total);
-	}
-	catch (Exception $e)
-	{
-		$smarty->assign("error", $e->getMessage());
-	}
-    
-    $ui=new MainUI();
-    $ui->setToolSection('ADMIN');
-    $ui->setMainContent($smarty->fetch("admin/templates/user_log_detailed.html"));
-    $ui->display();
+    header("Location: stats.php?user_id=" . $user->getId());
+    exit;
 }
 else
 {
