@@ -819,8 +819,9 @@ class Network implements GenericObject
 
 		//  is_default_network
 		$name = "network_".$this->getId()."_is_default_network";
-		if ($_REQUEST[$name] == 'on')
+		if (!empty($_REQUEST[$name]) && $_REQUEST[$name] == 'on')
 			$this->setAsDefaultNetwork();
+		
 
 		//  validation_grace_time
 		$name = "network_".$this->getId()."_validation_grace_time";

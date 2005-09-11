@@ -616,17 +616,6 @@ function update_schema()
             
 		}
 		
-		$new_schema_version = 28;
-		if ($schema_version < $new_schema_version)
-		{
-			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
-			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
-            $sql .= "ALTER TABLE nodes ADD COLUMN is_splash_only_node boolean;\n";
-            $sql .= "ALTER TABLE nodes ALTER COLUMN is_splash_only_node SET DEFAULT FALSE;\n";
-            $sql .= "ALTER TABLE nodes ADD COLUMN custom_portal_redirect_url text;\n";
-            
-		}
-		
 		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);
 		//$db->ExecSqlUpdate("BEGIN;\n$sql\nROLLBACK;\n", true);
 		echo "</html></head>";
