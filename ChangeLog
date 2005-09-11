@@ -1,4 +1,7 @@
 2005-09-10 Francois Proulx <francois.proulx@gmail.com>
+	* Fixed dependency check
+	
+2005-09-10 Francois Proulx <francois.proulx@gmail.com>
 	* Removed many blank lines after php tags
 	* added more checks, for dates etc...
 	* changed sorting mode

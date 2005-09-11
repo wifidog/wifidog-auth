@@ -24,15 +24,18 @@
 
 require_once BASEPATH.'admin/admin_common.php';
 
-if (!$_REQUEST["date_from"])
-    $_REQUEST["date_from"] = strftime("%Y-%m-%d 00:00");
-if (!$_REQUEST["date_to"])
-    $_REQUEST["date_to"] = strftime("%Y-%m-%d 11:59");
-
-$date_constraint = "AND timestamp_in >= '{$_REQUEST['date_from']}' AND timestamp_in <= '{$_REQUEST['date_to']}'";
-
-$node_id = isset($_REQUEST["node_id"]) ? $db->EscapeString($_REQUEST["node_id"]) : null;
-$user_id = isset($_REQUEST["user_id"]) ? $db->EscapeString($_REQUEST["user_id"]) : null;
-$network_id = isset($_REQUEST["network_id"]) ? $db->EscapeString($_REQUEST["network_id"]) : null;
+// Make sure the depency is met
+if (Dependencies::check("ImageGraph", $errmsg)) {
+	if (!$_REQUEST["date_from"])
+	    $_REQUEST["date_from"] = strftime("%Y-%m-%d 00:00");
+	if (!$_REQUEST["date_to"])
+	    $_REQUEST["date_to"] = strftime("%Y-%m-%d 11:59");
+	
+	$date_constraint = "AND timestamp_in >= '{$_REQUEST['date_from']}' AND timestamp_in <= '{$_REQUEST['date_to']}'";
+	
+	$node_id = isset($_REQUEST["node_id"]) ? $db->EscapeString($_REQUEST["node_id"]) : null;
+	$user_id = isset($_REQUEST["user_id"]) ? $db->EscapeString($_REQUEST["user_id"]) : null;
+	$network_id = isset($_REQUEST["network_id"]) ? $db->EscapeString($_REQUEST["network_id"]) : null;
+}
 
 ?>

@@ -1,4 +1,6 @@
 <?php
+
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -24,34 +26,24 @@
 
 class Dependencies
 {
-    static public function check($component, & $errmsg) {
-        $components = array(
-            "ImageGraph" => array(
-                "name" => "PEAR::Image_Graph",
-                "file" => "Image/Graph.php"
-            )
-        );
+	static public function check($component, & $errmsg)
+	{
+		$components = array ("ImageGraph" => array ("name" => "PEAR::Image_Graph", "file" => "Image/Graph.php"));
 
-        if (isset($components[$component])) {
-            $component_info = $components[$component];
-
-            if (file_exists($component_info["file"])) {
-
-                if (include_once($component_info["file"])) {
-                    return true;
-                } else {
-                    $errmsg = $component_info["name"] . _(" is not working properly");
-                    return false;
-                }
-
-            } else {
-                $errmsg = $component_info["name"] . _(" is not installed");
-                return false;
-            }
-        } else {
-            throw new Exception("Component not found");
-        }
-    }
+		if (isset ($components[$component]))
+		{
+			$component_info = $components[$component];
+			if (include_once ($component_info["file"]))
+				return true;
+			else
+			{
+				$errmsg = $component_info["name"]._(" is not installed");
+				return false;
+			}
+		}
+		else
+			throw new Exception("Component not found");
+	}
 
 } // End class
 ?>
