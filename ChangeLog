@@ -1,3 +1,9 @@
+2005-09-12 Benoit Grégoire  <bock@step.polymtl.ca>
+	* schema_validate.php:  Fix a bug version 26.  The conversion of the old account_origin as a parameter 
+	to the authenticator was wrong.  To fix it manually if you already ran the script,
+	 you must quote the parameter in column network_authenticator_params in the networks table.
+	* RssPressReview.php:  Make expansion of today's item optionnal.
+
 2005-09-11 Francois Proulx <francois.proulx@gmail.com>
 	* Fixed dependency check, found a workaround for the file_exists problem
 	

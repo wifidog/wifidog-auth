@@ -388,7 +388,7 @@ class Network implements GenericObject
 		{
 			throw new Exception("Network::getAuthenticator():  Security error:  The parameters passed to the constructor of the authenticator are potentially unsafe");
 		}
-		$objstring = 'return new '.$this->mRow['network_authenticator_class']."('".$this->mRow['network_authenticator_params']."');";
+		$objstring = 'return new '.$this->mRow['network_authenticator_class']."(".$this->mRow['network_authenticator_params'].");";
 		return eval ($objstring);
 	}
 

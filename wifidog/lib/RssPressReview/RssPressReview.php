@@ -691,7 +691,7 @@ class RssPressReview
 	/**
 	@param $show_empty_sources Should we show the feed information even if no news item has be selected?
 	*/
-	function get_rss_html($number_of_items_to_display = 20, $last_visit = null, $show_empty_sources = true)
+	function get_rss_html($number_of_items_to_display = 20, $last_visit = null, $show_empty_sources = true, $highlight_todays_news = true)
 	{
 		$html = '';
 		if (($rss_result = $this->get_rss_info($number_of_items_to_display, $last_visit)) !== null)
@@ -749,7 +749,7 @@ class RssPressReview
 						$dhtml_id = "summary_".mt_rand(1, 10000);
 						$feed_html .= "<li class='rpr_item'>\n";
 						$feed_html .= "<p class='rpr_item_title'>\n";
-						$item['rpr_is_today'] ? $switch_content = '-' : $switch_content = '+';
+						$item['rpr_is_today']&&$highlight_todays_news ? $switch_content = '-' : $switch_content = '+';
 
 						$feed_html .= "<a class='rpr_expand_switch' href='#dummy' onClick=\"toggleItemVisibility('$dhtml_id'); if(this.innerHTML=='+'){this.innerHTML='-';}else{this.innerHTML='+';}\">$switch_content</a> ";
 						$feed_html .= "<span class='rpr_title_date'>$display_date</span>";
@@ -765,12 +765,10 @@ class RssPressReview
 						$feed_html .= "</span></p>\n";
 						$feed_html .= "<div class='rpr_popup_outer_div'>\n";
 						$class = 'rpr_popup_inner_div';
-						$item['rpr_is_today'] ? $class = 'rpr_popup_inner_div_expanded' : $class = 'rpr_popup_inner_div';
+						$item['rpr_is_today']&&$highlight_todays_news ? $class = 'rpr_popup_inner_div_expanded' : $class = 'rpr_popup_inner_div';
 						$style = '';
-						//$item['rpr_is_today'] ? $style = 'z-index: 1000;' : $style = '';
-						$item['rpr_is_today'] ? $script= "changestyle('$dhtml_id','visible');" : $script = '';
+						$item['rpr_is_today']&&$highlight_todays_news ? $script= "changestyle('$dhtml_id','visible');" : $script = '';
 						$feed_html .= "<div class='$class' style='$style' id='$dhtml_id'>\n";
-						//$feed_html .= "<script type=\"text/javascript\">$script</script>\n";
 						$feed_html .= "<p class='rpr_text'>{$item['rpr_author']} ({$feed['channel']['title']}) $display_date</p>\n";
 						$summary = strip_tags($item['rpr_content'], "<br><p><a><img><b><i>");
 						$feed_html .= "<p class='rpr_text'>{$summary}</p></div>\n";
