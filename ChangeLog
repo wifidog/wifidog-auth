@@ -1,4 +1,7 @@
 2005-09-11 Francois Proulx <francois.proulx@gmail.com>
+	* Fixed dependency check, found a workaround for the file_exists problem
+	
+2005-09-11 Francois Proulx <francois.proulx@gmail.com>
 	* Added dependency check for Phlickr
 	
 2005-09-11 Francois Proulx <francois.proulx@gmail.com>

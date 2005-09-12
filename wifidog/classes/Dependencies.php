@@ -31,17 +31,22 @@ class Dependencies
 		$components = array();
 		$components["ImageGraph"] = array ("name" => "PEAR::Image_Graph", "file" => "Image/Graph.php");
 		$components["Phlickr"] = array ("name" => "PEAR::Phlickr", "file" => "Phlickr/Api.php");
-
+		
 		if (isset ($components[$component]))
 		{
+			// Since file_exists does not take in account the include_path
+			// Explode paths of include path
+			$path_array = explode( PATH_SEPARATOR, get_include_path());
 			$component_info = $components[$component];
-			if (include_once ($component_info["file"]))
-				return true;
-			else
-			{
-				$errmsg = $component_info["name"]._(" is not installed");
-				return false;
-			}
+			
+			// For each path or the include path, check if the file exists
+			foreach($path_array as $path)
+				if (file_exists ($path."/".$component_info["file"]))
+					return true;
+					
+			// Otherwise, the requirement is not met
+			$errmsg = $component_info["name"]._(" is not installed");
+			return false;
 		}
 		else
 			throw new Exception("Component not found");
