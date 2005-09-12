@@ -27,7 +27,7 @@ error_reporting(E_ALL);
 require_once BASEPATH.'config.php';
 require_once BASEPATH.'classes/AbstractDb.php';
 require_once BASEPATH.'classes/Session.php';
-define('REQUIRED_SCHEMA_VERSION', 28);
+define('REQUIRED_SCHEMA_VERSION', 29);
 
 /** Check that the database schema is up to date.  If it isn't, offer to update it. */
 function validate_schema()
@@ -185,85 +185,85 @@ function update_schema()
 			$sql .= "ALTER TABLE users ADD COLUMN prefered_locale text REFERENCES locales ON DELETE SET NULL ON UPDATE CASCADE;\n";
 
 			$sql .= "			
-						CREATE TABLE content
-						(
-						content_id text NOT NULL PRIMARY KEY,
-						content_type text NOT NULL  CONSTRAINT content_type_not_empty_string CHECK (content_type != ''),
-						title text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
-						description text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
-						project_info text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
-						sponsor_info text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
-						creation_timestamp timestamp DEFAULT now()
-						);
-			
-						CREATE TABLE content_has_owners
-						(
-						content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-						user_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,
-						is_author bool NOT NULL,
-						owner_since timestamp DEFAULT now(),
-						PRIMARY KEY  (content_id, user_id)
-						);
-						
-						CREATE TABLE langstring_entries (
-						  langstring_entries_id text NOT NULL PRIMARY KEY,
-						  langstrings_id text REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-						  locales_id text REFERENCES locales ON DELETE RESTRICT ON UPDATE CASCADE,
-						  value text  DEFAULT ''
-						);
-						
-						CREATE TABLE content_group (
-						  content_group_id text NOT NULL PRIMARY KEY REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-						  is_artistic_content bool NOT NULL DEFAULT FALSE,
-						  is_locative_content bool NOT NULL DEFAULT FALSE,
-						  content_selection_mode text
-						);
-						
-						CREATE TABLE content_group_element (
-						  content_group_element_id text NOT NULL PRIMARY KEY REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-						  content_group_id text NOT NULL REFERENCES content_group ON DELETE CASCADE ON UPDATE CASCADE,
-						  display_order integer DEFAULT '1',
-						  displayed_content_id text REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-						  force_only_allowed_node bool
-						);
-						CREATE INDEX idx_content_group_element_content_group_id ON content_group_element (content_group_id);
-						
-						CREATE TABLE content_group_element_has_allowed_nodes
-						(
-						content_group_element_id text NOT NULL REFERENCES content_group_element ON DELETE CASCADE ON UPDATE CASCADE,
-						node_id text NOT NULL REFERENCES nodes ON DELETE CASCADE ON UPDATE CASCADE,
-						allowed_since timestamp DEFAULT now(),
-						PRIMARY KEY  (content_group_element_id, node_id)
-						);
-						
-						CREATE TABLE content_group_element_portal_display_log (
-						  user_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,
-						  content_group_element_id text NOT NULL REFERENCES content_group_element ON DELETE CASCADE ON UPDATE CASCADE,
-						  display_timestamp timestamp NOT NULL DEFAULT now(),
-						  node_id text REFERENCES nodes ON DELETE CASCADE ON UPDATE CASCADE,
-						  PRIMARY KEY  (user_id,content_group_element_id, display_timestamp)
-						);
-						
-						CREATE TABLE user_has_content (
-						  user_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,
-						  content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-						  subscribe_timestamp timestamp NOT NULL DEFAULT now(),
-						  PRIMARY KEY  (user_id,content_id)
-						);
-						
-						CREATE TABLE node_has_content (
-						  node_id text NOT NULL REFERENCES nodes ON DELETE CASCADE ON UPDATE CASCADE,
-						  content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-						  subscribe_timestamp timestamp NOT NULL DEFAULT now(),
-						  PRIMARY KEY  (node_id,content_id)
-						);
-						
-						CREATE TABLE network_has_content (
-						  network_id text NOT NULL,
-						  content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-						  subscribe_timestamp timestamp NOT NULL DEFAULT now(),
-						  PRIMARY KEY  (network_id,content_id)
-						);";
+				CREATE TABLE content
+				(
+				content_id text NOT NULL PRIMARY KEY,
+				content_type text NOT NULL  CONSTRAINT content_type_not_empty_string CHECK (content_type != ''),
+				title text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
+				description text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
+				project_info text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
+				sponsor_info text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
+				creation_timestamp timestamp DEFAULT now()
+				);
+	
+				CREATE TABLE content_has_owners
+				(
+				content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+				user_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,
+				is_author bool NOT NULL,
+				owner_since timestamp DEFAULT now(),
+				PRIMARY KEY  (content_id, user_id)
+				);
+				
+				CREATE TABLE langstring_entries (
+				  langstring_entries_id text NOT NULL PRIMARY KEY,
+				  langstrings_id text REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+				  locales_id text REFERENCES locales ON DELETE RESTRICT ON UPDATE CASCADE,
+				  value text  DEFAULT ''
+				);
+				
+				CREATE TABLE content_group (
+				  content_group_id text NOT NULL PRIMARY KEY REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+				  is_artistic_content bool NOT NULL DEFAULT FALSE,
+				  is_locative_content bool NOT NULL DEFAULT FALSE,
+				  content_selection_mode text
+				);
+				
+				CREATE TABLE content_group_element (
+				  content_group_element_id text NOT NULL PRIMARY KEY REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+				  content_group_id text NOT NULL REFERENCES content_group ON DELETE CASCADE ON UPDATE CASCADE,
+				  display_order integer DEFAULT '1',
+				  displayed_content_id text REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+				  force_only_allowed_node bool
+				);
+				CREATE INDEX idx_content_group_element_content_group_id ON content_group_element (content_group_id);
+				
+				CREATE TABLE content_group_element_has_allowed_nodes
+				(
+				content_group_element_id text NOT NULL REFERENCES content_group_element ON DELETE CASCADE ON UPDATE CASCADE,
+				node_id text NOT NULL REFERENCES nodes ON DELETE CASCADE ON UPDATE CASCADE,
+				allowed_since timestamp DEFAULT now(),
+				PRIMARY KEY  (content_group_element_id, node_id)
+				);
+				
+				CREATE TABLE content_group_element_portal_display_log (
+				  user_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,
+				  content_group_element_id text NOT NULL REFERENCES content_group_element ON DELETE CASCADE ON UPDATE CASCADE,
+				  display_timestamp timestamp NOT NULL DEFAULT now(),
+				  node_id text REFERENCES nodes ON DELETE CASCADE ON UPDATE CASCADE,
+				  PRIMARY KEY  (user_id,content_group_element_id, display_timestamp)
+				);
+				
+				CREATE TABLE user_has_content (
+				  user_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,
+				  content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+				  subscribe_timestamp timestamp NOT NULL DEFAULT now(),
+				  PRIMARY KEY  (user_id,content_id)
+				);
+				
+				CREATE TABLE node_has_content (
+				  node_id text NOT NULL REFERENCES nodes ON DELETE CASCADE ON UPDATE CASCADE,
+				  content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+				  subscribe_timestamp timestamp NOT NULL DEFAULT now(),
+				  PRIMARY KEY  (node_id,content_id)
+				);
+				
+				CREATE TABLE network_has_content (
+				  network_id text NOT NULL,
+				  content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+				  subscribe_timestamp timestamp NOT NULL DEFAULT now(),
+				  PRIMARY KEY  (network_id,content_id)
+				);";
 		}
 
 		$new_schema_version = 7;
@@ -605,6 +605,7 @@ function update_schema()
             $sql .= "ALTER TABLE nodes ADD COLUMN last_paged timestamp;\n";
 
 		}
+		
 		$new_schema_version = 28;
 		if ($schema_version < $new_schema_version)
 		{
@@ -614,6 +615,14 @@ function update_schema()
             $sql .= "ALTER TABLE nodes ALTER COLUMN is_splash_only_node SET DEFAULT FALSE;\n";
             $sql .= "ALTER TABLE nodes ADD COLUMN custom_portal_redirect_url text;\n";
             
+		}
+		
+		$new_schema_version = 29;
+		if ($schema_version < $new_schema_version)
+		{
+			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+			$sql .= "ALTER TABLE flickr_photostream ADD COLUMN api_shared_secret text;\n";
 		}
 		
 		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);

@@ -1,3 +1,8 @@
+2005-09-11 Francois Proulx <francois.proulx@gmail.com>
+	* Fixed Flickr support
+	* Now using PEAR version of Phlickr
+	* Download the latest package and install like this : pear install PhlickrXYZ.tar.gz
+	
 2005-09-10 Francois Proulx <francois.proulx@gmail.com>
 	* Fixed dependency check
 	

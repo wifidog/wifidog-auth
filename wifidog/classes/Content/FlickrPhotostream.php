@@ -1,4 +1,5 @@
 <?php
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -29,9 +30,7 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 	require_once BASEPATH.'classes/Content.php';
 	require_once BASEPATH.'classes/FormSelectGenerator.php';
 
-	// Set the include_path in order to include Phlickr classes.
-	ini_set("include_path", ini_get("include_path").":".BASEPATH.PHLICKR_REL_PATH);
-
+	// Phlickr classes
 	require_once "Phlickr/Api.php";
 	require_once "Phlickr/User.php";
 	require_once "Phlickr/Group.php";
@@ -108,8 +107,8 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 
 		private function writeCacheToDatabase($force_overwrite = false)
 		{
-				//echo "<h2>DEBUG :: Writing cache to database</h2>";
-	$api = $this->getFlickrApi();
+			//echo "<h2>DEBUG :: Writing cache to database</h2>";
+			$api = $this->getFlickrApi();
 			if ($api)
 			{
 				$new_cache = serialize($api->getCache());
@@ -123,7 +122,7 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 		private function getFlickrApi()
 		{
 			if ($this->getApiKey() && $this->flickr_api == null)
-				$this->flickr_api = new Phlickr_Api($this->getApiKey());
+				$this->flickr_api = new Phlickr_Api($this->getApiKey(), $this->getApiSharedSecret());
 			return $this->flickr_api;
 		}
 
@@ -175,6 +174,19 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 		public function getApiKey()
 		{
 			return $this->flickr_photostream_row['api_key'];
+		}
+		
+		public function getApiSharedSecret()
+		{
+			return $this->flickr_photostream_row['api_shared_secret'];
+		}
+		
+		public function setApiSharedSecret($api_shared_secret)
+		{
+			$api_shared_secret = $this->mBd->EscapeString($api_shared_secret);
+			$this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET api_shared_secret ='$api_shared_secret' WHERE flickr_photostream_id = '".$this->getId()."'");
+			$this->refresh();
+			$this->setFlickrApi(null);
 		}
 
 		public function setApiKey($api_key)
@@ -366,6 +378,14 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 			$html .= "<input type='text' name='$name' value='".$this->getApiKey()."'\n";
 			$html .= "</div>\n";
 			$html .= "</div>\n";
+			
+			$html .= "<div class='admin_section_container'>\n";
+			$html .= "<div class='admin_section_title'>"._("Shared secret")." : </div>\n";
+			$html .= "<div class='admin_section_data'>\n";
+			$name = "flickr_photostream_".$this->id."_api_shared_secret";
+			$html .= "<input type='text' name='$name' value='".$this->getApiSharedSecret()."'\n";
+			$html .= "</div>\n";
+			$html .= "</div>\n";
 
 			$html .= "<div class='admin_section_container'>\n";
 			$html .= "<div class='admin_section_title'>"._("Flick photo selection mode :")."</div>\n";
@@ -531,7 +551,10 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 
 				$name = "flickr_photostream_".$this->id."_api_key";
 				!empty ($_REQUEST[$name]) ? $this->setApiKey($_REQUEST[$name]) : $this->setApiKey(null);
-
+				
+				$name = "flickr_photostream_".$this->id."_api_shared_secret";
+				!empty ($_REQUEST[$name]) ? $this->setApiSharedSecret($_REQUEST[$name]) : $this->setApiSharedSecret(null);
+				
 				if ($generator->isPresent("SelectionMode".$this->getID(), "FlickrPhotostream"))
 					$this->setSelectionMode($generator->getResult("SelectionMode".$this->getID(), "FlickrPhotostream"));
 
@@ -643,7 +666,7 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 
 						// Preload authors ( this will be cached )
 						foreach ($photos as $cache_authors)
-							$author = new Phlickr_User($api, $cache_authors->getOwnerId());
+							$author = new Phlickr_User($api, $cache_authors->getUserId());
 
 						// If there's enough photo show a grid
 						if (count($photos) >= self :: GRID_X * self :: GRID_Y)
@@ -663,7 +686,7 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 									$photo = $photos[$idx];
 									if (is_object($photo))
 									{
-										$author = new Phlickr_User($api, $photo->getOwnerId());
+										$author = new Phlickr_User($api, $photo->getUserId());
 										$html .= '<td><div class="flickr_photo"><a href="'.$photo->buildUrl().'"><img title="['.$author->getName()."] ".$photo->getTitle().'" src="'.$photo->buildImgUrl($size).'"></a></div></td>'."\n";
 									}
 								}
@@ -714,7 +737,7 @@ if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
 								}
 
 								foreach ($photos as $cache_authors)
-									$author = new Phlickr_User($api, $cache_authors->getOwnerId());
+									$author = new Phlickr_User($api, $cache_authors->getUserId());
 
 								$author = new Phlickr_User($api, $photo->getOwnerId());
 								$html .= '<div class="flickr_description"><a href="'.$author->buildUrl().'">'.$author->getName().'</a></div>'."\n";
