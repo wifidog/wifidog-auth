@@ -28,7 +28,9 @@ class Dependencies
 {
 	static public function check($component, & $errmsg)
 	{
-		$components = array ("ImageGraph" => array ("name" => "PEAR::Image_Graph", "file" => "Image/Graph.php"));
+		$components = array();
+		$components["ImageGraph"] = array ("name" => "PEAR::Image_Graph", "file" => "Image/Graph.php");
+		$components["Phlickr"] = array ("name" => "PEAR::Phlickr", "file" => "Phlickr/Api.php");
 
 		if (isset ($components[$component]))
 		{

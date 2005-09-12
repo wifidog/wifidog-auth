@@ -24,8 +24,8 @@
  * Technologies Coeus inc.
  */
 
-// Make sure the Phlickr support is activated
-if (defined('PHLICKR_SUPPORT') && PHLICKR_SUPPORT === true)
+// Make sure the Phlickr support is installed
+if (Dependencies::check("Phlickr", $errmsg))
 {
 	require_once BASEPATH.'classes/Content.php';
 	require_once BASEPATH.'classes/FormSelectGenerator.php';
@@ -811,12 +811,10 @@ else
 		}
 		public function getAdminUI($subclass_admin_interface = null)
 		{
-			$generator = new FormSelectGenerator();
-
 			$html = '';
-			$html .= "<div class='errormsg'>"._("Flickr support isn't enabled in the config file")."</div>\n";
-
-			$html .= $subclass_admin_interface;
+			$html .= "<div class='admin_class'>Flickr Photostream (".get_class($this)." instance)</div>\n";
+			$html .= _("PEAR::Phlickr is not installed");
+			
 			return parent :: getAdminUI($html);
 		}
 
