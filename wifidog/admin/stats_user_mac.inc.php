@@ -65,19 +65,19 @@ foreach ($rows as $row)
 	if (!empty($timestamp_in) && !empty($timestamp_out))
 	{
 		$total['time_spent'] += ($timestamp_out - $timestamp_in);
-		$html .= "  <td>".seconds_in_words($timestamp_out - $timestamp_in)."</td>";
+		$html .= "  <td>".Utils::convertSecondsToWords($timestamp_out - $timestamp_in)."</td>";
 	}
 	else
 	{
 		$html .= "  <td></td>";
 	}
 	if ($row['incoming'])
-		$html .= "<td>".bytes_in_words($row['incoming'])."</td>\n";
+		$html .= "<td>".Utils::convertBytesToWords($row['incoming'])."</td>\n";
 	else
 		$html .= "<td></td>\n";
 
 	if ($row['outgoing'])
-		$html .= "<td>".bytes_in_words($row['outgoing'])."</td>\n";
+		$html .= "<td>".Utils::convertBytesToWords($row['outgoing'])."</td>\n";
 	else
 		$html .= "<td></td>\n";
 
@@ -88,9 +88,9 @@ $html .= "<tr>\n";
 $html .= "  <td></td>\n";
 $html .= "  <td></td>\n";
 $html .= "  <th>"._("Total").":</th>\n";
-$html .= "  <th>".seconds_in_words($total['time_spent'])."</th>\n";
-$html .= "  <th>".bytes_in_words($total['incoming'])."</th>\n";
-$html .= "  <th>".bytes_in_words($total['outgoing'])."</th>\n";
+$html .= "  <th>".Utils::convertSecondsToWords($total['time_spent'])."</th>\n";
+$html .= "  <th>".Utils::convertBytesToWords($total['incoming'])."</th>\n";
+$html .= "  <th>".Utils::convertBytesToWords($total['outgoing'])."</th>\n";
 $html .= "</tr>\n";
 
 $html .= "</table>\n";

@@ -29,48 +29,7 @@ ini_set('display_errors', true);
 define('BASEPATH','../');
 require_once BASEPATH.'admin/admin_common.php';
 require_once BASEPATH.'classes/MainUI.php';
-
-function bytes_in_words($bytes) {
-    if ($bytes > 1024*1024*1024)
-        return round($bytes/(1024*1024*1024),1) . "G";
-    if ($bytes > 1024*1024)
-        return round($bytes/(1024*1024),1) . "M";
-    if ($bytes > 1024)
-        return round($bytes/(1024),1) . "K";
-}
-
-function seconds_in_words($seconds) {
-    $r = '';
-    if ($seconds >  60*60*24*365.25) {
-        $amount = floor($seconds/(60*60*24*365.25));
-        if ($amount != 0)
-            $r .= " {$amount}y";
-        $seconds -= ($amount*60*60*24*365.25);
-    }
-    if ($seconds > 60*60*24) {
-        $amount = floor($seconds/(60*60*24));
-        if ($amount != 0)
-            $r .= " {$amount}d";
-        $seconds -= ($amount*60*60*24);
-    }
-    if ($seconds > 60*60) {
-        $amount = floor($seconds/(60*60));
-        if ($amount != 0)
-            $r .= " {$amount}h";
-        $seconds -= ($amount*60*60);
-    }
-    if ($seconds > 60) {
-        $amount = floor($seconds/60);
-        if ($amount != 0)
-            $r .= " {$amount}m";
-        $seconds -= ($amount*60);
-    }
-    if ($seconds != 0) {
-        $r .= " {$seconds}s";
-    }
-    trim($r);
-    return $r;
-}
+require_once BASEPATH.'classes/Utils.php';
 
 $current_user = User::getCurrentUser();
 

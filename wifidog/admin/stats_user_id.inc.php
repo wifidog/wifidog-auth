@@ -132,7 +132,7 @@ if ($connections)
 		$html .= "  <td>".strftime("%c", $timestamp_in)."</td>\n";
 		if (!empty($timestamp_in) && !empty($timestamp_out))
 		{
-			$html .= "<td>".seconds_in_words($timestamp_out - $timestamp_in)."</td>\n";
+			$html .= "<td>".Utils::convertSecondsToWords($timestamp_out - $timestamp_in)."</td>\n";
 		}
 		else
 		{
@@ -141,8 +141,8 @@ if ($connections)
 		$html .= "  <td>".$connection['token_status']."</td>\n";
 		$html .= "  <td><a href='?date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}&node_id={$nodeObject->getId()}'>{$nodeObject->getName()}</a></td>\n";
 		$html .= "  <td>".$connection['user_ip']."</td>\n";
-		$html .= "  <td>".bytes_in_words($connection['incoming'])."</td>\n";
-		$html .= "  <td>".bytes_in_words($connection['outgoing'])."</td>\n";
+		$html .= "  <td>".Utils::convertBytesToWords($connection['incoming'])."</td>\n";
+		$html .= "  <td>".Utils::convertBytesToWords($connection['outgoing'])."</td>\n";
 		$html .= "</tr>\n";
 	}
 }
@@ -153,8 +153,8 @@ $html .= "  <td></td>\n";
 $html .= "  <td></td>\n";
 $html .= "  <td></td>\n";
 $html .= "  <th>"._("Total").":</th>\n";
-$html .= "  <th>".bytes_in_words($total['incoming'])."</th>\n";
-$html .= "  <th>".bytes_in_words($total['outgoing'])."</th>\n";
+$html .= "  <th>".Utils::convertBytesToWords($total['incoming'])."</th>\n";
+$html .= "  <th>".Utils::convertBytesToWords($total['outgoing'])."</th>\n";
 $html .= "</tr>\n";
 $html .= "</table>\n";
 $html .= "</fieldset>\n";

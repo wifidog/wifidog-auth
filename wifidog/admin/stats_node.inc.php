@@ -109,7 +109,7 @@ if ($current_user->isSuperAdmin() || $nodeObject->isOwner($current_user))
 	$html .= "</td>";
 	$html .= "<tr class='odd'>";
 	$html .= "  <th>"._("Last heartbeat")."</th>";
-	$html .= "  <td>".seconds_in_words(time() - strtotime($nodeObject->getLastHeartbeatTimestamp()))." ago</td>";
+	$html .= "  <td>".Utils::convertSecondsToWords(time() - strtotime($nodeObject->getLastHeartbeatTimestamp()))." ago</td>";
 	$html .= "</tr>";
 	$html .= "</tr>";
 	$html .= "<tr class='even'>";
@@ -137,9 +137,9 @@ if ($current_user->isSuperAdmin() || $nodeObject->isOwner($current_user))
 	$html .= "<tr class='odd'>";
 	$html .= "  <th>"._("Traffic").":</th>";
 	$html .= "  <td>";
-	$html .= _("Incoming").": ".bytes_in_words($rows[0]['in']);
+	$html .= _("Incoming").": ".Utils::convertBytesToWords($rows[0]['in']);
 	$html .= "<br>";
-	$html .= _("Outgoing").": ".bytes_in_words($rows[0]['out']);
+	$html .= _("Outgoing").": ".Utils::convertBytesToWords($rows[0]['out']);
 	$html .= "<br>";
 	$html .= "(for the selected period)";
 	$html .= "</td>";
@@ -299,7 +299,7 @@ if ($current_user->isSuperAdmin() || $nodeObject->isOwner($current_user))
 						$html .= "  <td>";
 						if ($timestamp_in != -1 && $timestamp_out != -1)
 						{
-							$html .= seconds_in_words($timestamp_out - $timestamp_in);
+							$html .= Utils::convertSecondsToWords($timestamp_out - $timestamp_in);
 						}
 						$html .= "</td>\n";
 						$html .= "</tr>\n";

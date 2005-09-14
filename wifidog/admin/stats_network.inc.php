@@ -50,7 +50,7 @@ $html .= "</tr>";
 
 $html .= "<tr class='odd'>";
 $html .= "  <th>" . _("Validation grace time") . "</th>";
-$html .= "  <td>" . seconds_in_words($networkObject->getValidationGraceTime()) . "</td>";
+$html .= "  <td>" . Utils::convertSecondsToWords($networkObject->getValidationGraceTime()) . "</td>";
 $html .= "</tr>";
 
 $html .= "<tr>";
@@ -224,9 +224,9 @@ if ($frequent_users_stats) {
         else
             $even = 0;
         $html .= "  <td><a href='?date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}&user_id={$row['user_id']}'>{$row['username']}</a></td>\n";
-        $html .= "  <td>" . bytes_in_words($row['total_incoming']) . "</td>";
-        $html .= "  <td>" . bytes_in_words($row['total_outgoing']) . "</td>";
-        $html .= "  <td>" . bytes_in_words($row['total']) . "</td>";
+        $html .= "  <td>" . Utils::convertBytesToWords($row['total_incoming']) . "</td>";
+        $html .= "  <td>" . Utils::convertBytesToWords($row['total_outgoing']) . "</td>";
+        $html .= "  <td>" . Utils::convertBytesToWords($row['total']) . "</td>";
         $html .= "</tr>";
     }
     $html .= "</table>";
