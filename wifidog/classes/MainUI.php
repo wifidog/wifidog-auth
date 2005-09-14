@@ -144,13 +144,18 @@ class MainUI
 
 						$html .= "</div>\n";
 						$html .= '</form>';
-						$html .= "<div class='admin_section_tools'>\n";
-						$html .= '<form action="'.GENERIC_OBJECT_ADMIN_ABS_HREF.'" method="post">';
-						$html .= "<input type='hidden' name='action' value='new_ui'>\n";
-						$html .= "<input type='hidden' name='object_class' value='Node'><br>\n";
-						$html .= "<input type=submit name='new_submit' value='"._("Create")."'>\n";
-						$html .= "</form>\n";
-						$html .= "</div>\n";
+						
+						if($current_user->isSuperAdmin())
+						{
+							$html .= "<div class='admin_section_tools'>\n";
+							$html .= '<form action="'.GENERIC_OBJECT_ADMIN_ABS_HREF.'" method="post">';
+							$html .= "<input type='hidden' name='action' value='new_ui'>\n";
+							$html .= "<input type='hidden' name='object_class' value='Node'><br>\n";
+							$html .= "<input type=submit name='new_submit' value='"._("Create")."'>\n";
+							$html .= "</form>\n";
+							$html .= "</div>\n";
+						}
+						
 						$html .= "</div>\n";
 					}
 

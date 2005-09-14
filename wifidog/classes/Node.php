@@ -641,6 +641,15 @@ else
 		$html .= "<div class='admin_container'>\n";
 		$html .= "<div class='admin_class'>Node (".get_class($this)." instance)</div>\n";
 		$html .= "<h3>"._("Edit a hotspot")."</h3>\n";
+		
+		// Display stats
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Statistics:")."</div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "node_".$this->id."_get_stats";
+		$html .= "<input type='submit' name='$name' value='"._("Get access statistics")."'>";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
 
 		// Information about the node
 		$html .= "<div class='admin_section_container'>\n";
@@ -941,15 +950,6 @@ else
 		$html .= "<input type='submit' name='$name' value='"._("Add technical officer")."'>";
 		$html .= "</li>\n";
 		$html .= "</ul>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
-
-		// Display stats
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Statistics:")."</div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$this->id."_get_stats";
-		$html .= "<input type='submit' name='$name' value='"._("Get access statistics")."'>";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 

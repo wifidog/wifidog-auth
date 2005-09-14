@@ -72,7 +72,7 @@ function seconds_in_words($seconds) {
     return $r;
 }
 
-$security = new Security();
+$current_user = User::getCurrentUser();
 
 try {
     if (isset($_REQUEST['node_id']) && $_REQUEST['node_id']) {
@@ -173,7 +173,8 @@ EOF;
         } elseif (isset($_REQUEST['network_id'])) {
             $html .= "<input type='hidden' id='network_id' name='network_id' value='{$_REQUEST['network_id']}'>";
         }
-
+        
+        $html .= "<b>"._("Select the time range for which statistics will be computed.")."</b>";
         $html .= "<table>";
         $html .= "<tr>";
         $html .= "    <th>" . _("From") . ":</th>";
@@ -203,7 +204,7 @@ EOF;
         $html .= "</tr>\n";
         $html .= "</table>\n";
 
-        if (isset($_REQUEST['node_id'])) {
+        if (isset($_REQUEST['node_id']) && $current_user->isSuperAdmin()) {
             $html .= "<em>" . _("Group connections") . "?</em><br>";
 
             $html .= "<input type=\"radio\" name=\"group_connections\" value=\"\"";
@@ -219,22 +220,22 @@ EOF;
             $html .= ">By unique usernames<br>";
         }
 
-        $html .= "<input type='submit' value='" . _("View") . "'>";
+        $html .= "<input type='submit' value='" . _("Generate statistics") . "'>";
         $html .= "</form>";
         $html .= "<hr>";
     }
 
     //$sql = "select user_mac,count(user_mac) as nb,max(timestamp_in) as last_seen,substract(timestamp_in, timestamp_out) as time_spend from connections where node_id='{$node_id}' group by user_mac order by nb desc";
 
-    if (isset($node_id)) {
+    if (isset($node_id) && ($current_user->isSuperAdmin() || $current_user->isOwner())) {
         include "stats_node.inc.php";
-    } elseif (isset($user_id)) {
+    } elseif (isset($user_id) && $current_user->isSuperAdmin()) {
         include "stats_user_id.inc.php";
-    } elseif (isset($user_mac)) {
+    } elseif (isset($user_mac) && $current_user->isSuperAdmin()) {
         include "stats_user_mac.inc.php";
-    } elseif (isset($network_id)) {
+    } elseif (isset($network_id) && $current_user->isSuperAdmin()) {
         include "stats_network.inc.php";
-    } else {
+    } else if($current_user->isSuperAdmin()) {
         include "stats_all_networks.inc.php";
     }
 

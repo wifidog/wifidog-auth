@@ -186,18 +186,21 @@ width:auto; }
 						border: none;
 display: none;
 }
-.admin_section_container { display: block;
-border: 1px solid #DDDDFF; /*light blue*/
-background-color:	#FBFBFF;/*lighter blue*/
-margin: 5px;
-width:auto; 
+.admin_section_container { 
+	display: block;
+	border: 1px solid #DDDDFF; 
+	background-color: #FBFBFF;
+	margin: 5px;
+	width:auto; 
 }
 #NodeSelector select {
 	width: 100%;
 }
 .admin_section_title { display: inline;
 						font-weight: bold;  }
-.admin_section_data { display: inline;}
+.admin_section_data { 
+	display: inline;
+}
 .admin_section_tools { display: inline;}
 
 .admin_section_list { /* list of elements inside a section */

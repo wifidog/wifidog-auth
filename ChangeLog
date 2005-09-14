@@ -1,3 +1,6 @@
+2005-09-13 Francois Proulx <francois.proulx@gmail.com>
+	* Added access permissions for statistics.
+
 2005-09-12 Benoit Grégoire  <bock@step.polymtl.ca>
 	* schema_validate.php:  Fix a bug version 26.  The conversion of the old account_origin as a parameter 
 	to the authenticator was wrong.  To fix it manually if you already ran the script,
