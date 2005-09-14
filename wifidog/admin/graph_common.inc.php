@@ -30,6 +30,8 @@ if (Dependencies::check("ImageGraph", $errmsg)) {
 	    $_REQUEST["date_from"] = strftime("%Y-%m-%d 00:00");
 	if (!$_REQUEST["date_to"])
 	    $_REQUEST["date_to"] = strftime("%Y-%m-%d 11:59");
+
+    require_once("Image/Graph.php");
 	
 	$date_constraint = "AND timestamp_in >= '{$_REQUEST['date_from']}' AND timestamp_in <= '{$_REQUEST['date_to']}'";
 	
