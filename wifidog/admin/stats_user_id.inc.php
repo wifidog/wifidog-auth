@@ -116,7 +116,7 @@ if ($connections)
 {
 	foreach ($connections as $connection)
 	{
-		$timestamp_in = !empty($connection['timestamp_out']) ? strtotime($connection['timestamp_in']) : null;
+		$timestamp_in = !empty($connection['timestamp_in']) ? strtotime($connection['timestamp_in']) : null;
 		$timestamp_out = !empty($connection['timestamp_out']) ? strtotime($connection['timestamp_out']) : null;
 
 		$nodeObject = Node :: getObject($connection['node_id']);

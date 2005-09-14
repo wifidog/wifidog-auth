@@ -339,7 +339,7 @@ if ($current_user->isSuperAdmin() || $nodeObject->isOwner($current_user))
 					$total ++;
 
 					$html .= "  <td><a href='?date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}&user_id={$row['user_id']}'>{$row['username']}</a></td>\n";
-					$html .= "  <td>".utf8_encode(strftime("%c", strtotime($row['reg_date'])))."</td>\n";
+					$html .= "  <td>".strftime("%c", strtotime($row['reg_date']))."</td>\n";
 					$html .= "</tr>\n";
 				}
 			}

@@ -48,7 +48,7 @@ $total['outgoing'] = 0;
 $total['time_spent'] = 0;
 foreach ($rows as $row)
 {
-	$timestamp_in = !empty($row['timestamp_out']) ? strtotime($row['timestamp_in']) : null;
+	$timestamp_in = !empty($row['timestamp_in']) ? strtotime($row['timestamp_in']) : null;
 	$timestamp_out = !empty($row['timestamp_out']) ? strtotime($row['timestamp_out']) : null;
 
 	$total['incoming'] += $row['incoming'];

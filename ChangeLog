@@ -1,4 +1,7 @@
 2005-09-13 Francois Proulx <francois.proulx@gmail.com>
+	* Fixed bug in user stats
+	
+2005-09-13 Francois Proulx <francois.proulx@gmail.com>
 	* Added access permissions for statistics.
 
 2005-09-12 Benoit Grégoire  <bock@step.polymtl.ca>
