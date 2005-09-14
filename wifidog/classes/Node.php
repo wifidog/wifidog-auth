@@ -1481,12 +1481,6 @@ else
 	{
 		global $db;
 		$db->ExecSql("SELECT * FROM connections,users,nodes WHERE token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND nodes.node_id=connections.node_id ORDER BY timestamp_in DESC", $online_users);
-		if($online_users)
-			foreach($online_users as $connection_row)
-			{
-				$connection_row['incoming'] = Utils::convertBytesToWords($connection_row['incoming']);
-				$connection_row['outgoing'] = Utils::convertBytesToWords($connection_row['outgoing']);
-			}
 		return $online_users;
 	}
 
