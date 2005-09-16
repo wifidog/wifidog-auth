@@ -1,3 +1,8 @@
+2005-09-16 Francois Proulx <francois.proulx@gmail.com>
+	* Added Mail Classes to circumvent mb_send_mail UTF-8 problems
+	* This class provides UTF-8 mailing for validation e-mail, lost password, lost username...
+	* Fixes reported bug where users would not receive validation email on some servers
+
 2005-09-13 Francois Proulx <francois.proulx@gmail.com>
 	* Added bytes in words for online users
 	

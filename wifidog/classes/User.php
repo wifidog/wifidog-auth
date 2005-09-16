@@ -25,6 +25,7 @@
 
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'classes/Network.php';
+require_once BASEPATH.'classes/Mail.php';
 
 /** Abstract a User. */
 class User implements GenericObject
@@ -435,17 +436,13 @@ class User implements GenericObject
 	function sendLostUsername()
 	{
 		$network = $this->getNetwork();
-		$username = $this->getUsername();
-		$headers = 'MIME-Version: 1.0'."\r\n";
-		$headers .= 'Content-type: text/plain; charset=UTF-8'."\r\n";
-		$headers .= "From: ".$network->getValidationEmailFromAddress();
-		$subject = $network->getName()._(" lost username request");
-		$body = _("Hello,\nYou have requested that the authentication server send you your username:\nUsername: ").$username._("\n\nHave a nice day,\nThe Team");
-
-		//TODO: Find a way to use correctly mb_encode_mimeheader 
-		$subject = mb_convert_encoding($subject, "ISO-8859-1", "AUTO");
-
-		mail($this->getEmail(), $subject, $body, $headers);
+		$mail = new Mail();
+		$mail->setSenderName(_("Registration system"));
+		$mail->setSenderEmail($network->getValidationEmailFromAddress());
+		$mail->setRecipientEmail($this->getEmail());
+		$mail->setMessageSubject($network->getName()._(" lost username request"));
+		$mail->setMessageBody(_("Hello,\nYou have requested that the authentication server send you your username:\nUsername: ").$this->getUsername()._("\n\nHave a nice day,\nThe Team"));
+		$mail->send();
 	}
 
 	function sendValidationEmail()
@@ -463,39 +460,32 @@ class User implements GenericObject
 			else
 			{
 				$network = $this->getNetwork();
-				$headers = 'MIME-Version: 1.0'."\r\n";
-				$headers .= 'Content-type: text/plain; charset=UTF-8'."\r\n";
-				$headers .= "From: ".$network->getValidationEmailFromAddress();
-				$subject = $network->getName()._(" new user validation");
+				
+				$mail = new Mail();
+				$mail->setSenderName(_("Registration system"));
+				$mail->setSenderEmail($network->getValidationEmailFromAddress());
+				$mail->setRecipientEmail($this->getEmail());
+				$mail->setMessageSubject($network->getName()._(" new user validation"));
 				$url = "http://".$_SERVER["SERVER_NAME"]."/validate.php?user_id=".$this->getId()."&token=".$this->getValidationToken();
-				$body = _("Hello,\nPlease follow the link below to validate your account.\n").$url._("\n\nThank you,\nThe Team.");
-
-				//TODO: Find a way to use correctly mb_encode_mimeheader 
-				$subject = mb_convert_encoding($subject, "ISO-8859-1", "AUTO");
-
-				mail($this->getEmail(), $subject, $body, $headers);
+				$mail->setMessageBody(_("Hello,\nPlease follow the link below to validate your account.\n").$url._("\n\nThank you,\nThe Team."));
+				$mail->send();
 			}
 		}
 	}
 
 	function sendLostPasswordEmail()
 	{
-		global $db;
 		$network = $this->getNetwork();
 		$new_password = $this->randomPass();
 		$this->setPassword($new_password);
-		$username = $this->getUsername();
-
-		$headers = 'MIME-Version: 1.0'."\r\n";
-		$headers .= 'Content-type: text/plain; charset=UTF-8'."\r\n";
-		$headers .= "From: ".$network->getValidationEmailFromAddress();
-		$subject = $network->getName()._(" new password request");
-		$body = _("Hello,\nYou have requested that the authentication server send you a new password:\nUsername: ").$username._("\nPassword: ").$new_password._("\n\nHave a nice day,\nThe Team");
-
-		//TODO: Find a way to use correctly mb_encode_mimeheader 
-		$subject = mb_convert_encoding($subject, "ISO-8859-1", "AUTO");
-
-		mail($this->getEmail(), $subject, $body, $headers);
+		
+		$mail = new Mail();
+		$mail->setSenderName(_("Registration system"));
+		$mail->setSenderEmail($network->getValidationEmailFromAddress());
+		$mail->setRecipientEmail($this->getEmail());
+		$mail->setMessageSubject($network->getName()._(" new password request"));
+		$mail->setMessageBody(_("Hello,\nYou have requested that the authentication server send you a new password:\nUsername: ").$this->getUsername()._("\nPassword: ").$new_password._("\n\nHave a nice day,\nThe Team"));
+		$mail->send();
 	}
 
 	static function userExists($id)
