@@ -23,19 +23,21 @@
  * Technologies Coeus inc.
  */
 
+require_once BASEPATH.'classes/Network.php';
+
 /** Abstract class to represent an authentication source */
 abstract class Authenticator
 {
-	private $mAccountOrigin;
+	private $mNetwork;
 
-	function __construct($account_orgin)
+	function __construct($network_id)
 	{
-		$this->mAccountOrigin = $account_orgin;
+		$this->mNetwork = Network::getObject($network_id);
 	}
 
-	public function getAccountOrigin()
+	public function getNetwork()
 	{
-		return $this->mAccountOrigin;
+		return $this->mNetwork;
 	}
 
 	/** Attempts to login a user against the authentication source.  If successfull, returns a User object */

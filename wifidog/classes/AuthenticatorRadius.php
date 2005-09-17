@@ -47,7 +47,7 @@ class AuthenticatorRadius extends Authenticator
 	 * AuthenticatorRadius constructor
 	 * Example:  new AuthenticatorRadius(IDRC_ACCOUNT_ORIGIN, "192.168.0.11",
 	 * 1812, 1813, "secret_key", "CHAP_MD5");
-	 * @param $account_orgin : The origin of the account
+	 * @param $account_orgin : The network ID
 	 * @param $host : hostname of the RADIUS server
 	 * @param $auth_port : Authentication port of the RADIUS server
 	 * @param $acct_port : Accounting port of the RADIUS server
@@ -154,7 +154,7 @@ class AuthenticatorRadius extends Authenticator
 			{
 				// RADIUS authentication succeeded !
 				// Now checking for local copy of this user
-				$sql = "SELECT user_id, pass FROM users WHERE (username='$username') AND account_origin='".$this->getAccountOrigin()."'";
+				$sql = "SELECT user_id, pass FROM users WHERE (username='$username') AND account_origin='".$this->getNetwork()->getId()."'";
 				$db->ExecSqlUniqueRes($sql, $user_info, false);
 
 				if ($user_info != null)
@@ -177,7 +177,7 @@ class AuthenticatorRadius extends Authenticator
 					// This user has been succcessfully authenticated through remote RADIUS, but it's not yet in our local database
 					// Creating the user with a Global Unique ID, empty email and password
 					// Local database password hashing is based on an empty string ( we do not store remote passwords )
-					$user = User :: createUser(get_guid(), $username, $this->getAccountOrigin(), "", "");
+					$user = User :: createUser(get_guid(), $username, $this->getNetwork(), "", "");
 					$retval = & $user;
 					// Validate the user right away !
 					$user->setAccountStatus(ACCOUNT_STATUS_ALLOWED);

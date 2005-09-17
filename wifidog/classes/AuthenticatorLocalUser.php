@@ -62,7 +62,7 @@ class AuthenticatorLocalUser extends Authenticator
 		$password = $db->EscapeString($password);
 		$password_hash = User :: passwordHash($_REQUEST['password']);
 
-		$sql = "SELECT user_id FROM users WHERE (username='$username' OR email='$username') AND account_origin='".$this->getAccountOrigin()."' AND pass='$password_hash'";
+		$sql = "SELECT user_id FROM users WHERE (username='$username' OR email='$username') AND account_origin='".$this->getNetwork()->getId()."' AND pass='$password_hash'";
 		$db->ExecSqlUniqueRes($sql, $user_info, false);
 
 		if ($user_info != null)
