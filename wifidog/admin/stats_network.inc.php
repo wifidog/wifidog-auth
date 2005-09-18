@@ -99,7 +99,7 @@ if (Dependencies::check("ImageGraph", $errmsg)) {
 $html .= "</fieldset>";
 
 $html .= "<fieldset class='pretty_fieldset'>";
-$html .= "<legend>" . _("Most registrations per node") . "</legend>";
+$html .= "<legend>" . _("Cumulative registrations") . "</legend>";
 if (Dependencies::check("ImageGraph", $errmsg)) {
     $html .= "<div><img src='graph_registrations_cumulative.php?network_id={$network_id}&date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}'></div>";
 } else {

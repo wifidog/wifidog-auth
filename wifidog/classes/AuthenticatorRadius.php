@@ -199,10 +199,6 @@ class AuthenticatorRadius extends Authenticator
 	 * $conn_id:  The connection id for the connection to work on */
 	function acctStart($conn_id, & $errmsg = null)
 	{
-		global $db;
-		$conn_id = $db->escapeString($conn_id);
-		$db->ExecSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id='$conn_id'", $info, false);
-		
 		// RADIUS accounting start
 		$radius_acct = new Auth_RADIUS_Acct_Start;
 		$radius_acct->addServer($this->mRadius_hostname, $this->mRadius_acct_port, $this->mRadius_secret_key);

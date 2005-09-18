@@ -109,7 +109,6 @@ abstract class Authenticator
 	 * $conn_id:  The connection id for the connection to work on */
 	function acctStart($conn_id)
 	{
-		//$info['conn_id']
 		global $db;
 		$conn_id = $db->escapeString($conn_id);
 		$db->ExecSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id='$conn_id'", $info, false);
@@ -128,7 +127,7 @@ abstract class Authenticator
 			$token = $db->EscapeString($_REQUEST['token']);
 			$sql = "SELECT * FROM connections WHERE user_id = '{$info['user_id']}' AND token_status='".TOKEN_INUSE."' AND token!='$token';\n";
 			$conn_rows = array ();
-			$db->ExecSql($sql, $conn_rows, true);
+			$db->ExecSql($sql, $conn_rows, false);
 			if (isset ($conn_rows))
 			{
 				foreach ($conn_rows as $conn_row)

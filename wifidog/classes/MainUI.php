@@ -137,25 +137,21 @@ class MainUI
 						$html .= "</div>\n";
 						$html .= "</div>\n";
 						$html .= "<div class='admin_section_tools'>\n";
-
 						$html .= "<input type='hidden' name='object_class' value='Node'>\n";
 						$html .= "<input type='hidden' name='action' value='edit'>\n";
 						$html .= "<input type='submit' name='edit_submit' value='"._("Edit")."'>\n";
-
-						$html .= "</div>\n";
 						$html .= '</form>';
 						
 						if($current_user->isSuperAdmin())
 						{
-							$html .= "<div class='admin_section_tools'>\n";
 							$html .= '<form action="'.GENERIC_OBJECT_ADMIN_ABS_HREF.'" method="post">';
 							$html .= "<input type='hidden' name='action' value='new_ui'>\n";
-							$html .= "<input type='hidden' name='object_class' value='Node'><br>\n";
+							$html .= "<input type='hidden' name='object_class' value='Node'>\n";
 							$html .= "<input type=submit name='new_submit' value='"._("Create")."'>\n";
 							$html .= "</form>\n";
-							$html .= "</div>\n";
+							
 						}
-						
+						$html .= "</div>\n";
 						$html .= "</div>\n";
 					}
 
@@ -172,14 +168,11 @@ class MainUI
 						$html .= Network :: getSelectNetworkUI('object_id');
 						$html .= "</div>\n";
 						$html .= "<div class='admin_section_tools'>\n";
-
 						$html .= "<input type=submit name='edit_submit' value='"._("Edit")."'>\n";
-						$html .= "</div>\n";
 						$html .= "</form>\n";
-						$html .= "<div class='admin_section_tools'>\n";
 						$html .= '<form action="'.GENERIC_OBJECT_ADMIN_ABS_HREF.'" method="post">';
 						$html .= "<input type='hidden' name='action' value='new_ui'>\n";
-						$html .= "<input type='hidden' name='object_class' value='Network'><br>\n";
+						$html .= "<input type='hidden' name='object_class' value='Network'>\n";
 						$html .= "<input type=submit name='new_submit' value='"._("Create")."'>\n";
 						$html .= "</form>\n";
 						$html .= "</div>\n";

@@ -28,7 +28,7 @@ require_once BASEPATH."admin/graph_common.inc.php";
 if ($current_user->isSuperAdmin() || $nodeObject->isOwner($current_user))
 {
 	$html .= "<fieldset class='pretty_fieldset'>";
-	$html .= "<legend>Profile</legend>";
+	$html .= "<legend>"._("Profile")."</legend>";
 	$html .= "<table>";
 
 	$html .= "<tr class='odd'>";
@@ -97,7 +97,7 @@ if ($current_user->isSuperAdmin() || $nodeObject->isOwner($current_user))
 	$html .= "</fieldset>";
 
 	$html .= "<fieldset class='pretty_fieldset'>";
-	$html .= "<legend>Status</legend>";
+	$html .= "<legend>"._("Status")."</legend>";
 	$html .= "<table>";
 
 	$db->ExecSql("SELECT node_id, name, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up, creation_date FROM nodes WHERE node_id = '{$node_id}'", $rows, false);
@@ -109,7 +109,7 @@ if ($current_user->isSuperAdmin() || $nodeObject->isOwner($current_user))
 	$html .= "</td>";
 	$html .= "<tr class='odd'>";
 	$html .= "  <th>"._("Last heartbeat")."</th>";
-	$html .= "  <td>".Utils::convertSecondsToWords(time() - strtotime($nodeObject->getLastHeartbeatTimestamp()))." ago</td>";
+	$html .= "  <td>".sprintf(_("%s ago"), Utils::convertSecondsToWords(time() - strtotime($nodeObject->getLastHeartbeatTimestamp())))."</td>";
 	$html .= "</tr>";
 	$html .= "</tr>";
 	$html .= "<tr class='even'>";
@@ -124,7 +124,7 @@ if ($current_user->isSuperAdmin() || $nodeObject->isOwner($current_user))
 	$html .= "</fieldset>";
 
 	$html .= "<fieldset class='pretty_fieldset'>";
-	$html .= "<legend>Statistics</legend>";
+	$html .= "<legend>"._("Statistics")."</legend>";
 	$html .= "<table>";
 
 	$db->ExecSql("SELECT round(CAST( (SELECT SUM(daily_connections) FROM (SELECT COUNT(DISTINCT user_id) AS daily_connections, date_trunc('day', timestamp_in) FROM connections WHERE node_id='${node_id}' AND (incoming!=0 OR outgoing!=0) GROUP BY date_trunc('day', timestamp_in)) AS daily_connections_table) / (EXTRACT(EPOCH FROM (NOW()-(SELECT timestamp_in FROM connections WHERE node_id='${node_id}' AND (incoming!=0 OR outgoing!=0) ORDER BY timestamp_in LIMIT 1)) )/(3600*24)) AS numeric),2) AS connections_per_day", $rows, false);
@@ -141,7 +141,7 @@ if ($current_user->isSuperAdmin() || $nodeObject->isOwner($current_user))
 	$html .= "<br>";
 	$html .= _("Outgoing").": ".Utils::convertBytesToWords($rows[0]['out']);
 	$html .= "<br>";
-	$html .= "(for the selected period)";
+	$html .= _("(for the selected period)");
 	$html .= "</td>";
 
 	$html .= "</table>";
@@ -227,14 +227,14 @@ if ($current_user->isSuperAdmin() || $nodeObject->isOwner($current_user))
 			$number_of_usernames = count($rows);
 
 			$html .= "<fieldset class='pretty_fieldset'>";
-			$html .= "<legend>Number of unique Usernames: {$number_of_usernames}</legend>";
+			$html .= "<legend>"._("Number of unique Usernames:").$number_of_usernames."</legend>";
 			$html .= "<table>";
 			$html .= "<thead>";
 			$html .= "<tr>";
-			$html .= "<th>Username</th>";
-			$html .= "<th>MAC Count</th>";
-			$html .= "<th>Cx Count</th>";
-			$html .= "<th>Last seen</th>";
+			$html .= "<th>"._("Username")."</th>";
+			$html .= "<th>"._("MAC Count")."</th>";
+			$html .= "<th>"._("Cx Count")."</th>";
+			$html .= "<th>"._("Last seen")."</th>";
 			$html .= "</tr>";
 			$html .= "</thead>";
 
@@ -260,14 +260,14 @@ if ($current_user->isSuperAdmin() || $nodeObject->isOwner($current_user))
 			$number_of_connections = count($rows);
 
 			$html .= "<fieldset class='pretty_fieldset'>";
-			$html .= "<legend>Number of non-unique connections: {$number_of_connections}</legend>";
+			$html .= "<legend>"._("Number of non-unique connections:").$number_of_connections."</legend>";
 			$html .= "<table>";
 			$html .= "<thead>";
 			$html .= "<tr>";
-			$html .= "<th>Username</th>";
-			$html .= "<th>MAC</th>";
-			$html .= "<th>Date</th>";
-			$html .= "<th>Time spent</th>";
+			$html .= "<th>"._("Username")."</th>";
+			$html .= "<th>"._("MAC")."</th>";
+			$html .= "<th>"._("Date")."</th>";
+			$html .= "<th>"._("Time spent")."</th>";
 			$html .= "</tr>";
 			$html .= "</thead>";
 
@@ -295,7 +295,7 @@ if ($current_user->isSuperAdmin() || $nodeObject->isOwner($current_user))
 							$even = 0;
 						$html .= "  <td><a href='?date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}&user_id={$row['user_id']}'>{$row['username']}</a></td>\n";
 						$html .= "  <td><a href='?date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}&user_mac={$row['user_mac']}'>{$row['user_mac']}</a></td>\n";
-						$html .= "  <td>".utf8_encode(strftime("%c", strtotime($row['timestamp_in'])))."</td>\n";
+						$html .= "  <td>".strftime("%c", strtotime($row['timestamp_in']))."</td>\n";
 						$html .= "  <td>";
 						if ($timestamp_in != -1 && $timestamp_out != -1)
 						{

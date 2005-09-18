@@ -196,7 +196,7 @@ else
 		global $db;
 		$html = '';
 		$name = "{$user_prefix}";
-		$html .= "Node: \n";
+		$html .= _("Node: ");
 		$sql = "SELECT node_id, name from nodes WHERE 1=1 $sql_additional_where ORDER BY node_id";
 		$node_rows = null;
 		$db->ExecSql($sql, $node_rows, false);
@@ -641,7 +641,7 @@ else
 		$html = '';
 		$html .= "<div class='admin_container'>\n";
 		$html .= "<div class='admin_class'>Node (".get_class($this)." instance)</div>\n";
-		$html .= "<h3>"._("Edit a hotspot")."</h3>\n";
+		$html .= "<h3>"._("Edit a node")."</h3>\n";
 		
 		// Display stats
 		$html .= "<div class='admin_section_container'>\n";

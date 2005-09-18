@@ -41,7 +41,7 @@ if(!empty($_REQUEST['node_id']))
 	$ui->setHtmlHeader($html_headers);
 	
 	// Create HTML body
-	$html = _("Click anywhere on the map to extract the GIS location, then click on the 'Save location' button.")."<br>";
+	$html = _("Click anywhere on the map to extract the GIS location, then click on the button to save the data.")."<br>";
 	$html .= "<div id=\"map_frame\"></div>\n";
 	$html .= "<input type='button' value='"._("Use these coordinates")."' onClick='setLocationInOriginalWindow();'>\n";
 	$ui->setMainContent($html);

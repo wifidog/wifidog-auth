@@ -74,49 +74,49 @@ try {
 EOF;
 
     $from_presets = array(
-            "Select from..." => "",
-            "yesterday"     => strftime("%Y-%m-%d 00:00", strtotime("-1 day")),
-            "today"         => strftime("%Y-%m-%d 00:00", time()),
-            "2 days ago"    => strftime("%Y-%m-%d 00:00", strtotime("-2 days")),
-            "3 days ago"    => strftime("%Y-%m-%d 00:00", strtotime("-3 days")),
-            "1 week ago"    => strftime("%Y-%m-%d 00:00", strtotime("-1 week")),
-            "2 weeks ago"   => strftime("%Y-%m-%d 00:00", strtotime("-2 weeks")),
-            "3 weeks ago"   => strftime("%Y-%m-%d 00:00", strtotime("-3 weeks")),
-            "1 month ago"   => strftime("%Y-%m-%d 00:00", strtotime("-1 month")),
-            "2 months ago"  => strftime("%Y-%m-%d 00:00", strtotime("-2 months")),
-            "6 months ago"  => strftime("%Y-%m-%d 00:00", strtotime("-6 months")),
-            "1 year ago"    => strftime("%Y-%m-%d 00:00", strtotime("-1 year")),
+            _("Start of range ...") => "",
+            _("yesterday")     => strftime("%Y-%m-%d 00:00", strtotime("-1 day")),
+            _("today")         => strftime("%Y-%m-%d 00:00", time()),
+            _("2 days ago")    => strftime("%Y-%m-%d 00:00", strtotime("-2 days")),
+            _("3 days ago")    => strftime("%Y-%m-%d 00:00", strtotime("-3 days")),
+            _("1 week ago")    => strftime("%Y-%m-%d 00:00", strtotime("-1 week")),
+            _("2 weeks ago")   => strftime("%Y-%m-%d 00:00", strtotime("-2 weeks")),
+            _("3 weeks ago")   => strftime("%Y-%m-%d 00:00", strtotime("-3 weeks")),
+            _("1 month ago")   => strftime("%Y-%m-%d 00:00", strtotime("-1 month")),
+            _("2 months ago")  => strftime("%Y-%m-%d 00:00", strtotime("-2 months")),
+            _("6 months ago")  => strftime("%Y-%m-%d 00:00", strtotime("-6 months")),
+            _("1 year ago")    => strftime("%Y-%m-%d 00:00", strtotime("-1 year")),
             "-"             => "",
-            "Select from and to..." => "",
-            "yesterday (whole day)"     => strftime("%Y-%m-%d 00:00", strtotime("-1 day")).",".strftime("%Y-%m-%d 11:59", strtotime("-1 day")),
-            "today (whole day)"         => strftime("%Y-%m-%d 00:00", time()).",".strftime("%Y-%m-%d %H:%M", time()),
-            "this month"    => strftime("%Y-%m-01 00:00", time()).",".strftime("%Y-%m-%d %H:%M", time()),
-            "last month"    => strftime("%Y-%m-01 00:00", strtotime("-1 month")).",".strftime("%Y-%m-01 00:00", time()),
-            "this year"     => strftime("%Y-01-01 00:00", time()).",".strftime("%Y-%m-%d %H:%M", time()),
-            "forever"       => "1970-01-01 00:00," . strftime("%Y-%m-%d %H:%M", time())
+            _("Choose a range ...") => "",
+            _("yesterday (whole day)")     => strftime("%Y-%m-%d 00:00", strtotime("-1 day")).",".strftime("%Y-%m-%d 11:59", strtotime("-1 day")),
+            _("today (whole day)")         => strftime("%Y-%m-%d 00:00", time()).",".strftime("%Y-%m-%d %H:%M", time()),
+            _("this month")    => strftime("%Y-%m-01 00:00", time()).",".strftime("%Y-%m-%d %H:%M", time()),
+            _("last month")    => strftime("%Y-%m-01 00:00", strtotime("-1 month")).",".strftime("%Y-%m-01 00:00", time()),
+            _("this year")     => strftime("%Y-01-01 00:00", time()).",".strftime("%Y-%m-%d %H:%M", time()),
+            _("forever")       => "1970-01-01 00:00," . strftime("%Y-%m-%d %H:%M", time())
     );
 
     $to_presets = array(
-            "Select to..." => "",
-            "yesterday"     => strftime("%Y-%m-%d 11:59", strtotime("-1 day")),
-            "today"         => strftime("%Y-%m-%d 11:59", time()),
-            "2 days ago"    => strftime("%Y-%m-%d 11:59", strtotime("-2 days")),
-            "3 days ago"    => strftime("%Y-%m-%d 11:59", strtotime("-3 days")),
-            "1 week ago"    => strftime("%Y-%m-%d 11:59", strtotime("-1 week")),
-            "2 weeks ago"   => strftime("%Y-%m-%d 11:59", strtotime("-2 weeks")),
-            "3 weeks ago"   => strftime("%Y-%m-%d 11:59", strtotime("-3 weeks")),
-            "1 month ago"   => strftime("%Y-%m-%d 11:59", strtotime("-1 month")),
-            "2 months ago"  => strftime("%Y-%m-%d 11:59", strtotime("-2 months")),
-            "6 months ago"  => strftime("%Y-%m-%d 11:59", strtotime("-6 months")),
-            "1 year ago"    => strftime("%Y-%m-%d 11:59", strtotime("-1 year")),
+            _("End of range ...") => "",
+            _("yesterday")     => strftime("%Y-%m-%d 11:59", strtotime("-1 day")),
+            _("today")         => strftime("%Y-%m-%d 11:59", time()),
+            _("2 days ago")    => strftime("%Y-%m-%d 11:59", strtotime("-2 days")),
+            _("3 days ago")    => strftime("%Y-%m-%d 11:59", strtotime("-3 days")),
+            _("1 week ago")    => strftime("%Y-%m-%d 11:59", strtotime("-1 week")),
+            _("2 weeks ago")   => strftime("%Y-%m-%d 11:59", strtotime("-2 weeks")),
+            _("3 weeks ago")   => strftime("%Y-%m-%d 11:59", strtotime("-3 weeks")),
+            _("1 month ago")   => strftime("%Y-%m-%d 11:59", strtotime("-1 month")),
+            _("2 months ago")  => strftime("%Y-%m-%d 11:59", strtotime("-2 months")),
+            _("6 months ago")  => strftime("%Y-%m-%d 11:59", strtotime("-6 months")),
+            _("1 year ago")    => strftime("%Y-%m-%d 11:59", strtotime("-1 year")),
             "-"             => "",
-            "Select from and to..." => "",
-            "yesterday (whole day)"     => strftime("%Y-%m-%d 11:59", strtotime("-1 day")).",".strftime("%Y-%m-%d 00:00", strtotime("-1 day")),
-            "today (whole day)"         => strftime("%Y-%m-%d %H:%M", time()).",".strftime("%Y-%m-%d 00:00", time()),
-            "this month"    => strftime("%Y-%m-%d %H:%M", time()).",".strftime("%Y-%m-01 00:00", time()),
-            "last month"    => strftime("%Y-%m-01 00:00", time()).",".strftime("%Y-%m-01 00:00", strtotime("-1 month")),
-            "this year"     => strftime("%Y-%m-%d %H:%M", time()).",".strftime("%Y-01-01 00:00", time()),
-            "forever"       => strftime("%Y-%m-%d %H:%M", time()) . ",1970-01-01 00:00"
+            _("Choose a range ...") => "",
+            _("yesterday (whole day)")     => strftime("%Y-%m-%d 11:59", strtotime("-1 day")).",".strftime("%Y-%m-%d 00:00", strtotime("-1 day")),
+            _("today (whole day)")         => strftime("%Y-%m-%d %H:%M", time()).",".strftime("%Y-%m-%d 00:00", time()),
+            _("this month")    => strftime("%Y-%m-%d %H:%M", time()).",".strftime("%Y-%m-01 00:00", time()),
+            _("last month")    => strftime("%Y-%m-01 00:00", time()).",".strftime("%Y-%m-01 00:00", strtotime("-1 month")),
+            _("this year")     => strftime("%Y-%m-%d %H:%M", time()).",".strftime("%Y-01-01 00:00", time()),
+            _("forever")       => strftime("%Y-%m-%d %H:%M", time()) . ",1970-01-01 00:00"
     );
 
     if (isset($stats_title)) {
@@ -164,19 +164,19 @@ EOF;
         $html .= "</table>\n";
 
         if (isset($_REQUEST['node_id']) && $current_user->isSuperAdmin()) {
-            $html .= "<em>" . _("Group connections") . "?</em><br>";
+            $html .= "<em>" . _("Group connections ?") . "</em><br>";
 
             $html .= "<input type=\"radio\" name=\"group_connections\" value=\"\"";
             $html .= empty($_REQUEST['group_connections']) ? 'CHECKED' : '';
-            $html .= ">No<br>";
+            $html .= ">"._("No")."<br>";
 
             $html .= "<input type=\"radio\" name=\"group_connections\" value=\"group_connections_by_mac\"";
             $html .= isset($_REQUEST['group_connections']) && $_REQUEST['group_connections'] == "group_connections_by_mac" ? 'CHECKED' : '';
-            $html .= ">By unique MACs<br>";
+            $html .= ">"._("By unique MACs")."<br>";
 
             $html .= "<input type=\"radio\" name=\"group_connections\" value=\"group_connections_by_user\"";
             $html .= isset($_REQUEST['group_connections']) && $_REQUEST['group_connections'] == "group_connections_by_user" ? 'CHECKED' : '';
-            $html .= ">By unique usernames<br>";
+            $html .= ">"._("By unique usernames")."<br>";
         }
 
         $html .= "<input type='submit' value='" . _("Generate statistics") . "'>";
