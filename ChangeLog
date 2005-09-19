@@ -1,4 +1,7 @@
 2005-09-17 Francois Proulx <francois.proulx@gmail.com>
+	* Fixed forgotten reference to getNetwork in AuthLocalUser
+	
+2005-09-17 Francois Proulx <francois.proulx@gmail.com>
 	* Fixed a few bugs in Radius class
 	* Improved syntax and completed 100% of French translations
 	

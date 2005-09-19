@@ -84,7 +84,7 @@ class AuthenticatorLocalUser extends Authenticator
 		{
 			$user_info = null;
 			/* This is only used to discriminate if the problem was a non-existent user of a wrong password. */
-			$db->ExecSqlUniqueRes("SELECT * FROM users WHERE (username='$username' OR email='$username') AND account_origin='".$this->getAccountOrigin()."'", $user_info, false);
+			$db->ExecSqlUniqueRes("SELECT * FROM users WHERE (username='$username' OR email='$username') AND account_origin='".$this->getNetwork()->getId()."'", $user_info, false);
 			if ($user_info == null)
 			{
 				$errmsg = _('Unknown username or email');
