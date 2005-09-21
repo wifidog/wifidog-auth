@@ -1,3 +1,7 @@
+2005-09-20 Francois Proulx <francois.proulx@gmail.com>
+	* Changed the output layout of the Google Maps hotspots list
+	* Added "Loading" message on Google Maps
+	
 2005-09-17 Francois Proulx <francois.proulx@gmail.com>
 	* Fixed forgotten reference to getNetwork in AuthLocalUser
 	

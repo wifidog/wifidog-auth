@@ -146,7 +146,9 @@ function createHtmlFromHotspot(hotspot_element, icon)
 	
 	var name = hotspot_element.getElementsByTagName("name");
 	if(name.length == 1)
-		html += "<b>" + name[0].firstChild.nodeValue + "</b><br/>";
+		html += "<b>" + name[0].firstChild.nodeValue + "</b>";
+	
+	html += "<br/>";
 	
 	var civicNumber = hotspot_element.getElementsByTagName("civicNumber");
 	if(civicNumber.length == 1)
@@ -154,7 +156,9 @@ function createHtmlFromHotspot(hotspot_element, icon)
 			
 	var streetAddress = hotspot_element.getElementsByTagName("streetAddress");
 	if(streetAddress.length == 1)
-		html += "<i>" + streetAddress[0].firstChild.nodeValue + ",&nbsp;</i><br/>";
+		html += "<i>" + streetAddress[0].firstChild.nodeValue + ",&nbsp;</i>";
+	
+	html += "<br/>";
 		
 	var city = hotspot_element.getElementsByTagName("city");
 	if(city.length == 1)
@@ -164,13 +168,17 @@ function createHtmlFromHotspot(hotspot_element, icon)
 	if(province.length == 1)
 		html += "<i>" + province[0].firstChild.nodeValue + ",&nbsp;</i>";
 		
+	html += "<br/>";
+		
 	var postalCode = hotspot_element.getElementsByTagName("postalCode");
 	if(postalCode.length == 1)
 		html += "<i>" + postalCode[0].firstChild.nodeValue + ",&nbsp;</i>";
 	
 	var country = hotspot_element.getElementsByTagName("country");
 	if(country.length == 1)
-		html += "<i>" + country[0].firstChild.nodeValue + "</i><br/>";
+		html += "<i>" + country[0].firstChild.nodeValue + "</i>";
+		
+	html += "<br/>";
 		
 	var phone = hotspot_element.getElementsByTagName("contactPhoneNumber");
 	if(phone.length == 1)

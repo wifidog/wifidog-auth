@@ -43,7 +43,7 @@ $html = "<h1>"._("Hotspots status map")."</h1>\n";
 $html .= _("This page displays a map of the deployed hotspots.")."<br>";
 $html .= _("Legend")." : <img src='images/hotspots_status_map_up.png'> <i>"._("the hotspot is operational")."</i> <img src='images/hotspots_status_map_down.png'> <i>"._("the hotspot is down")."</i> <img src='images/hotspots_status_map_unknown.png'> <i>"._("not monitored")."</i><br>";
 $html .= "<div id=\"map_hotspots_list\"></div>\n";
-$html .= "<div id=\"map_frame\"></div>\n";
+$html .= "<div id=\"map_frame\"><p/><center><h2>"._("Loading, please wait...")."</h2></center></div>\n";
 $ui->setMainContent($html);
 
 
