@@ -1,3 +1,7 @@
+2005-09-25 Philippe April  <philippe@ilesansfil.org>
+	* Make method getCurrentRealNode ORDER BY DESC so it picks
+	up the latest network name
+
 2005-09-20 Francois Proulx <francois.proulx@gmail.com>
 	* Changed the output layout of the Google Maps hotspots list
 	* Added "Loading" message on Google Maps

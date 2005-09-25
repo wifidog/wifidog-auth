@@ -84,7 +84,7 @@ class Node implements GenericObject
 	{
 		global $db;
 		$retval = null;
-		$sql = "SELECT node_id, last_heartbeat_ip from nodes WHERE last_heartbeat_ip='$_SERVER[REMOTE_ADDR]'";
+		$sql = "SELECT node_id, last_heartbeat_ip from nodes WHERE last_heartbeat_ip='$_SERVER[REMOTE_ADDR]' ORDER BY last_heartbeat_ip DESC";
 		$db->ExecSql($sql, $node_rows, false);
 		$num_match = count($node_rows);
 		if ($num_match == 0)
