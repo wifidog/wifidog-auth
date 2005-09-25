@@ -1,3 +1,7 @@
+2005-09-25 Francois Proulx <francois.proulx@gmail.com>
+	* Updated initial SQL script to schema 29
+	* Remove useless includes in some files, preventing from using the "plugin" contents
+	
 2005-09-25 Philippe April  <philippe@ilesansfil.org>
 	* Make method getCurrentRealNode ORDER BY DESC so it picks
 	up the latest network name

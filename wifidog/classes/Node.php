@@ -23,7 +23,6 @@
  */
 
 require_once BASEPATH.'include/common.php';
-require_once 'Content/ContentGroup.php';
 require_once 'User.php';
 require_once 'GisPoint.php';
 require_once 'AbstractGeocoder.php';

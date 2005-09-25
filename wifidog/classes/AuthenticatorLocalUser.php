@@ -108,8 +108,8 @@ class AuthenticatorLocalUser extends Authenticator
 	/** Update traffic counters */
 	function acctUpdate($info, $incoming, $outgoing, & $errmsg = null)
 	{
-			// Just call the generic counters update
-	parent :: acctUpdate($info, $incoming, $outgoing);
+		// Just call the generic counters update
+		parent :: acctUpdate($info, $incoming, $outgoing);
 		return true;
 	}
 
@@ -120,6 +120,9 @@ class AuthenticatorLocalUser extends Authenticator
 		return true;
 	}
 	
+	/**
+	 * The basic AuthenticatorLocalUser allows user signup
+	 */
 	function isRegistrationPermitted()
 	{
 		return true;

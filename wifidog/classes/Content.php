@@ -77,24 +77,29 @@ class Content implements GenericObject
 		return $object;
 	}
 	
-		/** Get an interface to create a new object.
+	/** Get an interface to create a new object.
 	* @return html markup
 	*/
 	public static function getCreateNewObjectUI()
 	{
-			$html ='';
+		$html = '';
+		$i = 0;
+		$tab = array();
+		foreach (self :: getAvailableContentTypes() as $classname)
+		{
+			$tab[$i][0] = $classname;
+			$tab[$i][1] = $classname;
+			$i ++;
+		}
+		$name = "new_content_content_type";
+		$default = 'TrivialLangstring';
+		if(empty($tab))
+			$html .= _("It appears that you have not installed any Content plugin !");
+		else
+		{
 			$html .= _("You must select a content type: ");
-			$i = 0;
-			foreach (self :: getAvailableContentTypes() as $classname)
-			{
-				$tab[$i][0] = $classname;
-				$tab[$i][1] = $classname;
-				$i ++;
-			}
-			$name = "new_content_content_type";
-			$default = 'TrivialLangstring';
 			$html .= FormSelectGenerator :: generateFromArray($tab, $default, $name, "Content", false);
-		
+		}
 		return $html;
 	}
 

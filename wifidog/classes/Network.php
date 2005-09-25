@@ -27,6 +27,7 @@ require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'classes/GenericObject.php';
 require_once BASEPATH.'classes/Content.php';
 require_once BASEPATH.'classes/User.php';
+require_once BASEPATH.'classes/Node.php';
 
 /** Abstract a Network.  A network is an administrative entity with it's own users, nodes and authenticator. */
 class Network implements GenericObject

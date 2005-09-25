@@ -28,31 +28,6 @@ COMMENT ON SCHEMA public IS 'Standard public schema';
 
 SET search_path = public, pg_catalog;
 
---
--- Name: plpgsql_call_handler(); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION plpgsql_call_handler() RETURNS language_handler
-    AS '$libdir/plpgsql', 'plpgsql_call_handler'
-    LANGUAGE c;
-
-
---
--- Name: plpgsql_validator(oid); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION plpgsql_validator(oid) RETURNS void
-    AS '$libdir/plpgsql', 'plpgsql_validator'
-    LANGUAGE c;
-
-
---
--- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: public; Owner: 
---
-
-CREATE TRUSTED PROCEDURAL LANGUAGE plpgsql HANDLER plpgsql_call_handler VALIDATOR plpgsql_validator;
-
-
 SET default_tablespace = '';
 
 SET default_with_oids = true;
@@ -246,7 +221,8 @@ CREATE TABLE flickr_photostream (
     display_tags boolean DEFAULT false NOT NULL,
     preferred_size text,
     requests_cache text,
-    cache_update_timestamp timestamp without time zone
+    cache_update_timestamp timestamp without time zone,
+    api_shared_secret text
 );
 
 

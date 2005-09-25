@@ -180,6 +180,15 @@ class User implements GenericObject
 		$object = new self($id);
 		return $object;
 	}
+	
+	public static function purgeUnvalidatedUsers($days_since_creation)
+	{
+		global $db;
+		$days_since_creation = $db->EscapeString($days_since_creation);
+		
+		
+		//$db->ExecSqlUpdate("INSERT INTO users (user_id,username, account_origin,email,pass,account_status,validation_token,reg_date) VALUES ('$id_str','$username_str','$account_origin_str','$email_str','$password_hash','$status','$token',NOW())");
+	}
 
 	/** @param $object_id The id of the user */
 	function __construct($object_id)
