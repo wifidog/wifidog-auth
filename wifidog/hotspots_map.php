@@ -41,13 +41,13 @@ $ui->setHtmlHeader($html_headers);
 // Create HTML body
 $html = "<div id=\"map_title\">\n";
 $html .= "<div id=\"map_toolbox\">\n";
-$html .= "<input type=\"button\" value=\"Show me the closest hotspot\" onclick=\"toggleOverlay('map_postalcode_overlay');\">\n";
+$html .= "<input type=\"button\" value=\""._("Show me the closest hotspot")."\" onclick=\"toggleOverlay('map_postalcode_overlay');\">\n";
 $html .= "<div id=\"map_postalcode_overlay\">\n";
-$html .= "Enter your postal code :<br/>\n";
+$html .= _("Enter your postal code")." :<br/>\n";
 $html .= "<input type=\"text\" id=\"postal_code\" size=\"10\"><br/>\n";
-$html .= "<input type=\"button\" value=\"Show\" onclick=\"toggleOverlay('map_postalcode_overlay'); p = document.getElementById('postal_code'); hotspots_map.findClosestHotspotByPostalCode(p.value);\">\n";
+$html .= "<input type=\"button\" value=\""._("Show")."\" onclick=\"toggleOverlay('map_postalcode_overlay'); p = document.getElementById('postal_code'); hotspots_map.findClosestHotspotByPostalCode(p.value);\">\n";
 $html .= "</div>\n";
-$html .= "<input type=\"button\" value=\"Refresh map\" onclick=\"hotspots_map.redraw();\">\n";
+$html .= "<input type=\"button\" value=\""._("Refresh map")."\" onclick=\"hotspots_map.redraw();\">\n";
 $html .= "</div>\n";
 $html .= _("Deployed HotSpots map")."\n";
 $html .= "</div>\n";

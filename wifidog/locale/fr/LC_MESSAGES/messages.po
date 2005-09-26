@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-18 00:20-0400\n"
+"POT-Creation-Date: 2005-09-26 17:20-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../classes/User.php:444 ../classes/User.php:487
+#: ../classes/User.php:444 ../classes/User.php:487 ../classes/User.php:448
+#: ../classes/User.php:491
 msgid ""
 "\n"
 "\n"
@@ -27,7 +28,7 @@ msgstr ""
 "\n"
 "Bonne journée, de la part de tout l'équipe"
 
-#: ../classes/User.php:470
+#: ../classes/User.php:470 ../classes/User.php:474
 msgid ""
 "\n"
 "\n"
@@ -38,7 +39,7 @@ msgstr ""
 "\n"
 "Merci, de la part de tout l'équipe"
 
-#: ../classes/User.php:487
+#: ../classes/User.php:487 ../classes/User.php:491
 msgid ""
 "\n"
 "Password: "
@@ -67,7 +68,7 @@ msgstr " dans la base de donn&eacute;e"
 msgid " in the database."
 msgstr " dans la base de donn&eacute;e."
 
-#: ../classes/User.php:443
+#: ../classes/User.php:443 ../classes/User.php:447
 msgid " lost username request"
 msgstr " demande de nom d'utilisateur perdu"
 
@@ -81,11 +82,11 @@ msgstr ""
 "valider votre compte d'un autre endroit ou encore de cr&eacute;er un autre "
 "compte. Pour de l'aide, veuillez "
 
-#: ../classes/User.php:486
+#: ../classes/User.php:486 ../classes/User.php:490
 msgid " new password request"
 msgstr " demande de changement de mot de passe"
 
-#: ../classes/User.php:468
+#: ../classes/User.php:468 ../classes/User.php:472
 msgid " new user validation"
 msgstr " validation de l'enregistrement"
 
@@ -138,12 +139,13 @@ msgstr "A propos de"
 msgid "About Pattern Language"
 msgstr "À propos de Pattern Language"
 
-#: ../classes/Content.php:1163
+#: ../classes/Content.php:1163 ../classes/Content.php:1168
 msgid "Access denied (not owner of content)"
 msgstr "Accès refusé (vous n'êtes pas propriétaire du contenu)"
 
 #: ../classes/Network.php:797 ../classes/Node.php:145 ../classes/Node.php:994
 #: ../classes/Content/FlickrPhotostream.php:792 smarty.txt:41
+#: ../classes/Network.php:843 ../classes/Content/FlickrPhotostream.php:794
 msgid "Access denied!"
 msgstr "Acc&egrave;s refus&eacute;!"
 
@@ -167,10 +169,11 @@ msgstr "Action"
 #: ../classes/Network.php:780 ../classes/Node.php:979
 #: ../classes/Content/ContentGroup.php:399
 #: ../classes/Content/RssAggregator.php:362 smarty.txt:111
+#: ../classes/Content.php:237 ../classes/Network.php:826
 msgid "Add"
 msgstr "Ajouter"
 
-#: ../classes/Content.php:228
+#: ../classes/Content.php:228 ../classes/Content.php:233
 msgid "Add a"
 msgstr "Ajouter un"
 
@@ -210,6 +213,7 @@ msgid "Add new string"
 msgstr "Ajouter un nouvelle chaîne"
 
 #: ../classes/Content.php:874 ../classes/Node.php:925
+#: ../classes/Content.php:879
 msgid "Add owner"
 msgstr "Ajouter un propriétaire"
 
@@ -263,7 +267,7 @@ msgstr "Une erreur interne est survenue, veuillez nous contacter."
 msgid "Attributes"
 msgstr "Attributs"
 
-#: ../classes/Content.php:598
+#: ../classes/Content.php:598 ../classes/Content.php:603
 msgid "Author(s):"
 msgstr "Auteur(s) : "
 
@@ -293,7 +297,7 @@ msgstr "Impossible d'&eacute;crire dans le r&eacute;pertoire '"
 msgid "Change my password"
 msgstr "Changer mon mot de passe"
 
-#: ../index.php:36 ../user_profile.php:34 smarty.txt:77
+#: ../index.php:36 ../user_profile.php:34 smarty.txt:77 ../index.php:35
 msgid "Change password"
 msgstr "Changer mon mot de passe"
 
@@ -319,7 +323,7 @@ msgstr "Contenu de :"
 msgid "Content group elements:"
 msgstr "Éléments du groupe de contenus:"
 
-#: ../classes/Content.php:1150
+#: ../classes/Content.php:1150 ../classes/Content.php:1155
 msgid ""
 "Content is persistent (you must make it non persistent before you can delete "
 "it)"
@@ -331,7 +335,7 @@ msgstr ""
 msgid "Content manager"
 msgstr "Gestionnaire de contenu"
 
-#: ../classes/Content.php:839
+#: ../classes/Content.php:839 ../classes/Content.php:844
 msgid "Content owner list"
 msgstr "Liste des propriétaires de contenu"
 
@@ -349,7 +353,7 @@ msgstr "Type de contenu"
 msgid "Content type is optionnal, but cannot be empty!"
 msgstr "Le type de contenu est optionnel, mais ne peut être vide !"
 
-#: ../classes/Content.php:206
+#: ../classes/Content.php:206 ../classes/Content.php:211
 msgid "Content type: "
 msgstr "Type de contenu:"
 
@@ -357,11 +361,12 @@ msgstr "Type de contenu:"
 msgid "Copyright "
 msgstr "Tous droits réservés "
 
-#: ../classes/Node.php:1382 ../classes/Node.php:1386
+#: ../classes/Node.php:1382 ../classes/Node.php:1386 ../classes/Node.php:1380
+#: ../classes/Node.php:1384
 msgid "Could not add owner"
 msgstr "Impossible d'ajouter le propri&eacute;taire"
 
-#: ../classes/User.php:412
+#: ../classes/User.php:412 ../classes/User.php:416
 msgid "Could not change user's password."
 msgstr "Impossible de changer le mot de passe de l'utilisateur"
 
@@ -369,6 +374,7 @@ msgid "Could not change your password"
 msgstr "Impossible de changer votre mot de passe"
 
 #: ../classes/Content/FlickrPhotostream.php:600
+#: ../classes/Content/FlickrPhotostream.php:602
 msgid "Could not complete successfully the saving procedure."
 msgstr "Impossible de compléter correctement la procédure de sauvegarde."
 
@@ -384,10 +390,12 @@ msgid "Could not delete this file, since it is persistent"
 msgstr "Impossible de supprimer ce fichier, puisqu'il est persistent"
 
 #: ../classes/Content/FlickrPhotostream.php:584
+#: ../classes/Content/FlickrPhotostream.php:586
 msgid "Could not find a Flickr user with this e-mail."
 msgstr "Impossible de trouver un usager Flickr avec ce courriel."
 
 #: ../classes/Content/FlickrPhotostream.php:450
+#: ../classes/Content/FlickrPhotostream.php:452
 msgid "Could not find any group photo pool."
 msgstr "Impossible de trouver un groupe de photos."
 
@@ -400,6 +408,8 @@ msgstr ""
 
 #: ../classes/Content/FlickrPhotostream.php:531
 #: ../classes/Content/FlickrPhotostream.php:768
+#: ../classes/Content/FlickrPhotostream.php:533
+#: ../classes/Content/FlickrPhotostream.php:770
 msgid "Could not get content from Flickr : "
 msgstr "Impossible d'obtenir le contenu de Flickr :"
 
@@ -413,11 +423,11 @@ msgstr "Impossible d'obtenir le fil RSS du réseau"
 msgid "Could not initiate PEAR RADIUS Auth class : "
 msgstr "Le syst&egrave;me n'a pu initialiser la classe PEAR RADIUS."
 
-#: ../classes/Node.php:1413
+#: ../classes/Node.php:1413 ../classes/Node.php:1411
 msgid "Could not remove owner"
 msgstr "Impossible de retirer le propri&eacute;taire"
 
-#: ../classes/User.php:283
+#: ../classes/User.php:283 ../classes/User.php:292
 msgid "Could not update status."
 msgstr "Impossible de mettre &agrave; jour le statut."
 
@@ -439,6 +449,9 @@ msgstr "Statistiques cumulatives des utilisateurs"
 #: ../classes/Content/EmbeddedContent.php:106
 #: ../classes/Content/EmbeddedContent.php:127
 #: ../classes/Content/RssAggregator.php:330 smarty.txt:92
+#: ../classes/Content.php:743 ../classes/Content.php:774
+#: ../classes/Content.php:795 ../classes/Content.php:816
+#: ../classes/Content.php:837
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -450,11 +463,13 @@ msgstr "Supprimer la chaîne"
 msgid "Deletion failed, error was: "
 msgstr "La suppression a échouée, l'erreur était:"
 
-#: ../hotspot_status.php:866 ../index.php:43
+#: ../hotspot_status.php:866 ../index.php:43 ../hotspot_status.php:867
+#: ../hotspots_map.php:52 ../index.php:42
 msgid "Deployed HotSpots map"
 msgstr "Carte des point d'accès déployés"
 
-#: ../hotspots_map.php:56 ../index.php:44 smarty.txt:34
+#: ../hotspots_map.php:56 ../index.php:44 smarty.txt:34 ../hotspots_map.php:78
+#: ../index.php:43
 msgid "Deployed HotSpots status with coordinates"
 msgstr "Noeuds sans-fil d&eacute;ploy&eacute;s avec coordonn&eacute;es"
 
@@ -463,7 +478,7 @@ msgstr "Noeuds sans-fil d&eacute;ploy&eacute;s avec coordonn&eacute;es"
 msgid "Description"
 msgstr "Description"
 
-#: ../classes/Content.php:755
+#: ../classes/Content.php:755 ../classes/Content.php:760
 msgid "Description:"
 msgstr "Description:"
 
@@ -483,7 +498,7 @@ msgstr "Télécharger"
 #: ../admin/generic_object_admin.php:160 ../classes/MainUI.php:143
 #: ../classes/MainUI.php:176 ../classes/Network.php:770
 #: ../classes/Node.php:969 smarty.txt:90 ../classes/MainUI.php:142
-#: ../classes/MainUI.php:171
+#: ../classes/MainUI.php:171 ../classes/Network.php:816
 msgid "Edit"
 msgstr "Modifier"
 
@@ -564,22 +579,27 @@ msgid "Find more HotSpots"
 msgstr "Trouver plus de points d'acc&egrave;s sans-fil"
 
 #: ../classes/Content/FlickrPhotostream.php:391
+#: ../classes/Content/FlickrPhotostream.php:393
 msgid "Flick photo selection mode :"
 msgstr "Mode de sélection des photos Flickr :"
 
 #: ../classes/Content/FlickrPhotostream.php:375
+#: ../classes/Content/FlickrPhotostream.php:377
 msgid "Flickr API key"
 msgstr "Clé de l'API Flickr"
 
 #: ../classes/Content/FlickrPhotostream.php:421
+#: ../classes/Content/FlickrPhotostream.php:423
 msgid "Flickr User E-mail"
 msgstr "Courriel de l'usager Flickr"
 
 #: ../classes/Content/FlickrPhotostream.php:410
+#: ../classes/Content/FlickrPhotostream.php:412
 msgid "Flickr User ID + Username"
 msgstr "Identifiant de l'usager Flickr + Surnom"
 
 #: ../classes/Content/FlickrPhotostream.php:470
+#: ../classes/Content/FlickrPhotostream.php:472
 msgid "Flickr photo display options"
 msgstr "Options d'affichage des photos Flickr"
 
@@ -609,7 +629,7 @@ msgstr "Tranduction française par Bernard Schutze"
 msgid "Frequently Asked Questions"
 msgstr "Questions Fr&eacute;quemment Pos&eacute;es"
 
-#: ../index.php:45 smarty.txt:35
+#: ../index.php:45 smarty.txt:35 ../index.php:44
 msgid "Full node technical status (includes non-deployed nodes)"
 msgstr ""
 "Status technique compl&egrave;te des noeuds (incluant les noeuds non-"
@@ -639,6 +659,7 @@ msgid "Go to the site I originally requested"
 msgstr "Aller au site web que j'ai demand&eacute;"
 
 #: ../classes/Content/FlickrPhotostream.php:437
+#: ../classes/Content/FlickrPhotostream.php:439
 msgid "Group Photo Pool"
 msgstr "Groupe de photos"
 
@@ -647,7 +668,7 @@ msgid "Height (leave empty if you want to keep original height)"
 msgstr ""
 "Hauteur (laissez la case vide, si vous désirez conserver la hauteuroriginale)"
 
-#: ../classes/User.php:470
+#: ../classes/User.php:470 ../classes/User.php:474
 msgid ""
 "Hello,\n"
 "Please follow the link below to validate your account.\n"
@@ -656,7 +677,7 @@ msgstr ""
 "Veuillez cliquer sur le lien ci-dessous pour compléter votre "
 "enregistrement.\n"
 
-#: ../classes/User.php:487
+#: ../classes/User.php:487 ../classes/User.php:491
 msgid ""
 "Hello,\n"
 "You have requested that the authentication server send you a new password:\n"
@@ -666,7 +687,7 @@ msgstr ""
 "Vous avez demandé au système de vous envoyer un nouveau mot de passe. \n"
 "Nom d'utilisateur: "
 
-#: ../classes/User.php:444
+#: ../classes/User.php:444 ../classes/User.php:448
 msgid ""
 "Hello,\n"
 "You have requested that the authentication server send you your username:\n"
@@ -697,7 +718,7 @@ msgstr "Point d'acc&egrave;s"
 msgid "Hotspot creation and configuration"
 msgstr "Cr&eacute;ation et configuration d'un point d'acc&egrave;s"
 
-#: ../hotspot_status.php:875
+#: ../hotspot_status.php:875 ../hotspot_status.php:876
 msgid "Hotspot list"
 msgstr "Liste des points d'accès"
 
@@ -738,6 +759,7 @@ msgid "I have failed to validate my account in x minutes"
 msgstr "J'ai &eacute;chou&eacute; la validation de mon compte en x minutes"
 
 #: ../index.php:37 ../user_profile.php:35 ../login/index.php:192
+#: ../index.php:36
 msgid "I have trouble connecting and I would like some help"
 msgstr ""
 "J'ai des difficult&eacute; &agrave; me brancher et je voudrais de l'aide"
@@ -781,6 +803,7 @@ msgstr ""
 "cr&eacute;er."
 
 #: ../classes/Content/FlickrPhotostream.php:151
+#: ../classes/Content/FlickrPhotostream.php:153
 msgid "Illegal Flickr Photostream selection mode."
 msgstr "Mode de sélection des photos Flickr illégal"
 
@@ -796,7 +819,7 @@ msgstr "Dans quel ordre les éléments doivent-ils être affichés ?"
 msgid "Incorrect password (Maybe you have CAPS LOCK on?)"
 msgstr "Mot de passe incorrect (CAPS LOCK peut-&ecirc;tre actif?)"
 
-#: ../classes/Content.php:797
+#: ../classes/Content.php:797 ../classes/Content.php:802
 msgid "Information on this project:"
 msgstr "Informations sur ce projet:"
 
@@ -806,7 +829,7 @@ msgstr "Erreur Interne"
 msgid "Internal error"
 msgstr "Erreur interne"
 
-#: ../admin/user_log.php:82
+#: ../admin/user_log.php:82 ../admin/user_log.php:84
 msgid "Internal error."
 msgstr "Erreur Interne."
 
@@ -855,7 +878,7 @@ msgstr "Langue"
 msgid "Language:"
 msgstr "Langue : "
 
-#: ../hotspots_map.php:44
+#: ../hotspots_map.php:44 ../hotspots_map.php:57
 msgid "Legend"
 msgstr "Légende"
 
@@ -930,14 +953,17 @@ msgid "Mass transit:"
 msgstr "Transport en commun:"
 
 #: ../classes/Content/FlickrPhotostream.php:462
+#: ../classes/Content/FlickrPhotostream.php:464
 msgid "Match all tags"
 msgstr "Tous les «tags»"
 
 #: ../classes/Content/FlickrPhotostream.php:462
+#: ../classes/Content/FlickrPhotostream.php:464
 msgid "Match any tag"
 msgstr "N'importe quel «tag»"
 
 #: ../classes/Content/FlickrPhotostream.php:503
+#: ../classes/Content/FlickrPhotostream.php:505
 msgid "Medium 500x375"
 msgstr "Moyenne 50x375"
 
@@ -1000,11 +1026,11 @@ msgstr "R&eacute;seau"
 msgid "Network administration:"
 msgstr "Gestion des réseaux :"
 
-#: ../classes/Network.php:760
+#: ../classes/Network.php:760 ../classes/Network.php:806
 msgid "Network content:"
 msgstr "Contenu réseau:"
 
-#: ../classes/Network.php:142
+#: ../classes/Network.php:142 ../classes/Network.php:145
 msgid "Network:"
 msgstr "Réseau :"
 
@@ -1015,6 +1041,7 @@ msgid "Newest"
 msgstr "Plus r&eacute;cent"
 
 #: ../classes/Content/FlickrPhotostream.php:750
+#: ../classes/Content/FlickrPhotostream.php:752
 msgid "No Flickr content matches the request !"
 msgstr "Aucune photo Flickr correspond à la requête !"
 
@@ -1032,6 +1059,7 @@ msgstr ""
 "probablement une erreur)"
 
 #: ../classes/Node.php:1278 ../classes/Node.php:1291 ../classes/Node.php:1304
+#: ../node_list.php:37
 msgid "No nodes could not be found in the database"
 msgstr ""
 "Aucun point d'acc&egrave;s n'a &eacute;t&eacute; trouv&eacute; dans la base "
@@ -1056,7 +1084,7 @@ msgstr ""
 msgid "No username specified!"
 msgstr "Aucun nom d'utilisateur sp&eacute;cifi&eacute;!"
 
-#: ../classes/User.php:431
+#: ../classes/User.php:431 ../classes/User.php:435
 msgid "No users could not be found in the database"
 msgstr ""
 "Aucun utilisateur n'a pu &ecirc;tre trouv&eacute; dans la base de "
@@ -1156,6 +1184,7 @@ msgid "Or"
 msgstr "Ou encore"
 
 #: ../classes/Content/FlickrPhotostream.php:503
+#: ../classes/Content/FlickrPhotostream.php:505
 msgid "Original size"
 msgstr "Taille originale"
 
@@ -1339,6 +1368,7 @@ msgid "Portal page"
 msgstr "Portail"
 
 #: ../classes/Content/FlickrPhotostream.php:501
+#: ../classes/Content/FlickrPhotostream.php:503
 msgid "Preferred size"
 msgstr "Taille préférée"
 
@@ -1349,11 +1379,11 @@ msgstr "Prévisualiser"
 msgid "Programming by Benoît Grégoire and François Proulx"
 msgstr "Programmation par Benoît Grégoire et François Proulx"
 
-#: ../classes/Content.php:622
+#: ../classes/Content.php:622 ../classes/Content.php:627
 msgid "Project information:"
 msgstr "Informations sur le projet : "
 
-#: ../classes/Content.php:634
+#: ../classes/Content.php:634 ../classes/Content.php:639
 msgid "Project sponsor:"
 msgstr "Commanditaires du projet :"
 
@@ -1393,7 +1423,7 @@ msgstr "Lire mon récit"
 msgid "Read narratives archives"
 msgstr "Voir l'archive des récits"
 
-#: ../classes/User.php:607
+#: ../classes/User.php:607 ../classes/User.php:611
 msgid "Real name"
 msgstr "Nom complet"
 
@@ -1416,6 +1446,7 @@ msgstr "Fichier distant à partir d'un URL"
 
 #: ../classes/Content.php:862 ../classes/ContentGroupElement.php:144
 #: ../classes/Network.php:772 ../classes/Node.php:971
+#: ../classes/Content.php:867 ../classes/Network.php:818
 msgid "Remove"
 msgstr "Enlever"
 
@@ -1424,6 +1455,7 @@ msgid "Report"
 msgstr "Rapport"
 
 #: ../classes/Content/FlickrPhotostream.php:414
+#: ../classes/Content/FlickrPhotostream.php:416
 msgid "Reset Flickr User ID"
 msgstr "Réinitialiser l'identifiant d'usager Flickr"
 
@@ -1444,30 +1476,36 @@ msgid "See Map"
 msgstr "Voir carte"
 
 #: ../classes/Content/FlickrPhotostream.php:394
+#: ../classes/Content/FlickrPhotostream.php:396
 msgid "Select by group"
 msgstr "Sélectionner par groupe"
 
 #: ../classes/Content/FlickrPhotostream.php:394
+#: ../classes/Content/FlickrPhotostream.php:396
 msgid "Select by tags"
 msgstr "Sélectionner par «tags»"
 
 #: ../classes/Content/FlickrPhotostream.php:394
+#: ../classes/Content/FlickrPhotostream.php:396
 msgid "Select by user"
 msgstr "Sélectionner par usager"
 
-#: ../classes/Content.php:278
+#: ../classes/Content.php:278 ../classes/Content.php:283
 msgid "Select existing Content : "
 msgstr "Sélectionner du contenu existant :"
 
 #: ../classes/Content/FlickrPhotostream.php:492
+#: ../classes/Content/FlickrPhotostream.php:494
 msgid "Show Flickr photo description ?"
 msgstr "Afficher la description de la photo Flickr ?"
 
 #: ../classes/Content/FlickrPhotostream.php:474
+#: ../classes/Content/FlickrPhotostream.php:476
 msgid "Show Flickr photo title ?"
 msgstr "Afficher le titre de la photo Flickr ?"
 
 #: ../classes/Content/FlickrPhotostream.php:483
+#: ../classes/Content/FlickrPhotostream.php:485
 msgid "Show Flickr tags ?"
 msgstr "Afficher les «tags» Flickr ?"
 
@@ -1499,11 +1537,14 @@ msgid "Sign-up, it's free!"
 msgstr "Inscrivez-vous, c'est gratuit!"
 
 #: ../classes/Content/FlickrPhotostream.php:503
+#: ../classes/Content/FlickrPhotostream.php:505
 msgid "Small 240x180"
 msgstr "Petite 240x180"
 
 #: ../classes/Content/FlickrPhotostream.php:523
 #: ../classes/Content/FlickrPhotostream.php:759
+#: ../classes/Content/FlickrPhotostream.php:525
+#: ../classes/Content/FlickrPhotostream.php:761
 msgid "Some of the request parameters provided to Flickr API are invalid."
 msgstr "Un moins un des paramètres de la requête à l'API Flickr est invalide."
 
@@ -1533,7 +1574,7 @@ msgstr ""
 "D&eacute;sol&eacute;, un compte est d&eacute;j&agrave; associ&eacute; "
 "&agrave; ce nom d'utilisateur. Choisissez en un autre."
 
-#: ../classes/Content.php:298
+#: ../classes/Content.php:298 ../classes/Content.php:303
 msgid "Sorry, no content available in the database"
 msgstr "Désolé, aucun contenu disponible dans la base de données"
 
@@ -1582,7 +1623,7 @@ msgstr ""
 "le $user_info[reg_date]).  Vous devez vous connecter &agrave; l'Internet par "
 "un autre moyen et valider votre compte."
 
-#: ../classes/User.php:318
+#: ../classes/User.php:318 ../classes/User.php:327
 msgid "Sorry, your account is not valid: "
 msgstr "D&eacute;sol&eacute;, votre compte n'est pas valide."
 
@@ -1594,11 +1635,12 @@ msgstr ""
 msgid "Sort"
 msgstr "Trier"
 
-#: ../classes/Content.php:818
+#: ../classes/Content.php:818 ../classes/Content.php:823
 msgid "Sponsor of this project:"
 msgstr "Commanditaires de ce projet:"
 
 #: ../classes/Content/FlickrPhotostream.php:503
+#: ../classes/Content/FlickrPhotostream.php:505
 msgid "Squared 75x75"
 msgstr "Carrée 75x75"
 
@@ -1645,10 +1687,12 @@ msgid "Subscription"
 msgstr "Inscription"
 
 #: ../classes/Content/FlickrPhotostream.php:721
+#: ../classes/Content/FlickrPhotostream.php:723
 msgid "Tags"
 msgstr "«Tags»"
 
 #: ../classes/Content/FlickrPhotostream.php:458
+#: ../classes/Content/FlickrPhotostream.php:460
 msgid "Tags (comma-separated)"
 msgstr "«Tags» (séparés par des virgules)"
 
@@ -1665,6 +1709,8 @@ msgstr ""
 #: ../classes/Content/EmbeddedContent.php:57 ../classes/Content/File.php:60
 #: ../classes/Content/FlickrPhotostream.php:87
 #: ../classes/Content/IFrame.php:57 ../classes/Content/Picture.php:56
+#: ../classes/Content.php:137 ../classes/Content.php:330
+#: ../classes/Content/FlickrPhotostream.php:89
 msgid "The content with the following id could not be found in the database: "
 msgstr ""
 "Le contenu avec l'ID suivant n'a pu être trouvé dans la base de données:"
@@ -1683,6 +1729,7 @@ msgstr ""
 "L'adresse courriel doit &ecirc;tre de la forme utilisateur@domaine.com."
 
 #: ../classes/Content.php:220 ../classes/Content.php:447
+#: ../classes/Content.php:225 ../classes/Content.php:452
 msgid "The following content type isn't valid: "
 msgstr "Le type de contenu suivant est invalide:"
 
@@ -1701,7 +1748,7 @@ msgstr "Le réseau spécifié n'existe pas:"
 msgid "The specified network doesn't exist: "
 msgstr "Le réseau spécifié n'existe pas :"
 
-#: ../classes/User.php:452
+#: ../classes/User.php:452 ../classes/User.php:456
 msgid "The user is not in validation period."
 msgstr "L'utilisateur n'est pas en p&eacute;riode de validation."
 
@@ -1711,7 +1758,7 @@ msgstr ""
 "Le jeton de validation ne correspond pas &agrave; celui dans la base de "
 "donn&eacute;es"
 
-#: ../classes/User.php:458
+#: ../classes/User.php:458 ../classes/User.php:462
 msgid "The validation token is empty."
 msgstr "Le jeton de validation est vide."
 
@@ -1753,6 +1800,7 @@ msgstr ""
 "données."
 
 #: ../classes/Content/FlickrPhotostream.php:503
+#: ../classes/Content/FlickrPhotostream.php:505
 msgid "Thumbnail 100x75"
 msgstr "Vignette 100x75"
 
@@ -1760,7 +1808,7 @@ msgstr "Vignette 100x75"
 msgid "Title"
 msgstr "Titre"
 
-#: ../classes/Content.php:724
+#: ../classes/Content.php:724 ../classes/Content.php:729
 msgid "Title:"
 msgstr "Titre:"
 
@@ -1776,6 +1824,8 @@ msgstr ""
 
 #: ../classes/Content/FlickrPhotostream.php:518
 #: ../classes/Content/FlickrPhotostream.php:755
+#: ../classes/Content/FlickrPhotostream.php:520
+#: ../classes/Content/FlickrPhotostream.php:757
 msgid "Unable to connect to Flickr API."
 msgstr "Impossible de se connecter à l'API Flickr."
 
@@ -1792,23 +1842,26 @@ msgid "Unable to insert new node into database!"
 msgstr ""
 "Impossible d'ins&eacute;rer le nouveau noeud dans la base de donn&eacute;es !"
 
-#: ../classes/Content.php:472
+#: ../classes/Content.php:472 ../classes/Content.php:477
 msgid "Unable to insert the new Owner into database."
 msgstr "Impossible d'insérer un nouveau propriétaire dans la base de données."
 
 msgid "Unable to locate "
 msgstr "Impossible de trouver "
 
-#: ../classes/Content.php:165
+#: ../classes/Content.php:165 ../classes/Content.php:170
+#: ../classes/Statistics.php:96
 msgid "Unable to open directory "
 msgstr "Impossible d'ouvrir le répertoire"
 
 #: ../classes/Content/FlickrPhotostream.php:527
 #: ../classes/Content/FlickrPhotostream.php:764
+#: ../classes/Content/FlickrPhotostream.php:529
+#: ../classes/Content/FlickrPhotostream.php:766
 msgid "Unable to parse Flickr's response."
 msgstr "Impossible d'analyser la réponse de Flickr"
 
-#: ../classes/Content.php:491
+#: ../classes/Content.php:491 ../classes/Content.php:496
 msgid "Unable to remove the owner from the database."
 msgstr "Impossible de supprimer le propriétaire de la base de données."
 
@@ -1821,7 +1874,7 @@ msgstr ""
 "ma de la base de donn&eacute;es est trop ancien pour &ecirc;tre mis &agrave; "
 "jour."
 
-#: ../classes/Content.php:1055
+#: ../classes/Content.php:1055 ../classes/Content.php:1060
 msgid "Unable to set as author in the database."
 msgstr "Impossible de définir en tant qu'auteur dans la base de données."
 
@@ -1846,7 +1899,7 @@ msgstr "Terminer l'inscription maintenant"
 msgid "Unsupported selection mode: "
 msgstr "Mode de sélection non-supporté :"
 
-#: ../classes/Content.php:340
+#: ../classes/Content.php:340 ../classes/Content.php:345
 msgid "Untitled content"
 msgstr "Contenu sans titre"
 
@@ -1854,7 +1907,7 @@ msgstr "Contenu sans titre"
 msgid "Update node"
 msgstr "Mettre &agrave; jour le noeud"
 
-#: ../classes/Content.php:453
+#: ../classes/Content.php:453 ../classes/Content.php:458
 msgid "Update was unsuccessfull (database error)"
 msgstr "La mise à jour a échouée (erreur de base de données)"
 
@@ -1891,7 +1944,7 @@ msgstr "Gestion des utilisateurs"
 #: ../admin/stats_node.inc.php:322 ../admin/stats_user_id.inc.php:35
 #: ../admin/stats_user_mac.inc.php:34 ../classes/User.php:588
 #: ../admin/stats_node.inc.php:234 smarty.txt:121
-#: ../admin/stats_node.inc.php:267
+#: ../admin/stats_node.inc.php:267 ../classes/User.php:592
 msgid "Username"
 msgstr "Nom d'usager"
 
@@ -1932,7 +1985,7 @@ msgstr ""
 msgid "Virtual login"
 msgstr "Connexion virtuelle :"
 
-#: ../classes/User.php:615
+#: ../classes/User.php:615 ../classes/User.php:619
 msgid "Website URL"
 msgstr "URL de mon site Web"
 
@@ -1987,6 +2040,7 @@ msgid "Wrong password."
 msgstr "Mauvais mot de passe."
 
 #: ../classes/Content/FlickrPhotostream.php:537
+#: ../classes/Content/FlickrPhotostream.php:539
 msgid "YOU MUST SPECIFY AN API KEY BEFORE YOU CAN GO ON."
 msgstr "VOUS DEVEZ ENTRER UNE CLÉ D'API AVANT DE POURSUIVRE"
 
@@ -2083,6 +2137,7 @@ msgid "You must display at least one element"
 msgstr "Vous devez afficher au moins un élément"
 
 #: ../classes/Content.php:86 ../classes/Content.php:709
+#: ../classes/Content.php:100 ../classes/Content.php:714
 msgid "You must select a content type: "
 msgstr "Vous devez sélectionner un type de contenu:"
 
@@ -2120,7 +2175,7 @@ msgstr ""
 "Lorsque l'on vous demandera de vous enregistrer, entrez le nom d'usager et "
 "le mot de passe que vous venez de cr&eacute;er."
 
-#: ../classes/User.php:312
+#: ../classes/User.php:312 ../classes/User.php:321
 msgid "Your account is currently valid."
 msgstr "Votre compte est actuellement valide."
 
@@ -2175,7 +2230,7 @@ msgstr ""
 "de gauche pour cr&eacute;er un nouvel usager ou encore retrouver un nom "
 "d'utilisateur ou un mot de passe perdu"
 
-#: ../index.php:51 ../classes/MainUI.php:53
+#: ../index.php:51 ../classes/MainUI.php:53 ../index.php:50
 msgid "authentication server"
 msgstr "serveur d'authentification"
 
@@ -2200,7 +2255,7 @@ msgstr "r&eacute;seau"
 msgid "new users"
 msgstr "nouveaux utilisateurs"
 
-#: ../hotspots_map.php:44
+#: ../hotspots_map.php:44 ../hotspots_map.php:60
 msgid "not monitored"
 msgstr "non surveillé"
 
@@ -2213,11 +2268,11 @@ msgstr "autres usagers en ligne à ce point d'accès..."
 msgid "sign-up."
 msgstr "cr&eacute;er un compte"
 
-#: ../hotspots_map.php:44
+#: ../hotspots_map.php:44 ../hotspots_map.php:59
 msgid "the hotspot is down"
 msgstr "le point d'accès est hors service"
 
-#: ../hotspots_map.php:44
+#: ../hotspots_map.php:44 ../hotspots_map.php:58
 msgid "the hotspot is operational"
 msgstr "le point d'accès est opérationnel"
 
@@ -2232,7 +2287,7 @@ msgstr "utilisateur(s) en ligne"
 msgid "valid users"
 msgstr "utilisateurs valides"
 
-#: ../index.php:46 smarty.txt:36
+#: ../index.php:46 smarty.txt:36 ../index.php:45
 msgid "Administration"
 msgstr "Administration"
 
@@ -2282,19 +2337,19 @@ msgstr ""
 msgid "SQL error on: "
 msgstr "Erreur SQL :"
 
-#: ../admin/stats.php:40
+#: ../admin/stats.php:40 ../admin/stats.php:45
 msgid "Connections at"
 msgstr "Connexions à partir de"
 
-#: ../admin/stats.php:44
+#: ../admin/stats.php:44 ../admin/stats.php:49
 msgid "User information for"
 msgstr "Informations sur l'usager"
 
-#: ../admin/stats.php:47
+#: ../admin/stats.php:47 ../admin/stats.php:52
 msgid "Connections from MAC"
 msgstr "Connexions à partir la MAC"
 
-#: ../admin/stats.php:51
+#: ../admin/stats.php:51 ../admin/stats.php:56
 msgid "Network information for"
 msgstr "Informations sur le réseau"
 
@@ -2304,15 +2359,15 @@ msgstr ""
 "Choisissez la période de temps pour laquelle vous désirez obtenir les "
 "statistiques."
 
-#: ../admin/stats.php:139
+#: ../admin/stats.php:139 ../classes/Statistics.php:127
 msgid "From"
 msgstr "De"
 
-#: ../admin/stats.php:152
+#: ../admin/stats.php:152 ../classes/Statistics.php:143
 msgid "To"
 msgstr "À"
 
-#: ../admin/stats.php:182
+#: ../admin/stats.php:182 ../admin/stats.php:81
 msgid "Generate statistics"
 msgstr "Générer les statistiques"
 
@@ -2587,11 +2642,11 @@ msgstr "Dénombrement"
 msgid "Date"
 msgstr "Date"
 
-#: ../admin/user_log.php:90
+#: ../admin/user_log.php:90 ../admin/user_log.php:92
 msgid "Find a user ID : "
 msgstr "Trouver selon le nom d'utilisateur : "
 
-#: ../classes/Content.php:776
+#: ../classes/Content.php:776 ../classes/Content.php:781
 msgid "Long description:"
 msgstr "Description longue :"
 
@@ -2614,51 +2669,53 @@ msgid "Building your wireless community"
 msgstr "construit votre communauté sans fil"
 
 #: ../classes/Network.php:60 ../classes/Network.php:150
+#: ../classes/Network.php:61 ../classes/Network.php:161
 msgid "Network::getAllNetworks:  Fatal error: No networks in the database!"
 msgstr ""
 "Network::getAllNetworks:  Erreur fatale: Aucun réseau dans la base de "
 "données !"
 
-#: ../classes/Network.php:81
+#: ../classes/Network.php:81 ../classes/Network.php:82
 msgid ""
 "Network::getDefaultNetwork:  Fatal error: Unable to find the default network!"
 msgstr ""
 "Network::getDefaultNetwork:  Erreur fatale: Le réseau par défaut n'a pu être "
 "trouvé !"
 
-#: ../classes/Network.php:127
+#: ../classes/Network.php:127 ../classes/Network.php:128
 msgid "Unable to insert the new network in the database!"
 msgstr "Impossible d'insérer le nouveau réseau dans la base de données !"
 
-#: ../classes/Network.php:198
+#: ../classes/Network.php:198 ../classes/Network.php:209
 msgid "Create new network with id"
 msgstr "Créer un nouveau réseau avec l'ID"
 
 #: ../classes/Network.php:220 ../classes/Node.php:277
+#: ../classes/Network.php:231
 msgid "Access denied"
 msgstr "Accès refusé"
 
-#: ../classes/Network.php:606
+#: ../classes/Network.php:606 ../classes/Network.php:652
 msgid "Network management"
 msgstr "Gestion du réseau"
 
-#: ../classes/Network.php:612
+#: ../classes/Network.php:612 ../classes/Network.php:658
 msgid "Network ID"
 msgstr "ID du réseau"
 
-#: ../classes/Network.php:623
+#: ../classes/Network.php:623 ../classes/Network.php:669
 msgid "Network name"
 msgstr "Nom du réseau"
 
-#: ../classes/Network.php:633
+#: ../classes/Network.php:633 ../classes/Network.php:679
 msgid "Network's web site"
 msgstr "Site Web du réseau"
 
-#: ../classes/Network.php:643
+#: ../classes/Network.php:643 ../classes/Network.php:689
 msgid "Technical support email"
 msgstr "Courriel de support techhnique"
 
-#: ../classes/Network.php:653
+#: ../classes/Network.php:653 ../classes/Network.php:699
 msgid ""
 "Network authenticator class.  The subclass of Authenticator to be used for "
 "user authentication (ex: AuthenticatorRadius)"
@@ -2666,7 +2723,7 @@ msgstr ""
 "Classe d'authentification réseau. Une sous-classe de Authenticator doit être "
 "utilisé (ex: AuthenticatorRadius)"
 
-#: ../classes/Network.php:663
+#: ../classes/Network.php:663 ../classes/Network.php:709
 msgid ""
 "The explicit parameters to be passed to the authenticator (ex: "
 "'my_network_id', '192.168.0.11', 1812, 1813, 'secret_key', 'CHAP_MD5')"
@@ -2674,31 +2731,31 @@ msgstr ""
 "Les paramètres devant être passé à l'authentificateur (ex: 'my_network_id', "
 "'192.168.0.11', 1812, 1813, 'secret_key', 'CHAP_MD5')"
 
-#: ../classes/Network.php:673
+#: ../classes/Network.php:673 ../classes/Network.php:719
 msgid "Is this network the default network?"
 msgstr "S'agit-il du réseau par défaut ?"
 
-#: ../classes/Network.php:683
+#: ../classes/Network.php:683 ../classes/Network.php:729
 msgid ""
 "The length of the validation grace period in seconds.  A new user is granted "
 "Internet access for this period check his email and validate his account."
 msgstr "Temps alloué aux nouveaux usagers pour vérifier leur courriel."
 
-#: ../classes/Network.php:693
+#: ../classes/Network.php:693 ../classes/Network.php:739
 msgid "This will be the from adress of the validation email"
 msgstr "Ce sera l'adresse de l'expéditeur du courriel"
 
-#: ../classes/Network.php:703
+#: ../classes/Network.php:703 ../classes/Network.php:749
 msgid "Can an account be connected more than once at the same time?"
 msgstr "Doit-on permettre les connexions multiples ?"
 
-#: ../classes/Network.php:713
+#: ../classes/Network.php:713 ../classes/Network.php:759
 msgid "Are nodes allowed to be set as splash-only (no login)?"
 msgstr ""
 "Doit-on permettre aux noeuds d'être 'splash-only' (sans ouverture de "
 "session) ?"
 
-#: ../classes/Network.php:723
+#: ../classes/Network.php:723 ../classes/Network.php:769
 msgid ""
 "Are nodes allowed to redirect users to an arbitrary web page instead of the "
 "portal?"
@@ -2706,23 +2763,23 @@ msgstr ""
 "Doit-on permettre aux noeuds de rediriger automatiquement vers un URL à la "
 "place du portail WifiDog ?"
 
-#: ../classes/Network.php:733
+#: ../classes/Network.php:733 ../classes/Network.php:779
 msgid "Network stakeholders"
 msgstr "Intervenants du réseau"
 
-#: ../classes/Network.php:744
+#: ../classes/Network.php:744 ../classes/Network.php:790
 msgid "New node ID"
 msgstr "ID du nouveau noeud"
 
-#: ../classes/Network.php:752
+#: ../classes/Network.php:752 ../classes/Network.php:798
 msgid "Create a new node"
 msgstr "Créer un nouveau noeud"
 
-#: ../classes/Network.php:900
+#: ../classes/Network.php:900 ../classes/Network.php:945
 msgid "Access denied (must have super admin access)"
 msgstr "Accès refusé (vous devez avoir les droits d'administration)"
 
-#: ../classes/Network.php:908
+#: ../classes/Network.php:908 ../classes/Network.php:953
 msgid "Could not delete network!"
 msgstr "Impossible de supprimer ce réseau !"
 
@@ -2858,19 +2915,20 @@ msgstr "L'utilisateur est déjà propriétaire de ce noeud."
 msgid "The user is already a technical officer of this node."
 msgstr "L'utilisateur est déjà officier technique de ce noeud."
 
-#: ../classes/Node.php:1316
+#: ../classes/Node.php:1316 ../classes/Node.php:1303
 msgid "No deployment statues  could be found in the database"
 msgstr "Aucun état de déploiement n'a pu être trouvé dans la base de données."
 
-#: ../classes/Node.php:1399 ../classes/Node.php:1403
+#: ../classes/Node.php:1399 ../classes/Node.php:1403 ../classes/Node.php:1397
+#: ../classes/Node.php:1401
 msgid "Could not add tech officer"
 msgstr "Impossible d'ajouter l'officier technique."
 
-#: ../classes/Node.php:1423
+#: ../classes/Node.php:1423 ../classes/Node.php:1421
 msgid "Could not remove tech officer"
 msgstr "Impossible de retirer l'officier techhnique"
 
-#: ../classes/User.php:307
+#: ../classes/User.php:307 ../classes/User.php:316
 #, php-format
 msgid ""
 "Sorry, your %s minutes grace period to retrieve your email and validate your "
@@ -2883,6 +2941,7 @@ msgstr ""
 "partir d'un autre emplacement pour compléter votre inscription"
 
 #: ../classes/User.php:440 ../classes/User.php:465 ../classes/User.php:483
+#: ../classes/User.php:444 ../classes/User.php:469 ../classes/User.php:487
 msgid "Registration system"
 msgstr "Système d'enregistrement"
 
@@ -2916,10 +2975,12 @@ msgid ""
 msgstr ""
 
 #: ../classes/Content/FlickrPhotostream.php:383
+#: ../classes/Content/FlickrPhotostream.php:385
 msgid "Shared secret"
 msgstr "Shared secret"
 
 #: ../classes/Content/FlickrPhotostream.php:816
+#: ../classes/Content/FlickrPhotostream.php:818
 msgid "PEAR::Phlickr is not installed"
 msgstr "PEAR::Phlickr n'est pas installé"
 
@@ -3098,47 +3159,47 @@ msgstr "Regrouper les connexions ?"
 msgid "Start of range ..."
 msgstr "Début de la période ..."
 
-#: ../admin/stats.php:78 ../admin/stats.php:101
+#: ../admin/stats.php:78 ../admin/stats.php:101 ../classes/Statistics.php:123
 msgid "yesterday"
 msgstr "hier"
 
-#: ../admin/stats.php:79 ../admin/stats.php:102
+#: ../admin/stats.php:79 ../admin/stats.php:102 ../classes/Statistics.php:123
 msgid "today"
 msgstr "aujourd'hui"
 
-#: ../admin/stats.php:80 ../admin/stats.php:103
+#: ../admin/stats.php:80 ../admin/stats.php:103 ../classes/Statistics.php:123
 msgid "2 days ago"
 msgstr "Il y a 2 jours"
 
-#: ../admin/stats.php:81 ../admin/stats.php:104
+#: ../admin/stats.php:81 ../admin/stats.php:104 ../classes/Statistics.php:123
 msgid "3 days ago"
 msgstr "Il y a 3 jours"
 
-#: ../admin/stats.php:82 ../admin/stats.php:105
+#: ../admin/stats.php:82 ../admin/stats.php:105 ../classes/Statistics.php:123
 msgid "1 week ago"
 msgstr "Il y a 1 semaine"
 
-#: ../admin/stats.php:83 ../admin/stats.php:106
+#: ../admin/stats.php:83 ../admin/stats.php:106 ../classes/Statistics.php:123
 msgid "2 weeks ago"
 msgstr "Il y a 2 semaines"
 
-#: ../admin/stats.php:84 ../admin/stats.php:107
+#: ../admin/stats.php:84 ../admin/stats.php:107 ../classes/Statistics.php:123
 msgid "3 weeks ago"
 msgstr "Il y a 3 semaines"
 
-#: ../admin/stats.php:85 ../admin/stats.php:108
+#: ../admin/stats.php:85 ../admin/stats.php:108 ../classes/Statistics.php:123
 msgid "1 month ago"
 msgstr "Il y a 1 mois"
 
-#: ../admin/stats.php:86 ../admin/stats.php:109
+#: ../admin/stats.php:86 ../admin/stats.php:109 ../classes/Statistics.php:123
 msgid "2 months ago"
 msgstr "Il y a 2 mois"
 
-#: ../admin/stats.php:87 ../admin/stats.php:110
+#: ../admin/stats.php:87 ../admin/stats.php:110 ../classes/Statistics.php:123
 msgid "6 months ago"
 msgstr "Il y a 6 mois"
 
-#: ../admin/stats.php:88 ../admin/stats.php:111
+#: ../admin/stats.php:88 ../admin/stats.php:111 ../classes/Statistics.php:123
 msgid "1 year ago"
 msgstr "Il y a 1 an"
 
@@ -3146,27 +3207,27 @@ msgstr "Il y a 1 an"
 msgid "Choose a range ..."
 msgstr "Choisir une période ..."
 
-#: ../admin/stats.php:91 ../admin/stats.php:114
+#: ../admin/stats.php:91 ../admin/stats.php:114 ../classes/Statistics.php:123
 msgid "yesterday (whole day)"
 msgstr "hier (journée entière)"
 
-#: ../admin/stats.php:92 ../admin/stats.php:115
+#: ../admin/stats.php:92 ../admin/stats.php:115 ../classes/Statistics.php:123
 msgid "today (whole day)"
 msgstr "aujourd'hui (journée entière)"
 
-#: ../admin/stats.php:93 ../admin/stats.php:116
+#: ../admin/stats.php:93 ../admin/stats.php:116 ../classes/Statistics.php:123
 msgid "this month"
 msgstr "ce mois-ci"
 
-#: ../admin/stats.php:94 ../admin/stats.php:117
+#: ../admin/stats.php:94 ../admin/stats.php:117 ../classes/Statistics.php:123
 msgid "last month"
 msgstr "le mois dernier"
 
-#: ../admin/stats.php:95 ../admin/stats.php:118
+#: ../admin/stats.php:95 ../admin/stats.php:118 ../classes/Statistics.php:123
 msgid "this year"
 msgstr "cette année"
 
-#: ../admin/stats.php:96 ../admin/stats.php:119
+#: ../admin/stats.php:96 ../admin/stats.php:119 ../classes/Statistics.php:123
 msgid "forever"
 msgstr "depuis le début"
 
@@ -3207,7 +3268,7 @@ msgstr "Vu pour la dernière fois"
 msgid "(for the selected period)"
 msgstr "(pour la période choisie)"
 
-#: ../classes/User.php:550
+#: ../classes/User.php:550 ../classes/User.php:554
 msgid "Username: "
 msgstr "Nom d'utilisateur : "
 
@@ -3226,3 +3287,90 @@ msgstr "Sens : "
 #: smarty.txt:123
 msgid "Registered On"
 msgstr "Date de l'inscription"
+
+#: ../hotspots_map.php:44
+msgid "Show me the closest hotspot"
+msgstr "Où est point d'accès le plus près ?"
+
+#: ../hotspots_map.php:50
+msgid "Refresh map"
+msgstr "Rafraîchir la carte"
+
+#: ../hotspots_map.php:55
+msgid "Loading, please wait..."
+msgstr "Chargement en cours, veuillez patienter..."
+
+#: ../index.php:39
+#, php-format
+msgid ""
+"The %s network currently has %s valid users, %s user(s) are currently online"
+msgstr ""
+"Le réseau %s a actuellement %s usagers valides, %s usager(s) sont connecté"
+"(s) en ce moment."
+
+#: ../classes/Content.php:97
+msgid "It appears that you have not installed any Content plugin !"
+msgstr "Il semble que vous n'ayez installé aucun plugiciel de contenu !"
+
+#: ../classes/Statistics.php:59
+msgid "Usernames"
+msgstr "Noms d'utilisateur"
+
+#: ../classes/Statistics.php:59
+msgid "MAC adresses"
+msgstr "Adresses MAC"
+
+#: ../classes/Statistics.php:123
+msgid "No restriction..."
+msgstr "Aucune restriction..."
+
+#: ../classes/Statistics.php:123
+msgid "-"
+msgstr "-"
+
+#: ../classes/Statistics.php:123
+msgid "Select from and to..."
+msgstr "Choisir début et fin..."
+
+#: ../classes/Statistics.php:406
+msgid "Invalid parameter"
+msgstr "Paramètre invalide"
+
+#: ../classes/Statistics.php:519
+msgid "Report configuration"
+msgstr "Configuration du rapport"
+
+#: ../classes/Statistics.php:532
+msgid "Restrict the time range for which statistics will be computed"
+msgstr ""
+"Restreindre la période de temps pour laquelle les statistiques seront "
+"comptabilisées."
+
+#: ../classes/Statistics.php:540
+msgid "Restrict stats to the following nodes"
+msgstr "Restreindre les stats aux noeuds suivants"
+
+#: ../classes/Statistics.php:548
+msgid "Distinguish users by"
+msgstr "Distinguer les usagers par"
+
+#: ../classes/Statistics.php:556
+msgid "Restrict stats to the selected users"
+msgstr "Restreindre les stats aux usagers suivants"
+
+#: ../classes/Statistics.php:564
+msgid "Selected reports"
+msgstr "Rapports sélectionnés"
+
+#: ../classes/User.php:202
+#, php-format
+msgid "User id: %s could not be found in the database"
+msgstr "L'ID utilisateur : %s n'a pu être trouvé"
+
+#: ../hotspots_map.php:46
+msgid "Enter your postal code"
+msgstr "Entrez votre code postal"
+
+#: ../hotspots_map.php:48
+msgid "Show"
+msgstr "Montrez-moi sur la carte"
