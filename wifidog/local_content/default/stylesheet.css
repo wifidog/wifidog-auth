@@ -159,17 +159,22 @@ select{
 
 
 /** Messages */
-.errormsg {font-weight: bold;  
-		color: red};
-
-.warningmsg {font-weight: bold;  
-		color: teal};
-
-.successmsg {font-weight: bold;  
-		color: green};
-
-.msg {font-weight: bold;  
-		font-color: black};
+.errormsg {
+	font-weight: bold;  
+	color: red;
+}
+.warningmsg {
+	font-weight: bold;  
+	color: teal;
+}
+.successmsg {
+	font-weight: bold;  
+	color: green;
+}
+.msg {
+	font-weight: bold;  
+	color: black;
+}
 
 /* The content container */
 .content { border: 2px solid gray; 

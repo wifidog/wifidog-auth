@@ -52,10 +52,10 @@ HotspotsMap.prototype.getGPointFromPostalCode = function(postal_code)
 		{
 			if(request.responseXML != undefined)
 			{
-				doc = request.responseXML;
-				long = doc.documentElement.getElementsByTagName("long");
-				lat = doc.documentElement.getElementsByTagName("lat");
-				self.findClosestHotspotByGPoint(new GPoint(long[0].firstChild.nodeValue, lat[0].firstChild.nodeValue));
+				var xml_doc = request.responseXML;
+				var lng = xml_doc.documentElement.getElementsByTagName("long");
+				var lat = xml_doc.documentElement.getElementsByTagName("lat");
+				self.findClosestHotspotByGPoint(new GPoint(lng[0].firstChild.nodeValue, lat[0].firstChild.nodeValue));
 			}
 		}
 	}
@@ -189,7 +189,6 @@ HotspotsMap.prototype.openInfoBubble = function(bubbleId)
 	// Trigger click ( NB. markers is a global var )
 	GEvent.trigger(this.markers[bubbleId], "click");
 }
-
 
 HotspotsMap.prototype.loadHotspotsStatus = function()
 {

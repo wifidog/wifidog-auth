@@ -1,3 +1,6 @@
+2005-09-26 Francois Proulx <francois.proulx@gmail.com>
+	* Fixed annoying bug in new google maps code
+	
 2005-09-25 Francois Proulx <francois.proulx@gmail.com>
 	* Complete rewrite of Google maps code, now stands as a js class
 	* relooking of mapping stuff

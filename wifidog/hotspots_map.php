@@ -63,8 +63,7 @@ $ui->setMainContent($html);
 
 // The onLoad code should only be called once all DIV are created.
 $script = "<script type=\"text/javascript\">\n";
-$script .= "function toggleOverlay(name) {";
-$script .= "	o = document.getElementById('map_postalcode_overlay');";
+$script .= "function toggleOverlay(name) { o = document.getElementById('map_postalcode_overlay');";
 $script .= "	if(o != undefined) { if(o.style.display == 'block') o.style.display='none'; else o.style.display='block'; }}\n";
 $script .= "hotspots_map = new HotspotsMap(\"map_frame\", \"hotspots_map\");\n";
 $script .= "hotspots_map.setXmlSourceUrl(\"".GMAPS_XML_SOURCE_URL."\");\n";

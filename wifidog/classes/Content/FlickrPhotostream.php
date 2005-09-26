@@ -23,6 +23,8 @@
  * @author Copyright (C) 2005 François Proulx <francois.proulx@gmail.com>,
  * Technologies Coeus inc.
  */
+ 
+require_once BASEPATH.'classes/Dependencies.php';
 
 // Make sure the Phlickr support is installed
 if (Dependencies::check("Phlickr", $errmsg))
