@@ -1490,4 +1490,3 @@ class Node implements GenericObject
 
 } // End class
 ?>
-

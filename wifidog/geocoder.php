@@ -18,28 +18,23 @@
  * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
  *                                                                  *
  \********************************************************************/
-/**@file index.php
- * @author Copyright (C) 2005 Philippe April
+/**@file geocode.php
+ * Geocoding service
+ * @author Copyright (C) 2005 François Proulx
  */
-
-define('BASEPATH', '../');
-require_once BASEPATH.'admin/admin_common.php';
-require_once BASEPATH.'classes/Content.php';
-require_once BASEPATH.'classes/MainUI.php';
-$ui=new MainUI();
-$html = '';
-$current_user = User :: getCurrentUser();
-if(!$current_user)
+ 
+define('BASEPATH','./');
+require_once BASEPATH.'classes/AbstractGeocoder.php';
+header("Content-Type: text/xml");
+ 
+if(!empty($_REQUEST["postal_code"]))
 {
-	// Redirect to login form automatically
-	header("Location: ../login/");
-	exit;
+	$geocoder = AbstractGeocoder::getGeocoder("Canada");
+	$geocoder->setPostalCode($_REQUEST["postal_code"]);
+	$long = $geocoder->getLongitude();
+	$lat = $geocoder->getLatitude();
+	echo "<geo><lat>{$lat}</lat><long>{$long}</long></geo>";
 }
 else
-{
-	$ui->setToolSection('ADMIN');
-}
-
-$ui->setMainContent($html);
-$ui->display();
-?>
+	echo "<geo></geo>";
+ ?>

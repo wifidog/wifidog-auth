@@ -34,21 +34,44 @@ $ui = new MainUI();
 $ui->setTitle(_("Hotspots status map"));
 
 // Add Google Maps JavaScript ( must set config values )
-$html_headers = "<script src=\"http://maps.google.com/maps?file=api&v=1&key=".GMAPS_PUBLIC_API_KEY."\" type=\"text/javascript\"></script>";
-$html_headers .= "<script src=\"js/gmaps_hotspots_status_map.js\" type=\"text/javascript\"></script>";
+$html_headers = "<script src=\"http://maps.google.com/maps?file=api&v=1&key=".GMAPS_PUBLIC_API_KEY."\" type=\"text/javascript\"></script>\n";
+$html_headers .= "<script src=\"js/hotspots_status_map.js\" type=\"text/javascript\"></script>";
 $ui->setHtmlHeader($html_headers);
 
 // Create HTML body
-$html = "<h1>"._("Hotspots status map")."</h1>\n";
-$html .= _("This page displays a map of the deployed hotspots.")."<br>";
-$html .= _("Legend")." : <img src='images/hotspots_status_map_up.png'> <i>"._("the hotspot is operational")."</i> <img src='images/hotspots_status_map_down.png'> <i>"._("the hotspot is down")."</i> <img src='images/hotspots_status_map_unknown.png'> <i>"._("not monitored")."</i><br>";
-$html .= "<div id=\"map_hotspots_list\"></div>\n";
-$html .= "<div id=\"map_frame\"><p/><center><h2>"._("Loading, please wait...")."</h2></center></div>\n";
+$html = "<div id=\"map_title\">\n";
+$html .= "<div id=\"map_toolbox\">\n";
+$html .= "<input type=\"button\" value=\"Show me the closest hotspot\" onclick=\"toggleOverlay('map_postalcode_overlay');\">\n";
+$html .= "<div id=\"map_postalcode_overlay\">\n";
+$html .= "Enter your postal code :<br/>\n";
+$html .= "<input type=\"text\" id=\"postal_code\" size=\"10\"><br/>\n";
+$html .= "<input type=\"button\" value=\"Show\" onclick=\"toggleOverlay('map_postalcode_overlay'); p = document.getElementById('postal_code'); hotspots_map.findClosestHotspotByPostalCode(p.value);\">\n";
+$html .= "</div>\n";
+$html .= "<input type=\"button\" value=\"Refresh map\" onclick=\"hotspots_map.redraw();\">\n";
+$html .= "</div>\n";
+$html .= "Carte des points d'accès déployés\n";
+$html .= "</div>\n";
+$html .= "<div id=\"map_outer_hotspots_list\"><div id=\"map_hotspots_list\"></div></div>\n";
+$html .= "<div id=\"map_frame\"><p/><center><h2>Loading, please wait...</h2></center></div>\n";
+$html .= "<div id=\"map_legend\">\n";
+$html .= "<b>Légende :</b>\n"; 
+$html .= "<img src='images/hotspots_status_map_up.png'> <i>le point d'accès est opérationnel</i>\n"; 
+$html .= "<img src='images/hotspots_status_map_down.png'> <i>le point d'accès est hors service</i>\n"; 
+$html .= "<img src='images/hotspots_status_map_unknown.png'> <i>non surveillé</i>\n";
+$html .= "</div>\n";
 $ui->setMainContent($html);
 
-
 // The onLoad code should only be called once all DIV are created.
-$script = "<script type=\"text/javascript\">loadHotspotsMap('".GMAPS_XML_SOURCE_URL."', ".GMAPS_INITIAL_LATITUDE.", ".GMAPS_INITIAL_LONGITUDE.", ".GMAPS_INITIAL_ZOOM_LEVEL.");</script>\n";
+$script = "<script type=\"text/javascript\">\n";
+$script .= "function toggleOverlay(name) {";
+$script .= "	o = document.getElementById('map_postalcode_overlay');";
+$script .= "	if(o != undefined) { if(o.style.display == 'block') o.style.display='none'; else o.style.display='block'; }}\n";
+$script .= "hotspots_map = new HotspotsMap(\"map_frame\", \"hotspots_map\");\n";
+$script .= "hotspots_map.setXmlSourceUrl(\"".GMAPS_XML_SOURCE_URL."\");\n";
+$script .= "hotspots_map.setHotspotsInfoList(\"map_hotspots_list\");\n";
+$script .= "hotspots_map.setInitialPosition(".GMAPS_INITIAL_LATITUDE.", ".GMAPS_INITIAL_LONGITUDE.", ".GMAPS_INITIAL_ZOOM_LEVEL.");\n";
+$script .= "hotspots_map.redraw();\n";
+$script .= "</script>\n";
 $ui->addFooterScript($script);
 
 $tool_html = '<p class="indent">'."\n";

@@ -510,15 +510,47 @@ table.content_admin td {
     }
 
 /* Google Maps stuff */
-#map_hotspots_list {
+#map_title {
+	background-color: #ffeac0;
+	border: 1px solid #ff9900;
+	padding: 5px;
+	font: 14pt "Arial",sans-serif;
+	font-weight: bold;
+}
+#map_toolbox {
+	display: inline;
+	float: right;	
+}
+#map_postalcode_overlay {
+	display: none;
+	background-color: #ffeac0;
+	border: 1px solid #ff9900;
+	padding: 10px;
+	font: 10pt "Arial",sans-serif;
+	font-weight: bold;
+	position: absolute;
+	z-index: 1;
+}
+#map_legend {
+	background-color: #ffeac0;
+	border: 1px solid #ff9900;
+	padding: 5px;
+	font: 10pt "Arial",sans-serif;
+	vertical-align: middle;
+}
+#map_outer_hotspots_list {
+	background-color: #ffffff;
 	width: 25%; 
 	height: 500px;
-	overflow: scroll;
+	overflow: auto;
 	float: right; 
 }
-
+#map_hotspots_list {
+	padding: 10px;
+}
 #map_frame {
-	width: 74%; 
+	font: 10pt "Arial",sans-serif;
+	width: 75%; 
 	height: 500px;
  }
 

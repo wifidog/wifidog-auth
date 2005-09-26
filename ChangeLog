@@ -1,3 +1,9 @@
+2005-09-25 Francois Proulx <francois.proulx@gmail.com>
+	* Complete rewrite of Google maps code, now stands as a js class
+	* relooking of mapping stuff
+	* wrote basic "Find the closest hotspot" widget for canada geocoding only...
+	* fixed broken xml, damn blank lines...
+	
 2005-09-25 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Statistics:  At long last, the monster statistics commit. 
 	 We finally have a stable, documented and uniform codebase for statistics. 
