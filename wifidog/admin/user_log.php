@@ -66,7 +66,9 @@ else
 
 	$per_page = 100;
 	$offset = (($current_page * $per_page) - $per_page);
-	$pages = $stats->getNumUsers() / $per_page;
+	$db->ExecSqlUniqueRes("SELECT count(user_id) as count FROM users", $count);
+
+	$pages = $count['count'] / $per_page;
 	for ($i = 1; $i <= $pages +1; $i ++)
 	{
 		$smarty->append("pages", array ('number' => $i, 'selected' => ($i == $current_page),));

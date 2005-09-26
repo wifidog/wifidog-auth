@@ -115,12 +115,12 @@ class Network implements GenericObject
 	static function createNewObject($network_id = null)
 	{
 		global $db;
-		if(empty($network_id))
+		if (empty ($network_id))
 		{
 			$network_id = get_guid();
 		}
 		$network_id = $db->EscapeString($network_id);
-		
+
 		$sql = "INSERT INTO networks (network_id, network_authenticator_class) VALUES ('$network_id', 'AuthenticatorLocalUser')";
 
 		if (!$db->ExecSqlUpdate($sql, false))
@@ -134,14 +134,24 @@ class Network implements GenericObject
 
 	/** Get an interface to pick a network.  If there is only one network available, no interface is actually shown
 	* @param $user_prefix A identifier provided by the programmer to recognise it's generated html form
+	* @param $pre_selected_network Optional, Network object: The network to be pre-
+	* selected in the form object
 	* @return html markup
 	*/
-	public static function getSelectNetworkUI($user_prefix)
+	public static function getSelectNetworkUI($user_prefix, $pre_selected_network = null)
 	{
 		$html = '';
 		$name = $user_prefix;
 		$html .= _("Network:")." \n";
 
+		if ($pre_selected_network)
+		{
+			$selected_id = $pre_selected_network->getId();
+		}
+		else
+		{
+			$selected_id = null;
+		}
 		global $db;
 		$sql = "SELECT network_id, name FROM networks ORDER BY is_default_network DESC";
 		$network_rows = null;
@@ -162,7 +172,7 @@ class Network implements GenericObject
 				$tab[$i][1] = $network_row['name'];
 				$i ++;
 			}
-			$html .= FormSelectGenerator :: generateFromArray($tab, null, $name, null, false);
+			$html .= FormSelectGenerator :: generateFromArray($tab, $selected_id, $name, null, false);
 
 		}
 		else
@@ -526,6 +536,41 @@ class Network implements GenericObject
 		}
 		return $user;
 	}
+
+	/**
+	* Find out the total number of users in this networks's database
+	* @return Number of users
+	*/
+	function getNumUsers()
+	{
+		global $db;
+		$network_id = $db->EscapeString($this->id);
+		$db->ExecSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_origin='$network_id'", $row, false);
+		return $row['count'];
+	}
+
+	/**
+	* Find out how many users are valid in this networks's database
+	* @return Number of valid users
+	*/
+	function getNumValidUsers()
+	{
+		global $db;
+		$network_id = $db->EscapeString($this->id);
+		$db->ExecSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_status = ".ACCOUNT_STATUS_ALLOWED." AND account_origin='$network_id'", $row, false);
+		return $row['count'];
+	}
+
+	/** Find out how many users are online on the entire network or at a specific HotSpot on the network
+	 * @return Number of online users
+	 */
+	function getNumOnlineUsers()
+	{
+		global $db;
+		$network_id = $db->EscapeString($this->id);
+		$db->ExecSqlUniqueRes("SELECT COUNT(DISTINCT users.user_id) FROM users,connections NATURAL JOIN nodes JOIN networks ON (nodes.network_id=networks.network_id AND networks.network_id='$network_id') "."WHERE connections.token_status='".TOKEN_INUSE."' "."AND users.user_id=connections.user_id ", $row, false);
+		return $row['count'];
+	}
 	/** Are nodes allowed to redirect users to an arbitrary web page instead of the portal?
 	 * @return true or false */
 	public function getCustomPortalRedirectAllowed()
@@ -820,9 +865,8 @@ class Network implements GenericObject
 
 		//  is_default_network
 		$name = "network_".$this->getId()."_is_default_network";
-		if (!empty($_REQUEST[$name]) && $_REQUEST[$name] == 'on')
+		if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == 'on')
 			$this->setAsDefaultNetwork();
-		
 
 		//  validation_grace_time
 		$name = "network_".$this->getId()."_validation_grace_time";
@@ -902,16 +946,16 @@ class Network implements GenericObject
 		}
 		else
 		{
-		global $db;
-		$id = $db->EscapeString($this->getId());
-		if (!$db->ExecSqlUpdate("DELETE FROM networks WHERE network_id='{$id}'", false))
-		{
-			$errmsg = _('Could not delete network!');
-		}
-		else
-		{
-			$retval = true;
-		}
+			global $db;
+			$id = $db->EscapeString($this->getId());
+			if (!$db->ExecSqlUpdate("DELETE FROM networks WHERE network_id='{$id}'", false))
+			{
+				$errmsg = _('Could not delete network!');
+			}
+			else
+			{
+				$retval = true;
+			}
 		}
 		return $retval;
 	}

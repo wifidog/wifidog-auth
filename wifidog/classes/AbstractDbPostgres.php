@@ -111,23 +111,23 @@ class AbstractDb
 				if ($debug)
 				{
 					$num_rows = pg_num_rows($result);
-					echo "<p>ExecuterSql(): DEBUG: Il y a $num_rows résultats:<br><TABLE class='spreadsheet'>";
+					echo "<p>ExecuterSql(): DEBUG: Il y a $num_rows résultats:<br><TABLE>";
 					if ($returnResults != NULL)
 					{
 						//On affiche l'en-téte des colonnes une seule fois*/
-						echo "<TR class='spreadsheet'>";
+						echo "<TR>";
 						while (list ($col_name, $col_content) = each($returnResults[0]))
 						{
-							echo "<TH class='spreadsheet'>$col_name</TH>";
+							echo "<TH>$col_name</TH>";
 						}
 						echo "</TR>\n";
 					}
 					while ($returnResults != NULL && list ($key, $value) = each($returnResults))
 					{
-						echo "<TR class='spreadsheet'>";
+						echo "<TR>";
 						while ($value != NULL && list ($col_name, $col_content) = each($value))
 						{
-							echo "<TD class='spreadsheet'>$col_content</TD>";
+							echo "<TD>$col_content</TD>";
 						}
 						echo "</TR>\n";
 					}
@@ -238,23 +238,23 @@ class AbstractDb
 			if ($debug)
 			{
 				$num_rows = pg_num_rows($result);
-				echo "<p>ExecuterSqlResUnique(): DEBUG: Il y a $num_rows résultats:<br><TABLE class='spreadsheet'>";
+				echo "<p>ExecuterSqlResUnique(): DEBUG: Il y a $num_rows résultats:<br><TABLE>";
 				if ($returnResults != NULL)
 				{
 					//On affiche l'en-téte des colonnes une seule fois*/
-					echo "<TR class='spreadsheet'>";
+					echo "<TR>";
 					while (list ($col_name, $col_content) = each($returnResults[0]))
 					{
-						echo "<TH class='spreadsheet'>$col_name</TH>";
+						echo "<TH>$col_name</TH>";
 					}
 					echo "</TR>\n";
 				
 				while ($returnResults != NULL && list ($key, $value) = each($returnResults))
 				{
-					echo "<TR class='spreadsheet'>";
+					echo "<TR>";
 					while ($value != NULL && list ($col_name, $col_content) = each($value))
 					{
-						echo "<TD class='spreadsheet'>$col_content</TD>";
+						echo "<TD>$col_content</TD>";
 					}
 					echo "</TR>\n";
 				}

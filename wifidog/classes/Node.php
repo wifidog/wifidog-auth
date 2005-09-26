@@ -1,4 +1,5 @@
 <?php
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -30,7 +31,7 @@ require_once 'Utils.php';
 
 /** Abstract a Node.  A Node is an actual physical transmitter.
  * @todo:  Make all the setter functions no-op if the value is the same as what
- * was already stored Use setCustomPortelReduirectUrl as an example*/
+ * was already stored Use setCustomPortalReduirectUrl as an example*/
 class Node implements GenericObject
 {
 	private $mRow;
@@ -127,19 +128,19 @@ class Node implements GenericObject
 		$retval = false;
 		$user = User :: getCurrentUser();
 		if ($this->isOwner($user) || $user->isSuperAdmin())
-{
-		global $db;
-		$id = $db->EscapeString($this->getId());
-		if (!$db->ExecSqlUpdate("DELETE FROM nodes WHERE node_id='{$id}'", false))
 		{
-			$errmsg = _('Could not delete node!');
+			global $db;
+			$id = $db->EscapeString($this->getId());
+			if (!$db->ExecSqlUpdate("DELETE FROM nodes WHERE node_id='{$id}'", false))
+			{
+				$errmsg = _('Could not delete node!');
+			}
+			else
+			{
+				$retval = true;
+			}
 		}
 		else
-		{
-			$retval = true;
-		}
-}
-else
 		{
 			$errmsg = _('Access denied!');
 		}
@@ -158,18 +159,18 @@ else
 	static function createNewObject($node_id = null, $network = null)
 	{
 		global $db;
-		if(empty($node_id))
+		if (empty ($node_id))
 		{
 			$node_id = get_guid();
 		}
 		$node_id = $db->EscapeString($node_id);
-		
-		if(empty($network))
+
+		if (empty ($network))
 		{
 			$network = Network :: getCurrentNetwork();
 		}
 		$network_id = $db->EscapeString($network->getId());
-		
+
 		$node_deployment_status = $db->EscapeString("IN_PLANNING");
 		$node_name = _("New node");
 		if (Node :: nodeExists($node_id))
@@ -641,7 +642,7 @@ else
 		$html .= "<div class='admin_container'>\n";
 		$html .= "<div class='admin_class'>Node (".get_class($this)." instance)</div>\n";
 		$html .= "<h3>"._("Edit a node")."</h3>\n";
-		
+
 		// Display stats
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Statistics:")."</div>\n";
@@ -1292,23 +1293,10 @@ else
 		return $nodes;
 	}
 
-	static function getAllNodesWithStatus()
-	{
-		global $db;
-		
-		$nodes = null;
-		$db->ExecSql("SELECT node_id, name, last_heartbeat_user_agent, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS online, creation_date, node_deployment_status FROM nodes ORDER BY name", $nodes, false);
-
-		if ($nodes == null)
-			throw new Exception(_("No nodes could not be found in the database"));
-
-		return $nodes;
-	}
-
 	static function getAllDeploymentStatus()
 	{
 		global $db;
-		
+
 		$statuses = null;
 		$db->ExecSql("SELECT * FROM node_deployment_status", $statuses, false);
 		if ($statuses == null)
@@ -1336,6 +1324,17 @@ else
 			}
 		}
 		return $retval;
+	}
+
+	/** Find out how many users are online this specific Node
+	 * @return Number of online users
+	 */
+	function getNumOnlineUsers($node_id = null)
+	{
+		global $db;
+		$retval = array ();
+		$db->ExecSqlUniqueRes("SELECT COUNT(DISTINCT users.user_id) as count FROM users,connections WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}'", $row, false);
+		return $row['count'];
 	}
 
 	function getOwners()
@@ -1491,3 +1490,4 @@ else
 
 } // End class
 ?>
+

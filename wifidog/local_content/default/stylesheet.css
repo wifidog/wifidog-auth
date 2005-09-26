@@ -435,13 +435,7 @@ table.content_admin th {
 table.content_admin td {
 	border: 1px solid grey;
 }
-.spreadsheet { border: thin solid lightblue  ; text-align:left}
-TH.spreadsheet { background-color: lightgrey}
-TABLE.spreadsheet { border: solid darkblue  ; text-align:left}
-TABLE.spreadsheet_user { border:  thin solid lightblue ; 	padding:0px;	margin:0px;}
-TH.th_left { background-color: lightgrey  ; text-align:left}
-TH.th_section { background-color: silver  ; text-align:center}
-TD.spreadsheet_user { /*background-color: lightgray;*/ }
+
 .popup { background-color: white;   border: solid darkblue    ; text-align:left}
 .link     { color: blue; text-decoration: underline }
 
@@ -499,7 +493,7 @@ TD.spreadsheet_user { /*background-color: lightgray;*/ }
     }
 .pretty_fieldset th {
     text-align: left;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
     }
 
 .pretty_fieldset div {

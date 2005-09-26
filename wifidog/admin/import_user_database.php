@@ -196,7 +196,7 @@ else if ($_REQUEST['action'] == 'upload_file')
 
 	$html .=  "<h2>"._('Report')."</h2>\n";
 	/* List rejected users */
-	$html .=  "<table class='spreadsheet'>\n";
+	$html .=  "<table>\n";
 	$count_reject=0;
 	$count_success=0;
 	foreach($import_user as $username => $user)
@@ -204,8 +204,8 @@ else if ($_REQUEST['action'] == 'upload_file')
 	  if($user['is_rejected']==true)
 	    {
 	      $count_reject++;
-	      $html .=  "<tr class='spreadsheet'>\n";
-	      $html .=  "<td class='spreadsheet'>$username</td><td class='spreadsheet'>$user[reject_reason]</td>\n";
+	      $html .=  "<tr>\n";
+	      $html .=  "<td>$username</td><td>$user[reject_reason]</td>\n";
 	      $html .=  "</tr>\n";
 	    }
 	  else
@@ -213,25 +213,25 @@ else if ($_REQUEST['action'] == 'upload_file')
 	      $count_success++;
 	    }
 	}
-	$html .=  "<thead><tr class='spreadsheet'><th class='spreadsheet' colspan=2>$count_reject rejected users</th></tr>\n";
-	$html .=  "<tr class='spreadsheet'><th class='spreadsheet'>Username</th><th class='spreadsheet'>Reason for rejection</th></tr></thead>\n";
+	$html .=  "<thead><tr><th colspan=2>$count_reject rejected users</th></tr>\n";
+	$html .=  "<tr><th>Username</th><th>Reason for rejection</th></tr></thead>\n";
 	$html .=  "</table>\n";
 
 	/* List users imported with mangled usernames */
-	$html .=  "<table class='spreadsheet'>\n";
+	$html .=  "<table>\n";
  $count_mangled=0;
 	foreach($import_user as $username => $user)
 	{
 	  if($user['is_rejected']==false&&!empty($user['username_modified_because_of']))
 	    {
 	      $count_mangled++;
-	      $html .=  "<tr class='spreadsheet'>\n";
-	      $html .=  "<td class='spreadsheet'>$username</td><td class='spreadsheet'>$user[original_username]</td><td class='spreadsheet'>$user[username_modified_because_of]</td>\n";
+	      $html .=  "<tr>\n";
+	      $html .=  "<td>$username</td><td>$user[original_username]</td><td>$user[username_modified_because_of]</td>\n";
 	      $html .=  "</tr>\n";
 	    }
 	}
-	$html .=  "<thead><tr class='spreadsheet'><th class='spreadsheet' colspan=3>$count_mangled users were imported with modified usernames</th></tr>\n";
-	$html .=  "<tr class='spreadsheet'><th class='spreadsheet'>Username</th><th class='spreadsheet'>Original username</th><th class='spreadsheet'>Changed because of user</th></tr></thead\n";
+	$html .=  "<thead><tr><th colspan=3>$count_mangled users were imported with modified usernames</th></tr>\n";
+	$html .=  "<tr><th>Username</th><th>Original username</th><th>Changed because of user</th></tr></thead\n";
 	$html .=  "</table>\n";
 	
 	$html .=  "<h2>$count_success user(s) successfully imported ($count_mangled of them had their username modified), $count_reject user(s)rejected</h2>\n";

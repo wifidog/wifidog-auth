@@ -1,3 +1,16 @@
+2005-09-25 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Statistics:  At long last, the monster statistics commit. 
+	 We finally have a stable, documented and uniform codebase for statistics. 
+	 This resulted is removal of several functions in other classes too.
+	 There are a few new reports, but mostly, each report is a lot more flexible.
+	 Still TODO:
+	 -Security:  This is to be implemented directly in the Statistics class, 
+	  by forcing restrictions to the selected nodes and network.
+	 -Support selecting multiple users for a report.  
+	  The code and SQL queries support it, but the UI doesn't. 
+	  An easy and quick way would be to simply parse a coma-separated list.
+	 Comment are off course welcome!
+	
 2005-09-25 Francois Proulx <francois.proulx@gmail.com>
 	* Updated initial SQL script to schema 29
 	* Remove useless includes in some files, preventing from using the "plugin" contents
@@ -38,6 +51,7 @@
 	* schema_validate.php:  Fix a bug version 26.  The conversion of the old account_origin as a parameter 
 	to the authenticator was wrong.  To fix it manually if you already ran the script,
 	 you must quote the parameter in column network_authenticator_params in the networks table.
+	* Network.php:  Fix improper quoting of Authenticator arguments.
 	* RssPressReview.php:  Make expansion of today's item optionnal.
 
 2005-09-11 Francois Proulx <francois.proulx@gmail.com>

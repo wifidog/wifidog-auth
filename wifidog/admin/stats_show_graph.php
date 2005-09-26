@@ -18,29 +18,28 @@
    * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
    *                                                                  *
    \********************************************************************/
-  /**@file graph_per_hour.php
+  /**@file graph_registrations_cumulative.php
+   * parameters:
+   * $_REQUEST['graph_class']: The name of the class for which we want the graph
+   * displayed.
    * @author Copyright (C) 2005 Philippe April
    */
 
 define('BASEPATH',"../");
-require_once BASEPATH.'admin/graph_common.inc.php';
 
-/**
- * Graph for connections per hours
- */
-$Graph =& Image_Graph::factory("Image_Graph", array(600, 200));
-$Plotarea =& $Graph->add(Image_Graph::factory("Image_Graph_Plotarea"));
-$Dataset =& Image_Graph::factory("Image_Graph_Dataset_Trivial");
-$Bar =& Image_Graph::factory("Image_Graph_Plot_Bar", &$Dataset);
-$Bar->setFillColor("#9db8d2");
-$Plot =& $Plotarea->add(&$Bar);
+if(empty($_REQUEST['graph_class']))
+{
+	echo "You must specify the class of the graph you want";
+}
+else
+{	
+	$classname = $_REQUEST['graph_class'];
+require_once BASEPATH.'classes/StatisticGraph/'.$classname.'.php';
+$graph = call_user_func(array ($classname, 'getObject'), $classname);
+$graph->showImageData();
 
-$db->ExecSql("SELECT COUNT(distinct user_mac) AS connections, extract('hour' from timestamp_in) AS hour FROM connections WHERE node_id='{$node_id}' ${date_constraint} AND (incoming != 0 OR outgoing != 0) GROUP BY extract('hour' from timestamp_in) ORDER BY hour", $results, false);
-if ($results != null) {
-	foreach($results as $row) {
-        $Dataset->addPoint($row['hour'] . "h", $row['connections']);
-	}
 }
 
-$Graph->done();
+
+
 ?>

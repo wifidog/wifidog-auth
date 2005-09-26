@@ -27,7 +27,7 @@ error_reporting(E_ALL);
 require_once BASEPATH.'config.php';
 require_once BASEPATH.'classes/AbstractDb.php';
 require_once BASEPATH.'classes/Session.php';
-define('REQUIRED_SCHEMA_VERSION', 29);
+define('REQUIRED_SCHEMA_VERSION', 30);
 
 /** Check that the database schema is up to date.  If it isn't, offer to update it. */
 function validate_schema()
@@ -625,7 +625,17 @@ function update_schema()
 			$sql .= "ALTER TABLE flickr_photostream ADD COLUMN api_shared_secret text;\n";
 		}
 		
-		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);
+		$new_schema_version = 30;
+		if ($schema_version < $new_schema_version)
+		{
+			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+			$sql .= "CREATE INDEX idx_connections_user_id ON connections (user_id);\n";
+			$sql .= "CREATE INDEX idx_connections_user_mac ON connections (user_mac);\n";
+			$sql .= "CREATE INDEX idx_connections_node_id ON connections (node_id);\n";
+		}
+		
+		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\nVACUUM ANALYZE;\n", true);
 		//$db->ExecSqlUpdate("BEGIN;\n$sql\nROLLBACK;\n", true);
 		echo "</html></head>";
 		//exit ();

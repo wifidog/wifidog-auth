@@ -81,12 +81,12 @@ class AbstractDb
 //echo "<p><pre>".	print_r ($plan_array)."</pre></p>";
 	foreach ($plan_array as $plan_line)
 	{
-	  echo "<table class='spreadsheet'>\n";
+	  echo "<table>\n";
 	  foreach ($plan_line as $key => $val)
 	  {
 	    if(!is_numeric($key))
 	      {
-		echo "<tr class='spreadsheet'><TD class='spreadsheet'>$key</td><td class='spreadsheet'>$val</td></tr>\n";
+		echo "<tr><TD>$key</td><td>$val</td></tr>\n";
 	      }
 	  }
 	  echo "</table>\n";
@@ -144,23 +144,23 @@ class AbstractDb
 	  if ($debug)
 	    {
 	      $num_rows = mysql_num_rows($result);
-	      echo "<p>ExecSql(): DEBUG: Il y a $num_rows r�sultats:<br><TABLE class='spreadsheet'>";
+	      echo "<p>ExecSql(): DEBUG: Il y a $num_rows r�sultats:<br><TABLE>";
 	      if ($returnResults != NULL)
 		{
 		  //On affiche l'en-t�te des colonnes une seule fois*/
-		  echo "<TR class='spreadsheet'>";
+		  echo "<TR>";
 		  while (list ($col_name, $col_content) = each($returnResults[0]))
 		    {
-		      echo "<TH class='spreadsheet'>$col_name</TH>";
+		      echo "<TH>$col_name</TH>";
 		    }
 		  echo "</TR>\n";
 		}
 	      while ($returnResults != NULL && list ($key, $value) = each($returnResults))
 		{
-		  echo "<TR class='spreadsheet'>";
+		  echo "<TR>";
 		  while ($value != NULL && list ($col_name, $col_content) = each($value))
 		    {
-		      echo "<TD class='spreadsheet'>$col_content</TD>";
+		      echo "<TD>$col_content</TD>";
 		    }
 		  echo "</TR>\n";
 		}

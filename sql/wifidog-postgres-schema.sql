@@ -28,6 +28,31 @@ COMMENT ON SCHEMA public IS 'Standard public schema';
 
 SET search_path = public, pg_catalog;
 
+--
+-- Name: plpgsql_call_handler(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION plpgsql_call_handler() RETURNS language_handler
+    AS '$libdir/plpgsql', 'plpgsql_call_handler'
+    LANGUAGE c;
+
+
+--
+-- Name: plpgsql_validator(oid); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION plpgsql_validator(oid) RETURNS void
+    AS '$libdir/plpgsql', 'plpgsql_validator'
+    LANGUAGE c;
+
+
+--
+-- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: public; Owner: 
+--
+
+CREATE TRUSTED PROCEDURAL LANGUAGE plpgsql HANDLER plpgsql_call_handler VALIDATOR plpgsql_validator;
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = true;
@@ -391,6 +416,15 @@ CREATE TABLE pictures (
 
 
 --
+-- Name: real_first_conn_table_name_3df89c20e8b80f2d145c27ef641713ae; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE real_first_conn_table_name_3df89c20e8b80f2d145c27ef641713ae (
+    conn_id integer
+);
+
+
+--
 -- Name: schema_info; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
 
@@ -685,6 +719,27 @@ ALTER TABLE ONLY users
 
 ALTER TABLE ONLY venue_types
     ADD CONSTRAINT venue_types_pkey PRIMARY KEY (venue_type);
+
+
+--
+-- Name: idx_connections_node_id; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE INDEX idx_connections_node_id ON connections USING btree (node_id);
+
+
+--
+-- Name: idx_connections_user_id; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE INDEX idx_connections_user_id ON connections USING btree (user_id);
+
+
+--
+-- Name: idx_connections_user_mac; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE INDEX idx_connections_user_mac ON connections USING btree (user_mac);
 
 
 --

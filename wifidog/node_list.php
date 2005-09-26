@@ -28,10 +28,20 @@ require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'include/common_interface.php';
 require_once BASEPATH.'classes/Node.php';
 
-foreach(Node::getAllNodesWithStatus("node_id") as $node) {
-    $node['duration'] = $db->GetDurationArrayFromIntervalStr($node['since_last_heartbeat']);
-    $node['num_online_users'] = $stats->getNumOnlineUsers($node['node_id']);
-    $smarty->append("nodes", $node);
+		global $db;
+		
+		$nodes = null;
+		$db->ExecSql("SELECT node_id, name, last_heartbeat_user_agent, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS online, creation_date, node_deployment_status FROM nodes ORDER BY name", $nodes, false);
+
+		if ($nodes == null)
+			throw new Exception(_("No nodes could not be found in the database"));
+
+		
+foreach($nodes as $node_row) {
+	$node = Node::getObject($node_row['node_id']);
+    $node_row['duration'] = $db->GetDurationArrayFromIntervalStr($node_row['since_last_heartbeat']);
+    $node_row['num_online_users'] = $node->getNumOnlineUsers();
+    $smarty->append("nodes", $node_row);
 }
 
 require_once BASEPATH.'classes/MainUI.php';

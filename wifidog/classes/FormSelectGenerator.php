@@ -165,6 +165,9 @@ class FormSelectGenerator
 				* @param $prefixeNomSelectObjet Un préfixe arbitraire choisi par l'objet ayant appelé la fonction pour assurer l'unicité
 				* @param $permetValeurNulle, TRUE ou FALSE
 				* @param $nullValueCaption, string displayed for the null value
+				* @param $additionalSelectAttribute will be appended inside the
+				* select tag.  For example: "onclick='submit();'"
+
 			 */
 	public static function generateFromArray($tab, $selectedClefPrimaire, $prefixeNomSelectUsager, $prefixeNomSelectObjet, $permetValeurNulle, $nullValueCaption = ' - - - ', $additionalSelectAttribute = "")
 	{

@@ -140,10 +140,10 @@ class Langstring extends Content
 
 		/*		if ($type_interface == 'COMPLETE')
 				{
-					$html .=  "<TR class='spreadsheet'>\n";
-					$html .=  "<TH class='spreadsheet'>Language</TH>\n";
-					$html .=  "<TH class='spreadsheet'>Chaîne</TH>\n";
-					$html .=  "<TH class='spreadsheet'>Effacer sous-chaîne #</TH>\n";
+					$html .=  "<TR>\n";
+					$html .=  "<TH>Language</TH>\n";
+					$html .=  "<TH>Chaîne</TH>\n";
+					$html .=  "<TH>Effacer sous-chaîne #</TH>\n";
 					$html .=  "</TR>\n";
 				}*/
 		$html .= "<ul class='admin_section_list'>\n";

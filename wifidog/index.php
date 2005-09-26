@@ -29,15 +29,14 @@ require_once BASEPATH.'classes/MainUI.php';
 require_once BASEPATH.'include/common_interface.php';
 require_once BASEPATH.'classes/Node.php';
 
-$num_valid_users = $stats->getNumValidUsers();
-$num_online_users = $stats->getNumOnlineUsers($node_id = null);
+$network = Network::getCurrentNetwork();
 
 $tool_html = '<ul>'."\n";
 $tool_html .= '<li><a href="'.BASE_SSL_PATH.'change_password.php">'._("Change password").'</a><br>'."\n";
 $tool_html .= '<li><a href="'.BASE_SSL_PATH.'faq.php">'._("I have trouble connecting and I would like some help").'</a><br>'."\n";
 $tool_html .= '</ul>'."\n";
 
-$body_html = "<p>"._("The network currently has")." {$num_valid_users} "._("valid users")." {$num_online_users} "._("user(s) are currently online")."</p>";
+$body_html = "<p>".sprintf(_("The %s network currently has %s valid users, %s user(s) are currently online"), $network->getName(), $network->getNumValidUsers(), $network->getNumOnlineUsers())."</p>";
 $body_html .= "<ul>\n";
 if(defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED == true)
 	$body_html .= "<li><a href='".BASE_NON_SSL_PATH."hotspots_map.php'>"._('Deployed HotSpots map')."</a></li>";

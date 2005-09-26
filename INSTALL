@@ -13,6 +13,9 @@ Installation
 Open with your browser the following URL : http://myHost.com/wifidogPATH/install.php (replace myHost by your domain and wifidogPATH by the right PATH)
 install.php will validate, install, create and configure all the stuff uoy need to have a working auth-server.
 
+2005-09-25:  For graph support, you will currently need some unstable pear packages.  They can be installed by:
+pear install Image_Graph-alpha Image_Canvas-alpha Image_Color 
+
 *************************************
 RADIUS authentication support section
 *************************************

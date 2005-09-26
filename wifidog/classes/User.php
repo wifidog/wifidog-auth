@@ -1,5 +1,6 @@
 <?php
 
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -180,13 +181,12 @@ class User implements GenericObject
 		$object = new self($id);
 		return $object;
 	}
-	
+
 	public static function purgeUnvalidatedUsers($days_since_creation)
 	{
 		global $db;
 		$days_since_creation = $db->EscapeString($days_since_creation);
-		
-		
+
 		//$db->ExecSqlUpdate("INSERT INTO users (user_id,username, account_origin,email,pass,account_status,validation_token,reg_date) VALUES ('$id_str','$username_str','$account_origin_str','$email_str','$password_hash','$status','$token',NOW())");
 	}
 
@@ -199,7 +199,7 @@ class User implements GenericObject
 		$db->ExecSqlUniqueRes($sql, $row, false);
 		if ($row == null)
 		{
-			throw new Exception(_("User id: ").$object_id_str._(" could not be found in the database"));
+			throw new Exception(sprintf(_("User id: %s could not be found in the database"), $object_id_str));
 		}
 		$this->mRow = $row;
 		$this->id = $row['user_id'];
@@ -374,11 +374,6 @@ class User implements GenericObject
 		return $this->mRow['validation_token'];
 	}
 
-	function getInfoArray()
-	{
-		return $this->mRow;
-	}
-
 	/** Generate a token in the connection table so the user can actually use the internet 
 	@return true on success, false on failure 
 	*/
@@ -469,7 +464,7 @@ class User implements GenericObject
 			else
 			{
 				$network = $this->getNetwork();
-				
+
 				$mail = new Mail();
 				$mail->setSenderName(_("Registration system"));
 				$mail->setSenderEmail($network->getValidationEmailFromAddress());
@@ -487,7 +482,7 @@ class User implements GenericObject
 		$network = $this->getNetwork();
 		$new_password = $this->randomPass();
 		$this->setPassword($new_password);
-		
+
 		$mail = new Mail();
 		$mail->setSenderName(_("Registration system"));
 		$mail->setSenderEmail($network->getValidationEmailFromAddress());

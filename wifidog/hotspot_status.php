@@ -80,11 +80,11 @@ switch ($format)
 		}
 		$nodes_count_node = $xmldoc->createElement("hotspotsCount", count($node_results));
 		$network_metadata_node->appendChild($nodes_count_node);
-		$network_validusers_node = $xmldoc->createElement("validSubscribedUsersCount", $stats->getNumValidUsers());
+		$network_validusers_node = $xmldoc->createElement("validSubscribedUsersCount", $network->getNumValidUsers());
 		$network_metadata_node->appendChild($network_validusers_node);
 		
 		// Get number of online users
-		$online_users_count = $stats->getNumOnlineUsers($node_id = null);
+		$online_users_count = $network->getNumOnlineUsers();
 		$network_onlineusers_node = $xmldoc->createElement("onlineUsersCount", $online_users_count);
 		$network_metadata_node->appendChild($network_onlineusers_node);
 		
@@ -852,7 +852,8 @@ switch ($format)
 		if ($node_results)
 			foreach ($node_results as $node_row)
 			{
-				$node_row['num_online_users'] = $stats->getNumOnlineUsers($node_row['node_id']);
+				$node = Node::getObject($node_row['node_id']);
+				$node_row['num_online_users'] = $node->getNumOnlineUsers();
 				$smarty->append("nodes", $node_row);
 			}
 		$smarty->assign("num_deployed_nodes", count($node_results));
