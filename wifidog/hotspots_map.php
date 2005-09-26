@@ -49,15 +49,15 @@ $html .= "<input type=\"button\" value=\"Show\" onclick=\"toggleOverlay('map_pos
 $html .= "</div>\n";
 $html .= "<input type=\"button\" value=\"Refresh map\" onclick=\"hotspots_map.redraw();\">\n";
 $html .= "</div>\n";
-$html .= "Carte des points d'accès déployés\n";
+$html .= _("Deployed HotSpots map")."\n";
 $html .= "</div>\n";
 $html .= "<div id=\"map_outer_hotspots_list\"><div id=\"map_hotspots_list\"></div></div>\n";
-$html .= "<div id=\"map_frame\"><p/><center><h2>Loading, please wait...</h2></center></div>\n";
+$html .= "<div id=\"map_frame\"><p/><center><h2>"._("Loading, please wait...")."</h2></center></div>\n";
 $html .= "<div id=\"map_legend\">\n";
-$html .= "<b>Légende :</b>\n"; 
-$html .= "<img src='images/hotspots_status_map_up.png'> <i>le point d'accès est opérationnel</i>\n"; 
-$html .= "<img src='images/hotspots_status_map_down.png'> <i>le point d'accès est hors service</i>\n"; 
-$html .= "<img src='images/hotspots_status_map_unknown.png'> <i>non surveillé</i>\n";
+$html .= "<b>"._("Legend")." :</b>\n"; 
+$html .= "<img src='images/hotspots_status_map_up.png'> <i>"._("the hotspot is operational")."</i>\n"; 
+$html .= "<img src='images/hotspots_status_map_down.png'> <i>"._("the hotspot is down")."</i>\n"; 
+$html .= "<img src='images/hotspots_status_map_unknown.png'> <i>"._("not monitored")."</i>\n";
 $html .= "</div>\n";
 $ui->setMainContent($html);
 
