@@ -70,9 +70,17 @@ class Locale
 		global $session;
 		$object = null;
 		$locale_id = $session->get(SESS_LANGUAGE_VAR);
+
+        /* Try to guess the lang */
+        if (empty($locale_id)) {
+            $locale_id = self :: getBestLanguage();
+        }
+
+        /* If we still don't have it, fill in default */
 		if (empty ($locale_id))
 		{
 			//$object = new self(DEFAULT_LANG);
+
 			$object = self :: getObject(DEFAULT_LANG);
 			self :: setCurrentLocale($object);
 		}
@@ -85,6 +93,27 @@ class Locale
 		return $object;
 	}
 
+    /**
+      * Try to find best language according to HTTP_ACCEPT_LANGUAGE passed
+      * by the browser
+      * 
+      * @return Best language from list of available languages, otherwise empty
+      */
+    public static function getBestLanguage()
+    {
+        global $AVAIL_LOCALE_ARRAY;
+        foreach(split(';', $_SERVER["HTTP_ACCEPT_LANGUAGE"]) as $lang) {
+            foreach($AVAIL_LOCALE_ARRAY as $avail_lang => $lang_description) {
+                $lang = ereg_replace("[_-].*$", "", $lang);
+                $avail_lang_trimmed = ereg_replace("[_-].*$", "", $avail_lang);
+                if ($lang == $avail_lang_trimmed) {
+                    return $avail_lang;
+                }
+            }
+        }
+
+    }
+
 	/**
 	 * @return true on success, false on failure
 	 */
@@ -92,6 +121,9 @@ class Locale
 	{
 		global $session;
 		$retval = false;
+        
+        /* TODO, don't trust the value in the cookie, verify that the value is in the
+        AVAILABLE locales set in the config */
 
 		// Get new locale ID, assume default if null
 		if ($locale != null)

@@ -1,3 +1,7 @@
+2005-09-25 Philippe April  <philippe@ilesansfil.org>
+	* Guess the best language from what the browser sends,
+	otherwise use the default.
+
 2005-09-26 Francois Proulx <francois.proulx@gmail.com>
 	* Translated the few new sentences on the login page
 	
