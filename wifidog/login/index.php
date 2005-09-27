@@ -209,7 +209,9 @@ if(!empty($node))
 
 /* Node section */
 // Get all node content 
+if ($node) {
     $contents = $node->getAllContent(true, null, 'login_page');
+    }
 if($contents)
 {
     $html_body .= "<table><tr><td>";
