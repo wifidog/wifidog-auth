@@ -533,7 +533,7 @@ table.content_admin td {
 	font: 10pt "Arial",sans-serif;
 	font-weight: bold;
 	position: absolute;
-	z-index: 1;
+	z-index: 10;
 }
 #map_legend {
 	background-color: #ffeac0;
