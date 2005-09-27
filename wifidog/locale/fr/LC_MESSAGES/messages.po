@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-26 17:20-0400\n"
+"POT-Creation-Date: 2005-09-27 08:11-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -157,6 +157,7 @@ msgid "Accounts on "
 msgstr "Comptes sur"
 
 #: ../classes/MainUI.php:298 ../classes/MainUI.php:291
+#: ../classes/MainUI.php:293
 #, php-format
 msgid "Accounts on %s are and will stay completely free."
 msgstr "Les comptes sont et resteront complètement gratuits."
@@ -735,11 +736,11 @@ msgstr "Points d'acc&egrave;s"
 msgid "Hotspots status map"
 msgstr "Carte des points d'accès déployés"
 
-#: ../login/index.php:182
+#: ../login/index.php:182 ../login/index.php:179
 msgid "I Forgot my password"
 msgstr "J'ai oubli&eacute; mon mot de passe"
 
-#: ../login/index.php:181
+#: ../login/index.php:181 ../login/index.php:178
 msgid "I Forgot my username"
 msgstr "J'ai oubli&eacute; mon nom d'utilisateur"
 
@@ -875,6 +876,7 @@ msgid "Language"
 msgstr "Langue"
 
 #: ../classes/MainUI.php:271 ../classes/MainUI.php:264
+#: ../classes/MainUI.php:266
 msgid "Language:"
 msgstr "Langue : "
 
@@ -902,7 +904,7 @@ msgstr "Ouverture de session :"
 msgid "Logged in as:"
 msgstr "Connect&eacute; en tant que:"
 
-#: ../login/index.php:174
+#: ../login/index.php:174 ../classes/MainUI.php:240 ../login/index.php:171
 msgid "Login"
 msgstr "Ouvrir une session"
 
@@ -1202,7 +1204,7 @@ msgstr "Paramètres"
 msgid "Participating hotspots"
 msgstr "Points d'accès participants"
 
-#: ../login/index.php:165 smarty.txt:66
+#: ../login/index.php:165 smarty.txt:66 ../login/index.php:162
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -1317,11 +1319,12 @@ msgstr ""
 "r&eacute;initialiser votre mot de passe"
 
 #: ../classes/MainUI.php:388 smarty.txt:21 smarty.txt:47
-#: ../classes/MainUI.php:381
+#: ../classes/MainUI.php:381 ../classes/MainUI.php:383
 msgid "Please get in touch with "
 msgstr "Veuillez contacter "
 
 #: ../classes/MainUI.php:299 ../classes/MainUI.php:292
+#: ../classes/MainUI.php:294
 msgid "Please inform us of any problem or service interruption at:"
 msgstr ""
 "Veuillez nous informer de tout problème ou interruption de service à : "
@@ -1403,7 +1406,7 @@ msgstr "Adresse URL du fil RSS"
 msgid "Re-send"
 msgstr "Envoyer de nouveau"
 
-#: ../login/index.php:183
+#: ../login/index.php:183 ../login/index.php:180
 msgid "Re-send the validation email"
 msgstr "Envoyez-moi de nouveau le courriel de validation"
 
@@ -1948,7 +1951,7 @@ msgstr "Gestion des utilisateurs"
 msgid "Username"
 msgstr "Nom d'usager"
 
-#: ../login/index.php:163
+#: ../login/index.php:163 ../login/index.php:160
 msgid "Username (or email)"
 msgstr "Utilisateur (ou courriel)"
 
@@ -2010,6 +2013,7 @@ msgid "When does the content rotate?"
 msgstr "Quand le contenu doit-il être changé ?"
 
 #: ../classes/MainUI.php:248 ../classes/MainUI.php:241
+#: ../classes/MainUI.php:243
 msgid "Where am I?"
 msgstr "Oû suis-je ?"
 
@@ -2665,6 +2669,7 @@ msgid "Statistics"
 msgstr "Statistiques"
 
 #: ../classes/MainUI.php:265 ../classes/MainUI.php:258
+#: ../classes/MainUI.php:260
 msgid "Building your wireless community"
 msgstr "construit votre communauté sans fil"
 
@@ -3374,3 +3379,23 @@ msgstr "Entrez votre code postal"
 #: ../hotspots_map.php:48
 msgid "Show"
 msgstr "Montrez-moi sur la carte"
+
+#: ../classes/MainUI.php:240
+msgid "I am not logged in."
+msgstr "Je ne suis pas connecté."
+
+#: ../login/index.php:148
+msgid "Create a free account"
+msgstr "Créer un compte gratuit"
+
+#: ../login/index.php:150
+msgid "I already have an account:"
+msgstr "J'ai déjà un compte :"
+
+#: ../login/index.php:176
+msgid "I'm having difficulties"
+msgstr "J'éprouve des difficultés"
+
+#: ../login/index.php:189
+msgid "Frequently asked questions"
+msgstr "Foire aux questions (FAQ)"

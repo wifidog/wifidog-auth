@@ -1,3 +1,6 @@
+2005-09-26 Francois Proulx <francois.proulx@gmail.com>
+	* Translated the few new sentences on the login page
+	
 2005-09-26 Benoit Grégoire  <bock@step.polymtl.ca>
 	* login/index.php, stylesheet.css:  Make the create new account bigger, and remove unnecessary words.
 
