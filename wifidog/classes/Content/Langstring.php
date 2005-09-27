@@ -261,8 +261,10 @@ class Langstring extends Content
 		$html = '';
 		$html .= "<div class='user_ui_container'>\n";
 		$html .= "<div class='user_ui_object_class'>Langstring (".get_class($this)." instance)</div>\n";
+$html .= "<div class='langstring'>\n";
 		$html .= $this->getString();
 		$html .= $subclass_user_interface;
+		$html .= "</div>\n";
 		$html .= "</div>\n";
 		return parent :: getUserUI($html);
 	}

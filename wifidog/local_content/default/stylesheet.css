@@ -345,6 +345,10 @@ display: compact;
 	height: 100px;
 	display: inline;
 }
+
+.langstring {
+	text-align:justify;
+}
 .flickr_photo_block {
     margin:20px auto 20px auto;
     width:400px;
