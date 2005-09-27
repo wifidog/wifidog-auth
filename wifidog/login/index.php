@@ -135,8 +135,8 @@ if ((!empty ($_REQUEST['logout']) && $_REQUEST['logout'] == true) && ($user = Us
 
 /* Start login interface section */
 $html = '';
-$html .= '<div id="form">'."\n";
-if (empty ($_REQUEST['gw_id']))
+$html .= '<div id="login_form">'."\n";
+/*if (empty ($_REQUEST['gw_id']))
 {
 	$html .= '<h1>'._("Virtual login").'</h1>'."\n";
 }
@@ -144,12 +144,11 @@ else
 {
 	$html .= '<h1>'._("Welcome! Hotspot:")." $hotspot_name</h1>\n";
 }
+*/
+$html .= '<h1><a href="'.BASE_SSL_PATH.'signup.php">'._("Create a free account").'</a></h1>';
 
-$html .= '<h1>'._("Sign up : ").'</h1>';
+$html .= '<h1>'._("I already have an account:").'</h1>';
 $html .= '<p class="indent">'."\n";
-$html .= '<a href="'.BASE_SSL_PATH.'signup.php">'._("Get an account here.").'</a><br><a href="'.BASE_SSL_PATH.'faq.php">'._("Why is this service free ?").'</a>'."\n";
-$html .= '</p>';
-
 $html .= '<form name="login_form" method="post">'."\n";
 if ($node != null)
 {
@@ -157,8 +156,6 @@ if ($node != null)
 	$html .= '<input type="hidden" name="gw_port" value="'.$gw_port.'">'."\n";
 	$html .= '<input type="hidden" name="gw_id" value="'.$gw_id.'">'."\n";
 }
-$html .= '<h1>'._("Log in : ").'</h1>';
-$html .= '<p class="indent">'."\n";
 $html .= Network::getSelectNetworkUI('auth_source')."<br>\n";
 $html .= _("Username (or email)").'<br>'."\n";
 $html .= '<input type="text" name="username" value="'.$username.'" size="20"><br>'."\n";
@@ -171,12 +168,12 @@ if ($error)
 	$html .= '</div>'."\n";
 }
 
-$html .= '<input class="submit" type="submit" name="submit" value="'._("Login").'"><br>'."\n";
+$html .= '<input class="submit" type="submit" name="submit" value="'._("Login").'">'."\n";
 ;
 $html .= '</form>'."\n";
 $html .= '</p>';
 
-$html .= '<h1>'._("I already have an account, but").':</h1>'."\n";
+$html .= '<h1>'._("I'm having difficulties").':</h1>'."\n";
 $html .= '<ul>'."\n";
 $html .= '<li><a href="'.BASE_SSL_PATH.'lost_username.php">'._("I Forgot my username").'</a><br>'."\n";
 $html .= '<li><a href="'.BASE_SSL_PATH.'lost_password.php">'._("I Forgot my password").'</a>'."\n";
@@ -189,7 +186,7 @@ else
 {
 	$class = '';
 }
-$html .= '<li><a href="'.BASE_SSL_PATH.'faq.php">'._("I have trouble connecting and I would like some help").'</a><br>'."\n";
+$html .= '<li><a href="'.BASE_SSL_PATH.'faq.php">'._("Frequently asked questions").'</a><br>'."\n";
 $html .= '</ul>'."\n";
 $html .= '</div>'."\n";
 

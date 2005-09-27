@@ -95,8 +95,8 @@ h1{
 	color: #88AA4B;
 	font-size: 14px;
 }
-form{
-	padding: 0px;
+#login_form form {
+	padding-left: 25px;
 	margin: 0px;
 }
 img.separator{
@@ -218,13 +218,21 @@ display: compact;
 	display: inline;
 	padding: 2px;
 }*/
+#login_form{
+	padding: 0px;
+	margin: 0px;
+}
+
+#login_form h1 a {
+	font-size: large;
+}
+
 .login_body {
 	text-align: center;
 }
 .login_body h1 {
 	font-size: large;
 }
-
 /* This is the warning message area ( Alerting the user to validation his account ASAP ) */
 #warning_message_area {
 	background-color: red;

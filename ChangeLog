@@ -1,3 +1,6 @@
+2005-09-26 Benoit Grégoire  <bock@step.polymtl.ca>
+	* login/index.php, stylesheet.css:  Make the create new account bigger, and remove unnecessary words.
+
 2005-09-26 Francois Proulx <francois.proulx@gmail.com>
 	* Completed translations
 	
@@ -9,7 +12,7 @@
 	* relooking of mapping stuff
 	* wrote basic "Find the closest hotspot" widget for canada geocoding only...
 	* fixed broken xml, damn blank lines...
-	
+
 2005-09-25 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Statistics:  At long last, the monster statistics commit. 
 	 We finally have a stable, documented and uniform codebase for statistics. 

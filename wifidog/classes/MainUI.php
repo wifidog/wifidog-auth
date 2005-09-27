@@ -234,9 +234,11 @@ class MainUI
 
 					// If the user connects physically ( through a gateway don't show the confusing login message ) 
 					if (empty ($gw_id) || empty ($gw_address) || empty ($gw_port))
-						$html .= '<p>'._("I'm NOT at a hotspot.").'<br><a href="'.BASE_SSL_PATH.'login/">'._("I would like to login virtually.").'</a></p>'."\n";
+						$href = BASE_SSL_PATH.'login/';
 					else
-						$html .= '<p>'._("NOT logged in.").'<br><a href="'.BASE_SSL_PATH.'login/?gw_id='.$gw_id.'&gw_address='.$gw_address.'&gw_port='.$gw_port.'">'._("Login to this hotspot.").'</a></p>'."\n";
+						$href = BASE_SSL_PATH.'login/?gw_id='.$gw_id.'&gw_address='.$gw_address.'&gw_port='.$gw_port;
+$html .= '<p>'._("I am not logged in.").'<br><a href="'.$href.'">'._("Login").'</a></p>'."\n";
+					
 					$html .= '<a class="administration" HREF="'.Network :: getCurrentNetwork()->getHomepageURL().'"><img class="administration" src="'.BASE_SSL_PATH.'images/lien_ext.gif"> '.Network :: getCurrentNetwork()->getName().'</a>'."\n";
 					$html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'faq.php"><img class="administration" src="'.BASE_SSL_PATH.'images/where.gif"> '._("Where am I?").'</a>'."\n";
 				}
