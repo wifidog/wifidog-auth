@@ -70,8 +70,6 @@ define('PORTAL_PAGE_NAME', 'portal.html');/**< @deprecated version - 19-Apr-2005
 define('PAGE_HEADER_NAME', 'header.html');/**< @deprecated version - 19-Apr-2005*/
 define('PAGE_FOOTER_NAME', 'footer.html');/**< @deprecated version - 19-Apr-2005*/
 define('HOTSPOT_STATUS_PAGE', 'hotspot_status.php');
-define('HOTSPOT_LOGO_NAME', 'hotspot_logo.jpg');
-define('HOTSPOT_LOGO_BANNER_NAME', 'hotspot_logo_banner.jpg');
 
 /* Path for files in LOCAL_CONTENT_REL_PATH/common/ */
 define('NETWORK_LOGO_NAME', 'network_logo.png');

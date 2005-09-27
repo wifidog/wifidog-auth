@@ -954,31 +954,17 @@ class Node implements GenericObject
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 
+/* Node content */
 		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Node content:")."</div>\n";
-
-		$html .= "<ul class='admin_section_list'>\n";
-		foreach ($this->getAllContent() as $content)
-		{
-			$html .= "<li class='admin_section_list_item'>\n";
-			$html .= "<div class='admin_section_data'>\n";
-			$html .= $content->getListUI();
-			$html .= "</div>\n";
-			$html .= "<div class='admin_section_tools'>\n";
-			$name = "node_".$this->id."_content_".$content->GetId()."_edit";
-			$html .= "<input type='button' name='$name' value='"._("Edit")."' onClick='window.location.href = \"".GENERIC_OBJECT_ADMIN_ABS_HREF."?object_class=Content&action=edit&object_id=".$content->GetId()."\";'>\n";
-			$name = "node_".$this->id."_content_".$content->GetId()."_erase";
-			$html .= "<input type='submit' name='$name' value='"._("Remove")."'>";
-			$html .= "</div>\n";
-			$html .= "</li>\n";
-		}
-		$html .= "<li class='admin_section_list_item'>\n";
-		$name = "node_{$this->id}_new_content";
-		$html .= Content :: getSelectContentUI($name, "AND content_id NOT IN (SELECT content_id FROM node_has_content WHERE node_id='$this->id')");
-		$name = "node_{$this->id}_new_content_submit";
-		$html .= "<input type='submit' name='$name' value='"._("Add")."'>";
-		$html .= "</li>\n";
-		$html .= "</ul>\n";
+		$html .= "<div class='admin_section_title'>"._("Node content (login):")."</div>\n";
+		$name = "node_{$this->id}_content_login";
+$html .= Content::getLinkedContentUI($name, 'node_has_content', 'node_id', $this->id, $display_location = 'login_page');
+		$html .= "</div>\n";
+		
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Node content (portal):")."</div>\n";
+		$name = "node_{$this->id}_content_portal";
+$html .= Content::getLinkedContentUI($name, 'node_has_content', 'node_id', $this->id, $display_location = 'portal_page');
 		$html .= "</div>\n";
 
 		return $html;
@@ -1168,24 +1154,11 @@ class Node implements GenericObject
 		}
 
 		// Content processing 
-		// Rebuild content id and deleting if it was selected for deletion )
-		foreach ($this->getAllContent() as $content)
-		{
-			$name = "node_".$this->id."_content_".$content->GetId()."_erase";
-			if (!empty ($_REQUEST[$name]))
-			{
-				$this->removeContent($content);
-			}
-		}
+		$name = "node_{$this->id}_content_login";
+		Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id);
+				$name = "node_{$this->id}_content_portal";
+Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id);
 
-		$name = "node_{$this->id}_new_content_submit";
-		if (!empty ($_REQUEST[$name]))
-		{
-			$name = "node_{$this->id}_new_content";
-			$content = Content :: processSelectContentUI($name);
-			if ($content)
-				$this->addContent($content);
-		}
 	}
 
 	// Redirect to this node's portal page
@@ -1215,16 +1188,18 @@ class Node implements GenericObject
 	/**Get an array of all Content linked to this node
 	 * @param boolean $exclude_subscribed_content
 	* @param User $subscriber The User object used to discriminate the content
+	* @param $display_location Only select the content to be displayed in thios
+	* area.  Defaults to 'portal_page'
 	* @return an array of Content or an empty arrray */
-	function getAllContent($exclude_subscribed_content = false, $subscriber = null)
+	function getAllContent($exclude_subscribed_content = false, $subscriber = null, $display_location='portal_page')
 	{
 		global $db;
 		$retval = array ();
 		// Get all network, but exclude user subscribed content if asked
 		if ($exclude_subscribed_content == true && $subscriber)
-			$sql = "SELECT content_id FROM node_has_content WHERE node_id='{$this->id}' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$subscriber->getId()}') ORDER BY subscribe_timestamp DESC";
+			$sql = "SELECT content_id FROM node_has_content WHERE node_id='{$this->id}' AND display_location='$display_location' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$subscriber->getId()}') ORDER BY subscribe_timestamp DESC";
 		else
-			$sql = "SELECT content_id FROM node_has_content WHERE node_id='{$this->id}' ORDER BY subscribe_timestamp DESC";
+			$sql = "SELECT content_id FROM node_has_content WHERE node_id='{$this->id}' AND display_location='$display_location' ORDER BY subscribe_timestamp DESC";
 		$db->ExecSql($sql, $content_rows, false);
 
 		if ($content_rows != null)

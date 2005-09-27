@@ -213,7 +213,6 @@ $hotspot_network_url = $network->getHomepageURL();
 $network_logo_url = COMMON_CONTENT_URL.NETWORK_LOGO_NAME;
 $network_logo_banner_url = COMMON_CONTENT_URL.NETWORK_LOGO_BANNER_NAME;
 
-$hotspot_logo_url = find_local_content_url(HOTSPOT_LOGO_NAME);
 $hotspot_logo_banner_url = find_local_content_url(HOTSPOT_LOGO_BANNER_NAME);
 
 // Get the current user
@@ -265,7 +264,6 @@ if($contents)
 {
     $html .= "<table><tr><td>";
     $html .= "<div class='portal_node_section'>\n";
-    //$html .= "<img class='portal_section_logo' src='{$hotspot_logo_url}' alt=''>\n";
     $html .= "<span class='portal_section_title'>"._("Content from:")." ";
     $node_homepage = $node->getHomePageURL();
     if (!empty ($node_homepage))

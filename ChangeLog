@@ -1,10 +1,13 @@
-2005-09-25 Philippe April  <philippe@ilesansfil.org>
+2005-09-27 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Partial login page content manager support (Node only for now)
+
+2005-09-27 Philippe April  <philippe@ilesansfil.org>
 	* Guess the best language from what the browser sends,
 	otherwise use the default.
 
 2005-09-26 Francois Proulx <francois.proulx@gmail.com>
 	* Translated the few new sentences on the login page
-	
+
 2005-09-26 Benoit Grégoire  <bock@step.polymtl.ca>
 	* login/index.php, stylesheet.css:  Make the create new account bigger, and remove unnecessary words.
 

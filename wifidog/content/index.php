@@ -91,7 +91,6 @@ $tool_html .= "</p>"."\n";
 */
 $ui->setToolContent($tool_html);
 
-$hotspot_logo_url = find_local_content_url(HOTSPOT_LOGO_NAME);
 
 $html = '';
 $html .= "<div id='portal_container'>\n";
@@ -103,7 +102,6 @@ if($contents)
 {
 	$html .= "<table width='100%'><tr><td>";
 	$html .= "<div class='portal_node_section'>\n";
-	$html .= "<img class='portal_section_logo' src='{$hotspot_logo_url}' alt=''>\n";
 	$html .= "<span class='portal_section_title'>"._("Content from:")." ";
 	
 	$node_homepage = $node->getHomePageURL();

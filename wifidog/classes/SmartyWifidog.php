@@ -120,9 +120,6 @@ class SmartyWifidog extends Smarty {
 	$this->assign('hotspot_network_name',$network->getName());
 	$this->assign('hotspot_network_url',$network->getHomepageURL());
 
-     $this->assign('hotspot_logo_url', find_local_content_url(HOTSPOT_LOGO_NAME));
-     $this->assign('hotspot_logo_banner_url', find_local_content_url(HOTSPOT_LOGO_BANNER_NAME));
-
      $this->assign('hotspot_id', CURRENT_NODE_ID);
    }
 

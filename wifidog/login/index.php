@@ -189,6 +189,7 @@ else
 $html .= '<li><a href="'.BASE_SSL_PATH.'faq.php">'._("Frequently asked questions").'</a><br>'."\n";
 $html .= '</ul>'."\n";
 $html .= '</div>'."\n";
+/* End login interface section */
 
 // HTML body
 $hotspot_network_name = $network->getName();
@@ -196,13 +197,52 @@ $hotspot_network_url = $network->getHomepageURL();
 $network_logo_banner_url = COMMON_CONTENT_URL.NETWORK_LOGO_BANNER_NAME;
 
 $html_body = "<div class='login_body'>";
-$html_body .= "<a href='{$hotspot_network_url}'><img src='{$network_logo_banner_url}' alt='{$hotspot_network_name} logo' border='0'></a><p>\n";
+//$html_body .= "<a href='{$hotspot_network_url}'><img src='{$network_logo_banner_url}' alt='{$hotspot_network_name} logo' border='0'></a><p>\n";
 if(!empty($node))
 {
-    $hotspot_logo_url = find_local_content_url(HOTSPOT_LOGO_NAME);
     $html_body .= "<h1>{$hotspot_name}</h1>";
-    $html_body .= "<a href='{$node->getHomePageURL()}'><img src='{$hotspot_logo_url}' alt='{$hotspot_name}'></a>\n";
 }
+
+
+
+
+
+/* Node section */
+// Get all node content 
+    $contents = $node->getAllContent(true, null, 'login_page');
+if($contents)
+{
+    $html_body .= "<table><tr><td>";
+    $html_body .= "<div class='portal_node_section'>\n";
+/*    $html_body .= "<span class='portal_section_title'>"._("Content from:")." ";
+    $node_homepage = $node->getHomePageURL();
+    if (!empty ($node_homepage))
+    {
+    	$html_body .= "<a href='$node_homepage'>";
+    }
+    $html_body .= $node->getName();
+    if (!empty ($node_homepage))
+    {
+    	$html_body .= "</a>\n";
+    }
+    $html_body .= "</span>";*/
+    foreach ($contents as $content)
+    {
+    	if ($content->isDisplayableAt($node))
+    	{
+    		$html_body .= "<div class='portal_content'>\n";
+    		$html_body .= $content->getUserUI();
+    		$html_body .= "</div>\n";
+    	}
+    }
+    $html_body .= "</div>\n";
+    $html_body .= "</td></tr></table>";
+}
+
+
+
+
+
 $html_body .= "</div>";
 
 require_once BASEPATH.'classes/MainUI.php';

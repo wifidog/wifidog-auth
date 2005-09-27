@@ -32,7 +32,6 @@
 define('BASEPATH', '../');
 require_once BASEPATH.'admin/admin_common.php';
 require_once BASEPATH.'classes/GenericObject.php';
-
 if (!empty ($_REQUEST['debug'])) {
 	echo "<pre>";
 	print_r($_REQUEST);
@@ -100,7 +99,7 @@ else if ($_REQUEST['action'] == 'edit') {
 	}
 	$common_input = '';
 	if (!empty ($_REQUEST['debug'])) {
-		$common_input .= "<input type=submit name='debug' value='true'>\n";
+		$common_input .= "<input type='hidden' name='debug' value='true'>\n";
 	}
 	$common_input .= "<input type='hidden' name='object_id' value='".$object->GetId()."'>\n";
 	$common_input .= "<input type='hidden' name='object_class' value='".get_class($object)."'>\n";
@@ -137,7 +136,7 @@ else if ($_REQUEST['action'] == 'preview') {
 	}
 	$common_input = '';
 	if (!empty ($_REQUEST['debug'])) {
-		$common_input .= "<input type=submit name='debug' value='true'>\n";
+		$common_input .= "<input type='hidden' name='debug' value='true'>\n";
 	}
 	$common_input .= "<input type='hidden' name='object_id' value='".$object->GetId()."'>\n";
 	$common_input .= "<input type='hidden' name='object_class' value='".get_class($object)."'>\n";

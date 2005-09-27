@@ -1,5 +1,6 @@
 <?php
 
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -76,7 +77,7 @@ class Content implements GenericObject
 
 		return $object;
 	}
-	
+
 	/** Get an interface to create a new object.
 	* @return html markup
 	*/
@@ -84,7 +85,7 @@ class Content implements GenericObject
 	{
 		$html = '';
 		$i = 0;
-		$tab = array();
+		$tab = array ();
 		foreach (self :: getAvailableContentTypes() as $classname)
 		{
 			$tab[$i][0] = $classname;
@@ -93,7 +94,7 @@ class Content implements GenericObject
 		}
 		$name = "new_content_content_type";
 		$default = 'TrivialLangstring';
-		if(empty($tab))
+		if (empty ($tab))
 			$html .= _("It appears that you have not installed any Content plugin !");
 		else
 		{
@@ -110,18 +111,18 @@ class Content implements GenericObject
 	 * @return the node object or null if no new node was created.
 	 */
 	static function processCreateNewObjectUI()
-{
-	$retval = null;
-	$name = "new_content_content_type";
-	$content_type = FormSelectGenerator :: getResult($name, "Content");
-    if($content_type)
-    {
-    	$retval = self::createNewObject($content_type);
-    }
-	
-	return $retval;
-}
-	
+	{
+		$retval = null;
+		$name = "new_content_content_type";
+		$content_type = FormSelectGenerator :: getResult($name, "Content");
+		if ($content_type)
+		{
+			$retval = self :: createNewObject($content_type);
+		}
+
+		return $retval;
+	}
+
 	/** Get the Content object, specific to it's content type 
 	 * @param $content_id The content id
 	 * @return the Content object, or null if there was an error (an exception is also thrown)
@@ -173,26 +174,26 @@ class Content implements GenericObject
 		sort($tab);
 		return $tab;
 	}
-    
-    /**
-     * Get all content, can be restricted to a given content type
-     */
-    public static function getAllContent($content_type = "")
-    {
-        global $db;
-        $where_clause = "";
-        if(!empty($content_type))
-        {
-            $content_type = $db->EscapeString($content_type);
-            $where_clause = "WHERE content_type = '$content_type'";
-        } 
-        $db->ExecSql("SELECT content_id FROM content $where_clause", $rows, false);
-        $objects = array();
-        if($rows)
-            foreach($rows as $row)
-                $objects[] = self::getObject($row['content_id']);
-        return $objects;
-    }
+
+	/**
+	 * Get all content, can be restricted to a given content type
+	 */
+	public static function getAllContent($content_type = "")
+	{
+		global $db;
+		$where_clause = "";
+		if (!empty ($content_type))
+		{
+			$content_type = $db->EscapeString($content_type);
+			$where_clause = "WHERE content_type = '$content_type'";
+		}
+		$db->ExecSql("SELECT content_id FROM content $where_clause", $rows, false);
+		$objects = array ();
+		if ($rows)
+			foreach ($rows as $row)
+				$objects[] = self :: getObject($row['content_id']);
+		return $objects;
+	}
 
 	/** Get a flexible interface to generate new content objects
 	 * @param $user_prefix A identifier provided by the programmer to recognise it's generated html form
@@ -260,15 +261,127 @@ class Content implements GenericObject
 				$name = "{$user_prefix}";
 			else
 				$name = "get_new_content_{$user_prefix}_content_type";
-			
-            // The result can be either a Content type or a Content ID depending on the form ( associate_existing_content or NOT )
-            $content_ui_result = FormSelectGenerator :: getResult($name, null);
-            if($associate_existing_content == true)
-                $object = self :: getObject($content_ui_result);
-            else
-                $object = self :: createNewObject($content_ui_result);
+
+			// The result can be either a Content type or a Content ID depending on the form ( associate_existing_content or NOT )
+			$content_ui_result = FormSelectGenerator :: getResult($name, null);
+			if ($associate_existing_content == true)
+				$object = self :: getObject($content_ui_result);
+			else
+				$object = self :: createNewObject($content_ui_result);
 		}
 		return $object;
+	}
+
+	/** Get a flexible interface to manage content linked to a node, a network or anything else
+	 * @param $user_prefix A identifier provided by the programmer to recognise it's generated html form
+	 * @param $content_type If set, the created content will be of this type, otherwise, the user will have to chose
+	 * @return html markup
+	 */
+	static function getLinkedContentUI($user_prefix, $link_table, $link_table_obj_key_col, $link_table_obj_key, $display_location)
+	{
+		global $db;
+		$html = '';
+		$link_table = $db->EscapeString($link_table);
+		$link_table_obj_key_col = $db->EscapeString($link_table_obj_key_col);
+		$link_table_obj_key = $db->EscapeString($link_table_obj_key);
+		$display_location = $db->EscapeString($display_location);
+		$name = "{$user_prefix}_display_location";
+		
+		$html .= "<input type='hidden' name='{$name}' value='{$display_location}'>\n";
+		$current_content_sql = "SELECT * FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key' AND display_location='$display_location' ORDER BY subscribe_timestamp DESC";
+		$rows = null;
+		$db->ExecSql($current_content_sql, $rows, false);
+		$html .= "<ul class='admin_section_list'>\n";
+		if ($rows)
+			foreach ($rows as $row)
+			{
+				$content = Content :: getObject($row['content_id']);
+				$html .= "<li class='admin_section_list_item'>\n";
+				$html .= "<div class='admin_section_data'>\n";
+				$html .= $content->getListUI();
+				$html .= "</div>\n";
+				$html .= "<div class='admin_section_tools'>\n";
+				$name = "{$user_prefix}_".$content->GetId()."_edit";
+				$html .= "<input type='button' name='$name' value='"._("Edit")."' onClick='window.location.href = \"".GENERIC_OBJECT_ADMIN_ABS_HREF."?object_class=Content&action=edit&object_id=".$content->GetId()."\";'>\n";
+				$name = "{$user_prefix}_".$content->GetId()."_erase";
+				$html .= "<input type='submit' name='$name' value='"._("Remove")."'>";
+				$html .= "</div>\n";
+				$html .= "</li>\n";
+			}
+		$html .= "<li class='admin_section_list_item'>\n";
+		$name = "{$user_prefix}_new_existing";
+		$html .= Content :: getSelectContentUI($name, "AND content_id NOT IN (SELECT content_id FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key')");
+		$name = "{$user_prefix}_new_display_location";
+		
+		$html .= "<input type='hidden' name='{$name}' value='{$display_location}'>\n";
+		$name = "{$user_prefix}_new_existing_submit";
+		$html .= "<input type='submit' name='$name' value='"._("Add")."'>";
+		$html .= "</li>\n";
+		$html .= "<li class='admin_section_list_item'>\n";
+		$html .= "Add new content: ";
+		$name = "{$user_prefix}_new";
+		$html .= self :: getNewContentUI($name, $content_type = null);
+		$html .= "</li>\n";
+		$html .= "</ul>\n";
+
+		return $html;
+	}
+
+	/** Get the created Content object, IF one was created 
+	 * OR Get existing content ( depending on what the user clicked ) 
+	 * @param $user_prefix A identifier provided by the programmer to recognise it's generated form
+	 * @param $associate_existing_content boolean if true allows to get existing
+	 * object
+	 * @return the Content object, or null if the user didn't greate one
+	 */
+	static function processLinkedContentUI($user_prefix, $link_table, $link_table_obj_key_col, $link_table_obj_key)
+	{
+
+		global $db;
+		$link_table = $db->EscapeString($link_table);
+		$link_table_obj_key_col = $db->EscapeString($link_table_obj_key_col);
+		$link_table_obj_key = $db->EscapeString($link_table_obj_key);
+		$name = "{$user_prefix}_display_location";
+		$display_location = $db->EscapeString($_REQUEST[$name]);
+				$name = "{$user_prefix}_new_display_location";
+				$display_location_new = $db->EscapeString($_REQUEST[$name]);
+		$current_content_sql = "SELECT * FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key' AND display_location='$display_location' ORDER BY subscribe_timestamp DESC";
+		$rows = null;
+		$db->ExecSql($current_content_sql, $rows, false);
+		if ($rows)
+			foreach ($rows as $row)
+			{
+				$content = Content :: getObject($row['content_id']);
+				$content_id = $db->EscapeString($content->getId());
+				$name = "{$user_prefix}_".$content->GetId()."_erase";
+				if (!empty ($_REQUEST[$name]))
+				{
+					$sql = "DELETE FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key' AND content_id = '$content_id'";
+					$db->ExecSqlUpdate($sql, $rows, false);
+				}
+			}
+
+		$name = "{$user_prefix}_new_existing_submit";
+		if (!empty ($_REQUEST[$name]))
+		{
+			$name = "{$user_prefix}_new_existing";
+			$content = Content :: processSelectContentUI($name);
+			if ($content)
+				{
+				$content_id = $db->EscapeString($content->getId());
+				$sql = "INSERT INTO $link_table (content_id, $link_table_obj_key_col, display_location) VALUES ('$content_id', '$link_table_obj_key', '$display_location_new');\n";
+				$db->ExecSqlUpdate($sql, $rows, false);
+				}
+		}
+			$name = "{$user_prefix}_new";
+			$content = self :: processNewContentUI($name);
+			if ($content)
+				{
+				$content_id = $db->EscapeString($content->getId());
+				$sql = "INSERT INTO $link_table (content_id, $link_table_obj_key_col, display_location) VALUES ('$content_id', '$link_table_obj_key', '$display_location_new');\n";
+				$db->ExecSqlUpdate($sql, $rows, false);
+				}
+
 	}
 
 	/** Get an interface to pick content from all persistent content.
@@ -312,10 +425,10 @@ class Content implements GenericObject
 	static function processSelectContentUI($user_prefix)
 	{
 		$name = "{$user_prefix}";
-        if(!empty($_REQUEST[$name]))
-            return Content :: getObject($_REQUEST[$name]);
-        else
-            return null;
+		if (!empty ($_REQUEST[$name]))
+			return Content :: getObject($_REQUEST[$name]);
+		else
+			return null;
 	}
 
 	private function __construct($content_id)
@@ -358,82 +471,82 @@ class Content implements GenericObject
 	{
 		return $this->content_type;
 	}
-	
+
 	/**
 	 * Get content title
 	 * @return content a content sub-class
 	 */
 	public function getTitle()
 	{
-		try 
+		try
 		{
 			return self :: getObject($this->content_row['title']);
 		}
-		catch(Exception $e)
+		catch (Exception $e)
 		{
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Get content description
 	 * @return content a content sub-class
 	 */
 	public function getDescription()
 	{
-		try 
+		try
 		{
 			return self :: getObject($this->content_row['description']);
 		}
-		catch(Exception $e)
+		catch (Exception $e)
 		{
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Get content long description
 	 * @return content a content sub-class
 	 */
 	public function getLongDescription()
 	{
-		try 
+		try
 		{
 			return self :: getObject($this->content_row['long_description']);
 		}
-		catch(Exception $e)
+		catch (Exception $e)
 		{
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Get content project info
 	 * @return content a content sub-class
 	 */
 	public function getProjectInfo()
 	{
-		try 
+		try
 		{
 			return self :: getObject($this->content_row['project_info']);
 		}
-		catch(Exception $e)
+		catch (Exception $e)
 		{
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Get content sponsor info
 	 * @return content a content sub-class
 	 */
 	public function getSponsorInfo()
 	{
-		try 
+		try
 		{
 			return self :: getObject($this->content_row['sponsor_info']);
 		}
-		catch(Exception $e)
+		catch (Exception $e)
 		{
 			return null;
 		}
@@ -775,7 +888,7 @@ class Content implements GenericObject
 					$html .= "</div>\n";
 				}
 				$html .= "</div>\n";
-				
+
 				/* long description */
 				$html .= "<div class='admin_section_container'>\n";
 				$html .= "<div class='admin_section_title'>"._("Long description:")."</div>\n";
@@ -892,208 +1005,208 @@ class Content implements GenericObject
 	*/
 	public function processAdminUI()
 	{
-        if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
-        {
-    		global $db;
-    		if ($this->getObjectType() == 'Content') /* The object hasn't yet been typed */
-    		{
-    			$content_type = FormSelectGenerator :: getResult("content_".$this->id."_content_type", "Content");
-    			$this->setContentType($content_type);
-    		}
-    		else
-    			if ($this->is_trivial_content == false)
-    			{
-    				/* title */
-    				if (empty ($this->content_row['title']))
-    				{
-    					$title = self :: processNewContentUI("title_{$this->id}_new");
-    					if ($title != null)
-    					{
-    						$title_id = $title->GetId();
-    						$db->ExecSqlUpdate("UPDATE content SET title = '$title_id' WHERE content_id = '$this->id'", FALSE);
-    					}
-    				}
-    				else
-    				{
-    					$title = self :: getObject($this->content_row['title']);
-    					$name = "content_".$this->id."_title_erase";
-    					if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
-    					{
-    						$db->ExecSqlUpdate("UPDATE content SET title = NULL WHERE content_id = '$this->id'", FALSE);
-    						$title->delete($errmsg);
-    					}
-    					else
-    					{
-    						$title->processAdminUI();
-    					}
-    				}
-    
-    				/* is_persistent */
-    				$name = "content_".$this->id."_is_persistent";
-    				!empty ($_REQUEST[$name]) ? $this->setIsPersistent(true) : $this->setIsPersistent(false);
-    
-    				/* description */
-    				if (empty ($this->content_row['description']))
-    				{
-    					$description = self :: processNewContentUI("description_{$this->id}_new");
-    					if ($description != null)
-    					{
-    						$description_id = $description->GetId();
-    						$db->ExecSqlUpdate("UPDATE content SET description = '$description_id' WHERE content_id = '$this->id'", FALSE);
-    					}
-    				}
-    				else
-    				{
-    					$description = self :: getObject($this->content_row['description']);
-    					$name = "content_".$this->id."_description_erase";
-    					if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
-    					{
-    						$db->ExecSqlUpdate("UPDATE content SET description = NULL WHERE content_id = '$this->id'", FALSE);
-    						$description->delete($errmsg);
-    					}
-    					else
-    					{
-    						$description->processAdminUI();
-    					}
-    				}
-    				
-    				/* long description */
-    				if (empty ($this->content_row['long_description']))
-    				{
-    					$long_description = self :: processNewContentUI("long_description_{$this->id}_new");
-    					if ($long_description != null)
-    					{
-    						$long_description_id = $long_description->GetId();
-    						$db->ExecSqlUpdate("UPDATE content SET long_description = '$long_description_id' WHERE content_id = '$this->id'", FALSE);
-    					}
-    				}
-    				else
-    				{
-    					$long_description = self :: getObject($this->content_row['long_description']);
-    					$name = "content_".$this->id."_long_description_erase";
-    					if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
-    					{
-    						$db->ExecSqlUpdate("UPDATE content SET long_description = NULL WHERE content_id = '$this->id'", FALSE);
-    						$long_description->delete($errmsg);
-    					}
-    					else
-    					{
-    						$long_description->processAdminUI();
-    					}
-    				}
-    
-    				/* project_info */
-    				if (empty ($this->content_row['project_info']))
-    				{
-    					$project_info = self :: processNewContentUI("project_info_{$this->id}_new");
-    					if ($project_info != null)
-    					{
-    						$project_info_id = $project_info->GetId();
-    						$db->ExecSqlUpdate("UPDATE content SET project_info = '$project_info_id' WHERE content_id = '$this->id'", FALSE);
-    					}
-    				}
-    				else
-    				{
-    					$project_info = self :: getObject($this->content_row['project_info']);
-    					$name = "content_".$this->id."_project_info_erase";
-    					if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
-    					{
-    						$db->ExecSqlUpdate("UPDATE content SET project_info = NULL WHERE content_id = '$this->id'", FALSE);
-    						$project_info->delete($errmsg);
-    					}
-    					else
-    					{
-    						$project_info->processAdminUI();
-    					}
-    				}
-    
-    				/* sponsor_info */
-    				if (empty ($this->content_row['sponsor_info']))
-    				{
-    					$sponsor_info = self :: processNewContentUI("sponsor_info_{$this->id}_new");
-    					if ($sponsor_info != null)
-    					{
-    						$sponsor_info_id = $sponsor_info->GetId();
-    						$db->ExecSqlUpdate("UPDATE content SET sponsor_info = '$sponsor_info_id' WHERE content_id = '$this->id'", FALSE);
-    					}
-    				}
-    				else
-    				{
-    					$sponsor_info = self :: getObject($this->content_row['sponsor_info']);
-    					$name = "content_".$this->id."_sponsor_info_erase";
-    					if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
-    					{
-    						$db->ExecSqlUpdate("UPDATE content SET sponsor_info = NULL WHERE content_id = '$this->id'", FALSE);
-    						$sponsor_info->delete($errmsg);
-    					}
-    					else
-    					{
-    						$sponsor_info->processAdminUI();
-    					}
-    				}
-    				/* content_has_owners */
-    				$sql = "SELECT * FROM content_has_owners WHERE content_id='$this->id'";
-    				$db->ExecSql($sql, $content_owner_rows, false);
-    				if ($content_owner_rows != null)
-    				{
-    					foreach ($content_owner_rows as $content_owner_row)
-    					{
-    						$user = User :: getObject($content_owner_row['user_id']);
-    						$user_id = $user->getId();
-    						$name = "content_".$this->id."_owner_".$user->GetId()."_remove";
-    						if (!empty ($_REQUEST[$name]))
-    						{
-    							$this->deleteOwner($user);
-    						}
-    						else
-    						{
-    							$name = "content_".$this->id."_owner_".$user->GetId()."_is_author";
-    							$content_owner_row['is_author'] == 't' ? $is_author = true : $is_author = false;
-    							!empty ($_REQUEST[$name]) ? $should_be_author = true : $should_be_author = false;
-    							if ($is_author != $should_be_author)
-    							{
-    								$should_be_author ? $is_author_sql = 'TRUE' : $is_author_sql = 'FALSE';
-    								$sql = "UPDATE content_has_owners SET is_author=$is_author_sql WHERE content_id='$this->id' AND user_id='$user_id'";
-    
-    								if (!$db->ExecSqlUpdate($sql, false))
-    								{
-    									throw new Exception(_('Unable to set as author in the database.'));
-    								}
-    
-    							}
-    
-    						}
-    					}
-    				}
-    				$user = User :: processSelectUserUI("content_{$this->id}_new_owner");
-    				$name = "content_{$this->id}_add_owner_submit";
-    				if (!empty ($_REQUEST[$name]) && $user != null)
-    				{
-    					$this->addOwner($user);
-    				}
-    
-    			}
-    		$this->refresh();
-        }
+		if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
+		{
+			global $db;
+			if ($this->getObjectType() == 'Content') /* The object hasn't yet been typed */
+			{
+				$content_type = FormSelectGenerator :: getResult("content_".$this->id."_content_type", "Content");
+				$this->setContentType($content_type);
+			}
+			else
+				if ($this->is_trivial_content == false)
+				{
+					/* title */
+					if (empty ($this->content_row['title']))
+					{
+						$title = self :: processNewContentUI("title_{$this->id}_new");
+						if ($title != null)
+						{
+							$title_id = $title->GetId();
+							$db->ExecSqlUpdate("UPDATE content SET title = '$title_id' WHERE content_id = '$this->id'", FALSE);
+						}
+					}
+					else
+					{
+						$title = self :: getObject($this->content_row['title']);
+						$name = "content_".$this->id."_title_erase";
+						if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
+						{
+							$db->ExecSqlUpdate("UPDATE content SET title = NULL WHERE content_id = '$this->id'", FALSE);
+							$title->delete($errmsg);
+						}
+						else
+						{
+							$title->processAdminUI();
+						}
+					}
+
+					/* is_persistent */
+					$name = "content_".$this->id."_is_persistent";
+					!empty ($_REQUEST[$name]) ? $this->setIsPersistent(true) : $this->setIsPersistent(false);
+
+					/* description */
+					if (empty ($this->content_row['description']))
+					{
+						$description = self :: processNewContentUI("description_{$this->id}_new");
+						if ($description != null)
+						{
+							$description_id = $description->GetId();
+							$db->ExecSqlUpdate("UPDATE content SET description = '$description_id' WHERE content_id = '$this->id'", FALSE);
+						}
+					}
+					else
+					{
+						$description = self :: getObject($this->content_row['description']);
+						$name = "content_".$this->id."_description_erase";
+						if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
+						{
+							$db->ExecSqlUpdate("UPDATE content SET description = NULL WHERE content_id = '$this->id'", FALSE);
+							$description->delete($errmsg);
+						}
+						else
+						{
+							$description->processAdminUI();
+						}
+					}
+
+					/* long description */
+					if (empty ($this->content_row['long_description']))
+					{
+						$long_description = self :: processNewContentUI("long_description_{$this->id}_new");
+						if ($long_description != null)
+						{
+							$long_description_id = $long_description->GetId();
+							$db->ExecSqlUpdate("UPDATE content SET long_description = '$long_description_id' WHERE content_id = '$this->id'", FALSE);
+						}
+					}
+					else
+					{
+						$long_description = self :: getObject($this->content_row['long_description']);
+						$name = "content_".$this->id."_long_description_erase";
+						if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
+						{
+							$db->ExecSqlUpdate("UPDATE content SET long_description = NULL WHERE content_id = '$this->id'", FALSE);
+							$long_description->delete($errmsg);
+						}
+						else
+						{
+							$long_description->processAdminUI();
+						}
+					}
+
+					/* project_info */
+					if (empty ($this->content_row['project_info']))
+					{
+						$project_info = self :: processNewContentUI("project_info_{$this->id}_new");
+						if ($project_info != null)
+						{
+							$project_info_id = $project_info->GetId();
+							$db->ExecSqlUpdate("UPDATE content SET project_info = '$project_info_id' WHERE content_id = '$this->id'", FALSE);
+						}
+					}
+					else
+					{
+						$project_info = self :: getObject($this->content_row['project_info']);
+						$name = "content_".$this->id."_project_info_erase";
+						if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
+						{
+							$db->ExecSqlUpdate("UPDATE content SET project_info = NULL WHERE content_id = '$this->id'", FALSE);
+							$project_info->delete($errmsg);
+						}
+						else
+						{
+							$project_info->processAdminUI();
+						}
+					}
+
+					/* sponsor_info */
+					if (empty ($this->content_row['sponsor_info']))
+					{
+						$sponsor_info = self :: processNewContentUI("sponsor_info_{$this->id}_new");
+						if ($sponsor_info != null)
+						{
+							$sponsor_info_id = $sponsor_info->GetId();
+							$db->ExecSqlUpdate("UPDATE content SET sponsor_info = '$sponsor_info_id' WHERE content_id = '$this->id'", FALSE);
+						}
+					}
+					else
+					{
+						$sponsor_info = self :: getObject($this->content_row['sponsor_info']);
+						$name = "content_".$this->id."_sponsor_info_erase";
+						if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
+						{
+							$db->ExecSqlUpdate("UPDATE content SET sponsor_info = NULL WHERE content_id = '$this->id'", FALSE);
+							$sponsor_info->delete($errmsg);
+						}
+						else
+						{
+							$sponsor_info->processAdminUI();
+						}
+					}
+					/* content_has_owners */
+					$sql = "SELECT * FROM content_has_owners WHERE content_id='$this->id'";
+					$db->ExecSql($sql, $content_owner_rows, false);
+					if ($content_owner_rows != null)
+					{
+						foreach ($content_owner_rows as $content_owner_row)
+						{
+							$user = User :: getObject($content_owner_row['user_id']);
+							$user_id = $user->getId();
+							$name = "content_".$this->id."_owner_".$user->GetId()."_remove";
+							if (!empty ($_REQUEST[$name]))
+							{
+								$this->deleteOwner($user);
+							}
+							else
+							{
+								$name = "content_".$this->id."_owner_".$user->GetId()."_is_author";
+								$content_owner_row['is_author'] == 't' ? $is_author = true : $is_author = false;
+								!empty ($_REQUEST[$name]) ? $should_be_author = true : $should_be_author = false;
+								if ($is_author != $should_be_author)
+								{
+									$should_be_author ? $is_author_sql = 'TRUE' : $is_author_sql = 'FALSE';
+									$sql = "UPDATE content_has_owners SET is_author=$is_author_sql WHERE content_id='$this->id' AND user_id='$user_id'";
+
+									if (!$db->ExecSqlUpdate($sql, false))
+									{
+										throw new Exception(_('Unable to set as author in the database.'));
+									}
+
+								}
+
+							}
+						}
+					}
+					$user = User :: processSelectUserUI("content_{$this->id}_new_owner");
+					$name = "content_{$this->id}_add_owner_submit";
+					if (!empty ($_REQUEST[$name]) && $user != null)
+					{
+						$this->addOwner($user);
+					}
+
+				}
+			$this->refresh();
+		}
 	}
-    
-    /**
-     * Tell if a given user is already subscribed to this content
-     * @param User the given user
-     * @return boolean
-     */
-    public function isUserSubscribed(User $user)
-    {
-        global $db;
-        $sql = "SELECT content_id FROM user_has_content WHERE user_id = '{$user->getId()}' AND content_id = '{$this->getId()}';";
-        $db->ExecSqlUniqueRes($sql, $row, false);
-        
-        if($row)
-            return true;
-        else
-            return false;
-    }
-    
+
+	/**
+	 * Tell if a given user is already subscribed to this content
+	 * @param User the given user
+	 * @return boolean
+	 */
+	public function isUserSubscribed(User $user)
+	{
+		global $db;
+		$sql = "SELECT content_id FROM user_has_content WHERE user_id = '{$user->getId()}' AND content_id = '{$this->getId()}';";
+		$db->ExecSqlUniqueRes($sql, $row, false);
+
+		if ($row)
+			return true;
+		else
+			return false;
+	}
+
 	/** Subscribe to the project 
 	 * @return true on success, false on failure */
 	public function subscribe(User $user)

@@ -27,7 +27,8 @@ error_reporting(E_ALL);
 require_once BASEPATH.'config.php';
 require_once BASEPATH.'classes/AbstractDb.php';
 require_once BASEPATH.'classes/Session.php';
-define('REQUIRED_SCHEMA_VERSION', 30);
+require_once BASEPATH.'classes/Node.php';
+define('REQUIRED_SCHEMA_VERSION', 31);
 
 /** Check that the database schema is up to date.  If it isn't, offer to update it. */
 function validate_schema()
@@ -633,6 +634,56 @@ function update_schema()
 			$sql .= "CREATE INDEX idx_connections_user_id ON connections (user_id);\n";
 			$sql .= "CREATE INDEX idx_connections_user_mac ON connections (user_mac);\n";
 			$sql .= "CREATE INDEX idx_connections_node_id ON connections (node_id);\n";
+		}
+		
+		$new_schema_version = 31;
+		if ($schema_version < $new_schema_version)
+		{
+			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+ 			$sql .= "CREATE TABLE content_display_location ( \n";
+			$sql .= "  display_location text NOT NULL PRIMARY KEY\n";
+			$sql .= ");\n";
+			$sql .= "INSERT INTO content_display_location (display_location) VALUES ('portal_page');\n";
+			$sql .= "INSERT INTO content_display_location (display_location) VALUES ('login_page');\n";
+						
+            $sql .= "ALTER TABLE network_has_content ADD COLUMN display_location text;\n";
+            $sql .= "ALTER TABLE network_has_content ALTER COLUMN display_location SET DEFAULT 'portal_page';\n";
+            $sql .= "UPDATE network_has_content SET display_location='portal_page';\n";
+            $sql .= "ALTER TABLE network_has_content ALTER COLUMN display_location SET NOT NULL;\n";
+			$sql .= "ALTER TABLE network_has_content ADD CONSTRAINT display_location_fkey FOREIGN KEY (display_location) REFERENCES content_display_location ON UPDATE CASCADE ON DELETE RESTRICT;\n";
+
+            $sql .= "ALTER TABLE node_has_content ADD COLUMN display_location text;\n";
+            $sql .= "ALTER TABLE node_has_content ALTER COLUMN display_location SET DEFAULT 'portal_page';\n";
+            $sql .= "UPDATE node_has_content SET display_location='portal_page';\n";
+            $sql .= "ALTER TABLE node_has_content ALTER COLUMN display_location SET NOT NULL;\n";
+			$sql .= "ALTER TABLE node_has_content ADD CONSTRAINT display_location_fkey FOREIGN KEY (display_location) REFERENCES content_display_location ON UPDATE CASCADE ON DELETE RESTRICT;\n";
+/* Convert the existing node logos */
+			$results = null;
+			$db->ExecSql("SELECT node_id FROM nodes", $results, false);
+							define('HOTSPOT_LOGO_NAME', 'hotspot_logo.jpg');
+			foreach ($results as $row)
+			{
+				$php_logo_path = BASEPATH.LOCAL_CONTENT_REL_PATH.$row['node_id'].'/'.HOTSPOT_LOGO_NAME;
+				//echo $php_logo_path."<br>";
+				if (file_exists($php_logo_path))
+				{
+					$node_logo_abs_url=$db->EscapeString(BASE_URL_PATH.LOCAL_CONTENT_REL_PATH.$row['node_id'].'/'.HOTSPOT_LOGO_NAME);
+					//$user_id = $db->EscapeString($row['user_id']);
+					$content_id = get_guid();
+					$sql .= "\nINSERT INTO content (content_id, content_type) VALUES ('$content_id', 'Picture');\n";
+					$sql .= "INSERT INTO files (files_id, url) VALUES ('$content_id', '$node_logo_abs_url');\n";
+					$sql .= "INSERT INTO pictures (pictures_id) VALUES ('$content_id');\n";
+					$node = Node :: getObject($row['node_id']);
+					$owners = $node->getOwners();
+					foreach ($owners as $owner)
+					{
+						$sql .= "INSERT INTO content_has_owners (content_id, user_id) VALUES ('$content_id', '".$owner->getId()."');\n";
+					}
+					$sql .= "INSERT INTO node_has_content (content_id, node_id, display_location) VALUES ('$content_id', '".$row['node_id']."', 'login_page');\n";
+				}
+			}
+			
 		}
 		
 		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\nVACUUM ANALYZE;\n", true);
