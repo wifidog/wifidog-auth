@@ -2,10 +2,10 @@
         <legend>{"Register a free account with"|_} {$hotspot_network_name}</legend>
 
         <form name="signup_form" method="post">
-        <table>
         {if $SelectNetworkUI}
         {$SelectNetworkUI}
         {/if}
+        <table>
         <tr>
             <th>{"Username desired"|_}:</th>
             <td><input type="text" name="username" value="{$username}" size="20"></td>
@@ -29,12 +29,24 @@
         </table>
         </form>
 
+        <hr>
+
+        <p><b>{"Please note"|_}</b>: {"While accounts are free, we <em>strongly</em> suggest that you use your previously created account if you have one."|_}</p>
+
+        <p><b>{"Note to free web-based email users"|_}</b>: {"Sometimes our validation email ends up in the 'spam' folder of some providers. If you have not received any email with the validation URL 5 minutes after submitting this form, please take a look in the spam folder."|_}</p>
+
+        <p>{"You can also use the following links if you need help"|_}:</p>
+        <ul>
+        <li><a style="font-size: 12pt;" href="{$smarty.const.BASE_SSL_PATH}lost_username.php">{"I Forgot my username"|_}</a></li>
+        <li><a style="font-size: 12pt;" href="{$smarty.const.BASE_SSL_PATH}lost_password.php">{"I Forgot my password"|_}</a></li>
+        </ul>
+
 </fieldset>
     
-    <div id="help">
-        {if $error}
-        {$error}
-        {else}
-        {"Your email address must be valid in order for your account to be activated"|_}.
-        {/if}
-    </div>
+<div id="help">
+    {if $error}
+    {$error}
+    {else}
+    {"Your email address must be valid in order for your account to be activated"|_}.
+    {/if}
+</div>
