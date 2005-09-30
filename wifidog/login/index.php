@@ -158,7 +158,7 @@ if ($node != null)
 }
 $html .= Network::getSelectNetworkUI('auth_source')."<br>\n";
 $html .= _("Username (or email)").'<br>'."\n";
-$html .= '<input type="text" name="username" value="'.$username.'" size="20"><br>'."\n";
+$html .= '<input type="text" name="username" value="'.$username.'" size="20" id="form_username"><br>'."\n";
 $html .= _("Password").':<br>'."\n";
 $html .= '<input type="password" name="password" size="20"><br>'."\n";
 if ($error)
@@ -190,6 +190,9 @@ $html .= '<li><a href="'.BASE_SSL_PATH.'faq.php">'._("Frequently asked questions
 $html .= '</ul>'."\n";
 $html .= '</div>'."\n";
 /* End login interface section */
+$html .= '<script language="javascript">'."\n";
+$html .= 'document.getElementById("form_username").focus()'."\n";
+$html .= '</script>'."\n";
 
 // HTML body
 $hotspot_network_name = $network->getName();
