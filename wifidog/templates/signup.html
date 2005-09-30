@@ -8,7 +8,7 @@
         <table>
         <tr>
             <th>{"Username desired"|_}:</th>
-            <td><input type="text" name="username" value="{$username}" size="20"></td>
+            <td><input type="text" name="username" value="{$username}" size="20" id="form_username"></td>
         </tr>
         <tr>
             <th>{"Your email address"|_}:</th>
@@ -50,3 +50,7 @@
     {"Your email address must be valid in order for your account to be activated"|_}.
     {/if}
 </div>
+
+<script language="javascript">
+document.getElementById("form_username").focus();
+</script>
