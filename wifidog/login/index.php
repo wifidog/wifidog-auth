@@ -1,4 +1,5 @@
 <?php
+
 // $Id$
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
@@ -32,7 +33,6 @@ require_once BASEPATH.'classes/Node.php';
 require_once BASEPATH.'classes/User.php';
 require_once BASEPATH.'classes/Network.php';
 
-
 /* Start general request parameter processing section */
 $node = null;
 if (!empty ($_REQUEST['gw_id']))
@@ -55,7 +55,7 @@ if (!empty ($_REQUEST['gw_id']))
 else
 {
 	/* Gateway ID is not set... Virtual login */
-	$network = Network::getCurrentNetwork();
+	$network = Network :: getCurrentNetwork();
 }
 
 isset ($_REQUEST["username"]) && $username = $_REQUEST["username"];
@@ -78,12 +78,12 @@ if (!empty ($_REQUEST['url']))
 /* Start login process section.
  * If  successfull, the browser is redirected to another page */
 
-/*  If this is a splash-only node, skip the login interface and log-in using the splash_only user */ 
-if($node && $node->isSplashOnly())
+/*  If this is a splash-only node, skip the login interface and log-in using the splash_only user */
+if ($node && $node->isSplashOnly())
 {
-	$user = $network-> getSplashOnlyUser();
+	$user = $network->getSplashOnlyUser();
 	$token = $user->generateConnectionToken();
-	User::setCurrentUser($user);
+	User :: setCurrentUser($user);
 	header("Location: http://".$_REQUEST['gw_address'].":".$_REQUEST['gw_port']."/wifidog/auth?token=$token");
 }
 
@@ -96,7 +96,7 @@ if (!empty ($_REQUEST['username']) && !empty ($_REQUEST['password']) && !empty (
 
 	// Authenticating the user through the selected auth source.
 	$network = Network :: processSelectNetworkUI('auth_source');
-    
+
 	$user = $network->getAuthenticator()->login($_REQUEST['username'], $_REQUEST['password'], $errmsg);
 	if ($user != null)
 	{
@@ -127,9 +127,9 @@ else
 
 /* Start logout process section.
  * Once logged out, we display the login page */
-if ((!empty ($_REQUEST['logout']) && $_REQUEST['logout'] == true) && ($user = User::getCurrentUser()) != null)
+if ((!empty ($_REQUEST['logout']) && $_REQUEST['logout'] == true) && ($user = User :: getCurrentUser()) != null)
 {
-    $network->getAuthenticator()->logout();
+	$network->getAuthenticator()->logout();
 }
 /* End logout process section. */
 
@@ -156,7 +156,7 @@ if ($node != null)
 	$html .= '<input type="hidden" name="gw_port" value="'.$gw_port.'">'."\n";
 	$html .= '<input type="hidden" name="gw_id" value="'.$gw_id.'">'."\n";
 }
-$html .= Network::getSelectNetworkUI('auth_source')."<br>\n";
+$html .= Network :: getSelectNetworkUI('auth_source')."<br>\n";
 $html .= _("Username (or email)").'<br>'."\n";
 $html .= '<input type="text" name="username" value="'.$username.'" size="20" id="form_username"><br>'."\n";
 $html .= _("Password").':<br>'."\n";
@@ -201,52 +201,42 @@ $network_logo_banner_url = COMMON_CONTENT_URL.NETWORK_LOGO_BANNER_NAME;
 
 $html_body = "<div class='login_body'>";
 //$html_body .= "<a href='{$hotspot_network_url}'><img src='{$network_logo_banner_url}' alt='{$hotspot_network_name} logo' border='0'></a><p>\n";
-if(!empty($node))
-{
-    $html_body .= "<h1>{$hotspot_name}</h1>";
-}
-
-
-
-
 
 /* Node section */
 // Get all node content 
-if ($node) {
-    $contents = $node->getAllContent(true, null, 'login_page');
-    }
-if($contents)
+if (!empty($node))
 {
-    $html_body .= "<table><tr><td>";
-    $html_body .= "<div class='portal_node_section'>\n";
-/*    $html_body .= "<span class='portal_section_title'>"._("Content from:")." ";
-    $node_homepage = $node->getHomePageURL();
-    if (!empty ($node_homepage))
-    {
-    	$html_body .= "<a href='$node_homepage'>";
-    }
-    $html_body .= $node->getName();
-    if (!empty ($node_homepage))
-    {
-    	$html_body .= "</a>\n";
-    }
-    $html_body .= "</span>";*/
-    foreach ($contents as $content)
-    {
-    	if ($content->isDisplayableAt($node))
-    	{
-    		$html_body .= "<div class='portal_content'>\n";
-    		$html_body .= $content->getUserUI();
-    		$html_body .= "</div>\n";
-    	}
-    }
-    $html_body .= "</div>\n";
-    $html_body .= "</td></tr></table>";
+	$html_body .= "<h1>{$hotspot_name}</h1>";
+	$contents = $node->getAllContent(true, null, 'login_page');
 }
-
-
-
-
+if (!empty($contents))
+{
+	$html_body .= "<table><tr><td>";
+	$html_body .= "<div class='portal_node_section'>\n";
+	/*    $html_body .= "<span class='portal_section_title'>"._("Content from:")." ";
+	    $node_homepage = $node->getHomePageURL();
+	    if (!empty ($node_homepage))
+	    {
+	    	$html_body .= "<a href='$node_homepage'>";
+	    }
+	    $html_body .= $node->getName();
+	    if (!empty ($node_homepage))
+	    {
+	    	$html_body .= "</a>\n";
+	    }
+	    $html_body .= "</span>";*/
+	foreach ($contents as $content)
+	{
+		if ($content->isDisplayableAt($node))
+		{
+			$html_body .= "<div class='portal_content'>\n";
+			$html_body .= $content->getUserUI();
+			$html_body .= "</div>\n";
+		}
+	}
+	$html_body .= "</div>\n";
+	$html_body .= "</td></tr></table>";
+}
 
 $html_body .= "</div>";
 
@@ -257,3 +247,4 @@ $ui->setMainContent($html_body);
 $ui->display();
 /* End login interface section */
 ?>
+
