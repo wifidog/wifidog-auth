@@ -628,6 +628,41 @@ class Content implements GenericObject
 		if (is_bool($status))
 			$this->is_logging_enabled = $status;
 	}
+	
+	
+	/** Get the PHP timestamp of the last time this content was displayed
+	 * @param $user User, Optional, if present, restrict to the selected user
+	 * @param $node Node, Optional, if present, restrict to the selected node
+	 * @return PHP timestamp (seconds since UNIX epoch) if the content has been
+	 * displayed before, an empty string otherwise.
+	 */
+	public function getLastDisplayTimestamp($user=null, $node=null)
+	{
+		global $db;
+$retval = '';		
+			$sql = "SELECT EXTRACT(EPOCH FROM last_display_timestamp) as last_display_unix_timestamp FROM content_display_log WHERE content_id='{$this->id}' \n";
+
+			if ($user)
+			{
+				$user_id = $db->EscapeString($user->getId());
+				$sql .= " AND user_id = '{$user_id}' \n";
+			}
+			if ($node)
+			{
+				$node_id = $db->EscapeString($node->getId());
+				$sql .= " AND node_id = '{$node_id}' \n";
+			}
+			$sql .= " ORDER BY last_display_timestamp DESC ";
+			$db->ExecSql($sql, $log_rows, false);
+			if($log_rows)
+			{
+				$retval = $log_rows[0]['last_display_unix_timestamp'];
+			}
+
+return $retval;
+	}
+
+
 
 	/** Is this Content element displayable at this hotspot, many classer override this
 	 * @param $node Node, optionnal
@@ -1251,8 +1286,10 @@ class Content implements GenericObject
 
 	}
 
-	/** Reloads the object from the database.  Should normally be called after a set operation */
-	protected function refresh()
+	/** Reloads the object from the database.  Should normally be called after a set operation.
+	 * This function is private because calling it from a subclass will call the
+	 * constructor from the wrong scope */
+	private function refresh()
 	{
 		$this->__construct($this->id);
 	}

@@ -500,8 +500,8 @@ switch ($page) {
       print "<TR><TD>$dir</TD>";
       if (!file_exists("$basepath/$dir")) {
         print "<TD COLSPAN=\"2\" STYLE=\"text-align:center;\">Missing</TD></TR>\n";
-        $cmd_mkdir .= "$dir ";
-        $cmd_chown .= "$dir ";
+        $cmd_mkdir .= "$basepath/$dir ";
+        $cmd_chown .= "$basepath/$dir ";
         $error = 1;
         continue;
       }
@@ -515,7 +515,7 @@ switch ($page) {
       }
       else {
         print "<TD>NO</TD>";
-        $cmd_chown .= "$dir ";
+        $cmd_chown .= "$basepath/$dir ";
         $error = 1;
       }
       print "</TR>\n";
@@ -531,14 +531,14 @@ switch ($page) {
       if(!empty($cmd_mkdir))
         print "<P><B>Tips</B> : mkdir $cmd_mkdir";
       if(!empty($cmd_chown))
-        print "<P><B>Tips</B> : chown -R $process_username:$process_group $cmd_chown";
+        print "<P><B>Tips</B>: chown -R $process_username:$process_group $cmd_chown";
     }
   break;
   ###################################
   case 'smarty': // Download, uncompress and install Smarty
     print <<< EndHTML
     <H1>Smarty installation</H1>
-    <P><A HREF="http://smarty.php.net/">Smarty</A> is known as a "Template Engine". Wifidog's internal fonctionnality needs it.</P>
+    <P><A HREF="http://smarty.php.net/">Smarty</A> is known as a "Template Engine". Wifidog s internal fonctionnality needs it.</P>
 EndHTML;
     if ($neededPackages['smarty']['available']) {
       print "Already installed !<BR>";
@@ -560,7 +560,8 @@ EndHTML;
       }
 
       print "Uncompressing : ";
-      $dirname = array_shift(split(".tar.gz", $filename));
+      $dir_array = split(".tar.gz", $filename);
+      $dirname = array_shift($dir_array);
 
       if (!file_exists($dirname))
         exec("tar -xzf $dirname.tar.gz &>/tmp/tar.output", $output, $return);
@@ -586,7 +587,8 @@ EndHTML;
     }
     elseif ($action == 'install') {
       chdir("$basepath/tmp");
-      $filename = array_pop(preg_split("/\//", $magpierss_full_url));
+      $filename_array = preg_split("/\//", $magpierss_full_url);
+      $filename = array_pop($filename_array);
       
       print "Download source code ($filename) : ";
       if (!file_exists($filename))
@@ -601,7 +603,8 @@ EndHTML;
       }
 
       print "Uncompressing : ";
-      $dirname = array_shift(split(".tar.gz", $filename));
+      $dir_array = split(".tar.gz", $filename);
+      $dirname = array_shift($dir_array);
       if (!file_exists($dirname))
         exec("tar -xzf $dirname.tar.gz &>/tmp/tar.output", $output, $return);
       print "OK<BR>";
@@ -632,7 +635,8 @@ EndHTML;
     }
     elseif ($action == 'install') {
       chdir("$basepath/tmp");
-      $filename = array_pop(preg_split("/\//", $phlickr_full_url));
+      $filename_array = preg_split("/\//", $phlickr_full_url);
+      $filename = array_pop($filename_array);
 
       print "Download source code ($filename) : ";
       if (!file_exists($filename))
@@ -647,7 +651,8 @@ EndHTML;
       }
 
       print "Uncompressing : ";
-      $dirname = array_shift(split(".tgz", $filename));
+      $dirname_array = split(".tgz", $filename);
+      $dirname = array_shift($dirname_array);
       if (!file_exists($dirname))
         exec("tar -xzf $dirname.tgz &>/tmp/tar.output", $output, $return);
       print "OK<BR>";

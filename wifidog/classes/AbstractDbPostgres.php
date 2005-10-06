@@ -38,8 +38,8 @@ class AbstractDb
 
 		if ($ptr_connexion == FALSE)
 		{
-			echo "<p class=warning>Unable to connect to database on ".CONF_DATABASE_HOST."</p>\n";
-			return FALSE;
+			echo sprintf(_("Unable to connect to database on %s"),CONF_DATABASE_HOST);
+			throw new Exception(sprintf(_("Unable to connect to database on %s"),CONF_DATABASE_HOST));
 		}
 
 		return $ptr_connexion;

@@ -28,12 +28,10 @@ require_once BASEPATH.'classes/Node.php';
 $security = new Security();
 $security->requireAdmin();
 
-try {
-    $online_users = Node::getAllOnlineUsers();
+		global $db;
+		$online_users = null;
+		$db->ExecSql("SELECT * FROM connections,users,nodes WHERE token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND nodes.node_id=connections.node_id ORDER BY timestamp_in DESC", $online_users);
 	$smarty->assign("users_array", $online_users);
-} catch (Exception $e) {
-	$smarty->assign("error", $e->getMessage());
-}
 
 require_once BASEPATH.'classes/MainUI.php';
 $ui=new MainUI();

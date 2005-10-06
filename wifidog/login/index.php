@@ -204,39 +204,38 @@ $html_body = "<div class='login_body'>";
 
 /* Node section */
 // Get all node content 
-if (!empty($node))
+if ($node) {
+    $contents = $node->getAllContent(true, null, 'login_page');
+if($contents)
 {
-	$html_body .= "<h1>{$hotspot_name}</h1>";
-	$contents = $node->getAllContent(true, null, 'login_page');
+    $html_body .= "<table><tr><td>";
+    $html_body .= "<div class='portal_node_section'>\n";
+/*    $html_body .= "<span class='portal_section_title'>"._("Content from:")." ";
+    $node_homepage = $node->getHomePageURL();
+    if (!empty ($node_homepage))
+    {
+    	$html_body .= "<a href='$node_homepage'>";
+    }
+    $html_body .= $node->getName();
+    if (!empty ($node_homepage))
+    {
+    	$html_body .= "</a>\n";
+    }
+    $html_body .= "</span>";*/
+    foreach ($contents as $content)
+    {
+    	if ($content->isDisplayableAt($node))
+    	{
+    		$html_body .= "<div class='portal_content'>\n";
+    		$html_body .= $content->getUserUI();
+    		$html_body .= "</div>\n";
+    	}
+    }
+    $html_body .= "</div>\n";
+    $html_body .= "</td></tr></table>";
 }
-if (!empty($contents))
-{
-	$html_body .= "<table><tr><td>";
-	$html_body .= "<div class='portal_node_section'>\n";
-	/*    $html_body .= "<span class='portal_section_title'>"._("Content from:")." ";
-	    $node_homepage = $node->getHomePageURL();
-	    if (!empty ($node_homepage))
-	    {
-	    	$html_body .= "<a href='$node_homepage'>";
-	    }
-	    $html_body .= $node->getName();
-	    if (!empty ($node_homepage))
-	    {
-	    	$html_body .= "</a>\n";
-	    }
-	    $html_body .= "</span>";*/
-	foreach ($contents as $content)
-	{
-		if ($content->isDisplayableAt($node))
-		{
-			$html_body .= "<div class='portal_content'>\n";
-			$html_body .= $content->getUserUI();
-			$html_body .= "</div>\n";
-		}
-	}
-	$html_body .= "</div>\n";
-	$html_body .= "</td></tr></table>";
-}
+    }
+
 
 $html_body .= "</div>";
 

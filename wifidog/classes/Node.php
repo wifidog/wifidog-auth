@@ -20,7 +20,7 @@
  *                                                                  *
  \********************************************************************/
 /**@file Node.php
- * @author Copyright (C) 2005 Benoit Gr�goire <bock@step.polymtl.ca>
+ * @author Copyright (C) 2005 Benoit Grégoire <bock@step.polymtl.ca>
  */
 
 require_once BASEPATH.'include/common.php';
@@ -85,6 +85,7 @@ class Node implements GenericObject
 		global $db;
 		$retval = null;
 		$sql = "SELECT node_id, last_heartbeat_ip from nodes WHERE last_heartbeat_ip='$_SERVER[REMOTE_ADDR]' ORDER BY last_heartbeat_timestamp DESC";
+		$node_rows = null;
 		$db->ExecSql($sql, $node_rows, false);
 		$num_match = count($node_rows);
 		if ($num_match == 0)
@@ -291,14 +292,15 @@ class Node implements GenericObject
 		global $db;
 		$html = '';
 		$name = "{$user_prefix}";
-		$status_list = self :: getAllDeploymentStatus();
-		if ($status_list != null)
-		{
+		$status_list = null;
+		$db->ExecSql("SELECT node_deployment_status FROM node_deployment_status", $status_list, false);
+		if ($status_list == null)
+			throw new Exception(_("No deployment statues  could be found in the database"));
+
 			$tab = array ();
 			foreach ($status_list as $status)
-				$tab[] = array ($status, $status);
+				$tab[] = array ($status['node_deployment_status'], $status['node_deployment_status']);
 			$html .= FormSelectGenerator :: generateFromArray($tab, $this->getDeploymentStatus(), $name, null, false);
-		}
 		return $html;
 	}
 
@@ -321,6 +323,7 @@ class Node implements GenericObject
 
 		$node_id_str = $db->EscapeString($node_id);
 		$sql = "SELECT * FROM nodes WHERE node_id='$node_id_str'";
+		$row = null;
 		$db->ExecSqlUniqueRes($sql, $row, false);
 		if ($row == null)
 		{
@@ -335,6 +338,26 @@ class Node implements GenericObject
 		return $this->id;
 	}
 
+/** Changing the id of a Node is supported. 
+ *  Be carefull to anly call this when all other changes are processed, 
+ * or the id used to generate the form names may no longer match.
+ * @param $id, string, the new node id.
+ * @return true on success, false on failure. Check this, 
+ * as it's possible that someone will enter an existing id, especially
+ * if the MAC address is used and hardware is recycled.
+ */
+	function setId($id)
+	{
+		$id = $this->mDb->EscapeString($id);
+		$retval = $this->mDb->ExecSqlUpdate("UPDATE nodes SET node_id = '{$id}' WHERE node_id = '{$this->getId()}'");
+		if($retval)
+		{
+		$this->id = $id;
+		$this->refresh();
+		}
+		return $retval;
+	}
+	
 	/** Gets the Network to which the node belongs 
 	 * @return Network object (never returns null)
 	 */
@@ -656,18 +679,19 @@ class Node implements GenericObject
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Information about the node:")."</div>\n";
 
-		// Node ID
-		$value = htmlspecialchars($this->getId(), ENT_QUOTES);
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("ID")." : {$value}</div>\n";
-		//$html .= "<div class='admin_section_data'>\n";
-		//$name = "node_".$this->getId()."_id";
-		//$html .= "<input type='text' readonly='' size='10' value='$value' name='$name'>\n";
-		//$html .= "</div>\n";
-		$html .= "</div>\n";
 
 		// Hashed node_id (this is a workaround since PHP auto-converts HTTP vars var periods, spaces or underscores )
 		$hashed_node_id = md5($this->getId());
+
+		// Node ID
+		$value = htmlspecialchars($this->getId(), ENT_QUOTES);
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("ID")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "node_".$hashed_node_id."_id";
+		$html .= "<input type='text' size='20' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
 
 		// Name
 		$html .= "<div class='admin_section_container'>\n";
@@ -1159,7 +1183,10 @@ $html .= Content::getLinkedContentUI($name, 'node_has_content', 'node_id', $this
 				$name = "node_{$this->id}_content_portal";
 Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id);
 
-	}
+		// Name
+		$name = "node_".$hashed_node_id."_id";
+		$this->setId($_REQUEST[$name]);
+					}
 
 	// Redirect to this node's portal page
 	public function getUserUI()
@@ -1195,6 +1222,7 @@ Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id)
 	{
 		global $db;
 		$retval = array ();
+		$content_rows = null;
 		// Get all network, but exclude user subscribed content if asked
 		if ($exclude_subscribed_content == true && $subscriber)
 			$sql = "SELECT content_id FROM node_has_content WHERE node_id='{$this->id}' AND display_location='$display_location' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$subscriber->getId()}') ORDER BY subscribe_timestamp DESC";
@@ -1219,6 +1247,7 @@ Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id)
 		global $db;
 		$retval = array ();
 		$sql = "SELECT * FROM content_group JOIN content ON (content.content_id = content_group.content_group_id) JOIN node_has_content ON (node_has_content.content_id = content_group.content_group_id AND node_has_content.node_id = '{$this->getId()}') WHERE is_persistent = true AND is_artistic_content = true AND is_locative_content = true ORDER BY subscribe_timestamp DESC";
+		$content_rows = null;
 		$db->ExecSql($sql, $content_rows, false);
 		if ($content_rows != null)
 		{
@@ -1241,55 +1270,13 @@ Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id)
 		return $retval;
 	}
 
-	/** Return all the nodes
-	 */
-	static function getAllNodes()
-	{
-		global $db;
-
-		$db->ExecSql("SELECT * FROM nodes", $nodes, false);
-
-		if ($nodes == null)
-			throw new Exception(_("No nodes could not be found in the database"));
-
-		return $nodes;
-	}
-
-	static function getAllNodesOrdered($order_by)
-	{
-		global $db;
-
-		$nodes = null;
-		$db->ExecSql("SELECT * FROM nodes ORDER BY $order_by", $nodes, false);
-
-		if ($nodes == null)
-			throw new Exception(_("No nodes could not be found in the database"));
-
-		return $nodes;
-	}
-
-	static function getAllDeploymentStatus()
-	{
-		global $db;
-
-		$statuses = null;
-		$db->ExecSql("SELECT * FROM node_deployment_status", $statuses, false);
-		if ($statuses == null)
-			throw new Exception(_("No deployment statues  could be found in the database"));
-
-		$statuses_array = array ();
-		foreach ($statuses as $status)
-			array_push($statuses_array, $status['node_deployment_status']);
-
-		return $statuses_array;
-	}
-
 	/** The list of users online at this node
 	 * @return An array of User object, or en empty array */
 	function getOnlineUsers()
 	{
 		global $db;
 		$retval = array ();
+		$users = null;
 		$db->ExecSql("SELECT users.user_id FROM users,connections WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}'", $users, false);
 		if ($users != null)
 		{
@@ -1304,18 +1291,22 @@ Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id)
 	/** Find out how many users are online this specific Node
 	 * @return Number of online users
 	 */
-	function getNumOnlineUsers($node_id = null)
+	function getNumOnlineUsers()
 	{
 		global $db;
 		$retval = array ();
+		$row = null;
 		$db->ExecSqlUniqueRes("SELECT COUNT(DISTINCT users.user_id) as count FROM users,connections WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}'", $row, false);
 		return $row['count'];
 	}
 
+	/** The list of all real owners of this node
+	 * @return An array of User object, or en empty array */
 	function getOwners()
 	{
 		global $db;
 		$retval = array ();
+		$owners = null;
 		$db->ExecSql("SELECT user_id FROM node_stakeholders WHERE is_owner = true AND node_id='{$this->id}'", $owners, false);
 		if ($owners != null)
 		{
@@ -1327,10 +1318,15 @@ Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id)
 		return $retval;
 	}
 
+	/** The list of all Technical officers of this node.  
+	 * Technical officers are displayed highlited and in the online user's list, 
+	 * and are contacted when the Node goes down.
+	 * @return An array of User object, or en empty array */
 	function getTechnicalOfficers()
 	{
 		global $db;
 		$retval = array ();
+		$officers = null;
 		$db->ExecSql("SELECT user_id FROM node_stakeholders WHERE is_tech_officer = true AND node_id='{$this->id}'", $officers, false);
 		if ($officers != null)
 		{
@@ -1348,6 +1344,7 @@ Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id)
 	function addOwner(User $user)
 	{
 		global $db;
+		$rows = null;
 		$db->ExecSql("SELECT * FROM node_stakeholders WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}'", $rows, false);
 		if (!$rows)
 		{
@@ -1365,6 +1362,7 @@ Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id)
 	function addTechnicalOfficer(User $user)
 	{
 		global $db;
+		$rows = null;
 		$db->ExecSql("SELECT * FROM node_stakeholders WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}'", $rows, false);
 		if (!$rows)
 		{
@@ -1373,10 +1371,10 @@ Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id)
 		}
 		else
 			if (!$db->ExecSqlUpdate("UPDATE node_stakeholders SET is_tech_officer = true WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}';", false))
-				throw new Exception(_('Could not add tech officer'));
+				throw new Exception(_('Could not set existing user as tech officer'));
 	}
 
-	/** Remove a technical officer ( tech support ) from this node
+	/** Remove owner flag for a stakeholder of this node
 	 * @param User
 	 */
 	function removeOwner(User $user)
@@ -1386,7 +1384,7 @@ Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id)
 			throw new Exception(_('Could not remove owner'));
 	}
 
-	/** Remove a technical officer ( tech support ) from this node
+	/** Remove technical officer flag for a stakeholder of this node
 	 * @param User
 	 */
 	function removeTechnicalOfficer(User $user)
@@ -1405,6 +1403,7 @@ Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id)
 		{
 			$user_id = $user->getId();
 			$retval = false;
+			$row = null;
 			$db->ExecSqlUniqueRes("SELECT * FROM node_stakeholders WHERE is_owner = true AND node_id='{$this->id}' AND user_id='{$user_id}'", $row, false);
 			if ($row != null)
 			{
@@ -1423,6 +1422,7 @@ Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id)
 		{
 			$user_id = $user->getId();
 			$retval = false;
+			$row = null;
 			$db->ExecSqlUniqueRes("SELECT * FROM node_stakeholders WHERE is_tech_officer = true AND node_id='{$this->id}' AND user_id='{$user_id}'", $row, false);
 			if ($row != null)
 			{
@@ -1439,22 +1439,13 @@ Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id)
 		$retval = false;
 		$id_str = $db->EscapeString($id);
 		$sql = "SELECT * FROM nodes WHERE node_id='{$id_str}'";
+		$row = null;
 		$db->ExecSqlUniqueRes($sql, $row, false);
 		if ($row != null)
 		{
 			$retval = true;
 		}
 		return $retval;
-	}
-
-	/** Warning, the semantics of this function will change *
-	 * @deprecated version - 2005-04-29 USE getOnlineUsers instead
-	 * */
-	public static function getAllOnlineUsers()
-	{
-		global $db;
-		$db->ExecSql("SELECT * FROM connections,users,nodes WHERE token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND nodes.node_id=connections.node_id ORDER BY timestamp_in DESC", $online_users);
-		return $online_users;
 	}
 
 	/** Reloads the object from the database.  Should normally be called after a set operation */

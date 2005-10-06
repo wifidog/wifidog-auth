@@ -74,7 +74,13 @@ class IFrame extends Content
 		$url = $this->mDb->EscapeString($url);
 		$this->mDb->ExecSqlUpdate("UPDATE iframes SET url = '{$url}' WHERE iframes_id = '{$this->getId()}';");
 	}
-
+	/**
+This function is there so that displayUserUi will work fine with the IFrameRest object.  Do NOT delete it.
+	*/
+	function getGeneratedUrl()
+	{
+		return $this->getUrl();;
+	}
 	function getWidth()
 	{
 		return $this->iframe_row['width'];
@@ -108,18 +114,10 @@ class IFrame extends Content
 	/**
 	 * Retrieves Admin UI for IFrame
 	*/
-	function getAdminUI()
+	function getAdminUI($subclass_admin_interface=null)
 	{
 		$html = '';
 		$html .= "<div class='admin_class'>IFrame (".get_class($this)." instance)</div>\n";
-
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$html .= "<div class='admin_section_title'>"._("HTML content URL")." : </div>\n";
-		$name = "iframe_".$this->id."_url";
-		$html .= "<input type='text' name='$name' value='".$this->getUrl()."'\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
 
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_data'>\n";
@@ -137,6 +135,15 @@ class IFrame extends Content
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$html .= "<div class='admin_section_title'>"._("HTML content URL")." : </div>\n";
+		$name = "iframe_".$this->id."_url";
+		$html .= "<input type='text' size=80 name='$name' value='".$this->getUrl()."'\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+
+		$html .= $subclass_admin_interface;
 		return parent :: getAdminUI($html);
 	}
 
@@ -170,11 +177,18 @@ class IFrame extends Content
 		$html = '';
 		$html .= "<div class='user_ui_container'>\n";
 		$html .= "<div class='user_ui_object_class'>IFrame (".get_class($this)." instance)</div>\n";
-		$html .= "<iframe width='{$this->getWidth()}' height='{$this->getHeight()}' frameborder='1' src='{$this->getUrl()}'>"._("Your browser does not support IFrames.")."</iframe>\n";
+		$html .= "<iframe width='{$this->getWidth()}' height='{$this->getHeight()}' frameborder='1' src='{$this->getGeneratedUrl()}'>"._("Your browser does not support IFrames.")."</iframe>\n";
 		$html .= $subclass_user_interface;
 		$html .= "</div>\n";
 		return parent :: getUserUI($html);
 	}
-
+	
+	/** Reloads the object from the database.  Should normally be called after a set operation.
+	 * This function is private because calling it from a subclass will call the
+	 * constructor from the wrong scope */
+	private function refresh()
+	{
+		$this->__construct($this->id);
+	}
 } /* end class Langstring */
 ?>

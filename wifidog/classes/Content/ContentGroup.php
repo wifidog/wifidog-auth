@@ -759,6 +759,13 @@ class ContentGroup extends Content
 		}
 		return parent :: delete($errmsg);
 	}
+		/** Reloads the object from the database.  Should normally be called after a set operation.
+	 * This function is private because calling it from a subclass will call the
+	 * constructor from the wrong scope */
+	private function refresh()
+	{
+		$this->__construct($this->id);
+	}
 
 } // End class
 ?>

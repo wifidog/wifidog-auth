@@ -213,8 +213,6 @@ $hotspot_network_url = $network->getHomepageURL();
 $network_logo_url = COMMON_CONTENT_URL.NETWORK_LOGO_NAME;
 $network_logo_banner_url = COMMON_CONTENT_URL.NETWORK_LOGO_BANNER_NAME;
 
-$hotspot_logo_banner_url = find_local_content_url(HOTSPOT_LOGO_BANNER_NAME);
-
 // Get the current user
 $current_user = User :: getCurrentUser();
 

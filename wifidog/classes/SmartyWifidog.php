@@ -35,7 +35,7 @@ if (file_exists(BASEPATH.'lib/smarty/Smarty.class.php')) {
   $exploded_path = explode("/", $_SERVER['SCRIPT_NAME']);     # Split directories in token
   array_pop($exploded_path);                                  # Remove install.php from the list
   $system_path = implode("/", $exploded_path);                # Build the system_path for the auth-server
-  print "Redirection to Wifidog web-base install <META HTTP-EQUIV=Refresh CONTENT=\"1; URL=$system_path/install.php\">";
+  print "Redirection to Wifidog web-base install since Smarty is missing <META HTTP-EQUIV=Refresh CONTENT=\"1; URL=$system_path/install.php\">";
   exit();
 }
 

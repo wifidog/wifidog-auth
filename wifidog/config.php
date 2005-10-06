@@ -6,10 +6,10 @@ if(file_exists(dirname(__FILE__)."/local.config.php")) {
 } else {
 
 /* Used by AbstractDb */
-define('CONF_DATABASE_HOST',   'localhost');
-define('CONF_DATABASE_NAME',   'wifidog');
-define('CONF_DATABASE_USER',   'wifidog');
-define('CONF_DATABASE_PASSWORD',   'wifidogtest');
+define('CONF_DATABASE_HOST', 'localhost');
+define('CONF_DATABASE_NAME', 'wifidog');
+define('CONF_DATABASE_USER', 'wifidog');
+define('CONF_DATABASE_PASSWORD', 'wifidogtest');
 
 /*************************** Common setup option.  Adjust to suit your environment *******************************/
 
@@ -45,7 +45,7 @@ define('DBMS_MYSQL','AbstractDbMySql.php');
 define('DBMS_POSTGRES','AbstractDbPostgres.php');
 
 /** Defines which Database management software you want to use */
-define('CONF_DBMS',DBMS_POSTGRES);
+define('CONF_DBMS', DBMS_POSTGRES);
 
 /* Available Locales (Languages) */
 $AVAIL_LOCALE_ARRAY=array('fr'=>'Français',

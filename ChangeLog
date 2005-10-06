@@ -1,3 +1,16 @@
+2005-10-04 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Remove a bunch of deprecated methods from the Node object,
+	 document undocumented methods.
+	* Make the node id editable.  This allows the gateway "MAC address as node ID"
+	 patch by London wireless to be usable with the standard auth server, and to 
+	 transition to using MAC address as node ID.
+	* Fix a saving problem with all the content types with some versions of PHP
+	* Add a new Content type:  IFrameRest.  This allows the result of a REST style query
+	returning HTML to be displayed in a HTML iframeset.  Currently supported are 
+	substitution of the node_id, the user_id and the last display date in the get query.
+	* CVS version of the auth server should now be "reasonnably" safe to use in production, 
+	so the 2005-09-01 notice is no longuer in effect.
+	
 2005-10-04 Francois Proulx <francois.proulx@gmail.com>
 	* Translated signup page messages
 

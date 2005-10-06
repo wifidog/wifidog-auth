@@ -28,7 +28,7 @@ require_once BASEPATH.'classes/Content.php';
 
 error_reporting(E_ALL);
 
-/** Représente un Langstring en particulier, ne créez pas un objet langstrings si vous n'en avez pas spécifiquement besoin 
+/** Represents an Image
  */
 class Picture extends File
 {
@@ -174,6 +174,12 @@ class Picture extends File
 		$html .= "</div>\n";
         return $html;
 	}
-
+	/** Reloads the object from the database.  Should normally be called after a set operation.
+	 * This function is private because calling it from a subclass will call the
+	 * constructor from the wrong scope */
+	private function refresh()
+	{
+		$this->__construct($this->id);
+	}
 } /* end class File */
 ?>
