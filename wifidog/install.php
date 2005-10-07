@@ -127,18 +127,16 @@ $requiredMySQLVersion     = '0.0.0'; // Todo
 $requiredPostgeSQLVersion = '0.0.0'; // Todo
 
 # Needed files/directories with write access
-$dir_array = array('tmp', 'tmp/magpie_cache', 'lib/smarty', 'tmp/smarty/templates_c', 'lib/magpie', 'lib/Phlickr', 'config.php'); #, 'lib/jpgraph'); 
+$dir_array = array('tmp', 'tmp/magpie_cache', 'lib/smarty', 'tmp/smarty/templates_c', 'lib/magpie', 'lib/Phlickr', 'config.php'); 
 
 $smarty_full_url    = 'http://smarty.php.net/do_download.php?download_file=Smarty-2.6.7.tar.gz';
 $magpierss_full_url = 'http://easynews.dl.sourceforge.net/sourceforge/magpierss/magpierss-0.71.1.tar.gz';
-$phlickr_full_url   = 'http://easynews.dl.sourceforge.net/sourceforge/phlickr/Phlickr-0.2.2.tgz';
-$jpgraph_full_url   = 'http://members.chello.se/jpgraph/jpgdownloads/jpgraph-2.0beta.tar.gz';
+$phlickr_full_url   = 'http://easynews.dl.sourceforge.net/sourceforge/phlickr/Phlickr-0.2.4.tgz';
 
 $neededPackages = array(
   'smarty'    => array('needed' => 1, 'available' => 0, 'message' => '', 'file' => 'lib/smarty/Smarty.class.php'),
   'magpierss' => array('needed' => 0, 'available' => 0, 'message' => '', 'file' => 'lib/magpie/rss_fetch.inc'),
-  'phlickr'   => array('needed' => 0, 'available' => 0, 'message' => '', 'file' => 'lib/Phlickr/Photo.php'),
-  'jpgraph'   => array('needed' => 0, 'available' => 0, 'message' => '', 'file' => 'lib/jpgraph/jpgraph.php'),
+  'phlickr'   => array('needed' => 0, 'available' => 0, 'message' => '', 'file' => 'lib/Phlickr/Photo.php')
 );
 
 $neededExtentions = array(   
@@ -631,7 +629,7 @@ EndHTML;
 
     if ( $neededPackages['phlickr']['available']) {
       print "Already installed !<BR>";
-      navigation(array(array("title" => "Back", "page" => "magpierss"), array("title" => "Next", "page" => "jpgraph")));
+      navigation(array(array("title" => "Back", "page" => "magpierss"), array("title" => "Next", "page" => "database")));
     }
     elseif ($action == 'install') {
       chdir("$basepath/tmp");
@@ -663,7 +661,8 @@ EndHTML;
       print "OK<BR>";
 
       refreshButton();
-      navigation(array(array("title" => "Back", "page" => "magpierss"), array("title" => "Next", "page" => "jpgraph")));
+      // Skipping jpgraph install
+      navigation(array(array("title" => "Back", "page" => "magpierss"), array("title" => "Next", "page" => "database")));
     }
     else {
       print <<< EndHTML
@@ -671,7 +670,7 @@ EndHTML;
 
 <P>Do you want to install Phlickr ?
 EndHTML;
-      navigation(array(array("title" => "Back", "page" => "magpierss"), array("title" => "Install", "page" => "phlickr", "action" => "install"), array("title" => "Next", "page" => "jpgraph")));
+      navigation(array(array("title" => "Back", "page" => "magpierss"), array("title" => "Install", "page" => "phlickr", "action" => "install"), array("title" => "Next", "page" => "database")));
     }
   break;
   ###################################

@@ -103,7 +103,8 @@ INSERT INTO node_deployment_status (node_deployment_status) VALUES ('TEMPORARILY
 -- PostgreSQL database dump complete
 --
 
-INSERT INTO nodes (node_id, name) VALUES ('default', 'Unknown node');
+INSERT INTO networks (network_id, is_default_network, network_authenticator_class, network_authenticator_params) VALUES ('default-network', true, 'AuthenticatorLocalUser', '\'default-network\'');
+INSERT INTO nodes (network_id, node_id, name) VALUES ('default-network', 'default', 'Unknown node');
 --
 -- PostgreSQL database dump
 --
@@ -118,7 +119,7 @@ SET search_path = public, pg_catalog;
 -- Data for Name: schema_info; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
-INSERT INTO schema_info (tag, value) VALUES ('schema_version', '30');
+INSERT INTO schema_info (tag, value) VALUES ('schema_version', '29');
 
 
 --

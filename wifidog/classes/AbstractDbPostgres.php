@@ -25,7 +25,7 @@ error_reporting(E_ALL);
 /** Classe statique, permet d'abstraire la connexion à la base de donnée
  */
 class AbstractDb
-{
+{	
 	function connexionDb($db_name)
 	{
 		if ($db_name == NULL)
@@ -56,7 +56,7 @@ class AbstractDb
 		$connection = $this -> connexionDb(NULL);
 		if ($debug == TRUE)
 		{
-			echo "<hr /><p>ExecuterSql(): DEBUG: Requête:<br>\n<pre>$sql</pre></p>\n<p>Plan:<br />\n";
+			echo "<hr /><p>ExecSql() : SQL Query<br>\n<pre>$sql</pre></p>\n<p>Query plan:<br />\n";
 			$result = pg_query($connection, "EXPLAIN ".$sql);
 
 			$plan_array = pg_fetch_all($result);
@@ -88,13 +88,13 @@ class AbstractDb
 
 		if ($debug == TRUE)
 		{
-			echo "<P>Temps écoulé pour la requête SQL: $sql_timetaken seconde(s)</P>\n";
+			echo "<P>Elapsed time for query execution : $sql_timetaken second(s)</P>\n";
 		}
 
 		if ($result == FALSE)
 		{
-			echo "<p>ExecuterSql(): ERREUR: Lors de l'exécution de la requête SQL:<br>$sql</p>";
-			echo "<p>L'erreur est:<br>".pg_last_error($connection)."</p>";
+			echo "<p>ExecSql() : An error occured while executing the following SQL query :<br>$sql</p>";
+			echo "<p>Error message :<br>".pg_last_error($connection)."</p>";
 			$returnResults = NULL;
 			$return_value = FALSE;
 		}
@@ -111,7 +111,7 @@ class AbstractDb
 				if ($debug)
 				{
 					$num_rows = pg_num_rows($result);
-					echo "<p>ExecuterSql(): DEBUG: Il y a $num_rows résultats:<br><TABLE>";
+					echo "<p>ExecSql() : The query returned $num_rows results :<br><TABLE>";
 					if ($returnResults != NULL)
 					{
 						//On affiche l'en-téte des colonnes une seule fois*/
@@ -187,12 +187,12 @@ class AbstractDb
 		$retval = TRUE;
 		if ($debug == TRUE)
 		{
-			echo "<hr /><p>requête: <br><pre>$sql</pre></p>";
+			echo "<hr /><p>SQL Query : <br><pre>$sql</pre></p>";
 		}
 		$connection = $this -> connexionDb(NULL);
 
 		$sql_starttime = microtime();
-		$result = pg_query($connection, $sql);
+		$result = @pg_query($connection, $sql);
 		$sql_endtime = microtime();
 
 		global $sql_total_time;
@@ -213,13 +213,13 @@ class AbstractDb
 
 		if ($debug == TRUE)
 		{
-			echo "<P>Temps écoulé pour la requête SQL: $sql_timetaken seconde(s)</P>\n";
+			echo "<P>Elapsed time for query execution : $sql_timetaken second(s)</P>\n";
 		}
 
 		if ($result == FALSE)
 		{
-			echo "<p>ExecuterSqlResUnique(): ERREUR: Lors de l'exécution de la requête SQL:<br>$sql</p>";
-			echo "<p>L'erreur est:<br>".pg_last_error($connection)."</p>";
+			echo "<p>ExecSqlUniqueRes() : An error occured while executing the following SQL query :<br>$sql</p>";
+			echo "<p>Error message : <br>".pg_last_error($connection)."</p>";
 			$retval = FALSE;
 		}
 		else
@@ -228,8 +228,8 @@ class AbstractDb
 			$retVal = $returnResults[0];
 			if (pg_num_rows($result) > 1)
 			{
-				echo "<p>ExecuterSqlResUnique(): ERREUR: Lors de l'exécution de la requête SQL:<br>$sql</p>";
-				echo "<p>Il y a ".pg_num_rows($result)." résultats alors qu'il ne devrait y en avoir qu'un seul.</p>";
+				echo "<p>ExecSqlUniqueRes() : An error occured while executing the following SQL query :<br>$sql</p>";
+				echo "<p>The query returned ".pg_num_rows($result)." results, although there should have been only one.</p>";
 				$retval = FALSE;
 				$debug = true;
 			}
@@ -238,7 +238,7 @@ class AbstractDb
 			if ($debug)
 			{
 				$num_rows = pg_num_rows($result);
-				echo "<p>ExecuterSqlResUnique(): DEBUG: Il y a $num_rows résultats:<br><TABLE>";
+				echo "<p>ExecSqlUniqueRes(): The query returned $num_rows result(s) :<br><TABLE>";
 				if ($returnResults != NULL)
 				{
 					//On affiche l'en-téte des colonnes une seule fois*/
@@ -277,7 +277,7 @@ class AbstractDb
 		$connection = $this -> connexionDb(NULL);
 		if ($debug == TRUE)
 		{
-			echo "<hr /><p>ExecuterSqlUpdate(): DEBUG: requête:<br>\n<pre>$sql</pre></p>\n";
+			echo "<hr /><p>ExecSqlUpdate(): SQL Query :<br>\n<pre>$sql</pre></p>\n";
 		}
 
 		global $sql_num_update_querys;

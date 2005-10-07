@@ -28,31 +28,6 @@ COMMENT ON SCHEMA public IS 'Standard public schema';
 
 SET search_path = public, pg_catalog;
 
---
--- Name: plpgsql_call_handler(); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION plpgsql_call_handler() RETURNS language_handler
-    AS '$libdir/plpgsql', 'plpgsql_call_handler'
-    LANGUAGE c;
-
-
---
--- Name: plpgsql_validator(oid); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION plpgsql_validator(oid) RETURNS void
-    AS '$libdir/plpgsql', 'plpgsql_validator'
-    LANGUAGE c;
-
-
---
--- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: public; Owner: 
---
-
-CREATE TRUSTED PROCEDURAL LANGUAGE plpgsql HANDLER plpgsql_call_handler VALIDATOR plpgsql_validator;
-
-
 SET default_tablespace = '';
 
 SET default_with_oids = true;
@@ -325,9 +300,9 @@ CREATE TABLE networks (
     allow_multiple_login boolean DEFAULT false NOT NULL,
     allow_splash_only_nodes boolean DEFAULT false NOT NULL,
     allow_custom_portal_redirect boolean DEFAULT false NOT NULL,
-    CONSTRAINT networks_name_check CHECK ((name <> ''::text)),
-    CONSTRAINT networks_network_authenticator_class_check CHECK ((network_authenticator_class <> ''::text)),
-    CONSTRAINT networks_validation_email_from_address_check CHECK ((validation_email_from_address <> ''::text))
+    CONSTRAINT networks_name CHECK ((name <> ''::text)),
+    CONSTRAINT networks_network_authenticator_class CHECK ((network_authenticator_class <> ''::text)),
+    CONSTRAINT networks_validation_email_from_address CHECK ((validation_email_from_address <> ''::text))
 );
 
 
@@ -412,15 +387,6 @@ CREATE TABLE pictures (
     pictures_id text NOT NULL,
     width integer,
     height integer
-);
-
-
---
--- Name: real_first_conn_table_name_3df89c20e8b80f2d145c27ef641713ae; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
---
-
-CREATE TABLE real_first_conn_table_name_3df89c20e8b80f2d145c27ef641713ae (
-    conn_id integer
 );
 
 
@@ -722,27 +688,6 @@ ALTER TABLE ONLY venue_types
 
 
 --
--- Name: idx_connections_node_id; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
---
-
-CREATE INDEX idx_connections_node_id ON connections USING btree (node_id);
-
-
---
--- Name: idx_connections_user_id; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
---
-
-CREATE INDEX idx_connections_user_id ON connections USING btree (user_id);
-
-
---
--- Name: idx_connections_user_mac; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
---
-
-CREATE INDEX idx_connections_user_mac ON connections USING btree (user_mac);
-
-
---
 -- Name: idx_content_group_element_content_group_id; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
 --
 
@@ -907,6 +852,14 @@ ALTER TABLE ONLY node_stakeholders
 
 
 --
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY network_stakeholders
+    ADD CONSTRAINT "$1" FOREIGN KEY (network_id) REFERENCES networks(network_id);
+
+
+--
 -- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -975,6 +928,14 @@ ALTER TABLE ONLY content_display_log
 --
 
 ALTER TABLE ONLY node_stakeholders
+    ADD CONSTRAINT "$2" FOREIGN KEY (user_id) REFERENCES users(user_id);
+
+
+--
+-- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY network_stakeholders
     ADD CONSTRAINT "$2" FOREIGN KEY (user_id) REFERENCES users(user_id);
 
 
@@ -1088,22 +1049,6 @@ ALTER TABLE ONLY nodes
 
 ALTER TABLE ONLY network_has_content
     ADD CONSTRAINT network_id_fkey FOREIGN KEY (network_id) REFERENCES networks(network_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: network_stakeholders_network_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY network_stakeholders
-    ADD CONSTRAINT network_stakeholders_network_id_fkey FOREIGN KEY (network_id) REFERENCES networks(network_id);
-
-
---
--- Name: network_stakeholders_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY network_stakeholders
-    ADD CONSTRAINT network_stakeholders_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(user_id);
 
 
 --

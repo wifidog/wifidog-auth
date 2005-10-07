@@ -1,3 +1,9 @@
+2005-10-04 Francois Proulx <francois.proulx@gmail.com>
+	* Translated some error message in SQL abstraction
+	* Cleaned up error messages when starting from scratch
+	* Added link to install script, when the database is empty.
+	* Fixed initial data dump script
+	
 2005-10-04 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Remove a bunch of deprecated methods from the Node object,
 	 document undocumented methods.

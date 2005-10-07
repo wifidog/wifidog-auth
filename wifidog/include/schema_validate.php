@@ -34,10 +34,20 @@ define('REQUIRED_SCHEMA_VERSION', 31);
 function validate_schema()
 {
 	global $db;
-	$db->ExecSqlUniqueRes("SELECT * FROM schema_info WHERE tag='schema_version'", $row, false);
+	$row = null;
+	try
+	{
+		// Check the schema info
+		$db->ExecSqlUniqueRes("SELECT * FROM schema_info WHERE tag='schema_version'", $row, false);
+	}
+	catch(Exception $e) { /* Be quiet */ }
+	
 	if (empty ($row))
 	{
-		echo "<html><head><h1>"._("Unable to retrieve schema version.  The database schema is too old to be updated.")."</h1></html></head>";
+		echo "<html><body>";
+		echo "<h1>"._("Unable to retrieve schema version. The database schema is too old to be updated.")."</h1>";
+		echo "<h2>"._("Try running the")." <a href='".BASEPATH."install.php'>"._("installation script")."</a>.</h2>\n";
+		echo "</html></body>";
 		exit ();
 	}
 	else
