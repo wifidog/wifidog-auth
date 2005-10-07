@@ -136,9 +136,11 @@ class Network implements GenericObject
 	* @param $user_prefix A identifier provided by the programmer to recognise it's generated html form
 	* @param $pre_selected_network Optional, Network object: The network to be pre-
 	* selected in the form object
+	* @param $additional_where Additional SQL conditions for the networks to
+	* select
 	* @return html markup
 	*/
-	public static function getSelectNetworkUI($user_prefix, $pre_selected_network = null)
+	public static function getSelectNetworkUI($user_prefix, $pre_selected_network = null, $additional_where=null)
 	{
 		$html = '';
 		$name = $user_prefix;
@@ -153,7 +155,8 @@ class Network implements GenericObject
 			$selected_id = null;
 		}
 		global $db;
-		$sql = "SELECT network_id, name FROM networks ORDER BY is_default_network DESC";
+		$additional_where = $db->EscapeString($additional_where);
+		$sql = "SELECT network_id, name FROM networks WHERE 1=1 $additional_where ORDER BY is_default_network DESC";
 		$network_rows = null;
 		$db->ExecSql($sql, $network_rows, false);
 		if ($network_rows == null)

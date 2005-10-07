@@ -1,3 +1,9 @@
+2005-10-04 Benoit Grégoire  <bock@step.polymtl.ca>
+	* AuthenticatorLocalUserNoSignup:  Make a new authenticator, identical to AuthenticatorLocalUser
+	 but disalowing new user signup.  When setting up a server, you can add your users, and then change 
+	 the authenticator class from AuthenticatorLocalUser to AuthenticatorLocalUserNoSignup
+	* signup.php:  Actually enforce it.  Still needs improvement, as the network is still shown for signing up.
+
 2005-10-04 Francois Proulx <francois.proulx@gmail.com>
 	* Translated some error message in SQL abstraction
 	* Cleaned up error messages when starting from scratch

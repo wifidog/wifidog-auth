@@ -85,7 +85,8 @@ if (isset ($_REQUEST["submit"]))
 	{
 		if (!isset($network))
 			throw new Exception(_("Sorry, this network does not exist !"));
-
+		if (!$network->getAuthenticator()->isRegistrationPermitted())
+			throw new Exception(_("Sorry, this network does not accept new user registration !"));
 		validate_username($username);
 		validate_email($email);
 		validate_passwords($password, $password_again);
