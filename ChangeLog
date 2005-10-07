@@ -1,4 +1,4 @@
-2005-10-04 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-10-06 Benoit Grégoire  <bock@step.polymtl.ca>
 	* AuthenticatorLocalUserNoSignup:  Make a new authenticator, identical to AuthenticatorLocalUser
 	 but disalowing new user signup.  When setting up a server, you can add your users, and then change 
 	 the authenticator class from AuthenticatorLocalUser to AuthenticatorLocalUserNoSignup
