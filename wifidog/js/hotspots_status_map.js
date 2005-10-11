@@ -25,16 +25,21 @@
 // Constructor
 function HotspotsMap(viewport, external_object_name)
 {
-	// Create the map attribute
-	this.map = new GMap(document.getElementById(viewport));
-	this.map.addControl(new GLargeMapControl());
-	this.map.addControl(new GMapTypeControl());
-	// Create the array that will contain refs to markers
-	this.markers = Array();
-	// Init source url
-	this.xml_source = null;
-	// This is quite stupide, but it's needed since we need to build onclick urls
-	this.external_object_name = external_object_name;
+	if(GBrowserIsCompatible())
+	{
+		// Create the map attribute
+		this.map = new GMap(document.getElementById(viewport));
+		this.map.addControl(new GLargeMapControl());
+		this.map.addControl(new GMapTypeControl());
+		// Create the array that will contain refs to markers
+		this.markers = Array();
+		// Init source url
+		this.xml_source = null;
+		// This is quite stupide, but it's needed since we need to build onclick urls
+		this.external_object_name = external_object_name;
+	}
+	else
+		alert("Sorry, your browser does not support Google Maps.");
 }
 
 HotspotsMap.prototype.getGPointFromPostalCode = function(postal_code)
