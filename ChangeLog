@@ -1,4 +1,9 @@
 2005-10-04 Francois Proulx <francois.proulx@gmail.com>
+	* Scaled down network logo
+	* Changed CSS accordingly
+	* Modified online users SQL query to sort better
+	
+2005-10-04 Francois Proulx <francois.proulx@gmail.com>
 	* Removed unwanted file from checkout
 	
 2005-10-07 Philippe April  <philippe@ilesansfil.org>
