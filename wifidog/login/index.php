@@ -202,16 +202,16 @@ $network_logo_banner_url = COMMON_CONTENT_URL.NETWORK_LOGO_BANNER_NAME;
 
 $html_body = "<div class='login_body'><center>";
 
-$hotspot_homepage_url = $node->getHomePageURL();
-if (!empty ($hotspot_homepage_url))
-	$html_body .= "<a href=\"{$hotspot_homepage_url}\"><h1>{$node->getName()}</h1></a>";
-else
-	$html_body .= "<h1>{$node->getName()}</h1>";
-
 /* Node section */
 // Get all node content 
-if ($node)
+if (!empty($node))
 {
+	$hotspot_homepage_url = $node->getHomePageURL();
+	if (!empty ($hotspot_homepage_url))
+		$html_body .= "<a href=\"{$hotspot_homepage_url}\"><h1>{$node->getName()}</h1></a>";
+	else
+		$html_body .= "<h1>{$node->getName()}</h1>";
+	
 	$contents = $node->getAllContent(true, null, 'login_page');
 	if ($contents)
 	{
