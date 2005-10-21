@@ -1,3 +1,8 @@
+2005-10-21 Francois Proulx <francois.proulx@gmail.com>
+	* Integration testing for Radius debugging
+	* Added network_id parameter to hotspot_status.php for selecting network
+	* Default network will be automatically selected...
+	
 2005-10-04 Francois Proulx <francois.proulx@gmail.com>
 	* Scaled down network logo
 	* Changed CSS accordingly

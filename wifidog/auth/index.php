@@ -33,108 +33,109 @@ $auth_response = ACCOUNT_STATUS_DENIED;
 $auth_message = '';
 
 $token = null;
-if(!empty($_REQUEST['token']))
+if (!empty ($_REQUEST['token']))
 {
-$token = $db->EscapeString($_REQUEST['token']);
+	$token = $db->EscapeString($_REQUEST['token']);
 }
 
 $db->ExecSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.token='$token'", $info, false);
 if ($info != null)
 {
 	// Retrieve the associated authenticator
-	$network = Network::getObject($info['account_origin']);
+	$network = Network :: getObject($info['account_origin']);
 	$authenticator = $network->getAuthenticator();
-if(!$authenticator)
-{
-			$auth_message .= "| Error: Unable to instanciate authenticator. ";
-			$auth_response = ACCOUNT_STATUS_ERROR;
-}
-else
-{
-if ($_REQUEST['stage'] == STAGE_LOGIN)
+	if (!$authenticator)
 	{
-		if ($info['token_status'] == TOKEN_UNUSED)
-		{
-			/* This is for the 15 minutes validation period, the exact same code is also present in when the stage is counters.  If you update this one don't forget to update the other one! */
-			if (($info['account_status'] == ACCOUNT_STATUS_VALIDATION) && ($info['validation_grace_time_expired'] == 't'))
-			{
-				$auth_response = ACCOUNT_STATUS_VALIDATION_FAILED;
-				$auth_message .= "| The validation grace period which began at ".$info['reg_date']." has now expired. ";
-			}
-			else
-			{
-				// Start accounting
-				if($authenticator->acctStart($info['conn_id'], $auth_message))
-					$auth_response = ACCOUNT_STATUS_ALLOWED;
-				else
-					$auth_response = ACCOUNT_STATUS_DENIED;
-				
-			}
-		}
-		else if($info['token_status'] == TOKEN_INUSE && $info['gw_id'] == $_REQUEST['gw_id'] && $info['mac'] == $_REQUEST['mac'] && $info['ip'] == $_REQUEST['ip'])
-		{
-			// This solves the bug where the user clicks twice before getting the portal page
-			$auth_response = ACCOUNT_STATUS_ALLOWED;
-		}
-		else
-		{
-			$auth_message .= "| Tried to login with a token that wasn't TOKEN_UNUSED. ";
-		}
+		$auth_message .= "| Error: Unable to instanciate authenticator. ";
+		$auth_response = ACCOUNT_STATUS_ERROR;
 	}
 	else
-		if ($_REQUEST['stage'] == STAGE_LOGOUT || $_REQUEST['stage'] == STAGE_COUNTERS)
+	{
+		if ($_REQUEST['stage'] == STAGE_LOGIN)
 		{
-			if ($_REQUEST['stage'] == STAGE_LOGOUT)
+			if ($info['token_status'] == TOKEN_UNUSED)
 			{
-				$authenticator->logout($info['conn_id']);
-				$auth_message .= "| User is now logged out. ";
-			}
-
-			if ($_REQUEST['stage'] == STAGE_COUNTERS)
-			{
-				if ($info['token_status'] == TOKEN_INUSE)
+				/* This is for the 15 minutes validation period, the exact same code is also present in when the stage is counters.  If you update this one don't forget to update the other one! */
+				if (($info['account_status'] == ACCOUNT_STATUS_VALIDATION) && ($info['validation_grace_time_expired'] == 't'))
 				{
-					/* This is for the 15 minutes validation period, the exact same code is also present when the stage is login.  If you update this one don't forget to update the other one! */
-					if (($info['account_status'] == ACCOUNT_STATUS_VALIDATION) && ($info['validation_grace_time_expired'] == 't'))
+					$auth_response = ACCOUNT_STATUS_VALIDATION_FAILED;
+					$auth_message .= "| The validation grace period which began at ".$info['reg_date']." has now expired. ";
+				}
+				else
+				{
+					// Start accounting
+					if ($authenticator->acctStart($info['conn_id'], $auth_message))
+						$auth_response = ACCOUNT_STATUS_ALLOWED;
+					else
+						$auth_response = ACCOUNT_STATUS_DENIED;
+
+				}
+			}
+			else
+				if ($info['token_status'] == TOKEN_INUSE && $info['gw_id'] == $_REQUEST['gw_id'] && $info['mac'] == $_REQUEST['mac'] && $info['ip'] == $_REQUEST['ip'])
+				{
+					// This solves the bug where the user clicks twice before getting the portal page
+					$auth_response = ACCOUNT_STATUS_ALLOWED;
+				}
+				else
+				{
+					$auth_message .= "| Tried to login with a token that wasn't TOKEN_UNUSED. ";
+				}
+		}
+		else
+			if ($_REQUEST['stage'] == STAGE_LOGOUT || $_REQUEST['stage'] == STAGE_COUNTERS)
+			{
+				if ($_REQUEST['stage'] == STAGE_LOGOUT)
+				{
+					$authenticator->logout($info['conn_id']);
+					$auth_message .= "| User is now logged out. ";
+				}
+
+				if ($_REQUEST['stage'] == STAGE_COUNTERS)
+				{
+					if ($info['token_status'] == TOKEN_INUSE)
 					{
-						$auth_response = ACCOUNT_STATUS_VALIDATION_FAILED;
-						$auth_message .= "| The validation grace period which began at ".$info['reg_date']." has now expired. ";
+						/* This is for the 15 minutes validation period, the exact same code is also present when the stage is login.  If you update this one don't forget to update the other one! */
+						if (($info['account_status'] == ACCOUNT_STATUS_VALIDATION) && ($info['validation_grace_time_expired'] == 't'))
+						{
+							$auth_response = ACCOUNT_STATUS_VALIDATION_FAILED;
+							$auth_message .= "| The validation grace period which began at ".$info['reg_date']." has now expired. ";
+						}
+						else
+						{
+							$auth_response = $info['account_status'];
+						}
+					}
+
+				}
+
+				if (!empty ($_REQUEST['incoming']) || !empty ($_REQUEST['outgoing']))
+				{
+					$incoming = $db->EscapeString($_REQUEST['incoming']);
+					$outgoing = $db->EscapeString($_REQUEST['outgoing']);
+
+					if (($incoming >= $info['incoming']) && ($outgoing >= $info['outgoing']))
+					{
+						$authenticator->acctUpdate($info['conn_id'], $incoming, $outgoing);
+						$auth_message .= "| Updated counters. ";
 					}
 					else
 					{
-						$auth_response = $info['account_status'];
+						$auth_message .= "| Warning:  Incoming or outgoing counter is smaller than what is stored in the database; counters not updated. ";
+
 					}
-				}
-
-			}
-
-			if (!empty ($_REQUEST['incoming']) || !empty ($_REQUEST['outgoing']))
-			{
-				$incoming = $db->EscapeString($_REQUEST['incoming']);
-				$outgoing = $db->EscapeString($_REQUEST['outgoing']);
-
-				if (($incoming >= $info['incoming']) && ($outgoing >= $info['outgoing']))
-				{
-					$authenticator->acctUpdate($info['conn_id'], $incoming, $outgoing);
-					$auth_message .= "| Updated counters. ";
 				}
 				else
 				{
-					$auth_message .= "| Warning:  Incoming or outgoing counter is smaller than what is stored in the database; counters not updated. ";
-
+					$auth_message .= "| Incoming or outgoing counter is missing; counters not updated. ";
 				}
 			}
 			else
 			{
-				$auth_message .= "| Incoming or outgoing counter is missing; counters not updated. ";
+				$auth_message .= "| Error: Unknown stage. ";
+				$auth_response = ACCOUNT_STATUS_ERROR;
 			}
-		}
-		else
-		{
-			$auth_message .= "| Error: Unknown stage. ";
-			$auth_response = ACCOUNT_STATUS_ERROR;
-		}
-}
+	}
 }
 else
 {

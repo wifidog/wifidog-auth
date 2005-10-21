@@ -321,8 +321,6 @@ $html .= '<p>'._("I am not logged in.").'<br><a href="'.$href.'">'._("Login").'<
 		$html .= '<meta http-equiv="Expires" CONTENT="-1">'."\n";
 		// Add HTML headers
 		$html .= "{$this->html_headers}";
-		$html .= "<html>\n";
-		$html .= "<head>\n";
 		$html .= "<title>{$this->title}</title>\n";
 		$html .= "<style type='text/css'>\n";
 		if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.STYLESHEET_NAME))

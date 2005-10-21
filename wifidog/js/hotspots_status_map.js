@@ -58,9 +58,8 @@ HotspotsMap.prototype.getGPointFromPostalCode = function(postal_code)
 			if(request.responseXML != undefined)
 			{
 				var xml_doc = request.responseXML;
-				var lng = xml_doc.documentElement.getElementsByTagName("long");
-				var lat = xml_doc.documentElement.getElementsByTagName("lat");
-				self.findClosestHotspotByGPoint(new GPoint(lng[0].firstChild.nodeValue, lat[0].firstChild.nodeValue));
+				var gis = xml_doc.documentElement;
+				self.findClosestHotspotByGPoint(new GPoint(GXml.value(gis.getElementsByTagName("long")[0]), GXml.value(gis.getElementsByTagName("lat")[0])));
 			}
 		}
 	}
@@ -117,51 +116,52 @@ HotspotsMap.prototype.buildHtmlFromHotspot = function(hotspot_element, icon)
 	
 	var name = hotspot_element.getElementsByTagName("name");
 	if(name.length == 1)
-		html += "<b>" + name[0].firstChild.nodeValue + "</b>";
+		html += "<b>" + GXml.value(name[0]) + "</b>";
 		
 	html += "<br/>";
 	
 	var civicNumber = hotspot_element.getElementsByTagName("civicNumber");
 	if(civicNumber.length == 1)
-		html += "<i>" + civicNumber[0].firstChild.nodeValue + ",&nbsp;</i>";
+		html += "<i>" + GXml.value(civicNumber[0]) + ",&nbsp;</i>";
 			
 	var streetAddress = hotspot_element.getElementsByTagName("streetAddress");
 	if(streetAddress.length == 1)
-		html += "<i>" + streetAddress[0].firstChild.nodeValue + ",&nbsp;</i>";
+		html += "<i>" + GXml.value(streetAddress[0]) + ",&nbsp;</i>";
 	
 	html += "<br/>";
 		
 	var city = hotspot_element.getElementsByTagName("city");
 	if(city.length == 1)
-		html += "<i>" + city[0].firstChild.nodeValue + ",&nbsp;</i>";
+		html += "<i>" + GXml.value(city[0]) + ",&nbsp;</i>";
 	
 	var province = hotspot_element.getElementsByTagName("province");
 	if(province.length == 1)
-		html += "<i>" + province[0].firstChild.nodeValue + ",&nbsp;</i>";
+		html += "<i>" + GXml.value(province[0]) + ",&nbsp;</i>";
 		
 	html += "<br/>";
 		
 	var postalCode = hotspot_element.getElementsByTagName("postalCode");
 	if(postalCode.length == 1)
-		html += "<i>" + postalCode[0].firstChild.nodeValue + ",&nbsp;</i>";
+		html += "<i>" + GXml.value(postalCode[0]) + ",&nbsp;</i>";
 	
 	var country = hotspot_element.getElementsByTagName("country");
 	if(country.length == 1)
-		html += "<i>" + country[0].firstChild.nodeValue + "</i>";
+		html += "<i>" + GXml.value(country[0]) + "</i>";
 		
 	html += "<br/>";
 		
 	var phone = hotspot_element.getElementsByTagName("contactPhoneNumber");
 	if(phone.length == 1)
-		html += "<i>" + phone[0].firstChild.nodeValue + "</i><br/>";
+		html += "<i>" + GXml.value(phone[0]) + "</i><br/>";
 		
 	var transit = hotspot_element.getElementsByTagName("massTransitInfo");
 	if(transit.length == 1)
-		html += "<b>" + transit[0].firstChild.nodeValue + "</b><br/>";
+		html += "<b>" + GXml.value(transit[0]) + "</b><br/>";
 		
 	var websiteUrl = hotspot_element.getElementsByTagName("webSiteUrl");
 	if(websiteUrl.length == 1)
-		html += "<a href='" + websiteUrl[0].firstChild.nodeValue + "'>URL (WWW)</a>";
+		html += "<a href='" + GXml.value(websiteUrl[0]) + "'>URL (WWW)</a>";
+		
 	html += "</td></tr></table>";
 	
 	return html;
@@ -244,7 +244,7 @@ HotspotsMap.prototype.parseHotspotsStatus = function(xml_doc)
 			var markerIcon;
 			if(status.length == 1)
 			{
-				switch(status[0].firstChild.nodeValue)
+				switch(GXml.value(status[0]))
 				{
 					case "100":
 						markerIcon = upIcon; // Hotspot is up
@@ -261,12 +261,12 @@ HotspotsMap.prototype.parseHotspotsStatus = function(xml_doc)
 			
 			// Prepare fragment that will go in the sidebar
 			var html = this.buildHtmlFromHotspot(hotspots[i], markerIcon);
-			html_list += html + "<p/><a href=\"#\" onClick=\"" + this.external_object_name +".openInfoBubble('" + hotspotId[0].firstChild.nodeValue + "');\">Show me on the map</a><hr width='95%'/>";
+			html_list += html + "<p/><a href=\"#\" onClick=\"" + this.external_object_name +".openInfoBubble('" + GXml.value(hotspotId[0]) + "');\">Show me on the map</a><hr width='95%'/>";
 			
 			// Create, save as ID and add the marker
 			var marker = this.createInfoBubble(point, markerIcon, html);
 			// markers is a global var
-			this.markers[hotspotId[0].firstChild.nodeValue] = marker;
+			this.markers[GXml.value(hotspotId[0])] = marker;
 			this.map.addOverlay(marker);
 		}
 	}

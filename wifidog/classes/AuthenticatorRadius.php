@@ -162,7 +162,7 @@ class AuthenticatorRadius extends Authenticator
 					$user = new User($user_info['user_id']);
 					if ($user->isUserValid($errmsg))
 					{
-						$retval = $user;
+						$retval = & $user;
 						User::setCurrentUser($user);
 						$errmsg = _("Login successfull");
 					}
@@ -197,7 +197,7 @@ class AuthenticatorRadius extends Authenticator
 
 	/** Start accounting traffic for the user 
 	 * $conn_id:  The connection id for the connection to work on */
-	function acctStart($conn_id, & $errmsg = null)
+	function acctStart($info, & $errmsg = null)
 	{
 		// RADIUS accounting start
 		$radius_acct = new Auth_RADIUS_Acct_Start;
