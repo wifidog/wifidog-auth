@@ -236,13 +236,12 @@ class AuthenticatorRadius extends Authenticator
 
 	/** Update traffic counters
 	 * $conn_id: The connection id for the connection to work on */
-	function acctUpdate($conn_id, $incoming, $outgoing, & $errmsg = null)
+	function acctUpdate($info, $incoming, $outgoing, & $errmsg = null)
 	{
 		// Call generic traffic updater ( local database )
-		parent :: acctUpdate($conn_id, $incoming, $outgoing);
+		parent :: acctUpdate($info['conn_id'], $incoming, $outgoing);
 		global $db;
-		$conn_id = $db->escapeString($conn_id);
-		$db->ExecSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id='$conn_id'", $info, false);
+		$db->ExecSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id='{$info['conn_id']}", $info, false);
 		
 		// RADIUS accounting ping
 		// Session is completely based on Database time
@@ -285,12 +284,11 @@ class AuthenticatorRadius extends Authenticator
 	/** Final update and stop accounting
 	 * $conn_id:  The connection id (the token id) for the connection to work on
 	 * */
-	function acctStop($conn_id, & $errmsg = null)
+	function acctStop($info, & $errmsg = null)
 	{
-		parent :: acctStop($conn_id);
+		parent :: acctStop($info['conn_id']);
 		global $db;
-		$conn_id = $db->escapeString($conn_id);
-		$db->ExecSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id='$conn_id'", $info, false);
+		$db->ExecSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id='{$info['conn_id']}", $info, false);
 
 		// RADIUS accounting stop
 		// Session is completely based on Database time
