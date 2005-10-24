@@ -99,24 +99,24 @@ class AuthenticatorLocalUser extends Authenticator
 	}
 
 	/** Start accounting traffic for the user */
-	function acctStart($info, & $errmsg = null)
+	function acctStart($conn_id, & $errmsg = null)
 	{
-		parent :: acctStart($info);
+		parent :: acctStart($conn_id);
 		return true;
 	}
 
 	/** Update traffic counters */
-	function acctUpdate($info, $incoming, $outgoing, & $errmsg = null)
+	function acctUpdate($conn_id, $incoming, $outgoing, & $errmsg = null)
 	{
 		// Just call the generic counters update
-		parent :: acctUpdate($info, $incoming, $outgoing);
+		parent :: acctUpdate($conn_id, $incoming, $outgoing);
 		return true;
 	}
 
 	/** Final update and stop accounting */
-	function acctStop($info, & $errmsg = null)
+	function acctStop($conn_id, & $errmsg = null)
 	{
-		parent :: acctStop($info);
+		parent :: acctStop($conn_id);
 		return true;
 	}
 	
