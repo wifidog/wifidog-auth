@@ -1,3 +1,6 @@
+2005-10-25 Francois Proulx <francois.proulx@gmail.com>
+	* AuthenticatorRadius : Fixed legacy variable misuse
+	
 2005-10-24 Benoit Grégoire  <bock@step.polymtl.ca>
 	* AuthenticatorRadius:  Fix bug reported by kouete, by inspection.  Fix not actually tested. 
 	 Guys, read the documentation of the function parameters when you code, it's there to help you ;)
