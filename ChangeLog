@@ -1,4 +1,9 @@
 2005-10-25 Francois Proulx <francois.proulx@gmail.com>
+	* /classes/DateTime.php : First iteration of DateTime abstraction class
+	* Basic support for datetime input field.
+	* TODO : Overhaul with full-fledged datetime selector...
+	
+2005-10-25 Francois Proulx <francois.proulx@gmail.com>
 	* AuthenticatorRadius : Fixed legacy variable misuse
 	
 2005-10-24 Benoit Grégoire  <bock@step.polymtl.ca>

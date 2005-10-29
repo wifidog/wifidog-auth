@@ -28,6 +28,7 @@ require_once 'User.php';
 require_once 'GisPoint.php';
 require_once 'AbstractGeocoder.php';
 require_once 'Utils.php';
+require_once 'DateTime.php';
 
 /** Abstract a Node.  A Node is an actual physical transmitter.
  * @todo:  Make all the setter functions no-op if the value is the same as what
@@ -407,6 +408,13 @@ class Node implements GenericObject
 	{
 		return $this->mRow['creation_date'];
 	}
+	
+	function setCreationDate($creation_date)
+	{
+		$creation_date = $this->mDb->EscapeString($creation_date);
+		$this->mDb->ExecSqlUpdate("UPDATE nodes SET creation_date = '{$creation_date}' WHERE node_id = '{$this->getId()}'");
+		$this->refresh();
+	}
 
 	function getHomePageURL()
 	{
@@ -692,6 +700,16 @@ class Node implements GenericObject
 		$html .= "<input type='text' size='20' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
+		
+		// Creation date
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>"._("Creation date")." : </div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$name = "node_".$hashed_node_id."_creation_date";
+		$html .= DateTime::getSelectDateTimeUI(new DateTime($this->getCreationDate()), $name, DateTime::INTERFACE_DATETIME_FIELD);
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+		
 
 		// Name
 		$html .= "<div class='admin_section_container'>\n";
@@ -1012,6 +1030,10 @@ $html .= Content::getLinkedContentUI($name, 'node_has_content', 'node_id', $this
 		// Name
 		$name = "node_".$hashed_node_id."_name";
 		$this->setName($_REQUEST[$name]);
+		
+		// Creation date
+		$name = "node_".$hashed_node_id."_creation_date";
+		$this->setCreationDate(DateTime::processSelectDateTimeUI($name, DateTime::INTERFACE_DATETIME_FIELD)->getIso8601FormattedString());
 
 		// Homepage URL
 		$name = "node_".$hashed_node_id."_homepage_url";
