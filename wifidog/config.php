@@ -49,7 +49,8 @@ define('CONF_DBMS', DBMS_POSTGRES);
 
 /* Available Locales (Languages) */
 $AVAIL_LOCALE_ARRAY=array('fr'=>'Français',
-            			'en'=>'English');
+            			'en'=>'English',
+            			'de'=>'Deutsch');
             					
 /***** You should normally not have to edit anything below this ******/
 define('WIFIDOG_NAME', 'WiFiDog Authentication server');
