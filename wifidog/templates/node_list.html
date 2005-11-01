@@ -19,7 +19,7 @@
     <img src='{$smarty.const.BASE_URL_PATH}images/hotspot_status_up.png'>
     {else}
     <img src='{$smarty.const.BASE_URL_PATH}images/hotspot_status_down.png'>
-    {$nodes[node].duration.days} {"days"|_} {$nodes[node].duration.hours}h {$nodes[node].duration.minutes}min<br />
+    {$nodes[node].duration.days} {"days"|_} {$nodes[node].duration.hours}{"h"|_} {$nodes[node].duration.minutes}{"min"|_}<br />
     {/if}
     {$nodes[node].last_heartbeat_user_agent}
     </td>
