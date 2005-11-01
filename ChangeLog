@@ -1,3 +1,15 @@
+2005-11-01 Max Horváth <max.horvath@maxspot.de>
+	* added german translation
+	* modified gen.sh to include geocoder and statistics classes for the translation
+	  file generation
+	* modified hotspot status page to allow translations of every string
+	* modified node list page to allow translations of every string
+	* modified FAQ page to allow translations of every string
+	* fixed bug in FAQ page which caused the Safari browser to display very large
+	  text
+	* modified online users page in administration to allow translations of every
+	  string
+
 2005-10-25 Francois Proulx <francois.proulx@gmail.com>
 	* /classes/DateTime.php : First iteration of DateTime abstraction class
 	* Basic support for datetime input field.
