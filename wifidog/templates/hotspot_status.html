@@ -2,12 +2,12 @@
 <table>
 <thead>
 <tr>
-    <th colspan=6>Status of the {$num_deployed_nodes} open {$hotspot_network_name} HotSpots (Get this list as a <a href='?format=RSS'>RSS feed</a>)</th>
+    <th colspan=6>{"Status of the"|_} {$num_deployed_nodes} {"open"|_} {$hotspot_network_name} {"Hotspots (Get this list as a <a href='?format=RSS'>RSS feed</a>)"|_}</th>
 </tr>
 <tr>
-    <th>HotSpot / Status</th>
-    <th>Description</th>
-    <th>Location</th>
+    <th>{"Hotspot / Status"|_}</th>
+    <th>{"Description"|_}</th>
+    <th>{"Location"|_}</th>
 </tr>
 </thead>
 
@@ -32,12 +32,12 @@
 
     {if $nodes[node].node_deployment_status == 'IN_TESTING'}
       <br />
-      HotSpot in testing phase
+      {"Hotspot in testing phase"|_}
     {/if}
 
     {if $nodes[node].node_deployment_status == 'NON_WIFIDOG_NODE' && $nodes[node].is_up != 't'}
       <br />
-      {$nodes[node].duration.days} days {$nodes[node].duration.hours}h {$nodes[node].duration.minutes}min<br />
+      {$nodes[node].duration.days} {"days"|_} {$nodes[node].duration.hours}{"h"|_} {$nodes[node].duration.minutes}{"min"|_}<br />
     {/if}
     </td>
 
@@ -47,7 +47,7 @@
       <br />
     {/if}
 
-    Opened on {$nodes[node].creation_date}
+    {"Opened on"|_} {$nodes[node].creation_date}
     </td>
 
     <td>
@@ -58,7 +58,7 @@
     {if $nodes[node].province}{$nodes[node].province}, {/if}
     {if $nodes[node].postal_code}{$nodes[node].postal_code}, {/if}
     {if $nodes[node].country}{$nodes[node].country}{/if}	
-    {if $nodes[node].map_url} - <a href='{$nodes[node].map_url}' target='_new'>Map</a>{/if}
+    {if $nodes[node].map_url} - <a href='{$nodes[node].map_url}' target='_new'>{"Map"|_}</a>{/if}
     {if $nodes[node].mass_transit_info}<br />{$nodes[node].mass_transit_info}{/if}
     {if $nodes[node].public_phone_number}<br />{$nodes[node].public_phone_number}{/if}
     {if $nodes[node].public_email}<br />{$nodes[node].public_email}{/if}
