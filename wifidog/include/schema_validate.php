@@ -28,7 +28,7 @@ require_once BASEPATH.'config.php';
 require_once BASEPATH.'classes/AbstractDb.php';
 require_once BASEPATH.'classes/Session.php';
 require_once BASEPATH.'classes/Node.php';
-define('REQUIRED_SCHEMA_VERSION', 31);
+define('REQUIRED_SCHEMA_VERSION', 32);
 
 /** Check that the database schema is up to date.  If it isn't, offer to update it. */
 function validate_schema()
