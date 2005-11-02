@@ -9,6 +9,7 @@
 	  text
 	* modified online users page in administration to allow translations of every
 	  string
+	* added Phlickr directory to /lib
 
 2005-10-25 Francois Proulx <francois.proulx@gmail.com>
 	* /classes/DateTime.php : First iteration of DateTime abstraction class
