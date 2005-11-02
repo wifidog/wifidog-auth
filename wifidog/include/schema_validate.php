@@ -696,6 +696,14 @@ function update_schema()
 			
 		}
 		
+		$new_schema_version = 32;
+		if ($schema_version < $new_schema_version)
+		{
+			echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+			$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+			$sql .= "INSERT INTO locales VALUES ('de');\n";
+		}
+		
 		$db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\nVACUUM ANALYZE;\n", true);
 		//$db->ExecSqlUpdate("BEGIN;\n$sql\nROLLBACK;\n", true);
 		echo "</html></head>";

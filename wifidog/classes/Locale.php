@@ -331,6 +331,11 @@ class Locale
 					$str .= "$resultats[english_name], $resultats[country_english_name]";
 					break;
 				}
+			case ('de') :
+				{
+					$str .= "$resultats[german_name], $resultats[country_german_name]";
+					break;
+				}
 			default :
 				{
 					$str .= "$resultats[french_name], $resultats[country_french_name]";
