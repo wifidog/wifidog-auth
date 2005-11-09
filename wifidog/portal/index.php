@@ -76,8 +76,18 @@ if ($current_node != null)
 	{
 		//$tool_html .= $num_online_users.' '._("other users online at this hotspot...");
         $tool_html .= "<ul class='users_list'>\n";
-        foreach($online_users as $online_user)
-            $tool_html .= "<li>{$online_user->getUsername()}</li>\n";
+        foreach($online_users as $online_user) {
+            $tool_html .= "<li>";
+            $tool_html .= $online_user->getUsername();
+            $roles = array();
+            if ($current_node->isOwner($online_user))
+                $roles[] = _("owner");
+            if ($current_node->isTechnicalOfficer($online_user))
+                $roles[] = _("technical officer");
+            if ($roles)
+                $tool_html .= " <span class='users_list_roles'>(" . join($roles, ",") . ")</span>";
+            $tool_html .= "</li>\n";
+        }
         $tool_html .= "</ul>\n";
 	}
 	else
