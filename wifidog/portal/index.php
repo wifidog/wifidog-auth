@@ -85,7 +85,7 @@ if ($current_node != null)
             if ($current_node->isTechnicalOfficer($online_user))
                 $roles[] = _("technical officer");
             if ($roles)
-                $tool_html .= " <span class='users_list_roles'>(" . join($roles, ",") . ")</span>";
+                $tool_html .= " <span class='roles'>(" . join($roles, ",") . ")</span>";
             $tool_html .= "</li>\n";
         }
         $tool_html .= "</ul>\n";

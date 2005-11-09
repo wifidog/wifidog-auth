@@ -67,6 +67,10 @@ form.language{
 .tool_content .users_list {
 	list-style-type: square;
 }
+.tool_content .users_list .roles {
+    font-size: 8pt;
+    font-style: italic;
+}
 div.avis{
 	padding: 20px 10px 10px 10px;
     {/literal}
