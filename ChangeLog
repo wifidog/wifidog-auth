@@ -1,3 +1,6 @@
+2005-11-08 Philippe April  <philippe@ilesansfil.org>
+	* Put a note to mention the roles of users in the logged in users list
+
 2005-11-01 Max Horváth <max.horvath@maxspot.de>
 	* added german translation
 	* modified gen.sh to include geocoder and statistics classes for the translation
