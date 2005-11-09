@@ -31,7 +31,7 @@ $security->requireAdmin();
 
 global $db;
 $online_users = null;
-$db->ExecSql("SELECT name, username, account_origin, timestamp_in, incoming, outgoing FROM connections,users,nodes WHERE token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND nodes.node_id=connections.node_id ORDER BY account_origin, name, timestamp_in DESC", $online_users);
+$db->ExecSql("SELECT user_id, name, username, account_origin, timestamp_in, incoming, outgoing FROM connections,users,nodes WHERE token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND nodes.node_id=connections.node_id ORDER BY account_origin, name, timestamp_in DESC", $online_users);
 $smarty->assign("users_array", $online_users);
 
 require_once BASEPATH.'classes/MainUI.php';
