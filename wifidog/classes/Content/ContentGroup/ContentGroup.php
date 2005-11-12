@@ -24,8 +24,10 @@
  * @author Copyright (C) 2005 Benoit Grégoire <bock@step.polymtl.ca>,
  * Technologies Coeus inc.
  */
+ 
 require_once BASEPATH.'classes/Content.php';
-require_once BASEPATH.'classes/ContentGroupElement.php';
+require_once BASEPATH.'classes/Content/ContentGroup/ContentGroupElement.php';
+
 /** A generic content group */
 class ContentGroup extends Content
 {

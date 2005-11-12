@@ -147,32 +147,33 @@ class Content implements GenericObject
 	public static function getAvailableContentTypes()
 	{
 		$dir = BASEPATH.'classes/Content';
-		if ($handle = opendir($dir))
+		if ($dir_handle = @opendir($dir))
 		{
-			$tab = Array ();
-			$i = 0;
+			$content_types = array();
+			
 			/* This is the correct way to loop over the directory. */
-			while (false !== ($file = readdir($handle)))
+			while (false !== ($sub_dir = readdir($dir_handle)))
 			{
-				if ($file != '.' && $file != '..')
+				// Loop through sub-directories of Content
+				if ($sub_dir != '.' && $sub_dir != '..' && is_dir("{$dir}/{$sub_dir}"))
 				{
-					if (preg_match("/^.*\.php$/", $file) > 0)
-					{
-						$tab[$i] = $file;
-						$i ++;
-					}
+					// Only add directories containing corresponding initial Content class
+					if(is_file("{$dir}/{$sub_dir}/{$sub_dir}.php"))
+						$content_types[] = $sub_dir;
 				}
 			}
-			closedir($handle);
-			//echo $gfs->genererDeArray($tab, $this->GetStylesheet(), "stylesheet", "Theme::AfficherInterfaceAdmin", true, 'Style par défaut ou style du parent');
+			closedir($dir_handle);
 		}
 		else
 		{
 			throw new Exception(_('Unable to open directory ').$dir);
 		}
-		$tab = str_ireplace('.php', '', $tab);
-		sort($tab);
-		return $tab;
+		
+		// Cleanup PHP file extensions and sort the result array
+		$content_types = str_ireplace('.php', '', $content_types);
+		sort($content_types);
+		
+		return $content_types;
 	}
 
 	/**
@@ -286,7 +287,7 @@ class Content implements GenericObject
 		$link_table_obj_key = $db->EscapeString($link_table_obj_key);
 		$display_location = $db->EscapeString($display_location);
 		$name = "{$user_prefix}_display_location";
-		
+
 		$html .= "<input type='hidden' name='{$name}' value='{$display_location}'>\n";
 		$current_content_sql = "SELECT * FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key' AND display_location='$display_location' ORDER BY subscribe_timestamp DESC";
 		$rows = null;
@@ -312,7 +313,7 @@ class Content implements GenericObject
 		$name = "{$user_prefix}_new_existing";
 		$html .= Content :: getSelectContentUI($name, "AND content_id NOT IN (SELECT content_id FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key')");
 		$name = "{$user_prefix}_new_display_location";
-		
+
 		$html .= "<input type='hidden' name='{$name}' value='{$display_location}'>\n";
 		$name = "{$user_prefix}_new_existing_submit";
 		$html .= "<input type='submit' name='$name' value='"._("Add")."'>";
@@ -343,8 +344,8 @@ class Content implements GenericObject
 		$link_table_obj_key = $db->EscapeString($link_table_obj_key);
 		$name = "{$user_prefix}_display_location";
 		$display_location = $db->EscapeString($_REQUEST[$name]);
-				$name = "{$user_prefix}_new_display_location";
-				$display_location_new = $db->EscapeString($_REQUEST[$name]);
+		$name = "{$user_prefix}_new_display_location";
+		$display_location_new = $db->EscapeString($_REQUEST[$name]);
 		$current_content_sql = "SELECT * FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key' AND display_location='$display_location' ORDER BY subscribe_timestamp DESC";
 		$rows = null;
 		$db->ExecSql($current_content_sql, $rows, false);
@@ -367,20 +368,20 @@ class Content implements GenericObject
 			$name = "{$user_prefix}_new_existing";
 			$content = Content :: processSelectContentUI($name);
 			if ($content)
-				{
+			{
 				$content_id = $db->EscapeString($content->getId());
 				$sql = "INSERT INTO $link_table (content_id, $link_table_obj_key_col, display_location) VALUES ('$content_id', '$link_table_obj_key', '$display_location_new');\n";
 				$db->ExecSqlUpdate($sql, $rows, false);
-				}
+			}
 		}
-			$name = "{$user_prefix}_new";
-			$content = self :: processNewContentUI($name);
-			if ($content)
-				{
-				$content_id = $db->EscapeString($content->getId());
-				$sql = "INSERT INTO $link_table (content_id, $link_table_obj_key_col, display_location) VALUES ('$content_id', '$link_table_obj_key', '$display_location_new');\n";
-				$db->ExecSqlUpdate($sql, $rows, false);
-				}
+		$name = "{$user_prefix}_new";
+		$content = self :: processNewContentUI($name);
+		if ($content)
+		{
+			$content_id = $db->EscapeString($content->getId());
+			$sql = "INSERT INTO $link_table (content_id, $link_table_obj_key_col, display_location) VALUES ('$content_id', '$link_table_obj_key', '$display_location_new');\n";
+			$db->ExecSqlUpdate($sql, $rows, false);
+		}
 
 	}
 
@@ -628,41 +629,38 @@ class Content implements GenericObject
 		if (is_bool($status))
 			$this->is_logging_enabled = $status;
 	}
-	
-	
+
 	/** Get the PHP timestamp of the last time this content was displayed
 	 * @param $user User, Optional, if present, restrict to the selected user
 	 * @param $node Node, Optional, if present, restrict to the selected node
 	 * @return PHP timestamp (seconds since UNIX epoch) if the content has been
 	 * displayed before, an empty string otherwise.
 	 */
-	public function getLastDisplayTimestamp($user=null, $node=null)
+	public function getLastDisplayTimestamp($user = null, $node = null)
 	{
 		global $db;
-$retval = '';		
-			$sql = "SELECT EXTRACT(EPOCH FROM last_display_timestamp) as last_display_unix_timestamp FROM content_display_log WHERE content_id='{$this->id}' \n";
+		$retval = '';
+		$sql = "SELECT EXTRACT(EPOCH FROM last_display_timestamp) as last_display_unix_timestamp FROM content_display_log WHERE content_id='{$this->id}' \n";
 
-			if ($user)
-			{
-				$user_id = $db->EscapeString($user->getId());
-				$sql .= " AND user_id = '{$user_id}' \n";
-			}
-			if ($node)
-			{
-				$node_id = $db->EscapeString($node->getId());
-				$sql .= " AND node_id = '{$node_id}' \n";
-			}
-			$sql .= " ORDER BY last_display_timestamp DESC ";
-			$db->ExecSql($sql, $log_rows, false);
-			if($log_rows)
-			{
-				$retval = $log_rows[0]['last_display_unix_timestamp'];
-			}
+		if ($user)
+		{
+			$user_id = $db->EscapeString($user->getId());
+			$sql .= " AND user_id = '{$user_id}' \n";
+		}
+		if ($node)
+		{
+			$node_id = $db->EscapeString($node->getId());
+			$sql .= " AND node_id = '{$node_id}' \n";
+		}
+		$sql .= " ORDER BY last_display_timestamp DESC ";
+		$db->ExecSql($sql, $log_rows, false);
+		if ($log_rows)
+		{
+			$retval = $log_rows[0]['last_display_unix_timestamp'];
+		}
 
-return $retval;
+		return $retval;
 	}
-
-
 
 	/** Is this Content element displayable at this hotspot, many classer override this
 	 * @param $node Node, optionnal
@@ -1327,6 +1325,6 @@ return $retval;
 $class_names = Content :: getAvailableContentTypes();
 foreach ($class_names as $class_name)
 {
-	require_once BASEPATH.'classes/Content/'.$class_name.'.php';
+	require_once BASEPATH."classes/Content/{$class_name}/{$class_name}.php";
 }
 ?>

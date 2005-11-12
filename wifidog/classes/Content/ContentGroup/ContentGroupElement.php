@@ -25,7 +25,7 @@
  * @author Copyright (C) 2005 Benoit Grégoire <bock@step.polymtl.ca>,
  * Technologies Coeus inc.
  */
-require_once BASEPATH.'classes/Content/ContentGroup.php';
+require_once BASEPATH.'classes/Content/ContentGroup/ContentGroup.php';
 require_once BASEPATH.'classes/Node.php';
 
 /** the elements of a ContentGroup */

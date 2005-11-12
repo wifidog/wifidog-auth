@@ -1,5 +1,6 @@
 <?php
 
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -23,11 +24,11 @@
  * @author Copyright (C) 2005 François Proulx <francois.proulx@gmail.com>,
  * Technologies Coeus inc.
  */
- 
+
 require_once BASEPATH.'classes/Dependencies.php';
 
 // Make sure the Phlickr support is installed
-if (Dependencies::check("Phlickr", $errmsg))
+if (Dependencies :: check("Phlickr", $errmsg))
 {
 	require_once BASEPATH.'classes/Content.php';
 	require_once BASEPATH.'classes/FormSelectGenerator.php';
@@ -43,6 +44,15 @@ if (Dependencies::check("Phlickr", $errmsg))
 	 */
 	class FlickrPhotostream extends Content
 	{
+		/* Photo display modes */
+		const DISPLAY_GRID = 'PDM_GRID';
+		const DISPLAY_FEATURE = 'PDM_FEATURE';
+		const DISPLAY_FEATURE_WITH_RANDOM = 'PDM_FEATURE_WITH_RANDOM';
+
+		/* Grid size */
+		const GRID_X = 3;
+		const GRID_Y = 3;
+
 		/* Photo selection modes */
 		const SELECT_BY_GROUP = 'PSM_GROUP';
 		const SELECT_BY_USER = 'PSM_USER';
@@ -53,14 +63,12 @@ if (Dependencies::check("Phlickr", $errmsg))
 		const TAG_MODE_ALL = 'ALL_TAGS';
 
 		/* Sizes */
-		const SIZE_SQUARED_75x75 = 's';
-		const SIZE_THUMB_100x75 = 't';
-		const SIZE_SMALL_240x180 = 'm';
-		const SIZE_MEDIUM_500x375 = '';
-		const SIZE_ORIGINAL = 'o';
-
-		const GRID_X = 3;
-		const GRID_Y = 3;
+		const SIZE_SQUARED_75x75 = Phlickr_Photo :: SIZE_75PX;
+		const SIZE_THUMB_100x75 = Phlickr_Photo :: SIZE_100PX;
+		const SIZE_SMALL_240x180 = Phlickr_Photo :: SIZE_240PX;
+		const SIZE_MEDIUM_500x375 = Phlickr_Photo :: SIZE_500PX;
+		const SIZE_LARGE_1024 = Phlickr_Photo :: SIZE_1024PX;
+		const SIZE_ORIGINAL = Phlickr_Photo :: SIZE_ORIGINAL;
 
 		/* 15 minutes cache age SHOULD ADD cron tab */
 		const MAX_CACHE_AGE = 600;
@@ -109,8 +117,8 @@ if (Dependencies::check("Phlickr", $errmsg))
 
 		private function writeCacheToDatabase($force_overwrite = false)
 		{
-			//echo "<h2>DEBUG :: Writing cache to database</h2>";
-			$api = $this->getFlickrApi();
+				//echo "<h2>DEBUG :: Writing cache to database</h2>";
+	$api = $this->getFlickrApi();
 			if ($api)
 			{
 				$new_cache = serialize($api->getCache());
@@ -173,16 +181,37 @@ if (Dependencies::check("Phlickr", $errmsg))
 				return false;
 		}
 
+		public function getDisplayMode()
+		{
+			return $this->flickr_photostream_row['photo_display_mode'];
+		}
+
+		public function setDisplayMode($display_mode)
+		{
+			switch ($display_mode)
+			{
+				case self :: DISPLAY_GRID :
+				case self :: DISPLAY_FEATURE :
+				case self :: DISPLAY_FEATURE_WITH_RANDOM :
+					$selection_mode = $this->mBd->EscapeString($display_mode);
+					$this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET photo_display_mode = '".$selection_mode."' WHERE flickr_photostream_id = '".$this->getId()."'");
+					$this->refresh();
+					break;
+				default :
+					throw new Exception(_("Illegal Flickr Photostream display mode."));
+			}
+		}
+
 		public function getApiKey()
 		{
 			return $this->flickr_photostream_row['api_key'];
 		}
-		
+
 		public function getApiSharedSecret()
 		{
 			return $this->flickr_photostream_row['api_shared_secret'];
 		}
-		
+
 		public function setApiSharedSecret($api_shared_secret)
 		{
 			$api_shared_secret = $this->mBd->EscapeString($api_shared_secret);
@@ -320,6 +349,7 @@ if (Dependencies::check("Phlickr", $errmsg))
 				case self :: SIZE_THUMB_100x75 :
 				case self :: SIZE_SMALL_240x180 :
 				case self :: SIZE_MEDIUM_500x375 :
+				case self :: SIZE_LARGE_1024 :
 				case self :: SIZE_ORIGINAL :
 					$size = $this->mBd->EscapeString($size);
 					$this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET preferred_size = '$size' WHERE flickr_photostream_id = '".$this->getId()."'");
@@ -380,12 +410,20 @@ if (Dependencies::check("Phlickr", $errmsg))
 			$html .= "<input type='text' name='$name' value='".$this->getApiKey()."'\n";
 			$html .= "</div>\n";
 			$html .= "</div>\n";
-			
+
 			$html .= "<div class='admin_section_container'>\n";
 			$html .= "<div class='admin_section_title'>"._("Shared secret")." : </div>\n";
 			$html .= "<div class='admin_section_data'>\n";
 			$name = "flickr_photostream_".$this->id."_api_shared_secret";
 			$html .= "<input type='text' name='$name' value='".$this->getApiSharedSecret()."'\n";
+			$html .= "</div>\n";
+			$html .= "</div>\n";
+
+			$html .= "<div class='admin_section_container'>\n";
+			$html .= "<div class='admin_section_title'>"._("Photos display mode")." : </div>\n";
+			$html .= "<div class='admin_section_data'>\n";
+			$display_modes = array (array (0 => self :: DISPLAY_GRID, 1 => _("Grid display")), array (0 => self :: DISPLAY_FEATURE, 1 => _("Feature photo (last one)")), array (0 => self :: DISPLAY_FEATURE_WITH_RANDOM, 1 => _("Feature photo + one at random")));
+			$html .= $generator->generateFromArray($display_modes, $this->getDisplayMode(), "DisplayMode".$this->getID(), "FlickrPhotostream", false, null);
 			$html .= "</div>\n";
 			$html .= "</div>\n";
 
@@ -502,15 +540,12 @@ if (Dependencies::check("Phlickr", $errmsg))
 					$html .= "<div class='admin_section_container'>\n";
 					$html .= "<div class='admin_section_title'>"._("Preferred size")." : </div>\n";
 					$html .= "<div class='admin_section_data'>\n";
-					$preferred_sizes = array (array (0 => self :: SIZE_SQUARED_75x75, 1 => _("Squared 75x75")), array (0 => self :: SIZE_THUMB_100x75, 1 => _("Thumbnail 100x75")), array (0 => self :: SIZE_SMALL_240x180, 1 => _("Small 240x180")), array (0 => self :: SIZE_MEDIUM_500x375, 1 => _("Medium 500x375")), array (0 => self :: SIZE_ORIGINAL, 1 => _("Original size")));
+					$preferred_sizes = array (array (0 => self :: SIZE_SQUARED_75x75, 1 => _("Squared 75x75")), array (0 => self :: SIZE_THUMB_100x75, 1 => _("Thumbnail 100x75")), array (0 => self :: SIZE_SMALL_240x180, 1 => _("Small 240x180")), array (0 => self :: SIZE_MEDIUM_500x375, 1 => _("Medium 500x375")), array (0 => self :: SIZE_LARGE_1024, 1 => _("Large 1024x*")), array (0 => self :: SIZE_ORIGINAL, 1 => _("Original size")));
 					$html .= $generator->generateFromArray($preferred_sizes, $this->getPreferredSize(), "PreferredSize".$this->getID(), "FlickrPhotostream", false, null, "onChange='submit()'");
 					$html .= "</div>\n";
 					$html .= "</div>\n";
 
 					//TODO: Add photo batch size support
-					//TODO: Add photo count support ( number of photos to display at once )
-					//TODO: Add random support (checkbox)
-					//TODO: Add date range support
 
 					$html .= "</div>\n";
 					$html .= "</div>\n";
@@ -553,10 +588,16 @@ if (Dependencies::check("Phlickr", $errmsg))
 
 				$name = "flickr_photostream_".$this->id."_api_key";
 				!empty ($_REQUEST[$name]) ? $this->setApiKey($_REQUEST[$name]) : $this->setApiKey(null);
-				
+
 				$name = "flickr_photostream_".$this->id."_api_shared_secret";
 				!empty ($_REQUEST[$name]) ? $this->setApiSharedSecret($_REQUEST[$name]) : $this->setApiSharedSecret(null);
-				
+
+				$name = "flickr_photostream_".$this->id."_photo_batch_size";
+				!empty ($_REQUEST[$name]) ? $this->setPhotoBatchSize($_REQUEST[$name]) : $this->setPhotoBatchSize(null);
+
+				if ($generator->isPresent("DisplayMode".$this->getID(), "FlickrPhotostream"))
+					$this->setDisplayMode($generator->getResult("DisplayMode".$this->getID(), "FlickrPhotostream"));
+
 				if ($generator->isPresent("SelectionMode".$this->getID(), "FlickrPhotostream"))
 					$this->setSelectionMode($generator->getResult("SelectionMode".$this->getID(), "FlickrPhotostream"));
 
@@ -670,82 +711,84 @@ if (Dependencies::check("Phlickr", $errmsg))
 						foreach ($photos as $cache_authors)
 							$author = new Phlickr_User($api, $cache_authors->getUserId());
 
-						// If there's enough photo show a grid
-						if (count($photos) >= self :: GRID_X * self :: GRID_Y)
+						switch ($this->getDisplayMode())
 						{
-							$grid_photos_idx = array ();
-							$html .= "<table>\n";
-							for ($i = 0; $i < self :: GRID_X; $i ++)
-							{
-								$html .= "<tr>\n";
-								for ($j = 0; $j < self :: GRID_Y; $j ++)
+							case self :: DISPLAY_GRID :
+								// If there's enough photo show a grid
+								if (count($photos) >= self :: GRID_X * self :: GRID_Y)
 								{
-									// Get random values for each grid positions (assert no double)
-									$idx = mt_rand(0, count($photos) - 1);
-									while (in_array($idx, $grid_photos_idx))
-										$idx = mt_rand(0, count($photos) - 1);
-									$grid_photos_idx[] = $idx;
-									$photo = $photos[$idx];
-									if (is_object($photo))
+									$grid_photos_idx = array ();
+									$html .= "<table>\n";
+									for ($i = 0; $i < self :: GRID_X; $i ++)
 									{
-										$author = new Phlickr_User($api, $photo->getUserId());
-										$html .= '<td><div class="flickr_photo"><a href="'.$photo->buildUrl().'"><img title="['.$author->getName()."] ".$photo->getTitle().'" src="'.$photo->buildImgUrl($size).'"></a></div></td>'."\n";
-									}
-								}
-								$html .= "</tr>\n";
-							}
-							$html .= "</table>\n";
-						}
-						else
-						{
-							// Get a photo at random
-							$photo = $photos[mt_rand(0, count($photos) - 1)];
-							if (is_object($photo))
-							{
-								$html .= '<div class="flickr_photo_block">'."\n";
-								if ($this->shouldDisplayTitle())
-								{
-									$title = $photo->getTitle();
-									if (!empty ($title))
-									{
-										$html .= '<div class="flickr_title"><h3>'.$photo->getTitle().'</h3></div>'."\n";
-									}
-								}
-
-								$html .= '<div class="flickr_photo"><a href="'.$photo->buildUrl().'"><img src="'.$photo->buildImgUrl($size).'"></a></div>'."\n";
-
-								if ($this->shouldDisplayTags())
-								{
-									$tags = $photo->getTags();
-									if (!empty ($tags))
-									{
-										$html .= '<div class="flickr_tags">'."\n";
-										$html .= '<h3>'._("Tags")."</h3>\n";
-										$html .= '<ul>'."\n";
-										foreach ($tags as $tag)
+										$html .= "<tr>\n";
+										for ($j = 0; $j < self :: GRID_Y; $j ++)
 										{
-											$url_encoded_tag = urlencode($tag);
-											$html .= '<li><a href="http://www.flickr.com/photos/tags/'.$url_encoded_tag.'/">'.$tag.'</a></li>'."\n";
+											$photo = $photos[$i * self :: GRID_X + $j];
+											if (is_object($photo))
+											{
+												$author = new Phlickr_User($api, $photo->getUserId());
+												$html .= '<td><div class="flickr_photo"><a href="'.$photo->buildUrl().'"><img title="['.$author->getName()."] ".$photo->getTitle().'" src="'.$photo->buildImgUrl($size).'"></a></div></td>'."\n";
+											}
 										}
-										$html .= '</ul>'."\n";
-										$html .= '</div>'."\n";
+										$html .= "</tr>\n";
 									}
+									$html .= "</table>\n";
 								}
-								if ($this->shouldDisplayDescription())
+								break;
+							case self :: DISPLAY_FEATURE :
+								// Get the last photo
+								$photo = $photos[0];
+								if (is_object($photo))
 								{
-									$description = $photo->getDescription();
-									if (!empty ($description))
-										$html .= '<div class="flickr_description">'.$description.'</div>'."\n";
+									/*
+									// Set the hover block
+									$html .= "<div id=\"flickr_photo_hover_{$photo->getId()}\" class=\"flickr_photo_hover\">\n";
+									
+									if ($this->shouldDisplayTitle())
+									{
+										$title = $photo->getTitle();
+										if (!empty ($title))
+										{
+											$html .= '<div class="flickr_title"><h3>'.$photo->getTitle().'</h3></div>'."\n";
+										}
+									
+										if ($this->shouldDisplayTags())
+										{
+											$tags = $photo->getTags();
+											if (!empty ($tags))
+											{
+												$html .= '<div class="flickr_tags">'."\n";
+												$html .= '<h3>'._("Tags")."</h3>\n";
+												$html .= '<ul>'."\n";
+												foreach ($tags as $tag)
+												{
+													$url_encoded_tag = urlencode($tag);
+													$html .= '<li><a href="http://www.flickr.com/photos/tags/'.$url_encoded_tag.'/">'.$tag.'</a></li>'."\n";
+												}
+												$html .= '</ul>'."\n";
+												$html .= '</div>'."\n";
+											}
+										}
+										
+										foreach ($photos as $cache_authors)
+											$author = new Phlickr_User($api, $cache_authors->getUserId());
+										$author = new Phlickr_User($api, $photo->getUserId());
+										$html .= '<div class="flickr_description"><a href="'.$author->buildUrl().'">'.$author->getName().'</a></div>'."\n";
+									}
+									
+									$html .= "</div>\n";
+									*/
+									$html .= '<div class="flickr_photo_block">'."\n";
+									$html .= '<div class="flickr_photo"><a href="'.$photo->buildUrl().'"><img onmouseover="" src="'.$photo->buildImgUrl($size).'"></a></div>'."\n";
+
+									$html .= "</div>\n";
 								}
-
-								foreach ($photos as $cache_authors)
-									$author = new Phlickr_User($api, $cache_authors->getUserId());
-
-								$author = new Phlickr_User($api, $photo->getOwnerId());
-								$html .= '<div class="flickr_description"><a href="'.$author->buildUrl().'">'.$author->getName().'</a></div>'."\n";
-								$html .= '</div>'."\n";
-							}
+								break;
+							case self :: DISPLAY_FEATURE_WITH_RANDOM :
+								break;
 						}
+
 					}
 					else
 					{
@@ -779,14 +822,14 @@ if (Dependencies::check("Phlickr", $errmsg))
 			return parent :: getUserUI($html);
 		}
 
-	/** Reloads the object from the database.  Should normally be called after a set operation.
-	 * This function is private because calling it from a subclass will call the
-	 * constructor from the wrong scope */
-	private function refresh()
-	{
-		$this->__construct($this->id);
-	}
-	
+		/** Reloads the object from the database.  Should normally be called after a set operation.
+		 * This function is private because calling it from a subclass will call the
+		 * constructor from the wrong scope */
+		private function refresh()
+		{
+			$this->__construct($this->id);
+		}
+
 		/** Delete this Content from the database */
 		public function delete(& $errmsg)
 		{
@@ -818,7 +861,7 @@ else
 			$html = '';
 			$html .= "<div class='admin_class'>Flickr Photostream (".get_class($this)." instance)</div>\n";
 			$html .= _("PEAR::Phlickr is not installed");
-			
+
 			return parent :: getAdminUI($html);
 		}
 

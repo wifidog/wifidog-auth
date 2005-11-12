@@ -237,9 +237,6 @@ $html .= "<div id='portal_container'>\n";
 
 /* Network section */
 
-// This table ( width 100% ) force each section to display on top of each other, even though the content will float
-// Until we find a better solution CSS only...
-$html .= "<table><tr><td>";
 $html .= "<div class='portal_network_section'>\n";
 $html .= "<a href='{$hotspot_network_url}'><img class='portal_section_logo' alt='{$hotspot_network_name} logo' src='{$network_logo_banner_url}' border='0'></a>\n";
 // Get all network content and EXCLUDE user subscribed content
@@ -260,7 +257,6 @@ if ($contents)
 	}
 }
 $html .= "</div>\n";
-$html .= "</td></tr></table>";
 
 /* Node section */
 // Get all node content and EXCLUDE user subscribed content
@@ -270,7 +266,6 @@ else
     $contents = $node->getAllContent();
 if($contents)
 {
-    $html .= "<table><tr><td>";
     $html .= "<div class='portal_node_section'>\n";
     $html .= "<span class='portal_section_title'>"._("Content from:")." ";
     $node_homepage = $node->getHomePageURL();
@@ -294,7 +289,6 @@ if($contents)
     	}
     }
     $html .= "</div>\n";
-    $html .= "</td></tr></table>";
 }
 
 /* User section */
@@ -303,7 +297,6 @@ if($current_user)
     $contents = User :: getCurrentUser()->getAllContent();
     if($contents)
     {
-        $html .= "<table><tr><td>";
         $html .= "<div class='portal_user_section'>\n";
         $html .= "<h1>"._("My content")."</h1>\n";
         foreach ($contents as $content)
@@ -313,7 +306,6 @@ if($current_user)
         	$html .= "</div>\n";
         }
         $html .= "</div>\n";
-        $html .= "</td></tr></table>";
     }
 }
 

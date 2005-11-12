@@ -36,8 +36,7 @@ if(!empty($_REQUEST['node_id']))
 	$node = Node::getObject($_REQUEST['node_id']);
 	
 	// Add Google Maps JavaScript ( must set config values )
-	$html_headers = "<script src=\"http://maps.google.com/maps?file=api&v=1&key=".GMAPS_ADMIN_API_KEY."\" type=\"text/javascript\"></script>";
-	$html_headers .= "<script src=\"../js/gmaps_hotspots_status_map.js\" type=\"text/javascript\"></script>";
+	$html_headers = "<script src=\"http://maps.google.com/maps?file=api&v=1&key=".GMAPS_PUBLIC_API_KEY."\" type=\"text/javascript\"></script>";
 	$ui->setHtmlHeader($html_headers);
 	
 	// Create HTML body
@@ -59,7 +58,10 @@ if(!empty($_REQUEST['node_id']))
 	
 	// The onLoad code should only be called once all DIV are created.
 	$script = "<script type=\"text/javascript\">\n";
-	$script .= "var map = loadHotspotsMap(null, $lat, $long, 1);\n";
+	$script .= "var map = new GMap(document.getElementById(\"map_frame\"));\n";
+	$script .= "map.addControl(new GLargeMapControl());\n";
+	$script .= "map.addControl(new GMapTypeControl());\n";
+	$script .= "map.centerAndZoom(new GPoint($long, $lat), 1);\n";
 	$script .= "var current_marker_point = new GPoint($long, $lat);\n";
 	$script .= "var current_marker = new GMarker(current_marker_point);\n";
 	$script .= "map.addOverlay(current_marker);\n";
@@ -69,7 +71,7 @@ if(!empty($_REQUEST['node_id']))
 	$script .= "  window.opener.document.getElementById(\"$gis_lat_name\").value = current_marker_point.y;\n";
 	$script .= "  window.opener.document.getElementById(\"$gis_long_name\").value = current_marker_point.x;";
 	$script .= "}\n";
-	$script .= "setMapClickCallback(map, function(overlay, point) {
+	$script .= "GEvent.addListener(this.map, 'click', function(overlay, point) {
 				if (point)
 				{
 					if(current_marker != null)
@@ -78,8 +80,6 @@ if(!empty($_REQUEST['node_id']))
 					current_marker = new GMarker(point);
 					map.addOverlay(current_marker);
 				}
-				else if(overlay)
-					map.removeOverlay(overlay);
 				});\n";
 	$script .= "</script>\n";
 	$ui->addFooterScript($script);

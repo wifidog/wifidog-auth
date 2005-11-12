@@ -73,5 +73,21 @@ class Utils
 		trim($r);
 		return $r;
 	}
+	
+	// From PHP.net forums : Thanks to mroach at mroach dot com
+	public static function natsort2d(& $arrIn, $index = null)
+	{
+		$arrTemp = array ();
+		$arrOut = array ();
+		foreach ($arrIn as $key => $value)
+		{
+			reset($value);
+			$arrTemp[$key] = is_null($index) ? current($value) : $value[$index];
+		}
+		natsort($arrTemp);
+		foreach ($arrTemp as $key => $value)
+			$arrOut[] = $arrIn[$key];
+		$arrIn = $arrOut;
+	}
 }
 ?>

@@ -1,7 +1,20 @@
+2005-11-11 François Proulx <francois.proulx@gmail.com>
+	* Fixed Admin hotspot location map
+	* Take note : Google Maps updated their API key system, so that you simply need to register a key for the whole domain.
+	  ie. one key for http://auth.abc.org will work even in sub-directories
+	* Changed the Content classes structure to make them "pluggable" more easily.
+	  as requested during last developpers meeting
+	* node_list.php now support column sorting, node_id are naturally sorted (numerical order, alphabetic)
+	* Added 2-dimensionnal natural sort algorithm to Utils class
+	* fixed Node::getSelectNodeUI to naturally sort by node_id
+	* Improved Flickr content class
+	* Modified Flickr database schema
+	* Modified CSS look and feel
+	  
 2005-11-08 Philippe April  <philippe@ilesansfil.org>
 	* Put a note to mention the roles of users in the logged in users list
 	* Fixed online users link to statistics
-
+	  
 2005-11-01 Max Horváth <max.horvath@maxspot.de>
 	* added german translation
 	* modified gen.sh to include geocoder and statistics classes for the translation

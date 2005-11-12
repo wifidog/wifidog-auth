@@ -29,6 +29,7 @@ require_once 'GisPoint.php';
 require_once 'AbstractGeocoder.php';
 require_once 'Utils.php';
 require_once 'DateTime.php';
+require_once 'Utils.php';
 
 /** Abstract a Node.  A Node is an actual physical transmitter.
  * @todo:  Make all the setter functions no-op if the value is the same as what
@@ -204,6 +205,8 @@ class Node implements GenericObject
 		$db->ExecSql($sql, $node_rows, false);
 		if ($node_rows != null)
 		{
+			// Naturally-sorting by node_id
+			Utils::natsort2d($node_rows, "node_id");
 			$i = 0;
 			foreach ($node_rows as $node_row)
 			{
