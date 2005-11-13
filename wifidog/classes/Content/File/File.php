@@ -306,7 +306,9 @@ class File extends Content
 			// If no file was uploaded, update filename and mime type
 			if (!empty ($_REQUEST["file_mode".$this->getId()]))
 			{
-				$this->setFilename($_REQUEST["file_file_name".$this->getId()]);
+        if (!empty($_REQUEST["file_file_name".$this->getId()])) {
+				  $this->setFilename($_REQUEST["file_file_name".$this->getId()]);
+        }
 
 				$file_mode = $_REQUEST["file_mode".$this->getId()];
 				if ($file_mode == "by_upload")

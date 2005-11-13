@@ -25,6 +25,7 @@
 */
 
 require_once BASEPATH.'classes/Content.php';
+require_once BASEPATH.'classes/Content/File.php';
 
 error_reporting(E_ALL);
 
@@ -143,8 +144,11 @@ class Picture extends File
         {
 	    		parent :: processAdminUI();
 	    		
-	    		$this->setWidth(intval($_REQUEST["pictures_{$this->getId()}_width"]));
-	    		$this->setHeight(intval($_REQUEST["pictures_{$this->getId()}_height"]));
+          if (!empty($_REQUEST["pictures_{$this->getId()}_width"]))
+	    		  $this->setWidth(intval($_REQUEST["pictures_{$this->getId()}_width"]));
+
+          if (!empty($_REQUEST["pictures_{$this->getId()}_height"]))
+	    		  $this->setHeight(intval($_REQUEST["pictures_{$this->getId()}_height"]));
         }
 	}
 
