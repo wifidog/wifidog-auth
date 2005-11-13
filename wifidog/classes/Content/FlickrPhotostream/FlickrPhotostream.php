@@ -780,8 +780,7 @@ if (Dependencies :: check("Phlickr", $errmsg))
 									$html .= "</div>\n";
 									*/
 									$html .= '<div class="flickr_photo_block">'."\n";
-									$html .= '<div class="flickr_photo"><a href="'.$photo->buildUrl().'"><img onmouseover="" src="'.$photo->buildImgUrl($size).'"></a></div>'."\n";
-
+									$html .= "<div class=\"flickr_photo\"><a href=\"{$photo->buildUrl()}\"><img onmouseout=\"document.getElementById('flickr_photo_hover_{$photo->getId()}').style.display='none'\" onmouseover=\"document.getElementById('flickr_photo_hover_{$photo->getId()}').style.display='block'\" src=\"{$photo->buildImgUrl($size)}\"></a></div>\n";
 									$html .= "</div>\n";
 								}
 								break;

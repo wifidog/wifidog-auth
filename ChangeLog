@@ -1,3 +1,8 @@
+
+2005-11-12 François Proulx <francois.proulx@gmail.com>
+	* Fixed schema 33 update
+	* fixed css
+	
 2005-11-11 François Proulx <francois.proulx@gmail.com>
 	* Fixed Admin hotspot location map
 	* Take note : Google Maps updated their API key system, so that you simply need to register a key for the whole domain.

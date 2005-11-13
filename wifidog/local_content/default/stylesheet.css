@@ -14,7 +14,8 @@ body{
 .outer_container
 {
 	background-color: white;
-	overflow: auto;
+	width: 100%;
+	float: left;
 }
 
 #tool_section {
