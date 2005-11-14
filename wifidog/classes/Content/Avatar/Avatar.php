@@ -25,8 +25,8 @@
 */
 
 require_once BASEPATH.'classes/Content.php';
-require_once BASEPATH.'classes/Content/Picture.php';
-require_once BASEPATH.'classes/Content/File.php';
+require_once BASEPATH.'classes/Content/Picture/Picture.php';
+require_once BASEPATH.'classes/Content/File/File.php';
 
 error_reporting(E_ALL);
 
@@ -42,19 +42,19 @@ class Avatar extends Picture
 		parent :: __construct($content_id);
 		$this->setIsTrivialContent(true);
 	}
-	
+
 	/**Affiche l'interface d'administration de l'objet */
 	function getAdminUI($subclass_admin_interface = null)
 	{
         $html = '';
         $html .= "<div class='admin_class'>Avatar (".get_class($this)." instance)</div>\n";
-        
+
         // Show File admin UI + display the picture
         $html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_data'>\n";
         $html .= "<div class='admin_section_title'>"._("Picture preview")." : </div>\n";
         $html .= "<br>\n";
-        
+
 		$html .= "<img src='".htmlentities($this->getFileUrl())."' alt='".$this->getFileName()."''>";
 		$html .= "</div>\n";
         $html .= "</div>\n";
@@ -95,7 +95,7 @@ class Avatar extends Picture
         #return parent :: getAdminUI($html);
         return $html;
 	}
-	
+
 	function processAdminUI()
 	{
         if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
@@ -112,7 +112,7 @@ class Avatar extends Picture
         $html = '';
 		$html .= "<div class='user_ui_container'>\n";
 		$html .= "<div class='user_ui_object_class'>Picture (".get_class($this)." instance)</div>\n";
-		
+
 		$html .= "<img src='".htmlentities($this->getFileUrl())."' alt='".$this->getFileName()."''>";
 		$html .= "</div>\n";
         return $html;

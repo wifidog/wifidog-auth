@@ -25,7 +25,7 @@
 */
 
 require_once BASEPATH.'classes/Content.php';
-require_once BASEPATH.'classes/Content/File.php';
+require_once BASEPATH.'classes/Content/File/File.php';
 
 error_reporting(E_ALL);
 
@@ -61,12 +61,12 @@ class Picture extends File
 		$this->mBd = & $db;
 		$this->pictures_row = $row;
 	}
-	
+
 	function getWidth()
 	{
 		return $this->pictures_row['width'];
 	}
-	
+
 	function setWidth($width)
 	{
 		if(empty($width) || is_numeric($width))
@@ -76,12 +76,12 @@ class Picture extends File
 			$this->refresh();
 		}
 	}
-	
+
 	function getHeight()
 	{
 		return $this->pictures_row['height'];
 	}
-	
+
 	function setHeight($height)
 	{
 		if(empty($height) || is_numeric($height))
@@ -97,39 +97,39 @@ class Picture extends File
 	{
         $html = '';
         $html .= "<div class='admin_class'>Picture (".get_class($this)." instance)</div>\n";
-        
+
         $html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_data'>\n";
         $html .= "<div class='admin_section_title'>"._("Width (leave empty if you want to keep original width)")." : </div>\n";
 		$html .= "<input type='text' name='pictures_{$this->getId()}_width' value='{$this->getWidth()}'>";
 		$html .= "</div>\n";
         $html .= "</div>\n";
-        
+
         $html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_data'>\n";
         $html .= "<div class='admin_section_title'>"._("Height (leave empty if you want to keep original height)")." : </div>\n";
 		$html .= "<input type='text' name='pictures_{$this->getId()}_height' value='{$this->getHeight()}'>";
 		$html .= "</div>\n";
         $html .= "</div>\n";
-        
+
         // Show File admin UI + display the picture
         $html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_data'>\n";
         $html .= "<div class='admin_section_title'>"._("Picture preview")." : </div>\n";
-        
+
         $width = $this->getWidth();
 		$height = $this->getHeight();
-		
+
 		if(empty($width))
 			$width = "";
 		else
 			$width = "width='$width'";
-		
+
 		if(empty($height))
 			$height = "";
 		else
 			$height = "height='$height'";
-			
+
 		$html .= "<img src='".htmlentities($this->getFileUrl())."' $width $height alt='".$this->getFileName()."''>";
 		$html .= "</div>\n";
         $html .= "</div>\n";
@@ -137,13 +137,13 @@ class Picture extends File
         $html .= $subclass_admin_interface;
         return parent :: getAdminUI($html);
 	}
-	
+
 	function processAdminUI()
 	{
         if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
         {
 	    		parent :: processAdminUI();
-	    		
+
           if (!empty($_REQUEST["pictures_{$this->getId()}_width"]))
 	    		  $this->setWidth(intval($_REQUEST["pictures_{$this->getId()}_width"]));
 
@@ -160,20 +160,20 @@ class Picture extends File
         $html = '';
 		$html .= "<div class='user_ui_container'>\n";
 		$html .= "<div class='user_ui_object_class'>Picture (".get_class($this)." instance)</div>\n";
-		
+
 		$width = $this->getWidth();
 		$height = $this->getHeight();
-		
+
 		if(empty($width))
 			$width = "";
 		else
 			$width = "width='$width'";
-		
+
 		if(empty($height))
 			$height = "";
 		else
 			$height = "height='$height'";
-			
+
 		$html .= "<img src='".htmlentities($this->getFileUrl())."' $width $height alt='".$this->getFileName()."''>";
 		$html .= "</div>\n";
         return $html;
