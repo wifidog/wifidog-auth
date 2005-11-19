@@ -550,7 +550,7 @@ if ($network)
 						}
 						if (!empty ($node_row['public_email']))
 						{
-							$description_text .= " <a href='".$node_row['public_email']."'>$node_row[public_email]</a> ";
+							$description_text .= " <a href='mailto:".$node_row['public_email']."'>$node_row[public_email]</a> ";
 						}
 						$description_text .= "</p>\n";
 					}
