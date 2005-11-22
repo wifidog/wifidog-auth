@@ -83,7 +83,7 @@ try {
             page_if_down_since($nodeObject, 5);
         } catch (Exception $e) {
             # Do nothing, we cronned this
-            echo $e->getMessage() . "<br>";
+            #echo $e->getMessage() . "<br>";
         }
         #echo "<br>";
         #echo "<hr>";
