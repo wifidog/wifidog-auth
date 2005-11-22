@@ -22,10 +22,9 @@
 /**@file page.php
  * @author Copyright (C) 2005 Philippe April
  */
-define('BASEPATH', './');
+define('BASEPATH', '../');
 
 require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'include/common_interface.php';
 require_once BASEPATH.'classes/Network.php';
 require_once BASEPATH.'classes/Node.php';
 
@@ -58,8 +57,7 @@ function page_if_down_since($nodeObject, $minutes) {
 }
 
 try {
-	#$sql = "SELECT node_id FROM nodes WHERE node_deployment_status = 'DEPLOYED' AND node_id='philippe'";
-	$sql = "SELECT node_id FROM nodes WHERE node_id='philippe'";
+	$sql = "SELECT node_id FROM nodes WHERE node_deployment_status = 'DEPLOYED'";
     $nodes_results = null;
     $db->ExecSql($sql, $nodes_results, false);
 
