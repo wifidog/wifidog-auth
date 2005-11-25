@@ -1,3 +1,6 @@
+2005-11-25 Rob Janes <janes.rob@gmail.com>
+	* EventLogging class initial checkin
+	
 2005-11-14 Max Horváth <max.horvath@maxspot.de>
 	* fixed path to included classes
 	  Guys, please check the paths to included files twice next time you're
