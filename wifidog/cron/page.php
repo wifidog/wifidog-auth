@@ -74,17 +74,13 @@ try {
         #echo $nodeObject->getLastHeartbeatTimestamp();
         #echo " - ";
         try {
-            page_if_down_since($nodeObject, 60);
             page_if_down_since($nodeObject, 120);
+            page_if_down_since($nodeObject, 60);
             page_if_down_since($nodeObject, 30);
             page_if_down_since($nodeObject, 20);
             page_if_down_since($nodeObject, 15);
             page_if_down_since($nodeObject, 10);
-            page_if_down_since($nodeObject, 9);
-            page_if_down_since($nodeObject, 8);
-            page_if_down_since($nodeObject, 7);
             page_if_down_since($nodeObject, 5);
-            page_if_down_since($nodeObject, 2);
         } catch (Exception $e) {
             # Do nothing, we cronned this
             #echo $e->getMessage() . "<br>";
