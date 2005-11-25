@@ -32,7 +32,8 @@ function page_if_down_since($nodeObject, $minutes) {
     $last_heartbeat = strtotime($nodeObject->getLastHeartbeatTimestamp());
 
     if (time() - $last_heartbeat > 60*$minutes) {
-        if (!$nodeObject->getLastPaged() || !($lastPaged = strtotime($nodeObject->getLastPaged()))) {
+        $lastPaged = strtotime($nodeObject->getLastPaged());
+        if (!$nodeObject->getLastPaged() || !$lastPaged) {
             $nodeObject->setLastPaged(time());
         } else if ($lastPaged - $last_heartbeat < 60*$minutes) {
             $network = $nodeObject->getNetwork();
@@ -40,7 +41,8 @@ function page_if_down_since($nodeObject, $minutes) {
             $nodeObject->setLastPaged(time());
 
             foreach ($nodeObject->getTechnicalOfficers() as $officer) {
-                Locale :: setCurrentLocale(Locale::getObject($officer->getPreferedLocale()));
+                # Doesn't work if called from cron
+                #Locale :: setCurrentLocale(Locale::getObject($officer->getPreferedLocale()));
                 $mail = new Mail();
                 $mail->setSenderName(_("Monitoring system"));
                 $mail->setSenderEmail($network->getTechSupportEmail());
@@ -57,7 +59,8 @@ function page_if_down_since($nodeObject, $minutes) {
 }
 
 try {
-	$sql = "SELECT node_id FROM nodes WHERE node_deployment_status = 'DEPLOYED'";
+	#$sql = "SELECT node_id FROM nodes WHERE node_deployment_status = 'DEPLOYED'";
+	$sql = "SELECT node_id FROM nodes WHERE node_id='philippe'";
     $nodes_results = null;
     $db->ExecSql($sql, $nodes_results, false);
 
@@ -78,7 +81,11 @@ try {
             page_if_down_since($nodeObject, 20);
             page_if_down_since($nodeObject, 15);
             page_if_down_since($nodeObject, 10);
+            page_if_down_since($nodeObject, 9);
+            page_if_down_since($nodeObject, 8);
+            page_if_down_since($nodeObject, 7);
             page_if_down_since($nodeObject, 5);
+            page_if_down_since($nodeObject, 2);
         } catch (Exception $e) {
             # Do nothing, we cronned this
             #echo $e->getMessage() . "<br>";
