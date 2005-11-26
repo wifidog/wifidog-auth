@@ -44,6 +44,7 @@ else
 	switch ($_REQUEST["sort_by"])
 	{
 		// SQL sort parameters
+        case "last_heartbeat_user_agent" :
 		case "name" :
 		case "creation_date" :
 			// Fall-through valid parameters

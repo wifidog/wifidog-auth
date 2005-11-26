@@ -3,7 +3,10 @@
 	<table>
 		<thead>
 		<tr>
-		    <th>{"Status"|_}</th>
+			<th>
+				<a href="?sort_by=last_heartbeat_user_agent">{"Status"|_}</a>
+				{if $sort_by_param == "last_heartbeat_user_agent"}<img src="{$smarty.const.BASE_URL_PATH}images/sort_by_asc.gif">{/if}
+			</th>
 			<th>
 				<a href="?sort_by=node_id">{"Id"|_}</a>
 				{if $sort_by_param == "node_id"}<img src="{$smarty.const.BASE_URL_PATH}images/sort_by_asc.gif">{/if}
