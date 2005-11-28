@@ -13,7 +13,7 @@ body{
 
 .outer_container
 {
-	background-color: white;
+	background-color: #FFFFFF;
 	width: 100%;
 	float: left;
 }
@@ -281,9 +281,8 @@ display: compact;
 	display: block;
 	font-size: medium;
 	font-weight: bold;
-	
-	color: #46a43a;
 	border : 1px solid #46a43a;
+	color: #46a43a;
 	background-color : #daedd8;
 }
 .user_ui_title a {
@@ -299,7 +298,9 @@ display: compact;
 }
 .user_ui_description {
 	text-align: justify;
-	background-color: #e6e6e6;
+	font-weight: bold;
+	border : 1px solid #46a43a;
+	background-color : #daedd8;
 }
 .user_ui_footer {
 	display: block;

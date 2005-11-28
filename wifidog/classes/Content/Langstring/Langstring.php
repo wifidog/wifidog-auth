@@ -1,5 +1,6 @@
 <?php
 
+
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -34,8 +35,8 @@ error_reporting(E_ALL);
  */
 class Langstring extends Content
 {
-    const ALLOWED_HTML_TAGS = "<a><br><b><h1><h2><h3><h4><i><img><li><ol><p><strong><u><ul><li>";
-    
+	const ALLOWED_HTML_TAGS = "<a><br><b><h1><h2><h3><h4><i><img><li><ol><p><strong><u><ul><li>";
+
 	/**Constructeur
 	@param $content_id Content id
 	*/
@@ -44,7 +45,7 @@ class Langstring extends Content
 		parent :: __construct($content_id);
 		global $db;
 		$this->mBd = & $db;
-        
+
 	}
 
 	/**Retourne la première chaîne disponible dans la langue par défaut de l'usager (si disponible), sinon dans la même langue majeure, sinon la première chaîne disponible
@@ -56,7 +57,7 @@ class Langstring extends Content
 		//Get user's prefered language
 
 		$sql = "SELECT value, locales_id, \n";
-		$sql .= Locale :: getSqlCaseStringSelect(Locale::getCurrentLocale()->getId());
+		$sql .= Locale :: getSqlCaseStringSelect(Locale :: getCurrentLocale()->getId());
 		$sql .= " as score FROM langstring_entries WHERE langstring_entries.langstrings_id = '{$this->id}' AND value!='' ORDER BY score LIMIT 1";
 		$this->mBd->ExecSqlUniqueRes($sql, $row, false);
 		if ($row == null)
@@ -128,12 +129,10 @@ class Langstring extends Content
 	function getAdminUI($type_interface = 'LARGE', $num_nouveau = 1)
 	{
 		$html = '';
-				$html .= "<div class='admin_class'>Langstring (".get_class($this)." instance)</div>\n";
-				$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_class'>Langstring (".get_class($this)." instance)</div>\n";
+		$html .= "<div class='admin_section_container'>\n";
 
-		
-
-        $html .= _("Only these HTML tags are allowed : ").htmlentities(self::ALLOWED_HTML_TAGS);
+		$html .= _("Only these HTML tags are allowed : ").htmlentities(self :: ALLOWED_HTML_TAGS);
 		$liste_languages = new LocaleList();
 		$sql = "SELECT * FROM langstring_entries WHERE langstring_entries.langstrings_id = '$this->id' ORDER BY locales_id";
 		$this->mBd->ExecSql($sql, $result, FALSE); //echo "type_interface: $type_interface\n";
@@ -152,8 +151,8 @@ class Langstring extends Content
 			while (list ($key, $value) = each($result))
 			{
 				$html .= "<li class='admin_section_list_item'>\n";
-								$html .= "<div class='admin_section_data'>\n";
-								$html .= $liste_languages->GenererFormSelect("$value[locales_id]", "langstrings_".$this->id."_substring_$value[langstring_entries_id]_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
+				$html .= "<div class='admin_section_data'>\n";
+				$html .= $liste_languages->GenererFormSelect("$value[locales_id]", "langstrings_".$this->id."_substring_$value[langstring_entries_id]_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
 				if ($type_interface == 'LARGE')
 				{
 					$html .= "<textarea name='langstrings_".$this->id."_substring_$value[langstring_entries_id]_string' cols='60' rows='3'>".htmlspecialchars($value['value'], ENT_QUOTES, 'UTF-8')."</textarea>\n";
@@ -162,20 +161,20 @@ class Langstring extends Content
 				{
 					$html .= "<input type='text' name='langstrings_".$this->id."_substring_$value[langstring_entries_id]_string' size='44' value='".htmlspecialchars($value['value'], ENT_QUOTES, 'UTF-8')."'>\n";
 				}
-								$html .= "</div>\n";
-								$html .= "<div class='admin_section_tools'>\n";
+				$html .= "</div>\n";
+				$html .= "<div class='admin_section_tools'>\n";
 				$name = "langstrings_".$this->id."_substring_$value[langstring_entries_id]_erase";
 				$html .= "<input type='submit' name='$name' value='"._("Delete string")."'>";
-								$html .= "</div>\n";
-								$html .= "</li>\n";
+				$html .= "</div>\n";
+				$html .= "</li>\n";
 			}
 		}
 
 		//Nouvelles chaîne
-		$locale =  LocaleList::GetDefault();
+		$locale = LocaleList :: GetDefault();
 		$html .= "<li class='admin_section_list_item'>\n";
-										$html .= "<div class='admin_section_data'>\n";
-		
+		$html .= "<div class='admin_section_data'>\n";
+
 		$html .= $liste_languages->GenererFormSelect($locale, "langstrings_".$this->id."_substring_new_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
 		$new_substring_name = "langstrings_".$this->id."_substring_new_string";
 		if ($type_interface == 'LARGE')
@@ -186,9 +185,9 @@ class Langstring extends Content
 		{
 			$html .= "<input type='text' name='$new_substring_name' size='44' value=''>\n";
 		}
-										$html .= "</div>\n";
-								$html .= "<div class='admin_section_tools'>\n";
-		
+		$html .= "</div>\n";
+		$html .= "<div class='admin_section_tools'>\n";
+
 		$new_substring_submit_name = "langstrings_".$this->id."_add_new_entry";
 		$html .= "<input type='submit' name='$new_substring_submit_name' value='"._("Add new string")."'>";
 		$html .= "</div>\n";
@@ -201,53 +200,53 @@ class Langstring extends Content
 
 	function processAdminUI()
 	{
-        if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
-        {
-    		parent :: processAdminUI();
-    		$generateur_form_select = new FormSelectGenerator();
-    		$sql = "SELECT * FROM langstring_entries WHERE langstring_entries.langstrings_id = '$this->id'";
-    		$this->mBd->ExecSql($sql, $result, FALSE);
-    		if ($result != null)
-    		{
-    			while (list ($key, $value) = each($result))
-    			{ //	print_r($value);
-    				if (!empty ($_REQUEST["langstrings_".$this->id."_substring_$value[langstring_entries_id]_erase"]) && $_REQUEST["langstrings_".$this->id."_substring_$value[langstring_entries_id]_erase"] == true)
-    				{
-    					$this->mBd->ExecSqlUpdate("DELETE FROM langstring_entries WHERE langstrings_id = '$this->id' AND langstring_entries_id='$value[langstring_entries_id]'", FALSE);
-    				}
-    				else
-    				{
-    					$language = $generateur_form_select->getResult("langstrings_".$this->id."_substring_$value[langstring_entries_id]_language", 'Langstring::AfficherInterfaceAdmin');
-    					if (empty ($language))
-                        {
-                            $language = 'NULL';
-                        }
-                        else
-                        {
-                            $language = "'".$language."'";
-                        }
-                        // Strip HTML tags !
-                        $string = $_REQUEST["langstrings_".$this->id."_substring_$value[langstring_entries_id]_string"];
-                        $string = $this->mBd->EscapeString(strip_tags($string, self::ALLOWED_HTML_TAGS));
-    					$this->mBd->ExecSqlUpdate("UPDATE langstring_entries SET locales_id = $language , value = '$string' WHERE langstrings_id = '$this->id' AND langstring_entries_id='$value[langstring_entries_id]'", FALSE);
-                        //$this->UpdateString($string, $language);
-    				}
-    			}
-    		}
-    		//Ajouter nouvelles chaîne(s) si champ non vide ou si l'usager a appuyé sur le bouton ajouter
-    		$new_substring_name = "langstrings_".$this->id."_substring_new_string";
-    		$new_substring_submit_name = "langstrings_".$this->id."_add_new_entry";
-    		if ((isset ($_REQUEST[$new_substring_submit_name]) && $_REQUEST[$new_substring_submit_name] == true) || !empty ($_REQUEST[$new_substring_name]))
-    		{
-    
-    			$language = $generateur_form_select->getResult("langstrings_".$this->id."_substring_new_language", 'Langstring::AfficherInterfaceAdmin');
-    			if (empty ($language))
-    			{
-    				$language = null;
-    			}
-    			$this->addString($_REQUEST[$new_substring_name], $language, true);
-    		}
-        }
+		if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
+		{
+			parent :: processAdminUI();
+			$generateur_form_select = new FormSelectGenerator();
+			$sql = "SELECT * FROM langstring_entries WHERE langstring_entries.langstrings_id = '$this->id'";
+			$this->mBd->ExecSql($sql, $result, FALSE);
+			if ($result != null)
+			{
+				while (list ($key, $value) = each($result))
+				{ //	print_r($value);
+					if (!empty ($_REQUEST["langstrings_".$this->id."_substring_$value[langstring_entries_id]_erase"]) && $_REQUEST["langstrings_".$this->id."_substring_$value[langstring_entries_id]_erase"] == true)
+					{
+						$this->mBd->ExecSqlUpdate("DELETE FROM langstring_entries WHERE langstrings_id = '$this->id' AND langstring_entries_id='$value[langstring_entries_id]'", FALSE);
+					}
+					else
+					{
+						$language = $generateur_form_select->getResult("langstrings_".$this->id."_substring_$value[langstring_entries_id]_language", 'Langstring::AfficherInterfaceAdmin');
+						if (empty ($language))
+						{
+							$language = 'NULL';
+						}
+						else
+						{
+							$language = "'".$language."'";
+						}
+						// Strip HTML tags !
+						$string = $_REQUEST["langstrings_".$this->id."_substring_$value[langstring_entries_id]_string"];
+						$string = $this->mBd->EscapeString(strip_tags($string, self :: ALLOWED_HTML_TAGS));
+						$this->mBd->ExecSqlUpdate("UPDATE langstring_entries SET locales_id = $language , value = '$string' WHERE langstrings_id = '$this->id' AND langstring_entries_id='$value[langstring_entries_id]'", FALSE);
+						//$this->UpdateString($string, $language);
+					}
+				}
+			}
+			//Ajouter nouvelles chaîne(s) si champ non vide ou si l'usager a appuyé sur le bouton ajouter
+			$new_substring_name = "langstrings_".$this->id."_substring_new_string";
+			$new_substring_submit_name = "langstrings_".$this->id."_add_new_entry";
+			if ((isset ($_REQUEST[$new_substring_submit_name]) && $_REQUEST[$new_substring_submit_name] == true) || !empty ($_REQUEST[$new_substring_name]))
+			{
+
+				$language = $generateur_form_select->getResult("langstrings_".$this->id."_substring_new_language", 'Langstring::AfficherInterfaceAdmin');
+				if (empty ($language))
+				{
+					$language = null;
+				}
+				$this->addString($_REQUEST[$new_substring_name], $language, true);
+			}
+		}
 	}
 
 	/**Affiche l'interface usager de l'objet
@@ -261,7 +260,7 @@ class Langstring extends Content
 		$html = '';
 		$html .= "<div class='user_ui_container'>\n";
 		$html .= "<div class='user_ui_object_class'>Langstring (".get_class($this)." instance)</div>\n";
-$html .= "<div class='langstring'>\n";
+		$html .= "<div class='langstring'>\n";
 		$html .= $this->getString();
 		$html .= $subclass_user_interface;
 		$html .= "</div>\n";
@@ -278,10 +277,10 @@ $html .= "<div class='langstring'>\n";
 		$this->mBd->ExecSqlResUnique($sql, $row, false);
 		return $row['count'];
 	}
-	
-		/** Reloads the object from the database.  Should normally be called after a set operation.
-	 * This function is private because calling it from a subclass will call the
-	 * constructor from the wrong scope */
+
+	/** Reloads the object from the database.  Should normally be called after a set operation.
+	* This function is private because calling it from a subclass will call the
+	* constructor from the wrong scope */
 	private function refresh()
 	{
 		$this->__construct($this->id);

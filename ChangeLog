@@ -1,3 +1,8 @@
+2005-11-28 François Proulx <francois.proulx@gmail.com>
+	* Improved Flickr user output
+	* Mostly completed Flickr admin UI
+	* Changed display algorithm to display sequentially
+	
 2005-11-25 Rob Janes <janes.rob@gmail.com>
 	* EventLogging class initial checkin
 	

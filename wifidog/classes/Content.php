@@ -741,7 +741,10 @@ class Content implements GenericObject
 			$html .= "</div>\n";
 		}
 
-		$html .= "<table><tr><td>\n";
+		$html .= "<table><tr>\n";
+		$html .= "<td>\n$subclass_user_interface</td>\n";
+		
+		$html .= "<td>\n";
 		$authors = $this->getAuthors();
 		if (count($authors) > 0)
 		{
@@ -791,10 +794,8 @@ class Content implements GenericObject
 				$html .= "</div>\n";
 			}
 		}
-
+		
 		$html .= "</td>\n";
-
-		$html .= "<td>\n$subclass_user_interface</td>\n";
 		$html .= "</tr></table>\n";
 
 		$html .= "</div>\n";

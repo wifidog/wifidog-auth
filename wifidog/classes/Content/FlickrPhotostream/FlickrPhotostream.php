@@ -728,7 +728,8 @@ if (Dependencies :: check("Phlickr", $errmsg))
 											if (is_object($photo))
 											{
 												$author = new Phlickr_User($api, $photo->getUserId());
-												$html .= '<td><div class="flickr_photo"><a href="'.$photo->buildUrl().'"><img title="['.$author->getName()."] ".$photo->getTitle().'" src="'.$photo->buildImgUrl($size).'"></a></div></td>'."\n";
+												$formats = $photo->getSizes();
+												$html .= '<td><div class="flickr_photo"><a href="'.$photo->buildUrl().'"><img width="'.$formats[$size][0].'" height="'.$formats[$size][1].'" title="['.$author->getName()."] ".$photo->getTitle().'" src="'.$photo->buildImgUrl($size).'"></a></div></td>'."\n";
 											}
 										}
 										$html .= "</tr>\n";
@@ -744,6 +745,7 @@ if (Dependencies :: check("Phlickr", $errmsg))
 									/*
 									// Set the hover block
 									$html .= "<div id=\"flickr_photo_hover_{$photo->getId()}\" class=\"flickr_photo_hover\">\n";
+									*/
 									
 									if ($this->shouldDisplayTitle())
 									{
@@ -752,33 +754,38 @@ if (Dependencies :: check("Phlickr", $errmsg))
 										{
 											$html .= '<div class="flickr_title"><h3>'.$photo->getTitle().'</h3></div>'."\n";
 										}
-									
-										if ($this->shouldDisplayTags())
-										{
-											$tags = $photo->getTags();
-											if (!empty ($tags))
-											{
-												$html .= '<div class="flickr_tags">'."\n";
-												$html .= '<h3>'._("Tags")."</h3>\n";
-												$html .= '<ul>'."\n";
-												foreach ($tags as $tag)
-												{
-													$url_encoded_tag = urlencode($tag);
-													$html .= '<li><a href="http://www.flickr.com/photos/tags/'.$url_encoded_tag.'/">'.$tag.'</a></li>'."\n";
-												}
-												$html .= '</ul>'."\n";
-												$html .= '</div>'."\n";
-											}
-										}
-										
-										foreach ($photos as $cache_authors)
-											$author = new Phlickr_User($api, $cache_authors->getUserId());
-										$author = new Phlickr_User($api, $photo->getUserId());
-										$html .= '<div class="flickr_description"><a href="'.$author->buildUrl().'">'.$author->getName().'</a></div>'."\n";
 									}
 									
-									$html .= "</div>\n";
+									//TODO: Find a way to display tags nicely
+									/*
+									if ($this->shouldDisplayTags())
+									{
+										$tags = $photo->getTags();
+										if (!empty ($tags))
+										{
+											$html .= '<div class="flickr_tags">'."\n";
+											$html .= '<h3>'._("Tags")."</h3>\n";
+											$html .= '<ul>'."\n";
+											foreach ($tags as $tag)
+											{
+												$url_encoded_tag = urlencode($tag);
+												$html .= '<li><a href="http://www.flickr.com/photos/tags/'.$url_encoded_tag.'/">'.$tag.'</a></li>'."\n";
+											}
+											$html .= '</ul>'."\n";
+											$html .= '</div>'."\n";
+										}
+									}*/
+									
+									//TODO: Display author's name along with it ...
+									/*
+									foreach ($photos as $cache_authors)
+										$author = new Phlickr_User($api, $cache_authors->getUserId());
+									$author = new Phlickr_User($api, $photo->getUserId());
+										$html .= '<div class="flickr_description"><a href="'.$author->buildUrl().'">'.$author->getName().'</a></div>'."\n";
 									*/
+									
+									//$html .= "</div>\n";
+									
 									$html .= '<div class="flickr_photo_block">'."\n";
 									$html .= "<div class=\"flickr_photo\"><a href=\"{$photo->buildUrl()}\"><img onmouseout=\"document.getElementById('flickr_photo_hover_{$photo->getId()}').style.display='none'\" onmouseover=\"document.getElementById('flickr_photo_hover_{$photo->getId()}').style.display='block'\" src=\"{$photo->buildImgUrl($size)}\"></a></div>\n";
 									$html .= "</div>\n";
