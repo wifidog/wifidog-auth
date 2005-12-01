@@ -1,3 +1,7 @@
+2005-11-30 Benoit Grégoire  <bock@step.polymtl.ca>
+	* User.php: Fix a bug in the sql query in isUserValid().  Checked that the change works with postgresql 7.4 and 8.
+	It is still not understood why ISF doesn't encounter this bug on it's production server.
+
 2005-11-28 François Proulx <francois.proulx@gmail.com>
 	* Improved Flickr user output
 	* Mostly completed Flickr admin UI

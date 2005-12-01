@@ -308,7 +308,7 @@ class User implements GenericObject
 		else
 			if ($account_status == ACCOUNT_STATUS_VALIDATION)
 			{
-				$sql = "SELECT CASE WHEN ((NOW() - reg_date) > interval networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired, networks.validation_grace_time FROM users  JOIN networks ON (users.account_origin = networks.network_id) WHERE (user_id='{$this->id}')";
+				$sql = "SELECT CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired, networks.validation_grace_time FROM users  JOIN networks ON (users.account_origin = networks.network_id) WHERE (user_id='{$this->id}')";
 				$db->ExecSqlUniqueRes($sql, $user_info, false);
 
 				if ($user_info['validation_grace_time_expired'] == 't')
