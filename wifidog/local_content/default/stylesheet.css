@@ -559,7 +559,7 @@ table.content_admin td {
 }
 #map_toolbox {
 	display: inline;
-	float: right;	
+	float: right;
 }
 #map_postalcode_overlay {
 	display: none;
@@ -580,7 +580,7 @@ table.content_admin td {
 }
 #map_outer_hotspots_list {
 	background-color: #ffffff;
-	width: 25%; 
+	width: 33%;
 	height: 500px;
 	overflow: auto;
 	float: right; 
@@ -590,7 +590,7 @@ table.content_admin td {
 }
 #map_frame {
 	font: 10pt "Arial",sans-serif;
-	width: 74%; 
+	width: 67%; 
 	height: 500px;
  }
 
