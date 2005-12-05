@@ -1,3 +1,6 @@
+2005-12-05 Max Horváth <max.horvath@maxspot.de>
+	* fixed bug when calling the preview version of a login page 
+
 2005-11-30 Benoit Grégoire  <bock@step.polymtl.ca>
 	* User.php: Fix a bug in the sql query in isUserValid().  Checked that the change works with postgresql 7.4 and 8.
 	It is still not understood why ISF doesn't encounter this bug on it's production server.
