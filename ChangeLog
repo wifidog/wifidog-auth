@@ -1,8 +1,11 @@
-2005-12-04 François Proulx <francois.proulx@gmail.com>
+2005-12-06 Max Horváth <max.horvath@maxspot.de>
+	* fixed SQL bug when calling the "report configuration" page as a node owner
+
+2005-12-05 François Proulx <francois.proulx@gmail.com>
 	* Crunched the Google Maps Div block for better display on small screens
-	
+
 2005-12-05 Max Horváth <max.horvath@maxspot.de>
-	* fixed bug when calling the preview version of a login page 
+	* fixed bug when calling the preview version of a login page
 
 2005-11-30 Benoit Grégoire  <bock@step.polymtl.ca>
 	* User.php: Fix a bug in the sql query in isUserValid().  Checked that the change works with postgresql 7.4 and 8.
@@ -12,10 +15,10 @@
 	* Improved Flickr user output
 	* Mostly completed Flickr admin UI
 	* Changed display algorithm to display sequentially
-	
+
 2005-11-25 Rob Janes <janes.rob@gmail.com>
 	* EventLogging class initial checkin
-	
+
 2005-11-14 Max Horváth <max.horvath@maxspot.de>
 	* fixed path to included classes
 	  Guys, please check the paths to included files twice next time you're

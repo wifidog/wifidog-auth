@@ -29,7 +29,7 @@ require_once BASEPATH.'include/common.php';
 /* Gives various statistics about the status of the network or of a specific node */
 class Statistics
 {
-	/** An array of the of the selected networks.  
+	/** An array of the of the selected networks.
 	 * The key is the network_id, the value is the Network object. */
 	private $report_selected_networks = array ();
 	private $report_date_min; /**< Minimum timestamp */
@@ -41,14 +41,14 @@ class Statistics
 	/* Options on how to distinguish users ,see constructor */
 	private $user_distinguish_by_options = array ();
 
-	/** An array of the node_ids to which the statistics should be restricted. 
+	/** An array of the node_ids to which the statistics should be restricted.
 		 * The key is the network_id, the value is the Network object.*/
 	private $report_selected_nodes = array ();
-	/** An array of the selected reports to be generated. 
+	/** An array of the selected reports to be generated.
 	 *  The key is the classname, the value is the report object */
 	private $report_selected_reports = array ();
 
-	/** An array of the selected users to which the reports should be restricted. 
+	/** An array of the selected users to which the reports should be restricted.
 	 *  The  key is the user_id or user_mac, the value is the User object,
 	 *  or null if the key is a MAC address */
 	private $report_selected_users = array ();
@@ -60,7 +60,7 @@ class Statistics
 
 	}
 
-	/** Get the list of available report types 
+	/** Get the list of available report types
 	 * @return an array of class names */
 	public function getAvailableReports()
 	{
@@ -100,7 +100,7 @@ class Statistics
 		return $tab;
 	}
 
-	/** UI for selecting the date ragnge for the report 
+	/** UI for selecting the date ragnge for the report
 	 * @return html markup */
 	private function getDateRangeUI()
 	{
@@ -254,7 +254,7 @@ EOF;
 		return $sql;
 	}
 
-	/** Get the actual SQL fragment to get the candidates rows from the connections table, 
+	/** Get the actual SQL fragment to get the candidates rows from the connections table,
 	 * once obeying all the report configuration constraints.  Only connections
 	 * with actuall data transferred is considered.  Connections is always
 	 * joined to the nodes table, but not to network or users.
@@ -323,7 +323,7 @@ EOF;
 			$user_id = $db->EscapeString($user->getId());
 			$sql_join = " JOIN node_stakeholders ON (nodes.node_id=node_stakeholders.node_id AND user_id='$user_id') ";
 		}
-		$sql = "SELECT node_id, name from nodes $sql_join WHERE 1=1 ORDER BY node_id";
+		$sql = "SELECT nodes.node_id, nodes.name from nodes $sql_join WHERE 1=1 ORDER BY node_id";
 		$node_rows = null;
 		$db->ExecSql($sql, $node_rows, false);
 		$html .= "<select multiple size = 6 name='$name'>\n";
@@ -375,7 +375,7 @@ EOF;
 		return $this->report_selected_nodes;
 	}
 
-	/** UI for selecting how the database determines if a user is unique 
+	/** UI for selecting how the database determines if a user is unique
 	 * @return html markup */
 	private function getDistinguishUsersByUI()
 	{
@@ -440,7 +440,7 @@ EOF;
 		return $html;
 	}
 
-	/** Process the users selection UI 
+	/** Process the users selection UI
 	 * 	@todo:  Allow to select more than one user*/
 	private function processSelectedUsersUI()
 	{
@@ -483,7 +483,7 @@ EOF;
 		return $this->report_selected_networks;
 	}
 
-	/** UI for selecting how the database determines if a user is unique 
+	/** UI for selecting how the database determines if a user is unique
 	 * @return html markup */
 	private function getSelectedReportsUI()
 	{
@@ -606,7 +606,7 @@ EOF;
 	/*	function getLastConnDate($node_id = null)
 		{
 			global $db;
-	
+
 			if ($node_id != null)
 			{
 				$node_id = $db->EscapeString($node_id);
@@ -616,7 +616,7 @@ EOF;
 			{
 				$sql_node = "";
 			}
-	
+
 			$db->ExecSqlUniqueRes("SELECT timestamp_in FROM connections WHERE incoming!=0 $sql_node ORDER BY timestamp_in DESC LIMIT 1", $row, false);
 			return $row['timestamp_in'];
 		}
@@ -625,12 +625,12 @@ EOF;
 	/*	public static function getRegistrationsPerNode($from = '', $to = '')
 		{
 			global $db;
-	
+
 			if ($from != '' && $to != '')
 				$date_constraint = "AND timestamp_in BETWEEN '$from' AND '$to'";
 			else
 				$date_constraint = '';
-	
+
 			$db->ExecSql("SELECT nodes.name,connections.node_id,COUNT(user_id) as registrations FROM connections,nodes WHERE timestamp_in IN (SELECT MIN(timestamp_in) as first_connection FROM connections GROUP BY user_id) ${date_constraint} AND nodes.node_id=connections.node_id GROUP BY connections.node_id,nodes.name ORDER BY registrations DESC", $results, false);
 			return $results;
 		}*/
