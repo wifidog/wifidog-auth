@@ -1,3 +1,10 @@
+2005-12-08 Max Horváth <max.horvath@maxspot.de>
+	* added FCKeditor to the supported libraries
+	* added new content type: HTMLeditor
+	* added new caching class which uses PEAR::Cache_Lite - must be enabled in config.php
+	* HTMLeditor is the first class using the new caching class
+	* beautified and reorganized config.php and added a new switch for the caching class
+
 2005-12-06 Max Horváth <max.horvath@maxspot.de>
 	* fixed SQL bug when calling the "report configuration" page as a node owner
 
