@@ -121,7 +121,7 @@ define('SSL_AVAILABLE', false);
  *
  * If you haven't installed PEAR::Cache_Lite, caching won't be enabled at all.
  */
-define('USE_CACHE_LITE', true);
+define('USE_CACHE_LITE', false);
 
 /********************************************************************\
  * WIFIDOG BASIC CONFIGURATION                                      *
