@@ -3,6 +3,7 @@
 	* added new content type: HTMLeditor
 	* added new caching class which uses PEAR::Cache_Lite - must be enabled in config.php
 	* HTMLeditor is the first class using the new caching class
+	* removed unused function from content type Langstring
 	* beautified and reorganized config.php and added a new switch for the caching class
 
 2005-12-06 Max Horváth <max.horvath@maxspot.de>
