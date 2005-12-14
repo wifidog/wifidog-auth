@@ -47,6 +47,19 @@ if (file_exists(dirname(__FILE__) . "/local.config.php")) {
 \********************************************************************/
 
 /**
+ * Database abstraction classes
+ * ============================
+ *
+ * The next two items are constants, do not edit!
+ */
+
+// Database abstraction class for MySQL access.
+define('DBMS_MYSQL','AbstractDbMySql.php');
+
+// Database abstraction class for PostgreSQL access.
+define('DBMS_POSTGRES','AbstractDbPostgres.php');
+
+/**
  * Which database management software do you want to use?
  * ======================================================
  *
@@ -249,19 +262,6 @@ define('XSLT_SUPPORT', false);
  *                                                                  *
  * You should normally not have to edit anything below this!        *
 \********************************************************************/
-
-/**
- * Database abstraction classes
- * ============================
- *
- * The next two items are constants, do not edit!
- */
-
-// Database abstraction class for MySQL access.
-define('DBMS_MYSQL','AbstractDbMySql.php');
-
-// Database abstraction class for PostgreSQL access.
-define('DBMS_POSTGRES','AbstractDbPostgres.php');
 
 /**
  * WiFiDOG configuration

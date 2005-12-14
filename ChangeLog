@@ -1,3 +1,6 @@
+2005-12-14 Max Horváth <max.horvath@maxspot.de>
+	* fixed bug in config.php:59 ... was unable to select DB server
+
 2005-12-08 Max Horváth <max.horvath@maxspot.de>
 	* added FCKeditor to the supported libraries
 	* added new content type: HTMLeditor
