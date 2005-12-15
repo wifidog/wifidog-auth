@@ -1,3 +1,6 @@
+2005-12-15 Max Horváth <max.horvath@maxspot.de>
+	* fixed bug in dependencies class when gettext support for PHP is not available
+
 2005-12-14 Max Horváth <max.horvath@maxspot.de>
 	* fixed bug in config.php:59 ... was unable to select DB server
 

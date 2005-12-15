@@ -52,6 +52,7 @@ class Dependencies {
                 return true;
             } else {
                 // The component has NOT been found. Return error message.
+                require_once BASEPATH.'classes/Locale.php';
                 $errmsg = $component_info["name"]._(" is not installed");
                 return false;
             }
