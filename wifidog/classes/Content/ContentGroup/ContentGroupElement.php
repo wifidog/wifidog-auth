@@ -38,7 +38,7 @@
  * ContentGroup
  *
  * @package    WiFiDogAuthServer
- * @subpackage Content classes
+ * @subpackage ContentClasses
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
  * @copyright  2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
  * inc.

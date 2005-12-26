@@ -35,7 +35,7 @@
 
 /**
  * @package    WiFiDogAuthServer
- * @subpackage Content classes
+ * @subpackage ContentClasses
  * @author     Max Horvath <max.horvath@maxspot.de>
  * @copyright  2005 Max Horvath <max.horvath@maxspot.de> - maxspot GmbH
  * @version    CVS: $Id$

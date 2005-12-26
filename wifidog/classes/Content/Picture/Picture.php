@@ -35,7 +35,7 @@
 
 /**
  * @package    WiFiDogAuthServer
- * @subpackage Content classes
+ * @subpackage ContentClasses
  * @author     Francois Proulx <francois.proulx@gmail.com>
  * @copyright  2005 Francois Proulx <francois.proulx@gmail.com> - Technologies
  * Coeus inc.
