@@ -205,6 +205,7 @@ class Network implements GenericObject
                 $html .= "<input type='hidden' name='$name' value='$network_row[network_id]'>";
             }
         }
+        
         return $html;
     }
 

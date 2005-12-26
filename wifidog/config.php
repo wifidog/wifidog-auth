@@ -173,23 +173,24 @@ define('USE_CACHE_LITE', false);
  * Available locales (languages)
  * =============================
  *
- * Define the locales supported by your server.
- *
- * Due to different
+ * Define the list of locales you want to support.
+ * English, French and German are supported.
+ * 
+ * See below examples
  */
 $AVAIL_LOCALE_ARRAY = array('fr' => 'Français',
                             'en' => 'English',
                             'de' => 'Deutsch');
 
 /**
- * A lot of linux distributions use locales like this:
+ * A lot of linux distributions (Debian, BSD and Mac OS X) use locales like this:
  */
 //$AVAIL_LOCALE_ARRAY = array('fr_CA' => 'Français',
 //                            'en_US' => 'English',
 //                            'de_DE' => 'Deutsch');
 
 /**
- * Other linux distributions use locales like this:
+ * Other linux distributions  use locales like this:
  */
 //$AVAIL_LOCALE_ARRAY = array('fr_CA.UTF8' => 'Français',
 //                            'en_US.UTF8' => 'English',
@@ -239,7 +240,7 @@ define('PHLICKR_SUPPORT', false);
  *
  * Enable Google Maps mapping using "hotspots_map.php".
  */
-define('GMAPS_HOTSPOTS_MAP_ENABLED', false);
+define('GMAPS_HOTSPOTS_MAP_ENABLED', true);
 
 /**
  * Google public API key
@@ -247,6 +248,9 @@ define('GMAPS_HOTSPOTS_MAP_ENABLED', false);
  *
  * In order to use the Google API you need to register your domain at Google and
  * enter the given API key.
+ * 
+ * Sign up for an API key here
+ * http://www.google.com/apis/maps/
  */
 define('GMAPS_PUBLIC_API_KEY', 'ENTER_YOUR_KEY_HERE');
 
@@ -274,8 +278,11 @@ define('GMAPS_INITIAL_ZOOM_LEVEL', '5');
  *
  * If you want to enable XSLT support for the Hotspot status page enable this
  * value.
+ * 
+ * Enabling it will let you you display hostpot status in any format.
+ * http://server_ip/hotspot_status.php?format=XML&xslt=http://xslt_server/xslt/wifidog_status.xsl
  */
-define('XSLT_SUPPORT', false);
+define('XSLT_SUPPORT', true);
 
 /********************************************************************\
  * ADVANCED CONFIGURATION                                           *
@@ -345,15 +352,9 @@ define('DEFAULT_NODE_ID', 'default');
  * @deprecated since 2005-04-19
  */
 define('PAGE_HEADER_NODE', 'header.html');
-
-/**
- * @deprecated since 2005-04-19
- */
+define('PAGE_HEADER_NAME', 'header.html');
 define('PAGE_FOOTER_NODE', 'footer.html');
-
-/**
- * @deprecated since 2005-04-19
- */
+define('PAGE_FOOTER_NAME', 'footer.html');
 define('PORTAL_PAGE_NAME', 'portal.html');
 
 /**

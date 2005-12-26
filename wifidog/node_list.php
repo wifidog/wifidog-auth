@@ -65,27 +65,29 @@ if (empty ($_REQUEST["sort_by"]))
     $sort_by_using_sql = true;
 }
 else
+{
     // Validate sort parameters
     switch ($_REQUEST["sort_by"])
     {
         // SQL sort parameters
         case "last_heartbeat_user_agent" :
-        case "name" :
-        case "creation_date" :
-            // Fall-through valid parameters
-            $sort_by_param = $_REQUEST["sort_by"];
-            $sort_by_using_sql = true;
-            break;
-            // Abstraction-driven sort parameters
-        case "node_id" :
-        case "num_online_users" :
-            $sort_by_param = $_REQUEST["sort_by"];
-            $sort_by_using_sql = false;
-            break;
-        default :
-            $sort_by_param = DEFAULT_SORT_BY_PARAM;
-            $sort_by_using_sql = true;
-    }
+		case "name" :
+		case "creation_date" :
+			// Fall-through valid parameters
+			$sort_by_param = $_REQUEST["sort_by"];
+			$sort_by_using_sql = true;
+			break;
+		// Abstraction-driven sort parameters
+		case "node_id" :
+		case "num_online_users" :
+			$sort_by_param = $_REQUEST["sort_by"];
+			$sort_by_using_sql = false;
+			break;
+		default :
+			$sort_by_param = DEFAULT_SORT_BY_PARAM;
+			$sort_by_using_sql = true;
+	}
+}
 
 // Sort according to above instructions
 if ($sort_by_using_sql === true)

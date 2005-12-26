@@ -1,5 +1,6 @@
 <?php
 
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -44,208 +45,206 @@
 
 class FormSelectGenerator
 {
-    // Attributes
-    private $mAbstractBd;
+	// Private class attributes
+	private $mAbstractBd;
 
-    // Associations
+	/** 
+	 * Constructor
+	 */
+	function __construct()
+	{
+		global $db;
+		$this->mAbstractBd = $db;
+	}
 
-    // Operations
+	/**
+	 * Generates an HTML SELECT element from an SQL result set
+	 * 
+	 * @param $resultSet : The SQL result set
+	 * @param $primaryKeyField : The column to use the primary key
+	 * @param $displayField : The column to display to the user
+	 * @param $selectedPrimaryKey : Optional.  Which element should be selected by default, use null to select the first one
+	 * @param $userPrefix : An arbitrary prefix, chosen by the user, to guarantee unicity
+	 * @param $objectPrefix : An arbitrary prefix, chosen by the calling object, to guarantee unicity
+	 * @param $displayFieldIsLangstring
+	 * @param $allowNullValues, TRUE or FALSE
+	 * @param $nullCaptionString, string displayed in place of null values
+	 * @param $additionalSelectAttribute will be appended inside the select tag.  For example: "onclick='submit();'"
+	 * @return string The HTML SELECT element definition string
+	 */
+	function generateFromResultSet($resultSet, $primaryKeyField, $displayField, $selectedPrimaryKey, $userPrefix, $objectPrefix, $displayFieldIsLangstring, $allowNullValues, $nullCaptionString = ' - - - ', $additionalSelectAttribute)
+	{
+		$retval = "";
+		$retval .= "<select id='{$userPrefix}{$objectPrefix}' name='{$userPrefix}{$objectPrefix}' {$additionalSelectAttribute}>\n";
+		if ($allowNullValues === true)
+		{
+			$retval .= "<option value=''>{$nullCaptionString}</option>\n";
+		}
 
-    /** Contructeur
-     */
-    function __construct()
-    {
-        global $db;
-        $this -> mAbstractBd = $db;
-    }
+		if (!empty ($resultSet))
+		{
+			foreach ($resultSet as $key => $value)
+			{
+				$retval .= "<option ";
+				if ($value[$primaryKeyField] == $selectedPrimaryKey)
+				{
+					$retval .= "SELECTED ";
+				}
+				if ($displayFieldIsLangstring === true)
+				{
+					if (!empty ($value[$displayField]))
+					{
+						$langstring = new Langstring($value[$displayField]);
+						if ($langstring->IsEmpty())
+						{
+							$nom = $value[$primaryKeyField]._(" (Empty langstring, ID is displayed)");
+						}
+						else
+						{
+							$nom = $langstring->GetString();
+						}
+					}
+					else
+					{
+						$nom = $value[$primaryKeyField]._(" (Empty langstring, ID is displayed)");
+					}
+				}
+				else
+				{
+					$nom = $value[$displayField];
+				}
+				$nom = htmlspecialchars($nom, ENT_QUOTES, 'UTF-8');
+				$primary_key = htmlentities($value[$primaryKeyField], ENT_QUOTES, 'UTF-8');
+				$retval .= "value='$primary_key'>$nom</option>\n";
+			}
+		}
+		else
+			if ($allowNullValues === false)
+			{
+				echo "<h1>FormSelectGenerator::generateFromResultSet(): Error: No results found, NULL value not allowed</h1>\n";
+			}
+		$retval .= "</select>\n";
+		return $retval;
+	}
 
-    /**Permet de générer un élément HTML select et de récupérer le résultat, à partir d'un resultset.
-     *
-     * @param $table Table de la base de donnée à utiliser; le format est bd.table
-     * @param $champClefPrimaire La colonne à utiliser comme valeur de clef primaire (qui sera retournée si l'élément est sélectionné)
-     * @param $champNom La colonne à utiliser comme nom à afficher à l'usager.
-     * @param $selectedClefPrimaire Optionnel.  Quelle entrée doit-on sélectionner par défaut.  Entrer "null" pour que le choix vide soit choisi.
-     * @param $prefixeNomSelectUsager Un préfixe arbitraire choisi par l'usager pour assurer l'unicité
-     * @param $prefixeNomSelectObjet Un préfixe arbitraire choisi par l'objet ayant appelé la fonction pour assurer l'unicité
-     * @param $champNomIsLangStringId
-     * @param $permetValeurNulle, TRUE ou FALSE
-     * @param $nullValueCaption, string displayed for the null value
-     * @param $additionalSelectAttribute will be appended inside the select tag.  For example: "onclick='submit();'"
-     * @return string L'élément select généré
-     */
-    function genererDeResults($resultats, $champClefPrimaire, $champNom, $selectedClefPrimaire, $prefixeNomSelectUsager, $prefixeNomSelectObjet, $champNomIsLangStringId, $permetValeurNulle, $nullValueCaption = ' - - - ', $additionalSelectAttribute)
-    {
-        $retval = "";
-        $retval.= "<select id='$prefixeNomSelectUsager$prefixeNomSelectObjet' name='$prefixeNomSelectUsager$prefixeNomSelectObjet' $additionalSelectAttribute>\n";
-        if ($permetValeurNulle == true)
-        {
-            $retval.= "<option value=''>$nullValueCaption</option>\n";
-        }
+	/**
+	 * Generates an HTML SELECT element from an SQL results set of a single database table dump
+	 * 
+	 * @param $table : The database table
+	 * @param $primaryKeyField : The column to use the primary key
+	 * @param $displayField : The column to display to the user
+	 * @param $selectedPrimaryKey : Optional.  Which element should be selected by default, use null to select the first one
+	 * @param $userPrefix : An arbitrary prefix, chosen by the user, to guarantee unicity
+	 * @param $objectPrefix : An arbitrary prefix, chosen by the calling object, to guarantee unicity
+	 * @param $displayFieldIsLangstring
+	 * @param $allowNullValues, TRUE or FALSE
+	 * @param $nullCaptionString, string displayed in place of null values
+	 * @param $additionalSelectAttribute will be appended inside the select tag.  For example: "onclick='submit();'"
+	 * @return string The HTML SELECT element definition string
+	 */
+	static function generateFromTable($table, $primaryKeyField, $displayField, $selectedPrimaryKey, $userPrefix, $objectPrefix, $displayFieldIsLangstring, $allowNullValues, $nullCaptionString = ' - - - ', $additionalSelectAttribute = null)
+	{
+		global $db;
+		$results = null;
+		$db->ExecuterSql("SELECT $primaryKeyField,  $displayField FROM $table", $results, false);
+		return self :: generateFromResultSet($results, $primaryKeyField, $displayField, $selectedPrimaryKey, $userPrefix, $objectPrefix, $displayFieldIsLangstring, $allowNullValues, $nullCaptionString, $additionalSelectAttribute);
+	}
 
-        if (!empty($resultats))
-        {
-            foreach ($resultats as $key => $value)
-            {
-                $retval.= "<option "; //echo "$value[$champClefPrimaire],$selectedClefPrimaire<br>";
-                //echo "value[champClefPrimaire]=$value[$champClefPrimaire] VS selectedClefPrimaire = $selectedClefPrimaire<br>\n";
-                if ($value[$champClefPrimaire] == $selectedClefPrimaire)
-                {
-                    $retval.= "SELECTED ";
-                }
-                if ($champNomIsLangStringId == true)
-                {
-                    if (!empty($value[$champNom]))
-                    {
-                        $langstring = new Langstring($value[$champNom]);
-                        if ($langstring -> IsEmpty())
-                        {
-                            $nom = $value[$champClefPrimaire].' (ID affiché car Langstring vide)';
-                        }
-                        else
-                        {
-                            $nom = $langstring -> GetString();
-                        }
-                    }
-                    else
-                    {
-                        $nom = $value[$champClefPrimaire]." (ID affiché car Langstring n'existe pas)";
-                    }
-                }
-                else
-                {
-                    $nom = $value[$champNom];
-                }
-                $nom = htmlspecialchars($nom, ENT_QUOTES, 'UTF-8');
-                $primary_key = htmlentities($value[$champClefPrimaire], ENT_QUOTES, 'UTF-8');
-                $retval.= "value='$primary_key'>$nom</option>\n";
-            }
-        }
-        else
-            if ($permetValeurNulle == false)
-            {
-                echo "<h1>GenerateurFormSelect::genererDeResults(): Erreur: Aucun résultats à sélectionner mais valeur nulle non permise!</h1>\n";
-            }
-        $retval.= "</select>\n";
-        return $retval;
-    }
+	/**
+	 * * Generates an HTML SELECT element from an SQL call
+	 * 
+	 * @param $sql : The SQL query to run
+	 * @param $primaryKeyField : The column to use the primary key
+	 * @param $displayField : The column to display to the user
+	 * @param $selectedPrimaryKey : Optional.  Which element should be selected by default, use null to select the first one
+	 * @param $userPrefix : An arbitrary prefix, chosen by the user, to guarantee unicity
+	 * @param $objectPrefix : An arbitrary prefix, chosen by the calling object, to guarantee unicity
+	 * @param $displayFieldIsLangstring
+	 * @param $allowNullValues, TRUE or FALSE
+	 * @param $nullCaptionString, string displayed in place of null values
+	 * @param $additionalSelectAttribute will be appended inside the select tag.  For example: "onclick='submit();'"
+	 * @return string The HTML SELECT element definition string
+	 */
+	function genererDeSelect($sql, $primaryKeyField, $displayField, $selectedPrimaryKey, $userPrefix, $objectPrefix, $displayFieldIsLangstring, $allowNullValues, $nullCaptionString = ' - - - ', $additionalSelectAttribute = null)
+	{
+		$results = null;
+		$this->mAbstractBd->ExecuterSql($sql, $results, false);
+		return $this->generateFromResultSet($results, $primaryKeyField, $displayField, $selectedPrimaryKey, $userPrefix, $objectPrefix, $displayFieldIsLangstring, $allowNullValues, $nullCaptionString, $additionalSelectAttribute);
+	}
 
-    /**Permet de générer un élément HTML select et de récupérer le résultat, à partir de tous les enregistrements d'une table de la base de donnée.
-    *
-    * @param $table Table de la base de donnée à utiliser; le format est bd.table
-    * @param $champClefPrimaire La colonne à utiliser comme valeur de clef
-    * primaire (qui sera retournée si l'élément est sélectionné)
-    * @param $champNom La colonne à utiliser comme nom à afficher à l'usager.
-    * @param $selectedClefPrimaire Optionnel.  Quelle entrée doit-on sélectionner par défaut.  Entrer "null" pour que le choix vide soit choisi.
-    * @param $prefixeNomSelectUsager Un préfixe arbitraire choisi par l'usager pour assurer l'unicité
-    * @param $prefixeNomSelectObjet Un préfixe arbitraire choisi par l'objet ayant appelé la fonction pour assurer l'unicité
-    * @param $champNomIsLangStringId
-    * @param $permetValeurNulle, TRUE ou FALSE
-    * @param $nullValueCaption, string displayed for the null value
-     * @param $additionalSelectAttribute will be appended inside the select tag.  For example: "onclick='submit();'"
-         * @return string L'élément select généré
-    */
-    static function generateFromTable($table, $champClefPrimaire, $champNom, $selectedClefPrimaire, $prefixeNomSelectUsager, $prefixeNomSelectObjet, $champNomIsLangStringId, $permetValeurNulle, $nullValueCaption = ' - - - ', $additionalSelectAttribute = null)
-    {
-        global $db;
-        $db -> ExecuterSql("SELECT $champClefPrimaire,  $champNom FROM $table", $resultats, false);
-        return self::genererDeResults($resultats, $champClefPrimaire, $champNom, $selectedClefPrimaire, $prefixeNomSelectUsager, $prefixeNomSelectObjet, $champNomIsLangStringId, $permetValeurNulle, $nullValueCaption, $additionalSelectAttribute);
-    }
+	/**
+	 * Generates an HTML SELECT element from an array containing the data
+	 * 
+	 * You must provide a 2-dimensionnal array such as tab[row_num][field_num]
+	 * field_num: [0] = The value of the primary key (that will be returned if the element is selected)
+	 * field_num: [1] = The name of the value, displayed to the user
+	 * 
+	 * @param $array : The SQL query to run
+	 * @param $selectedPrimaryKey : Optional.  Which element should be selected by default, use null to select the first one
+	 * @param $objectPrefix : An arbitrary prefix, chosen by the calling object, to guarantee unicity
+	 * @param $allowNullValues, TRUE or FALSE
+	 * @param $nullCaptionString, string displayed in place of null values
+	 * @param $additionalSelectAttribute will be appended inside the select tag.  For example: "onclick='submit();'"
+	 * @return string The HTML SELECT element definition string For example: "onclick='submit();'
+	 */
+	public static function generateFromArray($array, $selectedPrimaryKey, $objectPrefix, $allowNullValues, $nullValueCaption = ' - - - ', $additionalSelectAttribute = "")
+	{
+		$retval = "";
+		$retval .= "<select id='{$objectPrefix}' name='{$objectPrefix}' {$additionalSelectAttribute}>\n";
+		if ($allowNullValues == true)
+		{
+			$retval .= "<option value=''>{$nullCaptionString}</option>\n";
+		}
 
-    /**Permet de générer un élément HTML select et de récupérer le résultat à partir d'une requête SQL.
-            * Il est essentiel que la selelection inclue la colonne $champNom.
-            *
-            * @param $table Table de la base de donnée à utiliser; le format est bd.table
-            * @param $champClefPrimaire La colonne à utiliser comme valeur de clef primaire (qui sera retournée si l'élément est sélectionné)
-            * @param $champNom La colonne à utiliser comme nom à afficher à l'usager.
-            * @param $selectedClefPrimaire Optionnel.  Quelle entrée doit-on sélectionner par défaut.  Entrer "null" pour que le choix vide soit choisi.
-            * @param $prefixeNomSelectUsager Un préfixe arbitraire choisi par l'usager pour assurer l'unicité
-            * @param $prefixeNomSelectObjet Un préfixe arbitraire choisi par l'objet ayant appelé la fonction pour assurer l'unicité
-            * @param $champNomIsLangStringId
-            * @param $permetValeurNulle, TRUE ou FALSE
-            * @param $nullValueCaption, string displayed for the null value
-                 * @param $additionalSelectAttribute will be appended inside the select tag.  For example: "onclick='submit();'"
-            * @return L'élément select généré
-            */
-    function genererDeSelect($select, $champClefPrimaire, $champNom, $selectedClefPrimaire, $prefixeNomSelectUsager, $prefixeNomSelectObjet, $champNomIsLangStringId, $permetValeurNulle, $nullValueCaption = ' - - - ', $additionalSelectAttribute = null)
-    {
-        $this -> mAbstractBd -> ExecuterSql($select, $resultats, false);
-        return $this -> genererDeResults($resultats, $champClefPrimaire, $champNom, $selectedClefPrimaire, $prefixeNomSelectUsager, $prefixeNomSelectObjet, $champNomIsLangStringId, $permetValeurNulle, $nullValueCaption, $additionalSelectAttribute);
-    }
+		foreach ($array as $value)
+		{
+			$retval .= "<option ";
+			if ($value[0] == $selectedPrimaryKey)
+			{
+				$retval .= "SELECTED ";
+			}
 
-    /**Permet de générer l'interface à partir de tableaux contenant les valeurs.
-              *
-             * Les tableaux sont à deux dimensions, selont le format suivant: tab[row_num][field_num]
-             * field_num: [0] = La valeur de la clef primaire (qui sera retournée si l'élément est sélectionné)
-             * field_num: [1] = Le nom de la valeur, sera affiché à l'usager.
-             *
-             * @param $tab Le tableau
-                * @param $selectedClefPrimaire Optionnel.  Quelle entrée doit-on sélectionner par défaut.  Entrer "null" pour que le choix vide soit choisi.
-                * @param $prefixeNomSelectUsager Un préfixe arbitraire choisi par l'usager pour assurer l'unicité
-                * @param $prefixeNomSelectObjet Un préfixe arbitraire choisi par l'objet ayant appelé la fonction pour assurer l'unicité
-                * @param $permetValeurNulle, TRUE ou FALSE
-                * @param $nullValueCaption, string displayed for the null value
-                * @param $additionalSelectAttribute will be appended inside the
-                * select tag.  For example: "onclick='submit();'"
+			$name = $value[1];
+			$name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+			$primary_key = htmlentities($value[0], ENT_QUOTES, 'UTF-8');
+			$retval .= "value='{$primary_key}'>{$name}</option>\n";
+		}
+		$retval .= "</select>\n";
+		return $retval;
+	}
 
-             */
-    public static function generateFromArray($tab, $selectedClefPrimaire, $prefixeNomSelectUsager, $prefixeNomSelectObjet, $permetValeurNulle, $nullValueCaption = ' - - - ', $additionalSelectAttribute = "")
-    {
-        $retval = "";
-        $retval.= "<select id='$prefixeNomSelectUsager$prefixeNomSelectObjet' name='$prefixeNomSelectUsager$prefixeNomSelectObjet' $additionalSelectAttribute>\n";
-        if ($permetValeurNulle == true)
-        {
-            $retval.= "<option value=''>$nullValueCaption</option>\n";
-        }
+	/**
+	 * Returns the element selected
+	 * @param $userPrefix : An arbitrary prefix, chosen by the user, to guarantee unicity
+	 * @param $objectPrefix : An arbitrary prefix, chosen by the calling object, to guarantee unicity
+	 * @return The result, returns an empty string if not found
+	 */
+	public static function getResult($userPrefix, $objectPrefix)
+	{
+		return $_REQUEST[self :: getRequestIndex($userPrefix, $objectPrefix)];
+	}
 
-        foreach ($tab as $value)
-        {
-            $retval.= "<option "; //echo "$value[$champClefPrimaire],$selectedClefPrimaire<br>";
-            if ($value[0] == $selectedClefPrimaire)
-            {
-                $retval.= "SELECTED ";
-            }
+	/**
+	 * Returns the array index in $_REQUEST where the response is found
+	 * @param $userPrefix : An arbitrary prefix, chosen by the user, to guarantee unicity
+	 * @param $objectPrefix : An arbitrary prefix, chosen by the calling object, to guarantee unicity
+	 * @return The index
+	 */
+	public static function getRequestIndex($userPrefix, $objectPrefix)
+	{
+		return $userPrefix.$objectPrefix;
+	}
 
-            $nom = $value[1];
-            $nom = htmlspecialchars($nom, ENT_QUOTES, 'UTF-8');
-            $primary_key = htmlentities($value[0], ENT_QUOTES, 'UTF-8');
-            $retval.= "value='$primary_key'>$nom</option>\n";
-        }
-        $retval.= "</select>\n";
-        return $retval;
-    }
-
-    /**retourne la réponse au select généré par  genererDeBD(
-             * @param $prefixeNomSelectUsager @see  genererDeBD
-             * @param $prefixeNomSelectObjet @see genererDeBD
-             * @return Le résultat, retourne une chaîne vide si aucune entrée est sélectionnée.  Assurez vous de suivre cette convention lorsque vous écrivez des générateurs.
-             */
-    public static function getResult($prefixeNomSelectUsager, $prefixeNomSelectObjet)
-    { //echo"<h1>GenerateurFormSelect::getResultat()".$prefixeNomSelectUsager . $prefixeNomSelectObjet."</h1>";
-        //   print_r($_REQUEST);
-        return $_REQUEST[self::getRequestIndex($prefixeNomSelectUsager, $prefixeNomSelectObjet)];
-    }
-
-    /**retourne l'index de l'array $_REQUEST où se trouve la réponse réponse au select généré par les autres fonctions de la classe
-        * @param $prefixeNomSelectUsager @see  genererDeBD
-        * @param $prefixeNomSelectObjet @see genererDeBD
-        * @return Le résultat
-        */
-    public static function getRequestIndex($prefixeNomSelectUsager, $prefixeNomSelectObjet)
-    { //echo"<h1>GenerateurFormSelect::getResultat()".$prefixeNomSelectUsager . $prefixeNomSelectObjet."</h1>";
-        //   print_r($_REQUEST);
-        return $prefixeNomSelectUsager.$prefixeNomSelectObjet;
-    }
-
-    /**retourne si les résultats d'un elect sont présents dans la variable $_REQUEST
-         * @param $prefixeNomSelectUsager @see  genererDeBD
-         * @param $prefixeNomSelectObjet @see genererDeBD
-         * @return true ou false
-         */
-    function isPresent($prefixeNomSelectUsager, $prefixeNomSelectObjet)
-    { //echo"<h1>GenerateurFormSelect::getResultat()".$prefixeNomSelectUsager . $prefixeNomSelectObjet."</h1>";
-        //   print_r($_REQUEST);
-        return isset($_REQUEST[$this -> getRequestIndex($prefixeNomSelectUsager, $prefixeNomSelectObjet)]);
-    }
+	/**
+	 * Tells if a value exists in the HTTP response
+	 * @param $userPrefix : An arbitrary prefix, chosen by the user, to guarantee unicity
+	 * @param $objectPrefix : An arbitrary prefix, chosen by the calling object, to guarantee unicity
+	 * @return true or false
+	 */
+	function isPresent($userPrefix, $objectPrefix)
+	{
+		return isset ($_REQUEST[$this->getRequestIndex($userPrefix, $objectPrefix)]);
+	}
 }
 
 /*
@@ -255,5 +254,4 @@ class FormSelectGenerator
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
 ?>

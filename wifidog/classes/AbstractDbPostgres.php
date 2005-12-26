@@ -61,11 +61,11 @@ class AbstractDb
         }
 
         $conn_string = "host=".CONF_DATABASE_HOST." dbname=$db_name user=".CONF_DATABASE_USER." password=".CONF_DATABASE_PASSWORD."";
-        $ptr_connexion = pg_connect($conn_string);
+        $ptr_connexion = @pg_connect($conn_string);
 
         if ($ptr_connexion == FALSE)
         {
-            echo sprintf(_("Unable to connect to database on %s"),CONF_DATABASE_HOST);
+            //echo sprintf(_("Unable to connect to database on %s"),CONF_DATABASE_HOST);
             throw new Exception(sprintf(_("Unable to connect to database on %s"),CONF_DATABASE_HOST));
         }
 

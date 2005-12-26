@@ -115,13 +115,15 @@ HotspotsMap.prototype.findClosestHotspotByGPoint = function(pt)
     }
 }
 
-// Computes the distance between two GPoint in meters
+// Computes the distance between two GPoint in meters 
 HotspotsMap.prototype.computeDistance = function(pt1, pt2)
 {
     x1 = this.convertDegreesToRadian(pt1.y);
     y1 = this.convertDegreesToRadian(pt1.x);
     x2 = this.convertDegreesToRadian(pt2.y);
     y2 = this.convertDegreesToRadian(pt2.x);
+    // This makes the assumptions that points are not to far away from each other 
+    // (a few tens of kilometers) and approximately at the same altitude
     return 6378800 * (Math.acos(Math.sin(x1) * Math.sin(x2) + Math.cos(x1) * Math.cos(x2) * Math.cos(y2 - y1)));
 }
 

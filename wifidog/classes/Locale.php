@@ -61,22 +61,19 @@ if (!function_exists('gettext')) {
     define('GETTEXT_AVAILABLE', true);
 }
 
-/** Représente un langage humain, possiblement localisé, tel que fr_CA
+/** 
+ * Designates a human language, possibly localized ie fr_CA
  */
 class Locale {
-    // Attributes
-
-    //prive:
+    // Private attributes
     private $mLang;
-    private $mPays;
+    private $mCountry;
 
     /**
      * Constructor
      * @param string $p_locale Locale in POSIX format (excluding charset), such
      * as fr ou fr_CA: "xx(x)_YY_(n*z)".  Both '_' and '-' are acceptable as
      * separator.
-     * @todo Translate error messages into english.
-     * @todo Support subcode.
      */
     function __construct($p_locale) {
         $matches = self :: decomposeLocaleId($p_locale);
@@ -84,18 +81,18 @@ class Locale {
         $this->mLang = $matches[1];
 
         if ($this->mLang == null) {
-            throw new Exception(_("Locale(): Impossible de trouver une langue correspondant à $locale"), EXCEPTION_CREATE_OBJECT_FAILED);
+            throw new Exception(_("Locale(): Could not a locale matching $locale"), EXCEPTION_CREATE_OBJECT_FAILED);
         }
 
         if (empty ($matches[2])) {
-            $this->mPays = null;
+            $this->mCountry = null;
         } else {
             $locale .= '_'.$matches[2];
-            $this->mPays = $matches[2];
+            $this->mCountry = $matches[2];
         }
 
         if (empty ($matches[3])) {
-            // TODO: Support subcode.
+            // TODO: Optionally support subcode ?
         } else {
             $locale .= '_'.$matches[3];
         }
@@ -225,22 +222,23 @@ class Locale {
      */
     public static function getSqlCaseStringSelect($locale_id) {
         $decomposed_locale = Locale :: decomposeLocaleId($locale_id);
-
+        
+        // The case will rate locales and choose the best one.
+        
         $sql = " (CASE\n";
-        //On cherche une chaine ou le locale complet correspond au locale par défaut de l'usager
-
+        // Look for part of the string or the full-length locale
         $sql .= " WHEN locales_id='$decomposed_locale[0]' THEN 1\n";
-        //On cherche une chaine ou la >langue< du locale correspond a la langue du locale de l'usager (langue générique en premier)
+        // Look for a string or the language part of the locale (match generic language first)
         $sql .= " WHEN locales_id='{$decomposed_locale[1]}' THEN 2\n";
-        //On cherche une chaine ou la >langue< du locale correspond a la langue du locale de l'uager (autres locales de même langue)
+        // Look for the full string or any possible combination
         $sql .= " WHEN locales_id LIKE '{$decomposed_locale[1]}%' THEN 3\n";
-        //On cherche une chaine ou le pays du locale correspond au pays du locale de l'uager
-
+        
+        // Look for a string matching the language or the country of the user
         if (!empty ($decomposed_locale[2])) {
             $sql .= " WHEN locales_id LIKE '%{$decomposed_locale[2]}' THEN 4\n";
         }
-
-        //On cherche une chaine n'ayant pas de locale associée, elle a plue de chance d'être lisible qu'une chaîne prise au hasard
+        
+        // Look for a string with no locale associated, it's more likely to be readable than a random string
         $sql .= " WHEN locales_id IS NULL THEN 5\n";
 
         $sql .= "      ELSE 20 ";
@@ -254,21 +252,21 @@ class Locale {
     }
 
     /**
-     * Retourne le Locale en format POSIX, tel que fr ou fr_CA "xx_YY".
+     * Returns the locale in POSIX format, such as fr ou fr_CA "xx_YY".
      * @return string Locale
      */
     function GetLocale() {
         $retval = $this->mLang->GetShort();
 
-        if ($this->mPays != null) {
-            $retval .= '_'.$this->mPays->GetShort();
+        if ($this->mCountry != null) {
+            $retval .= '_'.$this->mCountry->GetShort();
         }
 
         return $retval;
     }
 
     /**
-     * Retourne le Locale en format XML (xs:language), tel que fr ou fr-CA "xx-YY".
+     * Returns the locale in W3C XML format (xs:language), such as fr ou fr-CA "xx-YY".
      * @return string Locale
      */
     function GetXMLLanguage() {
@@ -276,7 +274,7 @@ class Locale {
     }
 
     /**
-     * Retourne la langue.
+     * Returns the language
      * @return Lang.
      */
     function GetLang() {
@@ -284,11 +282,11 @@ class Locale {
     }
 
     /**
-     * Retourne le pays, s'il existe.
-     * @return Pays ou null
+     * Returns the country, if available
+     * @return Country or null
      */
-    function GetPays() {
-        return $this->mPays;
+    function GetCountry() {
+        return $this->mCountry;
     }
 
     /**
@@ -302,7 +300,7 @@ class Locale {
 
         $tmp_loc = $this->GetLocale();
 
-        //Recherche dans la BD du pays et de la langue choisie et affichée selon la langue de préférence de la session
+        // Look for the country in the database and match the preferred locale
         $sql = "SELECT * FROM languages_iso_639_1, locales LEFT JOIN countries ON (locales.countries_id = countries.countries_id) ";
         $sql .= "WHERE locales.languages_iso_639_1_id = languages_iso_639_1.iso639_1_id ";
         $sql .= "AND locales.locales_id = '$tmp_loc' ";

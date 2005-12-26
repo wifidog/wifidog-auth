@@ -58,7 +58,7 @@ class LocaleList {
     }
 
     /**
-     * Return language of languages codes supported by WiFiDOG.
+     * Returns language of languages codes supported by WiFiDOG.
      *
 	 * @author Max Horvath <max.horvath@maxspot.de>
 	 * @copyright 2005 Max Horvath <max.horvath@maxspot.de> - maxspot GmbH

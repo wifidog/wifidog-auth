@@ -116,7 +116,6 @@ if ($node && $node->isSplashOnly())
 /* Normal login process */
 if (!empty ($_REQUEST['username']) && !empty ($_REQUEST['password']) && !empty ($_REQUEST['auth_source']))
 {
-
     $errmsg = '';
     $username = $db->EscapeString($_REQUEST['username']);
 
@@ -162,15 +161,6 @@ if ((!empty ($_REQUEST['logout']) && $_REQUEST['logout'] == true) && ($user = Us
 /* Start login interface section */
 $html = '';
 $html .= '<div id="login_form">'."\n";
-/*if (empty ($_REQUEST['gw_id']))
-{
-    $html .= '<h1>'._("Virtual login").'</h1>'."\n";
-}
-else
-{
-    $html .= '<h1>'._("Welcome! Hotspot:")." $hotspot_name</h1>\n";
-}
-*/
 $html .= '<h1><a href="'.BASE_SSL_PATH.'signup.php">'._("Create a free account").'</a></h1>';
 
 $html .= '<h1>'._("I already have an account:").'</h1>';

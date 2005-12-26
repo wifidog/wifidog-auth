@@ -41,8 +41,14 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
+/**
+ * This class regroups a bunch of utility functions
+ */
 class Utils
 {
+	/**
+	 * Converts the bytes integer value in human-readable format
+	 */
     public static function convertBytesToWords($bytes)
     {
         if ($bytes > 1024 * 1024 * 1024)
@@ -53,6 +59,9 @@ class Utils
             return round($bytes / (1024), 1)."K";
     }
 
+	/**
+	 * Converts seconds integer value in human-readable format
+	 */
     public static function convertSecondsToWords($seconds)
     {
         $r = '';
@@ -92,7 +101,12 @@ class Utils
         return $r;
     }
 
-    // From PHP.net forums : Thanks to mroach at mroach dot com
+    /**
+     * Naturally sorts (collates) a 2-dimensionnal array.
+     * Ie. it will sort in human order : numbers first, letters ...
+     * 
+     * From PHP.net forums : Thanks to mroach at mroach dot com
+     */
     public static function natsort2d(& $arrIn, $index = null)
     {
         $arrTemp = array ();

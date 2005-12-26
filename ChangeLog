@@ -1,3 +1,12 @@
+2005-12-26 François Proulx <francois.proulx@gmail.com>
+	* Tiny modifications to config.php
+	* Reinserted the deprecated defines, created errors on my system
+	* Fully translated FormSelectGenerator class, Locale
+	* Added comments to Utils, Locale etc..
+	* Fully tested installation from scratch using blank database with installation script
+	* Improved installation script a bit
+	* Synched SQL for CVS schema 29 --> 33
+	
 2005-12-26 Max Horváth <max.horvath@maxspot.de>
 	* added new headers to every source file
 	* converted file to represent a tab as four (4) spaces

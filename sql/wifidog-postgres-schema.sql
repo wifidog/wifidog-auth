@@ -81,6 +81,15 @@ CREATE TABLE content (
 
 
 --
+-- Name: content_display_location; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE content_display_location (
+    display_location text NOT NULL
+);
+
+
+--
 -- Name: content_display_log; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
 
@@ -222,7 +231,8 @@ CREATE TABLE flickr_photostream (
     preferred_size text,
     requests_cache text,
     cache_update_timestamp timestamp without time zone,
-    api_shared_secret text
+    api_shared_secret text,
+    photo_display_mode text DEFAULT 'PDM_GRID'::text NOT NULL
 );
 
 
@@ -266,7 +276,8 @@ CREATE TABLE locales (
 CREATE TABLE network_has_content (
     network_id text NOT NULL,
     content_id text NOT NULL,
-    subscribe_timestamp timestamp without time zone DEFAULT now() NOT NULL
+    subscribe_timestamp timestamp without time zone DEFAULT now() NOT NULL,
+    display_location text DEFAULT 'portal_page'::text NOT NULL
 );
 
 
@@ -306,8 +317,6 @@ CREATE TABLE networks (
 );
 
 
-SET default_with_oids = false;
-
 --
 -- Name: node_deployment_status; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
@@ -317,8 +326,6 @@ CREATE TABLE node_deployment_status (
 );
 
 
-SET default_with_oids = true;
-
 --
 -- Name: node_has_content; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
@@ -326,7 +333,8 @@ SET default_with_oids = true;
 CREATE TABLE node_has_content (
     node_id text NOT NULL,
     content_id text NOT NULL,
-    subscribe_timestamp timestamp without time zone DEFAULT now() NOT NULL
+    subscribe_timestamp timestamp without time zone DEFAULT now() NOT NULL,
+    display_location text DEFAULT 'portal_page'::text NOT NULL
 );
 
 
@@ -442,8 +450,6 @@ CREATE TABLE users (
 );
 
 
-SET default_with_oids = false;
-
 --
 -- Name: venue_types; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
@@ -477,6 +483,14 @@ ALTER TABLE ONLY administrators
 
 ALTER TABLE ONLY connections
     ADD CONSTRAINT connections_pkey PRIMARY KEY (conn_id);
+
+
+--
+-- Name: content_display_location_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY content_display_location
+    ADD CONSTRAINT content_display_location_pkey PRIMARY KEY (display_location);
 
 
 --
@@ -685,6 +699,27 @@ ALTER TABLE ONLY users
 
 ALTER TABLE ONLY venue_types
     ADD CONSTRAINT venue_types_pkey PRIMARY KEY (venue_type);
+
+
+--
+-- Name: idx_connections_node_id; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE INDEX idx_connections_node_id ON connections USING btree (node_id);
+
+
+--
+-- Name: idx_connections_user_id; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE INDEX idx_connections_user_id ON connections USING btree (user_id);
+
+
+--
+-- Name: idx_connections_user_mac; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE INDEX idx_connections_user_mac ON connections USING btree (user_mac);
 
 
 --
@@ -993,6 +1028,22 @@ ALTER TABLE ONLY users
 
 ALTER TABLE ONLY administrators
     ADD CONSTRAINT administrators_ibfk_1 FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: display_location_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY network_has_content
+    ADD CONSTRAINT display_location_fkey FOREIGN KEY (display_location) REFERENCES content_display_location(display_location) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: display_location_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY node_has_content
+    ADD CONSTRAINT display_location_fkey FOREIGN KEY (display_location) REFERENCES content_display_location(display_location) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --

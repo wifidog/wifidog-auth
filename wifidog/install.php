@@ -104,7 +104,7 @@ print <<<EndHTML
 
 <style type="text/css">
 <!--
-.button /* Homemade button */
+.button
 {
   font-size: 12pt;
   font-weight: bold;
@@ -115,7 +115,7 @@ print <<<EndHTML
   border-right: 2px solid gray;
   border-bottom: 2px solid gray;
   border-left: 1px solid white;
-  padding: 1px 4px 1px 4px;
+  padding: 3px 5px 3px 5px;
 }
 
 td
@@ -487,7 +487,8 @@ switch ($page) {
 #    if (!($neededExtentions['pgsql']['available'] && $neededExtentions['mysql']['available']))
 #      print "At least one DB extentions is nedded<BR>";
 
-    print "<B>Todo</B> : PostgreSLQ and MySQL version are not validated";
+    //TODO: PostgreSQL and MySQL version are not validated";
+    print "We recommend you use PostgreSQL 8.0 or newer";
 
     refreshButton();
     if ($error != 1) {
@@ -507,8 +508,8 @@ switch ($page) {
     $cmd_chown = '';
     $error     = 0;
 
-    print "<P><B>Home</B>: $basepath</P>";
-    print "<P><B>HTTPD username/group</B>: $process_username/$process_group</P>";
+    print "<P><B>Installation directory</B>: $basepath</P>";
+    print "<P><B>HTTP daemon UNIX username/group</B>: $process_username/$process_group</P>";
 #    print "<P><B>HTTPD group</B>: $process_group<BR</P>";
     print "<P><TABLE BORDER=\"1\"><TR><TD><B>Directory</B></TD></TD><TD><B>Owner</B></TD><TD><B>Writable</B></TD></TR>\n";
 
@@ -543,21 +544,21 @@ switch ($page) {
     }
     else {
       refreshButton();
-      print "<P>Please allow <B>$process_username</B> to write to these directories (mkdir, chown or chmod)</P>";
+      print "<P>You need to allow UNIX user <B>$process_username</B> to write to these directories (mkdir, chown or chmod)</P>";
       if(!empty($cmd_mkdir))
-        print "<P><B>Tips</B> : mkdir $cmd_mkdir";
+        print "<P><B>For instance</B> : mkdir $cmd_mkdir";
       if(!empty($cmd_chown))
-        print "<P><B>Tips</B>: chown -R $process_username:$process_group $cmd_chown";
+        print "<P><B>For instance</B> : chown -R $process_username:$process_group $cmd_chown";
     }
   break;
   ###################################
   case 'smarty': // Download, uncompress and install Smarty
     print <<< EndHTML
-    <H1>Smarty installation</H1>
-    <P><A HREF="http://smarty.php.net/">Smarty</A> is known as a "Template Engine". Wifidog s internal fonctionnality needs it.</P>
+    <H1>Smarty template engine installation</H1>
+    <P><A HREF="http://smarty.php.net/">Smarty</A> is Template Engine. WifiDog requires you install it before you continue.</P>
 EndHTML;
     if ($neededPackages['smarty']['available']) {
-      print "Already installed !<BR>";
+      print "Already installed !<br/>";
     }
     else {
       chdir("$basepath/tmp");
@@ -684,7 +685,7 @@ EndHTML;
     }
     else {
       print <<< EndHTML
-<P><A HREF="http://phlickr.sourceforge.net/">Phlickr</A> is an opensource PHP5 based API kit used to access the Flickr API. <A HREF="http://flickr.com/">Phlick</A> help people make their photos available to the people who matter to them. Phlick allows Wifidog to share common hotspot pictures. It's is recommended to install Phlickr, if you don't, Phlickr options will be disable.
+<P><A HREF="http://phlickr.sourceforge.net/">Phlickr</A> is an Open Source PHP 5 interface to the Flickr API. <A HREF="http://flickr.com/">Flickr</A> is a digital photo sharing website. Phlickr allows WifiDog to display pictures from Flickr on its portal pages. Phlickr is thus an optional package..
 
 <P>Do you want to install Phlickr ?
 EndHTML;
@@ -786,7 +787,7 @@ EndHTML;
   }
 </script>
 
-<P><B>Note</B> : MySQL support is presently experimental and not working</P>
+<P><B>Note</B> : MySQL support is currently broken</P>
 
 EndHTML;
 
@@ -808,7 +809,7 @@ EndHTML;
         print "<UL><LI>Postgresql database connection : ";
 
         $conn_string = "host=$CONF_DATABASE_HOST dbname=$CONF_DATABASE_NAME user=$CONF_DATABASE_USER password=$CONF_DATABASE_PASSWORD";
-        $ptr_connexion = pg_connect($conn_string) or die(); # or die("Couldn't Connect ==".pg_last_error()."==<BR>");
+        $ptr_connexion = @pg_connect($conn_string) or die(); # or die("Couldn't Connect ==".pg_last_error()."==<BR>");
 
         #if ($ptr_connexion == TRUE) {
           print "Success<BR>";
@@ -1090,7 +1091,6 @@ EndHTML;
     #        Options avancees : Supporter les define de [SMARTY|MAGPIE|PHLICKR|JPGRAPH]_REL_PATH
     print <<< EndHTML
 <H1>Options</H1>
-<P>Not yet finished ... (dependencies autodetection and few other options)</P>
   <TABLE border="1">
 
 EndHTML;
@@ -1156,7 +1156,7 @@ EndHTML;
     print "<H1>Languages configuration</H1>";
     print <<< EndHTML
       <P>Not yet implemented ...</P>
-      <P>Will allow wich language can be use and correct error from unknown locale information</P>
+      <P>Will allow selecting language to use.</P>
 <B>Errror message example</B> : <BR>
 <DIV style="border:solid black;">Warning: language.php: Unable to setlocale() to fr, return value: , current locale: LC_CTYPE=en_US.UTF-8;LC_NUMERIC=C; [...]</DIV>
 EndHTML;
@@ -1167,7 +1167,7 @@ EndHTML;
 
   ###################################
   case 'radius':
-    print "<H1>Radius configuration</H1>";
+    print "<H1>Radius Authenticator configuration</H1>";
     print "<P>Not yet implemented ...";
 
     # Dependencies
@@ -1194,19 +1194,7 @@ EndHTML;
     $conn_string = "host=$CONF_DATABASE_HOST dbname=$CONF_DATABASE_NAME user=$CONF_DATABASE_USER password=$CONF_DATABASE_PASSWORD";
     $connection = pg_connect($conn_string) or die();
 
-    if ($action == 'create') {
-      define('BASEPATH', './');
-      require_once BASEPATH.'classes/User.php';
-
-      $created_user = User :: createUser(get_guid(), $username, Network::getDefaultNetwork(), $email, $password);
-      $user_id = $created_user->getId();
-
-      # Add user to admin table, hide his username and set his account status to 1 (allowed)
-      $sql = "INSERT INTO administrators (user_id) VALUES ('" . $created_user->getId() . "'); UPDATE users SET	account_status='1', never_show_username=true WHERE user_id='$user_id'";
-      $result = pg_query($connection, $sql);
-    }
-
-    $sql = "SELECT * FROM users NATURAL JOIN administrators WHERE account_origin = 'LOCAL_USER'";
+    $sql = "SELECT * FROM users NATURAL JOIN administrators WHERE account_origin = 'default-network'";
     $result = pg_query($connection, $sql);
     $result_array = pg_fetch_all($result);
     $username_db = $result_array[0]['username'];
@@ -1216,6 +1204,18 @@ EndHTML;
       navigation(array(array("title" => "Back", "page" => "radius"), array("title" => "Next", "page" => "network")));
     }
     else {
+    	
+    	if ($action == 'create') {
+      define('BASEPATH', './');
+      require_once BASEPATH.'classes/User.php';
+
+      $created_user = User :: createUser(get_guid(), $username, Network::getDefaultNetwork(), $email, $password);
+      $user_id = $created_user->getId();
+
+      # Add user to admin table, hide his username and set his account status to 1 (allowed)
+      $sql = "INSERT INTO administrators (user_id) VALUES ('{$user_id}'); UPDATE users SET account_status='1', never_show_username=true WHERE user_id='$user_id'";
+      $result = pg_query($connection, $sql);
+    }
       print<<<EndHTML
         <P>
         <TABLE BORDER="1">
@@ -1244,7 +1244,7 @@ EndHTML;
               exit();
             }
             if (document.myform.email.value == '') {
-              alert('You need to type a email');
+              alert('You need to type an e-mail');
               exit();
             }
             document.myform.page.value='admin';
@@ -1269,25 +1269,33 @@ EndHTML;
     //$VALIDATION_GRACE_TIME         = $configArray['VALIDATION_GRACE_TIME'];
     //$VALIDATION_EMAIL_FROM_ADDRESS = $configArray['VALIDATION_EMAIL_FROM_ADDRESS'];
 
-    print <<< EndHTML
-  <P>
+	/**
+	 * @deprecated version - Dec 26, 2005 - Needs to use network abstraction
+	 * 
+	 * 
+	 * <P>
   <TABLE border="1">
   <TR>
-    <TD>Network Name</TD><TD><INPUT type="text" name="HOTSPOT_NETWORK_NAME" value="$HOTSPOT_NETWORK_NAME" size="30"></TD>
+    <TD>Network Name</TD><TD><INPUT type="text" name="HOTSPOT_NETWORK_NAME" value="" size="30"></TD>
   </TR>
   <TR>
-    <TD>Network URL</TD><TD><INPUT type="text" name="HOTSPOT_NETWORK_URL" value="$HOTSPOT_NETWORK_URL" size="30"></TD>
+    <TD>Network URL</TD><TD><INPUT type="text" name="HOTSPOT_NETWORK_URL" value="" size="30"></TD>
   </TR>
   <TR>
-    <TD>Tech Support Email</TD><TD><INPUT type="text" name="TECH_SUPPORT_EMAIL" value="$TECH_SUPPORT_EMAIL" size="30"></TD>
+    <TD>Tech Support Email</TD><TD><INPUT type="text" name="TECH_SUPPORT_EMAIL" value="" size="30"></TD>
   </TR>
   <TR>
-    <TD>Validation Grace Time (min)</TD><TD><INPUT type="text" name="VALIDATION_GRACE_TIME" value="$VALIDATION_GRACE_TIME" size="30"></TD>
+    <TD>Validation Grace Time (min)</TD><TD><INPUT type="text" name="VALIDATION_GRACE_TIME" value="" size="30"></TD>
   </TR>
   <TR>
-    <TD>Validation Email (send from)</TD><TD><INPUT type="text" name="VALIDATION_EMAIL_FROM_ADDRESS" value="$VALIDATION_EMAIL_FROM_ADDRESS" size="30"></TD>
+    <TD>Validation Email (send from)</TD><TD><INPUT type="text" name="VALIDATION_EMAIL_FROM_ADDRESS" value="" size="30"></TD>
   </TR>
   </TABLE>
+	 */
+	print "Need to reimplement this... Until then connect to the administration pages and modify it by yourself.";
+	
+    print <<< EndHTML
+  
 
 <script type="text/javascript">
   function submitOptionsValue() {
@@ -1299,9 +1307,8 @@ EndHTML;
   }
 </script>
 
-    <P><B>Note</B>: One Wifidog Authentification Server instance will support many network soon. Waiting for new Network implementation/abstraction to become more sophisticated.
-
 EndHTML;
+
     navigation(array(array("title" => "Back", "page" => "admin")));
 
     print <<< EndHTML
@@ -1313,7 +1320,7 @@ EndHTML;
   ###################################
   case 'hotspot':
     print "<H1>Hotspot</H1>";
-    print "<P>Not yet implemented and maybe not needed<P>Default hotstop already created<P>Use administration interface to add new one";
+    print "<P>A default hotspot has already been created<P>Use administration interface to add more hotspots.";
     navigation(array(array("title" => "Back", "page" => "network"), array("title" => "Next", "page" => "end")));
   break;
 
@@ -1331,7 +1338,7 @@ EndHTML;
     $url = 'http://' . $_SERVER['HTTP_HOST'] . $system_path;
     print<<<EndHTML
   <H1>Thanks for using Wifidog</H1>
-  Redirection to your new Wifidog Authentification Server in few secondes
+  Redirection to your new WifiDog Authentification Server in 3 seconds
   <meta http-equiv="REFRESH" content="3;url=$url">
   <PRE>
 
@@ -1425,15 +1432,14 @@ EndHTML;
     $WIFIDOG_VERSION = $configArray['WIFIDOG_VERSION'];
     # TODO : Add links to auth-server web documents
     print <<<EndHTML
-<P>Welcome to Wifidog Auth-Server installation and configuration script.</P>
-<P>This is a work in progress, so please report bugs to the mailing list for better support.
-Many work needed to be done : validation, error handling, integration, security, etc.
-The current auth-server version is <B>$WIFIDOG_VERSION</B>. The installation is only available in english.</P>
+<H1>Welcome to WifiDog Auth-Server installation and configuration script.</H1>
+<P>This installation still needs improvement, so please any report bug to the mailing list for better support.<BR/>
+The current auth-server version is <B>$WIFIDOG_VERSION</B>.</P>
 
-<P>Before going further with this installation you need to have/create a valid user and database.
+<P><strong>Before going any further</strong> with this installation you need to have/create a valid user and database.
 <P>Here is a command line example for PostgreSQL (or use the way you like) :</P>
 
-<B>Create the wifidog DB user</B> (createuser and createdb need to be in you PATH) :
+<B>Create the PostgreSQL databaser user for WifiDog</B> (createuser and createdb need to be in you PATH) :
 <PRE>  <I>postgres@yourserver $></I> createuser wifidog --pwprompt
   Enter password for new user:
   Enter it again:
@@ -1442,12 +1448,12 @@ The current auth-server version is <B>$WIFIDOG_VERSION</B>. The installation is 
   CREATE USER
 </PRE>
 
-<B>Create the wifidog database</B>
-<PRE>  <I>postgres@yourserver $></I> createdb wifidog --encoding=UTF-8 --owner=wifidog
+<B>Create the WifiDog database</B>
+<PRE>  <I>postgres@yourserver $></I> createdb -U wifidog wifidog --encoding=UTF-8 --owner=wifidog
   CREATE DATABASE
 </PRE>
 
-<B>Security</B> : For now, a really simple password protection is in place. To find the password type this in command line :<PRE>  <B>ls -ld $basepath | awk '{print \$6\$7\$8}'</B>
+<B>Security</B> : A password is needed to continue with the installation process. To find the password type this in command line :<PRE>  <B>ls -ld $basepath | awk '{print \$6\$7\$8}'</B>
 
   (No username needed)
 </PRE>

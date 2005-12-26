@@ -119,7 +119,7 @@ SET search_path = public, pg_catalog;
 -- Data for Name: schema_info; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
-INSERT INTO schema_info (tag, value) VALUES ('schema_version', '29');
+INSERT INTO schema_info (tag, value) VALUES ('schema_version', '33');
 
 
 --
@@ -142,6 +142,7 @@ SET search_path = public, pg_catalog;
 
 INSERT INTO locales (locales_id) VALUES ('fr');
 INSERT INTO locales (locales_id) VALUES ('en');
+INSERT INTO locales (locales_id) VALUES ('de');
 
 
 --
