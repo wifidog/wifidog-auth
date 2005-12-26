@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class IFrame</title>
+			<link rel="stylesheet" href="../../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+
+<h2 class="class-name">Class IFrame</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+							<a href="#sec-descendents">Descendents</a>
+			|											<a href="#sec-vars">Vars</a>
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">An IFrame can integrate external HTML content from a given URL.</p>
+		<p class="notes">
+			Located in <a class="field" href="_wifidog_classes_Content_IFrame_IFrame_php.html">/classes/Content/IFrame/IFrame.php</a> (line <span class="field"><a href="../..//__filesource/fsource_WiFiDogAuthServer_ContentClasses_classesContentIFrameIFrame.php.html#a52">52</a></span>)
+		</p>
+		
+				
+		<pre><a href="../../WiFiDogAuthServer/Content.html">Content</a>
+   |
+   --IFrame</pre>
+	
+			</div>
+</div>
+
+	<a name="sec-descendents"></a>
+	<div class="info-box">
+		<div class="info-box-title">Direct descendents</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+			<span class="disabled">Descendents</span>
+			|												<a href="#sec-vars">Vars</a>
+								|															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<table cellpadding="2" cellspacing="0" class="class-table">
+				<tr>
+					<th class="class-table-header">Class</th>
+					<th class="class-table-header">Description</th>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../../WiFiDogAuthServer/ContentClasses/IFrameRest.html">IFrameRest</a></td>
+					<td>
+											An IFrame to integrate an external HTML content from a REST-style get query.
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../../WiFiDogAuthServer/ContentClasses/SimpleIFrame.html">SimpleIFrame</a></td>
+					<td>
+											A SimpleIFrame is an IFrame without all the fuss ( title, description ... )
+										</td>
+				</tr>
+							</table>
+		</div>
+	</div>
+
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
+																		<a href="#sec-vars">Vars</a>
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+								
+				<div class="method-definition">
+											<span class="method-result">IFrame</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$content_id</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getAdminUI" title="details" class="method-name">getAdminUI</a>
+											([<span class="var-type">mixed</span>&nbsp;<span class="var-name">$subclass_admin_interface</span> = <span class="var-default">null</span>])
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getGeneratedUrl" title="details" class="method-name">getGeneratedUrl</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getHeight" title="details" class="method-name">getHeight</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getUrl" title="details" class="method-name">getUrl</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">The</span>
+										<a href="#getUserUI" title="details" class="method-name">getUserUI</a>
+											([<span class="var-type">$subclass_admin_interface</span>&nbsp;<span class="var-name">$subclass_user_interface</span> = <span class="var-default">null</span>])
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getWidth" title="details" class="method-name">getWidth</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#processAdminUI" title="details" class="method-name">processAdminUI</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#refresh" title="details" class="method-name">refresh</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setHeight" title="details" class="method-name">setHeight</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$height</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setUrl" title="details" class="method-name">setUrl</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$url</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setWidth" title="details" class="method-name">setWidth</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$width</span>)
+									</div>
+							</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			
+							<h4>Inherited Variables</h4>
+				<A NAME='inherited_vars'><!-- --></A>
+									<p>Inherited from <span class="classname"><a href="../../WiFiDogAuthServer/Content.html">Content</a></span></p>
+					<blockquote>
+													<span class="var-title">
+								<span class="var-name"><a href="../../WiFiDogAuthServer/Content.html#var$content_row">Content::$content_row</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../WiFiDogAuthServer/Content.html#var$content_type">Content::$content_type</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../WiFiDogAuthServer/Content.html#var$id">Content::$id</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../WiFiDogAuthServer/Content.html#var$is_logging_enabled">Content::$is_logging_enabled</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../WiFiDogAuthServer/Content.html#var$is_trivial_content">Content::$is_trivial_content</a></span><br>
+							</span>
+											</blockquote> 
+										
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
+															<a href="#sec-vars">Vars</a>
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_ContentClasses_classesContentIFrameIFrame.php.html#a57">57</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Constructor</p>
+	
+	<div class="method-signature">
+		<span class="method-result">IFrame</span>
+		<span class="method-name">
+			__construct
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$content_id</span>)
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../../WiFiDogAuthServer/Content.html#method__construct">Content::__construct()</a></dt>
+					</dl>
+		
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../../WiFiDogAuthServer/ContentClasses/IFrameRest.html#method__construct">IFrameRest::__construct()</a>
+								: Constructor
+							</li>
+					<li>
+				<a href="../../WiFiDogAuthServer/ContentClasses/SimpleIFrame.html#method__construct">SimpleIFrame::__construct()</a>
+								: Constructeur
+							</li>
+				</ul>
+	</div>
+<a name="methodgetAdminUI" id="getAdminUI"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAdminUI</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_ContentClasses_classesContentIFrameIFrame.php.html#a136">136</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Retrieves Admin UI for IFrame</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getAdminUI
+		</span>
+					([<span class="var-type">mixed</span>&nbsp;<span class="var-name">$subclass_admin_interface</span> = <span class="var-default">null</span>])
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../../WiFiDogAuthServer/Content.html#methodgetAdminUI">Content::getAdminUI()</a></dt>
+						<dd>Retreives the admin interface of this object. Anything that overrides  this method should call the parent method with it's output at the END of  processing.</dd>
+					</dl>
+		
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../../WiFiDogAuthServer/ContentClasses/IFrameRest.html#methodgetAdminUI">IFrameRest::getAdminUI()</a>
+								: Retrieves Admin UI for IFrame
+							</li>
+				</ul>
+	</div>
+<a name="methodgetGeneratedUrl" id="getGeneratedUrl"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getGeneratedUrl</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_ContentClasses_classesContentIFrameIFrame.php.html#a99">99</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getGeneratedUrl
+		</span>
+				()
+			</div>
+	
+		
+		
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../../WiFiDogAuthServer/ContentClasses/IFrameRest.html#methodgetGeneratedUrl">IFrameRest::getGeneratedUrl()</a>
+								: Return the IFrame URL generated by parsing the data in the URL field.
+							</li>
+				</ul>
+	</div>
+<a name="methodgetHeight" id="getHeight"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getHeight</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_ContentClasses_classesContentIFrameIFrame.php.html#a118">118</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getHeight
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetUrl" id="getUrl"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getUrl</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_ContentClasses_classesContentIFrameIFrame.php.html#a86">86</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Return the IFrame URL</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getUrl
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetUserUI" id="getUserUI"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getUserUI</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_ContentClasses_classesContentIFrameIFrame.php.html#a194">194</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> HTML fragment for this interface</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">The</span>
+		<span class="method-name">
+			getUserUI
+		</span>
+					([<span class="var-type">$subclass_admin_interface</span>&nbsp;<span class="var-name">$subclass_user_interface</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">$subclass_admin_interface</span>
+				<span class="var-name">$subclass_user_interface</span><span class="var-description">: Html content of the interface element of a children</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../../WiFiDogAuthServer/Content.html#methodgetUserUI">Content::getUserUI()</a></dt>
+						<dd>Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.</dd>
+					</dl>
+		
+	</div>
+<a name="methodgetWidth" id="getWidth"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getWidth</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_ContentClasses_classesContentIFrameIFrame.php.html#a103">103</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getWidth
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodprocessAdminUI" id="processAdminUI"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">processAdminUI</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_ContentClasses_classesContentIFrameIFrame.php.html#a169">169</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			processAdminUI
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../../WiFiDogAuthServer/Content.html#methodprocessAdminUI">Content::processAdminUI()</a></dt>
+						<dd>Process admin interface of this object.  When an object overrides this method, they should call the parent processAdminUI at the BEGINING of processing.</dd>
+					</dl>
+		
+	</div>
+<a name="methodrefresh" id="refresh"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">refresh</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_ContentClasses_classesContentIFrameIFrame.php.html#a208">208</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Reloads the object from the database.  Should normally be called after a set operation.</p>
+<p class="description"><p>This function is private because calling it from a subclass will call the  constructor from the wrong scope</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			refresh
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../../WiFiDogAuthServer/Content.html#methodrefresh">Content::refresh()</a></dt>
+						<dd>Reloads the object from the database.  Should normally be called after a set operation.</dd>
+					</dl>
+		
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../../WiFiDogAuthServer/ContentClasses/IFrameRest.html#methodrefresh">IFrameRest::refresh()</a>
+								: Reloads the object from the database.  Should normally be called after a set operation.
+							</li>
+					<li>
+				<a href="../../WiFiDogAuthServer/ContentClasses/SimpleIFrame.html#methodrefresh">SimpleIFrame::refresh()</a>
+								: Reloads the object from the database.  Should normally be called after a set operation.
+							</li>
+				</ul>
+	</div>
+<a name="methodsetHeight" id="setHeight"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setHeight</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_ContentClasses_classesContentIFrameIFrame.php.html#a123">123</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setHeight
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$height</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetUrl" id="setUrl"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setUrl</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_ContentClasses_classesContentIFrameIFrame.php.html#a91">91</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setUrl
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$url</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetWidth" id="setWidth"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setWidth</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_ContentClasses_classesContentIFrameIFrame.php.html#a108">108</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setWidth
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$width</span>)
+			</div>
+	
+		
+		
+	</div>
+							<h4>Inherited Methods</h4>
+				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../../WiFiDogAuthServer/Content.html">Content</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#method__construct">Content::__construct()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodaddOwner">Content::addOwner()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodcreateNewObject">Content::createNewObject()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methoddelete">Content::delete()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methoddeleteOwner">Content::deleteOwner()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodgetAdminUI">Content::getAdminUI()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodgetAllContent">Content::getAllContent()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodgetAuthors">Content::getAuthors()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodgetAvailableContentTypes">Content::getAvailableContentTypes()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodgetCreateNewObjectUI">Content::getCreateNewObjectUI()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodgetDescription">Content::getDescription()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodgetId">Content::getId()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodgetLastDisplayTimestamp">Content::getLastDisplayTimestamp()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodgetLinkedContentUI">Content::getLinkedContentUI()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodgetListUI">Content::getListUI()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodgetLoggingStatus">Content::getLoggingStatus()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodgetLongDescription">Content::getLongDescription()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodgetNewContentUI">Content::getNewContentUI()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodgetObject">Content::getObject()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodgetObjectType">Content::getObjectType()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodgetProjectInfo">Content::getProjectInfo()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodgetSelectContentUI">Content::getSelectContentUI()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodgetSponsorInfo">Content::getSponsorInfo()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodgetTitle">Content::getTitle()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodgetUserUI">Content::getUserUI()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodisDisplayableAt">Content::isDisplayableAt()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodisOwner">Content::isOwner()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodisPersistent">Content::isPersistent()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodisUserSubscribed">Content::isUserSubscribed()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodlogContentDisplay">Content::logContentDisplay()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodprocessAdminUI">Content::processAdminUI()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodprocessCreateNewObjectUI">Content::processCreateNewObjectUI()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodprocessLinkedContentUI">Content::processLinkedContentUI()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodprocessNewContentUI">Content::processNewContentUI()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodprocessSelectContentUI">Content::processSelectContentUI()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodrefresh">Content::refresh()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodsetContentType">Content::setContentType()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodsetIsPersistent">Content::setIsPersistent()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodsetIsTrivialContent">Content::setIsTrivialContent()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodsetLoggingStatus">Content::setLoggingStatus()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodsubscribe">Content::subscribe()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#methodunsubscribe">Content::unsubscribe()</a></span><br>
+													<span class="method-name"><a href="../../WiFiDogAuthServer/Content.html#method__toString">Content::__toString()</a></span><br>
+											</blockquote>
+										
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 26 Dec 2005 12:24:23 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.3.0RC5</a>
+	</p>
+	</div></body>
+</html>

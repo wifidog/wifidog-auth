@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>File Source for AuthenticatorRadius.php</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+						
+<h1>Source for file AuthenticatorRadius.php</h1>
+<p>Documentation is available at <a href="../WiFiDogAuthServer/_wifidog_classes_AuthenticatorRadius_php.html">AuthenticatorRadius.php</a></p>
+<div class="src-code">
+<pre><ol><li><a name="a1"></a><span class="src-php">&lt;?php</span></li>
+<li><a name="a2"></a>&nbsp;</li>
+<li><a name="a4"></a><span class="src-comm">/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */</span></li>
+<li><a name="a5"></a><span class="src-comm">// +-------------------------------------------------------------------+</span></li>
+<li><a name="a6"></a><span class="src-comm">// | WiFiDog Authentication Server                                     |</span></li>
+<li><a name="a7"></a><span class="src-comm">// | =============================                                     |</span></li>
+<li><a name="a8"></a><span class="src-comm">// |                                                                   |</span></li>
+<li><a name="a9"></a><span class="src-comm">// | The WiFiDog Authentication Server is part of the WiFiDog captive  |</span></li>
+<li><a name="a10"></a><span class="src-comm">// | portal suite.                                                     |</span></li>
+<li><a name="a11"></a><span class="src-comm">// +-------------------------------------------------------------------+</span></li>
+<li><a name="a12"></a><span class="src-comm">// | PHP version 5 required.                                           |</span></li>
+<li><a name="a13"></a><span class="src-comm">// +-------------------------------------------------------------------+</span></li>
+<li><a name="a14"></a><span class="src-comm">// | Homepage:     http://www.wifidog.org/                             |</span></li>
+<li><a name="a15"></a><span class="src-comm">// | Source Forge: http://sourceforge.net/projects/wifidog/            |</span></li>
+<li><a name="a16"></a><span class="src-comm">// +-------------------------------------------------------------------+</span></li>
+<li><a name="a17"></a><span class="src-comm">// | This program is free software; you can redistribute it and/or     |</span></li>
+<li><a name="a18"></a><span class="src-comm">// | modify it under the terms of the GNU General Public License as    |</span></li>
+<li><a name="a19"></a><span class="src-comm">// | published by the Free Software Foundation; either version 2 of    |</span></li>
+<li><a name="a20"></a><span class="src-comm">// | the License, or (at your option) any later version.               |</span></li>
+<li><a name="a21"></a><span class="src-comm">// |                                                                   |</span></li>
+<li><a name="a22"></a><span class="src-comm">// | This program is distributed in the hope that it will be useful,   |</span></li>
+<li><a name="a23"></a><span class="src-comm">// | but WITHOUT ANY WARRANTY; without even the implied warranty of    |</span></li>
+<li><a name="a24"></a><span class="src-comm">// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |</span></li>
+<li><a name="a25"></a><span class="src-comm">// | GNU General Public License for more details.                      |</span></li>
+<li><a name="a26"></a><span class="src-comm">// |                                                                   |</span></li>
+<li><a name="a27"></a><span class="src-comm">// | You should have received a copy of the GNU General Public License |</span></li>
+<li><a name="a28"></a><span class="src-comm">// | along with this program; if not, contact:                         |</span></li>
+<li><a name="a29"></a><span class="src-comm">// |                                                                   |</span></li>
+<li><a name="a30"></a><span class="src-comm">// | Free Software Foundation           Voice:  +1-617-542-5942        |</span></li>
+<li><a name="a31"></a><span class="src-comm">// | 59 Temple Place - Suite 330        Fax:    +1-617-542-2652        |</span></li>
+<li><a name="a32"></a><span class="src-comm">// | Boston, MA  02111-1307,  USA       gnu@gnu.org                    |</span></li>
+<li><a name="a33"></a><span class="src-comm">// |                                                                   |</span></li>
+<li><a name="a34"></a><span class="src-comm">// +-------------------------------------------------------------------+</span></li>
+<li><a name="a35"></a>&nbsp;</li>
+<li><a name="a36"></a><span class="src-doc">/**</span></li>
+<li><a name="a37"></a><span class="src-doc"> * </span><span class="src-doc-coretag">@package</span><span class="src-doc">    WiFiDogAuthServer</span></li>
+<li><a name="a38"></a><span class="src-doc"> * </span><span class="src-doc-coretag">@author</span><span class="src-doc">     Benoit Gregoire &lt;bock@step.polymtl.ca&gt;</span></li>
+<li><a name="a39"></a><span class="src-doc"> * </span><span class="src-doc-coretag">@author</span><span class="src-doc">     Francois Proulx &lt;francois.proulx@gmail.com&gt;</span></li>
+<li><a name="a40"></a><span class="src-doc"> * </span><span class="src-doc-coretag">@copyright</span><span class="src-doc">  2005 Benoit Gregoire &lt;bock@step.polymtl.ca&gt; - Technologies Coeus</span></li>
+<li><a name="a41"></a><span class="src-doc"> *  inc.</span></li>
+<li><a name="a42"></a><span class="src-doc"> * </span><span class="src-doc-coretag">@copyright</span><span class="src-doc">  2005 Francois Proulx &lt;francois.proulx@gmail.com&gt; - Technologies</span></li>
+<li><a name="a43"></a><span class="src-doc"> *  Coeus inc.</span></li>
+<li><a name="a44"></a><span class="src-doc"> * </span><span class="src-doc-coretag">@version</span><span class="src-doc">    CVS: $Id: AuthenticatorRadius.php,v 1.17 2005/12/26 10:41:29 max-horvath Exp $</span></li>
+<li><a name="a45"></a><span class="src-doc"> * </span><span class="src-doc-coretag">@link</span><span class="src-doc">       http://sourceforge.net/projects/wifidog/</span></li>
+<li><a name="a46"></a><span class="src-doc"> */</span></li>
+<li><a name="a47"></a>&nbsp;</li>
+<li><a name="a48"></a><span class="src-doc">/**</span></li>
+<li><a name="a49"></a><span class="src-doc"> * Portions of this code are based on PEAR RADIUS Auth class examples provided</span></li>
+<li><a name="a50"></a><span class="src-doc"> * Copyright (c) 2003, Michael Bretterklieber &lt;michael@bretterklieber.com&gt;</span></li>
+<li><a name="a51"></a><span class="src-doc"> * All rights reserved.</span></li>
+<li><a name="a52"></a><span class="src-doc"> */</span></li>
+<li><a name="a53"></a><span class="src-inc">require_once </span><span class="src-id">BASEPATH</span>.<span class="src-str">'classes/Authenticator.php'</span><span class="src-sym">;</span></li>
+<li><a name="a54"></a><span class="src-inc">require_once </span><span class="src-id">BASEPATH</span>.<span class="src-str">'classes/User.php'</span><span class="src-sym">;</span></li>
+<li><a name="a55"></a><span class="src-comm">// Including PEAR RADIUS and CHAP MD5 interface classes</span></li>
+<li><a name="a56"></a><span class="src-inc">require_once </span><span class="src-str">'Auth/RADIUS.php'</span><span class="src-sym">;</span></li>
+<li><a name="a57"></a><span class="src-inc">require_once </span><span class="src-str">'Crypt/CHAP.php'</span><span class="src-sym">;</span></li>
+<li><a name="a58"></a>&nbsp;</li>
+<li><a name="a59"></a><span class="src-doc">/** Internal wifidog user database authentication source */</span></li>
+<li><a name="a59"></a>&nbsp;</li>
+<li><a name="a60"></a><span class="src-key">class </span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html">AuthenticatorRadius</a> <span class="src-key">extends </span><a href="../WiFiDogAuthServer/Authenticator.html">Authenticator</a></li>
+<li><a name="a61"></a><span class="src-sym">{</span></li>
+<li><a name="a62"></a>    <span class="src-key">private </span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_hostname">$mRadius_hostname</a><span class="src-sym">;</span></li>
+<li><a name="a63"></a>    <span class="src-key">private </span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_auth_port">$mRadius_auth_port</a><span class="src-sym">;</span></li>
+<li><a name="a64"></a>    <span class="src-key">private </span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_acct_port">$mRadius_acct_port</a><span class="src-sym">;</span></li>
+<li><a name="a65"></a>    <span class="src-key">private </span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_secret_key">$mRadius_secret_key</a><span class="src-sym">;</span></li>
+<li><a name="a66"></a>    <span class="src-key">private </span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_encryption_method">$mRadius_encryption_method</a><span class="src-sym">;</span></li>
+<li><a name="a67"></a>&nbsp;</li>
+<li><a name="a68"></a>    <span class="src-doc">/**</span></li>
+<li><a name="a69"></a><span class="src-doc">     * AuthenticatorRadius constructor</span></li>
+<li><a name="a70"></a><span class="src-doc">     * Example:  new AuthenticatorRadius(IDRC_ACCOUNT_ORIGIN, &quot;192.168.0.11&quot;,</span></li>
+<li><a name="a71"></a><span class="src-doc">     * 1812, 1813, &quot;secret_key&quot;, &quot;CHAP_MD5&quot;);</span></li>
+<li><a name="a72"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@param </span><span class="src-doc-type">$account_orgin </span><span class="src-doc">: The network ID</span></li>
+<li><a name="a73"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@param </span><span class="src-doc-type">$host </span><span class="src-doc">: hostname of the RADIUS server</span></li>
+<li><a name="a74"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@param </span><span class="src-doc-type">$auth_port </span><span class="src-doc">: Authentication port of the RADIUS server</span></li>
+<li><a name="a75"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@param </span><span class="src-doc-type">$acct_port </span><span class="src-doc">: Accounting port of the RADIUS server</span></li>
+<li><a name="a76"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@param </span><span class="src-doc-type">$secret_key </span><span class="src-doc">: The secret key between between this client and the</span></li>
+<li><a name="a77"></a><span class="src-doc">     *  server</span></li>
+<li><a name="a78"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@param </span><span class="src-doc-type">$encryption_method </span><span class="src-doc">: The encryption method choosen for the</span></li>
+<li><a name="a79"></a><span class="src-doc">     *  requests</span></li>
+<li><a name="a80"></a><span class="src-doc">     */</span></li>
+<li><a name="a81"></a>    <span class="src-key">function </span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#method__construct">__construct</a><span class="src-sym">(</span><span class="src-var">$account_orgin</span><span class="src-sym">, </span><span class="src-var">$host </span>= <span class="src-str">&quot;localhost&quot;</span><span class="src-sym">, </span><span class="src-var">$auth_port </span>= <span class="src-num">1812</span><span class="src-sym">, </span><span class="src-var">$acct_port </span>= <span class="src-num">1813</span><span class="src-sym">, </span><span class="src-var">$secret_key </span>= <span class="src-str">&quot;&quot;</span><span class="src-sym">, </span><span class="src-var">$encryption_method </span>= <span class="src-str">&quot;CHAP_MD5&quot;</span><span class="src-sym">)</span></li>
+<li><a name="a82"></a>    <span class="src-sym">{</span></li>
+<li><a name="a83"></a>        <span class="src-id">parent </span><span class="src-sym">:: </span><a href="../WiFiDogAuthServer/Authenticator.html#method__construct">__construct</a><span class="src-sym">(</span><span class="src-var">$account_orgin</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a84"></a>&nbsp;</li>
+<li><a name="a85"></a>        <span class="src-comm">// Store RADIUS server parameters</span></li>
+<li><a name="a86"></a>        <span class="src-comm">// Defaults to localhost:0 with MD5 CHAP encryption</span></li>
+<li><a name="a87"></a>        <span class="src-comm">// Setting port to 0 will get default RADIUS Auth service port ( either 1645 or 1812 )</span></li>
+<li><a name="a88"></a>        <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_hostname">mRadius_hostname</a> = <span class="src-var">$host</span><span class="src-sym">;</span></li>
+<li><a name="a89"></a>        <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_auth_port">mRadius_auth_port</a> = <span class="src-var">$auth_port</span><span class="src-sym">;</span></li>
+<li><a name="a90"></a>        <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_acct_port">mRadius_acct_port</a> = <span class="src-var">$acct_port</span><span class="src-sym">;</span></li>
+<li><a name="a91"></a>        <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_secret_key">mRadius_secret_key</a> = <span class="src-var">$secret_key</span><span class="src-sym">;</span></li>
+<li><a name="a92"></a>        <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_encryption_method">mRadius_encryption_method</a> = <span class="src-var">$encryption_method</span><span class="src-sym">;</span></li>
+<li><a name="a93"></a>    <span class="src-sym">}</span></li>
+<li><a name="a94"></a>&nbsp;</li>
+<li><a name="a95"></a>    <span class="src-doc">/** Attempts to login a user against the authentication source.  If successfull, returns a User object</span></li>
+<li><a name="a96"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@param </span><span class="src-doc-type">username: </span><span class="src-doc"> A valid identifying token for the source.  Not necessarily unique.  For local user, bots username and email are valid.</span></li>
+<li><a name="a97"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@param </span><span class="src-doc-type">password: </span><span class="src-doc"> Clear text password.</span></li>
+<li><a name="a98"></a><span class="src-doc">     * </span><span class="src-doc-tag">@retval</span><span class="src-doc"> The actual User object if login was successfull, false otherwise.</span></li>
+<li><a name="a99"></a><span class="src-doc">     */</span></li>
+<li><a name="a100"></a>    <span class="src-key">function </span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#methodlogin">login</a><span class="src-sym">(</span><span class="src-var">$username</span><span class="src-sym">, </span><span class="src-var">$password</span><span class="src-sym">, </span><span class="src-sym">&amp; </span><span class="src-var">$errmsg </span>= <span class="src-id">null</span><span class="src-sym">)</span></li>
+<li><a name="a101"></a>    <span class="src-sym">{</span></li>
+<li><a name="a102"></a>        <span class="src-key">global </span><span class="src-var">$db</span><span class="src-sym">;</span></li>
+<li><a name="a103"></a>        <span class="src-var">$security </span>= <span class="src-key">new </span><span class="src-id"><a href="../WiFiDogAuthServer/Security.html">Security</a></span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a104"></a>        <span class="src-var">$retval </span>= <span class="src-id">false</span><span class="src-sym">;</span></li>
+<li><a name="a105"></a>        <span class="src-var">$username </span>= <span class="src-var">$db</span><span class="src-sym">-&gt;</span><span class="src-id">EscapeString</span><span class="src-sym">(</span><span class="src-var">$username</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a106"></a>        <span class="src-var">$password </span>= <span class="src-var">$db</span><span class="src-sym">-&gt;</span><span class="src-id">EscapeString</span><span class="src-sym">(</span><span class="src-var">$password</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a107"></a>&nbsp;</li>
+<li><a name="a108"></a>        <span class="src-comm">/*</span></li>
+<li><a name="a109"></a><span class="src-comm">         * Supported encryption methods are :</span></li>
+<li><a name="a110"></a><span class="src-comm">         *</span></li>
+<li><a name="a111"></a><span class="src-comm">         * CHAP_MD5 :Challenge-Handshake Authentication Protocol with MD5</span></li>
+<li><a name="a112"></a><span class="src-comm">         * MSCHAPv1 and MSCHAPv2 : Microsoft's CHAP implementation</span></li>
+<li><a name="a113"></a><span class="src-comm">         */</span></li>
+<li><a name="a114"></a>        <span class="src-key">switch </span><span class="src-sym">(</span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_encryption_method">mRadius_encryption_method</a><span class="src-sym">)</span></li>
+<li><a name="a115"></a>        <span class="src-sym">{</span></li>
+<li><a name="a116"></a>            <span class="src-key">case </span><span class="src-str">&quot;PAP&quot; </span>:</li>
+<li><a name="a117"></a>            <span class="src-key">case </span><span class="src-str">&quot;CHAP_MD5&quot; </span>:</li>
+<li><a name="a118"></a>            <span class="src-key">case </span><span class="src-str">&quot;MSCHAPv1&quot; </span>:</li>
+<li><a name="a119"></a>            <span class="src-key">case </span><span class="src-str">&quot;MSCHAPv2&quot; </span>:</li>
+<li><a name="a120"></a>                <span class="src-comm">// Instanciate PEAR class</span></li>
+<li><a name="a121"></a>                <span class="src-var">$classname </span>= <span class="src-str">'Auth_RADIUS_'</span>.<span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_encryption_method">mRadius_encryption_method</a><span class="src-sym">;</span></li>
+<li><a name="a122"></a>                <span class="src-var">$radius_server </span>= <span class="src-key">new </span><span class="src-var">$classname </span><span class="src-sym">(</span><span class="src-var">$username</span><span class="src-sym">, </span><span class="src-var">$password</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a123"></a>                <span class="src-var">$radius_server</span><span class="src-sym">-&gt;</span><span class="src-id">addServer</span><span class="src-sym">(</span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_hostname">mRadius_hostname</a><span class="src-sym">, </span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_auth_port">mRadius_auth_port</a><span class="src-sym">, </span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_secret_key">mRadius_secret_key</a><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a124"></a>                <span class="src-key">break</span><span class="src-sym">;</span></li>
+<li><a name="a125"></a>            <span class="src-key">default </span>:</li>
+<li><a name="a126"></a>                <span class="src-comm">// Invalid encryption method</span></li>
+<li><a name="a127"></a>                <span class="src-var">$errmsg </span>= <a href="../WiFiDogAuthServer/_wifidog_classes_Locale_php.html#function_">_</a><span class="src-sym">(</span><span class="src-str">&quot;Invalid RADIUS encryption method.&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a128"></a>                <span class="src-key">return </span><span class="src-id">false</span><span class="src-sym">;</span></li>
+<li><a name="a129"></a>        <span class="src-sym">}</span></li>
+<li><a name="a130"></a>&nbsp;</li>
+<li><a name="a131"></a>        <span class="src-comm">// Instructing PEAR RADIUS class auth parameters</span></li>
+<li><a name="a132"></a>        <span class="src-var">$radius_server</span><span class="src-sym">-&gt;</span><span class="src-id">username </span>= <span class="src-var">$username</span><span class="src-sym">;</span></li>
+<li><a name="a133"></a>        <span class="src-comm">// Depending on the auth method, generate challenge response</span></li>
+<li><a name="a134"></a>        <span class="src-key">switch </span><span class="src-sym">(</span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_encryption_method">mRadius_encryption_method</a><span class="src-sym">)</span></li>
+<li><a name="a135"></a>        <span class="src-sym">{</span></li>
+<li><a name="a136"></a>            <span class="src-key">case </span><span class="src-str">'CHAP_MD5' </span>:</li>
+<li><a name="a137"></a>            <span class="src-key">case </span><span class="src-str">'MSCHAPv1' </span>:</li>
+<li><a name="a138"></a>                <span class="src-var">$classname </span>= <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_encryption_method">mRadius_encryption_method</a> == <span class="src-str">'MSCHAPv1' </span>? <span class="src-str">'Crypt_CHAP_MSv1' </span>: <span class="src-str">'Crypt_CHAP_MD5'</span><span class="src-sym">;</span></li>
+<li><a name="a139"></a>                <span class="src-var">$crypt_class </span>= <span class="src-key">new </span><span class="src-var">$classname</span><span class="src-sym">;</span></li>
+<li><a name="a140"></a>                <span class="src-var">$crypt_class</span><span class="src-sym">-&gt;</span><span class="src-id">password </span>= <span class="src-var">$password</span><span class="src-sym">;</span></li>
+<li><a name="a141"></a>                <span class="src-var">$radius_server</span><span class="src-sym">-&gt;</span><span class="src-id">challenge </span>= <span class="src-var">$crypt_class</span><span class="src-sym">-&gt;</span><span class="src-id">challenge</span><span class="src-sym">;</span></li>
+<li><a name="a142"></a>                <span class="src-var">$radius_server</span><span class="src-sym">-&gt;</span><span class="src-id">chapid </span>= <span class="src-var">$crypt_class</span><span class="src-sym">-&gt;</span><span class="src-id">chapid</span><span class="src-sym">;</span></li>
+<li><a name="a143"></a>                <span class="src-var">$radius_server</span><span class="src-sym">-&gt;</span><span class="src-id">response </span>= <span class="src-var">$crypt_class</span><span class="src-sym">-&gt;</span><span class="src-id">challengeResponse</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a144"></a>                <span class="src-var">$radius_server</span><span class="src-sym">-&gt;</span><span class="src-id">flags </span>= <span class="src-num">1</span><span class="src-sym">;</span></li>
+<li><a name="a145"></a>                <span class="src-key">break</span><span class="src-sym">;</span></li>
+<li><a name="a146"></a>            <span class="src-key">case </span><span class="src-str">'MSCHAPv2' </span>:</li>
+<li><a name="a147"></a>                <span class="src-var">$crypt_class </span>= <span class="src-key">new </span><span class="src-id">Crypt_CHAP_MSv2</span><span class="src-sym">;</span></li>
+<li><a name="a148"></a>                <span class="src-var">$crypt_class</span><span class="src-sym">-&gt;</span><span class="src-id">username </span>= <span class="src-var">$username</span><span class="src-sym">;</span></li>
+<li><a name="a149"></a>                <span class="src-var">$crypt_class</span><span class="src-sym">-&gt;</span><span class="src-id">password </span>= <span class="src-var">$password</span><span class="src-sym">;</span></li>
+<li><a name="a150"></a>                <span class="src-var">$radius_server</span><span class="src-sym">-&gt;</span><span class="src-id">challenge </span>= <span class="src-var">$crypt_class</span><span class="src-sym">-&gt;</span><span class="src-id">authChallenge</span><span class="src-sym">;</span></li>
+<li><a name="a151"></a>                <span class="src-var">$radius_server</span><span class="src-sym">-&gt;</span><span class="src-id">peerChallenge </span>= <span class="src-var">$crypt_class</span><span class="src-sym">-&gt;</span><span class="src-id">peerChallenge</span><span class="src-sym">;</span></li>
+<li><a name="a152"></a>                <span class="src-var">$radius_server</span><span class="src-sym">-&gt;</span><span class="src-id">chapid </span>= <span class="src-var">$crypt_class</span><span class="src-sym">-&gt;</span><span class="src-id">chapid</span><span class="src-sym">;</span></li>
+<li><a name="a153"></a>                <span class="src-var">$radius_server</span><span class="src-sym">-&gt;</span><span class="src-id">response </span>= <span class="src-var">$crypt_class</span><span class="src-sym">-&gt;</span><span class="src-id">challengeResponse</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a154"></a>                <span class="src-key">break</span><span class="src-sym">;</span></li>
+<li><a name="a155"></a>            <span class="src-key">default </span>:</li>
+<li><a name="a156"></a>                <span class="src-var">$radius_server</span><span class="src-sym">-&gt;</span><span class="src-id">password </span>= <span class="src-var">$password</span><span class="src-sym">;</span></li>
+<li><a name="a157"></a>                <span class="src-key">break</span><span class="src-sym">;</span></li>
+<li><a name="a158"></a>        <span class="src-sym">}</span></li>
+<li><a name="a159"></a>&nbsp;</li>
+<li><a name="a160"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-sym">!</span><span class="src-var">$radius_server</span><span class="src-sym">-&gt;</span><span class="src-id">start</span><span class="src-sym">(</span><span class="src-sym">))</span></li>
+<li><a name="a161"></a>        <span class="src-sym">{</span></li>
+<li><a name="a162"></a>            <span class="src-var">$errmsg </span>= <a href="../WiFiDogAuthServer/_wifidog_classes_Locale_php.html#function_">_</a><span class="src-sym">(</span><span class="src-str">&quot;Could not initiate PEAR RADIUS Auth class : &quot;</span>.<span class="src-var">$radius_server</span><span class="src-sym">-&gt;</span><span class="src-id">getError</span><span class="src-sym">(</span><span class="src-sym">))</span><span class="src-sym">;</span></li>
+<li><a name="a163"></a>            <span class="src-key">return </span><span class="src-id">false</span><span class="src-sym">;</span></li>
+<li><a name="a164"></a>        <span class="src-sym">}</span></li>
+<li><a name="a165"></a>&nbsp;</li>
+<li><a name="a166"></a>        <span class="src-comm">// Send the authentication request to the RADIUS server</span></li>
+<li><a name="a167"></a>        <span class="src-var">$result </span>= <span class="src-var">$radius_server</span><span class="src-sym">-&gt;</span><span class="src-id">send</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a168"></a>&nbsp;</li>
+<li><a name="a169"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-id">PEAR </span><span class="src-sym">:: </span><span class="src-id">isError</span><span class="src-sym">(</span><span class="src-var">$result</span><span class="src-sym">))</span></li>
+<li><a name="a170"></a>        <span class="src-sym">{</span></li>
+<li><a name="a171"></a>            <span class="src-var">$errmsg </span>= <a href="../WiFiDogAuthServer/_wifidog_classes_Locale_php.html#function_">_</a><span class="src-sym">(</span><span class="src-str">&quot;Failed to send authentication request to the RADIUS server. : &quot;</span>.<span class="src-var">$result</span><span class="src-sym">-&gt;</span><span class="src-id">getMessage</span><span class="src-sym">(</span><span class="src-sym">))</span><span class="src-sym">;</span></li>
+<li><a name="a172"></a>            <span class="src-key">return </span><span class="src-id">false</span><span class="src-sym">;</span></li>
+<li><a name="a173"></a>        <span class="src-sym">}</span></li>
+<li><a name="a174"></a>        <span class="src-key">else</span></li>
+<li><a name="a175"></a>            <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$result </span>=== <span class="src-id">true</span><span class="src-sym">)</span></li>
+<li><a name="a176"></a>            <span class="src-sym">{</span></li>
+<li><a name="a177"></a>                <span class="src-comm">// RADIUS authentication succeeded !</span></li>
+<li><a name="a178"></a>                <span class="src-comm">// Now checking for local copy of this user</span></li>
+<li><a name="a179"></a>                <span class="src-var">$user_info </span>= <span class="src-id">null</span><span class="src-sym">;</span></li>
+<li><a name="a180"></a>                <span class="src-var">$sql </span>= <span class="src-str">&quot;</span><span class="src-str"><span class="src-id">SELECT</span> <span class="src-id">user_id</span>, <span class="src-id">pass</span> <span class="src-id">FROM</span> <span class="src-id">users</span> <span class="src-id">WHERE</span> (<span class="src-id">username</span>='<span class="src-var">$username</span>') <span class="src-id">AND</span> <span class="src-id">account_origin</span>='</span><span class="src-str">&quot;</span>.<span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/Authenticator.html#methodgetNetwork">getNetwork</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">-&gt;</span><span class="src-id">getId</span><span class="src-sym">(</span><span class="src-sym">)</span>.<span class="src-str">&quot;'&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a181"></a>                <span class="src-var">$db</span><span class="src-sym">-&gt;</span><span class="src-id">ExecSqlUniqueRes</span><span class="src-sym">(</span><span class="src-var">$sql</span><span class="src-sym">, </span><span class="src-var">$user_info</span><span class="src-sym">, </span><span class="src-id">false</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a182"></a>&nbsp;</li>
+<li><a name="a183"></a>                <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$user_info </span>!= <span class="src-id">null</span><span class="src-sym">)</span></li>
+<li><a name="a184"></a>                <span class="src-sym">{</span></li>
+<li><a name="a185"></a>                    <span class="src-var">$user </span>= <span class="src-key">new </span><span class="src-id"><a href="../WiFiDogAuthServer/User.html">User</a></span><span class="src-sym">(</span><span class="src-var">$user_info</span><span class="src-sym">[</span><span class="src-str">'user_id'</span><span class="src-sym">]</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a186"></a>                    <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$user</span><span class="src-sym">-&gt;</span><span class="src-id">isUserValid</span><span class="src-sym">(</span><span class="src-var">$errmsg</span><span class="src-sym">))</span></li>
+<li><a name="a187"></a>                    <span class="src-sym">{</span></li>
+<li><a name="a188"></a>                        <span class="src-var">$retval </span>= <span class="src-sym">&amp; </span><span class="src-var">$user</span><span class="src-sym">;</span></li>
+<li><a name="a189"></a>                        <span class="src-id"><a href="../WiFiDogAuthServer/User.html">User</a> </span><span class="src-sym">:: </span><a href="../WiFiDogAuthServer/User.html#methodsetCurrentUser">setCurrentUser</a><span class="src-sym">(</span><span class="src-var">$user</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a190"></a>                        <span class="src-var">$errmsg </span>= <a href="../WiFiDogAuthServer/_wifidog_classes_Locale_php.html#function_">_</a><span class="src-sym">(</span><span class="src-str">&quot;Login successfull&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a191"></a>                    <span class="src-sym">}</span></li>
+<li><a name="a192"></a>                    <span class="src-key">else</span></li>
+<li><a name="a193"></a>                    <span class="src-sym">{</span></li>
+<li><a name="a194"></a>                        <span class="src-var">$retval </span>= <span class="src-id">false</span><span class="src-sym">;</span></li>
+<li><a name="a195"></a>                        <span class="src-comm">//Reason for refusal is already in $errmsg</span></li>
+<li><a name="a196"></a>                    <span class="src-sym">}</span></li>
+<li><a name="a197"></a>                <span class="src-sym">}</span></li>
+<li><a name="a198"></a>                <span class="src-key">else</span></li>
+<li><a name="a199"></a>                <span class="src-sym">{</span></li>
+<li><a name="a200"></a>                    <span class="src-comm">// This user has been succcessfully authenticated through remote RADIUS, but it's not yet in our local database</span></li>
+<li><a name="a201"></a>                    <span class="src-comm">// Creating the user with a Global Unique ID, empty email and password</span></li>
+<li><a name="a202"></a>                    <span class="src-comm">// Local database password hashing is based on an empty string ( we do not store remote passwords )</span></li>
+<li><a name="a203"></a>                    <span class="src-var">$user </span>= <span class="src-id"><a href="../WiFiDogAuthServer/User.html">User</a> </span><span class="src-sym">:: </span><a href="../WiFiDogAuthServer/User.html#methodcreateUser">createUser</a><span class="src-sym">(</span><a href="../WiFiDogAuthServer/_wifidog_include_common_php.html#functionget_guid">get_guid</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">, </span><span class="src-var">$username</span><span class="src-sym">, </span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/Authenticator.html#methodgetNetwork">getNetwork</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">, </span><span class="src-str">&quot;&quot;</span><span class="src-sym">, </span><span class="src-str">&quot;&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a204"></a>                    <span class="src-var">$retval </span>= <span class="src-sym">&amp; </span><span class="src-var">$user</span><span class="src-sym">;</span></li>
+<li><a name="a205"></a>                    <span class="src-comm">// Validate the user right away !</span></li>
+<li><a name="a206"></a>                    <span class="src-var">$user</span><span class="src-sym">-&gt;</span><span class="src-id">setAccountStatus</span><span class="src-sym">(</span><span class="src-id"><a href="../WiFiDogAuthServer/_wifidog_include_common_php.html#defineACCOUNT_STATUS_ALLOWED">ACCOUNT_STATUS_ALLOWED</a></span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a207"></a>                    <span class="src-id"><a href="../WiFiDogAuthServer/User.html">User</a> </span><span class="src-sym">:: </span><a href="../WiFiDogAuthServer/User.html#methodsetCurrentUser">setCurrentUser</a><span class="src-sym">(</span><span class="src-var">$user</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a208"></a>                    <span class="src-var">$errmsg </span>= <a href="../WiFiDogAuthServer/_wifidog_classes_Locale_php.html#function_">_</a><span class="src-sym">(</span><span class="src-str">&quot;Login successfull&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a209"></a>                <span class="src-sym">}</span></li>
+<li><a name="a210"></a>                <span class="src-key">return </span><span class="src-var">$retval</span><span class="src-sym">;</span></li>
+<li><a name="a211"></a>            <span class="src-sym">}</span></li>
+<li><a name="a212"></a>            <span class="src-key">else</span></li>
+<li><a name="a213"></a>            <span class="src-sym">{</span></li>
+<li><a name="a214"></a>                <span class="src-var">$errmsg </span>= <a href="../WiFiDogAuthServer/_wifidog_classes_Locale_php.html#function_">_</a><span class="src-sym">(</span><span class="src-str">&quot;The RADIUS server rejected this username/password combination.&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a215"></a>                <span class="src-key">return </span><span class="src-id">false</span><span class="src-sym">;</span></li>
+<li><a name="a216"></a>            <span class="src-sym">}</span></li>
+<li><a name="a217"></a>&nbsp;</li>
+<li><a name="a218"></a>        <span class="src-var">$radius_server</span><span class="src-sym">-&gt;</span><span class="src-id">close</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a219"></a>    <span class="src-sym">}</span></li>
+<li><a name="a220"></a>&nbsp;</li>
+<li><a name="a221"></a>    <span class="src-doc">/** Start accounting traffic for the user</span></li>
+<li><a name="a222"></a><span class="src-doc">     * $conn_id:  The connection id for the connection to work on */</span></li>
+<li><a name="a222"></a>&nbsp;</li>
+<li><a name="a223"></a>    <span class="src-key">function </span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#methodacctStart">acctStart</a><span class="src-sym">(</span><span class="src-var">$conn_id</span><span class="src-sym">, </span><span class="src-sym">&amp; </span><span class="src-var">$errmsg </span>= <span class="src-id">null</span><span class="src-sym">)</span></li>
+<li><a name="a224"></a>    <span class="src-sym">{</span></li>
+<li><a name="a225"></a>        <span class="src-key">global </span><span class="src-var">$db</span><span class="src-sym">;</span></li>
+<li><a name="a226"></a>        <span class="src-var">$info </span>= <span class="src-id">null</span><span class="src-sym">;</span></li>
+<li><a name="a227"></a>        <span class="src-var">$conn_id </span>= <span class="src-var">$db</span><span class="src-sym">-&gt;</span><span class="src-id">EscapeString</span><span class="src-sym">(</span><span class="src-var">$conn_id</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a228"></a>        <span class="src-var">$db</span><span class="src-sym">-&gt;</span><span class="src-id">ExecSqlUniqueRes</span><span class="src-sym">(</span><span class="src-str">&quot;</span><span class="src-str"><span class="src-id">SELECT</span> <span class="src-id">NOW</span>(), *, <span class="src-id">CASE</span> <span class="src-id">WHEN</span> ((<span class="src-id">NOW</span>() - <span class="src-id">reg_date</span>) &gt; <span class="src-id">networks</span>.<span class="src-id">validation_grace_time</span>) <span class="src-id">THEN</span> <span class="src-id">true</span> <span class="src-id">ELSE</span> <span class="src-id">false</span> <span class="src-id">END</span> <span class="src-id">AS</span> <span class="src-id">validation_grace_time_expired</span> <span class="src-id">FROM</span> <span class="src-id">connections</span> <span class="src-id">JOIN</span> <span class="src-id">users</span> <span class="src-id">ON</span> (<span class="src-id">users</span>.<span class="src-id">user_id</span>=<span class="src-id">connections</span>.<span class="src-id">user_id</span>) <span class="src-id">JOIN</span> <span class="src-id">networks</span> <span class="src-id">ON</span> (<span class="src-id">users</span>.<span class="src-id">account_origin</span> = <span class="src-id">networks</span>.<span class="src-id">network_id</span>) <span class="src-id">WHERE</span> <span class="src-id">connections</span>.<span class="src-id">conn_id</span>=<span class="src-var">$conn_id</span></span><span class="src-str">&quot;</span><span class="src-sym">, </span><span class="src-var">$info</span><span class="src-sym">, </span><span class="src-id">false</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a229"></a>&nbsp;</li>
+<li><a name="a230"></a>        <span class="src-comm">// RADIUS accounting start</span></li>
+<li><a name="a231"></a>        <span class="src-var">$radius_acct </span>= <span class="src-key">new </span><span class="src-id">Auth_RADIUS_Acct_Start</span><span class="src-sym">;</span></li>
+<li><a name="a232"></a>        <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">addServer</span><span class="src-sym">(</span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_hostname">mRadius_hostname</a><span class="src-sym">, </span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_acct_port">mRadius_acct_port</a><span class="src-sym">, </span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_secret_key">mRadius_secret_key</a><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a233"></a>        <span class="src-comm">// Specify the user for which accounting will be done</span></li>
+<li><a name="a234"></a>        <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">username </span>= <span class="src-var">$info</span><span class="src-sym">[</span><span class="src-str">'username'</span><span class="src-sym">]</span><span class="src-sym">;</span></li>
+<li><a name="a235"></a>        <span class="src-comm">// Specify the way the user has been authenticated ( via RADIUS, the class did it )</span></li>
+<li><a name="a236"></a>        <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">authentic </span>= <span class="src-id">RADIUS_AUTH_RADIUS</span><span class="src-sym">;</span></li>
+<li><a name="a237"></a>        <span class="src-comm">// Set the session ID to the generated token</span></li>
+<li><a name="a238"></a>        <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">session_id </span>= <span class="src-var">$info</span><span class="src-sym">[</span><span class="src-str">'token'</span><span class="src-sym">]</span><span class="src-sym">;</span></li>
+<li><a name="a239"></a>&nbsp;</li>
+<li><a name="a240"></a>        <span class="src-var">$status </span>= <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">start</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a241"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-id">PEAR </span><span class="src-sym">:: </span><span class="src-id">isError</span><span class="src-sym">(</span><span class="src-var">$status</span><span class="src-sym">))</span></li>
+<li><a name="a242"></a>            <span class="src-key">return </span><span class="src-id">false</span><span class="src-sym">;</span></li>
+<li><a name="a243"></a>&nbsp;</li>
+<li><a name="a244"></a>        <span class="src-var">$result </span>= <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">send</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a245"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-id">PEAR </span><span class="src-sym">:: </span><span class="src-id">isError</span><span class="src-sym">(</span><span class="src-var">$result</span><span class="src-sym">))</span></li>
+<li><a name="a246"></a>        <span class="src-sym">{</span></li>
+<li><a name="a247"></a>            <span class="src-var">$errmsg </span>= <span class="src-str">&quot;Could not send accounting request to RADIUS server.&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a248"></a>            <span class="src-key">return </span><span class="src-id">false</span><span class="src-sym">;</span></li>
+<li><a name="a249"></a>        <span class="src-sym">}</span></li>
+<li><a name="a250"></a>        <span class="src-key">else</span></li>
+<li><a name="a251"></a>            <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$result </span>!== <span class="src-id">true</span><span class="src-sym">)</span></li>
+<li><a name="a252"></a>            <span class="src-sym">{</span></li>
+<li><a name="a253"></a>                <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">close</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a254"></a>                <span class="src-var">$errmsg </span>= <span class="src-str">&quot;Accounting request rejected by RADIUS server.&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a255"></a>                <span class="src-key">return </span><span class="src-id">false</span><span class="src-sym">;</span></li>
+<li><a name="a256"></a>            <span class="src-sym">}</span></li>
+<li><a name="a257"></a>&nbsp;</li>
+<li><a name="a258"></a>        <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">close</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a259"></a>&nbsp;</li>
+<li><a name="a260"></a>        <span class="src-comm">// Run generic accounting ( local traffic counters ) only if RADIUS went OK</span></li>
+<li><a name="a261"></a>        <span class="src-id">parent </span><span class="src-sym">:: </span><a href="../WiFiDogAuthServer/Authenticator.html#methodacctStart">acctStart</a><span class="src-sym">(</span><span class="src-var">$conn_id</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a262"></a>        <span class="src-key">return </span><span class="src-id">true</span><span class="src-sym">;</span></li>
+<li><a name="a263"></a>    <span class="src-sym">}</span></li>
+<li><a name="a264"></a>&nbsp;</li>
+<li><a name="a265"></a>    <span class="src-doc">/** Update traffic counters</span></li>
+<li><a name="a266"></a><span class="src-doc">     * $conn_id: The connection id for the connection to work on */</span></li>
+<li><a name="a266"></a>&nbsp;</li>
+<li><a name="a267"></a>    <span class="src-key">function </span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#methodacctUpdate">acctUpdate</a><span class="src-sym">(</span><span class="src-var">$conn_id</span><span class="src-sym">, </span><span class="src-var">$incoming</span><span class="src-sym">, </span><span class="src-var">$outgoing</span><span class="src-sym">, </span><span class="src-sym">&amp; </span><span class="src-var">$errmsg </span>= <span class="src-id">null</span><span class="src-sym">)</span></li>
+<li><a name="a268"></a>    <span class="src-sym">{</span></li>
+<li><a name="a269"></a>        <span class="src-comm">// Call generic traffic updater ( local database )</span></li>
+<li><a name="a270"></a>        <span class="src-id">parent </span><span class="src-sym">:: </span><a href="../WiFiDogAuthServer/Authenticator.html#methodacctUpdate">acctUpdate</a><span class="src-sym">(</span><span class="src-var">$conn_id</span><span class="src-sym">, </span><span class="src-var">$incoming</span><span class="src-sym">, </span><span class="src-var">$outgoing</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a271"></a>        <span class="src-key">global </span><span class="src-var">$db</span><span class="src-sym">;</span></li>
+<li><a name="a272"></a>        <span class="src-var">$info </span>= <span class="src-id">null</span><span class="src-sym">;</span></li>
+<li><a name="a273"></a>        <span class="src-var">$conn_id </span>= <span class="src-var">$db</span><span class="src-sym">-&gt;</span><span class="src-id">EscapeString</span><span class="src-sym">(</span><span class="src-var">$conn_id</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a274"></a>        <span class="src-var">$db</span><span class="src-sym">-&gt;</span><span class="src-id">ExecSqlUniqueRes</span><span class="src-sym">(</span><span class="src-str">&quot;</span><span class="src-str"><span class="src-id">SELECT</span> <span class="src-id">NOW</span>(), *, <span class="src-id">CASE</span> <span class="src-id">WHEN</span> ((<span class="src-id">NOW</span>() - <span class="src-id">reg_date</span>) &gt; <span class="src-id">networks</span>.<span class="src-id">validation_grace_time</span>) <span class="src-id">THEN</span> <span class="src-id">true</span> <span class="src-id">ELSE</span> <span class="src-id">false</span> <span class="src-id">END</span> <span class="src-id">AS</span> <span class="src-id">validation_grace_time_expired</span> <span class="src-id">FROM</span> <span class="src-id">connections</span> <span class="src-id">JOIN</span> <span class="src-id">users</span> <span class="src-id">ON</span> (<span class="src-id">users</span>.<span class="src-id">user_id</span>=<span class="src-id">connections</span>.<span class="src-id">user_id</span>) <span class="src-id">JOIN</span> <span class="src-id">networks</span> <span class="src-id">ON</span> (<span class="src-id">users</span>.<span class="src-id">account_origin</span> = <span class="src-id">networks</span>.<span class="src-id">network_id</span>) <span class="src-id">WHERE</span> <span class="src-id">connections</span>.<span class="src-id">conn_id</span>=<span class="src-var">$conn_id</span></span><span class="src-str">&quot;</span><span class="src-sym">, </span><span class="src-var">$info</span><span class="src-sym">, </span><span class="src-id">false</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a275"></a>&nbsp;</li>
+<li><a name="a276"></a>        <span class="src-comm">// RADIUS accounting ping</span></li>
+<li><a name="a277"></a>        <span class="src-comm">// Session is completely based on Database time</span></li>
+<li><a name="a278"></a>        <span class="src-var">$session_time </span>= <a href="http://www.php.net/strtotime">strtotime</a><span class="src-sym">(</span><span class="src-var">$info</span><span class="src-sym">[</span><span class="src-str">'now'</span><span class="src-sym">]</span><span class="src-sym">) </span>- <a href="http://www.php.net/strtotime">strtotime</a><span class="src-sym">(</span><span class="src-var">$info</span><span class="src-sym">[</span><span class="src-str">'timestamp_in'</span><span class="src-sym">]</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a279"></a>&nbsp;</li>
+<li><a name="a280"></a>        <span class="src-var">$radius_acct </span>= <span class="src-key">new </span><span class="src-id">Auth_RADIUS_Acct_Update</span><span class="src-sym">;</span></li>
+<li><a name="a281"></a>        <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">addServer</span><span class="src-sym">(</span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_hostname">mRadius_hostname</a><span class="src-sym">, </span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_acct_port">mRadius_acct_port</a><span class="src-sym">, </span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_secret_key">mRadius_secret_key</a><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a282"></a>        <span class="src-comm">// Specify the user for which accounting will be done</span></li>
+<li><a name="a283"></a>        <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">username </span>= <span class="src-var">$info</span><span class="src-sym">[</span><span class="src-str">'username'</span><span class="src-sym">]</span><span class="src-sym">;</span></li>
+<li><a name="a284"></a>        <span class="src-var">$racct</span><span class="src-sym">-&gt;</span><span class="src-id">session_time </span>= <span class="src-var">$session_time</span><span class="src-sym">;</span></li>
+<li><a name="a285"></a>        <span class="src-comm">// Set the session ID to the generated token</span></li>
+<li><a name="a286"></a>        <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">session_id </span>= <span class="src-var">$info</span><span class="src-sym">[</span><span class="src-str">'token'</span><span class="src-sym">]</span><span class="src-sym">;</span></li>
+<li><a name="a287"></a>&nbsp;</li>
+<li><a name="a288"></a>        <span class="src-var">$status </span>= <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">start</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a289"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-id">PEAR </span><span class="src-sym">:: </span><span class="src-id">isError</span><span class="src-sym">(</span><span class="src-var">$status</span><span class="src-sym">))</span></li>
+<li><a name="a290"></a>            <span class="src-key">return </span><span class="src-id">false</span><span class="src-sym">;</span></li>
+<li><a name="a291"></a>&nbsp;</li>
+<li><a name="a292"></a>        <span class="src-comm">// Send traffic data along with the request</span></li>
+<li><a name="a293"></a>        <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">putAttribute</span><span class="src-sym">(</span><span class="src-id">RADIUS_ACCT_INPUT_PACKETS</span><span class="src-sym">, </span><span class="src-var">$incoming</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a294"></a>        <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">putAttribute</span><span class="src-sym">(</span><span class="src-id">RADIUS_ACCT_OUTPUT_PACKETS</span><span class="src-sym">, </span><span class="src-var">$outgoing</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a295"></a>&nbsp;</li>
+<li><a name="a296"></a>        <span class="src-var">$result </span>= <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">send</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a297"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-id">PEAR </span><span class="src-sym">:: </span><span class="src-id">isError</span><span class="src-sym">(</span><span class="src-var">$result</span><span class="src-sym">))</span></li>
+<li><a name="a298"></a>        <span class="src-sym">{</span></li>
+<li><a name="a299"></a>            <span class="src-var">$errmsg </span>= <span class="src-str">&quot;Could not send accounting request to RADIUS server.&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a300"></a>            <span class="src-key">return </span><span class="src-id">false</span><span class="src-sym">;</span></li>
+<li><a name="a301"></a>        <span class="src-sym">}</span></li>
+<li><a name="a302"></a>        <span class="src-key">else</span></li>
+<li><a name="a303"></a>            <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$result </span>!== <span class="src-id">true</span><span class="src-sym">)</span></li>
+<li><a name="a304"></a>            <span class="src-sym">{</span></li>
+<li><a name="a305"></a>                <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">close</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a306"></a>                <span class="src-var">$errmsg </span>= <span class="src-str">&quot;Accounting request rejected by RADIUS server.&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a307"></a>                <span class="src-key">return </span><span class="src-id">false</span><span class="src-sym">;</span></li>
+<li><a name="a308"></a>            <span class="src-sym">}</span></li>
+<li><a name="a309"></a>&nbsp;</li>
+<li><a name="a310"></a>        <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">close</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a311"></a>        <span class="src-key">return </span><span class="src-id">true</span><span class="src-sym">;</span></li>
+<li><a name="a312"></a>    <span class="src-sym">}</span></li>
+<li><a name="a313"></a>&nbsp;</li>
+<li><a name="a314"></a>    <span class="src-doc">/** Final update and stop accounting</span></li>
+<li><a name="a315"></a><span class="src-doc">     * $conn_id:  The connection id (the token id) for the connection to work on</span></li>
+<li><a name="a316"></a><span class="src-doc">     * */</span></li>
+<li><a name="a316"></a>&nbsp;</li>
+<li><a name="a317"></a>    <span class="src-key">function </span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#methodacctStop">acctStop</a><span class="src-sym">(</span><span class="src-var">$conn_id</span><span class="src-sym">, </span><span class="src-sym">&amp; </span><span class="src-var">$errmsg </span>= <span class="src-id">null</span><span class="src-sym">)</span></li>
+<li><a name="a318"></a>    <span class="src-sym">{</span></li>
+<li><a name="a319"></a>        <span class="src-id">parent </span><span class="src-sym">:: </span><a href="../WiFiDogAuthServer/Authenticator.html#methodacctStop">acctStop</a><span class="src-sym">(</span><span class="src-var">$conn_id</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a320"></a>        <span class="src-key">global </span><span class="src-var">$db</span><span class="src-sym">;</span></li>
+<li><a name="a321"></a>        <span class="src-var">$info </span>= <span class="src-id">null</span><span class="src-sym">;</span></li>
+<li><a name="a322"></a>        <span class="src-var">$conn_id </span>= <span class="src-var">$db</span><span class="src-sym">-&gt;</span><span class="src-id">EscapeString</span><span class="src-sym">(</span><span class="src-var">$conn_id</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a323"></a>        <span class="src-var">$db</span><span class="src-sym">-&gt;</span><span class="src-id">ExecSqlUniqueRes</span><span class="src-sym">(</span><span class="src-str">&quot;</span><span class="src-str"><span class="src-id">SELECT</span> <span class="src-id">NOW</span>(), *, <span class="src-id">CASE</span> <span class="src-id">WHEN</span> ((<span class="src-id">NOW</span>() - <span class="src-id">reg_date</span>) &gt; <span class="src-id">networks</span>.<span class="src-id">validation_grace_time</span>) <span class="src-id">THEN</span> <span class="src-id">true</span> <span class="src-id">ELSE</span> <span class="src-id">false</span> <span class="src-id">END</span> <span class="src-id">AS</span> <span class="src-id">validation_grace_time_expired</span> <span class="src-id">FROM</span> <span class="src-id">connections</span> <span class="src-id">JOIN</span> <span class="src-id">users</span> <span class="src-id">ON</span> (<span class="src-id">users</span>.<span class="src-id">user_id</span>=<span class="src-id">connections</span>.<span class="src-id">user_id</span>) <span class="src-id">JOIN</span> <span class="src-id">networks</span> <span class="src-id">ON</span> (<span class="src-id">users</span>.<span class="src-id">account_origin</span> = <span class="src-id">networks</span>.<span class="src-id">network_id</span>) <span class="src-id">WHERE</span> <span class="src-id">connections</span>.<span class="src-id">conn_id</span>=<span class="src-var">$conn_id</span></span><span class="src-str">&quot;</span><span class="src-sym">, </span><span class="src-var">$info</span><span class="src-sym">, </span><span class="src-id">false</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a324"></a>&nbsp;</li>
+<li><a name="a325"></a>        <span class="src-comm">// RADIUS accounting stop</span></li>
+<li><a name="a326"></a>        <span class="src-comm">// Session is completely based on Database time</span></li>
+<li><a name="a327"></a>        <span class="src-var">$session_time </span>= <a href="http://www.php.net/strtotime">strtotime</a><span class="src-sym">(</span><span class="src-var">$info</span><span class="src-sym">[</span><span class="src-str">'now'</span><span class="src-sym">]</span><span class="src-sym">) </span>- <a href="http://www.php.net/strtotime">strtotime</a><span class="src-sym">(</span><span class="src-var">$info</span><span class="src-sym">[</span><span class="src-str">'timestamp_in'</span><span class="src-sym">]</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a328"></a>&nbsp;</li>
+<li><a name="a329"></a>        <span class="src-var">$radius_acct </span>= <span class="src-key">new </span><span class="src-id">Auth_RADIUS_Acct_Stop</span><span class="src-sym">;</span></li>
+<li><a name="a330"></a>        <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">addServer</span><span class="src-sym">(</span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_hostname">mRadius_hostname</a><span class="src-sym">, </span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_acct_port">mRadius_acct_port</a><span class="src-sym">, </span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/AuthenticatorRadius.html#var$mRadius_secret_key">mRadius_secret_key</a><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a331"></a>        <span class="src-comm">// Specify the user for which accounting will be done</span></li>
+<li><a name="a332"></a>        <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">username </span>= <span class="src-var">$info</span><span class="src-sym">[</span><span class="src-str">'username'</span><span class="src-sym">]</span><span class="src-sym">;</span></li>
+<li><a name="a333"></a>        <span class="src-var">$racct</span><span class="src-sym">-&gt;</span><span class="src-id">session_time </span>= <span class="src-var">$session_time</span><span class="src-sym">;</span></li>
+<li><a name="a334"></a>        <span class="src-comm">// Set the session ID to the generated token</span></li>
+<li><a name="a335"></a>        <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">session_id </span>= <span class="src-var">$info</span><span class="src-sym">[</span><span class="src-str">'token'</span><span class="src-sym">]</span><span class="src-sym">;</span></li>
+<li><a name="a336"></a>&nbsp;</li>
+<li><a name="a337"></a>        <span class="src-var">$status </span>= <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">start</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a338"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-id">PEAR </span><span class="src-sym">:: </span><span class="src-id">isError</span><span class="src-sym">(</span><span class="src-var">$status</span><span class="src-sym">))</span></li>
+<li><a name="a339"></a>        <span class="src-sym">{</span></li>
+<li><a name="a340"></a>            <span class="src-var">$errmsg </span>= <span class="src-str">&quot;Could not initiate PEAR RADIUS class.&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a341"></a>            <span class="src-key">return </span><span class="src-id">false</span><span class="src-sym">;</span></li>
+<li><a name="a342"></a>        <span class="src-sym">}</span></li>
+<li><a name="a343"></a>&nbsp;</li>
+<li><a name="a344"></a>        <span class="src-comm">// Cause of session termination</span></li>
+<li><a name="a345"></a>        <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">putAttribute</span><span class="src-sym">(</span><span class="src-id">RADIUS_ACCT_TERMINATE_CAUSE</span><span class="src-sym">, </span><span class="src-id">RADIUS_TERM_SESSION_TIMEOUT</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a346"></a>        <span class="src-var">$result </span>= <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">send</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a347"></a>&nbsp;</li>
+<li><a name="a348"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-id">PEAR </span><span class="src-sym">:: </span><span class="src-id">isError</span><span class="src-sym">(</span><span class="src-var">$result</span><span class="src-sym">))</span></li>
+<li><a name="a349"></a>        <span class="src-sym">{</span></li>
+<li><a name="a350"></a>            <span class="src-var">$errmsg </span>= <span class="src-str">&quot;Could not send accounting request to RADIUS server.&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a351"></a>            <span class="src-key">return </span><span class="src-id">false</span><span class="src-sym">;</span></li>
+<li><a name="a352"></a>        <span class="src-sym">}</span></li>
+<li><a name="a353"></a>        <span class="src-key">else</span></li>
+<li><a name="a354"></a>            <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$result </span>!== <span class="src-id">true</span><span class="src-sym">)</span></li>
+<li><a name="a355"></a>            <span class="src-sym">{</span></li>
+<li><a name="a356"></a>                <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">close</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a357"></a>                <span class="src-var">$errmsg </span>= <span class="src-str">&quot;Accounting request rejected by RADIUS server.&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a358"></a>                <span class="src-key">return </span><span class="src-id">false</span><span class="src-sym">;</span></li>
+<li><a name="a359"></a>            <span class="src-sym">}</span></li>
+<li><a name="a360"></a>&nbsp;</li>
+<li><a name="a361"></a>        <span class="src-var">$radius_acct</span><span class="src-sym">-&gt;</span><span class="src-id">close</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a362"></a>        <span class="src-key">return </span><span class="src-id">true</span><span class="src-sym">;</span></li>
+<li><a name="a363"></a>    <span class="src-sym">}</span></li>
+<li><a name="a364"></a>&nbsp;</li>
+<li><a name="a365"></a><span class="src-sym">}</span></li>
+<li><a name="a366"></a>&nbsp;</li>
+<li><a name="a367"></a><span class="src-comm">/*</span></li>
+<li><a name="a368"></a><span class="src-comm"> * Local variables:</span></li>
+<li><a name="a369"></a><span class="src-comm"> * tab-width: 4</span></li>
+<li><a name="a370"></a><span class="src-comm"> * c-basic-offset: 4</span></li>
+<li><a name="a371"></a><span class="src-comm"> * c-hanging-comment-ender-p: nil</span></li>
+<li><a name="a372"></a><span class="src-comm"> * End:</span></li>
+<li><a name="a373"></a><span class="src-comm"> */</span></li>
+<li><a name="a374"></a>&nbsp;</li>
+<li><a name="a375"></a><span class="src-php">?&gt;</span></li>
+</ol></pre>
+</div>
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 26 Dec 2005 12:21:12 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.3.0RC5</a>
+	</p>
+	</body>
+</html>

@@ -1,0 +1,776 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>File Source for schema_validate.php</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+						
+<h1>Source for file schema_validate.php</h1>
+<p>Documentation is available at <a href="../WiFiDogAuthServer/_wifidog_include_schema_validate_php.html">schema_validate.php</a></p>
+<div class="src-code">
+<pre><ol><li><a name="a1"></a><span class="src-php">&lt;?php</span></li>
+<li><a name="a2"></a>&nbsp;</li>
+<li><a name="a4"></a><span class="src-comm">/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */</span></li>
+<li><a name="a5"></a><span class="src-comm">// +-------------------------------------------------------------------+</span></li>
+<li><a name="a6"></a><span class="src-comm">// | WiFiDog Authentication Server                                     |</span></li>
+<li><a name="a7"></a><span class="src-comm">// | =============================                                     |</span></li>
+<li><a name="a8"></a><span class="src-comm">// |                                                                   |</span></li>
+<li><a name="a9"></a><span class="src-comm">// | The WiFiDog Authentication Server is part of the WiFiDog captive  |</span></li>
+<li><a name="a10"></a><span class="src-comm">// | portal suite.                                                     |</span></li>
+<li><a name="a11"></a><span class="src-comm">// +-------------------------------------------------------------------+</span></li>
+<li><a name="a12"></a><span class="src-comm">// | PHP version 5 required.                                           |</span></li>
+<li><a name="a13"></a><span class="src-comm">// +-------------------------------------------------------------------+</span></li>
+<li><a name="a14"></a><span class="src-comm">// | Homepage:     http://www.wifidog.org/                             |</span></li>
+<li><a name="a15"></a><span class="src-comm">// | Source Forge: http://sourceforge.net/projects/wifidog/            |</span></li>
+<li><a name="a16"></a><span class="src-comm">// +-------------------------------------------------------------------+</span></li>
+<li><a name="a17"></a><span class="src-comm">// | This program is free software; you can redistribute it and/or     |</span></li>
+<li><a name="a18"></a><span class="src-comm">// | modify it under the terms of the GNU General Public License as    |</span></li>
+<li><a name="a19"></a><span class="src-comm">// | published by the Free Software Foundation; either version 2 of    |</span></li>
+<li><a name="a20"></a><span class="src-comm">// | the License, or (at your option) any later version.               |</span></li>
+<li><a name="a21"></a><span class="src-comm">// |                                                                   |</span></li>
+<li><a name="a22"></a><span class="src-comm">// | This program is distributed in the hope that it will be useful,   |</span></li>
+<li><a name="a23"></a><span class="src-comm">// | but WITHOUT ANY WARRANTY; without even the implied warranty of    |</span></li>
+<li><a name="a24"></a><span class="src-comm">// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |</span></li>
+<li><a name="a25"></a><span class="src-comm">// | GNU General Public License for more details.                      |</span></li>
+<li><a name="a26"></a><span class="src-comm">// |                                                                   |</span></li>
+<li><a name="a27"></a><span class="src-comm">// | You should have received a copy of the GNU General Public License |</span></li>
+<li><a name="a28"></a><span class="src-comm">// | along with this program; if not, contact:                         |</span></li>
+<li><a name="a29"></a><span class="src-comm">// |                                                                   |</span></li>
+<li><a name="a30"></a><span class="src-comm">// | Free Software Foundation           Voice:  +1-617-542-5942        |</span></li>
+<li><a name="a31"></a><span class="src-comm">// | 59 Temple Place - Suite 330        Fax:    +1-617-542-2652        |</span></li>
+<li><a name="a32"></a><span class="src-comm">// | Boston, MA  02111-1307,  USA       gnu@gnu.org                    |</span></li>
+<li><a name="a33"></a><span class="src-comm">// |                                                                   |</span></li>
+<li><a name="a34"></a><span class="src-comm">// +-------------------------------------------------------------------+</span></li>
+<li><a name="a35"></a>&nbsp;</li>
+<li><a name="a36"></a><span class="src-doc">/**</span></li>
+<li><a name="a37"></a><span class="src-doc"> * Network status page</span></li>
+<li><a name="a38"></a><span class="src-doc"> *</span></li>
+<li><a name="a39"></a><span class="src-doc"> * </span><span class="src-doc-coretag">@package</span><span class="src-doc">    WiFiDogAuthServer</span></li>
+<li><a name="a40"></a><span class="src-doc"> * </span><span class="src-doc-coretag">@author</span><span class="src-doc">     Benoit Gregoire &lt;bock@step.polymtl.ca&gt;</span></li>
+<li><a name="a41"></a><span class="src-doc"> * </span><span class="src-doc-coretag">@copyright</span><span class="src-doc">  2004-2005 Benoit Gregoire &lt;bock@step.polymtl.ca&gt; - Technologies Coeus</span></li>
+<li><a name="a42"></a><span class="src-doc"> *  inc.</span></li>
+<li><a name="a43"></a><span class="src-doc"> * </span><span class="src-doc-coretag">@version</span><span class="src-doc">    CVS: $Id: schema_validate.php,v 1.53 2005/12/26 10:38:46 max-horvath Exp $</span></li>
+<li><a name="a44"></a><span class="src-doc"> * </span><span class="src-doc-coretag">@link</span><span class="src-doc">       http://sourceforge.net/projects/wifidog/</span></li>
+<li><a name="a45"></a><span class="src-doc"> */</span></li>
+<li><a name="a46"></a>&nbsp;</li>
+<li><a name="a47"></a><a href="http://www.php.net/error_reporting">error_reporting</a><span class="src-sym">(</span><span class="src-id">E_ALL</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a48"></a><span class="src-inc">require_once </span><span class="src-id">BASEPATH</span>.<span class="src-str">'config.php'</span><span class="src-sym">;</span></li>
+<li><a name="a49"></a><span class="src-inc">require_once </span><span class="src-id">BASEPATH</span>.<span class="src-str">'classes/AbstractDb.php'</span><span class="src-sym">;</span></li>
+<li><a name="a50"></a><span class="src-inc">require_once </span><span class="src-id">BASEPATH</span>.<span class="src-str">'classes/Session.php'</span><span class="src-sym">;</span></li>
+<li><a name="a51"></a><span class="src-inc">require_once </span><span class="src-id">BASEPATH</span>.<span class="src-str">'classes/Node.php'</span><span class="src-sym">;</span></li>
+<li><a name="a52"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'REQUIRED_SCHEMA_VERSION'</span><span class="src-sym">, </span><span class="src-num">33</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a53"></a>&nbsp;</li>
+<li><a name="a54"></a><span class="src-doc">/** Check that the database schema is up to date.  If it isn't, offer to update it. */</span></li>
+<li><a name="a54"></a>&nbsp;</li>
+<li><a name="a55"></a><span class="src-key">function </span><a href="../WiFiDogAuthServer/_wifidog_include_schema_validate_php.html#functionvalidate_schema">validate_schema</a><span class="src-sym">(</span><span class="src-sym">)</span></li>
+<li><a name="a56"></a><span class="src-sym">{</span></li>
+<li><a name="a57"></a>    <span class="src-key">global </span><span class="src-var">$db</span><span class="src-sym">;</span></li>
+<li><a name="a58"></a>    <span class="src-var">$row </span>= <span class="src-id">null</span><span class="src-sym">;</span></li>
+<li><a name="a59"></a>    try</li>
+<li><a name="a60"></a>    <span class="src-sym">{</span></li>
+<li><a name="a61"></a>        <span class="src-comm">// Check the schema info</span></li>
+<li><a name="a62"></a>        <span class="src-var">$db</span><span class="src-sym">-&gt;</span><span class="src-id">ExecSqlUniqueRes</span><span class="src-sym">(</span><span class="src-str">&quot;SELECT * FROM schema_info WHERE tag='schema_version'&quot;</span><span class="src-sym">, </span><span class="src-var">$row</span><span class="src-sym">, </span><span class="src-id">false</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a63"></a>    <span class="src-sym">}</span></li>
+<li><a name="a64"></a>    catch<span class="src-sym">(</span><span class="src-id">Exception </span><span class="src-var">$e</span><span class="src-sym">) </span><span class="src-sym">{ </span><span class="src-comm">/* Be quiet */ </span><span class="src-sym">}</span></li>
+<li><a name="a65"></a>&nbsp;</li>
+<li><a name="a66"></a>    <span class="src-key">if </span><span class="src-sym">(</span><span class="src-key">empty </span><span class="src-sym">(</span><span class="src-var">$row</span><span class="src-sym">))</span></li>
+<li><a name="a67"></a>    <span class="src-sym">{</span></li>
+<li><a name="a68"></a>        echo <span class="src-str">&quot;&lt;html&gt;&lt;body&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a69"></a>        echo <span class="src-str">&quot;&lt;h1&gt;&quot;</span>.<a href="../WiFiDogAuthServer/_wifidog_classes_Locale_php.html#function_">_</a><span class="src-sym">(</span><span class="src-str">&quot;Unable to retrieve schema version. The database schema is too old to be updated.&quot;</span><span class="src-sym">)</span>.<span class="src-str">&quot;&lt;/h1&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a70"></a>        echo <span class="src-str">&quot;&lt;h2&gt;&quot;</span>.<a href="../WiFiDogAuthServer/_wifidog_classes_Locale_php.html#function_">_</a><span class="src-sym">(</span><span class="src-str">&quot;Try running the&quot;</span><span class="src-sym">)</span>.<span class="src-str">&quot; &lt;a href='&quot;</span>.<span class="src-id"><a href="../WiFiDogAuthServer/_wifidog_install_php.html#defineBASEPATH">BASEPATH</a></span>.<span class="src-str">&quot;install.php'&gt;&quot;</span>.<a href="../WiFiDogAuthServer/_wifidog_classes_Locale_php.html#function_">_</a><span class="src-sym">(</span><span class="src-str">&quot;installation script&quot;</span><span class="src-sym">)</span>.<span class="src-str">&quot;&lt;/a&gt;.&lt;/h2&gt;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a71"></a>        echo <span class="src-str">&quot;&lt;/html&gt;&lt;/body&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a72"></a>        <span class="src-key">exit </span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a73"></a>    <span class="src-sym">}</span></li>
+<li><a name="a74"></a>    <span class="src-key">else</span></li>
+<li><a name="a75"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$row</span><span class="src-sym">[</span><span class="src-str">'value'</span><span class="src-sym">] </span>&lt; <span class="src-id"><a href="../WiFiDogAuthServer/_wifidog_include_schema_validate_php.html#defineREQUIRED_SCHEMA_VERSION">REQUIRED_SCHEMA_VERSION</a></span><span class="src-sym">)</span></li>
+<li><a name="a76"></a>        <span class="src-sym">{</span></li>
+<li><a name="a77"></a><span class="src-comm">//            if (!empty ($_REQUEST['schema_update_confirm']) &amp;&amp; $_REQUEST['schema_update_confirm'] == 'on')</span></li>
+<li><a name="a78"></a><span class="src-comm">//            {</span></li>
+<li><a name="a79"></a>                <a href="../WiFiDogAuthServer/_wifidog_include_schema_validate_php.html#functionupdate_schema">update_schema</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a80"></a><span class="src-comm">/*            }</span></li>
+<li><a name="a81"></a><span class="src-comm">            else</span></li>
+<li><a name="a82"></a><span class="src-comm">            {</span></li>
+<li><a name="a83"></a><span class="src-comm">                echo &quot;&lt;html&gt;&lt;head&gt;&lt;h1&gt;&quot;;</span></li>
+<li><a name="a84"></a><span class="src-comm">                echo _(&quot;The database schema is not up to date.  Do you want to try to update it?  This operation is irreversible.&quot;);</span></li>
+<li><a name="a85"></a><span class="src-comm">                echo &quot;&lt;/h1&gt;&lt;form name='login_form' method='get'&gt;\n&quot;;</span></li>
+<li><a name="a86"></a><span class="src-comm">                echo &quot;&lt;input type='submit' name='submit' value='&quot;._(&quot;Try to update database schema&quot;).&quot;'&gt;\n&quot;;</span></li>
+<li><a name="a87"></a><span class="src-comm">                echo _(&quot;Yes, I am sure:&quot;).&quot;&lt;input type='checkbox' name='schema_update_confirm'&gt;\n&quot;;</span></li>
+<li><a name="a88"></a><span class="src-comm">                echo &quot;&lt;/form&gt;\n&quot;;</span></li>
+<li><a name="a89"></a><span class="src-comm">                echo &quot;&lt;/html&gt;&lt;/head&gt;&quot;;</span></li>
+<li><a name="a90"></a><span class="src-comm">                exit ();</span></li>
+<li><a name="a91"></a><span class="src-comm">            } */</span></li>
+<li><a name="a92"></a>        <span class="src-sym">}</span></li>
+<li><a name="a93"></a>        <span class="src-key">else</span></li>
+<li><a name="a94"></a>        <span class="src-sym">{</span></li>
+<li><a name="a95"></a>            <span class="src-comm">//echo &quot;&lt;html&gt;&lt;head&gt;&lt;h1&gt;The database schema is up to date.&lt;/h1&gt;&lt;/html&gt;&lt;/head&gt;&quot;;</span></li>
+<li><a name="a96"></a>            <span class="src-comm">//exit();</span></li>
+<li><a name="a97"></a>        <span class="src-sym">}</span></li>
+<li><a name="a98"></a><span class="src-sym">}</span></li>
+<li><a name="a99"></a>&nbsp;</li>
+<li><a name="a100"></a><span class="src-doc">/**</span></li>
+<li><a name="a101"></a><span class="src-doc"> * Auto create an administrator user with the first authenticator available</span></li>
+<li><a name="a102"></a><span class="src-doc"> */</span></li>
+<li><a name="a103"></a><span class="src-key">function </span><a href="../WiFiDogAuthServer/_wifidog_include_schema_validate_php.html#functioncheck_users_not_empty">check_users_not_empty</a><span class="src-sym">(</span><span class="src-sym">)</span></li>
+<li><a name="a104"></a><span class="src-sym">{</span></li>
+<li><a name="a105"></a>    <span class="src-comm">// Extract the first account origin, assume it's the default</span></li>
+<li><a name="a106"></a>    <span class="src-var">$network </span>= <span class="src-id"><a href="../WiFiDogAuthServer/Network.html">Network</a></span><span class="src-sym">::</span><a href="../WiFiDogAuthServer/Network.html#methodgetDefaultNetwork">getDefaultNetwork</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a107"></a>    <span class="src-key">if </span><span class="src-sym">(</span><span class="src-sym">!</span><span class="src-key">empty </span><span class="src-sym">(</span><span class="src-var">$network</span><span class="src-sym">))</span></li>
+<li><a name="a108"></a>    <span class="src-sym">{</span></li>
+<li><a name="a109"></a>        <span class="src-key">global </span><span class="src-var">$db</span><span class="src-sym">;</span></li>
+<li><a name="a110"></a>        <span class="src-var">$db</span><span class="src-sym">-&gt;</span><span class="src-id">ExecSqlUniqueRes</span><span class="src-sym">(</span><span class="src-str">&quot;</span><span class="src-str"><span class="src-id">SELECT</span> <span class="src-id">user_id</span> <span class="src-id">FROM</span> <span class="src-id">users</span> <span class="src-id">WHERE</span> <span class="src-id">account_origin</span> = '{<span class="src-var">$network</span></span><span class="src-sym">-&gt;</span><span class="src-id">getId</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-str"></span><span class="src-sym">}</span>' <span class="src-id">LIMIT</span> 1</span><span class="src-str">&quot;</span><span class="src-sym">, </span><span class="src-var">$row</span><span class="src-sym">, </span><span class="src-id">false</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a111"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$row </span>== <span class="src-id">null</span><span class="src-sym">)</span></li>
+<li><a name="a112"></a>        <span class="src-sym">{</span></li>
+<li><a name="a113"></a>            echo <span class="src-str">&quot;&lt;html&gt;&lt;head&gt;&lt;h1&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a114"></a>            echo <a href="../WiFiDogAuthServer/_wifidog_classes_Locale_php.html#function_">_</a><span class="src-sym">(</span><span class="src-str">&quot;No user matches the default network, a new user admin/admin will be created. Change the password as soon as possible !&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a115"></a>            echo <span class="src-str">&quot;&lt;/html&gt;&lt;/head&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a116"></a>            <span class="src-var">$sql </span>= <span class="src-str">&quot;BEGIN;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a117"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str"><span class="src-id">INSERT</span> <span class="src-id">INTO</span> <span class="src-id">users</span> (<span class="src-id">user_id</span>, <span class="src-id">username</span>, <span class="src-id">pass</span>, <span class="src-id">email</span>, <span class="src-id">account_status</span>, <span class="src-id">validation_token</span>, <span class="src-id">account_origin</span>) <span class="src-id">VALUES</span> ('<span class="src-id">admin_original_user_delete_me</span>', '<span class="src-id">admin</span>', '<span class="src-id">ISMvKXpXpadDiUoOSoAfww</span>==', '<span class="src-id">test_user_please</span>@<span class="src-id">delete</span>.<span class="src-id">me</span>', 1, '<span class="src-id">df16cc4b1d0975e267f3425eaac31950</span>', '<span class="src-var">$default_account_origin</span>');</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a118"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;INSERT INTO administrators (user_id) VALUES ('admin_original_user_delete_me');&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a119"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;COMMIT;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a120"></a>            <span class="src-var">$db</span><span class="src-sym">-&gt;</span><span class="src-id">ExecSqlUpdate</span><span class="src-sym">(</span><span class="src-var">$sql</span><span class="src-sym">, </span><span class="src-var">$row</span><span class="src-sym">, </span><span class="src-id">false</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a121"></a>            <span class="src-key">exit</span><span class="src-sym">;</span></li>
+<li><a name="a122"></a>        <span class="src-sym">}</span></li>
+<li><a name="a123"></a>    <span class="src-sym">}</span></li>
+<li><a name="a124"></a>    <span class="src-key">else</span></li>
+<li><a name="a125"></a>    <span class="src-sym">{</span></li>
+<li><a name="a126"></a>        echo <span class="src-str">&quot;&lt;html&gt;&lt;head&gt;&lt;h1&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a127"></a>        echo <a href="../WiFiDogAuthServer/_wifidog_classes_Locale_php.html#function_">_</a><span class="src-sym">(</span><span class="src-str">&quot;Could not get a default network!&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a128"></a>        echo <span class="src-str">&quot;&lt;/html&gt;&lt;/head&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a129"></a>        <span class="src-key">exit </span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a130"></a>    <span class="src-sym">}</span></li>
+<li><a name="a131"></a><span class="src-sym">} </span><span class="src-doc">/** Try to bring the database schema up to date. */</span></li>
+<li><a name="a131"></a>&nbsp;</li>
+<li><a name="a132"></a><span class="src-key">function </span><a href="../WiFiDogAuthServer/_wifidog_include_schema_validate_php.html#functionupdate_schema">update_schema</a><span class="src-sym">(</span><span class="src-sym">)</span></li>
+<li><a name="a133"></a><span class="src-sym">{</span></li>
+<li><a name="a134"></a>    <span class="src-key">global </span><span class="src-var">$db</span><span class="src-sym">;</span></li>
+<li><a name="a135"></a>    echo <span class="src-str">&quot;&lt;html&gt;&lt;head&gt;&lt;h1&gt;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a136"></a>    echo <a href="../WiFiDogAuthServer/_wifidog_classes_Locale_php.html#function_">_</a><span class="src-sym">(</span><span class="src-str">&quot;Trying to update the database schema.&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a137"></a>    echo <span class="src-str">&quot;&lt;/h1&gt;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a138"></a>    <span class="src-var">$db</span><span class="src-sym">-&gt;</span><span class="src-id">ExecSqlUniqueRes</span><span class="src-sym">(</span><span class="src-str">&quot;SELECT * FROM schema_info WHERE tag='schema_version'&quot;</span><span class="src-sym">, </span><span class="src-var">$row</span><span class="src-sym">, </span><span class="src-id">false</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a139"></a>    <span class="src-key">if </span><span class="src-sym">(</span><span class="src-key">empty </span><span class="src-sym">(</span><span class="src-var">$row</span><span class="src-sym">))</span></li>
+<li><a name="a140"></a>    <span class="src-sym">{</span></li>
+<li><a name="a141"></a>        echo <span class="src-str">&quot;&lt;h1&gt;&quot;</span>.<a href="../WiFiDogAuthServer/_wifidog_classes_Locale_php.html#function_">_</a><span class="src-sym">(</span><span class="src-str">&quot;Unable to retrieve schema version.  The database schema is too old to be updated.&quot;</span><span class="src-sym">)</span>.<span class="src-str">&quot;&lt;/h1&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a142"></a>        <span class="src-key">exit </span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a143"></a>    <span class="src-sym">}</span></li>
+<li><a name="a144"></a>    <span class="src-key">else</span></li>
+<li><a name="a145"></a>    <span class="src-sym">{</span></li>
+<li><a name="a146"></a>        <span class="src-var">$schema_version </span>= <span class="src-var">$row</span><span class="src-sym">[</span><span class="src-str">'value'</span><span class="src-sym">]</span><span class="src-sym">;</span></li>
+<li><a name="a147"></a>        <span class="src-var">$sql </span>= <span class="src-str">''</span><span class="src-sym">;</span></li>
+<li><a name="a148"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">2</span><span class="src-sym">;</span></li>
+<li><a name="a149"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a150"></a>        <span class="src-sym">{</span></li>
+<li><a name="a151"></a>&nbsp;</li>
+<li><a name="a152"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a153"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a154"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE users ADD COLUMN username text;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a155"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE users ADD COLUMN account_origin text;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a156"></a>            <span class="src-var">$db</span><span class="src-sym">-&gt;</span><span class="src-id">ExecSql</span><span class="src-sym">(</span><span class="src-str">&quot;SELECT user_id FROM users&quot;</span><span class="src-sym">, </span><span class="src-var">$results</span><span class="src-sym">, </span><span class="src-id">false</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a157"></a>            <span class="src-key">foreach </span><span class="src-sym">(</span><span class="src-var">$results </span><span class="src-key">as </span><span class="src-var">$row</span><span class="src-sym">)</span></li>
+<li><a name="a158"></a>            <span class="src-sym">{</span></li>
+<li><a name="a159"></a>                <span class="src-var">$user_id </span>= <span class="src-var">$db</span><span class="src-sym">-&gt;</span><span class="src-id">EscapeString</span><span class="src-sym">(</span><span class="src-var">$row</span><span class="src-sym">[</span><span class="src-str">'user_id'</span><span class="src-sym">]</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a160"></a>                <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str"><span class="src-id">UPDATE</span> <span class="src-id">users</span> <span class="src-id">SET</span> <span class="src-id">username</span>='<span class="src-var">$user_id</span>', <span class="src-id">user_id</span>='</span><span class="src-str">&quot;</span>.<a href="../WiFiDogAuthServer/_wifidog_include_common_php.html#functionget_guid">get_guid</a><span class="src-sym">(</span><span class="src-sym">)</span>.<span class="src-str">&quot;</span><span class="src-str">', <span class="src-id">account_origin</span>='<span class="src-id">LOCAL_USER</span>' <span class="src-id">WHERE</span> <span class="src-id">user_id</span>='<span class="src-var">$user_id</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a161"></a>            <span class="src-sym">}</span></li>
+<li><a name="a162"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;CREATE UNIQUE INDEX idx_unique_username_and_account_origin ON users (username, account_origin);\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a163"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;CREATE UNIQUE INDEX idx_unique_email_and_account_origin ON users USING btree (email, account_origin);\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a164"></a>        <span class="src-sym">}</span></li>
+<li><a name="a165"></a>&nbsp;</li>
+<li><a name="a166"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">3</span><span class="src-sym">;</span></li>
+<li><a name="a167"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a168"></a>        <span class="src-sym">{</span></li>
+<li><a name="a169"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a170"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a171"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;DROP INDEX idx_unique_email_and_account_origin;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a172"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE users DROP CONSTRAINT check_email_not_empty;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a173"></a>        <span class="src-sym">}</span></li>
+<li><a name="a174"></a>&nbsp;</li>
+<li><a name="a175"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">4</span><span class="src-sym">;</span></li>
+<li><a name="a176"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a177"></a>        <span class="src-sym">{</span></li>
+<li><a name="a178"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a179"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a180"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE users ALTER COLUMN account_origin SET NOT NULL;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a181"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE users ADD CONSTRAINT check_account_origin_not_empty CHECK (account_origin::text &lt;&gt; ''::text);\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a182"></a>&nbsp;</li>
+<li><a name="a183"></a>            <span class="src-comm">//We must skip all other updates because schema 5 must be manually updated:</span></li>
+<li><a name="a184"></a>            <span class="src-var">$schema_version </span>= <span class="src-num">1000000</span><span class="src-sym">;</span></li>
+<li><a name="a185"></a>        <span class="src-sym">}</span></li>
+<li><a name="a186"></a>&nbsp;</li>
+<li><a name="a187"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">5</span><span class="src-sym">;</span></li>
+<li><a name="a188"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>== <span class="src-var">$new_schema_version </span>-<span class="src-num">1</span><span class="src-sym">)</span></li>
+<li><a name="a189"></a>        <span class="src-sym">{</span></li>
+<li><a name="a190"></a>            echo <span class="src-str">&quot;&lt;h1&gt;Recoding database from ISO-8859-1 to UTF-8&lt;/h1&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a191"></a>            echo <span class="src-str">&quot;&lt;h1&gt;YOU MUST EXECUTE THESE COMMANDS FROM THE COMMAND_LINE:&lt;/h1&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a192"></a>            echo <span class="src-str">&quot;pg_dump wifidog -U wifidog &gt; wifidog_dump.sql;&lt;br&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a193"></a>            echo <span class="src-str">&quot;dropdb wifidog -U wifidog; &lt;br&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a194"></a>            echo <span class="src-str">&quot;createdb --encoding=UNICODE --template=template0 -U wifidog wifidog;&lt;br&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a195"></a>            echo <span class="src-str">&quot;psql wifidog -U wifidog &lt; wifidog_dump.sql;&lt;br&gt;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a196"></a>            echo <span class="src-str">&quot; (Note: You may ignore the following errors:  \&quot;ERROR:  permission denied to set session authorization\&quot; and \&quot;ERROR:  must be owner of schema public\&quot;)&lt;br&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a197"></a>            echo <span class="src-str">&quot;</span><span class="src-str"><span class="src-id">psql</span> <span class="src-id">wifidog</span> -<span class="src-id">U</span> <span class="src-id">wifidog</span> -<span class="src-id">c</span> \&quot;<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>'\&quot;;&lt;<span class="src-id">br</span>&gt;</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a198"></a>            <span class="src-key">exit</span><span class="src-sym">;</span></li>
+<li><a name="a199"></a>        <span class="src-sym">}</span></li>
+<li><a name="a200"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">6</span><span class="src-sym">;</span></li>
+<li><a name="a201"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a202"></a>        <span class="src-sym">{</span></li>
+<li><a name="a203"></a>&nbsp;</li>
+<li><a name="a204"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a205"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a206"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;CREATE TABLE locales ( \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a207"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  locales_id text PRIMARY KEY \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a208"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  ); \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a209"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  INSERT INTO locales VALUES ('fr'); \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a210"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  INSERT INTO locales VALUES ('en'); \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a211"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE users ADD COLUMN never_show_username bool;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a212"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE users ALTER COLUMN never_show_username SET DEFAULT FALSE;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a213"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE users ADD COLUMN real_name text;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a214"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE users ALTER COLUMN real_name SET DEFAULT NULL;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a215"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE users ADD COLUMN website text;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a216"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE users ALTER COLUMN website SET DEFAULT NULL;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a217"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE users ADD COLUMN prefered_locale text REFERENCES locales ON DELETE SET NULL ON UPDATE CASCADE;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a218"></a>&nbsp;</li>
+<li><a name="a219"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span></li>
+<li><a name="a220"></a><span class="src-str">                CREATE TABLE content</span></li>
+<li><a name="a221"></a><span class="src-str">                (</span></li>
+<li><a name="a222"></a><span class="src-str">                content_id text NOT NULL PRIMARY KEY,</span></li>
+<li><a name="a223"></a><span class="src-str">                content_type text NOT NULL  CONSTRAINT content_type_not_empty_string CHECK (content_type != ''),</span></li>
+<li><a name="a224"></a><span class="src-str">                title text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,</span></li>
+<li><a name="a225"></a><span class="src-str">                description text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,</span></li>
+<li><a name="a226"></a><span class="src-str">                project_info text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,</span></li>
+<li><a name="a227"></a><span class="src-str">                sponsor_info text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,</span></li>
+<li><a name="a228"></a><span class="src-str">                creation_timestamp timestamp DEFAULT now()</span></li>
+<li><a name="a229"></a><span class="src-str">                );</span></li>
+<li><a name="a230"></a>&nbsp;</li>
+<li><a name="a231"></a><span class="src-str">                CREATE TABLE content_has_owners</span></li>
+<li><a name="a232"></a><span class="src-str">                (</span></li>
+<li><a name="a233"></a><span class="src-str">                content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,</span></li>
+<li><a name="a234"></a><span class="src-str">                user_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,</span></li>
+<li><a name="a235"></a><span class="src-str">                is_author bool NOT NULL,</span></li>
+<li><a name="a236"></a><span class="src-str">                owner_since timestamp DEFAULT now(),</span></li>
+<li><a name="a237"></a><span class="src-str">                PRIMARY KEY  (content_id, user_id)</span></li>
+<li><a name="a238"></a><span class="src-str">                );</span></li>
+<li><a name="a239"></a>&nbsp;</li>
+<li><a name="a240"></a><span class="src-str">                CREATE TABLE langstring_entries (</span></li>
+<li><a name="a241"></a><span class="src-str">                  langstring_entries_id text NOT NULL PRIMARY KEY,</span></li>
+<li><a name="a242"></a><span class="src-str">                  langstrings_id text REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,</span></li>
+<li><a name="a243"></a><span class="src-str">                  locales_id text REFERENCES locales ON DELETE RESTRICT ON UPDATE CASCADE,</span></li>
+<li><a name="a244"></a><span class="src-str">                  value text  DEFAULT ''</span></li>
+<li><a name="a245"></a><span class="src-str">                );</span></li>
+<li><a name="a246"></a>&nbsp;</li>
+<li><a name="a247"></a><span class="src-str">                CREATE TABLE content_group (</span></li>
+<li><a name="a248"></a><span class="src-str">                  content_group_id text NOT NULL PRIMARY KEY REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,</span></li>
+<li><a name="a249"></a><span class="src-str">                  is_artistic_content bool NOT NULL DEFAULT FALSE,</span></li>
+<li><a name="a250"></a><span class="src-str">                  is_locative_content bool NOT NULL DEFAULT FALSE,</span></li>
+<li><a name="a251"></a><span class="src-str">                  content_selection_mode text</span></li>
+<li><a name="a252"></a><span class="src-str">                );</span></li>
+<li><a name="a253"></a>&nbsp;</li>
+<li><a name="a254"></a><span class="src-str">                CREATE TABLE content_group_element (</span></li>
+<li><a name="a255"></a><span class="src-str">                  content_group_element_id text NOT NULL PRIMARY KEY REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,</span></li>
+<li><a name="a256"></a><span class="src-str">                  content_group_id text NOT NULL REFERENCES content_group ON DELETE CASCADE ON UPDATE CASCADE,</span></li>
+<li><a name="a257"></a><span class="src-str">                  display_order integer DEFAULT '1',</span></li>
+<li><a name="a258"></a><span class="src-str">                  displayed_content_id text REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,</span></li>
+<li><a name="a259"></a><span class="src-str">                  force_only_allowed_node bool</span></li>
+<li><a name="a260"></a><span class="src-str">                );</span></li>
+<li><a name="a261"></a><span class="src-str">                CREATE INDEX idx_content_group_element_content_group_id ON content_group_element (content_group_id);</span></li>
+<li><a name="a262"></a>&nbsp;</li>
+<li><a name="a263"></a><span class="src-str">                CREATE TABLE content_group_element_has_allowed_nodes</span></li>
+<li><a name="a264"></a><span class="src-str">                (</span></li>
+<li><a name="a265"></a><span class="src-str">                content_group_element_id text NOT NULL REFERENCES content_group_element ON DELETE CASCADE ON UPDATE CASCADE,</span></li>
+<li><a name="a266"></a><span class="src-str">                node_id text NOT NULL REFERENCES nodes ON DELETE CASCADE ON UPDATE CASCADE,</span></li>
+<li><a name="a267"></a><span class="src-str">                allowed_since timestamp DEFAULT now(),</span></li>
+<li><a name="a268"></a><span class="src-str">                PRIMARY KEY  (content_group_element_id, node_id)</span></li>
+<li><a name="a269"></a><span class="src-str">                );</span></li>
+<li><a name="a270"></a>&nbsp;</li>
+<li><a name="a271"></a><span class="src-str">                CREATE TABLE content_group_element_portal_display_log (</span></li>
+<li><a name="a272"></a><span class="src-str">                  user_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,</span></li>
+<li><a name="a273"></a><span class="src-str">                  content_group_element_id text NOT NULL REFERENCES content_group_element ON DELETE CASCADE ON UPDATE CASCADE,</span></li>
+<li><a name="a274"></a><span class="src-str">                  display_timestamp timestamp NOT NULL DEFAULT now(),</span></li>
+<li><a name="a275"></a><span class="src-str">                  node_id text REFERENCES nodes ON DELETE CASCADE ON UPDATE CASCADE,</span></li>
+<li><a name="a276"></a><span class="src-str">                  PRIMARY KEY  (user_id,content_group_element_id, display_timestamp)</span></li>
+<li><a name="a277"></a><span class="src-str">                );</span></li>
+<li><a name="a278"></a>&nbsp;</li>
+<li><a name="a279"></a><span class="src-str">                CREATE TABLE user_has_content (</span></li>
+<li><a name="a280"></a><span class="src-str">                  user_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,</span></li>
+<li><a name="a281"></a><span class="src-str">                  content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,</span></li>
+<li><a name="a282"></a><span class="src-str">                  subscribe_timestamp timestamp NOT NULL DEFAULT now(),</span></li>
+<li><a name="a283"></a><span class="src-str">                  PRIMARY KEY  (user_id,content_id)</span></li>
+<li><a name="a284"></a><span class="src-str">                );</span></li>
+<li><a name="a285"></a>&nbsp;</li>
+<li><a name="a286"></a><span class="src-str">                CREATE TABLE node_has_content (</span></li>
+<li><a name="a287"></a><span class="src-str">                  node_id text NOT NULL REFERENCES nodes ON DELETE CASCADE ON UPDATE CASCADE,</span></li>
+<li><a name="a288"></a><span class="src-str">                  content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,</span></li>
+<li><a name="a289"></a><span class="src-str">                  subscribe_timestamp timestamp NOT NULL DEFAULT now(),</span></li>
+<li><a name="a290"></a><span class="src-str">                  PRIMARY KEY  (node_id,content_id)</span></li>
+<li><a name="a291"></a><span class="src-str">                );</span></li>
+<li><a name="a292"></a>&nbsp;</li>
+<li><a name="a293"></a><span class="src-str">                CREATE TABLE network_has_content (</span></li>
+<li><a name="a294"></a><span class="src-str">                  network_id text NOT NULL,</span></li>
+<li><a name="a295"></a><span class="src-str">                  content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,</span></li>
+<li><a name="a296"></a><span class="src-str">                  subscribe_timestamp timestamp NOT NULL DEFAULT now(),</span></li>
+<li><a name="a297"></a><span class="src-str">                  PRIMARY KEY  (network_id,content_id)</span></li>
+<li><a name="a298"></a><span class="src-str">                );&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a299"></a>        <span class="src-sym">}</span></li>
+<li><a name="a300"></a>&nbsp;</li>
+<li><a name="a301"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">7</span><span class="src-sym">;</span></li>
+<li><a name="a302"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a303"></a>        <span class="src-sym">{</span></li>
+<li><a name="a304"></a>&nbsp;</li>
+<li><a name="a305"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a306"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a307"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE content ADD COLUMN is_persistent bool;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a308"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE content ALTER COLUMN is_persistent SET DEFAULT FALSE;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a309"></a>&nbsp;</li>
+<li><a name="a310"></a>        <span class="src-sym">}</span></li>
+<li><a name="a311"></a>&nbsp;</li>
+<li><a name="a312"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">8</span><span class="src-sym">;</span></li>
+<li><a name="a313"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a314"></a>        <span class="src-sym">{</span></li>
+<li><a name="a315"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a316"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a317"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;CREATE TABLE flickr_photostream</span></li>
+<li><a name="a318"></a><span class="src-str">                        (</span></li>
+<li><a name="a319"></a><span class="src-str">                          flickr_photostream_id text NOT NULL,</span></li>
+<li><a name="a320"></a><span class="src-str">                          api_key text,</span></li>
+<li><a name="a321"></a><span class="src-str">                          photo_selection_mode text NOT NULL DEFAULT 'PSM_GROUP'::text,</span></li>
+<li><a name="a322"></a><span class="src-str">                          user_id text,</span></li>
+<li><a name="a323"></a><span class="src-str">                          user_name text,</span></li>
+<li><a name="a324"></a><span class="src-str">                          tags text,</span></li>
+<li><a name="a325"></a><span class="src-str">                          tag_mode varchar(10) DEFAULT 'any'::character varying,</span></li>
+<li><a name="a326"></a><span class="src-str">                          group_id text,</span></li>
+<li><a name="a327"></a><span class="src-str">                          random bool NOT NULL DEFAULT true,</span></li>
+<li><a name="a328"></a><span class="src-str">                          min_taken_date timestamp,</span></li>
+<li><a name="a329"></a><span class="src-str">                          max_taken_date timestamp,</span></li>
+<li><a name="a330"></a><span class="src-str">                          photo_batch_size int4 DEFAULT 10,</span></li>
+<li><a name="a331"></a><span class="src-str">                          photo_count int4 DEFAULT 1,</span></li>
+<li><a name="a332"></a><span class="src-str">                          display_title bool NOT NULL DEFAULT true,</span></li>
+<li><a name="a333"></a><span class="src-str">                          display_description bool NOT NULL DEFAULT false,</span></li>
+<li><a name="a334"></a><span class="src-str">                          display_tags bool NOT NULL DEFAULT false,</span></li>
+<li><a name="a335"></a><span class="src-str">                          CONSTRAINT flickr_photostream_pkey PRIMARY KEY (flickr_photostream_id),</span></li>
+<li><a name="a336"></a><span class="src-str">                          CONSTRAINT flickr_photostream_content_group_fkey FOREIGN KEY (flickr_photostream_id) REFERENCES content_group (content_group_id) ON UPDATE CASCADE ON DELETE CASCADE</span></li>
+<li><a name="a337"></a><span class="src-str">                        );&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a338"></a>        <span class="src-sym">}</span></li>
+<li><a name="a339"></a>&nbsp;</li>
+<li><a name="a340"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">9</span><span class="src-sym">;</span></li>
+<li><a name="a341"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a342"></a>        <span class="src-sym">{</span></li>
+<li><a name="a343"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a344"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a345"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;CREATE TABLE files</span></li>
+<li><a name="a346"></a><span class="src-str">                        (</span></li>
+<li><a name="a347"></a><span class="src-str">                          files_id text NOT NULL,</span></li>
+<li><a name="a348"></a><span class="src-str">                          filename text,</span></li>
+<li><a name="a349"></a><span class="src-str">                          mime_type text,</span></li>
+<li><a name="a350"></a><span class="src-str">                          binary_data bytea,</span></li>
+<li><a name="a351"></a><span class="src-str">                          remote_size int8,</span></li>
+<li><a name="a352"></a><span class="src-str">                          CONSTRAINT files_pkey PRIMARY KEY (files_id)</span></li>
+<li><a name="a353"></a><span class="src-str">                        );&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a354"></a>        <span class="src-sym">}</span></li>
+<li><a name="a355"></a>&nbsp;</li>
+<li><a name="a356"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">10</span><span class="src-sym">;</span></li>
+<li><a name="a357"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a358"></a>        <span class="src-sym">{</span></li>
+<li><a name="a359"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a360"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a361"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE files ADD COLUMN url text;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a362"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE flickr_photostream ADD COLUMN preferred_size text;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a363"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;CREATE TABLE embedded_content (</span></li>
+<li><a name="a364"></a><span class="src-str">                            embedded_content_id text NOT NULL,</span></li>
+<li><a name="a365"></a><span class="src-str">                            embedded_file_id text,</span></li>
+<li><a name="a366"></a><span class="src-str">                            fallback_content_id text,</span></li>
+<li><a name="a367"></a><span class="src-str">                            parameters text,</span></li>
+<li><a name="a368"></a><span class="src-str">                            attributes text</span></li>
+<li><a name="a369"></a><span class="src-str">                        );&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a370"></a>        <span class="src-sym">}</span></li>
+<li><a name="a371"></a>&nbsp;</li>
+<li><a name="a372"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">11</span><span class="src-sym">;</span></li>
+<li><a name="a373"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a374"></a>        <span class="src-sym">{</span></li>
+<li><a name="a375"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a376"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a377"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;DROP TABLE content_group_element_portal_display_log;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a378"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;CREATE TABLE content_display_log</span></li>
+<li><a name="a379"></a><span class="src-str">            (</span></li>
+<li><a name="a380"></a><span class="src-str">              user_id text NOT NULL REFERENCES users ON UPDATE CASCADE ON DELETE CASCADE,</span></li>
+<li><a name="a381"></a><span class="src-str">              content_id text NOT NULL REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE,</span></li>
+<li><a name="a382"></a><span class="src-str">              first_display_timestamp timestamp NOT NULL DEFAULT now(),</span></li>
+<li><a name="a383"></a><span class="src-str">              node_id text NOT NULL REFERENCES nodes ON UPDATE CASCADE ON DELETE CASCADE,</span></li>
+<li><a name="a384"></a><span class="src-str">              last_display_timestamp timestamp NOT NULL DEFAULT now(),</span></li>
+<li><a name="a385"></a><span class="src-str">              CONSTRAINT content_group_element_portal_display_log_pkey PRIMARY KEY (user_id, content_id, node_id)</span></li>
+<li><a name="a386"></a><span class="src-str">            ); \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a387"></a>&nbsp;</li>
+<li><a name="a388"></a>        <span class="src-sym">}</span></li>
+<li><a name="a389"></a>&nbsp;</li>
+<li><a name="a390"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">12</span><span class="src-sym">;</span></li>
+<li><a name="a391"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a392"></a>        <span class="src-sym">{</span></li>
+<li><a name="a393"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a394"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a395"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE flickr_photostream DROP CONSTRAINT flickr_photostream_content_group_fkey;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a396"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE flickr_photostream ADD CONSTRAINT flickr_photostream_content_fkey FOREIGN KEY (flickr_photostream_id) REFERENCES content (content_id) ON UPDATE CASCADE ON DELETE CASCADE;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a397"></a>        <span class="src-sym">}</span></li>
+<li><a name="a398"></a>&nbsp;</li>
+<li><a name="a399"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">13</span><span class="src-sym">;</span></li>
+<li><a name="a400"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a401"></a>        <span class="src-sym">{</span></li>
+<li><a name="a402"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a403"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a404"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE content_group DROP COLUMN content_selection_mode;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a405"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE content_group ADD COLUMN content_changes_on_mode text;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a406"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;UPDATE content_group SET content_changes_on_mode='ALWAYS';\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a407"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE content_group ALTER COLUMN content_changes_on_mode SET DEFAULT 'ALWAYS';\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a408"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE content_group ALTER COLUMN content_changes_on_mode SET NOT NULL;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a409"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE content_group ADD COLUMN content_ordering_mode text;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a410"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;UPDATE content_group SET content_ordering_mode='RANDOM';\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a411"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE content_group ALTER COLUMN content_ordering_mode SET DEFAULT 'RANDOM';\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a412"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE content_group ALTER COLUMN content_ordering_mode SET NOT NULL;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a413"></a>&nbsp;</li>
+<li><a name="a414"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE content_group ADD COLUMN display_num_elements int;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a415"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;UPDATE content_group SET display_num_elements=1;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a416"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE content_group ALTER COLUMN display_num_elements SET DEFAULT '1';\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a417"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE content_group ALTER COLUMN display_num_elements SET NOT NULL;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a418"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE content_group ADD CONSTRAINT display_at_least_one_element CHECK (display_num_elements &gt; 0);\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a419"></a>&nbsp;</li>
+<li><a name="a420"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE content_group ADD COLUMN allow_repeat text;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a421"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;UPDATE content_group SET allow_repeat='YES';\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a422"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE content_group ALTER COLUMN allow_repeat SET DEFAULT 'YES';\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a423"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE content_group ALTER COLUMN allow_repeat SET NOT NULL;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a424"></a>        <span class="src-sym">}</span></li>
+<li><a name="a425"></a>&nbsp;</li>
+<li><a name="a426"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">14</span><span class="src-sym">;</span></li>
+<li><a name="a427"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a428"></a>        <span class="src-sym">{</span></li>
+<li><a name="a429"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a430"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a431"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;CREATE TABLE pictures &quot;</span>.<span class="src-str">&quot;( &quot;</span>.<span class="src-str">&quot;pictures_id text NOT NULL PRIMARY KEY REFERENCES files ON DELETE CASCADE ON UPDATE CASCADE, &quot;</span>.<span class="src-str">&quot;width int4, &quot;</span>.<span class="src-str">&quot;height int4&quot;</span>.<span class="src-str">&quot;);\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a432"></a>        <span class="src-sym">}</span></li>
+<li><a name="a433"></a>&nbsp;</li>
+<li><a name="a434"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">15</span><span class="src-sym">;</span></li>
+<li><a name="a435"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a436"></a>        <span class="src-sym">{</span></li>
+<li><a name="a437"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a438"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a439"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE files ADD COLUMN data_blob oid;</span></li>
+<li><a name="a440"></a><span class="src-str">                                ALTER TABLE files ADD COLUMN local_binary_size int8;</span></li>
+<li><a name="a441"></a><span class="src-str">                                ALTER TABLE files DROP COLUMN binary_data;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a442"></a>        <span class="src-sym">}</span></li>
+<li><a name="a443"></a>&nbsp;</li>
+<li><a name="a444"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">16</span><span class="src-sym">;</span></li>
+<li><a name="a445"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a446"></a>        <span class="src-sym">{</span></li>
+<li><a name="a447"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a448"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a449"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE flickr_photostream ADD COLUMN requests_cache text; \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a450"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE flickr_photostream ADD COLUMN cache_update_timestamp timestamp; \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a451"></a>        <span class="src-sym">}</span></li>
+<li><a name="a452"></a>&nbsp;</li>
+<li><a name="a453"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">17</span><span class="src-sym">;</span></li>
+<li><a name="a454"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a455"></a>        <span class="src-sym">{</span></li>
+<li><a name="a456"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a457"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a458"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE nodes ADD COLUMN max_monthly_incoming int8; \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a459"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE nodes ADD COLUMN max_monthly_outgoing int8; \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a460"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE nodes ADD COLUMN quota_reset_day_of_month int4; \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a461"></a>        <span class="src-sym">}</span></li>
+<li><a name="a462"></a>&nbsp;</li>
+<li><a name="a463"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">18</span><span class="src-sym">;</span></li>
+<li><a name="a464"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a465"></a>        <span class="src-sym">{</span></li>
+<li><a name="a466"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a467"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a468"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE content ADD COLUMN long_description text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a469"></a>        <span class="src-sym">}</span></li>
+<li><a name="a470"></a>&nbsp;</li>
+<li><a name="a471"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">19</span><span class="src-sym">;</span></li>
+<li><a name="a472"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a473"></a>        <span class="src-sym">{</span></li>
+<li><a name="a474"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a475"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a476"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;CREATE TABLE iframes (&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a477"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;iframes_id text NOT NULL PRIMARY KEY REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a478"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;url text,&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a479"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;width int4,&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a480"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;height int4&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a481"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;);\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a482"></a>        <span class="src-sym">}</span></li>
+<li><a name="a483"></a>&nbsp;</li>
+<li><a name="a484"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">20</span><span class="src-sym">;</span></li>
+<li><a name="a485"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a486"></a>        <span class="src-sym">{</span></li>
+<li><a name="a487"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a488"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a489"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE nodes ADD COLUMN latitude NUMERIC(16, 6);\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a490"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE nodes ADD COLUMN longitude NUMERIC(16, 6);\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a491"></a>        <span class="src-sym">}</span></li>
+<li><a name="a492"></a>&nbsp;</li>
+<li><a name="a493"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">21</span><span class="src-sym">;</span></li>
+<li><a name="a494"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a495"></a>        <span class="src-sym">{</span></li>
+<li><a name="a496"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a497"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a498"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;CREATE TABLE content_rss_aggregator \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a499"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;( \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a500"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;content_id text NOT NULL PRIMARY KEY REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE, \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a501"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;number_of_display_items integer NOT NULL DEFAULT 10, \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a502"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;algorithm_strength real NOT NULL DEFAULT 0.75, \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a503"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;max_item_age interval DEFAULT NULL \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a504"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;); \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a505"></a>&nbsp;</li>
+<li><a name="a506"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;CREATE TABLE content_rss_aggregator_feeds \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a507"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;( &quot;</span><span class="src-sym">;</span></li>
+<li><a name="a508"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;content_id text NOT NULL REFERENCES content_rss_aggregator ON UPDATE CASCADE ON DELETE CASCADE, \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a509"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;url text, \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a510"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;bias real NOT NULL DEFAULT 1, \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a511"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;default_publication_interval int DEFAULT NULL, \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a512"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;PRIMARY KEY(content_id, url) \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a513"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;); \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a514"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE content_has_owners ALTER COLUMN is_author SET DEFAULT 'f';\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a515"></a>            <span class="src-var">$results </span>= <span class="src-id">null</span><span class="src-sym">;</span></li>
+<li><a name="a516"></a>            <span class="src-var">$db</span><span class="src-sym">-&gt;</span><span class="src-id">ExecSql</span><span class="src-sym">(</span><span class="src-str">&quot;SELECT node_id, rss_url FROM nodes&quot;</span><span class="src-sym">, </span><span class="src-var">$results</span><span class="src-sym">, </span><span class="src-id">false</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a517"></a>            <span class="src-key">foreach </span><span class="src-sym">(</span><span class="src-var">$results </span><span class="src-key">as </span><span class="src-var">$row</span><span class="src-sym">)</span></li>
+<li><a name="a518"></a>            <span class="src-sym">{</span></li>
+<li><a name="a519"></a>                <span class="src-key">if </span><span class="src-sym">(</span><span class="src-sym">!</span><span class="src-key">empty </span><span class="src-sym">(</span><span class="src-var">$row</span><span class="src-sym">[</span><span class="src-str">'rss_url'</span><span class="src-sym">]</span><span class="src-sym">))</span></li>
+<li><a name="a520"></a>                <span class="src-sym">{</span></li>
+<li><a name="a521"></a>                    <span class="src-comm">//$user_id = $db-&gt;EscapeString($row['user_id']);</span></li>
+<li><a name="a522"></a>                    <span class="src-var">$content_id </span>= <a href="../WiFiDogAuthServer/_wifidog_include_common_php.html#functionget_guid">get_guid</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a523"></a>                    <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n<span class="src-id">INSERT</span> <span class="src-id">INTO</span> <span class="src-id">content</span> (<span class="src-id">content_id</span>, <span class="src-id">content_type</span>) <span class="src-id">VALUES</span> ('<span class="src-var">$content_id</span>', '<span class="src-id">RssAggregator</span>');\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a524"></a>                    <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str"><span class="src-id">INSERT</span> <span class="src-id">INTO</span> <span class="src-id">content_rss_aggregator</span> (<span class="src-id">content_id</span>) <span class="src-id">VALUES</span> ('<span class="src-var">$content_id</span>');\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a525"></a>                    <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str"><span class="src-id">INSERT</span> <span class="src-id">INTO</span> <span class="src-id">content_rss_aggregator_feeds</span> (<span class="src-id">content_id</span>, <span class="src-id">url</span>) <span class="src-id">VALUES</span> ('<span class="src-var">$content_id</span>', '</span><span class="src-str">&quot;</span>.<span class="src-var">$row</span><span class="src-sym">[</span><span class="src-str">'rss_url'</span><span class="src-sym">]</span>.<span class="src-str">&quot;');\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a526"></a>                    <span class="src-var">$node </span>= <span class="src-id"><a href="../WiFiDogAuthServer/Node.html">Node</a> </span><span class="src-sym">:: </span><a href="../WiFiDogAuthServer/Node.html#methodgetObject">getObject</a><span class="src-sym">(</span><span class="src-var">$row</span><span class="src-sym">[</span><span class="src-str">'node_id'</span><span class="src-sym">]</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a527"></a>                    <span class="src-var">$owners </span>= <span class="src-var">$node</span><span class="src-sym">-&gt;</span><span class="src-id">getOwners</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a528"></a>                    <span class="src-key">foreach </span><span class="src-sym">(</span><span class="src-var">$owners </span><span class="src-key">as </span><span class="src-var">$owner</span><span class="src-sym">)</span></li>
+<li><a name="a529"></a>                    <span class="src-sym">{</span></li>
+<li><a name="a530"></a>                        <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str"><span class="src-id">INSERT</span> <span class="src-id">INTO</span> <span class="src-id">content_has_owners</span> (<span class="src-id">content_id</span>, <span class="src-id">user_id</span>) <span class="src-id">VALUES</span> ('<span class="src-var">$content_id</span>', '</span><span class="src-str">&quot;</span>.<span class="src-var">$owner</span><span class="src-sym">-&gt;</span><span class="src-id">getId</span><span class="src-sym">(</span><span class="src-sym">)</span>.<span class="src-str">&quot;');\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a531"></a>                    <span class="src-sym">}</span></li>
+<li><a name="a532"></a>                    <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str"><span class="src-id">INSERT</span> <span class="src-id">INTO</span> <span class="src-id">node_has_content</span> (<span class="src-id">content_id</span>, <span class="src-id">node_id</span>) <span class="src-id">VALUES</span> ('<span class="src-var">$content_id</span>', '</span><span class="src-str">&quot;</span>.<span class="src-var">$row</span><span class="src-sym">[</span><span class="src-str">'node_id'</span><span class="src-sym">]</span>.<span class="src-str">&quot;');\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a533"></a>                <span class="src-sym">}</span></li>
+<li><a name="a534"></a>            <span class="src-sym">}</span></li>
+<li><a name="a535"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;\nALTER TABLE nodes DROP COLUMN rss_url;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a536"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;\nDELETE FROM content WHERE content_type='HotspotRss';\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a537"></a>        <span class="src-sym">}</span></li>
+<li><a name="a538"></a>&nbsp;</li>
+<li><a name="a539"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">22</span><span class="src-sym">;</span></li>
+<li><a name="a540"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a541"></a>        <span class="src-sym">{</span></li>
+<li><a name="a542"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a543"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a544"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE nodes ADD COLUMN civic_number text;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a545"></a>            <span class="src-comm">// Dropping street_address and copying data to street_name for the sake of backward compatibility</span></li>
+<li><a name="a546"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE nodes ADD COLUMN street_name text;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a547"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;UPDATE nodes SET street_name = street_address;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a548"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE nodes DROP COLUMN street_address;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a549"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE nodes ADD COLUMN city text;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a550"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE nodes ADD COLUMN province text;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a551"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE nodes ADD COLUMN country text;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a552"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE nodes ADD COLUMN postal_code text;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a553"></a>        <span class="src-sym">}</span></li>
+<li><a name="a554"></a>&nbsp;</li>
+<li><a name="a555"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">23</span><span class="src-sym">;</span></li>
+<li><a name="a556"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a557"></a>        <span class="src-sym">{</span></li>
+<li><a name="a558"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a559"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a560"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;CREATE TABLE node_tech_officers (\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a561"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  node_id VARCHAR(32) REFERENCES nodes (node_id),\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a562"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  user_id VARCHAR(45) REFERENCES users (user_id),\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a563"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;PRIMARY KEY (node_id, user_id)\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a564"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;);\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a565"></a>        <span class="src-sym">}</span></li>
+<li><a name="a566"></a>&nbsp;</li>
+<li><a name="a567"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">24</span><span class="src-sym">;</span></li>
+<li><a name="a568"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a569"></a>        <span class="src-sym">{</span></li>
+<li><a name="a570"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a571"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a572"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE content_rss_aggregator_feeds ADD COLUMN title text; \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a573"></a>        <span class="src-sym">}</span></li>
+<li><a name="a574"></a>&nbsp;</li>
+<li><a name="a575"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">25</span><span class="src-sym">;</span></li>
+<li><a name="a576"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a577"></a>        <span class="src-sym">{</span></li>
+<li><a name="a578"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a579"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a580"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;CREATE TABLE node_stakeholders ( \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a581"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  node_id VARCHAR(32) REFERENCES nodes (node_id),\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a582"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  user_id VARCHAR(45) REFERENCES users (user_id),\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a583"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  is_owner BOOLEAN NOT NULL DEFAULT FALSE,\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a584"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  is_tech_officer BOOLEAN NOT NULL DEFAULT FALSE,\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a585"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;PRIMARY KEY (node_id, user_id)\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a586"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;);\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a587"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;INSERT INTO node_stakeholders (node_id, user_id) SELECT node_id, user_id FROM node_owners UNION SELECT node_id, user_id FROM node_tech_officers;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a588"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;UPDATE node_stakeholders SET is_owner = true FROM node_owners WHERE node_stakeholders.node_id = node_owners.node_id AND node_stakeholders.user_id = node_owners.user_id;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a589"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;UPDATE node_stakeholders SET is_tech_officer = true FROM node_tech_officers WHERE node_stakeholders.node_id = node_tech_officers.node_id AND node_stakeholders.user_id = node_tech_officers.user_id;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a590"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;DROP TABLE node_owners;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a591"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;DROP TABLE node_tech_officers;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a592"></a>        <span class="src-sym">}</span></li>
+<li><a name="a593"></a>&nbsp;</li>
+<li><a name="a594"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">26</span><span class="src-sym">;</span></li>
+<li><a name="a595"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a596"></a>        <span class="src-sym">{</span></li>
+<li><a name="a597"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a598"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a599"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;CREATE TABLE networks ( \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a600"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  network_id text NOT NULL PRIMARY KEY,\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a601"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  network_authenticator_class text NOT NULL CHECK (network_authenticator_class&lt;&gt;''),\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a602"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  network_authenticator_params text,\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a603"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  is_default_network boolean NOT NULL DEFAULT FALSE,\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a604"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  name text NOT NULL DEFAULT 'Unnamed network' CHECK (name&lt;&gt;''),\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a605"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  creation_date date NOT NULL DEFAULT now(),\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a606"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  homepage_url text,\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a607"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  tech_support_email text,\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a608"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  validation_grace_time interval NOT NULL DEFAULT '1200 seconds',\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a609"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  validation_email_from_address text NOT NULL CHECK (validation_email_from_address&lt;&gt;'') DEFAULT 'validation@wifidognetwork',\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a610"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  allow_multiple_login BOOLEAN NOT NULL DEFAULT FALSE,\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a611"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  allow_splash_only_nodes BOOLEAN NOT NULL DEFAULT FALSE,\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a612"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  allow_custom_portal_redirect BOOLEAN NOT NULL DEFAULT FALSE\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a613"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;);\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a614"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;INSERT INTO networks (network_id, network_authenticator_class, network_authenticator_params) SELECT  account_origin, COALESCE('AuthenticatorLocalUser') as network_authenticator_class, '\'' || account_origin || '\'' FROM users GROUP BY (account_origin) ORDER BY min(reg_date);\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a615"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;UPDATE networks SET is_default_network=TRUE WHERE network_id=(SELECT account_origin FROM users GROUP BY (account_origin) ORDER BY min(reg_date) LIMIT 1);\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a616"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE users ADD CONSTRAINT account_origin_fkey FOREIGN KEY (account_origin) REFERENCES networks (network_id) ON UPDATE CASCADE ON DELETE RESTRICT;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a617"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE nodes ADD COLUMN network_id text; \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a618"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;UPDATE nodes SET network_id=(SELECT account_origin FROM users GROUP BY (account_origin) ORDER BY min(reg_date) LIMIT 1);\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a619"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE nodes ALTER COLUMN network_id SET NOT NULL; \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a620"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE nodes ADD CONSTRAINT network_id_fkey FOREIGN KEY (network_id) REFERENCES networks ON UPDATE CASCADE ON DELETE RESTRICT;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a621"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE network_has_content ADD CONSTRAINT network_id_fkey FOREIGN KEY (network_id) REFERENCES networks ON UPDATE CASCADE ON DELETE CASCADE;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a622"></a>&nbsp;</li>
+<li><a name="a623"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;CREATE TABLE network_stakeholders ( \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a624"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  network_id text REFERENCES networks,\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a625"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  user_id VARCHAR(45) REFERENCES users,\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a626"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  is_admin BOOLEAN NOT NULL DEFAULT FALSE,\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a627"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  is_stat_viewer BOOLEAN NOT NULL DEFAULT FALSE,\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a628"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;PRIMARY KEY (network_id, user_id)\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a629"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;);\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a630"></a>        <span class="src-sym">}</span></li>
+<li><a name="a631"></a>&nbsp;</li>
+<li><a name="a632"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">27</span><span class="src-sym">;</span></li>
+<li><a name="a633"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a634"></a>        <span class="src-sym">{</span></li>
+<li><a name="a635"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a636"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a637"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE nodes ADD COLUMN last_paged timestamp;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a638"></a>&nbsp;</li>
+<li><a name="a639"></a>        <span class="src-sym">}</span></li>
+<li><a name="a640"></a>&nbsp;</li>
+<li><a name="a641"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">28</span><span class="src-sym">;</span></li>
+<li><a name="a642"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a643"></a>        <span class="src-sym">{</span></li>
+<li><a name="a644"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a645"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a646"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE nodes ADD COLUMN is_splash_only_node boolean;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a647"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE nodes ALTER COLUMN is_splash_only_node SET DEFAULT FALSE;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a648"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE nodes ADD COLUMN custom_portal_redirect_url text;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a649"></a>&nbsp;</li>
+<li><a name="a650"></a>        <span class="src-sym">}</span></li>
+<li><a name="a651"></a>&nbsp;</li>
+<li><a name="a652"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">29</span><span class="src-sym">;</span></li>
+<li><a name="a653"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a654"></a>        <span class="src-sym">{</span></li>
+<li><a name="a655"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a656"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a657"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE flickr_photostream ADD COLUMN api_shared_secret text;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a658"></a>        <span class="src-sym">}</span></li>
+<li><a name="a659"></a>&nbsp;</li>
+<li><a name="a660"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">30</span><span class="src-sym">;</span></li>
+<li><a name="a661"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a662"></a>        <span class="src-sym">{</span></li>
+<li><a name="a663"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a664"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a665"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;CREATE INDEX idx_connections_user_id ON connections (user_id);\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a666"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;CREATE INDEX idx_connections_user_mac ON connections (user_mac);\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a667"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;CREATE INDEX idx_connections_node_id ON connections (node_id);\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a668"></a>        <span class="src-sym">}</span></li>
+<li><a name="a669"></a>&nbsp;</li>
+<li><a name="a670"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">31</span><span class="src-sym">;</span></li>
+<li><a name="a671"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a672"></a>        <span class="src-sym">{</span></li>
+<li><a name="a673"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a674"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a675"></a>             <span class="src-var">$sql </span>.= <span class="src-str">&quot;CREATE TABLE content_display_location ( \n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a676"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;  display_location text NOT NULL PRIMARY KEY\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a677"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;);\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a678"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;INSERT INTO content_display_location (display_location) VALUES ('portal_page');\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a679"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;INSERT INTO content_display_location (display_location) VALUES ('login_page');\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a680"></a>&nbsp;</li>
+<li><a name="a681"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE network_has_content ADD COLUMN display_location text;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a682"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE network_has_content ALTER COLUMN display_location SET DEFAULT 'portal_page';\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a683"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;UPDATE network_has_content SET display_location='portal_page';\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a684"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE network_has_content ALTER COLUMN display_location SET NOT NULL;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a685"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE network_has_content ADD CONSTRAINT display_location_fkey FOREIGN KEY (display_location) REFERENCES content_display_location ON UPDATE CASCADE ON DELETE RESTRICT;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a686"></a>&nbsp;</li>
+<li><a name="a687"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE node_has_content ADD COLUMN display_location text;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a688"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE node_has_content ALTER COLUMN display_location SET DEFAULT 'portal_page';\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a689"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;UPDATE node_has_content SET display_location='portal_page';\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a690"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE node_has_content ALTER COLUMN display_location SET NOT NULL;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a691"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE node_has_content ADD CONSTRAINT display_location_fkey FOREIGN KEY (display_location) REFERENCES content_display_location ON UPDATE CASCADE ON DELETE RESTRICT;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a692"></a><span class="src-comm">/* Convert the existing node logos */</span></li>
+<li><a name="a693"></a>            <span class="src-var">$results </span>= <span class="src-id">null</span><span class="src-sym">;</span></li>
+<li><a name="a694"></a>            <span class="src-var">$db</span><span class="src-sym">-&gt;</span><span class="src-id">ExecSql</span><span class="src-sym">(</span><span class="src-str">&quot;SELECT node_id FROM nodes&quot;</span><span class="src-sym">, </span><span class="src-var">$results</span><span class="src-sym">, </span><span class="src-id">false</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a695"></a>                            <a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'HOTSPOT_LOGO_NAME'</span><span class="src-sym">, </span><span class="src-str">'hotspot_logo.jpg'</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a696"></a>            <span class="src-key">foreach </span><span class="src-sym">(</span><span class="src-var">$results </span><span class="src-key">as </span><span class="src-var">$row</span><span class="src-sym">)</span></li>
+<li><a name="a697"></a>            <span class="src-sym">{</span></li>
+<li><a name="a698"></a>                <span class="src-var">$php_logo_path </span>= <span class="src-id"><a href="../WiFiDogAuthServer/_wifidog_install_php.html#defineBASEPATH">BASEPATH</a></span>.<span class="src-id"><a href="../WiFiDogAuthServer/_wifidog_config_php.html#defineLOCAL_CONTENT_REL_PATH">LOCAL_CONTENT_REL_PATH</a></span>.<span class="src-var">$row</span><span class="src-sym">[</span><span class="src-str">'node_id'</span><span class="src-sym">]</span>.<span class="src-str">'/'</span>.<span class="src-id">HOTSPOT_LOGO_NAME</span><span class="src-sym">;</span></li>
+<li><a name="a699"></a>                <span class="src-comm">//echo $php_logo_path.&quot;&lt;br&gt;&quot;;</span></li>
+<li><a name="a700"></a>                <span class="src-key">if </span><span class="src-sym">(</span><a href="http://www.php.net/file_exists">file_exists</a><span class="src-sym">(</span><span class="src-var">$php_logo_path</span><span class="src-sym">))</span></li>
+<li><a name="a701"></a>                <span class="src-sym">{</span></li>
+<li><a name="a702"></a>                    <span class="src-var">$node_logo_abs_url</span>=<span class="src-var">$db</span><span class="src-sym">-&gt;</span><span class="src-id">EscapeString</span><span class="src-sym">(</span><span class="src-id"><a href="../WiFiDogAuthServer/_wifidog_include_common_php.html#defineBASE_URL_PATH">BASE_URL_PATH</a></span>.<span class="src-id"><a href="../WiFiDogAuthServer/_wifidog_config_php.html#defineLOCAL_CONTENT_REL_PATH">LOCAL_CONTENT_REL_PATH</a></span>.<span class="src-var">$row</span><span class="src-sym">[</span><span class="src-str">'node_id'</span><span class="src-sym">]</span>.<span class="src-str">'/'</span>.<span class="src-id">HOTSPOT_LOGO_NAME</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a703"></a>                    <span class="src-comm">//$user_id = $db-&gt;EscapeString($row['user_id']);</span></li>
+<li><a name="a704"></a>                    <span class="src-var">$content_id </span>= <a href="../WiFiDogAuthServer/_wifidog_include_common_php.html#functionget_guid">get_guid</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a705"></a>                    <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n<span class="src-id">INSERT</span> <span class="src-id">INTO</span> <span class="src-id">content</span> (<span class="src-id">content_id</span>, <span class="src-id">content_type</span>) <span class="src-id">VALUES</span> ('<span class="src-var">$content_id</span>', '<span class="src-id">Picture</span>');\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a706"></a>                    <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str"><span class="src-id">INSERT</span> <span class="src-id">INTO</span> <span class="src-id">files</span> (<span class="src-id">files_id</span>, <span class="src-id">url</span>) <span class="src-id">VALUES</span> ('<span class="src-var">$content_id</span>', '<span class="src-var">$node_logo_abs_url</span>');\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a707"></a>                    <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str"><span class="src-id">INSERT</span> <span class="src-id">INTO</span> <span class="src-id">pictures</span> (<span class="src-id">pictures_id</span>) <span class="src-id">VALUES</span> ('<span class="src-var">$content_id</span>');\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a708"></a>                    <span class="src-var">$node </span>= <span class="src-id"><a href="../WiFiDogAuthServer/Node.html">Node</a> </span><span class="src-sym">:: </span><a href="../WiFiDogAuthServer/Node.html#methodgetObject">getObject</a><span class="src-sym">(</span><span class="src-var">$row</span><span class="src-sym">[</span><span class="src-str">'node_id'</span><span class="src-sym">]</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a709"></a>                    <span class="src-var">$owners </span>= <span class="src-var">$node</span><span class="src-sym">-&gt;</span><span class="src-id">getOwners</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a710"></a>                    <span class="src-key">foreach </span><span class="src-sym">(</span><span class="src-var">$owners </span><span class="src-key">as </span><span class="src-var">$owner</span><span class="src-sym">)</span></li>
+<li><a name="a711"></a>                    <span class="src-sym">{</span></li>
+<li><a name="a712"></a>                        <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str"><span class="src-id">INSERT</span> <span class="src-id">INTO</span> <span class="src-id">content_has_owners</span> (<span class="src-id">content_id</span>, <span class="src-id">user_id</span>) <span class="src-id">VALUES</span> ('<span class="src-var">$content_id</span>', '</span><span class="src-str">&quot;</span>.<span class="src-var">$owner</span><span class="src-sym">-&gt;</span><span class="src-id">getId</span><span class="src-sym">(</span><span class="src-sym">)</span>.<span class="src-str">&quot;');\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a713"></a>                    <span class="src-sym">}</span></li>
+<li><a name="a714"></a>                    <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str"><span class="src-id">INSERT</span> <span class="src-id">INTO</span> <span class="src-id">node_has_content</span> (<span class="src-id">content_id</span>, <span class="src-id">node_id</span>, <span class="src-id">display_location</span>) <span class="src-id">VALUES</span> ('<span class="src-var">$content_id</span>', '</span><span class="src-str">&quot;</span>.<span class="src-var">$row</span><span class="src-sym">[</span><span class="src-str">'node_id'</span><span class="src-sym">]</span>.<span class="src-str">&quot;', 'login_page');\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a715"></a>                <span class="src-sym">}</span></li>
+<li><a name="a716"></a>            <span class="src-sym">}</span></li>
+<li><a name="a717"></a>&nbsp;</li>
+<li><a name="a718"></a>        <span class="src-sym">}</span></li>
+<li><a name="a719"></a>&nbsp;</li>
+<li><a name="a720"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">32</span><span class="src-sym">;</span></li>
+<li><a name="a721"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a722"></a>        <span class="src-sym">{</span></li>
+<li><a name="a723"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a724"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a725"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;INSERT INTO locales VALUES ('de');\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a726"></a>        <span class="src-sym">}</span></li>
+<li><a name="a727"></a>&nbsp;</li>
+<li><a name="a728"></a>        <span class="src-var">$new_schema_version </span>= <span class="src-num">33</span><span class="src-sym">;</span></li>
+<li><a name="a729"></a>        <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$schema_version </span>&lt; <span class="src-var">$new_schema_version</span><span class="src-sym">)</span></li>
+<li><a name="a730"></a>        <span class="src-sym">{</span></li>
+<li><a name="a731"></a>            echo <span class="src-str">&quot;</span><span class="src-str">&lt;<span class="src-id">h2</span>&gt;<span class="src-id">Preparing</span> <span class="src-id">SQL</span> <span class="src-id">statements</span> <span class="src-id">to</span> <span class="src-id">update</span> <span class="src-id">schema</span> <span class="src-id">to</span> <span class="src-id">version</span>  <span class="src-var">$new_schema_version</span>&lt;/<span class="src-id">h2</span>&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a732"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;</span><span class="src-str">\n\n<span class="src-id">UPDATE</span> <span class="src-id">schema_info</span> <span class="src-id">SET</span> <span class="src-id">value</span>='<span class="src-var">$new_schema_version</span>' <span class="src-id">WHERE</span> <span class="src-id">tag</span>='<span class="src-id">schema_version</span>';\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a733"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE flickr_photostream ADD COLUMN photo_display_mode text;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a734"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE flickr_photostream ALTER COLUMN photo_display_mode SET DEFAULT 'PDM_GRID'::text;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a735"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;UPDATE flickr_photostream SET photo_display_mode = 'PDM_GRID';\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a736"></a>            <span class="src-var">$sql </span>.= <span class="src-str">&quot;ALTER TABLE flickr_photostream ALTER COLUMN photo_display_mode SET NOT NULL;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a737"></a>        <span class="src-sym">}</span></li>
+<li><a name="a738"></a>&nbsp;</li>
+<li><a name="a739"></a>        <span class="src-var">$db</span><span class="src-sym">-&gt;</span><span class="src-id">ExecSqlUpdate</span><span class="src-sym">(</span><span class="src-str">&quot;</span><span class="src-str"><span class="src-id">BEGIN</span>;\n<span class="src-var">$sql</span>\n<span class="src-id">COMMIT</span>;\n<span class="src-id">VACUUM</span> <span class="src-id">ANALYZE</span>;\n</span><span class="src-str">&quot;</span><span class="src-sym">, </span><span class="src-id">true</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a740"></a>        <span class="src-comm">//$db-&gt;ExecSqlUpdate(&quot;BEGIN;\n$sql\nROLLBACK;\n&quot;, true);</span></li>
+<li><a name="a741"></a>        echo <span class="src-str">&quot;&lt;/html&gt;&lt;/head&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a742"></a>        <span class="src-comm">//exit ();</span></li>
+<li><a name="a743"></a>    <span class="src-sym">}</span></li>
+<li><a name="a744"></a><span class="src-sym">}</span></li>
+<li><a name="a745"></a>&nbsp;</li>
+<li><a name="a746"></a><span class="src-comm">/*</span></li>
+<li><a name="a747"></a><span class="src-comm"> * Local variables:</span></li>
+<li><a name="a748"></a><span class="src-comm"> * tab-width: 4</span></li>
+<li><a name="a749"></a><span class="src-comm"> * c-basic-offset: 4</span></li>
+<li><a name="a750"></a><span class="src-comm"> * c-hanging-comment-ender-p: nil</span></li>
+<li><a name="a751"></a><span class="src-comm"> * End:</span></li>
+<li><a name="a752"></a><span class="src-comm"> */</span></li>
+<li><a name="a753"></a>&nbsp;</li>
+<li><a name="a754"></a><span class="src-php">?&gt;</span></li>
+</ol></pre>
+</div>
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 26 Dec 2005 12:27:57 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.3.0RC5</a>
+	</p>
+	</body>
+</html>

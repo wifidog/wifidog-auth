@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class AbstractDb</title>
+			<link rel="stylesheet" href="../../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+
+<h2 class="class-name">Class AbstractDb</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Classe statique, permet d'abstraire la connexion à la base de donnée</p>
+		<p class="notes">
+			Located in <a class="field" href="_wifidog_classes_AbstractDbPostgres_php.html">/classes/AbstractDbPostgres.php</a> (line <span class="field"><a href="../..//__filesource/fsource_WiFiDogAuthServer_Database_classesAbstractDbPostgres.php.html#a54">54</a></span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+												<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#connexionDb" title="details" class="method-name">connexionDb</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$db_name</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#EscapeBinaryString" title="details" class="method-name">EscapeBinaryString</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$chaine</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#EscapeString" title="details" class="method-name">EscapeString</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$chaine</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#ExecSql" title="details" class="method-name">ExecSql</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$sql</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">&$returnResults</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$debug</span> = <span class="var-default">false</span>])
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#ExecSqlUniqueRes" title="details" class="method-name">ExecSqlUniqueRes</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$sql</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">&$retVal</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$debug</span> = <span class="var-default">false</span>])
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#ExecSqlUpdate" title="details" class="method-name">ExecSqlUpdate</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$sql</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$debug</span> = <span class="var-default">false</span>])
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#GetDurationArrayFromIntervalStr" title="details" class="method-name">GetDurationArrayFromIntervalStr</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$intervalstr</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#GetIntervalStrFromDuration" title="details" class="method-name">GetIntervalStrFromDuration</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$duration</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#ImportLargeObject" title="details" class="method-name">ImportLargeObject</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$path</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#ReadAndFlushLargeObject" title="details" class="method-name">ReadAndFlushLargeObject</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$lo_oid</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#UnescapeBinaryString" title="details" class="method-name">UnescapeBinaryString</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$chaine</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#UnlinkLargeObject" title="details" class="method-name">UnlinkLargeObject</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$oid</span>)
+									</div>
+							</div>
+		</div>
+	</div>		
+
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="methodconnexionDb" id="connexionDb"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">connexionDb</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_Database_classesAbstractDbPostgres.php.html#a56">56</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			connexionDb
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$db_name</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodEscapeBinaryString" id="EscapeBinaryString"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">EscapeBinaryString</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_Database_classesAbstractDbPostgres.php.html#a189">189</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Nettoye une chaine de caractère dans un format compatible bytea.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			EscapeBinaryString
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$chaine</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodEscapeString" id="EscapeString"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">EscapeString</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_Database_classesAbstractDbPostgres.php.html#a172">172</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Retourne une chaine de caractère dans un format compatible pour stockage dans la bd</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			EscapeString
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$chaine</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodExecSql" id="ExecSql"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">ExecSql</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_Database_classesAbstractDbPostgres.php.html#a81">81</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Exécute la requête, et retourne le résultat.  Affiche l'erreur s'il y a lieu.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			ExecSql
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$sql</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">&$returnResults</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$debug</span> = <span class="var-default">false</span>])
+			</div>
+	
+		
+		
+	</div>
+<a name="methodExecSqlUniqueRes" id="ExecSqlUniqueRes"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">ExecSqlUniqueRes</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_Database_classesAbstractDbPostgres.php.html#a212">212</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Exécute une requête pour laquelle on prévoit un résultat UNIQUE.  Si le résultat n'est pas unique, un avertissement est affiché</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			ExecSqlUniqueRes
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$sql</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">&$retVal</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$debug</span> = <span class="var-default">false</span>])
+			</div>
+	
+		
+		
+	</div>
+<a name="methodExecSqlUpdate" id="ExecSqlUpdate"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">ExecSqlUpdate</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_Database_classesAbstractDbPostgres.php.html#a302">302</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Exécute une requête visant à modifier la base de donnée, et donc ne retournant aucun résultat.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			ExecSqlUpdate
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$sql</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$debug</span> = <span class="var-default">false</span>])
+			</div>
+	
+		
+		
+	</div>
+<a name="methodGetDurationArrayFromIntervalStr" id="GetDurationArrayFromIntervalStr"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">GetDurationArrayFromIntervalStr</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_Database_classesAbstractDbPostgres.php.html#a414">414</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Builds the internal duration Array from a databases interval datatype and returns it.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			GetDurationArrayFromIntervalStr
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$intervalstr</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodGetIntervalStrFromDuration" id="GetIntervalStrFromDuration"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">GetIntervalStrFromDuration</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_Database_classesAbstractDbPostgres.php.html#a393">393</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Builds a string suitable for the databases interval datatype and returns it.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			GetIntervalStrFromDuration
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$duration</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodImportLargeObject" id="ImportLargeObject"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">ImportLargeObject</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_Database_classesAbstractDbPostgres.php.html#a368">368</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			ImportLargeObject
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$path</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodReadAndFlushLargeObject" id="ReadAndFlushLargeObject"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">ReadAndFlushLargeObject</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_Database_classesAbstractDbPostgres.php.html#a354">354</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Read entire large object and send it to the browser</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			ReadAndFlushLargeObject
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$lo_oid</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodUnescapeBinaryString" id="UnescapeBinaryString"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">UnescapeBinaryString</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_Database_classesAbstractDbPostgres.php.html#a200">200</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Reconverti une chaine de caractère en format bytea pur.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			UnescapeBinaryString
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$chaine</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodUnlinkLargeObject" id="UnlinkLargeObject"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">UnlinkLargeObject</span> (line <span class="line-number"><a href="../..//__filesource/fsource_WiFiDogAuthServer_Database_classesAbstractDbPostgres.php.html#a383">383</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			UnlinkLargeObject
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$oid</span>)
+			</div>
+	
+		
+		
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 26 Dec 2005 12:20:48 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.3.0RC5</a>
+	</p>
+	</div></body>
+</html>

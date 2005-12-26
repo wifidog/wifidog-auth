@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>File Source for PatternLanguage.php</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+						
+<h1>Source for file PatternLanguage.php</h1>
+<p>Documentation is available at <a href="../WiFiDogAuthServer/ContentClasses/_wifidog_classes_Content_PatternLanguage_PatternLanguage_php.html">PatternLanguage.php</a></p>
+<div class="src-code">
+<pre><ol><li><a name="a1"></a><span class="src-php">&lt;?php</span></li>
+<li><a name="a2"></a>&nbsp;</li>
+<li><a name="a4"></a><span class="src-comm">/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */</span></li>
+<li><a name="a5"></a><span class="src-comm">// +-------------------------------------------------------------------+</span></li>
+<li><a name="a6"></a><span class="src-comm">// | WiFiDog Authentication Server                                     |</span></li>
+<li><a name="a7"></a><span class="src-comm">// | =============================                                     |</span></li>
+<li><a name="a8"></a><span class="src-comm">// |                                                                   |</span></li>
+<li><a name="a9"></a><span class="src-comm">// | The WiFiDog Authentication Server is part of the WiFiDog captive  |</span></li>
+<li><a name="a10"></a><span class="src-comm">// | portal suite.                                                     |</span></li>
+<li><a name="a11"></a><span class="src-comm">// +-------------------------------------------------------------------+</span></li>
+<li><a name="a12"></a><span class="src-comm">// | PHP version 5 required.                                           |</span></li>
+<li><a name="a13"></a><span class="src-comm">// +-------------------------------------------------------------------+</span></li>
+<li><a name="a14"></a><span class="src-comm">// | Homepage:     http://www.wifidog.org/                             |</span></li>
+<li><a name="a15"></a><span class="src-comm">// | Source Forge: http://sourceforge.net/projects/wifidog/            |</span></li>
+<li><a name="a16"></a><span class="src-comm">// +-------------------------------------------------------------------+</span></li>
+<li><a name="a17"></a><span class="src-comm">// | This program is free software; you can redistribute it and/or     |</span></li>
+<li><a name="a18"></a><span class="src-comm">// | modify it under the terms of the GNU General Public License as    |</span></li>
+<li><a name="a19"></a><span class="src-comm">// | published by the Free Software Foundation; either version 2 of    |</span></li>
+<li><a name="a20"></a><span class="src-comm">// | the License, or (at your option) any later version.               |</span></li>
+<li><a name="a21"></a><span class="src-comm">// |                                                                   |</span></li>
+<li><a name="a22"></a><span class="src-comm">// | This program is distributed in the hope that it will be useful,   |</span></li>
+<li><a name="a23"></a><span class="src-comm">// | but WITHOUT ANY WARRANTY; without even the implied warranty of    |</span></li>
+<li><a name="a24"></a><span class="src-comm">// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |</span></li>
+<li><a name="a25"></a><span class="src-comm">// | GNU General Public License for more details.                      |</span></li>
+<li><a name="a26"></a><span class="src-comm">// |                                                                   |</span></li>
+<li><a name="a27"></a><span class="src-comm">// | You should have received a copy of the GNU General Public License |</span></li>
+<li><a name="a28"></a><span class="src-comm">// | along with this program; if not, contact:                         |</span></li>
+<li><a name="a29"></a><span class="src-comm">// |                                                                   |</span></li>
+<li><a name="a30"></a><span class="src-comm">// | Free Software Foundation           Voice:  +1-617-542-5942        |</span></li>
+<li><a name="a31"></a><span class="src-comm">// | 59 Temple Place - Suite 330        Fax:    +1-617-542-2652        |</span></li>
+<li><a name="a32"></a><span class="src-comm">// | Boston, MA  02111-1307,  USA       gnu@gnu.org                    |</span></li>
+<li><a name="a33"></a><span class="src-comm">// |                                                                   |</span></li>
+<li><a name="a34"></a><span class="src-comm">// +-------------------------------------------------------------------+</span></li>
+<li><a name="a35"></a>&nbsp;</li>
+<li><a name="a36"></a><span class="src-doc">/**</span></li>
+<li><a name="a37"></a><span class="src-doc"> * </span><span class="src-doc-coretag">@package</span><span class="src-doc">    WiFiDogAuthServer</span></li>
+<li><a name="a38"></a><span class="src-doc"> * </span><span class="src-doc-coretag">@subpackage</span><span class="src-doc"> ContentClasses</span></li>
+<li><a name="a39"></a><span class="src-doc"> * </span><span class="src-doc-coretag">@author</span><span class="src-doc">     Benoit Gregoire &lt;bock@step.polymtl.ca&gt;</span></li>
+<li><a name="a40"></a><span class="src-doc"> * </span><span class="src-doc-coretag">@copyright</span><span class="src-doc">  2004-2005 Benoit Gregoire &lt;bock@step.polymtl.ca&gt; - Technologies Coeus</span></li>
+<li><a name="a41"></a><span class="src-doc"> *  inc.</span></li>
+<li><a name="a42"></a><span class="src-doc"> * </span><span class="src-doc-coretag">@version</span><span class="src-doc">    CVS: $Id: PatternLanguage.php,v 1.4 2005/12/26 11:17:18 max-horvath Exp $</span></li>
+<li><a name="a43"></a><span class="src-doc"> * </span><span class="src-doc-coretag">@link</span><span class="src-doc">       http://sourceforge.net/projects/wifidog/</span></li>
+<li><a name="a44"></a><span class="src-doc"> */</span></li>
+<li><a name="a45"></a>&nbsp;</li>
+<li><a name="a46"></a><span class="src-inc">require_once </span><span class="src-id">BASEPATH</span>.<span class="src-str">'classes/Content/ContentGroup/ContentGroup.php'</span><span class="src-sym">;</span></li>
+<li><a name="a47"></a><span class="src-inc">require_once </span><span class="src-id">BASEPATH</span>.<span class="src-str">'classes/User.php'</span><span class="src-sym">;</span></li>
+<li><a name="a48"></a>&nbsp;</li>
+<li><a name="a49"></a><span class="src-key">class </span><a href="../WiFiDogAuthServer/ContentClasses/PatternLanguage.html">PatternLanguage</a> <span class="src-key">extends </span><a href="../WiFiDogAuthServer/ContentClasses/ContentGroup.html">ContentGroup</a></li>
+<li><a name="a50"></a><span class="src-sym">{</span></li>
+<li><a name="a51"></a>    <span class="src-doc">/**</span></li>
+<li><a name="a52"></a><span class="src-doc">     * Get all pattern language objects</span></li>
+<li><a name="a53"></a><span class="src-doc">     */</span></li>
+<li><a name="a54"></a>    <span class="src-key">public </span><span class="src-key">static </span><span class="src-key">function </span><a href="../WiFiDogAuthServer/ContentClasses/PatternLanguage.html#methodgetAllContent">getAllContent</a><span class="src-sym">(</span><span class="src-sym">)</span></li>
+<li><a name="a55"></a>    <span class="src-sym">{</span></li>
+<li><a name="a56"></a>       <span class="src-key">return </span><span class="src-id">parent</span><span class="src-sym">::</span><span class="src-id">getAllContent</span><span class="src-sym">(</span><span class="src-str">&quot;PatternLanguage&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a57"></a>    <span class="src-sym">}</span></li>
+<li><a name="a58"></a>&nbsp;</li>
+<li><a name="a59"></a>    <span class="src-key">function </span><a href="../WiFiDogAuthServer/ContentClasses/PatternLanguage.html#method__construct">__construct</a><span class="src-sym">(</span><span class="src-var">$content_id</span><span class="src-sym">)</span></li>
+<li><a name="a60"></a>    <span class="src-sym">{</span></li>
+<li><a name="a61"></a>        <span class="src-id">parent </span><span class="src-sym">:: </span><a href="../WiFiDogAuthServer/ContentClasses/ContentGroup.html#method__construct">__construct</a><span class="src-sym">(</span><span class="src-var">$content_id</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a62"></a>&nbsp;</li>
+<li><a name="a63"></a>        <span class="src-comm">// A Pattern language can NEVER be expandable</span></li>
+<li><a name="a64"></a>        <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/ContentClasses/ContentGroup.html#methodsetIsExpandable">setIsExpandable</a><span class="src-sym">(</span><span class="src-id">false</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a65"></a>    <span class="src-sym">}</span></li>
+<li><a name="a66"></a>&nbsp;</li>
+<li><a name="a67"></a>    <span class="src-doc">/** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.</span></li>
+<li><a name="a68"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@param </span><span class="src-doc-type">$subclass_admin_interface </span><span class="src-doc">Html content of the interface element of a children</span></li>
+<li><a name="a69"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@return </span><span class="src-doc-type">The </span><span class="src-doc">HTML fragment for this interface */</span></li>
+<li><a name="a70"></a>    <span class="src-key">public </span><span class="src-key">function </span><a href="../WiFiDogAuthServer/ContentClasses/PatternLanguage.html#methodgetUserUI">getUserUI</a><span class="src-sym">(</span><span class="src-var">$subclass_user_interface </span>= <span class="src-id">null</span><span class="src-sym">)</span></li>
+<li><a name="a71"></a>    <span class="src-sym">{</span></li>
+<li><a name="a72"></a>        <span class="src-var">$html </span>= <span class="src-str">''</span><span class="src-sym">;</span></li>
+<li><a name="a73"></a>        <span class="src-var">$html </span>.= <span class="src-str">&quot;&lt;div class='user_ui_container'&gt;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a74"></a>        <span class="src-var">$html </span>.= <span class="src-str">&quot;&lt;div class='user_ui_object_class'&gt;PatternLanguage (&quot;</span>.<a href="http://www.php.net/get_class">get_class</a><span class="src-sym">(</span><span class="src-var">$this</span><span class="src-sym">)</span>.<span class="src-str">&quot; instance)&lt;/div&gt;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a75"></a>&nbsp;</li>
+<li><a name="a76"></a>        <span class="src-comm">// Check if the user has already subscribed to Pattern language</span></li>
+<li><a name="a77"></a>        <span class="src-var">$current_user </span>= <span class="src-id"><a href="../WiFiDogAuthServer/User.html">User</a></span><span class="src-sym">::</span><a href="../WiFiDogAuthServer/User.html#methodgetCurrentUser">getCurrentUser</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a78"></a>        <span class="src-key">if</span><span class="src-sym">(</span><span class="src-var">$current_user </span>== <span class="src-id">null </span>|| <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/Content.html#methodisUserSubscribed">isUserSubscribed</a><span class="src-sym">(</span><span class="src-var">$current_user</span><span class="src-sym">) </span>== <span class="src-id">false</span><span class="src-sym">)</span></li>
+<li><a name="a79"></a>        <span class="src-sym">{</span></li>
+<li><a name="a80"></a>            <span class="src-comm">// hyperlink to all users narrative</span></li>
+<li><a name="a81"></a>            <span class="src-var">$html </span>.= <span class="src-str">&quot;&lt;ul class='pattern_language_menu'&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a82"></a>            <span class="src-var">$html </span>.= <span class="src-str">&quot;&lt;li&gt;&lt;a class='pattern_language_big_links' href='/content/PatternLanguage/subscription.php'&gt;&quot;</span>.<a href="../WiFiDogAuthServer/_wifidog_classes_Locale_php.html#function_">_</a><span class="src-sym">(</span><span class="src-str">&quot;Subscribe to Pattern Language&quot;</span><span class="src-sym">)</span>.<span class="src-str">&quot;&lt;/a&gt;&lt;/li&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a83"></a>            <span class="src-var">$html </span>.= <span class="src-str">&quot;&lt;li&gt;&lt;a class='pattern_language_big_links' href='/content/PatternLanguage/archives.php'&gt;&quot;</span>.<a href="../WiFiDogAuthServer/_wifidog_classes_Locale_php.html#function_">_</a><span class="src-sym">(</span><span class="src-str">&quot;Read narratives archives&quot;</span><span class="src-sym">)</span>.<span class="src-str">&quot;&lt;/a&gt;&lt;/li&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a84"></a>            <span class="src-var">$html </span>.= <span class="src-str">&quot;&lt;/ul&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a85"></a>&nbsp;</li>
+<li><a name="a86"></a>            <span class="src-comm">// Until subscription is done DO NOT log this !</span></li>
+<li><a name="a87"></a>            <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/Content.html#methodsetLoggingStatus">setLoggingStatus</a><span class="src-sym">(</span><span class="src-id">false</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a88"></a>            <span class="src-comm">// Tell the content group not to display elements until subscription is done</span></li>
+<li><a name="a89"></a>            <span class="src-var">$parent_output </span>= <span class="src-id">parent </span><span class="src-sym">:: </span><a href="../WiFiDogAuthServer/ContentClasses/ContentGroup.html#methodgetUserUI">getUserUI</a><span class="src-sym">(</span><span class="src-var">$html</span><span class="src-sym">, </span><span class="src-id">true</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a90"></a>        <span class="src-sym">}</span></li>
+<li><a name="a91"></a>        <span class="src-key">else</span></li>
+<li><a name="a92"></a>        <span class="src-sym">{</span></li>
+<li><a name="a93"></a>            <span class="src-comm">// The user is subscribed to the pattern language show an element !</span></li>
+<li><a name="a94"></a>            <span class="src-comm">// hyperlink to user's narrative</span></li>
+<li><a name="a95"></a>            <span class="src-var">$html </span>.= <span class="src-str">&quot;&lt;ul class='pattern_language_menu'&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a96"></a>            <span class="src-var">$html </span>.= <span class="src-str">&quot;&lt;li&gt;&lt;a href='/content/PatternLanguage/narrative.php'&gt;&quot;</span>.<a href="../WiFiDogAuthServer/_wifidog_classes_Locale_php.html#function_">_</a><span class="src-sym">(</span><span class="src-str">&quot;Read my narrative&quot;</span><span class="src-sym">)</span>.<span class="src-str">&quot;&lt;/a&gt;&lt;/li&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a97"></a>            <span class="src-var">$html </span>.= <span class="src-str">&quot;&lt;li&gt;&lt;a href='/content/PatternLanguage/archives.php'&gt;&quot;</span>.<a href="../WiFiDogAuthServer/_wifidog_classes_Locale_php.html#function_">_</a><span class="src-sym">(</span><span class="src-str">&quot;Read narratives archives&quot;</span><span class="src-sym">)</span>.<span class="src-str">&quot;&lt;/a&gt;&lt;/li&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a98"></a>            <span class="src-var">$html </span>.= <span class="src-str">&quot;&lt;li&gt;&lt;a href='/content/PatternLanguage/subscription.php'&gt;&quot;</span>.<a href="../WiFiDogAuthServer/_wifidog_classes_Locale_php.html#function_">_</a><span class="src-sym">(</span><span class="src-str">&quot;Unsubscribe&quot;</span><span class="src-sym">)</span>.<span class="src-str">&quot;&lt;/a&gt;&lt;/li&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a99"></a>            <span class="src-var">$html </span>.= <span class="src-str">&quot;&lt;/ul&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a100"></a>&nbsp;</li>
+<li><a name="a101"></a>            <span class="src-comm">// Display the random pattern</span></li>
+<li><a name="a102"></a>            <span class="src-var">$parent_output </span>= <span class="src-id">parent </span><span class="src-sym">:: </span><a href="../WiFiDogAuthServer/ContentClasses/ContentGroup.html#methodgetUserUI">getUserUI</a><span class="src-sym">(</span><span class="src-var">$html</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a103"></a>        <span class="src-sym">}</span></li>
+<li><a name="a104"></a>&nbsp;</li>
+<li><a name="a105"></a>        <span class="src-var">$html </span>.= <span class="src-var">$subclass_user_interface</span><span class="src-sym">;</span></li>
+<li><a name="a106"></a>        <span class="src-var">$html </span>.= <span class="src-str">&quot;&lt;/div&gt;\n&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a107"></a>&nbsp;</li>
+<li><a name="a108"></a>        <span class="src-key">return </span><span class="src-var">$parent_output</span><span class="src-sym">;</span></li>
+<li><a name="a109"></a>    <span class="src-sym">}</span></li>
+<li><a name="a110"></a>&nbsp;</li>
+<li><a name="a111"></a>    <span class="src-doc">/** Display the narrative</span></li>
+<li><a name="a112"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@param </span><span class="src-doc-type">$user </span><span class="src-doc">The user who's narrative you want to grab</span></li>
+<li><a name="a113"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@return </span><span class="src-doc-type">the </span><span class="src-doc">archive page HTML */</span></li>
+<li><a name="a114"></a>    <span class="src-key">public </span><span class="src-key">function </span><a href="../WiFiDogAuthServer/ContentClasses/PatternLanguage.html#methoddisplayNarrative">displayNarrative</a><span class="src-sym">(</span><span class="src-id">User </span><span class="src-var">$user</span><span class="src-sym">)</span></li>
+<li><a name="a115"></a>    <span class="src-sym">{</span></li>
+<li><a name="a116"></a>        <span class="src-key">global </span><span class="src-var">$db</span><span class="src-sym">;</span></li>
+<li><a name="a117"></a>        <span class="src-comm">// Debug values user_id = 8a90b1ea56cf27a0c61f9304da73bcd5</span></li>
+<li><a name="a118"></a>        <span class="src-comm">// PL : 3a3ea73dd2e2d03729e62b95d2574fc6</span></li>
+<li><a name="a119"></a>        <span class="src-var">$sql </span>= <span class="src-str">&quot;</span><span class="src-str"><span class="src-id">SELECT</span> * <span class="src-id">FROM</span> (<span class="src-id">SELECT</span> <span class="src-id">DISTINCT</span> <span class="src-id">ON</span> (<span class="src-id">content_group_element_id</span>) <span class="src-id">content_group_element_id</span>, <span class="src-id">first_display_timestamp</span> <span class="src-id">FROM</span> <span class="src-id">content_display_log</span> <span class="src-id">AS</span> <span class="src-id">cdl</span> <span class="src-id">JOIN</span> <span class="src-id">content_group_element</span> <span class="src-id">AS</span> <span class="src-id">cge</span> <span class="src-id">ON</span> (<span class="src-id">cdl</span>.<span class="src-id">content_id</span> = <span class="src-id">cge</span>.<span class="src-id">content_group_element_id</span>) <span class="src-id">JOIN</span> <span class="src-id">content</span> <span class="src-id">ON</span> (<span class="src-id">content</span>.<span class="src-id">content_id</span> = <span class="src-id">cge</span>.<span class="src-id">content_group_id</span>) <span class="src-id">where</span> <span class="src-id">user_id</span> = '{<span class="src-var">$user</span></span><span class="src-sym">-&gt;</span><span class="src-id">getId</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-str"></span><span class="src-sym">}</span>' <span class="src-id">AND</span> <span class="src-id">cge</span>.<span class="src-id">content_group_id</span> = '{<span class="src-var">$this</span></span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/Content.html#methodgetId">getId</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-str"></span><span class="src-sym">}</span>' <span class="src-id">AND</span> <span class="src-id">content</span>.<span class="src-id">content_type</span> = '<span class="src-id">PatternLanguage</span>') <span class="src-id">AS</span> <span class="src-id">patterns</span> <span class="src-id">ORDER</span> <span class="src-id">BY</span> <span class="src-id">first_display_timestamp</span></span><span class="src-str">&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a120"></a>        <span class="src-comm">// OLD QUERY $sql = &quot;SELECT DISTINCT ON (content_group_element_id) content_group_element_id, first_display_timestamp FROM content_display_log AS cdl JOIN content_group_element AS cge ON (cdl.content_id = cge.content_group_element_id) JOIN content ON (content.content_id = cge.content_group_id) where user_id = '{$user-&gt;getId()}' AND content.content_type = 'PatternLanguage' ORDER BY content_group_element_id&quot;;</span></li>
+<li><a name="a121"></a>        <span class="src-var">$db</span><span class="src-sym">-&gt;</span><span class="src-id">ExecSql</span><span class="src-sym">(</span><span class="src-var">$sql</span><span class="src-sym">, </span><span class="src-var">$rows</span><span class="src-sym">, </span><span class="src-id">false</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a122"></a>        <span class="src-var">$html </span>= <span class="src-str">&quot;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a123"></a>        <span class="src-key">if</span><span class="src-sym">(</span><span class="src-var">$rows</span><span class="src-sym">)</span></li>
+<li><a name="a124"></a>            <span class="src-key">foreach</span><span class="src-sym">(</span><span class="src-var">$rows </span><span class="src-key">as </span><span class="src-var">$row</span><span class="src-sym">)</span></li>
+<li><a name="a125"></a>            <span class="src-sym">{</span></li>
+<li><a name="a126"></a>                <span class="src-var">$cge </span>= <span class="src-id"><a href="../WiFiDogAuthServer/Content.html">Content</a></span><span class="src-sym">::</span><a href="../WiFiDogAuthServer/Content.html#methodgetObject">getObject</a><span class="src-sym">(</span><span class="src-var">$row</span><span class="src-sym">[</span><span class="src-str">'content_group_element_id'</span><span class="src-sym">]</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a127"></a>                <span class="src-var">$cge</span><span class="src-sym">-&gt;</span><span class="src-id">setLoggingStatus</span><span class="src-sym">(</span><span class="src-id">false</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a128"></a>                <span class="src-var">$html </span>.= <span class="src-var">$cge</span><span class="src-sym">-&gt;</span><span class="src-id">getUserUI</span><span class="src-sym">(</span><span class="src-sym">)</span>.<span class="src-str">&quot;&lt;p&gt;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a129"></a>            <span class="src-sym">}</span></li>
+<li><a name="a130"></a>       <span class="src-key">return </span><span class="src-var">$html</span><span class="src-sym">;</span></li>
+<li><a name="a131"></a>    <span class="src-sym">}</span></li>
+<li><a name="a132"></a>&nbsp;</li>
+<li><a name="a133"></a>    <span class="src-doc">/** Get the list of all narratives</span></li>
+<li><a name="a134"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@return </span><span class="src-doc-type">the </span><span class="src-doc">archive page HTML */</span></li>
+<li><a name="a135"></a>    <span class="src-key">public </span><span class="src-key">function </span><a href="../WiFiDogAuthServer/ContentClasses/PatternLanguage.html#methodgetNarrativeList">getNarrativeList</a><span class="src-sym">(</span><span class="src-sym">)</span></li>
+<li><a name="a136"></a>    <span class="src-sym">{</span></li>
+<li><a name="a137"></a>        <span class="src-key">global </span><span class="src-var">$db</span><span class="src-sym">;</span></li>
+<li><a name="a138"></a>        <span class="src-var">$sql </span>= <span class="src-str">&quot;SELECT DISTINCT user_id FROM content_display_log AS cdl JOIN content_group_element AS cge ON (cdl.content_id = cge.content_group_element_id) JOIN content ON (content.content_id = cge.content_group_id) WHERE content_type = 'PatternLanguage'&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a139"></a>        <span class="src-var">$db</span><span class="src-sym">-&gt;</span><span class="src-id">ExecSql</span><span class="src-sym">(</span><span class="src-var">$sql </span><span class="src-sym">, </span><span class="src-var">$rows</span><span class="src-sym">, </span><span class="src-id">false</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a140"></a>        <span class="src-var">$narratives </span>= <span class="src-key">array</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a141"></a>        <span class="src-key">if</span><span class="src-sym">(</span><span class="src-var">$rows</span><span class="src-sym">)</span></li>
+<li><a name="a142"></a>            <span class="src-key">foreach</span><span class="src-sym">(</span><span class="src-var">$rows </span><span class="src-key">as </span><span class="src-var">$row</span><span class="src-sym">)</span></li>
+<li><a name="a143"></a>                <span class="src-var">$narratives</span><span class="src-sym">[</span><span class="src-sym">] </span>= <span class="src-id"><a href="../WiFiDogAuthServer/User.html">User</a></span><span class="src-sym">::</span><a href="../WiFiDogAuthServer/User.html#methodgetObject">getObject</a><span class="src-sym">(</span><span class="src-var">$row</span><span class="src-sym">[</span><span class="src-str">'user_id'</span><span class="src-sym">]</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a144"></a>        <span class="src-key">return </span><span class="src-var">$narratives</span><span class="src-sym">;</span></li>
+<li><a name="a145"></a>    <span class="src-sym">}</span></li>
+<li><a name="a146"></a>    <span class="src-doc">/** Reloads the object from the database.  Should normally be called after a set operation.</span></li>
+<li><a name="a147"></a><span class="src-doc">     * This function is private because calling it from a subclass will call the</span></li>
+<li><a name="a148"></a><span class="src-doc">     * constructor from the wrong scope */</span></li>
+<li><a name="a148"></a>&nbsp;</li>
+<li><a name="a149"></a>    <span class="src-key">private </span><span class="src-key">function </span><a href="../WiFiDogAuthServer/ContentClasses/PatternLanguage.html#methodrefresh">refresh</a><span class="src-sym">(</span><span class="src-sym">)</span></li>
+<li><a name="a150"></a>    <span class="src-sym">{</span></li>
+<li><a name="a151"></a>        <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/ContentClasses/PatternLanguage.html#method__construct">__construct</a><span class="src-sym">(</span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../WiFiDogAuthServer/Content.html#var$id">id</a><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a152"></a>    <span class="src-sym">}</span></li>
+<li><a name="a153"></a><span class="src-sym">}</span></li>
+<li><a name="a154"></a>&nbsp;</li>
+<li><a name="a155"></a><span class="src-comm">/*</span></li>
+<li><a name="a156"></a><span class="src-comm"> * Local variables:</span></li>
+<li><a name="a157"></a><span class="src-comm"> * tab-width: 4</span></li>
+<li><a name="a158"></a><span class="src-comm"> * c-basic-offset: 4</span></li>
+<li><a name="a159"></a><span class="src-comm"> * c-hanging-comment-ender-p: nil</span></li>
+<li><a name="a160"></a><span class="src-comm"> * End:</span></li>
+<li><a name="a161"></a><span class="src-comm"> */</span></li>
+<li><a name="a162"></a>&nbsp;</li>
+<li><a name="a163"></a><span class="src-php">?&gt;</span></li>
+</ol></pre>
+</div>
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 26 Dec 2005 12:27:13 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.3.0RC5</a>
+	</p>
+	</body>
+</html>
