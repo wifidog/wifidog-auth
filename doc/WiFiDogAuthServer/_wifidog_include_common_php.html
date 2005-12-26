@@ -1,0 +1,782 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs for page common.php</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+
+<h2 class="file-name">/include/common.php</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+									<a href="#sec-includes">Includes</a>
+			|							<a href="#sec-constants">Constants</a>
+			|									<a href="#sec-functions">Functions</a>
+			</div>
+	<div class="info-box-body">	
+		<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">filesource:</span> <a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html">Source Code for this file</a></li>
+				<li><span class="field">link:</span> <a href="http://sourceforge.net/projects/wifidog/">http://sourceforge.net/projects/wifidog/</a></li>
+				<li><span class="field">version:</span> CVS: $Id: common.php,v 1.30 2005/12/26 10:38:46 max-horvath Exp $</li>
+				<li><span class="field">copyright:</span> 2004-2005 Benoit Gregoire &lt;bock@step.polymtl.ca&gt; - Technologies Coeus  inc.</li>
+				<li><span class="field">author:</span> Benoit Gregoire &lt;<a href="mailto:bock@step.polymtl.ca">bock@step.polymtl.ca</a>&gt;</li>
+			</ul>
+		
+			</div>
+</div>
+		
+
+	<a name="sec-includes"></a>	
+	<div class="info-box">
+		<div class="info-box-title">Includes</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Includes</span>
+			|							<a href="#sec-constants">Constants</a>
+				|													<a href="#sec-functions">Functions</a>
+					</div>
+		<div class="info-box-body">	
+			<a name="_BASEPATH_classes/Session_php"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="include-title">
+			<span class="include-type">require_once</span>
+			(<span class="include-name"><a href="../WiFiDogAuthServer/_wifidog_classes_Session_php.html">BASEPATH.'classes/Session.php'</a></span>)
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a75">75</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+</div>
+<a name="_BASEPATH_classes/AbstractDb_php"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="include-title">
+			<span class="include-type">require_once</span>
+			(<span class="include-name"><a href="../WiFiDogAuthServer/Database/_____wifidog_classes_AbstractDb_php.html">BASEPATH.'classes/AbstractDb.php'</a></span>)
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a73">73</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+</div>
+<a name="_BASEPATH_classes/Dependencies_php"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="include-title">
+			<span class="include-type">require_once</span>
+			(<span class="include-name"><a href="../WiFiDogAuthServer/_wifidog_classes_Dependencies_php.html">BASEPATH.'classes/Dependencies.php'</a></span>)
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a74">74</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+</div>
+<a name="_BASEPATH_config_php"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="include-title">
+			<span class="include-type">require_once</span>
+			(<span class="include-name"><a href="../WiFiDogAuthServer/_wifidog_config_php.html">BASEPATH.'config.php'</a></span>)
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a47">47</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+</div>
+		</div>
+	</div>
+	
+	<a name="sec-constants"></a>	
+	<div class="info-box">
+		<div class="info-box-title">Constants</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-includes">Includes</a>
+				|						<span class="disabled">Constants</span>
+			|										<a href="#sec-functions">Functions</a>
+					</div>
+		<div class="info-box-body">	
+			<a name="defineACCOUNT_STATUS_ALLOWED"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">ACCOUNT_STATUS_ALLOWED</span> = 1
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a83">83</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineACCOUNT_STATUS_DENIED"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">ACCOUNT_STATUS_DENIED</span> = 0
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a82">82</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineACCOUNT_STATUS_ERROR"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">ACCOUNT_STATUS_ERROR</span> = -1
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a81">81</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineACCOUNT_STATUS_LOCKED"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">ACCOUNT_STATUS_LOCKED</span> = 254
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a86">86</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineACCOUNT_STATUS_VALIDATION"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">ACCOUNT_STATUS_VALIDATION</span> = 5
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a84">84</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineACCOUNT_STATUS_VALIDATION_FAILED"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">ACCOUNT_STATUS_VALIDATION_FAILED</span> = 6
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a85">85</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineBASE_NON_SSL_PATH"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">BASE_NON_SSL_PATH</span> = 'http://'.$_SERVER['SERVER_NAME'].SYSTEM_PATH
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a124">124</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineBASE_SSL_PATH"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">BASE_SSL_PATH</span> = 'https://'.$_SERVER['SERVER_NAME'].SYSTEM_PATH
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a141">141</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineBASE_URL_PATH"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">BASE_URL_PATH</span> = BASE_SSL_PATH
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a151">151</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineCOMMON_CONTENT_URL"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">COMMON_CONTENT_URL</span> = BASE_URL_PATH.LOCAL_CONTENT_REL_PATH.'common/'
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a173">173</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineCONTENT_ADMIN_ABS_HREF"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">CONTENT_ADMIN_ABS_HREF</span> = BASE_URL_PATH.'admin/content_admin.php'
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a176">176</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineCURRENT_NODE_ID"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">CURRENT_NODE_ID</span> = DEFAULT_NODE_ID
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a160">160</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineCURRENT_REQUEST_URL"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">CURRENT_REQUEST_URL</span> = $curent_url
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a137">137</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineDEFAULT_CONTENT_PHP_RELATIVE_PATH"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">DEFAULT_CONTENT_PHP_RELATIVE_PATH</span> = BASEPATH.LOCAL_CONTENT_REL_PATH.DEFAULT_NODE_ID.'/'
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a168">168</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineDEFAULT_CONTENT_URL"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">DEFAULT_CONTENT_URL</span> = BASE_URL_PATH.LOCAL_CONTENT_REL_PATH.DEFAULT_NODE_ID.'/'
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a167">167</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineGENERIC_OBJECT_ADMIN_ABS_HREF"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">GENERIC_OBJECT_ADMIN_ABS_HREF</span> = BASE_URL_PATH.'admin/generic_object_admin.php'
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a175">175</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineNODE_CONTENT_PHP_RELATIVE_PATH"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">NODE_CONTENT_PHP_RELATIVE_PATH</span> = BASEPATH.LOCAL_CONTENT_REL_PATH.CURRENT_NODE_ID.'/'
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a171">171</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineNODE_CONTENT_URL"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">NODE_CONTENT_URL</span> = BASE_URL_PATH.LOCAL_CONTENT_REL_PATH.CURRENT_NODE_ID.'/'
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a170">170</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineONLINE_STATUS_OFFLINE"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">ONLINE_STATUS_OFFLINE</span> = 2
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a108">108</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineONLINE_STATUS_ONLINE"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">ONLINE_STATUS_ONLINE</span> = 1
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a107">107</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineSESS_GW_ADDRESS_VAR"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">SESS_GW_ADDRESS_VAR</span> = 'SESS_GW_ADDRESS'
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a117">117</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineSESS_GW_ID_VAR"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">SESS_GW_ID_VAR</span> = 'SESS_GW_ID'
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a119">119</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineSESS_GW_PORT_VAR"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">SESS_GW_PORT_VAR</span> = 'SESS_GW_PORT'
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a118">118</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineSESS_LANGUAGE_VAR"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">SESS_LANGUAGE_VAR</span> = 'SESS_LANGUAGE'
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a116">116</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineSESS_ORIGINAL_URL_VAR"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">SESS_ORIGINAL_URL_VAR</span> = 'SESS_ORIGINAL_URL'
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a115">115</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineSESS_PASSWORD_HASH_VAR"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">SESS_PASSWORD_HASH_VAR</span> = 'SESS_PASSWORD_HASH'
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a114">114</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineSESS_USERNAME_VAR"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">SESS_USERNAME_VAR</span> = 'SESS_USERNAME'
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a112">112</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineSESS_USER_ID_VAR"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">SESS_USER_ID_VAR</span> = 'SESS_USER_ID'
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a113">113</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineSTAGE_COUNTERS"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">STAGE_COUNTERS</span> = &quot;counters&quot;
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a105">105</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineSTAGE_LOGIN"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">STAGE_LOGIN</span> = &quot;login&quot;
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a103">103</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineSTAGE_LOGOUT"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">STAGE_LOGOUT</span> = &quot;logout&quot;
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a104">104</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineTOKEN_INUSE"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">TOKEN_INUSE</span> = 'INUSE'
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a96">96</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineTOKEN_UNUSED"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">TOKEN_UNUSED</span> = 'UNUSED'
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a95">95</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+<a name="defineTOKEN_USED"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="const-title">
+			<span class="const-name">TOKEN_USED</span> = 'USED'
+			(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a97">97</a></span>)
+		</span>
+	</div>
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+		
+</div>
+		</div>
+	</div>
+	
+	
+	<a name="sec-functions"></a>	
+	<div class="info-box">
+		<div class="info-box-title">Functions</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-includes">Includes</a>
+				|										<a href="#sec-constants">Constants</a>
+				|									<span class="disabled">Functions</span>
+		</div>
+		<div class="info-box-body">	
+			<a name="functionarray_map_recursive" id="functionarray_map_recursive"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">array_map_recursive</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a62">62</a></span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			array_map_recursive
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$function</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$data</span>)
+			</div>
+
+		
+	
+</div>
+<a name="functionconvert_nocat_password_hash" id="functionconvert_nocat_password_hash"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">convert_nocat_password_hash</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a181">181</a></span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Convert a password hash form a NoCat passwd file into the same format as get_password_hash().</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> 32 character hash.</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">The</span>
+		<span class="method-name">
+			convert_nocat_password_hash
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$hash</span>)
+			</div>
+
+		
+	
+</div>
+<a name="functionfind_local_content_url" id="functionfind_local_content_url"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">find_local_content_url</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a206">206</a></span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Get the url from the local content_specific folder if the file exists, and from the default content folder otherwise</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			find_local_content_url
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$filename</span>)
+			</div>
+
+		
+	
+</div>
+<a name="functiongarbage_collect" id="functiongarbage_collect"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">garbage_collect</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a195">195</a></span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Cleanup dangling tokens and connections from the database, left if a gateway crashed, etc.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			garbage_collect
+		</span>
+				()
+			</div>
+
+		
+	
+</div>
+<a name="functionget_guid" id="functionget_guid"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">get_guid</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a222">222</a></span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Return a 32 byte guid valid for database use</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			get_guid
+		</span>
+				()
+			</div>
+
+		
+	
+</div>
+<a name="functioniso8601_date" id="functioniso8601_date"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">iso8601_date</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a186">186</a></span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			iso8601_date
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$unix_timestamp</span>)
+			</div>
+
+		
+	
+</div>
+<a name="functionpretty_print_r" id="functionpretty_print_r"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">pretty_print_r</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a228">228</a></span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">like the php function print_r(), but the way it was meant to be...</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			pretty_print_r
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$param</span>)
+			</div>
+
+		
+	
+</div>
+<a name="functionundo_magic_quotes" id="functionundo_magic_quotes"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">undo_magic_quotes</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__includecommon.php.html#a49">49</a></span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			undo_magic_quotes
+		</span>
+				()
+			</div>
+
+		
+	
+</div>
+		</div>
+	</div>
+	
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 26 Dec 2005 12:21:24 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.3.0RC5</a>
+	</p>
+	</div></body>
+</html>

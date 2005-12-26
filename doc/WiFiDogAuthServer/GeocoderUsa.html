@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class GeocoderUsa</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+
+<h2 class="class-name">Class GeocoderUsa</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-vars">Vars</a>
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+		<p class="notes">
+			Located in <a class="field" href="_wifidog_classes_Geocoders_GeocoderUsa_php.html">/classes/Geocoders/GeocoderUsa.php</a> (line <span class="field"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesGeocodersGeocoderUsa.php.html#a49">49</a></span>)
+		</p>
+		
+				
+		<pre><a href="../WiFiDogAuthServer/AbstractGeocoder.html">AbstractGeocoder</a>
+   |
+   --GeocoderUsa</pre>
+	
+			</div>
+</div>
+
+
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-vars">Vars</a>
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+								
+				<div class="method-definition">
+											<span class="method-result">GeocoderUsa</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#buildQuery" title="details" class="method-name">buildQuery</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#executeQuery" title="details" class="method-name">executeQuery</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#getAltitude" title="details" class="method-name">getAltitude</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result"><a href="../WiFiDogAuthServer/GisPoint.html">GisPoint</a></span>
+										<a href="#getGisLocation" title="details" class="method-name">getGisLocation</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#getLatitude" title="details" class="method-name">getLatitude</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#getLongitude" title="details" class="method-name">getLongitude</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#validateAddress" title="details" class="method-name">validateAddress</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#validatePostalCode" title="details" class="method-name">validatePostalCode</a>
+										()
+									</div>
+							</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			
+							<h4>Inherited Variables</h4>
+				<A NAME='inherited_vars'><!-- --></A>
+									<p>Inherited from <span class="classname"><a href="../WiFiDogAuthServer/AbstractGeocoder.html">AbstractGeocoder</a></span></p>
+					<blockquote>
+													<span class="var-title">
+								<span class="var-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#var$city">AbstractGeocoder::$city</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#var$civic_number">AbstractGeocoder::$civic_number</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#var$country">AbstractGeocoder::$country</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#var$endpoint_url">AbstractGeocoder::$endpoint_url</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#var$execute_query">AbstractGeocoder::$execute_query</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#var$implementations_map">AbstractGeocoder::$implementations_map</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#var$postal_code">AbstractGeocoder::$postal_code</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#var$province">AbstractGeocoder::$province</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#var$street_name">AbstractGeocoder::$street_name</a></span><br>
+							</span>
+											</blockquote> 
+										
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-vars">Vars</a>
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesGeocodersGeocoderUsa.php.html#a51">51</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">GeocoderUsa</span>
+		<span class="method-name">
+			__construct
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodbuildQuery" id="buildQuery"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">buildQuery</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesGeocodersGeocoderUsa.php.html#a80">80</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Constructs the HTTP query string that will be sent to the endpoint URL</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> HTTP GET query string</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			buildQuery
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodexecuteQuery" id="executeQuery"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">executeQuery</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesGeocodersGeocoderUsa.php.html#a95">95</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Runs the HTTP GET query</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			executeQuery
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetAltitude" id="getAltitude"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAltitude</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesGeocodersGeocoderUsa.php.html#a151">151</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Get the altitude for enterred infos</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> algitude</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			getAltitude
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodgetAltitude">AbstractGeocoder::getAltitude()</a></dt>
+					</dl>
+		
+	</div>
+<a name="methodgetGisLocation" id="getGisLocation"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getGisLocation</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesGeocodersGeocoderUsa.php.html#a160">160</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Get a GIS Point instance</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../WiFiDogAuthServer/GisPoint.html">GisPoint</a></span>
+		<span class="method-name">
+			getGisLocation
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodgetGisLocation">AbstractGeocoder::getGisLocation()</a></dt>
+					</dl>
+		
+	</div>
+<a name="methodgetLatitude" id="getLatitude"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getLatitude</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesGeocodersGeocoderUsa.php.html#a123">123</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Get the latitude for enterred infos</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> latitude ( decimal format 6-digits precision )</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			getLatitude
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodgetLatitude">AbstractGeocoder::getLatitude()</a></dt>
+					</dl>
+		
+	</div>
+<a name="methodgetLongitude" id="getLongitude"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getLongitude</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesGeocodersGeocoderUsa.php.html#a137">137</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Get the longitude for enterred infos</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> longitude ( decimal format 6-digits precision )</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			getLongitude
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodgetLongitude">AbstractGeocoder::getLongitude()</a></dt>
+					</dl>
+		
+	</div>
+<a name="methodvalidateAddress" id="validateAddress"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">validateAddress</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesGeocodersGeocoderUsa.php.html#a69">69</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Validate address, making sure we don't send an HTTP for nothing</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			validateAddress
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodvalidateAddress">AbstractGeocoder::validateAddress()</a></dt>
+					</dl>
+		
+	</div>
+<a name="methodvalidatePostalCode" id="validatePostalCode"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">validatePostalCode</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesGeocodersGeocoderUsa.php.html#a60">60</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Run regexp to verify the postal code</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			validatePostalCode
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+							<h4>Inherited Methods</h4>
+				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../WiFiDogAuthServer/AbstractGeocoder.html">AbstractGeocoder</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodgetAltitude">AbstractGeocoder::getAltitude()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodgetAvailableCountriesFormSelect">AbstractGeocoder::getAvailableCountriesFormSelect()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodgetAvailableCountriesList">AbstractGeocoder::getAvailableCountriesList()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodgetAvailableGeocoderImplementations">AbstractGeocoder::getAvailableGeocoderImplementations()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodgetCity">AbstractGeocoder::getCity()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodgetCivicNumber">AbstractGeocoder::getCivicNumber()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodgetCountry">AbstractGeocoder::getCountry()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodgetEndpointUrl">AbstractGeocoder::getEndpointUrl()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodgetGeocoder">AbstractGeocoder::getGeocoder()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodgetGisLocation">AbstractGeocoder::getGisLocation()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodgetLatitude">AbstractGeocoder::getLatitude()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodgetLongitude">AbstractGeocoder::getLongitude()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodgetPostalCode">AbstractGeocoder::getPostalCode()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodgetProvince">AbstractGeocoder::getProvince()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodgetStreetName">AbstractGeocoder::getStreetName()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodkeepResponse">AbstractGeocoder::keepResponse()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodsetCity">AbstractGeocoder::setCity()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodsetCivicNumber">AbstractGeocoder::setCivicNumber()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodsetCountry">AbstractGeocoder::setCountry()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodsetEndpointUrl">AbstractGeocoder::setEndpointUrl()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodsetPostalCode">AbstractGeocoder::setPostalCode()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodsetProvince">AbstractGeocoder::setProvince()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodsetStreetName">AbstractGeocoder::setStreetName()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodshouldExecuteQuery">AbstractGeocoder::shouldExecuteQuery()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodtrashResponse">AbstractGeocoder::trashResponse()</a></span><br>
+													<span class="method-name"><a href="../WiFiDogAuthServer/AbstractGeocoder.html#methodvalidateAddress">AbstractGeocoder::validateAddress()</a></span><br>
+											</blockquote>
+										
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 26 Dec 2005 12:23:33 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.3.0RC5</a>
+	</p>
+	</div></body>
+</html>

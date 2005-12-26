@@ -1,0 +1,1669 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class User</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+
+<h2 class="class-name">Class User</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+                <p class="implements">
+            Implements interfaces:
+            <ul>
+                <li><a href="../WiFiDogAuthServer/GenericObject.html">GenericObject</a></li>            </ul>
+        </p>
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Abstract a User.</p>
+		<p class="notes">
+			Located in <a class="field" href="_wifidog_classes_User_php.html">/classes/User.php</a> (line <span class="field"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a50">50</a></span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+								<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$id" title="details" class="var-name">$id</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$mRow" title="details" class="var-name">$mRow</a>
+				</div>
+							</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+								
+				<div class="method-definition">
+											<span class="method-result">User</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+											(<span class="var-type">$object_id</span>&nbsp;<span class="var-name">$object_id</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#addContent" title="details" class="method-name">addContent</a>
+											(<span class="var-type">Content</span>&nbsp;<span class="var-name">$content</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#createNewObject" title="details" class="method-name">createNewObject</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">the</span>
+										<a href="#createUser" title="details" class="method-name">createUser</a>
+											(<span class="var-type">$id</span>&nbsp;<span class="var-name">$id</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$username</span>, <span class="var-type">Network</span>&nbsp;<span class="var-name">$account_origin</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$email</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$password</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#delete" title="details" class="method-name">delete</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">&$errmsg</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#emailExists" title="details" class="method-name">emailExists</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$id</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#generateConnectionToken" title="details" class="method-name">generateConnectionToken</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#generateToken" title="details" class="method-name">generateToken</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getAccountOrigin" title="details" class="method-name">getAccountOrigin</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">Possible</span>
+										<a href="#getAccountStatus" title="details" class="method-name">getAccountStatus</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getAdminUI" title="details" class="method-name">getAdminUI</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">an</span>
+										<a href="#getAllContent" title="details" class="method-name">getAllContent</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getAllUsers" title="details" class="method-name">getAllUsers</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">html</span>
+										<a href="#getCreateNewObjectUI" title="details" class="method-name">getCreateNewObjectUI</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">a</span>
+										<a href="#getCurrentUser" title="details" class="method-name">getCurrentUser</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getEmail" title="details" class="method-name">getEmail</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getId" title="details" class="method-name">getId</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result"><a href="../WiFiDogAuthServer/Network.html">Network</a></span>
+										<a href="#getNetwork" title="details" class="method-name">getNetwork</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">a</span>
+										<a href="#getObject" title="details" class="method-name">getObject</a>
+											(<span class="var-type">$id</span>&nbsp;<span class="var-name">$id</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getPasswordHash" title="details" class="method-name">getPasswordHash</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getPreferedLocale" title="details" class="method-name">getPreferedLocale</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getRealName" title="details" class="method-name">getRealName</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">html</span>
+										<a href="#getSelectUserUI" title="details" class="method-name">getSelectUserUI</a>
+											(<span class="var-type">$user_prefix</span>&nbsp;<span class="var-name">$user_prefix</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">a</span>
+										<a href="#getUserByEmailAndOrigin" title="details" class="method-name">getUserByEmailAndOrigin</a>
+											(<span class="var-type">$email</span>&nbsp;<span class="var-name">$email</span>, <span class="var-type">Network</span>&nbsp;<span class="var-name">$account_origin</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">a</span>
+										<a href="#getUserByUsernameAndOrigin" title="details" class="method-name">getUserByUsernameAndOrigin</a>
+											(<span class="var-type">$username</span>&nbsp;<span class="var-name">$username</span>, <span class="var-type">Network</span>&nbsp;<span class="var-name">$account_origin</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getUserListUI" title="details" class="method-name">getUserListUI</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getUsername" title="details" class="method-name">getUsername</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getUserUI" title="details" class="method-name">getUserUI</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getValidationToken" title="details" class="method-name">getValidationToken</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getWebsiteURL" title="details" class="method-name">getWebsiteURL</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#isNobody" title="details" class="method-name">isNobody</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#isOwner" title="details" class="method-name">isOwner</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#isSuperAdmin" title="details" class="method-name">isSuperAdmin</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#isUserValid" title="details" class="method-name">isUserValid</a>
+											([<span class="var-type">mixed</span>&nbsp;<span class="var-name">&$errmsg</span> = <span class="var-default">null</span>])
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">The</span>
+										<a href="#passwordHash" title="details" class="method-name">passwordHash</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$password</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#processAdminUI" title="details" class="method-name">processAdminUI</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">the</span>
+										<a href="#processCreateNewObjectUI" title="details" class="method-name">processCreateNewObjectUI</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">the</span>
+										<a href="#processSelectUserUI" title="details" class="method-name">processSelectUserUI</a>
+											(<span class="var-type">$user_prefix</span>&nbsp;<span class="var-name">$user_prefix</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#purgeUnvalidatedUsers" title="details" class="method-name">purgeUnvalidatedUsers</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$days_since_creation</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#randomPass" title="details" class="method-name">randomPass</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#removeContent" title="details" class="method-name">removeContent</a>
+											(<span class="var-type">Content</span>&nbsp;<span class="var-name">$content</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#sendLostPasswordEmail" title="details" class="method-name">sendLostPasswordEmail</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#sendLostUsername" title="details" class="method-name">sendLostUsername</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#sendValidationEmail" title="details" class="method-name">sendValidationEmail</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setAccountStatus" title="details" class="method-name">setAccountStatus</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$status</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#setCurrentUser" title="details" class="method-name">setCurrentUser</a>
+											(<span class="var-type">User</span>&nbsp;<span class="var-name">$user</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setPassword" title="details" class="method-name">setPassword</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$password</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setRealName" title="details" class="method-name">setRealName</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setWebsiteURL" title="details" class="method-name">setWebsiteURL</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#userExists" title="details" class="method-name">userExists</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$id</span>)
+									</div>
+							</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="var$id" id="$id"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$id</span>
+						(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a53">53</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$mRow" id="$mRow"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$mRow</span>
+						(line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a52">52</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+
+						
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a212">212</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">User</span>
+		<span class="method-name">
+			__construct
+		</span>
+					(<span class="var-type">$object_id</span>&nbsp;<span class="var-name">$object_id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">$object_id</span>
+				<span class="var-name">$object_id</span><span class="var-description">: The id of the user</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodaddContent" id="addContent"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">addContent</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a661">661</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Add content to this user ( subscription )</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			addContent
+		</span>
+					(<span class="var-type">Content</span>&nbsp;<span class="var-name">$content</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodcreateNewObject" id="createNewObject"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">createNewObject</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a66">66</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">static:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			createNewObject
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodcreateUser" id="createUser"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">createUser</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a183">183</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Create a new User in the database</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> newly created User object, or null if there was an error</li>
+				<li><span class="field">static:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">the</span>
+		<span class="method-name">
+			createUser
+		</span>
+					(<span class="var-type">$id</span>&nbsp;<span class="var-name">$id</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$username</span>, <span class="var-type">Network</span>&nbsp;<span class="var-name">$account_origin</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$email</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$password</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">$id</span>
+				<span class="var-name">$id</span><span class="var-description">: The id to be given to the new user</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methoddelete" id="delete"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">delete</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a652">652</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			delete
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">&$errmsg</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodemailExists" id="emailExists"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">emailExists</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a522">522</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">static:</span> </li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			emailExists
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$id</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgenerateConnectionToken" id="generateConnectionToken"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">generateConnectionToken</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a398">398</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Generate a token in the connection table so the user can actually use the internet</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			generateConnectionToken
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgenerateToken" id="generateToken"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">generateToken</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a556">556</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">static:</span> </li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			generateToken
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetAccountOrigin" id="getAccountOrigin"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAccountOrigin</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a439">439</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getAccountOrigin
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetAccountStatus" id="getAccountStatus"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAccountStatus</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a298">298</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Get the account status.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> values are listed in common.php</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Possible</span>
+		<span class="method-name">
+			getAccountStatus
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetAdminUI" id="getAdminUI"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAdminUI</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a602">602</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getAdminUI
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetAllContent" id="getAllContent"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAllContent</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a682">682</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Get an array of all Content linked to this node</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> array of Content or an empty arrray</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">an</span>
+		<span class="method-name">
+			getAllContent
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetAllUsers" id="getAllUsers"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAllUsers</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a446">446</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Return all the users</p>
+	<ul class="tags">
+				<li><span class="field">static:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getAllUsers
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetCreateNewObjectUI" id="getCreateNewObjectUI"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getCreateNewObjectUI</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a73">73</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Get an interface to create a new object.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> markup</li>
+				<li><span class="field">static:</span> </li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">html</span>
+		<span class="method-name">
+			getCreateNewObjectUI
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetCurrentUser" id="getCurrentUser"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getCurrentUser</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a91">91</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Instantiate the current user</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> User object, or null if there was an error</li>
+				<li><span class="field">static:</span> </li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">a</span>
+		<span class="method-name">
+			getCurrentUser
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetEmail" id="getEmail"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getEmail</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a252">252</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getEmail
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetId" id="getId"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getId</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a226">226</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getId
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetNetwork" id="getNetwork"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getNetwork</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a234">234</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the Network to which the user belongs</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> object (never returns null)</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../WiFiDogAuthServer/Network.html">Network</a></span>
+		<span class="method-name">
+			getNetwork
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetObject" id="getObject"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getObject</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a59">59</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Instantiate a user object</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> User object, or null if there was an error</li>
+				<li><span class="field">static:</span> </li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">a</span>
+		<span class="method-name">
+			getObject
+		</span>
+					(<span class="var-type">$id</span>&nbsp;<span class="var-name">$id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">$id</span>
+				<span class="var-name">$id</span><span class="var-description">: The user id of the requested user</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodgetPasswordHash" id="getPasswordHash"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getPasswordHash</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a290">290</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">get the hashed password stored in the database</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getPasswordHash
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetPreferedLocale" id="getPreferedLocale"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getPreferedLocale</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a277">277</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">What locale (language) does the user prefer?</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+				<li><span class="field">todo:</span> Save in the database</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getPreferedLocale
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetRealName" id="getRealName"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getRealName</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a257">257</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getRealName
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetSelectUserUI" id="getSelectUserUI"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getSelectUserUI</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a565">565</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Get an interface to add a user to a list</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> markup</li>
+				<li><span class="field">static:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">html</span>
+		<span class="method-name">
+			getSelectUserUI
+		</span>
+					(<span class="var-type">$user_prefix</span>&nbsp;<span class="var-name">$user_prefix</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">$user_prefix</span>
+				<span class="var-name">$user_prefix</span><span class="var-description">: A identifier provided by the programmer to recognise it's generated html form</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodgetUserByEmailAndOrigin" id="getUserByEmailAndOrigin"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getUserByEmailAndOrigin</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a152">152</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Instantiate a user object</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> User object, or null if there was an error</li>
+				<li><span class="field">static:</span> </li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">a</span>
+		<span class="method-name">
+			getUserByEmailAndOrigin
+		</span>
+					(<span class="var-type">$email</span>&nbsp;<span class="var-name">$email</span>, <span class="var-type">Network</span>&nbsp;<span class="var-name">$account_origin</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">$email</span>
+				<span class="var-name">$email</span><span class="var-description">: The email of the user</span>			</li>
+					<li>
+				<span class="var-type">$account_origin</span>
+				<span class="var-name">$account_origin</span><span class="var-description">: Network:  The account origin</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodgetUserByUsernameAndOrigin" id="getUserByUsernameAndOrigin"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getUserByUsernameAndOrigin</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a133">133</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Instantiate a user object</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> User object, or null if there was an error</li>
+				<li><span class="field">static:</span> </li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">a</span>
+		<span class="method-name">
+			getUserByUsernameAndOrigin
+		</span>
+					(<span class="var-type">$username</span>&nbsp;<span class="var-name">$username</span>, <span class="var-type">Network</span>&nbsp;<span class="var-name">$account_origin</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">$username</span>
+				<span class="var-name">$username</span><span class="var-description">: The username of the user</span>			</li>
+					<li>
+				<span class="var-type">$account_origin</span>
+				<span class="var-name">$account_origin</span><span class="var-description">: Network:  The account origin</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodgetUserListUI" id="getUserListUI"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getUserListUI</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a240">240</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Get a user display suitable for a user list.  Will include link to the user profile.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getUserListUI
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetUsername" id="getUsername"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getUsername</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a247">247</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getUsername
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetUserUI" id="getUserUI"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getUserUI</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a656">656</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getUserUI
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetValidationToken" id="getValidationToken"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getValidationToken</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a390">390</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getValidationToken
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetWebsiteURL" id="getWebsiteURL"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getWebsiteURL</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a266">266</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getWebsiteURL
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodisNobody" id="isNobody"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">isNobody</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a381">381</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			isNobody
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodisOwner" id="isOwner"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">isOwner</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a371">371</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Tells if the current user is owner of at least one hotspot.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			isOwner
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodisSuperAdmin" id="isSuperAdmin"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">isSuperAdmin</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a351">351</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			isSuperAdmin
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodisUserValid" id="isUserValid"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">isUserValid</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a317">317</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Is the user valid?  Valid means that the account is validated or hasn't exhausted it's validation period.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			isUserValid
+		</span>
+					([<span class="var-type">mixed</span>&nbsp;<span class="var-name">&$errmsg</span> = <span class="var-default">null</span>])
+			</div>
+	
+		
+		
+	</div>
+<a name="methodpasswordHash" id="passwordHash"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">passwordHash</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a169">169</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns the hash of the password suitable for storing or comparing in the database.  This hash is the same one as used in NoCat</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> 32 character hash.</li>
+				<li><span class="field">static:</span> </li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">The</span>
+		<span class="method-name">
+			passwordHash
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$password</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodprocessAdminUI" id="processAdminUI"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">processAdminUI</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a648">648</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			processAdminUI
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodprocessCreateNewObjectUI" id="processCreateNewObjectUI"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">processCreateNewObjectUI</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a84">84</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Process the new object interface.</p>
+<p class="description"><p>Will       return the new object if the user has the credentials  necessary (Else an exception is thrown) and and the form was fully  filled (Else the object returns null).</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> node object or null if no new node was created.</li>
+				<li><span class="field">static:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">the</span>
+		<span class="method-name">
+			processCreateNewObjectUI
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodprocessSelectUserUI" id="processSelectUserUI"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">processSelectUserUI</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a581">581</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Get the selected user, IF one was selected and is valid</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> User object, or null if the user is invalid or none was selected</li>
+				<li><span class="field">static:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">the</span>
+		<span class="method-name">
+			processSelectUserUI
+		</span>
+					(<span class="var-type">$user_prefix</span>&nbsp;<span class="var-name">$user_prefix</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">$user_prefix</span>
+				<span class="var-name">$user_prefix</span><span class="var-description">: A identifier provided by the programmer to recognise it's generated form</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodpurgeUnvalidatedUsers" id="purgeUnvalidatedUsers"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">purgeUnvalidatedUsers</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a203">203</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">static:</span> </li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			purgeUnvalidatedUsers
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$days_since_creation</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodrandomPass" id="randomPass"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">randomPass</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a531">531</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">static:</span> </li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			randomPass
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodremoveContent" id="removeContent"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">removeContent</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a671">671</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Remove content from this node</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			removeContent
+		</span>
+					(<span class="var-type">Content</span>&nbsp;<span class="var-name">$content</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsendLostPasswordEmail" id="sendLostPasswordEmail"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">sendLostPasswordEmail</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a498">498</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			sendLostPasswordEmail
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsendLostUsername" id="sendLostUsername"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">sendLostUsername</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a458">458</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			sendLostUsername
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsendValidationEmail" id="sendValidationEmail"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">sendValidationEmail</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a470">470</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			sendValidationEmail
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetAccountStatus" id="setAccountStatus"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setAccountStatus</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a303">303</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setAccountStatus
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$status</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetCurrentUser" id="setCurrentUser"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setCurrentUser</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a113">113</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Associates the user passed in parameter with the session.  This should NOT be called by anything except the Authenticators</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> true if everything went well setting the session...</li>
+				<li><span class="field">static:</span> </li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			setCurrentUser
+		</span>
+					(<span class="var-type">User</span>&nbsp;<span class="var-name">$user</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../WiFiDogAuthServer/User.html">User</a></span>
+				<span class="var-name">$user</span><span class="var-description">: a user object</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodsetPassword" id="setPassword"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setPassword</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a427">427</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setPassword
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$password</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetRealName" id="setRealName"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setRealName</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a262">262</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setRealName
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetWebsiteURL" id="setWebsiteURL"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setWebsiteURL</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a271">271</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setWebsiteURL
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methoduserExists" id="userExists"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">userExists</span> (line <span class="line-number"><a href="..//__filesource/fsource_WiFiDogAuthServer__classesUser.php.html#a513">513</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">static:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			userExists
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$id</span>)
+			</div>
+	
+		
+		
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 26 Dec 2005 12:28:43 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.3.0RC5</a>
+	</p>
+	</div></body>
+</html>
