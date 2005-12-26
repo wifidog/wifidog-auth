@@ -1,3 +1,12 @@
+2005-12-26 Max Horváth <max.horvath@maxspot.de>
+	* added new headers to every source file
+	* converted file to represent a tab as four (4) spaces
+	* added PhpDocumentor documentation
+	* added WiFiDog skin to HTMLeditor
+	* language selection in a content class now shows the language name instead of
+	  the language code
+	* added caching support to content classes Langstring and TrivialLangstring
+
 2005-12-15 Max Horváth <max.horvath@maxspot.de>
 	* fixed bug in dependencies class when gettext support for PHP is not available
 
