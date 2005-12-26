@@ -1,28 +1,54 @@
 <?php
-/********************************************************************\
- * This program is free software; you can redistribute it and/or    *
- * modify it under the terms of the GNU General Public License as   *
- * published by the Free Software Foundation; either version 2 of   *
- * the License, or (at your option) any later version.              *
- *                                                                  *
- * This program is distributed in the hope that it will be useful,  *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of   *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the    *
- * GNU General Public License for more details.                     *
- *                                                                  *
- * You should have received a copy of the GNU General Public License*
- * along with this program; if not, contact:                        *
- *                                                                  *
- * Free Software Foundation           Voice:  +1-617-542-5942       *
- * 59 Temple Place - Suite 330        Fax:    +1-617-542-2652       *
- * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
- *                                                                  *
- \********************************************************************/
-/**@file index.php Displays all the content associated to a hotspot
- * @author Copyright (C) 2005 François Proulx
+
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
+
+// +-------------------------------------------------------------------+
+// | WiFiDog Authentication Server                                     |
+// | =============================                                     |
+// |                                                                   |
+// | The WiFiDog Authentication Server is part of the WiFiDog captive  |
+// | portal suite.                                                     |
+// +-------------------------------------------------------------------+
+// | PHP version 5 required.                                           |
+// +-------------------------------------------------------------------+
+// | Homepage:     http://www.wifidog.org/                             |
+// | Source Forge: http://sourceforge.net/projects/wifidog/            |
+// +-------------------------------------------------------------------+
+// | This program is free software; you can redistribute it and/or     |
+// | modify it under the terms of the GNU General Public License as    |
+// | published by the Free Software Foundation; either version 2 of    |
+// | the License, or (at your option) any later version.               |
+// |                                                                   |
+// | This program is distributed in the hope that it will be useful,   |
+// | but WITHOUT ANY WARRANTY; without even the implied warranty of    |
+// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |
+// | GNU General Public License for more details.                      |
+// |                                                                   |
+// | You should have received a copy of the GNU General Public License |
+// | along with this program; if not, contact:                         |
+// |                                                                   |
+// | Free Software Foundation           Voice:  +1-617-542-5942        |
+// | 59 Temple Place - Suite 330        Fax:    +1-617-542-2652        |
+// | Boston, MA  02111-1307,  USA       gnu@gnu.org                    |
+// |                                                                   |
+// +-------------------------------------------------------------------+
+
+/**
+ * Displays all the content associated to a hotspot
+ *
+ * @package    WiFiDogAuthServer
+ * @author     Francois Proulx <francois.proulx@gmail.com>
+ * @copyright  2005 Francois Proulx <francois.proulx@gmail.com> - Technologies
+ * Coeus inc.
+ * @version    CVS: $Id$
+ * @link       http://sourceforge.net/projects/wifidog/
  */
 
+/**
+ * @ignore
+ */
 define('BASEPATH', '../');
+
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'classes/MainUI.php';
 require_once BASEPATH.'include/common_interface.php';
@@ -30,7 +56,7 @@ require_once BASEPATH.'classes/Node.php';
 
 if (CONF_USE_CRON_FOR_DB_CLEANUP == false)
 {
-	garbage_collect();
+    garbage_collect();
 }
 
 $node = null;
@@ -39,8 +65,8 @@ if(!empty($_REQUEST['gw_id']))
 
 if ($node == null)
 {
-	$smarty->display("templates/message_unknown_hotspot.html");
-	exit;
+    $smarty->display("templates/message_unknown_hotspot.html");
+    exit;
 }
 
 $node_id = $node->getId();
@@ -50,7 +76,7 @@ Node :: setCurrentNode($node);
 $ui = new MainUI();
 if (isset ($session))
 {
-	$smarty->assign("original_url_requested", $session->get(SESS_ORIGINAL_URL_VAR));
+    $smarty->assign("original_url_requested", $session->get(SESS_ORIGINAL_URL_VAR));
 }
 
 $tool_html = '';
@@ -100,33 +126,41 @@ $html .= "<div id='portal_container'>\n";
 $contents = $node->getAllLocativeArtisticContent();
 if($contents)
 {
-	$html .= "<table width='100%'><tr><td>";
-	$html .= "<div class='portal_node_section'>\n";
-	$html .= "<span class='portal_section_title'>"._("Content from:")." ";
-	
-	$node_homepage = $node->getHomePageURL();
-	if(!empty($node_homepage))
-	{
-		$html .= "<a href='$node_homepage'>";
-	}
-	$html .= $node->getName();
-	if(!empty($node_homepage))
-	{
-		$html .= "</a>\n";
-	}
-	$html .= "</span>";
-	$html .= "</td></tr></table>";
-	
-	foreach ($contents as $content)
-	{
-		$html .= "<div class='portal_content'>\n";
-		$html .= $content->getUserUI();
-		$html .= "</div>";
-	}
-	$html .= "</div>\n";
+    $html .= "<table width='100%'><tr><td>";
+    $html .= "<div class='portal_node_section'>\n";
+    $html .= "<span class='portal_section_title'>"._("Content from:")." ";
+
+    $node_homepage = $node->getHomePageURL();
+    if(!empty($node_homepage))
+    {
+        $html .= "<a href='$node_homepage'>";
+    }
+    $html .= $node->getName();
+    if(!empty($node_homepage))
+    {
+        $html .= "</a>\n";
+    }
+    $html .= "</span>";
+    $html .= "</td></tr></table>";
+
+    foreach ($contents as $content)
+    {
+        $html .= "<div class='portal_content'>\n";
+        $html .= $content->getUserUI();
+        $html .= "</div>";
+    }
+    $html .= "</div>\n";
 }
 
 $ui->setMainContent($html);
 $ui->display();
+
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * c-hanging-comment-ender-p: nil
+ * End:
+ */
 
 ?>

@@ -1,29 +1,47 @@
 <?php
 
-  /********************************************************************\
-   * This program is free software; you can redistribute it and/or    *
-   * modify it under the terms of the GNU General Public License as   *
-   * published by the Free Software Foundation; either version 2 of   *
-   * the License, or (at your option) any later version.              *
-   *                                                                  *
-   * This program is distributed in the hope that it will be useful,  *
-   * but WITHOUT ANY WARRANTY; without even the implied warranty of   *
-   * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the    *
-   * GNU General Public License for more details.                     *
-   *                                                                  *
-   * You should have received a copy of the GNU General Public License*
-   * along with this program; if not, contact:                        *
-   *                                                                  *
-   * Free Software Foundation           Voice:  +1-617-542-5942       *
-   * 59 Temple Place - Suite 330        Fax:    +1-617-542-2652       *
-   * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
-   *                                                                  *
-   \********************************************************************/
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
-  /**@file install.php
-   * Authserver installation and configuration
-   * @author Copyright (C) 2005 Pascal Leclerc
-   */
+// +-------------------------------------------------------------------+
+// | WiFiDog Authentication Server                                     |
+// | =============================                                     |
+// |                                                                   |
+// | The WiFiDog Authentication Server is part of the WiFiDog captive  |
+// | portal suite.                                                     |
+// +-------------------------------------------------------------------+
+// | PHP version 5 required.                                           |
+// +-------------------------------------------------------------------+
+// | Homepage:     http://www.wifidog.org/                             |
+// | Source Forge: http://sourceforge.net/projects/wifidog/            |
+// +-------------------------------------------------------------------+
+// | This program is free software; you can redistribute it and/or     |
+// | modify it under the terms of the GNU General Public License as    |
+// | published by the Free Software Foundation; either version 2 of    |
+// | the License, or (at your option) any later version.               |
+// |                                                                   |
+// | This program is distributed in the hope that it will be useful,   |
+// | but WITHOUT ANY WARRANTY; without even the implied warranty of    |
+// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |
+// | GNU General Public License for more details.                      |
+// |                                                                   |
+// | You should have received a copy of the GNU General Public License |
+// | along with this program; if not, contact:                         |
+// |                                                                   |
+// | Free Software Foundation           Voice:  +1-617-542-5942        |
+// | 59 Temple Place - Suite 330        Fax:    +1-617-542-2652        |
+// | Boston, MA  02111-1307,  USA       gnu@gnu.org                    |
+// |                                                                   |
+// +-------------------------------------------------------------------+
+
+/**
+ * WiFiDog Authentication Server installation and configuration script
+ *
+ * @package    WiFiDogAuthServer
+ * @author     Pascal Leclerc <isf@plec.ca>
+ * @copyright  2005 Pascal Leclerc <isf@plec.ca>
+ * @version    CVS: $Id$
+ * @link       http://sourceforge.net/projects/wifidog/
+ */
 
 empty($_REQUEST['page'])   ? $page    = 'Welcome' : $page    = $_REQUEST['page'];   # The page to be loaded
 empty($_REQUEST['action']) ? $action  = ''        : $action  = $_REQUEST['action']; # The action to be done (in page)
@@ -40,7 +58,7 @@ $system_path = implode("/", $exploded_path);                # Build the system_p
 
 # Security : Minimal access validation is use by asking user to type the wifidog directory field date
 # It's dummy, easy to implement and better than nothing
-$password = exec("ls -ld $basepath | awk '{print \$6\$7\$8}'", $output_array, $return); 
+$password = exec("ls -ld $basepath | awk '{print \$6\$7\$8}'", $output_array, $return);
 $auth = false;
 
 if ($page != 'Welcome') {
@@ -68,7 +86,7 @@ print <<<EndHTML
 
   <SCRIPT type="text/javascript">
     // This function add new configuration value to the "config" hidden input
-    // On submit, config will be parsed and value saved to config.php file    
+    // On submit, config will be parsed and value saved to config.php file
     function newConfig(dataAdd) {
       // TODO : Validate input data
       if (document.myform.config.value == '') {
@@ -97,12 +115,12 @@ print <<<EndHTML
   border-right: 2px solid gray;
   border-bottom: 2px solid gray;
   border-left: 1px solid white;
-  padding: 1px 4px 1px 4px; 
+  padding: 1px 4px 1px 4px;
 }
 
 td
 {
-  padding: 1px 4px 1px 4px; 
+  padding: 1px 4px 1px 4px;
 }
 //-->
 </style>
@@ -127,7 +145,7 @@ $requiredMySQLVersion     = '0.0.0'; // Todo
 $requiredPostgeSQLVersion = '0.0.0'; // Todo
 
 # Needed files/directories with write access
-$dir_array = array('tmp', 'tmp/magpie_cache', 'lib/smarty', 'tmp/smarty/templates_c', 'lib/magpie', 'lib/Phlickr', 'config.php'); 
+$dir_array = array('tmp', 'tmp/magpie_cache', 'lib/smarty', 'tmp/smarty/templates_c', 'lib/magpie', 'lib/Phlickr', 'config.php');
 
 $smarty_full_url    = 'http://smarty.php.net/do_download.php?download_file=Smarty-2.6.7.tar.gz';
 $magpierss_full_url = 'http://easynews.dl.sourceforge.net/sourceforge/magpierss/magpierss-0.71.1.tar.gz';
@@ -139,7 +157,7 @@ $neededPackages = array(
   'phlickr'   => array('needed' => 0, 'available' => 0, 'message' => '', 'file' => 'lib/Phlickr/Photo.php')
 );
 
-$neededExtentions = array(   
+$neededExtentions = array(
   'xml'      => array('needed'    => 0,
                       'available' => 0,
                       'message'   => '<B>xml</B> extention is missing',
@@ -155,7 +173,7 @@ $neededExtentions = array(
   'dom'      => array('needed'    => 1,
                       'available' => 0,
                       'message'   => '<B>DOM</B> extention is missing',
-                      'note'      => 'Required if you want to export the list of HotSpots as a RSS feed'), 
+                      'note'      => 'Required if you want to export the list of HotSpots as a RSS feed'),
   'gettext'  => array('needed'    => 0,
                       'available' => 0,
                       'message'   => 'Gettext is unavailable, the auth-server will work, but you will loose internationalization',
@@ -163,15 +181,15 @@ $neededExtentions = array(
   'mbstring' => array('needed'    => 1,
                       'available' => 0,
                       'message'   => '<B>mbstring</B> extention is missing',
-                      'note'      => 'Required for core auth-server and RSS support'), 
+                      'note'      => 'Required for core auth-server and RSS support'),
   'mcrypt'   => array('needed'    => 0,
                       'available' => 0,
                       'message'   => '<B>mcrypt</B> extention is missing',
-                      'note'      => 'Required for RADIUS support'), 
+                      'note'      => 'Required for RADIUS support'),
   'mhash'    => array('needed'    => 0,
                       'available' => 0,
                       'message'   => '<B>mhash</B> extention is missing',
-                      'note'      => 'Required for RADIUS support'), 
+                      'note'      => 'Required for RADIUS support'),
   'xmlrpc'   => array('needed'    => 0,
                       'available' => 0,
                       'message'   => '<B>xmlrpc</B> extention is missing',
@@ -226,7 +244,7 @@ $CONFIG_FILE       = 'config.php';
 $LOCAL_CONFIG_FILE = 'local.config.php';
 
 if (!empty($config))  # If not empty, save javascript 'config' variable to config.php file
-  saveConfig($config); 
+  saveConfig($config);
 
 ### Read Configuration file. Keys and Values => define('FOO', 'BRAK');
 # Use config.php if local.config.php does not exist
@@ -246,7 +264,7 @@ foreach($contentArray as $line) {
     $key = preg_replace($pattern, $replacement, trim($key));
     $value = preg_replace($pattern, $replacement, trim($value));
     $configArray[$key] = $value;
-  }   
+  }
 }
 
 # Database connections variables
@@ -379,11 +397,11 @@ function saveConfig($data) {
         $replacement = array("'", "'");
         $value = preg_replace($pattern, $replacement, trim($defineArray[$key]));
         #print "(define('$key', $value);)<BR>";
-		fwrite($fd, "define('$key', $value);\n"); # Write the new define($name, $value)
-	  }
-	  else { // The key does not exist (no new value to be saved)
+        fwrite($fd, "define('$key', $value);\n"); # Write the new define($name, $value)
+      }
+      else { // The key does not exist (no new value to be saved)
         fwrite($fd, $line); # Write the same line in config.php
-	  }
+      }
     }
     else {
       fwrite($fd, $line);   # Write the line (not a define line). Ex: Commented text
@@ -395,7 +413,7 @@ function saveConfig($data) {
 # MAIN
 switch ($page) {
   case 'version':
-/*  TODO : Valider qu'au moins une extention de DB est existante (pgsql, mysql, etc)  
+/*  TODO : Valider qu'au moins une extention de DB est existante (pgsql, mysql, etc)
            Definir les versions minimales de Posgres et MySQL */
 
     print "<H1>Version validation</H1>";
@@ -415,7 +433,7 @@ switch ($page) {
       $error = 1;
     }
     print "</TR></TABLE><BR>";
-   
+
     print "<TABLE BORDER=\"1\"><TR><TD><B>Extention</B></TD><TD><B>Status</B></TD><TD><B>Note</B></TD><TD><B>Message</B></TD></TR>";
     foreach($neededExtentions as $key => $value) {
       print  "<TR><TD><A HREF=\"http://www.php.net/$key\">$key</A></TD>";
@@ -427,10 +445,10 @@ switch ($page) {
         if ($neededExtentions[$key]['needed'] == 1) {
           print  "$errorMsg<TD>$note</TD><TD>$message</TD></TR>";
           $error = 1;
-        } else {         
+        } else {
           print  "$warningMsg<TD>$note</TD><TD>$message</TD></TR>";
         }
-      }     
+      }
     }
     print "</TABLE><BR>";
 
@@ -450,11 +468,11 @@ switch ($page) {
         if ($neededPEARPackages[$key]['needed'] == 1) {
           print  "$errorMsg<TD>$message</TD></TR>";
           $error = 1;
-        } else {         
+        } else {
           print  "$warningMsg<TD>$message</TD></TR>";
         }
-      } 
-    } 
+      }
+    }
     print "</TABLE><BR>";
 
     /************************************
@@ -480,7 +498,7 @@ switch ($page) {
   ###################################
   case 'permission':
     print "<H1>Permissions</H1>";
-    
+
     $process_info_user_id  = posix_getpwuid(posix_getuid());
     $process_info_group_id = posix_getgrgid(posix_getegid());
     $process_username      = $process_info_user_id['name'];
@@ -578,7 +596,7 @@ EndHTML;
   ###################################
   case 'magpierss': // Download, uncompress and install MagpieRSS
     print "<H1>MagpieRSS installation</H1>\n";
-    
+
     if ( $neededPackages['magpierss']['available']) {
       print "Already installed !<BR>";
       navigation(array(array("title" => "Back", "page" => "smarty"), array("title" => "Next", "page" => "phlickr")));
@@ -587,7 +605,7 @@ EndHTML;
       chdir("$basepath/tmp");
       $filename_array = preg_split("/\//", $magpierss_full_url);
       $filename = array_pop($filename_array);
-      
+
       print "Download source code ($filename) : ";
       if (!file_exists($filename))
         exec("wget \"$magpierss_full_url\" 2>&1", $output, $return);
@@ -608,7 +626,7 @@ EndHTML;
       print "OK<BR>";
 
       print "Copying : ";
-      exec("cp -r $dirname/* ../lib/magpie &>/tmp/cp.output", $output, $return); # TODO : Utiliser MAGPIE_REL_PATH 
+      exec("cp -r $dirname/* ../lib/magpie &>/tmp/cp.output", $output, $return); # TODO : Utiliser MAGPIE_REL_PATH
       print "OK<BR>";
 
       refreshButton();
@@ -714,7 +732,7 @@ EndHTML;
     }
     else {
       print <<< EndHTML
-<P><A HREF="http://www.aditus.nu/jpgraph/">JpGraph</A> is a Object-Oriented Graph creating library for PHP. 
+<P><A HREF="http://www.aditus.nu/jpgraph/">JpGraph</A> is a Object-Oriented Graph creating library for PHP.
 JpGraph is not currently use by Wifidog (will be use for statistique graph in a later version). You can skip this installation if your not a developper.
 
 <P>Do you want to install JpGraph ?
@@ -735,7 +753,7 @@ EndHTML;
 EndHTML;
 
     foreach($configArray as $key => $value) {  # In config.php, find all DBMS_* define
-	  if (preg_match("/^(DBMS_)(.*)/", $key, $matchesArray)) {
+      if (preg_match("/^(DBMS_)(.*)/", $key, $matchesArray)) {
         $dbname_lower = strtolower($matchesArray[2]);
         if ($dbname_lower == 'postgres') # config.php use postgres and PHP use pgsql
           $dbname_lower = 'pgsql';
@@ -746,7 +764,7 @@ EndHTML;
         else
           print "    <OPTION value=\"$key\">" . $matchesArray[2] . "</OPTION>\n";
       }
-	}   
+    }
 
     print <<< EndHTML
   </TD></TR>
@@ -782,7 +800,7 @@ EndHTML;
   ###################################
   case 'testdatabase':
     print "<H1>Database connection</H1>";
-    /* TODO : Tester la version minimale requise de MySQL et Postgresql 
+    /* TODO : Tester la version minimale requise de MySQL et Postgresql
               Tester si MySQL supporte InnoDB                           */
 
     switch ($CONF_DBMS) {
@@ -793,7 +811,7 @@ EndHTML;
         $ptr_connexion = pg_connect($conn_string) or die(); # or die("Couldn't Connect ==".pg_last_error()."==<BR>");
 
         #if ($ptr_connexion == TRUE) {
-          print "Success<BR>"; 
+          print "Success<BR>";
         #}
 #        } else {
 #          print "Unable to connect to database on $CONF_DATABASE_HOST<BR>The database must be online to continue.<BR>Please go back and retry with correct values";
@@ -886,9 +904,9 @@ EndHTML;
           if(preg_match("/^define\('REQUIRED_SCHEMA_VERSION', (\d+)\);/", $line, $matchesArray)) {
             #print "REQUIRED_SCHEMA_VERSION = " . $matchesArray[1] . "<BR>";
             $file_schema_version = $matchesArray[1];
-          }   
+          }
         }
-        
+
         # Get current database schema version (if defined)
         $sql = "SELECT * FROM schema_info WHERE tag='schema_version'";
         if ($result = @pg_query($connection, $sql)) { # The @ remove warning display
@@ -932,7 +950,7 @@ EndHTML;
         if ($debug) print "<PRE>";
 
         $inTable = 0;
-        foreach ($content_schema_array as $lineNum => $line) {          
+        foreach ($content_schema_array as $lineNum => $line) {
 #          if (preg_match("/^--/", $line)) continue; # Remove commented lines
 #          if (preg_match("/^$/", $line))  continue; # Remove empty lines
           if ($debug) print "<B>ORI</B> $line";
@@ -946,7 +964,7 @@ EndHTML;
               # MySQL => ) TYPE=InnoDB;
               $line = preg_replace("/^\);$/", ") TYPE=InnoDB;", $line);
               $inTable = 0;
-            } 
+            }
             else {
               #print "<B>IN  \n</B>"; # The line is in CREATE TABLE
 
@@ -986,14 +1004,14 @@ EndHTML;
 
               $line = preg_replace("/false/", "0", $line); # Change "false" strings for 0 (zero)
               $line = preg_replace("/true/", "1", $line);  # Change "true" strings for 1 (one)
-              $line = preg_replace("/WITHOUT OIDS/", "", $line); # Remove "WITHOUT OIDS" 
+              $line = preg_replace("/WITHOUT OIDS/", "", $line); # Remove "WITHOUT OIDS"
 
               # PG    => binary_data bytea,
               # MySQL => binary_data MEDIUMBLOB
               # Uploading, Saving and Downloading Binary Data in a MySQL Database http://www.onlamp.com/lpt/a/370
               $line = preg_replace("/bytea/", "MEDIUMBLOB", $line); # maximum 16777215 (2^24 - 1) bytes
             } ### End of else. Regex in CREATE TABLE {};
-          } ### End of if ($inTable). 
+          } ### End of if ($inTable).
 
           # PG    => CREATE INDEX idx_token ON connections USING btree (token);
           # MySQL => CREATE INDEX idx_token USING btree ON connections (token);
@@ -1007,7 +1025,7 @@ EndHTML;
           $line = preg_replace("/CREATE INDEX idx_content_group_element_content_group_id USING btree ON content_group_element \(content_group_id\);/", "CREATE INDEX idx_content_group_element_content_group_id USING btree ON content_group_element (content_group_id(100));", $line);
 
           if ($debug) print "NEW $line";
-            $content_mysql .= $previous_line;  
+            $content_mysql .= $previous_line;
           $previous_line = $line;
         } ### End of foreach ($content_schema_array as $lineNum => $line)
 
@@ -1048,7 +1066,12 @@ EndHTML;
   ###################################
   case 'schema_validate':
     print "<H1>Database schema upgrade</H1>\n";
+
+    /**
+     * @ignore
+     */
     define('BASEPATH', './');
+
     require_once BASEPATH.'include/common.php';
     require_once BASEPATH.'config.php';
     require_once BASEPATH.'classes/AbstractDb.php';
@@ -1057,7 +1080,7 @@ EndHTML;
     validate_schema();
 
     navigation(array(array("title" => "Back", "page" => "dbinit"), array("title" => "Next", "page" => "options")));
-    
+
     //navigation(array(array("title" => "Back", "page" => "dbinit")));
   break;
 
@@ -1138,7 +1161,7 @@ EndHTML;
 <DIV style="border:solid black;">Warning: language.php: Unable to setlocale() to fr, return value: , current locale: LC_CTYPE=en_US.UTF-8;LC_NUMERIC=C; [...]</DIV>
 EndHTML;
 //    exec("locale -a 2>&1", $output, $return);
-    
+
     navigation(array(array("title" => "Back", "page" => "options"), array("title" => "Next", "page" => "radius")));
   break;
 
@@ -1151,9 +1174,9 @@ EndHTML;
     #$neededExtentions['mcrypt']['available'];
     #$neededExtentions['mhash']['available'];
     #$neededExtentions['xmlrpc']['available'];
-    #$neededPEARPackages['radius']['available'];   
+    #$neededPEARPackages['radius']['available'];
     #$neededPEARPackages['Auth_RADIUS']['available'];
-    #$neededPEARPackages['Crypt_CHAP']['available'];      
+    #$neededPEARPackages['Crypt_CHAP']['available'];
 
     navigation(array(array("title" => "Back", "page" => "languages"), array("title" => "Next", "page" => "admin")));
   break;
@@ -1162,7 +1185,7 @@ EndHTML;
   case 'admin':
     print "<H1>Administration account</H1>";
     # TODO : Allow to create more than one admin account and list the current admin users
-    #        Allow admin to choose to show or not is username 
+    #        Allow admin to choose to show or not is username
     empty($_REQUEST['username'])  ? $username   = 'admin'                  : $username   = $_REQUEST['username'];
     empty($_REQUEST['password'])  ? $password   = ''                       : $password   = $_REQUEST['password'];
     empty($_REQUEST['password2']) ? $password2  = ''                       : $password2  = $_REQUEST['password2'];
@@ -1202,9 +1225,9 @@ EndHTML;
         <TR>
           <TD>Password</TD><TD><INPUT type="password" name="password"></TD>
         </TR>
-        <TR> 
+        <TR>
           <TD>Password again</TD><TD><INPUT type="password" name="password2"></TD>
-        </TR> 
+        </TR>
         <TR>
           <TD>Email</TD><TD><INPUT type="text" name="email" value="$email"></TD>
         </TR>
@@ -1244,7 +1267,7 @@ EndHTML;
     //$HOTSPOT_NETWORK_URL           = $configArray['HOTSPOT_NETWORK_URL'];
     //$TECH_SUPPORT_EMAIL            = $configArray['TECH_SUPPORT_EMAIL'];
     //$VALIDATION_GRACE_TIME         = $configArray['VALIDATION_GRACE_TIME'];
-    //$VALIDATION_EMAIL_FROM_ADDRESS = $configArray['VALIDATION_EMAIL_FROM_ADDRESS'];    
+    //$VALIDATION_EMAIL_FROM_ADDRESS = $configArray['VALIDATION_EMAIL_FROM_ADDRESS'];
 
     print <<< EndHTML
   <P>
@@ -1343,7 +1366,7 @@ EndHTML;
         if ($matchesArray[1] == 'toc')
           continue;
         print "<LI><A HREF=\"" . $_SERVER['SCRIPT_NAME'] . "?page=" . $matchesArray[1] . "\">" . $matchesArray[1] . "</A>\n";  # Display a Table of Content
-      }   
+      }
     }
     print "</UL>\n";
   break;
@@ -1356,10 +1379,10 @@ EndHTML;
   -Support des define de Google Maps dans config.php
   -Faire une fonction d'execution avec gestion de retour d'erreur et d'affichage de l'exection pour chaque "exec"
   -Ajouter une veritable validation (user/password admin provenant de la DB)
-     Pour une meilleur securite du script d'installation. 
+     Pour une meilleur securite du script d'installation.
        Au chargement, valider que la connection DB est fonctionnel, que la DB existe et que l'usager admin existe
          Si oui, on demande l'authentification
-	     Si non, on creer l'usager admin
+         Si non, on creer l'usager admin
   -Faire un vrai menu pour acceder directement aux pages desirees (pas une TOC poche)
   -Ameliorer le javascript et arreter de faire des document.myform.submit();
   -Generate valid HTML code
@@ -1403,7 +1426,7 @@ EndHTML;
     # TODO : Add links to auth-server web documents
     print <<<EndHTML
 <P>Welcome to Wifidog Auth-Server installation and configuration script.</P>
-<P>This is a work in progress, so please report bugs to the mailing list for better support. 
+<P>This is a work in progress, so please report bugs to the mailing list for better support.
 Many work needed to be done : validation, error handling, integration, security, etc.
 The current auth-server version is <B>$WIFIDOG_VERSION</B>. The installation is only available in english.</P>
 
@@ -1421,7 +1444,7 @@ The current auth-server version is <B>$WIFIDOG_VERSION</B>. The installation is 
 
 <B>Create the wifidog database</B>
 <PRE>  <I>postgres@yourserver $></I> createdb wifidog --encoding=UTF-8 --owner=wifidog
-  CREATE DATABASE 
+  CREATE DATABASE
 </PRE>
 
 <B>Security</B> : For now, a really simple password protection is in place. To find the password type this in command line :<PRE>  <B>ls -ld $basepath | awk '{print \$6\$7\$8}'</B>
@@ -1432,7 +1455,7 @@ The current auth-server version is <B>$WIFIDOG_VERSION</B>. The installation is 
 <P>When you are ready click next</P>
 
 EndHTML;
- 
+
     navigation(array(array("title" => "Next", "page" => "version")));
 }
 

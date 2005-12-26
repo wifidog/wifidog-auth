@@ -1,29 +1,52 @@
 <?php
 
-/********************************************************************\
- * This program is free software; you can redistribute it and/or    *
- * modify it under the terms of the GNU General Public License as   *
- * published by the Free Software Foundation; either version 2 of   *
- * the License, or (at your option) any later version.              *
- *                                                                  *
- * This program is distributed in the hope that it will be useful,  *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of   *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the    *
- * GNU General Public License for more details.                     *
- *                                                                  *
- * You should have received a copy of the GNU General Public License*
- * along with this program; if not, contact:                        *
- *                                                                  *
- * Free Software Foundation           Voice:  +1-617-542-5942       *
- * 59 Temple Place - Suite 330        Fax:    +1-617-542-2652       *
- * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
- *                                                                  *
- \********************************************************************/
-/**@file hotspots_map.php
- * Network status page
- * @author Copyright (C) 2005 François Proulx
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
+
+// +-------------------------------------------------------------------+
+// | WiFiDog Authentication Server                                     |
+// | =============================                                     |
+// |                                                                   |
+// | The WiFiDog Authentication Server is part of the WiFiDog captive  |
+// | portal suite.                                                     |
+// +-------------------------------------------------------------------+
+// | PHP version 5 required.                                           |
+// +-------------------------------------------------------------------+
+// | Homepage:     http://www.wifidog.org/                             |
+// | Source Forge: http://sourceforge.net/projects/wifidog/            |
+// +-------------------------------------------------------------------+
+// | This program is free software; you can redistribute it and/or     |
+// | modify it under the terms of the GNU General Public License as    |
+// | published by the Free Software Foundation; either version 2 of    |
+// | the License, or (at your option) any later version.               |
+// |                                                                   |
+// | This program is distributed in the hope that it will be useful,   |
+// | but WITHOUT ANY WARRANTY; without even the implied warranty of    |
+// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |
+// | GNU General Public License for more details.                      |
+// |                                                                   |
+// | You should have received a copy of the GNU General Public License |
+// | along with this program; if not, contact:                         |
+// |                                                                   |
+// | Free Software Foundation           Voice:  +1-617-542-5942        |
+// | 59 Temple Place - Suite 330        Fax:    +1-617-542-2652        |
+// | Boston, MA  02111-1307,  USA       gnu@gnu.org                    |
+// |                                                                   |
+// +-------------------------------------------------------------------+
+
+/**
+ * Network status page.
+ *
+ * @package    WiFiDogAuthServer
+ * @author     Francois Proulx <francois.proulx@gmail.com>
+ * @copyright  2005 Francois Proulx <francois.proulx@gmail.com> - Technologies
+ * Coeus inc.
+ * @version    CVS: $Id$
+ * @link       http://sourceforge.net/projects/wifidog/
  */
 
+/**
+ * @ignore
+ */
 define('BASEPATH', './');
 
 require_once BASEPATH.'include/common.php';
@@ -54,9 +77,9 @@ $html .= "</div>\n";
 $html .= "<div id=\"map_outer_hotspots_list\"><div id=\"map_hotspots_list\"></div></div>\n";
 $html .= "<div id=\"map_frame\"><p/><center><h2>"._("Loading, please wait...")."</h2></center></div>\n";
 $html .= "<div id=\"map_legend\">\n";
-$html .= "<b>"._("Legend")." :</b>\n"; 
-$html .= "<img src='images/hotspots_status_map_up.png'> <i>"._("the hotspot is operational")."</i>\n"; 
-$html .= "<img src='images/hotspots_status_map_down.png'> <i>"._("the hotspot is down")."</i>\n"; 
+$html .= "<b>"._("Legend")." :</b>\n";
+$html .= "<img src='images/hotspots_status_map_up.png'> <i>"._("the hotspot is operational")."</i>\n";
+$html .= "<img src='images/hotspots_status_map_down.png'> <i>"._("the hotspot is down")."</i>\n";
 $html .= "<img src='images/hotspots_status_map_unknown.png'> <i>"._("not monitored")."</i>\n";
 $html .= "</div>\n";
 $ui->setMainContent($html);
@@ -79,8 +102,16 @@ $tool_html .= "<li><a href='hotspot_status.php'>"._('Deployed HotSpots status wi
 $tool_html .= "</ul>\n";
 $tool_html .= '</p>'."\n";
 
-$ui->setToolContent($tool_html);		
+$ui->setToolContent($tool_html);
 
 $ui->display();
+
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * c-hanging-comment-ender-p: nil
+ * End:
+ */
 
 ?>

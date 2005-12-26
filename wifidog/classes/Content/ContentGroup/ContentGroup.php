@@ -1,28 +1,45 @@
 <?php
 
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
-/********************************************************************\
- * This program is free software; you can redistribute it and/or    *
- * modify it under the terms of the GNU General Public License as   *
- * published by the Free Software Foundation; either version 2 of   *
- * the License, or (at your option) any later version.              *
- *                                                                  *
- * This program is distributed in the hope that it will be useful,  *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of   *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the    *
- * GNU General Public License for more details.                     *
- *                                                                  *
- * You should have received a copy of the GNU General Public License*
- * along with this program; if not, contact:                        *
- *                                                                  *
- * Free Software Foundation           Voice:  +1-617-542-5942       *
- * 59 Temple Place - Suite 330        Fax:    +1-617-542-2652       *
- * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
- *                                                                  *
- \********************************************************************/
-/**@file ContentGroup.php
- * @author Copyright (C) 2005 Benoit Grégoire <bock@step.polymtl.ca>,
- * Technologies Coeus inc.
+// +-------------------------------------------------------------------+
+// | WiFiDog Authentication Server                                     |
+// | =============================                                     |
+// |                                                                   |
+// | The WiFiDog Authentication Server is part of the WiFiDog captive  |
+// | portal suite.                                                     |
+// +-------------------------------------------------------------------+
+// | PHP version 5 required.                                           |
+// +-------------------------------------------------------------------+
+// | Homepage:     http://www.wifidog.org/                             |
+// | Source Forge: http://sourceforge.net/projects/wifidog/            |
+// +-------------------------------------------------------------------+
+// | This program is free software; you can redistribute it and/or     |
+// | modify it under the terms of the GNU General Public License as    |
+// | published by the Free Software Foundation; either version 2 of    |
+// | the License, or (at your option) any later version.               |
+// |                                                                   |
+// | This program is distributed in the hope that it will be useful,   |
+// | but WITHOUT ANY WARRANTY; without even the implied warranty of    |
+// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |
+// | GNU General Public License for more details.                      |
+// |                                                                   |
+// | You should have received a copy of the GNU General Public License |
+// | along with this program; if not, contact:                         |
+// |                                                                   |
+// | Free Software Foundation           Voice:  +1-617-542-5942        |
+// | 59 Temple Place - Suite 330        Fax:    +1-617-542-2652        |
+// | Boston, MA  02111-1307,  USA       gnu@gnu.org                    |
+// |                                                                   |
+// +-------------------------------------------------------------------+
+
+/**
+ * @package    WiFiDogAuthServer
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @copyright  2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
+ * inc.
+ * @version    CVS: $Id$
+ * @link       http://sourceforge.net/projects/wifidog/
  */
 
 require_once BASEPATH.'classes/Content.php';
@@ -32,12 +49,12 @@ require_once BASEPATH.'classes/Content/ContentGroup/ContentGroupElement.php';
 class ContentGroup extends Content
 {
 
-	private $CONTENT_ORDERING_MODES = array ('RANDOM' => "Pick content elements randomly", 'SEQUENTIAL' => "Pick content elements in sequential order");
-	private $CONTENT_CHANGES_ON_MODES = array ('ALWAYS' => "Content always rotates", 'NEXT_DAY' => "Content rotates once per day", 'NEXT_LOGIN' => "Content rotates once per session", 'NEXT_NODE' => "Content rotates each time you change node");
-	private $ALLOW_REPEAT_MODES = array ('YES' => "Content can be shown more than once", 'NO' => "Content can only be shown once", 'ONCE_PER_NODE' => "Content can be shown more than once, but not at the same node");
+    private $CONTENT_ORDERING_MODES = array ('RANDOM' => "Pick content elements randomly", 'SEQUENTIAL' => "Pick content elements in sequential order");
+    private $CONTENT_CHANGES_ON_MODES = array ('ALWAYS' => "Content always rotates", 'NEXT_DAY' => "Content rotates once per day", 'NEXT_LOGIN' => "Content rotates once per session", 'NEXT_NODE' => "Content rotates each time you change node");
+    private $ALLOW_REPEAT_MODES = array ('YES' => "Content can be shown more than once", 'NO' => "Content can only be shown once", 'ONCE_PER_NODE' => "Content can be shown more than once, but not at the same node");
 
-	protected $is_artistic_content;
-	protected $is_locative_content;
+    protected $is_artistic_content;
+    protected $is_locative_content;
 
     // is_expandable is ONLY for internal use, it use normally only set by the constructor
     private $is_expandable = true;
@@ -45,240 +62,240 @@ class ContentGroup extends Content
     private $expand_status = false;
     private $temporary_display_num_elements;
 
-	private $content_selection_mode;
-	private $content_group_row;
+    private $content_selection_mode;
+    private $content_group_row;
 
-	protected function __construct($content_id)
-	{
-		parent :: __construct($content_id);
-		global $db;
-		$content_id = $db->EscapeString($content_id);
+    protected function __construct($content_id)
+    {
+        parent :: __construct($content_id);
+        global $db;
+        $content_id = $db->EscapeString($content_id);
 
-		$sql = "SELECT * FROM content_group WHERE content_group_id='$content_id'";
-		$db->ExecSqlUniqueRes($sql, $row, false);
-		if ($row == null)
-		{
-			/*Since the parent Content exists, the necessary data in content_group had not yet been created */
-			$sql = "INSERT INTO content_group (content_group_id) VALUES ('$content_id')";
-			$db->ExecSqlUpdate($sql, false);
-			$sql = "SELECT * FROM content_group WHERE content_group_id='$content_id'";
-			$db->ExecSqlUniqueRes($sql, $row, false);
-			if ($row == null)
-			{
-				throw new Exception(_("The content with the following id could not be found in the database: ").$content_id);
-			}
+        $sql = "SELECT * FROM content_group WHERE content_group_id='$content_id'";
+        $db->ExecSqlUniqueRes($sql, $row, false);
+        if ($row == null)
+        {
+            /*Since the parent Content exists, the necessary data in content_group had not yet been created */
+            $sql = "INSERT INTO content_group (content_group_id) VALUES ('$content_id')";
+            $db->ExecSqlUpdate($sql, false);
+            $sql = "SELECT * FROM content_group WHERE content_group_id='$content_id'";
+            $db->ExecSqlUniqueRes($sql, $row, false);
+            if ($row == null)
+            {
+                throw new Exception(_("The content with the following id could not be found in the database: ").$content_id);
+            }
 
-		}
+        }
 
-		$this->content_group_row = $row;
+        $this->content_group_row = $row;
 
         // These are for internal use only ( private and protected methods ) for dealing with expanding content
         $this->setTemporaryDisplayNumElements(null);
-	}
+    }
 
-	/** Is the content group artistic in nature?
-	 * @return true or false */
-	public function isArtisticContent()
-	{
-		if ($this->content_group_row['is_artistic_content'] == 't')
-		{
-			$retval = true;
-		}
-		else
-		{
-			$retval = false;
-		}
-		return $retval;
-	}
+    /** Is the content group artistic in nature?
+     * @return true or false */
+    public function isArtisticContent()
+    {
+        if ($this->content_group_row['is_artistic_content'] == 't')
+        {
+            $retval = true;
+        }
+        else
+        {
+            $retval = false;
+        }
+        return $retval;
+    }
 
-	/** Set if the content group is artistic in nature,
-	 * @param $is_artistic_content true or false*/
-	public function setIsArtisticContent($is_artistic_content)
-	{
-		if ($is_artistic_content != $this->isArtisticContent()) /* Only update database if there is an actual change */
-		{
-			$is_artistic_content ? $is_artistic_content_sql = 'TRUE' : $is_artistic_content_sql = 'FALSE';
+    /** Set if the content group is artistic in nature,
+     * @param $is_artistic_content true or false*/
+    public function setIsArtisticContent($is_artistic_content)
+    {
+        if ($is_artistic_content != $this->isArtisticContent()) /* Only update database if there is an actual change */
+        {
+            $is_artistic_content ? $is_artistic_content_sql = 'TRUE' : $is_artistic_content_sql = 'FALSE';
 
-			global $db;
-			$db->ExecSqlUpdate("UPDATE content_group SET is_artistic_content = $is_artistic_content_sql WHERE content_group_id = '$this->id'", false);
-			$this->refresh();
-		}
+            global $db;
+            $db->ExecSqlUpdate("UPDATE content_group SET is_artistic_content = $is_artistic_content_sql WHERE content_group_id = '$this->id'", false);
+            $this->refresh();
+        }
 
-	}
+    }
 
-	/** Does the content shown or generated by the content group directly related to where it is viewed from?
-	 * @return true or false */
-	public function isLocativeContent()
-	{
-		if ($this->content_group_row['is_locative_content'] == 't')
-		{
-			$retval = true;
-		}
-		else
-		{
-			$retval = false;
-		}
-		return $retval;
-	}
+    /** Does the content shown or generated by the content group directly related to where it is viewed from?
+     * @return true or false */
+    public function isLocativeContent()
+    {
+        if ($this->content_group_row['is_locative_content'] == 't')
+        {
+            $retval = true;
+        }
+        else
+        {
+            $retval = false;
+        }
+        return $retval;
+    }
 
-	/** Set if the content group is locative
-	 * @param $is_locative_content true or false
-	 * */
-	public function setIsLocativeContent($is_locative_content)
-	{
-		if ($is_locative_content != $this->isLocativeContent()) /* Only update database if there is an actual change */
-		{
-			$is_locative_content ? $is_locative_content_sql = 'TRUE' : $is_locative_content_sql = 'FALSE';
+    /** Set if the content group is locative
+     * @param $is_locative_content true or false
+     * */
+    public function setIsLocativeContent($is_locative_content)
+    {
+        if ($is_locative_content != $this->isLocativeContent()) /* Only update database if there is an actual change */
+        {
+            $is_locative_content ? $is_locative_content_sql = 'TRUE' : $is_locative_content_sql = 'FALSE';
 
-			global $db;
-			$db->ExecSqlUpdate("UPDATE content_group SET is_locative_content = $is_locative_content_sql WHERE content_group_id = '$this->id'", false);
-			$this->refresh();
-		}
+            global $db;
+            $db->ExecSqlUpdate("UPDATE content_group SET is_locative_content = $is_locative_content_sql WHERE content_group_id = '$this->id'", false);
+            $this->refresh();
+        }
 
-	}
+    }
 
-	/** In what order is the content displayed to the user
-	* @return string, a key of CONTENT_SELECTION_MODES */
-	public function getContentOrderingMode()
-	{
-		return $this->content_group_row['content_ordering_mode'];
-	}
+    /** In what order is the content displayed to the user
+    * @return string, a key of CONTENT_SELECTION_MODES */
+    public function getContentOrderingMode()
+    {
+        return $this->content_group_row['content_ordering_mode'];
+    }
 
-	/** In what order is the content displayed to the user
-	 * @param $content_ordering_mode One of the CONTENT_ORDERING_MODES constants defined in the class
-	 * @return true if successfull
-	 * */
-	protected function setContentOrderingMode($content_ordering_mode, & $errormsg = null)
-	{
-		$retval = false;
-		if (isset ($this->CONTENT_ORDERING_MODES[$content_ordering_mode]) && $content_ordering_mode != $this->getContentOrderingMode()) /* Only update database if the mode is valid and there is an actual change */
-		{
-			global $db;
-			$content_ordering_mode = $db->EscapeString($content_ordering_mode);
-			$db->ExecSqlUpdate("UPDATE content_group SET content_ordering_mode = '$content_ordering_mode' WHERE content_group_id = '$this->id'", false);
-			$this->refresh();
-			$retval = true;
-		}
-		elseif (!isset ($this->CONTENT_ORDERING_MODES[$content_ordering_mode]))
-		{
-			$errormsg = _("Invalid content selection mode (must be part of CONTENT_ORDERING_MODES)");
-			$retval = false;
-		}
-		else
-		{
-			/* Successfull, but nothing modified */
-			$retval = true;
-		}
-		return $retval;
-	}
+    /** In what order is the content displayed to the user
+     * @param $content_ordering_mode One of the CONTENT_ORDERING_MODES constants defined in the class
+     * @return true if successfull
+     * */
+    protected function setContentOrderingMode($content_ordering_mode, & $errormsg = null)
+    {
+        $retval = false;
+        if (isset ($this->CONTENT_ORDERING_MODES[$content_ordering_mode]) && $content_ordering_mode != $this->getContentOrderingMode()) /* Only update database if the mode is valid and there is an actual change */
+        {
+            global $db;
+            $content_ordering_mode = $db->EscapeString($content_ordering_mode);
+            $db->ExecSqlUpdate("UPDATE content_group SET content_ordering_mode = '$content_ordering_mode' WHERE content_group_id = '$this->id'", false);
+            $this->refresh();
+            $retval = true;
+        }
+        elseif (!isset ($this->CONTENT_ORDERING_MODES[$content_ordering_mode]))
+        {
+            $errormsg = _("Invalid content selection mode (must be part of CONTENT_ORDERING_MODES)");
+            $retval = false;
+        }
+        else
+        {
+            /* Successfull, but nothing modified */
+            $retval = true;
+        }
+        return $retval;
+    }
 
-	/** When does the content rotate?
-	* @return string, a key of CONTENT_SELECTION_MODES */
-	public function getContentChangesOnMode()
-	{
-		return $this->content_group_row['content_changes_on_mode'];
-	}
+    /** When does the content rotate?
+    * @return string, a key of CONTENT_SELECTION_MODES */
+    public function getContentChangesOnMode()
+    {
+        return $this->content_group_row['content_changes_on_mode'];
+    }
 
-	/** When does the content rotate?
-	 * @param $content_changes_on_mode One of the content_changes_on_modeS constants defined in the class
-	 * @return true if successfull
-	 * */
-	protected function setContentChangesOnMode($content_changes_on_mode, & $errormsg = null)
-	{
-		$retval = false;
-		if (isset ($this->CONTENT_CHANGES_ON_MODES[$content_changes_on_mode]) && $content_changes_on_mode != $this->getContentChangesOnMode()) /* Only update database if the mode is valid and there is an actual change */
-		{
-			global $db;
-			$content_changes_on_mode = $db->EscapeString($content_changes_on_mode);
-			$db->ExecSqlUpdate("UPDATE content_group SET content_changes_on_mode = '$content_changes_on_mode' WHERE content_group_id = '$this->id'", false);
-			$this->refresh();
-			$retval = true;
-		}
-		elseif (!isset ($this->CONTENT_CHANGES_ON_MODES[$content_changes_on_mode]))
-		{
-			$errormsg = _("Invalid content selection mode (must be part of CONTENT_CHANGES_ON_MODES)");
-			$retval = false;
-		}
-		else
-		{
-			/* Successfull, but nothing modified */
-			$retval = true;
-		}
-		return $retval;
-	}
+    /** When does the content rotate?
+     * @param $content_changes_on_mode One of the content_changes_on_modeS constants defined in the class
+     * @return true if successfull
+     * */
+    protected function setContentChangesOnMode($content_changes_on_mode, & $errormsg = null)
+    {
+        $retval = false;
+        if (isset ($this->CONTENT_CHANGES_ON_MODES[$content_changes_on_mode]) && $content_changes_on_mode != $this->getContentChangesOnMode()) /* Only update database if the mode is valid and there is an actual change */
+        {
+            global $db;
+            $content_changes_on_mode = $db->EscapeString($content_changes_on_mode);
+            $db->ExecSqlUpdate("UPDATE content_group SET content_changes_on_mode = '$content_changes_on_mode' WHERE content_group_id = '$this->id'", false);
+            $this->refresh();
+            $retval = true;
+        }
+        elseif (!isset ($this->CONTENT_CHANGES_ON_MODES[$content_changes_on_mode]))
+        {
+            $errormsg = _("Invalid content selection mode (must be part of CONTENT_CHANGES_ON_MODES)");
+            $retval = false;
+        }
+        else
+        {
+            /* Successfull, but nothing modified */
+            $retval = true;
+        }
+        return $retval;
+    }
 
-	/** Can the same content be shown twice
-	 * @return 'YES', 'NO', 'ONCE_PER_NODE' */
-	public function getAllowRepeat()
-	{
-		return $this->content_group_row['allow_repeat'];
-	}
+    /** Can the same content be shown twice
+     * @return 'YES', 'NO', 'ONCE_PER_NODE' */
+    public function getAllowRepeat()
+    {
+        return $this->content_group_row['allow_repeat'];
+    }
 
-	/** When does the content rotate?
-	 * @param $allow_repeat One of the allow_repeatS constants defined in the class
-	 * @return true if successfull
-	 * */
-	protected function setAllowRepeat($allow_repeat, & $errormsg = null)
-	{
-		$retval = false;
-		if (isset ($this->ALLOW_REPEAT_MODES[$allow_repeat]) && $allow_repeat != $this->getAllowRepeat()) /* Only update database if the mode is valid and there is an actual change */
-		{
-			global $db;
-			$allow_repeat = $db->EscapeString($allow_repeat);
-			$db->ExecSqlUpdate("UPDATE content_group SET allow_repeat = '$allow_repeat' WHERE content_group_id = '$this->id'", false);
-			$this->refresh();
-			$retval = true;
-		}
-		elseif (!isset ($this->ALLOW_REPEAT_MODES[$allow_repeat]))
-		{
-			$errormsg = _("Invalid content selection mode (must be part of ALLOW_REPEAT_MODES)");
-			$retval = false;
-		}
-		else
-		{
-			/* Successfull, but nothing modified */
-			$retval = true;
-		}
-		return $retval;
-	}
+    /** When does the content rotate?
+     * @param $allow_repeat One of the allow_repeatS constants defined in the class
+     * @return true if successfull
+     * */
+    protected function setAllowRepeat($allow_repeat, & $errormsg = null)
+    {
+        $retval = false;
+        if (isset ($this->ALLOW_REPEAT_MODES[$allow_repeat]) && $allow_repeat != $this->getAllowRepeat()) /* Only update database if the mode is valid and there is an actual change */
+        {
+            global $db;
+            $allow_repeat = $db->EscapeString($allow_repeat);
+            $db->ExecSqlUpdate("UPDATE content_group SET allow_repeat = '$allow_repeat' WHERE content_group_id = '$this->id'", false);
+            $this->refresh();
+            $retval = true;
+        }
+        elseif (!isset ($this->ALLOW_REPEAT_MODES[$allow_repeat]))
+        {
+            $errormsg = _("Invalid content selection mode (must be part of ALLOW_REPEAT_MODES)");
+            $retval = false;
+        }
+        else
+        {
+            /* Successfull, but nothing modified */
+            $retval = true;
+        }
+        return $retval;
+    }
 
-	/** How many element should be picked for display at once?
-	* @return integer */
-	public function getDisplayNumElements()
-	{
+    /** How many element should be picked for display at once?
+    * @return integer */
+    public function getDisplayNumElements()
+    {
         if($this->temporary_display_num_elements == null)
             return $this->content_group_row['display_num_elements'];
         else
             return $this->temporary_display_num_elements;
-	}
+    }
 
-	/** How many element should be picked for display at once?
-	* @param $display_num_elements integer, must be greater than zero.
-	* @return true if successfull
-	* */
-	protected function setDisplayNumElements($display_num_elements, & $errormsg = null)
-	{
-		$retval = false;
-		if (($display_num_elements > 0) && $display_num_elements != $this->getDisplayNumElements()) /* Only update database if the mode is valid and there is an actual change */
-		{
-			global $db;
-			$allow_repeat = $db->EscapeString($allow_repeat);
-			$db->ExecSqlUpdate("UPDATE content_group SET display_num_elements = '$display_num_elements' WHERE content_group_id = '$this->id'", false);
-			$this->refresh();
-			$retval = true;
-		}
-		elseif ($display_num_elements <= 0)
-		{
-			$errormsg = _("You must display at least one element");
-			$retval = false;
-		}
-		else
-		{
-			/* Successfull, but nothing modified */
-			$retval = true;
-		}
-		return $retval;
-	}
+    /** How many element should be picked for display at once?
+    * @param $display_num_elements integer, must be greater than zero.
+    * @return true if successfull
+    * */
+    protected function setDisplayNumElements($display_num_elements, & $errormsg = null)
+    {
+        $retval = false;
+        if (($display_num_elements > 0) && $display_num_elements != $this->getDisplayNumElements()) /* Only update database if the mode is valid and there is an actual change */
+        {
+            global $db;
+            $allow_repeat = $db->EscapeString($allow_repeat);
+            $db->ExecSqlUpdate("UPDATE content_group SET display_num_elements = '$display_num_elements' WHERE content_group_id = '$this->id'", false);
+            $this->refresh();
+            $retval = true;
+        }
+        elseif ($display_num_elements <= 0)
+        {
+            $errormsg = _("You must display at least one element");
+            $retval = false;
+        }
+        else
+        {
+            /* Successfull, but nothing modified */
+            $retval = true;
+        }
+        return $retval;
+    }
 
     /**
      * This will a temporary limit ( NOT ACTUALLY STORED IN DATABASE )
@@ -290,166 +307,166 @@ class ContentGroup extends Content
         $this->temporary_display_num_elements = $temporary_num_elements;
     }
 
-	public function getAdminUI($subclass_admin_interface = null)
-	{
-		$html = '';
-		$html .= "<div class='admin_class'>ContentGroup (".get_class($this)." instance)</div>\n";
+    public function getAdminUI($subclass_admin_interface = null)
+    {
+        $html = '';
+        $html .= "<div class='admin_class'>ContentGroup (".get_class($this)." instance)</div>\n";
 
-		/* is_artistic_content */
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>Is artistic content?: </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "content_group_".$this->id."_is_artistic_content";
-		$this->isArtisticContent() ? $checked = 'CHECKED' : $checked = '';
-		$html .= "<input type='checkbox' name='$name' $checked>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
+        /* is_artistic_content */
+        $html .= "<div class='admin_section_container'>\n";
+        $html .= "<div class='admin_section_title'>Is artistic content?: </div>\n";
+        $html .= "<div class='admin_section_data'>\n";
+        $name = "content_group_".$this->id."_is_artistic_content";
+        $this->isArtisticContent() ? $checked = 'CHECKED' : $checked = '';
+        $html .= "<input type='checkbox' name='$name' $checked>\n";
+        $html .= "</div>\n";
+        $html .= "</div>\n";
 
-		/* is_locative_content */
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>". ("Is locative content?").": </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "content_group_".$this->id."_is_locative_content";
-		$this->isLocativeContent() ? $checked = 'CHECKED' : $checked = '';
-		$html .= "<input type='checkbox' name='$name' $checked>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
+        /* is_locative_content */
+        $html .= "<div class='admin_section_container'>\n";
+        $html .= "<div class='admin_section_title'>". ("Is locative content?").": </div>\n";
+        $html .= "<div class='admin_section_data'>\n";
+        $name = "content_group_".$this->id."_is_locative_content";
+        $this->isLocativeContent() ? $checked = 'CHECKED' : $checked = '';
+        $html .= "<input type='checkbox' name='$name' $checked>\n";
+        $html .= "</div>\n";
+        $html .= "</div>\n";
 
-		/* content_ordering_mode */
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("In what order should the content displayed?").": </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "content_group_".$this->id."_content_ordering_mode";
+        /* content_ordering_mode */
+        $html .= "<div class='admin_section_container'>\n";
+        $html .= "<div class='admin_section_title'>"._("In what order should the content displayed?").": </div>\n";
+        $html .= "<div class='admin_section_data'>\n";
+        $name = "content_group_".$this->id."_content_ordering_mode";
 
-		$i = 0;
-		$tab = null;
-		foreach ($this->CONTENT_ORDERING_MODES as $select_mode_id => $select_mode_descr)
-		{
-			$tab[$i][0] = $select_mode_id;
-			$tab[$i][1] = $select_mode_descr;
-			$i ++;
-		}
-		$html .= FormSelectGenerator :: generateFromArray($tab, $this->getContentOrderingMode(), $name, null, false);
-		$html .= "</div>\n";
-		$html .= "</div>\n";
+        $i = 0;
+        $tab = null;
+        foreach ($this->CONTENT_ORDERING_MODES as $select_mode_id => $select_mode_descr)
+        {
+            $tab[$i][0] = $select_mode_id;
+            $tab[$i][1] = $select_mode_descr;
+            $i ++;
+        }
+        $html .= FormSelectGenerator :: generateFromArray($tab, $this->getContentOrderingMode(), $name, null, false);
+        $html .= "</div>\n";
+        $html .= "</div>\n";
 
-		/*content_changes_on_mode */
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("When does the content rotate?").": </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "content_group_".$this->id."_content_changes_on_mode";
-		$i = 0;
-		$tab = null;
-		foreach ($this->CONTENT_CHANGES_ON_MODES as $select_mode_id => $select_mode_descr)
-		{
-			$tab[$i][0] = $select_mode_id;
-			$tab[$i][1] = $select_mode_descr;
-			$i ++;
-		}
-		$html .= FormSelectGenerator :: generateFromArray($tab, $this->getContentChangesOnMode(), $name, null, false);
-		$html .= "</div>\n";
-		$html .= "</div>\n";
+        /*content_changes_on_mode */
+        $html .= "<div class='admin_section_container'>\n";
+        $html .= "<div class='admin_section_title'>"._("When does the content rotate?").": </div>\n";
+        $html .= "<div class='admin_section_data'>\n";
+        $name = "content_group_".$this->id."_content_changes_on_mode";
+        $i = 0;
+        $tab = null;
+        foreach ($this->CONTENT_CHANGES_ON_MODES as $select_mode_id => $select_mode_descr)
+        {
+            $tab[$i][0] = $select_mode_id;
+            $tab[$i][1] = $select_mode_descr;
+            $i ++;
+        }
+        $html .= FormSelectGenerator :: generateFromArray($tab, $this->getContentChangesOnMode(), $name, null, false);
+        $html .= "</div>\n";
+        $html .= "</div>\n";
 
-		/* allow_repeat*/
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Can content be shown more than once to the same user?").": </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "content_group_".$this->id."_allow_repeat";
-		$i = 0;
-		$tab = null;
-		foreach ($this->ALLOW_REPEAT_MODES as $select_mode_id => $select_mode_descr)
-		{
-			$tab[$i][0] = $select_mode_id;
-			$tab[$i][1] = $select_mode_descr;
-			$i ++;
-		}
-		$html .= FormSelectGenerator :: generateFromArray($tab, $this->getAllowRepeat(), $name, null, false);
-		$html .= "</div>\n";
-		$html .= "</div>\n";
+        /* allow_repeat*/
+        $html .= "<div class='admin_section_container'>\n";
+        $html .= "<div class='admin_section_title'>"._("Can content be shown more than once to the same user?").": </div>\n";
+        $html .= "<div class='admin_section_data'>\n";
+        $name = "content_group_".$this->id."_allow_repeat";
+        $i = 0;
+        $tab = null;
+        foreach ($this->ALLOW_REPEAT_MODES as $select_mode_id => $select_mode_descr)
+        {
+            $tab[$i][0] = $select_mode_id;
+            $tab[$i][1] = $select_mode_descr;
+            $i ++;
+        }
+        $html .= FormSelectGenerator :: generateFromArray($tab, $this->getAllowRepeat(), $name, null, false);
+        $html .= "</div>\n";
+        $html .= "</div>\n";
 
-		/*display_num_elements*/
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>". ("Pick how many elements for each display?").": </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "content_group_".$this->id."_display_num_elements";
-		$value = $this->getDisplayNumElements();
-		$html .= "<input type='text' size='2' value='$value' name='$name'>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
+        /*display_num_elements*/
+        $html .= "<div class='admin_section_container'>\n";
+        $html .= "<div class='admin_section_title'>". ("Pick how many elements for each display?").": </div>\n";
+        $html .= "<div class='admin_section_data'>\n";
+        $name = "content_group_".$this->id."_display_num_elements";
+        $value = $this->getDisplayNumElements();
+        $html .= "<input type='text' size='2' value='$value' name='$name'>\n";
+        $html .= "</div>\n";
+        $html .= "</div>\n";
 
-		/* content_group_element (table)*/
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Content group elements:")."</div>\n";
+        /* content_group_element (table)*/
+        $html .= "<div class='admin_section_container'>\n";
+        $html .= "<div class='admin_section_title'>"._("Content group elements:")."</div>\n";
 
-		$html .= "<ul class='admin_section_list'>\n";
-		foreach ($this->getElements() as $element)
-		{
-			$html .= "<li class='admin_section_list_item'>\n";
-			$html .= "<div class='admin_section_data'>\n";
-			$html .= $element->getAdminUI();
-			$html .= "</div'>\n";
-			$html .= "<div class='admin_section_tools'>\n";
-			$name = "content_group_".$this->id."_element_".$element->GetId()."_erase";
-			$html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
-			$html .= "</div>\n";
-			$html .= "</li>\n";
-		}
-		$html .= "<li class='admin_section_list_item'>\n";
+        $html .= "<ul class='admin_section_list'>\n";
+        foreach ($this->getElements() as $element)
+        {
+            $html .= "<li class='admin_section_list_item'>\n";
+            $html .= "<div class='admin_section_data'>\n";
+            $html .= $element->getAdminUI();
+            $html .= "</div'>\n";
+            $html .= "<div class='admin_section_tools'>\n";
+            $name = "content_group_".$this->id."_element_".$element->GetId()."_erase";
+            $html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
+            $html .= "</div>\n";
+            $html .= "</li>\n";
+        }
+        $html .= "<li class='admin_section_list_item'>\n";
         $html .= "<b>"._("Add a new content OR select previously created content")."</b><br>";
-		$html .= self :: getNewContentUI("content_group_{$this->id}_new_element")."<br>";
+        $html .= self :: getNewContentUI("content_group_{$this->id}_new_element")."<br>";
         $html .= self :: getSelectContentUI("content_group_{$this->id}_existing_element", "AND content_id != '$this->id'");
         $html .= "<input type='submit' name='content_group_{$this->id}_existing_element_add' value='"._("Add")."'>";
         $html .= "</li>\n";
-		$html .= "</ul>\n";
-		$html .= "</div>\n";
+        $html .= "</ul>\n";
+        $html .= "</div>\n";
 
-		$html .= $subclass_admin_interface;
-		return parent :: getAdminUI($html);
-	}
+        $html .= $subclass_admin_interface;
+        return parent :: getAdminUI($html);
+    }
 
-	function processAdminUI()
-	{
+    function processAdminUI()
+    {
         if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
         {
-    		parent :: processAdminUI();
+            parent :: processAdminUI();
 
-    		/* is_artistic_content */
-    		$name = "content_group_".$this->id."_is_artistic_content";
-    		!empty ($_REQUEST[$name]) ? $this->setIsArtisticContent(true) : $this->setIsArtisticContent(false);
+            /* is_artistic_content */
+            $name = "content_group_".$this->id."_is_artistic_content";
+            !empty ($_REQUEST[$name]) ? $this->setIsArtisticContent(true) : $this->setIsArtisticContent(false);
 
-    		/* is_locative_content */
-    		$name = "content_group_".$this->id."_is_locative_content";
-    		!empty ($_REQUEST[$name]) ? $this->setIsLocativeContent(true) : $this->setIsLocativeContent(false);
+            /* is_locative_content */
+            $name = "content_group_".$this->id."_is_locative_content";
+            !empty ($_REQUEST[$name]) ? $this->setIsLocativeContent(true) : $this->setIsLocativeContent(false);
 
-    		/* content_ordering_mode */
-    		$name = "content_group_".$this->id."_content_ordering_mode";
-    		$this->setContentOrderingMode(FormSelectGenerator :: getResult($name, null));
+            /* content_ordering_mode */
+            $name = "content_group_".$this->id."_content_ordering_mode";
+            $this->setContentOrderingMode(FormSelectGenerator :: getResult($name, null));
 
-    		/*content_changes_on_mode */
-    		$name = "content_group_".$this->id."_content_changes_on_mode";
-    		$this->setContentChangesOnMode(FormSelectGenerator :: getResult($name, null));
+            /*content_changes_on_mode */
+            $name = "content_group_".$this->id."_content_changes_on_mode";
+            $this->setContentChangesOnMode(FormSelectGenerator :: getResult($name, null));
 
-    		/* allow_repeat*/
-    		$name = "content_group_".$this->id."_allow_repeat";
-    		$this->setAllowRepeat(FormSelectGenerator :: getResult($name, null));
+            /* allow_repeat*/
+            $name = "content_group_".$this->id."_allow_repeat";
+            $this->setAllowRepeat(FormSelectGenerator :: getResult($name, null));
 
-    		/*display_num_elements*/
-    		$name = "content_group_".$this->id."_display_num_elements";
-    		$this->setDisplayNumElements($_REQUEST[$name]);
+            /*display_num_elements*/
+            $name = "content_group_".$this->id."_display_num_elements";
+            $this->setDisplayNumElements($_REQUEST[$name]);
 
-    		/* content_group_element */
-    		foreach ($this->getElements() as $element)
-    		{
-    			$name = "content_group_".$this->id."_element_".$element->GetId()."_erase";
-    			if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
-    			{
-    				$element->delete($errmsg);
-    			}
-    			else
-    			{
-    				$element->processAdminUI();
-    			}
-    		}
+            /* content_group_element */
+            foreach ($this->getElements() as $element)
+            {
+                $name = "content_group_".$this->id."_element_".$element->GetId()."_erase";
+                if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
+                {
+                    $element->delete($errmsg);
+                }
+                else
+                {
+                    $element->processAdminUI();
+                }
+            }
 
             // The two following calls will either add a new element or add an existing one ( depending on what button the user clicked
             /* We explicitely call the ContentGroupElement version of processNewContentUI */
@@ -457,13 +474,13 @@ class ContentGroup extends Content
             // Last parameters allows for existing content ( if any was selected )
             ContentGroupElement :: processNewContentUI("content_group_{$this->id}_existing_element", $this, true);
         }
-	}
+    }
 
-	/** Is this Content element displayable at this hotspot
-	 * @param $node Node, optionnal
-	 * @return true or false */
-	public function isDisplayableAt($node)
-	{
+    /** Is this Content element displayable at this hotspot
+     * @param $node Node, optionnal
+     * @return true or false */
+    public function isDisplayableAt($node)
+    {
         $old_curent_node = Node::getCurrentNode();
         Node::setCurrentNode($node);
 
@@ -478,173 +495,173 @@ class ContentGroup extends Content
         }
 
         return $retval;
-	}
+    }
 
 
-	/**Get the next element or elements to be displayed, depending on the display mode
-	* @return an array of ContentGroupElement or an empty arrray */
-	function getDisplayElements()
-	{
-		global $db;
-		$retval = array ();
-		$user = User :: getCurrentUser();
-		if ($user)
-		{
-			$user_id = $user->getId();
-		}
-		else
-		{
-			$user_id = '';
-		}
-		$node = Node :: getCurrentNode();
-		if ($node)
-		{
-			$node_id = $node->getId();
-		}
-		else
-		{
-			$node_id = '';
-		}
-		$display_num_elements = $this->getDisplayNumElements();
+    /**Get the next element or elements to be displayed, depending on the display mode
+    * @return an array of ContentGroupElement or an empty arrray */
+    function getDisplayElements()
+    {
+        global $db;
+        $retval = array ();
+        $user = User :: getCurrentUser();
+        if ($user)
+        {
+            $user_id = $user->getId();
+        }
+        else
+        {
+            $user_id = '';
+        }
+        $node = Node :: getCurrentNode();
+        if ($node)
+        {
+            $node_id = $node->getId();
+        }
+        else
+        {
+            $node_id = '';
+        }
+        $display_num_elements = $this->getDisplayNumElements();
 
-		/** First, find if we have content to display again because we haven't passed the rotation period */
-		/*  'ALWAYS' => "Content always rotates"
-		 *  'NEXT_DAY' => "Content rotates once per day"
-		 *  'NEXT_LOGIN' => "Content rotates once per session"
-		 *  'NEXT_NODE' => "Content rotates each time you change node"*/
-		$content_changes_on_mode = $this->getContentChangesOnMode();
+        /** First, find if we have content to display again because we haven't passed the rotation period */
+        /*  'ALWAYS' => "Content always rotates"
+         *  'NEXT_DAY' => "Content rotates once per day"
+         *  'NEXT_LOGIN' => "Content rotates once per session"
+         *  'NEXT_NODE' => "Content rotates each time you change node"*/
+        $content_changes_on_mode = $this->getContentChangesOnMode();
 
-		$redisplay_objects = array ();
-		if ($content_changes_on_mode != 'ALWAYS')
-		{
-			$sql = "SELECT content_group_element_id FROM content_group_element \n";
-			$sql .= "JOIN content_display_log ON (content_group_element_id=content_id) \n";
-			$sql .= " WHERE content_group_id='$this->id' \n";
+        $redisplay_objects = array ();
+        if ($content_changes_on_mode != 'ALWAYS')
+        {
+            $sql = "SELECT content_group_element_id FROM content_group_element \n";
+            $sql .= "JOIN content_display_log ON (content_group_element_id=content_id) \n";
+            $sql .= " WHERE content_group_id='$this->id' \n";
 
-			if ($content_changes_on_mode == 'NEXT_DAY')
-			{
-				$sql .= "AND date_trunc('day', last_display_timestamp) = date_trunc('day', CURRENT_DATE) \n";
-			}
-			if ($content_changes_on_mode == 'NEXT_LOGIN')
-			{
-				/**@todo Must fix, this will fail if the user never really connected from a hotspot... */
-				$sql .= "AND last_display_timestamp > (SELECT timestamp_in FROM connections WHERE user_id='$user_id' ORDER BY timestamp_in DESC LIMIT 1) \n";
-			}
-			if ($content_changes_on_mode == 'NEXT_NODE')
-			{
-				/** We find the close time of the last connection from another node */
-				$sql .= "AND last_display_timestamp > (SELECT timestamp_out FROM connections WHERE user_id='$user_id' AND node_id != '$node_id' ORDER BY timestamp_in DESC LIMIT 1) \n";
-			}
-			/* There usually won't be more than one, but if there is, we want the most recents */
-			$sql .= " ORDER BY last_display_timestamp DESC ";
-			$db->ExecSql($sql, $redisplay_rows, false);
-			$redisplay_objects = array ();
-			if ($redisplay_rows != null)
-			{
-				foreach ($redisplay_rows as $redisplay_row)
-				{
-					$object = self :: getObject($redisplay_row['content_group_element_id']);
-					if ($object->isDisplayableAt(Node :: GetCurrentNode()) == true) /** Only content available at this hotspot are considered */
-					{
-						$redisplay_objects[] = $object;
-					}
-				}
-			}
-			/* Pick the proper number of elements to be re-displayed */
-			$redisplay_objects = array_slice($redisplay_objects, 0, $display_num_elements);
+            if ($content_changes_on_mode == 'NEXT_DAY')
+            {
+                $sql .= "AND date_trunc('day', last_display_timestamp) = date_trunc('day', CURRENT_DATE) \n";
+            }
+            if ($content_changes_on_mode == 'NEXT_LOGIN')
+            {
+                /**@todo Must fix, this will fail if the user never really connected from a hotspot... */
+                $sql .= "AND last_display_timestamp > (SELECT timestamp_in FROM connections WHERE user_id='$user_id' ORDER BY timestamp_in DESC LIMIT 1) \n";
+            }
+            if ($content_changes_on_mode == 'NEXT_NODE')
+            {
+                /** We find the close time of the last connection from another node */
+                $sql .= "AND last_display_timestamp > (SELECT timestamp_out FROM connections WHERE user_id='$user_id' AND node_id != '$node_id' ORDER BY timestamp_in DESC LIMIT 1) \n";
+            }
+            /* There usually won't be more than one, but if there is, we want the most recents */
+            $sql .= " ORDER BY last_display_timestamp DESC ";
+            $db->ExecSql($sql, $redisplay_rows, false);
+            $redisplay_objects = array ();
+            if ($redisplay_rows != null)
+            {
+                foreach ($redisplay_rows as $redisplay_row)
+                {
+                    $object = self :: getObject($redisplay_row['content_group_element_id']);
+                    if ($object->isDisplayableAt(Node :: GetCurrentNode()) == true) /** Only content available at this hotspot are considered */
+                    {
+                        $redisplay_objects[] = $object;
+                    }
+                }
+            }
+            /* Pick the proper number of elements to be re-displayed */
+            $redisplay_objects = array_slice($redisplay_objects, 0, $display_num_elements);
 
-		}
+        }
 
-		$new_objects = array ();
-		if (count($redisplay_objects) < $display_num_elements)
-		{
-			/* We need new content */
+        $new_objects = array ();
+        if (count($redisplay_objects) < $display_num_elements)
+        {
+            /* We need new content */
 
-			$sql = "SELECT content_group_element_id FROM content_group_element WHERE content_group_id='$this->id' \n";
+            $sql = "SELECT content_group_element_id FROM content_group_element WHERE content_group_id='$this->id' \n";
 
-			/*'YES' => "Content can be shown more than once", 'NO' => "Content can only be shown once", 'ONCE_PER_NODE' => "Content can be shown more than once, but not at the same node"*/
-			$allow_repeat = $this->getAllowRepeat();
+            /*'YES' => "Content can be shown more than once", 'NO' => "Content can only be shown once", 'ONCE_PER_NODE' => "Content can be shown more than once, but not at the same node"*/
+            $allow_repeat = $this->getAllowRepeat();
 
-			if ($allow_repeat == 'NO')
-			{
-				$sql .= "AND content_group_element_id NOT IN (SELECT content_id FROM content_display_log WHERE user_id = '$user_id') \n";
-			}
-			elseif ($allow_repeat == 'ONCE_PER_NODE')
-			{
-				$sql .= "AND content_group_element_id NOT IN (SELECT content_id FROM content_display_log WHERE user_id = '$user_id' AND  node_id = '$node_id') \n";
-			}
+            if ($allow_repeat == 'NO')
+            {
+                $sql .= "AND content_group_element_id NOT IN (SELECT content_id FROM content_display_log WHERE user_id = '$user_id') \n";
+            }
+            elseif ($allow_repeat == 'ONCE_PER_NODE')
+            {
+                $sql .= "AND content_group_element_id NOT IN (SELECT content_id FROM content_display_log WHERE user_id = '$user_id' AND  node_id = '$node_id') \n";
+            }
 
-			/* 'RANDOM' => "Pick content elements randomly",'SEQUENTIAL' => "Pick content elements in sequential order" */
-			$content_ordering_mode = $this->getContentOrderingMode();
+            /* 'RANDOM' => "Pick content elements randomly",'SEQUENTIAL' => "Pick content elements in sequential order" */
+            $content_ordering_mode = $this->getContentOrderingMode();
 
-			if ($content_ordering_mode == 'SEQUENTIAL')
-			{
-				$order_by = ' ORDER BY display_order ';
-			$sql_last_order = "SELECT display_order FROM content_group_element \n";
-			$sql_last_order .= "JOIN content_display_log ON (content_group_element_id=content_id) \n";
-			$sql_last_order .= " WHERE content_group_id='$this->id' \n";
-			$sql_last_order .= " ORDER BY last_display_timestamp DESC LIMIT 1";
-			$db->ExecSqlUniqueRes($sql_last_order, $last_order_row, false);
-			if($last_order_row['display_order']!=null)
-			{
-			$last_order=$last_order_row['display_order'];
-			}
-			else
-			{
-			$last_order=0;
-			}
-			}
-			else
-			{
-				$order_by = ' ';
-			}
-			$sql .= $order_by;
+            if ($content_ordering_mode == 'SEQUENTIAL')
+            {
+                $order_by = ' ORDER BY display_order ';
+            $sql_last_order = "SELECT display_order FROM content_group_element \n";
+            $sql_last_order .= "JOIN content_display_log ON (content_group_element_id=content_id) \n";
+            $sql_last_order .= " WHERE content_group_id='$this->id' \n";
+            $sql_last_order .= " ORDER BY last_display_timestamp DESC LIMIT 1";
+            $db->ExecSqlUniqueRes($sql_last_order, $last_order_row, false);
+            if($last_order_row['display_order']!=null)
+            {
+            $last_order=$last_order_row['display_order'];
+            }
+            else
+            {
+            $last_order=0;
+            }
+            }
+            else
+            {
+                $order_by = ' ';
+            }
+            $sql .= $order_by;
 
-			$db->ExecSql($sql, $element_rows, false);
-			if ($element_rows == null)
-			{
-				$element_rows = array ();
-			}
-			foreach ($element_rows as $element_row)
-			{
-				$object = self :: getObject($element_row['content_group_element_id']);
-				if ($object->isDisplayableAt(Node :: GetCurrentNode()) == true) /** Only content available at this hotspot are considered */
-				{
-					$new_objects[] = $object;
-				}
-			}
+            $db->ExecSql($sql, $element_rows, false);
+            if ($element_rows == null)
+            {
+                $element_rows = array ();
+            }
+            foreach ($element_rows as $element_row)
+            {
+                $object = self :: getObject($element_row['content_group_element_id']);
+                if ($object->isDisplayableAt(Node :: GetCurrentNode()) == true) /** Only content available at this hotspot are considered */
+                {
+                    $new_objects[] = $object;
+                }
+            }
 
-			if ($content_ordering_mode == 'RANDOM')
-			{
-				shuffle($new_objects);
-			}
-			elseif($content_ordering_mode == 'SEQUENTIAL')
-			{
-				foreach($new_objects as $object)
-				{
-					if($object->getDisplayOrder()<=$last_order)
-					{
-						array_push ( $new_objects, array_shift ( $new_objects ));
-						//echo " Pushed ".$object->getDisplayOrder();
-					}
-				}
-			}
+            if ($content_ordering_mode == 'RANDOM')
+            {
+                shuffle($new_objects);
+            }
+            elseif($content_ordering_mode == 'SEQUENTIAL')
+            {
+                foreach($new_objects as $object)
+                {
+                    if($object->getDisplayOrder()<=$last_order)
+                    {
+                        array_push ( $new_objects, array_shift ( $new_objects ));
+                        //echo " Pushed ".$object->getDisplayOrder();
+                    }
+                }
+            }
 
-			/** Pick the proper number of elements */
-			$num_to_pick = $display_num_elements - count($redisplay_objects);
-			$new_objects = array_slice($new_objects, 0, $num_to_pick);
-		}
-		/*
-		echo "<pre>Redisplay: ";
-		print_r($redisplay_objects);
-		echo "New objects: ";
-		print_r($new_objects);
-		echo "</pre>";
+            /** Pick the proper number of elements */
+            $num_to_pick = $display_num_elements - count($redisplay_objects);
+            $new_objects = array_slice($new_objects, 0, $num_to_pick);
+        }
+        /*
+        echo "<pre>Redisplay: ";
+        print_r($redisplay_objects);
+        echo "New objects: ";
+        print_r($new_objects);
+        echo "</pre>";
 */
-		$retval = array_merge($new_objects, $redisplay_objects);
-		//echo count($retval).' returned <br>';
-		return $retval;
-	}
+        $retval = array_merge($new_objects, $redisplay_objects);
+        //echo count($retval).' returned <br>';
+        return $retval;
+    }
 
     /**
      * This attribute is for internal use ( to tell if a certain class could be
@@ -695,81 +712,90 @@ class ContentGroup extends Content
         return $this->expand_status;
     }
 
-	/** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
-	 * @param $subclass_admin_interface Html content of the interface element of a children
+    /** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
+     * @param $subclass_admin_interface Html content of the interface element of a children
      * @param boolean $hide_elements allows the child class ( for example
      * Pattern Language) to tell the content group not to display elements ) for
      * elements that need to be hidden before subscription
-	 * @return The HTML fragment for this interface */
-	public function getUserUI($subclass_user_interface = null, $hide_elements = false)
-	{
-		$html = '';
-		$html .= "<div class='user_ui_container'>\n";
-		$html .= "<div class='user_ui_object_class'>ContentGroup (".get_class($this)." instance)</div>\n";
+     * @return The HTML fragment for this interface */
+    public function getUserUI($subclass_user_interface = null, $hide_elements = false)
+    {
+        $html = '';
+        $html .= "<div class='user_ui_container'>\n";
+        $html .= "<div class='user_ui_object_class'>ContentGroup (".get_class($this)." instance)</div>\n";
 
-		if($hide_elements == false)
+        if($hide_elements == false)
         {
             $display_elements = $this->getDisplayElements();
-    		if (count($display_elements) > 0)
-    		{
-    			foreach ($display_elements as $display_element)
-    			{
+            if (count($display_elements) > 0)
+            {
+                foreach ($display_elements as $display_element)
+                {
                     // If the content group logging is disabled, all the children will inherit this property temporarly
                     if($this->getLoggingStatus() == false)
                         $display_element->setLoggingStatus(false);
-    				$html .= $display_element->getUserUI();
-    			}
-    		}
-    		else
-    		{
-    			$html .= '<p class="warningmsg">'._("Sorry, no elements available at this hotspot or all elements of the content group have already been shown")."</p>\n";
-    		}
+                    $html .= $display_element->getUserUI();
+                }
+            }
+            else
+            {
+                $html .= '<p class="warningmsg">'._("Sorry, no elements available at this hotspot or all elements of the content group have already been shown")."</p>\n";
+            }
         }
 
-		$html .= $subclass_user_interface;
-		$html .= "</div>\n";
+        $html .= $subclass_user_interface;
+        $html .= "</div>\n";
 
-		return parent :: getUserUI($html);
-	}
+        return parent :: getUserUI($html);
+    }
 
-	/**Get all elements
-	 * @return an array of ContentGroupElement or an empty arrray */
-	function getElements()
-	{
-		global $db;
-		$retval = array ();
-		$sql = "SELECT content_group_element_id FROM content_group_element WHERE content_group_id='$this->id' ORDER BY display_order";
-		$db->ExecSql($sql, $element_rows, false);
-		if ($element_rows != null)
-		{
-			foreach ($element_rows as $element_row)
-			{
-				$retval[] = self :: getObject($element_row['content_group_element_id']);
-			}
-		}
-		return $retval;
-	}
+    /**Get all elements
+     * @return an array of ContentGroupElement or an empty arrray */
+    function getElements()
+    {
+        global $db;
+        $retval = array ();
+        $sql = "SELECT content_group_element_id FROM content_group_element WHERE content_group_id='$this->id' ORDER BY display_order";
+        $db->ExecSql($sql, $element_rows, false);
+        if ($element_rows != null)
+        {
+            foreach ($element_rows as $element_row)
+            {
+                $retval[] = self :: getObject($element_row['content_group_element_id']);
+            }
+        }
+        return $retval;
+    }
 
-	/** Delete this Content from the database
-	*/
-	public function delete(& $errmsg)
-	{
-		if ($this->isPersistent() == false)
-		{
-			foreach ($this->getElements() as $element)
-			{
-				$element->delete($errmsg);
-			}
-		}
-		return parent :: delete($errmsg);
-	}
-		/** Reloads the object from the database.  Should normally be called after a set operation.
-	 * This function is private because calling it from a subclass will call the
-	 * constructor from the wrong scope */
-	private function refresh()
-	{
-		$this->__construct($this->id);
-	}
+    /** Delete this Content from the database
+    */
+    public function delete(& $errmsg)
+    {
+        if ($this->isPersistent() == false)
+        {
+            foreach ($this->getElements() as $element)
+            {
+                $element->delete($errmsg);
+            }
+        }
+        return parent :: delete($errmsg);
+    }
+        /** Reloads the object from the database.  Should normally be called after a set operation.
+     * This function is private because calling it from a subclass will call the
+     * constructor from the wrong scope */
+    private function refresh()
+    {
+        $this->__construct($this->id);
+    }
 
-} // End class
+}
+
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * c-hanging-comment-ender-p: nil
+ * End:
+ */
+
 ?>

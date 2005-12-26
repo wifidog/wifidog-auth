@@ -1,30 +1,56 @@
 <?php
 
-// $Id$
-/********************************************************************\
- * This program is free software; you can redistribute it and/or    *
- * modify it under the terms of the GNU General Public License as   *
- * published by the Free Software Foundation; either version 2 of   *
- * the License, or (at your option) any later version.              *
- *                                                                  *
- * This program is distributed in the hope that it will be useful,  *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of   *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the    *
- * GNU General Public License for more details.                     *
- *                                                                  *
- * You should have received a copy of the GNU General Public License*
- * along with this program; if not, contact:                        *
- *                                                                  *
- * Free Software Foundation           Voice:  +1-617-542-5942       *
- * 59 Temple Place - Suite 330        Fax:    +1-617-542-2652       *
- * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
- *                                                                  *
- \********************************************************************/
-/**@file index.php Displays the portal page
- * @author Copyright (C) 2004 Benoit Gr�goire et Philippe April
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
+
+// +-------------------------------------------------------------------+
+// | WiFiDog Authentication Server                                     |
+// | =============================                                     |
+// |                                                                   |
+// | The WiFiDog Authentication Server is part of the WiFiDog captive  |
+// | portal suite.                                                     |
+// +-------------------------------------------------------------------+
+// | PHP version 5 required.                                           |
+// +-------------------------------------------------------------------+
+// | Homepage:     http://www.wifidog.org/                             |
+// | Source Forge: http://sourceforge.net/projects/wifidog/            |
+// +-------------------------------------------------------------------+
+// | This program is free software; you can redistribute it and/or     |
+// | modify it under the terms of the GNU General Public License as    |
+// | published by the Free Software Foundation; either version 2 of    |
+// | the License, or (at your option) any later version.               |
+// |                                                                   |
+// | This program is distributed in the hope that it will be useful,   |
+// | but WITHOUT ANY WARRANTY; without even the implied warranty of    |
+// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |
+// | GNU General Public License for more details.                      |
+// |                                                                   |
+// | You should have received a copy of the GNU General Public License |
+// | along with this program; if not, contact:                         |
+// |                                                                   |
+// | Free Software Foundation           Voice:  +1-617-542-5942        |
+// | 59 Temple Place - Suite 330        Fax:    +1-617-542-2652        |
+// | Boston, MA  02111-1307,  USA       gnu@gnu.org                    |
+// |                                                                   |
+// +-------------------------------------------------------------------+
+
+/**
+ * Displays the portal page
+ *
+ * @package    WiFiDogAuthServer
+ * @author     Philippe April
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @copyright  2004-2005 April
+ * @copyright  2004-2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
+ * inc.
+ * @version    CVS: $Id$
+ * @link       http://sourceforge.net/projects/wifidog/
  */
 
+/**
+ * @ignore
+ */
 define('BASEPATH', '../');
+
 require_once BASEPATH.'include/common.php';
 require_once BASEPATH.'include/common_interface.php';
 require_once BASEPATH.'classes/Node.php';
@@ -33,20 +59,20 @@ define('TOOLBAR_WIDTH','250');//Must match the stylesheet for the tool section w
 
 $node = null;
 if (!empty ($_REQUEST['gw_id']))
-	$node = Node :: getObject($_REQUEST['gw_id']);
+    $node = Node :: getObject($_REQUEST['gw_id']);
 
 if ($node == null)
 {
-	$smarty->display("templates/message_unknown_hotspot.html");
-	exit;
+    $smarty->display("templates/message_unknown_hotspot.html");
+    exit;
 }
 $network = $node->getNetwork();
 
-/*  If this node has a custom portal defined, and the network config allows it, redirect to the custom portal */ 
+/*  If this node has a custom portal defined, and the network config allows it, redirect to the custom portal */
 $custom_portal_url = $node->getCustomPortalRedirectUrl();
 if(!empty($custom_portal_url) && $network->getCustomPortalRedirectAllowed())
 {
-	header("Location: {$custom_portal_url}");
+    header("Location: {$custom_portal_url}");
 }
 
 
@@ -69,12 +95,12 @@ $tool_html .= '<p class="indent">'."\n";
 $current_node = Node :: getCurrentNode();
 if ($current_node != null)
 {
-	$current_node_id = $current_node->getId();
-	$online_users = $current_node->getOnlineUsers();
-	$num_online_users = count($online_users);
-	if ($num_online_users > 0)
-	{
-		//$tool_html .= $num_online_users.' '._("other users online at this hotspot...");
+    $current_node_id = $current_node->getId();
+    $online_users = $current_node->getOnlineUsers();
+    $num_online_users = count($online_users);
+    if ($num_online_users > 0)
+    {
+        //$tool_html .= $num_online_users.' '._("other users online at this hotspot...");
         $tool_html .= "<ul class='users_list'>\n";
         foreach($online_users as $online_user) {
             $tool_html .= "<li>";
@@ -89,27 +115,27 @@ if ($current_node != null)
             $tool_html .= "</li>\n";
         }
         $tool_html .= "</ul>\n";
-	}
-	else
-	{
-		$tool_html .= _("Nobody is online at this hotspot...");
-	}
+    }
+    else
+    {
+        $tool_html .= _("Nobody is online at this hotspot...");
+    }
 }
 else
 {
-	$network = Network::getCurrentNetwork();
-	$current_node_id = null;
-	$tool_html .= _("You are not currently at a hotspot...");
+    $network = Network::getCurrentNetwork();
+    $current_node_id = null;
+    $tool_html .= _("You are not currently at a hotspot...");
 }
 $tool_html .= "</p>"."\n";
 
 $tool_html .= '<script type="text/javascript">
 function getElementById(id) {
     if (document.all) {
-	return document.getElementById(id);
+    return document.getElementById(id);
     }
     for (i=0;i<document.forms.length;i++) {
-	if (document.forms[i].elements[id]) {return document.forms[i].elements[id]; }
+    if (document.forms[i].elements[id]) {return document.forms[i].elements[id]; }
     }
 }
 
@@ -167,15 +193,15 @@ $tool_html .= "</p>"."\n";
 
 
 
-	$original_url_requested=$session->get(SESS_ORIGINAL_URL_VAR);
-	if(empty($original_url_requested))
-	{
-		$url="missing_original_url.php";
-	}
-	else
-	{
-		$url=$original_url_requested;
-	}
+    $original_url_requested=$session->get(SESS_ORIGINAL_URL_VAR);
+    if(empty($original_url_requested))
+    {
+        $url="missing_original_url.php";
+    }
+    else
+    {
+        $url=$original_url_requested;
+    }
 $tool_html .= '<p class="indent">'."\n";
 $tool_html .= "<a id='wifidog_use_internet' href='$url' onclick=\"
 var size_array = getWindowSize(window);
@@ -230,8 +256,8 @@ $html = '';
 
 // While in validation period, alert user that he should validate his account ASAP
 if($current_user && $current_user->getAccountStatus() == ACCOUNT_STATUS_VALIDATION)
-	$html .= "<div id='warning_message_area'>"._('An email with confirmation instructions was sent to your email address.  Your account has been granted 15 minutes of access to retrieve your email and validate your account.')."</div>";
-	
+    $html .= "<div id='warning_message_area'>"._('An email with confirmation instructions was sent to your email address.  Your account has been granted 15 minutes of access to retrieve your email and validate your account.')."</div>";
+
 $html .= "<div id='portal_container'>\n";
 
 
@@ -246,15 +272,15 @@ else
     $contents = Network :: getCurrentNetwork()->getAllContent();
 if ($contents)
 {
-	foreach ($contents as $content)
-	{
-		if ($content->isDisplayableAt($node))
-		{
-			$html .= "<div class='portal_content'>\n";
-			$html .= $content->getUserUI();
-			$html .= "</div>\n";
-		}
-	}
+    foreach ($contents as $content)
+    {
+        if ($content->isDisplayableAt($node))
+        {
+            $html .= "<div class='portal_content'>\n";
+            $html .= $content->getUserUI();
+            $html .= "</div>\n";
+        }
+    }
 }
 $html .= "</div>\n";
 
@@ -271,22 +297,22 @@ if($contents)
     $node_homepage = $node->getHomePageURL();
     if (!empty ($node_homepage))
     {
-    	$html .= "<a href='$node_homepage'>";
+        $html .= "<a href='$node_homepage'>";
     }
     $html .= $node->getName();
     if (!empty ($node_homepage))
     {
-    	$html .= "</a>\n";
+        $html .= "</a>\n";
     }
     $html .= "</span>";
     foreach ($contents as $content)
     {
-    	if ($content->isDisplayableAt($node))
-    	{
-    		$html .= "<div class='portal_content'>\n";
-    		$html .= $content->getUserUI();
-    		$html .= "</div>\n";
-    	}
+        if ($content->isDisplayableAt($node))
+        {
+            $html .= "<div class='portal_content'>\n";
+            $html .= $content->getUserUI();
+            $html .= "</div>\n";
+        }
     }
     $html .= "</div>\n";
 }
@@ -301,9 +327,9 @@ if($current_user)
         $html .= "<h1>"._("My content")."</h1>\n";
         foreach ($contents as $content)
         {
-        	$html .= "<div class='portal_content'>\n";
-        	$html .= $content->getUserUI();
-        	$html .= "</div>\n";
+            $html .= "<div class='portal_content'>\n";
+            $html .= $content->getUserUI();
+            $html .= "</div>\n";
         }
         $html .= "</div>\n";
     }
@@ -317,4 +343,13 @@ $html .= "</div>\n";
 
 $ui->setMainContent($html);
 $ui->display();
+
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * c-hanging-comment-ender-p: nil
+ * End:
+ */
+
 ?>

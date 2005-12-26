@@ -1,32 +1,51 @@
 <?php
-  /********************************************************************\
-   * This program is free software; you can redistribute it and/or    *
-   * modify it under the terms of the GNU General Public License as   *
-   * published by the Free Software Foundation; either version 2 of   *
-   * the License, or (at your option) any later version.              *
-   *                                                                  *
-   * This program is distributed in the hope that it will be useful,  *
-   * but WITHOUT ANY WARRANTY; without even the implied warranty of   *
-   * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the    *
-   * GNU General Public License for more details.                     *
-   *                                                                  *
-   * You should have received a copy of the GNU General Public License*
-   * along with this program; if not, contact:                        *
-   *                                                                  *
-   * Free Software Foundation           Voice:  +1-617-542-5942       *
-   * 59 Temple Place - Suite 330        Fax:    +1-617-542-2652       *
-   * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
-   *                                                                  *
-   \********************************************************************/
-  /**@file stats.php
-   * @author Copyright (C) 2005 Philippe April
-   */
-   /*
-ini_set('error_reporting', E_ALL);
-ini_set('display_errors', true);
-*/
 
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
+
+// +-------------------------------------------------------------------+
+// | WiFiDog Authentication Server                                     |
+// | =============================                                     |
+// |                                                                   |
+// | The WiFiDog Authentication Server is part of the WiFiDog captive  |
+// | portal suite.                                                     |
+// +-------------------------------------------------------------------+
+// | PHP version 5 required.                                           |
+// +-------------------------------------------------------------------+
+// | Homepage:     http://www.wifidog.org/                             |
+// | Source Forge: http://sourceforge.net/projects/wifidog/            |
+// +-------------------------------------------------------------------+
+// | This program is free software; you can redistribute it and/or     |
+// | modify it under the terms of the GNU General Public License as    |
+// | published by the Free Software Foundation; either version 2 of    |
+// | the License, or (at your option) any later version.               |
+// |                                                                   |
+// | This program is distributed in the hope that it will be useful,   |
+// | but WITHOUT ANY WARRANTY; without even the implied warranty of    |
+// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |
+// | GNU General Public License for more details.                      |
+// |                                                                   |
+// | You should have received a copy of the GNU General Public License |
+// | along with this program; if not, contact:                         |
+// |                                                                   |
+// | Free Software Foundation           Voice:  +1-617-542-5942        |
+// | 59 Temple Place - Suite 330        Fax:    +1-617-542-2652        |
+// | Boston, MA  02111-1307,  USA       gnu@gnu.org                    |
+// |                                                                   |
+// +-------------------------------------------------------------------+
+
+/**
+ * @package    WiFiDogAuthServer
+ * @author     Philippe April
+ * @copyright  2005 Philippe April
+ * @version    CVS: $Id$
+ * @link       http://sourceforge.net/projects/wifidog/
+ */
+
+/**
+ * @ignore
+ */
 define('BASEPATH','../');
+
 require_once BASEPATH.'admin/admin_common.php';
 require_once BASEPATH.'classes/MainUI.php';
 require_once BASEPATH.'classes/Utils.php';
@@ -34,13 +53,13 @@ require_once BASEPATH.'classes/Utils.php';
 $current_user = User::getCurrentUser();
 
 $statistics = new Statistics();
-	if(!empty($_REQUEST['action']) &&  $_REQUEST['action'] == 'generate')
-	{
+    if(!empty($_REQUEST['action']) &&  $_REQUEST['action'] == 'generate')
+    {
 $statistics -> processAdminUI();
-	}
+    }
 try {
     if (!empty($_REQUEST['node_id'])) {
-	    $node_id = $db->EscapeString($_REQUEST["node_id"]);
+        $node_id = $db->EscapeString($_REQUEST["node_id"]);
         $nodeObject = Node::getObject($node_id);
         $stats_title = _("Connections at") . " '" . $nodeObject->getName() . "'";
     } elseif (isset($_REQUEST['user_id'])) {
@@ -51,7 +70,7 @@ try {
         $user_mac = $db->EscapeString($_REQUEST["user_mac"]);
         $stats_title = _("Connections from MAC") . " '" . $user_mac . "'";
     } elseif (isset($_REQUEST['network_id'])) {
-	    $network_id = $db->EscapeString($_REQUEST["network_id"]);
+        $network_id = $db->EscapeString($_REQUEST["network_id"]);
         $networkObject = Network::getObject($network_id);
         $stats_title = _("Network information for") . " '" . $networkObject->getName() . "'";
     }
@@ -64,7 +83,7 @@ try {
             }
         $html .= "<form>";
         $html .= $statistics->getAdminUI();
-        
+
         if (isset($_REQUEST['node_id'])) {
             $html .= "<input type='hidden' id='node_id' name='node_id' value='{$_REQUEST['node_id']}'>";
         } elseif (isset($_REQUEST['user_id'])) {
@@ -107,4 +126,13 @@ $ui=new MainUI();
 $ui->setToolSection('ADMIN');
 $ui->setMainContent($html);
 $ui->display();
+
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * c-hanging-comment-ender-p: nil
+ * End:
+ */
+
 ?>

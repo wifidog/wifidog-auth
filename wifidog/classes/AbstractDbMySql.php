@@ -1,28 +1,50 @@
 <?php
-  /********************************************************************\
-   * This program is free software; you can redistribute it and/or    *
-   * modify it under the terms of the GNU General Public License as   *
-   * published by the Free Software Foundation; either version 2 of   *
-   * the License, or (at your option) any later version.              *
-   *                                                                  *
-   * This program is distributed in the hope that it will be useful,  *
-   * but WITHOUT ANY WARRANTY; without even the implied warranty of   *
-   * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the    *
-   * GNU General Public License for more details.                     *
-   *                                                                  *
-   * You should have received a copy of the GNU General Public License*
-   * along with this program; if not, contact:                        *
-   *                                                                  *
-   * Free Software Foundation           Voice:  +1-617-542-5942       *
-   * 59 Temple Place - Suite 330        Fax:    +1-617-542-2652       *
-   * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
-   *                                                                  *
-   \********************************************************************/
-  /**@file AbstractDb.php
-   * @author Copyright (C) 2004 Technologies Coeus inc.
-   */
 
-/** Classe statique, permet d'abstraire la connexion � la base de donn�e
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
+
+// +-------------------------------------------------------------------+
+// | WiFiDog Authentication Server                                     |
+// | =============================                                     |
+// |                                                                   |
+// | The WiFiDog Authentication Server is part of the WiFiDog captive  |
+// | portal suite.                                                     |
+// +-------------------------------------------------------------------+
+// | PHP version 5 required.                                           |
+// +-------------------------------------------------------------------+
+// | Homepage:     http://www.wifidog.org/                             |
+// | Source Forge: http://sourceforge.net/projects/wifidog/            |
+// +-------------------------------------------------------------------+
+// | This program is free software; you can redistribute it and/or     |
+// | modify it under the terms of the GNU General Public License as    |
+// | published by the Free Software Foundation; either version 2 of    |
+// | the License, or (at your option) any later version.               |
+// |                                                                   |
+// | This program is distributed in the hope that it will be useful,   |
+// | but WITHOUT ANY WARRANTY; without even the implied warranty of    |
+// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |
+// | GNU General Public License for more details.                      |
+// |                                                                   |
+// | You should have received a copy of the GNU General Public License |
+// | along with this program; if not, contact:                         |
+// |                                                                   |
+// | Free Software Foundation           Voice:  +1-617-542-5942        |
+// | 59 Temple Place - Suite 330        Fax:    +1-617-542-2652        |
+// | Boston, MA  02111-1307,  USA       gnu@gnu.org                    |
+// |                                                                   |
+// +-------------------------------------------------------------------+
+
+/**
+ * @package    WiFiDogAuthServer
+ * @subpackage Database
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @copyright  2004-2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
+ * inc.
+ * @version    CVS: $Id$
+ * @link       http://sourceforge.net/projects/wifidog/
+ */
+
+/**
+ * @ignore
  */
 class AbstractDb
 {
@@ -30,22 +52,22 @@ class AbstractDb
   {
     if ($db_name == NULL)
       {
-	$db_name = CONF_DATABASE_NAME;
+    $db_name = CONF_DATABASE_NAME;
       }
 
     $ptr_connexion = mysql_connect(CONF_DATABASE_HOST, CONF_DATABASE_USER, CONF_DATABASE_PASSWORD);
-       
+
     if ($ptr_connexion == FALSE)
       {
-	echo "<p class=warning>Unable to connect to database on ".CONF_DATABASE_HOST."</p>";
-	return FALSE;
+    echo "<p class=warning>Unable to connect to database on ".CONF_DATABASE_HOST."</p>";
+    return FALSE;
       }
 
     if(!mysql_select_db($db_name))
       {
-	echo "<p class=warning>Unable to select the database: $db_name</p>";
+    echo "<p class=warning>Unable to select the database: $db_name</p>";
         exit();
-	return FALSE;
+    return FALSE;
       }
 
     return $ptr_connexion;
@@ -55,10 +77,10 @@ class AbstractDb
   function mysql_fetch_all($result)
   {
     $retval = Array();
-  
+
     for($i=0;$row=mysql_fetch_array($result);$i++)
       {
-	$retval[$i]=$row;
+    $retval[$i]=$row;
       }
     return $retval;
   }
@@ -74,25 +96,25 @@ class AbstractDb
     $connection = $this -> connexionDb(NULL);
     if ($debug == TRUE)
       {
-	echo "<hr /><p>ExecSql(): DEBUG: Requ�te:<br>\n<pre>$sql</pre></p>\n<p>Plan:<br />\n";
-	$result = mysql_query("EXPLAIN ".$sql, $connection);
+    echo "<hr /><p>ExecSql(): DEBUG: Requ�te:<br>\n<pre>$sql</pre></p>\n<p>Plan:<br />\n";
+    $result = mysql_query("EXPLAIN ".$sql, $connection);
 
-	$plan_array = $this->mysql_fetch_all($result);
+    $plan_array = $this->mysql_fetch_all($result);
 //echo "<p><pre>".	print_r ($plan_array)."</pre></p>";
-	foreach ($plan_array as $plan_line)
-	{
-	  echo "<table>\n";
-	  foreach ($plan_line as $key => $val)
-	  {
-	    if(!is_numeric($key))
-	      {
-		echo "<tr><TD>$key</td><td>$val</td></tr>\n";
-	      }
-	  }
-	  echo "</table>\n";
-	  
-	}
-	echo "</p>\n";
+    foreach ($plan_array as $plan_line)
+    {
+      echo "<table>\n";
+      foreach ($plan_line as $key => $val)
+      {
+        if(!is_numeric($key))
+          {
+        echo "<tr><TD>$key</td><td>$val</td></tr>\n";
+          }
+      }
+      echo "</table>\n";
+
+    }
+    echo "</p>\n";
       }
 
     $sql_starttime = microtime();
@@ -116,59 +138,59 @@ class AbstractDb
 
     if ($debug == TRUE)
       {
-	echo "<P>Temps �coul� pour la requ�te SQL: $sql_timetaken seconde(s)</P>\n";
+    echo "<P>Temps �coul� pour la requ�te SQL: $sql_timetaken seconde(s)</P>\n";
       }
 
     if ($result == FALSE)
       {
-	echo "<p class=warning>ExecSql(): ERREUR: Lors de l'ex�cution de la requ�te SQL:<br>$sql</p>";
-	echo "<p class=warning>L'erreur est:<br>".mysql_error($connection)."</p>";
-	$returnResults = NULL;
-	$return_value = FALSE;
+    echo "<p class=warning>ExecSql(): ERREUR: Lors de l'ex�cution de la requ�te SQL:<br>$sql</p>";
+    echo "<p class=warning>L'erreur est:<br>".mysql_error($connection)."</p>";
+    $returnResults = NULL;
+    $return_value = FALSE;
       }
     else
       if (mysql_num_rows($result) == 0)
-	{
-	  $returnResults = null;
-	  $return_value = TRUE;
-	}
+    {
+      $returnResults = null;
+      $return_value = TRUE;
+    }
       else
-	{
-	  $i = 0;
-	  while ($row = mysql_fetch_assoc($result))
-	    {
-	      $returnResults[$i] = $row;
-	      $i ++;
-	      $return_value = TRUE;
-	    }
-	  if ($debug)
-	    {
-	      $num_rows = mysql_num_rows($result);
-	      echo "<p>ExecSql(): DEBUG: Il y a $num_rows r�sultats:<br><TABLE>";
-	      if ($returnResults != NULL)
-		{
-		  //On affiche l'en-t�te des colonnes une seule fois*/
-		  echo "<TR>";
-		  while (list ($col_name, $col_content) = each($returnResults[0]))
-		    {
-		      echo "<TH>$col_name</TH>";
-		    }
-		  echo "</TR>\n";
-		}
-	      while ($returnResults != NULL && list ($key, $value) = each($returnResults))
-		{
-		  echo "<TR>";
-		  while ($value != NULL && list ($col_name, $col_content) = each($value))
-		    {
-		      echo "<TD>$col_content</TD>";
-		    }
-		  echo "</TR>\n";
-		}
-	      reset($returnResults);
-	      echo "</TABLE></p><hr />\n";
+    {
+      $i = 0;
+      while ($row = mysql_fetch_assoc($result))
+        {
+          $returnResults[$i] = $row;
+          $i ++;
+          $return_value = TRUE;
+        }
+      if ($debug)
+        {
+          $num_rows = mysql_num_rows($result);
+          echo "<p>ExecSql(): DEBUG: Il y a $num_rows r�sultats:<br><TABLE>";
+          if ($returnResults != NULL)
+        {
+          //On affiche l'en-t�te des colonnes une seule fois*/
+          echo "<TR>";
+          while (list ($col_name, $col_content) = each($returnResults[0]))
+            {
+              echo "<TH>$col_name</TH>";
+            }
+          echo "</TR>\n";
+        }
+          while ($returnResults != NULL && list ($key, $value) = each($returnResults))
+        {
+          echo "<TR>";
+          while ($value != NULL && list ($col_name, $col_content) = each($value))
+            {
+              echo "<TD>$col_content</TD>";
+            }
+          echo "</TR>\n";
+        }
+          reset($returnResults);
+          echo "</TABLE></p><hr />\n";
 
-	    }
-	}
+        }
+    }
     return $return_value;
   }
 
@@ -180,11 +202,11 @@ class AbstractDb
   {
     if (!get_magic_quotes_gpc())
       {
-	return mysql_escape_string($chaine);
+    return mysql_escape_string($chaine);
       }
     else
       {
-	return ($chaine);
+    return ($chaine);
       }
   }
 
@@ -210,7 +232,7 @@ class AbstractDb
     $retval = TRUE;
     if ($debug == TRUE)
       {
-	echo "<hr /><p>Requ�te: <br><pre>$sql</pre></p>";
+    echo "<hr /><p>Requ�te: <br><pre>$sql</pre></p>";
       }
     $connection = $this -> connexionDb(NULL);
 
@@ -236,30 +258,30 @@ class AbstractDb
 
     if ($debug == TRUE)
       {
-	echo "<P>Temps �coul� pour la requ�te SQL: $sql_timetaken seconde(s)</P>\n";
+    echo "<P>Temps �coul� pour la requ�te SQL: $sql_timetaken seconde(s)</P>\n";
       }
 
     if ($result == FALSE)
       {
-	echo "<p class=warning>ExecSqlResUnique(): ERREUR: Lors de l'ex�cution de la requ�te SQL:<br>$sql</p>";
-	echo "<p class=warning>L'erreur est:<br>".mysql_error($connection)."</p>";
-	$retval = FALSE;
+    echo "<p class=warning>ExecSqlResUnique(): ERREUR: Lors de l'ex�cution de la requ�te SQL:<br>$sql</p>";
+    echo "<p class=warning>L'erreur est:<br>".mysql_error($connection)."</p>";
+    $retval = FALSE;
       }
     else
       {
-	if (mysql_num_rows($result) > 1)
-	  {
-	    echo "<p class=warning>ExecSqlResUnique(): ERREUR: Lors de l'ex�cution de la requ�te SQL:<br>$sql</p>";
-	    echo "<p>Il y a ".mysql_num_rows($result)." r�sultats alors qu'il ne devrait y en avoir qu'un seul.</p>";
-	    $retval = FALSE;
-	  }
-	$retVal = mysql_fetch_assoc($result);
-	if ($debug)
-	  {
-	    echo "<p class=warning>ExecSqlResUnique(): DEBUG: R�sultats:<br>";
-	    print_r($retVal);
-	    echo "</p><hr />\n";
-	  }
+    if (mysql_num_rows($result) > 1)
+      {
+        echo "<p class=warning>ExecSqlResUnique(): ERREUR: Lors de l'ex�cution de la requ�te SQL:<br>$sql</p>";
+        echo "<p>Il y a ".mysql_num_rows($result)." r�sultats alors qu'il ne devrait y en avoir qu'un seul.</p>";
+        $retval = FALSE;
+      }
+    $retVal = mysql_fetch_assoc($result);
+    if ($debug)
+      {
+        echo "<p class=warning>ExecSqlResUnique(): DEBUG: R�sultats:<br>";
+        print_r($retVal);
+        echo "</p><hr />\n";
+      }
       }
     return $retval;
   }
@@ -273,7 +295,7 @@ class AbstractDb
     $connection = $this -> connexionDb(NULL);
     if ($debug == TRUE)
       {
-	echo "<hr /><p>ExecSqlUpdate(): DEBUG: Requ�te:<br>\n<pre>$sql</pre></p>\n";
+    echo "<hr /><p>ExecSqlUpdate(): DEBUG: Requ�te:<br>\n<pre>$sql</pre></p>\n";
       }
 
     global $sql_num_update_querys;
@@ -298,21 +320,29 @@ class AbstractDb
 
     if ($debug == TRUE)
       {
-	echo "<P>".mysql_affected_rows()." rang�es affect�es par la requ�te SQL<br>\n";
-	echo "Temps �coul�: $sql_timetaken seconde(s)</P>\n";
+    echo "<P>".mysql_affected_rows()." rang�es affect�es par la requ�te SQL<br>\n";
+    echo "Temps �coul�: $sql_timetaken seconde(s)</P>\n";
       }
 
     if ($result == FALSE)
       {
-	echo "<p class=warning>ExecSqlResUnique(): ERREUR: Lors de l'ex�cution de la requ�te SQL:<br><pre>$sql</pre></p>";
-	echo "<p class=warning>L'erreur est:<br>".mysql_error()."</p>";
+    echo "<p class=warning>ExecSqlResUnique(): ERREUR: Lors de l'ex�cution de la requ�te SQL:<br><pre>$sql</pre></p>";
+    echo "<p class=warning>L'erreur est:<br>".mysql_error()."</p>";
       }
     else
       {
-	return $result;
+    return $result;
       }
   }
 
+}
 
-} /* end class AbstractDb */
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * c-hanging-comment-ender-p: nil
+ * End:
+ */
+
 ?>

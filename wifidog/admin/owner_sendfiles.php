@@ -1,31 +1,54 @@
 <?php
-  /********************************************************************\
-   * This program is free software; you can redistribute it and/or    *
-   * modify it under the terms of the GNU General Public License as   *
-   * published by the Free Software Foundation; either version 2 of   *
-   * the License, or (at your option) any later version.              *
-   *                                                                  *
-   * This program is distributed in the hope that it will be useful,  *
-   * but WITHOUT ANY WARRANTY; without even the implied warranty of   *
-   * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the    *
-   * GNU General Public License for more details.                     *
-   *                                                                  *
-   * You should have received a copy of the GNU General Public License*
-   * along with this program; if not, contact:                        *
-   *                                                                  *
-   * Free Software Foundation           Voice:  +1-617-542-5942       *
-   * 59 Temple Place - Suite 330        Fax:    +1-617-542-2652       *
-   * Boston, MA  02111-1307,  USA       gnu@gnu.org                   *
-   *                                                                  *
-   \********************************************************************/
-  /**@file sendfile.php
-   * Node owner upload file
-   * @author Copyright (C) 2005 Pascal Leclerc
-   */
-//TODO: Move to Node getAdminUI
 
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
+// +-------------------------------------------------------------------+
+// | WiFiDog Authentication Server                                     |
+// | =============================                                     |
+// |                                                                   |
+// | The WiFiDog Authentication Server is part of the WiFiDog captive  |
+// | portal suite.                                                     |
+// +-------------------------------------------------------------------+
+// | PHP version 5 required.                                           |
+// +-------------------------------------------------------------------+
+// | Homepage:     http://www.wifidog.org/                             |
+// | Source Forge: http://sourceforge.net/projects/wifidog/            |
+// +-------------------------------------------------------------------+
+// | This program is free software; you can redistribute it and/or     |
+// | modify it under the terms of the GNU General Public License as    |
+// | published by the Free Software Foundation; either version 2 of    |
+// | the License, or (at your option) any later version.               |
+// |                                                                   |
+// | This program is distributed in the hope that it will be useful,   |
+// | but WITHOUT ANY WARRANTY; without even the implied warranty of    |
+// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |
+// | GNU General Public License for more details.                      |
+// |                                                                   |
+// | You should have received a copy of the GNU General Public License |
+// | along with this program; if not, contact:                         |
+// |                                                                   |
+// | Free Software Foundation           Voice:  +1-617-542-5942        |
+// | 59 Temple Place - Suite 330        Fax:    +1-617-542-2652        |
+// | Boston, MA  02111-1307,  USA       gnu@gnu.org                    |
+// |                                                                   |
+// +-------------------------------------------------------------------+
+
+/**
+ * Node owner upload file
+ *
+ * @package    WiFiDogAuthServer
+ * @author     Pascal Leclerc
+ * @copyright  2005 Pascal Leclerc
+ * @version    CVS: $Id$
+ * @link       http://sourceforge.net/projects/wifidog/
+ * @todo		  Move to node getAdminUI.
+ */
+
+/**
+ * @ignore
+ */
 define('BASEPATH','../');
+
 require_once BASEPATH.'admin/admin_common.php';
 require_once BASEPATH.'classes/Node.php';
 require_once BASEPATH.'classes/User.php';
@@ -41,7 +64,9 @@ empty($_REQUEST['delfile']) ? $delfile = '' : $delfile = $_REQUEST['delfile'];
 $username = User::getCurrentUser()->getUsername();
 $smarty->assign("username", $username); // DEBUG
 
-// TODO: Remplacer les constantes definit dans config.php pour $filesArray
+/**
+ * @todo Remplacer les constantes definit dans config.php pour $filesArray
+ */
 $filesArray = array (
    "0" => array('filename' => 'hotspot_logo_banner.jpg', 'file_exists' => 0),
    "1" => array('filename' => 'hotspot_logo.jpg',        'file_exists' => 0),
@@ -52,10 +77,11 @@ $filesArray = array (
 
 // Error checking before user can upload files
 if (!is_writable(BASEPATH.LOCAL_CONTENT_REL_PATH)) {
-     /* TODO Detailler l'erreur :
-          -Print absolute PATH directory
-          -Print current uid/gid
-          -Print needed uid/gid
+     /**
+      * @todo Detailler l'erreur:
+      * - print absolute PATH directory
+      * - print current uid/gid
+      * - print needed uid/gid
       */
     $fileinfo = posix_getpwuid(posix_getuid());
     $smarty->assign("error_message", _("Can not write to directory '" . BASEPATH.LOCAL_CONTENT_REL_PATH . "', ownership should be set to user ") . $fileinfo['name'] . " (uid=" . $fileinfo['uid'] . ")");
@@ -72,19 +98,21 @@ if ("$delfile" == "submit") { // Submit all files
     if (!file_exists(BASEPATH.LOCAL_CONTENT_REL_PATH . $node_id)) {
         mkdir(BASEPATH.LOCAL_CONTENT_REL_PATH . $node_id);  // TODO : Add error checking
     }
-    
+
     foreach($filesArray as $fileArray) {
         $filename = $fileArray['filename'];
         $filename_underscore = str_replace('.', '_', $filename);
 
         // Source and destination file (with PATH) and name (in tmp directory). @ is use to remove useless PHP notice message.
-        $source              = @$_FILES["$filename_underscore"]['tmp_name'];        
+        $source              = @$_FILES["$filename_underscore"]['tmp_name'];
         $destination         = BASEPATH.LOCAL_CONTENT_REL_PATH."$node_id/$filename";  // Destination file PATH and name (local_content)
         //echo "S=$source D=$destination<BR>";
         if (empty($source)) // Skip empty input file submission
             continue;
 
-        // TODO : Display file upload success or error.
+        /**
+         * @todo Display file upload success or error.
+         */
         if (move_uploaded_file($source, $destination)) {
             //echo "File is valid, and was successfully uploaded.<BR>";
         } else {
@@ -97,7 +125,7 @@ if ("$delfile" == "submit") { // Submit all files
             $filename = $fileArray['filename'];
             $source = BASEPATH.LOCAL_CONTENT_REL_PATH . "$node_id/$filename";
             //echo "DELETE SOURCE=$source<BR>";
-            unlink($source);    
+            unlink($source);
         }
     }
 }
@@ -138,4 +166,13 @@ if ("$action" == 'uploadform') {
     $ui->display();
     //$smarty->display("admin/templates/owner_display.html");
 }
+
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * c-hanging-comment-ender-p: nil
+ * End:
+ */
+
 ?>
