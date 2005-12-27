@@ -49,7 +49,7 @@ require_once BASEPATH.'config.php';
 require_once BASEPATH.'classes/AbstractDb.php';
 require_once BASEPATH.'classes/Session.php';
 require_once BASEPATH.'classes/Node.php';
-define('REQUIRED_SCHEMA_VERSION', 33);
+define('REQUIRED_SCHEMA_VERSION', 34);
 
 /** Check that the database schema is up to date.  If it isn't, offer to update it. */
 function validate_schema()
@@ -689,7 +689,8 @@ function update_schema()
             $sql .= "UPDATE node_has_content SET display_location='portal_page';\n";
             $sql .= "ALTER TABLE node_has_content ALTER COLUMN display_location SET NOT NULL;\n";
             $sql .= "ALTER TABLE node_has_content ADD CONSTRAINT display_location_fkey FOREIGN KEY (display_location) REFERENCES content_display_location ON UPDATE CASCADE ON DELETE RESTRICT;\n";
-/* Convert the existing node logos */
+			
+			/* Convert the existing node logos */
             $results = null;
             $db->ExecSql("SELECT node_id FROM nodes", $results, false);
                             define('HOTSPOT_LOGO_NAME', 'hotspot_logo.jpg');
@@ -734,6 +735,15 @@ function update_schema()
             $sql .= "ALTER TABLE flickr_photostream ALTER COLUMN photo_display_mode SET DEFAULT 'PDM_GRID'::text;\n";
             $sql .= "UPDATE flickr_photostream SET photo_display_mode = 'PDM_GRID';\n";
             $sql .= "ALTER TABLE flickr_photostream ALTER COLUMN photo_display_mode SET NOT NULL;\n";
+        }
+        
+        $new_schema_version = 34;
+        if ($schema_version < $new_schema_version)
+        {
+            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+            $sql .= "ALTER TABLE node_stakeholders DROP CONSTRAINT \"$1\";\n";
+            $sql .= "ALTER TABLE node_stakeholders ADD CONSTRAINT nodes_fkey FOREIGN KEY (node_id) REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE CASCADE;";
         }
 
         $db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\nVACUUM ANALYZE;\n", true);

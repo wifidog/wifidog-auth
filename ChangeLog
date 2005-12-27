@@ -1,3 +1,8 @@
+2005-12-26 François Proulx <francois.proulx@gmail.com>	
+	* Fixed bug when the same user was owner of many nodes
+	* Added missing reference to content_display_location initial data in dump script
+	* 
+	
 2005-12-26 François Proulx <francois.proulx@gmail.com>
 	* Tiny modifications to config.php
 	* Reinserted the deprecated defines, created errors on my system

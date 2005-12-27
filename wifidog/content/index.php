@@ -124,9 +124,8 @@ $html .= "<div id='portal_container'>\n";
 /* Node section */
 // Get all locative artistic content for this node
 $contents = $node->getAllLocativeArtisticContent();
-if($contents)
+if(!empty($contents))
 {
-    $html .= "<table width='100%'><tr><td>";
     $html .= "<div class='portal_node_section'>\n";
     $html .= "<span class='portal_section_title'>"._("Content from:")." ";
 
@@ -141,7 +140,6 @@ if($contents)
         $html .= "</a>\n";
     }
     $html .= "</span>";
-    $html .= "</td></tr></table>";
 
     foreach ($contents as $content)
     {

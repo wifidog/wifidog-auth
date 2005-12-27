@@ -317,6 +317,8 @@ CREATE TABLE networks (
 );
 
 
+SET default_with_oids = false;
+
 --
 -- Name: node_deployment_status; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
@@ -325,6 +327,8 @@ CREATE TABLE node_deployment_status (
     node_deployment_status character varying(32) NOT NULL
 );
 
+
+SET default_with_oids = true;
 
 --
 -- Name: node_has_content; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
@@ -449,6 +453,8 @@ CREATE TABLE users (
     CONSTRAINT check_user_not_empty CHECK (((user_id)::text <> ''::text))
 );
 
+
+SET default_with_oids = false;
 
 --
 -- Name: venue_types; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 

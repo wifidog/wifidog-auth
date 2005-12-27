@@ -141,7 +141,7 @@ else if ($_REQUEST['action'] == 'edit') {
     $html .= "<input type=submit name='save_submit' value='"._("Save")." ".get_class($object)."'>\n";
     $html .= '</form>';
 
-    $html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' method='post'>";
+    $html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' target='_blank' method='post'>";
     $html .= $common_input;
     $html .= "<input type='hidden' name='action' value='preview'>\n";
     $html .= "<input type=submit name='preview_submit' value='"._("Preview")." ".get_class($object)."'>\n";
@@ -172,7 +172,7 @@ else if ($_REQUEST['action'] == 'preview') {
     $common_input .= "<input type='hidden' name='object_class' value='".get_class($object)."'>\n";
     $common_input .= "<input type='hidden' name='node_id' value='".$node_id."'>\n";
 
-    $html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' method='post'>";
+    $html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' target='_top' method='post'>";
     $html .= $common_input;
 
     $name = "node_id";
@@ -180,7 +180,7 @@ else if ($_REQUEST['action'] == 'preview') {
 
     $html .= $object->getUserUI();
     $html .= "<input type='hidden' name='action' value='preview'>\n";
-    $html .= "<input type=submit name='preview_submit' value='"._("Preview")." ".get_class($object)."'>\n";
+    $html .= "<input type='submit' name='preview_submit' value='"._("Preview")." ".get_class($object)."'>\n";
     $html .= '</form>';
 
     $html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' method='post'>";

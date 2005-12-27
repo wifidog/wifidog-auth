@@ -290,7 +290,8 @@ if($current_user)
     $contents = $node->getAllContent(true, $current_user);
 else
     $contents = $node->getAllContent();
-if($contents)
+    
+if(!empty($contents))
 {
     $html .= "<div class='portal_node_section'>\n";
     $html .= "<span class='portal_section_title'>"._("Content from:")." ";

@@ -103,6 +103,28 @@ INSERT INTO node_deployment_status (node_deployment_status) VALUES ('TEMPORARILY
 -- PostgreSQL database dump complete
 --
 
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'UNICODE';
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for Name: content_display_location; Type: TABLE DATA; Schema: public; Owner: wifidog
+--
+
+INSERT INTO content_display_location (display_location) VALUES ('portal_page');
+INSERT INTO content_display_location (display_location) VALUES ('login_page');
+
+
+--
+-- PostgreSQL database dump complete
+--
+
 INSERT INTO networks (network_id, is_default_network, network_authenticator_class, network_authenticator_params) VALUES ('default-network', true, 'AuthenticatorLocalUser', '\'default-network\'');
 INSERT INTO nodes (network_id, node_id, name) VALUES ('default-network', 'default', 'Unknown node');
 --

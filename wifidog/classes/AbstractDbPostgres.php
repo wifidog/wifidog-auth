@@ -299,7 +299,7 @@ class AbstractDb
      @param $debug Si TRUE, affiche la requête brute
      @return false on failure, true otherwise
      */
-    function ExecSqlUpdate($sql, $debug=false)
+    function ExecSqlUpdate($sql, $debug = false)
     {
         $connection = $this -> connexionDb(NULL);
         if ($debug == TRUE)

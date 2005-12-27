@@ -350,7 +350,6 @@ class Content implements GenericObject {
      */
     static function processLinkedContentUI($user_prefix, $link_table, $link_table_obj_key_col, $link_table_obj_key)
     {
-
         global $db;
         $link_table = $db->EscapeString($link_table);
         $link_table_obj_key_col = $db->EscapeString($link_table_obj_key_col);
@@ -371,7 +370,7 @@ class Content implements GenericObject {
                 if (!empty ($_REQUEST[$name]))
                 {
                     $sql = "DELETE FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key' AND content_id = '$content_id'";
-                    $db->ExecSqlUpdate($sql, $rows, false);
+                    $db->ExecSqlUpdate($sql, false);
                 }
             }
 
@@ -384,7 +383,7 @@ class Content implements GenericObject {
             {
                 $content_id = $db->EscapeString($content->getId());
                 $sql = "INSERT INTO $link_table (content_id, $link_table_obj_key_col, display_location) VALUES ('$content_id', '$link_table_obj_key', '$display_location_new');\n";
-                $db->ExecSqlUpdate($sql, $rows, false);
+                $db->ExecSqlUpdate($sql, false);
             }
         }
         $name = "{$user_prefix}_new";
@@ -393,7 +392,7 @@ class Content implements GenericObject {
         {
             $content_id = $db->EscapeString($content->getId());
             $sql = "INSERT INTO $link_table (content_id, $link_table_obj_key_col, display_location) VALUES ('$content_id', '$link_table_obj_key', '$display_location_new');\n";
-            $db->ExecSqlUpdate($sql, $rows, false);
+            $db->ExecSqlUpdate($sql, false);
         }
 
     }
