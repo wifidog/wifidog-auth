@@ -80,7 +80,7 @@ $ui=new MainUI();
 $ui->setToolContent($tool_html);
 $smarty->assign("title", _("User Profile"));
 //TODO: Write User profiles
-//$ui->setMainContent($body_html);
+$ui->setMainContent($body_html);
 $ui->display();
 
 /*
