@@ -211,6 +211,7 @@ class User implements GenericObject
     function __construct($object_id)
     {
         global $db;
+        $this->mDb = & $db;
         $object_id_str = $db->escapeString($object_id);
         $sql = "SELECT * FROM users WHERE user_id='{$object_id_str}'";
         $db->execSqlUniqueRes($sql, $row, false);
@@ -254,22 +255,46 @@ class User implements GenericObject
     }
 
     public function getRealName()
-    {
-        return $this->mRow['real_name'];
-    }
+	{
+		return $this->mRow['real_name'];
+	}
 
-    public function setRealName()
-    {
-    }
+	public function setRealName($realname)
+	{
+		$realname = $this->mDb->EscapeString($realname);
+		$this->mDb->execSqlUpdate("UPDATE users SET real_name = '{$realname}' WHERE user_id = '{$this->getId()}'");
+		$this->refresh();
+	}
 
-    public function getWebsiteURL()
-    {
-        return $this->mRow['website'];
-    }
+	function setIsAdvertised($value)
+	{
+		$retval = true;
+		if ($value != $this->isAdvertised())
+		{
+			global $db;
+			$value ? $value = 'TRUE' : $value = 'FALSE';
+			$retval = $db->execSqlUpdate("UPDATE users SET never_show_username = {$value} WHERE user_id = '{$this->getId()}'", false);
+			$this->refresh();
+		}
+		return $retval;
+	}
 
-    public function setWebsiteURL()
-    {
-    }
+	public function isAdvertised()
+	{
+		return (($this->mRow['never_show_username'] == 't') ? true : false);
+	}
+
+	public function getWebsiteURL()
+	{
+		return $this->mRow['website'];
+	}
+
+	public function setWebsiteURL($website)
+	{
+		$website = $this->mDb->EscapeString($website);
+		$this->mDb->execSqlUpdate("UPDATE users SET website = '{$website}' WHERE user_id = '{$this->getId()}'");
+		$this->refresh();
+	}
 
     /**What locale (language) does the user prefer?
      * @todo Save in the database */
@@ -378,13 +403,13 @@ class User implements GenericObject
     }
 
     public function isNobody()
-    {
-        global $db;
-        $db->execSqlUniqueRes("SELECT DISTINCT user_id FROM (SELECT user_id FROM network_stakeholders WHERE user_id='{$this->getId()}' UNION SELECT user_id FROM node_stakeholders WHERE user_id='{$this->getId()}' UNION SELECT user_id FROM administrators WHERE user_id='{$this->getId()}') as tmp", $row, false);
-        if ($row == null)
-            return true;
-        return false;
-    }
+	{
+		global $db;
+		$db->execSqlUniqueRes("SELECT DISTINCT user_id FROM (SELECT user_id FROM network_stakeholders WHERE user_id='{$this->getId()}' UNION SELECT user_id FROM node_stakeholders WHERE user_id='{$this->getId()}' UNION SELECT user_id FROM administrators WHERE user_id='{$this->getId()}') as tmp", $row, false);
+		if ($row == null)
+			return true;
+		return false;
+	}
 
     function getValidationToken()
     {
@@ -653,8 +678,12 @@ class User implements GenericObject
     }
 
     public function getUserUI()
-    {
-    }
+	{
+        $html = "";
+        $html .= $this->getRealName();
+
+        return $html;
+	}
 
     /** Add content to this user ( subscription ) */
     public function addContent(Content $content)

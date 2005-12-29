@@ -221,7 +221,7 @@ class File extends Content
      *
      * @access private
      */
-    private function getMimeType()
+    protected function getMimeType()
     {
         return $this->files_row['mime_type'];
     }
@@ -249,7 +249,7 @@ class File extends Content
      *
      * @access private
      */
-    private function getFilename()
+    protected function getFilename()
     {
         return $this->files_row['filename'];
     }
@@ -285,7 +285,7 @@ class File extends Content
      *
      * @access private
      */
-    private function getFileSize($unit = self::UNIT_BYTES)
+    protected function getFileSize($unit = self::UNIT_BYTES)
     {
         if ($this->isLocalFile()) {
             $size = $this->files_row['local_binary_size'];
@@ -365,7 +365,7 @@ class File extends Content
      *
      * @access private
      */
-    private function getFileUrl()
+    protected function getFileUrl()
     {
         // Init values
         $_retval = null;
