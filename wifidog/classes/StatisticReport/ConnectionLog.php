@@ -93,7 +93,7 @@ class ConnectionLog extends StatisticReport
                 $candidate_connections_sql = $this->stats->getSqlCandidateConnectionsQuery("connections.$distinguish_users_by, count(distinct connections.user_mac) as nb_mac, COUNT(DISTINCT connections.user_id) AS nb_users, count(connections.$distinguish_users_by) as nb_cx,max(timestamp_in) as last_seen", true);
                 $sql = "$candidate_connections_sql GROUP BY connections.$distinguish_users_by ORDER BY nb_cx desc";
             }
-            $db->ExecSql($sql, $rows, false);
+            $db->execSql($sql, $rows, false);
 
             $html .= "<fieldset class='pretty_fieldset'>";
             $html .= "<legend>"._("Number of unique Users:").count($rows)."</legend>";
@@ -141,7 +141,7 @@ class ConnectionLog extends StatisticReport
             $candidate_connections_sql = $this->stats->getSqlCandidateConnectionsQuery("users.username, nodes.name, EXTRACT('EPOCH' FROM date_trunc('second',timestamp_out-timestamp_in)) AS time_spent, EXTRACT('EPOCH' FROM timestamp_in) AS timestamp_in, connections.user_id, user_mac ", true);
 
             $sql = "$candidate_connections_sql ORDER BY timestamp_in DESC";
-            $db->ExecSql($sql, $rows, false);
+            $db->execSql($sql, $rows, false);
 
             $number_of_connections = count($rows);
 

@@ -55,7 +55,8 @@ if (file_exists('config.php')) {
 /**
  * Add system path of WiFiDog installation to PHPs include path
  */
-set_include_path(get_include_path() . PATH_SEPARATOR . $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/'));
+ 
+set_include_path(get_include_path().PATH_SEPARATOR . $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/'));
 
 function undo_magic_quotes()
 {
@@ -210,7 +211,7 @@ function garbage_collect()
     // 10 minutes
     $expiration = time() - 60 * 10;
     $expiration = iso8601_date($expiration);
-    $db->ExecSqlUpdate("UPDATE connections SET token_status='".TOKEN_USED."' WHERE last_updated < '$expiration' AND token_status = '".TOKEN_INUSE."'", false);
+    $db->execSqlUpdate("UPDATE connections SET token_status='".TOKEN_USED."' WHERE last_updated < '$expiration' AND token_status = '".TOKEN_INUSE."'", false);
 }
 
 /** Get the url from the local content_specific folder if the file exists, and from the default content folder otherwise */

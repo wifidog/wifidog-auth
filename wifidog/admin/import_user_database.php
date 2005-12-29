@@ -165,8 +165,8 @@ else if ($_REQUEST['action'] == 'upload_file')
 
       if(!empty($user['email']))
         {
-          $email_str = $db->EscapeString($user['email']);
-          $db->ExecSqlUniqueRes("SELECT email FROM users WHERE email='$email_str'", $user_info_email, false);
+          $email_str = $db->escapeString($user['email']);
+          $db->execSqlUniqueRes("SELECT email FROM users WHERE email='$email_str'", $user_info_email, false);
           if($user_info_email!=null)
         {
           $import_user[$username]['is_rejected']=true;
@@ -180,8 +180,8 @@ else if ($_REQUEST['action'] == 'upload_file')
         }
       else
         {
-          $username_str = $db->EscapeString($username);
-          $db->ExecSqlUniqueRes("SELECT username FROM users WHERE username='$username_str'", $user_info_username, false);
+          $username_str = $db->escapeString($username);
+          $db->execSqlUniqueRes("SELECT username FROM users WHERE username='$username_str'", $user_info_username, false);
           if($user_info_username!=null)
         {
           $import_user[$username]['is_rejected']=true;
@@ -194,11 +194,11 @@ else if ($_REQUEST['action'] == 'upload_file')
           $status = ACCOUNT_STATUS_ALLOWED;
           $token = User::generateToken();
           $reg_date = iso8601_date(time());
-          $password_hash = $db->EscapeString($user['passwd_hash']);
-          $username =  $db->EscapeString($username);
-          $email =  $db->EscapeString($user['email']);
+          $password_hash = $db->escapeString($user['passwd_hash']);
+          $username =  $db->escapeString($username);
+          $email =  $db->escapeString($user['email']);
           $sql = "INSERT INTO users (user_id, username,email,pass,account_status,validation_token,reg_date) VALUES ('".get_guid()."','$username','$email','$password_hash','{$status}','{$token}','{$reg_date}')";
-          $update_successful = $db->ExecSqlUpdate($sql);
+          $update_successful = $db->execSqlUpdate($sql);
           if ($update_successful)
         {
           //send_validation_email($email);

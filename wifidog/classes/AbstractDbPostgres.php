@@ -1,5 +1,6 @@
 <?php
 
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -46,389 +47,364 @@
 error_reporting(E_ALL);
 
 /**
- * Classe statique, permet d'abstraire la connexion à la base de donnée
+ * Database Abstraction class
  *
  * @package    WiFiDogAuthServer
  * @subpackage Database
  */
 class AbstractDb
 {
-    function connexionDb($db_name)
-    {
-        if ($db_name == NULL)
-        {
-            $db_name = CONF_DATABASE_NAME;
-        }
+	// Connects to PostgreSQL database
+	function connect($db_name)
+	{
+		// Grab default database name from config file
+		if ($db_name == NULL)
+			$db_name = CONF_DATABASE_NAME;
 
-        $conn_string = "host=".CONF_DATABASE_HOST." dbname=$db_name user=".CONF_DATABASE_USER." password=".CONF_DATABASE_PASSWORD."";
-        $ptr_connexion = @pg_connect($conn_string);
+		// Build connection string
+		$conn_string = "host=".CONF_DATABASE_HOST." dbname=$db_name user=".CONF_DATABASE_USER." password=".CONF_DATABASE_PASSWORD."";
+		// Try connecting and hide warning, errors
+		$ptr_connexion = @ pg_connect($conn_string);
 
-        if ($ptr_connexion == FALSE)
-        {
-            //echo sprintf(_("Unable to connect to database on %s"),CONF_DATABASE_HOST);
-            throw new Exception(sprintf(_("Unable to connect to database on %s"),CONF_DATABASE_HOST));
-        }
+		// Throw an exception if anything went wrong
+		if ($ptr_connexion == FALSE)
+			throw new Exception(sprintf(_("Unable to connect to database on %s"), CONF_DATABASE_HOST));
 
-        return $ptr_connexion;
-    }
+		return $ptr_connexion;
+	}
 
-    /**Exécute la requête, et retourne le résultat.  Affiche l'erreur s'il y a lieu.
-     @param $sql requête SELECT à exécuter
-     @param $returnResults un array à deux dimensions des rangées de résultats, NULL si aucun résultats.
-     @param $debug Si TRUE, affiche les résultats bruts de la requête
-     @return TRUE si la requete a été effectuée avec succés, FALSE autrement.
-    */
-    function ExecSql($sql, & $returnResults, $debug=false)
-    {
-        $connection = $this -> connexionDb(NULL);
-        if ($debug == TRUE)
-        {
-            echo "<hr /><p>ExecSql() : SQL Query<br>\n<pre>$sql</pre></p>\n<p>Query plan:<br />\n";
-            $result = pg_query($connection, "EXPLAIN ".$sql);
+	/** 
+	 * Execute an SQL query and returns the result set or throws an error
+	 @param $sql SQL query to execute
+	 @param $resultSet A 2-dimensionnal array containing result rows, NULL if empty
+	 @param $debug When set to true the function will spit out debug informations
+	 @return TRUE indicated the query went fine, FALSE something went wrong
+	*/
+	function execSql($sql, & $resultSet, $debug = false)
+	{
+			// Get a connection handle
+	$connection = $this->connect(NULL);
 
-            $plan_array = pg_fetch_all($result);
-            foreach ($plan_array as $plan_line)
-            {
-                echo $plan_line['QUERY PLAN']."<br />\n";
-            }
-            echo "</p>\n";
-        }
+		// In debug mode spit out the SQL query
+		if ($debug == TRUE)
+		{
+			// Header
+			echo "<hr/><p/>execSql() : "._("SQL Query")."<br/>\n<pre>{$sql}</pre></p>\n<p>"._("Query plan")." :<br/>\n";
 
-        $sql_starttime = microtime();
-        $result = pg_query($connection, $sql);
-        $sql_endtime = microtime();
+			// Prepend EXPLAIN statement to the SQL query
+			$result = pg_query($connection, "EXPLAIN ".$sql);
+			$plan_array = pg_fetch_all($result);
+			foreach ($plan_array as $plan_line)
+				echo $plan_line['QUERY PLAN']."<br/>\n";
 
-        global $sql_total_time;
-        global $sql_num_select_querys;
-        $sql_num_select_querys ++;
-        $parts_of_starttime = explode(' ', $sql_starttime);
-        $sql_starttime = $parts_of_starttime[0] + $parts_of_starttime[1];
-        //echo "sql_starttime: $sql_starttime <br />\n";
+			echo "</p>\n";
+		}
 
-        $parts_of_endtime = explode(' ', $sql_endtime);
-        $sql_endtime = $parts_of_endtime[0] + $parts_of_endtime[1];
-        //echo "sql_endtime: $sql_endtime <br />\n";
-        $sql_timetaken = $sql_endtime - $sql_starttime;
-        //echo "sql_timetaken: $sql_timetaken <br />\n";
+		// Start the clockwatch
+		$sql_starttime = microtime();
+		$result = pg_query($connection, $sql);
+		$sql_endtime = microtime();
 
-        $sql_total_time = $sql_total_time + $sql_timetaken;
+		global $sql_total_time;
+		global $sql_num_select_querys;
 
-        if ($debug == TRUE)
-        {
-            echo "<P>Elapsed time for query execution : $sql_timetaken second(s)</P>\n";
-        }
+		$sql_num_select_querys ++;
+		$parts_of_starttime = explode(' ', $sql_starttime);
+		$sql_starttime = $parts_of_starttime[0] + $parts_of_starttime[1];
+		$parts_of_endtime = explode(' ', $sql_endtime);
+		$sql_endtime = $parts_of_endtime[0] + $parts_of_endtime[1];
+		$sql_timetaken = $sql_endtime - $sql_starttime;
+		$sql_total_time = $sql_total_time + $sql_timetaken;
 
-        if ($result == FALSE)
-        {
-            echo "<p>ExecSql() : An error occured while executing the following SQL query :<br>$sql</p>";
-            echo "<p>Error message :<br>".pg_last_error($connection)."</p>";
-            $returnResults = NULL;
-            $return_value = FALSE;
-        }
-        else
-            if (pg_num_rows($result) == 0)
-            {
-                $returnResults = NULL;
-                $return_value = TRUE;
-            }
-            else
-            {
-                $returnResults = pg_fetch_all($result);
-                $return_value = TRUE;
-                if ($debug)
-                {
-                    $num_rows = pg_num_rows($result);
-                    echo "<p>ExecSql() : The query returned $num_rows results :<br><TABLE>";
-                    if ($returnResults != NULL)
-                    {
-                        //On affiche l'en-téte des colonnes une seule fois*/
-                        echo "<TR>";
-                        while (list ($col_name, $col_content) = each($returnResults[0]))
-                        {
-                            echo "<TH>$col_name</TH>";
-                        }
-                        echo "</TR>\n";
-                    }
-                    while ($returnResults != NULL && list ($key, $value) = each($returnResults))
-                    {
-                        echo "<TR>";
-                        while ($value != NULL && list ($col_name, $col_content) = each($value))
-                        {
-                            echo "<TD>$col_content</TD>";
-                        }
-                        echo "</TR>\n";
-                    }
-                    reset($returnResults);
-                    echo "</TABLE></p><hr />\n";
-                }
-            }
-        return $return_value;
-    }
+		if ($debug == TRUE)
+			echo "<p>".sprintf(_("Elapsed time for query execution : %.6f second(s)"), $sql_timetaken)."</p>\n";
 
-    /**Retourne une chaine de caractère dans un format compatible pour stockage dans la bd
-     @param $chaine La chaéne de caractère à nettoyer
-     @return La chaéne nettoyée
-     */
-    function EscapeString($chaine)
-    {
-        if (true) //if (!get_magic_quotes_gpc())
-        {
-            return pg_escape_string($chaine);
-        }
-        else
-        {
-            return ($chaine);
-        }
-    }
+		if ($result == FALSE)
+		{
+			echo "<p>execSql() : "._("An error occured while executing the following SQL query")." :<br>{$sql}</p>";
+			echo "<p>"._("Error message")." : <br/>".pg_last_error($connection)."</p>";
+			$resultSet = NULL;
+			$return_value = FALSE;
+		}
+		else
+			if (pg_num_rows($result) == 0)
+			{
+				$resultSet = NULL;
+				$return_value = TRUE;
+			}
+			else
+			{
+				$resultSet = pg_fetch_all($result);
+				$return_value = TRUE;
+				if ($debug)
+				{
+					$num_rows = pg_num_rows($result);
+					echo "<p>execSql() : ".sprintf(_("The query returned %d results"), $num_rows)." :<br/>\n<table>";
+					if ($resultSet != NULL)
+					{
+						// Displaying column names only once
+						echo "<tr>\n";
+						while (list ($col_name, $col_content) = each($resultSet[0]))
+							echo "<th>$col_name</th>\n";
+						echo "</TR>\n";
+					}
+					while ($resultSet != NULL && list ($key, $value) = each($resultSet))
+					{
+						echo "<tr>\n";
+						while ($value != NULL && list ($col_name, $col_content) = each($value))
+							echo "<td>$col_content</td>\n";
+						echo "</tr>\n";
+					}
+					// Reset the array pointer to the beginning
+					reset($resultSet);
+					echo "</table></p><hr/>\n";
+				}
+			}
+		return $return_value;
+	}
 
-    /** Nettoye une chaine de caractère dans un format compatible bytea.
-     @param $chaine La chaéne de caractère à nettoyer
-     @return La chaéne nettoyée (escaped string)
-     */
+	/**
+	 * Returns a string in a compatible / secure way for storing in the database
+	 @param $string The string to clean up
+	 @return The cleaned-up string
+	 */
+	function escapeString($string)
+	{
+		// WARNING : magic quotes must be off
+		return pg_escape_string($string);
+	}
 
-    function EscapeBinaryString($chaine)
-    {
-        return pg_escape_bytea($chaine);
+	/** 
+	 * Returns a cleaned-up binary string BLOG for storing in ByteA fields
+	 @param $string The string to clean up
+	 @return The cleaned-up string
+	 */
 
-    }
+	function escapeBinaryString($string)
+	{
+		return pg_escape_bytea($string);
+	}
 
-    /** Reconverti une chaine de caractère en format bytea pur.
-     @param $chaine La chaéne de caractère
-     @return La chaéne reconvertie  en format original (unescaped string)
-     */
+	/** 
+	 * Reverts a ByteA escape to raw binary
+	 @param $string The string to clean up
+	 @return The cleaned-up string
+	 */
 
-    function UnescapeBinaryString($chaine)
-    {
-        return pg_unescape_bytea($chaine);
+	function unescapeBinaryString($string)
+	{
+		return pg_unescape_bytea($string);
 
-    }
+	}
 
-    /**Exécute une requête pour laquelle on prévoit un résultat UNIQUE.  Si le résultat n'est pas unique, un avertissement est affiché
-     @param $sql requête SELECT à exécuter
-     @param $retVal un array des colonnes de la rangée retournée, NULL si aucun résultats.
-     @param $debug Si TRUE, affiche les résultats bruts de la requête
-     @return TRUE si la requete a été effectuée avec succés, FALSE autrement.
-     */
-    function ExecSqlUniqueRes($sql, & $retVal, $debug=false)
-    {
-        $retval = TRUE;
-        if ($debug == TRUE)
-        {
-            echo "<hr /><p>SQL Query : <br><pre>$sql</pre></p>";
-        }
-        $connection = $this -> connexionDb(NULL);
+	/**
+	 * Executes an SQL for which, we predict to get a unique match, if that's not the case, this function will throw an error message
+	 @param $sql SQL query to run
+	 @param $retRow un array des colonnes de la rangée retournée, NULL si aucun résultats.
+	 @param $debug Si TRUE, affiche les résultats bruts de la requête
+	 @return TRUE si la requete a été effectuée avec succés, FALSE autrement.
+	 */
+	function execSqlUniqueRes($sql, & $retRow, $debug = false)
+	{
+		$retval = true;
 
-        $sql_starttime = microtime();
-        $result = @pg_query($connection, $sql);
-        $sql_endtime = microtime();
+		if ($debug == true)
+			echo "<hr/><p>"._("SQL Query")." : <br/><pre>{$sql}</pre></p>";
 
-        global $sql_total_time;
-        global $sql_num_select_unique_querys;
-        $sql_num_select_unique_querys ++;
+		// Get a connection handle
+		$connection = $this->connect(NULL);
+		$sql_starttime = microtime();
+		$result = @ pg_query($connection, $sql);
+		$sql_endtime = microtime();
 
-        $parts_of_starttime = explode(' ', $sql_starttime);
-        $sql_starttime = $parts_of_starttime[0] + $parts_of_starttime[1];
-        //echo "sql_starttime: $sql_starttime <br />\n";
+		global $sql_total_time;
+		global $sql_num_select_unique_querys;
 
-        $parts_of_endtime = explode(' ', $sql_endtime);
-        $sql_endtime = $parts_of_endtime[0] + $parts_of_endtime[1];
-        //echo "sql_endtime: $sql_endtime <br />\n";
-        $sql_timetaken = $sql_endtime - $sql_starttime;
-        //echo "sql_timetaken: $sql_timetaken <br />\n";
+		$sql_num_select_unique_querys ++;
+		$parts_of_starttime = explode(' ', $sql_starttime);
+		$sql_starttime = $parts_of_starttime[0] + $parts_of_starttime[1];
+		$parts_of_endtime = explode(' ', $sql_endtime);
+		$sql_endtime = $parts_of_endtime[0] + $parts_of_endtime[1];
+		$sql_timetaken = $sql_endtime - $sql_starttime;
+		$sql_total_time = $sql_total_time + $sql_timetaken;
 
-        $sql_total_time = $sql_total_time + $sql_timetaken;
+		if ($debug == true)
+			echo "<p>".sprintf(_("Elapsed time for query execution : %6f second(s)"), $sql_timetaken)."</p>\n";
 
-        if ($debug == TRUE)
-        {
-            echo "<P>Elapsed time for query execution : $sql_timetaken second(s)</P>\n";
-        }
+		if ($result == false)
+		{
+			echo "<p>execSqlUniqueRes() : "._("An error occured while executing the following SQL query")." :<br/>{$sql}</p>";
+			echo "<p>"._("Error message")." : <br/>".pg_last_error($connection)."</p>";
+			$retval = false;
+		}
+		else
+		{
+			$resultSet = pg_fetch_all($result);
+			$retRow = $resultSet[0];
+			if (pg_num_rows($result) > 1)
+			{
+				echo "<p>execSqlUniqueRes() : "._("An error occured while executing the following SQL query")." : <br/>{$sql}</p>";
+				echo "<p>".sprintf(_("The query returned %d results, although there should have been only one."), pg_num_rows($result))."</p>";
+				$retval = false;
+				$debug = true;
+			}
 
-        if ($result == FALSE)
-        {
-            echo "<p>ExecSqlUniqueRes() : An error occured while executing the following SQL query :<br>$sql</p>";
-            echo "<p>Error message : <br>".pg_last_error($connection)."</p>";
-            $retval = FALSE;
-        }
-        else
-        {
-            $returnResults = pg_fetch_all($result);
-            $retVal = $returnResults[0];
-            if (pg_num_rows($result) > 1)
-            {
-                echo "<p>ExecSqlUniqueRes() : An error occured while executing the following SQL query :<br>$sql</p>";
-                echo "<p>The query returned ".pg_num_rows($result)." results, although there should have been only one.</p>";
-                $retval = FALSE;
-                $debug = true;
-            }
+			if ($debug)
+			{
+				$num_rows = pg_num_rows($result);
+				echo "<p>execSqlUniqueRes(): ".sprintf(_("The query returned %d result(s)"), $num_rows)." : <br/>\n<table>\n";
+				if ($resultSet != NULL)
+				{
+					echo "<tr>\n";
+					while (list ($col_name, $col_content) = each($resultSet[0]))
+					{
+						echo "<th>$col_name</th>\n";
+					}
+					echo "</tr>\n";
 
+					while ($resultSet != NULL && list ($key, $value) = each($resultSet))
+					{
+						echo "<tr>\n";
+						while ($value != NULL && list ($col_name, $col_content) = each($value))
+						{
+							echo "<td>$col_content</td>\n";
+						}
+						echo "</tr>\n";
+					}
+					reset($resultSet);
+				}
+				echo "</table></p><hr/>\n";
+			}
 
-            if ($debug)
-            {
-                $num_rows = pg_num_rows($result);
-                echo "<p>ExecSqlUniqueRes(): The query returned $num_rows result(s) :<br><TABLE>";
-                if ($returnResults != NULL)
-                {
-                    //On affiche l'en-téte des colonnes une seule fois*/
-                    echo "<TR>";
-                    while (list ($col_name, $col_content) = each($returnResults[0]))
-                    {
-                        echo "<TH>$col_name</TH>";
-                    }
-                    echo "</TR>\n";
+		}
+		return $retval;
+	}
 
-                while ($returnResults != NULL && list ($key, $value) = each($returnResults))
-                {
-                    echo "<TR>";
-                    while ($value != NULL && list ($col_name, $col_content) = each($value))
-                    {
-                        echo "<TD>$col_content</TD>";
-                    }
-                    echo "</TR>\n";
-                }
-                reset($returnResults);
-                }
-                echo "</TABLE></p><hr />\n";
-            }
+	/**
+	 * Execute an SQL query meant to modify the database content
+	 @param $sql SQL update query to run
+	 @param $debug Optional display debug output
+	 @return false on failure, true otherwise
+	 */
+	function execSqlUpdate($sql, $debug = false)
+	{
+		// Get a connection handle
+		$connection = $this->connect(NULL);
+		if ($debug == TRUE)
+			echo "<hr/><p>execSqlUpdate(): "._("SQL Query")." : <br/>\n<pre>{$sql}</pre></p>\n";
 
-        }
-        return $retval;
-    }
+		global $sql_num_update_querys;
+		global $sql_total_time;
+		
+		$sql_num_update_querys ++;
+		$sql_starttime = microtime();
+		$result = pg_query($connection, $sql);
+		$sql_endtime = microtime();
+		$parts_of_starttime = explode(' ', $sql_starttime);
+		$sql_starttime = $parts_of_starttime[0] + $parts_of_starttime[1];
+		$parts_of_endtime = explode(' ', $sql_endtime);
+		$sql_endtime = $parts_of_endtime[0] + $parts_of_endtime[1];
+		$sql_timetaken = $sql_endtime - $sql_starttime;
+		$sql_total_time = $sql_total_time + $sql_timetaken;
 
-    /**Exécute une requête visant à modifier la base de donnée, et donc ne retournant aucun résultat.
-     @param $sql requête SELECT à exécuter
-     @param $debug Si TRUE, affiche la requête brute
-     @return false on failure, true otherwise
-     */
-    function ExecSqlUpdate($sql, $debug = false)
-    {
-        $connection = $this -> connexionDb(NULL);
-        if ($debug == TRUE)
-        {
-            echo "<hr /><p>ExecSqlUpdate(): SQL Query :<br>\n<pre>$sql</pre></p>\n";
-        }
+		if ($debug == TRUE)
+		{
+			echo "<p>".sprintf(_("%d rows affected by the SQL query."), pg_affected_rows($result))."<br/>\n";
+			echo sprintf(_("Elapsed time for query execution : %6f second(s)"), $sql_timetaken)."</p>\n";
+		}
 
-        global $sql_num_update_querys;
-        $sql_num_update_querys ++;
+		if ($result == FALSE)
+		{
+			echo "<p>execSqlUpdate(): "._("An error occured while executing the following SQL query")." : <br><pre>$sql</pre></p>";
+			echo "<p>"._("Error message")." : <br/>".pg_last_error($connection)."<br/>".pg_result_error($result)."</p>";
+		}
+		else
+			if ($debug == TRUE)
+				echo "<p>execSqlUpdate(): ".sprintf(_("%d rows affected by the SQL query."), pg_affected_rows($result))."</p><hr/>\n";
+		return $result;
+	}
 
-        $sql_starttime = microtime();
-        $result = pg_query($connection, $sql);
-        $sql_endtime = microtime();
+	/**
+	 * Reads an entire large object and send it to the browser
+	 */
+	function readFlushLargeObject($lo_oid)
+	{
+		$connection = $this->connect(NULL);
+		
+		// Large objects calls MUST be enclosed in transaction block
+		// remember, large objects must be obtained from within a transaction
+		pg_query($connection, "begin");
+		$handle_lo = pg_lo_open($connection, $lo_oid, "r") or die("<h1>Error.. can't get handle</h1>");
+		pg_lo_read_all($handle_lo) or die("<h1>Error, can't read large object.</h1>");
+		// committing the data transaction
+		pg_query($connection, "commit");
+	}
 
-        global $sql_total_time;
-        $parts_of_starttime = explode(' ', $sql_starttime);
-        $sql_starttime = $parts_of_starttime[0] + $parts_of_starttime[1];
-        //echo "sql_starttime: $sql_starttime <br />\n";
+	function importLargeObject($path)
+	{
+		$connection = $this->connect(NULL);
+		
+		// Large objects calls MUST be enclosed in transaction block
+		// remember, large objects must be obtained from within a transaction
+		pg_query($connection, "begin");
+		$new_oid = pg_lo_import($connection, $path);
+		// committing the data transaction
+		pg_query($connection, "commit");
 
-        $parts_of_endtime = explode(' ', $sql_endtime);
-        $sql_endtime = $parts_of_endtime[0] + $parts_of_endtime[1];
-        //echo "sql_endtime: $sql_endtime <br />\n";
-        $sql_timetaken = $sql_endtime - $sql_starttime;
-        //echo "sql_timetaken: $sql_timetaken <br />\n";
+		return $new_oid;
+	}
 
-        $sql_total_time = $sql_total_time + $sql_timetaken;
+	function unlinkLargeObject($oid)
+	{
+		return $this->execSqlUpdate("BEGIN; SELECT lo_unlink($oid);  COMMIT;", false);
+	}
 
-        if ($debug == TRUE)
-        {
-            echo "<P>".pg_affected_rows($result)." rangées affectées par la requête SQL<br>\n";
-            echo "Temps écoulé: $sql_timetaken seconde(s)</P>\n";
-        }
+	/** 
+	 * Builds a string suitable for the databases interval datatype and returns it.
+	 @param $duration The source Duration object
+	 @return a string suitable for storage in the database's interval datatype
+	 */
+	function GetIntervalStrFromDuration($duration)
+	{
+		$str = '';
+		if ($duration->GetYears() != 0)
+			$str .= $duration->GetYears().' years ';
+		if ($duration->GetMonths() != 0)
+			$str .= $duration->GetMonths().' months ';
+		if ($duration->GetDays() != 0)
+			$str .= $duration->GetDays().' days ';
 
-        if ($result == FALSE)
-        {
-            echo "<p>ExecuterSqlResUnique(): ERREUR: Lors de l'exécution de la requête SQL:<br><pre>$sql</pre></p>";
-            echo "<p>L'erreur est:<br>".pg_last_error()."<br>".pg_result_error($result)."</p>";
-        }
-        else
-        {
-            if ($debug == TRUE)
-            {
-                echo "<p>ExecuterSqlUpdate(): DEBUG: ".pg_affected_rows($result)." rangée(s) affectée(s)</p><hr />\n";
-            }
-        }
-        return $result;
-    }
+		if ($duration->GetHours() != 0 || $duration->GetMinutes() != 0 || $duration->GetSeconds() != 0)
+		{
+			$str .= $duration->GetHours().':'.$duration->GetMinutes().':'.$duration->GetSeconds();
+		}
+		return $str;
+	}
 
-    /**
-     * Read entire large object and send it to the browser
-     */
-    function ReadAndFlushLargeObject($lo_oid)
-    {
-        $connection = $this->connexionDb(NULL);
-        // Large objects calls MUST be enclosed in transaction block
-        // remember, large objects must be obtained from within a transaction
-        pg_query ($connection, "begin");
-        $handle_lo = pg_lo_open($connection, $lo_oid, "r") or die("<h1>Error.. can't get handle</h1>");
-
-        pg_lo_read_all($handle_lo) or die("<h1>Error, can't read large object.</h1>");
-
-        // committing the data transaction
-        pg_query ($connection, "commit");
-    }
-
-    function ImportLargeObject($path)
-    {
-        $connection = $this->connexionDb(NULL);
-        // Large objects calls MUST be enclosed in transaction block
-        // remember, large objects must be obtained from within a transaction
-        pg_query ($connection, "begin");
-
-        $new_oid = pg_lo_import($connection, $path);
-
-        // committing the data transaction
-        pg_query ($connection, "commit");
-
-        return $new_oid;
-    }
-
-    function UnlinkLargeObject($oid)
-    {
-        return $this->ExecSqlUpdate("BEGIN; SELECT lo_unlink($oid);  COMMIT;", false);
-    }
-
-
-    /** Builds a string suitable for the databases interval datatype and returns it.
-     @param $duration The source Duration object
-     @return a string suitable for storage in the database's interval datatype
-     */
-    function GetIntervalStrFromDuration($duration)
-    {
-        $str = '';
-        if ($duration -> GetYears() != 0)
-            $str.= $duration -> GetYears().' years ';
-        if ($duration -> GetMonths() != 0)
-            $str.= $duration -> GetMonths().' months ';
-        if ($duration -> GetDays() != 0)
-            $str.= $duration -> GetDays().' days ';
-
-        if ($duration -> GetHours() != 0 || $duration -> GetMinutes() != 0 || $duration -> GetSeconds() != 0)
-        {
-            $str.= $duration -> GetHours().':'.$duration -> GetMinutes().':'.$duration -> GetSeconds();
-        }
-        return $str;
-    }
-
-    /** Builds the internal duration Array from a databases interval datatype and returns it.
-     @param $intervalstr A string in the database's interval datatype format
-     @return the internal representration on the Duration object
-     */
-    function GetDurationArrayFromIntervalStr($intervalstr)
-    {
-        if (empty($intervalstr))
-        {
-            $retval['years'] = 0;
-            $retval['months'] = 0;
-            $retval['days'] = 0;
-            $retval['hours'] = 0;
-            $retval['minutes'] = 0;
-            $retval['seconds'] = 0;
-        }
-        else
-        {
-            $sql = "SELECT EXTRACT (year FROM INTERVAL '$intervalstr') AS years, EXTRACT (month FROM INTERVAL '$intervalstr') AS months, EXTRACT (day FROM INTERVAL '$intervalstr') AS days, EXTRACT (hour FROM INTERVAL '$intervalstr') AS hours, EXTRACT (minutes FROM INTERVAL '$intervalstr') AS minutes, EXTRACT (seconds FROM INTERVAL '$intervalstr') AS seconds";
-            $this -> ExecSqlUniqueRes($sql, $retval, false);
-        }
-        return $retval;
-    }
+	/** 
+	 * Builds the internal duration Array from a databases interval datatype and returns it.
+	 @param $intervalstr A string in the database's interval datatype format
+	 @return the internal representration on the Duration object
+	 */
+	function GetDurationArrayFromIntervalStr($intervalstr)
+	{
+		$retval = null;
+		if (empty ($intervalstr))
+		{
+			$retval['years'] = 0;
+			$retval['months'] = 0;
+			$retval['days'] = 0;
+			$retval['hours'] = 0;
+			$retval['minutes'] = 0;
+			$retval['seconds'] = 0;
+		}
+		else
+		{
+			$sql = "SELECT EXTRACT (year FROM INTERVAL '$intervalstr') AS years, EXTRACT (month FROM INTERVAL '$intervalstr') AS months, EXTRACT (day FROM INTERVAL '$intervalstr') AS days, EXTRACT (hour FROM INTERVAL '$intervalstr') AS hours, EXTRACT (minutes FROM INTERVAL '$intervalstr') AS minutes, EXTRACT (seconds FROM INTERVAL '$intervalstr') AS seconds";
+			$this->execSqlUniqueRes($sql, $retval, false);
+		}
+		return $retval;
+	}
 
 }
 
@@ -439,5 +415,4 @@ class AbstractDb
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
 ?>

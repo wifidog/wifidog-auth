@@ -102,8 +102,8 @@ class AuthenticatorRadius extends Authenticator
         global $db;
         $security = new Security();
         $retval = false;
-        $username = $db->EscapeString($username);
-        $password = $db->EscapeString($password);
+        $username = $db->escapeString($username);
+        $password = $db->escapeString($password);
 
         /*
          * Supported encryption methods are :
@@ -178,7 +178,7 @@ class AuthenticatorRadius extends Authenticator
                 // Now checking for local copy of this user
                 $user_info = null;
                 $sql = "SELECT user_id, pass FROM users WHERE (username='$username') AND account_origin='".$this->getNetwork()->getId()."'";
-                $db->ExecSqlUniqueRes($sql, $user_info, false);
+                $db->execSqlUniqueRes($sql, $user_info, false);
 
                 if ($user_info != null)
                 {
@@ -224,8 +224,8 @@ class AuthenticatorRadius extends Authenticator
     {
         global $db;
         $info = null;
-        $conn_id = $db->EscapeString($conn_id);
-        $db->ExecSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id=$conn_id", $info, false);
+        $conn_id = $db->escapeString($conn_id);
+        $db->execSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id=$conn_id", $info, false);
 
         // RADIUS accounting start
         $radius_acct = new Auth_RADIUS_Acct_Start;
@@ -270,8 +270,8 @@ class AuthenticatorRadius extends Authenticator
         parent :: acctUpdate($conn_id, $incoming, $outgoing);
         global $db;
         $info = null;
-        $conn_id = $db->EscapeString($conn_id);
-        $db->ExecSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id=$conn_id", $info, false);
+        $conn_id = $db->escapeString($conn_id);
+        $db->execSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id=$conn_id", $info, false);
 
         // RADIUS accounting ping
         // Session is completely based on Database time
@@ -319,8 +319,8 @@ class AuthenticatorRadius extends Authenticator
         parent :: acctStop($conn_id);
         global $db;
         $info = null;
-        $conn_id = $db->EscapeString($conn_id);
-        $db->ExecSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id=$conn_id", $info, false);
+        $conn_id = $db->escapeString($conn_id);
+        $db->execSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id=$conn_id", $info, false);
 
         // RADIUS accounting stop
         // Session is completely based on Database time

@@ -65,18 +65,18 @@ class Content implements GenericObject {
         if (empty ($id)) {
             $content_id = get_guid();
         } else {
-            $content_id = $db->EscapeString($id);
+            $content_id = $db->escapeString($id);
         }
 
         if (empty ($content_type)) {
             throw new Exception(_('Content type is optionnal, but cannot be empty!'));
         } else {
-            $content_type = $db->EscapeString($content_type);
+            $content_type = $db->escapeString($content_type);
         }
 
         $sql = "INSERT INTO content (content_id, content_type) VALUES ('$content_id', '$content_type')";
 
-        if (!$db->ExecSqlUpdate($sql, false)) {
+        if (!$db->execSqlUpdate($sql, false)) {
             throw new Exception(_('Unable to insert new content into database!'));
         }
 
@@ -142,9 +142,9 @@ class Content implements GenericObject {
     static function getObject($content_id)
     {
         global $db;
-        $content_id = $db->EscapeString($content_id);
+        $content_id = $db->escapeString($content_id);
         $sql = "SELECT content_type FROM content WHERE content_id='$content_id'";
-        $db->ExecSqlUniqueRes($sql, $row, false);
+        $db->execSqlUniqueRes($sql, $row, false);
         if ($row == null)
         {
             throw new Exception(_("The content with the following id could not be found in the database: ").$content_id);
@@ -197,10 +197,10 @@ class Content implements GenericObject {
         $where_clause = "";
         if (!empty ($content_type))
         {
-            $content_type = $db->EscapeString($content_type);
+            $content_type = $db->escapeString($content_type);
             $where_clause = "WHERE content_type = '$content_type'";
         }
-        $db->ExecSql("SELECT content_id FROM content $where_clause", $rows, false);
+        $db->execSql("SELECT content_id FROM content $where_clause", $rows, false);
         $objects = array ();
         if ($rows)
             foreach ($rows as $row)
@@ -294,16 +294,16 @@ class Content implements GenericObject {
     {
         global $db;
         $html = '';
-        $link_table = $db->EscapeString($link_table);
-        $link_table_obj_key_col = $db->EscapeString($link_table_obj_key_col);
-        $link_table_obj_key = $db->EscapeString($link_table_obj_key);
-        $display_location = $db->EscapeString($display_location);
+        $link_table = $db->escapeString($link_table);
+        $link_table_obj_key_col = $db->escapeString($link_table_obj_key_col);
+        $link_table_obj_key = $db->escapeString($link_table_obj_key);
+        $display_location = $db->escapeString($display_location);
         $name = "{$user_prefix}_display_location";
 
         $html .= "<input type='hidden' name='{$name}' value='{$display_location}'>\n";
         $current_content_sql = "SELECT * FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key' AND display_location='$display_location' ORDER BY subscribe_timestamp DESC";
         $rows = null;
-        $db->ExecSql($current_content_sql, $rows, false);
+        $db->execSql($current_content_sql, $rows, false);
         $html .= "<ul class='admin_section_list'>\n";
         if ($rows)
             foreach ($rows as $row)
@@ -350,26 +350,26 @@ class Content implements GenericObject {
     static function processLinkedContentUI($user_prefix, $link_table, $link_table_obj_key_col, $link_table_obj_key)
     {
         global $db;
-        $link_table = $db->EscapeString($link_table);
-        $link_table_obj_key_col = $db->EscapeString($link_table_obj_key_col);
-        $link_table_obj_key = $db->EscapeString($link_table_obj_key);
+        $link_table = $db->escapeString($link_table);
+        $link_table_obj_key_col = $db->escapeString($link_table_obj_key_col);
+        $link_table_obj_key = $db->escapeString($link_table_obj_key);
         $name = "{$user_prefix}_display_location";
-        $display_location = $db->EscapeString($_REQUEST[$name]);
+        $display_location = $db->escapeString($_REQUEST[$name]);
         $name = "{$user_prefix}_new_display_location";
-        $display_location_new = $db->EscapeString($_REQUEST[$name]);
+        $display_location_new = $db->escapeString($_REQUEST[$name]);
         $current_content_sql = "SELECT * FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key' AND display_location='$display_location' ORDER BY subscribe_timestamp DESC";
         $rows = null;
-        $db->ExecSql($current_content_sql, $rows, false);
+        $db->execSql($current_content_sql, $rows, false);
         if ($rows)
             foreach ($rows as $row)
             {
                 $content = Content :: getObject($row['content_id']);
-                $content_id = $db->EscapeString($content->getId());
+                $content_id = $db->escapeString($content->getId());
                 $name = "{$user_prefix}_".$content->GetId()."_erase";
                 if (!empty ($_REQUEST[$name]))
                 {
                     $sql = "DELETE FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key' AND content_id = '$content_id'";
-                    $db->ExecSqlUpdate($sql, false);
+                    $db->execSqlUpdate($sql, false);
                 }
             }
 
@@ -380,18 +380,18 @@ class Content implements GenericObject {
             $content = Content :: processSelectContentUI($name);
             if ($content)
             {
-                $content_id = $db->EscapeString($content->getId());
+                $content_id = $db->escapeString($content->getId());
                 $sql = "INSERT INTO $link_table (content_id, $link_table_obj_key_col, display_location) VALUES ('$content_id', '$link_table_obj_key', '$display_location_new');\n";
-                $db->ExecSqlUpdate($sql, false);
+                $db->execSqlUpdate($sql, false);
             }
         }
         $name = "{$user_prefix}_new";
         $content = self :: processNewContentUI($name);
         if ($content)
         {
-            $content_id = $db->EscapeString($content->getId());
+            $content_id = $db->escapeString($content->getId());
             $sql = "INSERT INTO $link_table (content_id, $link_table_obj_key_col, display_location) VALUES ('$content_id', '$link_table_obj_key', '$display_location_new');\n";
-            $db->ExecSqlUpdate($sql, false);
+            $db->execSqlUpdate($sql, false);
         }
 
     }
@@ -409,7 +409,7 @@ class Content implements GenericObject {
         global $db;
         $retval = array ();
         $sql = "SELECT * FROM content WHERE is_persistent=TRUE $sql_additional_where ORDER BY creation_timestamp";
-        $db->ExecSql($sql, $content_rows, false);
+        $db->execSql($sql, $content_rows, false);
         if ($content_rows != null)
         {
             $i = 0;
@@ -447,9 +447,9 @@ class Content implements GenericObject {
     {
         global $db;
 
-        $content_id = $db->EscapeString($content_id);
+        $content_id = $db->escapeString($content_id);
         $sql = "SELECT * FROM content WHERE content_id='$content_id'";
-        $db->ExecSqlUniqueRes($sql, $row, false);
+        $db->execSqlUniqueRes($sql, $row, false);
         if ($row == null)
         {
             throw new Exception(_("The content with the following id could not be found in the database: ").$content_id);
@@ -570,7 +570,7 @@ class Content implements GenericObject {
     private function setContentType($content_type)
     {
         global $db;
-        $content_type = $db->EscapeString($content_type);
+        $content_type = $db->escapeString($content_type);
         $available_content_types = self :: getAvailableContentTypes();
         if (false === array_search($content_type, $available_content_types, true))
         {
@@ -578,7 +578,7 @@ class Content implements GenericObject {
         }
         $sql = "UPDATE content SET content_type = '$content_type' WHERE content_id='$this->id'";
 
-        if (!$db->ExecSqlUpdate($sql, false))
+        if (!$db->execSqlUpdate($sql, false))
         {
             throw new Exception(_("Update was unsuccessfull (database error)"));
         }
@@ -593,11 +593,11 @@ class Content implements GenericObject {
     {
         global $db;
         $content_id = "'".$this->id."'";
-        $user_id = "'".$db->EscapeString($user->getId())."'";
+        $user_id = "'".$db->escapeString($user->getId())."'";
         $is_author ? $is_author = 'TRUE' : $is_author = 'FALSE';
         $sql = "INSERT INTO content_has_owners (content_id, user_id, is_author) VALUES ($content_id, $user_id, $is_author)";
 
-        if (!$db->ExecSqlUpdate($sql, false))
+        if (!$db->execSqlUpdate($sql, false))
         {
             throw new Exception(_('Unable to insert the new Owner into database.'));
         }
@@ -612,11 +612,11 @@ class Content implements GenericObject {
     {
         global $db;
         $content_id = "'".$this->id."'";
-        $user_id = "'".$db->EscapeString($user->getId())."'";
+        $user_id = "'".$db->escapeString($user->getId())."'";
 
         $sql = "DELETE FROM content_has_owners WHERE content_id=$content_id AND user_id=$user_id";
 
-        if (!$db->ExecSqlUpdate($sql, false))
+        if (!$db->execSqlUpdate($sql, false))
         {
             throw new Exception(_('Unable to remove the owner from the database.'));
         }
@@ -655,16 +655,16 @@ class Content implements GenericObject {
 
         if ($user)
         {
-            $user_id = $db->EscapeString($user->getId());
+            $user_id = $db->escapeString($user->getId());
             $sql .= " AND user_id = '{$user_id}' \n";
         }
         if ($node)
         {
-            $node_id = $db->EscapeString($node->getId());
+            $node_id = $db->escapeString($node->getId());
             $sql .= " AND node_id = '{$node_id}' \n";
         }
         $sql .= " ORDER BY last_display_timestamp DESC ";
-        $db->ExecSql($sql, $log_rows, false);
+        $db->execSql($sql, $log_rows, false);
         if ($log_rows)
         {
             $retval = $log_rows[0]['last_display_unix_timestamp'];
@@ -690,9 +690,9 @@ class Content implements GenericObject {
         $retval = false;
         if ($user != null)
         {
-            $user_id = $db->EscapeString($user->GetId());
+            $user_id = $db->escapeString($user->GetId());
             $sql = "SELECT * FROM content_has_owners WHERE content_id='$this->id' AND user_id='$user_id'";
-            $db->ExecSqlUniqueRes($sql, $content_owner_row, false);
+            $db->execSqlUniqueRes($sql, $content_owner_row, false);
             if ($content_owner_row != null)
             {
                 $retval = true;
@@ -708,7 +708,7 @@ class Content implements GenericObject {
         global $db;
         $retval = array ();
         $sql = "SELECT user_id FROM content_has_owners WHERE content_id='$this->id' AND is_author=TRUE";
-        $db->ExecSqlUniqueRes($sql, $content_owner_row, false);
+        $db->execSqlUniqueRes($sql, $content_owner_row, false);
         if ($content_owner_row != null)
         {
             $user = User :: getObject($content_owner_row['user_id']);
@@ -831,7 +831,7 @@ class Content implements GenericObject {
                 global $db;
 
                 $sql = "SELECT * FROM content_display_log WHERE user_id='$user_id' AND node_id='$node_id' AND content_id='$this->id'";
-                $db->ExecSql($sql, $log_rows, false);
+                $db->execSql($sql, $log_rows, false);
                 if ($log_rows != null)
                 {
                     $sql = "UPDATE content_display_log SET last_display_timestamp = NOW() WHERE user_id='$user_id' AND content_id='$this->id' AND node_id='$node_id'";
@@ -840,7 +840,7 @@ class Content implements GenericObject {
                 {
                     $sql = "INSERT INTO content_display_log (user_id, content_id, node_id) VALUES ('$user_id', '$this->id', '$node_id')";
                 }
-                $db->ExecSqlUpdate($sql, false);
+                $db->execSqlUpdate($sql, false);
             }
         }
     }
@@ -1032,7 +1032,7 @@ class Content implements GenericObject {
 
                 global $db;
                 $sql = "SELECT * FROM content_has_owners WHERE content_id='$this->id'";
-                $db->ExecSql($sql, $content_owner_rows, false);
+                $db->execSql($sql, $content_owner_rows, false);
                 if ($content_owner_rows != null)
                 {
                     foreach ($content_owner_rows as $content_owner_row)
@@ -1097,7 +1097,7 @@ class Content implements GenericObject {
                         if ($title != null)
                         {
                             $title_id = $title->GetId();
-                            $db->ExecSqlUpdate("UPDATE content SET title = '$title_id' WHERE content_id = '$this->id'", FALSE);
+                            $db->execSqlUpdate("UPDATE content SET title = '$title_id' WHERE content_id = '$this->id'", FALSE);
                         }
                     }
                     else
@@ -1106,7 +1106,7 @@ class Content implements GenericObject {
                         $name = "content_".$this->id."_title_erase";
                         if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
                         {
-                            $db->ExecSqlUpdate("UPDATE content SET title = NULL WHERE content_id = '$this->id'", FALSE);
+                            $db->execSqlUpdate("UPDATE content SET title = NULL WHERE content_id = '$this->id'", FALSE);
                             $title->delete($errmsg);
                         }
                         else
@@ -1126,7 +1126,7 @@ class Content implements GenericObject {
                         if ($description != null)
                         {
                             $description_id = $description->GetId();
-                            $db->ExecSqlUpdate("UPDATE content SET description = '$description_id' WHERE content_id = '$this->id'", FALSE);
+                            $db->execSqlUpdate("UPDATE content SET description = '$description_id' WHERE content_id = '$this->id'", FALSE);
                         }
                     }
                     else
@@ -1135,7 +1135,7 @@ class Content implements GenericObject {
                         $name = "content_".$this->id."_description_erase";
                         if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
                         {
-                            $db->ExecSqlUpdate("UPDATE content SET description = NULL WHERE content_id = '$this->id'", FALSE);
+                            $db->execSqlUpdate("UPDATE content SET description = NULL WHERE content_id = '$this->id'", FALSE);
                             $description->delete($errmsg);
                         }
                         else
@@ -1151,7 +1151,7 @@ class Content implements GenericObject {
                         if ($long_description != null)
                         {
                             $long_description_id = $long_description->GetId();
-                            $db->ExecSqlUpdate("UPDATE content SET long_description = '$long_description_id' WHERE content_id = '$this->id'", FALSE);
+                            $db->execSqlUpdate("UPDATE content SET long_description = '$long_description_id' WHERE content_id = '$this->id'", FALSE);
                         }
                     }
                     else
@@ -1160,7 +1160,7 @@ class Content implements GenericObject {
                         $name = "content_".$this->id."_long_description_erase";
                         if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
                         {
-                            $db->ExecSqlUpdate("UPDATE content SET long_description = NULL WHERE content_id = '$this->id'", FALSE);
+                            $db->execSqlUpdate("UPDATE content SET long_description = NULL WHERE content_id = '$this->id'", FALSE);
                             $long_description->delete($errmsg);
                         }
                         else
@@ -1176,7 +1176,7 @@ class Content implements GenericObject {
                         if ($project_info != null)
                         {
                             $project_info_id = $project_info->GetId();
-                            $db->ExecSqlUpdate("UPDATE content SET project_info = '$project_info_id' WHERE content_id = '$this->id'", FALSE);
+                            $db->execSqlUpdate("UPDATE content SET project_info = '$project_info_id' WHERE content_id = '$this->id'", FALSE);
                         }
                     }
                     else
@@ -1185,7 +1185,7 @@ class Content implements GenericObject {
                         $name = "content_".$this->id."_project_info_erase";
                         if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
                         {
-                            $db->ExecSqlUpdate("UPDATE content SET project_info = NULL WHERE content_id = '$this->id'", FALSE);
+                            $db->execSqlUpdate("UPDATE content SET project_info = NULL WHERE content_id = '$this->id'", FALSE);
                             $project_info->delete($errmsg);
                         }
                         else
@@ -1201,7 +1201,7 @@ class Content implements GenericObject {
                         if ($sponsor_info != null)
                         {
                             $sponsor_info_id = $sponsor_info->GetId();
-                            $db->ExecSqlUpdate("UPDATE content SET sponsor_info = '$sponsor_info_id' WHERE content_id = '$this->id'", FALSE);
+                            $db->execSqlUpdate("UPDATE content SET sponsor_info = '$sponsor_info_id' WHERE content_id = '$this->id'", FALSE);
                         }
                     }
                     else
@@ -1210,7 +1210,7 @@ class Content implements GenericObject {
                         $name = "content_".$this->id."_sponsor_info_erase";
                         if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
                         {
-                            $db->ExecSqlUpdate("UPDATE content SET sponsor_info = NULL WHERE content_id = '$this->id'", FALSE);
+                            $db->execSqlUpdate("UPDATE content SET sponsor_info = NULL WHERE content_id = '$this->id'", FALSE);
                             $sponsor_info->delete($errmsg);
                         }
                         else
@@ -1220,7 +1220,7 @@ class Content implements GenericObject {
                     }
                     /* content_has_owners */
                     $sql = "SELECT * FROM content_has_owners WHERE content_id='$this->id'";
-                    $db->ExecSql($sql, $content_owner_rows, false);
+                    $db->execSql($sql, $content_owner_rows, false);
                     if ($content_owner_rows != null)
                     {
                         foreach ($content_owner_rows as $content_owner_row)
@@ -1242,7 +1242,7 @@ class Content implements GenericObject {
                                     $should_be_author ? $is_author_sql = 'TRUE' : $is_author_sql = 'FALSE';
                                     $sql = "UPDATE content_has_owners SET is_author=$is_author_sql WHERE content_id='$this->id' AND user_id='$user_id'";
 
-                                    if (!$db->ExecSqlUpdate($sql, false))
+                                    if (!$db->execSqlUpdate($sql, false))
                                     {
                                         throw new Exception(_('Unable to set as author in the database.'));
                                     }
@@ -1273,7 +1273,7 @@ class Content implements GenericObject {
     {
         global $db;
         $sql = "SELECT content_id FROM user_has_content WHERE user_id = '{$user->getId()}' AND content_id = '{$this->getId()}';";
-        $db->ExecSqlUniqueRes($sql, $row, false);
+        $db->execSqlUniqueRes($sql, $row, false);
 
         if ($row)
             return true;
@@ -1319,7 +1319,7 @@ class Content implements GenericObject {
             $is_persistent ? $is_persistent_sql = 'TRUE' : $is_persistent_sql = 'FALSE';
 
             global $db;
-            $db->ExecSqlUpdate("UPDATE content SET is_persistent = $is_persistent_sql WHERE content_id = '$this->id'", false);
+            $db->execSqlUpdate("UPDATE content SET is_persistent = $is_persistent_sql WHERE content_id = '$this->id'", false);
             $this->refresh();
         }
 
@@ -1349,7 +1349,7 @@ class Content implements GenericObject {
             if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
             {
                 $sql = "DELETE FROM content WHERE content_id='$this->id'";
-                $db->ExecSqlUpdate($sql, false);
+                $db->execSqlUpdate($sql, false);
                 $retval = true;
             }
             else

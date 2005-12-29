@@ -106,7 +106,7 @@ class Node implements GenericObject
 		$retval = null;
 		$sql = "SELECT node_id, last_heartbeat_ip from nodes WHERE last_heartbeat_ip='$_SERVER[REMOTE_ADDR]' ORDER BY last_heartbeat_timestamp DESC";
 		$node_rows = null;
-		$db->ExecSql($sql, $node_rows, false);
+		$db->execSql($sql, $node_rows, false);
 		$num_match = count($node_rows);
 		if ($num_match == 0)
 		{
@@ -133,7 +133,7 @@ class Node implements GenericObject
 					$current_user_id = $current_user->getId();
 					$_SERVER['REMOTE_ADDR'];
 					$sql = "SELECT node_id, last_heartbeat_ip from connections NATURAL JOIN nodes WHERE user_id='$current_user_id' ORDER BY last_updated DESC ";
-					$db->ExecSql($sql, $node_rows, false);
+					$db->execSql($sql, $node_rows, false);
 					$node_row = $node_rows[0];
 					if ($node_row != null && $node_row['last_heartbeat_ip'] == $_SERVER['REMOTE_ADDR'])
 					{
@@ -151,8 +151,8 @@ class Node implements GenericObject
 		if ($this->isOwner($user) || $user->isSuperAdmin())
 		{
 			global $db;
-			$id = $db->EscapeString($this->getId());
-			if (!$db->ExecSqlUpdate("DELETE FROM nodes WHERE node_id='{$id}'", false))
+			$id = $db->escapeString($this->getId());
+			if (!$db->execSqlUpdate("DELETE FROM nodes WHERE node_id='{$id}'", false))
 			{
 				$errmsg = _('Could not delete node!');
 			}
@@ -184,22 +184,22 @@ class Node implements GenericObject
 		{
 			$node_id = get_guid();
 		}
-		$node_id = $db->EscapeString($node_id);
+		$node_id = $db->escapeString($node_id);
 
 		if (empty ($network))
 		{
 			$network = Network :: getCurrentNetwork();
 		}
-		$network_id = $db->EscapeString($network->getId());
+		$network_id = $db->escapeString($network->getId());
 
-		$node_deployment_status = $db->EscapeString("IN_PLANNING");
+		$node_deployment_status = $db->escapeString("IN_PLANNING");
 		$node_name = _("New node");
 		if (Node :: nodeExists($node_id))
 			throw new Exception(_('This node already exists.'));
 
 		$sql = "INSERT INTO nodes (node_id, network_id, creation_date, node_deployment_status, name) VALUES ('$node_id', '$network_id', NOW(),'$node_deployment_status', '$node_name')";
 
-		if (!$db->ExecSqlUpdate($sql, false))
+		if (!$db->execSqlUpdate($sql, false))
 		{
 			throw new Exception(_('Unable to insert new node into database!'));
 		}
@@ -220,7 +220,7 @@ class Node implements GenericObject
 		$html .= _("Node: ");
 		$sql = "SELECT node_id, name from nodes WHERE 1=1 $sql_additional_where ORDER BY node_id";
 		$node_rows = null;
-		$db->ExecSql($sql, $node_rows, false);
+		$db->execSql($sql, $node_rows, false);
 		if ($node_rows != null)
 		{
 			// Naturally-sorting by node_id
@@ -315,7 +315,7 @@ class Node implements GenericObject
 		$html = '';
 		$name = "{$user_prefix}";
 		$status_list = null;
-		$db->ExecSql("SELECT node_deployment_status FROM node_deployment_status", $status_list, false);
+		$db->execSql("SELECT node_deployment_status FROM node_deployment_status", $status_list, false);
 		if ($status_list == null)
 			throw new Exception(_("No deployment statues  could be found in the database"));
 
@@ -343,10 +343,10 @@ class Node implements GenericObject
 		global $db;
 		$this->mDb = & $db;
 
-		$node_id_str = $db->EscapeString($node_id);
+		$node_id_str = $db->escapeString($node_id);
 		$sql = "SELECT * FROM nodes WHERE node_id='$node_id_str'";
 		$row = null;
-		$db->ExecSqlUniqueRes($sql, $row, false);
+		$db->execSqlUniqueRes($sql, $row, false);
 		if ($row == null)
 		{
 			throw new Exception(_("The id $node_id_str could not be found in the database"));
@@ -370,8 +370,8 @@ class Node implements GenericObject
 	 */
 	function setId($id)
 	{
-		$id = $this->mDb->EscapeString($id);
-		$retval = $this->mDb->ExecSqlUpdate("UPDATE nodes SET node_id = '{$id}' WHERE node_id = '{$this->getId()}'");
+		$id = $this->mDb->escapeString($id);
+		$retval = $this->mDb->execSqlUpdate("UPDATE nodes SET node_id = '{$id}' WHERE node_id = '{$this->getId()}'");
 		if ($retval)
 		{
 			$this->id = $id;
@@ -400,13 +400,13 @@ class Node implements GenericObject
 	{
 		if (!empty ($pt))
 		{
-			$lat = $this->mDb->EscapeString($pt->getLatitude());
-			$long = $this->mDb->EscapeString($pt->getLongitude());
+			$lat = $this->mDb->escapeString($pt->getLatitude());
+			$long = $this->mDb->escapeString($pt->getLongitude());
 
 			if (!empty ($lat) && !empty ($long))
-				$this->mDb->ExecSqlUpdate("UPDATE nodes SET latitude = $lat, longitude = $long WHERE node_id = '{$this->getId()}'");
+				$this->mDb->execSqlUpdate("UPDATE nodes SET latitude = $lat, longitude = $long WHERE node_id = '{$this->getId()}'");
 			else
-				$this->mDb->ExecSqlUpdate("UPDATE nodes SET latitude = NULL, longitude = NULL WHERE node_id = '{$this->getId()}'");
+				$this->mDb->execSqlUpdate("UPDATE nodes SET latitude = NULL, longitude = NULL WHERE node_id = '{$this->getId()}'");
 			$this->refresh();
 		}
 	}
@@ -420,8 +420,8 @@ class Node implements GenericObject
 
 	function setName($name)
 	{
-		$name = $this->mDb->EscapeString($name);
-		$this->mDb->ExecSqlUpdate("UPDATE nodes SET name = '{$name}' WHERE node_id = '{$this->getId()}'");
+		$name = $this->mDb->escapeString($name);
+		$this->mDb->execSqlUpdate("UPDATE nodes SET name = '{$name}' WHERE node_id = '{$this->getId()}'");
 		$this->refresh();
 	}
 
@@ -432,8 +432,8 @@ class Node implements GenericObject
 
 	function setCreationDate($creation_date)
 	{
-		$creation_date = $this->mDb->EscapeString($creation_date);
-		$this->mDb->ExecSqlUpdate("UPDATE nodes SET creation_date = '{$creation_date}' WHERE node_id = '{$this->getId()}'");
+		$creation_date = $this->mDb->escapeString($creation_date);
+		$this->mDb->execSqlUpdate("UPDATE nodes SET creation_date = '{$creation_date}' WHERE node_id = '{$this->getId()}'");
 		$this->refresh();
 	}
 
@@ -444,8 +444,8 @@ class Node implements GenericObject
 
 	function setHomePageUrl($url)
 	{
-		$url = $this->mDb->EscapeString($url);
-		$this->mDb->ExecSqlUpdate("UPDATE nodes SET home_page_url = '{$url}' WHERE node_id = '{$this->getId()}'");
+		$url = $this->mDb->escapeString($url);
+		$this->mDb->execSqlUpdate("UPDATE nodes SET home_page_url = '{$url}' WHERE node_id = '{$this->getId()}'");
 		$this->refresh();
 	}
 
@@ -456,8 +456,8 @@ class Node implements GenericObject
 
 	function setDescription($description)
 	{
-		$description = $this->mDb->EscapeString($description);
-		$this->mDb->ExecSqlUpdate("UPDATE nodes SET description = '{$description}' WHERE node_id = '{$this->getId()}'");
+		$description = $this->mDb->escapeString($description);
+		$this->mDb->execSqlUpdate("UPDATE nodes SET description = '{$description}' WHERE node_id = '{$this->getId()}'");
 		$this->refresh();
 	}
 
@@ -468,8 +468,8 @@ class Node implements GenericObject
 
 	function setMapURL($url)
 	{
-		$url = $this->mDb->EscapeString($url);
-		$this->mDb->ExecSqlUpdate("UPDATE nodes SET map_url = '{$url}' WHERE node_id = '{$this->getId()}'");
+		$url = $this->mDb->escapeString($url);
+		$this->mDb->execSqlUpdate("UPDATE nodes SET map_url = '{$url}' WHERE node_id = '{$this->getId()}'");
 		$this->refresh();
 	}
 
@@ -480,8 +480,8 @@ class Node implements GenericObject
 
 	public function setCivicNumber($civic_number)
 	{
-		$civic_number = $this->mDb->EscapeString($civic_number);
-		$this->mDb->ExecSqlUpdate("UPDATE nodes SET civic_number = '{$civic_number}' WHERE node_id = '{$this->getId()}'");
+		$civic_number = $this->mDb->escapeString($civic_number);
+		$this->mDb->execSqlUpdate("UPDATE nodes SET civic_number = '{$civic_number}' WHERE node_id = '{$this->getId()}'");
 		$this->refresh();
 	}
 
@@ -492,8 +492,8 @@ class Node implements GenericObject
 
 	public function setStreetName($street_name)
 	{
-		$street_name = $this->mDb->EscapeString($street_name);
-		$this->mDb->ExecSqlUpdate("UPDATE nodes SET street_name = '{$street_name}' WHERE node_id = '{$this->getId()}'");
+		$street_name = $this->mDb->escapeString($street_name);
+		$this->mDb->execSqlUpdate("UPDATE nodes SET street_name = '{$street_name}' WHERE node_id = '{$this->getId()}'");
 		$this->refresh();
 	}
 
@@ -504,8 +504,8 @@ class Node implements GenericObject
 
 	public function setCity($city)
 	{
-		$city = $this->mDb->EscapeString($city);
-		$this->mDb->ExecSqlUpdate("UPDATE nodes SET city = '{$city}' WHERE node_id = '{$this->getId()}'");
+		$city = $this->mDb->escapeString($city);
+		$this->mDb->execSqlUpdate("UPDATE nodes SET city = '{$city}' WHERE node_id = '{$this->getId()}'");
 		$this->refresh();
 	}
 
@@ -516,8 +516,8 @@ class Node implements GenericObject
 
 	public function setProvince($province)
 	{
-		$province = $this->mDb->EscapeString($province);
-		$this->mDb->ExecSqlUpdate("UPDATE nodes SET province = '{$province}' WHERE node_id = '{$this->getId()}'");
+		$province = $this->mDb->escapeString($province);
+		$this->mDb->execSqlUpdate("UPDATE nodes SET province = '{$province}' WHERE node_id = '{$this->getId()}'");
 		$this->refresh();
 	}
 
@@ -528,8 +528,8 @@ class Node implements GenericObject
 
 	protected function setCountry($country)
 	{
-		$country = $this->mDb->EscapeString($country);
-		$this->mDb->ExecSqlUpdate("UPDATE nodes SET country = '{$country}' WHERE node_id = '{$this->getId()}'");
+		$country = $this->mDb->escapeString($country);
+		$this->mDb->execSqlUpdate("UPDATE nodes SET country = '{$country}' WHERE node_id = '{$this->getId()}'");
 		$this->refresh();
 	}
 
@@ -540,8 +540,8 @@ class Node implements GenericObject
 
 	public function setPostalCode($postal_code)
 	{
-		$postal_code = $this->mDb->EscapeString($postal_code);
-		$this->mDb->ExecSqlUpdate("UPDATE nodes SET postal_code = '{$postal_code}' WHERE node_id = '{$this->getId()}'");
+		$postal_code = $this->mDb->escapeString($postal_code);
+		$this->mDb->execSqlUpdate("UPDATE nodes SET postal_code = '{$postal_code}' WHERE node_id = '{$this->getId()}'");
 		$this->refresh();
 	}
 
@@ -552,8 +552,8 @@ class Node implements GenericObject
 
 	function setTelephone($phone)
 	{
-		$phone = $this->mDb->EscapeString($phone);
-		$this->mDb->ExecSqlUpdate("UPDATE nodes SET public_phone_number = '{$phone}' WHERE node_id = '{$this->getId()}'");
+		$phone = $this->mDb->escapeString($phone);
+		$this->mDb->execSqlUpdate("UPDATE nodes SET public_phone_number = '{$phone}' WHERE node_id = '{$this->getId()}'");
 		$this->refresh();
 	}
 
@@ -564,8 +564,8 @@ class Node implements GenericObject
 
 	function setTransitInfo($transit_info)
 	{
-		$transit_info = $this->mDb->EscapeString($transit_info);
-		$this->mDb->ExecSqlUpdate("UPDATE nodes SET mass_transit_info = '{$transit_info}' WHERE node_id = '{$this->getId()}'");
+		$transit_info = $this->mDb->escapeString($transit_info);
+		$this->mDb->execSqlUpdate("UPDATE nodes SET mass_transit_info = '{$transit_info}' WHERE node_id = '{$this->getId()}'");
 		$this->refresh();
 	}
 
@@ -576,8 +576,8 @@ class Node implements GenericObject
 
 	function setEmail($email)
 	{
-		$email = $this->mDb->EscapeString($email);
-		$this->mDb->ExecSqlUpdate("UPDATE nodes SET public_email = '{$email}' WHERE node_id = '{$this->getId()}'");
+		$email = $this->mDb->escapeString($email);
+		$this->mDb->execSqlUpdate("UPDATE nodes SET public_email = '{$email}' WHERE node_id = '{$this->getId()}'");
 		$this->refresh();
 	}
 
@@ -588,8 +588,8 @@ class Node implements GenericObject
 
 	function setDeploymentStatus($status)
 	{
-		$status = $this->mDb->EscapeString($status);
-		$this->mDb->ExecSqlUpdate("UPDATE nodes SET node_deployment_status = '{$status}' WHERE node_id = '{$this->getId()}'");
+		$status = $this->mDb->escapeString($status);
+		$this->mDb->execSqlUpdate("UPDATE nodes SET node_deployment_status = '{$status}' WHERE node_id = '{$this->getId()}'");
 		$this->refresh();
 	}
 
@@ -600,7 +600,7 @@ class Node implements GenericObject
 
 	function setLastPaged($last_paged)
 	{
-		$this->mDb->ExecSqlUpdate("UPDATE nodes SET last_paged = {$last_paged}::abstime WHERE node_id = '{$this->getId()}'");
+		$this->mDb->execSqlUpdate("UPDATE nodes SET last_paged = {$last_paged}::abstime WHERE node_id = '{$this->getId()}'");
 		$this->refresh();
 	}
 
@@ -621,7 +621,7 @@ class Node implements GenericObject
 
 	function setLastHeartbeatTimestamp($timestamp)
 	{
-		$this->mDb->ExecSqlUpdate("UPDATE nodes SET last_heartbeat_timestamp = '{$timestamp}' WHERE node_id = '{$this->getId()}'");
+		$this->mDb->execSqlUpdate("UPDATE nodes SET last_heartbeat_timestamp = '{$timestamp}' WHERE node_id = '{$this->getId()}'");
 		$this->refresh();
 	}
 
@@ -652,7 +652,7 @@ class Node implements GenericObject
 		{
 			global $db;
 			$value ? $value = 'TRUE' : $value = 'FALSE';
-			$retval = $db->ExecSqlUpdate("UPDATE nodes SET is_splash_only_node = {$value} WHERE node_id = '{$this->getId()}'", false);
+			$retval = $db->execSqlUpdate("UPDATE nodes SET is_splash_only_node = {$value} WHERE node_id = '{$this->getId()}'", false);
 			$this->refresh();
 		}
 		return $retval;
@@ -675,8 +675,8 @@ class Node implements GenericObject
 		if ($value != $this->getCustomPortalRedirectUrl())
 		{
 			global $db;
-			$value = $db->EscapeString($value);
-			$retval = $db->ExecSqlUpdate("UPDATE nodes SET custom_portal_redirect_url = '{$value}' WHERE node_id = '{$this->getId()}'", false);
+			$value = $db->escapeString($value);
+			$retval = $db->execSqlUpdate("UPDATE nodes SET custom_portal_redirect_url = '{$value}' WHERE node_id = '{$this->getId()}'", false);
 			$this->refresh();
 		}
 		return $retval;
@@ -1239,9 +1239,9 @@ class Node implements GenericObject
 	public function addContent(Content $content)
 	{
 		global $db;
-		$content_id = $db->EscapeString($content->getId());
+		$content_id = $db->escapeString($content->getId());
 		$sql = "INSERT INTO node_has_content (node_id, content_id) VALUES ('$this->id','$content_id')";
-		$db->ExecSqlUpdate($sql, false);
+		$db->execSqlUpdate($sql, false);
 		exit;
 	}
 
@@ -1249,9 +1249,9 @@ class Node implements GenericObject
 	public function removeContent(Content $content)
 	{
 		global $db;
-		$content_id = $db->EscapeString($content->getId());
+		$content_id = $db->escapeString($content->getId());
 		$sql = "DELETE FROM node_has_content WHERE node_id='$this->id' AND content_id='$content_id'";
-		$db->ExecSqlUpdate($sql, false);
+		$db->execSqlUpdate($sql, false);
 	}
 
 	/**Get an array of all Content linked to this node
@@ -1270,7 +1270,7 @@ class Node implements GenericObject
 			$sql = "SELECT content_id FROM node_has_content WHERE node_id='{$this->id}' AND display_location='$display_location' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$subscriber->getId()}') ORDER BY subscribe_timestamp DESC";
 		else
 			$sql = "SELECT content_id FROM node_has_content WHERE node_id='{$this->id}' AND display_location='$display_location' ORDER BY subscribe_timestamp DESC";
-		$db->ExecSql($sql, $content_rows, false);
+		$db->execSql($sql, $content_rows, false);
 
 		if ($content_rows != null)
 		{
@@ -1290,7 +1290,7 @@ class Node implements GenericObject
 		$retval = array ();
 		$sql = "SELECT * FROM content_group JOIN content ON (content.content_id = content_group.content_group_id) JOIN node_has_content ON (node_has_content.content_id = content_group.content_group_id AND node_has_content.node_id = '{$this->getId()}') WHERE is_persistent = true AND is_artistic_content = true AND is_locative_content = true ORDER BY subscribe_timestamp DESC";
 		$content_rows = null;
-		$db->ExecSql($sql, $content_rows, false);
+		$db->execSql($sql, $content_rows, false);
 		if ($content_rows != null)
 		{
 			foreach ($content_rows as $content_row)
@@ -1319,7 +1319,7 @@ class Node implements GenericObject
 		global $db;
 		$retval = array ();
 		$users = null;
-		$db->ExecSql("SELECT users.user_id FROM users,connections WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}'", $users, false);
+		$db->execSql("SELECT users.user_id FROM users,connections WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}'", $users, false);
 		if ($users != null)
 		{
 			foreach ($users as $user_row)
@@ -1338,7 +1338,7 @@ class Node implements GenericObject
 		global $db;
 		$retval = array ();
 		$row = null;
-		$db->ExecSqlUniqueRes("SELECT COUNT(DISTINCT users.user_id) as count FROM users,connections WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}'", $row, false);
+		$db->execSqlUniqueRes("SELECT COUNT(DISTINCT users.user_id) as count FROM users,connections WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}'", $row, false);
 		return $row['count'];
 	}
 
@@ -1349,7 +1349,7 @@ class Node implements GenericObject
 		global $db;
 		$retval = array ();
 		$owners = null;
-		$db->ExecSql("SELECT user_id FROM node_stakeholders WHERE is_owner = true AND node_id='{$this->id}'", $owners, false);
+		$db->execSql("SELECT user_id FROM node_stakeholders WHERE is_owner = true AND node_id='{$this->id}'", $owners, false);
 		if ($owners != null)
 		{
 			foreach ($owners as $owner_row)
@@ -1369,7 +1369,7 @@ class Node implements GenericObject
 		global $db;
 		$retval = array ();
 		$officers = null;
-		$db->ExecSql("SELECT user_id FROM node_stakeholders WHERE is_tech_officer = true AND node_id='{$this->id}'", $officers, false);
+		$db->execSql("SELECT user_id FROM node_stakeholders WHERE is_tech_officer = true AND node_id='{$this->id}'", $officers, false);
 		if ($officers != null)
 		{
 			foreach ($officers as $officer_row)
@@ -1387,14 +1387,14 @@ class Node implements GenericObject
 	{
 		global $db;
 		$rows = null;
-		$db->ExecSql("SELECT * FROM node_stakeholders WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}'", $rows, false);
+		$db->execSql("SELECT * FROM node_stakeholders WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}'", $rows, false);
 		if (!$rows)
 		{
-			if (!$db->ExecSqlUpdate("INSERT INTO node_stakeholders (node_id, user_id, is_owner) VALUES ('{$this->getId()}','{$user->getId()}', true)", false))
+			if (!$db->execSqlUpdate("INSERT INTO node_stakeholders (node_id, user_id, is_owner) VALUES ('{$this->getId()}','{$user->getId()}', true)", false))
 				throw new Exception(_('Could not add owner'));
 		}
 		else
-			if (!$db->ExecSqlUpdate("UPDATE node_stakeholders SET is_owner = true WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}';", false))
+			if (!$db->execSqlUpdate("UPDATE node_stakeholders SET is_owner = true WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}';", false))
 				throw new Exception(_('Could not add owner'));
 	}
 
@@ -1405,14 +1405,14 @@ class Node implements GenericObject
 	{
 		global $db;
 		$rows = null;
-		$db->ExecSql("SELECT * FROM node_stakeholders WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}'", $rows, false);
+		$db->execSql("SELECT * FROM node_stakeholders WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}'", $rows, false);
 		if (!$rows)
 		{
-			if (!$db->ExecSqlUpdate("INSERT INTO node_stakeholders (node_id, user_id, is_tech_officer) VALUES ('{$this->getId()}','{$user->getId()}', true)", false))
+			if (!$db->execSqlUpdate("INSERT INTO node_stakeholders (node_id, user_id, is_tech_officer) VALUES ('{$this->getId()}','{$user->getId()}', true)", false))
 				throw new Exception(_('Could not add tech officer'));
 		}
 		else
-			if (!$db->ExecSqlUpdate("UPDATE node_stakeholders SET is_tech_officer = true WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}';", false))
+			if (!$db->execSqlUpdate("UPDATE node_stakeholders SET is_tech_officer = true WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}';", false))
 				throw new Exception(_('Could not set existing user as tech officer'));
 	}
 
@@ -1422,7 +1422,7 @@ class Node implements GenericObject
 	function removeOwner(User $user)
 	{
 		global $db;
-		if (!$db->ExecSqlUpdate("UPDATE node_stakeholders SET is_owner = false WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}';", false))
+		if (!$db->execSqlUpdate("UPDATE node_stakeholders SET is_owner = false WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}';", false))
 			throw new Exception(_('Could not remove owner'));
 	}
 
@@ -1432,7 +1432,7 @@ class Node implements GenericObject
 	function removeTechnicalOfficer(User $user)
 	{
 		global $db;
-		if (!$db->ExecSqlUpdate("UPDATE node_stakeholders SET is_tech_officer = false WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}';", false))
+		if (!$db->execSqlUpdate("UPDATE node_stakeholders SET is_tech_officer = false WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}';", false))
 			throw new Exception(_('Could not remove tech officer'));
 	}
 
@@ -1446,7 +1446,7 @@ class Node implements GenericObject
 			$user_id = $user->getId();
 			$retval = false;
 			$row = null;
-			$db->ExecSqlUniqueRes("SELECT * FROM node_stakeholders WHERE is_owner = true AND node_id='{$this->id}' AND user_id='{$user_id}'", $row, false);
+			$db->execSqlUniqueRes("SELECT * FROM node_stakeholders WHERE is_owner = true AND node_id='{$this->id}' AND user_id='{$user_id}'", $row, false);
 			if ($row != null)
 			{
 				$retval = true;
@@ -1465,7 +1465,7 @@ class Node implements GenericObject
 			$user_id = $user->getId();
 			$retval = false;
 			$row = null;
-			$db->ExecSqlUniqueRes("SELECT * FROM node_stakeholders WHERE is_tech_officer = true AND node_id='{$this->id}' AND user_id='{$user_id}'", $row, false);
+			$db->execSqlUniqueRes("SELECT * FROM node_stakeholders WHERE is_tech_officer = true AND node_id='{$this->id}' AND user_id='{$user_id}'", $row, false);
 			if ($row != null)
 			{
 				$retval = true;
@@ -1479,10 +1479,10 @@ class Node implements GenericObject
 	{
 		global $db;
 		$retval = false;
-		$id_str = $db->EscapeString($id);
+		$id_str = $db->escapeString($id);
 		$sql = "SELECT * FROM nodes WHERE node_id='{$id_str}'";
 		$row = null;
-		$db->ExecSqlUniqueRes($sql, $row, false);
+		$db->execSqlUniqueRes($sql, $row, false);
 		if ($row != null)
 		{
 			$retval = true;
@@ -1506,4 +1506,3 @@ class Node implements GenericObject
  * End:
  */
 ?>
-

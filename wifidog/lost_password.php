@@ -56,8 +56,8 @@ if (isset($_REQUEST['submit'])) {
     if (!$_REQUEST['username'] && !$_REQUEST['email']) {
         $smarty->assign("error", _("Please specify a username or email address"));
     } else {
-        $username = $db->EscapeString($_REQUEST['username']);
-        $email = $db->EscapeString($_REQUEST['email']);
+        $username = $db->escapeString($_REQUEST['username']);
+        $email = $db->escapeString($_REQUEST['email']);
 
         $account_origin = Network::getObject($_REQUEST['auth_source']);
 

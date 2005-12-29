@@ -78,7 +78,7 @@ if ($_REQUEST['action'] == 'list_all_content' || $_REQUEST['action'] == 'list_pe
         $html .= "<input type='hidden' name='action' value='list_persistent_content'>\n";
         $html .= "<input type=submit name='list_submit' value='"._("Show only persistent content")."'>\n";
     }
-    $db->ExecSql($sql, $results, false);
+    $db->execSql($sql, $results, false);
 
     $html .= '</form>';
 

@@ -74,7 +74,7 @@ class Network implements GenericObject
 		global $db;
 		$sql = "SELECT network_id FROM networks ORDER BY is_default_network DESC";
 		$network_rows = null;
-		$db->ExecSql($sql, $network_rows, false);
+		$db->execSql($sql, $network_rows, false);
 		if ($network_rows == null)
 		{
 			throw new Exception(_("Network::getAllNetworks:  Fatal error: No networks in the database!"));
@@ -95,7 +95,7 @@ class Network implements GenericObject
 		global $db;
 		$sql = "SELECT network_id FROM networks WHERE is_default_network=TRUE ORDER BY creation_date LIMIT 1";
 		$network_row = null;
-		$db->ExecSqlUniqueRes($sql, $network_row, false);
+		$db->execSqlUniqueRes($sql, $network_row, false);
 		if ($network_row == null)
 		{
 			throw new Exception(_("Network::getDefaultNetwork:  Fatal error: Unable to find the default network!"));
@@ -138,11 +138,11 @@ class Network implements GenericObject
 		{
 			$network_id = get_guid();
 		}
-		$network_id = $db->EscapeString($network_id);
+		$network_id = $db->escapeString($network_id);
 
 		$sql = "INSERT INTO networks (network_id, network_authenticator_class) VALUES ('$network_id', 'AuthenticatorLocalUser')";
 
-		if (!$db->ExecSqlUpdate($sql, false))
+		if (!$db->execSqlUpdate($sql, false))
 		{
 			throw new Exception(_('Unable to insert the new network in the database!'));
 		}
@@ -174,10 +174,10 @@ class Network implements GenericObject
 			$selected_id = null;
 		}
 		global $db;
-		$additional_where = $db->EscapeString($additional_where);
+		$additional_where = $db->escapeString($additional_where);
 		$sql = "SELECT network_id, name FROM networks WHERE 1=1 $additional_where ORDER BY is_default_network DESC";
 		$network_rows = null;
-		$db->ExecSql($sql, $network_rows, false);
+		$db->execSql($sql, $network_rows, false);
 		if ($network_rows == null)
 		{
 			throw new Exception(_("Network::getAllNetworks:  Fatal error: No networks in the database!"));
@@ -263,16 +263,16 @@ class Network implements GenericObject
 	{
 		global $db;
 
-		$network_id_str = $db->EscapeString($p_network_id);
+		$network_id_str = $db->escapeString($p_network_id);
 		$sql = "SELECT *, EXTRACT(EPOCH FROM validation_grace_time) as validation_grace_time_seconds FROM networks WHERE network_id='$network_id_str'";
 		$row = null;
-		$db->ExecSqlUniqueRes($sql, $row, false);
+		$db->execSqlUniqueRes($sql, $row, false);
 		if ($row == null)
 		{
 			throw new Exception("The network with id $network_id_str could not be found in the database");
 		}
 		$this->mRow = $row;
-		$this->id = $db->EscapeString($row['network_id']);
+		$this->id = $db->escapeString($row['network_id']);
 	}
 
 	/** Retreives the id of the object
@@ -298,8 +298,8 @@ class Network implements GenericObject
 		if ($value != $this->getName())
 		{
 			global $db;
-			$value = $db->EscapeString($value);
-			$retval = $db->ExecSqlUpdate("UPDATE networks SET tech_support_email = '{$value}' WHERE network_id = '{$this->getId()}'", false);
+			$value = $db->escapeString($value);
+			$retval = $db->execSqlUpdate("UPDATE networks SET tech_support_email = '{$value}' WHERE network_id = '{$this->getId()}'", false);
 			$this->refresh();
 		}
 		return $retval;
@@ -324,8 +324,8 @@ class Network implements GenericObject
 		if ($value != $this->getName())
 		{
 			global $db;
-			$value = $db->EscapeString($value);
-			$retval = $db->ExecSqlUpdate("UPDATE networks SET name = '{$value}' WHERE network_id = '{$this->getId()}'", false);
+			$value = $db->escapeString($value);
+			$retval = $db->execSqlUpdate("UPDATE networks SET name = '{$value}' WHERE network_id = '{$this->getId()}'", false);
 			$this->refresh();
 		}
 		return $retval;
@@ -356,8 +356,8 @@ class Network implements GenericObject
 		if ($value != $this->getName())
 		{
 			global $db;
-			$value = $db->EscapeString($value);
-			$retval = $db->ExecSqlUpdate("UPDATE networks SET homepage_url = '{$value}' WHERE network_id = '{$this->getId()}'", false);
+			$value = $db->escapeString($value);
+			$retval = $db->execSqlUpdate("UPDATE networks SET homepage_url = '{$value}' WHERE network_id = '{$this->getId()}'", false);
 			$this->refresh();
 		}
 		return $retval;
@@ -379,8 +379,8 @@ class Network implements GenericObject
 		if ($value != $this->getAuthenticatorClassName())
 		{
 			global $db;
-			$value = $db->EscapeString($value);
-			$retval = $db->ExecSqlUpdate("UPDATE networks SET network_authenticator_class = '{$value}' WHERE network_id = '{$this->getId()}'", false);
+			$value = $db->escapeString($value);
+			$retval = $db->execSqlUpdate("UPDATE networks SET network_authenticator_class = '{$value}' WHERE network_id = '{$this->getId()}'", false);
 			$this->refresh();
 		}
 		return $retval;
@@ -402,8 +402,8 @@ class Network implements GenericObject
 		if ($value != $this->getAuthenticatorConstructorParams())
 		{
 			global $db;
-			$value = $db->EscapeString($value);
-			$retval = $db->ExecSqlUpdate("UPDATE networks SET network_authenticator_params = '{$value}' WHERE network_id = '{$this->getId()}'", false);
+			$value = $db->escapeString($value);
+			$retval = $db->execSqlUpdate("UPDATE networks SET network_authenticator_params = '{$value}' WHERE network_id = '{$this->getId()}'", false);
 			$this->refresh();
 		}
 		return $retval;
@@ -447,7 +447,7 @@ class Network implements GenericObject
 			global $db;
 			$sql = "UPDATE networks SET is_default_network = FALSE;\n";
 			$sql .= "UPDATE networks SET is_default_network = TRUE WHERE network_id = '{$this->getId()}';\n";
-			$retval = $db->ExecSqlUpdate($sql, false);
+			$retval = $db->execSqlUpdate($sql, false);
 			$this->refresh();
 		}
 		return $retval;
@@ -469,8 +469,8 @@ class Network implements GenericObject
 		if ($value != $this->getValidationGraceTime())
 		{
 			global $db;
-			$value = $db->EscapeString($value);
-			$retval = $db->ExecSqlUpdate("UPDATE networks SET validation_grace_time = '{$value} seconds' WHERE network_id = '{$this->getId()}'", false);
+			$value = $db->escapeString($value);
+			$retval = $db->execSqlUpdate("UPDATE networks SET validation_grace_time = '{$value} seconds' WHERE network_id = '{$this->getId()}'", false);
 			$this->refresh();
 		}
 		return $retval;
@@ -492,8 +492,8 @@ class Network implements GenericObject
 		if ($value != $this->getValidationEmailFromAddress())
 		{
 			global $db;
-			$value = $db->EscapeString($value);
-			$retval = $db->ExecSqlUpdate("UPDATE networks SET validation_email_from_address = '{$value}' WHERE network_id = '{$this->getId()}'", false);
+			$value = $db->escapeString($value);
+			$retval = $db->execSqlUpdate("UPDATE networks SET validation_email_from_address = '{$value}' WHERE network_id = '{$this->getId()}'", false);
 			$this->refresh();
 		}
 		return $retval;
@@ -516,7 +516,7 @@ class Network implements GenericObject
 		{
 			global $db;
 			$value ? $value = 'TRUE' : $value = 'FALSE';
-			$retval = $db->ExecSqlUpdate("UPDATE networks SET allow_multiple_login = {$value} WHERE network_id = '{$this->getId()}'", false);
+			$retval = $db->execSqlUpdate("UPDATE networks SET allow_multiple_login = {$value} WHERE network_id = '{$this->getId()}'", false);
 			$this->refresh();
 		}
 		return $retval;
@@ -539,7 +539,7 @@ class Network implements GenericObject
 		{
 			global $db;
 			$value ? $value = 'TRUE' : $value = 'FALSE';
-			$retval = $db->ExecSqlUpdate("UPDATE networks SET allow_splash_only_nodes = {$value} WHERE network_id = '{$this->getId()}'", false);
+			$retval = $db->execSqlUpdate("UPDATE networks SET allow_splash_only_nodes = {$value} WHERE network_id = '{$this->getId()}'", false);
 			$this->refresh();
 		}
 		return $retval;
@@ -570,8 +570,8 @@ class Network implements GenericObject
 	function getNumUsers()
 	{
 		global $db;
-		$network_id = $db->EscapeString($this->id);
-		$db->ExecSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_origin='$network_id'", $row, false);
+		$network_id = $db->escapeString($this->id);
+		$db->execSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_origin='$network_id'", $row, false);
 		return $row['count'];
 	}
 
@@ -582,8 +582,8 @@ class Network implements GenericObject
 	function getNumValidUsers()
 	{
 		global $db;
-		$network_id = $db->EscapeString($this->id);
-		$db->ExecSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_status = ".ACCOUNT_STATUS_ALLOWED." AND account_origin='$network_id'", $row, false);
+		$network_id = $db->escapeString($this->id);
+		$db->execSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_status = ".ACCOUNT_STATUS_ALLOWED." AND account_origin='$network_id'", $row, false);
 		return $row['count'];
 	}
 
@@ -593,8 +593,8 @@ class Network implements GenericObject
 	function getNumOnlineUsers()
 	{
 		global $db;
-		$network_id = $db->EscapeString($this->id);
-		$db->ExecSqlUniqueRes("SELECT COUNT(DISTINCT users.user_id) FROM users,connections NATURAL JOIN nodes JOIN networks ON (nodes.network_id=networks.network_id AND networks.network_id='$network_id') "."WHERE connections.token_status='".TOKEN_INUSE."' "."AND users.user_id=connections.user_id ", $row, false);
+		$network_id = $db->escapeString($this->id);
+		$db->execSqlUniqueRes("SELECT COUNT(DISTINCT users.user_id) FROM users,connections NATURAL JOIN nodes JOIN networks ON (nodes.network_id=networks.network_id AND networks.network_id='$network_id') "."WHERE connections.token_status='".TOKEN_INUSE."' "."AND users.user_id=connections.user_id ", $row, false);
 		return $row['count'];
 	}
 	/** Are nodes allowed to redirect users to an arbitrary web page instead of the portal?
@@ -614,7 +614,7 @@ class Network implements GenericObject
 		{
 			global $db;
 			$value ? $value = 'TRUE' : $value = 'FALSE';
-			$retval = $db->ExecSqlUpdate("UPDATE networks SET allow_custom_portal_redirect = {$value} WHERE network_id = '{$this->getId()}'", false);
+			$retval = $db->execSqlUpdate("UPDATE networks SET allow_custom_portal_redirect = {$value} WHERE network_id = '{$this->getId()}'", false);
 			$this->refresh();
 		}
 		return $retval;
@@ -630,7 +630,7 @@ class Network implements GenericObject
 		{
 			$user_id = $user->getId();
 			$retval = false;
-			$db->ExecSqlUniqueRes("SELECT * FROM network_stakeholders WHERE is_admin = true AND network_id='{$this->id}' AND user_id='{$user_id}'", $row, false);
+			$db->execSqlUniqueRes("SELECT * FROM network_stakeholders WHERE is_admin = true AND network_id='{$this->id}' AND user_id='{$user_id}'", $row, false);
 			if ($row != null)
 			{
 				$retval = true;
@@ -657,7 +657,7 @@ class Network implements GenericObject
 			$sql = "SELECT content_id FROM network_has_content WHERE network_id='$this->id' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$subscriber->getId()}') ORDER BY subscribe_timestamp DESC";
 		else
 			$sql = "SELECT content_id FROM network_has_content WHERE network_id='$this->id' ORDER BY subscribe_timestamp DESC";
-		$db->ExecSql($sql, $content_rows, false);
+		$db->execSql($sql, $content_rows, false);
 
 		if ($content_rows != null)
 		{
@@ -945,18 +945,18 @@ class Network implements GenericObject
 	public function addContent(Content $content)
 	{
 		global $db;
-		$content_id = $db->EscapeString($content->getId());
+		$content_id = $db->escapeString($content->getId());
 		$sql = "INSERT INTO network_has_content (network_id, content_id) VALUES ('$this->id','$content_id')";
-		$db->ExecSqlUpdate($sql, false);
+		$db->execSqlUpdate($sql, false);
 	}
 
 	/** Remove network-wide content from this network */
 	public function removeContent(Content $content)
 	{
 		global $db;
-		$content_id = $db->EscapeString($content->getId());
+		$content_id = $db->escapeString($content->getId());
 		$sql = "DELETE FROM network_has_content WHERE network_id='$this->id' AND content_id='$content_id'";
-		$db->ExecSqlUpdate($sql, false);
+		$db->execSqlUpdate($sql, false);
 	}
 
 	/** Delete this Object form the it's storage mechanism
@@ -977,8 +977,8 @@ class Network implements GenericObject
 			else
 			{
 				global $db;
-				$id = $db->EscapeString($this->getId());
-				if (!$db->ExecSqlUpdate("DELETE FROM networks WHERE network_id='{$id}'", false))
+				$id = $db->escapeString($this->getId());
+				if (!$db->execSqlUpdate("DELETE FROM networks WHERE network_id='{$id}'", false))
 				{
 					$errmsg = _('Could not delete network!');
 				}
@@ -1006,5 +1006,3 @@ class Network implements GenericObject
  * End:
  */
 ?>
-
-

@@ -1,3 +1,9 @@
+2005-12-29 François Proulx <francois.proulx@gmail.com>
+	* Added Aidan's file_exists_incpath function to Dependencies class
+	* Translated and standardized most of PostgreSQL abstraction class.
+	* Removed blank lines at end of many files
+	* Tested the new Phlickr package, which fixes URL on Flickr
+	
 2005-12-28 Max Horváth <max.horvath@maxspot.de>
 	* Removed BASEPATH define from source - resulting in a better require-overview
 	* speed improvement of 7% by optimizing Dependencies class

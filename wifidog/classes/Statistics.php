@@ -188,13 +188,13 @@ EOF;
     public function getSqlDateConstraint($column = 'timestamp_in')
     {
         global $db;
-        $column = $db->EscapeString($column);
+        $column = $db->escapeString($column);
         $sql = '';
-        if ($date_min = $db->EscapeString($this->report_date_min))
+        if ($date_min = $db->escapeString($this->report_date_min))
         {
             $sql .= " AND $column >= '$date_min' ";
         }
-        if ($date_max = $db->EscapeString($this->report_date_max))
+        if ($date_max = $db->escapeString($this->report_date_max))
         {
             $sql .= " AND $column <= '$date_max' ";
         }
@@ -207,7 +207,7 @@ EOF;
     public function getSqlNodeConstraint($column)
     {
         global $db;
-        $column = $db->EscapeString($column);
+        $column = $db->escapeString($column);
         $sql = '';
         if (count($this->report_selected_nodes) > 0)
         {
@@ -215,7 +215,7 @@ EOF;
             $first = true;
             foreach ($this->report_selected_nodes as $node_id => $node)
             {
-                $node_id = $db->EscapeString($node_id);
+                $node_id = $db->escapeString($node_id);
                 $first ? $sql .= "" : $sql .= " OR ";
                 $sql .= "$column = '$node_id'";
                 $first = false;
@@ -230,7 +230,7 @@ EOF;
     public function getSqlNetworkConstraint($column)
     {
         global $db;
-        $column = $db->EscapeString($column);
+        $column = $db->escapeString($column);
         $sql = '';
         if (count($this->report_selected_networks) > 0)
         {
@@ -238,7 +238,7 @@ EOF;
             $first = true;
             foreach ($this->report_selected_networks as $network_id => $network)
             {
-                $network_id = $db->EscapeString($network_id);
+                $network_id = $db->escapeString($network_id);
                 $first ? $sql .= "" : $sql .= " OR ";
                 $sql .= "$column = '$network_id'";
                 $first = false;
@@ -252,7 +252,7 @@ EOF;
     public function getSqlUserConstraint()
     {
         global $db;
-        $column = $db->EscapeString($this->report_distinguish_users_by);
+        $column = $db->escapeString($this->report_distinguish_users_by);
         $sql = '';
         if (count($this->report_selected_users) > 0)
         {
@@ -260,7 +260,7 @@ EOF;
             $first = true;
             foreach ($this->report_selected_users as $id => $user)
             {
-                $id = $db->EscapeString($id);
+                $id = $db->escapeString($id);
                 $first ? $sql .= "" : $sql .= " OR ";
                 $sql .= "$column = '$id'";
                 $first = false;
@@ -336,12 +336,12 @@ EOF;
         }
         else
         {
-            $user_id = $db->EscapeString($user->getId());
+            $user_id = $db->escapeString($user->getId());
             $sql_join = " JOIN node_stakeholders ON (nodes.node_id=node_stakeholders.node_id AND user_id='$user_id') ";
         }
         $sql = "SELECT nodes.node_id, nodes.name from nodes $sql_join WHERE 1=1 ORDER BY node_id";
         $node_rows = null;
-        $db->ExecSql($sql, $node_rows, false);
+        $db->execSql($sql, $node_rows, false);
         $html .= "<select multiple size = 6 name='$name'>\n";
 
         /*count($this->report_selected_nodes)==0?$selected=' SELECTED ':$selected='';
@@ -465,9 +465,9 @@ EOF;
         if ($this->report_distinguish_users_by == 'user_id')
         {
             global $db;
-            $username = $db->EscapeString($_REQUEST['stats_selected_users']);
+            $username = $db->escapeString($_REQUEST['stats_selected_users']);
             $row = null;
-            $db->ExecSqlUniqueRes("SELECT user_id FROM users WHERE username='$username'", $row);
+            $db->execSqlUniqueRes("SELECT user_id FROM users WHERE username='$username'", $row);
             if ($row)
             {
                 $user_id = $row['user_id'];

@@ -76,7 +76,7 @@ abstract class Authenticator
         $conn_id = $db->escapeString($conn_id);
         if (!empty ($conn_id))
         {
-            $db->ExecSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id='$conn_id'", $info, false);
+            $db->execSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id='$conn_id'", $info, false);
 
             $user = User :: getObject($info['user_id']);
             $network = $user->getNetwork();
@@ -93,7 +93,7 @@ abstract class Authenticator
                 //Try to destroy all connections tied to the current node
                 $sql = "SELECT conn_id FROM connections WHERE user_id = '{$user->getId()}' AND node_id='{$node->getId()}' AND token_status='".TOKEN_INUSE."';\n";
                 $conn_rows = null;
-                $db->ExecSql($sql, $conn_rows, false);
+                $db->execSql($sql, $conn_rows, false);
                 if ($conn_rows)
                 {
                     foreach ($conn_rows as $conn_row)
@@ -110,7 +110,7 @@ abstract class Authenticator
              * Logging in with a new token implies that all other active tokens should expire */
             $sql = "SELECT conn_id FROM connections WHERE user_id = '{$user->getId()}' AND token_status='".TOKEN_INUSE."';\n";
             $conn_rows = null;
-            $db->ExecSql($sql, $conn_rows, false);
+            $db->execSql($sql, $conn_rows, false);
             if ($conn_rows)
             {
                 foreach ($conn_rows as $conn_row)
@@ -130,23 +130,23 @@ abstract class Authenticator
     {
         global $db;
         $conn_id = $db->escapeString($conn_id);
-        $db->ExecSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id='$conn_id'", $info, false);
+        $db->execSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id='$conn_id'", $info, false);
         $network = Network :: getObject($info['network_id']);
         $splash_user_id = $network->getSplashOnlyUser()->getId();
         $auth_response = $info['account_status'];
         /* Login the user */
-        $mac = $db->EscapeString($_REQUEST['mac']);
-        $ip = $db->EscapeString($_REQUEST['ip']);
+        $mac = $db->escapeString($_REQUEST['mac']);
+        $ip = $db->escapeString($_REQUEST['ip']);
         $sql = "UPDATE connections SET "."token_status='".TOKEN_INUSE."',"."user_mac='$mac',"."user_ip='$ip',"."last_updated=NOW()"."WHERE conn_id='{$conn_id}';\n";
-        $db->ExecSqlUpdate($sql, false);
+        $db->execSqlUpdate($sql, false);
         if ($splash_user_id != $info['user_id'] && $network->getMultipleLoginAllowed() == false)
         {
             /* The user isn't the splash_only user and the network config does not allow multiple logins.
              * Logging in with a new token implies that all other active tokens should expire */
-            $token = $db->EscapeString($_REQUEST['token']);
+            $token = $db->escapeString($_REQUEST['token']);
             $sql = "SELECT * FROM connections WHERE user_id = '{$info['user_id']}' AND token_status='".TOKEN_INUSE."' AND token!='$token';\n";
             $conn_rows = array ();
-            $db->ExecSql($sql, $conn_rows, false);
+            $db->execSql($sql, $conn_rows, false);
             if (isset ($conn_rows))
             {
                 foreach ($conn_rows as $conn_row)
@@ -158,7 +158,7 @@ abstract class Authenticator
 
         /* Delete all unused tokens for this user, so we don't fill the database with them */
         $sql = "DELETE FROM connections "."WHERE token_status='".TOKEN_UNUSED."' AND user_id = '{$info['user_id']}';\n";
-        $db->ExecSqlUpdate($sql, false);
+        $db->execSqlUpdate($sql, false);
     }
 
     /** Update traffic counters
@@ -168,7 +168,7 @@ abstract class Authenticator
         // Write traffic counters to database
         global $db;
         $conn_id = $db->escapeString($conn_id);
-        $db->ExecSqlUpdate("UPDATE connections SET "."incoming='$incoming',"."outgoing='$outgoing',"."last_updated=NOW() "."WHERE conn_id='{$conn_id}'");
+        $db->execSqlUpdate("UPDATE connections SET "."incoming='$incoming',"."outgoing='$outgoing',"."last_updated=NOW() "."WHERE conn_id='{$conn_id}'");
     }
 
     /** Final update and stop accounting
@@ -179,7 +179,7 @@ abstract class Authenticator
         // Stop traffic counters update
         global $db;
         $conn_id = $db->escapeString($conn_id);
-        $db->ExecSqlUpdate("UPDATE connections SET "."timestamp_out=NOW(),"."token_status='".TOKEN_USED."' "."WHERE conn_id='{$conn_id}';\n", false);
+        $db->execSqlUpdate("UPDATE connections SET "."timestamp_out=NOW(),"."token_status='".TOKEN_USED."' "."WHERE conn_id='{$conn_id}';\n", false);
     }
 
     /**

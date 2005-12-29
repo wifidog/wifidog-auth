@@ -92,7 +92,7 @@ $Bar->setFillColor("#9db8d2");
 $Plot =& $Plotarea->add($Bar);
 
         $candidate_connections_sql = self :: $stats->getSqlCandidateConnectionsQuery("COUNT(DISTINCT user_id||connections.node_id) AS daily_connections, date_trunc('day', timestamp_in) AS date");
-$db->ExecSql("SELECT SUM(daily_connections) AS connections, date_trunc('month', date) AS month FROM ($candidate_connections_sql GROUP BY date) AS daily_connections_table GROUP BY month ORDER BY month", $results, false);
+$db->execSql("SELECT SUM(daily_connections) AS connections, date_trunc('month', date) AS month FROM ($candidate_connections_sql GROUP BY date) AS daily_connections_table GROUP BY month ORDER BY month", $results, false);
 if ($results != null) {
     foreach($results as $row) {
         /* Cut xxxx-xx-xx xx:xx:Xx to yy-mm */

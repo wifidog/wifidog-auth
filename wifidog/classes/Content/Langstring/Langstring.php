@@ -120,7 +120,7 @@ class Langstring extends Content {
             $sql = "SELECT value, locales_id, \n";
             $sql .= Locale :: getSqlCaseStringSelect(Locale :: getCurrentLocale()->getId());
             $sql .= " as score FROM langstring_entries WHERE langstring_entries.langstrings_id = '{$this->id}' AND value!='' ORDER BY score LIMIT 1";
-            $this->mBd->ExecSqlUniqueRes($sql, $row, false);
+            $this->mBd->execSqlUniqueRes($sql, $row, false);
 
             if ($row == null) {
                 $retval = "(Langstring vide)";
@@ -167,8 +167,8 @@ class Langstring extends Content {
         }
 
         if ($allow_empty_string || ($string != null && $string != '')) {
-            $string = $this->mBd->EscapeString($string);
-            $this->mBd->ExecSqlUpdate("INSERT INTO langstring_entries (langstring_entries_id, langstrings_id, locales_id, value) VALUES ('".get_guid()."', '$this->id', $idSQL , '$string')", FALSE);
+            $string = $this->mBd->escapeString($string);
+            $this->mBd->execSqlUpdate("INSERT INTO langstring_entries (langstring_entries_id, langstrings_id, locales_id, value) VALUES ('".get_guid()."', '$this->id', $idSQL , '$string')", FALSE);
 
             // Create new cache object.
             $_cache = new Cache('langstrings_' . $this->id . '_substring_' .  $id . '_string', $this->id);
@@ -215,12 +215,12 @@ class Langstring extends Content {
         }
 
         if ($string != null && $string != '') {
-            $string = $this->mBd->EscapeString($string);
+            $string = $this->mBd->escapeString($string);
             // If the update returns 0 ( no update ), try inserting the record
-            $this->mBd->ExecSqlUniqueRes("SELECT * FROM langstring_entries WHERE locales_id = $idSQL AND langstrings_id = '$this->id'", $row, false);
+            $this->mBd->execSqlUniqueRes("SELECT * FROM langstring_entries WHERE locales_id = $idSQL AND langstrings_id = '$this->id'", $row, false);
 
             if ($row != null) {
-                $this->mBd->ExecSqlUpdate("UPDATE langstring_entries SET value = '$string' WHERE langstrings_id = '$this->id' AND locales_id = $idSQL", false);
+                $this->mBd->execSqlUpdate("UPDATE langstring_entries SET value = '$string' WHERE langstrings_id = '$this->id' AND locales_id = $idSQL", false);
 
                 // Create new cache object.
                 $_cache = new Cache('langstrings_' . $this->id . '_substring_' .  $id . '_string', $this->id);
@@ -271,7 +271,7 @@ class Langstring extends Content {
 
         $liste_languages = new LocaleList();
         $sql = "SELECT * FROM langstring_entries WHERE langstring_entries.langstrings_id = '$this->id' ORDER BY locales_id";
-        $this->mBd->ExecSql($sql, $result, FALSE); //echo "type_interface: $type_interface\n";
+        $this->mBd->execSql($sql, $result, FALSE); //echo "type_interface: $type_interface\n";
 
         $html .= "<ul class='admin_section_list'>\n";
 
@@ -423,7 +423,7 @@ class Langstring extends Content {
             parent :: processAdminUI();
             $generateur_form_select = new FormSelectGenerator();
             $sql = "SELECT * FROM langstring_entries WHERE langstring_entries.langstrings_id = '$this->id'";
-            $this->mBd->ExecSql($sql, $result, FALSE);
+            $this->mBd->execSql($sql, $result, FALSE);
 
             if ($result != null) {
                 while (list ($key, $value) = each($result)) {
@@ -437,7 +437,7 @@ class Langstring extends Content {
                     }
 
                     if (!empty ($_REQUEST["langstrings_".$this->id."_substring_$value[langstring_entries_id]_erase"]) && $_REQUEST["langstrings_".$this->id."_substring_$value[langstring_entries_id]_erase"] == true) {
-                        $this->mBd->ExecSqlUpdate("DELETE FROM langstring_entries WHERE langstrings_id = '$this->id' AND langstring_entries_id='$value[langstring_entries_id]'", FALSE);
+                        $this->mBd->execSqlUpdate("DELETE FROM langstring_entries WHERE langstrings_id = '$this->id' AND langstring_entries_id='$value[langstring_entries_id]'", FALSE);
 
                         // Create new cache object.
                         $_cache = new Cache('langstrings_' . $this->id . '_substring_' .  $language . '_string', $this->id);
@@ -450,8 +450,8 @@ class Langstring extends Content {
                     } else {
                         // Strip HTML tags !
                         $string = $_REQUEST["langstrings_".$this->id."_substring_$value[langstring_entries_id]_string"];
-                        $string = $this->mBd->EscapeString(strip_tags($string, self :: ALLOWED_HTML_TAGS));
-                        $this->mBd->ExecSqlUpdate("UPDATE langstring_entries SET locales_id = $languageSQL , value = '$string' WHERE langstrings_id = '$this->id' AND langstring_entries_id='$value[langstring_entries_id]'", FALSE);
+                        $string = $this->mBd->escapeString(strip_tags($string, self :: ALLOWED_HTML_TAGS));
+                        $this->mBd->execSqlUpdate("UPDATE langstring_entries SET locales_id = $languageSQL , value = '$string' WHERE langstrings_id = '$this->id' AND langstring_entries_id='$value[langstring_entries_id]'", FALSE);
 
                         // Create new cache object.
                         $_cache = new Cache('langstrings_' . $this->id . '_substring_' .  $language . '_string', $this->id);
@@ -552,7 +552,7 @@ class Langstring extends Content {
 
             if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
                 $_sql = "DELETE FROM content WHERE content_id='$this->id'";
-                $db->ExecSqlUpdate($_sql, false);
+                $db->execSqlUpdate($_sql, false);
                 $_retval = true;
 
                 // Create new cache object.

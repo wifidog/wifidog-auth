@@ -102,9 +102,9 @@ class File extends Content
 
         parent :: __construct($content_id);
 
-        $content_id = $db->EscapeString($content_id);
+        $content_id = $db->escapeString($content_id);
         $sql = "SELECT * FROM files WHERE files_id='$content_id'";
-        $db->ExecSqlUniqueRes($sql, $row, false);
+        $db->execSqlUniqueRes($sql, $row, false);
 
         if ($row == null) {
             /*
@@ -112,10 +112,10 @@ class File extends Content
              * content_group had not yet been created
              */
             $sql = "INSERT INTO files (files_id) VALUES ('$content_id')";
-            $db->ExecSqlUpdate($sql, false);
+            $db->execSqlUpdate($sql, false);
 
             $sql = "SELECT * FROM files WHERE files_id='$content_id'";
-            $db->ExecSqlUniqueRes($sql, $row, false);
+            $db->execSqlUniqueRes($sql, $row, false);
 
             if ($row == null) {
                 throw new Exception(_("The content with the following id could not be found in the database: ").$content_id);
@@ -145,12 +145,12 @@ class File extends Content
             $blob_oid = $this->getBinaryDataOid();
 
             if ($blob_oid) {
-                $this->mBd->UnlinkLargeObject($blob_oid);
+                $this->mBd->unlinkLargeObject($blob_oid);
             }
 
             // Updating database
             // Create a new BLOB
-            $new_oid = $this->mBd->ImportLargeObject($_FILES[$upload_field]['tmp_name']);
+            $new_oid = $this->mBd->importLargeObject($_FILES[$upload_field]['tmp_name']);
             $this->setBinaryDataOid($new_oid);
             $this->setLocalFileSize($_FILES[$upload_field]['size']);
             $this->setMimeType($_FILES[$upload_field]['type']);
@@ -192,7 +192,7 @@ class File extends Content
      */
     private function getBinaryDataOid()
     {
-        return $this->mBd->UnescapeBinaryString($this->files_row['data_blob']);
+        return $this->mBd->unescapeBinaryString($this->files_row['data_blob']);
     }
 
     /**
@@ -210,7 +210,7 @@ class File extends Content
             $oid = "NULL";
         }
 
-        $this->mBd->ExecSqlUpdate("UPDATE files SET data_blob = $oid WHERE files_id='".$this->getId()."'", false);
+        $this->mBd->execSqlUpdate("UPDATE files SET data_blob = $oid WHERE files_id='".$this->getId()."'", false);
         $this->refresh();
     }
 
@@ -237,8 +237,8 @@ class File extends Content
      */
     private function setMimeType($mime_type)
     {
-        $mime_type = $this->mBd->EscapeString($mime_type);
-        $this->mBd->ExecSqlUpdate("UPDATE files SET mime_type ='".$mime_type."' WHERE files_id='".$this->getId()."'", false);
+        $mime_type = $this->mBd->escapeString($mime_type);
+        $this->mBd->execSqlUpdate("UPDATE files SET mime_type ='".$mime_type."' WHERE files_id='".$this->getId()."'", false);
         $this->refresh();
     }
 
@@ -265,8 +265,8 @@ class File extends Content
      */
     private function setFilename($file_name)
     {
-        $file_name = $this->mBd->EscapeString($file_name);
-        $this->mBd->ExecSqlUpdate("UPDATE files SET filename ='".$file_name."' WHERE files_id='".$this->getId()."'", false);
+        $file_name = $this->mBd->escapeString($file_name);
+        $this->mBd->execSqlUpdate("UPDATE files SET filename ='".$file_name."' WHERE files_id='".$this->getId()."'", false);
         $this->refresh();
     }
 
@@ -393,7 +393,7 @@ class File extends Content
         if ($url == null) {
             $url = "NULL";
         } else {
-            $url = "'".$this->mBd->EscapeString($url)."'";
+            $url = "'".$this->mBd->escapeString($url)."'";
         }
 
         $this->mBd->execSqlUpdate("UPDATE files SET url = $url WHERE files_id='".$this->getId()."'", false);
@@ -621,7 +621,7 @@ class File extends Content
                 }
             }
 
-            $this->mBd->ExecSqlUpdate("DELETE FROM files WHERE files_id = '".$this->getId()."'", false);
+            $this->mBd->execSqlUpdate("DELETE FROM files WHERE files_id = '".$this->getId()."'", false);
         } else {
             $errmsg = _("Could not delete this file, since it is persistent");
         }

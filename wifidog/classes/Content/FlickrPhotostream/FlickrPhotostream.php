@@ -104,7 +104,7 @@ class FlickrPhotostream extends Content
         parent :: __construct($content_id);
 
         if (Dependencies::check("Phlickr", $errmsg)) {
-            // Definde globals
+            // Defined globals
             global $db;
 
             // Load Phlickr classes
@@ -112,18 +112,18 @@ class FlickrPhotostream extends Content
             require_once("Phlickr/User.php");
             require_once("Phlickr/Group.php");
 
-            $content_id = $db->EscapeString($content_id);
+            $content_id = $db->escapeString($content_id);
 
             $sql = "SELECT *, EXTRACT(EPOCH FROM AGE(NOW(), cache_update_timestamp)) as cache_age FROM flickr_photostream WHERE flickr_photostream_id='$content_id'";
-            $db->ExecSqlUniqueRes($sql, $row, false);
+            $db->execSqlUniqueRes($sql, $row, false);
             if ($row == null)
             {
                 /*Since the parent Content exists, the necessary data in content_group had not yet been created */
                 $sql = "INSERT INTO flickr_photostream (flickr_photostream_id, preferred_size) VALUES ('$content_id', '".self :: SIZE_SMALL_240x180."')";
-                $db->ExecSqlUpdate($sql, false);
+                $db->execSqlUpdate($sql, false);
 
                 $sql = "SELECT * FROM flickr_photostream WHERE flickr_photostream_id='$content_id'";
-                $db->ExecSqlUniqueRes($sql, $row, false);
+                $db->execSqlUniqueRes($sql, $row, false);
                 if ($row == null)
                 {
                     throw new Exception(_("The content with the following id could not be found in the database: ").$content_id);
@@ -145,7 +145,7 @@ class FlickrPhotostream extends Content
         if (!is_null($this->flickr_photostream_row['requests_cache']) && !is_null($this->flickr_photostream_row['cache_age']) && ($this->flickr_photostream_row['cache_age'] < self :: MAX_CACHE_AGE))
         {
             //echo "<h2>DEBUG :: Loading Flickr cache from database</h2>";
-            $obj = unserialize($this->mBd->UnescapeBinaryString($this->flickr_photostream_row['requests_cache']));
+            $obj = unserialize($this->mBd->unescapeBinaryString($this->flickr_photostream_row['requests_cache']));
             $this->getFlickrApi()->setCache($obj);
         }
     }
@@ -157,10 +157,10 @@ $api = $this->getFlickrApi();
         if ($api)
         {
             $new_cache = serialize($api->getCache());
-            $old_cache = $this->mBd->UnescapeBinaryString($this->flickr_photostream_row['requests_cache']);
+            $old_cache = $this->mBd->unescapeBinaryString($this->flickr_photostream_row['requests_cache']);
             $age = is_null($this->flickr_photostream_row['cache_age']) ? self :: MAX_CACHE_AGE : $this->flickr_photostream_row['cache_age'];
             if ($force_overwrite === true || ($age >= self :: MAX_CACHE_AGE) || ($new_cache !== $old_cache))
-                $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET cache_update_timestamp = NOW(), requests_cache = '".$this->mBd->EscapeBinaryString($new_cache)."' WHERE flickr_photostream_id = '".$this->getId()."'", false);
+                $this->mBd->execSqlUpdate("UPDATE flickr_photostream SET cache_update_timestamp = NOW(), requests_cache = '".$this->mBd->escapeBinaryString($new_cache)."' WHERE flickr_photostream_id = '".$this->getId()."'", false);
         }
     }
 
@@ -188,8 +188,8 @@ $api = $this->getFlickrApi();
             case self :: SELECT_BY_GROUP :
             case self :: SELECT_BY_USER :
             case self :: SELECT_BY_TAGS :
-                $selection_mode = $this->mBd->EscapeString($selection_mode);
-                $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET photo_selection_mode = '".$selection_mode."' WHERE flickr_photostream_id = '".$this->getId()."'");
+                $selection_mode = $this->mBd->escapeString($selection_mode);
+                $this->mBd->execSqlUpdate("UPDATE flickr_photostream SET photo_selection_mode = '".$selection_mode."' WHERE flickr_photostream_id = '".$this->getId()."'");
                 $this->refresh();
                 break;
             default :
@@ -207,8 +207,8 @@ $api = $this->getFlickrApi();
         //TODO: Add photo batch size support in getAdminUI()
         if (is_numeric($size))
         {
-            $size = $this->mBd->EscapeString($size);
-            $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET photo_batch_size ='$size' WHERE flickr_photostream_id = '".$this->getId()."'");
+            $size = $this->mBd->escapeString($size);
+            $this->mBd->execSqlUpdate("UPDATE flickr_photostream SET photo_batch_size ='$size' WHERE flickr_photostream_id = '".$this->getId()."'");
             $this->refresh();
             return true;
         }
@@ -228,8 +228,8 @@ $api = $this->getFlickrApi();
             case self :: DISPLAY_GRID :
             case self :: DISPLAY_FEATURE :
             case self :: DISPLAY_FEATURE_WITH_RANDOM :
-                $selection_mode = $this->mBd->EscapeString($display_mode);
-                $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET photo_display_mode = '".$selection_mode."' WHERE flickr_photostream_id = '".$this->getId()."'");
+                $selection_mode = $this->mBd->escapeString($display_mode);
+                $this->mBd->execSqlUpdate("UPDATE flickr_photostream SET photo_display_mode = '".$selection_mode."' WHERE flickr_photostream_id = '".$this->getId()."'");
                 $this->refresh();
                 break;
             default :
@@ -249,16 +249,16 @@ $api = $this->getFlickrApi();
 
     public function setApiSharedSecret($api_shared_secret)
     {
-        $api_shared_secret = $this->mBd->EscapeString($api_shared_secret);
-        $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET api_shared_secret ='$api_shared_secret' WHERE flickr_photostream_id = '".$this->getId()."'");
+        $api_shared_secret = $this->mBd->escapeString($api_shared_secret);
+        $this->mBd->execSqlUpdate("UPDATE flickr_photostream SET api_shared_secret ='$api_shared_secret' WHERE flickr_photostream_id = '".$this->getId()."'");
         $this->refresh();
         $this->setFlickrApi(null);
     }
 
     public function setApiKey($api_key)
     {
-        $api_key = $this->mBd->EscapeString($api_key);
-        $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET api_key ='$api_key' WHERE flickr_photostream_id = '".$this->getId()."'");
+        $api_key = $this->mBd->escapeString($api_key);
+        $this->mBd->execSqlUpdate("UPDATE flickr_photostream SET api_key ='$api_key' WHERE flickr_photostream_id = '".$this->getId()."'");
         $this->refresh();
         $this->setFlickrApi(null);
     }
@@ -310,8 +310,8 @@ $api = $this->getFlickrApi();
 
     public function setUserId($user_id)
     {
-        $user_id = $this->mBd->EscapeString($user_id);
-        $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET user_id ='$user_id' WHERE flickr_photostream_id = '".$this->getId()."'");
+        $user_id = $this->mBd->escapeString($user_id);
+        $this->mBd->execSqlUpdate("UPDATE flickr_photostream SET user_id ='$user_id' WHERE flickr_photostream_id = '".$this->getId()."'");
         $this->refresh();
     }
 
@@ -322,8 +322,8 @@ $api = $this->getFlickrApi();
 
     public function setUserName($user_name)
     {
-        $user_name = $this->mBd->EscapeString($user_name);
-        $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET user_name = '$user_name' WHERE flickr_photostream_id = '".$this->getId()."'");
+        $user_name = $this->mBd->escapeString($user_name);
+        $this->mBd->execSqlUpdate("UPDATE flickr_photostream SET user_name = '$user_name' WHERE flickr_photostream_id = '".$this->getId()."'");
         $this->refresh();
     }
 
@@ -334,8 +334,8 @@ $api = $this->getFlickrApi();
 
     public function setGroupId($group_id)
     {
-        $group_id = $this->mBd->EscapeString($group_id);
-        $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET group_id = '$group_id' WHERE flickr_photostream_id = '".$this->getId()."'");
+        $group_id = $this->mBd->escapeString($group_id);
+        $this->mBd->execSqlUpdate("UPDATE flickr_photostream SET group_id = '$group_id' WHERE flickr_photostream_id = '".$this->getId()."'");
         $this->refresh();
     }
 
@@ -346,8 +346,8 @@ $api = $this->getFlickrApi();
 
     public function setTags($tags)
     {
-        $tags = $this->mBd->EscapeString($tags);
-        $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET tags = '$tags' WHERE flickr_photostream_id = '".$this->getId()."'");
+        $tags = $this->mBd->escapeString($tags);
+        $this->mBd->execSqlUpdate("UPDATE flickr_photostream SET tags = '$tags' WHERE flickr_photostream_id = '".$this->getId()."'");
         $this->refresh();
     }
 
@@ -362,8 +362,8 @@ $api = $this->getFlickrApi();
         {
             case self :: TAG_MODE_ANY :
             case self :: TAG_MODE_ALL :
-                $mode = $this->mBd->EscapeString($mode);
-                $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET tag_mode = '$mode' WHERE flickr_photostream_id = '".$this->getId()."'");
+                $mode = $this->mBd->escapeString($mode);
+                $this->mBd->execSqlUpdate("UPDATE flickr_photostream SET tag_mode = '$mode' WHERE flickr_photostream_id = '".$this->getId()."'");
                 $this->refresh();
                 break;
             default :
@@ -386,8 +386,8 @@ $api = $this->getFlickrApi();
             case self :: SIZE_MEDIUM_500x375 :
             case self :: SIZE_LARGE_1024 :
             case self :: SIZE_ORIGINAL :
-                $size = $this->mBd->EscapeString($size);
-                $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET preferred_size = '$size' WHERE flickr_photostream_id = '".$this->getId()."'");
+                $size = $this->mBd->escapeString($size);
+                $this->mBd->execSqlUpdate("UPDATE flickr_photostream SET preferred_size = '$size' WHERE flickr_photostream_id = '".$this->getId()."'");
                 $this->refresh();
                 break;
             default :
@@ -403,7 +403,7 @@ $api = $this->getFlickrApi();
     public function setDisplayTitle($display_title)
     {
         $display_title = $display_title == true ? "true" : "false";
-        $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET display_title = $display_title WHERE flickr_photostream_id = '".$this->getId()."'");
+        $this->mBd->execSqlUpdate("UPDATE flickr_photostream SET display_title = $display_title WHERE flickr_photostream_id = '".$this->getId()."'");
         $this->refresh();
     }
 
@@ -415,7 +415,7 @@ $api = $this->getFlickrApi();
     public function setDisplayTags($display_tags)
     {
         $display_tags = $display_tags == true ? "true" : "false";
-        $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET display_tags = $display_tags WHERE flickr_photostream_id = '".$this->getId()."'");
+        $this->mBd->execSqlUpdate("UPDATE flickr_photostream SET display_tags = $display_tags WHERE flickr_photostream_id = '".$this->getId()."'");
         $this->refresh();
     }
 
@@ -427,7 +427,7 @@ $api = $this->getFlickrApi();
     public function setDisplayDescription($display_description)
     {
         $display_description = $display_description == true ? "true" : "false";
-        $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET display_description = $display_description WHERE flickr_photostream_id = '".$this->getId()."'");
+        $this->mBd->execSqlUpdate("UPDATE flickr_photostream SET display_description = $display_description WHERE flickr_photostream_id = '".$this->getId()."'");
         $this->refresh();
     }
 
@@ -903,7 +903,7 @@ $api = $this->getFlickrApi();
 
         if ($this->isPersistent() == false)
         {
-            $this->mBd->ExecSqlUpdate("DELETE FROM flickr_photostream WHERE flickr_photostream_id = '".$this->getId()."'", false);
+            $this->mBd->execSqlUpdate("DELETE FROM flickr_photostream WHERE flickr_photostream_id = '".$this->getId()."'", false);
         }
         return parent :: delete($errmsg);
     }

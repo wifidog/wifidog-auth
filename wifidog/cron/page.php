@@ -79,7 +79,7 @@ function page_if_down_since($nodeObject, $minutes) {
 try {
 	$sql = "SELECT node_id FROM nodes WHERE node_deployment_status = 'DEPLOYED'";
     $nodes_results = null;
-    $db->ExecSql($sql, $nodes_results, false);
+    $db->execSql($sql, $nodes_results, false);
 
     if ($nodes_results == null)
     	throw new Exception(_("No nodes could not be found in the database"));

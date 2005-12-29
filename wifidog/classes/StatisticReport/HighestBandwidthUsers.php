@@ -77,7 +77,7 @@ class HighestBandwidthUsers extends StatisticReport
 
         $sql = "$candidate_connections_sql GROUP BY connections.$distinguish_users_by ORDER BY total DESC LIMIT ".self :: NUM_USERS_TO_DISPLAY."";
 
-        $db->ExecSql($sql, $frequent_users_stats, false);
+        $db->execSql($sql, $frequent_users_stats, false);
 
         if ($frequent_users_stats)
         {

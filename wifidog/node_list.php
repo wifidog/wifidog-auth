@@ -46,8 +46,7 @@
 
 define('DEFAULT_SORT_BY_PARAM', "name");
 
-require_once(dirname(__FILE__) . 'include/common.php');
-
+require_once(dirname(__FILE__) . '/include/common.php');
 require_once('include/common_interface.php');
 require_once('classes/Node.php');
 require_once('classes/Utils.php');
@@ -91,7 +90,7 @@ if ($sort_by_using_sql === true)
 else
     $sql = "SELECT node_id, name, last_heartbeat_user_agent, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS online, creation_date, node_deployment_status FROM nodes WHERE node_deployment_status != 'PERMANENTLY_CLOSED' ORDER BY ".DEFAULT_SORT_BY_PARAM;
 $nodes_results = null;
-$db->ExecSql($sql, $nodes_results, false);
+$db->execSql($sql, $nodes_results, false);
 
 if ($nodes_results == null)
     throw new Exception(_("No nodes could not be found in the database"));

@@ -81,7 +81,7 @@ class RegistrationsPerMonth extends StatisticGraph
 
         $network_constraint = self :: $stats->getSqlNetworkConstraint('account_origin');
         $date_constraint = self :: $stats->getSqlDateConstraint('reg_date');
-        $db->ExecSql("SELECT COUNT(users) AS num_users, date_trunc('month', reg_date) AS month FROM users  WHERE account_status = ".ACCOUNT_STATUS_ALLOWED." ${date_constraint} {$network_constraint} GROUP BY date_trunc('month', reg_date) ORDER BY month", $registration_stats, false);
+        $db->execSql("SELECT COUNT(users) AS num_users, date_trunc('month', reg_date) AS month FROM users  WHERE account_status = ".ACCOUNT_STATUS_ALLOWED." ${date_constraint} {$network_constraint} GROUP BY date_trunc('month', reg_date) ORDER BY month", $registration_stats, false);
 
         if ($registration_stats)
         {

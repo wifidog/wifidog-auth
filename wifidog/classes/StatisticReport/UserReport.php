@@ -82,9 +82,9 @@ class UserReport extends StatisticReport
                 if ($userObject)
                 {
                     $userinfo = null;
-                    $user_id = $db->EscapeString($user_id);
+                    $user_id = $db->escapeString($user_id);
                     $sql = "SELECT * FROM users WHERE user_id='{$user_id}'";
-                    $db->ExecSqlUniqueRes($sql, $userinfo, false);
+                    $db->execSqlUniqueRes($sql, $userinfo, false);
                     if ($userinfo == null)
                     {
                         throw new Exception(sprintf(_("User id: %s could not be found in the database"), $user_id));
@@ -150,7 +150,7 @@ class UserReport extends StatisticReport
                 $html .= "<fieldset class='pretty_fieldset'>\n";
                 $candidate_connections_sql = $this->stats->getSqlCandidateConnectionsQuery("*");
                 $sql = "$candidate_connections_sql ORDER BY timestamp_in DESC";
-                $db->ExecSql($sql, $connections, false);
+                $db->execSql($sql, $connections, false);
                 $html .= "<legend>".sprintf(_("%d Connections"), count($connections))."</legend>\n";
 
                 // Variables init
@@ -231,7 +231,7 @@ class UserReport extends StatisticReport
                     $candidate_connections_sql = $this->stats->getSqlCandidateConnectionsQuery("user_mac,count(user_mac) as nb ");
 
                     $sql = "$candidate_connections_sql group by user_mac order by nb desc";
-                    $db->ExecSql($sql, $rows, false);
+                    $db->execSql($sql, $rows, false);
 
                     $html .= "<fieldset class='pretty_fieldset'>\n";
                     $html .= "<legend>".sprintf(_("%d MAC addresses"), count($rows))."</legend>\n";
@@ -267,7 +267,7 @@ class UserReport extends StatisticReport
                     $candidate_connections_sql = $this->stats->getSqlCandidateConnectionsQuery("connections.user_id,username, count(connections.user_id) as nb ", true);
 
                     $sql = "$candidate_connections_sql group by connections.user_id, username order by nb desc, connections.user_id,username";
-                    $db->ExecSql($sql, $rows, false);
+                    $db->execSql($sql, $rows, false);
 
                     $html .= "<fieldset class='pretty_fieldset'>\n";
                     $html .= "<legend>".sprintf(_("%d users"), count($rows))."</legend>\n";

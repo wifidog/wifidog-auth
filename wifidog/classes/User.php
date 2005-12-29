@@ -134,9 +134,9 @@ class User implements GenericObject
         global $db;
         $object = null;
 
-        $username_str = $db->EscapeString($username);
-        $account_origin_str = $db->EscapeString($account_origin->getId());
-        $db->ExecSqlUniqueRes("SELECT user_id FROM users WHERE username = '$username_str' AND account_origin = '$account_origin_str'", $user_info, false);
+        $username_str = $db->escapeString($username);
+        $account_origin_str = $db->escapeString($account_origin->getId());
+        $db->execSqlUniqueRes("SELECT user_id FROM users WHERE username = '$username_str' AND account_origin = '$account_origin_str'", $user_info, false);
 
         if ($user_info != null)
             $object = new self($user_info['user_id']);
@@ -153,9 +153,9 @@ class User implements GenericObject
         global $db;
         $object = null;
 
-        $email_str = $db->EscapeString($email);
-        $account_origin_str = $db->EscapeString($account_origin->getId());
-        $db->ExecSqlUniqueRes("SELECT user_id FROM users WHERE email = '$email_str' AND account_origin = '$account_origin_str'", $user_info, false);
+        $email_str = $db->escapeString($email);
+        $account_origin_str = $db->escapeString($account_origin->getId());
+        $db->execSqlUniqueRes("SELECT user_id FROM users WHERE email = '$email_str' AND account_origin = '$account_origin_str'", $user_info, false);
 
         if ($user_info != null)
             $object = new self($user_info['user_id']);
@@ -184,16 +184,16 @@ class User implements GenericObject
         global $db;
 
         $object = null;
-        $id_str = $db->EscapeString($id);
-        $username_str = $db->EscapeString($username);
-        $account_origin_str = $db->EscapeString($account_origin->getId());
-        $email_str = $db->EscapeString($email);
+        $id_str = $db->escapeString($id);
+        $username_str = $db->escapeString($username);
+        $account_origin_str = $db->escapeString($account_origin->getId());
+        $email_str = $db->escapeString($email);
 
-        $password_hash = $db->EscapeString(User :: passwordHash($password));
+        $password_hash = $db->escapeString(User :: passwordHash($password));
         $status = ACCOUNT_STATUS_VALIDATION;
         $token = User :: generateToken();
 
-        $db->ExecSqlUpdate("INSERT INTO users (user_id,username, account_origin,email,pass,account_status,validation_token,reg_date) VALUES ('$id_str','$username_str','$account_origin_str','$email_str','$password_hash','$status','$token',NOW())");
+        $db->execSqlUpdate("INSERT INTO users (user_id,username, account_origin,email,pass,account_status,validation_token,reg_date) VALUES ('$id_str','$username_str','$account_origin_str','$email_str','$password_hash','$status','$token',NOW())");
 
         $object = new self($id);
         return $object;
@@ -202,18 +202,18 @@ class User implements GenericObject
     public static function purgeUnvalidatedUsers($days_since_creation)
     {
         global $db;
-        $days_since_creation = $db->EscapeString($days_since_creation);
+        $days_since_creation = $db->escapeString($days_since_creation);
 
-        //$db->ExecSqlUpdate("INSERT INTO users (user_id,username, account_origin,email,pass,account_status,validation_token,reg_date) VALUES ('$id_str','$username_str','$account_origin_str','$email_str','$password_hash','$status','$token',NOW())");
+        //$db->execSqlUpdate("INSERT INTO users (user_id,username, account_origin,email,pass,account_status,validation_token,reg_date) VALUES ('$id_str','$username_str','$account_origin_str','$email_str','$password_hash','$status','$token',NOW())");
     }
 
     /** @param $object_id The id of the user */
     function __construct($object_id)
     {
         global $db;
-        $object_id_str = $db->EscapeString($object_id);
+        $object_id_str = $db->escapeString($object_id);
         $sql = "SELECT * FROM users WHERE user_id='{$object_id_str}'";
-        $db->ExecSqlUniqueRes($sql, $row, false);
+        $db->execSqlUniqueRes($sql, $row, false);
         if ($row == null)
         {
             throw new Exception(sprintf(_("User id: %s could not be found in the database"), $object_id_str));
@@ -303,8 +303,8 @@ class User implements GenericObject
     {
         global $db;
 
-        $status_str = $db->EscapeString($status);
-        if (!($update = $db->ExecSqlUpdate("UPDATE users SET account_status='{$status_str}' WHERE user_id='{$this->id}'")))
+        $status_str = $db->escapeString($status);
+        if (!($update = $db->execSqlUpdate("UPDATE users SET account_status='{$status_str}' WHERE user_id='{$this->id}'")))
         {
             throw new Exception(_("Could not update status."));
         }
@@ -326,7 +326,7 @@ class User implements GenericObject
             if ($account_status == ACCOUNT_STATUS_VALIDATION)
             {
                 $sql = "SELECT CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired, networks.validation_grace_time FROM users  JOIN networks ON (users.account_origin = networks.network_id) WHERE (user_id='{$this->id}')";
-                $db->ExecSqlUniqueRes($sql, $user_info, false);
+                $db->execSqlUniqueRes($sql, $user_info, false);
 
                 if ($user_info['validation_grace_time_expired'] == 't')
                 {
@@ -352,7 +352,7 @@ class User implements GenericObject
         global $db;
         //$this->session->dump();
 
-        $db->ExecSqlUniqueRes("SELECT * FROM users NATURAL JOIN administrators WHERE (users.user_id='$this->id')", $user_info, false);
+        $db->execSqlUniqueRes("SELECT * FROM users NATURAL JOIN administrators WHERE (users.user_id='$this->id')", $user_info, false);
         if (!empty ($user_info))
         {
             return true;
@@ -370,7 +370,7 @@ class User implements GenericObject
     public function isOwner()
     {
         global $db;
-        $db->ExecSql("SELECT * FROM node_stakeholders WHERE is_owner = true AND user_id='{$this->getId()}'", $row, false);
+        $db->execSql("SELECT * FROM node_stakeholders WHERE is_owner = true AND user_id='{$this->getId()}'", $row, false);
         if ($row != null)
             return true;
         return false;
@@ -380,7 +380,7 @@ class User implements GenericObject
     public function isNobody()
     {
         global $db;
-        $db->ExecSqlUniqueRes("SELECT DISTINCT user_id FROM (SELECT user_id FROM network_stakeholders WHERE user_id='{$this->getId()}' UNION SELECT user_id FROM node_stakeholders WHERE user_id='{$this->getId()}' UNION SELECT user_id FROM administrators WHERE user_id='{$this->getId()}') as tmp", $row, false);
+        $db->execSqlUniqueRes("SELECT DISTINCT user_id FROM (SELECT user_id FROM network_stakeholders WHERE user_id='{$this->getId()}' UNION SELECT user_id FROM node_stakeholders WHERE user_id='{$this->getId()}' UNION SELECT user_id FROM administrators WHERE user_id='{$this->getId()}') as tmp", $row, false);
         if ($row == null)
             return true;
         return false;
@@ -404,13 +404,13 @@ class User implements GenericObject
             $token = self :: generateToken();
             if ($_SERVER['REMOTE_ADDR'])
             {
-                $node_ip = $db->EscapeString($_SERVER['REMOTE_ADDR']);
+                $node_ip = $db->escapeString($_SERVER['REMOTE_ADDR']);
             }
 
             if ($session && $node_ip && $session->get(SESS_GW_ID_VAR))
             {
-                $node_id = $db->EscapeString($session->get(SESS_GW_ID_VAR));
-                $db->ExecSqlUpdate("INSERT INTO connections (user_id, token, token_status, timestamp_in, node_id, node_ip, last_updated) VALUES ('".$this->getId()."', '$token', '".TOKEN_UNUSED."', NOW(), '$node_id', '$node_ip', NOW())", false);
+                $node_id = $db->escapeString($session->get(SESS_GW_ID_VAR));
+                $db->execSqlUpdate("INSERT INTO connections (user_id, token, token_status, timestamp_in, node_id, node_ip, last_updated) VALUES ('".$this->getId()."', '$token', '".TOKEN_UNUSED."', NOW(), '$node_id', '$node_ip', NOW())", false);
                 $retval = $token;
             }
             else
@@ -428,7 +428,7 @@ class User implements GenericObject
         global $db;
 
         $new_password_hash = User :: passwordHash($password);
-        if (!($update = $db->ExecSqlUpdate("UPDATE users SET pass='$new_password_hash' WHERE user_id='{$this->id}'")))
+        if (!($update = $db->execSqlUpdate("UPDATE users SET pass='$new_password_hash' WHERE user_id='{$this->id}'")))
         {
             throw new Exception(_("Could not change user's password."));
         }
@@ -446,7 +446,7 @@ class User implements GenericObject
     {
         global $db;
 
-        $db->ExecSql("SELECT * FROM users", $objects, false);
+        $db->execSql("SELECT * FROM users", $objects, false);
         if ($objects == null)
         {
             throw new Exception(_("No users could not be found in the database"));
@@ -512,18 +512,18 @@ class User implements GenericObject
     static function userExists($id)
     {
         global $db;
-        $id_str = $db->EscapeString($id);
+        $id_str = $db->escapeString($id);
         $sql = "SELECT * FROM users WHERE user_id='{$id_str}'";
-        $db->ExecSqlUniqueRes($sql, $row, false);
+        $db->execSqlUniqueRes($sql, $row, false);
         return $row;
     }
 
     public static function emailExists($id)
     {
         global $db;
-        $id_str = $db->EscapeString($id);
+        $id_str = $db->escapeString($id);
         $sql = "SELECT * FROM users WHERE email='{$id_str}'";
-        $db->ExecSqlUniqueRes($sql, $row, false);
+        $db->execSqlUniqueRes($sql, $row, false);
         return $row;
     }
 
@@ -660,9 +660,9 @@ class User implements GenericObject
     public function addContent(Content $content)
     {
         global $db;
-        $content_id = $db->EscapeString($content->getId());
+        $content_id = $db->escapeString($content->getId());
         $sql = "INSERT INTO user_has_content (user_id, content_id) VALUES ('$this->id','$content_id')";
-        $db->ExecSqlUpdate($sql, false);
+        $db->execSqlUpdate($sql, false);
         return true;
     }
 
@@ -670,9 +670,9 @@ class User implements GenericObject
     public function removeContent(Content $content)
     {
         global $db;
-        $content_id = $db->EscapeString($content->getId());
+        $content_id = $db->escapeString($content->getId());
         $sql = "DELETE FROM user_has_content WHERE user_id='$this->id' AND content_id='$content_id'";
-        $db->ExecSqlUpdate($sql, false);
+        $db->execSqlUpdate($sql, false);
         return true;
     }
 
@@ -683,7 +683,7 @@ class User implements GenericObject
         global $db;
         $retval = array ();
         $sql = "SELECT * FROM user_has_content WHERE user_id='$this->id' ORDER BY subscribe_timestamp";
-        $db->ExecSql($sql, $content_rows, false);
+        $db->execSql($sql, $content_rows, false);
         if ($content_rows != null)
         {
             foreach ($content_rows as $content_row)

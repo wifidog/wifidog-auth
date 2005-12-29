@@ -85,15 +85,15 @@ class ContentGroupElement extends Content
         parent :: __construct($content_id);
 
         $this->setIsTrivialContent(true);
-        $content_id = $db->EscapeString($content_id);
+        $content_id = $db->escapeString($content_id);
 
         $sql_select = "SELECT * FROM content_group_element WHERE content_group_element_id='$content_id'";
-        $db->ExecSqlUniqueRes($sql_select, $row, false);
+        $db->execSqlUniqueRes($sql_select, $row, false);
 
         if ($row == null) {
             // The database was corrupted, let's fix it ...
             $sql = "DELETE FROM content WHERE content_id='$content_id'";
-            $db->ExecSqlUpdate($sql, true);
+            $db->execSqlUpdate($sql, true);
         }
 
         $this->content_group_element_row = $row;
@@ -133,7 +133,7 @@ class ContentGroupElement extends Content
             $new_displayed_content_id_sql = "NULL";
         }
 
-        $db->ExecSqlUpdate("UPDATE content_group_element SET displayed_content_id = $new_displayed_content_id_sql WHERE content_group_element_id = '$this->id'", FALSE);
+        $db->execSqlUpdate("UPDATE content_group_element SET displayed_content_id = $new_displayed_content_id_sql WHERE content_group_element_id = '$this->id'", FALSE);
 
         if ($old_displayed_content != null) {
             $old_displayed_conten->delete($errmsg);
@@ -170,8 +170,8 @@ class ContentGroupElement extends Content
             /*
              * Only update database if there is an actual change
              */
-            $order = $db->EscapeString($order);
-            $db->ExecSqlUpdate("UPDATE content_group_element SET display_order = $order WHERE content_group_element_id = '$this->id'", false);
+            $order = $db->escapeString($order);
+            $db->execSqlUpdate("UPDATE content_group_element SET display_order = $order WHERE content_group_element_id = '$this->id'", false);
         }
     }
 
@@ -223,13 +223,13 @@ class ContentGroupElement extends Content
             $content_type = 'ContentGroupElement';
             $sql = "INSERT INTO content (content_id, content_type) VALUES ('$content_id', '$content_type');";
 
-            if (!$db->ExecSqlUpdate($sql, false)) {
+            if (!$db->execSqlUpdate($sql, false)) {
                 throw new Exception(_('Unable to insert new content into database!'));
             }
 
             $sql = "INSERT INTO content_group_element (content_group_element_id, content_group_id, display_order) VALUES ('$content_id', '".$content_group->GetId()."', $display_order);";
 
-            if (!$db->ExecSqlUpdate($sql, false)) {
+            if (!$db->execSqlUpdate($sql, false)) {
                 throw new Exception(_('Unable to insert new content into database!'));
             }
 
@@ -287,7 +287,7 @@ class ContentGroupElement extends Content
         $html .= "<ul class='admin_section_list'>\n";
 
         $sql = "SELECT * FROM content_group_element_has_allowed_nodes WHERE content_group_element_id='$this->id'";
-        $db->ExecSql($sql, $allowed_node_rows, false);
+        $db->execSql($sql, $allowed_node_rows, false);
 
         if ($allowed_node_rows != null) {
             foreach ($allowed_node_rows as $allowed_node_row) {
@@ -365,7 +365,7 @@ class ContentGroupElement extends Content
 
         /* content_group_element_has_allowed_nodes */
         $sql = "SELECT * FROM content_group_element_has_allowed_nodes WHERE content_group_element_id='$this->id'";
-        $db->ExecSql($sql, $allowed_node_rows, false);
+        $db->execSql($sql, $allowed_node_rows, false);
 
         if ($allowed_node_rows != null) {
             foreach ($allowed_node_rows as $allowed_node_row) {
@@ -374,7 +374,7 @@ class ContentGroupElement extends Content
 
                 if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true) {
                     $sql = "DELETE FROM content_group_element_has_allowed_nodes WHERE content_group_element_id='$this->id' AND node_id='".$node->GetId()."'";
-                    $db->ExecSqlUpdate($sql, false);
+                    $db->execSqlUpdate($sql, false);
                 }
             }
         }
@@ -385,7 +385,7 @@ class ContentGroupElement extends Content
             $name = "content_group_element_{$this->id}_new_allowed_node";
             $node = Node :: processSelectNodeUI($name);
             $node_id = $node->GetId();
-            $db->ExecSqlUpdate("INSERT INTO content_group_element_has_allowed_nodes (content_group_element_id, node_id) VALUES ('$this->id', '$node_id')", FALSE);
+            $db->execSqlUpdate("INSERT INTO content_group_element_has_allowed_nodes (content_group_element_id, node_id) VALUES ('$this->id', '$node_id')", FALSE);
         }
 
         /* displayed_content_id */
@@ -399,7 +399,7 @@ class ContentGroupElement extends Content
 
             if ($displayed_content != null) {
                 $displayed_content_id = $displayed_content->GetId();
-                $db->ExecSqlUpdate("UPDATE content_group_element SET displayed_content_id = '$displayed_content_id' WHERE content_group_element_id = '$this->id'", FALSE);
+                $db->execSqlUpdate("UPDATE content_group_element SET displayed_content_id = '$displayed_content_id' WHERE content_group_element_id = '$this->id'", FALSE);
                 $displayed_content->setIsPersistent(false);
             }
         } else {
@@ -408,7 +408,7 @@ class ContentGroupElement extends Content
 
             if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true) {
                 if($displayed_content->delete($errmsg) != false) {
-                    $db->ExecSqlUpdate("UPDATE content_group_element SET displayed_content_id = NULL WHERE content_group_element_id = '$this->id'", FALSE);
+                    $db->execSqlUpdate("UPDATE content_group_element SET displayed_content_id = NULL WHERE content_group_element_id = '$this->id'", FALSE);
                 } else {
                     echo $errmsg;
                 }
@@ -469,7 +469,7 @@ class ContentGroupElement extends Content
         $allowed_node_rows = null;
 
         $sql = "SELECT * FROM content_group_element_has_allowed_nodes WHERE content_group_element_id='$this->id'";
-        $db->ExecSql($sql, $allowed_node_rows, false);
+        $db->execSql($sql, $allowed_node_rows, false);
 
         if ($allowed_node_rows != null) {
             if ($node) {

@@ -54,7 +54,7 @@ function validate_schema()
     try
     {
         // Check the schema info
-        $db->ExecSqlUniqueRes("SELECT * FROM schema_info WHERE tag='schema_version'", $row, false);
+        $db->execSqlUniqueRes("SELECT * FROM schema_info WHERE tag='schema_version'", $row, false);
     }
     catch(Exception $e) { /* Be quiet */ }
 
@@ -102,7 +102,7 @@ function check_users_not_empty()
     if (!empty ($network))
     {
         global $db;
-        $db->ExecSqlUniqueRes("SELECT user_id FROM users WHERE account_origin = '{$network->getId()}' LIMIT 1", $row, false);
+        $db->execSqlUniqueRes("SELECT user_id FROM users WHERE account_origin = '{$network->getId()}' LIMIT 1", $row, false);
         if ($row == null)
         {
             echo "<html><head><h1>";
@@ -112,7 +112,7 @@ function check_users_not_empty()
             $sql .= "INSERT INTO users (user_id, username, pass, email, account_status, validation_token, account_origin) VALUES ('admin_original_user_delete_me', 'admin', 'ISMvKXpXpadDiUoOSoAfww==', 'test_user_please@delete.me', 1, 'df16cc4b1d0975e267f3425eaac31950', '$default_account_origin');";
             $sql .= "INSERT INTO administrators (user_id) VALUES ('admin_original_user_delete_me');";
             $sql .= "COMMIT;";
-            $db->ExecSqlUpdate($sql, $row, false);
+            $db->execSqlUpdate($sql, $row, false);
             exit;
         }
     }
@@ -130,7 +130,7 @@ function update_schema()
     echo "<html><head><h1>\n";
     echo _("Trying to update the database schema.");
     echo "</h1>\n";
-    $db->ExecSqlUniqueRes("SELECT * FROM schema_info WHERE tag='schema_version'", $row, false);
+    $db->execSqlUniqueRes("SELECT * FROM schema_info WHERE tag='schema_version'", $row, false);
     if (empty ($row))
     {
         echo "<h1>"._("Unable to retrieve schema version.  The database schema is too old to be updated.")."</h1>";
@@ -148,10 +148,10 @@ function update_schema()
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "ALTER TABLE users ADD COLUMN username text;\n";
             $sql .= "ALTER TABLE users ADD COLUMN account_origin text;\n";
-            $db->ExecSql("SELECT user_id FROM users", $results, false);
+            $db->execSql("SELECT user_id FROM users", $results, false);
             foreach ($results as $row)
             {
-                $user_id = $db->EscapeString($row['user_id']);
+                $user_id = $db->escapeString($row['user_id']);
                 $sql .= "UPDATE users SET username='$user_id', user_id='".get_guid()."', account_origin='LOCAL_USER' WHERE user_id='$user_id';\n";
             }
             $sql .= "CREATE UNIQUE INDEX idx_unique_username_and_account_origin ON users (username, account_origin);\n";
@@ -508,12 +508,12 @@ function update_schema()
             $sql .= "); \n";
             $sql .= "ALTER TABLE content_has_owners ALTER COLUMN is_author SET DEFAULT 'f';\n";
             $results = null;
-            $db->ExecSql("SELECT node_id, rss_url FROM nodes", $results, false);
+            $db->execSql("SELECT node_id, rss_url FROM nodes", $results, false);
             foreach ($results as $row)
             {
                 if (!empty ($row['rss_url']))
                 {
-                    //$user_id = $db->EscapeString($row['user_id']);
+                    //$user_id = $db->escapeString($row['user_id']);
                     $content_id = get_guid();
                     $sql .= "\nINSERT INTO content (content_id, content_type) VALUES ('$content_id', 'RssAggregator');\n";
                     $sql .= "INSERT INTO content_rss_aggregator (content_id) VALUES ('$content_id');\n";
@@ -687,7 +687,7 @@ function update_schema()
 
 			/* Convert the existing node logos */
             $results = null;
-            $db->ExecSql("SELECT node_id FROM nodes", $results, false);
+            $db->execSql("SELECT node_id FROM nodes", $results, false);
                             define('HOTSPOT_LOGO_NAME', 'hotspot_logo.jpg');
             foreach ($results as $row)
             {
@@ -695,8 +695,8 @@ function update_schema()
                 //echo $php_logo_path."<br>";
                 if (file_exists($php_logo_path))
                 {
-                    $node_logo_abs_url=$db->EscapeString(BASE_URL_PATH.LOCAL_CONTENT_REL_PATH.$row['node_id'].'/'.HOTSPOT_LOGO_NAME);
-                    //$user_id = $db->EscapeString($row['user_id']);
+                    $node_logo_abs_url=$db->escapeString(BASE_URL_PATH.LOCAL_CONTENT_REL_PATH.$row['node_id'].'/'.HOTSPOT_LOGO_NAME);
+                    //$user_id = $db->escapeString($row['user_id']);
                     $content_id = get_guid();
                     $sql .= "\nINSERT INTO content (content_id, content_type) VALUES ('$content_id', 'Picture');\n";
                     $sql .= "INSERT INTO files (files_id, url) VALUES ('$content_id', '$node_logo_abs_url');\n";
@@ -741,8 +741,8 @@ function update_schema()
             $sql .= "ALTER TABLE node_stakeholders ADD CONSTRAINT nodes_fkey FOREIGN KEY (node_id) REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE CASCADE;";
         }
 
-        $db->ExecSqlUpdate("BEGIN;\n$sql\nCOMMIT;\nVACUUM ANALYZE;\n", true);
-        //$db->ExecSqlUpdate("BEGIN;\n$sql\nROLLBACK;\n", true);
+        $db->execSqlUpdate("BEGIN;\n$sql\nCOMMIT;\nVACUUM ANALYZE;\n", true);
+        //$db->execSqlUpdate("BEGIN;\n$sql\nROLLBACK;\n", true);
         echo "</html></head>";
         //exit ();
     }

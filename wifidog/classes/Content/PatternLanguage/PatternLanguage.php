@@ -167,7 +167,7 @@ class PatternLanguage extends ContentGroup
          */
 
         $sql = "SELECT * FROM (SELECT DISTINCT ON (content_group_element_id) content_group_element_id, first_display_timestamp FROM content_display_log AS cdl JOIN content_group_element AS cge ON (cdl.content_id = cge.content_group_element_id) JOIN content ON (content.content_id = cge.content_group_id) where user_id = '{$user->getId()}' AND cge.content_group_id = '{$this->getId()}' AND content.content_type = 'PatternLanguage') AS patterns ORDER BY first_display_timestamp";
-        $db->ExecSql($sql, $rows, false);
+        $db->execSql($sql, $rows, false);
 
         if ($rows) {
             foreach($rows as $row) {
@@ -197,7 +197,7 @@ class PatternLanguage extends ContentGroup
         $rows = null;
 
         $sql = "SELECT DISTINCT user_id FROM content_display_log AS cdl JOIN content_group_element AS cge ON (cdl.content_id = cge.content_group_element_id) JOIN content ON (content.content_id = cge.content_group_id) WHERE content_type = 'PatternLanguage'";
-        $db->ExecSql($sql , $rows, false);
+        $db->execSql($sql , $rows, false);
 
         if ($rows) {
             foreach($rows as $row) {

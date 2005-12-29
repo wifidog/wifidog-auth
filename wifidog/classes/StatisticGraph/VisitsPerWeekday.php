@@ -93,10 +93,10 @@ class VisitsPerWeekday extends StatisticGraph
         $Plot = & $Plotarea->add($Bar);
         //Old code, counted connections
         //$candidate_connections_sql = self :: $stats->getSqlCandidateConnectionsQuery(" COUNT(conn_id) AS connections, extract('dow' from timestamp_in) AS day ");
-        //$db->ExecSql("$candidate_connections_sql GROUP BY day ORDER BY day", $results, true);
+        //$db->execSql("$candidate_connections_sql GROUP BY day ORDER BY day", $results, true);
 
         $candidate_connections_sql = self :: $stats->getSqlCandidateConnectionsQuery("COUNT(DISTINCT user_id||connections.node_id) AS daily_connections, date_trunc('day', timestamp_in) AS date");
-        $db->ExecSql("SELECT SUM(daily_connections) AS visits, extract('dow' from date) AS day FROM ($candidate_connections_sql GROUP BY date) AS daily_connections_table GROUP BY day ORDER BY day", $results, false);
+        $db->execSql("SELECT SUM(daily_connections) AS visits, extract('dow' from date) AS day FROM ($candidate_connections_sql GROUP BY date) AS daily_connections_table GROUP BY day ORDER BY day", $results, false);
 
         if ($results)
         {

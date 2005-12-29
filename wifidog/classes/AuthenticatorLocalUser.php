@@ -75,12 +75,12 @@ class AuthenticatorLocalUser extends Authenticator
         global $db;
         $security = new Security();
         $retval = false;
-        $username = $db->EscapeString($username);
-        $password = $db->EscapeString($password);
+        $username = $db->escapeString($username);
+        $password = $db->escapeString($password);
         $password_hash = User :: passwordHash($_REQUEST['password']);
 
         $sql = "SELECT user_id FROM users WHERE (username='$username' OR email='$username') AND account_origin='".$this->getNetwork()->getId()."' AND pass='$password_hash'";
-        $db->ExecSqlUniqueRes($sql, $user_info, false);
+        $db->execSqlUniqueRes($sql, $user_info, false);
 
         if ($user_info != null)
         {
@@ -101,7 +101,7 @@ class AuthenticatorLocalUser extends Authenticator
         {
             $user_info = null;
             /* This is only used to discriminate if the problem was a non-existent user of a wrong password. */
-            $db->ExecSqlUniqueRes("SELECT * FROM users WHERE (username='$username' OR email='$username') AND account_origin='".$this->getNetwork()->getId()."'", $user_info, false);
+            $db->execSqlUniqueRes("SELECT * FROM users WHERE (username='$username' OR email='$username') AND account_origin='".$this->getNetwork()->getId()."'", $user_info, false);
             if ($user_info == null)
             {
                 $errmsg = _('Unknown username or email');

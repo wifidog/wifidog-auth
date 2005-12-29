@@ -89,31 +89,31 @@ class UserRegistrationReport extends StatisticReport
 
         /* The following query will retreive the list of the REAL first connection of each user, no matter where or when.*/
         $sql_real_first_connections = $this->stats->getSqlRealFirstConnectionsQuery();
-        //$db->ExecSql($sql_real_first_connections, $tmp, true);
+        //$db->execSql($sql_real_first_connections, $tmp, true);
         $real_first_connections_table_name = "real_first_conn_table_name_".session_id();
 
         $real_first_connections_table_sql = "CREATE TABLE  $real_first_connections_table_name AS ($sql_real_first_connections);\n";
         //$real_first_connections_table_sql .= "CREATE INDEX {$real_first_connections_table_name}_idx ON $real_first_connections_table_name (conn_id); \n";
-        $db->ExecSqlUpdate($real_first_connections_table_sql, false);
+        $db->execSqlUpdate($real_first_connections_table_sql, false);
 
         /* Now retrieves the oldest connection matching the report restriction, and only keep it if it's really the user's first connection */
         $candidate_connections_sql = $this->stats->getSqlCandidateConnectionsQuery("DISTINCT ON(connections.$distinguish_users_by) connections.$distinguish_users_by, conn_id, connections.node_id, nodes.name,timestamp_in ");
-        //$db->ExecSql($candidate_connections_sql, $tmp, true);
+        //$db->execSql($candidate_connections_sql, $tmp, true);
 
         $first_connection_table_sql = "$candidate_connections_sql ORDER BY connections.$distinguish_users_by, connections.node_id, nodes.name, timestamp_in DESC\n";
-        //$db->ExecSql($first_connection_table_sql, $node_usage_stats, true);
+        //$db->execSql($first_connection_table_sql, $node_usage_stats, true);
 
         $first_connection_table_name = "first_connection_table_name_".session_id();
         $registration_node_table_sql = "CREATE TEMP TABLE  $first_connection_table_name AS ($first_connection_table_sql);\n  \n";
         //$registration_node_table_sql .= "CREATE INDEX {$first_connection_table_name}_idx ON $first_connection_table_name (node_id)";
-        $db->ExecSqlUpdate($registration_node_table_sql, false);
+        $db->execSqlUpdate($registration_node_table_sql, false);
         $registration_node_table_sql = "SELECT COUNT ($first_connection_table_name.$distinguish_users_by) AS total_first_connections, node_id, name FROM $first_connection_table_name JOIN $real_first_connections_table_name ON ($first_connection_table_name.conn_id=$real_first_connections_table_name.conn_id) GROUP BY node_id, name ORDER BY total_first_connections DESC;";
-        $db->ExecSql($registration_node_table_sql, $node_usage_stats, false);
+        $db->execSql($registration_node_table_sql, $node_usage_stats, false);
         $registration_node_table_sql = "DROP TABLE $first_connection_table_name;";
-        $db->ExecSqlUpdate($registration_node_table_sql, false);
+        $db->execSqlUpdate($registration_node_table_sql, false);
 
         $real_first_connections_table_sql = "DROP TABLE $real_first_connections_table_name;";
-        $db->ExecSqlUpdate($real_first_connections_table_sql, false);
+        $db->execSqlUpdate($real_first_connections_table_sql, false);
 
         if ($node_usage_stats)
         {

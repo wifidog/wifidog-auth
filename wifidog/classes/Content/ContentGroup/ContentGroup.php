@@ -81,17 +81,17 @@ class ContentGroup extends Content
 
         parent :: __construct($content_id);
 
-        $content_id = $db->EscapeString($content_id);
+        $content_id = $db->escapeString($content_id);
 
         $sql = "SELECT * FROM content_group WHERE content_group_id='$content_id'";
-        $db->ExecSqlUniqueRes($sql, $row, false);
+        $db->execSqlUniqueRes($sql, $row, false);
         if ($row == null)
         {
             /*Since the parent Content exists, the necessary data in content_group had not yet been created */
             $sql = "INSERT INTO content_group (content_group_id) VALUES ('$content_id')";
-            $db->ExecSqlUpdate($sql, false);
+            $db->execSqlUpdate($sql, false);
             $sql = "SELECT * FROM content_group WHERE content_group_id='$content_id'";
-            $db->ExecSqlUniqueRes($sql, $row, false);
+            $db->execSqlUniqueRes($sql, $row, false);
             if ($row == null)
             {
                 throw new Exception(_("The content with the following id could not be found in the database: ").$content_id);
@@ -129,7 +129,7 @@ class ContentGroup extends Content
             $is_artistic_content ? $is_artistic_content_sql = 'TRUE' : $is_artistic_content_sql = 'FALSE';
 
             global $db;
-            $db->ExecSqlUpdate("UPDATE content_group SET is_artistic_content = $is_artistic_content_sql WHERE content_group_id = '$this->id'", false);
+            $db->execSqlUpdate("UPDATE content_group SET is_artistic_content = $is_artistic_content_sql WHERE content_group_id = '$this->id'", false);
             $this->refresh();
         }
 
@@ -160,7 +160,7 @@ class ContentGroup extends Content
             $is_locative_content ? $is_locative_content_sql = 'TRUE' : $is_locative_content_sql = 'FALSE';
 
             global $db;
-            $db->ExecSqlUpdate("UPDATE content_group SET is_locative_content = $is_locative_content_sql WHERE content_group_id = '$this->id'", false);
+            $db->execSqlUpdate("UPDATE content_group SET is_locative_content = $is_locative_content_sql WHERE content_group_id = '$this->id'", false);
             $this->refresh();
         }
 
@@ -183,8 +183,8 @@ class ContentGroup extends Content
         if (isset ($this->CONTENT_ORDERING_MODES[$content_ordering_mode]) && $content_ordering_mode != $this->getContentOrderingMode()) /* Only update database if the mode is valid and there is an actual change */
         {
             global $db;
-            $content_ordering_mode = $db->EscapeString($content_ordering_mode);
-            $db->ExecSqlUpdate("UPDATE content_group SET content_ordering_mode = '$content_ordering_mode' WHERE content_group_id = '$this->id'", false);
+            $content_ordering_mode = $db->escapeString($content_ordering_mode);
+            $db->execSqlUpdate("UPDATE content_group SET content_ordering_mode = '$content_ordering_mode' WHERE content_group_id = '$this->id'", false);
             $this->refresh();
             $retval = true;
         }
@@ -218,8 +218,8 @@ class ContentGroup extends Content
         if (isset ($this->CONTENT_CHANGES_ON_MODES[$content_changes_on_mode]) && $content_changes_on_mode != $this->getContentChangesOnMode()) /* Only update database if the mode is valid and there is an actual change */
         {
             global $db;
-            $content_changes_on_mode = $db->EscapeString($content_changes_on_mode);
-            $db->ExecSqlUpdate("UPDATE content_group SET content_changes_on_mode = '$content_changes_on_mode' WHERE content_group_id = '$this->id'", false);
+            $content_changes_on_mode = $db->escapeString($content_changes_on_mode);
+            $db->execSqlUpdate("UPDATE content_group SET content_changes_on_mode = '$content_changes_on_mode' WHERE content_group_id = '$this->id'", false);
             $this->refresh();
             $retval = true;
         }
@@ -253,8 +253,8 @@ class ContentGroup extends Content
         if (isset ($this->ALLOW_REPEAT_MODES[$allow_repeat]) && $allow_repeat != $this->getAllowRepeat()) /* Only update database if the mode is valid and there is an actual change */
         {
             global $db;
-            $allow_repeat = $db->EscapeString($allow_repeat);
-            $db->ExecSqlUpdate("UPDATE content_group SET allow_repeat = '$allow_repeat' WHERE content_group_id = '$this->id'", false);
+            $allow_repeat = $db->escapeString($allow_repeat);
+            $db->execSqlUpdate("UPDATE content_group SET allow_repeat = '$allow_repeat' WHERE content_group_id = '$this->id'", false);
             $this->refresh();
             $retval = true;
         }
@@ -291,8 +291,8 @@ class ContentGroup extends Content
         if (($display_num_elements > 0) && $display_num_elements != $this->getDisplayNumElements()) /* Only update database if the mode is valid and there is an actual change */
         {
             global $db;
-            $allow_repeat = $db->EscapeString($allow_repeat);
-            $db->ExecSqlUpdate("UPDATE content_group SET display_num_elements = '$display_num_elements' WHERE content_group_id = '$this->id'", false);
+            $allow_repeat = $db->escapeString($allow_repeat);
+            $db->execSqlUpdate("UPDATE content_group SET display_num_elements = '$display_num_elements' WHERE content_group_id = '$this->id'", false);
             $this->refresh();
             $retval = true;
         }
@@ -576,7 +576,7 @@ class ContentGroup extends Content
             }
             /* There usually won't be more than one, but if there is, we want the most recents */
             $sql .= " ORDER BY last_display_timestamp DESC ";
-            $db->ExecSql($sql, $redisplay_rows, false);
+            $db->execSql($sql, $redisplay_rows, false);
             $redisplay_objects = array ();
             if ($redisplay_rows != null)
             {
@@ -623,7 +623,7 @@ class ContentGroup extends Content
             $sql_last_order .= "JOIN content_display_log ON (content_group_element_id=content_id) \n";
             $sql_last_order .= " WHERE content_group_id='$this->id' \n";
             $sql_last_order .= " ORDER BY last_display_timestamp DESC LIMIT 1";
-            $db->ExecSqlUniqueRes($sql_last_order, $last_order_row, false);
+            $db->execSqlUniqueRes($sql_last_order, $last_order_row, false);
             if($last_order_row['display_order']!=null)
             {
             $last_order=$last_order_row['display_order'];
@@ -639,7 +639,7 @@ class ContentGroup extends Content
             }
             $sql .= $order_by;
 
-            $db->ExecSql($sql, $element_rows, false);
+            $db->execSql($sql, $element_rows, false);
             if ($element_rows == null)
             {
                 $element_rows = array ();
@@ -783,7 +783,7 @@ class ContentGroup extends Content
         $element_rows = null;
 
         $sql = "SELECT content_group_element_id FROM content_group_element WHERE content_group_id='$this->id' ORDER BY display_order";
-        $db->ExecSql($sql, $element_rows, false);
+        $db->execSql($sql, $element_rows, false);
         if ($element_rows != null)
         {
             foreach ($element_rows as $element_row)

@@ -75,9 +75,9 @@ class Picture extends File
 
         parent::__construct($content_id);
 
-        $content_id = $db->EscapeString($content_id);
+        $content_id = $db->escapeString($content_id);
         $sql = "SELECT * FROM pictures WHERE pictures_id='$content_id'";
-        $db->ExecSqlUniqueRes($sql, $row, false);
+        $db->execSqlUniqueRes($sql, $row, false);
 
         if ($row == null) {
             /*
@@ -85,10 +85,10 @@ class Picture extends File
              * content_group had not yet been created
              */
             $sql = "INSERT INTO pictures (pictures_id) VALUES ('$content_id')";
-            $db->ExecSqlUpdate($sql, false);
+            $db->execSqlUpdate($sql, false);
 
             $sql = "SELECT * FROM pictures WHERE pictures_id='$content_id'";
-            $db->ExecSqlUniqueRes($sql, $row, false);
+            $db->execSqlUniqueRes($sql, $row, false);
 
             if ($row == null) {
                 throw new Exception(_("The content with the following id could not be found in the database: ").$content_id);
@@ -126,9 +126,9 @@ class Picture extends File
         $_retval = false;
 
         if (empty($width) || is_numeric($width)) {
-            empty($width) ? $width = "NULL" : $width = $this->mBd->EscapeString($width);
+            empty($width) ? $width = "NULL" : $width = $this->mBd->escapeString($width);
 
-            $this->mBd->ExecSqlUpdate("UPDATE pictures SET width=" . $width . " WHERE pictures_id='" . $this->getId() . "'", false);
+            $this->mBd->execSqlUpdate("UPDATE pictures SET width=" . $width . " WHERE pictures_id='" . $this->getId() . "'", false);
             $this->refresh();
 
             $_retval = true;
@@ -164,9 +164,9 @@ class Picture extends File
         $_retval = false;
 
         if(empty($height) || is_numeric($height)) {
-            empty($height) ? $height = "NULL" : $height = $this->mBd->EscapeString($height) ;
+            empty($height) ? $height = "NULL" : $height = $this->mBd->escapeString($height) ;
 
-            $this->mBd->ExecSqlUpdate("UPDATE pictures SET height=" . $height . " WHERE pictures_id='" . $this->getId() . "'", false);
+            $this->mBd->execSqlUpdate("UPDATE pictures SET height=" . $height . " WHERE pictures_id='" . $this->getId() . "'", false);
             $this->refresh();
 
             $_retval = true;

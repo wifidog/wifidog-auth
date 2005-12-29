@@ -145,7 +145,7 @@ if ("$action" == 'uploadform') {
     $ui->display();
     //$smarty->display("admin/templates/owner_upload.html");
 } else {
-    $db->ExecSql("SELECT nodes.node_id,name FROM nodes NATURAL JOIN node_owners WHERE node_owners.user_id='$user_id'", $node_results, false);
+    $db->execSql("SELECT nodes.node_id,name FROM nodes NATURAL JOIN node_owners WHERE node_owners.user_id='$user_id'", $node_results, false);
 
     if (is_array($node_results)) {
         $smarty->assign("node_list", $node_results);

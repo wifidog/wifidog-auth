@@ -44,8 +44,7 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once(dirname(__FILE__) . 'include/common.php');
-
+require_once(dirname(__FILE__) . '/include/common.php');
 require_once('include/common_interface.php');
 require_once('classes/MainUI.php');
 

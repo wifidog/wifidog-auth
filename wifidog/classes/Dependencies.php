@@ -1,5 +1,6 @@
 <?php
 
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -45,76 +46,112 @@
 
 class Dependencies
 {
+	/**
+	 * List of components used by WiFiDog
+	 *
+	 * @var array
+	 * @access private
+	 */
+	private static $_components = array ("ImageGraph" => array ("name" => "PEAR::Image_Graph", "file" => "Image/Graph.php", "localLib" => false), "Phlickr" => array ("name" => "PEAR::Phlickr", "file" => "Phlickr/Api.php", "localLib" => false), "Cache" => array ("name" => "PEAR::Cache_Lite", "file" => "Cache/Lite.php", "localLib" => false), "FCKeditor" => array ("name" => "FCKeditor", "file" => "lib/FCKeditor/fckeditor.php", "localLib" => true), "Smarty" => array ("name" => "Smarty", "file" => "lib/smarty/Smarty.class.php", "localLib" => true));
 
-    /**
-     * List of components used by WiFiDog
-     *
-     * @var array
-     * @access private
-     */
-    private static $_components  = array(
-        "ImageGraph" => array ("name" => "PEAR::Image_Graph", "file" => "Image/Graph.php", "localLib" => false),
-        "Phlickr" => array ("name" => "PEAR::Phlickr", "file" => "Phlickr/Api.php", "localLib" => false),
-        "Cache" => array ("name" => "PEAR::Cache_Lite", "file" => "Cache/Lite.php", "localLib" => false),
-        "FCKeditor" => array ("name" => "FCKeditor", "file" => "lib/FCKeditor/fckeditor.php", "localLib" => true),
-        "Smarty" => array ("name" => "Smarty", "file" => "lib/smarty/Smarty.class.php", "localLib" => true)
-    );
-
-    /**
-     * Checks if a component is available.
-     *
-     * This function checks, if a specific component is available to be used
-     * by WiFiDog.
-     *
-     * Here's an example of how to use the function:
-     * <code>
-     * Dependencies::check("FCKeditor", $errmsg);
-     * </code>
-     *
-     * @param string $component Name of component to be checked.
-     * @param string $errmsg    Reference of a string which would contain an
-     *                          error message.
-     *
-     * @return boolean Returns whether the component has been found or not.
-     *
-     * @access public
+	/**
+	 * Checks if a file exists, including checking in the include path
+	 *
+	 * This function comes from the Aidan's repository
+	 * Thanks : http://aidan.dotgeek.org/repos/ v/function.file_exists_incpath.php
+	 * 
+	 * Here's an example of how to use the function:
+	 * <code>
+	 * Dependencies::file_exists_incpath($path_to_file);
+	 * </code>
+	 *
+	 * @param string $file Path or name of a file
+	 *
+	 * @return boolean Returns whether the file has been found or not.
+	 *
+	 * @access public
 	 * @static
-     */
-    static public function check($component, &$errmsg)
-    {
-        // Init values
-        $_returnValue = false;
+	 */
+	public static function file_exists_incpath($file)
+	{
+		$paths = explode(PATH_SEPARATOR, get_include_path());
+		foreach ($paths as $path)
+		{
+			$fullpath = $path.DIRECTORY_SEPARATOR.$file;
+			if (file_exists($fullpath))
+				return $fullpath;
+		}
+		return false;
+	}
 
-        // Check, if the requested component can be found.
-        if (isset(self::$_components[$component])) {
-            if (self::$_components[$component]["localLib"]) {
-                if (file_exists($_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . self::$_components[$component]["file"])) {
-                    // The component has been found.
-                    $_returnValue = true;
-                } else {
-                    // The component has NOT been found. Return error message.
-                    require_once('Locale.php');
+	/**
+	 * Checks if a component is available.
+	 *
+	 * This function checks, if a specific component is available to be used
+	 * by WiFiDog.
+	 *
+	 * Here's an example of how to use the function:
+	 * <code>
+	 * Dependencies::check("FCKeditor", $errmsg);
+	 * </code>
+	 *
+	 * @param string $component Name of component to be checked.
+	 * @param string $errmsg    Reference of a string which would contain an
+	 *                          error message.
+	 *
+	 * @return boolean Returns whether the component has been found or not.
+	 *
+	 * @access public
+	 * @static
+	 */
+	static public function check($component, & $errmsg)
+	{
+		// Init values
+		$_returnValue = false;
 
-                    $errmsg = self::$_components[$component]["name"] . _(" is not installed");
-                }
-            } else {
-                if (file_exists(self::$_components[$component]["file"])) {
-                    // The component has been found.
-                    $_returnValue = true;
-                } else {
-                    // The component has NOT been found. Return error message.
-                    require_once('Locale.php');
+		// Check, if the requested component can be found.
+		if (isset (self :: $_components[$component]))
+		{
+			if (self :: $_components[$component]["localLib"])
+			{
+				if (file_exists($_SERVER["DOCUMENT_ROOT"]. (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/').self :: $_components[$component]["file"]))
+				{
+					// The component has been found.
+					$_returnValue = true;
+				}
+				else
+				{
+					// The component has NOT been found. Return error message.
+					require_once ('Locale.php');
 
-                    $errmsg = self::$_components[$component]["name"] . _(" is not installed");
-                }
-            }
-        } else {
-            // The requested component has not been defined in this class.
-            throw new Exception("Component not found");
-        }
+					$errmsg = self :: $_components[$component]["name"]._(" is not installed");
+				}
+			}
+			else
+			{
+				// We need to use a custom file_exists to also check in the include path
+				if (self :: file_exists_incpath(self :: $_components[$component]["file"]))
+				{
+					// The component has been found.
+					$_returnValue = true;
+				}
+				else
+				{
+					// The component has NOT been found. Return error message.
+					require_once ('Locale.php');
 
-        return $_returnValue;
-    }
+					$errmsg = self :: $_components[$component]["name"]._(" is not installed");
+				}
+			}
+		}
+		else
+		{
+			// The requested component has not been defined in this class.
+			throw new Exception("Component not found");
+		}
+
+		return $_returnValue;
+	}
 
 }
 
@@ -125,5 +162,4 @@ class Dependencies
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
 ?>

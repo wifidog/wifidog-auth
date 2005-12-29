@@ -75,20 +75,20 @@ class MostPopularNodes extends StatisticReport
 
         $distinguish_users_by = $this->stats->getDistinguishUsersBy();
         $candidate_connections_sql = $this->stats->getSqlCandidateConnectionsQuery("DISTINCT connections.$distinguish_users_by, connections.node_id, nodes.name, date_trunc('day', timestamp_in) as rounded_date");
-        //$db->ExecSql($candidate_connections_sql, $tmp, true);
+        //$db->execSql($candidate_connections_sql, $tmp, true);
 
         $daily_visit_table_name = "daily_visit_table_name_".session_id();
         $daily_visit_table_sql = "CREATE TEMP TABLE  $daily_visit_table_name AS ($candidate_connections_sql);\n  \n";
         $daily_visit_table_sql .= "CREATE INDEX {$daily_visit_table_name}_idx ON $daily_visit_table_name (node_id)";
-        $db->ExecSqlUpdate($daily_visit_table_sql, false);
+        $db->execSqlUpdate($daily_visit_table_sql, false);
         $daily_visit_table_sql = "SELECT COUNT ($distinguish_users_by) AS total_visits, node_id, name FROM $daily_visit_table_name GROUP BY node_id, name ORDER BY total_visits DESC;";
-        $db->ExecSql($daily_visit_table_sql, $node_usage_stats, false);
+        $db->execSql($daily_visit_table_sql, $node_usage_stats, false);
         $daily_visit_table_sql = "DROP TABLE $daily_visit_table_name;";
-        $db->ExecSqlUpdate($daily_visit_table_sql, false);
+        $db->execSqlUpdate($daily_visit_table_sql, false);
 
         //		$candidate_connections_sql = $this->stats->getSqlCandidateConnectionsQuery("nodes.name,connections.node_id,COUNT(connections.node_id) AS connections ");
         //		$sql = "$candidate_connections_sql GROUP BY connections.node_id,nodes.name ORDER BY connections DESC";
-        //		$db->ExecSql($sql, $node_usage_stats, false);
+        //		$db->execSql($sql, $node_usage_stats, false);
 
         if ($node_usage_stats)
         {

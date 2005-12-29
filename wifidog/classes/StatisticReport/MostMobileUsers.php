@@ -76,7 +76,7 @@ class MostMobileUsers extends StatisticReport
         $candidate_connections_sql = $this->stats->getSqlCandidateConnectionsQuery("COUNT(DISTINCT connections.node_id) AS num_hotspots_visited, $distinguish_users_by");
 
         $sql = "$candidate_connections_sql GROUP BY $distinguish_users_by ORDER BY num_hotspots_visited DESC LIMIT ".self :: NUM_USERS_TO_DISPLAY."";
-        $db->ExecSql($sql, $mobile_users_stats, false);
+        $db->execSql($sql, $mobile_users_stats, false);
 
         if ($mobile_users_stats)
         {

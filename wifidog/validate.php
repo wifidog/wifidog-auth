@@ -59,7 +59,7 @@ try {
 
     $validated_user = User::getObject($_REQUEST['user_id']);
 
-    if ($db->EscapeString($_REQUEST['token']) != $validated_user->getValidationToken())
+    if ($db->escapeString($_REQUEST['token']) != $validated_user->getValidationToken())
         throw new Exception(_('The validation token does not match the one in the database.'));
 
     if ($validated_user->getAccountStatus() == ACCOUNT_STATUS_ALLOWED)

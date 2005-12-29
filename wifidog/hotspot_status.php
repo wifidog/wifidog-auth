@@ -47,18 +47,17 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once(dirname(__FILE__) . 'include/common.php');
-
+require_once(dirname(__FILE__) . '/include/common.php');
 require_once('include/common_interface.php');
 require_once('classes/Network.php');
 
 if (!empty ($_REQUEST['format']))
-    $format = $db->EscapeString($_REQUEST['format']);
+    $format = $db->escapeString($_REQUEST['format']);
 else
     $format = null;
 
 if (!empty ($_REQUEST['network_id']))
-    $network = Network :: getObject($db->EscapeString($_REQUEST['network_id']));
+    $network = Network :: getObject($db->escapeString($_REQUEST['network_id']));
 else
     $network = Network :: getDefaultNetwork(true);
 
@@ -69,7 +68,7 @@ if ($network)
         // XML format v1.0 by François proulx <francois.proulx@gmail.com>
         case "XML" :
             // Query the database, sorting by node name
-            $db->ExecSql("SELECT *, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, EXTRACT(epoch FROM creation_date) as creation_date_epoch, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up FROM nodes WHERE network_id = '".$db->EscapeString($network->getId())."' AND (node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE') ORDER BY name", $node_results, false);
+            $db->execSql("SELECT *, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, EXTRACT(epoch FROM creation_date) as creation_date_epoch, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up FROM nodes WHERE network_id = '".$db->escapeString($network->getId())."' AND (node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE') ORDER BY name", $node_results, false);
 
             require_once('classes/Node.php');
 
@@ -316,7 +315,7 @@ if ($network)
             break;
         case "RSS" :
             // Query the database, sorting by creation date
-            $db->ExecSql("SELECT *, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, EXTRACT(epoch FROM creation_date) as creation_date_epoch, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up FROM nodes WHERE network_id = '".$db->EscapeString($network->getId())."' AND (node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE') ORDER BY creation_date", $node_results, false);
+            $db->execSql("SELECT *, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, EXTRACT(epoch FROM creation_date) as creation_date_epoch, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up FROM nodes WHERE network_id = '".$db->escapeString($network->getId())."' AND (node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE') ORDER BY creation_date", $node_results, false);
 
             Header("Cache-control: private, no-cache, must-revalidate");
             Header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); # Past date
@@ -392,7 +391,7 @@ if ($network)
             //<lastBuildDate> -- The date-time the last time the content of the channel changed.
             /* Make a request through the database for the latest modification date of an object.
              * Maybe it should be an object property? */
-            $db->ExecSqlUniqueRes("SELECT EXTRACT(epoch FROM MAX(creation_date)) as date_last_hotspot_opened FROM nodes WHERE node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE' ", $last_hotspot_row, false);
+            $db->execSqlUniqueRes("SELECT EXTRACT(epoch FROM MAX(creation_date)) as date_last_hotspot_opened FROM nodes WHERE node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE' ", $last_hotspot_row, false);
 
             $lastBuildDate = $xmldoc->createElement("lastBuildDate");
             $channel->appendChild($lastBuildDate);
@@ -613,7 +612,7 @@ if ($network)
             break;
         case "WIFI411_CSV" :
             // Query the database, sorting by creation date
-            $db->ExecSql("SELECT *, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, EXTRACT(epoch FROM creation_date) as creation_date_epoch, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up FROM nodes WHERE network_id = '".$db->EscapeString($network->getId())."' AND (node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE') ORDER BY name", $node_results, false);
+            $db->execSql("SELECT *, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, EXTRACT(epoch FROM creation_date) as creation_date_epoch, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up FROM nodes WHERE network_id = '".$db->escapeString($network->getId())."' AND (node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE') ORDER BY name", $node_results, false);
 
             /* Header("Cache-control: private, no-cache, must-revalidate");
              Header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); # Past date
@@ -687,7 +686,7 @@ if ($network)
             //<lastBuildDate> -- The date-time the last time the content of the channel changed.
             /* Make a request through the database for the latest modification date of an object.
              * Maybe it should be an object property? */
-            $db->ExecSqlUniqueRes("SELECT EXTRACT(epoch FROM MAX(creation_date)) as date_last_hotspot_opened FROM nodes WHERE node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE' ", $last_hotspot_row, false);
+            $db->execSqlUniqueRes("SELECT EXTRACT(epoch FROM MAX(creation_date)) as date_last_hotspot_opened FROM nodes WHERE node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE' ", $last_hotspot_row, false);
 
             $lastBuildDate = $xmldoc->createElement("lastBuildDate");
             $channel->appendChild($lastBuildDate);
@@ -874,7 +873,7 @@ if ($network)
             break;
         default :
             // Query the database, sorting by node name
-            $db->ExecSql("SELECT *, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, EXTRACT(epoch FROM creation_date) as creation_date_epoch, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up FROM nodes WHERE network_id = '".$db->EscapeString($network->getId())."' AND (node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE') ORDER BY name", $node_results, false);
+            $db->execSql("SELECT *, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, EXTRACT(epoch FROM creation_date) as creation_date_epoch, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up FROM nodes WHERE network_id = '".$db->escapeString($network->getId())."' AND (node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE') ORDER BY name", $node_results, false);
 
             if ($node_results)
                 foreach ($node_results as $node_row)

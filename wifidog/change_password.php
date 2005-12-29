@@ -61,9 +61,9 @@ if (isset($_REQUEST["submit"])) {
 
         if (!$account_origin || !$_REQUEST["username"] || !$_REQUEST["oldpassword"] || !$_REQUEST["newpassword"] || !$_REQUEST["newpassword_again"])
             throw new Exception(_('You MUST fill in all the fields.'));
-        $username = $db->EscapeString(trim($_REQUEST['username']));
-        $current_password = $db->EscapeString(trim($_REQUEST['oldpassword']));
-        $new_password = $db->EscapeString(trim($_REQUEST['newpassword']));
+        $username = $db->escapeString(trim($_REQUEST['username']));
+        $current_password = $db->escapeString(trim($_REQUEST['oldpassword']));
+        $new_password = $db->escapeString(trim($_REQUEST['newpassword']));
 
         if(empty($account_origin))
             throw new Exception(_("Sorry, this network does not exist !"));

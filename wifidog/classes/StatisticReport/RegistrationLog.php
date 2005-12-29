@@ -77,31 +77,31 @@ class RegistrationLog extends StatisticReport
 
         /* The following query will retreive the list of the REAL first connection of each user, no matter where or when.*/
         $sql_real_first_connections = $this->stats->getSqlRealFirstConnectionsQuery();
-        //$db->ExecSql($sql_real_first_connections, $tmp, true);
+        //$db->execSql($sql_real_first_connections, $tmp, true);
         $real_first_connections_table_name = "real_first_conn_table_name_".session_id();
 
         $real_first_connections_table_sql = "CREATE TABLE  $real_first_connections_table_name AS ($sql_real_first_connections);\n";
         $real_first_connections_table_sql .= "CREATE INDEX {$real_first_connections_table_name}_idx ON $real_first_connections_table_name (conn_id); \n";
-        $db->ExecSqlUpdate($real_first_connections_table_sql, false);
+        $db->execSqlUpdate($real_first_connections_table_sql, false);
 
         /* Now retrieves the oldest connection matching the report restriction, and only keep it if it's really the user's first connection */
         $candidate_connections_sql = $this->stats->getSqlCandidateConnectionsQuery("connections.$distinguish_users_by,users.username,users.reg_date, conn_id, nodes.name ", true);
-        //$db->ExecSql($candidate_connections_sql, $tmp, true);
+        //$db->execSql($candidate_connections_sql, $tmp, true);
 
         $first_connection_table_name = "first_conn_table_name_".session_id();
         $registration_node_table_sql = "CREATE TEMP TABLE  $first_connection_table_name AS ($candidate_connections_sql);\n  \n";
         //$registration_node_table_sql .= "CREATE INDEX {$first_connection_table_name}_idx ON $first_connection_table_name (conn_id)";
-        $db->ExecSqlUpdate($registration_node_table_sql, false);
+        $db->execSqlUpdate($registration_node_table_sql, false);
 
         //$sql = "select FROM connections,nodes,users where timestamp_in IN (SELECT MIN(timestamp_in) as first_connection FROM connections GROUP BY user_id) ${date_constraint} AND users.user_id=connections.user_id AND connections.node_id='{$node_id}' AND nodes.node_id='{$node_id}' AND reg_date >= creation_date ORDER BY reg_date DESC";
         $sql = "SELECT * FROM $first_connection_table_name JOIN $real_first_connections_table_name USING (conn_id) ORDER BY reg_date DESC";
         $rows = null;
-        $db->ExecSql($sql, $rows, false);
+        $db->execSql($sql, $rows, false);
 
         $registration_node_table_sql = "DROP TABLE $first_connection_table_name;";
-        $db->ExecSqlUpdate($registration_node_table_sql, false);
+        $db->execSqlUpdate($registration_node_table_sql, false);
         $real_first_connections_table_sql = "DROP TABLE $real_first_connections_table_name;";
-        $db->ExecSqlUpdate($real_first_connections_table_sql, false);
+        $db->execSqlUpdate($real_first_connections_table_sql, false);
         $html .= "<fieldset class='pretty_fieldset'>";
         $html .= "<legend>"._("Users who signed up here")."</legend>";
         $html .= "<table>";

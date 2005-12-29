@@ -72,9 +72,9 @@ class IFrame extends Content
         parent::__construct($content_id);
         $this->mDb = &$db;
 
-        $content_id = $db->EscapeString($content_id);
+        $content_id = $db->escapeString($content_id);
         $sql = "SELECT * FROM iframes WHERE iframes_id='$content_id'";
-        $db->ExecSqlUniqueRes($sql, $row, false);
+        $db->execSqlUniqueRes($sql, $row, false);
 
         if ($row == null) {
             /*
@@ -82,10 +82,10 @@ class IFrame extends Content
              * content_group had not yet been created
              */
             $sql = "INSERT INTO iframes (iframes_id) VALUES ('$content_id')";
-            $db->ExecSqlUpdate($sql, false);
+            $db->execSqlUpdate($sql, false);
 
             $sql = "SELECT * FROM iframes WHERE iframes_id='$content_id'";
-            $db->ExecSqlUniqueRes($sql, $row, false);
+            $db->execSqlUniqueRes($sql, $row, false);
 
             if ($row == null) {
                 throw new Exception(_("The content with the following id could not be found in the database: ").$content_id);
@@ -118,8 +118,8 @@ class IFrame extends Content
      */
     private function setUrl($url)
     {
-        $url = $this->mDb->EscapeString($url);
-        $this->mDb->ExecSqlUpdate("UPDATE iframes SET url = '{$url}' WHERE iframes_id = '{$this->getId()}';");
+        $url = $this->mDb->escapeString($url);
+        $this->mDb->execSqlUpdate("UPDATE iframes SET url = '{$url}' WHERE iframes_id = '{$this->getId()}';");
     }
 
     /**
@@ -167,10 +167,10 @@ class IFrame extends Content
             if (empty ($width)) {
                 $width = "NULL";
             } else {
-                $width = $this->mDb->EscapeString($width);
+                $width = $this->mDb->escapeString($width);
             }
 
-            $this->mDb->ExecSqlUpdate("UPDATE iframes SET width=" . $width . " WHERE iframes_id='" . $this->getId() . "'", false);
+            $this->mDb->execSqlUpdate("UPDATE iframes SET width=" . $width . " WHERE iframes_id='" . $this->getId() . "'", false);
             $this->refresh();
 
             $_retval = true;
@@ -210,10 +210,10 @@ class IFrame extends Content
             if (empty ($height)) {
                 $height = "NULL";
             } else {
-                $height = $this->mDb->EscapeString($height);
+                $height = $this->mDb->escapeString($height);
             }
 
-            $this->mDb->ExecSqlUpdate("UPDATE iframes SET height =".$height." WHERE iframes_id='".$this->getId()."'", false);
+            $this->mDb->execSqlUpdate("UPDATE iframes SET height =".$height." WHERE iframes_id='".$this->getId()."'", false);
             $this->refresh();
 
             $_retval = true;

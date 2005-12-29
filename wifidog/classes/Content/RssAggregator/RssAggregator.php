@@ -96,18 +96,18 @@ class RssAggregator extends Content
         $content_rss_aggregator_rows = null;
 
         parent::__construct($content_id);
-        $content_id = $db->EscapeString($content_id);
+        $content_id = $db->escapeString($content_id);
 
         $sql = "SELECT *, EXTRACT(EPOCH FROM max_item_age) as max_item_age_seconds FROM content_rss_aggregator WHERE content_id='$content_id'";
-        $db->ExecSqlUniqueRes($sql, $row, false);
+        $db->execSqlUniqueRes($sql, $row, false);
 
         if ($row == null) {
             /*
              *Since the parent Content exists, the necessary data in content_group had not yet been created
              */
             $sql_new = "INSERT INTO content_rss_aggregator (content_id) VALUES ('$content_id')";
-            $db->ExecSqlUpdate($sql_new, false);
-            $db->ExecSqlUniqueRes($sql, $row, false);
+            $db->execSqlUpdate($sql_new, false);
+            $db->execSqlUniqueRes($sql, $row, false);
 
             if ($row == null) {
                 throw new Exception(_("The RssAggregator content with the following id could not be found in the database: ").$content_id);
@@ -117,7 +117,7 @@ class RssAggregator extends Content
         $this->content_rss_aggregator_row = $row;
 
         $sql = "SELECT * FROM content_rss_aggregator_feeds WHERE content_id='$content_id'";
-        $db->ExecSql($sql, $content_rss_aggregator_rows, false);
+        $db->execSql($sql, $content_rss_aggregator_rows, false);
 
         if ($content_rss_aggregator_rows != null) {
             $this->content_rss_aggregator_feeds_rows = $content_rss_aggregator_rows;
@@ -141,9 +141,9 @@ class RssAggregator extends Content
                  * This allows the system to know every feed's title without continuously looking them up
                  */
                  if(!empty($title) && $title!=$feed_row['title']) {
-                     $title = $db->EscapeString($title);
-                     $url = $db->EscapeString($feed_row['url']);
-                     $db->ExecSqlUpdate("UPDATE content_rss_aggregator_feeds SET title = '$title' WHERE url='$url'", false);
+                     $title = $db->escapeString($title);
+                     $url = $db->escapeString($feed_row['url']);
+                     $db->execSqlUpdate("UPDATE content_rss_aggregator_feeds SET title = '$title' WHERE url='$url'", false);
                      $this->refresh();
                  }
             }
@@ -187,8 +187,8 @@ class RssAggregator extends Content
              */
             global $db;
 
-            $num_items = $db->EscapeString($num_items);
-            $db->ExecSqlUpdate("UPDATE content_rss_aggregator SET number_of_display_items = $num_items WHERE content_id = '$this->id'", false);
+            $num_items = $db->escapeString($num_items);
+            $db->execSqlUpdate("UPDATE content_rss_aggregator SET number_of_display_items = $num_items WHERE content_id = '$this->id'", false);
             $this->refresh();
 
             $retval = true;
@@ -253,8 +253,8 @@ class RssAggregator extends Content
              */
             global $db;
 
-            $strength = $db->EscapeString($strength);
-            $db->ExecSqlUpdate("UPDATE content_rss_aggregator SET algorithm_strength = '$strength' WHERE content_id = '$this->id'", false);
+            $strength = $db->escapeString($strength);
+            $db->execSqlUpdate("UPDATE content_rss_aggregator SET algorithm_strength = '$strength' WHERE content_id = '$this->id'", false);
             $this->refresh();
 
             $retval = true;
@@ -319,8 +319,8 @@ class RssAggregator extends Content
                 $max_item_age = 'NULL';
             }
 
-            $max_item_age = $db->EscapeString($max_item_age);
-            $db->ExecSqlUpdate("UPDATE content_rss_aggregator SET max_item_age = '$max_item_age seconds' WHERE content_id = '$this->id'", false);
+            $max_item_age = $db->escapeString($max_item_age);
+            $db->execSqlUpdate("UPDATE content_rss_aggregator SET max_item_age = '$max_item_age seconds' WHERE content_id = '$this->id'", false);
             $this->refresh();
 
             $retval = true;
@@ -356,10 +356,10 @@ class RssAggregator extends Content
         $retval = false;
 
         if (!empty ($url)) {
-            $url = $db->EscapeString($url);
+            $url = $db->escapeString($url);
             $sql = "INSERT INTO content_rss_aggregator_feeds (content_id, url) VALUES ('{$this->id}', '$url') ";
             $content_rss_aggregator_rows = null;
-            $retval = $db->ExecSqlUpdate($sql, false);
+            $retval = $db->execSqlUpdate($sql, false);
             $this->refresh();
         }
 
@@ -384,10 +384,10 @@ class RssAggregator extends Content
         $retval = false;
 
         if (!empty ($url)) {
-            $url = $db->EscapeString($url);
+            $url = $db->escapeString($url);
             $sql = "DELETE FROM content_rss_aggregator_feeds WHERE content_id='{$this->id}' AND url = '$url' ";
             $content_rss_aggregator_rows = null;
-            $retval = $db->ExecSqlUpdate($sql, false);
+            $retval = $db->execSqlUpdate($sql, false);
             $this->refresh();
         }
 
@@ -515,7 +515,7 @@ class RssAggregator extends Content
                 ON (available_feeds.url=content_rss_aggregator_feeds.url)
                 ORDER by count DESC";
 
-        $db->ExecSql($sql, $feed_urls, false);
+        $db->execSql($sql, $feed_urls, false);
 
         foreach ($feed_urls as $feed_row) {
             $tab[$i][0] = $feed_row['url'];
@@ -702,20 +702,20 @@ class RssAggregator extends Content
         // Define globals
         global $db;
 
-        $original_url = $db->EscapeString($feed_row['url']);
+        $original_url = $db->escapeString($feed_row['url']);
 
         /*
          * bias
          */
         $name = "rss_aggregator_".$this->id."_feed_".md5($feed_row['url'])."_bias";
-        $original_bias = $db->EscapeString($feed_row['bias']);
-        $bias = $db->EscapeString($_REQUEST[$name]);
+        $original_bias = $db->escapeString($feed_row['bias']);
+        $bias = $db->escapeString($_REQUEST[$name]);
 
         if (is_numeric($bias) && $bias > 0 && $bias != $original_bias) {
             /*
              * Only update database if the mode is valid and there is an actual change
              */
-            $db->ExecSqlUpdate("UPDATE content_rss_aggregator_feeds SET bias = '$bias' WHERE content_id = '$this->id' AND url='$original_url'", false);
+            $db->execSqlUpdate("UPDATE content_rss_aggregator_feeds SET bias = '$bias' WHERE content_id = '$this->id' AND url='$original_url'", false);
             $this->refresh();
         } elseif (!is_numeric($bias) || $bias <= 0) {
             echo _("The bias must be a positive real number");
@@ -731,8 +731,8 @@ class RssAggregator extends Content
         $name = "rss_aggregator_".$this->id."_feed_".md5($feed_row['url'])."_default_publication_interval";
 
         if (isset ($_REQUEST[$name])) {
-            $original_default_publication_interval = $db->EscapeString($feed_row['default_publication_interval']);
-            $default_publication_interval = $db->EscapeString($_REQUEST[$name] * (60 * 60 * 24));
+            $original_default_publication_interval = $db->escapeString($feed_row['default_publication_interval']);
+            $default_publication_interval = $db->escapeString($_REQUEST[$name] * (60 * 60 * 24));
 
             if ((empty ($default_publication_interval) || (is_numeric($default_publication_interval) && $default_publication_interval > 0)) && $default_publication_interval != $original_default_publication_interval) {
                 /*
@@ -742,7 +742,7 @@ class RssAggregator extends Content
                     $default_publication_interval = 'NULL';
                 }
 
-                $db->ExecSqlUpdate("UPDATE content_rss_aggregator_feeds SET default_publication_interval = $default_publication_interval WHERE content_id = '$this->id' AND url='$original_url'", false);
+                $db->execSqlUpdate("UPDATE content_rss_aggregator_feeds SET default_publication_interval = $default_publication_interval WHERE content_id = '$this->id' AND url='$original_url'", false);
                 $this->refresh();
             } elseif (!is_numeric($bias) || $bias <= 0) {
                 echo _("The default publication must must be a positive integer or empty");
@@ -757,13 +757,13 @@ class RssAggregator extends Content
          * URL, we must change it last or we won't find the row again
          */
         $name = "rss_aggregator_".$this->id."_feed_".md5($feed_row['url'])."_url";
-        $url = $db->EscapeString($_REQUEST[$name]);
+        $url = $db->escapeString($_REQUEST[$name]);
 
         if (!empty ($url) && $url != $feed_row['url']) {
             /*
              * Only update database if the mode is valid and there is an actual change
              */
-            $db->ExecSqlUpdate("UPDATE content_rss_aggregator_feeds SET url = '$url' WHERE content_id = '$this->id' AND url='$original_url'", false);
+            $db->execSqlUpdate("UPDATE content_rss_aggregator_feeds SET url = '$url' WHERE content_id = '$this->id' AND url='$original_url'", false);
             $this->refresh();
         } elseif (empty ($url)) {
             echo _("The URL cannot be empty!");

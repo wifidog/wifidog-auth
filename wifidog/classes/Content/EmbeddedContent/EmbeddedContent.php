@@ -79,17 +79,17 @@ class EmbeddedContent extends Content
 
         parent::__construct($content_id);
 
-        $content_id = $db->EscapeString($content_id);
+        $content_id = $db->escapeString($content_id);
 
         $sql = "SELECT * FROM embedded_content WHERE embedded_content_id='$content_id'";
-        $db->ExecSqlUniqueRes($sql, $row, false);
+        $db->execSqlUniqueRes($sql, $row, false);
         if ($row == null)
         {
             /*Since the parent Content exists, the necessary data in content_group had not yet been created */
             $sql = "INSERT INTO embedded_content (embedded_content_id) VALUES ('$content_id')";
-            $db->ExecSqlUpdate($sql, false);
+            $db->execSqlUpdate($sql, false);
             $sql = "SELECT * FROM embedded_content WHERE embedded_content_id='$content_id'";
-            $db->ExecSqlUniqueRes($sql, $row, false);
+            $db->execSqlUniqueRes($sql, $row, false);
             if ($row == null)
             {
                 throw new Exception(_("The content with the following id could not be found in the database: ").$content_id);
@@ -126,8 +126,8 @@ class EmbeddedContent extends Content
      */
     private function setAttributes($attributes_str)
     {
-        $attributes_str = $this->mBd->EscapeString($attributes_str);
-        $this->mBd->ExecSqlUpdate("UPDATE embedded_content SET attributes ='".$attributes_str."' WHERE embedded_content_id='".$this->getId()."'", false);
+        $attributes_str = $this->mBd->escapeString($attributes_str);
+        $this->mBd->execSqlUpdate("UPDATE embedded_content SET attributes ='".$attributes_str."' WHERE embedded_content_id='".$this->getId()."'", false);
         $this->refresh();
     }
 
@@ -154,8 +154,8 @@ class EmbeddedContent extends Content
      */
     private function setParameters($paramters_str)
     {
-        $paramters_str = $this->mBd->EscapeString($paramters_str);
-        $this->mBd->ExecSqlUpdate("UPDATE embedded_content SET parameters ='".$paramters_str."' WHERE embedded_content_id='".$this->getId()."'", false);
+        $paramters_str = $this->mBd->escapeString($paramters_str);
+        $this->mBd->execSqlUpdate("UPDATE embedded_content SET parameters ='".$paramters_str."' WHERE embedded_content_id='".$this->getId()."'", false);
         $this->refresh();
     }
 
@@ -263,7 +263,7 @@ class EmbeddedContent extends Content
 
                 if ($embedded_content_file != null) {
                     $embedded_content_file_id = $embedded_content_file->GetId();
-                    $db->ExecSqlUpdate("UPDATE embedded_content SET embedded_file_id = '$embedded_content_file_id' WHERE embedded_content_id = '$this->id'", FALSE);
+                    $db->execSqlUpdate("UPDATE embedded_content SET embedded_file_id = '$embedded_content_file_id' WHERE embedded_content_id = '$this->id'", FALSE);
                 } else {
                     echo _("You MUST choose a File object or any of its siblings.");
                     $embedded_content_file->delete($errmsg);
@@ -273,7 +273,7 @@ class EmbeddedContent extends Content
                 $name = "embeddedcontent_".$this->id."_embedded_file_erase";
 
                 if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true) {
-                    $db->ExecSqlUpdate("UPDATE embedded_content SET embedded_file_id = NULL WHERE embedded_content_id = '$this->id'", FALSE);
+                    $db->execSqlUpdate("UPDATE embedded_content SET embedded_file_id = NULL WHERE embedded_content_id = '$this->id'", FALSE);
                     $embedded_content_file->delete($errmsg);
                 } else {
                     $embedded_content_file->processAdminUI();
@@ -291,14 +291,14 @@ class EmbeddedContent extends Content
 
                 if ($fallback_content != null) {
                     $fallback_content_id = $fallback_content->GetId();
-                    $db->ExecSqlUpdate("UPDATE embedded_content SET fallback_content_id = '$fallback_content_id' WHERE embedded_content_id = '$this->id'", FALSE);
+                    $db->execSqlUpdate("UPDATE embedded_content SET fallback_content_id = '$fallback_content_id' WHERE embedded_content_id = '$this->id'", FALSE);
                 }
             } else {
                 $fallback_content = self :: getObject($this->embedded_content_row['fallback_content_id']);
                 $name = "fallback_content_".$this->id."_fallback_content_erase";
 
                 if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true) {
-                    $db->ExecSqlUpdate("UPDATE embedded_content SET fallback_content_id = NULL WHERE embedded_content_id = '$this->id'", FALSE);
+                    $db->execSqlUpdate("UPDATE embedded_content SET fallback_content_id = NULL WHERE embedded_content_id = '$this->id'", FALSE);
                     $fallback_content->delete($errmsg);
                 } else {
                     $fallback_content->processAdminUI();

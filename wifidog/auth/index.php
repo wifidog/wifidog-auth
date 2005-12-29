@@ -56,10 +56,10 @@ $auth_message = '';
 $token = null;
 if (!empty ($_REQUEST['token']))
 {
-    $token = $db->EscapeString($_REQUEST['token']);
+    $token = $db->escapeString($_REQUEST['token']);
 }
 
-$db->ExecSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.token='$token'", $info, false);
+$db->execSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.token='$token'", $info, false);
 if ($info != null)
 {
     // Retrieve the associated authenticator
@@ -132,8 +132,8 @@ if ($info != null)
 
                 if (!empty ($_REQUEST['incoming']) || !empty ($_REQUEST['outgoing']))
                 {
-                    $incoming = $db->EscapeString($_REQUEST['incoming']);
-                    $outgoing = $db->EscapeString($_REQUEST['outgoing']);
+                    $incoming = $db->escapeString($_REQUEST['incoming']);
+                    $outgoing = $db->escapeString($_REQUEST['outgoing']);
 
                     if (($incoming >= $info['incoming']) && ($outgoing >= $info['outgoing']))
                     {

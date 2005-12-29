@@ -54,7 +54,7 @@ echo "</div>\n";
 echo "<div id='content'>\n";
 echo "<h3>This script was meant for auth servers that rean prior to the release of wifidog gateway 1.0.2.  Version prior to this would log incomint and outgoing traffic reversed.  This will fix your logs.  You must uncomment COMMIT; in the code to actually swap data, and obviously run it ONLY ONCE!</h3>";
     $results = null;
-    $db->ExecSql("SELECT * FROM connections ORDER BY conn_id",$results, true);
+    $db->execSql("SELECT * FROM connections ORDER BY conn_id",$results, true);
     if ($results!=null)
     {
             echo "<PRE>";
@@ -70,7 +70,7 @@ echo "<h3>This script was meant for auth servers that rean prior to the release 
 //	$sql .= "COMMIT;\n" ;
                  //echo "$sql\n</pre>";
     }
-    $db->ExecSqlUpdate($sql, true);
+    $db->execSqlUpdate($sql, true);
 
     echo "</div>\n";
 

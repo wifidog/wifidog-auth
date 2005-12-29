@@ -92,7 +92,7 @@ class LocaleList {
         $resultats = "";
 
         $sql = "SELECT * FROM locales ORDER BY locales_id";
-        $this->mBd->ExecSql($sql, $resultats, FALSE);
+        $this->mBd->execSql($sql, $resultats, FALSE);
 
         $retval = "";
         $retval .= "<select name='$prefixeNomSelectUsager$prefixeNomSelectObjet'>\n";

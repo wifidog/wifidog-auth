@@ -48,7 +48,7 @@
  */
 class AbstractDb
 {
-  function connexionDb($db_name)
+  function connect($db_name)
   {
     if ($db_name == NULL)
       {
@@ -91,12 +91,12 @@ class AbstractDb
    @param $debug Si TRUE, affiche les r�sultats bruts de la requ�te
    @return TRUE si la requete a �t� effectu�e avec succ�s, FALSE autrement.
   */
-  function ExecSql($sql, & $returnResults, $debug=false)
+  function execSql($sql, & $returnResults, $debug=false)
   {
-    $connection = $this -> connexionDb(NULL);
+    $connection = $this -> connect(NULL);
     if ($debug == TRUE)
       {
-    echo "<hr /><p>ExecSql(): DEBUG: Requ�te:<br>\n<pre>$sql</pre></p>\n<p>Plan:<br />\n";
+    echo "<hr /><p>execSql(): DEBUG: Requ�te:<br>\n<pre>$sql</pre></p>\n<p>Plan:<br />\n";
     $result = mysql_query("EXPLAIN ".$sql, $connection);
 
     $plan_array = $this->mysql_fetch_all($result);
@@ -143,7 +143,7 @@ class AbstractDb
 
     if ($result == FALSE)
       {
-    echo "<p class=warning>ExecSql(): ERREUR: Lors de l'ex�cution de la requ�te SQL:<br>$sql</p>";
+    echo "<p class=warning>execSql(): ERREUR: Lors de l'ex�cution de la requ�te SQL:<br>$sql</p>";
     echo "<p class=warning>L'erreur est:<br>".mysql_error($connection)."</p>";
     $returnResults = NULL;
     $return_value = FALSE;
@@ -166,7 +166,7 @@ class AbstractDb
       if ($debug)
         {
           $num_rows = mysql_num_rows($result);
-          echo "<p>ExecSql(): DEBUG: Il y a $num_rows r�sultats:<br><TABLE>";
+          echo "<p>execSql(): DEBUG: Il y a $num_rows r�sultats:<br><TABLE>";
           if ($returnResults != NULL)
         {
           //On affiche l'en-t�te des colonnes une seule fois*/
@@ -198,7 +198,7 @@ class AbstractDb
    @param $chaine La cha�ne de caract�re � nettoyer
    @return La cha�ne nettoy�e
   */
-  function EscapeString($chaine)
+  function escapeString($chaine)
   {
     if (!get_magic_quotes_gpc())
       {
@@ -215,9 +215,9 @@ class AbstractDb
    @return La cha�ne nettoy�e (escaped string)
   */
 
-  function EscapeBinaryString($chaine)
+  function escapeBinaryString($chaine)
   {
-    return $this->EscapeString($chaine);
+    return $this->escapeString($chaine);
 
   }
 
@@ -227,14 +227,14 @@ class AbstractDb
    @param $debug Si TRUE, affiche les r�sultats bruts de la requ�te
    @return TRUE si la requete a �t� effectu�e avec succ�s, FALSE autrement.
   */
-  function ExecSqlUniqueRes($sql, & $retVal, $debug=false)
+  function execSqlUniqueRes($sql, & $retVal, $debug=false)
   {
     $retval = TRUE;
     if ($debug == TRUE)
       {
     echo "<hr /><p>Requ�te: <br><pre>$sql</pre></p>";
       }
-    $connection = $this -> connexionDb(NULL);
+    $connection = $this -> connect(NULL);
 
     $sql_starttime = microtime();
     $result = mysql_query($sql, $connection);
@@ -263,7 +263,7 @@ class AbstractDb
 
     if ($result == FALSE)
       {
-    echo "<p class=warning>ExecSqlResUnique(): ERREUR: Lors de l'ex�cution de la requ�te SQL:<br>$sql</p>";
+    echo "<p class=warning>execSqlResUnique(): ERREUR: Lors de l'ex�cution de la requ�te SQL:<br>$sql</p>";
     echo "<p class=warning>L'erreur est:<br>".mysql_error($connection)."</p>";
     $retval = FALSE;
       }
@@ -271,14 +271,14 @@ class AbstractDb
       {
     if (mysql_num_rows($result) > 1)
       {
-        echo "<p class=warning>ExecSqlResUnique(): ERREUR: Lors de l'ex�cution de la requ�te SQL:<br>$sql</p>";
+        echo "<p class=warning>execSqlResUnique(): ERREUR: Lors de l'ex�cution de la requ�te SQL:<br>$sql</p>";
         echo "<p>Il y a ".mysql_num_rows($result)." r�sultats alors qu'il ne devrait y en avoir qu'un seul.</p>";
         $retval = FALSE;
       }
     $retVal = mysql_fetch_assoc($result);
     if ($debug)
       {
-        echo "<p class=warning>ExecSqlResUnique(): DEBUG: R�sultats:<br>";
+        echo "<p class=warning>execSqlResUnique(): DEBUG: R�sultats:<br>";
         print_r($retVal);
         echo "</p><hr />\n";
       }
@@ -290,12 +290,12 @@ class AbstractDb
    @param $sql Requ�te SELECT � ex�cuter
    @param $debug Si TRUE, affiche la requ�te brute
   */
-  function ExecSqlUpdate($sql, $debug=false)
+  function execSqlUpdate($sql, $debug=false)
   {
-    $connection = $this -> connexionDb(NULL);
+    $connection = $this -> connect(NULL);
     if ($debug == TRUE)
       {
-    echo "<hr /><p>ExecSqlUpdate(): DEBUG: Requ�te:<br>\n<pre>$sql</pre></p>\n";
+    echo "<hr /><p>execSqlUpdate(): DEBUG: Requ�te:<br>\n<pre>$sql</pre></p>\n";
       }
 
     global $sql_num_update_querys;
@@ -326,7 +326,7 @@ class AbstractDb
 
     if ($result == FALSE)
       {
-    echo "<p class=warning>ExecSqlResUnique(): ERREUR: Lors de l'ex�cution de la requ�te SQL:<br><pre>$sql</pre></p>";
+    echo "<p class=warning>execSqlResUnique(): ERREUR: Lors de l'ex�cution de la requ�te SQL:<br><pre>$sql</pre></p>";
     echo "<p class=warning>L'erreur est:<br>".mysql_error()."</p>";
       }
     else

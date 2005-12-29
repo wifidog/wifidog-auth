@@ -76,7 +76,7 @@ class MostFrequentUsers extends StatisticReport
         $candidate_connections_sql = $this->stats->getSqlCandidateConnectionsQuery("DISTINCT $distinguish_users_by, date_trunc('day', timestamp_in) AS date");
 
         $sql = "SELECT COUNT(*) AS active_days, $distinguish_users_by FROM ($candidate_connections_sql GROUP BY date,$distinguish_users_by) AS user_active_days GROUP BY $distinguish_users_by ORDER BY active_days DESC LIMIT ".self :: NUM_USERS_TO_DISPLAY."";
-        $db->ExecSql($sql, $frequent_users_stats, false);
+        $db->execSql($sql, $frequent_users_stats, false);
 
         if ($frequent_users_stats)
         {

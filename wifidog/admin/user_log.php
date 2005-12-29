@@ -84,7 +84,7 @@ else
 
     $per_page = 100;
     $offset = (($current_page * $per_page) - $per_page);
-    $db->ExecSqlUniqueRes("SELECT count(user_id) as count FROM users", $count);
+    $db->execSqlUniqueRes("SELECT count(user_id) as count FROM users", $count);
 
     $pages = $count['count'] / $per_page;
     for ($i = 1; $i <= $pages +1; $i ++)
@@ -92,7 +92,7 @@ else
         $smarty->append("pages", array ('number' => $i, 'selected' => ($i == $current_page),));
     }
 
-    $db->ExecSql("SELECT user_id,username,account_origin,reg_date,account_status FROM users ORDER BY $sort $direction LIMIT $per_page OFFSET $offset", $users_res);
+    $db->execSql("SELECT user_id,username,account_origin,reg_date,account_status FROM users ORDER BY $sort $direction LIMIT $per_page OFFSET $offset", $users_res);
     if ($users_res)
     {
         $smarty->assign("users_array", $users_res);

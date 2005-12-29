@@ -89,7 +89,7 @@ class NodeStatus extends StatisticReport
                 $html .= "<legend>"._("Status")."</legend>";
                 $html .= "<table>";
 
-                $db->ExecSql("SELECT node_id, name, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up, creation_date FROM nodes WHERE node_id = '{$node_id}'", $rows, false);
+                $db->execSql("SELECT node_id, name, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up, creation_date FROM nodes WHERE node_id = '{$node_id}'", $rows, false);
 
                 $html .= ($rows[0]['is_up'] == 't') ? "<tr class='even'>" : "<tr class='red'>";
                 $html .= "  <th>"._("WifiDog status")."</th>";
@@ -194,13 +194,13 @@ class NodeStatus extends StatisticReport
                 $html .= "<legend>"._("Statistics")."</legend>";
                 $html .= "<table>";
                 $date_constraint = $this->stats->getSqlDateConstraint();
-                $db->ExecSql("SELECT round(CAST( (SELECT SUM(daily_connections) FROM (SELECT COUNT(DISTINCT user_id) AS daily_connections, date_trunc('day', timestamp_in) FROM connections WHERE node_id='${node_id}' AND (incoming!=0 OR outgoing!=0) {$date_constraint} GROUP BY date_trunc('day', timestamp_in)) AS daily_connections_table) / (EXTRACT(EPOCH FROM (NOW()-(SELECT timestamp_in FROM connections WHERE node_id='${node_id}' AND (incoming!=0 OR outgoing!=0) ORDER BY timestamp_in LIMIT 1)) )/(3600*24)) AS numeric),2) AS connections_per_day", $rows, false);
+                $db->execSql("SELECT round(CAST( (SELECT SUM(daily_connections) FROM (SELECT COUNT(DISTINCT user_id) AS daily_connections, date_trunc('day', timestamp_in) FROM connections WHERE node_id='${node_id}' AND (incoming!=0 OR outgoing!=0) {$date_constraint} GROUP BY date_trunc('day', timestamp_in)) AS daily_connections_table) / (EXTRACT(EPOCH FROM (NOW()-(SELECT timestamp_in FROM connections WHERE node_id='${node_id}' AND (incoming!=0 OR outgoing!=0) ORDER BY timestamp_in LIMIT 1)) )/(3600*24)) AS numeric),2) AS connections_per_day", $rows, false);
                 $html .= "<tr class='even'>";
                 $html .= "  <th>"._("Average visits per day").":</th>";
                 $html .= "  <td>".$rows[0]['connections_per_day']." "._("(for the selected period)")." </td>";
                 $html .= "</tr>";
 
-                $db->ExecSql("SELECT SUM(incoming) AS in, SUM(outgoing) AS out FROM connections WHERE node_id='{$node_id}' ${date_constraint}", $rows, false);
+                $db->execSql("SELECT SUM(incoming) AS in, SUM(outgoing) AS out FROM connections WHERE node_id='{$node_id}' ${date_constraint}", $rows, false);
                 $html .= "<tr class='odd'>";
                 $html .= "  <th>"._("Traffic").":</th>";
                 $html .= "  <td>";

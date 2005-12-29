@@ -113,7 +113,7 @@ if ($node && $node->isSplashOnly())
 if (!empty ($_REQUEST['username']) && !empty ($_REQUEST['password']) && !empty ($_REQUEST['auth_source']))
 {
     $errmsg = '';
-    $username = $db->EscapeString($_REQUEST['username']);
+    $username = $db->escapeString($_REQUEST['username']);
 
     // Authenticating the user through the selected auth source.
     $network = Network :: processSelectNetworkUI('auth_source');

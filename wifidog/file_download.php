@@ -47,9 +47,9 @@ require_once(dirname(__FILE__) . '/include/common.php');
 if (!empty ($_REQUEST['file_id']))
 {
     global $db;
-    $file_id = $db->EscapeString($_REQUEST['file_id']);
+    $file_id = $db->escapeString($_REQUEST['file_id']);
     $sql = "SELECT * FROM files WHERE files_id = '$file_id'";
-    $db->ExecSqlUniqueRes($sql, $file_row, false);
+    $db->execSqlUniqueRes($sql, $file_row, false);
 
     if ($file_row && $file_row['data_blob'])
     {
@@ -67,7 +67,7 @@ if (!empty ($_REQUEST['file_id']))
         header('Keep-Alive: timeout=15, max=100');
         header('Content-Disposition: inline; filename="'.$file_row['filename'].'"');
 
-        $db->ReadAndFlushLargeObject($file_row['data_blob']);
+        $db->readFlushLargeObject($file_row['data_blob']);
     }
 }
 

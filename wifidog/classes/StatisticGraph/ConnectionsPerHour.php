@@ -78,7 +78,7 @@ $Bar->setFillColor("#9db8d2");
 $Plot =& $Plotarea->add($Bar);
         $candidate_connections_sql = self :: $stats->getSqlCandidateConnectionsQuery("COUNT(distinct user_mac) AS connections, extract('hour' from timestamp_in) AS hour");
 
-        $db->ExecSql("$candidate_connections_sql GROUP BY hour ORDER BY hour", $results, false);
+        $db->execSql("$candidate_connections_sql GROUP BY hour ORDER BY hour", $results, false);
 
         if ($results)
         {

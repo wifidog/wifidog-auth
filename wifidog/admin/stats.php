@@ -58,24 +58,24 @@ try
 {
 	if (!empty ($_REQUEST['node_id']))
 	{
-		$node_id = $db->EscapeString($_REQUEST["node_id"]);
+		$node_id = $db->escapeString($_REQUEST["node_id"]);
 		$nodeObject = Node :: getObject($node_id);
 		$stats_title = _("Connections at")." '".$nodeObject->getName()."'";
 	}
 	elseif (isset ($_REQUEST['user_id']))
 	{
-		$user_id = $db->EscapeString($_REQUEST["user_id"]);
+		$user_id = $db->escapeString($_REQUEST["user_id"]);
 		$userObject = User :: getObject($user_id);
 		$stats_title = _("User information for")." '".$userObject->getUsername()."'";
 	}
 	elseif (isset ($_REQUEST['user_mac']))
 	{
-		$user_mac = $db->EscapeString($_REQUEST["user_mac"]);
+		$user_mac = $db->escapeString($_REQUEST["user_mac"]);
 		$stats_title = _("Connections from MAC")." '".$user_mac."'";
 	}
 	elseif (isset ($_REQUEST['network_id']))
 	{
-		$network_id = $db->EscapeString($_REQUEST["network_id"]);
+		$network_id = $db->escapeString($_REQUEST["network_id"]);
 		$networkObject = Network :: getObject($network_id);
 		$stats_title = _("Network information for")." '".$networkObject->getName()."'";
 	}
