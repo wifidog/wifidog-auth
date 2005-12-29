@@ -55,13 +55,11 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-/**
- * @ignore
- */
-define('BASEPATH', '../');
+require_once('admin_common.php');
 
-require_once BASEPATH.'admin/admin_common.php';
-require_once BASEPATH.'classes/GenericObject.php';
+require_once('classes/GenericObject.php');
+require_once('classes/MainUI.php');
+
 if (!empty ($_REQUEST['debug'])) {
     echo "<pre>";
     print_r($_REQUEST);
@@ -191,7 +189,6 @@ else if ($_REQUEST['action'] == 'preview') {
 }
 $html .= "</div>";
 
-require_once BASEPATH.'classes/MainUI.php';
 $ui=new MainUI();
 $ui->setToolSection('ADMIN');
 $ui->setTitle(_("Generic object editor"));

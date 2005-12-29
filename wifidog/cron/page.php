@@ -41,14 +41,10 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-/**
- * @ignore
- */
-define('BASEPATH', '../');
+require_once('../include/common.php');
 
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/Network.php';
-require_once BASEPATH.'classes/Node.php';
+require_once('classes/Network.php');
+require_once('classes/Node.php');
 
 function page_if_down_since($nodeObject, $minutes) {
     $last_heartbeat = strtotime($nodeObject->getLastHeartbeatTimestamp());

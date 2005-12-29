@@ -42,9 +42,7 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/GenericObject.php';
-require_once BASEPATH.'classes/AbstractGeocoder.php';
+require_once('classes/GenericObject.php');
 
 class GeocoderUsa extends AbstractGeocoder
 {

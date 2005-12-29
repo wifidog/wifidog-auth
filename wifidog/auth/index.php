@@ -46,13 +46,9 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-/**
- * @ignore
- */
-define('BASEPATH', '../');
+require_once('../include/common.php');
 
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/Network.php';
+require_once('classes/Network.php');
 
 $auth_response = ACCOUNT_STATUS_DENIED;
 $auth_message = '';

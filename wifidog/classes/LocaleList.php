@@ -42,10 +42,6 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH.'include/common.php';
-
-error_reporting(E_ALL);
-
 /**
  * Représente une liste de tous les languages humains en usage dans le système,
  * selon les différentes normes internationales.

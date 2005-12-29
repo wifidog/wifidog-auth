@@ -46,16 +46,13 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-/**
- * @ignore
- */
-define('BASEPATH',"../");
-
-if(empty($_REQUEST['graph_class'])) {
+if (empty($_REQUEST['graph_class'])) {
     echo "You must specify the class of the graph you want";
 } else {
     $classname = $_REQUEST['graph_class'];
-    require_once BASEPATH.'classes/StatisticGraph/'.$classname.'.php';
+
+    require_once('classes/StatisticGraph/' . $classname . '.php');
+
     $graph = call_user_func(array ($classname, 'getObject'), $classname);
     $graph->showImageData();
 }

@@ -49,16 +49,17 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH.'classes/Session.php';
-require_once BASEPATH.'classes/Statistics.php';
-require_once BASEPATH.'classes/SmartyWifidog.php';
-require_once BASEPATH.'classes/User.php';
 
-$smarty = new SmartyWifidog;
+require_once('classes/Session.php');
+require_once('classes/Statistics.php');
+require_once('classes/SmartyWifidog.php');
+require_once('classes/User.php');
+
 $session = new Session();
 $stats = new Statistics();
+$smarty = new SmartyWifidog;
 
-require_once BASEPATH.'include/language.php';
+require_once('include/language.php');
 
 try
 {

@@ -43,12 +43,7 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-/**
- * @ignore
- */
-define('BASEPATH','../');
-
-require_once BASEPATH.'include/common.php';
+require_once('../include/common.php');
 
 garbage_collect();
 

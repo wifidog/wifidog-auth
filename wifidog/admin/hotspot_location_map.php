@@ -45,15 +45,11 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-/**
- * @ignore
- */
-define('BASEPATH', '../');
+require_once('admin_common.php');
 
-require_once BASEPATH.'admin/admin_common.php';
-require_once BASEPATH.'classes/Node.php';
-require_once BASEPATH.'classes/AbstractGeocoder.php';
-require_once BASEPATH.'classes/MainUI.php';
+require_once('classes/Node.php');
+require_once('classes/AbstractGeocoder.php');
+require_once('classes/MainUI.php');
 
 $ui = new MainUI();
 $ui->setTitle(_("Hotspot location map"));

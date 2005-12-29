@@ -61,7 +61,7 @@ if (!function_exists('gettext')) {
     define('GETTEXT_AVAILABLE', true);
 }
 
-/** 
+/**
  * Designates a human language, possibly localized ie fr_CA
  */
 class Locale {
@@ -183,7 +183,7 @@ class Locale {
                 echo "Warning in /classes/Locale.php : Unable to setlocale() to ".$locale_id.", return value: $current_locale, current locale: ".setlocale(LC_ALL, 0);
                 $retval = false;
             } else {
-                bindtextdomain('messages', BASEPATH.'/locale');
+                bindtextdomain('messages', $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . 'locale');
                 bind_textdomain_codeset('messages', 'UTF-8');
                 textDomain('messages');
 
@@ -222,9 +222,9 @@ class Locale {
      */
     public static function getSqlCaseStringSelect($locale_id) {
         $decomposed_locale = Locale :: decomposeLocaleId($locale_id);
-        
+
         // The case will rate locales and choose the best one.
-        
+
         $sql = " (CASE\n";
         // Look for part of the string or the full-length locale
         $sql .= " WHEN locales_id='$decomposed_locale[0]' THEN 1\n";
@@ -232,12 +232,12 @@ class Locale {
         $sql .= " WHEN locales_id='{$decomposed_locale[1]}' THEN 2\n";
         // Look for the full string or any possible combination
         $sql .= " WHEN locales_id LIKE '{$decomposed_locale[1]}%' THEN 3\n";
-        
+
         // Look for a string matching the language or the country of the user
         if (!empty ($decomposed_locale[2])) {
             $sql .= " WHEN locales_id LIKE '%{$decomposed_locale[2]}' THEN 4\n";
         }
-        
+
         // Look for a string with no locale associated, it's more likely to be readable than a random string
         $sql .= " WHEN locales_id IS NULL THEN 5\n";
 

@@ -43,11 +43,10 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/GenericObject.php';
-require_once BASEPATH.'classes/Content.php';
-require_once BASEPATH.'classes/User.php';
-require_once BASEPATH.'classes/Node.php';
+require_once('classes/GenericObject.php');
+require_once('classes/Content.php');
+require_once('classes/User.php');
+require_once('classes/Node.php');
 
 /** Abstract a Network.  A network is an administrative entity with it's own users, nodes and authenticator. */
 class Network implements GenericObject
@@ -416,14 +415,17 @@ class Network implements GenericObject
 	 * @return a subclass of Authenticator */
 	public function getAuthenticator()
 	{
-		require_once BASEPATH.'classes/Authenticator.php';
+		require_once('classes/Authenticator.php');
+
 		// Include only the authenticator we are about to use
-		require_once BASEPATH.'classes/'.$this->mRow['network_authenticator_class'].'.php';
-		if (strpos($this->mRow['network_authenticator_params'], ';') != false)
-		{
+		require_once('classes/' . $this->mRow['network_authenticator_class'] . '.php');
+
+		if (strpos($this->mRow['network_authenticator_params'], ';') != false) {
 			throw new Exception("Network::getAuthenticator():  Security error:  The parameters passed to the constructor of the authenticator are potentially unsafe");
 		}
+
 		$objstring = 'return new '.$this->mRow['network_authenticator_class']."(".$this->mRow['network_authenticator_params'].");";
+
 		return eval ($objstring);
 	}
 

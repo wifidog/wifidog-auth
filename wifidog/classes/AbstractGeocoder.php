@@ -42,8 +42,7 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/FormSelectGenerator.php';
+require_once('classes/FormSelectGenerator.php');
 
 // Implementation classes loading is done after abstract class definition
 
@@ -205,9 +204,10 @@ abstract class AbstractGeocoder
 
 } // End class
 
-$class_names = AbstractGeocoder :: getAvailableGeocoderImplementations();
+$class_names = AbstractGeocoder::getAvailableGeocoderImplementations();
+
 foreach ($class_names as $class_name)
-    require_once BASEPATH.'classes/Geocoders/'.$class_name.'.php';
+    require_once('classes/Geocoders/' . $class_name . '.php');
 
 /*
  * Local variables:

@@ -43,13 +43,11 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH.'include/common.php';
-require_once 'User.php';
-require_once 'GisPoint.php';
-require_once 'AbstractGeocoder.php';
-require_once 'Utils.php';
-require_once 'DateTime.php';
-require_once 'Utils.php';
+require_once('classes/User.php');
+require_once('classes/GisPoint.php');
+require_once('classes/AbstractGeocoder.php');
+require_once('classes/Utils.php');
+require_once('classes/DateTime.php');
 
 /** Abstract a Node.  A Node is an actual physical transmitter.
  * @todo:  Make all the setter functions no-op if the value is the same as what

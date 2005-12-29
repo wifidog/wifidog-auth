@@ -45,10 +45,7 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-/**
- * @ignore
- */
-require_once BASEPATH.'classes/'.CONF_DBMS;
+require_once(dirname(__FILE__) . '/' . CONF_DBMS);
 
 /*
  * Local variables:

@@ -47,17 +47,13 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-/**
- * @ignore
- */
-define('BASEPATH', '../');
+require_once(dirname(__FILE__) . '/include/common.php');
 
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'include/common_interface.php';
-require_once BASEPATH.'classes/Security.php';
-require_once BASEPATH.'classes/Node.php';
-require_once BASEPATH.'classes/User.php';
-require_once BASEPATH.'classes/Network.php';
+require_once('include/common_interface.php');
+require_once('classes/Security.php');
+require_once('classes/Node.php');
+require_once('classes/User.php');
+require_once('classes/Network.php');
 
 /* Start general request parameter processing section */
 $node = null;
@@ -249,7 +245,8 @@ if (!empty($node))
 
 $html_body .= "</center></div>";
 
-require_once BASEPATH.'classes/MainUI.php';
+require_once('classes/MainUI.php');
+
 $ui = new MainUI();
 $ui->setToolContent($html);
 $ui->setMainContent($html_body);

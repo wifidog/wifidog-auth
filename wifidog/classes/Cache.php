@@ -35,39 +35,76 @@
 
 /**
  * @package    WiFiDogAuthServer
+ * @subpackage Performance
  * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2005 Max Horvath <max.horvath@maxspot.de> - maxspot GmbH
+ * @copyright  2005 Max Horvath, maxspot GmbH
  * @version    CVS: $Id$
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
 /**
  * PEAR::Cache_Lite implementation
+ *
+ * @package    WiFiDogAuthServer
+ * @subpackage Performance
+ * @author     Max Horvath <max.horvath@maxspot.de>
+ * @copyright  2005 Max Horvath, maxspot GmbH
  */
-class Cache {
+class Cache
+{
 
-    // Caching enabled?
+    /**
+     * Defines if caching is enabled or not
+     *
+     * @var bool
+     * @access public
+     */
     public $isCachingEnabled = false;
 
-    // Lifetime of cache (value in seconds or null).
+    /**
+     * Lifetime of cache (value in seconds or null).
+     *
+     * @var mixed (int or null)
+     * @access private
+     */
     private $_lifeTime = null;
 
-    // PEAR::Cache_Lite object.
+    /**
+     * PEAR::Cache_Lite object.
+     *
+     * @var object
+     * @access private
+     */
     private $_cacheLite;
 
-    // ID of PEAR::Cache_Lite object.
+    /**
+     * ID of PEAR::Cache_Lite object.
+     *
+     * @var mixed (string or null)
+     * @access private
+     */
     private $_cacheID = null;
 
-    // Group of PEAR::Cache_Lite object.
+    /**
+     * Group of PEAR::Cache_Lite object.
+     *
+     * @var string
+     * @access private
+     */
     private $_cacheGroup = "default";
 
     /**
      * Constructor.
-     * @param string $id ID of PEAR::Cache_Lite object.
-     * @param string $group Group of PEAR::Cache_Lite object. (optional)
+     *
+     * @param string $id    ID of PEAR::Cache_Lite object.
+     * @param string $group Group of PEAR::Cache_Lite object.
+     *
      * @return void
+     *
+     * @access public
      */
-    public function __construct($id, $group = "default") {
+    public function __construct($id, $group = "default")
+    {
         // Check if need to load PEAR::Cache_Lite.
         if ($this->cachingEnabled()) {
             // Proceed if $id is set, only.
@@ -80,7 +117,7 @@ class Cache {
 
                 // Set cache properties.
                 $_cacheOptions = array(
-                    'cacheDir' => BASEPATH . 'tmp/cache/',
+                    'cacheDir' => $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . 'tmp/cache/',
                     'lifeTime' => $this->_lifeTime
                 );
 
@@ -98,9 +135,13 @@ class Cache {
 
     /**
      * Return if PEAR::Cache_Lite is available and caching has been enabled.
-     * @return boolean Caching enabled or disabled.
+     *
+     * @return bool Caching enabled or disabled.
+     *
+     * @access private
      */
-    private function cachingEnabled() {
+    private function cachingEnabled()
+    {
         // Init values.
         $_doCache = false;
         $_errmsg = "";
@@ -118,9 +159,13 @@ class Cache {
 
     /**
      * Return data from cache if it is available and caching has been enabled.
+     *
      * @return string Data of cache.
+     *
+     * @access public
      */
-    public function getCachedData() {
+    public function getCachedData()
+    {
         // Init values.
         $_cacheData = null;
 
@@ -134,10 +179,15 @@ class Cache {
 
     /**
      * Save data into cache if it is available and caching has been enabled.
+     *
      * @param string $data Data to be saved into cache.
-     * @return boolean Saving data into cache was successful or not.
+     *
+     * @return bool Saving data into cache was successful or not.
+     *
+     * @access public
      */
-    public function saveCachedData($data) {
+    public function saveCachedData($data)
+    {
         // Init values.
         $_cacheData = false;
 
@@ -155,9 +205,13 @@ class Cache {
     /**
      * Erase specific data from cache if it is available and caching has been
      * enabled.
-     * @return boolean Removing data from cache was successful or not.
+     *
+     * @return bool Removing data from cache was successful or not.
+     *
+     * @access public
      */
-    public function eraseCachedData() {
+    public function eraseCachedData()
+    {
         // Init values.
         $_cacheData = null;
 
@@ -172,9 +226,13 @@ class Cache {
     /**
      * Erase a group of data from cache if it is available and caching has been
      * enabled.
-     * @return boolean Removing data from cache was successful or not.
+     *
+     * @return bool Removing data from cache was successful or not.
+     *
+     * @access public
      */
-    public function eraseCachedGroupData() {
+    public function eraseCachedGroupData()
+    {
         // Init values.
         $_cacheData = null;
 

@@ -35,14 +35,12 @@
 
 /**
  * @package    WiFiDogAuthServer
+ * @subpackage Statistics
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2004-2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
+ * @copyright  2004-2005 Benoit Gregoire, Technologies Coeus inc.
  * @version    CVS: $Id$
  * @link       http://sourceforge.net/projects/wifidog/
  */
-
-require_once BASEPATH.'include/common.php';
 
 /* Gives various statistics about the status of the network or of a specific node */
 class Statistics
@@ -82,7 +80,7 @@ class Statistics
      * @return an array of class names */
     public function getAvailableReports()
     {
-        $dir = BASEPATH.'classes/StatisticReport';
+        $dir = $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . 'classes/StatisticReport';
         if ($handle = opendir($dir))
         {
             $tab = Array ();

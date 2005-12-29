@@ -36,15 +36,26 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2004-2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
+ * @copyright  2004-2005 Benoit Gregoire, Technologies Coeus inc.
  * @version    CVS: $Id$
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
 error_reporting(E_ALL);
 
-require_once BASEPATH.'config.php';
+/**
+ * Include configuration
+ */
+if (file_exists('config.php')) {
+    require_once('config.php');
+} else {
+    require_once('../config.php');
+}
+
+/**
+ * Add system path of WiFiDog installation to PHPs include path
+ */
+set_include_path(get_include_path() . PATH_SEPARATOR . $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/'));
 
 function undo_magic_quotes()
 {
@@ -70,11 +81,11 @@ if (!function_exists('array_map_recursive'))
 }
 undo_magic_quotes();
 
-require_once BASEPATH.'classes/AbstractDb.php';
-require_once BASEPATH.'classes/Dependencies.php';
-require_once BASEPATH.'classes/Session.php';
+require_once('classes/AbstractDb.php');
+require_once('classes/Dependencies.php');
 
 global $db;
+
 $db = new AbstractDb();
 
 /* NEVER edit these, as they mush match the C code of the gateway */
@@ -165,10 +176,10 @@ else
 }
 
 define('DEFAULT_CONTENT_URL', BASE_URL_PATH.LOCAL_CONTENT_REL_PATH.DEFAULT_NODE_ID.'/');
-define('DEFAULT_CONTENT_PHP_RELATIVE_PATH', BASEPATH.LOCAL_CONTENT_REL_PATH.DEFAULT_NODE_ID.'/');
+define('DEFAULT_CONTENT_PHP_RELATIVE_PATH', LOCAL_CONTENT_REL_PATH.DEFAULT_NODE_ID.'/');
 
 define('NODE_CONTENT_URL', BASE_URL_PATH.LOCAL_CONTENT_REL_PATH.CURRENT_NODE_ID.'/');
-define('NODE_CONTENT_PHP_RELATIVE_PATH', BASEPATH.LOCAL_CONTENT_REL_PATH.CURRENT_NODE_ID.'/');
+define('NODE_CONTENT_PHP_RELATIVE_PATH', LOCAL_CONTENT_REL_PATH.CURRENT_NODE_ID.'/');
 
 define('COMMON_CONTENT_URL', BASE_URL_PATH.LOCAL_CONTENT_REL_PATH.'common/');
 

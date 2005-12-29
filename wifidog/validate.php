@@ -43,15 +43,12 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-/**
- * @ignore
- */
-define('BASEPATH','./');
+require_once(dirname(__FILE__) . '/include/common.php');
 
-require_once (BASEPATH.'/include/common.php');
-require_once (BASEPATH.'/include/common_interface.php');
-require_once (BASEPATH.'/classes/User.php');
-require_once (BASEPATH.'/classes/Node.php');
+require_once('include/common_interface.php');
+require_once('classes/User.php');
+require_once('classes/Node.php');
+require_once('classes/MainUI.php');
 
 try {
     if (!isset($_REQUEST["token"]))
@@ -84,7 +81,6 @@ try {
     $smarty->assign('message', $e->getMessage());
 }
 
-require_once BASEPATH.'classes/MainUI.php';
 $ui = new MainUI();
 $ui->setMainContent($smarty->fetch("templates/validate.html"));
 $ui->display();

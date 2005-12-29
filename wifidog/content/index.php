@@ -44,15 +44,11 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-/**
- * @ignore
- */
-define('BASEPATH', '../');
+require_once('../include/common.php');
 
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/MainUI.php';
-require_once BASEPATH.'include/common_interface.php';
-require_once BASEPATH.'classes/Node.php';
+require_once('classes/MainUI.php');
+require_once('include/common_interface.php');
+require_once('classes/Node.php');
 
 if (CONF_USE_CRON_FOR_DB_CLEANUP == false)
 {

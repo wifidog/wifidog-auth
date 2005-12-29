@@ -36,17 +36,16 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
+ * @copyright  2005 Benoit Gregoire, Technologies Coeus inc.
  * @version    CVS: $Id$
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH.'include/common.php';
-/** @note We put a call to validate_schema() here so it systematically called
-* from any UI page, but not from any machine readable pages
-*/
-require_once BASEPATH.'include/schema_validate.php';
+/**
+ * @internal We put a call to validate_schema() here so it systematically called
+ * from any UI page, but not from any machine readable pages
+ */
+require_once('include/schema_validate.php');
 validate_schema();
 
 if (CONF_USE_CRON_FOR_DB_CLEANUP == false)
@@ -54,7 +53,7 @@ if (CONF_USE_CRON_FOR_DB_CLEANUP == false)
     garbage_collect();
 }
 
-require_once BASEPATH.'include/common_interface.php';
+require_once('include/common_interface.php');
 
 /** Style contains functions managing headers, footers, stylesheet, etc.
  */

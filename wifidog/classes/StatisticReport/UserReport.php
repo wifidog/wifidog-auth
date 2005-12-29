@@ -35,14 +35,14 @@
 
 /**
  * @package    WiFiDogAuthServer
+ * @subpackage Statistics
  * @author     Philippe April
  * @copyright  2005 Philippe April
  * @version    CVS: $Id$
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/StatisticReport.php';
+require_once('classes/StatisticReport.php');
 
 /* General report about a node */
 class UserReport extends StatisticReport

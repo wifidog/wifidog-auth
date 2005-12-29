@@ -37,40 +37,57 @@
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2004-2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
+ * @copyright  2004-2005 Benoit Gregoire, Technologies Coeus inc.
  * @version    CVS: $Id$
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH.'classes/Cache.php';
-require_once BASEPATH.'classes/FormSelectGenerator.php';
-require_once BASEPATH.'classes/Content.php';
-require_once BASEPATH.'classes/LocaleList.php';
-require_once BASEPATH.'classes/Locale.php';
+require_once('classes/Cache.php');
+require_once('classes/LocaleList.php');
 
-error_reporting(E_ALL);
 
-/** Représente un Langstring en particulier, ne créez pas un objet langstrings si vous n'en avez pas spécifiquement besoin
+/**
+ * Représente un Langstring en particulier, ne créez pas un objet langstrings
+ * si vous n'en avez pas spécifiquement besoin
+ *
+ * @package    WiFiDogAuthServer
+ * @subpackage ContentClasses
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @copyright  2004-2005 Benoit Gregoire, Technologies Coeus inc.
  */
 class Langstring extends Content {
+    /**
+     * HTML allowed to be used
+     */
     const ALLOWED_HTML_TAGS = "<a><br><b><h1><h2><h3><h4><i><img><li><ol><p><strong><u><ul><li>";
 
     /**
-     * Constructeur
-     * @param $content_id Content id
+     * Constructor
+     *
+     * @param string $content_id Content id
+     *
+     * @access public
      */
-    function __construct($content_id) {
-        parent :: __construct($content_id);
+    public function __construct($content_id)
+    {
+        // Define globals
         global $db;
-        $this->mBd = & $db;
+
+        parent::__construct($content_id);
+        $this->mBd = &$db;
     }
 
     /**
-     * Retourne la première chaîne disponible dans la langue par défaut de l'usager (si disponible), sinon dans la même langue majeure, sinon la première chaîne disponible
+     * Retourne la première chaîne disponible dans la langue par défaut de
+     * l'usager (si disponible), sinon dans la même langue majeure, sinon
+     * la première chaîne disponible
+     *
      * @return string Chaîne UTF-8 retournée
+     *
+     * @access public
      */
-    function getString() {
+    public function getString()
+    {
         // Init values
         $retval = null;
         $row = null;
@@ -123,14 +140,22 @@ class Langstring extends Content {
 
     /**
      * Ajoute une chaîne de caractère au Langstring
-     * @param $string La chaîne de caractère à ajouter.  Si la chaîne est vide
-     * ('') ou null, la fonction retourne sans toucher à la base de donnée
-     * @param $locale La langue régionale de la chaîne ajoutée, exemple:
-     * 'fr_CA', peut être NULL
-     * @return bollean, true si une chaîne a été ajoutée à la base de donnée,
+     *
+     * @param string $string             La chaîne de caractère à ajouter.  Si la chaîne
+     *                                   est vide ('') ou null, la fonction retourne sans
+     *                                   toucher à la base de donnée
+     * @param string $locale             La langue régionale de la chaîne ajoutée, exemple:
+     *                                   'fr_CA', peut être NULL
+     * @param bool   $allow_empty_string Allow to store an empty string
+     *
+     * @return bool True si une chaîne a été ajoutée à la base de donnée,
      * false autrement.
+     *
+     * @access public
      */
-    function addString($string, $locale, $allow_empty_string = false) {
+    public function addString($string, $locale, $allow_empty_string = false)
+    {
+        // Init values
         $retval = false;
         $id = 'NULL';
         $idSQL = $id;
@@ -163,12 +188,21 @@ class Langstring extends Content {
         return $retval;
     }
 
-    /** Updates the string associated with the locale
-     * @param $string La chaîne de caractère à ajouter.  Si la chaîne est vide ('') ou null, la fonction retourne sans toucher à la base de donnée
-     * @param $locale La langue régionale de la chaîne ajoutée, exemple: 'fr_CA', peut être NULL
-     * @return bollean, true si une chaîne a été ajoutée à la base de donnée, false autrement.
+    /**
+     * Updates the string associated with the locale
+     *
+     * @param string $string La chaîne de caractère à ajouter. Si la chaîne
+     *                       est vide ('') ou null, la fonction retourne
+     *                       sans toucher à la base de donnée
+     * @param string $locale La langue régionale de la chaîne ajoutée,
+     *                       exemple: 'fr_CA', peut être NULL
+     *
+     * @return bool True si une chaîne a été ajoutée à la base de donnée, false autrement.
+     *
+     * @access public
      */
-    function UpdateString($string, $locale) {
+    public function UpdateString($string, $locale)
+    {
         // Init values
         $retval = false;
         $id = 'NULL';
@@ -211,12 +245,19 @@ class Langstring extends Content {
 
     /**
      * Affiche l'interface d'administration de l'objet
-     * @param type_interface SIMPLE pour éditer un seul champ, COMPLETE
-     * pour voir toutes les chaînes, LARGE pour avoir un textarea.
-     * @param num_nouveau Nombre de champ à afficher pour entrer de nouvelles
-     * chaîne en une seule opération
+     *
+     * @param string $type_interface SIMPLE pour éditer un seul champ, COMPLETE
+     *                               pour voir toutes les chaînes, LARGE pour
+     *                               avoir un textarea.
+     * @param int    $num_nouveau    Nombre de champ à afficher pour entrer de
+     *                               nouvelles chaîne en une seule opération
+     *
+     * @return string HTML code of administration interface
+     *
+     * @access public
      */
-    function getAdminUI($type_interface = 'LARGE', $num_nouveau = 1) {
+    public function getAdminUI($type_interface = "LARGE", $num_nouveau = 1)
+    {
         // Init values.
         $html = '';
         $result = "";
@@ -366,7 +407,15 @@ class Langstring extends Content {
         return parent :: getAdminUI($html);
     }
 
-    function processAdminUI() {
+    /**
+     * Processes the input of the administration interface for Langstring
+     *
+     * @return void
+     *
+     * @access public
+     */
+    public function processAdminUI()
+    {
         // Init values.
         $result = null;
 
@@ -436,12 +485,23 @@ class Langstring extends Content {
     }
 
     /**
-     * Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
-     * @param $subclass_admin_interface Html content of the interface element of a children
-     * @return The HTML fragment for this interface
+     * Retreives the user interface of this object.
+     *
+     * Anything that overrides this method should call the parent method with
+     * it's output at the END of processing.
+     *
+     * @param string $subclass_admin_interface HTML content of the interface
+     *                                         element of a children
+     *
+     * @return string The HTML fragment for this interface
+     *
+     * @access public
      */
-    public function getUserUI($subclass_user_interface = null) {
+    public function getUserUI($subclass_user_interface = null)
+    {
+        // Init values
         $html = '';
+
         $html .= "<div class='user_ui_container'>\n";
         $html .= "<div class='user_ui_object_class'>Langstring (".get_class($this)." instance)</div>\n";
         $html .= "<div class='langstring'>\n";
@@ -449,23 +509,39 @@ class Langstring extends Content {
         $html .= $subclass_user_interface;
         $html .= "</div>\n";
         $html .= "</div>\n";
-        return parent :: getUserUI($html);
+
+        return parent::getUserUI($html);
     }
 
     /**
-     * Reloads the object from the database.  Should normally be called after a set operation.
-     * This function is private because calling it from a subclass will call the
-     * constructor from the wrong scope
+     * Reloads the object from the database.
+     *
+     * Should normally be called after a set operation.
+     *
+     * This function is private because calling it from a subclass will call
+     * the constructor from the wrong scope
+     *
+     * @return void
+     *
+     * @access private
      */
-    private function refresh() {
+    private function refresh()
+    {
         $this->__construct($this->id);
     }
 
     /**
-     * @see GenericObject
-     * @note Persistent content will not be deleted
+     * Deletes a Langstring object
+     *
+     * @param string $errmsg Reference to error message
+     *
+     * @return bool True if deletion was successful
+     *
+     * @access public
+     * @internal Persistent content will not be deleted
      */
-    public function delete(& $errmsg) {
+    public function delete(&$errmsg)
+    {
         // Init values.
         $_retval = false;
 

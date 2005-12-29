@@ -37,105 +37,206 @@
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Francois Proulx <francois.proulx@gmail.com>
- * @copyright  2005 Francois Proulx <francois.proulx@gmail.com> - Technologies
- * Coeus inc.
+ * @copyright  2005 Francois Proulx, Technologies Coeus inc.
  * @version    CVS: $Id$
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH.'classes/Content.php';
-error_reporting(E_ALL);
-
 /**
  * An IFrame can integrate external HTML content from a given URL.
+ *
+ * @package    WiFiDogAuthServer
+ * @subpackage ContentClasses
+ * @author     Francois Proulx <francois.proulx@gmail.com>
+ * @copyright  2005 Francois Proulx, Technologies Coeus inc.
  */
 class IFrame extends Content
 {
-    /**Constructor
-    @param $content_id Content id
-    */
-    function __construct($content_id)
+    /**
+     * Constructor
+     *
+     * @param string $content_id Content id
+     *
+     * @return void
+     *
+     * @access public
+     */
+    public function __construct($content_id)
     {
-        parent :: __construct($content_id);
+        // Define globals
         global $db;
-        $this->mDb = & $db;
+
+        // Init value
+        $row = null;
+
+        parent::__construct($content_id);
+        $this->mDb = &$db;
 
         $content_id = $db->EscapeString($content_id);
         $sql = "SELECT * FROM iframes WHERE iframes_id='$content_id'";
         $db->ExecSqlUniqueRes($sql, $row, false);
-        if ($row == null)
-        {
-            /*Since the parent Content exists, the necessary data in content_group had not yet been created */
+
+        if ($row == null) {
+            /*
+             * Since the parent Content exists, the necessary data in
+             * content_group had not yet been created
+             */
             $sql = "INSERT INTO iframes (iframes_id) VALUES ('$content_id')";
             $db->ExecSqlUpdate($sql, false);
 
             $sql = "SELECT * FROM iframes WHERE iframes_id='$content_id'";
             $db->ExecSqlUniqueRes($sql, $row, false);
-            if ($row == null)
-            {
+
+            if ($row == null) {
                 throw new Exception(_("The content with the following id could not be found in the database: ").$content_id);
             }
-
         }
+
         $this->iframe_row = $row;
     }
 
     /**
      * Return the IFrame URL
-    */
-    function getUrl()
+     *
+     * @return mixed (string or null) IFrame URL if it has been set
+     *
+     * @access private
+     */
+    private function getUrl()
     {
         return $this->iframe_row['url'];
     }
 
-    function setUrl($url)
+    /**
+     * Sets the IFrame URL
+     *
+     * @param string $url IFrame URL
+     *
+     * @return void
+     *
+     * @access private
+     */
+    private function setUrl($url)
     {
         $url = $this->mDb->EscapeString($url);
         $this->mDb->ExecSqlUpdate("UPDATE iframes SET url = '{$url}' WHERE iframes_id = '{$this->getId()}';");
     }
+
     /**
-This function is there so that displayUserUi will work fine with the IFrameRest object.  Do NOT delete it.
-    */
-    function getGeneratedUrl()
+     * This function is there for displayUserUi will work fine with the
+     * IFrameRest object.
+     *
+     * DO NOT DELETE IT.
+     *
+     * @return mixed (string or null) IFrame URL if it has been set
+     *
+     * @access private
+     */
+    private function getGeneratedUrl()
     {
         return $this->getUrl();;
     }
-    function getWidth()
+
+    /**
+     * Gets the width of an IFrame
+     *
+     * @return mixed (int or null) Width of IFrame
+     *
+     * @access private
+     */
+    private function getWidth()
     {
         return $this->iframe_row['width'];
     }
 
-    function setWidth($width)
+    /**
+     * Sets the width of an IFrame
+     *
+     * @param int $width Width to be set
+     *
+     * @return bool True if width was a valid value and could be set
+     *
+     * @access private
+     */
+    private function setWidth($width)
     {
-        if (empty ($width) || is_numeric($width))
-        {
-            empty ($width) ? $width = "NULL" : $width = $this->mDb->EscapeString($width);
-            $this->mDb->ExecSqlUpdate("UPDATE iframes SET width =".$width." WHERE iframes_id='".$this->getId()."'", false);
+        // Init values
+        $_retval = false;
+
+        if (empty ($width) || is_numeric($width)) {
+            if (empty ($width)) {
+                $width = "NULL";
+            } else {
+                $width = $this->mDb->EscapeString($width);
+            }
+
+            $this->mDb->ExecSqlUpdate("UPDATE iframes SET width=" . $width . " WHERE iframes_id='" . $this->getId() . "'", false);
             $this->refresh();
+
+            $_retval = true;
         }
+
+        return $_retval;
     }
 
-    function getHeight()
+    /**
+     * Gets the height of an IFrame
+     *
+     * @return mixed (int or null) Height of IFrame
+     *
+     * @access private
+     */
+    private function getHeight()
     {
         return $this->iframe_row['height'];
     }
 
-    function setHeight($height)
+    /**
+     * Sets the width of an IFrame
+     *
+     * @param int $height Height to be set
+     *
+     * @return bool True if height was a valid value and could be set
+     *
+     * @access private
+     */
+    private function setHeight($height)
     {
+        // Init values
+        $_retval = false;
+
         if (empty ($height) || is_numeric($height))
         {
-            empty ($height) ? $height = "NULL" : $height = $this->mDb->EscapeString($height);
+            if (empty ($height)) {
+                $height = "NULL";
+            } else {
+                $height = $this->mDb->EscapeString($height);
+            }
+
             $this->mDb->ExecSqlUpdate("UPDATE iframes SET height =".$height." WHERE iframes_id='".$this->getId()."'", false);
             $this->refresh();
+
+            $_retval = true;
         }
+
+        return $_retval;
     }
 
     /**
-     * Retrieves Admin UI for IFrame
-    */
-    function getAdminUI($subclass_admin_interface=null)
+     * Shows the administration interface for IFrame
+     *
+     * @param string $subclass_admin_interface HTML code to be added after the
+     *                                         administration interface
+     *
+     * @return string HTML code for the administration interface
+     *
+     * @access public
+     */
+    public function getAdminUI($subclass_admin_interface = null)
     {
+        // Init values
         $html = '';
+
         $html .= "<div class='admin_class'>IFrame (".get_class($this)." instance)</div>\n";
 
         $html .= "<div class='admin_section_container'>\n";
@@ -163,48 +264,76 @@ This function is there so that displayUserUi will work fine with the IFrameRest 
         $html .= "</div>\n";
 
         $html .= $subclass_admin_interface;
-        return parent :: getAdminUI($html);
+
+        return parent::getAdminUI($html);
     }
 
-    function processAdminUI()
+    /**
+     * Processes the input of the administration interface for IFrame
+     *
+     * @return void
+     *
+     * @access public
+     */
+    public function processAdminUI()
     {
-        if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
-        {
-            parent :: processAdminUI();
+        if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
+            parent::processAdminUI();
 
             // If the URL is not empty
             $name = "iframe_".$this->id."_url";
-            if (!empty ($_REQUEST[$name]))
-            {
+
+            if (!empty ($_REQUEST[$name])) {
                 $this->setUrl($_REQUEST[$name]);
-            }
-            else
+            } else {
                 $this->setUrl("");
+            }
 
             $name = "iframe_".$this->id."_width";
             $this->setWidth(intval($_REQUEST[$name]));
             $name = "iframe_".$this->id."_height";
-                $this->setHeight(intval($_REQUEST[$name]));
+            $this->setHeight(intval($_REQUEST[$name]));
         }
     }
 
-    /** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
-     * @param $subclass_admin_interface Html content of the interface element of a children
-     * @return The HTML fragment for this interface */
+    /**
+     * Retreives the user interface of this object.
+     *
+     * Anything that overrides this method should call the parent method with
+     * it's output at the END of processing.
+     *
+     * @param string $subclass_admin_interface HTML content of the interface
+     *                                         element of a children
+     * @return string The HTML fragment for this interface
+     *
+     * @access public
+     */
     public function getUserUI($subclass_user_interface = null)
     {
+        // Init values
         $html = '';
+
         $html .= "<div class='user_ui_container'>\n";
         $html .= "<div class='user_ui_object_class'>IFrame (".get_class($this)." instance)</div>\n";
         $html .= "<iframe width='{$this->getWidth()}' height='{$this->getHeight()}' frameborder='1' src='{$this->getGeneratedUrl()}'>"._("Your browser does not support IFrames.")."</iframe>\n";
         $html .= $subclass_user_interface;
         $html .= "</div>\n";
-        return parent :: getUserUI($html);
+
+        return parent::getUserUI($html);
     }
 
-    /** Reloads the object from the database.  Should normally be called after a set operation.
-     * This function is private because calling it from a subclass will call the
-     * constructor from the wrong scope */
+    /**
+     * Reloads the object from the database.
+     *
+     * Should normally be called after a set operation.
+     *
+     * This function is private because calling it from a subclass will call
+     * the constructor from the wrong scope
+     *
+     * @return void
+     *
+     * @access private
+     */
     private function refresh()
     {
         $this->__construct($this->id);

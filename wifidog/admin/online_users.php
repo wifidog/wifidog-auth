@@ -45,13 +45,10 @@
  * @author Copyright (C) 2004 Philippe April.
  */
 
-/**
- * @ignore
- */
-define('BASEPATH', '../');
+require_once('admin_common.php');
 
-require_once BASEPATH.'admin/admin_common.php';
-require_once BASEPATH.'classes/Node.php';
+require_once('classes/Node.php');
+require_once('classes/MainUI.php');
 
 $security = new Security();
 $security->requireAdmin();
@@ -61,7 +58,6 @@ $online_users = null;
 $db->ExecSql("SELECT connections.user_id, name, username, account_origin, timestamp_in, incoming, outgoing FROM connections,users,nodes WHERE token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND nodes.node_id=connections.node_id ORDER BY account_origin, timestamp_in DESC", $online_users);
 $smarty->assign("users_array", $online_users);
 
-require_once BASEPATH.'classes/MainUI.php';
 $ui = new MainUI();
 $ui->setToolSection('ADMIN');
 $ui->setMainContent($smarty->fetch("admin/templates/online_users.html"));

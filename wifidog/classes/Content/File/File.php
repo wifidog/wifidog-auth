@@ -37,68 +37,116 @@
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Francois Proulx <francois.proulx@gmail.com>
- * @copyright  2005 Francois Proulx <francois.proulx@gmail.com> - Technologies
- * Coeus inc.
+ * @author     Max Horvath <max.horvath@maxspot.de>
+ * @copyright  2005 Francois Proulx, Technologies Coeus inc.
+ * @copyright  2005 Max Horvath, maxspot GmbH
  * @version    CVS: $Id$
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH.'classes/Content.php';
-
-error_reporting(E_ALL);
-
-/** Représente un Langstring en particulier, ne créez pas un objet langstrings si vous n'en avez pas spécifiquement besoin
+/**
+ * Binary or ASCII file
+ *
+ * @package    WiFiDogAuthServer
+ * @subpackage ContentClasses
+ * @author     Francois Proulx <francois.proulx@gmail.com>
+ * @author     Max Horvath <max.horvath@maxspot.de>
+ * @copyright  2005 Francois Proulx, Technologies Coeus inc.
+ * @copyright  2005 Max Horvath, maxspot GmbH
  */
 class File extends Content
 {
-    /* File size units */
+
+    /**
+     * File size unit: Byte
+     *
+     * @access private
+     */
     const UNIT_BYTES = 1;
+
+    /**
+     * File size unit: KB
+     *
+     * @access private
+     */
     const UNIT_KILOBYTES = 1024;
+
+    /**
+     * File size unit: MB
+     *
+     * @access private
+     */
     const UNIT_MEGABYTES = 1048576;
+
+    /**
+     * File size unit: GB
+     *
+     * @access private
+     */
     const UNIT_GIGABYTES = 1073741824;
 
-    /**Constructeur
-    @param $content_id Content id
-    */
-    function __construct($content_id)
+    /**
+     * Constructor
+     *
+     * @param string $content_id Content id
+     *
+     * @access public
+     */
+    public function __construct($content_id)
     {
-        parent :: __construct($content_id);
+        // Define globals
         global $db;
+
+        // Init values
+        $row = null;
+
+        parent :: __construct($content_id);
 
         $content_id = $db->EscapeString($content_id);
         $sql = "SELECT * FROM files WHERE files_id='$content_id'";
         $db->ExecSqlUniqueRes($sql, $row, false);
-        if ($row == null)
-        {
-            /*Since the parent Content exists, the necessary data in content_group had not yet been created */
+
+        if ($row == null) {
+            /*
+             * Since the parent Content exists, the necessary data in
+             * content_group had not yet been created
+             */
             $sql = "INSERT INTO files (files_id) VALUES ('$content_id')";
             $db->ExecSqlUpdate($sql, false);
 
             $sql = "SELECT * FROM files WHERE files_id='$content_id'";
             $db->ExecSqlUniqueRes($sql, $row, false);
-            if ($row == null)
-            {
+
+            if ($row == null) {
                 throw new Exception(_("The content with the following id could not be found in the database: ").$content_id);
             }
-
         }
-        $this->mBd = & $db;
+
+        $this->mBd = &$db;
         $this->files_row = $row;
     }
 
     /**
      * Set Binary data from a POST form data field
+     *
      * @param string $upload_field The form field that contains the data
      *
+     * @return bool True if successful
+     *
+     * @access private
      */
-    function setBinaryDataFromPostVar($upload_field)
+    private function setBinaryDataFromPostVar($upload_field)
     {
-        if (!empty ($_FILES[$upload_field]) && $_FILES[$upload_field]['error'] == UPLOAD_ERR_OK)
-        {
+        // Init values
+        $_retval = false;
+
+        if (!empty ($_FILES[$upload_field]) && $_FILES[$upload_field]['error'] == UPLOAD_ERR_OK) {
             // Unlink BLOB if any exists
             $blob_oid = $this->getBinaryDataOid();
-            if ($blob_oid)
+
+            if ($blob_oid) {
                 $this->mBd->UnlinkLargeObject($blob_oid);
+            }
 
             // Updating database
             // Create a new BLOB
@@ -108,137 +156,277 @@ class File extends Content
             $this->setMimeType($_FILES[$upload_field]['type']);
             $this->setFilename($_FILES[$upload_field]['name']);
             $this->refresh();
-            return true;
-        }
-        else
-        {
+
+            $_retval = true;
+        } else {
             switch ($_FILES[$upload_field]['error'])
             {
-                case 'UPLOAD_ERR_INI_SIZE' :
-                    echo _("File size exceeds limit specified in PHP.ini");
-                    break;
-                case 'UPLOAD_ERR_FORM_SIZE' :
-                    echo _("File size exceeds limit specified HTML form");
-                    break;
-                case 'UPLOAD_ERR_PARTIAL' :
-                    echo _("File upload was interrupted");
-                    break;
-                    /*
-                    case UPLOAD_ERR_NO_FILE:
-                        echo _("No file was uploaded");
-                        break;*/
-                case 'UPLOAD_ERR_NO_TMP_DIR' :
-                    echo _("Missing temp folder");
-                    break;
+            case 'UPLOAD_ERR_INI_SIZE':
+                echo _("File size exceeds limit specified in PHP.ini");
+                break;
+
+            case 'UPLOAD_ERR_FORM_SIZE':
+                echo _("File size exceeds limit specified HTML form");
+                break;
+
+            case 'UPLOAD_ERR_PARTIAL':
+                echo _("File upload was interrupted");
+                break;
+
+            case 'UPLOAD_ERR_NO_TMP_DIR':
+                echo _("Missing temp folder");
+                break;
+
             }
-            return false;
         }
+
+        return $_retval;
     }
 
-    /** Returns the DateTime object representing the date of the contribution */
-    function getBinaryDataOid()
+    /**
+     * Returns the binary data from the database
+     *
+     * @return string Binary data from the database
+     *
+     * @access private
+     */
+    private function getBinaryDataOid()
     {
         return $this->mBd->UnescapeBinaryString($this->files_row['data_blob']);
     }
 
-    function setBinaryDataOid($oid)
+    /**
+     * Saves the binary data to the database
+     *
+     * @param string $oid Binary data
+     *
+     * @return void
+     *
+     * @access private
+     */
+    private function setBinaryDataOid($oid)
     {
-        if(is_null($oid))
+        if (is_null($oid)) {
             $oid = "NULL";
+        }
+
         $this->mBd->ExecSqlUpdate("UPDATE files SET data_blob = $oid WHERE files_id='".$this->getId()."'", false);
         $this->refresh();
     }
 
-    function getMimeType()
+    /**
+     * Returns the MIME type of the file
+     *
+     * @return string MIME type of file
+     *
+     * @access private
+     */
+    private function getMimeType()
     {
         return $this->files_row['mime_type'];
     }
 
-    function setMimeType($mime_type)
+    /**
+     * Saves the MIME type of the file
+     *
+     * @param string $mime_type
+     *
+     * @return void
+     *
+     * @access private
+     */
+    private function setMimeType($mime_type)
     {
         $mime_type = $this->mBd->EscapeString($mime_type);
         $this->mBd->ExecSqlUpdate("UPDATE files SET mime_type ='".$mime_type."' WHERE files_id='".$this->getId()."'", false);
         $this->refresh();
     }
 
-    function getFilename()
+    /**
+     * Returns the filename of the file
+     *
+     * @return string Filename of file
+     *
+     * @access private
+     */
+    private function getFilename()
     {
         return $this->files_row['filename'];
     }
 
-    function setFilename($file_name)
+    /**
+     * Stores the filename of the file
+     *
+     * @param string $file_name Filename of the file
+     *
+     * @return void
+     *
+     * @access private
+     */
+    private function setFilename($file_name)
     {
         $file_name = $this->mBd->EscapeString($file_name);
         $this->mBd->ExecSqlUpdate("UPDATE files SET filename ='".$file_name."' WHERE files_id='".$this->getId()."'", false);
         $this->refresh();
     }
 
-    function getFileSize($unit = self :: UNIT_BYTES)
+    /**
+     * Returns the size of the file
+     *
+     * @param string $unit Name of constant of which kind of filesize unit
+     *                     to use
+     *                     Possibilities:
+     *                       + self::UNIT_BYTES
+     *                       + self::UNIT_KILOBYTES
+     *                       + self::MEGABYTES
+     *                       + self::GIGABYTES
+     *
+     * @return float Size of file
+     *
+     * @access private
+     */
+    private function getFileSize($unit = self::UNIT_BYTES)
     {
-        if ($this->isLocalFile())
+        if ($this->isLocalFile()) {
             $size = $this->files_row['local_binary_size'];
-        else
+        } else {
             $size = $this->files_row['remote_size'];
-
-        switch ($unit)
-        {
-            case self :: UNIT_KILOBYTES;
-            case self :: UNIT_MEGABYTES :
-            case self :: UNIT_GIGABYTES :
-            case self :: UNIT_BYTES :
-                return round($size / $unit, 2);
-            default :
-                return $size;
         }
+
+        switch ($unit) {
+        case self::UNIT_KILOBYTES:
+        case self::UNIT_MEGABYTES:
+        case self::UNIT_GIGABYTES:
+        case self::UNIT_BYTES:
+            $size = round($size / $unit, 2);
+            break;
+
+        }
+
+        return $size;
     }
 
-    function setLocalFileSize($size, $unit = self :: UNIT_BYTES)
+    /**
+     * Sets the size of a local file
+     *
+     * @param int    $size Size of file
+     * @param string $unit Name of constant of which kind of filesize unit
+     *                     to use
+     *                     Possibilities:
+     *                       + self::UNIT_BYTES
+     *                       + self::UNIT_KILOBYTES
+     *                       + self::MEGABYTES
+     *                       + self::GIGABYTES
+     *
+     * @return void
+     *
+     * @access private
+     */
+    private function setLocalFileSize($size, $unit = self::UNIT_BYTES)
     {
-        if (is_numeric($size))
-        {
+        if (is_numeric($size)) {
             $octet_size = $size * $unit;
-            $this->mBd->execSqlUpdate("UPDATE files SET local_binary_size = $octet_size WHERE files_id='".$this->getId()."'", false);
+
+            $this->mBd->execSqlUpdate("UPDATE files SET local_binary_size = $octet_size WHERE files_id='" . $this->getId() . "'", false);
             $this->refresh();
         }
     }
 
-    function setRemoteFileSize($size, $unit = self :: UNIT_KILOBYTES)
+    /**
+     * Sets the size of a remote file
+     *
+     * @param int    $size Size of file
+     * @param string $unit Name of constant of which kind of filesize unit
+     *                     to use
+     *                     Possibilities:
+     *                       + self::UNIT_BYTES
+     *                       + self::UNIT_KILOBYTES
+     *                       + self::MEGABYTES
+     *                       + self::GIGABYTES
+     *
+     * @return void
+     *
+     * @access private
+     */
+    private function setRemoteFileSize($size, $unit = self::UNIT_KILOBYTES)
     {
-        if (is_numeric($size))
-        {
+        if (is_numeric($size)) {
             $octet_size = $size * $unit;
+
             $this->mBd->execSqlUpdate("UPDATE files SET remote_size = $octet_size WHERE files_id='".$this->getId()."'", false);
             $this->refresh();
         }
     }
 
-    function getFileUrl()
+    /**
+     * Get URL of file
+     *
+     * @return string URL of file
+     *
+     * @access private
+     */
+    private function getFileUrl()
     {
-        if (!$this->isLocalFile())
-            return $this->files_row['url'];
-        else
-            return BASE_SSL_PATH."file_download.php?file_id=".$this->getId();
+        // Init values
+        $_retval = null;
+
+        if (!$this->isLocalFile()) {
+            $_retval = $this->files_row['url'];
+        } else {
+            $_retval = BASE_SSL_PATH . "file_download.php?file_id=" . $this->getId();
+        }
+
+        return $_retval;
     }
 
-    function setURL($url)
+    /**
+     * Sets URL of a file
+     *
+     * @param string $url
+     *
+     * @return void
+     *
+     * @access private
+     */
+    private function setURL($url)
     {
-        if ($url == null)
+        if ($url == null) {
             $url = "NULL";
-        else
+        } else {
             $url = "'".$this->mBd->EscapeString($url)."'";
+        }
+
         $this->mBd->execSqlUpdate("UPDATE files SET url = $url WHERE files_id='".$this->getId()."'", false);
         $this->refresh();
     }
 
-    function isLocalFile()
+    /**
+     * Returns if file is a local file
+     *
+     * @return bool True if file is local
+     *
+     * @access private
+     */
+    private function isLocalFile()
     {
         return is_null($this->files_row['url']);
     }
 
-    /**Affiche l'interface d'administration de l'objet */
-    function getAdminUI($subclass_admin_interface = null)
+    /**
+     * Shows the administration interface for RssAggregator.
+     *
+     * @param string $subclass_admin_interface HTML code to be added after the
+     *                                         administration interface
+     *
+     * @return string HTML code for the administration interface
+     *
+     * @access public
+     */
+    public function getAdminUI($subclass_admin_interface = null)
     {
+        // Init values
         $html = '';
+
         $html .= "<div class='admin_class'>File (".get_class($this)." instance)</div>\n";
 
         $html .= "<div class='admin_section_container'>\n";
@@ -256,15 +444,17 @@ class File extends Content
         $html .= "<input type='radio' name='file_mode".$this->getId()."' value='remote' ". (!$this->isLocalFile() ? "CHECKED" : "").">";
         $html .= _("Remote file via URL")." : </div>\n";
         $html .= "<div class='admin_section_data'>\n";
-        if ($this->isLocalFile())
+
+        if ($this->isLocalFile()) {
             $html .= "<input name='file_url".$this->getId()."' type='text' size='50'/>";
-        else
+        } else {
             $html .= "<input name='file_url".$this->getId()."' type='text' size='50' value='".$this->getFileUrl()."'/>";
+        }
+
         $html .= "</div>\n";
         $html .= "</div>\n";
 
-        if (!$this->isLocalFile())
-        {
+        if (!$this->isLocalFile()) {
             $html .= "<div class='admin_section_container'>\n";
             $html .= "<div class='admin_section_title'>"._("File URL")." : </div>\n";
             $html .= "<div class='admin_section_data'>\n";
@@ -280,8 +470,7 @@ class File extends Content
         $html .= "</div>\n";
         $html .= "</div>\n";
 
-        if ($this->isLocalFile())
-        {
+        if ($this->isLocalFile()) {
             $html .= "<div class='admin_section_container'>\n";
             $html .= "<div class='admin_section_title'>"._("MIME type")." : </div>\n";
             $html .= "<div class='admin_section_data'>\n";
@@ -295,9 +484,7 @@ class File extends Content
             $html .= $this->getFileSize(self :: UNIT_KILOBYTES)." "._("KB");
             $html .= "</div>\n";
             $html .= "</div>\n";
-        }
-        else
-        {
+        } else {
             $html .= "<div class='admin_section_container'>\n";
             $html .= "<div class='admin_section_title'>"._("Remote file size (Automatically converted from KB to Bytes)")." : </div>\n";
             $html .= "<div class='admin_section_data'>\n";
@@ -315,98 +502,133 @@ class File extends Content
         $html .= "</div>\n";
 
         $html .= $subclass_admin_interface;
-        return parent :: getAdminUI($html);
+
+        return parent::getAdminUI($html);
     }
 
-    function processAdminUI()
+    /**
+     * Processes the input of the administration interface for RssAggregator
+     *
+     * @return void
+     *
+     * @access public
+     */
+    public function processAdminUI()
     {
-        if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
-        {
+        if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
             parent :: processAdminUI();
 
             // If no file was uploaded, update filename and mime type
-            if (!empty ($_REQUEST["file_mode".$this->getId()]))
-            {
-        if (!empty($_REQUEST["file_file_name".$this->getId()])) {
-                  $this->setFilename($_REQUEST["file_file_name".$this->getId()]);
-        }
+            if (!empty ($_REQUEST["file_mode".$this->getId()])) {
+                if (!empty($_REQUEST["file_file_name".$this->getId()])) {
+                    $this->setFilename($_REQUEST["file_file_name".$this->getId()]);
+                }
 
                 $file_mode = $_REQUEST["file_mode".$this->getId()];
-                if ($file_mode == "by_upload")
-                {
-                    if(isset($_REQUEST["file_mime_type".$this->getId()]))
+
+                if ($file_mode == "by_upload") {
+                    if(isset($_REQUEST["file_mime_type".$this->getId()])) {
                         $this->setMimeType($_REQUEST["file_mime_type".$this->getId()]);
+                    }
+
                     $this->setBinaryDataFromPostVar("file_file_upload".$this->getId());
                     $this->setURL(null);
+
                     // Reset the remote file size ( not used )
                     $this->setRemoteFileSize(0);
-                }
-                else
-                {
-                    if ($file_mode == "remote")
-                    {
+                } else {
+                    if ($file_mode == "remote") {
                         $this->setURL($_REQUEST["file_url".$this->getId()]);
                         $this->setBinaryDataOid(null);
+
                         // When switching from local to remote, this field does not exist yet
-                        if (isset($_REQUEST["file_old_remote_size".$this->getId()]))
-                        {
-                            if ($_REQUEST["file_remote_size".$this->getId()] != $_REQUEST["file_old_remote_size".$this->getId()])
+                        if (isset($_REQUEST["file_old_remote_size".$this->getId()])) {
+                            if ($_REQUEST["file_remote_size".$this->getId()] != $_REQUEST["file_old_remote_size".$this->getId()]) {
                                 $this->setRemoteFileSize($_REQUEST["file_remote_size".$this->getId()]);
-                        }
-                        else
+                            }
+                        } else {
                             $this->setRemoteFileSize(0);
+                        }
                     }
                 }
             }
         }
     }
 
-    /** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
-     * @param $subclass_admin_interface Html content of the interface element of a children
-     * @return The HTML fragment for this interface */
+    /**
+     * Retreives the user interface of this object.
+     *
+     * @return string The HTML fragment for this interface
+     *
+     * @access public
+     */
     public function getUserUI()
     {
+        // Init values
         $html = '';
+
         $html .= "<div class='user_ui_container'>\n";
         $html .= "<div class='user_ui_object_class'>File (".get_class($this)." instance)</div>\n";
-        if($this->getFileSize() > 0)
+
+        if($this->getFileSize() > 0) {
             $append_size = " (".$this->getFileSize(self :: UNIT_KILOBYTES)." "._("KB").")";
-        else
+        } else {
             $append_size = "";
+        }
+
         $html .= "<div class='download_button'><a href='".htmlentities($this->getFileUrl())."'>"._("Download")." ".$this->getFilename()."$append_size</a></div>";
         $html .= "</div>\n";
-        return parent :: getUserUI($html);
+
+        return parent::getUserUI($html);
     }
 
-    /** Delete this Content from the database */
-    public function delete(& $errmsg)
-    {
-        if ($this->isPersistent() == false)
-        {
-            // Unlink BLOB if any exists
-            $blob_oid = $this->getBinaryDataOid();
-            if($blob_oid)
-            {
-                $errmsg = "Deleting BLOB OID : $blob_oid";
-                if($this->mBd->UnlinkLargeObject($blob_oid) == false)
-                {
-                    $errmsg = _("Unable to successfully unlink BLOB OID : $blob_oid !");
-                    return false;
-                }
-            }
-            $this->mBd->ExecSqlUpdate("DELETE FROM files WHERE files_id = '".$this->getId()."'", false);
-        }
-        else
-            $errmsg = _("Could not delete this file, since it is persistent");
-        return parent :: delete($errmsg);
-    }
-    /** Reloads the object from the database.  Should normally be called after a set operation.
-     * This function is private because calling it from a subclass will call the
-     * constructor from the wrong scope */
+    /**
+     * Reloads the object from the database. Should normally be called after
+     * a set operation. This function is private because calling it from a
+     * subclass will call the constructor from the wrong scope.
+     *
+     * @return void
+     *
+     * @access private
+     */
     private function refresh()
     {
         $this->__construct($this->id);
     }
+
+    /**
+     * Deletes a File object
+     *
+     * @param string $errmsg Reference to error message
+     *
+     * @return bool True if deletion was successful
+     *
+     * @access public
+     * @internal Persistent content will not be deleted
+     */
+    public function delete(&$errmsg)
+    {
+        if ($this->isPersistent() == false) {
+            // Unlink BLOB if any exists
+            $blob_oid = $this->getBinaryDataOid();
+
+            if($blob_oid) {
+                $errmsg = "Deleting BLOB OID : $blob_oid";
+
+                if($this->mBd->UnlinkLargeObject($blob_oid) == false) {
+                    $errmsg = _("Unable to successfully unlink BLOB OID : $blob_oid !");
+                    return false;
+                }
+            }
+
+            $this->mBd->ExecSqlUpdate("DELETE FROM files WHERE files_id = '".$this->getId()."'", false);
+        } else {
+            $errmsg = _("Could not delete this file, since it is persistent");
+        }
+
+        return parent::delete($errmsg);
+    }
+
 }
 
 /*

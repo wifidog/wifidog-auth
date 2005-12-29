@@ -35,15 +35,14 @@
 
 /**
  * @package    WiFiDogAuthServer
+ * @subpackage Statistics
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
+ * @copyright  2005 Benoit Gregoire, Technologies Coeus inc.
  * @version    CVS: $Id$
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/StatisticReport.php';
+require_once('classes/StatisticReport.php');
 
 /* General report about a node */
 class NetworkStatus extends StatisticReport

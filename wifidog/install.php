@@ -1068,16 +1068,12 @@ EndHTML;
   case 'schema_validate':
     print "<H1>Database schema upgrade</H1>\n";
 
-    /**
-     * @ignore
-     */
-    define('BASEPATH', './');
+    require_once(dirname(__FILE__) . '/include/common.php');
 
-    require_once BASEPATH.'include/common.php';
-    require_once BASEPATH.'config.php';
-    require_once BASEPATH.'classes/AbstractDb.php';
-    require_once BASEPATH.'classes/Session.php';
-    require_once BASEPATH.'include/schema_validate.php';
+    require_once('classes/AbstractDb.php');
+    require_once('classes/Session.php');
+    require_once('include/schema_validate.php');
+
     validate_schema();
 
     navigation(array(array("title" => "Back", "page" => "dbinit"), array("title" => "Next", "page" => "options")));
@@ -1204,10 +1200,10 @@ EndHTML;
       navigation(array(array("title" => "Back", "page" => "radius"), array("title" => "Next", "page" => "network")));
     }
     else {
-    	
+
     	if ($action == 'create') {
-      define('BASEPATH', './');
-      require_once BASEPATH.'classes/User.php';
+
+    	    require_once(dirname(__FILE__) . '/classes/User.php');
 
       $created_user = User :: createUser(get_guid(), $username, Network::getDefaultNetwork(), $email, $password);
       $user_id = $created_user->getId();
@@ -1271,8 +1267,8 @@ EndHTML;
 
 	/**
 	 * @deprecated version - Dec 26, 2005 - Needs to use network abstraction
-	 * 
-	 * 
+	 *
+	 *
 	 * <P>
   <TABLE border="1">
   <TR>
@@ -1293,9 +1289,9 @@ EndHTML;
   </TABLE>
 	 */
 	print "Need to reimplement this... Until then connect to the administration pages and modify it by yourself.";
-	
+
     print <<< EndHTML
-  
+
 
 <script type="text/javascript">
   function submitOptionsValue() {

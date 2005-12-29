@@ -37,128 +37,213 @@
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2005 Max Horvath <max.horvath@maxspot.de> - maxspot GmbH
+ * @copyright  2005 Max Horvath, maxspot GmbH
  * @version    CVS: $Id$
  * @link       http://sourceforge.net/projects/wifidog/
  * @todo       Add CSS styles for editors.
  */
 
-require_once BASEPATH.'classes/Dependencies.php';
+require_once('classes/Cache.php');
+require_once('classes/LocaleList.php');
 
-// Make sure the FCKeditor support is installed
-if (Dependencies :: check("FCKeditor", $errmsg)) {
-    require_once BASEPATH.'classes/Cache.php';
-    require_once BASEPATH.'classes/Content.php';
-    require_once BASEPATH.'classes/FormSelectGenerator.php';
-    require_once BASEPATH.'classes/LocaleList.php';
-    require_once BASEPATH.'classes/Locale.php';
-
-    // FCKeditor class
-    require_once BASEPATH.'lib/FCKeditor/fckeditor.php';
-
-    error_reporting(E_ALL);
+/**
+ * FCKeditor implementation
+ *
+ * @package    WiFiDogAuthServer
+ * @subpackage ContentClasses
+ * @author     Max Horvath <max.horvath@maxspot.de>
+ * @copyright  2005 Max Horvath, maxspot GmbH
+ */
+class HTMLeditor extends Content
+{
 
     /**
-     * FCKeditor implementation
+     * HTML allowed to be used
      */
-    class HTMLeditor extends Content {
+    const ALLOWED_HTML_TAGS = "<p><div><pre><address><h1><h2><h3><h4><h5><h6><br><b><strong><i><em><u><span><ol><ul><li><a><img><embed><table><tbody><thead><th><tr><td><hr>";
 
-        const ALLOWED_HTML_TAGS = "<p><div><pre><address><h1><h2><h3><h4><h5><h6><br><b><strong><i><em><u><span><ol><ul><li><a><img><embed><table><tbody><thead><th><tr><td><hr>";
+    /**
+     * Defines if the FCKeditor library has been installed
+     *
+     * @var bool
+     * @access private
+     */
+    var $_FCKeditorAvailable = false;
 
-        /**
-         * Constructor. Gets called if FCKeditor is installed.
-         * @param int $content_id ID of content.
-         * @return void
-         */
-        protected function __construct($content_id) {
-            parent :: __construct($content_id);
+    /**
+     * Constructor.
+     *
+     * @param int $content_id ID of content.
+     *
+     * @return void
+     *
+     * @access protected
+     */
+    protected function __construct($content_id)
+    {
+        // Init values
+        $errmsg = "";
+
+        parent::__construct($content_id);
+
+        // Check FCKeditor support
+        if (Dependencies :: check("FCKeditor", $errmsg)) {
+            // Define globals
             global $db;
-            $this->mBd = & $db;
+
+            // Load FCKeditor class
+            require_once('lib/FCKeditor/fckeditor.php');
+
+            $this->mBd = &$db;
+
+            $this->_FCKeditorAvailable = true;
         }
+    }
 
-        /**
-         * Return string in the language requested by the user.
-         * @return string UTF-8 string.
-         */
-        private function getString() {
-            // Init values
-            $_retval = null;
-            $_row = null;
-            $_useCache = false;
-            $_cachedData = null;
+    /**
+     * Return string in the language requested by the user.
+     *
+     * @return string UTF-8 string of content.
+     *
+     * @access private
+     */
+    private function getString()
+    {
+        // Init values
+        $_retval = null;
+        $_row = null;
+        $_useCache = false;
+        $_cachedData = null;
 
-            // Create new cache objects
-            $_cacheLanguage = new Cache('langstrings_' . $this->id . '_substring_' . substr(Locale :: getCurrentLocale()->getId(), 0, 2) . '_string', $this->id);
-            $_cache = new Cache('langstrings_' . $this->id . '_substring__string', $this->id);
+        // Create new cache objects
+        $_cacheLanguage = new Cache('langstrings_' . $this->id . '_substring_' . substr(Locale :: getCurrentLocale()->getId(), 0, 2) . '_string', $this->id);
+        $_cache = new Cache('langstrings_' . $this->id . '_substring__string', $this->id);
 
-            // Check if caching has been enabled.
-            if ($_cacheLanguage->isCachingEnabled) {
-                if ($_cachedData = $_cacheLanguage->getCachedData()) {
+        // Check if caching has been enabled.
+        if ($_cacheLanguage->isCachingEnabled) {
+            if ($_cachedData = $_cacheLanguage->getCachedData()) {
+                // Return cached data.
+                $_useCache = true;
+                $_retval = $_cachedData;
+            } else {
+                // Language specific cached data has not been found.
+                // Try to get language independent cached data.
+                if ($_cachedData = $_cache->getCachedData()) {
                     // Return cached data.
                     $_useCache = true;
                     $_retval = $_cachedData;
-                } else {
-                    // Language specific cached data has not been found.
-                    // Try to get language independent cached data.
-                    if ($_cachedData = $_cache->getCachedData()) {
-                        // Return cached data.
-                        $_useCache = true;
-                        $_retval = $_cachedData;
-                    }
                 }
             }
-
-            if (!$_useCache) {
-                // Get string in the prefered language of the user
-                $_sql = "SELECT value, locales_id, \n";
-                $_sql .= Locale :: getSqlCaseStringSelect(Locale :: getCurrentLocale()->getId());
-                $_sql .= " as score FROM langstring_entries WHERE langstring_entries.langstrings_id = '{$this->id}' AND value!='' ORDER BY score LIMIT 1";
-                $this->mBd->ExecSqlUniqueRes($_sql, $_row, false);
-
-                if ($_row == null) {
-                    // String has not been found
-                    $_retval = "(Empty string)";
-                } else {
-                    // String has been found
-                    $_retval = $_row['value'];
-
-                    // Check if caching has been enabled.
-                    if ($_cache->isCachingEnabled) {
-                        // Save data into cache, because it wasn't saved into cache before.
-                        $_cache->saveCachedData($_retval);
-                    }
-                }
-            }
-
-            return $_retval;
         }
 
-        /**
-         * Adds the string associated with the locale.
-         * @param string $string String to be added.
-         * @param string $locale Locale of string (i.e. 'fr_CA') - can be NULL.
-         * @param boolean $allow_empty_string Defines if string may be empty
-         * (optional).
-         * @return boolean True if string has been added, otherwise false.
-         */
-        private function addString($string, $locale, $allow_empty_string = false) {
-            // Init values
-            $_retval = false;
-            $_id = 'NULL';
-            $_idSQL = $_id;
+        if (!$_useCache) {
+            // Get string in the prefered language of the user
+            $_sql = "SELECT value, locales_id, \n";
+            $_sql .= Locale :: getSqlCaseStringSelect(Locale :: getCurrentLocale()->getId());
+            $_sql .= " as score FROM langstring_entries WHERE langstring_entries.langstrings_id = '{$this->id}' AND value!='' ORDER BY score LIMIT 1";
+            $this->mBd->ExecSqlUniqueRes($_sql, $_row, false);
 
-            if ($locale) {
-                // Set locale of string
-                $_language = new Locale($locale);
+            if ($_row == null) {
+                // String has not been found
+                $_retval = "(Empty string)";
+            } else {
+                // String has been found
+                $_retval = $_row['value'];
 
-                $_id = $_language->GetId();
-                $_idSQL = "'" . $_id . "'";
+                // Check if caching has been enabled.
+                if ($_cache->isCachingEnabled) {
+                    // Save data into cache, because it wasn't saved into cache before.
+                    $_cache->saveCachedData($_retval);
+                }
+            }
+        }
+
+        return $_retval;
+    }
+
+    /**
+     * Adds the string associated with the locale.
+     *
+     * @param string $string             String to be added
+     * @param string $locale             Locale of string (i.e. 'fr_CA') - can
+     *                                   be NULL
+     * @param bool   $allow_empty_string Defines if string may be empty
+     *
+     * @return bool True if string has been added, otherwise false.
+     *
+     * @access private
+     */
+    private function addString($string, $locale, $allow_empty_string = false)
+    {
+        // Init values
+        $_retval = false;
+        $_id = 'NULL';
+        $_idSQL = $_id;
+
+        if ($locale) {
+            // Set locale of string
+            $_language = new Locale($locale);
+
+            $_id = $_language->GetId();
+            $_idSQL = "'" . $_id . "'";
+        }
+
+        if ($allow_empty_string || ($string != null && $string != '')) {
+            // Save string in database
+            $string = $this->mBd->EscapeString($string);
+            $this->mBd->ExecSqlUpdate("INSERT INTO langstring_entries (langstring_entries_id, langstrings_id, locales_id, value) VALUES ('" . get_guid() . "', '$this->id', $_idSQL , '$string')", FALSE);
+
+            // Create new cache object.
+            $_cache = new Cache('langstrings_' . $this->id . '_substring_' .  $_id . '_string', $this->id);
+
+            // Check if caching has been enabled.
+            if ($_cache->isCachingEnabled) {
+                // Remove old cached data.
+                $_cache->eraseCachedData();
+
+                // Save data into cache.
+                $_cache->saveCachedData($string);
             }
 
-            if ($allow_empty_string || ($string != null && $string != '')) {
-                // Save string in database
-                $string = $this->mBd->EscapeString($string);
-                $this->mBd->ExecSqlUpdate("INSERT INTO langstring_entries (langstring_entries_id, langstrings_id, locales_id, value) VALUES ('" . get_guid() . "', '$this->id', $_idSQL , '$string')", FALSE);
+            $_retval = true;
+        }
+
+        return $_retval;
+    }
+
+    /**
+     * Updates the string associated with the locale.
+     *
+     * @param string $string String to be updated.
+     * @param string $locale Locale of string (i.e. 'fr_CA') - can be NULL.
+     *
+     * @return bool True if string has been updated, otherwise false.
+     *
+     * @access private
+     */
+    private function UpdateString($string, $locale)
+    {
+        // Init values
+        $_retval = false;
+        $_id = 'NULL';
+        $_row = null;
+
+        if ($locale) {
+            // Set locale of string
+            $_language = new Locale($locale);
+
+            $_id = $_language->GetId();
+            $_idSQL = "'" . $_id . "'";
+        }
+
+        if ($string != null && $string != '') {
+            $string = $this->mBd->EscapeString($string);
+
+            // If the update returns 0 (no update), try inserting the record
+            $this->mBd->ExecSqlUniqueRes("SELECT * FROM langstring_entries WHERE locales_id = $_idSQL AND langstrings_id = '$this->id'", $_row, false);
+
+            if ($_row != null) {
+                $this->mBd->ExecSqlUpdate("UPDATE langstring_entries SET value = '$string' WHERE langstrings_id = '$this->id' AND locales_id = $_idSQL", false);
 
                 // Create new cache object.
                 $_cache = new Cache('langstrings_' . $this->id . '_substring_' .  $_id . '_string', $this->id);
@@ -171,71 +256,29 @@ if (Dependencies :: check("FCKeditor", $errmsg)) {
                     // Save data into cache.
                     $_cache->saveCachedData($string);
                 }
-
-                $_retval = true;
+            } else {
+                $this->addString($string, $locale);
             }
 
-            return $_retval;
+            $_retval = true;
         }
+        return $_retval;
+    }
 
-        /**
-         * Updates the string associated with the locale.
-         * @param string $string String to be updated.
-         * @param string $locale Locale of string (i.e. 'fr_CA') - can be NULL.
-         * @return boolean True if string has been updated, otherwise false.
-         */
-        private function UpdateString($string, $locale) {
-            // Init values
-            $_retval = false;
-            $_id = 'NULL';
-            $_row = null;
-
-            if ($locale) {
-                // Set locale of string
-                $_language = new Locale($locale);
-
-                $_id = $_language->GetId();
-                $_idSQL = "'" . $_id . "'";
-            }
-
-            if ($string != null && $string != '') {
-                $string = $this->mBd->EscapeString($string);
-
-                // If the update returns 0 (no update), try inserting the record
-                $this->mBd->ExecSqlUniqueRes("SELECT * FROM langstring_entries WHERE locales_id = $_idSQL AND langstrings_id = '$this->id'", $_row, false);
-
-                if ($_row != null) {
-                    $this->mBd->ExecSqlUpdate("UPDATE langstring_entries SET value = '$string' WHERE langstrings_id = '$this->id' AND locales_id = $_idSQL", false);
-
-                    // Create new cache object.
-                    $_cache = new Cache('langstrings_' . $this->id . '_substring_' .  $_id . '_string', $this->id);
-
-                    // Check if caching has been enabled.
-                    if ($_cache->isCachingEnabled) {
-                        // Remove old cached data.
-                        $_cache->eraseCachedData();
-
-                        // Save data into cache.
-                        $_cache->saveCachedData($string);
-                    }
-                } else {
-                    $this->addString($string, $locale);
-                }
-
-                $_retval = true;
-            }
-            return $_retval;
-        }
-
-        /**
-         * Shows the administration interface for HTMLeditor. Gets called if
-         * FCKeditor is installed.
-         * @param string $type_interface SIMPLE for a small HTML editor, LARGE
-         * for a larger HTML editor (default).
-         * @param int $num_nouveau Number of new HTML editors to be created.
-         * @return string HTML code for the administration interface.
-         */
-        function getAdminUI($type_interface = 'LARGE', $num_nouveau = 1) {
+    /**
+     * Shows the administration interface for HTMLeditor.
+     *
+     * @param string $type_interface SIMPLE for a small HTML editor, LARGE
+     *                               for a larger HTML editor (default).
+     * @param int    $num_nouveau    Number of new HTML editors to be created.
+     *
+     * @return string HTML code for the administration interface.
+     *
+     * @access public
+     */
+    public function getAdminUI($type_interface = 'LARGE', $num_nouveau = 1)
+    {
+        if ($this->_FCKeditorAvailable) {
             // Init values
             $_result = null;
             $_html = '';
@@ -257,7 +300,7 @@ if (Dependencies :: check("FCKeditor", $errmsg)) {
                     $_html .= $_languages->GenererFormSelect($_value["locales_id"], "langstrings_" . $this->id . "_substring_" . $_value["langstring_entries_id"] . "_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
 
                     $_FCKeditor = new FCKeditor('langstrings_' . $this->id . '_substring_' . $_value["langstring_entries_id"] . '_string');
-                    $_FCKeditor->BasePath	= BASEPATH . "lib/FCKeditor/";
+                    $_FCKeditor->BasePath = $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . "lib/FCKeditor/";
                     $_FCKeditor->Config["CustomConfigurationsPath"] = BASE_URL_PATH . "js/HTMLeditor.js";
                     $_FCKeditor->Config["AutoDetectLanguage"] = false;
                     $_FCKeditor->Config["DefaultLanguage"] = substr(Locale :: getCurrentLocale()->getId(), 0, 2);
@@ -296,7 +339,7 @@ if (Dependencies :: check("FCKeditor", $errmsg)) {
             $_html .= $_languages->GenererFormSelect($_locale, "langstrings_" . $this->id . "_substring_new_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
 
             $_FCKeditor = new FCKeditor('langstrings_' . $this->id . '_substring_new_string');
-            $_FCKeditor->BasePath	= BASEPATH . "lib/FCKeditor/";
+            $_FCKeditor->BasePath = $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . "lib/FCKeditor/";
             $_FCKeditor->Config["CustomConfigurationsPath"] = BASE_URL_PATH . "js/HTMLeditor.js";
             $_FCKeditor->Config["AutoDetectLanguage"] = false;
             $_FCKeditor->Config["DefaultLanguage"] = substr(Locale :: getCurrentLocale()->getId(), 0, 2);
@@ -323,15 +366,26 @@ if (Dependencies :: check("FCKeditor", $errmsg)) {
 
             $_html .= "</ul>\n";
             $_html .= "</div>\n";
-
-            return parent :: getAdminUI($_html);
+        } else {
+            $_html = '';
+            $_html .= "<div class='admin_class'>HTMLeditor (".get_class($this)." instance)</div>\n";
+            $_html .= _("FCKeditor is not installed");
         }
 
-        /**
-         * Processes the input of the administration interface for HTMLeditor
-         * @return void
-         */
-        function processAdminUI() {
+        return parent :: getAdminUI($_html);
+    }
+
+    /**
+     * Processes the input of the administration interface for HTMLeditor
+     *
+     * @return void
+     *
+     * @access public
+     */
+    public function processAdminUI()
+    {
+        // Check FCKeditor support
+        if ($this->_FCKeditorAvailable) {
             // Init values
             $_result = null;
 
@@ -398,102 +452,97 @@ if (Dependencies :: check("FCKeditor", $errmsg)) {
                 }
             }
         }
+    }
 
-        /**
-         * Retreives the user interface of this object. Anything that overrides
-         * this method should call the parent method with it's output at the
-         * END of processing.
-         * @param string $subclass_admin_interface HTML content of the interface
-         * element of a children.
-         * @return string The HTML fragment for this interface.
-         */
-        public function getUserUI($subclass_user_interface = null) {
-            $_html = '';
-            $_html .= "<div class='user_ui_container'>\n";
-            $_html .= "<div class='user_ui_object_class'>Langstring (" . get_class($this) . " instance)</div>\n";
-            $_html .= "<div class='langstring'>\n";
+    /**
+     * Retreives the user interface of this object. Anything that overrides
+     * this method should call the parent method with it's output at the
+     * END of processing.
+     *
+     * @param string $subclass_admin_interface HTML content of the interface
+     *                                         element of a children.
+     *
+     * @return string The HTML fragment for this interface.
+     *
+     * @access public
+     */
+    public function getUserUI($subclass_user_interface = null)
+    {
+        // Init values
+        $html = "";
+
+        $_html .= "<div class='user_ui_container'>\n";
+        $_html .= "<div class='user_ui_object_class'>HTMLeditor (" . get_class($this) . " instance)</div>\n";
+        $_html .= "<div class='langstring'>\n";
+
+        // Check FCKeditor support
+        if ($this->_FCKeditorAvailable) {
             $_html .= $this->getString();
-            $_html .= $subclass_user_interface;
-            $_html .= "</div>\n";
-            $_html .= "</div>\n";
-
-            return parent :: getUserUI($_html);
-        }
-
-        /**
-         * Reloads the object from the database. Should normally be called after
-         * a set operation. This function is private because calling it from a
-         * subclass will call the constructor from the wrong scope.
-         * @return void
-         */
-        private function refresh() {
-            $this->__construct($this->id);
-        }
-
-        /**
-         * @see GenericObject
-         * @note Persistent content will not be deleted
-         */
-        public function delete(& $errmsg) {
-            // Init values.
-            $_retval = false;
-
-            if ($this->isPersistent()) {
-                $errmsg = _("Content is persistent (you must make it non persistent before you can delete it)");
-            } else {
-                global $db;
-
-                if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
-                    $_sql = "DELETE FROM content WHERE content_id='$this->id'";
-                    $db->ExecSqlUpdate($_sql, false);
-                    $_retval = true;
-
-                    // Create new cache object.
-                    $_cache = new Cache('all', $this->id);
-
-                    // Check if caching has been enabled.
-                    if ($_cache->isCachingEnabled) {
-                        // Remove old cached data.
-                        $_cache->eraseCachedGroupData();
-                    }
-                } else {
-                    $errmsg = _("Access denied (not owner of content)");
-                }
-            }
-
-            return $_retval;
-        }
-
-    }
-} else {
-    class HTMLeditor extends Content {
-
-        /**
-         * Constructor. Gets called if FCKeditor is NOT installed.
-         * @param int $content_id ID of content.
-         * @return void
-         */
-        protected function __construct($content_id) {
-            parent :: __construct($content_id);
-        }
-
-        /**
-         * Shows the administration interface for HTMLeditor. Gets called if
-         * FCKeditor is NOT installed.
-         * @param string $subclass_admin_interface This parameter should stay
-         * null.
-         * @return string HTML code for the administration interface. Tells the
-         * user that the feature is not available.
-         */
-        public function getAdminUI($subclass_admin_interface = null) {
-            $_html = '';
-            $_html .= "<div class='admin_class'>FCKeditor (".get_class($this)." instance)</div>\n";
+        } else {
             $_html .= _("FCKeditor is not installed");
-
-            return parent :: getAdminUI($_html);
         }
 
+        $_html .= $subclass_user_interface;
+        $_html .= "</div>\n";
+        $_html .= "</div>\n";
+
+        return parent::getUserUI($_html);
     }
+
+    /**
+     * Reloads the object from the database. Should normally be called after
+     * a set operation. This function is private because calling it from a
+     * subclass will call the constructor from the wrong scope.
+     *
+     * @return void
+     *
+     * @access private
+     */
+    private function refresh()
+    {
+        $this->__construct($this->id);
+    }
+
+    /**
+     * Deletes a HTMLeditor object
+     *
+     * @param string $errmsg Reference to error message
+     *
+     * @return bool True if deletion was successful
+     *
+     * @access public
+     * @internal Persistent content will not be deleted
+     */
+    public function delete(& $errmsg) {
+        // Init values.
+        $_retval = false;
+
+        if ($this->isPersistent()) {
+            $errmsg = _("Content is persistent (you must make it non persistent before you can delete it)");
+        } else {
+            global $db;
+
+            if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
+                $_sql = "DELETE FROM content WHERE content_id='$this->id'";
+                $db->ExecSqlUpdate($_sql, false);
+                $_retval = true;
+
+                // Create new cache object.
+                $_cache = new Cache('all', $this->id);
+
+                // Check if caching has been enabled.
+                if ($_cache->isCachingEnabled) {
+                    // Remove old cached data.
+                    $_cache->eraseCachedGroupData();
+                }
+            } else {
+                $errmsg = _("Access denied (not owner of content)");
+            }
+        }
+
+        return $_retval;
+    }
+
 }
 
 /*

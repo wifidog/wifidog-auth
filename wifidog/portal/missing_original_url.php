@@ -47,27 +47,18 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-/**
- * @ignore
- */
-define('BASEPATH', '../');
+require_once('../include/common.php');
 
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'include/common_interface.php';
-require_once BASEPATH.'classes/MainUI.php';
-
-$ui = new MainUI();
-
-//$ui->setToolContent($tool_html);
+require_once('include/common_interface.php');
+require_once('classes/MainUI.php');
 
 $html = '';
 
-// While in validation period, alert user that he should validate his account ASAP
-if($current_user && $current_user->getAccountStatus() == ACCOUNT_STATUS_VALIDATION)
-    $html .= "<div id='warning_message_area'>\n";
-    $html .= _('For some reason, we were unable to determine the web site you initially wanted to see.  You should now enter a web address in your URL bar.');
-    $html .= "</div>";
+$html .= "<div id='warning_message_area'>\n";
+$html .= _('For some reason, we were unable to determine the web site you initially wanted to see.  You should now enter a web address in your URL bar.');
+$html .= "</div>";
 
+$ui = new MainUI();
 $ui->setMainContent($html);
 $ui->display();
 

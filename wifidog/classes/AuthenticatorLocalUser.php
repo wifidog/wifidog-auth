@@ -35,15 +35,15 @@
 
 /**
  * @package    WiFiDogAuthServer
+ * @subpackage Authenticators
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
+ * @copyright  2005 Benoit Gregoire, Technologies Coeus inc.
  * @version    CVS: $Id$
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH.'classes/Authenticator.php';
-require_once BASEPATH.'classes/User.php';
+require_once('classes/Authenticator.php');
+require_once('classes/User.php');
 
 /** Internal wifidog user database authentication source */
 class AuthenticatorLocalUser extends Authenticator

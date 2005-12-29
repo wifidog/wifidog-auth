@@ -43,13 +43,9 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-/**
- * @ignore
- */
-define('BASEPATH','./');
+require_once(dirname(__FILE__) . '/include/common.php');
 
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'include/common_interface.php';
+require_once('include/common_interface.php');
 
 if (isset($_REQUEST["message"])) {
     switch ($_REQUEST["message"]) {

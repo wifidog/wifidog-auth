@@ -42,9 +42,8 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/FormSelectGenerator.php';
-require_once BASEPATH.'classes/GenericObject.php';
+require_once('classes/FormSelectGenerator.php');
+require_once('classes/GenericObject.php');
 
 /** Any type of content */
 class Content implements GenericObject {
@@ -159,9 +158,9 @@ class Content implements GenericObject {
      * @return an array of class names */
     public static function getAvailableContentTypes()
     {
-        $dir = BASEPATH.'classes/Content';
-        if ($dir_handle = @opendir($dir))
-        {
+        $dir = $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . 'classes/Content';
+
+        if ($dir_handle = @opendir($dir)) {
             $content_types = array();
 
             /* This is the correct way to loop over the directory. */
@@ -1365,9 +1364,9 @@ class Content implements GenericObject {
 
 /* This allows the class to enumerate it's children properly */
 $class_names = Content :: getAvailableContentTypes();
-foreach ($class_names as $class_name)
-{
-    require_once BASEPATH."classes/Content/{$class_name}/{$class_name}.php";
+
+foreach ($class_names as $class_name) {
+    require_once('classes/Content/' . $class_name . '/' . $class_name . '.php');
 }
 
 /*

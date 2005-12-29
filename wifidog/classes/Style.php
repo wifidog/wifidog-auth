@@ -44,14 +44,14 @@
  * stats somewhere else.
  */
 
-  /*Prevent caching*/
+require_once('classes/SmartyWifidog.php');
+require_once('classes/Session.php');
+
+/*Prevent caching*/
 Header("Cache-control: private, no-cache, must-revalidate");
 Header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); # Past date
 Header("Pragma: no-cache");
 Header("Content-Type: text/html; charset=utf-8");
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/SmartyWifidog.php';
-require_once BASEPATH.'classes/Session.php';
 
 /** Style contains functions managing headers, footers, stylesheet, etc.
  */

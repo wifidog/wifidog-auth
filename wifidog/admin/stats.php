@@ -42,14 +42,10 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-/**
- * @ignore
- */
-define('BASEPATH', '../');
+require_once('admin_common.php');
 
-require_once BASEPATH.'admin/admin_common.php';
-require_once BASEPATH.'classes/MainUI.php';
-require_once BASEPATH.'classes/Utils.php';
+require_once('classes/MainUI.php');
+require_once('classes/Utils.php');
 
 $current_user = User :: getCurrentUser();
 

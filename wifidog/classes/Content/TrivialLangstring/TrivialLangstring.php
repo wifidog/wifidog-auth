@@ -37,46 +37,73 @@
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
+ * @copyright  2005 Benoit Gregoire, Technologies Coeus inc.
  * @version    CVS: $Id$
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH.'classes/FormSelectGenerator.php';
-require_once BASEPATH.'classes/Content.php';
-require_once BASEPATH.'classes/LocaleList.php';
-require_once BASEPATH.'classes/Locale.php';
+require_once('classes/LocaleList.php');
+require_once('classes/Locale.php');
 
-error_reporting(E_ALL);
-
-/** Represents a trivial Langstring (no title, description, etc.
+/**
+ * Represents a trivial Langstring (no title, description, etc.)
+ *
+ * @package    WiFiDogAuthServer
+ * @subpackage ContentClasses
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @copyright  2005 Benoit Gregoire, Technologies Coeus inc.
  */
 class TrivialLangstring extends Langstring
 {
-    /**Constructeur
-    @param $content_id Content id
-    */
-    function __construct($content_id)
+    /**
+     * Constructor
+     *
+     * @param string $content_id Content id
+     *
+     * @return void
+     *
+     * @access protected
+     */
+    protected function __construct($content_id)
     {
-        parent :: __construct($content_id);
+        parent::__construct($content_id);
         $this->setIsTrivialContent(true);
-        /* A TrivialLangstring is NEVER persistent */
+
+        /*
+         * A TrivialLangstring is NEVER persistent
+         */
         parent::setIsPersistent(false);
     }
 
-    /** A short string representation of the content */
+    /**
+     * A short string representation of the content
+     *
+     * @return string Returns the content
+     *
+     * @access public
+     */
     public function __toString()
     {
         return $this->getString();
     }
-    /** Reloads the object from the database.  Should normally be called after a set operation.
+
+    /**
+     * Reloads the object from the database.
+     *
+     * Should normally be called after a set operation.
+     *
      * This function is private because calling it from a subclass will call the
-     * constructor from the wrong scope */
+     * constructor from the wrong scope
+     *
+     * @return void
+     *
+     * @access private
+     */
     private function refresh()
     {
         $this->__construct($this->id);
     }
+
 }
 
 /*

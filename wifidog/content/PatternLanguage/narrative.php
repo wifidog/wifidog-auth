@@ -42,16 +42,12 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-/**
- * @ignore
- */
-define('BASEPATH', '../../');
+require_once('../../include/common.php');
 
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'include/common_interface.php';
-require_once BASEPATH.'classes/User.php';
-require_once BASEPATH.'classes/Content/PatternLanguage.php';
-require_once BASEPATH.'classes/MainUI.php';
+require_once('include/common_interface.php');
+require_once('classes/User.php');
+require_once('classes/Content/PatternLanguage.php');
+require_once('classes/MainUI.php');
 
 // This trick is done to allow displaying of Pattern Language right away if there is only one available.
 if(!empty($_REQUEST['content_id']))

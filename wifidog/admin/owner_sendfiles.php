@@ -44,15 +44,11 @@
  * @todo		  Move to node getAdminUI.
  */
 
-/**
- * @ignore
- */
-define('BASEPATH','../');
+require_once('admin_common.php');
 
-require_once BASEPATH.'admin/admin_common.php';
-require_once BASEPATH.'classes/Node.php';
-require_once BASEPATH.'classes/User.php';
-require_once BASEPATH.'classes/MainUI.php';
+require_once('classes/Node.php');
+require_once('classes/User.php');
+require_once('classes/MainUI.php');
 
 $user_id = User::getCurrentUser()->getId();
 $smarty->assign("user_id", $user_id); // DEBUG
@@ -76,7 +72,7 @@ $filesArray = array (
 );
 
 // Error checking before user can upload files
-if (!is_writable(BASEPATH.LOCAL_CONTENT_REL_PATH)) {
+if (!is_writable($_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . LOCAL_CONTENT_REL_PATH)) {
      /**
       * @todo Detailler l'erreur:
       * - print absolute PATH directory
@@ -84,7 +80,7 @@ if (!is_writable(BASEPATH.LOCAL_CONTENT_REL_PATH)) {
       * - print needed uid/gid
       */
     $fileinfo = posix_getpwuid(posix_getuid());
-    $smarty->assign("error_message", _("Can not write to directory '" . BASEPATH.LOCAL_CONTENT_REL_PATH . "', ownership should be set to user ") . $fileinfo['name'] . " (uid=" . $fileinfo['uid'] . ")");
+    $smarty->assign("error_message", _("Can not write to directory '" . $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . LOCAL_CONTENT_REL_PATH . "', ownership should be set to user ") . $fileinfo['name'] . " (uid=" . $fileinfo['uid'] . ")");
     $ui=new MainUI();
     $ui->setToolSection('ADMIN');
     $ui->setMainContent($smarty->fetch("admin/templates/owner_display.html"));
@@ -95,8 +91,8 @@ if (!is_writable(BASEPATH.LOCAL_CONTENT_REL_PATH)) {
 
 if ("$delfile" == "submit") { // Submit all files
     // Create node directory in local_content
-    if (!file_exists(BASEPATH.LOCAL_CONTENT_REL_PATH . $node_id)) {
-        mkdir(BASEPATH.LOCAL_CONTENT_REL_PATH . $node_id);  // TODO : Add error checking
+    if (!file_exists($_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . LOCAL_CONTENT_REL_PATH . $node_id)) {
+        mkdir($_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . LOCAL_CONTENT_REL_PATH . $node_id);  // TODO : Add error checking
     }
 
     foreach($filesArray as $fileArray) {
@@ -105,7 +101,7 @@ if ("$delfile" == "submit") { // Submit all files
 
         // Source and destination file (with PATH) and name (in tmp directory). @ is use to remove useless PHP notice message.
         $source              = @$_FILES["$filename_underscore"]['tmp_name'];
-        $destination         = BASEPATH.LOCAL_CONTENT_REL_PATH."$node_id/$filename";  // Destination file PATH and name (local_content)
+        $destination         = $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . LOCAL_CONTENT_REL_PATH."$node_id/$filename";  // Destination file PATH and name (local_content)
         //echo "S=$source D=$destination<BR>";
         if (empty($source)) // Skip empty input file submission
             continue;
@@ -123,7 +119,7 @@ if ("$delfile" == "submit") { // Submit all files
     foreach($filesArray as $fileArray) {
         if ($fileArray['filename'] == $delfile) {
             $filename = $fileArray['filename'];
-            $source = BASEPATH.LOCAL_CONTENT_REL_PATH . "$node_id/$filename";
+            $source = $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . LOCAL_CONTENT_REL_PATH . "$node_id/$filename";
             //echo "DELETE SOURCE=$source<BR>";
             unlink($source);
         }
@@ -135,7 +131,7 @@ if ("$action" == 'uploadform') {
     $inc = 0;
     foreach($filesArray as $fileArray) {
         $filename = $fileArray['filename'];
-        if (file_exists(BASEPATH.LOCAL_CONTENT_REL_PATH . "$node_id/$filename")) {
+        if (file_exists($_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . LOCAL_CONTENT_REL_PATH . "$node_id/$filename")) {
             $filesArray[$inc]['file_exists'] = 1;
         }
         ++$inc;

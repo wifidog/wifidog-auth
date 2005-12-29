@@ -37,32 +37,53 @@
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Francois Proulx <francois.proulx@gmail.com>
- * @copyright  2005 Francois Proulx <francois.proulx@gmail.com> - Technologies
- * Coeus inc.
+ * @copyright  2005 Francois Proulx, Technologies Coeus inc.
  * @version    CVS: $Id$
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH.'classes/Content.php';
-error_reporting(E_ALL);
-
 /**
  * A SimpleIFrame is an IFrame without all the fuss ( title, description ... )
+ *
+ * @package    WiFiDogAuthServer
+ * @subpackage ContentClasses
+ * @author     Francois Proulx <francois.proulx@gmail.com>
+ * @copyright  2005 Francois Proulx, Technologies Coeus inc.
  */
 class SimpleIFrame extends IFrame
 {
-    /**Constructeur
-    @param $content_id Content id
-    */
-    function __construct($content_id)
+    /**
+     * Constructor
+     *
+     * @param string $content_id Content id
+     *
+     * @return void
+     *
+     * @access protected
+     */
+    protected function __construct($content_id)
     {
         parent :: __construct($content_id);
         $this->setIsTrivialContent(true);
+
+        /*
+         * A SimpleIFrame is NEVER persistent
+         */
         $this->setIsPersistent(false);
     }
-        /** Reloads the object from the database.  Should normally be called after a set operation.
+
+    /**
+     * Reloads the object from the database.
+     *
+     * Should normally be called after a set operation.
+     *
      * This function is private because calling it from a subclass will call the
-     * constructor from the wrong scope */
+     * constructor from the wrong scope
+     *
+     * @return void
+     *
+     * @access private
+     */
     private function refresh()
     {
         $this->__construct($this->id);

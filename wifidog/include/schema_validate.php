@@ -44,11 +44,6 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-error_reporting(E_ALL);
-require_once BASEPATH.'config.php';
-require_once BASEPATH.'classes/AbstractDb.php';
-require_once BASEPATH.'classes/Session.php';
-require_once BASEPATH.'classes/Node.php';
 define('REQUIRED_SCHEMA_VERSION', 34);
 
 /** Check that the database schema is up to date.  If it isn't, offer to update it. */
@@ -67,7 +62,7 @@ function validate_schema()
     {
         echo "<html><body>";
         echo "<h1>"._("Unable to retrieve schema version. The database schema is too old to be updated.")."</h1>";
-        echo "<h2>"._("Try running the")." <a href='".BASEPATH."install.php'>"._("installation script")."</a>.</h2>\n";
+        echo "<h2>"._("Try running the")." <a href='" . SYSTEM_PATH . "install.php'>"._("installation script")."</a>.</h2>\n";
         echo "</html></body>";
         exit ();
     }
@@ -689,14 +684,14 @@ function update_schema()
             $sql .= "UPDATE node_has_content SET display_location='portal_page';\n";
             $sql .= "ALTER TABLE node_has_content ALTER COLUMN display_location SET NOT NULL;\n";
             $sql .= "ALTER TABLE node_has_content ADD CONSTRAINT display_location_fkey FOREIGN KEY (display_location) REFERENCES content_display_location ON UPDATE CASCADE ON DELETE RESTRICT;\n";
-			
+
 			/* Convert the existing node logos */
             $results = null;
             $db->ExecSql("SELECT node_id FROM nodes", $results, false);
                             define('HOTSPOT_LOGO_NAME', 'hotspot_logo.jpg');
             foreach ($results as $row)
             {
-                $php_logo_path = BASEPATH.LOCAL_CONTENT_REL_PATH.$row['node_id'].'/'.HOTSPOT_LOGO_NAME;
+                $php_logo_path = $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . LOCAL_CONTENT_REL_PATH.$row['node_id'].'/'.HOTSPOT_LOGO_NAME;
                 //echo $php_logo_path."<br>";
                 if (file_exists($php_logo_path))
                 {
@@ -736,7 +731,7 @@ function update_schema()
             $sql .= "UPDATE flickr_photostream SET photo_display_mode = 'PDM_GRID';\n";
             $sql .= "ALTER TABLE flickr_photostream ALTER COLUMN photo_display_mode SET NOT NULL;\n";
         }
-        
+
         $new_schema_version = 34;
         if ($schema_version < $new_schema_version)
         {

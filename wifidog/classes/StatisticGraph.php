@@ -35,15 +35,14 @@
 
 /**
  * @package    WiFiDogAuthServer
+ * @subpackage Statistics
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
+ * @copyright  2005 Benoit Gregoire, Technologies Coeus inc.
  * @version    CVS: $Id$
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/Statistics.php';
+require_once('classes/Statistics.php');
 
 /* An abstract class.  All statistics must inherit from this class */
 abstract class StatisticGraph
@@ -57,7 +56,8 @@ abstract class StatisticGraph
      * @return a localised string */
     final public static function getObject($classname)
     {
-        require_once BASEPATH.'classes/StatisticGraph/'.$classname.'.php';
+        require_once('classes/StatisticGraph/' . $classname . '.php');
+
         return new $classname ();
     }
 

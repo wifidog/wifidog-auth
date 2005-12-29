@@ -41,9 +41,10 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH . 'include/common.php';
-require_once BASEPATH . 'include/common_interface.php';
-require_once BASEPATH . 'classes/Security.php';
+require_once('../include/common.php');
+
+require_once('include/common_interface.php');
+require_once('classes/Security.php');
 
 /*
  * Local variables:

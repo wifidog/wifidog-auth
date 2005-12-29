@@ -35,14 +35,14 @@
 
 /**
  * @package    WiFiDogAuthServer
+ * @subpackage Authenticators
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
+ * @copyright  2005 Benoit Gregoire, Technologies Coeus inc.
  * @version    CVS: $Id$
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH.'classes/Network.php';
+require_once('classes/Network.php');
 
 /** Abstract class to represent an authentication source */
 abstract class Authenticator

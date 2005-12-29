@@ -42,9 +42,8 @@
  * @package    WiFiDogAuthServer
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
  * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2004-2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies
- * Coeus inc.
- * @copyright  2005 Max Horvath <max.horvath@maxspot.de> - maxspot GmbH
+ * @copyright  2004-2005 Benoit Gregoire, Technologies Coeus inc.
+ * @copyright  2005 Max Horvath, maxspot GmbH
  * @version    CVS: $Id$
  * @link       http://sourceforge.net/projects/wifidog/
  */
@@ -175,7 +174,7 @@ define('USE_CACHE_LITE', false);
  *
  * Define the list of locales you want to support.
  * English, French and German are supported.
- * 
+ *
  * See below examples
  */
 $AVAIL_LOCALE_ARRAY = array('fr' => 'Français',
@@ -190,7 +189,7 @@ $AVAIL_LOCALE_ARRAY = array('fr' => 'Français',
 //                            'de_DE' => 'Deutsch');
 
 /**
- * Other linux distributions  use locales like this:
+ * Other linux distributions use locales like this:
  */
 //$AVAIL_LOCALE_ARRAY = array('fr_CA.UTF8' => 'Français',
 //                            'en_US.UTF8' => 'English',
@@ -248,7 +247,7 @@ define('GMAPS_HOTSPOTS_MAP_ENABLED', true);
  *
  * In order to use the Google API you need to register your domain at Google and
  * enter the given API key.
- * 
+ *
  * Sign up for an API key here
  * http://www.google.com/apis/maps/
  */
@@ -278,7 +277,7 @@ define('GMAPS_INITIAL_ZOOM_LEVEL', '5');
  *
  * If you want to enable XSLT support for the Hotspot status page enable this
  * value.
- * 
+ *
  * Enabling it will let you you display hostpot status in any format.
  * http://server_ip/hotspot_status.php?format=XML&xslt=http://xslt_server/xslt/wifidog_status.xsl
  */
@@ -352,9 +351,25 @@ define('DEFAULT_NODE_ID', 'default');
  * @deprecated since 2005-04-19
  */
 define('PAGE_HEADER_NODE', 'header.html');
+
+/**
+ * @deprecated since 2005-04-19
+ */
 define('PAGE_HEADER_NAME', 'header.html');
+
+/**
+ * @deprecated since 2005-04-19
+ */
 define('PAGE_FOOTER_NODE', 'footer.html');
+
+/**
+ * @deprecated since 2005-04-19
+ */
 define('PAGE_FOOTER_NAME', 'footer.html');
+
+/**
+ * @deprecated since 2005-04-19
+ */
 define('PORTAL_PAGE_NAME', 'portal.html');
 
 /**

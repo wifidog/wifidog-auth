@@ -37,16 +37,21 @@
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
+ * @copyright  2005 Benoit Gregoire, Technologies Coeus inc.
  * @version    CVS: $Id$
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH.'classes/Content.php';
-require_once BASEPATH.'classes/Content/ContentGroup/ContentGroupElement.php';
+require_once('classes/Content/ContentGroup/ContentGroupElement.php');
 
-/** A generic content group */
+/**
+ * A generic content group
+ *
+ * @package    WiFiDogAuthServer
+ * @subpackage ContentClasses
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @copyright  2005 Benoit Gregoire, Technologies Coeus inc.
+ */
 class ContentGroup extends Content
 {
 
@@ -68,8 +73,14 @@ class ContentGroup extends Content
 
     protected function __construct($content_id)
     {
-        parent :: __construct($content_id);
+        // Define globals
         global $db;
+
+        // Init values
+        $row = null;
+
+        parent :: __construct($content_id);
+
         $content_id = $db->EscapeString($content_id);
 
         $sql = "SELECT * FROM content_group WHERE content_group_id='$content_id'";
@@ -427,6 +438,9 @@ class ContentGroup extends Content
 
     function processAdminUI()
     {
+        // Init values
+        $errmsg = null;
+
         if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
         {
             parent :: processAdminUI();
@@ -503,9 +517,16 @@ class ContentGroup extends Content
     * @return an array of ContentGroupElement or an empty arrray */
     function getDisplayElements()
     {
+        // Define globals
         global $db;
+
+        // Init values
         $retval = array ();
         $user = User :: getCurrentUser();
+        $redisplay_rows = null;
+        $last_order_row = null;
+        $element_rows = null;
+
         if ($user)
         {
             $user_id = $user->getId();
@@ -754,8 +775,13 @@ class ContentGroup extends Content
      * @return an array of ContentGroupElement or an empty arrray */
     function getElements()
     {
+        // Define globals
         global $db;
+
+        // Init values
         $retval = array ();
+        $element_rows = null;
+
         $sql = "SELECT content_group_element_id FROM content_group_element WHERE content_group_id='$this->id' ORDER BY display_order";
         $db->ExecSql($sql, $element_rows, false);
         if ($element_rows != null)

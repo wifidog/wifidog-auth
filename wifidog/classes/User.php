@@ -42,9 +42,8 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/Network.php';
-require_once BASEPATH.'classes/Mail.php';
+require_once('classes/Network.php');
+require_once('classes/Mail.php');
 
 /** Abstract a User. */
 class User implements GenericObject
@@ -90,7 +89,7 @@ class User implements GenericObject
      */
     public static function getCurrentUser()
     {
-        require_once BASEPATH.'classes/Session.php';
+        require_once('classes/Session.php');
         $session = new Session();
         $user = null;
         try

@@ -44,12 +44,10 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-/**
- * @ignore
- */
-define('BASEPATH','./');
+require_once(dirname(__FILE__) . '/include/common.php');
 
-require_once BASEPATH.'classes/AbstractGeocoder.php';
+require_once('classes/AbstractGeocoder.php');
+
 header("Content-Type: text/xml");
 
 if(!empty($_REQUEST["postal_code"]))

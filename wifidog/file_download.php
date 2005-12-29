@@ -42,12 +42,7 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-/**
- * @ignore
- */
-define('BASEPATH', './');
-
-require_once BASEPATH.'include/common.php';
+require_once(dirname(__FILE__) . '/include/common.php');
 
 if (!empty ($_REQUEST['file_id']))
 {

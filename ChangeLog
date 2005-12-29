@@ -1,8 +1,14 @@
-2005-12-26 François Proulx <francois.proulx@gmail.com>	
+2005-12-28 Max Horváth <max.horvath@maxspot.de>
+	* Removed BASEPATH define from source - resulting in a better require-overview
+	* speed improvement of 7% by optimizing Dependencies class
+	* improved documentation of content classes
+	* added WiFiDog skin to HTMLeditor
+	* updated PhpDocumentor documentation
+
+2005-12-26 François Proulx <francois.proulx@gmail.com>
 	* Fixed bug when the same user was owner of many nodes
 	* Added missing reference to content_display_location initial data in dump script
-	* 
-	
+
 2005-12-26 François Proulx <francois.proulx@gmail.com>
 	* Tiny modifications to config.php
 	* Reinserted the deprecated defines, created errors on my system
@@ -11,7 +17,7 @@
 	* Fully tested installation from scratch using blank database with installation script
 	* Improved installation script a bit
 	* Synched SQL for CVS schema 29 --> 33
-	
+
 2005-12-26 Max Horváth <max.horvath@maxspot.de>
 	* added new headers to every source file
 	* converted file to represent a tab as four (4) spaces

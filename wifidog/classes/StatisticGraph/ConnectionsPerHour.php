@@ -35,14 +35,14 @@
 
 /**
  * @package    WiFiDogAuthServer
+ * @subpackage Statistics
  * @author     Philippe April
  * @copyright  2005 Philippe April
  * @version    CVS: $Id$
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/StatisticGraph.php';
+require_once('classes/StatisticGraph.php');
 
 /* An abstract class.  All statistics must inherit from this class */
 class ConnectionsPerHour extends StatisticGraph

@@ -35,12 +35,11 @@
 
 /**
  * @package    WiFiDogAuthServer
+ * @subpackage Authenticators
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
  * @author     Francois Proulx <francois.proulx@gmail.com>
- * @copyright  2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
- * @copyright  2005 Francois Proulx <francois.proulx@gmail.com> - Technologies
- * Coeus inc.
+ * @copyright  2005 Benoit Gregoire, Technologies Coeus inc.
+ * @copyright  2005 Francois Proulx, Technologies Coeus inc.
  * @version    CVS: $Id$
  * @link       http://sourceforge.net/projects/wifidog/
  */
@@ -50,11 +49,12 @@
  * Copyright (c) 2003, Michael Bretterklieber <michael@bretterklieber.com>
  * All rights reserved.
  */
-require_once BASEPATH.'classes/Authenticator.php';
-require_once BASEPATH.'classes/User.php';
+require_once('classes/Authenticator.php');
+require_once('classes/User.php');
+
 // Including PEAR RADIUS and CHAP MD5 interface classes
-require_once 'Auth/RADIUS.php';
-require_once 'Crypt/CHAP.php';
+require_once('Auth/RADIUS.php');
+require_once('Crypt/CHAP.php');
 
 /** Internal wifidog user database authentication source */
 class AuthenticatorRadius extends Authenticator

@@ -44,20 +44,20 @@
 
 /*Prevent caching*/
 
-require_once BASEPATH.'include/common.php';
 define('DEFAULT_CONTENT_SMARTY_PATH', LOCAL_CONTENT_REL_PATH.DEFAULT_NODE_ID.'/');
 define('NODE_CONTENT_SMARTY_PATH', LOCAL_CONTENT_REL_PATH.CURRENT_NODE_ID.'/');
 define('COMMON_CONTENT_SMARTY_PATH', LOCAL_CONTENT_REL_PATH.'common/');
 
 # Check if Smarty installed, if not redirect user to web-base installation
-if (file_exists(BASEPATH.'lib/smarty/Smarty.class.php')) {
-  require_once(BASEPATH.'lib/smarty/Smarty.class.php');       # load Smarty library
+if (Dependencies::check("Smarty", $errmsg)) {
+    // Load Smarty library
+    require_once('lib/smarty/Smarty.class.php');
 } else {
-  $exploded_path = explode("/", $_SERVER['SCRIPT_NAME']);     # Split directories in token
-  array_pop($exploded_path);                                  # Remove install.php from the list
-  $system_path = implode("/", $exploded_path);                # Build the system_path for the auth-server
-  print "Redirection to Wifidog web-base install since Smarty is missing <META HTTP-EQUIV=Refresh CONTENT=\"1; URL=$system_path/install.php\">";
-  exit();
+    $exploded_path = explode("/", $_SERVER['SCRIPT_NAME']);     # Split directories in token
+    array_pop($exploded_path);                                  # Remove install.php from the list
+    $system_path = implode("/", $exploded_path);                # Build the system_path for the auth-server
+    print "Redirection to Wifidog web-base install since Smarty is missing <META HTTP-EQUIV=Refresh CONTENT=\"1; URL=$system_path/install.php\">";
+    exit();
 }
 
 // The setup.php file is a good place to load
@@ -74,10 +74,10 @@ class SmartyWifidog extends Smarty {
 
         $this->Smarty();
 
-        $this->template_dir = BASEPATH;
-        $this->compile_dir = BASEPATH.'tmp/smarty/templates_c/';
-        $this->config_dir = BASEPATH.'tmp/smarty/configs/';
-        $this->cache_dir = BASEPATH.'tmp/smarty/cache/';
+        $this->template_dir = $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/');
+        $this->compile_dir = $this->template_dir . 'tmp/smarty/templates_c/';
+        $this->config_dir = $this->template_dir . 'tmp/smarty/configs/';
+        $this->cache_dir = $this->template_dir . 'tmp/smarty/cache/';
 
         /* Register the _ smarty modifier to call the _()
          * PHP function which is the gettext() function

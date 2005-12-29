@@ -41,18 +41,13 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-/**
- * @ignore
- */
-define('BASEPATH', '../');
+require_once('admin_common.php');
 
-require_once BASEPATH.'admin/admin_common.php';
-require_once BASEPATH.'classes/MainUI.php';
+require_once('classes/MainUI.php');
+require_once('classes/User.php');
 
 $security = new Security();
 $security->requireAdmin();
-
-require_once BASEPATH.'classes/User.php';
 
 $total = array ();
 $total['incoming'] = 0;

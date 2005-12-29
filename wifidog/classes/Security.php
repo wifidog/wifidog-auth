@@ -42,8 +42,7 @@
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH.'include/common.php';
-require_once BASEPATH.'classes/Session.php';
+require_once('classes/Session.php');
 
 /**
  */

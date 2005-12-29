@@ -37,67 +37,81 @@
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Francois Proulx <francois.proulx@gmail.com>
- * @copyright  2005 Francois Proulx <francois.proulx@gmail.com> - Technologies
- * Coeus inc.
+ * @copyright  2005 Francois Proulx, Technologies Coeus inc.
  * @version    CVS: $Id$
  * @link       http://sourceforge.net/projects/wifidog/
  */
 
-require_once BASEPATH.'classes/Dependencies.php';
+require_once('classes/Content.php');
+require_once('classes/FormSelectGenerator.php');
 
-// Make sure the Phlickr support is installed
-if (Dependencies :: check("Phlickr", $errmsg))
+/**
+ * A Flickr Photostreams wrapper with flexible administrative options
+ *
+ * @package    WiFiDogAuthServer
+ * @subpackage ContentClasses
+ * @author     Francois Proulx <francois.proulx@gmail.com>
+ * @copyright  2005 Francois Proulx, Technologies Coeus inc.
+ */
+class FlickrPhotostream extends Content
 {
-    require_once BASEPATH.'classes/Content.php';
-    require_once BASEPATH.'classes/FormSelectGenerator.php';
+    /* Photo display modes */
+    const DISPLAY_GRID = 'PDM_GRID';
+    const DISPLAY_FEATURE = 'PDM_FEATURE';
+    const DISPLAY_FEATURE_WITH_RANDOM = 'PDM_FEATURE_WITH_RANDOM';
 
-    // Phlickr classes
-    require_once "Phlickr/Api.php";
-    require_once "Phlickr/User.php";
-    require_once "Phlickr/Group.php";
+    /* Grid size */
+    const GRID_X = 3;
+    const GRID_Y = 3;
+
+    /* Photo selection modes */
+    const SELECT_BY_GROUP = 'PSM_GROUP';
+    const SELECT_BY_USER = 'PSM_USER';
+    const SELECT_BY_TAGS = 'PSM_TAGS';
+
+    /* Tags matching mode */
+    const TAG_MODE_ANY = 'ANY_TAG';
+    const TAG_MODE_ALL = 'ALL_TAGS';
+
+    /* Sizes */
+    const SIZE_SQUARED_75x75 = Phlickr_Photo :: SIZE_75PX;
+    const SIZE_THUMB_100x75 = Phlickr_Photo :: SIZE_100PX;
+    const SIZE_SMALL_240x180 = Phlickr_Photo :: SIZE_240PX;
+    const SIZE_MEDIUM_500x375 = Phlickr_Photo :: SIZE_500PX;
+    const SIZE_LARGE_1024 = Phlickr_Photo :: SIZE_1024PX;
+    const SIZE_ORIGINAL = Phlickr_Photo :: SIZE_ORIGINAL;
+
+    /* 15 minutes cache age SHOULD ADD cron tab */
+    const MAX_CACHE_AGE = 600;
+
+    /* Private Phlickr objects */
+    private $flickr_api;
 
     /**
-     * A Flickr Photostreams wrapper
-     * 	- Flexible administrative options
+     * Defines if the Phlickr classes have been installed
+     *
+     * @var bool
+     * @access private
      */
-    class FlickrPhotostream extends Content
+    var $_PhlickrAvailable = false;
+
+    protected function __construct($content_id)
     {
-        /* Photo display modes */
-        const DISPLAY_GRID = 'PDM_GRID';
-        const DISPLAY_FEATURE = 'PDM_FEATURE';
-        const DISPLAY_FEATURE_WITH_RANDOM = 'PDM_FEATURE_WITH_RANDOM';
+        // Init values
+        $errmsg = "";
+        $row = null;
 
-        /* Grid size */
-        const GRID_X = 3;
-        const GRID_Y = 3;
+        parent :: __construct($content_id);
 
-        /* Photo selection modes */
-        const SELECT_BY_GROUP = 'PSM_GROUP';
-        const SELECT_BY_USER = 'PSM_USER';
-        const SELECT_BY_TAGS = 'PSM_TAGS';
-
-        /* Tags matching mode */
-        const TAG_MODE_ANY = 'ANY_TAG';
-        const TAG_MODE_ALL = 'ALL_TAGS';
-
-        /* Sizes */
-        const SIZE_SQUARED_75x75 = Phlickr_Photo :: SIZE_75PX;
-        const SIZE_THUMB_100x75 = Phlickr_Photo :: SIZE_100PX;
-        const SIZE_SMALL_240x180 = Phlickr_Photo :: SIZE_240PX;
-        const SIZE_MEDIUM_500x375 = Phlickr_Photo :: SIZE_500PX;
-        const SIZE_LARGE_1024 = Phlickr_Photo :: SIZE_1024PX;
-        const SIZE_ORIGINAL = Phlickr_Photo :: SIZE_ORIGINAL;
-
-        /* 15 minutes cache age SHOULD ADD cron tab */
-        const MAX_CACHE_AGE = 600;
-
-        /* Private Phlickr objects */
-        private $flickr_api;
-
-        protected function __construct($content_id)
-        {
-            parent :: __construct($content_id);
+        if (Dependencies::check("Phlickr", $errmsg)) {
+            // Definde globals
             global $db;
+
+            // Load Phlickr classes
+            require_once("Phlickr/Api.php");
+            require_once("Phlickr/User.php");
+            require_once("Phlickr/Group.php");
+
             $content_id = $db->EscapeString($content_id);
 
             $sql = "SELECT *, EXTRACT(EPOCH FROM AGE(NOW(), cache_update_timestamp)) as cache_age FROM flickr_photostream WHERE flickr_photostream_id='$content_id'";
@@ -119,306 +133,312 @@ if (Dependencies :: check("Phlickr", $errmsg))
 
             $this->flickr_photostream_row = $row;
             $this->flickr_api = null;
-            $this->mBd = & $db;
-        }
+            $this->mBd = &$db;
 
-        private function loadCacheFromDatabase()
-        {
-            //echo "<h2>DEBUG :: Cache Age :: {$this->flickr_photostream_row['cache_age']}</h2>";
-            if (!is_null($this->flickr_photostream_row['requests_cache']) && !is_null($this->flickr_photostream_row['cache_age']) && ($this->flickr_photostream_row['cache_age'] < self :: MAX_CACHE_AGE))
-            {
-                //echo "<h2>DEBUG :: Loading Flickr cache from database</h2>";
-                $obj = unserialize($this->mBd->UnescapeBinaryString($this->flickr_photostream_row['requests_cache']));
-                $this->getFlickrApi()->setCache($obj);
-            }
+            $this->_PhlickrAvailable = true;
         }
+    }
 
-        private function writeCacheToDatabase($force_overwrite = false)
+    private function loadCacheFromDatabase()
+    {
+        //echo "<h2>DEBUG :: Cache Age :: {$this->flickr_photostream_row['cache_age']}</h2>";
+        if (!is_null($this->flickr_photostream_row['requests_cache']) && !is_null($this->flickr_photostream_row['cache_age']) && ($this->flickr_photostream_row['cache_age'] < self :: MAX_CACHE_AGE))
         {
-                //echo "<h2>DEBUG :: Writing cache to database</h2>";
-    $api = $this->getFlickrApi();
-            if ($api)
-            {
-                $new_cache = serialize($api->getCache());
-                $old_cache = $this->mBd->UnescapeBinaryString($this->flickr_photostream_row['requests_cache']);
-                $age = is_null($this->flickr_photostream_row['cache_age']) ? self :: MAX_CACHE_AGE : $this->flickr_photostream_row['cache_age'];
-                if ($force_overwrite === true || ($age >= self :: MAX_CACHE_AGE) || ($new_cache !== $old_cache))
-                    $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET cache_update_timestamp = NOW(), requests_cache = '".$this->mBd->EscapeBinaryString($new_cache)."' WHERE flickr_photostream_id = '".$this->getId()."'", false);
-            }
+            //echo "<h2>DEBUG :: Loading Flickr cache from database</h2>";
+            $obj = unserialize($this->mBd->UnescapeBinaryString($this->flickr_photostream_row['requests_cache']));
+            $this->getFlickrApi()->setCache($obj);
         }
+    }
 
-        private function getFlickrApi()
+    private function writeCacheToDatabase($force_overwrite = false)
+    {
+            //echo "<h2>DEBUG :: Writing cache to database</h2>";
+$api = $this->getFlickrApi();
+        if ($api)
         {
-            if ($this->getApiKey() && $this->flickr_api == null)
-                $this->flickr_api = new Phlickr_Api($this->getApiKey(), $this->getApiSharedSecret());
-            return $this->flickr_api;
+            $new_cache = serialize($api->getCache());
+            $old_cache = $this->mBd->UnescapeBinaryString($this->flickr_photostream_row['requests_cache']);
+            $age = is_null($this->flickr_photostream_row['cache_age']) ? self :: MAX_CACHE_AGE : $this->flickr_photostream_row['cache_age'];
+            if ($force_overwrite === true || ($age >= self :: MAX_CACHE_AGE) || ($new_cache !== $old_cache))
+                $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET cache_update_timestamp = NOW(), requests_cache = '".$this->mBd->EscapeBinaryString($new_cache)."' WHERE flickr_photostream_id = '".$this->getId()."'", false);
         }
+    }
 
-        private function setFlickrApi($api)
-        {
-            $this->flickr_api = $api;
-        }
+    private function getFlickrApi()
+    {
+        if ($this->getApiKey() && $this->flickr_api == null)
+            $this->flickr_api = new Phlickr_Api($this->getApiKey(), $this->getApiSharedSecret());
+        return $this->flickr_api;
+    }
 
-        public function getSelectionMode()
-        {
-            return $this->flickr_photostream_row['photo_selection_mode'];
-        }
+    private function setFlickrApi($api)
+    {
+        $this->flickr_api = $api;
+    }
 
-        public function setSelectionMode($selection_mode)
-        {
-            switch ($selection_mode)
-            {
-                case self :: SELECT_BY_GROUP :
-                case self :: SELECT_BY_USER :
-                case self :: SELECT_BY_TAGS :
-                    $selection_mode = $this->mBd->EscapeString($selection_mode);
-                    $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET photo_selection_mode = '".$selection_mode."' WHERE flickr_photostream_id = '".$this->getId()."'");
-                    $this->refresh();
-                    break;
-                default :
-                    throw new Exception(_("Illegal Flickr Photostream selection mode."));
-            }
-        }
+    public function getSelectionMode()
+    {
+        return $this->flickr_photostream_row['photo_selection_mode'];
+    }
 
-        public function getPhotoBatchSize()
+    public function setSelectionMode($selection_mode)
+    {
+        switch ($selection_mode)
         {
-            return $this->flickr_photostream_row['photo_batch_size'];
-        }
-
-        public function setPhotoBatchSize($size)
-        {
-            //TODO: Add photo batch size support in getAdminUI()
-            if (is_numeric($size))
-            {
-                $size = $this->mBd->EscapeString($size);
-                $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET photo_batch_size ='$size' WHERE flickr_photostream_id = '".$this->getId()."'");
+            case self :: SELECT_BY_GROUP :
+            case self :: SELECT_BY_USER :
+            case self :: SELECT_BY_TAGS :
+                $selection_mode = $this->mBd->EscapeString($selection_mode);
+                $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET photo_selection_mode = '".$selection_mode."' WHERE flickr_photostream_id = '".$this->getId()."'");
                 $this->refresh();
+                break;
+            default :
+                throw new Exception(_("Illegal Flickr Photostream selection mode."));
+        }
+    }
+
+    public function getPhotoBatchSize()
+    {
+        return $this->flickr_photostream_row['photo_batch_size'];
+    }
+
+    public function setPhotoBatchSize($size)
+    {
+        //TODO: Add photo batch size support in getAdminUI()
+        if (is_numeric($size))
+        {
+            $size = $this->mBd->EscapeString($size);
+            $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET photo_batch_size ='$size' WHERE flickr_photostream_id = '".$this->getId()."'");
+            $this->refresh();
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public function getDisplayMode()
+    {
+        return $this->flickr_photostream_row['photo_display_mode'];
+    }
+
+    public function setDisplayMode($display_mode)
+    {
+        switch ($display_mode)
+        {
+            case self :: DISPLAY_GRID :
+            case self :: DISPLAY_FEATURE :
+            case self :: DISPLAY_FEATURE_WITH_RANDOM :
+                $selection_mode = $this->mBd->EscapeString($display_mode);
+                $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET photo_display_mode = '".$selection_mode."' WHERE flickr_photostream_id = '".$this->getId()."'");
+                $this->refresh();
+                break;
+            default :
+                throw new Exception(_("Illegal Flickr Photostream display mode."));
+        }
+    }
+
+    public function getApiKey()
+    {
+        return $this->flickr_photostream_row['api_key'];
+    }
+
+    public function getApiSharedSecret()
+    {
+        return $this->flickr_photostream_row['api_shared_secret'];
+    }
+
+    public function setApiSharedSecret($api_shared_secret)
+    {
+        $api_shared_secret = $this->mBd->EscapeString($api_shared_secret);
+        $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET api_shared_secret ='$api_shared_secret' WHERE flickr_photostream_id = '".$this->getId()."'");
+        $this->refresh();
+        $this->setFlickrApi(null);
+    }
+
+    public function setApiKey($api_key)
+    {
+        $api_key = $this->mBd->EscapeString($api_key);
+        $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET api_key ='$api_key' WHERE flickr_photostream_id = '".$this->getId()."'");
+        $this->refresh();
+        $this->setFlickrApi(null);
+    }
+
+    public function pingFlickr()
+    {
+        if ($this->getFlickrApi())
+        {
+            try
+            {
+                $request = $$this->getFlickrApi()->createRequest("flickr.test.echo", null);
+                $request->setExceptionThrownOnFailure(true);
+                $resp = $request->execute();
                 return true;
             }
-            else
+            catch (Phlickr_Exception $ex)
+            {
                 return false;
-        }
-
-        public function getDisplayMode()
-        {
-            return $this->flickr_photostream_row['photo_display_mode'];
-        }
-
-        public function setDisplayMode($display_mode)
-        {
-            switch ($display_mode)
-            {
-                case self :: DISPLAY_GRID :
-                case self :: DISPLAY_FEATURE :
-                case self :: DISPLAY_FEATURE_WITH_RANDOM :
-                    $selection_mode = $this->mBd->EscapeString($display_mode);
-                    $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET photo_display_mode = '".$selection_mode."' WHERE flickr_photostream_id = '".$this->getId()."'");
-                    $this->refresh();
-                    break;
-                default :
-                    throw new Exception(_("Illegal Flickr Photostream display mode."));
             }
         }
+        else
+            return false;
+    }
 
-        public function getApiKey()
+    private function getUserByEmail($email)
+    {
+        if ($this->getFlickrApi())
         {
-            return $this->flickr_photostream_row['api_key'];
-        }
-
-        public function getApiSharedSecret()
-        {
-            return $this->flickr_photostream_row['api_shared_secret'];
-        }
-
-        public function setApiSharedSecret($api_shared_secret)
-        {
-            $api_shared_secret = $this->mBd->EscapeString($api_shared_secret);
-            $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET api_shared_secret ='$api_shared_secret' WHERE flickr_photostream_id = '".$this->getId()."'");
-            $this->refresh();
-            $this->setFlickrApi(null);
-        }
-
-        public function setApiKey($api_key)
-        {
-            $api_key = $this->mBd->EscapeString($api_key);
-            $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET api_key ='$api_key' WHERE flickr_photostream_id = '".$this->getId()."'");
-            $this->refresh();
-            $this->setFlickrApi(null);
-        }
-
-        public function pingFlickr()
-        {
-            if ($this->getFlickrApi())
+            try
             {
-                try
-                {
-                    $request = $$this->getFlickrApi()->createRequest("flickr.test.echo", null);
-                    $request->setExceptionThrownOnFailure(true);
-                    $resp = $request->execute();
-                    return true;
-                }
-                catch (Phlickr_Exception $ex)
-                {
-                    return false;
-                }
+                $request = $this->getFlickrApi()->createRequest("flickr.people.findByEmail", array ("find_email" => $email));
+                $request->setExceptionThrownOnFailure(true);
+                $resp = $request->execute();
+                return new Phlickr_User($this->getFlickrApi(), (string) $resp->xml->user['id']);
             }
-            else
-                return false;
-        }
-
-        private function getUserByEmail($email)
-        {
-            if ($this->getFlickrApi())
+            catch (Phlickr_Exception $ex)
             {
-                try
-                {
-                    $request = $this->getFlickrApi()->createRequest("flickr.people.findByEmail", array ("find_email" => $email));
-                    $request->setExceptionThrownOnFailure(true);
-                    $resp = $request->execute();
-                    return new Phlickr_User($this->getFlickrApi(), (string) $resp->xml->user['id']);
-                }
-                catch (Phlickr_Exception $ex)
-                {
-                    return null;
-                }
-            }
-            else
                 return null;
-        }
-
-        public function getFlickrUserId()
-        {
-            return $this->flickr_photostream_row['user_id'];
-        }
-
-        public function setUserId($user_id)
-        {
-            $user_id = $this->mBd->EscapeString($user_id);
-            $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET user_id ='$user_id' WHERE flickr_photostream_id = '".$this->getId()."'");
-            $this->refresh();
-        }
-
-        public function getUserName()
-        {
-            return $this->flickr_photostream_row['user_name'];
-        }
-
-        public function setUserName($user_name)
-        {
-            $user_name = $this->mBd->EscapeString($user_name);
-            $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET user_name = '$user_name' WHERE flickr_photostream_id = '".$this->getId()."'");
-            $this->refresh();
-        }
-
-        public function getGroupId()
-        {
-            return $this->flickr_photostream_row['group_id'];
-        }
-
-        public function setGroupId($group_id)
-        {
-            $group_id = $this->mBd->EscapeString($group_id);
-            $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET group_id = '$group_id' WHERE flickr_photostream_id = '".$this->getId()."'");
-            $this->refresh();
-        }
-
-        public function getTags()
-        {
-            return $this->flickr_photostream_row['tags'];
-        }
-
-        public function setTags($tags)
-        {
-            $tags = $this->mBd->EscapeString($tags);
-            $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET tags = '$tags' WHERE flickr_photostream_id = '".$this->getId()."'");
-            $this->refresh();
-        }
-
-        public function getTagMode()
-        {
-            return $this->flickr_photostream_row['tag_mode'];
-        }
-
-        public function setTagMode($mode)
-        {
-            switch ($mode)
-            {
-                case self :: TAG_MODE_ANY :
-                case self :: TAG_MODE_ALL :
-                    $mode = $this->mBd->EscapeString($mode);
-                    $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET tag_mode = '$mode' WHERE flickr_photostream_id = '".$this->getId()."'");
-                    $this->refresh();
-                    break;
-                default :
-                    throw new Exception("Illegal tag matching mode.");
             }
         }
+        else
+            return null;
+    }
 
-        public function getPreferredSize()
+    public function getFlickrUserId()
+    {
+        return $this->flickr_photostream_row['user_id'];
+    }
+
+    public function setUserId($user_id)
+    {
+        $user_id = $this->mBd->EscapeString($user_id);
+        $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET user_id ='$user_id' WHERE flickr_photostream_id = '".$this->getId()."'");
+        $this->refresh();
+    }
+
+    public function getUserName()
+    {
+        return $this->flickr_photostream_row['user_name'];
+    }
+
+    public function setUserName($user_name)
+    {
+        $user_name = $this->mBd->EscapeString($user_name);
+        $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET user_name = '$user_name' WHERE flickr_photostream_id = '".$this->getId()."'");
+        $this->refresh();
+    }
+
+    public function getGroupId()
+    {
+        return $this->flickr_photostream_row['group_id'];
+    }
+
+    public function setGroupId($group_id)
+    {
+        $group_id = $this->mBd->EscapeString($group_id);
+        $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET group_id = '$group_id' WHERE flickr_photostream_id = '".$this->getId()."'");
+        $this->refresh();
+    }
+
+    public function getTags()
+    {
+        return $this->flickr_photostream_row['tags'];
+    }
+
+    public function setTags($tags)
+    {
+        $tags = $this->mBd->EscapeString($tags);
+        $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET tags = '$tags' WHERE flickr_photostream_id = '".$this->getId()."'");
+        $this->refresh();
+    }
+
+    public function getTagMode()
+    {
+        return $this->flickr_photostream_row['tag_mode'];
+    }
+
+    public function setTagMode($mode)
+    {
+        switch ($mode)
         {
-            return $this->flickr_photostream_row['preferred_size'];
+            case self :: TAG_MODE_ANY :
+            case self :: TAG_MODE_ALL :
+                $mode = $this->mBd->EscapeString($mode);
+                $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET tag_mode = '$mode' WHERE flickr_photostream_id = '".$this->getId()."'");
+                $this->refresh();
+                break;
+            default :
+                throw new Exception("Illegal tag matching mode.");
         }
+    }
 
-        public function setPreferredSize($size)
+    public function getPreferredSize()
+    {
+        return $this->flickr_photostream_row['preferred_size'];
+    }
+
+    public function setPreferredSize($size)
+    {
+        switch ($size)
         {
-            switch ($size)
-            {
-                case self :: SIZE_SQUARED_75x75 :
-                case self :: SIZE_THUMB_100x75 :
-                case self :: SIZE_SMALL_240x180 :
-                case self :: SIZE_MEDIUM_500x375 :
-                case self :: SIZE_LARGE_1024 :
-                case self :: SIZE_ORIGINAL :
-                    $size = $this->mBd->EscapeString($size);
-                    $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET preferred_size = '$size' WHERE flickr_photostream_id = '".$this->getId()."'");
-                    $this->refresh();
-                    break;
-                default :
-                    throw new Exception("Illegal size.");
-            }
+            case self :: SIZE_SQUARED_75x75 :
+            case self :: SIZE_THUMB_100x75 :
+            case self :: SIZE_SMALL_240x180 :
+            case self :: SIZE_MEDIUM_500x375 :
+            case self :: SIZE_LARGE_1024 :
+            case self :: SIZE_ORIGINAL :
+                $size = $this->mBd->EscapeString($size);
+                $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET preferred_size = '$size' WHERE flickr_photostream_id = '".$this->getId()."'");
+                $this->refresh();
+                break;
+            default :
+                throw new Exception("Illegal size.");
         }
+    }
 
-        public function shouldDisplayTitle()
-        {
-            return $this->flickr_photostream_row['display_title'] == "t";
-        }
+    public function shouldDisplayTitle()
+    {
+        return $this->flickr_photostream_row['display_title'] == "t";
+    }
 
-        public function setDisplayTitle($display_title)
-        {
-            $display_title = $display_title == true ? "true" : "false";
-            $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET display_title = $display_title WHERE flickr_photostream_id = '".$this->getId()."'");
-            $this->refresh();
-        }
+    public function setDisplayTitle($display_title)
+    {
+        $display_title = $display_title == true ? "true" : "false";
+        $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET display_title = $display_title WHERE flickr_photostream_id = '".$this->getId()."'");
+        $this->refresh();
+    }
 
-        public function shouldDisplayTags()
-        {
-            return $this->flickr_photostream_row['display_tags'] == "t";
-        }
+    public function shouldDisplayTags()
+    {
+        return $this->flickr_photostream_row['display_tags'] == "t";
+    }
 
-        public function setDisplayTags($display_tags)
-        {
-            $display_tags = $display_tags == true ? "true" : "false";
-            $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET display_tags = $display_tags WHERE flickr_photostream_id = '".$this->getId()."'");
-            $this->refresh();
-        }
+    public function setDisplayTags($display_tags)
+    {
+        $display_tags = $display_tags == true ? "true" : "false";
+        $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET display_tags = $display_tags WHERE flickr_photostream_id = '".$this->getId()."'");
+        $this->refresh();
+    }
 
-        public function shouldDisplayDescription()
-        {
-            return $this->flickr_photostream_row['display_description'] == "t";
-        }
+    public function shouldDisplayDescription()
+    {
+        return $this->flickr_photostream_row['display_description'] == "t";
+    }
 
-        public function setDisplayDescription($display_description)
-        {
-            $display_description = $display_description == true ? "true" : "false";
-            $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET display_description = $display_description WHERE flickr_photostream_id = '".$this->getId()."'");
-            $this->refresh();
-        }
+    public function setDisplayDescription($display_description)
+    {
+        $display_description = $display_description == true ? "true" : "false";
+        $this->mBd->ExecSqlUpdate("UPDATE flickr_photostream SET display_description = $display_description WHERE flickr_photostream_id = '".$this->getId()."'");
+        $this->refresh();
+    }
 
-        public function getAdminUI($subclass_admin_interface = null)
-        {
+    public function getAdminUI($subclass_admin_interface = null)
+    {
+        // Init values
+        $html = '';
+
+        if ($this->_PhlickrAvailable) {
             $generator = new FormSelectGenerator();
 
-            $html = '';
             $html .= "<div class='admin_class'>Flickr Photostream (".get_class($this)." instance)</div>\n";
 
             $html .= "<div class='admin_section_container'>\n";
@@ -594,92 +614,100 @@ if (Dependencies :: check("Phlickr", $errmsg))
             }
 
             $html .= $subclass_admin_interface;
-            return parent :: getAdminUI($html);
+        } else {
+            $html .= "<div class='admin_class'>Flickr Photostream (".get_class($this)." instance)</div>\n";
+            $html .= _("PEAR::Phlickr is not installed");
         }
 
-        function processAdminUI()
+        return parent::getAdminUI($html);
+    }
+
+    function processAdminUI()
+    {
+        if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
         {
-            if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
+            parent :: processAdminUI();
+            $generator = new FormSelectGenerator();
+
+            $name = "flickr_photostream_".$this->id."_api_key";
+            !empty ($_REQUEST[$name]) ? $this->setApiKey($_REQUEST[$name]) : $this->setApiKey(null);
+
+            $name = "flickr_photostream_".$this->id."_api_shared_secret";
+            !empty ($_REQUEST[$name]) ? $this->setApiSharedSecret($_REQUEST[$name]) : $this->setApiSharedSecret(null);
+
+            $name = "flickr_photostream_".$this->id."_photo_batch_size";
+            !empty ($_REQUEST[$name]) ? $this->setPhotoBatchSize($_REQUEST[$name]) : $this->setPhotoBatchSize(null);
+
+            if ($generator->isPresent("DisplayMode".$this->getID(), "FlickrPhotostream"))
+                $this->setDisplayMode($generator->getResult("DisplayMode".$this->getID(), "FlickrPhotostream"));
+
+            if ($generator->isPresent("SelectionMode".$this->getID(), "FlickrPhotostream"))
+                $this->setSelectionMode($generator->getResult("SelectionMode".$this->getID(), "FlickrPhotostream"));
+
+            // Check for existing API key
+            if ($this->getAPIKey() && $this->getSelectionMode())
             {
-                parent :: processAdminUI();
-                $generator = new FormSelectGenerator();
-
-                $name = "flickr_photostream_".$this->id."_api_key";
-                !empty ($_REQUEST[$name]) ? $this->setApiKey($_REQUEST[$name]) : $this->setApiKey(null);
-
-                $name = "flickr_photostream_".$this->id."_api_shared_secret";
-                !empty ($_REQUEST[$name]) ? $this->setApiSharedSecret($_REQUEST[$name]) : $this->setApiSharedSecret(null);
-
-                $name = "flickr_photostream_".$this->id."_photo_batch_size";
-                !empty ($_REQUEST[$name]) ? $this->setPhotoBatchSize($_REQUEST[$name]) : $this->setPhotoBatchSize(null);
-
-                if ($generator->isPresent("DisplayMode".$this->getID(), "FlickrPhotostream"))
-                    $this->setDisplayMode($generator->getResult("DisplayMode".$this->getID(), "FlickrPhotostream"));
-
-                if ($generator->isPresent("SelectionMode".$this->getID(), "FlickrPhotostream"))
-                    $this->setSelectionMode($generator->getResult("SelectionMode".$this->getID(), "FlickrPhotostream"));
-
-                // Check for existing API key
-                if ($this->getAPIKey() && $this->getSelectionMode())
+                try
                 {
-                    try
+                    switch ($this->getSelectionMode())
                     {
-                        switch ($this->getSelectionMode())
-                        {
-                            // Process common data for groups and users
-                            case self :: SELECT_BY_GROUP :
-                                if ($generator->isPresent("GroupPhotoPool".$this->getID(), "FlickrPhotostream"))
-                                    $this->setGroupId($generator->getResult("GroupPhotoPool".$this->getID(), "FlickrPhotostream"));
-                            case self :: SELECT_BY_USER :
-                                $name = "flickr_photostream_".$this->id."_reset_user_id";
-                                if (!empty ($_REQUEST[$name]) || !$this->getFlickrUserId())
+                        // Process common data for groups and users
+                        case self :: SELECT_BY_GROUP :
+                            if ($generator->isPresent("GroupPhotoPool".$this->getID(), "FlickrPhotostream"))
+                                $this->setGroupId($generator->getResult("GroupPhotoPool".$this->getID(), "FlickrPhotostream"));
+                        case self :: SELECT_BY_USER :
+                            $name = "flickr_photostream_".$this->id."_reset_user_id";
+                            if (!empty ($_REQUEST[$name]) || !$this->getFlickrUserId())
+                            {
+                                $this->setUserId(null);
+                                $name = "flickr_photostream_".$this->id."_email";
+                                if (!empty ($_REQUEST[$name]) && ($flickr_user = $this->getUserByEmail($_REQUEST[$name])) != null)
                                 {
-                                    $this->setUserId(null);
-                                    $name = "flickr_photostream_".$this->id."_email";
-                                    if (!empty ($_REQUEST[$name]) && ($flickr_user = $this->getUserByEmail($_REQUEST[$name])) != null)
-                                    {
-                                        $this->setUserId($flickr_user->getId());
-                                        $this->setUserName($flickr_user->getName());
-                                    }
-                                    else
-                                        echo _("Could not find a Flickr user with this e-mail.");
+                                    $this->setUserId($flickr_user->getId());
+                                    $this->setUserName($flickr_user->getName());
                                 }
-                                break;
-                            case self :: SELECT_BY_TAGS :
-                                $name = "flickr_photostream_".$this->id."_tags";
-                                if (!empty ($_REQUEST[$name]))
-                                    $this->setTags($_REQUEST[$name]);
                                 else
-                                    $this->setTags(null);
-                                if ($generator->isPresent("TagMode".$this->getID(), "FlickrPhotostream"))
-                                    $this->setTagMode($generator->getResult("TagMode".$this->getID(), "FlickrPhotostream"));
-                                break;
-                        }
+                                    echo _("Could not find a Flickr user with this e-mail.");
+                            }
+                            break;
+                        case self :: SELECT_BY_TAGS :
+                            $name = "flickr_photostream_".$this->id."_tags";
+                            if (!empty ($_REQUEST[$name]))
+                                $this->setTags($_REQUEST[$name]);
+                            else
+                                $this->setTags(null);
+                            if ($generator->isPresent("TagMode".$this->getID(), "FlickrPhotostream"))
+                                $this->setTagMode($generator->getResult("TagMode".$this->getID(), "FlickrPhotostream"));
+                            break;
                     }
-                    catch (Exception $e)
-                    {
-                        echo _("Could not complete successfully the saving procedure.");
-                    }
-
-                    $name = "flickr_photostream_".$this->id."_display_title";
-                    !empty ($_REQUEST[$name]) ? $this->setDisplayTitle(true) : $this->setDisplayTitle(false);
-                    $name = "flickr_photostream_".$this->id."_display_tags";
-                    !empty ($_REQUEST[$name]) ? $this->setDisplayTags(true) : $this->setDisplayTags(false);
-                    $name = "flickr_photostream_".$this->id."_display_description";
-                    !empty ($_REQUEST[$name]) ? $this->setDisplayDescription(true) : $this->setDisplayDescription(false);
-
-                    if ($generator->isPresent("PreferredSize".$this->getID(), "FlickrPhotostream"))
-                        $this->setPreferredSize($generator->getResult("PreferredSize".$this->getID(), "FlickrPhotostream"));
                 }
+                catch (Exception $e)
+                {
+                    echo _("Could not complete successfully the saving procedure.");
+                }
+
+                $name = "flickr_photostream_".$this->id."_display_title";
+                !empty ($_REQUEST[$name]) ? $this->setDisplayTitle(true) : $this->setDisplayTitle(false);
+                $name = "flickr_photostream_".$this->id."_display_tags";
+                !empty ($_REQUEST[$name]) ? $this->setDisplayTags(true) : $this->setDisplayTags(false);
+                $name = "flickr_photostream_".$this->id."_display_description";
+                !empty ($_REQUEST[$name]) ? $this->setDisplayDescription(true) : $this->setDisplayDescription(false);
+
+                if ($generator->isPresent("PreferredSize".$this->getID(), "FlickrPhotostream"))
+                    $this->setPreferredSize($generator->getResult("PreferredSize".$this->getID(), "FlickrPhotostream"));
             }
         }
+    }
 
-        /** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
-        * @param $subclass_admin_interface Html content of the interface element of a children
-        * @return The HTML fragment for this interface */
-        public function getUserUI($subclass_user_interface = null, $force_data_refresh = false)
-        {
-            $html = '';
+    /**Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
+    * @param $subclass_admin_interface Html content of the interface element of a children
+    * @return The HTML fragment for this interface */
+    public function getUserUI($subclass_user_interface = null, $force_data_refresh = false)
+    {
+        // Init values
+        $html = '';
+
+        if ($this->_PhlickrAvailable) {
             $html .= "<div class='user_ui_container'>\n";
             $html .= "<div class='user_ui_object_class'>FlickrPhotostream (".get_class($this)." instance)</div>\n";
 
@@ -774,7 +802,10 @@ if (Dependencies :: check("Phlickr", $errmsg))
                                         }
                                     }
 
-                                    //TODO: Find a way to display tags nicely
+                                    /**
+                                     * @todo Find a way to display tags nicely
+                                     */
+
                                     /*
                                     if ($this->shouldDisplayTags())
                                     {
@@ -794,7 +825,10 @@ if (Dependencies :: check("Phlickr", $errmsg))
                                         }
                                     }*/
 
-                                    //TODO: Display author's name along with it ...
+                                    /**
+                                     * @todo Display author's name along with it ...
+                                     */
+
                                     /*
                                     foreach ($photos as $cache_authors)
                                         $author = new Phlickr_User($api, $cache_authors->getUserId());
@@ -840,56 +874,40 @@ if (Dependencies :: check("Phlickr", $errmsg))
                 // Overwrite cache if needed
                 $this->writeCacheToDatabase($force_data_refresh);
             }
-
-            $html .= $subclass_user_interface;
-            $html .= "</div>\n";
-            return parent :: getUserUI($html);
-        }
-
-        /** Reloads the object from the database.  Should normally be called after a set operation.
-         * This function is private because calling it from a subclass will call the
-         * constructor from the wrong scope */
-        private function refresh()
-        {
-            $this->__construct($this->id);
-        }
-
-        /** Delete this Content from the database */
-        public function delete(& $errmsg)
-        {
-            $user = User :: getCurrentUser();
-            if (!$this->isOwner($user) || !$user->isSuperAdmin())
-            {
-                $errmsg = _('Access denied!');
-            }
-
-            if ($this->isPersistent() == false)
-            {
-                $this->mBd->ExecSqlUpdate("DELETE FROM flickr_photostream WHERE flickr_photostream_id = '".$this->getId()."'", false);
-            }
-            return parent :: delete($errmsg);
-        }
-
-    } // End class
-}
-else
-{
-    class FlickrPhotostream extends Content
-    {
-        protected function __construct($content_id)
-        {
-            parent :: __construct($content_id);
-        }
-        public function getAdminUI($subclass_admin_interface = null)
-        {
-            $html = '';
-            $html .= "<div class='admin_class'>Flickr Photostream (".get_class($this)." instance)</div>\n";
+        } else {
             $html .= _("PEAR::Phlickr is not installed");
-
-            return parent :: getAdminUI($html);
         }
 
+        $html .= $subclass_user_interface;
+        $html .= "</div>\n";
+
+        return parent::getUserUI($html);
     }
+
+    /** Reloads the object from the database.  Should normally be called after a set operation.
+     * This function is private because calling it from a subclass will call the
+     * constructor from the wrong scope */
+    private function refresh()
+    {
+        $this->__construct($this->id);
+    }
+
+    /** Delete this Content from the database */
+    public function delete(& $errmsg)
+    {
+        $user = User :: getCurrentUser();
+        if (!$this->isOwner($user) || !$user->isSuperAdmin())
+        {
+            $errmsg = _('Access denied!');
+        }
+
+        if ($this->isPersistent() == false)
+        {
+            $this->mBd->ExecSqlUpdate("DELETE FROM flickr_photostream WHERE flickr_photostream_id = '".$this->getId()."'", false);
+        }
+        return parent :: delete($errmsg);
+    }
+
 }
 
 /*
