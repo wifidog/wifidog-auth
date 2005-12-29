@@ -2,8 +2,6 @@
 	* Removed BASEPATH define from source - resulting in a better require-overview
 	* speed improvement of 7% by optimizing Dependencies class
 	* improved documentation of content classes
-	* added WiFiDog skin to HTMLeditor
-	* updated PhpDocumentor documentation
 
 2005-12-26 François Proulx <francois.proulx@gmail.com>
 	* Fixed bug when the same user was owner of many nodes
