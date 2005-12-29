@@ -47,7 +47,6 @@
  */
 
 require_once('../include/common.php');
-
 require_once('classes/Network.php');
 
 $auth_response = ACCOUNT_STATUS_DENIED;
@@ -60,6 +59,7 @@ if (!empty ($_REQUEST['token']))
 }
 
 $db->execSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.token='$token'", $info, false);
+
 if ($info != null)
 {
     // Retrieve the associated authenticator
