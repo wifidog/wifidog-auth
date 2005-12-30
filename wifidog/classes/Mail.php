@@ -1,5 +1,6 @@
 <?php
 
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -47,92 +48,132 @@
 
 class Mail
 {
-    // Business domain attributes
-    private $from_name;
-    private $from_email;
-    private $to_name;
-    private $to_email;
-    private $subject;
-    private $body;
+	// List of fake e-mails hosts
+	private static $_hosts_black_list = array ("simplicato.net", "mytrashmail.com", "spamhole.com", "mailexpire.com", "sneakemail.com", "spamex.com", "emailias.com", "mymailoasis.com", "spamcon.org", "spamgourmet.com", "spammotel.com", "dodgeit.com");
 
-    public function __construct()
-    {
-    }
+	// Business domain attributes
+	private $from_name;
+	private $from_email;
+	private $to_name;
+	private $to_email;
+	private $subject;
+	private $body;
 
-    private function encodeMimeHeader($header)
-    {
-        // BASE 64 according to the RFC
-        // Taken from : www.php.net mb_send_mail comments
-        $header = preg_replace('/([^a-z ])/ie', 'sprintf("=%02x",ord(StripSlashes("\\1")))', $header);
-        $header = str_replace(' ', '_', $header);
-        return "=?utf-8?Q?$header?=";
-    }
+	public function __construct()
+	{
+	}
 
-    public function getMessageBody()
-    {
-        return $this->body;
-    }
+	private function encodeMimeHeader($header)
+	{
+		// BASE 64 according to the RFC
+		// Taken from : www.php.net mb_send_mail comments
+		$header = preg_replace('/([^a-z ])/ie', 'sprintf("=%02x",ord(StripSlashes("\\1")))', $header);
+		$header = str_replace(' ', '_', $header);
+		return "=?utf-8?Q?$header?=";
+	}
 
-    public function getMessageSubject()
-    {
-        return $this->subject;
-    }
+	public function getMessageBody()
+	{
+		return $this->body;
+	}
 
-    public function getRecipientName()
-    {
-        return $this->to_name;
-    }
+	public function getMessageSubject()
+	{
+		return $this->subject;
+	}
 
-    public function getRecipientEmail()
-    {
-        return $this->to_email;
-    }
+	public function getRecipientName()
+	{
+		return $this->to_name;
+	}
 
-    public function getSenderName()
-    {
-        return $this->from_name;
-    }
+	public function getRecipientEmail()
+	{
+		return $this->to_email;
+	}
 
-    public function getSenderEmail()
-    {
-        return $this->from_email;
-    }
+	public function getSenderName()
+	{
+		return $this->from_name;
+	}
 
-    // Packs e-mail and send it according to RFC822
-    public function send()
-    {
-        $headers = "From: \"".$this->getSenderName()."\" <".$this->getSenderEmail().">\r\n";
-        $headers .= "Reply-To: ".$this->getSenderEmail()."\r\n";
-        $headers .= "Content-Type: text/plain; charset=utf-8";
-        $args = "-f".$this->getSenderEmail();
-        return mail($this->getRecipientEmail(), $this->getMessageSubject(), $this->getMessageBody(), $headers, $args);
-    }
+	public function getSenderEmail()
+	{
+		return $this->from_email;
+	}
 
-    public function setMessageBody($body)
-    {
-        $this->body = $body;
-    }
+	// Packs e-mail and send it according to RFC822
+	public function send()
+	{
+		$headers = "From: \"".$this->getSenderName()."\" <".$this->getSenderEmail().">\r\n";
+		$headers .= "Reply-To: ".$this->getSenderEmail()."\r\n";
+		$headers .= "Content-Type: text/plain; charset=utf-8";
+		$args = "-f".$this->getSenderEmail();
+		return mail($this->getRecipientEmail(), $this->getMessageSubject(), $this->getMessageBody(), $headers, $args);
+	}
 
-    public function setMessageSubject($subject)
-    {
-        $this->subject = $this->encodeMimeHeader($subject);
-    }
+	public function setMessageBody($body)
+	{
+		$this->body = $body;
+	}
 
-    public function setRecipientEmail($mail)
-    {
-        $this->to_email = $mail;
-    }
+	public function setMessageSubject($subject)
+	{
+		$this->subject = $this->encodeMimeHeader($subject);
+	}
 
-    public function setSenderName($name)
-    {
-        // Encode header
-        $this->from_name = $this->encodeMimeHeader($name);
-    }
+	public function setRecipientEmail($mail)
+	{
+		$this->to_email = $mail;
+	}
 
-    public function setSenderEmail($mail)
-    {
-        $this->from_email = $mail;
-    }
+	public function setSenderName($name)
+	{
+		// Encode header
+		$this->from_name = $this->encodeMimeHeader($name);
+	}
+
+	public function setSenderEmail($mail)
+	{
+		$this->from_email = $mail;
+	}
+
+	/**
+	 * Validates an e-mail address 
+	 *
+	 * This function will make sure an e-mail is RFC822 compliant
+	 * and is not black listed.
+	 * 
+	 * Here's an example of how to use the function:
+	 * <code>
+	 * Mail::validateEmailAddress($mail);
+	 * </code>
+	 *
+	 * @param string $mail The e-mail address to validate
+	 *
+	 * @return boolean Returns whether the e-mail is valid or not
+	 *
+	 * @access public
+	 * @static
+	 */
+	public static function validateEmailAddress($email)
+	{
+		$matches = null;
+		// Test if the email matches the regexp
+		$regex = "/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i";
+		if (preg_match_all($regex, $email, $matches))
+		{
+			// If the hostname is black listed, reject the e-mail.
+			$full_hostname = $matches[2][0].".".$matches[3][0];
+			if(in_array($full_hostname, self::$_hosts_black_list))
+				return false;
+			else
+				return true;
+		}
+		else
+			return false;
+	}
+
 }
 
 /*
@@ -142,5 +183,4 @@ class Mail
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
 ?>

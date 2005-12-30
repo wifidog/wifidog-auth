@@ -1,6 +1,7 @@
 2005-12-29 François Proulx <francois.proulx@gmail.com>
 	* Integrating Philippe's code for User class
 	* This build needs extensive testing please
+	* E-mail blacklisting (Mail class)
 	
 2005-12-29 François Proulx <francois.proulx@gmail.com>
 	* Added Aidan's file_exists_incpath function to Dependencies class

@@ -51,6 +51,7 @@ require_once('include/common_interface.php');
 require_once('classes/User.php');
 require_once('classes/Security.php');
 require_once('classes/MainUI.php');
+require_once('classes/Mail.php');
 
 if (defined("CUSTOM_SIGNUP_URL"))
 {
@@ -72,8 +73,8 @@ function validate_email($email)
     if (!isset ($email) || !$email)
         throw new Exception(_("A valid email address is required."));
 
-    if (!ereg("^.*@.*\..*$", $email))
-        throw new Exception(_("The email address must be of the form user@domain.com."));
+   	if(Mail::validateEmailAddress($email) === false)
+        throw new Exception(_("The email address must be of the form user@domain.com and is not black-listed."));
 }
 
 function validate_passwords($password, $password_again)
