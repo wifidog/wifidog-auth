@@ -259,8 +259,8 @@ class MainUI
                         $href = BASE_SSL_PATH.'login/?gw_id='.$gw_id.'&gw_address='.$gw_address.'&gw_port='.$gw_port;
 $html .= '<p>'._("I am not logged in.").'<br><a href="'.$href.'">'._("Login").'</a></p>'."\n";
 
-                    $html .= '<a class="administration" HREF="'.Network :: getCurrentNetwork()->getHomepageURL().'"><img class="administration" src="'.BASE_SSL_PATH.'images/lien_ext.gif"> '.Network :: getCurrentNetwork()->getName().'</a>'."\n";
-                    $html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'faq.php"><img class="administration" src="'.BASE_SSL_PATH.'images/where.gif"> '._("Where am I?").'</a>'."\n";
+                    $html .= '<a class="administration" HREF="'.Network :: getCurrentNetwork()->getHomepageURL().'"><img class="administration" src="'.BASE_URL_PATH.'images/lien_ext.gif"> '.Network :: getCurrentNetwork()->getName().'</a>'."\n";
+                    $html .= '<a class="administration" HREF="'.BASE_SSL_PATH.'faq.php"><img class="administration" src="'.BASE_URL_PATH.'images/where.gif"> '._("Where am I?").'</a>'."\n";
                 }
 
                 $html .= "</span>"."\n"; //End tool_user_info
@@ -342,7 +342,7 @@ $html .= '<p>'._("I am not logged in.").'<br><a href="'.$href.'">'._("Login").'<
         // Add HTML headers
         $html .= "{$this->html_headers}";
         $html .= "<title>{$this->title}</title>\n";
-        $html .= "<style type='text/css'>\n";
+		$html .= "<link rel='stylesheet' type='text/css' href='".COMMON_CONTENT_URL.STYLESHEET_NAME."' />\n";
         if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.STYLESHEET_NAME))
         {
             $stylesheet_file = NODE_CONTENT_SMARTY_PATH.STYLESHEET_NAME;
@@ -351,6 +351,7 @@ $html .= '<p>'._("I am not logged in.").'<br><a href="'.$href.'">'._("Login").'<
         {
             $stylesheet_file = DEFAULT_CONTENT_SMARTY_PATH.STYLESHEET_NAME;
         }
+        $html .= "<style type='text/css'>\n";
         $html .= $this->smarty->fetch($stylesheet_file);
         $html .= "</style>\n";
         $html .= "</head>\n";

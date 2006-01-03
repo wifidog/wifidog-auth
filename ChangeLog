@@ -1,3 +1,12 @@
+2006-01-02 Rob Janes <janes.rob@gmail.com>
+    * split static stylesheet.css from smarty template stuff.
+	  local_content/default/stylesheet.css has only smarty template stuff.
+	  local_content/common/stylesheet.css has all the rest.
+	* classes/MainUI.php changed to <link ...> the common stylesheet.css, while
+	  still smarty fetching the templated stylesheet.
+	* classes/SmartyWifidog.php changed to set a smarty template variable so
+	  that the templating stylesheet could work.
+
 2005-12-29 François Proulx <francois.proulx@gmail.com>
 	* Integrating Philippe's code for User class
 	* This build needs extensive testing please
