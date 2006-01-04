@@ -44,19 +44,15 @@
 error_reporting(E_ALL);
 
 /**
- * Include configuration
+ * Include configuration file
  */
-if (file_exists('config.php')) {
-    require_once('config.php');
-} else {
-    require_once('../config.php');
-}
+cmnRequireConfig();
 
 /**
  * Add system path of WiFiDog installation to PHPs include path
  */
  
-set_include_path(get_include_path().PATH_SEPARATOR . $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/'));
+set_include_path(cmnHomeDir() . PATH_SEPARATOR . get_include_path());
 
 function undo_magic_quotes()
 {
@@ -82,11 +78,14 @@ if (!function_exists('array_map_recursive'))
 }
 undo_magic_quotes();
 
+require_once('classes/EventLogging.php');
 require_once('classes/AbstractDb.php');
 require_once('classes/Dependencies.php');
+// require_once('classes/Session.php');
 
 global $db;
 
+// $db = AbstractDb::Connect('DEFAULT');
 $db = new AbstractDb();
 
 /* NEVER edit these, as they mush match the C code of the gateway */
@@ -242,6 +241,159 @@ function pretty_print_r($param)
     echo "\n<pre>\n";
     print_r($param);
     echo "\n</pre>\n";
+}
+
+/** pop directory path */
+function cmnPopDir($dirname=null, $popcount=1) {
+  if (empty($dirname)) $dirname = dirname($_SERVER['PHP_SELF']);
+  if ($dirname === DIRECTORY_SEPARATOR) return DIRECTORY_SEPARATOR;
+  if (substr($dirname,-1,1) === DIRECTORY_SEPARATOR) $popcount++;
+
+  $popped = implode(DIRECTORY_SEPARATOR, array_slice(explode(DIRECTORY_SEPARATOR, $dirname), 0, -$popcount));
+
+  return empty($popped) ? DIRECTORY_SEPARATOR : substr($popped,-1,1) === DIRECTORY_SEPARATOR ? $popped :
+    $popped . DIRECTORY_SEPARATOR;
+}
+
+function cmnDirectorySlash($dirname) {
+  return empty($dirname) ? DIRECTORY_SEPARATOR : substr($dirname,-1,1) === DIRECTORY_SEPARATOR ? $dirname :
+    $dirname . DIRECTORY_SEPARATOR;
+}
+
+/** search parent directory hierarchy for a file */
+function cmnSearchParentDirectories($dirname, $searchfor) {
+  $pieces = explode(DIRECTORY_SEPARATOR, $dirname);
+  $is_absolute = substr($dirname,0,1) === DIRECTORY_SEPARATOR ? 1 : 0;
+
+  for ($i=count($pieces); $i > $is_absolute; $i--) {
+    $filename = implode(DIRECTORY_SEPARATOR, array_merge(array_slice($pieces,0,$i), array($searchfor)));
+    if (file_exists($filename)) return $filename;
+  }
+
+  return false;
+}
+
+/** get the execution home directory */
+function cmnHomeDir() {
+  if (defined('BASEPATH')) {
+    // the old way of setting the home directory
+    $basedir = constant('BASEPATH');
+  }
+  elseif (!empty($_SERVER['DOCUMENT_ROOT'])) {
+    // the new way of setting the home directory
+    $basedir = $_SERVER["DOCUMENT_ROOT"] . ( defined('SYSTEM_PATH') ? constant('SYSTEM_PATH') : DIRECTORY_SEPARATOR );
+  }
+  elseif (!empty($_SERVER['PHP_SELF'])) {
+    // look to the name of the executing file
+    $basedir = dirname($_SERVER['PHP_SELF']);
+  }
+  else {
+    // look to the path name of this file (common.php)
+    $basedir = cmnPopDir( dirname(__FILE__) );
+  }
+
+  $path_to_config = cmnSearchParentDirectories($basedir, 'config.php');
+  if (empty($path_to_config)) $path_to_config = cmnSearchParentDirectories($basedir, 'local.config.php');
+
+  return empty($path_to_config) ? false : cmnDirectorySlash(dirname($path_to_config));
+}
+
+/** join file path pieces together */
+function cmnJoinPath() {
+  $fullpath = '';
+
+  //$arguments = func_get_args();
+
+  for ($i=0; $i < func_num_args(); $i++) {
+    $pathelement = func_get_arg($i);
+    if ($pathelement=='') continue;
+
+    if ($fullpath=='') $fullpath = $pathelement;
+    elseif (substr($fullpath,-1,1)==DIRECTORY_SEPARATOR) {
+      if (substr($pathelement,0,1)==DIRECTORY_SEPARATOR)
+	$fullpath .= substr($pathelement,1);
+      else
+	$fullpath .= $pathelement;
+    }
+    else {
+      if (substr($pathelement,0,1)==DIRECTORY_SEPARATOR)
+	$fullpath .= $pathelement;
+      else
+	$fullpath .= DIRECTORY_SEPARATOR . $pathelement;
+    }
+  }
+
+  return $fullpath;
+}
+
+/** find a named file in the include path */
+function cmnFindPackage($rel_path, $private=false) {
+  $basepath = cmnHomeDir();
+
+  $paths = isset($private) && ($private===true || $private==='PRIVATE') ? array($basepath) :
+    explode(PATH_SEPARATOR, get_include_path());
+
+  foreach ($paths as $topdir) {
+    $package = cmnJoinPath($topdir, $rel_path);
+    if (file_exists($package)) {
+      if ($private)
+	return $package;
+      else
+	return $rel_path;
+    }
+  }
+
+  return false;			// package was not found
+}
+
+/** require_once a named file */
+function cmnRequirePackage($rel_path, $private=false) {
+  $basepath = cmnHomeDir();
+
+  $paths = isset($private) && ($private===true || $private==='PRIVATE') ? array($basepath) :
+    explode(PATH_SEPARATOR, get_include_path());
+
+  foreach ($paths as $topdir) {
+    $package = cmnJoinPath($topdir, $rel_path);
+    if (file_exists($package)) {
+      if ($private)
+	@require_once $package;
+      else
+	@require_once $rel_path;
+
+      return true;		// package was found
+    }
+  }
+
+  return false;			// package was not found
+}
+
+/** include_once a named file */
+function cmnIncludePackage($rel_path, $private=false) {
+  $basepath = cmnHomeDir();
+
+  $paths = isset($private) && ($private===true || $private==='PRIVATE') ? array($basepath) :
+    explode(PATH_SEPARATOR, get_include_path());
+
+  foreach ($paths as $topdir) {
+    $package = cmnJoinPath($topdir, $rel_path);
+    if (file_exists($package)) {
+      if ($private)
+	@include_once $package;
+      else
+	@include_once $rel_path;
+
+      return true;		// package was found
+    }
+  }
+
+  return false;			// package was not found
+}
+
+function cmnRequireConfig($config_file='config.php') {
+  global $AVAIL_LOCALE_ARRAY;	// so that nobody has to change their custom config.php
+  $config_path = cmnSearchParentDirectories(dirname(__FILE__), $config_file);
+  if (!empty($config_path)) require_once($config_path);
 }
 
 /*
