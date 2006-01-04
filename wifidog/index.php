@@ -49,6 +49,9 @@
  * path to the global include_path variable of PHP, yet!
  */
 require_once(dirname(__FILE__) . '/include/common.php');
+EventLogging::SetupErrorHandling("strict~/var:\sDeprecated/(off)",
+								 new PrintChannel(new HTMLFormatter(), 'warning,notice', null, true),
+								 new PrintChannel(new HTMLCommentsFormatter(), '=debug', null, true));
 
 require_once('include/common_interface.php');
 require_once('classes/MainUI.php');
