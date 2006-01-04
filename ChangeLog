@@ -1,8 +1,19 @@
+2006-01-03 Rob Janes <janes.rob@gmail.com>
+	* added support for classes/EventLogging.php.
+	* modified include/common.php to pull in the EventLogging class
+	* modified index.php to kick start error logging with minimal setup.
+	  I didn't setup a css for this, so any errors are simply pushed out
+	  when the logging channel is destructed.
+	* other changes to include/common.php - a host of utility functions,
+	  prefixed with "cmn" to avoid namespace collision.
+	* stock config.php, added global $AVAIL_LOCALE_ARRAY, cause of my change
+	  to include/common.php, wrapping the require_once in a function.
+
 2006-01-04 Pascal Leclerc <isf@plec.ca>
     * install.php : New security validation and small bugs fix in admin account creation
 
 2006-01-02 Rob Janes <janes.rob@gmail.com>
-    * split static stylesheet.css from smarty template stuff.
+	* split static stylesheet.css from smarty template stuff.
 	  local_content/default/stylesheet.css has only smarty template stuff.
 	  local_content/common/stylesheet.css has all the rest.
 	* classes/MainUI.php changed to <link ...> the common stylesheet.css, while
