@@ -177,6 +177,8 @@ define('USE_CACHE_LITE', false);
  *
  * See below examples
  */
+global $AVAIL_LOCALE_ARRAY;
+
 $AVAIL_LOCALE_ARRAY = array('fr' => 'Français',
                             'en' => 'English',
                             'de' => 'Deutsch');
