@@ -48,6 +48,23 @@ error_reporting(E_ALL);
  */
 cmnRequireConfig();
 
+
+/**
+ * Path of WiFiDOG auth server installation
+ * ========================================
+ *
+ * SYSTEM_PATH must be set to the url path needed to reach the wifidog
+ * directory.
+ *
+ * Normally '/' or '/wifidog/', depending on where configure your
+ * document root.
+ *
+ * Gateway configuration must match this as well.
+ */
+   $path_tmp = str_replace ( $_SERVER['DOCUMENT_ROOT'], '', __FILE__);
+   $path_tmp = str_replace ( 'include/common.php', '', $path_tmp);
+   define('SYSTEM_PATH', $path_tmp);
+   //echo SYSTEM_PATH;exit;
 /**
  * Add system path of WiFiDog installation to PHPs include path
  */

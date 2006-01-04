@@ -1,3 +1,6 @@
+2005-01-04 Benoit Grégoire  <bock@step.polymtl.ca>
+	* config.php, common.php:  Completely remove SYSTEM_PATH from config.php, making one less config option to manage.  It is now autodetected.
+
 2006-01-03 Rob Janes <janes.rob@gmail.com>
 	* added support for classes/EventLogging.php.
 	* modified include/common.php to pull in the EventLogging class

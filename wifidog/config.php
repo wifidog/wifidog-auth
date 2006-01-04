@@ -122,20 +122,6 @@ define('CONF_USE_CRON_FOR_DB_CLEANUP', false);
 \********************************************************************/
 
 /**
- * Path of WiFiDOG auth server installation
- * ========================================
- *
- * SYSTEM_PATH must be set to the url path needed to reach the wifidog
- * directory.
- *
- * Normally '/' or '/wifidog/', depending on where configure your
- * document root.
- *
- * Gateway configuration must match this as well.
- */
-define('SYSTEM_PATH', '/');
-
-/**
  * Use SSL
  * =======
  *
