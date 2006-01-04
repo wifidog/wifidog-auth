@@ -1,3 +1,6 @@
+2006-01-04 Pascal Leclerc <isf@plec.ca>
+    * install.php : New security validation and small bugs fix in admin account creation
+
 2006-01-02 Rob Janes <janes.rob@gmail.com>
     * split static stylesheet.css from smarty template stuff.
 	  local_content/default/stylesheet.css has only smarty template stuff.
