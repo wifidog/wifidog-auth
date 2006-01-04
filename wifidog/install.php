@@ -56,9 +56,27 @@ $exploded_path = explode("/", $_SERVER['SCRIPT_NAME']);     # Split directories 
 array_pop($exploded_path);                                  # Remove install.php from the list
 $system_path = implode("/", $exploded_path);                # Build the system_path for the auth-server
 
-# Security : Minimal access validation is use by asking user to type the wifidog directory field date
-# It's dummy, easy to implement and better than nothing
-$password = exec("ls -ld $basepath | awk '{print \$6\$7\$8}'", $output_array, $return);
+# Security : Minimal access validation is use by asking user to retreive a random password in a local file. This prevent remote user to access unprotected installation script. It's dummy, easy to implement and better than nothing.
+
+# Random password generator
+$password_file = '/tmp/dog_cookie.txt';
+if (!file_exists($password_file)) {
+  srand(date("s"));
+  $possible_charactors = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  $password = "";
+  while(strlen($random_password)<8) {
+    $random_password .= substr($possible_charactors, rand()%(strlen($possible_charactors)), 1);
+  }
+  $fd = fopen($password_file, 'w');
+  fwrite($fd, $random_password);
+  fclose($fd);
+}
+
+# Read password file
+$fd = fopen($password_file, "rb");
+$password = fread($fd, filesize($password_file));
+fclose($fd);
+
 $auth = false;
 
 if ($page != 'Welcome') {
@@ -549,6 +567,7 @@ switch ($page) {
         print "<P><B>For instance</B> : mkdir $cmd_mkdir";
       if(!empty($cmd_chown))
         print "<P><B>For instance</B> : chown -R $process_username:$process_group $cmd_chown";
+      print "<P>After permissions modification done, hit the REFRESH button to see the NEXT button an continue with the installation";
     }
   break;
   ###################################
@@ -693,7 +712,7 @@ EndHTML;
     }
   break;
   ###################################
-  case 'jpgraph': // Download, uncompress and install phlickr library
+  case 'jpgraph': // Download, uncompress and install JpGraph library
     print "<H1>JpGraph installation</H1>\n";
 
     if ( $neededPackages['jpgraph']['available']) {
@@ -756,7 +775,7 @@ EndHTML;
     foreach($configArray as $key => $value) {  # In config.php, find all DBMS_* define
       if (preg_match("/^(DBMS_)(.*)/", $key, $matchesArray)) {
         $dbname_lower = strtolower($matchesArray[2]);
-        if ($dbname_lower == 'postgres') # config.php use postgres and PHP use pgsql
+    if ($dbname_lower == 'postgres') # config.php use postgres and PHP use pgsql
           $dbname_lower = 'pgsql';
         if ($neededExtentions[$dbname_lower]['available'] == 0) # Validate dependencie
           continue;
@@ -883,7 +902,7 @@ EndHTML;
     $replacements[3] = '-- ';
     $replacements[4] = '-- ';
 
-    $content_schema_array = file("$basepath/../sql/wifidog-postgres-schema.sql");       # Read SQL schema file
+    $content_schema_array = file("$basepath/../sql/wifidog-postgres-schema.sql") or die("Can not open $basepath/../sql/wifidog-postgres-schema.sql");       # Read SQL schema file
     $content_schema       = implode("", $content_schema_array);
     $content_data_array   = file("$basepath/../sql/wifidog-postgres-initial-data.sql"); # Read SQL initial data file
     $content_data         = implode("", $content_data_array);
@@ -1153,8 +1172,9 @@ EndHTML;
     print <<< EndHTML
       <P>Not yet implemented ...</P>
       <P>Will allow selecting language to use.</P>
-<B>Errror message example</B> : <BR>
+<B>Error message example</B> : <BR>
 <DIV style="border:solid black;">Warning: language.php: Unable to setlocale() to fr, return value: , current locale: LC_CTYPE=en_US.UTF-8;LC_NUMERIC=C; [...]</DIV>
+<P><B>I repeat</B> : This is an example of message you can see in the top of your working auth-server if language are not set correctly. To change these values please edit <B>config.php</B> in auth-server install directory. Look for "Available locales" and "Default language" header in config.php.
 EndHTML;
 //    exec("locale -a 2>&1", $output, $return);
 
@@ -1200,18 +1220,18 @@ EndHTML;
       navigation(array(array("title" => "Back", "page" => "radius"), array("title" => "Next", "page" => "network")));
     }
     else {
+      if ($action == 'create') {
+        require_once(dirname(__FILE__) . '/config.php');
+        require_once(dirname(__FILE__) . '/include/common.php');
+    	require_once(dirname(__FILE__) . '/classes/User.php');
 
-    	if ($action == 'create') {
+        $created_user = User :: createUser(get_guid(), $username, Network::getDefaultNetwork(), $email, $password);
+        $user_id = $created_user->getId();
 
-    	    require_once(dirname(__FILE__) . '/classes/User.php');
-
-      $created_user = User :: createUser(get_guid(), $username, Network::getDefaultNetwork(), $email, $password);
-      $user_id = $created_user->getId();
-
-      # Add user to admin table, hide his username and set his account status to 1 (allowed)
-      $sql = "INSERT INTO administrators (user_id) VALUES ('{$user_id}'); UPDATE users SET account_status='1', never_show_username=true WHERE user_id='$user_id'";
-      $result = pg_query($connection, $sql);
-    }
+        # Add user to admin table, hide his username and set his account status to 1 (allowed)
+        $sql = "INSERT INTO administrators (user_id) VALUES ('{$user_id}'); UPDATE users SET account_status='1', never_show_username=true WHERE user_id='$user_id'";
+        $result = pg_query($connection, $sql);
+      }
       print<<<EndHTML
         <P>
         <TABLE BORDER="1">
@@ -1445,13 +1465,11 @@ The current auth-server version is <B>$WIFIDOG_VERSION</B>.</P>
 </PRE>
 
 <B>Create the WifiDog database</B>
-<PRE>  <I>postgres@yourserver $></I> createdb -U wifidog wifidog --encoding=UTF-8 --owner=wifidog
+<PRE>  <I>postgres@yourserver $></I> createdb wifidog --encoding=UTF-8 --owner=wifidog
   CREATE DATABASE
 </PRE>
 
-<B>Security</B> : A password is needed to continue with the installation process. To find the password type this in command line :<PRE>  <B>ls -ld $basepath | awk '{print \$6\$7\$8}'</B>
-
-  (No username needed)
+<B>Security</B> : A password is needed to continue with the installation. You need to read the random password in <B>$password_file</B> file. No username needed, only the password. This password is only usefull for the installation, you will never use it in Auth-Server administration pages.
 </PRE>
 
 <P>When you are ready click next</P>
