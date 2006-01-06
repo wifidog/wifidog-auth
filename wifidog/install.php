@@ -292,16 +292,6 @@ $CONF_DATABASE_NAME     = $configArray['CONF_DATABASE_NAME'];
 $CONF_DATABASE_USER     = $configArray['CONF_DATABASE_USER'];
 $CONF_DATABASE_PASSWORD = $configArray['CONF_DATABASE_PASSWORD'];
 
-# Update SYSTEM_PATH if $system_path (value detected be this script) is not the same as the config.php value
-# Don't update SYSTEM_PATH before $page=='permissions' in case of no write access to config.php
-if ($configArray['SYSTEM_PATH'] != $system_path and $page == 'smarty') {
-  print <<<EndHTML
-<script type="text/javascript">
-    newConfig("SYSTEM_PATH='$system_path/'");
-</script>
-EndHTML;
-}
-
 //foreach($configArray as $key => $value) { print "K=$key V=$value<BR>"; } exit(); # DEBUG
 
 ###################################
@@ -567,7 +557,7 @@ switch ($page) {
         print "<P><B>For instance</B> : mkdir $cmd_mkdir";
       if(!empty($cmd_chown))
         print "<P><B>For instance</B> : chown -R $process_username:$process_group $cmd_chown";
-      print "<P>After permissions modification done, hit the REFRESH button to see the NEXT button an continue with the installation";
+      print "<P>After permissions modification done, hit the REFRESH button to see the NEXT button and continue with the installation";
     }
   break;
   ###################################
@@ -828,7 +818,7 @@ EndHTML;
         print "<UL><LI>Postgresql database connection : ";
 
         $conn_string = "host=$CONF_DATABASE_HOST dbname=$CONF_DATABASE_NAME user=$CONF_DATABASE_USER password=$CONF_DATABASE_PASSWORD";
-        $ptr_connexion = @pg_connect($conn_string) or die(); # or die("Couldn't Connect ==".pg_last_error()."==<BR>");
+        $ptr_connexion = pg_connect($conn_string) or die(); # or die("Couldn't Connect ==".pg_last_error()."==<BR>");
 
         #if ($ptr_connexion == TRUE) {
           print "Success<BR>";
@@ -1210,6 +1200,19 @@ EndHTML;
     $conn_string = "host=$CONF_DATABASE_HOST dbname=$CONF_DATABASE_NAME user=$CONF_DATABASE_USER password=$CONF_DATABASE_PASSWORD";
     $connection = pg_connect($conn_string) or die();
 
+    if ($action == 'create') {
+//      require_once(dirname(__FILE__) . '/config.php');
+      require_once(dirname(__FILE__) . '/include/common.php');
+      require_once(dirname(__FILE__) . '/classes/User.php');
+
+      $created_user = User :: createUser(get_guid(), $username, Network::getDefaultNetwork(), $email, $password);
+      $user_id = $created_user->getId();
+
+      # Add user to admin table, hide his username and set his account status to 1 (allowed)
+      $sql = "INSERT INTO administrators (user_id) VALUES ('$user_id'); UPDATE users SET  account_status='1', never_show_username=true WHERE user_id='$user_id'";
+      $result = pg_query($connection, $sql);
+    }
+
     $sql = "SELECT * FROM users NATURAL JOIN administrators WHERE account_origin = 'default-network'";
     $result = pg_query($connection, $sql);
     $result_array = pg_fetch_all($result);
@@ -1220,18 +1223,6 @@ EndHTML;
       navigation(array(array("title" => "Back", "page" => "radius"), array("title" => "Next", "page" => "network")));
     }
     else {
-      if ($action == 'create') {
-        require_once(dirname(__FILE__) . '/config.php');
-        require_once(dirname(__FILE__) . '/include/common.php');
-    	require_once(dirname(__FILE__) . '/classes/User.php');
-
-        $created_user = User :: createUser(get_guid(), $username, Network::getDefaultNetwork(), $email, $password);
-        $user_id = $created_user->getId();
-
-        # Add user to admin table, hide his username and set his account status to 1 (allowed)
-        $sql = "INSERT INTO administrators (user_id) VALUES ('{$user_id}'); UPDATE users SET account_status='1', never_show_username=true WHERE user_id='$user_id'";
-        $result = pg_query($connection, $sql);
-      }
       print<<<EndHTML
         <P>
         <TABLE BORDER="1">
@@ -1260,7 +1251,7 @@ EndHTML;
               exit();
             }
             if (document.myform.email.value == '') {
-              alert('You need to type an e-mail');
+              alert('You need to type a email');
               exit();
             }
             document.myform.page.value='admin';
