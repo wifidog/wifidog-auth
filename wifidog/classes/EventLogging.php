@@ -780,6 +780,23 @@ class EventLogging {
   }
 }
 
+define('_EL_DEBUG', 'debug');
+define('_EL_INFO', 'info');
+define('_EL_CRITICAL', 'critical');
+
+define('_EL_ERROR', 'error');	// can't be captured
+define('_EL_WARNING', 'warning');
+define('_EL_PARSE', 'parse');	// can't be captured
+define('_EL_NOTICE', 'notice');
+define('_EL_CORE_ERROR', 'core error'); // can't be captured
+define('_EL_CORE_WARNING', 'core warning'); // can't be captured
+define('_EL_COMPILE_ERROR', 'compile error'); // can't be captured
+define('_EL_COMPILE_WARNING', 'compile warning'); // can't be captured
+define('_EL_USER_ERROR', 'user error');
+define('_EL_USER_WARNING', 'user warning');
+define('_EL_USER_NOTICE', 'user notice');
+define('_EL_STRICT', 'strict');
+
 class EventObject {
   private $message;
   private $layoutType;
@@ -799,22 +816,22 @@ class EventObject {
   private $undoActions;
   private $onFlag;
 
-  const EVO_DEBUG = 'debug';
-  const EVO_INFO = 'info';
-  const EVO_CRITICAL = 'critical';
+  const EVO_DEBUG = _EL_DEBUG;
+  const EVO_INFO = _EL_INFO;
+  const EVO_CRITICAL = _EL_CRITICAL;
 
-  const EVO_ERROR = 'error';	// can't be captured
-  const EVO_WARNING = 'warning';
-  const EVO_PARSE = 'parse';	// can't be captured
-  const EVO_NOTICE = 'notice';
-  const EVO_CORE_ERROR = 'core error'; // can't be captured
-  const EVO_CORE_WARNING = 'core warning'; // can't be captured
-  const EVO_COMPILE_ERROR = 'compile error'; // can't be captured
-  const EVO_COMPILE_WARNING = 'compile warning'; // can't be captured
-  const EVO_USER_ERROR = 'user error';
-  const EVO_USER_WARNING = 'user warning';
-  const EVO_USER_NOTICE = 'user notice';
-  const EVO_STRICT = 'strict';
+  const EVO_ERROR = _EL_ERROR;	// can't be captured
+  const EVO_WARNING = _EL_WARNING;
+  const EVO_PARSE = _EL_PARSE;	// can't be captured
+  const EVO_NOTICE = _EL_NOTICE;
+  const EVO_CORE_ERROR = _EL_CORE_ERROR; // can't be captured
+  const EVO_CORE_WARNING = _EL_CORE_WARNING; // can't be captured
+  const EVO_COMPILE_ERROR = _EL_COMPILE_ERROR; // can't be captured
+  const EVO_COMPILE_WARNING = _EL_COMPILE_WARNING; // can't be captured
+  const EVO_USER_ERROR = _EL_USER_ERROR;
+  const EVO_USER_WARNING = _EL_USER_WARNING;
+  const EVO_USER_NOTICE = _EL_USER_NOTICE;
+  const EVO_STRICT = _EL_STRICT;
 
   public function __construct($pMessage = null, $pImportance = self::EVO_USER_NOTICE) {
     $this->message = $pMessage;
@@ -914,22 +931,22 @@ class EventObject {
 
   public static $ClassifyErrorTypes =
     array (
-					 self::EVO_DEBUG           => 'debug',
-					 self::EVO_INFO            => 'info',
-					 self::EVO_CRITICAL        => 'critical',
+					 _EL_DEBUG           => 'debug',
+					 _EL_INFO            => 'info',
+					 _EL_CRITICAL        => 'critical',
 
-					 self::EVO_ERROR           => 'error',
-					 self::EVO_WARNING         => 'warning',
-					 self::EVO_PARSE           => 'parse',
-					 self::EVO_NOTICE          => 'notice',
-					 self::EVO_CORE_ERROR      => 'error',
-					 self::EVO_CORE_WARNING    => 'warning',
-					 self::EVO_COMPILE_ERROR   => 'error',
-					 self::EVO_COMPILE_WARNING => 'warning',
-					 self::EVO_USER_ERROR      => 'error',
-					 self::EVO_USER_WARNING    => 'warning',
-					 self::EVO_USER_NOTICE     => 'notice',
-					 self::EVO_STRICT          => 'notice',
+					 _EL_ERROR           => 'error',
+					 _EL_WARNING         => 'warning',
+					 _EL_PARSE           => 'parse',
+					 _EL_NOTICE          => 'notice',
+					 _EL_CORE_ERROR      => 'error',
+					 _EL_CORE_WARNING    => 'warning',
+					 _EL_COMPILE_ERROR   => 'error',
+					 _EL_COMPILE_WARNING => 'warning',
+					 _EL_USER_ERROR      => 'error',
+					 _EL_USER_WARNING    => 'warning',
+					 _EL_USER_NOTICE     => 'notice',
+					 _EL_STRICT          => 'notice',
 					 'off'                     => 'off',
 					 'on'                      => 'on',
 					 'all'                     => 'all',
@@ -937,50 +954,50 @@ class EventObject {
 
   public static $GroupErrorTypes =
     array (
-					 'debug'    => array(self::EVO_DEBUG),
-					 'info'     => array(self::EVO_INFO),
-					 'critical' => array(self::EVO_CRITICAL),
+					 'debug'    => array(_EL_DEBUG),
+					 'info'     => array(_EL_INFO),
+					 'critical' => array(_EL_CRITICAL),
 
-					 'error'    => array(self::EVO_ERROR, self::EVO_CORE_ERROR, self::EVO_COMPILE_ERROR, self::EVO_USER_ERROR),
-					 'warning'  => array(self::EVO_WARNING, self::EVO_CORE_WARNING, self::EVO_COMPILE_WARNING, self::EVO_USER_WARNING),
-					 'notice'   => array(self::EVO_NOTICE, self::EVO_USER_NOTICE, self::EVO_STRICT),
-					 'user'     => array(self::EVO_USER_ERROR, self::EVO_USER_WARNING, self::EVO_USER_NOTICE),
-					 'core'     => array(self::EVO_CORE_ERROR, self::EVO_CORE_WARNING),
-					 'compile'  => array(self::EVO_COMPILE_ERROR, self::EVO_COMPILE_WARNING, self::EVO_PARSE),
+					 'error'    => array(_EL_ERROR, _EL_CORE_ERROR, _EL_COMPILE_ERROR, _EL_USER_ERROR),
+					 'warning'  => array(_EL_WARNING, _EL_CORE_WARNING, _EL_COMPILE_WARNING, _EL_USER_WARNING),
+					 'notice'   => array(_EL_NOTICE, _EL_USER_NOTICE, _EL_STRICT),
+					 'user'     => array(_EL_USER_ERROR, _EL_USER_WARNING, _EL_USER_NOTICE),
+					 'core'     => array(_EL_CORE_ERROR, _EL_CORE_WARNING),
+					 'compile'  => array(_EL_COMPILE_ERROR, _EL_COMPILE_WARNING, _EL_PARSE),
 					 );
 
   public static $SystemErrorTypes =
     array (
-					 E_ERROR           => self::EVO_ERROR,
-					 E_WARNING         => self::EVO_WARNING,
-					 E_PARSE           => self::EVO_PARSE,
-					 E_NOTICE          => self::EVO_NOTICE,
-					 E_CORE_ERROR      => self::EVO_CORE_ERROR,
-					 E_CORE_WARNING    => self::EVO_CORE_WARNING,
-					 E_COMPILE_ERROR   => self::EVO_COMPILE_ERROR,
-					 E_COMPILE_WARNING => self::EVO_COMPILE_WARNING,
-					 E_USER_ERROR      => self::EVO_USER_ERROR,
-					 E_USER_WARNING    => self::EVO_USER_WARNING,
-					 E_USER_NOTICE     => self::EVO_USER_NOTICE,
-					 E_STRICT          => self::EVO_STRICT,
+					 E_ERROR           => _EL_ERROR,
+					 E_WARNING         => _EL_WARNING,
+					 E_PARSE           => _EL_PARSE,
+					 E_NOTICE          => _EL_NOTICE,
+					 E_CORE_ERROR      => _EL_CORE_ERROR,
+					 E_CORE_WARNING    => _EL_CORE_WARNING,
+					 E_COMPILE_ERROR   => _EL_COMPILE_ERROR,
+					 E_COMPILE_WARNING => _EL_COMPILE_WARNING,
+					 E_USER_ERROR      => _EL_USER_ERROR,
+					 E_USER_WARNING    => _EL_USER_WARNING,
+					 E_USER_NOTICE     => _EL_USER_NOTICE,
+					 E_STRICT          => _EL_STRICT,
 					 );
 
   private static $PrettyErrorTypes =
     array (
-					 self::EVO_DEBUG           => "Debug",
-					 self::EVO_INFO            => "Info",
-					 self::EVO_ERROR           => "Error",
-					 self::EVO_WARNING         => "Warning",
-					 self::EVO_PARSE           => "Parsing Error",
-					 self::EVO_NOTICE          => "Notice",
-					 self::EVO_CORE_ERROR      => "Core Error",
-					 self::EVO_CORE_WARNING    => "Core Warning",
-					 self::EVO_COMPILE_ERROR   => "Compile Error",
-					 self::EVO_COMPILE_WARNING => "Compile Warning",
-					 self::EVO_USER_ERROR      => "User Error",
-					 self::EVO_USER_WARNING    => "User Warning",
-					 self::EVO_USER_NOTICE     => "User Notice",
-					 self::EVO_STRICT          => "Runtime Notice"
+					 _EL_DEBUG           => "Debug",
+					 _EL_INFO            => "Info",
+					 _EL_ERROR           => "Error",
+					 _EL_WARNING         => "Warning",
+					 _EL_PARSE           => "Parsing Error",
+					 _EL_NOTICE          => "Notice",
+					 _EL_CORE_ERROR      => "Core Error",
+					 _EL_CORE_WARNING    => "Core Warning",
+					 _EL_COMPILE_ERROR   => "Compile Error",
+					 _EL_COMPILE_WARNING => "Compile Warning",
+					 _EL_USER_ERROR      => "User Error",
+					 _EL_USER_WARNING    => "User Warning",
+					 _EL_USER_NOTICE     => "User Notice",
+					 _EL_STRICT          => "Runtime Notice"
 					 );
 
   /**
