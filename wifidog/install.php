@@ -292,6 +292,16 @@ $CONF_DATABASE_NAME     = $configArray['CONF_DATABASE_NAME'];
 $CONF_DATABASE_USER     = $configArray['CONF_DATABASE_USER'];
 $CONF_DATABASE_PASSWORD = $configArray['CONF_DATABASE_PASSWORD'];
 
+# Update SYSTEM_PATH if $system_path (value detected be this script) is not the same as the config.php value
+# Don't update SYSTEM_PATH before $page=='permissions' in case of no write access to config.php
+if ($configArray['SYSTEM_PATH'] != $system_path and $page == 'smarty') {
+  print <<<EndHTML
+<script type="text/javascript">
+    newConfig("SYSTEM_PATH='$system_path/'");
+</script>
+EndHTML;
+}
+
 //foreach($configArray as $key => $value) { print "K=$key V=$value<BR>"; } exit(); # DEBUG
 
 ###################################
