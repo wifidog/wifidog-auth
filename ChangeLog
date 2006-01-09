@@ -1,11 +1,14 @@
-2005-01-08 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-01-09 Max Horváth <max.horvath@maxspot.de>
+	* createDoc.sh: added description of how to install requirements
+
+2006-01-08 Benoit Grégoire  <bock@step.polymtl.ca>
  	* common.php:  Improve path detection code, and start moving PATH detection back to a central location.
  	You should NEVER go to any $_SERVER[] variables for path related stuff, all you need is already available
  	 in defines.
  	* UserReport.php:  Remove dangling reference to BASEPATH.
  	* install.php:  Use centralised path detection.
- 	
-2005-01-04 Benoit Grégoire  <bock@step.polymtl.ca>
+
+2006-01-04 Benoit Grégoire  <bock@step.polymtl.ca>
 	* config.php, common.php:  Completely remove SYSTEM_PATH from config.php, making one less config option to manage.  It is now autodetected.
 
 2006-01-03 Rob Janes <janes.rob@gmail.com>
@@ -35,13 +38,13 @@
 	* Integrating Philippe's code for User class
 	* This build needs extensive testing please
 	* E-mail blacklisting (Mail class)
-	
+
 2005-12-29 François Proulx <francois.proulx@gmail.com>
 	* Added Aidan's file_exists_incpath function to Dependencies class
 	* Translated and standardized most of PostgreSQL abstraction class.
 	* Removed blank lines at end of many files
 	* Tested the new Phlickr package, which fixes URL on Flickr
-	
+
 2005-12-28 Max Horváth <max.horvath@maxspot.de>
 	* Removed BASEPATH define from source - resulting in a better require-overview
 	* speed improvement of 7% by optimizing Dependencies class
