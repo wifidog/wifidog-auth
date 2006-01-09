@@ -355,7 +355,7 @@ class User implements GenericObject
 
                 if ($user_info['validation_grace_time_expired'] == 't')
                 {
-                    $errmsg = sprintf(_("Sorry, your %s minutes grace period to retrieve your email and validate your account has now expired. You will have to connect to the internet and validate your account from another location or create a new account. For help, please %s click here %s."), $user_info['validation_grace_time_expired'], '<a href="'.BASEPATH.'faq.php'.'">', '</a>');
+                    $errmsg = sprintf(_("Sorry, your %s minutes grace period to retrieve your email and validate your account has now expired. You will have to connect to the internet and validate your account from another location or create a new account. For help, please %s click here %s."), $user_info['validation_grace_time_expired'], '<a href="'.BASE_URL_PATH.'faq.php'.'">', '</a>');
                     $retval = false;
                 }
                 else
