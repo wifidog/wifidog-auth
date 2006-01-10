@@ -160,19 +160,83 @@ $requiredPostgeSQLVersion = '0.0.0'; // Todo
 # Needed files/directories with write access
 $dir_array = array ('tmp', 'tmp/magpie_cache', 'lib/smarty', 'tmp/smarty/templates_c', 'lib/magpie', 'lib/Phlickr', 'config.php');
 
-$smarty_full_url = 'http://smarty.php.net/do_download.php?download_file=Smarty-2.6.7.tar.gz';
+$smarty_full_url    = 'http://smarty.php.net/do_download.php?download_file=Smarty-2.6.7.tar.gz';
 $magpierss_full_url = 'http://easynews.dl.sourceforge.net/sourceforge/magpierss/magpierss-0.71.1.tar.gz';
-$phlickr_full_url = 'http://easynews.dl.sourceforge.net/sourceforge/phlickr/Phlickr-0.2.4.tgz';
+$phlickr_full_url   = 'http://easynews.dl.sourceforge.net/sourceforge/phlickr/Phlickr-0.2.4.tgz';
 
-$neededPackages = array ('smarty' => array ('needed' => 1, 'available' => 0, 'message' => '', 'file' => 'lib/smarty/Smarty.class.php'), 'magpierss' => array ('needed' => 0, 'available' => 0, 'message' => '', 'file' => 'lib/magpie/rss_fetch.inc'), 'phlickr' => array ('needed' => 0, 'available' => 0, 'message' => '', 'file' => 'lib/Phlickr/Photo.php'));
+$neededPackages = array(
+  'smarty'    => array('needed' => 1, 'available' => 0, 'message' => '', 'file' => 'lib/smarty/Smarty.class.php'),
+  'magpierss' => array('needed' => 0, 'available' => 0, 'message' => '', 'file' => 'lib/magpie/rss_fetch.inc'),
+  'phlickr'   => array('needed' => 0, 'available' => 0, 'message' => '', 'file' => 'lib/Phlickr/Photo.php')
+);
 
-$neededExtentions = array ('xml' => array ('needed' => 0, 'available' => 0, 'message' => '<B>xml</B> extention is missing', 'note' => 'Required for RSS support'), 'pgsql' => array ('needed' => 1, 'available' => 0, 'message' => '<B>Posgresql</B> extention is missing', 'note' => 'Required to connect to Postgresql database'), 'mysql' => array ('needed' => 0, 'available' => 0, 'message' => '<B>MySQL</B> extention is missing', 'note' => 'Required to connect to MySQL database (experimental and not working)'), 'dom' => array ('needed' => 1, 'available' => 0, 'message' => '<B>DOM</B> extention is missing', 'note' => 'Required if you want to export the list of HotSpots as a RSS feed'), 'gettext' => array ('needed' => 0, 'available' => 0, 'message' => 'Gettext is unavailable, the auth-server will work, but you will loose internationalization', 'note' => 'Internationalization support'), 'mbstring' => array ('needed' => 1, 'available' => 0, 'message' => '<B>mbstring</B> extention is missing', 'note' => 'Required for core auth-server and RSS support'), 'mcrypt' => array ('needed' => 0, 'available' => 0, 'message' => '<B>mcrypt</B> extention is missing', 'note' => 'Required for RADIUS support'), 'mhash' => array ('needed' => 0, 'available' => 0, 'message' => '<B>mhash</B> extention is missing', 'note' => 'Required for RADIUS support'), 'xmlrpc' => array ('needed' => 0, 'available' => 0, 'message' => '<B>xmlrpc</B> extention is missing', 'note' => 'Required for RADIUS support'));
+$neededExtentions = array(
+  'xml'      => array('needed'    => 0,
+                      'available' => 0,
+                      'message'   => '<B>xml</B> extention is missing',
+                      'note'      => 'Required for RSS support'),
+  'pgsql'    => array('needed'    => 1,
+                      'available' => 0,
+                      'message'   => '<B>Posgresql</B> extention is missing',
+                      'note'      => 'Required to connect to Postgresql database'),
+  'mysql'    => array('needed'    => 0,
+                      'available' => 0,
+                      'message'   => '<B>MySQL</B> extention is missing',
+                      'note'      => 'Required to connect to MySQL database (experimental and not working)'),
+  'dom'      => array('needed'    => 1,
+                      'available' => 0,
+                      'message'   => '<B>DOM</B> extention is missing',
+                      'note'      => 'Required if you want to export the list of HotSpots as a RSS feed'),
+  'gettext'  => array('needed'    => 0,
+                      'available' => 0,
+                      'message'   => 'Gettext is unavailable, the auth-server will work, but you will loose internationalization',
+                      'note'      => 'Internationalization support'),
+  'mbstring' => array('needed'    => 1,
+                      'available' => 0,
+                      'message'   => '<B>mbstring</B> extention is missing',
+                      'note'      => 'Required for core auth-server and RSS support'),
+  'mcrypt'   => array('needed'    => 0,
+                      'available' => 0,
+                      'message'   => '<B>mcrypt</B> extention is missing',
+                      'note'      => 'Required for RADIUS support'),
+  'mhash'    => array('needed'    => 0,
+                      'available' => 0,
+                      'message'   => '<B>mhash</B> extention is missing',
+                      'note'      => 'Required for RADIUS support'),
+  'xmlrpc'   => array('needed'    => 0,
+                      'available' => 0,
+                      'message'   => '<B>xmlrpc</B> extention is missing',
+                      'note'      => 'Required for RADIUS support')
+);
 
 $loadedExtensions = array_flip(get_loaded_extensions()); # Debug : An empty array for $loadedExtensions will show needed dependencies
 
-$neededPEARPackages = array ('radius' => array ('needed' => 0, 'available' => 0, 'command' => "return dl('radius.so');", 'message' => 'Try in command line : pear install radius'), 'Auth_RADIUS' => array ('needed' => 0, 'available' => 0, 'command' => "return include_once 'Auth/RADIUS.php';", 'message' => 'Try in command line : pear install Auth_RADIUS'), 'Crypt_CHAP' => array ('needed' => 0, 'available' => 0, 'command' => "return include_once 'Crypt/CHAP.php';", 'message' => 'Try in command line : pear install Crypt_CHAP (mhash and mcrypt extensions are needed)'));
+$neededPEARPackages = array(
+  'radius'      => array('needed' => 0, 'available' => 0, 'command' => "return dl('radius.so');",                'message' => 'Try in command line : pear install radius'),
+  'Auth_RADIUS' => array('needed' => 0, 'available' => 0, 'command' => "return include_once 'Auth/RADIUS.php';", 'message' => 'Try in command line : pear install Auth_RADIUS'),
+  'Crypt_CHAP'  => array('needed' => 0, 'available' => 0, 'command' => "return include_once 'Crypt/CHAP.php';",  'message' => 'Try in command line : pear install Crypt_CHAP (mhash and mcrypt extensions are needed)')
+);
 
-$optionsInfo = array ('SSL_AVAILABLE' => array ('title' => 'SSL Support', 'depend' => 'return 1;', 'message' => '&nbsp;'), 'RSS_SUPPORT' => array ('title' => 'RSS Support', 'depend' => 'return ($neededExtentions[\'xml\'][\'available\'] && $neededPackages[\'magpierss\'][\'available\']);', 'message' => 'Missing <B>xml</B> extentions or <B>MagpieRSS</B>'), 'PHLICKR_SUPPORT' => array ('title' => 'Flickr Photostream content support', 'depend' => 'return $neededPackages[\'phlickr\'][\'available\'];', 'message' => '<B>Phlickr</B> library not installed'), 'CONF_USE_CRON_FOR_DB_CLEANUP' => array ('title' => 'Use cron for DB cleanup', 'depend' => 'return 1;', 'message' => '&nbsp;'), 'XSLT_SUPPORT' => array ('title' => 'XSLT Support', 'depend' => 'return 1;', 'message' => '&nbsp;'), 'GMAPS_HOTSPOTS_MAP_ENABLED' => array ('title' => 'Google Maps Support', 'depend' => 'return 1;', 'message' => '&nbsp;'));
+$optionsInfo = array(
+  'SSL_AVAILABLE'                => array('title'   => 'SSL Support',
+                                          'depend'  => 'return 1;',
+                                          'message' => '&nbsp;'),
+  'RSS_SUPPORT'                  => array('title'   => 'RSS Support',
+                                          'depend'  => 'return ($neededExtentions[\'xml\'][\'available\'] && $neededPackages[\'magpierss\'][\'available\']);',
+                                          'message' => 'Missing <B>xml</B> extentions or <B>MagpieRSS</B>'),
+  'PHLICKR_SUPPORT'              => array('title'   => 'Flickr Photostream content support',
+                                          'depend'  => 'return $neededPackages[\'phlickr\'][\'available\'];',
+                                          'message' => '<B>Phlickr</B> library not installed'),
+  'CONF_USE_CRON_FOR_DB_CLEANUP' => array('title'   => 'Use cron for DB cleanup',
+                                          'depend'  => 'return 1;',
+                                          'message' => '&nbsp;'),
+  'XSLT_SUPPORT'                 => array('title'   => 'XSLT Support',
+                                          'depend'  => 'return 1;',
+                                          'message' => '&nbsp;'),
+  'GMAPS_HOTSPOTS_MAP_ENABLED'   => array('title'   => 'Google Maps Support',
+                                          'depend'  => 'return 1;',
+                                          'message' => '&nbsp;')
+);
 
 foreach ($neededExtentions as $key => $value) { # Detect availables extentions
     if (array_key_exists($key, $loadedExtensions))
@@ -483,7 +547,8 @@ switch ($page) {
         print "</TABLE>\n";
 
         if ($error != 1) {
-            navigation(array (array ("title" => "Back", "page" => ""), array ("title" => "Next", "page" => "smarty")));
+            print "<P><B>Note:</B> Please validate that 'Installation directory' value is the right one. If this value is wrong, the PATH de automatic detection will not work as expected";
+            navigation(array (array ("title" => "Back", "page" => "version"), array ("title" => "Next", "page" => "smarty")));
         }
         else {
             refreshButton();
@@ -833,7 +898,7 @@ EndHTML;
         $replacements[3] = '-- ';
         $replacements[4] = '-- ';
 
-        $content_schema_array = file(WIFIDOG_ABS_FILE_PATH."../sql/wifidog-postgres-schema.sql") or die("Can not open $basepath/../sql/wifidog-postgres-schema.sql"); # Read SQL schema file
+        $content_schema_array = file(WIFIDOG_ABS_FILE_PATH."../sql/wifidog-postgres-schema.sql") or die("<B>Error</B>: Can not open $basepath/../sql/wifidog-postgres-schema.sql"); # Read SQL schema file
         $content_schema = implode("", $content_schema_array);
         $content_data_array = file(WIFIDOG_ABS_FILE_PATH."../sql/wifidog-postgres-initial-data.sql"); # Read SQL initial data file
         $content_data = implode("", $content_data_array);
