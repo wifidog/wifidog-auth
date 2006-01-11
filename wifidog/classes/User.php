@@ -254,60 +254,101 @@ class User implements GenericObject
         return $this->mRow['email'];
     }
 
+    public function setEmail($email)
+    {
+      $email_str = $this->mDb->escapeString($email);
+      if (!($update = $this->mDb->execSqlUpdate("UPDATE users SET email='{$email_str}' WHERE user_id='{$this->id}'")))
+	{
+	  throw new Exception(_("Could not update email address."));
+	}
+      $this->mRow['email'] = $email; // unescaped
+    }
+
     public function getRealName()
-	{
-		return $this->mRow['real_name'];
-	}
+    {
+      return $this->mRow['real_name'];
+    }
 
-	public function setRealName($realname)
+    public function setRealName($realname)
+    {
+      $realname_str = $this->mDb->escapeString($realname);
+      if (!($update = $this->mDb->execSqlUpdate("UPDATE users SET real_name='{$realname_str}' WHERE user_id='{$this->id}'")))
 	{
-		$realname = $this->mDb->EscapeString($realname);
-		$this->mDb->execSqlUpdate("UPDATE users SET real_name = '{$realname}' WHERE user_id = '{$this->getId()}'");
-		$this->refresh();
+	  throw new Exception(_("Could not update real name."));
 	}
+      $this->mRow['real_name'] = $realname; // unescaped
+    }
 
-	function setIsAdvertised($value)
+    function setIsAdvertised($value)
+    {
+      $retval = true;
+      if ($value != $this->isAdvertised())
 	{
-		$retval = true;
-		if ($value != $this->isAdvertised())
-		{
-			global $db;
-			$value ? $value = 'TRUE' : $value = 'FALSE';
-			$retval = $db->execSqlUpdate("UPDATE users SET never_show_username = {$value} WHERE user_id = '{$this->getId()}'", false);
-			$this->refresh();
-		}
-		return $retval;
+	  global $db;
+	  $value ? $value = 'TRUE' : $value = 'FALSE';
+	  $retval = $db->execSqlUpdate("UPDATE users SET never_show_username = {$value} WHERE user_id = '{$this->getId()}'", false);
+	  $this->refresh();
 	}
+      return $retval;
+    }
 
-	public function isAdvertised()
+    public function isAdvertised()
+    {
+      return (($this->mRow['never_show_username'] == 't') ? true : false);
+    }
+
+    public function getWebsiteURL()
+    {
+      return $this->mRow['website'];
+    }
+
+    public function setWebsiteURL($website)
+    {
+      $website_str = $this->mDb->escapeString($website);
+      if (!($update = $this->mDb->execSqlUpdate("UPDATE users SET website='{$website_str}' WHERE user_id='{$this->id}'")))
 	{
-		return (($this->mRow['never_show_username'] == 't') ? true : false);
+	  throw new Exception(_("Could not update website URL."));
 	}
+      $this->mRow['website'] = $website;
+    }
 
-	public function getWebsiteURL()
+    public function getUsernameVisiblity()
+    {
+      return !$this->mRow['never_show_username'];
+    }
+
+    public function setUsernameVisiblity($visible)
+    {
+      $invisible = !$visible;
+      if (!($update = $this->mDb->execSqlUpdate("UPDATE users SET never_show_username=".
+						($invisible ? 'true' : 'false').
+						" WHERE user_id='{$this->id}'")))
 	{
-		return $this->mRow['website'];
+	  throw new Exception(_("Could not update username visibility flag."));
 	}
+      $this->mRow['never_show_username'] = $invisible;
+    }
 
-	public function setWebsiteURL($website)
-	{
-		$website = $this->mDb->EscapeString($website);
-		$this->mDb->execSqlUpdate("UPDATE users SET website = '{$website}' WHERE user_id = '{$this->getId()}'");
-		$this->refresh();
-	}
-
-    /**What locale (language) does the user prefer?
-     * @todo Save in the database */
+    /**What locale (language) does the user prefer? */
     public function getPreferedLocale()
     {
-        global $session;
-        //return $this->mRow['prefered_locale'];
-        $locale = $session->get('SESS_LANGUAGE_VAR');
-        if (empty ($locale))
-        {
-            $locale = DEFAULT_LANG;
-        }
-        return $locale;
+      global $session;
+      $locale = $this->mRow['prefered_locale'];
+      if (empty($locale) && !empty($session))
+	$locale = $session->get('SESS_LANGUAGE_VAR');
+      if (empty($locale))
+	$locale = DEFAULT_LANG;
+      return $locale;
+    }
+
+    public function setPreferedLocale($locale)
+    {
+      $locale_str = $this->mDb->escapeString($locale);
+      if (!($update = $this->mDb->execSqlUpdate("UPDATE users SET prefered_locale='{$locale_str}' WHERE user_id='{$this->id}'")))
+	{
+	  throw new Exception(_("Could not update username locale."));
+	}
+      $this->mRow['prefered_locale'] = $locale;
     }
 
     /** get the hashed password stored in the database */
@@ -721,6 +762,12 @@ class User implements GenericObject
             }
         }
         return $retval;
+    }
+
+    /** Reloads the object from the database.  Should normally be called after a set operation */
+    protected function refresh()
+    {
+      $this->__construct($this->id);
     }
 
 }
