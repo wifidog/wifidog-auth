@@ -1,3 +1,6 @@
+2006-01-11 Rob Janes <janes.rob@gmail.com>
+    * classes/User.php: added setters, getters, throw exceptions, added refresh() subr, tweaked language
+
 2006-01-09 Max Horváth <max.horvath@maxspot.de>
 	* createDoc.sh: added description of how to install requirements
 
