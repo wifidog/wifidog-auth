@@ -1,3 +1,6 @@
+2006-01-18 François Proulx <francois.proulx@gmail.com>
+	* Remove unneeded .cvsignore files since ths svn:ignore property is set to the same list 
+	
 2006-01-11 Rob Janes <janes.rob@gmail.com>
     * classes/User.php: added setters, getters, throw exceptions, added refresh() subr, tweaked language
 
