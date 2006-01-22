@@ -55,6 +55,7 @@ empty ($_REQUEST['config']) ? $config = '' : $config = $_REQUEST['config']; # St
 
 # Random password generator
 $password_file = '/tmp/dog_cookie.txt';
+$random_password = null;
 if (!file_exists($password_file)) {
     srand(date("s"));
     $possible_charactors = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -597,7 +598,7 @@ EndHTML;
             exec("pwd", $output, $return);
             print "Copying : ";
             if (!file_exists(WIFIDOG_ABS_FILE_PATH."lib/smarty"));
-            exec("cp -r $dirname/libs/* $basepath/lib/smarty &>/tmp/cp.output", $output, $return); # TODO : Utiliser SMARTY_REL_PATH
+            exec("cp -r $dirname/libs/* ".WIFIDOG_ABS_FILE_PATH."/lib/smarty &>/tmp/cp.output", $output, $return); # TODO : Utiliser SMARTY_REL_PATH
             print "OK<BR>";
 
             refreshButton();

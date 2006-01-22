@@ -112,21 +112,13 @@ define('SESS_GW_ID_VAR', 'SESS_GW_ID');
 
 function undo_magic_quotes() {
     if (get_magic_quotes_gpc()) {
-        $_GET = array_map_recursive('stripslashes', $_GET);
-        $_POST = array_map_recursive('stripslashes', $_POST);
-        $_COOKIE = array_map_recursive('stripslashes', $_COOKIE);
-        $_REQUEST = array_map_recursive('stripslashes', $_REQUEST);
+        $_GET = array_walk_recursive($_GET, 'stripslashes');
+        $_POST = array_walk_recursive($_POST, 'stripslashes');
+        $_COOKIE = array_walk_recursive($_COOKIE, 'stripslashes');
+        $_REQUEST = array_walk_recursive($_REQUEST, 'stripslashes');
     }
 }
 
-if (!function_exists('array_map_recursive')) {
-    function array_map_recursive($function, $data) {
-        foreach ($data as $i => $item) {
-            $data[$i] = is_array($item) ? array_map_recursive($function, $item) : $function ($item);
-        }
-        return $data;
-    }
-}
 /** Convert a password hash form a NoCat passwd file into the same format as get_password_hash().
 * @return The 32 character hash.
 */
