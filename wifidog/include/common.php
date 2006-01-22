@@ -303,4 +303,3 @@ function cmnRequireConfig($config_file = 'config.php') {
  * End:
  */
 ?>
-
