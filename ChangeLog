@@ -1,4 +1,7 @@
 2006-01-08 Benoit Grégoire  <bock@step.polymtl.ca>
+	* common.php:  Real fix for Ticket #59 ;)
+	
+2006-01-08 Benoit Grégoire  <bock@step.polymtl.ca>
 	* common.php:  Untested fix for Ticket #59
 	
 2006-01-18 François Proulx <francois.proulx@gmail.com>

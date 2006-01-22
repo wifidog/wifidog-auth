@@ -109,13 +109,17 @@ define('SESS_GW_ID_VAR', 'SESS_GW_ID');
 /* End session constants */
 
 
+function stripslashes_cb(&$item, $key)
+{
+   $item = stripslashes($item);
+}
 
 function undo_magic_quotes() {
     if (get_magic_quotes_gpc()) {
-        $_GET = array_walk_recursive($_GET, 'stripslashes');
-        $_POST = array_walk_recursive($_POST, 'stripslashes');
-        $_COOKIE = array_walk_recursive($_COOKIE, 'stripslashes');
-        $_REQUEST = array_walk_recursive($_REQUEST, 'stripslashes');
+        array_walk_recursive($_GET, 'stripslashes_cb');
+        array_walk_recursive($_POST, 'stripslashes_cb');
+        array_walk_recursive($_COOKIE, 'stripslashes_cb');
+        array_walk_recursive($_REQUEST, 'stripslashes_cb');
     }
 }
 
