@@ -1,4 +1,4 @@
-2006-01-21 Max Horváth <max.horvath@maxspot.de>
+2006-01-23 Max Horváth <max.horvath@maxspot.de>
 	* Removed compiled PHPdoc documentation
 	* moved createDoc.sh to "doc" directory, documentation can be generated on
 	  the fly now, in the future we'll be generating a nightly PHPdoc on
@@ -8,8 +8,11 @@
 	* touched almost every PHP file in WiFiDog auth server for PHPdoc generating
 	  compiling without any warnings
 	* Initialized uninitialized variables in Node class
+	* Fixed initialization error of one variable
+	* Configuration file (config.php) will be read before path detection is
+	  being started (otherwise there was no chance to set a manual SYSTEM_PATH)
 
-2006-01-20 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-01-22 Benoit Grégoire  <bock@step.polymtl.ca>
 	* common.php:  Real fix for Ticket #59 ;)
 	* common.php:  Untested fix for Ticket #59
 
