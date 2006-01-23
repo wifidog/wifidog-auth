@@ -1,0 +1,29 @@
+<refentry id="{@id}">
+ <refnamediv>
+  <refname>{@link http://www.wifidog.org/ WiFiDog Authentication Server 1.0.0m2} Manual</refname>
+  <refpurpose>Introduction to WiFiDog Authentication Server</refpurpose>
+ </refnamediv>
+ <refsynopsisdiv>
+  <para>WiFiDog Athentication Server documentation authors</para>
+  <authorgroup>
+   <author>
+    Max Horvath
+    <authorblurb>
+     {@link mailto:max.horvath@maxspot.de max.horvath@maxspot.de}
+    </authorblurb>
+   </author>
+  </authorgroup>
+ </refsynopsisdiv>
+ <refsect1 id="{@id intro}">
+  <refsect2 id="{@id documentation}">
+   <title>Documentation</title>
+   <para>The WiFiDog project is a complete and embeddable captive portal solution for wireless community groups or individuals who wish to open a free Hotspot while still preventing abuse of their Internet connection.</para>
+   <para>The WiFiDog project was started by {@link http://www.ilesansfil.org/ Ile sans fil} and is currently {@link http://auth.ilesansfil.org/ in production}. Existing captive portal solutions were either almost impossible to embed ({@link http://lists.nocat.net/mailman/listinfo NoCat}, which relies on Perl, GnuPG , OpenSSL ), or only designed to display disclaimers with no access control at all (NoCatSplash and others). WiFiDog is designed to have optional centralized access control, full bandwidth accounting, node heartbeating and local content specific to each hotspot. It does not rely on a JavaScript window, so it works with any platform with a web browser, including PDAs and cellphones. It is developed in C to make it easy to include in embedded systems (It has been designed for the {@link http://www.linksys.com/servlet/Satellite?childpagename=US%2FLayout&packedargs=c%3DL_Product_C2%26cid%3D1127782957298&pagename=Linksys%2FCommon%2FVisitorWrapper Linksys WRT54G}, but runs on any recent Linux platform). A typical install only takes 30kb on i386, and a fully functionnal install could be made in under 10 kb if necessary.</para>
+  </refsect2>
+  <refsect2 id="{@id bug-reporting}">
+   <title>Bugs and Features (guaranteed to be separate entities...)</title>
+   <para>If you think you've found a bug in WiFiDog Authentication Server, please check our bug tracker online at {@link http://dev.wifidog.org/report http://dev.wifidog.org/report}, the bug may have already been fixed.  If you don't find it, please submit a bug, and we will attempt to fix it as quickly as possible.</para>
+   <para>If there is a feature you're dying to have, check our feature tracker at {@link http://dev.wifidog.org/report http://dev.wifidog.org/report}. Please don't hesitate to look right at the source code and help apply your feature.  We love that, and can easily give you access to the Subversion server.</para>
+  </refsect2>
+ </refsect1>
+</refentry>
