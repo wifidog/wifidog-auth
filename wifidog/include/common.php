@@ -43,14 +43,14 @@
  */
 
 /**
- * Include path detection code
- */
-require_once ('path_defines_base.php');
-
-/**
  * Include configuration file
  */
 cmnRequireConfig();
+
+/**
+ * Include path detection code
+ */
+require_once ('path_defines_base.php');
 
 require_once ('path_defines_url_content.php');
 
