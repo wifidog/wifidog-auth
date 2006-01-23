@@ -35,11 +35,14 @@
 
 /**
  * @package    WiFiDogAuthServer
- * @copyright  2004 Technologies Coeus inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2004-2006 Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * Load common include file
+ */
 require_once('admin_common.php');
 
 require_once('classes/MainUI.php');

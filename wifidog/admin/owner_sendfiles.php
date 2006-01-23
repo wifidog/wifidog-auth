@@ -38,12 +38,15 @@
  *
  * @package    WiFiDogAuthServer
  * @author     Pascal Leclerc
- * @copyright  2005 Pascal Leclerc
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
- * @todo		  Move to node getAdminUI.
+ * @copyright  2005-2006 Pascal Leclerc
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
+ * @todo       Move to node getAdminUI.
  */
 
+/**
+ * Load common include file
+ */
 require_once('admin_common.php');
 
 require_once('classes/Node.php');

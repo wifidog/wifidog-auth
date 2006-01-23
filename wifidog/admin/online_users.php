@@ -36,15 +36,14 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Philippe April
- * @copyright  2004-2005 Philippe April
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2004-2006 Philippe April
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
 /**
- * @author Copyright (C) 2004 Philippe April.
+ * Load common include file
  */
-
 require_once('admin_common.php');
 
 require_once('classes/Node.php');

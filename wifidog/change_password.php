@@ -39,13 +39,15 @@
  * @package    WiFiDogAuthServer
  * @author     Philippe April
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2004-2005 Philippe April
- * @copyright  2004-2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2004-2006 Philippe April
+ * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * Load common include file
+ */
 require_once(dirname(__FILE__) . '/include/common.php');
 
 require_once('classes/MainUI.php');
