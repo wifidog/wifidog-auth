@@ -36,14 +36,23 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire, Technologies Coeus inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * Load content classes
+ */
 require_once('classes/Content.php');
 
-/** Any object that implement this interface can be administered in a generic way. */
+/**
+ * Any object that implement this interface can be administered in a generic way.
+ *
+ * @package    WiFiDogAuthServer
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ */
 interface GenericObject
 {
     /** Get an instance of the object

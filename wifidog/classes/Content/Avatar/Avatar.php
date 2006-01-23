@@ -37,11 +37,14 @@
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Francois Proulx <francois.proulx@gmail.com>
- * @copyright  2005 Francois Proulx, Technologies Coeus inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * Load Picture content class
+ */
 require_once('classes/Content/Picture/Picture.php');
 
 /**
@@ -50,7 +53,7 @@ require_once('classes/Content/Picture/Picture.php');
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Francois Proulx <francois.proulx@gmail.com>
- * @copyright  2005 Francois Proulx, Technologies Coeus inc.
+ * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
  */
 class Avatar extends Picture
 {

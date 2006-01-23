@@ -35,17 +35,27 @@
 
 /**
  * @package    WiFiDogAuthServer
+ * @subpackage ContentClasses
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * Load required classes
+ */
 require_once('classes/FormSelectGenerator.php');
 require_once('classes/GenericObject.php');
 
-/** Any type of content */
+/**
+ * Defines any type of content
+ *
+ * @package    WiFiDogAuthServer
+ * @subpackage ContentClasses
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ */
 class Content implements GenericObject {
     protected $id;
     protected $content_row;
@@ -1333,9 +1343,10 @@ class Content implements GenericObject {
         $this->__construct($this->id);
     }
 
-    /** @see GenericObject
-     * @note Persistent content will not be deleted
-    */
+    /**
+     * @see GenericObject
+     * @internal Persistent content will not be deleted
+     */
     public function delete(& $errmsg)
     {
         $retval = false;
@@ -1366,6 +1377,9 @@ class Content implements GenericObject {
 $class_names = Content :: getAvailableContentTypes();
 
 foreach ($class_names as $class_name) {
+    /**
+     * Load requested content class
+     */
     require_once('classes/Content/' . $class_name . '/' . $class_name . '.php');
 }
 

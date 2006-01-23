@@ -37,15 +37,25 @@
  * @package    WiFiDogAuthServer
  * @subpackage Authenticators
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire, Technologies Coeus inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * Load include files
+ */
 require_once('classes/Authenticator.php');
 require_once('classes/User.php');
 
-/** Internal wifidog user database authentication source */
+/**
+ * Internal wifidog user database authentication source
+ *
+ * @package    WiFiDogAuthServer
+ * @subpackage Authenticators
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ */
 class AuthenticatorLocalUser extends Authenticator
 {
 
@@ -56,8 +66,9 @@ class AuthenticatorLocalUser extends Authenticator
 
     /**
      * Callback function used to discriminate Local User account origins
-     * @param $account_origin : array
-     * @return boolean : true if the parameter refers to a Local User account
+     *
+     * @param array $account_origin
+     * @return boolean True if the parameter refers to a Local User account
      * origin
      */
     private static function isLocalUserAccountOrigin($account_origin)
@@ -66,9 +77,10 @@ class AuthenticatorLocalUser extends Authenticator
     }
 
     /** Attempts to login a user against the authentication source.  If successfull, returns a User object
-     * @param username:  A valid identifying token for the source.  Not necessarily unique.  For local user, bots username and email are valid.
-     * @param password:  Clear text password.
-     * @retval The actual User object if sogin was successfull, false otherwise.
+     *
+     * @param string $username A valid identifying token for the source.  Not necessarily unique.  For local user, bots username and email are valid.
+     * @param string $password Clear text password.
+     * @return The actual User object if sogin was successfull, false otherwise.
      */
     function login($username, $password, & $errmsg = null)
     {
@@ -115,14 +127,18 @@ class AuthenticatorLocalUser extends Authenticator
         return $retval;
     }
 
-    /** Start accounting traffic for the user */
+    /**
+     * Start accounting traffic for the user
+     */
     function acctStart($conn_id, & $errmsg = null)
     {
         parent :: acctStart($conn_id);
         return true;
     }
 
-    /** Update traffic counters */
+    /**
+     * Update traffic counters
+     */
     function acctUpdate($conn_id, $incoming, $outgoing, & $errmsg = null)
     {
         // Just call the generic counters update
@@ -130,7 +146,9 @@ class AuthenticatorLocalUser extends Authenticator
         return true;
     }
 
-    /** Final update and stop accounting */
+    /**
+     * Final update and stop accounting
+     */
     function acctStop($conn_id, & $errmsg = null)
     {
         parent :: acctStop($conn_id);

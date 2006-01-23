@@ -35,15 +35,24 @@
 
 /**
  * @package    WiFiDogAuthServer
+ * @subpackage Geocoders
  * @author     Francois Proulx <francois.proulx@gmail.com>
- * @copyright  2005 Francois Proulx <francois.proulx@gmail.com> - Technologies
- * Coeus inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * Load required class
+ */
 require_once('classes/GenericObject.php');
 
+/**
+ * @package    WiFiDogAuthServer
+ * @subpackage Geocoders
+ * @author     Francois Proulx <francois.proulx@gmail.com>
+ * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
+ */
 class GeocoderUsa extends AbstractGeocoder
 {
     public function __construct()

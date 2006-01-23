@@ -36,16 +36,24 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * Load required classes
+ */
 require_once('classes/Network.php');
 require_once('classes/Mail.php');
 
-/** Abstract a User. */
+/**
+ * Abstract a User
+ *
+ * @package    WiFiDogAuthServer
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ */
 class User implements GenericObject
 {
     private $mRow;

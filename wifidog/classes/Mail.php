@@ -35,17 +35,21 @@
 // +-------------------------------------------------------------------+
 
 /**
+ * @package    WiFiDogAuthServer
+ * @author     Francois Proulx <francois.proulx@gmail.com>
+ * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
+ */
+
+/**
  * This a wrapper class conforming RFC822 capable of sending valid UTF-8 MIME
  * headers
  *
  * @package    WiFiDogAuthServer
  * @author     Francois Proulx <francois.proulx@gmail.com>
- * @copyright  2005 Francois Proulx <francois.proulx@gmail.com> - Technologies
- * Coeus inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
  */
-
 class Mail
 {
 	// List of fake e-mails hosts
@@ -139,11 +143,11 @@ class Mail
 	}
 
 	/**
-	 * Validates an e-mail address 
+	 * Validates an e-mail address
 	 *
 	 * This function will make sure an e-mail is RFC822 compliant
 	 * and is not black listed.
-	 * 
+	 *
 	 * Here's an example of how to use the function:
 	 * <code>
 	 * Mail::validateEmailAddress($mail);

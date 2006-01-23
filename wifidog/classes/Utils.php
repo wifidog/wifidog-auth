@@ -36,13 +36,17 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Philippe April
- * @copyright  2004-2005 Philippe April
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2004-2006 Philippe April
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
 /**
  * This class regroups a bunch of utility functions
+ *
+ * @package    WiFiDogAuthServer
+ * @author     Philippe April
+ * @copyright  2004-2006 Philippe April
  */
 class Utils
 {
@@ -104,7 +108,7 @@ class Utils
     /**
      * Naturally sorts (collates) a 2-dimensionnal array.
      * Ie. it will sort in human order : numbers first, letters ...
-     * 
+     *
      * From PHP.net forums : Thanks to mroach at mroach dot com
      */
     public static function natsort2d(& $arrIn, $index = null)

@@ -38,12 +38,15 @@
  * @subpackage ContentClasses
  * @author     Francois Proulx <francois.proulx@gmail.com>
  * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2005 Francois Proulx, Technologies Coeus inc.
- * @copyright  2005 Max Horvath, maxspot GmbH
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
+ * @copyright  2005-2006 Max Horvath, maxspot GmbH
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * Load File content class
+ */
 require_once('classes/Content/File/File.php');
 
 /**
@@ -53,8 +56,8 @@ require_once('classes/Content/File/File.php');
  * @subpackage ContentClasses
  * @author     Francois Proulx <francois.proulx@gmail.com>
  * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2005 Francois Proulx, Technologies Coeus inc.
- * @copyright  2005 Max Horvath, maxspot GmbH
+ * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
+ * @copyright  2005-2006 Max Horvath, maxspot GmbH
  */
 class Picture extends File
 {

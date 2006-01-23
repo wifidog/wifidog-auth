@@ -36,16 +36,18 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2004-2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
 error_reporting(E_ALL);
 
 // Detect Gettext support.
 if (!function_exists('gettext')) {
+    /**
+     * Define Gettext has NOT been found on the system
+     */
     define('GETTEXT_AVAILABLE', false);
 
     // Redefine the gettext functions if gettext isn't installed.
@@ -58,11 +60,20 @@ if (!function_exists('gettext')) {
         return $string;
     }
 } else {
+    /**
+     * Define Gettext has been found on the system
+     *
+     * @ignore
+     */
     define('GETTEXT_AVAILABLE', true);
 }
 
 /**
  * Designates a human language, possibly localized ie fr_CA
+ *
+ * @package    WiFiDogAuthServer
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
  */
 class Locale {
     // Private attributes

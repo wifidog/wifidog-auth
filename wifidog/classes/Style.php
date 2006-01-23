@@ -36,14 +36,16 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2004-2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  * @deprecated 2005-05-30 This file is NOT used anymore, kept until we move SQL
  * stats somewhere else.
  */
 
+/**
+ * Load required classes
+ */
 require_once('classes/SmartyWifidog.php');
 require_once('classes/Session.php');
 
@@ -53,7 +55,14 @@ Header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); # Past date
 Header("Pragma: no-cache");
 Header("Content-Type: text/html; charset=utf-8");
 
-/** Style contains functions managing headers, footers, stylesheet, etc.
+/**
+ * Style contains functions managing headers, footers, stylesheet, etc.
+ *
+ * @package    WiFiDogAuthServer
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @deprecated 2005-05-30 This class is NOT used anymore, kept until we move SQL
+ * stats somewhere else.
  */
 class Style
 {

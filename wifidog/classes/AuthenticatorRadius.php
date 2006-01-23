@@ -34,29 +34,42 @@
 // +-------------------------------------------------------------------+
 
 /**
+ * Portions of this code are based on PEAR RADIUS Auth class examples provided
+ * Copyright (c) 2003, Michael Bretterklieber <michael@bretterklieber.com>
+ * All rights reserved.
+ *
  * @package    WiFiDogAuthServer
  * @subpackage Authenticators
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
  * @author     Francois Proulx <francois.proulx@gmail.com>
- * @copyright  2005 Benoit Gregoire, Technologies Coeus inc.
- * @copyright  2005 Francois Proulx, Technologies Coeus inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
 /**
- * Portions of this code are based on PEAR RADIUS Auth class examples provided
- * Copyright (c) 2003, Michael Bretterklieber <michael@bretterklieber.com>
- * All rights reserved.
+ * Load include files
  */
 require_once('classes/Authenticator.php');
 require_once('classes/User.php');
 
-// Including PEAR RADIUS and CHAP MD5 interface classes
+/**
+ * Including PEAR RADIUS and CHAP MD5 interface classes
+ */
 require_once('Auth/RADIUS.php');
 require_once('Crypt/CHAP.php');
 
-/** Internal wifidog user database authentication source */
+/**
+ * Internal wifidog user database authentication source
+ *
+ * @package    WiFiDogAuthServer
+ * @subpackage Authenticators
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @author     Francois Proulx <francois.proulx@gmail.com>
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
+ */
 class AuthenticatorRadius extends Authenticator
 {
     private $mRadius_hostname;
@@ -95,7 +108,7 @@ class AuthenticatorRadius extends Authenticator
     /** Attempts to login a user against the authentication source.  If successfull, returns a User object
      * @param username:  A valid identifying token for the source.  Not necessarily unique.  For local user, bots username and email are valid.
      * @param password:  Clear text password.
-     * @retval The actual User object if login was successfull, false otherwise.
+     * @return The actual User object if login was successfull, false otherwise.
      */
     function login($username, $password, & $errmsg = null)
     {

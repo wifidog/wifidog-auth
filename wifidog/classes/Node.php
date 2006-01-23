@@ -1,6 +1,5 @@
 <?php
 
-
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -37,21 +36,30 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * Load required classes
+ */
 require_once('classes/User.php');
 require_once('classes/GisPoint.php');
 require_once('classes/AbstractGeocoder.php');
 require_once('classes/Utils.php');
 require_once('classes/DateTime.php');
 
-/** Abstract a Node.  A Node is an actual physical transmitter.
- * @todo:  Make all the setter functions no-op if the value is the same as what
- * was already stored Use setCustomPortalReduirectUrl as an example*/
+/**
+ * Abstract a Node.  A Node is an actual physical transmitter.
+ *
+ * @todo Make all the setter functions no-op if the value is the same as what
+ * was already stored Use setCustomPortalReduirectUrl as an example
+ *
+ * @package    WiFiDogAuthServer
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @copyright  2005 Benoit Gregoire, Technologies Coeus inc.
+ */
 class Node implements GenericObject
 {
 	private $mRow;

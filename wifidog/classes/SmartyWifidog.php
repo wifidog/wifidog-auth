@@ -36,24 +36,24 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2004-2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
-/*Prevent caching*/
-
+/**
+ * Prevent caching
+ */
 define('DEFAULT_CONTENT_SMARTY_PATH', LOCAL_CONTENT_REL_PATH.DEFAULT_NODE_ID.'/');
 define('NODE_CONTENT_SMARTY_PATH', LOCAL_CONTENT_REL_PATH.CURRENT_NODE_ID.'/');
 define('COMMON_CONTENT_SMARTY_PATH', LOCAL_CONTENT_REL_PATH.'common/');
 
-# Check if Smarty installed, if not redirect user to web-base installation
+// Check if Smarty installed, if not redirect user to web-base installation
 if (Dependencies::check("Smarty", $errmsg)) {
     // Load Smarty library
     require_once('lib/smarty/Smarty.class.php');
 } else {
-             # Build the system_path for the auth-server
+    // Build the system_path for the auth-server
     print "Redirection to Wifidog web-base install since Smarty is missing <META HTTP-EQUIV=Refresh CONTENT=\"5; URL=".BASE_URL_PATH."/install.php\">";
     exit();
 }
@@ -63,6 +63,11 @@ if (Dependencies::check("Smarty", $errmsg)) {
 // can do that right here. An example:
 // require('guestbook/guestbook.lib.php');
 
+/**
+ * @package    WiFiDogAuthServer
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ */
 class SmartyWifidog extends Smarty {
 
    function __construct()

@@ -36,9 +36,9 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire, Technologies Coeus inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
 /**
@@ -55,7 +55,12 @@ if (CONF_USE_CRON_FOR_DB_CLEANUP == false)
 
 require_once('include/common_interface.php');
 
-/** Style contains functions managing headers, footers, stylesheet, etc.
+/**
+ * Style contains functions managing headers, footers, stylesheet, etc.
+ *
+ * @package    WiFiDogAuthServer
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
  */
 class MainUI
 {
@@ -213,9 +218,12 @@ class MainUI
         $this->tool_content = $html;
     }
 
-    /** Get the content to be displayed in the tool pane
-     * @param section, one of:  START, LOGIN,
-     * @return HTML markup */
+    /**
+     * Get the content to be displayed in the tool pane
+     *
+     * @param string $section One of:  START, LOGIN,
+     * @return string HTML markup
+     */
     private function getToolContent($section = 'START')
     {
         global $session;
@@ -324,9 +332,12 @@ $html .= '<p>'._("I am not logged in.").'<br><a href="'.$href.'">'._("Login").'<
         return $html;
     }
 
-    /** Display the page
-     * @note:  Uses a few request parameters to displaty debug information
-     * if $_REQUEST['debug_request'] is present, it will print out the $_REQUEST array at the top of the page */
+    /**
+     * Display the page
+     *
+     * @internal Uses a few request parameters to displaty debug information
+     * if $_REQUEST['debug_request'] is present, it will print out the $_REQUEST array at the top of the page
+     */
     public function display()
     {
         $html = '';

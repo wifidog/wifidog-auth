@@ -37,11 +37,14 @@
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire, Technologies Coeus inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * Load ContentGroupElement class
+ */
 require_once('classes/Content/ContentGroup/ContentGroupElement.php');
 
 /**
@@ -50,7 +53,7 @@ require_once('classes/Content/ContentGroup/ContentGroupElement.php');
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire, Technologies Coeus inc.
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
  */
 class ContentGroup extends Content
 {

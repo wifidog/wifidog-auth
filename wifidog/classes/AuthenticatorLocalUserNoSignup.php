@@ -37,15 +37,25 @@
  * @package    WiFiDogAuthServer
  * @subpackage Authenticators
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire, Technologies Coeus inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * Load include files
+ */
 require_once('classes/AuthenticatorLocalUser.php');
 require_once('classes/User.php');
 
-/** Internal wifidog user database authentication source, with signup disabled */
+/**
+ * Internal wifidog user database authentication source, with signup disabled
+ *
+ * @package    WiFiDogAuthServer
+ * @subpackage Authenticators
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ */
 class AuthenticatorLocalUserNoSignup extends AuthenticatorLocalUser
 {
     /**

@@ -36,119 +36,132 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Francois Proulx <francois.proulx@gmail.com>
- * @copyright  2005 Francois Proulx <francois.proulx@gmail.com> - Technologies
- * Coeus inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
- class DateTime
- {
-     const INTERFACE_DATE_SELECTOR = 1;
-     const INTERFACE_DATETIME_SELECTOR = 2;
-     const INTERFACE_DATETIME_FIELD = 3;
+/**
+ * @package    WiFiDogAuthServer
+ * @author     Francois Proulx <francois.proulx@gmail.com>
+ * @copyright  2005 Francois Proulx, Technologies Coeus inc.
+ */
+class DateTime
+{
+    const INTERFACE_DATE_SELECTOR = 1;
+    const INTERFACE_DATETIME_SELECTOR = 2;
+    const INTERFACE_DATETIME_FIELD = 3;
 
-     //TODO: Complete this ...
-     public static function getSelectDateTimeUI(DateTime $datetime, $user_prefix, $interface_type)
-     {
-         $html = "";
-         switch($interface_type)
-         {
-             case self::INTERFACE_DATE_SELECTOR:
-                 $html = "";
-                 break;
-             case self::INTERFACE_DATETIME_SELECTOR:
-                 $html = "";
-                 break;
-             case self::INTERFACE_DATETIME_FIELD:
-                 $str = $datetime->getIso8601FormattedString();
-                 $html = "<input type=\"text\" name=\"{$user_prefix}\" value=\"{$str}\">";
-                 break;
-         }
-         return $html;
-     }
-
-     static function processSelectDateTimeUI($user_prefix, $interface_type)
+    /**
+     * @todo Complete this
+     */
+    public static function getSelectDateTimeUI(DateTime $datetime, $user_prefix, $interface_type)
     {
-        $object = null;
-         switch($interface_type)
-         {
-             case self::INTERFACE_DATE_SELECTOR:
-                 $object = new self();
-                 break;
-             case self::INTERFACE_DATETIME_SELECTOR:
-                 $object = new self();
-                 break;
-             case self::INTERFACE_DATETIME_FIELD:
-                 $object = new self($_REQUEST[$user_prefix]);
-                 break;
-         }
-         return $object;
+        $html = "";
+        switch($interface_type)
+        {
+        case self::INTERFACE_DATE_SELECTOR:
+            $html = "";
+            break;
+
+        case self::INTERFACE_DATETIME_SELECTOR:
+            $html = "";
+            break;
+
+        case self::INTERFACE_DATETIME_FIELD:
+            $str = $datetime->getIso8601FormattedString();
+            $html = "<input type=\"text\" name=\"{$user_prefix}\" value=\"{$str}\">";
+            break;
+        }
+
+        return $html;
     }
 
-     // Domain-related attributes
-     private $day = 0;
-     private $month = 0;
-     private $year = 0;
-     private $hours = 0;
-     private $minutes = 0;
-     private $seconds = 0;
+    static function processSelectDateTimeUI($user_prefix, $interface_type)
+    {
+        $object = null;
 
-     /**
-      * @param string $datetime_str formatted date string (ideally ISO-8601-2000)
-      */
-     public function __construct($datetime_str)
-     {
-         if($datetime_str != null)
-         {
-             $date_attributes = getdate(strtotime($datetime_str));
-             $this->day = $date_attributes["mday"];
-             $this->month = $date_attributes["mon"];
-             $this->year = $date_attributes["year"];
-             $this->hours = $date_attributes["hours"];
-             $this->minutes = $date_attributes["minutes"];
-             $this->seconds = $date_attributes["seconds"];
-         }
-     }
+        switch($interface_type)
+        {
+        case self::INTERFACE_DATE_SELECTOR:
+            $object = new self();
+            break;
 
-     public function getIso8601FormattedString()
-     {
-         return sprintf("%04d-%02d-%02d", $this->getYear(), $this->getMonth(), $this->getDayOfMonth());
-     }
+        case self::INTERFACE_DATETIME_SELECTOR:
+            $object = new self();
+            break;
 
-     public function getDayOfMonth()
-     {
-         return $this->day;
-     }
+        case self::INTERFACE_DATETIME_FIELD:
+            $object = new self($_REQUEST[$user_prefix]);
+            break;
 
-     public function getMonth()
-     {
-         return $this->month;
-     }
+        }
 
-     public function getYear()
-     {
-         return $this->year;
-     }
+        return $object;
+    }
 
-     public function getHours()
-     {
-         return $this->hours;
-     }
+    // Domain-related attributes
+    private $day = 0;
+    private $month = 0;
+    private $year = 0;
+    private $hours = 0;
+    private $minutes = 0;
+    private $seconds = 0;
 
-     public function getMinutes()
-     {
-         return $this->minutes;
-     }
+    /**
+    * @param string $datetime_str formatted date string (ideally ISO-8601-2000)
+    */
+    public function __construct($datetime_str)
+    {
+        if ($datetime_str != null) {
+            $date_attributes = getdate(strtotime($datetime_str));
+            $this->day = $date_attributes["mday"];
+            $this->month = $date_attributes["mon"];
+            $this->year = $date_attributes["year"];
+            $this->hours = $date_attributes["hours"];
+            $this->minutes = $date_attributes["minutes"];
+            $this->seconds = $date_attributes["seconds"];
+        }
+    }
 
-     public function getSeconds()
-     {
-         return $this->seconds;
-     }
+    public function getIso8601FormattedString()
+    {
+        return sprintf("%04d-%02d-%02d", $this->getYear(), $this->getMonth(), $this->getDayOfMonth());
+    }
 
- }
+    public function getDayOfMonth()
+    {
+        return $this->day;
+    }
 
- /*
+    public function getMonth()
+    {
+        return $this->month;
+    }
+
+    public function getYear()
+    {
+        return $this->year;
+    }
+
+    public function getHours()
+    {
+        return $this->hours;
+    }
+
+    public function getMinutes()
+    {
+        return $this->minutes;
+    }
+
+    public function getSeconds()
+    {
+        return $this->seconds;
+    }
+
+}
+
+/*
  * Local variables:
  * tab-width: 4
  * c-basic-offset: 4

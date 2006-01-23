@@ -36,58 +36,65 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Francois Proulx <francois.proulx@gmail.com>
- * @copyright  2005 Francois Proulx <francois.proulx@gmail.com> - Technologies
- * Coeus inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
- class GisPoint
- {
-     // Domain-related attributes
-     private $latitude = .0;
-     private $longitude = .0;
-     private $altitude = .0;
+/**
+ * @package    WiFiDogAuthServer
+ * @subpackage Geocoders
+ * @author     Francois Proulx <francois.proulx@gmail.com>
+ * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
+ */
+class GisPoint
+{
 
-     public function __construct($lat, $long, $alt)
-     {
-         $this->latitude = $lat;
-         $this->longitude = $long;
-         $this->altitude = $alt;
-     }
+    // Domain-related attributes
+    private $latitude = .0;
+    private $longitude = .0;
+    private $altitude = .0;
 
-     public function getLatitude()
-     {
-         return $this->latitude;
-     }
+    public function __construct($lat, $long, $alt)
+    {
+        $this->latitude = $lat;
+        $this->longitude = $long;
+        $this->altitude = $alt;
+    }
 
-     public function setLatitude($lat)
-     {
-         $this->latitude = $lat;
-     }
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
 
-     public function getLongitude()
-     {
-         return $this->longitude;
-     }
+    public function setLatitude($lat)
+    {
+        $this->latitude = $lat;
+    }
 
-     public function setLongitude($long)
-     {
-         $this->longitude = $long;
-     }
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
 
-     public function getAltitude()
-     {
-         return $this->altitude;
-     }
+    public function setLongitude($long)
+    {
+        $this->longitude = $long;
+    }
 
-     public function setAltitude($alt)
-     {
-         $this->altitude = $alt;
-     }
- }
+    public function getAltitude()
+    {
+        return $this->altitude;
+    }
 
- /*
+    public function setAltitude($alt)
+    {
+        $this->altitude = $alt;
+    }
+
+}
+
+/*
  * Local variables:
  * tab-width: 4
  * c-basic-offset: 4

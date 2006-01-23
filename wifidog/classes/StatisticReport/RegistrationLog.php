@@ -37,14 +37,24 @@
  * @package    WiFiDogAuthServer
  * @subpackage Statistics
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire, Technologies Coeus inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * Load required classes
+ */
 require_once('classes/StatisticReport.php');
 
-/* Report on new user registration */
+/**
+ * Report on new user registration
+ *
+ * @package    WiFiDogAuthServer
+ * @subpackage Statistics
+ * @author     Benoit Gregoire
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ */
 class RegistrationLog extends StatisticReport
 {
     /** Get the report's name.  Must be overriden by the report class

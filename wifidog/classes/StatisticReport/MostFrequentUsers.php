@@ -37,14 +37,25 @@
  * @package    WiFiDogAuthServer
  * @subpackage Statistics
  * @author     Philippe April
- * @copyright  2005 Philippe April
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Philippe April
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * Load required classes
+ */
 require_once('classes/StatisticReport.php');
 
-/** Reports on the users who connect most frequently, and how many times they opened a connection */
+/**
+ * Reports on the users who connect most frequently, and how many times they
+ * opened a connection
+ *
+ * @package    WiFiDogAuthServer
+ * @subpackage Statistics
+ * @author     Philippe April
+ * @copyright  2005-2006 Philippe April
+ */
 class MostFrequentUsers extends StatisticReport
 {
     const NUM_USERS_TO_DISPLAY = 10;

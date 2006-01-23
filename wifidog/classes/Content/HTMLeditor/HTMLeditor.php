@@ -37,12 +37,15 @@
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2005 Max Horvath, maxspot GmbH
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Max Horvath, maxspot GmbH
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  * @todo       Add CSS styles for editors.
  */
 
+/**
+ * Load required classes
+ */
 require_once('classes/Cache.php');
 require_once('classes/LocaleList.php');
 
@@ -52,7 +55,7 @@ require_once('classes/LocaleList.php');
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2005 Max Horvath, maxspot GmbH
+ * @copyright  2005-2006 Max Horvath, maxspot GmbH
  */
 class HTMLeditor extends Content
 {

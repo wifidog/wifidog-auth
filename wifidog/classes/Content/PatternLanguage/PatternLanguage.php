@@ -37,11 +37,14 @@
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2004-2005 Benoit Gregoire, Technologies Coeus inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * Load required classes
+ */
 require_once('classes/Content/ContentGroup/ContentGroup.php');
 require_once('classes/User.php');
 
@@ -49,7 +52,7 @@ require_once('classes/User.php');
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2004-2005 Benoit Gregoire, Technologies Coeus inc.
+ * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
  */
 class PatternLanguage extends ContentGroup
 {

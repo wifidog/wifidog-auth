@@ -37,14 +37,24 @@
  * @package    WiFiDogAuthServer
  * @subpackage Statistics
  * @author     Philippe April
- * @copyright  2005 Philippe April
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Philippe April
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * Load required classes
+ */
 require_once('classes/StatisticReport.php');
 
-/* General report about a node */
+/**
+ * General report about a user
+ *
+ * @package    WiFiDogAuthServer
+ * @subpackage Statistics
+ * @author     Philippe April
+ * @copyright  2005-2006 Philippe April
+ */
 class UserReport extends StatisticReport
 {
     /** Get the report's name.  Must be overriden by the report class

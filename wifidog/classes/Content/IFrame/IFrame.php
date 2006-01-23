@@ -37,9 +37,9 @@
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Francois Proulx <francois.proulx@gmail.com>
- * @copyright  2005 Francois Proulx, Technologies Coeus inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
 /**
@@ -48,7 +48,7 @@
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Francois Proulx <francois.proulx@gmail.com>
- * @copyright  2005 Francois Proulx, Technologies Coeus inc.
+ * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
  */
 class IFrame extends Content
 {

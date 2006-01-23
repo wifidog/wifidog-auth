@@ -37,9 +37,9 @@
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire, Technologies Coeus inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
 /**
@@ -48,7 +48,7 @@
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire, Technologies Coeus inc.
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
  */
 class IFrameRest extends IFrame
 {

@@ -1,6 +1,5 @@
 <?php
 
-
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -37,18 +36,22 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2004-2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * @package    WiFiDogAuthServer
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @copyright  2004-2005 Benoit Gregoire, Technologies Coeus inc.
+ */
 class FormSelectGenerator
 {
 	// Private class attributes
 	private $mAbstractBd;
 
-	/** 
+	/**
 	 * Constructor
 	 */
 	function __construct()
@@ -59,7 +62,7 @@ class FormSelectGenerator
 
 	/**
 	 * Generates an HTML SELECT element from an SQL result set
-	 * 
+	 *
 	 * @param $resultSet : The SQL result set
 	 * @param $primaryKeyField : The column to use the primary key
 	 * @param $displayField : The column to display to the user
@@ -129,7 +132,7 @@ class FormSelectGenerator
 
 	/**
 	 * Generates an HTML SELECT element from an SQL results set of a single database table dump
-	 * 
+	 *
 	 * @param $table : The database table
 	 * @param $primaryKeyField : The column to use the primary key
 	 * @param $displayField : The column to display to the user
@@ -151,8 +154,8 @@ class FormSelectGenerator
 	}
 
 	/**
-	 * * Generates an HTML SELECT element from an SQL call
-	 * 
+	 * Generates an HTML SELECT element from an SQL call
+	 *
 	 * @param $sql : The SQL query to run
 	 * @param $primaryKeyField : The column to use the primary key
 	 * @param $displayField : The column to display to the user
@@ -174,11 +177,11 @@ class FormSelectGenerator
 
 	/**
 	 * Generates an HTML SELECT element from an array containing the data
-	 * 
+	 *
 	 * You must provide a 2-dimensionnal array such as tab[row_num][field_num]
 	 * field_num: [0] = The value of the primary key (that will be returned if the element is selected)
 	 * field_num: [1] = The name of the value, displayed to the user
-	 * 
+	 *
 	 * @param $array : The SQL query to run
 	 * @param $selectedPrimaryKey : Optional.  Which element should be selected by default, use null to select the first one
 	 * @param $objectPrefix : An arbitrary prefix, chosen by the calling object, to guarantee unicity

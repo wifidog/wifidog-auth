@@ -37,12 +37,19 @@
  * @package    WiFiDogAuthServer
  * @subpackage Statistics
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2004-2005 Benoit Gregoire, Technologies Coeus inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
-/* Gives various statistics about the status of the network or of a specific node */
+/**
+ * Gives various statistics about the status of the network or of a specific node
+ *
+ * @package    WiFiDogAuthServer
+ * @subpackage Statistics
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ */
 class Statistics
 {
     /** An array of the of the selected networks.
@@ -76,8 +83,11 @@ class Statistics
 
     }
 
-    /** Get the list of available report types
-     * @return an array of class names */
+    /**
+     * Get the list of available report types
+     *
+     * @return array An array of class names
+     */
     public function getAvailableReports()
     {
         $dir = $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . 'classes/StatisticReport';
@@ -116,8 +126,11 @@ class Statistics
         return $tab;
     }
 
-    /** UI for selecting the date ragnge for the report
-     * @return html markup */
+    /**
+     * UI for selecting the date ragnge for the report
+     *
+     * @return string HTML markup
+     */
     private function getDateRangeUI()
     {
         $html = '';
@@ -174,17 +187,24 @@ EOF;
         return $html;
 
     }
-    /** Process the date range selection UI */
+    /**
+     * Process the date range selection UI
+     *
+     * @return void
+     */
     private function processDateRangeUI()
     {
         $this->report_date_min = $_REQUEST['date_from'];
         $this->report_date_max = $_REQUEST['date_to'];
     }
 
-    /** Get the actual SQL fragment to restrict a report to a specific date
-     * @param $column The column in the database that must be higher or equal to
+    /**
+     * Get the actual SQL fragment to restrict a report to a specific date
+     *
+     * @param string $column The column in the database that must be higher or equal to
      * the min date and lower or equal to the max date
-     * @return SQL AND clauses */
+     * @return string SQL AND clauses
+     */
     public function getSqlDateConstraint($column = 'timestamp_in')
     {
         global $db;
@@ -201,9 +221,13 @@ EOF;
         return $sql;
     }
 
-    /** Get the actual SQL fragment to restrict a report to the specific node(s) selected
-     * @param $column The column in the database that must match the node_id
-     * @return SQL AND clauses */
+    /**
+     * Get the actual SQL fragment to restrict a report to the specific
+     * node(s) selected
+     *
+     * @param string $column The column in the database that must match the node_id
+     * @return string SQL AND clauses
+     */
     public function getSqlNodeConstraint($column)
     {
         global $db;
@@ -224,9 +248,12 @@ EOF;
         }
         return $sql;
     }
-    /** Get the actual SQL fragment to restrict a report to a specific network(s) selected
-     * @param $column The column in the database that must match the network_id
-     * @return SQL AND clauses */
+    /**
+     * Get the actual SQL fragment to restrict a report to a specific network(s)
+     * selected
+     * @param string $column The column in the database that must match the network_id
+     * @return string SQL AND clauses
+     */
     public function getSqlNetworkConstraint($column)
     {
         global $db;
@@ -247,8 +274,12 @@ EOF;
         }
         return $sql;
     }
-    /** Get the actual SQL fragment to restrict a report to the specific user(s) selected
-    * @return SQL AND clauses */
+    /**
+     * Get the actual SQL fragment to restrict a report to the specific
+     * user(s) selected
+     *
+     * @return string SQL AND clauses
+     */
     public function getSqlUserConstraint()
     {
         global $db;
@@ -270,15 +301,18 @@ EOF;
         return $sql;
     }
 
-    /** Get the actual SQL fragment to get the candidates rows from the connections table,
+    /**
+     * Get the actual SQL fragment to get the candidates rows from the connections table,
      * once obeying all the report configuration constraints.  Only connections
      * with actuall data transferred is considered.  Connections is always
      * joined to the nodes table, but not to network or users.
-     * @param $select_columns The selected columns, will be inserted between
+     *
+     * @param string $select_columns The selected columns, will be inserted between
      * between SELECT and FROM
-     * @param $join_users true or false, Should we join with the users table?
-     * @return SQL select statemnt.  You can append additional AND and GROUP BY
-     * clauses */
+     * @param string $join_users true or false, Should we join with the users table?
+     * @return string SQL select statemnt.  You can append additional AND and GROUP BY
+     * clauses
+     */
     public function getSqlCandidateConnectionsQuery($select_columns = '*', $join_users = false)
     {
         $sql = '';
@@ -301,11 +335,14 @@ EOF;
         return $sql;
     }
 
-    /** Get the actual SQL fragment to get all the conn_id of the all users first successfull connections from the connections table.  Only connections
+    /**
+     * Get the actual SQL fragment to get all the conn_id of the all users first successfull connections from the connections table.  Only connections
      * with actuall data transferred is considered. It will ignore all report
      * configuration except getDistinguishUsersBy() and selected users, because
      * doing otherwise would not give the real first connection.
-     * @return SQL query */
+     *
+     * @return string SQL query
+     */
     public function getSqlRealFirstConnectionsQuery($select_columns = '*', $join_users = false)
     {
         $sql = '';
@@ -321,9 +358,11 @@ EOF;
         return $sql;
     }
 
-    /** Get an interface to pick to which nodes the statistics apply.
-    * @return html markup
-    */
+    /**
+     * Get an interface to pick to which nodes the statistics apply.
+     *
+     * @return string HTML markup
+     */
     private function getSelectedNodesUI()
     {
         global $db;
@@ -367,7 +406,8 @@ EOF;
         return $html;
     }
 
-    /** Get the select node interface.
+    /**
+     * Get the select node interface.
      */
     private function processSelectedNodesUI()
     {
@@ -384,15 +424,21 @@ EOF;
         }
     }
 
-    /** Get the selected nodes for the reports.
-    @return An array of Node objects, with the node_id as the key, or an empty array */
+    /**
+     * Get the selected nodes for the reports.
+     * @return array An array of Node objects, with the node_id as the key, or
+     * an empty array
+     */
     public function getSelectedNodes()
     {
         return $this->report_selected_nodes;
     }
 
-    /** UI for selecting how the database determines if a user is unique
-     * @return html markup */
+    /**
+     * UI for selecting how the database determines if a user is unique
+     *
+     * @return string HTML markup
+     */
     private function getDistinguishUsersByUI()
     {
         $html = '';
@@ -415,7 +461,9 @@ EOF;
         return $html;
     }
 
-    /** Process the date range selection UI */
+    /**
+     * Process the date range selection UI
+     */
     private function processDistinguishUsersByUI()
     {
         if (!isset ($this->user_distinguish_by_options[$_REQUEST['distinguish_users_by']]))
@@ -423,16 +471,23 @@ EOF;
         $this->report_distinguish_users_by = $_REQUEST['distinguish_users_by'];
     }
 
-    /** Get how are users to be ddistinguished
-     * @return Either 'user_id' our 'user_mac' */
+    /**
+     * Get how are users to be ddistinguished
+     *
+     * @return string Either 'user_id' our 'user_mac'
+     */
     public function getDistinguishUsersBy()
     {
         return $this->report_distinguish_users_by;
     }
 
-    /** UI for selecting to which users to restrict the reports
-     * @todo:  Allow to select more than one user
-     * @return html markup */
+    /**
+     * UI for selecting to which users to restrict the reports
+     *
+     * @return string HTML markup
+     *
+     * @todo Allow to select more than one user
+     */
     private function getSelectedUsersUI()
     {
         $html = '';
@@ -456,8 +511,11 @@ EOF;
         return $html;
     }
 
-    /** Process the users selection UI
-     * 	@todo:  Allow to select more than one user*/
+    /**
+     * Process the users selection UI
+     *
+     * @todo Allow to select more than one user
+     */
     private function processSelectedUsersUI()
     {
         $this->report_selected_users = array ();
@@ -484,23 +542,34 @@ EOF;
 
     }
 
-    /** Get the selected users for the reports.
-    @return An empty array or an array of user_id or MAC addresses as the key and a User object as the value, unless it's a MAC in which case the value is null
-    */
+    /**
+     * Get the selected users for the reports.
+     *
+     * @return array An empty array or an array of user_id or MAC addresses as the
+     * key and a User object as the value, unless it's a MAC in which case the
+     * value is null
+     */
     public function getSelectedUsers()
     {
         return $this->report_selected_users;
     }
 
-    /** Get the selected nodes for the reports.
-    @return An array of Network objects, with the network_id as the key, or an empty array */
+    /**
+     * Get the selected nodes for the reports.
+     *
+     * @return array An array of Network objects, with the network_id as the
+     * key, or an empty array
+     */
     public function getSelectedNetworks()
     {
         return $this->report_selected_networks;
     }
 
-    /** UI for selecting how the database determines if a user is unique
-     * @return html markup */
+    /**
+     * UI for selecting how the database determines if a user is unique
+     *
+     * @return string HTML markup
+     */
     private function getSelectedReportsUI()
     {
         $html = '';
@@ -515,7 +584,9 @@ EOF;
         return $html;
     }
 
-    /** Process the date range selection UI */
+    /**
+     * Process the date range selection UI
+     */
     private function processSelectedReportsUI()
     {
         $this->report_selected_reports = array ();
@@ -598,8 +669,11 @@ EOF;
         $this->processSelectedReportsUI();
     }
 
-    /** Get the output of all the selected reports
-     * @return html markup */
+    /**
+     * Get the output of all the selected reports
+     *
+     * @return string HTML markup
+     */
     public function getReportUI()
     {
         $html = '';

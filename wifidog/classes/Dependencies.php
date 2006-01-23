@@ -38,12 +38,21 @@
  * @package    WiFiDogAuthServer
  * @author     Philippe April
  * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2005 Philippe April
- * @copyright  2005 Max Horváth, maxspot GmbH
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Philippe April
+ * @copyright  2005-2006 Max Horváth, maxspot GmbH
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * This class checks the existence of components required by WiFiDog
+ *
+ * @package    WiFiDogAuthServer
+ * @author     Philippe April
+ * @author     Max Horvath <max.horvath@maxspot.de>
+ * @copyright  2005-2006 Philippe April
+ * @copyright  2005-2006 Max Horvath, maxspot GmbH
+ */
 class Dependencies
 {
 	/**
@@ -59,7 +68,7 @@ class Dependencies
 	 *
 	 * This function comes from the Aidan's repository
 	 * Thanks : http://aidan.dotgeek.org/repos/ v/function.file_exists_incpath.php
-	 * 
+	 *
 	 * Here's an example of how to use the function:
 	 * <code>
 	 * Dependencies::file_exists_incpath($path_to_file);

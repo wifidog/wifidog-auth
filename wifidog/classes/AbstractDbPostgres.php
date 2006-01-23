@@ -38,19 +38,18 @@
  * @package    WiFiDogAuthServer
  * @subpackage Database
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2004-2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
-
-error_reporting(E_ALL);
 
 /**
  * Database Abstraction class
  *
  * @package    WiFiDogAuthServer
  * @subpackage Database
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
  */
 class AbstractDb
 {
@@ -73,13 +72,14 @@ class AbstractDb
 		return $ptr_connexion;
 	}
 
-	/** 
+	/**
 	 * Execute an SQL query and returns the result set or throws an error
-	 @param $sql SQL query to execute
-	 @param $resultSet A 2-dimensionnal array containing result rows, NULL if empty
-	 @param $debug When set to true the function will spit out debug informations
-	 @return TRUE indicated the query went fine, FALSE something went wrong
-	*/
+	 *
+	 * @param $sql SQL query to execute
+	 * @param $resultSet A 2-dimensionnal array containing result rows, NULL if empty
+	 * @param $debug When set to true the function will spit out debug informations
+	 * @return TRUE indicated the query went fine, FALSE something went wrong
+     */
 	function execSql($sql, & $resultSet, $debug = false)
 	{
 			// Get a connection handle
@@ -165,8 +165,9 @@ class AbstractDb
 
 	/**
 	 * Returns a string in a compatible / secure way for storing in the database
-	 @param $string The string to clean up
-	 @return The cleaned-up string
+	 *
+	 * @param $string The string to clean up
+	 * @return The cleaned-up string
 	 */
 	function escapeString($string)
 	{
@@ -174,10 +175,11 @@ class AbstractDb
 		return pg_escape_string($string);
 	}
 
-	/** 
+	/**
 	 * Returns a cleaned-up binary string BLOG for storing in ByteA fields
-	 @param $string The string to clean up
-	 @return The cleaned-up string
+	 *
+	 * @param $string The string to clean up
+	 * @return The cleaned-up string
 	 */
 
 	function escapeBinaryString($string)
@@ -185,11 +187,12 @@ class AbstractDb
 		return pg_escape_bytea($string);
 	}
 
-	/** 
+	/**
 	 * Reverts a ByteA escape to raw binary
-	 @param $string The string to clean up
-	 @return The cleaned-up string
-	 */
+	 *
+	 * @param $string The string to clean up
+	 * @return The cleaned-up string
+     */
 
 	function unescapeBinaryString($string)
 	{
@@ -199,10 +202,11 @@ class AbstractDb
 
 	/**
 	 * Executes an SQL for which, we predict to get a unique match, if that's not the case, this function will throw an error message
-	 @param $sql SQL query to run
-	 @param $retRow un array des colonnes de la rangée retournée, NULL si aucun résultats.
-	 @param $debug Si TRUE, affiche les résultats bruts de la requête
-	 @return TRUE si la requete a été effectuée avec succés, FALSE autrement.
+	 *
+	 * @param $sql SQL query to run
+	 * @param $retRow un array des colonnes de la rangée retournée, NULL si aucun résultats.
+	 * @param $debug Si TRUE, affiche les résultats bruts de la requête
+	 * @return TRUE si la requete a été effectuée avec succés, FALSE autrement.
 	 */
 	function execSqlUniqueRes($sql, & $retRow, $debug = false)
 	{
@@ -282,9 +286,10 @@ class AbstractDb
 
 	/**
 	 * Execute an SQL query meant to modify the database content
-	 @param $sql SQL update query to run
-	 @param $debug Optional display debug output
-	 @return false on failure, true otherwise
+	 *
+	 * @param $sql SQL update query to run
+	 * @param $debug Optional display debug output
+	 * @return false on failure, true otherwise
 	 */
 	function execSqlUpdate($sql, $debug = false)
 	{
@@ -295,7 +300,7 @@ class AbstractDb
 
 		global $sql_num_update_querys;
 		global $sql_total_time;
-		
+
 		$sql_num_update_querys ++;
 		$sql_starttime = microtime();
 		$result = pg_query($connection, $sql);
@@ -330,7 +335,7 @@ class AbstractDb
 	function readFlushLargeObject($lo_oid)
 	{
 		$connection = $this->connect(NULL);
-		
+
 		// Large objects calls MUST be enclosed in transaction block
 		// remember, large objects must be obtained from within a transaction
 		pg_query($connection, "begin");
@@ -343,7 +348,7 @@ class AbstractDb
 	function importLargeObject($path)
 	{
 		$connection = $this->connect(NULL);
-		
+
 		// Large objects calls MUST be enclosed in transaction block
 		// remember, large objects must be obtained from within a transaction
 		pg_query($connection, "begin");
@@ -359,10 +364,11 @@ class AbstractDb
 		return $this->execSqlUpdate("BEGIN; SELECT lo_unlink($oid);  COMMIT;", false);
 	}
 
-	/** 
+	/**
 	 * Builds a string suitable for the databases interval datatype and returns it.
-	 @param $duration The source Duration object
-	 @return a string suitable for storage in the database's interval datatype
+	 *
+	 * @param $duration The source Duration object
+	 * @return a string suitable for storage in the database's interval datatype
 	 */
 	function GetIntervalStrFromDuration($duration)
 	{
@@ -381,10 +387,11 @@ class AbstractDb
 		return $str;
 	}
 
-	/** 
+	/**
 	 * Builds the internal duration Array from a databases interval datatype and returns it.
-	 @param $intervalstr A string in the database's interval datatype format
-	 @return the internal representration on the Duration object
+	 *
+	 * @param $intervalstr A string in the database's interval datatype format
+	 * @return the internal representration on the Duration object
 	 */
 	function GetDurationArrayFromIntervalStr($intervalstr)
 	{

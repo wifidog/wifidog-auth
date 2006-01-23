@@ -1,6 +1,5 @@
 <?php
 
-
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -37,18 +36,28 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * Load required classes
+ */
 require_once('classes/GenericObject.php');
 require_once('classes/Content.php');
 require_once('classes/User.php');
 require_once('classes/Node.php');
 
-/** Abstract a Network.  A network is an administrative entity with it's own users, nodes and authenticator. */
+/**
+ * Abstract a Network.
+ *
+ * A network is an administrative entity with it's own users, nodes and authenticator.
+ *
+ * @package    WiFiDogAuthServer
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ */
 class Network implements GenericObject
 {
 	private $id; /**< The network id */
@@ -409,10 +418,13 @@ class Network implements GenericObject
 		return $retval;
 	}
 
-	/** Get the Authenticator object for this network
-	 * @todo:  Reimplement this using the muich safer call_user_func_array
-	 * instead of eval()  Benoitg 2005-09-10
-	 * @return a subclass of Authenticator */
+	/**
+	 * Get the Authenticator object for this network
+	 *
+	 * @return a subclass of Authenticator
+	 *
+	 * @todo Reimplement this using the muich safer call_user_func_array
+	 */
 	public function getAuthenticator()
 	{
 		require_once('classes/Authenticator.php');
@@ -429,8 +441,11 @@ class Network implements GenericObject
 		return eval ($objstring);
 	}
 
-	/** Is the network the default network?
-	 * @return true or false */
+	/**
+	 * Is the network the default network?
+	 *
+	 * @return true or false
+	 */
 	public function isDefaultNetwork()
 	{
 		($this->mRow['is_default_network'] == 't') ? $retval = true : $retval = false;
@@ -569,7 +584,12 @@ class Network implements GenericObject
 	*/
 	function getNumUsers()
 	{
+	    // Define globals
 		global $db;
+
+		// Init values
+		$row = null;
+
 		$network_id = $db->escapeString($this->id);
 		$db->execSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_origin='$network_id'", $row, false);
 		return $row['count'];
@@ -581,7 +601,12 @@ class Network implements GenericObject
 	*/
 	function getNumValidUsers()
 	{
+	    // Define globals
 		global $db;
+
+        // Init values
+        $row = null;
+
 		$network_id = $db->escapeString($this->id);
 		$db->execSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_status = ".ACCOUNT_STATUS_ALLOWED." AND account_origin='$network_id'", $row, false);
 		return $row['count'];
@@ -592,7 +617,12 @@ class Network implements GenericObject
 	 */
 	function getNumOnlineUsers()
 	{
+	    // Define globals
 		global $db;
+
+        // Init values
+        $row = null;
+
 		$network_id = $db->escapeString($this->id);
 		$db->execSqlUniqueRes("SELECT COUNT(DISTINCT users.user_id) FROM users,connections NATURAL JOIN nodes JOIN networks ON (nodes.network_id=networks.network_id AND networks.network_id='$network_id') "."WHERE connections.token_status='".TOKEN_INUSE."' "."AND users.user_id=connections.user_id ", $row, false);
 		return $row['count'];
@@ -620,27 +650,32 @@ class Network implements GenericObject
 		return $retval;
 	}
 
-	/** Does the user have admin access to this network?
-	 * @return true our false*/
+	/**
+	 * Does the user have admin access to this network?
+	 * @return boolean true our false
+	 */
 	function hasAdminAccess(User $user)
 	{
+	    // Define globals
 		global $db;
+
+        // Init values
+        $row = null;
 		$retval = false;
-		if ($user != null)
-		{
+
+		if ($user != null) {
 			$user_id = $user->getId();
-			$retval = false;
 			$db->execSqlUniqueRes("SELECT * FROM network_stakeholders WHERE is_admin = true AND network_id='{$this->id}' AND user_id='{$user_id}'", $row, false);
-			if ($row != null)
-			{
+
+			if ($row != null) {
 				$retval = true;
-			}
-			else
-				if ($user->isSuperAdmin())
-				{
+			} else {
+				if ($user->isSuperAdmin()) {
 					$retval = true;
 				}
+			}
 		}
+
 		return $retval;
 	}
 
@@ -650,8 +685,13 @@ class Network implements GenericObject
 	* @return an array of Content or an empty arrray */
 	function getAllContent($exclude_subscribed_content = false, $subscriber = null)
 	{
+	    // Deine globals
 		global $db;
+
+        // Init values
+        $content_rows = null;
 		$retval = array ();
+
 		// Get all network, but exclude user subscribed content if asked
 		if ($exclude_subscribed_content == true && $subscriber)
 			$sql = "SELECT content_id FROM network_has_content WHERE network_id='$this->id' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$subscriber->getId()}') ORDER BY subscribe_timestamp DESC";

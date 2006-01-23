@@ -36,15 +36,18 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
 /**
  * Représente une liste de tous les languages humains en usage dans le système,
  * selon les différentes normes internationales.
+ *
+ * @package    WiFiDogAuthServer
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
  */
 class LocaleList {
 
@@ -57,7 +60,7 @@ class LocaleList {
      * Returns language of languages codes supported by WiFiDOG.
      *
 	 * @author Max Horvath <max.horvath@maxspot.de>
-	 * @copyright 2005 Max Horvath <max.horvath@maxspot.de> - maxspot GmbH
+	 * @copyright 2005-2006 Max Horvath, maxspot GmbH
      * @param string $locale Language code.
      * @return string Language representing the language code.
      */
