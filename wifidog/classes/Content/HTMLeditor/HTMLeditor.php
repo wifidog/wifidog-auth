@@ -472,7 +472,7 @@ class HTMLeditor extends Content
     public function getUserUI($subclass_user_interface = null)
     {
         // Init values
-        $html = "";
+        $_html = "";
 
         $_html .= "<div class='user_ui_container'>\n";
         $_html .= "<div class='user_ui_object_class'>HTMLeditor (" . get_class($this) . " instance)</div>\n";
