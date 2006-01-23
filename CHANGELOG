@@ -1,12 +1,21 @@
-2006-01-08 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-01-21 Max Horváth <max.horvath@maxspot.de>
+	* Removed compiled PHPdoc documentation
+	* moved createDoc.sh to "doc" directory, documentation can be generated on
+	  the fly now, in the future we'll be generating a nightly PHPdoc on
+	  wifidog.org
+	* renamed "ChangeLog" to CHANGELOG, resulting this file being parsed by PHPdoc
+	* moved "header.gif" image to its own folder in the images directory
+	* touched almost every PHP file in WiFiDog auth server for PHPdoc generating
+	  compiling without any warnings
+	* Initialized uninitialized variables in Node class
+
+2006-01-20 Benoit Grégoire  <bock@step.polymtl.ca>
 	* common.php:  Real fix for Ticket #59 ;)
-	
-2006-01-08 Benoit Grégoire  <bock@step.polymtl.ca>
 	* common.php:  Untested fix for Ticket #59
-	
+
 2006-01-18 François Proulx <francois.proulx@gmail.com>
-	* Remove unneeded .cvsignore files since ths svn:ignore property is set to the same list 
-	
+	* Remove unneeded .cvsignore files since ths svn:ignore property is set to the same list
+
 2006-01-11 Rob Janes <janes.rob@gmail.com>
     * classes/User.php: added setters, getters, throw exceptions, added refresh() subr, tweaked language
 
