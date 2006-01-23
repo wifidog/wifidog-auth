@@ -1,4 +1,6 @@
-Prerequisites:
+PREREQUISITES
+=============
+
 -PHP5
 -Smarty template engine http://smarty.php.net/
 -Magpierss http://magpierss.sourceforge.net/ (Required for RSS support.  RSS support must be manually disabled if you do not insall it)
@@ -8,19 +10,20 @@ Prerequisites:
 -PostgreSQL (mysql code also exists, but is looking for a maintainer)
 -PEAR ( if you need RADIUS auth support, see below )
 
-Installation
+INSTALLATION
+============
 
 Open with your browser the following URL : http://myHost.com/wifidogPATH/install.php (replace myHost by your domain and wifidogPATH by the right PATH)
 install.php will validate, install, create and configure all the stuff uoy need to have a working auth-server.
 
 2005-09-25:  For graph support, you will currently need some unstable pear packages.  They can be installed by:
-pear install Image_Graph-alpha Image_Canvas-alpha Image_Color 
+pear install Image_Graph-alpha Image_Canvas-alpha Image_Color
 
 *************************************
 RADIUS authentication support section
 *************************************
 
-The following section only needs to be followed if you want RADIUS support.  You'll need to install PEAR and several PEAR and PHP modules.  The procedure below is for PHP 5.0.2 under Mandrake 10.1.  You WILL need to adapt it under other distributions.  
+The following section only needs to be followed if you want RADIUS support.  You'll need to install PEAR and several PEAR and PHP modules.  The procedure below is for PHP 5.0.2 under Mandrake 10.1.  You WILL need to adapt it under other distributions.
 
 All necessary RPM packages are available in the contrib urpmi source.  If you don't have a contrib source already, you can add one with the command:
 urpmi.addmedia contrib http://gulus.usherbrooke.ca/pub/distro/Mandrakelinux/official/10.1/i586/media/contrib with media_info/hdlist.cz
@@ -31,7 +34,7 @@ php5-cli
 php5-devel
 php5-xml
 php5-xmlrpc ---> depends on libxmlrpc
-php5-mhash 
+php5-mhash
 php5-mcrypt
 
 The following command should install them all and resolve dependencies:
@@ -74,5 +77,3 @@ To restore from a backup:
 	pg_restore -U wifidog -d wifidog -v wifidog_backup.sql
 
 Enjoy!
-
-  
