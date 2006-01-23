@@ -39,11 +39,14 @@
  *
  * @package    WiFiDogAuthServer
  * @author     Pascal Leclerc <isf@plec.ca>
- * @copyright  2005 Pascal Leclerc <isf@plec.ca>
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Pascal Leclerc
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * Load required files
+ */
 require_once ('include/path_defines_base.php');
 
 empty ($_REQUEST['page']) ? $page = 'Welcome' : $page = $_REQUEST['page']; # The page to be loaded
@@ -1293,7 +1296,7 @@ EndHTML;
         //$VALIDATION_EMAIL_FROM_ADDRESS = $configArray['VALIDATION_EMAIL_FROM_ADDRESS'];
 
         /**
-         * @deprecated version - Dec 26, 2005 - Needs to use network abstraction
+         * @deprecated 2005-12-26 Needs to use network abstraction
          *
          *
          * <P>

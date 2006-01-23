@@ -37,18 +37,21 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2004-2005 Benoit Gregoire, Technologies Coeus inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
-error_reporting(E_ALL);
-
+/**
+ * Include path detection code
+ */
 require_once ('path_defines_base.php');
+
 /**
  * Include configuration file
  */
 cmnRequireConfig();
+
 require_once ('path_defines_url_content.php');
 
 

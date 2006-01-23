@@ -37,13 +37,16 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire, Technologies Coeus inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
 /* This section deals with PATHs used in URLs and local content */
 
+/**
+ * Define base web address without SLL
+ */
 define('BASE_NON_SSL_PATH', 'http://'.$_SERVER['SERVER_NAME'].SYSTEM_PATH);
 
 //echo "<pre>";print_r($_SERVER);echo "</pre>";
@@ -56,32 +59,66 @@ $curent_url .= '://'.$_SERVER['HTTP_HOST'];
 if ($_SERVER['SERVER_PORT'] != 80 && $_SERVER['SERVER_PORT'] != 443)
     $curent_url .= ':'.$_SERVER['SERVER_PORT'];
 $curent_url .= $_SERVER['REQUEST_URI'];
+
+/**
+ * Define current request URL
+ */
 define('CURRENT_REQUEST_URL', $curent_url);
 
 if (SSL_AVAILABLE) {
+    /**
+     * Define base web address to use (this time using SLL)
+     */
     define('BASE_SSL_PATH', 'https://'.$_SERVER['SERVER_NAME'].SYSTEM_PATH);
 }
 else {
+    /**
+     * Define base web address to use
+     *
+     * @ignore
+     */
     define('BASE_SSL_PATH', BASE_NON_SSL_PATH);
 }
 
 /* If we actually ARE in SSL mode, make all URLS http:// to avoid security warnings. */
 if (isset ($_SERVER['HTTPS'])) {
+    /**
+     * Define base web address to use (this time using SLL)
+     */
     define('BASE_URL_PATH', BASE_SSL_PATH);
 }
 else {
+    /**
+     * Define base web address to use
+     *
+     * @ignore
+     */
     define('BASE_URL_PATH', BASE_NON_SSL_PATH);
 }
 
+/**
+ * Define URLs
+ */
 define('DEFAULT_CONTENT_URL', BASE_URL_PATH.LOCAL_CONTENT_REL_PATH.DEFAULT_NODE_ID.'/');
 define('DEFAULT_CONTENT_PHP_RELATIVE_PATH', LOCAL_CONTENT_REL_PATH.DEFAULT_NODE_ID.'/');
 
 if (empty ($_REQUEST['gw_id'])) {
+    /**
+     * Define id of current node
+     */
     define('CURRENT_NODE_ID', DEFAULT_NODE_ID);
-}
-else {
+} else {
+    /**
+     * Define id of current node
+     *
+     * @ignore
+     */
     define('CURRENT_NODE_ID', trim($_REQUEST['gw_id']));
 }
+
+/**
+ * Define URLs
+ */
 define('NODE_CONTENT_URL', BASE_URL_PATH.LOCAL_CONTENT_REL_PATH.CURRENT_NODE_ID.'/');
 define('NODE_CONTENT_PHP_RELATIVE_PATH', LOCAL_CONTENT_REL_PATH.CURRENT_NODE_ID.'/');
 
@@ -90,5 +127,4 @@ define('COMMON_CONTENT_URL', BASE_URL_PATH.LOCAL_CONTENT_REL_PATH.'common/');
 define('GENERIC_OBJECT_ADMIN_ABS_HREF', BASE_URL_PATH.'admin/generic_object_admin.php');
 define('CONTENT_ADMIN_ABS_HREF', BASE_URL_PATH.'admin/content_admin.php');
 
-/* End PATH section */
 ?>

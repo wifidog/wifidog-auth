@@ -39,20 +39,25 @@
  * @package    WiFiDogAuthServer
  * @author     Philippe April
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2004-2005 April
- * @copyright  2004-2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2004-2006 Philippe April
+ * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * Load required files
+ */
 require_once('../include/common.php');
 
 require_once('include/common_interface.php');
 require_once('classes/Node.php');
 require_once('classes/MainUI.php');
 
-define('TOOLBAR_WIDTH','250');//Must match the stylesheet for the tool section width
+/**
+ * Define width of toolbar
+ */
+define('TOOLBAR_WIDTH','250'); //Must match the stylesheet for the tool section width
 
 $node = null;
 if (!empty ($_REQUEST['gw_id']))

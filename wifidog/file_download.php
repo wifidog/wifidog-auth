@@ -36,12 +36,14 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Francois Proulx <francois.proulx@gmail.com>
- * @copyright  2005 Francois Proulx <francois.proulx@gmail.com> - Technologies
- * Coeus inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * Load required files
+ */
 require_once(dirname(__FILE__) . '/include/common.php');
 
 if (!empty ($_REQUEST['file_id']))

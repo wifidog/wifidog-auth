@@ -39,11 +39,14 @@
  *
  * @package    WiFiDogAuthServer
  * @author     Alexandre Carmel-Veilleux <acv@acv.ca>
- * @copyright  2004-2005 Alexandre Carmel-Veilleux <acv@acv.ca>
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2004-2006 Alexandre Carmel-Veilleux
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * Load required files
+ */
 require_once('../include/common.php');
 
 echo "Pong";

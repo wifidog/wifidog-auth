@@ -37,37 +37,37 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire, Technologies Coeus inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
-/* This file deals with PATHs.  
- * 
+/* This file deals with PATHs.
+ *
  * It adds the content of WIFIDOG_ABS_FILE_PATH o PHPs path, so you can
  * reference classes uniformly once this file is included.
- * 
+ *
  *  You should NEVER go to any $_SERVER[] variables for path related stuff
  * All  you need is already available here and in @see http_and_file_path.php .
  * The following constants are defined here:
- * 
- * DOCUMENT_ROOT: The absolute filesystem path of the webserver document root 
- * 
+ *
+ * DOCUMENT_ROOT: The absolute filesystem path of the webserver document root
+ *
  * SYSTEM_PATH: The path of the base /wifidog directory relative to the document
  * root,  Also the absolute URI (path after the domain name), but you should use
  * the constants in @see http_and_file_path.php or you will have problems with
  * SSL
- * 
+ *
  * WIFIDOG_ABS_FILE_PATH: The absolute filesystem path to the /wifidog directory
- * 
+ *
  * Examples:  If you have wifidog installed in /var/www/wifidog-auth
  and your document root is /var/www/wifidog-auth/wifidog, the constants will have the following values:
  * DOCUMENT_ROOT: /var/www/wifidog-auth/wifidog
- * 
+ *
  * SYSTEM_PATH: /
- * 
+ *
  * WIFIDOG_ABS_FILE_PATH: /var/www/wifidog-auth/wifidog/
- * 
+ *
   *
   *  */
 /**
@@ -96,7 +96,7 @@ echo "<br/>";*/
     $path_tmp = strstr ( $_SERVER['SCRIPT_FILENAME'], $_SERVER['PHP_SELF']);
     $pos = strrpos($path_tmp, '/');
 $path_tmp = substr ( $path_tmp, 0, $pos+1);
- define('SYSTEM_PATH', $path_tmp); 
+ define('SYSTEM_PATH', $path_tmp);
 */
 if (!defined('DOCUMENT_ROOT')) {
     define('DOCUMENT_ROOT', substr($_SERVER['SCRIPT_FILENAME'], 0, -strlen($_SERVER['PHP_SELF'])));
@@ -114,7 +114,7 @@ if (!defined('SYSTEM_PATH')) {
     define('SYSTEM_PATH',     $path_tmp    );
 }
 
-define('WIFIDOG_ABS_FILE_PATH', DOCUMENT_ROOT.SYSTEM_PATH); 
+define('WIFIDOG_ABS_FILE_PATH', DOCUMENT_ROOT.SYSTEM_PATH);
 /*
 echo "SYSTEM_PATH:".SYSTEM_PATH."<br/>";
 echo "DOCUMENT_ROOT:".DOCUMENT_ROOT."<br/>";

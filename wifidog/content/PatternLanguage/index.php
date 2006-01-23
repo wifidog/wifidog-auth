@@ -36,12 +36,14 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Francois Proulx <francois.proulx@gmail.com>
- * @copyright  2005 Francois Proulx <francois.proulx@gmail.com> - Technologies
- * Coeus inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * Load required files
+ */
 require_once('../../include/common.php');
 
 require_once('include/common_interface.php');
@@ -82,7 +84,7 @@ $tool_html .=  $pattern_language->getSponsorInfo()->__toString();
 $tool_html .= "</div>";
 
 // Body
-$body_html = "<img src='header.gif'>\n";
+$body_html = "<img src='".BASE_SSL_PATH."images/PatternLanguage/header.gif'>\n";
 $body_html .= "<h1>"._("About Pattern Language")."</h1>";
 $body_html .= "<div class='pattern_language_body'>";
 $body_html .= $pattern_language->getLongDescription()->__toString();

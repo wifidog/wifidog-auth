@@ -36,15 +36,23 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005 Benoit Gregoire <bock@step.polymtl.ca> - Technologies Coeus
- * inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
-//define('MAGPIE_DEBUG', 0);
+// define('MAGPIE_DEBUG', 0);
+
+/**
+ * Define default publication interval
+ */
 define('DEFAULT_PUBLICATION_INTERVAL', (1 * 24 * 3600));
 
+/**
+ * @package    WiFiDogAuthServer
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ */
 class RssPressReview
 {
     var $output_encoding;

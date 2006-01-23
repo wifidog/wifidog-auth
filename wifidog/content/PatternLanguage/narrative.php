@@ -36,12 +36,14 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Francois Proulx <francois.proulx@gmail.com>
- * @copyright  2005 Francois Proulx <francois.proulx@gmail.com> - Technologies
- * Coeus inc.
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
+/**
+ * Load required files
+ */
 require_once('../../include/common.php');
 
 require_once('include/common_interface.php');
@@ -93,7 +95,7 @@ try
 
     if ($user)
     {
-        $body_html = "<img src='header.gif'>\n";
+        $body_html = "<img src='".BASE_SSL_PATH."images/PatternLanguage/header.gif'>\n";
         $body_html .= "<h1>"._("Narrative for ")."{$user->getUsername()}</h1>\n";
         $body_html .= "<div class='pattern_language_body'>\n";
         $body_html .= $pattern_language->displayNarrative($user);
@@ -101,7 +103,7 @@ try
     }
     else
     {
-        $body_html = "<img src='header.gif'><p>\n";
+        $body_html = "<img src='".BASE_SSL_PATH."images/PatternLanguage/header.gif'><p>\n";
         $body_html .= _("You must be logged in to read your narrative");
     }
 }

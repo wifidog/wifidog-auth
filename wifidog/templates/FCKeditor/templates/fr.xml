@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
@@ -37,9 +37,9 @@
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2005 Max Horvath <max.horvath@maxspot.de> - maxspot GmbH
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Max Horvath, maxspot GmbH
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 -->
 <Templates imagesBasePath="../../../../templates/FCKeditor/templates/images/">

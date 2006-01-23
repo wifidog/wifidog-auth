@@ -44,12 +44,15 @@
  *
  * @package    WiFiDogAuthServer
  * @author     Philippe April
- * @copyright  2005 Philippe April
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Philippe April
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
 
+/**
+ * Load required files
+ */
 require_once('classes/Session.php');
 require_once('classes/Statistics.php');
 require_once('classes/SmartyWifidog.php');

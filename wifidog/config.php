@@ -42,10 +42,10 @@
  * @package    WiFiDogAuthServer
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
  * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2004-2005 Benoit Gregoire, Technologies Coeus inc.
- * @copyright  2005 Max Horvath, maxspot GmbH
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @copyright  2005-2006 Max Horvath, maxspot GmbH
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
 /**

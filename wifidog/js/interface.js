@@ -34,9 +34,9 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2005 Max Horvath <max.horvath@maxspot.de> - maxspot GmbH
- * @version    CVS: $Id$
- * @link       http://sourceforge.net/projects/wifidog/
+ * @copyright  2005-2006 Max Horvath, maxspot GmbH
+ * @version    Subversion $Id$
+ * @link       http://www.wifidog.org/
  */
 
 function showHideView(show, hide) {
