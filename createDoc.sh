@@ -10,4 +10,4 @@
 #   pear install PhpDocumentor-beta
 # - memory_limit flag in php.ini must be larger than 8 MB (at least 16 MB recommended)
 
-phpdoc -t  doc -d  wifidog/,doc -i  wifidog/admin/templates/,wifidog/classes/AbstractDbMySql.php,wifidog/images/,wifidog/includes/HTMLeditor/,wifidog/js/,wifidog/lib/FCKeditor/,wifidog/lib/magpie/,wifidog/lib/Phlickr/,wifidog/lib/smarty/,wifidog/local_content/,wifidog/locale/,wifidog/templates/,wifidog/tmp/,local.config.php -pp on -s on -ti "WiFiDog Documentation" -o  HTML:frames:default
+phpdoc -t  . -d  ../wifidog/,. -i  *.html,*.gif,*.jpg,*.png,*.css,*.js,*.sh,*.mo,*.po,*.pl,*.txt,*.xml,README,../wifidog/classes/AbstractDbMySql.php,../wifidog/lib/FCKeditor/,../wifidog/lib/magpie/,../wifidog/lib/Phlickr/,../wifidog/lib/smarty/,../wifidog/local_content/,../wifidog/locale/,../wifidog/tmp/,../local.config.php -pp on -s on -ti "WiFiDog Documentation" -o  HTML:frames:default
