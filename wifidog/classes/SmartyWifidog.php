@@ -54,7 +54,7 @@ if (Dependencies::check("Smarty", $errmsg)) {
     require_once('lib/smarty/Smarty.class.php');
 } else {
     // Build the system_path for the auth-server
-    print "Redirection to Wifidog web-base install since Smarty is missing <META HTTP-EQUIV=Refresh CONTENT=\"5; URL=".BASE_URL_PATH."/install.php\">";
+    print "Redirecting to Wifidog web-based install script since Smarty is missing (Error was: $errmsg)<META HTTP-EQUIV=Refresh CONTENT=\"5; URL=".BASE_URL_PATH."/install.php\">";
     exit();
 }
 

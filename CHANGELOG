@@ -1,3 +1,9 @@
+2006-01-24 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Dependencies.php:  We missed one more instance of non-unifrom code for path detection.  
+	The Dependencies class now uses the code in include/path_defines_base.php like the rest of the system.  
+	Also make it return more usefull error messages.
+	* SmartyWifidog.php:  Output the error returned by Dependencies if Smarty cannot be found for some reason.
+
 2006-01-23 Max Horváth <max.horvath@maxspot.de>
 	* Removed compiled PHPdoc documentation
 	* moved createDoc.sh to "doc" directory, documentation can be generated on

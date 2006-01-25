@@ -45,7 +45,8 @@
  */
 
 /**
- * This class checks the existence of components required by WiFiDog
+ * This class checks the existence of components required by WiFiDog.  
+ * Note that it implicitely depends on the defines in include/path_defines_base.php
  *
  * @package    WiFiDogAuthServer
  * @author     Philippe April
@@ -123,7 +124,8 @@ class Dependencies
 		{
 			if (self :: $_components[$component]["localLib"])
 			{
-				if (file_exists($_SERVER["DOCUMENT_ROOT"]. (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/').self :: $_components[$component]["file"]))
+                $filepath = WIFIDOG_ABS_FILE_PATH.self :: $_components[$component]["file"]; 
+				if (file_exists($filepath))
 				{
 					// The component has been found.
 					$_returnValue = true;
@@ -133,7 +135,7 @@ class Dependencies
 					// The component has NOT been found. Return error message.
 					require_once ('Locale.php');
 
-					$errmsg = self :: $_components[$component]["name"]._(" is not installed");
+					$errmsg = sprintf(_("Component %s is not installed (not found in %s)"), self :: $_components[$component]["name"], $filepath);
 				}
 			}
 			else
@@ -148,8 +150,8 @@ class Dependencies
 				{
 					// The component has NOT been found. Return error message.
 					require_once ('Locale.php');
-
-					$errmsg = self :: $_components[$component]["name"]._(" is not installed");
+                    $errmsg = sprintf(_("Component %s is not installed (not found in %s)"), self :: $_components[$component]["name"], get_include_path());
+                    
 				}
 			}
 		}
