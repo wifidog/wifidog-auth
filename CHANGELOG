@@ -1,6 +1,12 @@
+2006-01-25 Max Horváth <max.horvath@maxspot.de>
+	* a notice message regarding timezones was being displayed when running PHP
+	  5.1.0+ due to rewritten date functions of PHP. There is a new config flag
+	  in config.php named DATE_TIMEZONE. Set it to your local timezone.
+	  Don't forget to update your local.config.php in case you're using it.
+
 2006-01-24 Benoit Grégoire  <bock@step.polymtl.ca>
-	* Dependencies.php:  We missed one more instance of non-unifrom code for path detection.  
-	The Dependencies class now uses the code in include/path_defines_base.php like the rest of the system.  
+	* Dependencies.php:  We missed one more instance of non-unifrom code for path detection.
+	The Dependencies class now uses the code in include/path_defines_base.php like the rest of the system.
 	Also make it return more usefull error messages.
 	* SmartyWifidog.php:  Output the error returned by Dependencies if Smarty cannot be found for some reason.
 

@@ -134,9 +134,17 @@ function convert_nocat_password_hash($hash) {
 }
 
 function iso8601_date($unix_timestamp) {
+    /**
+     * Set timezone if PHP version >= 5.1.0
+     */
+    if (str_replace(".", "", phpversion()) >= 510) {
+        date_default_timezone_set(defined(DATE_TIMEZONE) ? DATE_TIMEZONE : "Canada/Eastern");
+    }
+
     $tzd = date('O', $unix_timestamp);
     $tzd = substr(chunk_split($tzd, 3, ':'), 0, 6);
     $date = date('Y-m-d\TH:i:s', $unix_timestamp).$tzd;
+
     return $date;
 }
 

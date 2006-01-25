@@ -141,6 +141,18 @@ define('SSL_AVAILABLE', false);
  */
 define('USE_CACHE_LITE', false);
 
+/**
+ * Timezone
+ * ========
+ *
+ * Since PHP 5.1.0 date functions have been rewritten and require to set
+ * a valid timezone.
+ *
+ * You'll find a list of valid identifiers at:
+ * http://www.php.net/manual/en/timezones.php
+ */
+define('DATE_TIMEZONE', 'Canada/Eastern');
+
 /********************************************************************\
  * WIFIDOG BASIC CONFIGURATION                                      *
 \********************************************************************/
