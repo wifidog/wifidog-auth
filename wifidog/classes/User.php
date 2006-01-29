@@ -561,7 +561,7 @@ class User implements GenericObject
                 $mail->setSenderEmail($network->getValidationEmailFromAddress());
                 $mail->setRecipientEmail($this->getEmail());
                 $mail->setMessageSubject($network->getName()._(" new user validation"));
-                $url = "http://" . WIFIDOG_ABS_FILE_PATH . "validate.php?user_id=".$this->getId()."&token=".$this->getValidationToken();
+                $url = BASE_SSL_PATH . "validate.php?user_id=".$this->getId()."&token=".$this->getValidationToken();
                 $mail->setMessageBody(_("Hello,\nPlease follow the link below to validate your account.\n").$url._("\n\nThank you,\nThe Team."));
                 $mail->send();
             }
