@@ -117,7 +117,7 @@ class Cache
 
                 // Set cache properties.
                 $_cacheOptions = array(
-                    'cacheDir' => $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . 'tmp/cache/',
+                    'cacheDir' => WIFIDOG_ABS_FILE_PATH . 'tmp/cache/',
                     'lifeTime' => $this->_lifeTime
                 );
 

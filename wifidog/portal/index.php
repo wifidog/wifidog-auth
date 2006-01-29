@@ -220,7 +220,7 @@ new_window.resizeTo('".TOOLBAR_WIDTH."',size_array[1]);
 /*if(window.open){alert('window.open enabled');}
 else{alert('window.open DISABLED');}*/
 
-\"><img src='/images/start.gif'></a>\n";
+\"><img src='" . BASE_SSL_PATH . "images/start.gif'></a>\n";
 $tool_html .= "</p>"."\n";
 
 $tool_html .= '<script type="text/javascript">

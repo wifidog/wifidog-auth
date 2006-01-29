@@ -194,7 +194,7 @@ class Locale {
                 echo "Warning in /classes/Locale.php : Unable to setlocale() to ".$locale_id.", return value: $current_locale, current locale: ".setlocale(LC_ALL, 0);
                 $retval = false;
             } else {
-                bindtextdomain('messages', $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . 'locale');
+                bindtextdomain('messages', WIFIDOG_ABS_FILE_PATH . 'locale');
                 bind_textdomain_codeset('messages', 'UTF-8');
                 textDomain('messages');
 

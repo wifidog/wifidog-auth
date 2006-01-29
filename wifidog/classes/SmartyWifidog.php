@@ -77,7 +77,7 @@ class SmartyWifidog extends Smarty {
 
         $this->Smarty();
 
-        $this->template_dir = $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/');
+        $this->template_dir = WIFIDOG_ABS_FILE_PATH;
         $this->compile_dir = $this->template_dir . 'tmp/smarty/templates_c/';
         $this->config_dir = $this->template_dir . 'tmp/smarty/configs/';
         $this->cache_dir = $this->template_dir . 'tmp/smarty/cache/';

@@ -693,10 +693,9 @@ function update_schema()
                             define('HOTSPOT_LOGO_NAME', 'hotspot_logo.jpg');
             foreach ($results as $row)
             {
-                $php_logo_path = $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . LOCAL_CONTENT_REL_PATH.$row['node_id'].'/'.HOTSPOT_LOGO_NAME;
-                //echo $php_logo_path."<br>";
-                if (file_exists($php_logo_path))
-                {
+                $php_logo_path = WIFIDOG_ABS_FILE_PATH . LOCAL_CONTENT_REL_PATH . $row['node_id'] . '/' . HOTSPOT_LOGO_NAME;
+
+                if (file_exists($php_logo_path)) {
                     $node_logo_abs_url=$db->escapeString(BASE_URL_PATH.LOCAL_CONTENT_REL_PATH.$row['node_id'].'/'.HOTSPOT_LOGO_NAME);
                     //$user_id = $db->escapeString($row['user_id']);
                     $content_id = get_guid();
@@ -705,10 +704,11 @@ function update_schema()
                     $sql .= "INSERT INTO pictures (pictures_id) VALUES ('$content_id');\n";
                     $node = Node :: getObject($row['node_id']);
                     $owners = $node->getOwners();
-                    foreach ($owners as $owner)
-                    {
+
+                    foreach ($owners as $owner) {
                         $sql .= "INSERT INTO content_has_owners (content_id, user_id) VALUES ('$content_id', '".$owner->getId()."');\n";
                     }
+
                     $sql .= "INSERT INTO node_has_content (content_id, node_id, display_location) VALUES ('$content_id', '".$row['node_id']."', 'login_page');\n";
                 }
             }

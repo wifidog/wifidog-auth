@@ -75,7 +75,7 @@ $filesArray = array (
 );
 
 // Error checking before user can upload files
-if (!is_writable($_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . LOCAL_CONTENT_REL_PATH)) {
+if (!is_writable(WIFIDOG_ABS_FILE_PATH . LOCAL_CONTENT_REL_PATH)) {
      /**
       * @todo Detailler l'erreur:
       * - print absolute PATH directory
@@ -83,7 +83,7 @@ if (!is_writable($_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PA
       * - print needed uid/gid
       */
     $fileinfo = posix_getpwuid(posix_getuid());
-    $smarty->assign("error_message", _("Can not write to directory '" . $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . LOCAL_CONTENT_REL_PATH . "', ownership should be set to user ") . $fileinfo['name'] . " (uid=" . $fileinfo['uid'] . ")");
+    $smarty->assign("error_message", _("Can not write to directory '" . WIFIDOG_ABS_FILE_PATH . LOCAL_CONTENT_REL_PATH . "', ownership should be set to user ") . $fileinfo['name'] . " (uid=" . $fileinfo['uid'] . ")");
     $ui=new MainUI();
     $ui->setToolSection('ADMIN');
     $ui->setMainContent($smarty->fetch("admin/templates/owner_display.html"));
@@ -94,8 +94,8 @@ if (!is_writable($_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PA
 
 if ("$delfile" == "submit") { // Submit all files
     // Create node directory in local_content
-    if (!file_exists($_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . LOCAL_CONTENT_REL_PATH . $node_id)) {
-        mkdir($_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . LOCAL_CONTENT_REL_PATH . $node_id);  // TODO : Add error checking
+    if (!file_exists(WIFIDOG_ABS_FILE_PATH . LOCAL_CONTENT_REL_PATH . $node_id)) {
+        mkdir(WIFIDOG_ABS_FILE_PATH . LOCAL_CONTENT_REL_PATH . $node_id);  // TODO : Add error checking
     }
 
     foreach($filesArray as $fileArray) {
@@ -104,7 +104,7 @@ if ("$delfile" == "submit") { // Submit all files
 
         // Source and destination file (with PATH) and name (in tmp directory). @ is use to remove useless PHP notice message.
         $source              = @$_FILES["$filename_underscore"]['tmp_name'];
-        $destination         = $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . LOCAL_CONTENT_REL_PATH."$node_id/$filename";  // Destination file PATH and name (local_content)
+        $destination         = WIFIDOG_ABS_FILE_PATH . LOCAL_CONTENT_REL_PATH . "$node_id/$filename";  // Destination file PATH and name (local_content)
         //echo "S=$source D=$destination<BR>";
         if (empty($source)) // Skip empty input file submission
             continue;
@@ -122,7 +122,7 @@ if ("$delfile" == "submit") { // Submit all files
     foreach($filesArray as $fileArray) {
         if ($fileArray['filename'] == $delfile) {
             $filename = $fileArray['filename'];
-            $source = $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . LOCAL_CONTENT_REL_PATH . "$node_id/$filename";
+            $source = WIFIDOG_ABS_FILE_PATH . LOCAL_CONTENT_REL_PATH . "$node_id/$filename";
             //echo "DELETE SOURCE=$source<BR>";
             unlink($source);
         }
@@ -134,7 +134,7 @@ if ("$action" == 'uploadform') {
     $inc = 0;
     foreach($filesArray as $fileArray) {
         $filename = $fileArray['filename'];
-        if (file_exists($_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . LOCAL_CONTENT_REL_PATH . "$node_id/$filename")) {
+        if (file_exists(WIFIDOG_ABS_FILE_PATH . LOCAL_CONTENT_REL_PATH . "$node_id/$filename")) {
             $filesArray[$inc]['file_exists'] = 1;
         }
         ++$inc;

@@ -90,7 +90,7 @@ class Statistics
      */
     public function getAvailableReports()
     {
-        $dir = $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . 'classes/StatisticReport';
+        $dir = WIFIDOG_ABS_FILE_PATH . 'classes/StatisticReport';
         if ($handle = opendir($dir))
         {
             $tab = Array ();

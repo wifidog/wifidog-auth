@@ -168,7 +168,7 @@ class Content implements GenericObject {
      * @return an array of class names */
     public static function getAvailableContentTypes()
     {
-        $dir = $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . 'classes/Content';
+        $dir = WIFIDOG_ABS_FILE_PATH . 'classes/Content';
 
         if ($dir_handle = @opendir($dir)) {
             $content_types = array();

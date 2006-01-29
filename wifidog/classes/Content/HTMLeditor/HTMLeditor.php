@@ -303,7 +303,7 @@ class HTMLeditor extends Content
                     $_html .= $_languages->GenererFormSelect($_value["locales_id"], "langstrings_" . $this->id . "_substring_" . $_value["langstring_entries_id"] . "_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
 
                     $_FCKeditor = new FCKeditor('langstrings_' . $this->id . '_substring_' . $_value["langstring_entries_id"] . '_string');
-                    $_FCKeditor->BasePath = $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . "lib/FCKeditor/";
+                    $_FCKeditor->BasePath = WIFIDOG_ABS_FILE_PATH . "lib/FCKeditor/";
                     $_FCKeditor->Config["CustomConfigurationsPath"] = BASE_URL_PATH . "js/HTMLeditor.js";
                     $_FCKeditor->Config["AutoDetectLanguage"] = false;
                     $_FCKeditor->Config["DefaultLanguage"] = substr(Locale :: getCurrentLocale()->getId(), 0, 2);
@@ -342,7 +342,7 @@ class HTMLeditor extends Content
             $_html .= $_languages->GenererFormSelect($_locale, "langstrings_" . $this->id . "_substring_new_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
 
             $_FCKeditor = new FCKeditor('langstrings_' . $this->id . '_substring_new_string');
-            $_FCKeditor->BasePath = $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . "lib/FCKeditor/";
+            $_FCKeditor->BasePath = WIFIDOG_ABS_FILE_PATH . "lib/FCKeditor/";
             $_FCKeditor->Config["CustomConfigurationsPath"] = BASE_URL_PATH . "js/HTMLeditor.js";
             $_FCKeditor->Config["AutoDetectLanguage"] = false;
             $_FCKeditor->Config["DefaultLanguage"] = substr(Locale :: getCurrentLocale()->getId(), 0, 2);

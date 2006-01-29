@@ -6,6 +6,10 @@
 	* the validation mail sent to new users now includes the full path to the
 	  WiFiDog installation (before it assumed WiFiDog to be installed in
 	  the document root of the webserver)
+	* fixed display of start button of portal when WiFiDog is not installed
+	  in the document root of the webserver
+	* replaced $_SERVER["DOCUMENT_ROOT"]-stuff with our defines made in
+	  path_defines_base.php
 
 2006-01-25 Max Horváth <max.horvath@maxspot.de>
 	* a notice message regarding timezones was being displayed when running PHP

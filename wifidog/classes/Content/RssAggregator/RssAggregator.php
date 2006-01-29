@@ -50,7 +50,7 @@ require_once('classes/LocaleList.php');
 /**
  * Defines path to cache directory of Magpie
  */
-define('MAGPIE_CACHE_DIR', $_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . 'tmp/magpie_cache/');
+define('MAGPIE_CACHE_DIR', WIFIDOG_ABS_FILE_PATH . 'tmp/magpie_cache/');
 
 /**
  * Interim code to display the RSS feed for a hotspot
@@ -131,7 +131,7 @@ class RssAggregator extends Content
         if (RSS_SUPPORT) {
             require_once('lib/RssPressReview/RssPressReview.php');
 
-            $this->press_review = new RssPressReview($_SERVER["DOCUMENT_ROOT"] . (defined('SYSTEM_PATH') ? SYSTEM_PATH : '/') . MAGPIE_REL_PATH, "UTF-8");
+            $this->press_review = new RssPressReview(WIFIDOG_ABS_FILE_PATH . MAGPIE_REL_PATH, "UTF-8");
             $this->press_review->setAlgorithmStrength($this->content_rss_aggregator_row['algorithm_strength']);
             $this->press_review->setMaxItemAge($this->content_rss_aggregator_row['max_item_age']);
 
