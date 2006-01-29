@@ -1,3 +1,9 @@
+2006-01-29 Max Horváth <max.horvath@maxspot.de>
+	* WiFiDog now detects APC PHP cache and eAccelerator PHP cache and disables
+	  both PHP caches, because WiFiDog currently doesn't run with either of
+	  those PHP caches (I'm still investigating why)
+	* added a missing <ul> HTML tag on the administration page
+
 2006-01-25 Max Horváth <max.horvath@maxspot.de>
 	* a notice message regarding timezones was being displayed when running PHP
 	  5.1.0+ due to rewritten date functions of PHP. There is a new config flag

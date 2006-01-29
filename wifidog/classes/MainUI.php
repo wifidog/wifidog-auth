@@ -134,14 +134,14 @@ class MainUI
 
                     if ($current_user && $current_user->isSuperAdmin())
                     {
+                        $html .= "<ul>\n";
                         $html .= "<li><a href='user_log.php'>"._("User logs")."</a></li>\n";
                         $html .= "<li><a href='online_users.php'>"._("Online Users")."</a></li>\n";
                         $html .= "<li><a href='stats.php'>"._("Statistics")."</a></li>\n";
                         $html .= "<li><a href='import_user_database.php'>"._("Import NoCat user database")."</a></li>\n";
                         $html .= "<li><a href='content_admin.php'>"._("Content manager")."</a></li>\n";
+                        $html .= "</ul>\n";
                     }
-
-                    $html .= "</ul>\n";
 
                     // If the user is super admin OR owner of at least one hotspot show the menu
                     if ($current_user && ($current_user->isSuperAdmin() || $current_user->isOwner()))

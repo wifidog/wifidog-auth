@@ -43,6 +43,20 @@
  */
 
 /**
+ * Disable APC cache (in case it has been installed)
+ */
+if (function_exists("apc_clear_cache")) {
+    ini_set("apc.enabled", 0);
+}
+
+/**
+ * Disable eAccelerator cache (in case it has been installed)
+ */
+if (function_exists("eaccelerator_rm")) {
+    ini_set("eaccelerator.enable", 0);
+}
+
+/**
  * Include configuration file
  */
 cmnRequireConfig();
