@@ -3,6 +3,9 @@
 	  both PHP caches, because WiFiDog currently doesn't run with either of
 	  those PHP caches (I'm still investigating why)
 	* added a missing <ul> HTML tag on the administration page
+	* the validation mail sent to new users now includes the full path to the
+	  WiFiDog installation (before it assumed WiFiDog to be installed in
+	  the document root of the webserver)
 
 2006-01-25 Max Horváth <max.horvath@maxspot.de>
 	* a notice message regarding timezones was being displayed when running PHP
