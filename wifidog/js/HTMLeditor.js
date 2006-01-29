@@ -44,7 +44,7 @@
 FCKConfig.SkinPath = FCKConfig.BasePath + '../../../include/HTMLeditor/';
 
 // Path to our CSS defenitions
-FCKConfig.EditorAreaCSS = FCKConfig.BasePath + '../../../local_content/default/stylesheet.css';
+FCKConfig.EditorAreaCSS = FCKConfig.BasePath + '../../../local_content/common/stylesheet.css';
 
 // Don't show script sources in source mode
 FCKConfig.ProtectedSource.Add(/<script[\s\S]*?\/script>/gi);	// <SCRIPT> tags.

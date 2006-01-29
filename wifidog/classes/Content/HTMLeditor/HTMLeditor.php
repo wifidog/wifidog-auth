@@ -307,8 +307,8 @@ class HTMLeditor extends Content
                     $_FCKeditor->Config["CustomConfigurationsPath"] = BASE_URL_PATH . "js/HTMLeditor.js";
                     $_FCKeditor->Config["AutoDetectLanguage"] = false;
                     $_FCKeditor->Config["DefaultLanguage"] = substr(Locale :: getCurrentLocale()->getId(), 0, 2);
-                    $_FCKeditor->Config["StylesXmlPath"] = BASE_URL_PATH . "templates/FCKeditor/css/" . substr(Locale :: getCurrentLocale()->getId(), 0, 2) . ".xml";
-                    $_FCKeditor->Config["TemplatesXmlPath"] = BASE_URL_PATH . "templates/FCKeditor/templates/" . substr(Locale :: getCurrentLocale()->getId(), 0, 2) . ".xml";
+                    $_FCKeditor->Config["StylesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/css/" . substr(Locale :: getCurrentLocale()->getId(), 0, 2) . ".xml";
+                    $_FCKeditor->Config["TemplatesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/templates/" . substr(Locale :: getCurrentLocale()->getId(), 0, 2) . ".xml";
 
                     $_FCKeditor->ToolbarSet = "WiFiDOG";
 
@@ -346,8 +346,8 @@ class HTMLeditor extends Content
             $_FCKeditor->Config["CustomConfigurationsPath"] = BASE_URL_PATH . "js/HTMLeditor.js";
             $_FCKeditor->Config["AutoDetectLanguage"] = false;
             $_FCKeditor->Config["DefaultLanguage"] = substr(Locale :: getCurrentLocale()->getId(), 0, 2);
-            $_FCKeditor->Config["StylesXmlPath"] = BASE_URL_PATH . "templates/FCKeditor/css/" . substr(Locale :: getCurrentLocale()->getId(), 0, 2) . ".xml";
-            $_FCKeditor->Config["TemplatesXmlPath"] = BASE_URL_PATH . "templates/FCKeditor/templates/" . substr(Locale :: getCurrentLocale()->getId(), 0, 2) . ".xml";
+            $_FCKeditor->Config["StylesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/css/" . substr(Locale :: getCurrentLocale()->getId(), 0, 2) . ".xml";
+            $_FCKeditor->Config["TemplatesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/templates/" . substr(Locale :: getCurrentLocale()->getId(), 0, 2) . ".xml";
             $_FCKeditor->ToolbarSet = "WiFiDOG";
 
             $_FCKeditor->Value = "";

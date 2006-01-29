@@ -10,6 +10,7 @@
 	  in the document root of the webserver
 	* replaced $_SERVER["DOCUMENT_ROOT"]-stuff with our defines made in
 	  path_defines_base.php
+	* updated HTMLeditor content class to use the new, moved stylesheet.css
 
 2006-01-25 Max Horváth <max.horvath@maxspot.de>
 	* a notice message regarding timezones was being displayed when running PHP
