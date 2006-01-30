@@ -11,6 +11,7 @@
 	* replaced $_SERVER["DOCUMENT_ROOT"]-stuff with our defines made in
 	  path_defines_base.php
 	* updated HTMLeditor content class to use the new, moved stylesheet.css
+	* fixed error messages not displaying technical support e-mail address
 
 2006-01-25 Max Horváth <max.horvath@maxspot.de>
 	* a notice message regarding timezones was being displayed when running PHP

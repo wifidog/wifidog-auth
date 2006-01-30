@@ -63,6 +63,7 @@ if(!empty($_REQUEST['gw_id']))
 
 if ($node == null)
 {
+    $smarty->assign("tech_support_email", Network::getCurrentNetwork()->getTechSupportEmail());
     $smarty->display("templates/message_unknown_hotspot.html");
     exit;
 }

@@ -72,6 +72,7 @@ if (!empty ($_REQUEST['gw_id']))
     catch (Exception $e)
     {
         $smarty->assign("error", $e->getMessage());
+        $smarty->assign("tech_support_email", Network::getCurrentNetwork()->getTechSupportEmail());
         $smarty->display("templates/generic_error.html");
         exit;
     }
