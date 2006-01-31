@@ -101,15 +101,15 @@ $path_tmp = substr ( $path_tmp, 0, $pos+1);
 if (!defined('DOCUMENT_ROOT')) {
     define('DOCUMENT_ROOT', substr($_SERVER['SCRIPT_FILENAME'], 0, -strlen($_SERVER['PHP_SELF'])));
 }
-
+$count = 0;
 if (!defined('SYSTEM_PATH')) {
     $path_tmp = str_replace(DOCUMENT_ROOT, '', __FILE__, $count);
-    if ($count == 0) { // note: three equal signs
-        throw new Exception('Path detection failed, you may have to define SYSTEM_PATH manually in your config.php');
+    if ($count === 0) { // note: three equal signs
+        throw new exception(sprintf('Path detection failed (DOCUMENT_ROOT was: %s, __FILE__ was: %s).  You may have to define SYSTEM_PATH manually in your config.php'), DOCUMENT_ROOT, __FILE__);
     }
     $path_tmp = str_replace('include/path_defines_base.php', '', $path_tmp, $count);
-    if ($count == 0) { // note: three equal signs
-        throw new Exception('Path detection failed');
+    if ($count === 0) { // note: three equal signs
+        throw new exception(sprintf('Path detection failed ($path_tmp was: %s).  You may have to define SYSTEM_PATH manually in your config.php'), $path_tmp);
     }
     define('SYSTEM_PATH',     $path_tmp    );
 }

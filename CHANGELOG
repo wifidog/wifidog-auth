@@ -1,3 +1,6 @@
+2006-01-31 Benoit Grégoire  <bock@step.polymtl.ca>
+	* path_defines_base.php:  Fix syntax errors in the exception thrown.  Add more meaningfull output
+	
 2006-01-29 Max Horváth <max.horvath@maxspot.de>
 	* WiFiDog now detects APC PHP cache and eAccelerator PHP cache and disables
 	  both PHP caches, because WiFiDog currently doesn't run with either of
