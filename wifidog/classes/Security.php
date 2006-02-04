@@ -35,6 +35,7 @@
 
 /**
  * @package    WiFiDogAuthServer
+ * @subpackage Security
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
  * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
  * @version    Subversion $Id$
@@ -42,53 +43,69 @@
  */
 
 /**
- * Load session class
+ * Load required files
  */
 require_once('classes/Session.php');
+require_once('classes/User.php');
 
 /**
  * Security class
  *
  * @package    WiFiDogAuthServer
+ * @subpackage Security
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
  * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
  */
-class Security {
-  private $session;
+class Security
+{
+    /**
+     * This functions ensures that code called after executing the function
+     * won't be run, when the user has no admin priviliges
+     *
+     * @return void Halts execution if user has no admin priviliges
+     *
+     * @static
+     * @access public
+     */
+    public static function requireAdmin()
+    {
+        $_currentUser = User::getCurrentUser();
 
-  function Security() {
-    $this->session = new Session();
-  }
-
-  function requireAdmin() {
-       $current_user = User::getCurrentUser();
-     if (!$current_user || ($current_user && !User::getCurrentUser()->isSuperAdmin()))
-      {
-      echo '<p class=error>'._("You do not have administrator privileges")."</p>\n";
-      exit;
-    } else {
-      /* Access granted */
-      //echo '<p class=error>'._("Access granted")."</p>\n";
+        if (!$_currentUser || ($_currentUser && !User::getCurrentUser()->isSuperAdmin())) {
+            echo '<p class="error">' . _("You do not have administrator privileges") . '!</p>';
+            exit;
+        }
     }
 
-  }
+    /**
+     * This functions ensures that code called after executing the function
+     * won't be run, when the user has no admin priviliges or is owner of a
+     * specific node
+     *
+     * @param string $node_id ID of node to be checked
+     *
+     * @return mixed Halts execution if user has no admin priviliges or returns
+     *               true
+     *
+     * @static
+     * @access public
+     */
+    public static function requireOwner($node_id)
+    {
+        $_currentUser = User::getCurrentUser();
 
-  function requireOwner($node_id) {
-      // If the user has super power let him in !
-      $current_user = User::getCurrentUser();
-      if ($current_user && User::getCurrentUser()->isSuperAdmin())
-          return true;
+        // If the user is an admin let him pass
+        if ($_currentUser && User::getCurrentUser()->isSuperAdmin()) {
+            return true;
+        }
 
-      $node=Node::getObject($node_id);
+        $_node = Node::getObject($node_id);
 
-    if(!$node->isOwner($current_user)) {
-        echo '<p class=error>'._("You do not have owner privileges")."</p>\n";
-        exit;
-    } else {
-      /* Access granted */
-      //echo '<p class=error>'._("Access granted")."</p>\n";
+        if (!$_node->isOwner($_currentUser)) {
+            echo '<p class="error">' . _("You do not have owner privileges") . '!</p>';
+            exit;
+        }
     }
-  }
 
 }
 

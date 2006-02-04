@@ -47,6 +47,7 @@
  * Load required classes
  */
 require_once('classes/Cache.php');
+require_once('classes/HtmlSafe.php');
 require_once('classes/LocaleList.php');
 
 /**
@@ -71,7 +72,7 @@ class HTMLeditor extends Content
      * @var bool
      * @access private
      */
-    var $_FCKeditorAvailable = false;
+    private $_FCKeditorAvailable = false;
 
     /**
      * Constructor.
@@ -84,13 +85,10 @@ class HTMLeditor extends Content
      */
     protected function __construct($content_id)
     {
-        // Init values
-        $errmsg = "";
-
         parent::__construct($content_id);
 
         // Check FCKeditor support
-        if (Dependencies :: check("FCKeditor", $errmsg)) {
+        if (Dependencies::check("FCKeditor")) {
             // Define globals
             global $db;
 
@@ -119,19 +117,23 @@ class HTMLeditor extends Content
         $_cachedData = null;
 
         // Create new cache objects
-        $_cacheLanguage = new Cache('langstrings_' . $this->id . '_substring_' . substr(Locale :: getCurrentLocale()->getId(), 0, 2) . '_string', $this->id);
+        $_cacheLanguage = new Cache('langstrings_' . $this->id . '_substring_' . substr(Locale::getCurrentLocale()->getId(), 0, 2) . '_string', $this->id);
         $_cache = new Cache('langstrings_' . $this->id . '_substring__string', $this->id);
 
         // Check if caching has been enabled.
         if ($_cacheLanguage->isCachingEnabled) {
-            if ($_cachedData = $_cacheLanguage->getCachedData()) {
+            $_cachedData = $_cacheLanguage->getCachedData();
+
+            if ($_cachedData) {
                 // Return cached data.
                 $_useCache = true;
                 $_retval = $_cachedData;
             } else {
                 // Language specific cached data has not been found.
                 // Try to get language independent cached data.
-                if ($_cachedData = $_cache->getCachedData()) {
+                $_cachedData = $_cache->getCachedData();
+
+                if ($_cachedData) {
                     // Return cached data.
                     $_useCache = true;
                     $_retval = $_cachedData;
@@ -142,7 +144,7 @@ class HTMLeditor extends Content
         if (!$_useCache) {
             // Get string in the prefered language of the user
             $_sql = "SELECT value, locales_id, \n";
-            $_sql .= Locale :: getSqlCaseStringSelect(Locale :: getCurrentLocale()->getId());
+            $_sql .= Locale::getSqlCaseStringSelect(Locale::getCurrentLocale()->getId());
             $_sql .= " as score FROM langstring_entries WHERE langstring_entries.langstrings_id = '{$this->id}' AND value!='' ORDER BY score LIMIT 1";
             $this->mBd->execSqlUniqueRes($_sql, $_row, false);
 
@@ -279,7 +281,7 @@ class HTMLeditor extends Content
      *
      * @access public
      */
-    public function getAdminUI($type_interface = 'LARGE', $num_nouveau = 1)
+    public function getAdminUI($type_interface = 'LARGE')
     {
         if ($this->_FCKeditorAvailable) {
             // Init values
@@ -297,18 +299,18 @@ class HTMLeditor extends Content
 
             // Show existing content
             if ($_result != null) {
-                while (list ($_key, $_value) = each($_result)) {
+                while (list($_key, $_value) = each($_result)) {
                     $_html .= "<li class='admin_section_list_item'>\n";
                     $_html .= "<div class='admin_section_data'>\n";
                     $_html .= $_languages->GenererFormSelect($_value["locales_id"], "langstrings_" . $this->id . "_substring_" . $_value["langstring_entries_id"] . "_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
 
                     $_FCKeditor = new FCKeditor('langstrings_' . $this->id . '_substring_' . $_value["langstring_entries_id"] . '_string');
-                    $_FCKeditor->BasePath = WIFIDOG_ABS_FILE_PATH . "lib/FCKeditor/";
+                    $_FCKeditor->BasePath = SYSTEM_PATH . "lib/FCKeditor/";
                     $_FCKeditor->Config["CustomConfigurationsPath"] = BASE_URL_PATH . "js/HTMLeditor.js";
                     $_FCKeditor->Config["AutoDetectLanguage"] = false;
-                    $_FCKeditor->Config["DefaultLanguage"] = substr(Locale :: getCurrentLocale()->getId(), 0, 2);
-                    $_FCKeditor->Config["StylesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/css/" . substr(Locale :: getCurrentLocale()->getId(), 0, 2) . ".xml";
-                    $_FCKeditor->Config["TemplatesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/templates/" . substr(Locale :: getCurrentLocale()->getId(), 0, 2) . ".xml";
+                    $_FCKeditor->Config["DefaultLanguage"] = substr(Locale::getCurrentLocale()->getId(), 0, 2);
+                    $_FCKeditor->Config["StylesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/css/" . substr(Locale::getCurrentLocale()->getId(), 0, 2) . ".xml";
+                    $_FCKeditor->Config["TemplatesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/templates/" . substr(Locale::getCurrentLocale()->getId(), 0, 2) . ".xml";
 
                     $_FCKeditor->ToolbarSet = "WiFiDOG";
 
@@ -334,7 +336,7 @@ class HTMLeditor extends Content
             }
 
             // Editor for new content
-            $_locale = LocaleList :: GetDefault();
+            $_locale = LocaleList::GetDefault();
 
             $_html .= "<li class='admin_section_list_item'>\n";
             $_html .= "<div class='admin_section_data'>\n";
@@ -342,12 +344,12 @@ class HTMLeditor extends Content
             $_html .= $_languages->GenererFormSelect($_locale, "langstrings_" . $this->id . "_substring_new_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
 
             $_FCKeditor = new FCKeditor('langstrings_' . $this->id . '_substring_new_string');
-            $_FCKeditor->BasePath = WIFIDOG_ABS_FILE_PATH . "lib/FCKeditor/";
+            $_FCKeditor->BasePath = SYSTEM_PATH . "lib/FCKeditor/";
             $_FCKeditor->Config["CustomConfigurationsPath"] = BASE_URL_PATH . "js/HTMLeditor.js";
             $_FCKeditor->Config["AutoDetectLanguage"] = false;
-            $_FCKeditor->Config["DefaultLanguage"] = substr(Locale :: getCurrentLocale()->getId(), 0, 2);
-            $_FCKeditor->Config["StylesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/css/" . substr(Locale :: getCurrentLocale()->getId(), 0, 2) . ".xml";
-            $_FCKeditor->Config["TemplatesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/templates/" . substr(Locale :: getCurrentLocale()->getId(), 0, 2) . ".xml";
+            $_FCKeditor->Config["DefaultLanguage"] = substr(Locale::getCurrentLocale()->getId(), 0, 2);
+            $_FCKeditor->Config["StylesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/css/" . substr(Locale::getCurrentLocale()->getId(), 0, 2) . ".xml";
+            $_FCKeditor->Config["TemplatesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/templates/" . substr(Locale::getCurrentLocale()->getId(), 0, 2) . ".xml";
             $_FCKeditor->ToolbarSet = "WiFiDOG";
 
             $_FCKeditor->Value = "";
@@ -392,15 +394,16 @@ class HTMLeditor extends Content
             // Init values
             $_result = null;
 
-            if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
-                parent :: processAdminUI();
+            if ($this->isOwner(User::getCurrentUser()) || User::getCurrentUser()->isSuperAdmin()) {
+                parent::processAdminUI();
+
                 $_form_select = new FormSelectGenerator();
 
                 $_sql = "SELECT * FROM langstring_entries WHERE langstring_entries.langstrings_id = '$this->id'";
                 $this->mBd->execSql($_sql, $_result, FALSE);
 
                 if ($_result != null) {
-                    while (list ($_key, $_value) = each($_result)) {
+                    while (list($_key, $_value) = each($_result)) {
                         $_language = $_form_select->getResult("langstrings_" . $this->id . "_substring_" . $_value["langstring_entries_id"] . "_language", 'Langstring::AfficherInterfaceAdmin');
 
                         if (empty ($_language)) {
@@ -424,7 +427,15 @@ class HTMLeditor extends Content
                         } else {
                             // Strip HTML tags!
                             $string = $_REQUEST["langstrings_" . $this->id . "_substring_" . $_value["langstring_entries_id"] . "_string"];
-                            $string = $this->mBd->escapeString(strip_tags($string, self :: ALLOWED_HTML_TAGS));
+                            $string = $this->mBd->escapeString(strip_tags($string, self::ALLOWED_HTML_TAGS));
+
+                            // If PEAR::HTML_Safe is available strips down all potentially dangerous content
+                            $_HtmlSafe = new HtmlSafe();
+
+                            if ($_HtmlSafe->isHtmlSafeEnabled) {
+                                $string = $_HtmlSafe->parseHtml($string);
+                            }
+
                             $this->mBd->execSqlUpdate("UPDATE langstring_entries SET locales_id = " . $_languageSQL . " , value = '$string' WHERE langstrings_id = '$this->id' AND langstring_entries_id='" . $_value["langstring_entries_id"] . "'", FALSE);
 
                             // Create new cache object.
@@ -525,7 +536,7 @@ class HTMLeditor extends Content
         } else {
             global $db;
 
-            if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
+            if ($this->isOwner(User::getCurrentUser()) || User::getCurrentUser()->isSuperAdmin()) {
                 $_sql = "DELETE FROM content WHERE content_id='$this->id'";
                 $db->execSqlUpdate($_sql, false);
                 $_retval = true;

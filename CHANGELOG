@@ -1,6 +1,31 @@
+2006-02-04 Max Horváth <max.horvath@maxspot.de>
+	* MainUI class now uses Smarty templates to render HTML pages
+	* display of debug messages by using $_REQUEST['debug_request'] on any
+	  page is now only possible for a super admin
+	* caching class now supports lifetime of a cache and every data type
+	  supported by PHP (except the resource-type)
+	* Content class caches available content plugins for 7 days if caching has
+	  been enabled -> results in a nice speed-up on every page call because
+	  of 17 saved filesystem queries
+	* converted Security class to PHP5 style and it's functions to static
+	  functions
+	* fixed broken HTMLeditor support
+	* implemented PEAR::HTML_Safe cache support - if PEAR::HTML_Safe has been
+	  installed it strips down all potentially dangerous content within HTML
+	  that has been entered using the content plugins Langstring,
+	  TrivialLangstring and HTMLeditor
+	* moved /wifidog/include/HTMLeditor to /wifidog/content/HTMLeditor
+	* fixed thrown exception in path_defines_base.php (sprintf() was used
+	  uncorrectly)
+	* template for definition of SYSTEM_PATH has been added to config.php
+	  for easier definiton when path detection failes
+	* from now on caching is enabled by default in config.php - it means that
+	  WiFiDog caching features will automaticly be used if PEAR::Cache_Lite
+	  has been installed
+
 2006-01-31 Benoit Grégoire  <bock@step.polymtl.ca>
 	* path_defines_base.php:  Fix syntax errors in the exception thrown.  Add more meaningfull output
-	
+
 2006-01-29 Max Horváth <max.horvath@maxspot.de>
 	* WiFiDog now detects APC PHP cache and eAccelerator PHP cache and disables
 	  both PHP caches, because WiFiDog currently doesn't run with either of

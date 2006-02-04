@@ -1,4 +1,4 @@
-<?php
+{*
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
@@ -34,39 +34,57 @@
 // +-------------------------------------------------------------------+
 
 /**
+ * Definition of main HTML page
+ *
  * @package    WiFiDogAuthServer
- * @author     Philippe April
- * @copyright  2004-2006 Philippe April
- * @version    Subversion $Id$
+ * @subpackage Templates
+ * @author     Max Horvath <max.horvath@maxspot.de>
+ * @copyright  2006 Max Horvath, maxspot GmbH
+ * @version    Subversion $Id: change_password.php 914 2006-01-23 05:25:43Z max-horvath $
  * @link       http://www.wifidog.org/
  */
 
-/**
- * Load common include file
- */
-require_once('admin_common.php');
+*}
 
-require_once('classes/Node.php');
-require_once('classes/MainUI.php');
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
-Security::requireAdmin();
+<html>
 
-global $db;
-$online_users = null;
-$db->execSql("SELECT connections.user_id, name, username, account_origin, timestamp_in, incoming, outgoing FROM connections,users,nodes WHERE token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND nodes.node_id=connections.node_id ORDER BY account_origin, timestamp_in DESC", $online_users);
-$smarty->assign("users_array", $online_users);
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="-1">
+        {$htmlHeaders}
 
-$ui = new MainUI();
-$ui->setToolSection('ADMIN');
-$ui->setMainContent($smarty->fetch("admin/templates/online_users.html"));
-$ui->display();
+        <title>{$title}</title>
 
-/*
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * c-hanging-comment-ender-p: nil
- * End:
- */
+		<link rel="stylesheet" type="text/css" href="{$stylesheetURL}">
 
-?>
+        <style type="text/css">
+            {include file="$stylesheetParsedFile"}
+        </style>
+    </head>
+
+    <body class="bodyBackColor">
+        {if $debugRequested && $isSuperAdmin}
+            <pre>{$debugOutput}</pre>
+        {/if}
+
+        <div class="outer_container">
+            {if $toolPaneEnabled}
+                {$toolPaneContent}
+
+                <div id="main_section">
+                    {$mainContent}
+                </div>
+            {else}
+                {$mainContent}
+            {/if}
+        </div>
+
+        {foreach from=$footerScripts item=currScript}
+          {$currScript}
+        {/foreach}
+    </body>
+
+</html>

@@ -139,7 +139,7 @@ define('SSL_AVAILABLE', false);
  *
  * If you haven't installed PEAR::Cache_Lite, caching won't be enabled at all.
  */
-define('USE_CACHE_LITE', false);
+define('USE_CACHE_LITE', true);
 
 /**
  * Timezone
@@ -288,6 +288,22 @@ define('XSLT_SUPPORT', true);
  *                                                                  *
  * You should normally not have to edit anything below this!        *
 \********************************************************************/
+
+/**
+ * Path of WiFiDOG auth server installation
+ * ========================================
+ *
+ * SYSTEM_PATH must be set to the url path needed to reach the wifidog
+ * directory.
+ *
+ * Normally '/' or '/wifidog/', depending on where configure your
+ * document root.
+ *
+ * Gateway configuration must match this as well.
+ *
+ * CONFIGURATION FLAG REQUIRED IF PATH DETECTION FAILS, ONLY!
+ */
+// define('SYSTEM_PATH', '/');
 
 /**
  * WiFiDOG configuration

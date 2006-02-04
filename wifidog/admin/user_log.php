@@ -49,8 +49,7 @@ require_once('admin_common.php');
 require_once('classes/MainUI.php');
 require_once('classes/User.php');
 
-$security = new Security();
-$security->requireAdmin();
+Security::requireAdmin();
 
 $total = array ();
 $total['incoming'] = 0;

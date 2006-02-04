@@ -1,6 +1,5 @@
 <?php
 
-
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -45,7 +44,7 @@
  */
 
 /**
- * This class checks the existence of components required by WiFiDog.  
+ * This class checks the existence of components required by WiFiDog.
  * Note that it implicitely depends on the defines in include/path_defines_base.php
  *
  * @package    WiFiDogAuthServer
@@ -62,35 +61,42 @@ class Dependencies
 	 * @var array
 	 * @access private
 	 */
-	private static $_components = array ("ImageGraph" => array ("name" => "PEAR::Image_Graph", "file" => "Image/Graph.php", "localLib" => false), "Phlickr" => array ("name" => "PEAR::Phlickr", "file" => "Phlickr/Api.php", "localLib" => false), "Cache" => array ("name" => "PEAR::Cache_Lite", "file" => "Cache/Lite.php", "localLib" => false), "FCKeditor" => array ("name" => "FCKeditor", "file" => "lib/FCKeditor/fckeditor.php", "localLib" => true), "Smarty" => array ("name" => "Smarty", "file" => "lib/smarty/Smarty.class.php", "localLib" => true));
+	private static $_components = array(
+	   "ImageGraph" => array ("name" => "PEAR::Image_Graph", "file" => "Image/Graph.php", "localLib" => false),
+	   "Phlickr" => array ("name" => "PEAR::Phlickr", "file" => "Phlickr/Api.php", "localLib" => false),
+	   "Cache" => array ("name" => "PEAR::Cache_Lite", "file" => "Cache/Lite.php", "localLib" => false),
+	   "FCKeditor" => array ("name" => "FCKeditor", "file" => "lib/FCKeditor/fckeditor.php", "localLib" => true),
+	   "Smarty" => array ("name" => "Smarty", "file" => "lib/smarty/Smarty.class.php", "localLib" => true),
+	   "HtmlSafe" => array ("name" => "PEAR::HTML_Safe", "file" => "HTML/Safe.php", "localLib" => false)
+	   );
 
 	/**
 	 * Checks if a file exists, including checking in the include path
-	 *
-	 * This function comes from the Aidan's repository
-	 * Thanks : http://aidan.dotgeek.org/repos/ v/function.file_exists_incpath.php
-	 *
-	 * Here's an example of how to use the function:
-	 * <code>
-	 * Dependencies::file_exists_incpath($path_to_file);
-	 * </code>
 	 *
 	 * @param string $file Path or name of a file
 	 *
 	 * @return boolean Returns whether the file has been found or not.
 	 *
-	 * @access public
+	 * @author Aidan Lister <aidan@php.net>
+	 * @link http://aidanlister.com/repos/v/function.file_exists_incpath.php
+	 *
 	 * @static
+	 * @access public
 	 */
 	public static function file_exists_incpath($file)
 	{
-		$paths = explode(PATH_SEPARATOR, get_include_path());
-		foreach ($paths as $path)
-		{
-			$fullpath = $path.DIRECTORY_SEPARATOR.$file;
-			if (file_exists($fullpath))
-				return $fullpath;
+		$_paths = explode(PATH_SEPARATOR, get_include_path());
+
+		foreach ($_paths as $_path) {
+		    // Formulate the absolute path
+			$_fullPath = $_path . DIRECTORY_SEPARATOR . $file;
+
+			// Check it
+			if (file_exists($_fullPath)) {
+				return $_fullPath;
+			}
 		}
+
 		return false;
 	}
 
@@ -111,52 +117,45 @@ class Dependencies
 	 *
 	 * @return boolean Returns whether the component has been found or not.
 	 *
-	 * @access public
 	 * @static
+	 * @access public
 	 */
-	static public function check($component, & $errmsg)
+	public static function check($component, &$errmsg = null)
 	{
 		// Init values
 		$_returnValue = false;
 
 		// Check, if the requested component can be found.
-		if (isset (self :: $_components[$component]))
-		{
-			if (self :: $_components[$component]["localLib"])
-			{
-                $filepath = WIFIDOG_ABS_FILE_PATH.self :: $_components[$component]["file"]; 
-				if (file_exists($filepath))
-				{
-					// The component has been found.
-					$_returnValue = true;
-				}
-				else
-				{
-					// The component has NOT been found. Return error message.
-					require_once ('Locale.php');
+		if (isset(self::$_components[$component])) {
+			if (self::$_components[$component]["localLib"]) {
+                $_filePath = WIFIDOG_ABS_FILE_PATH . self::$_components[$component]["file"];
 
-					$errmsg = sprintf(_("Component %s is not installed (not found in %s)"), self :: $_components[$component]["name"], $filepath);
-				}
-			}
-			else
-			{
-				// We need to use a custom file_exists to also check in the include path
-				if (self :: file_exists_incpath(self :: $_components[$component]["file"]))
-				{
+                if (file_exists($_filePath)) {
 					// The component has been found.
 					$_returnValue = true;
+				} else {
+				    if (!is_null($errmsg)) {
+    					// The component has NOT been found. Return error message.
+    					require_once ('Locale.php');
+
+    					$errmsg = sprintf(_("Component %s is not installed (not found in %s)"), self::$_components[$component]["name"], $_filePath);
+				    }
 				}
-				else
-				{
-					// The component has NOT been found. Return error message.
-					require_once ('Locale.php');
-                    $errmsg = sprintf(_("Component %s is not installed (not found in %s)"), self :: $_components[$component]["name"], get_include_path());
-                    
+			} else {
+				// We need to use a custom file_exists to also check in the include path
+				if (self::file_exists_incpath(self::$_components[$component]["file"])) {
+					// The component has been found.
+					$_returnValue = true;
+				} else {
+				    if (!is_null($errmsg)) {
+    					// The component has NOT been found. Return error message.
+    					require_once ('Locale.php');
+
+                        $errmsg = sprintf(_("Component %s is not installed (not found in %s)"), self::$_components[$component]["name"], get_include_path());
+				    }
 				}
 			}
-		}
-		else
-		{
+		} else {
 			// The requested component has not been defined in this class.
 			throw new Exception("Component not found");
 		}

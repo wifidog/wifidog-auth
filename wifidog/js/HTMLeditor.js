@@ -41,7 +41,7 @@
  */
 
 // WiFiDOG skin
-FCKConfig.SkinPath = FCKConfig.BasePath + '../../../include/HTMLeditor/';
+FCKConfig.SkinPath = FCKConfig.BasePath + '../../../content/HTMLeditor/';
 
 // Path to our CSS defenitions
 FCKConfig.EditorAreaCSS = FCKConfig.BasePath + '../../../local_content/common/stylesheet.css';

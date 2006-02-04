@@ -130,7 +130,7 @@ if ("$delfile" == "submit") { // Submit all files
 }
 
 if ("$action" == 'uploadform') {
-    $security->requireOwner($node_id);
+    Security::requireOwner($node_id);
     $inc = 0;
     foreach($filesArray as $fileArray) {
         $filename = $fileArray['filename'];

@@ -103,7 +103,7 @@ class Cache
      *
      * @access public
      */
-    public function __construct($id, $group = "default")
+    public function __construct($id, $group = "default", $lifeTime = null)
     {
         // Check if need to load PEAR::Cache_Lite.
         if ($this->cachingEnabled()) {
@@ -114,6 +114,9 @@ class Cache
 
                 // Enable caching support.
                 $this->isCachingEnabled = true;
+
+                // Set lifetime of cache
+                $this->_lifeTime = $lifeTime;
 
                 // Set cache properties.
                 $_cacheOptions = array(
@@ -144,10 +147,9 @@ class Cache
     {
         // Init values.
         $_doCache = false;
-        $_errmsg = "";
 
         // Check if PEAR::Cache_Lite is available.
-        if (Dependencies :: check("Cache", $_errmsg)) {
+        if (Dependencies::check("Cache")) {
             // Check if caching has been enabled in config.php or local.config.php.
             if (defined("USE_CACHE_LITE") && USE_CACHE_LITE == true) {
                 $_doCache = true;
@@ -158,13 +160,50 @@ class Cache
     }
 
     /**
+     * Returns the currently active lifetime of an cache object
+     *
+     * @return int Lifetime of an cache object in seconds or null if lifetime
+     *             is unlimited
+     *
+     * @access public
+     */
+    public function getLifeTime()
+    {
+        return $this->_lifeTime;
+    }
+
+    /**
+     * Sets the new lifetime of an cache object
+     *
+     * @param int $lifetime Lifetime in seconds or null if lifetime shall be
+     *                      unlimited
+     *
+     * @return void
+     *
+     * @access public
+     */
+    public function setLifeTime($lifetime)
+    {
+        if (is_int($lifetime) || is_null($lifetime)) {
+            $this->_cacheLite->setLifeTime($lifetime);
+        } else {
+            throw new Exception("No valid filetime forthe  cache!");
+        }
+    }
+
+    /**
      * Return data from cache if it is available and caching has been enabled.
+     *
+     * @param string $cacheType Defines, if the data to be cached is a string
+     *                          or not. Possible values:
+     *                            + string
+     *                            + mixed
      *
      * @return string Data of cache.
      *
      * @access public
      */
-    public function getCachedData()
+    public function getCachedData($cacheType = "string")
     {
         // Init values.
         $_cacheData = null;
@@ -172,6 +211,14 @@ class Cache
         // Check if caching has been enabled and if cache identifier has been set.
         if ($this->isCachingEnabled && $this->_cacheID != null && $this->_cacheGroup != null) {
             $_cacheData = $this->_cacheLite->get($this->_cacheID, $this->_cacheGroup);
+        }
+
+        // Check for type of cache
+        if ($cacheType == "mixed") {
+            // If cache data has been found we have to convert it into it's object
+            if ($_cacheData !== false) {
+                $_cacheData = unserialize($_cacheData);
+            }
         }
 
         return $_cacheData;
@@ -182,11 +229,16 @@ class Cache
      *
      * @param string $data Data to be saved into cache.
      *
+     * @param string $cacheType Defines, if the data to be cached is a string
+     *                          or not. Possible values:
+     *                            + string
+     *                            + mixed
+     *
      * @return bool Saving data into cache was successful or not.
      *
      * @access public
      */
-    public function saveCachedData($data)
+    public function saveCachedData($data, $cacheType = "string")
     {
         // Init values.
         $_cacheData = false;
@@ -195,7 +247,7 @@ class Cache
         if ($this->isCachingEnabled && $this->_cacheID != null && $this->_cacheGroup != null) {
             // Proceed if $data is set, only.
             if ($data != null && $data != "") {
-                $_cacheData = $this->_cacheLite->save($data, $this->_cacheID, $this->_cacheGroup);
+                $_cacheData = $this->_cacheLite->save(($cacheType == "string" ? $data : serialize($data)), $this->_cacheID, $this->_cacheGroup);
             }
         }
 

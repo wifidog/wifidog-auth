@@ -47,8 +47,7 @@ require_once('admin_common.php');
 
 require_once('classes/MainUI.php');
 
-$security = new Security();
-$security->requireAdmin();
+Security::requireAdmin();
 
 $html = '';
 

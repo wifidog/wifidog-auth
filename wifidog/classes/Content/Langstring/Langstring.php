@@ -46,6 +46,7 @@
  * Load required classes
  */
 require_once('classes/Cache.php');
+require_once('classes/HtmlSafe.php');
 require_once('classes/LocaleList.php');
 
 
@@ -454,6 +455,18 @@ class Langstring extends Content {
                         // Strip HTML tags !
                         $string = $_REQUEST["langstrings_".$this->id."_substring_$value[langstring_entries_id]_string"];
                         $string = $this->mBd->escapeString(strip_tags($string, self :: ALLOWED_HTML_TAGS));
+
+                        // If PEAR::HTML_Safe is available strips down all potentially dangerous content
+                        $_HtmlSafe = new HtmlSafe();
+
+                        if ($_HtmlSafe->isHtmlSafeEnabled) {
+                            // Add "embed" and "object" to the default set of dangerous tags
+                            $_HtmlSafe->setDeleteTags(array("embed", "object"), true);
+
+                            // Strip HTML
+                            $string = $_HtmlSafe->parseHtml($string);
+                        }
+
                         $this->mBd->execSqlUpdate("UPDATE langstring_entries SET locales_id = $languageSQL , value = '$string' WHERE langstrings_id = '$this->id' AND langstring_entries_id='$value[langstring_entries_id]'", FALSE);
 
                         // Create new cache object.

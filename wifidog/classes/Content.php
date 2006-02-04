@@ -47,6 +47,7 @@
  */
 require_once('classes/FormSelectGenerator.php');
 require_once('classes/GenericObject.php');
+require_once('classes/Cache.php');
 
 /**
  * Defines any type of content
@@ -57,25 +58,126 @@ require_once('classes/GenericObject.php');
  * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
  */
 class Content implements GenericObject {
+    /**
+     * Id of content
+     *
+     * @var string
+     *
+     * @access protected
+     */
     protected $id;
+
+    /**
+     * Array containg content from database
+     *
+     * @var array
+     *
+     * @access protected
+     */
     protected $content_row;
+
+    /**
+     * Type of content
+     *
+     * @var string
+     *
+     * @access private
+     */
     private $content_type;
+
+    /**
+     * Definesif content is trivial or not
+     *
+     * @var bool
+     *
+     * @access private
+     */
     private $is_trivial_content;
+
+    /**
+     * Defines if logging is enabled or not
+     *
+     * @var bool
+     *
+     * @access private
+     */
     private $is_logging_enabled;
 
     /**
-     * Create a new Content object in the database
-     * @param $content_type Optionnal, the content type to be given to the new object
-     * @param $id Optionnal, the id to be given to the new Content.  If null, a new id will be assigned
-     * @return the newly created Content object, or null if there was an error (an exception is also trown
+     * Constructor
+     *
+     * @param string $content_id Id of content
+     *
+     * @return void
+     *
+     * @access private
      */
-    static function createNewObject($content_type = 'Content', $id = null) {
+    private function __construct($content_id)
+    {
+        // Define globals
+        global $db;
+
+        // Init values
+        $_row = null;
+
+        // Get content from database
+        $content_id = $db->escapeString($content_id);
+        $_sql = "SELECT * FROM content WHERE content_id='$content_id'";
+        $db->execSqlUniqueRes($_sql, $_row, false);
+
+        if ($_row == null) {
+            throw new Exception(_("The content with the following id could not be found in the database: ") . $content_id);
+        }
+
+        $this->content_row = $_row;
+        $this->id = $_row['content_id'];
+        $this->content_type = $_row['content_type'];
+
+        // By default content display logging is enabled
+        $this->setLoggingStatus(true);
+    }
+
+    /**
+     * A short string representation of the content
+     *
+     * @return string String representation of the content
+     *
+     * @access public
+     */
+    public function __toString()
+    {
+        if (empty ($this->content_row['title'])) {
+            $_string = _("Untitled content");
+        } else {
+            $_title = self::getObject($this->content_row['title']);
+            $_string = $_title->__toString();
+        }
+
+        return $_string;
+    }
+
+    /**
+     * Create a new Content object in the database
+     *
+     * @param string $content_type The content type to be given to the new object
+     * @param string $id           The id to be given to the new Content. If
+     *                             null, a new id will be assigned
+     *
+     * @return object The newly created Content object, or null if there was an
+     *                error (an exception is also trown)
+     *
+     * @static
+     * @access public
+     */
+    public static function createNewObject($content_type = "Content", $id = null)
+    {
+        // Define globals
         global $db;
 
         if (empty ($id)) {
-            $content_id = get_guid();
+            $_contentId = get_guid();
         } else {
-            $content_id = $db->escapeString($id);
+            $_contentId = $db->escapeString($id);
         }
 
         if (empty ($content_type)) {
@@ -84,226 +186,346 @@ class Content implements GenericObject {
             $content_type = $db->escapeString($content_type);
         }
 
-        $sql = "INSERT INTO content (content_id, content_type) VALUES ('$content_id', '$content_type')";
+        $_sql = "INSERT INTO content (content_id, content_type) VALUES ('$_contentId', '$content_type')";
 
-        if (!$db->execSqlUpdate($sql, false)) {
+        if (!$db->execSqlUpdate($_sql, false)) {
             throw new Exception(_('Unable to insert new content into database!'));
         }
 
-        $object = self :: getObject($content_id);
-        /* At least add the current user as the default owner */
-        $object->AddOwner(User :: getCurrentUser());
-        /* By default, make it persistent */
-        $object->setIsPersistent(true);
+        $_object = self::getObject($_contentId);
 
-        return $object;
+        // At least add the current user as the default owner
+        $_object->AddOwner(User::getCurrentUser());
+
+        // By default, make it persistent
+        $_object->setIsPersistent(true);
+
+        return $_object;
     }
 
     /**
      * Get an interface to create a new object.
-     * @return html markup
+     *
+     * @return string HTML markup
+     *
+     * @static
+     * @access public
      */
     public static function getCreateNewObjectUI()
     {
-        $html = '';
-        $i = 0;
-        $tab = array ();
-        foreach (self :: getAvailableContentTypes() as $classname)
-        {
-            $tab[$i][0] = $classname;
-            $tab[$i][1] = $classname;
-            $i ++;
-        }
-        $name = "new_content_content_type";
-        $default = 'TrivialLangstring';
-        if (empty ($tab))
-            $html .= _("It appears that you have not installed any Content plugin !");
-        else
-        {
-            $html .= _("You must select a content type: ");
-            $html .= FormSelectGenerator :: generateFromArray($tab, $default, $name, "Content", false);
-        }
-        return $html;
-    }
+        // Init values
+        $_html = "";
+        $_i = 0;
+        $_tab = array ();
 
-    /** Process the new object interface.
-     *  Will       return the new object if the user has the credentials
-     * necessary (Else an exception is thrown) and and the form was fully
-     * filled (Else the object returns null).
-     * @return the node object or null if no new node was created.
-     */
-    static function processCreateNewObjectUI()
-    {
-        $retval = null;
-        $name = "new_content_content_type";
-        $content_type = FormSelectGenerator :: getResult($name, "Content");
-        if ($content_type)
-        {
-            $retval = self :: createNewObject($content_type);
+        foreach (self::getAvailableContentTypes() as $_className) {
+            $_tab[$_i][0] = $_className;
+            $_tab[$_i][1] = $_className;
+            $_i ++;
         }
 
-        return $retval;
-    }
-
-    /** Get the Content object, specific to it's content type
-     * @param $content_id The content id
-     * @return the Content object, or null if there was an error (an exception is also thrown)
-     */
-    static function getObject($content_id)
-    {
-        global $db;
-        $content_id = $db->escapeString($content_id);
-        $sql = "SELECT content_type FROM content WHERE content_id='$content_id'";
-        $db->execSqlUniqueRes($sql, $row, false);
-        if ($row == null)
-        {
-            throw new Exception(_("The content with the following id could not be found in the database: ").$content_id);
-        }
-        $content_type = $row['content_type'];
-        $object = new $content_type ($content_id);
-        return $object;
-    }
-
-    /** Get the list of available content type on the system
-     * @return an array of class names */
-    public static function getAvailableContentTypes()
-    {
-        $dir = WIFIDOG_ABS_FILE_PATH . 'classes/Content';
-
-        if ($dir_handle = @opendir($dir)) {
-            $content_types = array();
-
-            /* This is the correct way to loop over the directory. */
-            while (false !== ($sub_dir = readdir($dir_handle)))
-            {
-                // Loop through sub-directories of Content
-                if ($sub_dir != '.' && $sub_dir != '..' && is_dir("{$dir}/{$sub_dir}"))
-                {
-                    // Only add directories containing corresponding initial Content class
-                    if(is_file("{$dir}/{$sub_dir}/{$sub_dir}.php"))
-                        $content_types[] = $sub_dir;
-                }
-            }
-            closedir($dir_handle);
-        }
-        else
-        {
-            throw new Exception(_('Unable to open directory ').$dir);
+        if (empty ($_tab)) {
+            $_html .= _("It appears that you have not installed any Content plugin !");
+        } else {
+            $_html .= _("You must select a content type: ");
+            $_html .= FormSelectGenerator::generateFromArray($_tab, "TrivialLangstring", "new_content_content_type", "Content", false);
         }
 
-        // Cleanup PHP file extensions and sort the result array
-        $content_types = str_ireplace('.php', '', $content_types);
-        sort($content_types);
-
-        return $content_types;
+        return $_html;
     }
 
     /**
-     * Get all content, can be restricted to a given content type
+     * Process the new object interface
+     *
+     * Will return the new object if the user has the credentials
+     * necessary (else an exception is thrown) and if the form was fully
+     * filled (else the object returns null).
+     *
+     * @return object The node object or null if no new node was created
+     *
+     * @static
+     * @access public
+     */
+    public static function processCreateNewObjectUI()
+    {
+        // Init values
+        $_retVal = null;
+
+        $_contentType = FormSelectGenerator::getResult("new_content_content_type", "Content");
+
+        if ($_contentType) {
+            $_retVal = self::createNewObject($_contentType);
+        }
+
+        return $_retVal;
+    }
+
+    /**
+     * Get the content object, specific to it's content type
+     *
+     * @param string $content_id The content Id
+     *
+     * @return object The Content object, or null if there was an error
+     *                (an exception is also thrown)
+     *
+     * @static
+     * @access public
+     */
+    public static function getObject($content_id)
+    {
+        // Define globals
+        global $db;
+
+        // Init values
+        $_row = null;
+
+        $content_id = $db->escapeString($content_id);
+        $_sql = "SELECT content_type FROM content WHERE content_id='$content_id'";
+        $db->execSqlUniqueRes($_sql, $_row, false);
+
+        if ($_row == null) {
+            throw new Exception(_("The content with the following id could not be found in the database: ") . $content_id);
+        }
+
+        $_contentType = $_row['content_type'];
+        $_object = new $_contentType($content_id);
+
+        return $_object;
+    }
+
+    /**
+     * Get the list of available content type on the system
+     *
+     * @return array An array of class names
+     *
+     * @static
+     * @access public
+     */
+    public static function getAvailableContentTypes()
+    {
+        // Init values
+        $_contentTypes = array();
+        $_useCache = false;
+        $_cachedData = null;
+
+        // Create new cache object with a lifetime of one week
+        $_cache = new Cache("ContentClasses", "ClassFileCaches", 604800);
+
+        // Check if caching has been enabled.
+        if ($_cache->isCachingEnabled) {
+            $_cachedData = $_cache->getCachedData("mixed");
+
+            if ($_cachedData) {
+                // Return cached data.
+                $_useCache = true;
+                $_contentTypes = $_cachedData;
+            }
+        }
+
+        if (!$_useCache) {
+            $_dir = WIFIDOG_ABS_FILE_PATH . "classes/Content";
+            $_dirHandle = @opendir($_dir);
+
+            if ($_dirHandle) {
+                // Loop over the directory
+                while (false !== ($_subDir = readdir($_dirHandle))) {
+                    // Loop through sub-directories of Content
+                    if ($_subDir != '.' && $_subDir != '..' && is_dir("{$_dir}/{$_subDir}")) {
+                        // Only add directories containing corresponding initial Content class
+                        if (is_file("{$_dir}/{$_subDir}/{$_subDir}.php")) {
+                            $_contentTypes[] = $_subDir;
+                        }
+                    }
+                }
+
+                closedir($_dirHandle);
+            } else {
+                throw new Exception(_('Unable to open directory ') . $_dir);
+            }
+
+            // Cleanup PHP file extensions and sort the result array
+            $_contentTypes = str_ireplace('.php', '', $_contentTypes);
+            sort($_contentTypes);
+
+            // Check if caching has been enabled.
+            if ($_cache->isCachingEnabled) {
+                // Save results into cache, because it wasn't saved into cache before.
+                $_cache->saveCachedData($_contentTypes, "mixed");
+            }
+        }
+
+        return $_contentTypes;
+    }
+
+    /**
+     * Get all content
+     *
+     * Can be restricted to a given content type
+     *
+     * @param string $content_type Type of content
+     *
+     * @return mixed Requested content
+     *
+     * @static
+     * @access public
      */
     public static function getAllContent($content_type = "")
     {
+        // Define globals
         global $db;
-        $where_clause = "";
-        if (!empty ($content_type))
-        {
+
+        // Init values
+        $_whereClause = "";
+        $_rows = null;
+        $_objects = array();
+
+        if (!empty ($content_type)) {
             $content_type = $db->escapeString($content_type);
-            $where_clause = "WHERE content_type = '$content_type'";
+            $_whereClause = "WHERE content_type = '$content_type'";
         }
-        $db->execSql("SELECT content_id FROM content $where_clause", $rows, false);
-        $objects = array ();
-        if ($rows)
-            foreach ($rows as $row)
-                $objects[] = self :: getObject($row['content_id']);
-        return $objects;
-    }
 
-    /** Get a flexible interface to generate new content objects
-     * @param $user_prefix A identifier provided by the programmer to recognise it's generated html form
-     * @param $content_type If set, the created content will be of this type, otherwise, the user will have to chose
-     * @return html markup
-     */
-    static function getNewContentUI($user_prefix, $content_type = null)
-    {
-        global $db;
-        $html = '';
-        $available_content_types = self :: getAvailableContentTypes();
+        $db->execSql("SELECT content_id FROM content $_whereClause", $_rows, false);
 
-        $name = "get_new_content_{$user_prefix}_content_type";
-        if (empty ($content_type))
-        {
-            $html .= _("Content type: ");
-            $i = 0;
-            foreach ($available_content_types as $classname)
-            {
-                $tab[$i][0] = $classname;
-                $tab[$i][1] = $classname;
-                $i ++;
+        if ($_rows) {
+            foreach ($_rows as $_row) {
+                $_objects[] = self::getObject($_row['content_id']);
             }
-            $html .= FormSelectGenerator :: generateFromArray($tab, 'TrivialLangstring', $name, null, false);
         }
-        else
-        {
-            if (false === array_search($content_type, $available_content_types, true))
-            {
-                throw new Exception(_("The following content type isn't valid: ").$content_type);
-            }
-            $html .= "<input type='hidden' name='$name' value='$content_type'>";
-        }
-        $name = "get_new_content_{$user_prefix}_add";
 
-        if ($content_type)
-        {
-            $value = _("Add a")." $content_type";
-        }
-        else
-        {
-            $value = _("Add");
-        }
-        $html .= "<input type='submit' name='$name' value='$value'>";
-        return $html;
+        return $_objects;
     }
 
-    /** Get the created Content object, IF one was created
-     * OR Get existing content ( depending on what the user clicked )
-     * @param $user_prefix A identifier provided by the programmer to recognise it's generated form
-     * @param $associate_existing_content boolean if true allows to get existing
-     * object
-     * @return the Content object, or null if the user didn't greate one
+    /**
+     * Get a flexible interface to generate new content objects
+     *
+     * @param string $user_prefix  A identifier provided by the programmer to
+     *                             recognise it's generated html form
+     * @param string $content_type If set, the created content will be of this
+     *                             type, otherwise, the user will have to choose
+     *
+     * @return string HTML markup
+     *
+     * @static
+     * @access public
      */
-    static function processNewContentUI($user_prefix, $associate_existing_content = false)
+    public static function getNewContentUI($user_prefix, $content_type = null)
     {
-        $object = null;
-        if ($associate_existing_content == true)
-            $name = "{$user_prefix}_add";
-        else
-            $name = "get_new_content_{$user_prefix}_add";
-        if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true)
-        {
-            if ($associate_existing_content == true)
-                $name = "{$user_prefix}";
-            else
-                $name = "get_new_content_{$user_prefix}_content_type";
-
-            // The result can be either a Content type or a Content ID depending on the form ( associate_existing_content or NOT )
-            $content_ui_result = FormSelectGenerator :: getResult($name, null);
-            if ($associate_existing_content == true)
-                $object = self :: getObject($content_ui_result);
-            else
-                $object = self :: createNewObject($content_ui_result);
-        }
-        return $object;
-    }
-
-    /** Get a flexible interface to manage content linked to a node, a network or anything else
-     * @param $user_prefix A identifier provided by the programmer to recognise it's generated html form
-     * @param $content_type If set, the created content will be of this type, otherwise, the user will have to chose
-     * @return html markup
-     */
-    static function getLinkedContentUI($user_prefix, $link_table, $link_table_obj_key_col, $link_table_obj_key, $display_location)
-    {
+        // Define globals
         global $db;
-        $html = '';
+
+        // Init values
+        $_html = "";
+
+        $_availableContentTypes = self::getAvailableContentTypes();
+
+        $_name = "get_new_content_{$user_prefix}_content_type";
+
+        if (empty ($content_type)) {
+            $_html .= _("Content type: ");
+            $_i = 0;
+
+            foreach ($_availableContentTypes as $_className) {
+                $_tab[$_i][0] = $_className;
+                $_tab[$_i][1] = $_className;
+                $_i++;
+            }
+
+            $_html .= FormSelectGenerator::generateFromArray($_tab, 'TrivialLangstring', $_name, null, false);
+        } else {
+            if (false === array_search($content_type, $_availableContentTypes, true)) {
+                throw new Exception(_("The following content type isn't valid: ") . $content_type);
+            }
+
+            $_html .= '<input type="hidden" name="' . $_name . '" value="' . $content_type . '">';
+        }
+
+        $_name = "get_new_content_{$user_prefix}_add";
+
+        if ($content_type) {
+            $_value = sprintf(_("Add a %s"), $content_type);
+        } else {
+            $_value = _("Add");
+        }
+
+        $_html .= '<input type="submit" name="' . $_name . '" value="' . $_value . '">';
+
+        return $_html;
+    }
+
+    /**
+     * Get the created content object, IF one was created OR get existing
+     * content (depending on what the user clicked)
+     *
+     * @param string $user_prefix                A identifier provided by the
+     *                                           programmer to recognise it's
+     *                                           generated form
+     * @param bool   $associate_existing_content If true it allows to get
+     *                                           existing object
+     *
+     * @return object The Content object, or null if the user didn't create one
+     *
+     * @static
+     * @access public
+     */
+    public static function processNewContentUI($user_prefix, $associate_existing_content = false)
+    {
+        // Init values
+        $_object = null;
+
+        if ($associate_existing_content == true) {
+            $_name = "{$user_prefix}_add";
+        } else {
+            $_name = "get_new_content_{$user_prefix}_add";
+        }
+
+        if (!empty ($_REQUEST[$_name]) && $_REQUEST[$_name] == true) {
+            if ($associate_existing_content == true) {
+                $_name = "{$user_prefix}";
+            } else {
+                $_name = "get_new_content_{$user_prefix}_content_type";
+            }
+
+            /*
+             * The result can be either a content type or a content ID
+             * depending on the form (associate_existing_content or NOT)
+             */
+            $_contentUiResult = FormSelectGenerator::getResult($_name, null);
+
+            if ($associate_existing_content == true) {
+                $_object = self::getObject($_contentUiResult);
+            } else {
+                $_object = self::createNewObject($_contentUiResult);
+            }
+        }
+
+        return $_object;
+    }
+
+    /**
+     * Get a flexible interface to manage content linked to a node, a network
+     * or anything else
+     *
+     * @param string $user_prefix            A identifier provided by the
+     *                                       programmer to recognise it's
+     *                                       generated HTML form
+     * @param string $link_table             Table to link from
+     * @param string $link_table_obj_key_col Column in linked table to match
+     * @param string $link_table_obj_key     Key to be found in linked table
+     * @param string $display_location       Location to be displayed
+     *
+     * @return string HTML markup
+     *
+     * @static
+     * @access public
+     */
+    public static function getLinkedContentUI($user_prefix, $link_table, $link_table_obj_key_col, $link_table_obj_key, $display_location)
+    {
+        // Define globals
+        global $db;
+
+        // Init values
+        $html = "";
+
         $link_table = $db->escapeString($link_table);
         $link_table_obj_key_col = $db->escapeString($link_table_obj_key_col);
         $link_table_obj_key = $db->escapeString($link_table_obj_key);
@@ -451,40 +673,6 @@ class Content implements GenericObject {
             return Content :: getObject($_REQUEST[$name]);
         else
             return null;
-    }
-
-    private function __construct($content_id)
-    {
-        global $db;
-
-        $content_id = $db->escapeString($content_id);
-        $sql = "SELECT * FROM content WHERE content_id='$content_id'";
-        $db->execSqlUniqueRes($sql, $row, false);
-        if ($row == null)
-        {
-            throw new Exception(_("The content with the following id could not be found in the database: ").$content_id);
-        }
-        $this->content_row = $row;
-        $this->id = $row['content_id'];
-        $this->content_type = $row['content_type'];
-
-        // By default Content display logging is enabled
-        $this->setLoggingStatus(true);
-    }
-
-    /** A short string representation of the content */
-    public function __toString()
-    {
-        if (empty ($this->content_row['title']))
-        {
-            $string = _("Untitled content");
-        }
-        else
-        {
-            $title = self :: getObject($this->content_row['title']);
-            $string = $title->__toString();
-        }
-        return $string;
     }
 
     /** Get the true object type represented by this isntance
