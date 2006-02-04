@@ -1,31 +1,59 @@
 PREREQUISITES
 =============
 
--PHP5
--Smarty template engine http://smarty.php.net/
--Magpierss http://magpierss.sourceforge.net/ (Required for RSS support.  RSS support must be manually disabled if you do not insall it)
--php's php-xml extention installed. (Required if RSS support is on)
--php's dom extension installed. (Required if you want to export the list of HotSpots as a RSS feed)
--php compiled with gettext support (Will be autodetected if unavailable, but you will loose internationalization)
--PostgreSQL (mysql code also exists, but is looking for a maintainer)
--PEAR ( if you need RADIUS auth support, see below )
+- PHP 5.x (http://www.php.net)
+- PHP's php-xml extention installed (Required if RSS support is on)
+- PHP's dom extension installed (Required if you want to export the list of
+  Hotspots as a RSS feed)
+- PHP compiled with gettext support (Will be autodetected if unavailable, but
+  you will loose internationalization)
+- PostgreSQL 7.4+ (http://www.posgresql.org/)
+- Smarty template engine (http://smarty.php.net/)
+- Magpierss (http://magpierss.sourceforge.net/) (Required for RSS support. RSS
+  support must be manually disabled if you do not install it)
+- FCKeditor 2.2 (http://www.fckeditor.net/) (Required if you want to edit
+  content with a HTML text editor aka WYSIWYG editor)
+- PEAR (if you need RADIUS auth support, see below)
+- Phlickr installed as a PEAR package (http://phlickr.sourceforge.net/) (required
+  if you want to use the content class accessing Flickr photo albums)
+- PEAR packages radius, Auth_RADIUS and Crypt_CHAP (required if you need RADIUS
+  support)
+- PEAR packages Image_Graph-alpha Image_Canvas-alpha Image_Color (required if
+  you want to generate graphical statistics)
+- PEAR package Cache_Lite (required if you want to use WiFiDogs caching
+  capabilities)
+- PEAR package HTML_Safe-beta (required if you want to ensure that HTML enabled
+  input in various content classes will be filtered)
 
 INSTALLATION
 ============
 
-Open with your browser the following URL : http://myHost.com/wifidogPATH/install.php (replace myHost by your domain and wifidogPATH by the right PATH)
-install.php will validate, install, create and configure all the stuff uoy need to have a working auth-server.
+Open with your browser the following URL:
+http://www.domain.com/wifidogPATH/install.php
 
-2005-09-25:  For graph support, you will currently need some unstable pear packages.  They can be installed by:
-pear install Image_Graph-alpha Image_Canvas-alpha Image_Color
+Replace www.domain.com by your domain and wifidogPATH by the right path.
 
-*************************************
-RADIUS authentication support section
-*************************************
+install.php will validate, install, create and configure all the stuff you need
+to have a working auth-server.
 
-The following section only needs to be followed if you want RADIUS support.  You'll need to install PEAR and several PEAR and PHP modules.  The procedure below is for PHP 5.0.2 under Mandrake 10.1.  You WILL need to adapt it under other distributions.
+WIKI
+====
 
-All necessary RPM packages are available in the contrib urpmi source.  If you don't have a contrib source already, you can add one with the command:
+More detailed installation instructions can be found on our homepage at:
+http://www.wifidog.org/
+
+RADIUS AUTHENTICATION SUPPORT SECTION
+=====================================
+
+The following section only needs to be followed if you want RADIUS support.
+
+You'll need to install PEAR and several PEAR and PHP modules.  The procedure
+below is for PHP 5.0.2 under Mandrake 10.1. You WILL need to adapt it under
+other distributions.
+
+All necessary RPM packages are available in the contrib urpmi source. If you
+don't have a contrib source already, you can add one with the command:
+
 urpmi.addmedia contrib http://gulus.usherbrooke.ca/pub/distro/Mandrakelinux/official/10.1/i586/media/contrib with media_info/hdlist.cz
 
 You'll need the following packages:
@@ -44,29 +72,22 @@ urpmi php5-cli php5-devel php5-xml php5-xmlrpc php5-mhash php5-mcrypt
 To install PEAR, run this in a shell:
 "lynx -source http://go-pear.org | php5"
 
-*************
 WARNING:
+--------
 You must have PHP5 CLI with php5ize installed
-NB : By default Mandrake renames the PHP binaries with a 5 suffix.  You should create symbolic links so that you can use standard scripts:
 
-ln -s /usr/bin/php5 /usr/bin/php
-ln -s /usr/bin/php5ize /usr/bin/phpize
-*************
+NB: By default Mandrake renames the PHP binaries with a 5 suffix. You should
+    create symbolic links so that you can use standard scripts:
 
-Now you'll need a few packages, you can let PEAR install them
-automatically:
+    ln -s /usr/bin/php5 /usr/bin/php
+    ln -s /usr/bin/php5ize /usr/bin/phpize
 
-pear install radius   ( PECL module compilation)
-pear install Auth_RADIUS
-pear install Crypt_CHAP
+Now you'll need a few packages, you can let PEAR install them automatically:
 
-*****************************************
-End RADIUS authentication support section
-*****************************************
+pear install radius Auth_RADIUS Crypt_CHAP
 
-*****************************************
-Backup and restore
-*****************************************
+BACKUP AND RESTORE
+==================
 
 To backup:
 	pg_dump wifidog --blobs --file=wifidog_backup.sql --format=c --ignore-version --no-owner -v --compress=3 -U wifidog
