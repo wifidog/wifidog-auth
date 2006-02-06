@@ -1,3 +1,7 @@
+2006-02-06 Benoit Grégoire  <bock@step.polymtl.ca>
+	* wifidog/local_content/default/hotspot_logo.jpg: Delete deprecated file
+	* wifidog/local_content/default/hotspot_logo_banner.jpg: Delete deprecated file
+
 2006-02-04 Max Horváth <max.horvath@maxspot.de>
 	* MainUI class now uses Smarty templates to render HTML pages
 	* display of debug messages by using $_REQUEST['debug_request'] on any
