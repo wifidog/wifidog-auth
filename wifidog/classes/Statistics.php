@@ -50,6 +50,8 @@
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
  * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
  */
+ 
+ require_once('include/common.php');
 class Statistics
 {
     /** An array of the of the selected networks.

@@ -1,3 +1,9 @@
+2006-02-07 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Fix a bunch of file inclusion bugs in the statistics subsystem.  
+	This is only a ad-hac fix.  It seems the requires for just about every class have been stripped off.
+	This must be fixed, all classes should require_once all classes or include that they need that isn't 
+	included by a parent class.
+	
 2006-02-06 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog/local_content/default/hotspot_logo.jpg: Delete deprecated file
 	* wifidog/local_content/default/hotspot_logo_banner.jpg: Delete deprecated file
@@ -28,7 +34,7 @@
 	  has been installed
 	* updated installation file to represent all the new modules that can be
 	  installed to use all WiFiDog features
-
+	
 2006-01-31 Benoit Grégoire  <bock@step.polymtl.ca>
 	* path_defines_base.php:  Fix syntax errors in the exception thrown.  Add more meaningfull output
 

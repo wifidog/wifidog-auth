@@ -45,6 +45,7 @@
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
+require_once ('../include/path_defines_base.php');
 
 if (empty($_REQUEST['graph_class'])) {
     echo "You must specify the class of the graph you want";
