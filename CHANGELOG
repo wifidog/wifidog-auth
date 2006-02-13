@@ -1,3 +1,7 @@
+2006-02-13 Rob Janes <janes.rob@gmail.com>
+    * cron/cleanup.php needed new way to call common.php
+	* added cron/vacuum.php to round things out
+
 2006-02-07 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix a bunch of file inclusion bugs in the statistics subsystem.  
 	This is only a ad-hac fix.  It seems the requires for just about every class have been stripped off.

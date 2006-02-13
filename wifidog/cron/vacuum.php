@@ -37,7 +37,7 @@
  * @package    WiFiDogAuthServer
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
  * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
- * @version    Subversion $Id$
+ * @version    Subversion $Id: cleanup.php 916 2006-01-23 05:28:15Z max-horvath $
  * @link       http://www.wifidog.org/
  */
 
@@ -46,7 +46,10 @@
  */
 require_once(dirname(__FILE__) . '/../include/common.php');
 
-garbage_collect();
+global $db;
+
+// $db->execSqlUpdate("VACUUM ANALYZE;", false);
+$db->execSqlUpdate("VACUUM ANALYZE;", true); // verbose
 
 /*
  * Local variables:

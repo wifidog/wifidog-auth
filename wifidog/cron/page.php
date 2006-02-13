@@ -44,7 +44,7 @@
 /**
  * Load required files
  */
-require_once('../include/common.php');
+require_once(dirname(__FILE__) . '/../include/common.php');
 
 require_once('classes/Network.php');
 require_once('classes/Node.php');
