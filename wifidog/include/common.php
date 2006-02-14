@@ -1,6 +1,5 @@
 <?php
 
-
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -43,18 +42,9 @@
  */
 
 /**
- * Disable APC cache (in case it has been installed)
+ * Include PHP initialization file file
  */
-if (function_exists("apc_clear_cache")) {
-    ini_set("apc.enabled", 0);
-}
-
-/**
- * Disable eAccelerator cache (in case it has been installed)
- */
-if (function_exists("eaccelerator_rm")) {
-    ini_set("eaccelerator.enable", 0);
-}
+require_once('init_php.php');
 
 /**
  * Include configuration file
@@ -62,24 +52,31 @@ if (function_exists("eaccelerator_rm")) {
 cmnRequireConfig();
 
 /**
- * Include path detection code
+ * Filter super globals
  */
-require_once ('path_defines_base.php');
-
-require_once ('path_defines_url_content.php');
-
-
 undo_magic_quotes();
 
-require_once ('classes/EventLogging.php');
-require_once ('classes/AbstractDb.php');
-require_once ('classes/Locale.php');//Must be included for gettext handling
-require_once ('classes/Dependencies.php');
-// require_once('classes/Session.php');
+/**
+ * Set default timezone
+ */
+dateFix();
+
+/**
+ * Include path detection code
+ */
+require_once('path_defines_base.php');
+require_once('path_defines_url_content.php');
+
+/**
+ * Load required classes
+ */
+require_once('classes/EventLogging.php');
+require_once('classes/AbstractDb.php');
+require_once('classes/Locale.php');
+require_once('classes/Dependencies.php');
 
 global $db;
 
-// $db = AbstractDb::Connect('DEFAULT');
 $db = new AbstractDb();
 
 /* Constant shared with the gateway
@@ -125,21 +122,6 @@ define('SESS_GW_PORT_VAR', 'SESS_GW_PORT');
 define('SESS_GW_ID_VAR', 'SESS_GW_ID');
 /* End session constants */
 
-
-function stripslashes_cb(&$item, $key)
-{
-   $item = stripslashes($item);
-}
-
-function undo_magic_quotes() {
-    if (get_magic_quotes_gpc()) {
-        array_walk_recursive($_GET, 'stripslashes_cb');
-        array_walk_recursive($_POST, 'stripslashes_cb');
-        array_walk_recursive($_COOKIE, 'stripslashes_cb');
-        array_walk_recursive($_REQUEST, 'stripslashes_cb');
-    }
-}
-
 /** Convert a password hash form a NoCat passwd file into the same format as get_password_hash().
 * @return The 32 character hash.
 */
@@ -148,13 +130,6 @@ function convert_nocat_password_hash($hash) {
 }
 
 function iso8601_date($unix_timestamp) {
-    /**
-     * Set timezone if PHP version >= 5.1.0
-     */
-    if (str_replace(".", "", phpversion()) >= 510) {
-        date_default_timezone_set(defined(DATE_TIMEZONE) ? DATE_TIMEZONE : "Canada/Eastern");
-    }
-
     $tzd = date('O', $unix_timestamp);
     $tzd = substr(chunk_split($tzd, 3, ':'), 0, 6);
     $date = date('Y-m-d\TH:i:s', $unix_timestamp).$tzd;
@@ -331,4 +306,5 @@ function cmnRequireConfig($config_file = 'config.php') {
  * c-hanging-comment-ender-p: nil
  * End:
  */
+
 ?>

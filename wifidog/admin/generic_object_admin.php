@@ -61,6 +61,7 @@ require_once('admin_common.php');
 
 require_once('classes/GenericObject.php');
 require_once('classes/MainUI.php');
+require_once('classes/Network.php');
 
 if (!empty ($_REQUEST['debug'])) {
     echo "<pre>";
@@ -178,7 +179,10 @@ else if ($_REQUEST['action'] == 'preview') {
     $name = "node_id";
     $html .= Node :: getSelectNodeUI($name);
 
-    $html .= $object->getUserUI();
+    if (method_exists($object, "getUserUI")) {
+        $html .= $object->getUserUI();
+    }
+
     $html .= "<input type='hidden' name='action' value='preview'>\n";
     $html .= "<input type='submit' name='preview_submit' value='"._("Preview")." ".get_class($object)."'>\n";
     $html .= '</form>';

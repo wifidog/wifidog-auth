@@ -53,30 +53,44 @@ require_once('../include/common.php');
 require_once('include/common_interface.php');
 require_once('classes/Node.php');
 require_once('classes/MainUI.php');
+require_once('classes/Session.php');
 
 /**
  * Define width of toolbar
+ *
+ * Must match the stylesheet for the tool section width
  */
-define('TOOLBAR_WIDTH','250'); //Must match the stylesheet for the tool section width
+define('TOOLBAR_WIDTH', '250');
 
+// Init values
 $node = null;
-if (!empty ($_REQUEST['gw_id']))
-    $node = Node :: getObject($_REQUEST['gw_id']);
 
-if ($node == null)
-{
+// Init session
+$session = new Session();
+
+// Get the current user
+$current_user = User::getCurrentUser();
+
+if (!empty ($_REQUEST['gw_id'])) {
+    $node = Node :: getObject($_REQUEST['gw_id']);
+}
+
+if ($node == null) {
     $smarty->display("templates/message_unknown_hotspot.html");
     exit;
 }
+
+// Get information about current network
 $network = $node->getNetwork();
 
-/*  If this node has a custom portal defined, and the network config allows it, redirect to the custom portal */
+/*
+ * If this node has a custom portal defined, and the network config allows it,
+ * redirect to the custom portal
+ */
 $custom_portal_url = $node->getCustomPortalRedirectUrl();
-if(!empty($custom_portal_url) && $network->getCustomPortalRedirectAllowed())
-{
+if (!empty($custom_portal_url) && $network->getCustomPortalRedirectAllowed()) {
     header("Location: {$custom_portal_url}");
 }
-
 
 $node_id = $node->getId();
 $portal_template = $node_id.".html";
@@ -250,9 +264,6 @@ $hotspot_network_name = $network->getName();
 $hotspot_network_url = $network->getHomepageURL();
 $network_logo_url = COMMON_CONTENT_URL.NETWORK_LOGO_NAME;
 $network_logo_banner_url = COMMON_CONTENT_URL.NETWORK_LOGO_BANNER_NAME;
-
-// Get the current user
-$current_user = User :: getCurrentUser();
 
 $html = '';
 

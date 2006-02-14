@@ -49,17 +49,20 @@ require_once('admin_common.php');
 require_once('classes/Content.php');
 require_once('classes/MainUI.php');
 
-$ui=new MainUI();
+// Init values
 $html = '';
-$current_user = User :: getCurrentUser();
-if(!$current_user)
-{
+
+// Load MainUI class
+$ui = new MainUI();
+
+// Get information about curent user
+$current_user = User::getCurrentUser();
+
+if(!$current_user) {
     // Redirect to login form automatically
-    header("Location: ../login/");
+    header("Location: ../login/?origin=admin");
     exit;
-}
-else
-{
+} else {
     $ui->setToolSection('ADMIN');
 }
 

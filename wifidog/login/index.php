@@ -57,30 +57,31 @@ require_once('classes/Node.php');
 require_once('classes/User.php');
 require_once('classes/Network.php');
 
-/* Start general request parameter processing section */
+// Init values
 $node = null;
-if (!empty ($_REQUEST['gw_id']))
-{
+$continueToAdmin = false;
+
+/*
+ * Start general request parameter processing section
+ */
+if (!empty ($_REQUEST['gw_id'])) {
     $gw_id = $_REQUEST['gw_id'];
 
-    try
-    {
-        $node = Node :: getObject($_REQUEST['gw_id']);
+    try {
+        $node = Node::getObject($_REQUEST['gw_id']);
         $hotspot_name = $node->getName();
         $network = $node->getNetwork();
     }
-    catch (Exception $e)
-    {
+
+    catch (Exception $e) {
         $smarty->assign("error", $e->getMessage());
         $smarty->assign("tech_support_email", Network::getCurrentNetwork()->getTechSupportEmail());
         $smarty->display("templates/generic_error.html");
         exit;
     }
-}
-else
-{
-    /* Gateway ID is not set... Virtual login */
-    $network = Network :: getCurrentNetwork();
+} else {
+    // Gateway ID is not set ... virtual login
+    $network = Network::getCurrentNetwork();
 }
 
 isset ($_REQUEST["username"]) && $username = $_REQUEST["username"];
@@ -92,72 +93,91 @@ isset ($_REQUEST["gw_address"]) && $session->set(SESS_GW_ADDRESS_VAR, $_REQUEST[
 isset ($_REQUEST["gw_port"]) && $session->set(SESS_GW_PORT_VAR, $_REQUEST['gw_port']);
 isset ($_REQUEST["gw_id"]) && $session->set(SESS_GW_ID_VAR, $_REQUEST['gw_id']);
 
-// Store original URL typed by user.
-//TODO: manage this...
-if (!empty ($_REQUEST['url']))
-{
+/*
+ * General request parameter processing section
+ */
+
+/**
+ * Store original URL typed by user
+ *
+ * @todo Manage storing of original URL typed by user
+ */
+if (!empty($_REQUEST['url'])) {
     $session->set(SESS_ORIGINAL_URL_VAR, $_REQUEST['url']);
 }
-/* End general request parameter processing section */
 
-/* Start login process section.
- * If  successfull, the browser is redirected to another page */
-
-/*  If this is a splash-only node, skip the login interface and log-in using the splash_only user */
-if ($node && $node->isSplashOnly())
-{
-    $user = $network->getSplashOnlyUser();
-    $token = $user->generateConnectionToken();
-    User :: setCurrentUser($user);
-    header("Location: http://".$_REQUEST['gw_address'].":".$_REQUEST['gw_port']."/wifidog/auth?token=$token");
+// Check if user wanted to enter the administration interface
+if (!empty($_REQUEST['origin']) && $_REQUEST['origin'] = "admin") {
+    $continueToAdmin = true;
 }
 
-/* Normal login process */
-if (!empty ($_REQUEST['username']) && !empty ($_REQUEST['password']) && !empty ($_REQUEST['auth_source']))
-{
+/*
+ * Start login process section.
+ *
+ * If  successfull, the browser is redirected to another page
+ */
+
+/*
+ * If this is a splash-only node, skip the login interface and log-in using
+ * the splash_only user
+ */
+if ($node && $node->isSplashOnly()) {
+    $user = $network->getSplashOnlyUser();
+    $token = $user->generateConnectionToken();
+    User::setCurrentUser($user);
+
+    header("Location: http://" . $_REQUEST['gw_address'] . ":" . $_REQUEST['gw_port'] . "/wifidog/auth?token=" . $token);
+}
+
+/*
+ * Normal login process
+ */
+if (!empty ($_REQUEST['username']) && !empty ($_REQUEST['password']) && !empty ($_REQUEST['auth_source'])) {
+    // Init values
     $errmsg = '';
+
     $username = $db->escapeString($_REQUEST['username']);
 
     // Authenticating the user through the selected auth source.
-    $network = Network :: processSelectNetworkUI('auth_source');
+    $network = Network::processSelectNetworkUI('auth_source');
 
     $user = $network->getAuthenticator()->login($_REQUEST['username'], $_REQUEST['password'], $errmsg);
-    if ($user != null)
-    {
-        if (isset ($_REQUEST['gw_address']) && isset ($_REQUEST['gw_port']))
-        {
-            /* Login from a gateway, redirect to the gateway to activate the token */
+
+    if ($user != null) {
+        if (isset ($_REQUEST['gw_address']) && isset ($_REQUEST['gw_port'])) {
+            // Login from a gateway, redirect to the gateway to activate the token
             $token = $user->generateConnectionToken();
-            header("Location: http://".$_REQUEST['gw_address'].":".$_REQUEST['gw_port']."/wifidog/auth?token=$token");
+
+            header("Location: http://" . $_REQUEST['gw_address'] . ":" . $_REQUEST['gw_port'] . "/wifidog/auth?token=" . $token);
+        } else {
+            // Virtual login, redirect to the auth server homepage
+            header("Location: " . BASE_SSL_PATH . ($continueToAdmin ? "admin/" : ""));
         }
-        else
-        {
-            /* Virtual login, redirect to the auth server homepage */
-            header("Location: ".BASE_SSL_PATH);
-        }
+
         exit;
-    }
-    else
-    {
+    } else {
         $error = $errmsg;
     }
-}
-else
-{
-    //Note that this is executed even when we have just arrived at the login page, so the user is reminded to supply a username and password
+} else {
+    /*
+     * Note that this is executed even when we have just arrived at the login
+     * page, so  the user is reminded to supply a username and password
+     */
     $error = _('Your must specify your username and password');
 }
-/* End login process section.*/
 
-/* Start logout process section.
- * Once logged out, we display the login page */
-if ((!empty ($_REQUEST['logout']) && $_REQUEST['logout'] == true) && ($user = User :: getCurrentUser()) != null)
-{
+/*
+ * Start logout process section
+ *
+ * Once logged out, we display the login page
+ */
+if ((!empty ($_REQUEST['logout']) && $_REQUEST['logout'] == true) && ($user = User::getCurrentUser()) != null) {
     $network->getAuthenticator()->logout();
 }
-/* End logout process section. */
 
-/* Start login interface section */
+/*
+ * Start login interface section
+ */
 $html = '';
 $html .= '<div id="login_form">'."\n";
 $html .= '<h1><a href="'.BASE_SSL_PATH.'signup.php">'._("Create a free account").'</a></h1>';

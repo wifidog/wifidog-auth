@@ -1,4 +1,4 @@
-{*
+<?php
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
@@ -34,78 +34,88 @@
 // +-------------------------------------------------------------------+
 
 /**
- * Content of tool pane
+ * This file contains all code that must be run to set up PHP behaviours
+ * before any code gets executed by the WiFiDog Authentication Server.
  *
  * @package    WiFiDogAuthServer
- * @subpackage Templates
  * @author     Max Horvath <max.horvath@maxspot.de>
  * @copyright  2006 Max Horvath, maxspot GmbH
- * @version    Subversion $Id: change_password.php 914 2006-01-23 05:25:43Z max-horvath $
+ * @version    Subversion $Id: common.php 927 2006-01-29 22:24:06Z max-horvath $
  * @link       http://www.wifidog.org/
  */
 
-*}
+/**
+ * Security function - filters super globals
+ *
+ * @return void
+ */
+function undo_magic_quotes() {
+    if (get_magic_quotes_gpc()) {
+        array_walk_recursive($_GET, 'stripslashes');
+        array_walk_recursive($_POST, 'stripslashes');
+        array_walk_recursive($_COOKIE, 'stripslashes');
+        array_walk_recursive($_REQUEST, 'stripslashes');
+    }
+}
 
-{if $sectionSTART}
-{*
-    BEGIN section START
-*}
-    <div id="tool_section">
-        <div class="tool_user_info">
-            <span class="tool_user_info">
-                {if $isValidUser}
-                    <p>{"Logged in as"|_}: {$username}</p>
-                    <a class="administration" href="{$base_ssl_path}user_profile.php"><img class="administration" src="{$base_ssl_path}images/profile.gif" border="0">{"My Profile"|_}</a>
-                    <a class="administration" href="{$base_ssl_path}login/?logout=true{$logoutParameters}"><img class="administration" src="{$base_ssl_path}images/logout.gif" border="0">{"Logout"|_}</a>
-                {else}
-                    <p>
-                        {"I am not logged in."|_}<br>
-                        <a href="{$base_ssl_path}login/{$loginParameters}">{"Login"|_}</a>
-                    </p>
+/**
+ * Disables APC cache (in case it has been installed) and fixes an APC bug
+ *
+ * @return void
+ */
+function disableAPC()
+{
+    if (function_exists("apc_clear_cache")) {
+        ini_set("apc.enabled", 0);
 
-                    <a class="administration" href="{$networkHomepageURL}"><img class="administration" src="{$base_url_path}images/lien_ext.gif">{$networkName}</a>
-                    <a class="administration" href="{$base_ssl_path}faq.php"><img class="administration" src="{$base_url_path}images/where.gif">{"Where am I?"|_}</a>
-                {/if}
-            </span>
-        </div>
+        /**
+         * Disable Just-In-Time creating of super globals when APC is enabled
+         *
+         * @see http://pecl.php.net/bugs/bug.php?id=4772
+         */
+        ini_set("auto_globals_jit", 0);
+    }
+}
 
-        <div class="navigation">
-            <span class="navigation">{$networkName} {"Building your wireless community"|_}</span>
-        </div>
+/**
+ * Disables eAccelerator cache (in case it has been installed)
+ *
+ * @return void
+ */
+function disableEA()
+{
+    if (function_exists("eaccelerator_rm")) {
+        ini_set("eaccelerator.enable", 0);
+    }
+}
 
-        <div class="language">
-            <form class="language" name="lang_form" method="post" action="{$formAction}">
-                {"Language"|_}:
-                <select name="wifidog_language" onchange="javascript: document.lang_form.submit();">
-                    {foreach from=$languageChooser item=currLanguage}
-                      {$currLanguage}
-                    {/foreach}
-                </select>
-            </form>
-        </div>
+/**
+ * Set timezone if PHP version >= 5.1.0
+ *
+ * @return void
+ */
+function dateFix()
+{
+    // Set timezone if PHP version >= 5.1.0
+    if (str_replace(".", "", phpversion()) >= 510) {
+        date_default_timezone_set(defined(DATE_TIMEZONE) ? DATE_TIMEZONE : "Canada/Eastern");
+    }
+}
 
-        <div class="tool_content">
-            {$toolContent}
-        </div>
+/*
+ * Do the magic ...
+ */
 
-        <div class="avis">
-            <span class="avis">
-                {$accountInformation}
-                {$techSupportInformation}
-            </span>
-        </div>
-    </div>
-{*
-    END section START
-*}
-{/if}
+// First we need to disable PHP caches
+disableAPC();
+disableEA();
 
-{if $sectionLOGIN}
-{*
-    BEGIN section LOGIN
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * c-hanging-comment-ender-p: nil
+ * End:
+ */
 
-    // No code defined ...
-
-    END section START
-*}
-{/if}
+?>

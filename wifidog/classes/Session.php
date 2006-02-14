@@ -48,70 +48,125 @@
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
  * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
  */
-class Session{
+class Session
+{
 
-  function Session() {
-    $session_id = session_id();
-    if(empty($session_id)) {
-    session_start();
-      }
-  }
+    /**
+     * Constructor
+     *
+     * @return void
+     *
+     * @access public
+     */
+    public function __construct()
+    {
+        $session_id = session_id();
 
-  /**
-   * Sets a session variable
-   * @param string name of variable
-   * @param mixed value of variable
-   * @return void
-   */
-  function set($name,$value) {
-    $_SESSION[$name] = $value;
-  }
-
-  /**
-   * Fetches a session variable
-   * @param string name of variable
-   * @return mixed value of session varaible
-   */
-  function get($name) {
-    if (isset($_SESSION[$name])) {
-    return $_SESSION[$name];
-    } else {
-    return false;
+        if (empty($session_id)) {
+            session_start();
+        }
     }
-  }
 
-  /**
-   * Deletes a session variable
-   * @param string name of variable
-   * @return boolean
-   */
-  function remove($name) {
-    if (isset($_SESSION[$name])) {
-    unset($_SESSION[$name]);
-    return true;
-    } else {
-    return false;
+    /**
+     * Sets a session variable
+     *
+     * @param string $name Name of variable
+     * @param mixed $value value of variable
+     *
+     * @return void
+     *
+     * @access public
+     */
+    public function set($name, $value)
+    {
+        $_SESSION[$name] = $value;
     }
-  }
 
-  /**
-   * Delete the whole session
-   * @return void
-   */
-  function destroy() {
-    $_SESSION = array();
-    session_destroy();
-  }
+    /**
+     * Fetches a session variable
+     *
+     * @param string $name Name of variable
+     *
+     * @return mixed Value of session varaible or false if unable to get value
+     *
+     * @access public
+     */
+    public function get($name)
+    {
+        if (isset($_SESSION[$name])) {
+            return $_SESSION[$name];
+        } else {
+            return false;
+        }
+    }
 
-  /**
-   * Delete the whole session
-   * @return void
-   */
-  function dump() {
-    echo "<pre>";
-    print_r($_SESSION);
-    echo "</pre>\n";
-  }
+    /**
+     * Deletes a session variable
+     *
+     * @param string $name Name of variable
+     *
+     * @return bool True if successful
+     *
+     * @access public
+     */
+    public function remove($name)
+    {
+        if (isset($_SESSION[$name])) {
+            unset($_SESSION[$name]);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Delete the whole session
+     *
+     * @return void
+     *
+     * @access public
+     */
+    public function destroy()
+    {
+        $_SESSION = array();
+        session_destroy();
+    }
+
+    /**
+     * Reinitializes the whole session
+     *
+     * @return void
+     *
+     * @access public
+     */
+    public function restart()
+    {
+        $_SESSION = array();
+        session_unset();
+        session_destroy();
+
+        session_start();
+    }
+
+    /**
+     * Dump the whole session
+     *
+     * @param bool $print If true session will be printed
+     *
+     * @return mixed If $print is false the session data will be returned
+     *
+     * @access public
+     */
+    public function dump($print = true)
+    {
+        if ($print) {
+            echo "<pre>" . print_r($_SESSION, true) . "</pre>";
+        } else {
+            return $_SESSION;
+        }
+    }
+
 }
 
 /*

@@ -1,0 +1,6 @@
+#
+# Deny access to files inside this folder to the webserver
+#
+
+Order allow,deny
+Deny from all
