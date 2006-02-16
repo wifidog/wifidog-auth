@@ -74,7 +74,7 @@
                     <div class="errormsg">{$error}</div>
                 {/if}
 
-                <input class="submit" type="submit" name="submit" value="'{"Login"|_}">
+                <input class="submit" type="submit" name="submit" value="{"Login"|_}">
             </form>
         </p>
 
