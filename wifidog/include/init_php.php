@@ -69,6 +69,8 @@ function undo_magic_quotes()
         array_walk_recursive($_POST, 'stripslashes_cb');
         array_walk_recursive($_COOKIE, 'stripslashes_cb');
         array_walk_recursive($_REQUEST, 'stripslashes_cb');
+        array_walk_recursive($_GLOBALS, 'stripslashes_cb');
+        array_walk_recursive($_SERVER, 'stripslashes_cb');
     }
 }
 
