@@ -49,12 +49,26 @@
  *
  * @return void
  */
-function undo_magic_quotes() {
+function undo_magic_quotes()
+{
+    /**
+     * Helper function used by undo_magic_quotes() only
+     *
+     * @param array  $item Item be processed
+     * @param string $key  Key of array being worked on
+     *
+     * @return array Array with un-quoted strings
+     */
+    function stripslashes_cb(&$item, $key)
+    {
+       $item = stripslashes($item);
+    }
+
     if (get_magic_quotes_gpc()) {
-        array_walk_recursive($_GET, 'stripslashes');
-        array_walk_recursive($_POST, 'stripslashes');
-        array_walk_recursive($_COOKIE, 'stripslashes');
-        array_walk_recursive($_REQUEST, 'stripslashes');
+        array_walk_recursive($_GET, 'stripslashes_cb');
+        array_walk_recursive($_POST, 'stripslashes_cb');
+        array_walk_recursive($_COOKIE, 'stripslashes_cb');
+        array_walk_recursive($_REQUEST, 'stripslashes_cb');
     }
 }
 
