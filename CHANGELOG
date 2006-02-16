@@ -1,3 +1,6 @@
+2006-02-15 Max Horváth <max.horvath@maxspot.de>
+	* Login site now uses a Smarty template to render HTML page
+
 2006-02-14 Max Horváth <max.horvath@maxspot.de>
 	* converted Session class to PHP5 style
 	* moved code used used to init PHP into wifidog/include/init_php.php

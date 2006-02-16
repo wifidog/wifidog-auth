@@ -78,7 +78,7 @@
                 {"Language"|_}:
                 <select name="wifidog_language" onchange="javascript: document.lang_form.submit();">
                     {foreach from=$languageChooser item=currLanguage}
-                      {$currLanguage}
+                        {$currLanguage}
                     {/foreach}
                 </select>
             </form>
