@@ -188,25 +188,25 @@ select {
 
 /** Messages */
 .errormsg {
-    font-weight: bold;  
+    font-weight: bold;
     color: red;
 }
 .warningmsg {
-    font-weight: bold;  
+    font-weight: bold;
     color: teal;
 }
 .successmsg {
-    font-weight: bold;  
+    font-weight: bold;
     color: green;
 }
 .msg {
-    font-weight: bold;  
+    font-weight: bold;
     color: black;
 }
 
 /* The content container */
 .content {
-    border: 2px solid gray; 
+    border: 2px solid gray;
     width:auto;
 }
 
@@ -221,18 +221,18 @@ select {
 
  /* The class name of the container */
 .admin_class {
-    /*float: left;*/ 
+    /*float: left;*/
     color:grey;
     border: none;
     display: none;
 }
 
-.admin_section_container { 
+.admin_section_container {
     display: block;
-    border: 1px solid #DDDDFF; 
+    border: 1px solid #DDDDFF;
     background-color: #FBFBFF;
     margin: 5px;
-    width:auto; 
+    width:auto;
 }
 #NodeSelector select {
     width: 100%;
@@ -246,7 +246,7 @@ select {
     display: inline;
     font-weight: bold;
 }
-.admin_section_data { 
+.admin_section_data {
     display: inline;
 }
 .admin_section_tools { display: inline;}
@@ -342,7 +342,7 @@ display: compact;
     display: block;
     font-size: medium;
     font-weight: bold;
- 	
+
     color: #46a43a;
     border : 1px solid #46a43a;
     background-color : #daedd8;
@@ -604,6 +604,10 @@ table.content_admin td {
     background-color: #fff;
 }
 
+.pretty_fieldset a {
+    font-size: 12pt;
+}
+
 .pretty_fieldset .red {
     background-color: red;
 }
@@ -622,7 +626,7 @@ table.content_admin td {
 }
 #map_toolbox {
     display: inline;
-    float: right;	
+    float: right;
 }
 #map_postalcode_overlay {
     display: none;
@@ -643,16 +647,16 @@ table.content_admin td {
 }
 #map_outer_hotspots_list {
     background-color: #ffffff;
-    width: 33%; 
+    width: 33%;
     height: 500px;
     overflow: auto;
-    float: right; 
+    float: right;
 }
 #map_hotspots_list {
     padding: 10px;
 }
 #map_frame {
     font: 10pt "Arial",sans-serif;
-    width: 66%; 
+    width: 66%;
     height: 500px;
 }

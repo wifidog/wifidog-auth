@@ -1,6 +1,8 @@
 for i in `find . -maxdepth 1 -mindepth 1 -type d -and -not -name "CVS"`; do
     echo '<?php' > smarty.txt
     find ../templates -name "*.html" -exec ./gensmarty.pl {} >> smarty.txt \;
+    find ../templates/classes -name "*.tpl" -exec ./gensmarty.pl {} >> smarty.txt \;
+    find ../templates/sites -name "*.tpl" -exec ./gensmarty.pl {} >> smarty.txt \;
     find ../local_content -name "*.html" -exec ./gensmarty.pl {} >> smarty.txt \;
     find ../admin/templates -name "*.html" -exec ./gensmarty.pl {} >> smarty.txt \;
     echo '?>' >> smarty.txt

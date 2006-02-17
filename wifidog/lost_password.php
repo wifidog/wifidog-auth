@@ -79,9 +79,9 @@ if (isset($_REQUEST['submit'])) {
                 throw new Exception(_("This username or email could not be found in our database"));
 
             $smarty->assign('message', _('A new password has been emailed to you.'));
-            //$smarty->display('templates/validate.html');
+
             $ui = new MainUI();
-            $ui->setMainContent($smarty->fetch("templates/validate.html"));
+            $ui->setMainContent($smarty->fetch("templates/sites/validate.tpl"));
             $ui->display();
             exit;
         } catch (Exception $e) {

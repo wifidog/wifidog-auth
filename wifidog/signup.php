@@ -39,8 +39,10 @@
  * @package    WiFiDogAuthServer
  * @author     Philippe April
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @author     Max Horvath <max.horvath@maxspot.de>
  * @copyright  2004-2006 Philippe April
  * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @copyright  2006 Max Horvath, maxspot GmbH
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
@@ -56,125 +58,239 @@ require_once('classes/Security.php');
 require_once('classes/MainUI.php');
 require_once('classes/Mail.php');
 
-if (defined("CUSTOM_SIGNUP_URL"))
-{
-    header("Location: ".CUSTOM_SIGNUP_URL."?gw=".base64_encode($_SERVER['REQUEST_URI']));
+/**
+ * Load custom signup URL if it has been defined in config.php
+ */
+if (defined("CUSTOM_SIGNUP_URL")) {
+    header("Location: " . CUSTOM_SIGNUP_URL . "?gw=" . base64_encode($_SERVER['REQUEST_URI']));
     exit;
 }
 
+/**
+ * Validates the format of an username
+ *
+ * @param string $username The username
+ *
+ * @return void
+ *
+ * @throws Exeption if no username was given or if the username contains
+ *         invalid characters
+ */
 function validate_username($username)
 {
-    if (!isset ($username) || !$username)
+    if (!isset ($username) || !$username) {
         throw new Exception(_('Username is required.'));
+    }
 
-    if (!ereg("^[0-9a-zA-Z_]*$", $username))
+    if (!ereg("^[0-9a-zA-Z_]*$", $username)) {
         throw new Exception(_('Username contains invalid characters.'));
+    }
 }
 
+/**
+ * Validates the format of an email address
+ *
+ * @param string $email The email address
+ *
+ * @return void
+ *
+ * @throws Exeption if no email address was given or if the format of the email
+ *         address is invalid characters or if the domain of the email address
+ *         is black-listed
+ */
 function validate_email($email)
 {
-    if (!isset ($email) || !$email)
+    if (!isset ($email) || !$email) {
         throw new Exception(_("A valid email address is required."));
+    }
 
-   	if(Mail::validateEmailAddress($email) === false)
-        throw new Exception(_("The email address must be of the form user@domain.com and is not black-listed."));
+   	if (Mail::validateEmailAddress($email) === false) {
+        throw new Exception(_("The email address must be valid (i.e. user@domain.com). Please understand that we also black-listed various temporary-email-address providers."));
+   	}
 }
 
+/**
+ * Validates the format of a password
+ *
+ * @param string $password       The password
+ * @param string $password_again Copy of password
+ *
+ * @return void
+ *
+ * @throws Exeption if no password was given or if the password contains
+ *         invalid characters or if the two given passwords don't match or
+ *         if the password is too short
+ */
 function validate_passwords($password, $password_again)
 {
-    if (!isset ($password) || !$password)
+    if (!isset ($password) || !$password) {
         throw new Exception(_("A password of at least 6 characters is required."));
+    }
 
-    if (!ereg("^[0-9a-zA-Z]*$", $password))
+    if (!ereg("^[0-9a-zA-Z]*$", $password)) {
         throw new Exception(_("Password contains invalid characters."));
+    }
 
-    if (!isset ($password_again))
+    if (!isset ($password_again)) {
         throw new Exception(_("You must type your password twice."));
+    }
 
-    if ($password != $password_again)
+    if ($password != $password_again) {
         throw new Exception(_("Passwords do not match."));
+    }
 
-    if (strlen($password) < 6)
+    if (strlen($password) < 6) {
         throw new Exception(_("Password is too short, it must be 6 characters minimum."));
+    }
 }
 
-if (isset ($_REQUEST["submit"]))
-{
+/**
+ * Process signing up
+ */
+
+// Init ALL smarty SWITCH values
+$smarty->assign('sectionTOOLCONTENT', false);
+$smarty->assign('sectionMAINCONTENT', false);
+
+// Init ALL smarty values
+$smarty->assign('username', "");
+$smarty->assign('email', "");
+$smarty->assign('error', "");
+$smarty->assign('auth_sources', "");
+$smarty->assign('selected_auth_source', "");
+
+if (isset ($_REQUEST["submit"])) {
+    // Secure entered values
     $username = trim($_REQUEST['username']);
     $email = trim($_REQUEST['email']);
     $password = trim($_REQUEST['password']);
     $password_again = trim($_REQUEST['password_again']);
+
     $smarty->assign('username', $username);
     $smarty->assign('email', $email);
+
     $network = Network::getObject($_REQUEST['auth_source']);
-    try
-    {
-        if (!isset($network))
+
+    try {
+        if (!isset($network)) {
             throw new Exception(_("Sorry, this network does not exist !"));
-        if (!$network->getAuthenticator()->isRegistrationPermitted())
+        }
+
+        if (!$network->getAuthenticator()->isRegistrationPermitted()) {
             throw new Exception(_("Sorry, this network does not accept new user registration !"));
+        }
+
+        // Validate entered values
         validate_username($username);
         validate_email($email);
         validate_passwords($password, $password_again);
 
-        if (User :: getUserByUsernameAndOrigin($username, $network))
+        // Check if user exists
+        if (User::getUserByUsernameAndOrigin($username, $network)) {
             throw new Exception(_("Sorry, a user account is already associated to this username. Pick another one."));
+        }
 
-        if (User :: getUserByEmailAndOrigin($email, $network))
+        if (User::getUserByEmailAndOrigin($email, $network)) {
             throw new Exception(_("Sorry, a user account is already associated to this email address."));
+        }
 
-        $created_user = User :: createUser(get_guid(), $username, $network, $email, $password);
+        // Create user and send him the validation email
+        $created_user = User::createUser(get_guid(), $username, $network, $email, $password);
         $created_user->sendValidationEmail();
 
-        // If the user is at a REAL hotspot, give him his 15 minutes right away
+        // If the user is at a REAL hotspot, give him his sign-up minutes right away
         $gw_id = $session->get(SESS_GW_ID_VAR);
         $gw_address = $session->get(SESS_GW_ADDRESS_VAR);
         $gw_port = $session->get(SESS_GW_PORT_VAR);
 
-        if($gw_id && $gw_address && $gw_port)
-        {
+        if ($gw_id && $gw_address && $gw_port) {
+            // Init values
+            $errmsg = "";
+
             // Authenticate this new user automatically
             $authenticated_user = $network->getAuthenticator()->login($username, $password, $errmsg);
 
             // Make sure the user IDs match
-            if(($created_user->getId() == $authenticated_user->getId()))
-            {
+            if(($created_user->getId() == $authenticated_user->getId())) {
                 $token = $created_user->generateConnectionToken();
-                header("Location: http://{$gw_address}:{$gw_port}/wifidog/auth?token={$token}");
+
+                header("Location: http://" . $gw_address . ":" . $gw_port . "/wifidog/auth?token=" . $token);
+            } else {
+                header("Location: " . BASE_NON_SSL_PATH);
             }
-            else
-                header("Location: ".BASE_NON_SSL_PATH);
-        }
-        else
+        } else {
             $smarty->assign('message', _('An email with confirmation instructions was sent to your email address.  Your account has been granted 15 minutes of access to retrieve your email and validate your account.  You may now open a browser window and go to any remote Internet address to obtain the login page.'));
+        }
 
-        //$smarty->display("templates/validate.html");
-
+        /*
+         * Render output
+         */
         $ui = new MainUI();
-        $ui->setMainContent($smarty->fetch("templates/validate.html"));
+        $ui->setMainContent($smarty->fetch("templates/sites/validate.tpl"));
         $ui->display();
+
+        // We're done ...
         exit;
     }
-    catch (Exception $e)
-    {
+
+    catch (Exception $e) {
         $smarty->assign('error', $e->getMessage());
     }
 }
+
+/*
+ * Tool content
+ */
+
+// Set section of Smarty template
+$smarty->assign('sectionTOOLCONTENT', true);
+
+// Compile HTML code
+$html = $smarty->fetch("templates/sites/signup.tpl");
+
+/*
+ * Main content
+ */
+
+// Reset ALL smarty SWITCH values
+$smarty->assign('sectionTOOLCONTENT', false);
+$smarty->assign('sectionMAINCONTENT', false);
+
+// Set section of Smarty template
+$smarty->assign('sectionMAINCONTENT', true);
+
 // Add the auth servers list to smarty variables
 $sources = array ();
+
 // Preserve keys
-$network_array=Network::getAllNetworks();
-foreach ($network_array as $network)
-    if ($network->getAuthenticator()->isRegistrationPermitted())
+$network_array = Network::getAllNetworks();
+
+foreach ($network_array as $network) {
+    if ($network->getAuthenticator()->isRegistrationPermitted()) {
         $sources[$network->getId()] = $network->getName();
+    }
+}
 
-isset ($sources) && $smarty->assign('auth_sources', $sources);
+if (isset($sources)) {
+    $smarty->assign('auth_sources', $sources);
+}
+
 // Pass the account_origin along, if it's set
-isset ($_REQUEST["auth_source"]) && $smarty->assign('selected_auth_source', $_REQUEST["auth_source"]);
+if (isset($_REQUEST["auth_source"])) {
+    $smarty->assign('selected_auth_source', $_REQUEST["auth_source"]);
+}
 
-$ui = new MainUI();
 $smarty->assign('SelectNetworkUI', Network::getSelectNetworkUI('auth_source'));
-$ui->setMainContent($smarty->fetch("templates/signup.html"));
+
+// Compile HTML code
+$html_body = $smarty->fetch("templates/sites/signup.tpl");
+
+/*
+ * Render output
+ */
+$ui = new MainUI();
+$ui->setToolContent($html);
+$ui->setMainContent($html_body);
 $ui->display();
 
 /*

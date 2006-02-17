@@ -34,7 +34,7 @@
 // +-------------------------------------------------------------------+
 
 /**
- * Content of tool pane
+ * Login page
  *
  * @package    WiFiDogAuthServer
  * @subpackage Templates
@@ -88,10 +88,10 @@
         </ul>
     </div>
 
-    <script type="text/javascript" language="JavaScript">
-    <!--
-        document.getElementById("form_username").focus();
-    //-->
+    <script type="text/javascript">
+        <!--
+            document.getElementById("form_username").focus();
+        //-->
     </script>
 {*
     END section TOOLCONTENT

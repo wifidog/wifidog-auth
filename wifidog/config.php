@@ -312,7 +312,7 @@ define('XSLT_SUPPORT', true);
  * Name and version of the WiFiDOG auth server.
  */
 define('WIFIDOG_NAME', 'WiFiDog Authentication server');
-define('WIFIDOG_VERSION', 'CVS');
+define('WIFIDOG_VERSION', '(Development)');
 
 /**
  * WiFiDOG features configuration

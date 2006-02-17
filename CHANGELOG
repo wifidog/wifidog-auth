@@ -1,3 +1,13 @@
+2006-02-16 Max Horváth <max.horvath@maxspot.de>
+    * added full PHPdoc documentation to Mail class
+    * added more temporary-email-address-providers to the black-list
+	* Login site now uses a Smarty template to render HTML page
+	* Refactored signup site - now it also includes the help toolbox
+	* removed Phlickr directory in /lib dir as Phlickr must be installed via
+	  PEAR
+	* modified gen.sh to include new template folders for the
+	  translation file generation
+
 2006-02-15 Max Horváth <max.horvath@maxspot.de>
 	* Login site now uses a Smarty template to render HTML page
 
@@ -8,9 +18,10 @@
 	  first use
 	* in an attemp to enter the administration interface of WiFiDog and not
 	  being logged in you'll be redirected to the administration interface after
-	  a successful login, if you are an admin or owner of a node. This only works
-	  for a virtual login, as it isn't needed to be done when logging in via a
-	  WiFiDog node (then you have to login anyway on the splash page first)
+	  a successful login, if you are an admin or owner of a node. This only
+	  works for a virtual login, as it isn't needed to be done when logging in
+	  via a WiFiDog node (then you have to login anyway on the splash page
+	  first)
 	* fixed preview of network in administration interface as content for a
 	  network as is isn't available in the code, yet
 
@@ -20,13 +31,15 @@
 
 2006-02-07 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix a bunch of file inclusion bugs in the statistics subsystem.
-	  This is only a ad-hac fix. It seems the requires for just about every class
-	  have been stripped off. This must be fixed, all classes should require_once
-	  all classes or include that they need that isn't included by a parent class.
+	  This is only a ad-hac fix. It seems the requires for just about every
+	  class have been stripped off. This must be fixed, all classes should
+	  require_once all classes or include that they need that isn't included by
+	  a parent class.
 
 2006-02-06 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog/local_content/default/hotspot_logo.jpg: Delete deprecated file
-	* wifidog/local_content/default/hotspot_logo_banner.jpg: Delete deprecated file
+	* wifidog/local_content/default/hotspot_logo_banner.jpg: Delete deprecated
+	  file
 
 2006-02-04 Max Horváth <max.horvath@maxspot.de>
 	* MainUI class now uses Smarty templates to render HTML pages
@@ -56,7 +69,8 @@
 	  installed to use all WiFiDog features
 
 2006-01-31 Benoit Grégoire  <bock@step.polymtl.ca>
-	* path_defines_base.php:  Fix syntax errors in the exception thrown.  Add more meaningfull output
+	* path_defines_base.php:  Fix syntax errors in the exception thrown. Add
+	  more meaningfull output
 
 2006-01-29 Max Horváth <max.horvath@maxspot.de>
 	* WiFiDog now detects APC PHP cache and eAccelerator PHP cache and disables
@@ -80,17 +94,20 @@
 	  Don't forget to update your local.config.php in case you're using it.
 
 2006-01-24 Benoit Grégoire  <bock@step.polymtl.ca>
-	* Dependencies.php:  We missed one more instance of non-unifrom code for path detection.
-	The Dependencies class now uses the code in include/path_defines_base.php like the rest of the system.
-	Also make it return more usefull error messages.
-	* SmartyWifidog.php:  Output the error returned by Dependencies if Smarty cannot be found for some reason.
+	* Dependencies.php:  We missed one more instance of non-unifrom code for
+	  path detection. The Dependencies class now uses the code in
+	  include/path_defines_base.php like the rest of the system. Also make it
+	  returns more usefull error messages.
+	* SmartyWifidog.php: Output the error returned by Dependencies if Smarty
+      cannot be found for some reason.
 
 2006-01-23 Max Horváth <max.horvath@maxspot.de>
 	* Removed compiled PHPdoc documentation
 	* moved createDoc.sh to "doc" directory, documentation can be generated on
 	  the fly now, in the future we'll be generating a nightly PHPdoc on
 	  wifidog.org
-	* renamed "ChangeLog" to CHANGELOG, resulting this file being parsed by PHPdoc
+	* renamed "ChangeLog" to CHANGELOG, resulting this file being parsed by
+	  PHPdoc
 	* moved "header.gif" image to its own folder in the images directory
 	* touched almost every PHP file in WiFiDog auth server for PHPdoc generating
 	  compiling without any warnings
@@ -100,27 +117,31 @@
 	  being started (otherwise there was no chance to set a manual SYSTEM_PATH)
 
 2006-01-22 Benoit Grégoire  <bock@step.polymtl.ca>
-	* common.php:  Real fix for Ticket #59 ;)
-	* common.php:  Untested fix for Ticket #59
+	* common.php: Real fix for Ticket #59 ;)
+	* common.php: Untested fix for Ticket #59
 
 2006-01-18 François Proulx <francois.proulx@gmail.com>
-	* Remove unneeded .cvsignore files since ths svn:ignore property is set to the same list
+	* Remove unneeded .cvsignore files since the svn:ignore property is set to
+	  the same list
 
 2006-01-11 Rob Janes <janes.rob@gmail.com>
-    * classes/User.php: added setters, getters, throw exceptions, added refresh() subr, tweaked language
+    * classes/User.php: added setters, getters, throw exceptions, added
+      refresh() subr, tweaked language
 
 2006-01-09 Max Horváth <max.horvath@maxspot.de>
 	* createDoc.sh: added description of how to install requirements
 
 2006-01-08 Benoit Grégoire  <bock@step.polymtl.ca>
- 	* common.php:  Improve path detection code, and start moving PATH detection back to a central location.
- 	You should NEVER go to any $_SERVER[] variables for path related stuff, all you need is already available
- 	 in defines.
- 	* UserReport.php:  Remove dangling reference to BASEPATH.
- 	* install.php:  Use centralised path detection.
+ 	* common.php: Improve path detection code, and start moving PATH detection
+ 	  back to a central location. You should NEVER go to any $_SERVER[]
+ 	  variables for path related stuff, all you need is already available
+ 	  in defines.
+ 	* UserReport.php: Remove dangling reference to BASEPATH.
+ 	* install.php: Use centralised path detection.
 
 2006-01-04 Benoit Grégoire  <bock@step.polymtl.ca>
-	* config.php, common.php:  Completely remove SYSTEM_PATH from config.php, making one less config option to manage.  It is now autodetected.
+	* config.php, common.php: Completely remove SYSTEM_PATH from config.php,
+	  making one less config option to manage.  It is now autodetected.
 
 2006-01-03 Rob Janes <janes.rob@gmail.com>
 	* added support for classes/EventLogging.php.
@@ -134,7 +155,8 @@
 	  to include/common.php, wrapping the require_once in a function.
 
 2006-01-04 Pascal Leclerc <isf@plec.ca>
-    * install.php : New security validation and small bugs fix in admin account creation
+    * install.php: New security validation and small bugs fix in admin account
+      creation
 
 2006-01-02 Rob Janes <janes.rob@gmail.com>
 	* split static stylesheet.css from smarty template stuff.
@@ -157,20 +179,23 @@
 	* Tested the new Phlickr package, which fixes URL on Flickr
 
 2005-12-28 Max Horváth <max.horvath@maxspot.de>
-	* Removed BASEPATH define from source - resulting in a better require-overview
+	* Removed BASEPATH define from source - resulting in a better
+	  require-overview
 	* speed improvement of 7% by optimizing Dependencies class
 	* improved documentation of content classes
 
 2005-12-26 François Proulx <francois.proulx@gmail.com>
 	* Fixed bug when the same user was owner of many nodes
-	* Added missing reference to content_display_location initial data in dump script
+	* Added missing reference to content_display_location initial data in dump
+	  script
 
 2005-12-26 François Proulx <francois.proulx@gmail.com>
 	* Tiny modifications to config.php
 	* Reinserted the deprecated defines, created errors on my system
 	* Fully translated FormSelectGenerator class, Locale
 	* Added comments to Utils, Locale etc..
-	* Fully tested installation from scratch using blank database with installation script
+	* Fully tested installation from scratch using blank database with
+	  installation script
 	* Improved installation script a bit
 	* Synched SQL for CVS schema 29 --> 33
 
@@ -179,12 +204,13 @@
 	* converted file to represent a tab as four (4) spaces
 	* added PhpDocumentor documentation
 	* added WiFiDog skin to HTMLeditor
-	* language selection in a content class now shows the language name instead of
-	  the language code
+	* language selection in a content class now shows the language name instead
+	  of the language code
 	* added caching support to content classes Langstring and TrivialLangstring
 
 2005-12-15 Max Horváth <max.horvath@maxspot.de>
-	* fixed bug in dependencies class when gettext support for PHP is not available
+	* fixed bug in dependencies class when gettext support for PHP is not
+	  available
 
 2005-12-14 Max Horváth <max.horvath@maxspot.de>
 	* fixed bug in config.php:59 ... was unable to select DB server
@@ -192,10 +218,12 @@
 2005-12-08 Max Horváth <max.horvath@maxspot.de>
 	* added FCKeditor to the supported libraries
 	* added new content type: HTMLeditor
-	* added new caching class which uses PEAR::Cache_Lite - must be enabled in config.php
+	* added new caching class which uses PEAR::Cache_Lite - must be enabled in
+	  config.php
 	* HTMLeditor is the first class using the new caching class
 	* removed unused function from content type Langstring
-	* beautified and reorganized config.php and added a new switch for the caching class
+	* beautified and reorganized config.php and added a new switch for the
+	  caching class
 
 2005-12-06 Max Horváth <max.horvath@maxspot.de>
 	* fixed SQL bug when calling the "report configuration" page as a node owner
@@ -207,8 +235,9 @@
 	* fixed bug when calling the preview version of a login page
 
 2005-11-30 Benoit Grégoire  <bock@step.polymtl.ca>
-	* User.php: Fix a bug in the sql query in isUserValid().  Checked that the change works with postgresql 7.4 and 8.
-	It is still not understood why ISF doesn't encounter this bug on it's production server.
+	* User.php: Fix a bug in the sql query in isUserValid(). Checked that the
+	  change works with postgresql 7.4 and 8. It is still not understood why
+	  ISF doesn't encounter this bug on it's production server.
 
 2005-11-28 François Proulx <francois.proulx@gmail.com>
 	* Improved Flickr user output
@@ -229,11 +258,13 @@
 
 2005-11-11 François Proulx <francois.proulx@gmail.com>
 	* Fixed Admin hotspot location map
-	* Take note : Google Maps updated their API key system, so that you simply need to register a key for the whole domain.
+	* Take note: Google Maps updated their API key system, so that you simply
+	  need to register a key for the whole domain.
 	  ie. one key for http://auth.abc.org will work even in sub-directories
-	* Changed the Content classes structure to make them "pluggable" more easily.
+	* Changed the Content classes structure to make them "pluggable" more easily
 	  as requested during last developpers meeting
-	* node_list.php now support column sorting, node_id are naturally sorted (numerical order, alphabetic)
+	* node_list.php now support column sorting, node_id are naturally sorted
+	  (numerical order, alphabetic)
 	* Added 2-dimensionnal natural sort algorithm to Utils class
 	* fixed Node::getSelectNodeUI to naturally sort by node_id
 	* Improved Flickr content class
@@ -246,15 +277,15 @@
 
 2005-11-01 Max Horváth <max.horvath@maxspot.de>
 	* added german translation
-	* modified gen.sh to include geocoder and statistics classes for the translation
-	  file generation
+	* modified gen.sh to include geocoder and statistics classes for the
+	  translation file generation
 	* modified hotspot status page to allow translations of every string
 	* modified node list page to allow translations of every string
 	* modified FAQ page to allow translations of every string
-	* fixed bug in FAQ page which caused the Safari browser to display very large
-	  text
-	* modified online users page in administration to allow translations of every
-	  string
+	* fixed bug in FAQ page which caused the Safari browser to display very
+	  large text
+	* modified online users page in administration to allow translations of
+	  every string
 	* added Phlickr directory to /lib
 
 2005-10-25 Francois Proulx <francois.proulx@gmail.com>
@@ -266,8 +297,9 @@
 	* AuthenticatorRadius : Fixed legacy variable misuse
 
 2005-10-24 Benoit Grégoire  <bock@step.polymtl.ca>
-	* AuthenticatorRadius:  Fix bug reported by kouete, by inspection.  Fix not actually tested.
-	 Guys, read the documentation of the function parameters when you code, it's there to help you ;)
+	* AuthenticatorRadius:  Fix bug reported by kouete, by inspection. Fix not
+	  actually tested. Guys, read the documentation of the function parameters
+	  when you code, it's there to help you ;)
 
 2005-10-21 Francois Proulx <francois.proulx@gmail.com>
 	* Integration testing for Radius debugging
@@ -286,10 +318,12 @@
 	* Released wifidog-auth-1.0.0_m2
 
 2005-10-06 Benoit Grégoire  <bock@step.polymtl.ca>
-	* AuthenticatorLocalUserNoSignup:  Make a new authenticator, identical to AuthenticatorLocalUser
-	 but disalowing new user signup.  When setting up a server, you can add your users, and then change
-	 the authenticator class from AuthenticatorLocalUser to AuthenticatorLocalUserNoSignup
-	* signup.php:  Actually enforce it.  Still needs improvement, as the network is still shown for signing up.
+	* AuthenticatorLocalUserNoSignup:  Make a new authenticator, identical to
+	  AuthenticatorLocalUser but disalowing new user signup.  When setting up
+	  a server, you can add your users, and then change the authenticator class
+	  from AuthenticatorLocalUser to AuthenticatorLocalUserNoSignup
+	* signup.php: Actually enforce it. Still needs improvement, as the network
+	  is still shown for signing up.
 
 2005-10-04 Francois Proulx <francois.proulx@gmail.com>
 	* Translated some error message in SQL abstraction
@@ -299,16 +333,17 @@
 
 2005-10-04 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Remove a bunch of deprecated methods from the Node object,
-	 document undocumented methods.
-	* Make the node id editable.  This allows the gateway "MAC address as node ID"
-	 patch by London wireless to be usable with the standard auth server, and to
-	 transition to using MAC address as node ID.
+	  document undocumented methods.
+	* Make the node id editable.  This allows the gateway "MAC address as node
+	  ID" patch by London wireless to be usable with the standard auth server,
+	  and to transition to using MAC address as node ID.
 	* Fix a saving problem with all the content types with some versions of PHP
-	* Add a new Content type:  IFrameRest.  This allows the result of a REST style query
-	returning HTML to be displayed in a HTML iframeset.  Currently supported are
-	substitution of the node_id, the user_id and the last display date in the get query.
-	* CVS version of the auth server should now be "reasonnably" safe to use in production,
-	so the 2005-09-01 notice is no longuer in effect.
+	* Add a new Content type:  IFrameRest.  This allows the result of a REST
+	  style query returning HTML to be displayed in a HTML iframeset. Currently
+	  supported are substitution of the node_id, the user_id and the last
+	  display date in the get query.
+	* CVS version of the auth server should now be "reasonnably" safe to use in
+	  production, so the 2005-09-01 notice is no longuer in effect.
 
 2005-10-04 Francois Proulx <francois.proulx@gmail.com>
 	* Translated signup page messages
@@ -318,13 +353,14 @@
 
 2005-09-27 Philippe April  <philippe@ilesansfil.org>
 	* Guess the best language from what the browser sends,
-	otherwise use the default.
+	  otherwise use the default.
 
 2005-09-26 Francois Proulx <francois.proulx@gmail.com>
 	* Translated the few new sentences on the login page
 
 2005-09-26 Benoit Grégoire  <bock@step.polymtl.ca>
-	* login/index.php, stylesheet.css:  Make the create new account bigger, and remove unnecessary words.
+	* login/index.php, stylesheet.css:  Make the create new account bigger, and
+	  remove unnecessary words.
 
 2005-09-26 Francois Proulx <francois.proulx@gmail.com>
 	* Completed translations
@@ -340,24 +376,26 @@
 
 2005-09-25 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Statistics:  At long last, the monster statistics commit.
-	 We finally have a stable, documented and uniform codebase for statistics.
-	 This resulted is removal of several functions in other classes too.
-	 There are a few new reports, but mostly, each report is a lot more flexible.
-	 Still TODO:
-	 -Security:  This is to be implemented directly in the Statistics class,
-	  by forcing restrictions to the selected nodes and network.
-	 -Support selecting multiple users for a report.
-	  The code and SQL queries support it, but the UI doesn't.
-	  An easy and quick way would be to simply parse a coma-separated list.
-	 Comment are off course welcome!
+	  We finally have a stable, documented and uniform codebase for statistics.
+	  This resulted is removal of several functions in other classes too.
+	  There are a few new reports, but mostly, each report is a lot more
+	  flexible.
+	  Still TODO:
+	  - Security:  This is to be implemented directly in the Statistics class,
+	    by forcing restrictions to the selected nodes and network.
+	  - Support selecting multiple users for a report.
+	    The code and SQL queries support it, but the UI doesn't. An easy and
+	    quick way would be to simply parse a coma-separated list. Comment are
+	    off course welcome!
 
 2005-09-25 Francois Proulx <francois.proulx@gmail.com>
 	* Updated initial SQL script to schema 29
-	* Remove useless includes in some files, preventing from using the "plugin" contents
+	* Remove useless includes in some files, preventing from using the "plugin"
+	  contents
 
 2005-09-25 Philippe April  <philippe@ilesansfil.org>
 	* Make method getCurrentRealNode ORDER BY DESC so it picks
-	up the latest network name
+	  up the latest network name
 
 2005-09-20 Francois Proulx <francois.proulx@gmail.com>
 	* Changed the output layout of the Google Maps hotspots list
@@ -375,8 +413,10 @@
 
 2005-09-16 Francois Proulx <francois.proulx@gmail.com>
 	* Added Mail Classes to circumvent mb_send_mail UTF-8 problems
-	* This class provides UTF-8 mailing for validation e-mail, lost password, lost username...
-	* Fixes reported bug where users would not receive validation email on some servers
+	* This class provides UTF-8 mailing for validation e-mail, lost password,
+	  lost username...
+	* Fixes reported bug where users would not receive validation email on
+	  some servers
 
 2005-09-13 Francois Proulx <francois.proulx@gmail.com>
 	* Added bytes in words for online users
@@ -388,9 +428,10 @@
 	* Added access permissions for statistics.
 
 2005-09-12 Benoit Grégoire  <bock@step.polymtl.ca>
-	* schema_validate.php:  Fix a bug version 26.  The conversion of the old account_origin as a parameter
-	to the authenticator was wrong.  To fix it manually if you already ran the script,
-	 you must quote the parameter in column network_authenticator_params in the networks table.
+	* schema_validate.php:  Fix a bug version 26.  The conversion of the old
+	  account_origin as a parameter to the authenticator was wrong.  To fix it
+	  manually if you already ran the script, you must quote the parameter in
+	  column network_authenticator_params in the networks table.
 	* Network.php:  Fix improper quoting of Authenticator arguments.
 	* RssPressReview.php:  Make expansion of today's item optionnal.
 
@@ -403,7 +444,8 @@
 2005-09-11 Francois Proulx <francois.proulx@gmail.com>
 	* Fixed Flickr support
 	* Now using PEAR version of Phlickr
-	* Download the latest package and install like this : pear install PhlickrXYZ.tar.gz
+	* Download the latest package and install like this: pear install
+	  PhlickrXYZ.tar.gz
 
 2005-09-10 Francois Proulx <francois.proulx@gmail.com>
 	* Fixed dependency check
@@ -419,9 +461,9 @@
 
 2005-09-10 Philippe April  <philippe@ilesansfil.org>
 	* signup.php: Fixed bug in detecting is the user is already part of the
-	network.
+	  network.
 	* classes/{Authenticator,Network,Node}.php: isset, and issues preventing
-	users from logging out.
+	  users from logging out.
 	* add BASEPATH to most files with require_once
 	* Added dependency checking class
 	* Don't show the admin menu if user does not have access
@@ -429,7 +471,8 @@
 
 2005-09-10 Francois Proulx <francois.proulx@gmail.com>
 	* Automatically redirect user to login form when trying to access admin
-	* Added various isset, empty tests, vars init in stats (to avoid php warning)
+	* Added various isset, empty tests, vars init in stats (to avoid PHP
+	  warning)
 
 2005-09-08 Philippe April  <philippe@ilesansfil.org>
 	* New stats system with graphs
@@ -448,16 +491,21 @@
 	* login/index.php:  Fix getSplashOnlyUser() method call.
 
 2005-09-07 Benoit Grégoire  <bock@step.polymtl.ca>
-	* RssPressReview.php:  Fix z-index so the hovers will overlap the expanded news.
-	* login/index.php:  Reorganise code to make it more legible and comment what it does.
-	Emphasise error messages and put them right above where they clicked so users can actually see them.
+	* RssPressReview.php:  Fix z-index so the hovers will overlap the expanded
+	  news.
+	* login/index.php:  Reorganise code to make it more legible and comment what
+	  it does. Emphasise error messages and put them right above where they
+	  clicked so users can actually see them.
 	* Security.php:  Remove deprecated login code
 	* Authenticator.php: Change calling convention for better encapsulation
-	* New feature:  Support multiple simultaneous logins if enabled in network configuration
+	* New feature:  Support multiple simultaneous logins if enabled in network
+	  configuration
 	* New feature (in testing): Splash-only node support
 
 2005-09-05 Benoit Grégoire  <bock@step.polymtl.ca>
-	* include/common.php:  Add code to undo the effect of magic_quote if enabled in the server config.  It is still strongly recommended to disable magic_quote
+	* include/common.php:  Add code to undo the effect of magic_quote if enabled
+	  in the server config.  It is still strongly recommended to disable
+	  magic_quote
 	* Node.php:  Add UI for splash only node and custom portal
 	* Update schema
 
@@ -476,14 +524,17 @@
 	Massive internal changes are underway.
 	Use the release tagged 1.0m1 in production.
 	* Network abstraction mostly complete, including UI.
-	All that is missing is new network creation, network stakeholder UI and testing.
+	  All that is missing is new network creation, network stakeholder UI and
+	  testing.
 	* Cleanup the config file of all the now unneeded constants.
-	 Note that the install script is currently broken.
-	There can now be multiple networks on the server.
-	The install script will have to make sure that there is at least one, with one super-admin
+	  Note that the install script is currently broken.
+	  There can now be multiple networks on the server.
+	  The install script will have to make sure that there is at least one, with
+	  one super-admin
 
 2005-08-31 Francois Proulx <francois.proulx@gmail.com>
-	* Fixed bug where node ID containing periods, whitespaces or underscores would confuse PHP
+	* Fixed bug where node ID containing periods, whitespaces or underscores
+	  would confuse PHP
 	* MD5 hash is used to make sur the http vars are unique
 	* This is only valid for Node administration
 
@@ -497,19 +548,21 @@ NOTE:  the 1.0m1 release was tagged here
 
 2005-08-29 Philippe April <philippe@ilesansfil.org>
 	* js/gmaps_hotspots_status_map.js: Fixed small bug in that makes prevents
-	IE to see the map properly.
+	  IE to see the map properly.
 
 2005-08-22 Pascal Leclerc  <pascal@plec.ca>
 	* install.php, Change javascript to OnClick + dependencie note
 	* schema_validate.php, Fix broken DB update for install.php
-	* SmartyWifidog.php, Add automatic redirect to install.php if Smarty not installed
+	* SmartyWifidog.php, Add automatic redirect to install.php if Smarty not
+	  installed
 
 2005-08-22 Francois Proulx <francois.proulx@gmail.com>
 	* Added edit button for quickly accessing Content editing mode
 	* Changed the layout so the admin ui fits in a tighter space
 
 2005-08-21 Francois Proulx <francois.proulx@gmail.com>
-	* Added reference to new street address fields in mapping page and on status template
+	* Added reference to new street address fields in mapping page and on status
+	  template
 	* Fix bug on line 756 of RssPressReview , added check for empty var.
 	* Flickr support is broken, added  bug to sf.net tracker
 
@@ -521,23 +574,27 @@ NOTE:  the 1.0m1 release was tagged here
 2005-08-19 Benoit Grégoire  <bock@step.polymtl.ca>
 	* New schema version
 	* install.php, tmp/magpie_cache/:  Move all magpie caches
-	to a central location, adjust install script to match.
-	* classes/MainUI.php:  Add $_REQUEST array output if debug_request is set as a parameter to the page
-	* classes/Network.php, classes/Node.php:  Change content ordering to be most recently subscribed first,
-	 this is a stopgap measure while waiting for Content ordering to be explicitely settable.
+	  to a central location, adjust install script to match.
+	* classes/MainUI.php:  Add $_REQUEST array output if debug_request is set as
+	  a parameter to the page
+	* classes/Network.php, classes/Node.php:  Change content ordering to be most
+	  recently subscribed first, this is a stopgap measure while waiting for
+	  Content ordering to be explicitely settable.
 	* classes/Content/RssAggregator.php:  Full admin UI, some bug fixes
-	* lib/RssPressReview/RssPressReview.php: New version, adds isFeedAvailable() and getFeedTitle() methods.
+	* lib/RssPressReview/RssPressReview.php: New version, adds isFeedAvailable()
+	  and getFeedTitle() methods.
 	  Fixes minor bugs
 
 2005-08-17 Pascal Leclerc  <pascal@plec.ca>
-        * Added install script + minor changes in schema_validate.php
+    * Added install script + minor changes in schema_validate.php
 
 2005-08-15 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Re-Run sync_sql_for_cvs.sh, did not run to completion last time.
 
 2005-08-15 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Run sync_sql_for_cvs.sh
-	* sql/dump_initial_data_postgres.sh:  Fix a hardcoded reference to rss_url which no longer exists
+	* sql/dump_initial_data_postgres.sh:  Fix a hardcoded reference to rss_url
+	  which no longer exists
 	* .project:  Remove mistakenly commited file in last commit
 	* .cvsignore:  Add file to avoid previous error
 
@@ -550,20 +607,26 @@ NOTE:  the 1.0m1 release was tagged here
 2005-08-12 Francois Proulx <francois.proulx@gmail.com>
 	* Changed config.php GMAPS_API_KEY to GMAPS_PUBLIC_API_KEY
 	* Added GMAPS_ADMIN_API_KEY, needed for admin UI
-	* This is a stupid limitation of the Google Maps API which matches the complete URL path
+	* This is a stupid limitation of the Google Maps API which matches the
+	  complete URL path
 	* Added /classes/GisPoint.php class
 	* Will add geocode + Google Maps capabilities very soon
 	* Notice : the XML schema will change very soon...
-	* I will try to keep the streetAddress field intact so I won't break backward compat.
+	* I will try to keep the streetAddress field intact so I won't break
+	  backward compat.
 
 2005-08-12 Benoit Grégoire  <bock@step.polymtl.ca>
-	* classes/MainUI.php: Move the call to schema_validate() in MainUI's constructor
-	* lib/RssPressReview/RssPressReview.php: Finish rewrite. Move there to reflect
-	it's independently maintained status
+	* classes/MainUI.php: Move the call to schema_validate() in MainUI's
+	  constructor
+	* lib/RssPressReview/RssPressReview.php: Finish rewrite. Move there to
+	  reflect it's independently maintained status
 	* wifidog/classes/Content/HotspotRss.php:  Delete the class, obsolete
-	* wifidog/classes/Content/RssAggregator.php:  Functionnal, but needs it's admin UI written.
-	* wifidog/include/schema_validate.php:  Create the table structure for the new RssAggregator.
-	Remove rss_url in nodes table, no longer needed.  Move it's data to the new Content class.
+	* wifidog/classes/Content/RssAggregator.php:  Functionnal, but needs it's
+	  admin UI written.
+	* wifidog/include/schema_validate.php:  Create the table structure for the
+	  new RssAggregator.
+	  Remove rss_url in nodes table, no longer needed.  Move it's data to the
+	  new Content class.
 
 2005-08-11 Francois Proulx <francois.proulx@gmail.com>
 	* Refactored the Admin UI.
@@ -574,11 +637,11 @@ NOTE:  the 1.0m1 release was tagged here
 
 2005-08-10 Francois Proulx <francois.proulx@gmail.com>
 	* Added Geocoders
-		* /classes/AbstractGeocoder.php
-		* /classes/Geocoders/GeocoderCanada.php
-		* /classes/Geocoders/GeocoderUsa.php
+	  - /classes/AbstractGeocoder.php
+	  - /classes/Geocoders/GeocoderCanada.php
+	  - /classes/Geocoders/GeocoderUsa.php
 	* This will be used for enterring GIS data
-	* Coming in the next few days : set hotspot gis using Google Maps + Geocoding
+	* Coming in the next few days: set hotspot gis using Google Maps + Geocoding
 
 2005-01-25 Pascal Leclerc  <pascal@plec.ca>
 	* Fix hardcoded images path in classes/MainUI.php
@@ -591,16 +654,18 @@ NOTE:  the 1.0m1 release was tagged here
 	* Fixed bugs in gen.sh, compile.sh locale scripts
 
 2005-07-12 Francois Proulx <francois.proulx@gmail.com>
-	* Changed XML element from hotspotsMetadata to hotspots and added networkUri element to networkMetadata
+	* Changed XML element from hotspotsMetadata to hotspots and added networkUri
+	  element to networkMetadata
 
 2005-07-12 Francois Proulx <francois.proulx@gmail.com>
 	* Fixed XML protocol for exchanging hotspots status.
-		* Should now be considered stable (stamped v1.0)
+	* Should now be considered stable (stamped v1.0)
 	* Fixed hotspots status map to reflect the changes
 	* Added french translations
 
 2005-07-11 Francois Proulx <francois.proulx@gmail.com>
-	* Changed link to hotspots map using NON ssl because Google Keys are sensitive to the whole path.
+	* Changed link to hotspots map using NON ssl because Google Keys are
+	  sensitive to the whole path.
 
 2005-07-11 Benoit Grégoire  <bock@step.polymtl.ca>
 	* classes/RssPressReview.php: Begin rewrite.
@@ -622,13 +687,15 @@ NOTE:  the 1.0m1 release was tagged here
 	* Added GMaps constants to config file
 	* Unsmartied index.php , added link to map
 	* Check config.php to set corresponding values
-	* You can now use hotspot_status.php?format=XML along with xslt query string parament to convert your XML document
+	* You can now use hotspot_status.php?format=XML along with xslt query string
+	  parament to convert your XML document
 	* For this to work, You need to have activated XSLT ( see config file )
 
 2005-07-05 Francois Proulx <francois.proulx@gmail.com>
 	* Added Google Maps mapping venues_map.php
 	* /js/venues_status_map.js  JavaScript code for Mapping
-	* In beta : tested successfuly with 48 nodes in the Montreal area, loads in a snap
+	* In beta : tested successfuly with 48 nodes in the Montreal area, loads in
+	  a snap
 
 2005-07-03 Francois Proulx <francois.proulx@gmail.com>
 	* Updated the XML venues status format ( version 1.0, once approved )
@@ -638,26 +705,32 @@ NOTE:  the 1.0m1 release was tagged here
 	* Added IFrame and SimpleIFrame content types.
 
 2005-06-28 Benoit Grégoire  <bock@step.polymtl.ca>
-	* classes/Content/Langstring.php:  Bug fix:  Langstring was always non-persistent, no matter the checkbox.  Move the code to TrivialLangstring.php where it belongs.
+	* classes/Content/Langstring.php:  Bug fix:  Langstring was always
+	  non-persistent, no matter the checkbox.  Move the code to
+	  TrivialLangstring.php where it belongs.
 
 2005-06-21 Benoit Grégoire  <bock@step.polymtl.ca>
-	* portal/inted.php:  Implement the start button functionnality (maybe it would be better to call it
-	 "use the Internet").  From now on, once authenticated and when pressing the start
-	  button on the portal, the user will be sent to the page he originally tried to
-	  access.  A second window will be popped with the portal page so he can come back
-	   to it. The window is collapsed, and can be expanded back by clicking on the link.
-	   I tried to make it cross platform (and mostly did) but it's still buggy in IE.
+	* portal/inted.php:  Implement the start button functionnality (maybe it
+	  would be better to call it "use the Internet").  From now on, once
+	  authenticated and when pressing the start button on the portal, the user
+	  will be sent to the page he originally tried to access.  A second window
+	  will be popped with the portal page so he can come back to it. The window
+	  is collapsed, and can be expanded back by clicking on the link. I tried
+	  to make it cross platform (and mostly did) but it's still buggy in IE.
 
-	  At the same time, this fixes the goof reported by Rob Kelley of nycwireless.net
+	  At the same time, this fixes the goof reported by Rob Kelley of
+	  nycwireless.net
 
-	* portal/missing_original_url.php:  Displayed when the user tries to use the start button but for some reason the original url is unavailable
-	* common.php:  New define CURRENT_REQUEST_URL, hopefully containing the full URL in
-	the user's URL bar.
+	* portal/missing_original_url.php:  Displayed when the user tries to use the
+	  start button but for some reason the original url is unavailable
+	* common.php:  New define CURRENT_REQUEST_URL, hopefully containing the full
+	  URL in the user's URL bar.
 
 
 2005-06-17 Francois Proulx <francois.proulx@gmail.com>
 	* Removed forced Pattern Language on all hotspots
-	* Do not show hotspot logo in portal page, only on login, until we find a better layout
+	* Do not show hotspot logo in portal page, only on login, until we find a
+	  better layout
 
 2005-06-16 Francois Proulx <francois.proulx@gmail.com>
 	* Added XML output format for hotspot_status.php
@@ -681,7 +754,8 @@ NOTE:  the 1.0m1 release was tagged here
 	  and in other admin pages
 
 2005-05-30 Francois Proulx <francois.proulx@gmail.com>
-	* Changed language selectbox name so it does not clash with ISF's domain cookie
+	* Changed language selectbox name so it does not clash with ISF's domain
+	  cookie
 	* Fixed setlocale algorithm in Locale.php
 
 2005-05-29 Francois Proulx <francois.proulx@gmail.com>
@@ -689,20 +763,28 @@ NOTE:  the 1.0m1 release was tagged here
 
 2005-05-27 Francois Proulx <francois.proulx@gmail.com>
 	* Changed the signup process to make it smoother for users
-		* The user will automatically be granted the 15 minutes if he's signing up at a real hotspot
-		* If the user closes his browser during the 15 minutes and loses its session, we will regenerate it
-	* Added big red message to the top of the portal page, warning user to validate as soon as possible
+	* The user will automatically be granted the 15 minutes if he's signing up
+	  at a real hotspot
+	* If the user closes his browser during the 15 minutes and loses its
+	  session, we will regenerate it
+	* Added big red message to the top of the portal page, warning user to
+	  validate as soon as possible
 	* Fixed translation typos
 
 2005-05-26 Benoit Grégoire  <bock@step.polymtl.ca>
-	* Someone moved the fallback gettext functions definition (for when gettext isn't installed) inside the static setCurrentLocale method, completely breaking the system when PHP doesn't have gettext support.  This is an untested fix.
+	* Someone moved the fallback gettext functions definition (for when gettext
+	  isn't installed) inside the static setCurrentLocale method, completely
+	  breaking the system when PHP doesn't have gettext support.  This is an
+	  untested fix.
 
 2005-05-24 Francois Proulx <francois.proulx@gmail.com>
-	* Fixed bug in auth.php to let users go through when the click twice on the login button
+	* Fixed bug in auth.php to let users go through when the click twice on the
+	  login button
 	* Fixed bug in hotspot_log.php
 
 2005-05-24 Francois Proulx <francois.proulx@gmail.com>
-	* Added "Get access statistics" button to Node admin to get hotspot specific stats
+	* Added "Get access statistics" button to Node admin to get hotspot specific
+	  stats
 	* Added search box in Users log to get a specific user stats quickly
 
 2005-05-24 Francois Proulx <francois.proulx@gmail.com>
@@ -710,10 +792,12 @@ NOTE:  the 1.0m1 release was tagged here
 	* Cleaned-up todos
 
 2005-05-18 Francois Proulx <francois.proulx@gmail.com>
-	* Added strip_tags in RssPreview ( some malformed HTML would break the page layout )
+	* Added strip_tags in RssPreview ( some malformed HTML would break the page
+	  layout)
 
 2005-05-16 Francois Proulx <francois.proulx@gmail.com>
-	* Changed login message in MainUI to make it clearer what the login button will do
+	* Changed login message in MainUI to make it clearer what the login button
+	  will do
 
 2005-05-13 Philippe April <philippe@ilesansfil.org>
 	* Added deployment status to node_list
@@ -724,8 +808,8 @@ NOTE:  the 1.0m1 release was tagged here
 	* Added node quota fields in DB ( bandwidth, throttling ...)
 
 2005-05-10 Francois Proulx <francois.proulx@gmail.com>
-	* Fixed Login link in signup page ( MainUI.php ) if the Session has gw_id, gw_address, gw_port
-	  show physical login link
+	* Fixed Login link in signup page ( MainUI.php ) if the Session has gw_id,
+	  gw_address, gw_port show physical login link
 
 2005-05-10 Francois Proulx <francois.proulx@gmail.com>
 	* Added download button CSS class to style button
@@ -743,7 +827,8 @@ NOTE:  the 1.0m1 release was tagged here
 
 2005-05-04 Francois Proulx <francois.proulx@gmail.com>
 	* Implemented caching for Flickr
-	* Need to contact Phlickr to see how we could do better, since serialize does not work OK on objects
+	* Need to contact Phlickr to see how we could do better, since serialize
+	  does not work OK on objects
 
 2005-05-04 Francois Proulx <francois.proulx@gmail.com>
 	* Fixed bug concerning Content-Length header
@@ -775,8 +860,10 @@ NOTE:  the 1.0m1 release was tagged here
 	* Logout button will now destroy session AND render token USED
 
 2005-04-30 Francois Proulx <francois.proulx@gmail.com>
-	* Fixed bug that could potentially let non owners add content in /content through content groups
-	* Admin menu won't show node selector if the user is not owner of at least one hotspot
+	* Fixed bug that could potentially let non owners add content in /content
+	  through content groups
+	* Admin menu won't show node selector if the user is not owner of at least
+	  one hotspot
 	* Added Width, height support for Picture
 
 2005-04-30 Francois Proulx <francois.proulx@gmail.com>
@@ -795,31 +882,39 @@ NOTE:  the 1.0m1 release was tagged here
 	* Testing on live server
 
 2005-04-29 François Proulx <francois.proulx@gmail.com>
-	* Removed all inline unuseful javascript code on submit buttons onclick='submit()'
+	* Removed all inline unuseful javascript code on submit buttons
+	  onclick='submit()'
 	* This conflicted with the actual click on the submit button in Safari
 	* Fixed check in Network for isOwner, only check superAdmin
-	* Fixed bug so you can't add an existing content group to itself ( deadlock )
+	* Fixed bug so you can't add an existing content group to itself (deadlock)
 	* Started coding Pattern language narrative display
 
 2005-04-29 François Proulx <francois.proulx@gmail.com>
 	* Wrote User.php addcontent, removeContent, getAllContent()
 	* Wrote Content.php subscrite() and unsubscribe()
-	* Added parameters to getAllContent() in Node and Network ( exclude_subscribed_content )
+	* Added parameters to getAllContent() in Node and Network
+	  (exclude_subscribed_content)
 	* These will be used for subscribing a to some content
 	* Pattern Language will be the first to use it
 	* Online users lists
 	* Fixed bugs in Node and Network ( isOwner check )
 
 2005-04-28 François Proulx <francois.proulx@gmail.com>
-	* Logout button build a query string containing gw_id, gw_address, gw_port ( if available ), so that a user at a physical hotspot will get the login page from the hotspot he is.
+	* Logout button build a query string containing gw_id, gw_address, gw_port
+	  ( if available ), so that a user at a physical hotspot will get the login
+	  page from the hotspot he is.
 	* Fixed but in Locale ( did not propertly set the locale in the session )
 
 2005-04-28 François Proulx <francois.proulx@gmail.com>
-	* Added check in MainUI toolbar so that it won't show "NOT logged in ?" message when connect to a real hotspot ( not virtual )
-		* This message confused many users ( they clicked and got the virtual login instead ! )
-	* Hide adminstration features ( statistics, hotspot creation, network wide content etc...) from all but Super admins
+	* Added check in MainUI toolbar so that it won't show "NOT logged in ?"
+	  message when connect to a real hotspot ( not virtual )
+	* This message confused many users ( they clicked and got the virtual login
+	  instead ! )
+	* Hide adminstration features ( statistics, hotspot creation, network wide
+	  content etc...) from all but Super admins
 	* Fixed getAllLocativeArtisticContent in Node.php added is_persistent check
-	* Added $associate_existing_content parameter to processNewContentUI to allows reuse for existing content ( in ContentGroup )
+	* Added $associate_existing_content parameter to processNewContentUI to
+	  allows reuse for existing content ( in ContentGroup )
 	* Fixed bug in FlickrPhotoStream delete ( missing return from parent )
 	* Added security check in all content classes ( ProcessAdminUI )
 
@@ -831,20 +926,26 @@ NOTE:  the 1.0m1 release was tagged here
 
 2005-04-26 François Proulx <francois.proulx@gmail.com>
 	* Added /content/ for displaying all content elements
-		* Logging is disable when viewing them
-		* All content elements will expand
-		* Pattern languages won't display everything ( special property ) isExpandable
+	* Logging is disable when viewing them
+	* All content elements will expand
+	* Pattern languages won't display everything ( special property )
+	  isExpandable
 	* Added a link in portal pages to go to /content/
 	* Added Show all contents button in content_admin.php
 
 2005-04-27 Benoit Grégoire  <bock@step.polymtl.ca>
-	* Content.php, ContentGroup.php:  All Content now implement the isDisplayableAt($node).  Used by the portal, if content has nothing displayabel, the entire content is skipped.
+	* Content.php, ContentGroup.php:  All Content now implement the
+	  isDisplayableAt($node).  Used by the portal, if content has nothing
+	  displayabel, the entire content is skipped.
 
 2005-04-27 Benoit Grégoire  <bock@step.polymtl.ca>
-	* FlickrPhotostream.php:  Fix the object so it doesn't crash when flicker is disabled.
+	* FlickrPhotostream.php:  Fix the object so it doesn't crash when flicker is
+	  disabled.
 
 2005-04-27 Benoit Grégoire  <bock@step.polymtl.ca>
-	* ContentGroup.php:  Fully functionnal content rotation engine, with all options supported.    Rotation based on session may not be reliable if the user isn't truly logged in (from a node).
+	* ContentGroup.php:  Fully functionnal content rotation engine, with all
+	  options supported. Rotation based on session may not be reliable if the
+	  user isn't truly logged in (from a node).
 
 2005-04-26 François Proulx <francois.proulx@gmail.com>
 	* Most of the missing translations
@@ -854,14 +955,18 @@ NOTE:  the 1.0m1 release was tagged here
 	* portal page stylesheet
 
 2005-04-26 Benoit Grégoire  <bock@step.polymtl.ca>
-	* ContentGroupElement.php:  It shouldn't be allowed to create a new content element in isolation.  Unfortunately the UI allows if for now.  Such content will now be deleted.
+	* ContentGroupElement.php:  It shouldn't be allowed to create a new content
+	  element in isolation.  Unfortunately the UI allows if for now.  Such
+	  content will now be deleted.
 	* Locale:  Fix string selection algorithm to pick the right language.
 	* Content:  Implement display logging.
 
 2005-04-26 François Proulx <francois.proulx@gmail.com>
 	* stylesheet rework
+
 2005-04-26 François Proulx <francois.proulx@gmail.com>
 	* Fixed wrong location for change password link
+
 2005-04-25 François Proulx <francois.proulx@gmail.com>
 	* Portal page styling
 
@@ -870,6 +975,7 @@ NOTE:  the 1.0m1 release was tagged here
 
 2005-04-26 Benoit Grégoire  <bock@step.polymtl.ca>
 	* ContentGroup.php:  Make bad selection mode eror non-fatal.
+
 2005-04-25 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix bug in ContentGroup enumeration
 
@@ -884,14 +990,17 @@ NOTE:  the 1.0m1 release was tagged here
 
 2005-04-25 François Proulx <francois.proulx@gmail.com
 	* More interface work
+
 2005-04-25 François Proulx <francois.proulx@gmail.com
 	* Completed integration of new interface with new objects
 
 2005-04-25 Benoit Grégoire  <bock@step.polymtl.ca>
-	* Integration merge, should work, but there will be display problems everywhere.  Expect further commits today.
+	* Integration merge, should work, but there will be display problems
+	  everywhere.  Expect further commits today.
 	* Almost 100% complete Network abstraction
 	* Much better object encapsulation.  Deprecated methods not removed yet.
-	* Add MainUI class.  Used to display the interface.  Inner workings still need work.
+	* Add MainUI class.  Used to display the interface.  Inner workings still
+	  need work.
 
 2005-04-23 François Proulx <francois.proulx@gmail.com>
 	* Added Preferred Size support for Flickr pictures
@@ -937,14 +1046,17 @@ NOTE:  the 1.0m1 release was tagged here
 
 2005-04-18 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Hotspot and network content association, continue access control work.
-	* hotspot_owner.php: Fix wrong assignement of user_id that prevented the script from working.
-	* All files:  Remove whitespace and carriage return after the ?> closing tags.
+	* hotspot_owner.php: Fix wrong assignement of user_id that prevented the
+	  script from working.
+	* All files:  Remove whitespace and carriage return after the ?> closing
+	  tags.
 
 2005-04-18 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Much more complete admin, initial access control work.
 
 2005-04-15 Benoit Grégoire  <bock@step.polymtl.ca>
-	* Support more of the content object model, do a half-decent CSS for the admin interface.
+	* Support more of the content object model, do a half-decent CSS for the
+	  admin interface.
 
 2005-04-14 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Content.php:  Use full langstring interface by default;
@@ -954,17 +1066,18 @@ NOTE:  the 1.0m1 release was tagged here
 
 2005-04-14 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix Content object enumeration preventing usage of admin interface
-	* Partial fix for RSS feed encoding (multiple feed aggregation still broken);
+	* Partial fix for RSS feed encoding (multiple feed aggregation still broken)
 
 2005-04-14 Benoit Grégoire  <bock@step.polymtl.ca>
-	* First part of the future content delivery infrastructure.  Many files added.
+	* First part of the future content delivery infrastructure. Many files added
 
 2005-04-01 François Proulx  <francois.proulx@gmail.com>
 	* Modified gen.sh script to match UTF-8
 	* Added PAP RADIUS encryption support ( asked by Paris Sans Fil )
 
 2005-04-01 Benoit Grégoire  <bock@step.polymtl.ca>
-	* wifidog/templates/auth_sources_selection.html:  Add missing file from francois's commit.
+	* wifidog/templates/auth_sources_selection.html:  Add missing file from
+	  Francois's commit.
 
 2005-04-01 Philippe April <philippe@ilesansfil.org>
 	* Fixed missing parenthesis in classes/User.php
@@ -972,9 +1085,11 @@ NOTE:  the 1.0m1 release was tagged here
 	* fixed schema_validate.php (typos)
 
 2005-04-01 Francois Proulx  <francois.proulx@gmail.com>
-	* EVERYTHING IS NOW UTF-8 YOU MUST EDIT YOUR FILES WITH AN UTF-8 COMPLIANT EDITOR
+	* EVERYTHING IS NOW UTF-8 YOU MUST EDIT YOUR FILES WITH AN UTF-8 COMPLIANT
+	  EDITOR
 	* The database will be converted to UTF-8 (version 5)
-	* Added select boxes ( or hidden ) html form elements to choose the network for signup, lost password, username
+	* Added select boxes ( or hidden ) html form elements to choose the network
+	  for signup, lost password, username
 
 2005-04-01 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Add constraints to account_origin to detect errors on inserts.
@@ -987,7 +1102,9 @@ NOTE:  the 1.0m1 release was tagged here
 
 2005-03-31 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Remove spaces after php blocks in various files.
-	* Temporarily fix single authentication source not present bug in login smarty template.  All other places where we select the network will be fixed tommorow.
+	* Temporarily fix single authentication source not present bug in login
+	  smarty template.  All other places where we select the network will be
+	  fixed tommorow.
 	* Fix initial schema errors.
 
 2005-03-31 Benoit Grégoire  <bock@step.polymtl.ca>
@@ -1012,72 +1129,94 @@ NOTE:  the 1.0m1 release was tagged here
 	* Added translations for new features
 	* Translated the validation, lost password, username e-mails
 	* Tested quite a bit, this version is considered stable
-	* A few examples on how set different RADIUS or local authenticators can be found in the config.php
+	* A few examples on how set different RADIUS or local authenticators can be
+	  found in the config.php
 
 2005-03-29 François Proulx  <francois.proulx@gmail.com>
-	* schema_validate.php : Modified schema : dropped e-mail + account unique index, dropped email not empty constraint
+	* schema_validate.php : Modified schema : dropped e-mail + account unique
+	  index, dropped email not empty constraint
 	* Schema is now at version 3
 	* Coded RADIUS authentication
-	* Modified templates to show a select box when more than one server is configured
+	* Modified templates to show a select box when more than one server is
+	  configured
 	* Coded RADIUS accounting and backward compatibility accounting
 	* Modified many statistics SQL queries to match new Users table
 	* modified statistics templates to match user_id and account_origin
-	* TODO : Fix lost_username and lost_password ( issue since we dropped the unique constraint on emails... )
+	* TODO : Fix lost_username and lost_password ( issue since we dropped the
+	  unique constraint on emails... )
 	* TODO : Heavy testing possibly with remote RADIUS servers
 
 2005-03-28 Benoit Grégoire  <bock@step.polymtl.ca>
-	* sql:  Put initial data in a transaction, and specify the wifidog user so you do not have to su to it while using sync_sql_for_svs
+	* sql:  Put initial data in a transaction, and specify the wifidog user so
+	  you do not have to su to it while using sync_sql_for_svs
 
 2005-03-28 Benoit Grégoire  <bock@step.polymtl.ca>
 	* common.php:  Add get_guid() function
-	* validate_schema.php: New auto-upgrade script to allow autaumatic schema upgrade.  Note that you must still update dump_initial_data_postgres.sh and use sync_sql_for_cvs.sh so new users aren't left in the cold.
-	* New class Authenticator (and subclasses):  Begin virtualizing the login process.
+	* validate_schema.php: New auto-upgrade script to allow autaumatic schema
+	  upgrade.  Note that you must still update dump_initial_data_postgres.sh
+	  and use sync_sql_for_cvs.sh so new users aren't left in the cold.
+	* New class Authenticator (and subclasses):  Begin virtualizing the login
+	  process.
 
 2005-03-24 Benoit Grégoire  <bock@step.polymtl.ca>
-	* Statistics.php: Fix getMostGreedyUsers returning bad values when incoming and outgoing for all connections from a user have null values.
-	* wifidog/local_content/default/portal.html: Fix layout so it resizes properly.  This in an interim measure.
-	* Update schema.  This will allow automatic schema updates in the future.  TO update a live server:
-		BEGIN;
-		CREATE TABLE schema_info (
-		    tag text PRIMARY KEY,
-		    value text
-		);
-		INSERT INTO schema_info (tag, value) VALUES ('schema_version', '1');
-		COMMIT;
+	* Statistics.php: Fix getMostGreedyUsers returning bad values when incoming
+	  and outgoing for all connections from a user have null values.
+	* wifidog/local_content/default/portal.html: Fix layout so it resizes
+	  properly.  This in an interim measure.
+	* Update schema.  This will allow automatic schema updates in the future.
+	  TO update a live server:
+
+      BEGIN;
+      CREATE TABLE schema_info (
+	    tag text PRIMARY KEY,
+	    value text
+	  );
+	  INSERT INTO schema_info (tag, value) VALUES ('schema_version', '1');
+	  COMMIT;
 
 2005-03-16 Matthew Asham <matthewa@bcwireless.net>
- * config.php: will use "local.config.php" instead, if present.  avoid cvs over-writing.
- * signup.php: if CUSTOM_SIGNUP_URL is defined, signup.php will re-direct.  For integration with existing auth systems
- * hotspot_status.php: ob_clean may complain about buffering.  muted.
- * ./classes/RssPressReview.inc: if rss_source['url'] is blank, ignore the feed.
+    * config.php: will use "local.config.php" instead, if present.  avoid cvs
+      over-writing.
+    * signup.php: if CUSTOM_SIGNUP_URL is defined, signup.php will re-direct.
+      For integration with existing auth systems
+    * hotspot_status.php: ob_clean may complain about buffering.  muted.
+    * ./classes/RssPressReview.inc: if rss_source['url'] is blank, ignore the
+      feed.
 
 2005-02-22 Benoit Grégoire  <bock@step.polymtl.ca>
-	* sql/dump_initial_data_postgres.sh, wifidog-postgres-initial-data.sql, wifidog-postgres-schema.sql:-Widen the connections size to fix int4 wraparound problems.  To update a running server, execute the following sql sniplet:
-BEGIN;
-ALTER TABLE connections RENAME incoming TO incoming_old;
-ALTER TABLE connections ADD COLUMN incoming int8;
-ALTER TABLE connections RENAME outgoing TO outgoing_old;
-ALTER TABLE connections ADD COLUMN outgoing int8;
-UPDATE connections set incoming=incoming_old, outgoing=outgoing_old;
-ALTER TABLE connections DROP COLUMN incoming_old;
-ALTER TABLE connections DROP COLUMN outgoing_old;
-COMMIT;
+	* sql/dump_initial_data_postgres.sh, wifidog-postgres-initial-data.sql,
+	  wifidog-postgres-schema.sql:-Widen the connections size to fix int4
+	  wraparound problems.  To update a running server, execute the following
+	  sql sniplet:
+
+      BEGIN;
+      ALTER TABLE connections RENAME incoming TO incoming_old;
+      ALTER TABLE connections ADD COLUMN incoming int8;
+      ALTER TABLE connections RENAME outgoing TO outgoing_old;
+      ALTER TABLE connections ADD COLUMN outgoing int8;
+      UPDATE connections set incoming=incoming_old, outgoing=outgoing_old;
+      ALTER TABLE connections DROP COLUMN incoming_old;
+      ALTER TABLE connections DROP COLUMN outgoing_old;
+      COMMIT;
+
 	* wifidog/admin/hotspot.php: Missing file from phil's commit.
-	* wifidog/locale/fr/LC_MESSAGES/messages.mo, messages.po:  New translation by Benoit St-André
+	* wifidog/locale/fr/LC_MESSAGES/messages.mo, messages.po:  New translation
+	  by Benoit St-André
 
 2005-02-14 Philippe April <philippe@ilesansfil.org>
 	* gw_message.php: the "activate" message was not properly defined and
-	would cause an error to show up instead of the nice activate your account
-	message
+	  would cause an error to show up instead of the nice activate your account
+	  message
 
 2005-02-14 Philippe April <philippe@ilesansfil.org>
 	* wifidog/locale/gen.s: Was not working as expected, it will now get the
-	gettext from smarty properly.
+	  gettext from smarty properly.
 	* Updated TODO with ideas on making config better
 
 2005-01-31 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog/templates/hotspot_status.html:  Restore the number of nodes
-	* wifidog/hotspot_status.php: Restore the number of nodes, add formatting and more information to the RSS feed.
+	* wifidog/hotspot_status.php: Restore the number of nodes, add formatting
+	  and more information to the RSS feed.
 
 2005-01-26 Philippe April <isf_lists@philippeapril.com>
 	* Some kind of virtual login (we need to talk about this).
@@ -1111,94 +1250,136 @@ COMMIT;
 	* INSTALL: Mandate PHP5
 	* wifidog/hotspot_status.php: Allow export of the list as a RSS feed
 	* wifidog/classes/RssPressReview.inc:  Make it truly functionnal.
-	* wifidog/portal/index.php:  Support multiple RSS feeds.  The system will automatically pick the best 5 entries from all the feeds.  It will compensate for disparate publication intervals.  An entry from a feed that does not publish often will live longer than an entry from a feed that publishes very often.  If a feed doesn't have any entry that makes the cut, it will not appear at all.
+	* wifidog/portal/index.php:  Support multiple RSS feeds.  The system will
+	  automatically pick the best 5 entries from all the feeds.  It will
+	  compensate for disparate publication intervals.  An entry from a feed that
+	  does not publish often will live longer than an entry from a feed that
+	  publishes very often.  If a feed doesn't have any entry that makes the
+	  cut, it will not appear at all.
 	* wifidog/templates/hotspot_status.html:  Add link to the RSS version.
 
 2005-01-11 Benoit Grégoire  <bock@step.polymtl.ca>
-	* wifidog/config.php:  Add list of hotspot to network rss feed list (not yet functionnal)
-	* wifidog/hotspot_status.php:  Allow RSS export of the list of deployed HotSpots.
-	* wifidog/admin/incoming_outgoing_swap.php:  Script to swap incoming and outgoing in your data.  only use this if you had gateways before 1.0.2 and wish to correct your logs before you upgrade.
+	* wifidog/config.php:  Add list of hotspot to network rss feed list (not yet
+	  functionnal)
+	* wifidog/hotspot_status.php:  Allow RSS export of the list of deployed
+	  Hotspots.
+	* wifidog/admin/incoming_outgoing_swap.php:  Script to swap incoming and
+	  outgoing in your data. Only use this if you had gateways before 1.0.2
+	  and wish to correct your logs before you upgrade.
 	* wifidog/classes/RssPressReview.inc:  Missing file from previous commit.
-	* wifidog/portal/index.php: Preliminary work to enable smart press review of multiple RSS feeds.
+	* wifidog/portal/index.php: Preliminary work to enable smart press review
+	  of multiple RSS feeds.
 
 2005-01-10 Benoit Grégoire  <bock@step.polymtl.ca>
-	* include/common.php: Fix SSL security warnings.  If SSL is enabled and the page was actually served over SSL, all media in the file will be served over SSL. Add a new define (BASE_NON_SSL_PATH) to allow us to make links that break out of SSL mode.  From now on, use the self adapting BASE_URL_PATH in most circumstance, BASE_SSL_PATH to enter SSL mode, and BASE_URL_PATH to break out of it.
+	* include/common.php: Fix SSL security warnings.  If SSL is enabled and the
+	  page was actually served over SSL, all media in the file will be served
+	  over SSL. Add a new define (BASE_NON_SSL_PATH) to allow us to make links
+	  that break out of SSL mode.  From now on, use the self adapting
+	  BASE_URL_PATH in most circumstance, BASE_SSL_PATH to enter SSL mode,
+	  and BASE_URL_PATH to break out of it.
 
 2005-01-10 Benoit Grégoire  <bock@step.polymtl.ca>
-	* admin/user_stats.php: Add three top tens to the statistics:  Top ten apetite for bandwidth, top ten travelers, most addicted users.
+	* admin/user_stats.php: Add three top tens to the statistics:  Top ten
+	  apetite for bandwidth, top ten travelers, most addicted users.
 
 2005-01-04 Benoit Grégoire  <bock@step.polymtl.ca>
-	* wifidog/local_content/default/hotspot_logo_banner.jpg: Make it much thinner.
+	* wifidog/local_content/default/hotspot_logo_banner.jpg: Make it much
+	  thinner.
 	* wifidog/local_content/default/login.html: Remove announcements
 	* wifidog/include/user_management_menu.php: Fix mailto:
-	* wifidog/auth/index.php: Fix auth server part of the no data transmited statistics bug.
+	* wifidog/auth/index.php: Fix auth server part of the no data transmited
+	  statistics bug.
 	* wifidog/admin/index.php: Add link to statistics
 	* wifidog/admin/user_stats.php: Activate security.
-	* wifidog/index.php: Make the distinction between the two hotspot status pages clearer.
+	* wifidog/index.php: Make the distinction between the two hotspot status
+	  pages clearer.
 
 2004-12-08 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog/index.php: Add menu
-	* wifidog/include/user_management_menu.php: Editorial change, make translateable
+	* wifidog/include/user_management_menu.php: Editorial change, make
+	  translateable
 	* wifidog/portal/index.php:  Fix RSS feeds
 
 2004-12-03 Benoit Grégoire  <bock@step.polymtl.ca>
-	* wifidog/admin/user_stats.php,  wifidog/classes/Statistics.php:  Embryonic aggregate user stats.  Currently allows you to find out the rate at which your users subscribe.
-	* wifidog/config.php, wifidog/local_content/default/login.html, wifidog/include/user_management_menu.php:  Add hotspot status page to login page.
+	* wifidog/admin/user_stats.php,  wifidog/classes/Statistics.php:  Embryonic
+	  aggregate user stats.  Currently allows you to find out the rate at which
+	  your users subscribe.
+	* wifidog/config.php, wifidog/local_content/default/login.html,
+	  wifidog/include/user_management_menu.php:  Add hotspot status page to
+	  login page.
 	* wifidog/hotspot_status.php: Cosmetic
 	* wifidog/admin/hotspot_log.php: Stats now need admin privileges
 	* wifidog/index.php: Cosmetic.
 
 2004-11-19 Benoit Grégoire  <bock@step.polymtl.ca>
 	* TODO: Add email domains to blacklist
-	* wifidog/config.php, wifidog/include/user_management_menu.php: Add tech support email address
-	* wifidog/hotspot_status.php: List of HotSpots that are open with summary of information.  Designed to be included as part of another page.
+	* wifidog/config.php, wifidog/include/user_management_menu.php: Add tech
+	  support email address
+	* wifidog/hotspot_status.php: List of HotSpots that are open with summary of
+	  information.  Designed to be included as part of another page.
 	* wifidog/local_content/common/wifidog_logo_banner.gif: Add wifidog logo
-	* wifidog/local_content/default/hotspot_logo_banner.jpg: Shrink the logo and write unknown hotspot, however this is still really ugly
-	* wifidog/local_content/default/login.html, portal.html, stylesheet.css: Cosmetic fixes
- 	* wifidog/local_content/default/login.html.fr, portal.html.fr: Delete the files, this isn't the approach we will use for translation.
-	* sql/wifidog-postgres-initial-data.sql, wifidog-postgres-schema.sql: Update with new node information structures.
+	* wifidog/local_content/default/hotspot_logo_banner.jpg: Shrink the logo
+	  and write unknown hotspot, however this is still really ugly
+	* wifidog/local_content/default/login.html, portal.html, stylesheet.css:
+	  Cosmetic fixes
+ 	* wifidog/local_content/default/login.html.fr, portal.html.fr: Delete the
+ 	  files, this isn't the approach we will use for translation.
+	* sql/wifidog-postgres-initial-data.sql, wifidog-postgres-schema.sql:
+	  Update with new node information structures.
 
 2004-11-04 Benoit Grégoire  <bock@step.polymtl.ca>
-	* wifidog/admin/hotspot_log.php: Add number of currently connected users here as well.
+	* wifidog/admin/hotspot_log.php: Add number of currently connected users
+	  here as well.
 
 2004-11-03 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog/ping/index.php: Log user-agent
 	* extensive statistics work
-	* sql/wifidog-postgres-schema.sql: Add description field for hotspots and log user-agent
+	* sql/wifidog-postgres-schema.sql: Add description field for hotspots and
+	  log user-agent
 
 2004-10-28 Benoit Grégoire  <bock@step.polymtl.ca>
-	* sql/wifidog-postgres-schema.sql:  Add constraints to avoid empty string in email or user_id.
+	* sql/wifidog-postgres-schema.sql:  Add constraints to avoid empty string
+	  in email or user_id.
 	* Some statistics fixes
 
 2004-09-29 Alexandre Carmel-Veilleux <acv@acv.ca>
 	* wifidog/admin/index.php: Integrated the changes contributed
-	on the mailing list by Rikhardur EGILSSON (fname.lname@oecd.org),
-	mainly a missing ' in some HTML.
+	  on the mailing list by Rikhardur EGILSSON (fname.lname@oecd.org),
+	  mainly a missing ' in some HTML.
 
 2004-09-28 Yanik Crépeau <yanik@exScriptis.com>
-        * wifidog/include/common.php: Added commented header with cvs
-	keywords.
+    * wifidog/include/common.php: Added commented header with cvs
+	  keywords.
 	* wifidog/include/common.php: Added commented code (not executing) for
-	further testing with language/localization issues.
+	  further testing with language/localization issues.
 
 2004-09-27 Benoit Grégoire  <bock@step.polymtl.ca>
-	* sql/wifidog-postgres-schema.sql:  Remove non SQL standard "COMMENT ON" comments
+	* sql/wifidog-postgres-schema.sql:  Remove non SQL standard "COMMENT ON"
+	  comments
 
 2004-09-27 Benoit Grégoire  <bock@step.polymtl.ca>
 	* sql/wifidog-postgres-schema.sql:  Drop procedural language stuff
 
 2004-09-27 Benoit Grégoire  <bock@step.polymtl.ca>
 	* sql/wifidog-postgres-schema.sql:  Fix layout for the node_owners table
-	* Begin integrating Patrick Tanguay's new layout and generate the css dynamically to allow for background images.
+	* Begin integrating Patrick Tanguay's new layout and generate the css
+	  dynamically to allow for background images.
 
 2004-09-22 Benoit Grégoire  <bock@step.polymtl.ca>
 	* portal/index.php:  Fix users appearing online at every hotspot.
-	* wifidog/classes/Style.php, wifidog/login/index.php:  Fix some potential cache problems and help with validation.
+	* wifidog/classes/Style.php, wifidog/login/index.php:  Fix some potential
+	  cache problems and help with validation.
 
 2004-09-18 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog/config.php:  Add VALIDATION_GRACE_TIME configuration parameter.
-	* wifidog/auth/index.php:  Move grace time date arithmetics to the database, fixes validation period not working.  Stop storing VALIDATION_FAILES status to the database.  Add check for validation period expiration at stage login, not just stage counters, this will fix one minute validation period.
-	* wifidog/login/index.php:  Check validation period activation, and if period is expired, explain to the user instead of redirecting to the gateway.
+	* wifidog/auth/index.php:  Move grace time date arithmetics to the database,
+	  fixes validation period not working.  Stop storing VALIDATION_FAILES
+	  status to the database.  Add check for validation period expiration at
+	  stage login, not just stage counters, this will fix one minute
+	  validation period.
+	* wifidog/login/index.php:  Check validation period activation, and if
+	  period is expired, explain to the user instead of redirecting to the
+	  gateway.
 	* wifidog/user_management/index.php:  Fix SQL error at new user registration.
 
 2004-09-02 Benoit Grégoire  <bock@step.polymtl.ca>
@@ -1208,17 +1389,24 @@ COMMIT;
 
 2004-08-31 Benoit Grégoire  <bock@step.polymtl.ca>
 	* sql/: Update the postgres schemas and add scripts to ease maintaining it.
-	* sql/sync_sql_for_cvs.sh: Should you modify the schema in your db, run this script to the chances will be available in the cvs schemas and initial data.
-	* sql/dump_initial_data_postgres.sh: This does the actual dump of the data in a runnable form.  Note that this needs to be edited manually if you add a new table requiring initial data.
+	* sql/sync_sql_for_cvs.sh: Should you modify the schema in your db, run this
+	  script to the chances will be available in the cvs schemas and initial
+	  data.
+	* sql/dump_initial_data_postgres.sh: This does the actual dump of the data
+	  in a runnable form.  Note that this needs to be edited manually if you add
+	  a new table requiring initial data.
 	* INSTALL:  Update for postgres.  Somebody please test this.
 
 2004-08-31 Benoit Grégoire  <bock@step.polymtl.ca>
-	* wifidog/ping/index.php: Implement logging of which hotspot sent the heartbeat, from which ip and when.
+	* wifidog/ping/index.php: Implement logging of which hotspot sent the
+	  heartbeat, from which ip and when.
 	* wifidog/node_list.php:  Primitive but functionnal hotspot status page.
 	* wifidog/include/user_management_menu.php:  Change menu labels
-	* wifidog/local_content/default/login.html: Improve layout.  Someone needs to make this stylesheet correct, I took shortcuts...
+	* wifidog/local_content/default/login.html: Improve layout.  Someone needs
+	  to make this stylesheet correct, I took shortcuts...
 	* wifidog/local_content/default/stylesheet.css:  Reduce H1 font size.
-	* wifidog/user_management/index.php:  Display the menu, will eventually allow us to present proper help text.
+	* wifidog/user_management/index.php:  Display the menu, will eventually
+	  allow us to present proper help text.
 
 2004-08-30 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Add link to original requested site.
@@ -1229,13 +1417,17 @@ COMMIT;
 	* Administrative security is implemented.
 
 2004-08-28 Benoit Grégoire  <bock@step.polymtl.ca>
-	* Fix big gaping security hole in login page (password would be ignored if the username was used to login)
+	* Fix big gaping security hole in login page (password would be ignored if
+	  the username was used to login)
 	* PostgreSql port
 	* Change the method to determine who is online
 	* Stop keeping unused token once user successfully logs in.
 	* Fix missing update of token update date.
 	* Counters wouldn't get updated for stage=LOGOUT
-	* wifidog/auth/index.php:  Added a Messages: response in addition to Auth: so we can know what the hell the server is up to.  Currently you need to run wifidog in debug level 7 to see it. That message should be parsed so it is visible in debug level 6.
+	* wifidog/auth/index.php:  Added a Messages: response in addition to Auth:
+	  so we can know what the hell the server is up to.  Currently you need to
+	  run wifidog in debug level 7 to see it. That message should be parsed so
+	  it is visible in debug level 6.
 	* wifidog/auth/index.php:   Fix code injection vulnerability.
 
 2004-08-27 Benoit Grégoire  <bock@step.polymtl.ca>
@@ -1248,25 +1440,34 @@ COMMIT;
 
 2004-08-11 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog/config.php: Add USER_MANAGEMENT_PAGE
-	* wifidog/include/user_management_menu.php:  Code meant to deal with non-standard ports broke the menu.  Hopefully fixed.
+	* wifidog/include/user_management_menu.php:  Code meant to deal with
+	  non-standard ports broke the menu.  Hopefully fixed.
 	* Add alex's mising changelog entry...
 
 2004-08-11 Alexandre Carmel-Veilleux <acv@acv.ca>
-	* wifidog/ping/index.php: will now reply if the wifidog auth server is up. to be used by wifidog to do heartbeats.
+	* wifidog/ping/index.php: will now reply if the wifidog auth server is up.
+	  To be used by wifidog to do heartbeats.
 
 2004-08-07 Benoit Grégoire  <bock@step.polymtl.ca>
-	* Add code to import a NoCat user database (passwd).  The username will be generated from the first part of the email if the name was en email.
-	* Change password hashing algorithm to make it compatible with NoCat (For the curious among you, the hashing algorithm is now:  take the md5 digest in binary format of the password, and base64 encode it.
-	* Table schema changed to accomodate newhash length (users.pass is now varchar(32))
+	* Add code to import a NoCat user database (passwd).  The username will be
+	  generated from the first part of the email if the name was en email.
+	* Change password hashing algorithm to make it compatible with NoCat (For
+	  the curious among you, the hashing algorithm is now:  take the md5
+	  digest in binary format of the password, and base64 encode it.
+	* Table schema changed to accomodate newhash length (users.pass is now
+	  varchar(32))
 	* The user is now allowed to login with either his username or his email.
 
 2004-08-03 Pascal Leclerc  <pascal@plec.ca>
-	* wifidog/classes/SmartyWifidog.php: Fix path validation bug, replace NODE_CONTENT_URL with NODE_CONTENT_PHP_RELATIVE_PATH
+	* wifidog/classes/SmartyWifidog.php: Fix path validation bug, replace
+	  NODE_CONTENT_URL with NODE_CONTENT_PHP_RELATIVE_PATH
 	* wifidog/classes/AbstractDb.php: Add class=warning for better display
 	* wifidog/config.php: Add SYSTEM_PATH and test/fix non-standard server ports
 
 2004-08-03 Benoit Grégoire  <bock@step.polymtl.ca>
-	* Make gettext support optionnal, and define GETTEXT_AVAILABLE, will be set to true if gettext is available.  If false, blank _() and gettext() functions will be defined so the system still works.
+	* Make gettext support optionnal, and define GETTEXT_AVAILABLE, will be set
+	  to true if gettext is available.  If false, blank _() and gettext()
+	  functions will be defined so the system still works.
 
 2004-08-03 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix BASE_URL_PATH to properly detect non-standard server ports (hopefully).
@@ -1275,26 +1476,32 @@ COMMIT;
 	* wifidog-auth lives! New since the dark ages
 	* Demo page to allow people to hack more easely on it
 	* Support for multiple nodes.  TODO:  Merge with the database project.
-	* Very cool local content architecture.  Every hotspot can have a folder in the local_content directory.  This folder can be filed by a single logo, leaving all the rest to the default content, or be completely custom (stylesheet, login page, portal page, header, etc.)
-	* Everything in local content is templated with smarty, no problem with web designer wrecking havoc on the auth server.  You can edit everything in local_content/default even if you only speak html.
-	* No need to set any path in the web server config files (that one was a bitch to implement)
-	* RSS feed support (optionnal, with magpierss), one feed per node (url stored in the database, works great, but no gui to edit it yet) and one network-wide RSS feed.
+	* Very cool local content architecture.  Every hotspot can have a folder in
+	  the local_content directory.  This folder can be filed by a single logo,
+	  leaving all the rest to the default content, or be completely custom
+	  (stylesheet, login page, portal page, header, etc.)
+	* Everything in local content is templated with smarty, no problem with
+	  web designer wrecking havoc on the auth server.  You can edit everything
+	  in local_content/default even if you only speak html.
+	* No need to set any path in the web server config files (that one was a
+	  bitch to implement)
+	* RSS feed support (optionnal, with magpierss), one feed per node (url
+	  stored in the database, works great, but no gui to edit it yet) and one
+	  network-wide RSS feed.
 	* All path are editable from the config file
-	* "Productize" the thing, so it make sense for other groups to install it (the network name, url, default RSS, and such are set from the config file.
+	* "Productize" the thing, so it make sense for other groups to install it
+	  (the network name, url, default RSS, and such are set from the config
+	  file).
 	* Put most strings in gettext calls for easy future translation.
 	* User can request that the server send the validation email again
 	* User can change password
 	* User who forgot his username can have it mailed to him.
-	* User who lost his password can ask the system to generate a new one and mail it to him.
+	* User who lost his password can ask the system to generate a new one and
+	  mail it to him.
 	* Email is now a separate field to preserve user privacy.
 	* Enforces (politely) that there are no duplicate emails in the database
-	* Database abstraction layer with very nice debugging features (just append true at the end of the call, and you'll see the query, the results, the query plan and number of affected rows.  Also allow future upgrade to postgres.
+	* Database abstraction layer with very nice debugging features (just append
+	  true at the end of the call, and you'll see the query, the results, the
+	  query plan and number of affected rows.  Also allow future upgrade to
+	  postgres.
 	* Lots of other things I forgot.
-
-	* User who forgot his username can have it mailed to him.
-	* User who lost his password can ask the system to generate a new one and mail it to him.
-	* Email is now a separate field to preserve user privacy.
-	* Enforces (politely) that there are no duplicate emails in the database
-	* Database abstraction layer with very nice debugging features (just append true at the end of the call, and you'll see the query, the results, the query plan and number of affected rows.  Also allow future upgrade to postgres.
-	* Lots of other things I forgot.
-

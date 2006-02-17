@@ -83,6 +83,7 @@ function disableAPC()
 {
     if (function_exists("apc_clear_cache")) {
         ini_set("apc.enabled", 0);
+        ini_set("apc.optimization", 0);
 
         /**
          * Disable Just-In-Time creating of super globals when APC is enabled
@@ -102,6 +103,7 @@ function disableEA()
 {
     if (function_exists("eaccelerator_rm")) {
         ini_set("eaccelerator.enable", 0);
+        ini_set("eaccelerator.optimizer", 0);
     }
 }
 

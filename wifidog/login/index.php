@@ -59,7 +59,6 @@ require_once('classes/Node.php');
 require_once('classes/User.php');
 require_once('classes/Network.php');
 require_once('classes/MainUI.php');
-require_once('classes/SmartyWifidog.php');
 
 // Init values
 $node = null;
@@ -211,9 +210,6 @@ if ((!is_null($logout) && $logout) && ($user = User::getCurrentUser()) != null) 
 /**
  * Start login interface section
  */
-
-// Init Smarty
-$smarty = new SmartyWifidog();
 
 // Init ALL smarty SWITCH values
 $smarty->assign('sectionTOOLCONTENT', false);

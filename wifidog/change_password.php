@@ -81,7 +81,7 @@ if (isset($_REQUEST["submit"])) {
         $user->SetPassword($new_password);
         $ui = new MainUI();
         $smarty->assign("message", _("Your password has been changed succesfully."));
-        $ui->setMainContent($smarty->fetch("templates/validate.html"));
+        $ui->setMainContent($smarty->fetch("templates/sites/validate.tpl"));
         $ui->display();
         exit;
     } catch (Exception $e) {

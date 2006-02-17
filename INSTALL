@@ -2,9 +2,11 @@ PREREQUISITES
 =============
 
 - PHP 5.x (http://www.php.net)
+- PHP's mbstring extention installed
 - PHP's php-xml extention installed (Required if RSS support is on)
 - PHP's dom extension installed (Required if you want to export the list of
   Hotspots as a RSS feed)
+- PHP's curl extension installed (Required if you want to use Phlickr)
 - PHP compiled with gettext support (Will be autodetected if unavailable, but
   you will loose internationalization)
 - PostgreSQL 7.4+ (http://www.posgresql.org/)
@@ -14,8 +16,8 @@ PREREQUISITES
 - FCKeditor 2.2 (http://www.fckeditor.net/) (Required if you want to edit
   content with a HTML text editor aka WYSIWYG editor)
 - PEAR (if you need RADIUS auth support, see below)
-- Phlickr installed as a PEAR package (http://phlickr.sourceforge.net/) (required
-  if you want to use the content class accessing Flickr photo albums)
+- Phlickr 0.2.5+ installed as a PEAR package (http://phlickr.sourceforge.net/)
+  (required if you want to use the content class accessing Flickr photo albums)
 - PEAR packages radius, Auth_RADIUS and Crypt_CHAP (required if you need RADIUS
   support)
 - PEAR packages Image_Graph-alpha Image_Canvas-alpha Image_Color (required if

@@ -70,9 +70,9 @@ if (isset($_REQUEST["submit"])) {
         $user->sendLostUsername();
 
         $smarty->assign("message", _("Your username has been emailed to you."));
-        //$smarty->display("templates/validate.html");
+
         $ui = new MainUI();
-        $ui->setMainContent($smarty->fetch("templates/validate.html"));
+        $ui->setMainContent($smarty->fetch("templates/sites/validate.tpl"));
         $ui->display();
         exit;
     } catch (Exception $e) {

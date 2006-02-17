@@ -106,7 +106,7 @@ class Cache
     public function __construct($id, $group = "default", $lifeTime = null)
     {
         // Check if need to load PEAR::Cache_Lite.
-        if ($this->cachingEnabled()) {
+        if ($this->_cachingEnabled()) {
             // Proceed if $id is set, only.
             if ($id != null && $id != "") {
                 // Load PEAR::Cache_Lite.
@@ -143,7 +143,7 @@ class Cache
      *
      * @access private
      */
-    private function cachingEnabled()
+    private function _cachingEnabled()
     {
         // Init values.
         $_doCache = false;

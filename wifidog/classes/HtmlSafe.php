@@ -140,7 +140,7 @@ class HtmlSafe
      *
      * @access private
      */
-    private function setTags(&$tagList, $tags, $appendTags = false)
+    private function _setTags(&$tagList, $tags, $appendTags = false)
     {
         // Init values
         $_retVal = false;
@@ -184,7 +184,7 @@ class HtmlSafe
      */
     public function setDeleteTags($deleteTags, $appendTags = false)
     {
-        $_retVal = $this->setTags($this->_deleteTags, $deleteTags, $appendTags);
+        $_retVal = $this->_setTags($this->_deleteTags, $deleteTags, $appendTags);
 
         if ($_retVal) {
             $this->_HtmlSafe->deleteTags = $this->getDeleteTags();
@@ -219,7 +219,7 @@ class HtmlSafe
      */
     public function setDeleteTagsContent($deleteTagsContent, $appendTags = false)
     {
-        $_retVal = $this->setTags($this->_deleteTagsContent, $deleteTagsContent, $appendTags);
+        $_retVal = $this->_setTags($this->_deleteTagsContent, $deleteTagsContent, $appendTags);
 
         if ($_retVal) {
             $this->_HtmlSafe->deleteTags = $this->getDeleteTagsContent();
@@ -254,7 +254,7 @@ class HtmlSafe
      */
     public function setAttributes($attributes, $appendTags = false)
     {
-        $_retVal = $this->setTags($this->_attributes, $attributes, $appendTags);
+        $_retVal = $this->_setTags($this->_attributes, $attributes, $appendTags);
 
         if ($_retVal) {
             $this->_HtmlSafe->deleteTags = $this->getAttributes();
