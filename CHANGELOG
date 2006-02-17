@@ -1,8 +1,13 @@
+2006-02-17 Max Horváth <max.horvath@maxspot.de>
+	* refactored lost username site - now it also includes the help toolbox
+	* lost username page now focuses input field automaticly (like on login or
+	  signup page)
+
 2006-02-16 Max Horváth <max.horvath@maxspot.de>
     * added full PHPdoc documentation to Mail class
     * added more temporary-email-address-providers to the black-list
 	* Login site now uses a Smarty template to render HTML page
-	* Refactored signup site - now it also includes the help toolbox
+	* refactored signup site - now it also includes the help toolbox
 	* removed Phlickr directory in /lib dir as Phlickr must be installed via
 	  PEAR
 	* modified gen.sh to include new template folders for the

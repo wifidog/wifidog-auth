@@ -158,6 +158,7 @@ $smarty->assign('email', "");
 $smarty->assign('error', "");
 $smarty->assign('auth_sources', "");
 $smarty->assign('selected_auth_source', "");
+$smarty->assign('SelectNetworkUI', "");
 
 if (isset ($_REQUEST["submit"])) {
     // Secure entered values
@@ -172,6 +173,27 @@ if (isset ($_REQUEST["submit"])) {
     $network = Network::getObject($_REQUEST['auth_source']);
 
     try {
+        /*
+         * Tool content
+         */
+
+        // Set section of Smarty template
+        $smarty->assign('sectionTOOLCONTENT', true);
+
+        // Compile HTML code
+        $html = $smarty->fetch("templates/sites/signup.tpl");
+
+        /*
+         * Main content
+         */
+
+        // Reset ALL smarty SWITCH values
+        $smarty->assign('sectionTOOLCONTENT', false);
+        $smarty->assign('sectionMAINCONTENT', false);
+
+        // Set section of Smarty template
+        $smarty->assign('sectionMAINCONTENT', true);
+
         if (!isset($network)) {
             throw new Exception(_("Sorry, this network does not exist !"));
         }
@@ -222,11 +244,15 @@ if (isset ($_REQUEST["submit"])) {
             $smarty->assign('message', _('An email with confirmation instructions was sent to your email address.  Your account has been granted 15 minutes of access to retrieve your email and validate your account.  You may now open a browser window and go to any remote Internet address to obtain the login page.'));
         }
 
+        // Compile HTML code
+        $html_body = $smarty->fetch("templates/sites/signup.tpl");
+
         /*
          * Render output
          */
         $ui = new MainUI();
-        $ui->setMainContent($smarty->fetch("templates/sites/validate.tpl"));
+        $ui->setToolContent($html);
+        $ui->setMainContent($html_body);
         $ui->display();
 
         // We're done ...
@@ -235,6 +261,14 @@ if (isset ($_REQUEST["submit"])) {
 
     catch (Exception $e) {
         $smarty->assign('error', $e->getMessage());
+
+        // Reset HTML output
+        $html = "";
+        $html_body = "";
+
+        // Reset ALL smarty SWITCH values
+        $smarty->assign('sectionTOOLCONTENT', false);
+        $smarty->assign('sectionMAINCONTENT', false);
     }
 }
 
