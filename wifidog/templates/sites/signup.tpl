@@ -64,12 +64,6 @@
             <li><a href="{$base_ssl_path}faq.php">{"Frequently asked questions"|_}</a></li>
         </ul>
     </div>
-
-    <script type="text/javascript">
-        <!--
-            document.getElementById("form_username").focus();
-        //-->
-    </script>
 {*
     END section TOOLCONTENT
 *}
