@@ -39,8 +39,10 @@
  * @package    WiFiDogAuthServer
  * @author     Philippe April
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @author     Max Horvath <max.horvath@maxspot.de>
  * @copyright  2004-2006 Philippe April
  * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @copyright  2006 Max Horvath, maxspot GmbH
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
@@ -54,57 +56,152 @@ require_once('include/common_interface.php');
 require_once('classes/User.php');
 require_once('classes/MainUI.php');
 
+/**
+ * Process recovering username
+ */
+
+// Init ALL smarty SWITCH values
+$smarty->assign('sectionTOOLCONTENT', false);
+$smarty->assign('sectionMAINCONTENT', false);
+
+// Init ALL smarty values
+$smarty->assign('message', "");
+$smarty->assign('error', "");
+$smarty->assign('auth_sources', "");
+$smarty->assign('selected_auth_source', "");
+$smarty->assign('SelectNetworkUI', "");
+
 if (isset($_REQUEST['submit'])) {
-    if (!$_REQUEST['username'] && !$_REQUEST['email']) {
-        $smarty->assign("error", _("Please specify a username or email address"));
-    } else {
+    $account_origin = Network::getObject($_REQUEST['auth_source']);
+
+    try {
+        /*
+         * Tool content
+         */
+
+        // Set section of Smarty template
+        $smarty->assign('sectionTOOLCONTENT', true);
+
+        // Compile HTML code
+        $html = $smarty->fetch("templates/sites/lost_password.tpl");
+
+        /*
+         * Main content
+         */
+
+        // Reset ALL smarty SWITCH values
+        $smarty->assign('sectionTOOLCONTENT', false);
+        $smarty->assign('sectionMAINCONTENT', false);
+
+        // Set section of Smarty template
+        $smarty->assign('sectionMAINCONTENT', true);
+
+        if (empty($account_origin)) {
+            throw new Exception(_("Sorry, this network does not exist !"));
+        }
+
+        if (!$_REQUEST['username'] && !$_REQUEST['email']) {
+            throw new Exception(_("Please specify a username or email address"));
+        }
+
         $username = $db->escapeString($_REQUEST['username']);
         $email = $db->escapeString($_REQUEST['email']);
 
-        $account_origin = Network::getObject($_REQUEST['auth_source']);
+        // Get a list of users associated with either a username of an e-mail
+        $username && $user = User::getUserByUsernameAndOrigin($username, $account_origin);
+        $email && $user = User::getUserByEmailAndOrigin($email, $account_origin);
 
-        try {
-            if(empty($account_origin))
-                throw new Exception(_("Sorry, this network does not exist !"));
-
-            // Get a list of users associated with either a username of an e-mail
-            $username && $user = User::getUserByUsernameAndOrigin($username, $account_origin);
-            $email && $user = User::getUserByEmailAndOrigin($email, $account_origin);
-
-            // In the case that both previous function calls failed to return a users list
-            // Throw an exception
-            if($user != null)
-                $user->sendLostPasswordEmail();
-            else
-                throw new Exception(_("This username or email could not be found in our database"));
-
-            $smarty->assign('message', _('A new password has been emailed to you.'));
-
-            $ui = new MainUI();
-            $ui->setMainContent($smarty->fetch("templates/sites/validate.tpl"));
-            $ui->display();
-            exit;
-        } catch (Exception $e) {
-            $smarty->assign("error", $e->getMessage());
+        /*
+         * In case that both previous function calls failed to return a users
+         * list throw an exception
+         */
+        if ($user != null) {
+            $user->sendLostPasswordEmail();
+        } else {
+            throw new Exception(_("This username or email could not be found in our database"));
         }
+
+        $smarty->assign('message', _('A new password has been emailed to you.'));
+
+        // Compile HTML code
+        $html_body = $smarty->fetch("templates/sites/validate.tpl");
+
+        /*
+         * Render output
+         */
+        $ui = new MainUI();
+        $ui->setToolContent($html);
+        $ui->setMainContent($html_body);
+        $ui->display();
+
+        // We're done ...
+        exit;
+    } catch (Exception $e) {
+        $smarty->assign("error", $e->getMessage());
+
+        // Reset HTML output
+        $html = "";
+        $html_body = "";
+
+        // Reset ALL smarty SWITCH values
+        $smarty->assign('sectionTOOLCONTENT', false);
+        $smarty->assign('sectionMAINCONTENT', false);
     }
 }
 
+/*
+ * Tool content
+ */
+
+// Set section of Smarty template
+$smarty->assign('sectionTOOLCONTENT', true);
+
+// Compile HTML code
+$html = $smarty->fetch("templates/sites/lost_password.tpl");
+
+/*
+ * Main content
+ */
+
+// Reset ALL smarty SWITCH values
+$smarty->assign('sectionTOOLCONTENT', false);
+$smarty->assign('sectionMAINCONTENT', false);
+
+// Set section of Smarty template
+$smarty->assign('sectionMAINCONTENT', true);
+
 // Add the auth servers list to smarty variables
-$sources = array ();
+$sources = array();
+
 // Preserve keys
 $network_array=Network::getAllNetworks();
-foreach ($network_array as $network)
-    if ($network->getAuthenticator()->isRegistrationPermitted())
+
+foreach ($network_array as $network) {
+    if ($network->getAuthenticator()->isRegistrationPermitted()) {
         $sources[$network->getId()] = $network->getName();
+    }
+}
 
-isset ($sources) && $smarty->assign('auth_sources', $sources);
+if (isset($sources)) {
+    $smarty->assign('auth_sources', $sources);
+}
+
 // Pass the account_origin along, if it's set
-isset ($_REQUEST["auth_source"]) && $smarty->assign('selected_auth_source', $_REQUEST["auth_source"]);
+if (isset($_REQUEST["auth_source"])) {
+    $smarty->assign('selected_auth_source', $_REQUEST["auth_source"]);
+}
 
-$ui = new MainUI();
 $smarty->assign('SelectNetworkUI', Network::getSelectNetworkUI('auth_source'));
-$ui->setMainContent($smarty->fetch("templates/lost_password.html"));
+
+// Compile HTML code
+$html_body = $smarty->fetch("templates/sites/lost_password.tpl");
+
+/*
+ * Render output
+ */
+$ui = new MainUI();
+$ui->setToolContent($html);
+$ui->setMainContent($html_body);
 $ui->display();
 
 /*

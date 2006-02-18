@@ -66,6 +66,7 @@ $smarty->assign('sectionMAINCONTENT', false);
 
 // Init ALL smarty values
 $smarty->assign('message', "");
+$smarty->assign('error', "");
 $smarty->assign('auth_sources', "");
 $smarty->assign('selected_auth_source', "");
 $smarty->assign('SelectNetworkUI', "");
@@ -162,7 +163,7 @@ $smarty->assign('sectionMAINCONTENT', false);
 $smarty->assign('sectionMAINCONTENT', true);
 
 // Add the auth servers list to smarty variables
-$sources = array ();
+$sources = array();
 
 // Preserve keys
 $network_array = Network::getAllNetworks();

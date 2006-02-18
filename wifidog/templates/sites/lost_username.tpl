@@ -83,11 +83,11 @@
 
             <table>
                 <tr>
-                    <td>{"Your email address"|_}:</td>
-                    <td><input type="text" name="email" value="{$email}" size="20" id="form_username"></td>
+                    <th>{"Your email address"|_}:</th>
+                    <td><input type="text" name="email" value="{$email}" size="20" id="form_email"></td>
                 </tr>
                 <tr>
-                    <td></td>
+                    <th></th>
                     <td><input class="submit" type="submit" name="submit" value="{"Retrieve"|_}"></td>
                 </tr>
             </table>
@@ -104,7 +104,7 @@
 
     <script type="text/javascript">
         <!--
-            document.getElementById("form_username").focus();
+            document.getElementById("form_email").focus();
         //-->
     </script>
 {*
