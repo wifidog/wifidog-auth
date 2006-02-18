@@ -83,7 +83,7 @@ if (isset($_REQUEST["submit"])) {
         $smarty->assign('sectionTOOLCONTENT', true);
 
         // Compile HTML code
-        $html = $smarty->fetch("templates/resend_validation.html");
+        $html = $smarty->fetch("templates/sites/resend_validation.tpl");
 
         /*
          * Main content
@@ -149,7 +149,7 @@ if (isset($_REQUEST["submit"])) {
 $smarty->assign('sectionTOOLCONTENT', true);
 
 // Compile HTML code
-$html = $smarty->fetch("templates/resend_validation.html");
+$html = $smarty->fetch("templates/sites/resend_validation.tpl");
 
 /*
  * Main content
@@ -186,7 +186,7 @@ if (isset($_REQUEST["auth_source"])) {
 $smarty->assign('SelectNetworkUI', Network::getSelectNetworkUI('auth_source'));
 
 // Compile HTML code
-$html_body = $smarty->fetch("templates/resend_validation.html");
+$html_body = $smarty->fetch("templates/sites/resend_validation.tpl");
 
 /*
  * Render output
