@@ -107,9 +107,16 @@ if (isset($_REQUEST['submit'])) {
         $username = $db->escapeString($_REQUEST['username']);
         $email = $db->escapeString($_REQUEST['email']);
 
-        // Get a list of users associated with either a username of an e-mail
-        $username && $user = User::getUserByUsernameAndOrigin($username, $account_origin);
-        $email && $user = User::getUserByEmailAndOrigin($email, $account_origin);
+        /*
+         * Get a list of users associated with either a username of an e-mail
+         */
+        if ($username) {
+            $user = User::getUserByUsernameAndOrigin($username, $account_origin);
+        }
+
+        if ($email) {
+            $user = User::getUserByEmailAndOrigin($email, $account_origin);
+        }
 
         /*
          * In case that both previous function calls failed to return a users

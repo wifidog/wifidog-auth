@@ -1,12 +1,14 @@
-2006-02-18 Max Horváth <max.horvath@maxspot.de>
-	* refactored lost password site - now it also includes the help toolbox
-	* lost password page now focuses input field automaticly (like on login or
-	  signup page)
-
 2006-02-17 Max Horváth <max.horvath@maxspot.de>
 	* refactored lost username site - now it also includes the help toolbox
 	* lost username page now focuses input field automaticly (like on login or
 	  signup page)
+	* refactored lost password site - now it also includes the help toolbox
+	* lost password page now focuses input field automaticly (like on login or
+	  signup page)
+	* refactored sesend validation email site - now it also includes the help
+	  toolbox
+	* refactored resend validation email page now focuses input field
+	  automaticly (like on login or signup page)
 
 2006-02-16 Max Horváth <max.horvath@maxspot.de>
     * added full PHPdoc documentation to Mail class
