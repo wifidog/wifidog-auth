@@ -294,7 +294,7 @@ class ContentGroup extends Content
         if (($display_num_elements > 0) && $display_num_elements != $this->getDisplayNumElements()) /* Only update database if the mode is valid and there is an actual change */
         {
             global $db;
-            $allow_repeat = $db->escapeString($allow_repeat);
+            $display_num_elements = $db->escapeString($display_num_elements);
             $db->execSqlUpdate("UPDATE content_group SET display_num_elements = '$display_num_elements' WHERE content_group_id = '$this->id'", false);
             $this->refresh();
             $retval = true;

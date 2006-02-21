@@ -36,7 +36,9 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @author     Max Horvath <max.horvath@maxspot.de>
  * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @copyright  2006 Max Horvath, maxspot GmbH
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
@@ -48,6 +50,7 @@ require_once('classes/GenericObject.php');
 require_once('classes/Content.php');
 require_once('classes/User.php');
 require_once('classes/Node.php');
+require_once('classes/Cache.php');
 
 /**
  * Abstract a Network.
@@ -192,7 +195,6 @@ class Network implements GenericObject
 			throw new Exception(_("Network::getAllNetworks:  Fatal error: No networks in the database!"));
 		}
 
-		$network_array = self :: getAllNetworks();
 		$number_of_networks = count($network_rows);
 		if ($number_of_networks > 1)
 		{
@@ -218,13 +220,19 @@ class Network implements GenericObject
 		return $html;
 	}
 
-	/** Get the selected Network object.
-	 * @param $user_prefix A identifier provided by the programmer to recognise it's generated form
-	 * @return the Network object
+	/**
+	 * Get the selected Network object.
+	 *
+	 * @param string $user_prefix A identifier provided by the programmer to
+	 *                            recognise it's generated form
+	 *
+	 * @return mixed The network object or null
+	 *
+	 * @static
+	 * @access public
 	 */
-	static function processSelectNetworkUI($user_prefix)
+	public static function processSelectNetworkUI($user_prefix)
 	{
-		$object = null;
 		$name = "{$user_prefix}";
 		if (!empty ($_REQUEST[$name]))
 			return new self($_REQUEST[$name]);
@@ -579,54 +587,306 @@ class Network implements GenericObject
 	}
 
 	/**
-	* Find out the total number of users in this networks's database
-	* @return Number of users
-	*/
-	function getNumUsers()
+     * Find out the total number of users in this networks's database
+     *
+     * @return int Number of users
+     *
+     * @access public
+     */
+	public function getNumUsers()
 	{
 	    // Define globals
 		global $db;
 
 		// Init values
-		$row = null;
+        $_retval = 0;
+		$_row = null;
+        $_useCache = false;
+        $_cachedData = null;
 
-		$network_id = $db->escapeString($this->id);
-		$db->execSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_origin='$network_id'", $row, false);
-		return $row['count'];
+        // Create new cache objects (valid for 1 minute)
+        $_cache = new Cache('network_' . $this->id . '_num_users', $this->id, 60);
+
+        // Check if caching has been enabled.
+        if ($_cache->isCachingEnabled) {
+            $_cachedData = $_cache->getCachedData();
+
+            if ($_cachedData) {
+                // Return cached data.
+                $_useCache = true;
+                $_retval = $_cachedData;
+            }
+        }
+
+        if (!$_useCache) {
+            // Get number of users
+    		$_network_id = $db->escapeString($this->id);
+    		$db->execSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_origin='$_network_id'", $_row, false);
+
+            // String has been found
+            $_retval = $_row['count'];
+
+            // Check if caching has been enabled.
+            if ($_cache->isCachingEnabled) {
+                // Save data into cache, because it wasn't saved into cache before.
+                $_cache->saveCachedData($_retval);
+            }
+        }
+
+		return $_retval;
 	}
 
 	/**
-	* Find out how many users are valid in this networks's database
-	* @return Number of valid users
-	*/
-	function getNumValidUsers()
+     * Find out how many users are valid in this networks's database
+     *
+     * @return int Number of valid users
+     *
+     * @access public
+     */
+	public function getNumValidUsers()
 	{
 	    // Define globals
 		global $db;
 
-        // Init values
-        $row = null;
+		// Init values
+        $_retval = 0;
+		$_row = null;
+        $_useCache = false;
+        $_cachedData = null;
 
-		$network_id = $db->escapeString($this->id);
-		$db->execSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_status = ".ACCOUNT_STATUS_ALLOWED." AND account_origin='$network_id'", $row, false);
-		return $row['count'];
+        // Create new cache objects (valid for 1 minute)
+        $_cache = new Cache('network_' . $this->id . '_num_valid_users', $this->id, 60);
+
+        // Check if caching has been enabled.
+        if ($_cache->isCachingEnabled) {
+            $_cachedData = $_cache->getCachedData();
+
+            if ($_cachedData) {
+                // Return cached data.
+                $_useCache = true;
+                $_retval = $_cachedData;
+            }
+        }
+
+        if (!$_useCache) {
+            // Get number of valid users
+    		$_network_id = $db->escapeString($this->id);
+    		$db->execSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_status = ".ACCOUNT_STATUS_ALLOWED." AND account_origin='$_network_id'", $_row, false);
+
+            // String has been found
+            $_retval = $_row['count'];
+
+            // Check if caching has been enabled.
+            if ($_cache->isCachingEnabled) {
+                // Save data into cache, because it wasn't saved into cache before.
+                $_cache->saveCachedData($_retval);
+            }
+        }
+
+		return $_retval;
 	}
 
-	/** Find out how many users are online on the entire network or at a specific HotSpot on the network
-	 * @return Number of online users
+	/**
+	 * Find out how many users are online on the entire network or at a
+	 * specific Hotspot on the network
+	 *
+	 * @return int Number of online users
+	 *
+	 * @access public
 	 */
-	function getNumOnlineUsers()
+	public function getNumOnlineUsers()
 	{
 	    // Define globals
 		global $db;
 
-        // Init values
-        $row = null;
+		// Init values
+        $_retval = 0;
+		$_row = null;
+        $_useCache = false;
+        $_cachedData = null;
 
-		$network_id = $db->escapeString($this->id);
-		$db->execSqlUniqueRes("SELECT COUNT(DISTINCT users.user_id) FROM users,connections NATURAL JOIN nodes JOIN networks ON (nodes.network_id=networks.network_id AND networks.network_id='$network_id') "."WHERE connections.token_status='".TOKEN_INUSE."' "."AND users.user_id=connections.user_id ", $row, false);
-		return $row['count'];
+        // Create new cache objects (valid for 1 minute)
+        $_cache = new Cache('network_' . $this->id . '_num_online_users', $this->id, 60);
+
+        // Check if caching has been enabled.
+        if ($_cache->isCachingEnabled) {
+            $_cachedData = $_cache->getCachedData();
+
+            if ($_cachedData) {
+                // Return cached data.
+                $_useCache = true;
+                $_retval = $_cachedData;
+            }
+        }
+
+        if (!$_useCache) {
+            // Get number of online users
+    		$_network_id = $db->escapeString($this->id);
+    		$db->execSqlUniqueRes("SELECT COUNT(DISTINCT users.user_id) FROM users,connections NATURAL JOIN nodes JOIN networks ON (nodes.network_id=networks.network_id AND networks.network_id='$_network_id') "."WHERE connections.token_status='".TOKEN_INUSE."' "."AND users.user_id=connections.user_id ", $_row, false);
+
+            // String has been found
+            $_retval = $_row['count'];
+
+            // Check if caching has been enabled.
+            if ($_cache->isCachingEnabled) {
+                // Save data into cache, because it wasn't saved into cache before.
+                $_cache->saveCachedData($_retval);
+            }
+        }
+
+		return $_retval;
 	}
+
+	/**
+     * Find out how many nodes are registered in this networks's database
+	 *
+	 * @return int Number of nodes
+	 *
+	 * @access public
+	 */
+	public function getNumNodes()
+	{
+	    // Define globals
+		global $db;
+
+		// Init values
+        $_retval = 0;
+		$_row = null;
+        $_useCache = false;
+        $_cachedData = null;
+
+        // Create new cache objects (valid for 5 minutes)
+        $_cache = new Cache('network_' . $this->id . '_num_nodes', $this->id, 300);
+
+        // Check if caching has been enabled.
+        if ($_cache->isCachingEnabled) {
+            $_cachedData = $_cache->getCachedData();
+
+            if ($_cachedData) {
+                // Return cached data.
+                $_useCache = true;
+                $_retval = $_cachedData;
+            }
+        }
+
+        if (!$_useCache) {
+            // Get number of nodes
+    		$_network_id = $db->escapeString($this->id);
+            $db->execSqlUniqueRes("SELECT COUNT(node_id) FROM nodes WHERE network_id = '$_network_id'", $_row, false);
+
+            // String has been found
+            $_retval = $_row['count'];
+
+            // Check if caching has been enabled.
+            if ($_cache->isCachingEnabled) {
+                // Save data into cache, because it wasn't saved into cache before.
+                $_cache->saveCachedData($_retval);
+            }
+        }
+
+		return $_retval;
+	}
+
+	/**
+     * Find out how many nodes are deployed in this networks's database
+	 *
+	 * @return int Number of deployed nodes
+	 *
+	 * @access public
+	 */
+	public function getNumDeployedNodes()
+	{
+	    // Define globals
+		global $db;
+
+		// Init values
+        $_retval = 0;
+		$_row = null;
+        $_useCache = false;
+        $_cachedData = null;
+
+        // Create new cache objects (valid for 5 minutes)
+        $_cache = new Cache('network_' . $this->id . '_num_deployed_nodes', $this->id, 300);
+
+        // Check if caching has been enabled.
+        if ($_cache->isCachingEnabled) {
+            $_cachedData = $_cache->getCachedData();
+
+            if ($_cachedData) {
+                // Return cached data.
+                $_useCache = true;
+                $_retval = $_cachedData;
+            }
+        }
+
+        if (!$_useCache) {
+            // Get number of deployed nodes
+    		$_network_id = $db->escapeString($this->id);
+            $db->execSqlUniqueRes("SELECT COUNT(node_id) FROM nodes WHERE network_id = '$_network_id' AND (node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE')", $_row, false);
+
+            // String has been found
+            $_retval = $_row['count'];
+
+            // Check if caching has been enabled.
+            if ($_cache->isCachingEnabled) {
+                // Save data into cache, because it wasn't saved into cache before.
+                $_cache->saveCachedData($_retval);
+            }
+        }
+
+		return $_retval;
+	}
+
+	/**
+     * Find out how many deployed nodes are online in this networks's database
+	 *
+	 * @return int Number of deployed nodes which are online
+	 *
+	 * @access public
+	 */
+	public function getNumOnlineNodes()
+	{
+	    // Define globals
+		global $db;
+
+		// Init values
+        $_retval = 0;
+		$_row = null;
+        $_useCache = false;
+        $_cachedData = null;
+
+        // Create new cache objects (valid for 5 minutes)
+        $_cache = new Cache('network_' . $this->id . '_num_online_nodes', $this->id, 300);
+
+        // Check if caching has been enabled.
+        if ($_cache->isCachingEnabled) {
+            $_cachedData = $_cache->getCachedData();
+
+            if ($_cachedData) {
+                // Return cached data.
+                $_useCache = true;
+                $_retval = $_cachedData;
+            }
+        }
+
+        if (!$_useCache) {
+            // Get number of online nodes
+    		$_network_id = $db->escapeString($this->id);
+            $db->execSqlUniqueRes("SELECT COUNT(node_id) FROM nodes WHERE network_id = '$_network_id' AND (node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE') AND ((NOW()-last_heartbeat_timestamp) < interval '5 minutes')", $_row, false);
+
+            // String has been found
+            $_retval = $_row['count'];
+
+            // Check if caching has been enabled.
+            if ($_cache->isCachingEnabled) {
+                // Save data into cache, because it wasn't saved into cache before.
+                $_cache->saveCachedData($_retval);
+            }
+        }
+
+		return $_retval;
+	}
+
 	/** Are nodes allowed to redirect users to an arbitrary web page instead of the portal?
 	 * @return true or false */
 	public function getCustomPortalRedirectAllowed()
@@ -723,10 +983,8 @@ class Network implements GenericObject
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Network ID")." : </div>\n";
 		$html .= "<div class='admin_section_data'>\n";
-		$name = "network_".$this->getId()."_name";
 		$value = htmlspecialchars($this->getId(), ENT_QUOTES);
 		$html .= $value;
-		//$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 

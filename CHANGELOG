@@ -1,3 +1,13 @@
+2006-02-21 Max Horváth <max.horvath@maxspot.de>
+	* fixed access restriction for HTMLeditor in templates folder
+	* fixed XML error in HTMLeditors CSS and HTML templates
+	* fixed undefined variable bug in content class ContenGroup
+	* start page now uses a Smarty template to render HTML page
+	* start page now also displays information about deployed/operational nodes
+	* information about valid/online users and deployed/operational nodes gets
+	  cached if caching has been enabled (valid/online users for 1 minute,
+	  deployed/operational nodes for 5 minutes)
+
 2006-02-17 Max Horváth <max.horvath@maxspot.de>
 	* refactored lost username site - now it also includes the help toolbox
 	* lost username page now focuses input field automaticly (like on login or

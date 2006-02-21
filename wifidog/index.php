@@ -38,7 +38,9 @@
  *
  * @package    WiFiDogAuthServer
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @author     Max Horvath <max.horvath@maxspot.de>
  * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @copyright  2006 Max Horvath, maxspot GmbH
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
@@ -54,32 +56,84 @@ EventLogging::SetupErrorHandling("strict~/var:\sDeprecated/(off)",
 
 require_once('include/common_interface.php');
 require_once('classes/MainUI.php');
+require_once('classes/Network.php');
 require_once('classes/Node.php');
+require_once('classes/User.php');
 
+// Init ALL smarty SWITCH values
+$smarty->assign('sectionTOOLCONTENT', false);
+$smarty->assign('sectionMAINCONTENT', false);
+
+// Init ALL smarty values
+$smarty->assign('isSuperAdmin', false);
+$smarty->assign('isOwner', false);
+$smarty->assign('networkName', "");
+$smarty->assign('networkNumValidUsers', 0);
+$smarty->assign('networkNumOnlineUsers', 0);
+$smarty->assign('networkNumDeployedNodes', 0);
+$smarty->assign('networkNumOnlineNodes', 0);
+$smarty->assign('googleMapsEnabled', false);
+
+// Get information about network
 $network = Network::getCurrentNetwork();
 
-$tool_html  = '<ul>';
-$tool_html .= '<li><a href="' . BASE_SSL_PATH . 'change_password.php">' . _("Change password") . '</a></li>';
-$tool_html .= '<li><a href="' . BASE_SSL_PATH . 'faq.php">' . _("I have trouble connecting and I would like some help") . '</a></li>';
-$tool_html .= '</ul>';
+// Get information about user
+$currentUser = User::getCurrentUser();
 
-$body_html  = '<p>' . sprintf(_("The %s network currently has %s valid users, %s user(s) are currently online"), $network->getName(), $network->getNumValidUsers(), $network->getNumOnlineUsers()) . '</p>';
-$body_html .= '<ul>';
+/**
+ * Define user security levels for the template
+ *
+ * These values are used in the default template of WiFoDog but could be used
+ * in a customized template to restrict certain links to specific user
+ * access levels.
+ */
+$smarty->assign('isSuperAdmin', $currentUser && $currentUser->isSuperAdmin());
+$smarty->assign('isOwner', $currentUser && $currentUser->isOwner());
 
-if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED == true) {
-    $body_html .= '<li><a href="' . BASE_NON_SSL_PATH . 'hotspots_map.php">' . _("Deployed HotSpots map") . '</a></li>';
-}
+/*
+ * Tool content
+ */
 
-$body_html .= '<li><a href="hotspot_status.php">' . _("Deployed HotSpots status with coordinates") . '</a></li>';
-$body_html .= '<li><a href="node_list.php">' . _("Full node technical status (includes non-deployed nodes)") . '</a></li>';
-$body_html .= '<li><a href="' . BASE_SSL_PATH . 'admin/index.php">' . _("Administration") . '</a></li>';
-$body_html .= '</ul>';
+// Set section of Smarty template
+$smarty->assign('sectionTOOLCONTENT', true);
 
-$smarty->assign("title", _("authentication server"));
+// Compile HTML code
+$html = $smarty->fetch("templates/sites/index.tpl");
 
+/*
+ * Main content
+ */
+
+// Reset ALL smarty SWITCH values
+$smarty->assign('sectionTOOLCONTENT', false);
+$smarty->assign('sectionMAINCONTENT', false);
+
+// Set section of Smarty template
+$smarty->assign('sectionMAINCONTENT', true);
+
+// Set networks information
+$smarty->assign('networkName', $network->getName());
+
+// Set networks user information
+$smarty->assign('networkNumValidUsers', $network->getNumValidUsers());
+$smarty->assign('networkNumOnlineUsers', $network->getNumOnlineUsers());
+
+// Set networks node information
+$smarty->assign('networkNumDeployedNodes', $network->getNumDeployedNodes());
+$smarty->assign('networkNumOnlineNodes', $network->getNumOnlineNodes());
+
+// Set Google maps information
+$smarty->assign('googleMapsEnabled', defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED);
+
+// Compile HTML code
+$html_body = $smarty->fetch("templates/sites/index.tpl");
+
+/*
+ * Render output
+ */
 $ui = new MainUI();
-$ui->setToolContent($tool_html);
-$ui->setMainContent($body_html);
+$ui->setToolContent($html);
+$ui->setMainContent($html_body);
 $ui->display();
 
 /*
