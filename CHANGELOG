@@ -57,6 +57,9 @@
 	* Hotspots map page now offers full multilingual support (text in the
 	  JavaScript file was english only)
 	* Hotspots map page now uses a Smarty template to render HTML page
+	* Hotspots map page now uses a direct Javascript call for the link
+	  "Show me on the map" (resulting in the browser not jumping to the top of
+	  the page if a user clicks on such a link)
 
 2006-02-21 Max Horváth <max.horvath@maxspot.de>
 	* fixed access restriction for HTMLeditor in templates folder

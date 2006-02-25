@@ -364,7 +364,7 @@ HotspotsMap.prototype.parseHotspotsStatus = function(xml_doc)
 
             // Prepare fragment that will go in the sidebar
             var html = this.buildHtmlFromHotspot(hotspots[i], markerIcon);
-            html_list += html + "<br /><br /><a href=\"#\" onclick=\"" + this.external_object_name +".openInfoBubble('" + GXml.value(hotspotId[0]) + "');\">" + this.translations.show_on_map + "</a><hr width='95%'/>";
+            html_list += html + "<br /><br /><a href=\"javascript:" + this.external_object_name +".openInfoBubble('" + GXml.value(hotspotId[0]) + "');\">" + this.translations.show_on_map + "</a><hr width='95%'/>";
 
             // Create, save as ID and add the marker
             var marker = this.createInfoBubble(point, markerIcon, html);

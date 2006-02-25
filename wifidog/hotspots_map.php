@@ -53,6 +53,7 @@ require_once(dirname(__FILE__) . '/include/common.php');
 require_once('include/common_interface.php');
 require_once('classes/MainUI.php');
 require_once('classes/Network.php');
+require_once('classes/User.php');
 require_once('classes/Server.php');
 
 // Check if Google maps support has been enabled
@@ -66,7 +67,22 @@ $smarty->assign('sectionTOOLCONTENT', false);
 $smarty->assign('sectionMAINCONTENT', false);
 
 // Init ALL smarty values
+$smarty->assign('isSuperAdmin', false);
+$smarty->assign('isOwner', false);
 $smarty->assign('selectNetworkUI', null);
+
+// Get information about user
+$currentUser = User::getCurrentUser();
+
+/**
+ * Define user security levels for the template
+ *
+ * These values are used in the default template of WiFoDog but could be used
+ * in a customized template to restrict certain links to specific user
+ * access levels.
+ */
+$smarty->assign('isSuperAdmin', $currentUser && $currentUser->isSuperAdmin());
+$smarty->assign('isOwner', $currentUser && $currentUser->isOwner());
 
 /*
  * Header JavaScripts
