@@ -41,24 +41,41 @@
  * @link       http://www.wifidog.org/
  */
 
-// Constructor
-function HotspotsMap(viewport, external_object_name)
+// Translations
+function HotspotsMapTranslations(browser_support, homepage, show_on_map, loading)
 {
-    if(GBrowserIsCompatible())
-    {
+    this.browser_support = browser_support;
+    this.homepage = homepage;
+    this.show_on_map = show_on_map;
+    this.loading = loading;
+}
+
+// Constructor
+function HotspotsMap(viewport, external_object_name, translations, server_path)
+{
+    // Init translations
+    this.translations = translations;
+
+    if (GBrowserIsCompatible()) {
         // Create the map attribute
         this.map = new GMap(document.getElementById(viewport));
         this.map.addControl(new GLargeMapControl());
         this.map.addControl(new GMapTypeControl());
+
         // Create the array that will contain refs to markers
         this.markers = Array();
+
         // Init source url
         this.xml_source = null;
+
         // This is quite stupide, but it's needed since we need to build onclick urls
         this.external_object_name = external_object_name;
+
+        // Init server path
+        this.server_path = server_path;
+    } else {
+        alert(this.translations.browser_support);
     }
-    else
-        alert("Sorry, your browser does not support Google Maps.");
 }
 
 HotspotsMap.prototype.getGPointFromPostalCode = function(postal_code)
@@ -67,50 +84,54 @@ HotspotsMap.prototype.getGPointFromPostalCode = function(postal_code)
     var geocoded_point = null;
     var request = GXmlHttp.create();
     var self = this;
+
     // Download asynchronously the hotspots data
     request.open("GET", "geocoder.php?postal_code=" + postal_code, true);
+
     // Once completed, start parsing
     request.onreadystatechange = function()
     {
-        if (request.readyState == 4)
-        {
-            if(request.responseXML != undefined)
-            {
+        if (request.readyState == 4) {
+            if (request.responseXML != undefined) {
                 var xml_doc = request.responseXML;
                 var gis = xml_doc.documentElement;
                 self.findClosestHotspotByGPoint(new GPoint(GXml.value(gis.getElementsByTagName("long")[0]), GXml.value(gis.getElementsByTagName("lat")[0])));
             }
         }
     }
+
     request.send(null);
 }
 
 HotspotsMap.prototype.findClosestHotspotByPostalCode = function(postal_code)
 {
-    if(postal_code != undefined && this.markers.length > 0)
+    if (postal_code != undefined && this.markers.length > 0) {
         this.getGPointFromPostalCode(postal_code);
+    }
 }
 
 HotspotsMap.prototype.findClosestHotspotByGPoint = function(pt)
 {
-    if(pt != null && this.markers.length > 0)
-    {
+    if (pt != null && this.markers.length > 0) {
+        // Init values
         var dist = null;
         var hotspot_id = null;
+
         // For each registered markers
-        for(i in this.markers)
-        {
+        for(i in this.markers) {
             // Compute the distance in meters between the two points
             tmp = this.computeDistance(pt, this.markers[i].point);
-            if(dist == null || tmp < dist)
-            {
+
+            if(dist == null || tmp < dist) {
                 dist = tmp
                 hotspot_id = i;
             }
         }
+
         // If a hotspot has been found, pop the blowup balloon
-        if(hotspot_id != null)
+        if(hotspot_id != null) {
             this.openInfoBubble(hotspot_id);
+        }
     }
 }
 
@@ -121,6 +142,7 @@ HotspotsMap.prototype.computeDistance = function(pt1, pt2)
     y1 = this.convertDegreesToRadian(pt1.x);
     x2 = this.convertDegreesToRadian(pt2.y);
     y2 = this.convertDegreesToRadian(pt2.x);
+
     // This makes the assumptions that points are not to far away from each other
     // (a few tens of kilometers) and approximately at the same altitude
     return 6378800 * (Math.acos(Math.sin(x1) * Math.sin(x2) + Math.cos(x1) * Math.cos(x2) * Math.cos(y2 - y1)));
@@ -128,60 +150,111 @@ HotspotsMap.prototype.computeDistance = function(pt1, pt2)
 
 HotspotsMap.prototype.convertDegreesToRadian = function(deg)
 {
-    return deg / (180/Math.PI);
+    return deg / (180 / Math.PI);
 }
 
 HotspotsMap.prototype.buildHtmlFromHotspot = function(hotspot_element, icon)
 {
-    var html = "<table><tr><td><img src='" + icon.image + "'></td><td>";
+    // Init HTML
+    var html = "<table><tr><td><img src='" + icon.image + "' /></td><td>";
 
+    /*
+     * Hotspot name
+     */
     var name = hotspot_element.getElementsByTagName("name");
-    if(name.length == 1)
+
+    if (name.length == 1) {
         html += "<b>" + GXml.value(name[0]) + "</b>";
+    }
 
-    html += "<br/>";
+    html += "<br />";
 
+    /*
+     * Civic number
+     */
     var civicNumber = hotspot_element.getElementsByTagName("civicNumber");
-    if(civicNumber.length == 1)
+
+    if (civicNumber.length == 1) {
         html += "<i>" + GXml.value(civicNumber[0]) + ",&nbsp;</i>";
+    }
 
+    /*
+     * Street address
+     */
     var streetAddress = hotspot_element.getElementsByTagName("streetAddress");
-    if(streetAddress.length == 1)
+
+    if (streetAddress.length == 1) {
         html += "<i>" + GXml.value(streetAddress[0]) + ",&nbsp;</i>";
+    }
 
-    html += "<br/>";
+    html += "<br />";
 
+    /*
+     * City
+     */
     var city = hotspot_element.getElementsByTagName("city");
-    if(city.length == 1)
+
+    if (city.length == 1) {
         html += "<i>" + GXml.value(city[0]) + ",&nbsp;</i>";
+    }
 
+    /*
+     * Province
+     */
     var province = hotspot_element.getElementsByTagName("province");
-    if(province.length == 1)
+
+    if (province.length == 1) {
         html += "<i>" + GXml.value(province[0]) + ",&nbsp;</i>";
+    }
 
-    html += "<br/>";
+    html += "<br />";
 
+    /*
+     * Postal code (ZIP)
+     */
     var postalCode = hotspot_element.getElementsByTagName("postalCode");
-    if(postalCode.length == 1)
+
+    if (postalCode.length == 1) {
         html += "<i>" + GXml.value(postalCode[0]) + ",&nbsp;</i>";
+    }
 
+    /*
+     * Country
+     */
     var country = hotspot_element.getElementsByTagName("country");
-    if(country.length == 1)
+
+    if (country.length == 1) {
         html += "<i>" + GXml.value(country[0]) + "</i>";
+    }
 
-    html += "<br/>";
+    html += "<br />";
 
+    /*
+     * Phone
+     */
     var phone = hotspot_element.getElementsByTagName("contactPhoneNumber");
-    if(phone.length == 1)
-        html += "<i>" + GXml.value(phone[0]) + "</i><br/>";
 
+    if (phone.length == 1) {
+        html += "<i>" + GXml.value(phone[0]) + "</i><br />";
+    }
+
+    /*
+     * Transit
+     */
     var transit = hotspot_element.getElementsByTagName("massTransitInfo");
-    if(transit.length == 1)
-        html += "<b>" + GXml.value(transit[0]) + "</b><br/>";
 
+    if (transit.length == 1) {
+        html += "<b>" + GXml.value(transit[0]) + "</b><br />";
+    }
+
+    /*
+     * Website
+     */
     var websiteUrl = hotspot_element.getElementsByTagName("webSiteUrl");
-    if(websiteUrl.length == 1)
-        html += "<a href='" + GXml.value(websiteUrl[0]) + "'>URL (WWW)</a>";
+
+    if (websiteUrl.length == 1) {
+        html += "<a href='" + GXml.value(websiteUrl[0]) + "'>" + this.translations.homepage + "</a>";
+    }
 
     html += "</td></tr></table>";
 
@@ -192,19 +265,23 @@ HotspotsMap.prototype.buildHtmlFromHotspot = function(hotspot_element, icon)
 HotspotsMap.prototype.createIcon = function (imageUrl, iSize, shadowUrl, sSize, iconAnchor, bubbleAnchor)
 {
     var icon = new GIcon();
+
     icon.image = imageUrl;
     icon.iconSize = iSize;
     icon.shadow = shadowUrl;
     icon.shadowSize = sSize;
     icon.iconAnchor = iconAnchor;
     icon.infoWindowAnchor = bubbleAnchor;
+
     return icon;
 }
 
 HotspotsMap.prototype.createInfoBubble = function(point, icon, html)
 {
     var marker = new GMarker(point, icon);
-    GEvent.addListener(marker, "click", function() {
+
+    GEvent.addListener(marker, "click", function()
+    {
         marker.openInfoWindowHtml(html);
     });
     return marker;
@@ -219,73 +296,79 @@ HotspotsMap.prototype.openInfoBubble = function(bubbleId)
 HotspotsMap.prototype.loadHotspotsStatus = function()
 {
     // Make sure the source has been set
-    if(this.xml_source != null)
-    {
+    if (this.xml_source != null) {
         // Fool the async callback
         var self = this;
         var request = GXmlHttp.create();
+
         // Download asynchronously the hotspots data
         request.open("GET", this.xml_source, true);
+
         // Once completed, start parsing
-        request.onreadystatechange = function()
-        {
-            if (request.readyState == 4)
+        request.onreadystatechange = function() {
+            if (request.readyState == 4) {
                 self.parseHotspotsStatus(request.responseXML);
+            }
         }
         request.send(null);
-    }
-    else
+    } else {
         return false;
+    }
 }
 
 HotspotsMap.prototype.parseHotspotsStatus = function(xml_doc)
 {
     var html_list = "";
+
     // Init marker icons
-    var upIcon = this.createIcon("../images/hotspots_status_map_up.png", new GSize(20, 34),
-                            "../images/hotspots_status_map_shadow.png", new GSize(37, 34),
-                            new GPoint(10, 20), new GPoint(10, 1));
-    var downIcon = this.createIcon("../images/hotspots_status_map_down.png", new GSize(20, 34),
-                              "../images/hotspots_status_map_shadow.png", new GSize(37, 34),
-                              new GPoint(10, 20), new GPoint(10, 1));
-    var unknownIcon = this.createIcon("../images/hotspots_status_map_unknown.png", new GSize(22, 34),
-                              "../images/hotspots_status_map_blank.png", new GSize(22, 34),
-                              new GPoint(11, 30), new GPoint(11, 1));
+    var upIcon = this.createIcon(this.server_path + "images/hotspots_status_map_up.png", new GSize(20, 34),
+                                 this.server_path + "images/hotspots_status_map_shadow.png", new GSize(37, 34),
+                                 new GPoint(10, 20), new GPoint(10, 1));
+    var downIcon = this.createIcon(this.server_path + "images/hotspots_status_map_down.png", new GSize(20, 34),
+                                   this.server_path + "images/hotspots_status_map_shadow.png", new GSize(37, 34),
+                                   new GPoint(10, 20), new GPoint(10, 1));
+    var unknownIcon = this.createIcon(this.server_path + "images/hotspots_status_map_unknown.png", new GSize(22, 34),
+                                      this.server_path + "images/hotspots_status_map_blank.png", new GSize(22, 34),
+                                      new GPoint(11, 30), new GPoint(11, 1));
+
     // Parse the XML DOM
     var hotspots = xml_doc.documentElement.getElementsByTagName("hotspot");
-    for (var i = 0; i < hotspots.length; i++)
-    {
+
+    for (var i = 0; i < hotspots.length; i++) {
         var hotspotId = hotspots[i].getElementsByTagName("hotspotId");
         var gis = hotspots[i].getElementsByTagName("gisCenterLatLong");
-        if(hotspotId.length == 1 && gis.length == 1)
-        {
+
+        if (hotspotId.length == 1 && gis.length == 1) {
             // Extract GIS data
             var point = new GPoint(parseFloat(gis[0].getAttribute("long")), parseFloat(gis[0].getAttribute("lat")));
             var status = hotspots[i].getElementsByTagName("globalStatus");
             var markerIcon;
-            if(status.length == 1)
-            {
-                switch(GXml.value(status[0]))
-                {
-                    case "100":
-                        markerIcon = upIcon; // Hotspot is up
-                        break;
-                    case "0":
-                        markerIcon = downIcon; // Hotspot is down
-                        break;
-                    default:
-                        markerIcon = unknownIcon; // Unknown hotspot status
+
+            if (status.length == 1) {
+                switch (GXml.value(status[0])) {
+                case "100":
+                    markerIcon = upIcon; // Hotspot is up
+                    break;
+
+                case "0":
+                    markerIcon = downIcon; // Hotspot is down
+                    break;
+
+                default:
+                    markerIcon = unknownIcon; // Unknown hotspot status
+                    break;
                 }
-            }
-            else
+            } else {
                 markerIcon = unknownIcon; // Unknown hotspot status
+            }
 
             // Prepare fragment that will go in the sidebar
             var html = this.buildHtmlFromHotspot(hotspots[i], markerIcon);
-            html_list += html + "<p/><a href=\"#\" onClick=\"" + this.external_object_name +".openInfoBubble('" + GXml.value(hotspotId[0]) + "');\">Show me on the map</a><hr width='95%'/>";
+            html_list += html + "<br /><br /><a href=\"#\" onclick=\"" + this.external_object_name +".openInfoBubble('" + GXml.value(hotspotId[0]) + "');\">" + this.translations.show_on_map + "</a><hr width='95%'/>";
 
             // Create, save as ID and add the marker
             var marker = this.createInfoBubble(point, markerIcon, html);
+
             // markers is a global var
             this.markers[GXml.value(hotspotId[0])] = marker;
             this.map.addOverlay(marker);
@@ -298,9 +381,11 @@ HotspotsMap.prototype.parseHotspotsStatus = function(xml_doc)
 
 HotspotsMap.prototype.redraw = function()
 {
-    for(i = 0;i < this.markers.length;i++)
+    for (i = 0;i < this.markers.length;i++) {
         this.map.removeOverlay(this.markers[i]);
-    this.hotspots_info_list.innerHTML = "Loading, please wait...";
+    }
+
+    this.hotspots_info_list.innerHTML = this.translations.loading;
     this.loadHotspotsStatus();
 }
 
@@ -312,6 +397,11 @@ HotspotsMap.prototype.setHotspotsInfoList = function(hotspots_info_list)
 HotspotsMap.prototype.setInitialPosition = function(lat, lng, zoom)
 {
     this.map.centerAndZoom(new GPoint(lng, lat), zoom);
+}
+
+HotspotsMap.prototype.setMapType = function(map_type)
+{
+    this.map.setMapType(map_type);
 }
 
 HotspotsMap.prototype.setOnClickListener = function(callback_fct)

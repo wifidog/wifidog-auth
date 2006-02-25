@@ -79,27 +79,38 @@ class UserReport extends StatisticReport
      */
     public function getReportUI($child_html = null)
     {
+        // Define globals
         global $db;
-        $html = '';
-        //$distinguish_users_by=$this->stats->getDistinguishUsersBy();
-        //$candidate_connections_sql = $this->stats->getSqlCandidateConnectionsQuery("DISTINCT $distinguish_users_by, date_trunc('day', timestamp_in) AS date");
+        global $account_status_to_text;
+        global $token_to_text;
+
+        // Init values
+        $html = "";
+        $_date_from = "";
+        $_date_to = "";
+
+        // Process input
+        if (isset($_REQUEST['date_from'])) {
+            $_date_from = $_REQUEST['date_from'];
+        }
+
+        if (isset($_REQUEST['date_to'])) {
+            $_date_to = $_REQUEST['date_to'];
+        }
 
         $selected_users = $this->stats->getSelectedUsers();
-        if ($selected_users)
-        {
-            foreach ($selected_users as $user_id => $userObject)
-            {
-                if ($userObject)
-                {
+        if ($selected_users) {
+            foreach ($selected_users as $user_id => $userObject) {
+                if ($userObject) {
                     $userinfo = null;
                     $user_id = $db->escapeString($user_id);
                     $sql = "SELECT * FROM users WHERE user_id='{$user_id}'";
                     $db->execSqlUniqueRes($sql, $userinfo, false);
-                    if ($userinfo == null)
-                    {
+
+                    if ($userinfo == null) {
                         throw new Exception(sprintf(_("User id: %s could not be found in the database"), $user_id));
                     }
-                    global $account_status_to_text;
+
                     $userinfo['account_status_description'] = $account_status_to_text[$userinfo['account_status']];
 
                     $html .= "<fieldset class='pretty_fieldset'>\n";
@@ -124,7 +135,7 @@ class UserReport extends StatisticReport
 
                     $html .= "<tr>\n";
                     $html .= "  <th>"._("Network").":</th>\n";
-                    $html .= "  <td><a href='?date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}&network_id={$userinfo['account_origin']}'>{$userinfo['account_origin']}</a></td>\n";
+                    $html .= "  <td><a href='?date_from={$_date_from}&date_to={$_date_to}&network_id={$userinfo['account_origin']}'>{$userinfo['account_origin']}</a></td>\n";
                     $html .= "</tr>\n";
 
                     $html .= "<tr class='odd'>\n";
@@ -165,17 +176,13 @@ class UserReport extends StatisticReport
 
                 // Variables init
                 $even = 0;
-                global $token_to_text;
                 $total = array ();
                 $total['incoming'] = 0;
                 $total['outgoing'] = 0;
                 $total['time_spent'] = 0;
-                if (count($connections) == 0)
-                {
+                if (count($connections) == 0) {
                     $html .= _("No information found matching the report configuration");
-                }
-                else
-                {
+                } else {
                     $html .= "<table class='smaller'>\n";
                     $html .= "<thead>\n";
                     $html .= "<tr>\n";
@@ -188,9 +195,8 @@ class UserReport extends StatisticReport
                     $html .= "  <th>"._("U")."</th>\n";
                     $html .= "</tr>\n";
                     $html .= "</thead>\n";
-                    foreach ($connections as $connection)
-                    {
 
+                    foreach ($connections as $connection) {
                         $timestamp_in = !empty ($connection['timestamp_in']) ? strtotime($connection['timestamp_in']) : null;
                         $timestamp_out = !empty ($connection['timestamp_out']) ? strtotime($connection['timestamp_out']) : null;
 
@@ -200,20 +206,22 @@ class UserReport extends StatisticReport
 
                         $connection['token_status_description'] = $token_to_text[$connection['token_status']];
                         $html .= $even ? "<tr>\n" : "<tr class='odd'>\n";
-                        if ($even == 0)
+
+                        if ($even == 0) {
                             $even = 1;
-                        else
+                        } else {
                             $even = 0;
+                        }
+
                         $html .= "  <td>".strftime("%c", $timestamp_in)."</td>\n";
-                        if (!empty ($timestamp_in) && !empty ($timestamp_out))
-                        {
+
+                        if (!empty ($timestamp_in) && !empty ($timestamp_out)) {
                             $total['time_spent'] += ($timestamp_out - $timestamp_in);
                             $html .= "<td>".Utils :: convertSecondsToWords($timestamp_out - $timestamp_in)."</td>\n";
-                        }
-                        else
-                        {
+                        } else {
                             $html .= "<td>"._("N/A")."</td>\n";
                         }
+
                         $html .= "  <td>".$connection['token_status']."</td>\n";
                         $html .= "  <td><a href='?date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}&node_id={$nodeObject->getId()}'>{$nodeObject->getName()}</a></td>\n";
                         $html .= "  <td>".$connection['user_ip']."</td>\n";
@@ -235,8 +243,7 @@ class UserReport extends StatisticReport
                     $html .= "</fieldset>\n";
                 }
 
-                if ($this->stats->getDistinguishUsersBy() == 'user_id')
-                {
+                if ($this->stats->getDistinguishUsersBy() == 'user_id') {
                     /******* MAC addresses **********/
                     $candidate_connections_sql = $this->stats->getSqlCandidateConnectionsQuery("user_mac,count(user_mac) as nb ");
 
@@ -254,25 +261,25 @@ class UserReport extends StatisticReport
                     $html .= "</thead>\n";
 
                     $even = 0;
-                    if ($rows)
-                        foreach ($rows as $row)
-                        {
+                    if ($rows) {
+                        foreach ($rows as $row) {
                             $html .= $even ? "<tr>\n" : "<tr class='odd'>\n";
-                            if ($even == 0)
+
+                            if ($even == 0) {
                                 $even = 1;
-                            else
+                            } else {
                                 $even = 0;
-                            //$html .= "  <td><a href='?date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}&user_mac={$row['user_mac']}'>{$row['user_mac']}</a></td>\n";
+                            }
+
                             $html .= "  <td>{$row['user_mac']}</td>\n";
                             $html .= "  <td>".$row['nb']."</td>\n";
                             $html .= "</tr>\n";
                         }
+                    }
 
                     $html .= "</table>\n";
                     $html .= "</fieldset>\n";
-                }
-                else
-                {
+                } else {
                     /******* Usernames **********/
                     $candidate_connections_sql = $this->stats->getSqlCandidateConnectionsQuery("connections.user_id,username, count(connections.user_id) as nb ", true);
 
@@ -290,26 +297,28 @@ class UserReport extends StatisticReport
                     $html .= "</thead>\n";
 
                     $even = 0;
-                    if ($rows)
-                        foreach ($rows as $row)
-                        {
 
+                    if ($rows) {
+                        foreach ($rows as $row) {
                             $html .= $even ? "<tr>\n" : "<tr class='odd'>\n";
-                            if ($even == 0)
+
+                            if ($even == 0) {
                                 $even = 1;
-                            else
+                            } else {
                                 $even = 0;
+                            }
+
                             $html .= "  <td>{$row['username']}</td>\n";
                             $html .= "  <td>".$row['nb']."</td>\n";
                             $html .= "</tr>\n";
                         }
+                    }
 
                     $html .= "</table>\n";
                     $html .= "</fieldset>\n";
                 }
-
-            } //End foreach
-        } //End else
+            }
+        }
 
         return parent :: getReportUI($html);
     }

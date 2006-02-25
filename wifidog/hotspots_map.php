@@ -34,11 +34,13 @@
 // +-------------------------------------------------------------------+
 
 /**
- * Network status page.
+ * Network map/status page.
  *
  * @package    WiFiDogAuthServer
  * @author     Francois Proulx <francois.proulx@gmail.com>
+ * @author     Max Horvath <max.horvath@maxspot.de>
  * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
+ * @copyright  2006 Max Horvath, maxspot GmbH
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
@@ -50,58 +52,102 @@ require_once(dirname(__FILE__) . '/include/common.php');
 
 require_once('include/common_interface.php');
 require_once('classes/MainUI.php');
+require_once('classes/Network.php');
+require_once('classes/Server.php');
 
-$ui = new MainUI();
-$ui->setTitle(_("Hotspots status map"));
+// Check if Google maps support has been enabled
+if (!defined("GMAPS_HOTSPOTS_MAP_ENABLED") || (defined("GMAPS_HOTSPOTS_MAP_ENABLED") && GMAPS_HOTSPOTS_MAP_ENABLED === false)) {
+    header("Location: hotspot_status.php");
+    exit();
+}
 
-// Add Google Maps JavaScript ( must set config values )
-$html_headers = "<script src=\"http://maps.google.com/maps?file=api&v=1&key=".GMAPS_PUBLIC_API_KEY."\" type=\"text/javascript\"></script>\n";
-$html_headers .= "<script src=\"js/hotspots_status_map.js\" type=\"text/javascript\"></script>";
-$ui->setHtmlHeader($html_headers);
+// Init ALL smarty SWITCH values
+$smarty->assign('sectionTOOLCONTENT', false);
+$smarty->assign('sectionMAINCONTENT', false);
 
-// Create HTML body
-$html = "<div id=\"map_title\">\n";
-$html .= "<div id=\"map_toolbox\">\n";
-$html .= "<input type=\"button\" value=\""._("Show me the closest hotspot")."\" onclick=\"toggleOverlay('map_postalcode_overlay');\">\n";
-$html .= "<div id=\"map_postalcode_overlay\">\n";
-$html .= _("Enter your postal code")." :<br/>\n";
-$html .= "<input type=\"text\" id=\"postal_code\" size=\"10\"><br/>\n";
-$html .= "<input type=\"button\" value=\""._("Show")."\" onclick=\"toggleOverlay('map_postalcode_overlay'); p = document.getElementById('postal_code'); hotspots_map.findClosestHotspotByPostalCode(p.value);\">\n";
-$html .= "</div>\n";
-$html .= "<input type=\"button\" value=\""._("Refresh map")."\" onclick=\"hotspots_map.redraw();\">\n";
-$html .= "</div>\n";
-$html .= _("Deployed HotSpots map")."\n";
-$html .= "</div>\n";
-$html .= "<div id=\"map_outer_hotspots_list\"><div id=\"map_hotspots_list\"></div></div>\n";
-$html .= "<div id=\"map_frame\"><p/><center><h2>"._("Loading, please wait...")."</h2></center></div>\n";
-$html .= "<div id=\"map_legend\">\n";
-$html .= "<b>"._("Legend")." :</b>\n";
-$html .= "<img src='images/hotspots_status_map_up.png'> <i>"._("the hotspot is operational")."</i>\n";
-$html .= "<img src='images/hotspots_status_map_down.png'> <i>"._("the hotspot is down")."</i>\n";
-$html .= "<img src='images/hotspots_status_map_unknown.png'> <i>"._("not monitored")."</i>\n";
-$html .= "</div>\n";
-$ui->setMainContent($html);
+// Init ALL smarty values
+$smarty->assign('selectNetworkUI', null);
+
+/*
+ * Header JavaScripts
+ */
+
+// Add Google Maps JavaScript (must set config values)
+$html_headers  = "<script src='http://maps.google.com/maps?file=api&v=1&key=" . Server::getCurrentServer()->getGoogleAPIKey() . "' type='text/javascript'></script>";
+$html_headers .= "<script src='js/hotspots_status_map.js' type='text/javascript'></script>";
+
+/*
+ * Tool content
+ */
+
+// Set section of Smarty template
+$smarty->assign('sectionTOOLCONTENT', true);
+
+// Compile HTML code
+$html = $smarty->fetch("templates/sites/hotspots_map.tpl");
+
+/*
+ * Main content
+ */
+
+// Reset ALL smarty SWITCH values
+$smarty->assign('sectionTOOLCONTENT', false);
+$smarty->assign('sectionMAINCONTENT', false);
+
+// Set section of Smarty template
+$smarty->assign('sectionMAINCONTENT', true);
+
+// Set network selector
+$smarty->assign('selectNetworkUI', Network::getSelectNetworkUI('network_map', (!empty($_REQUEST['network_map']) ? Network::getObject($_REQUEST['network_map']) : Network::getCurrentNetwork())) . (count(Network::getAllNetworks()) > 1 ? '<input class="submit" type="submit" name="submit" value="' . _("Change network") . '">' : ""));
+
+// Compile HTML code
+$html_body = $smarty->fetch("templates/sites/hotspots_map.tpl");
+
+/*
+ * Footer JavaScripts
+ */
+
+// Get GIS data to set
+if (!empty($_REQUEST['network_map'])) {
+    $network = Network::getObject($_REQUEST['network_map']);
+} else {
+    $network = Network::getCurrentNetwork();
+}
+
+$gis_data = $network->getGisLocation();
 
 // The onLoad code should only be called once all DIV are created.
-$script = "<script type=\"text/javascript\">\n";
-$script .= "function toggleOverlay(name) { o = document.getElementById('map_postalcode_overlay');";
-$script .= "	if(o != undefined) { if(o.style.display == 'block') o.style.display='none'; else o.style.display='block'; }}\n";
-$script .= "hotspots_map = new HotspotsMap(\"map_frame\", \"hotspots_map\");\n";
-$script .= "hotspots_map.setXmlSourceUrl(\"".GMAPS_XML_SOURCE_URL."\");\n";
-$script .= "hotspots_map.setHotspotsInfoList(\"map_hotspots_list\");\n";
-$script .= "hotspots_map.setInitialPosition(".GMAPS_INITIAL_LATITUDE.", ".GMAPS_INITIAL_LONGITUDE.", ".GMAPS_INITIAL_ZOOM_LEVEL.");\n";
-$script .= "hotspots_map.redraw();\n";
+$script  = "<script type=\"text/javascript\"><!--\n";
+$script .= "    function toggleOverlay(name)\n";
+$script .= "    {\n";
+$script .= "        o = document.getElementById('map_postalcode_overlay');\n";
+$script .= "        if (o != undefined) {\n";
+$script .= "            if (o.style.display == 'block') {\n";
+$script .= "                o.style.display = 'none';\n";
+$script .= "            } else {\n";
+$script .= "                o.style.display = 'block';\n";
+$script .= "            }\n";
+$script .= "        }\n";
+$script .= "    }\n";
+$script .= "    translations = new HotspotsMapTranslations('" . _("Sorry, your browser does not support Google Maps.") . "', '" . _("Homepage") . "', '" . _("Show me on the map") . "', '" . _("Loading, please wait...") . "');\n";
+$script .= "    hotspots_map = new HotspotsMap('map_frame', 'hotspots_map', translations, '" . BASE_SSL_PATH . "');\n";
+$script .= "    hotspots_map.setXmlSourceUrl('" . GMAPS_XML_SOURCE_URL . "');\n";
+$script .= "    hotspots_map.setHotspotsInfoList('map_hotspots_list');\n";
+$script .= "    hotspots_map.setInitialPosition(" . $gis_data->getLatitude() . ", " . $gis_data->getLongitude() . ", " . $gis_data->getAltitude() . ");\n";
+$script .= "    hotspots_map.setMapType(" . $network->getGisMapType() . ");\n";
+$script .= "    hotspots_map.redraw();\n";
+$script .= "//-->\n";
 $script .= "</script>\n";
+
+/*
+ * Render output
+ */
+$ui = new MainUI();
+$ui->setTitle(_("Hotspots status map"));
+$ui->setHtmlHeader($html_headers);
+$ui->setToolContent($html);
+$ui->setMainContent($html_body);
 $ui->addFooterScript($script);
-
-$tool_html = '<p class="indent">'."\n";
-$tool_html .= "<ul class='users_list'>\n";
-$tool_html .= "<li><a href='hotspot_status.php'>"._('Deployed HotSpots status with coordinates')."</a></li>";
-$tool_html .= "</ul>\n";
-$tool_html .= '</p>'."\n";
-
-$ui->setToolContent($tool_html);
-
 $ui->display();
 
 /*

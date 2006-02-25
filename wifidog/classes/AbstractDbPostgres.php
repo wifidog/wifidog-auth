@@ -203,12 +203,14 @@ class AbstractDb
 	/**
 	 * Executes an SQL for which, we predict to get a unique match, if that's not the case, this function will throw an error message
 	 *
-	 * @param $sql SQL query to run
-	 * @param $retRow un array des colonnes de la rangée retournée, NULL si aucun résultats.
-	 * @param $debug Si TRUE, affiche les résultats bruts de la requête
+	 * @param string $sql    SQL query to run
+	 * @param array  $retRow un array des colonnes de la rangée retournée, NULL si aucun résultats.
+	 * @param bool   $debug  Si TRUE, affiche les résultats bruts de la requête
+	 * @param bool   $silent If set to true, no error message will be shown
+	 *
 	 * @return TRUE si la requete a été effectuée avec succés, FALSE autrement.
 	 */
-	function execSqlUniqueRes($sql, & $retRow, $debug = false)
+	function execSqlUniqueRes($sql, & $retRow, $debug = false, $silent = false)
 	{
 		$retval = true;
 
@@ -235,14 +237,14 @@ class AbstractDb
 		if ($debug == true)
 			echo "<p>".sprintf(_("Elapsed time for query execution : %6f second(s)"), $sql_timetaken)."</p>\n";
 
-		if ($result == false)
-		{
-			echo "<p>execSqlUniqueRes() : "._("An error occured while executing the following SQL query")." :<br/>{$sql}</p>";
-			echo "<p>"._("Error message")." : <br/>".pg_last_error($connection)."</p>";
+		if ($result == false) {
+		    if (!$silent) {
+    			echo "<p>execSqlUniqueRes() : "._("An error occured while executing the following SQL query")." :<br/>{$sql}</p>";
+    			echo "<p>"._("Error message")." : <br/>".pg_last_error($connection)."</p>";
+		    }
+
 			$retval = false;
-		}
-		else
-		{
+		} else {
 			$resultSet = pg_fetch_all($result);
 			$retRow = $resultSet[0];
 			if (pg_num_rows($result) > 1)

@@ -1,4 +1,4 @@
-<?php
+{*
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
@@ -34,108 +34,73 @@
 // +-------------------------------------------------------------------+
 
 /**
- * This file contains all code that must be run to set up PHP behaviours
- * before any code gets executed by the WiFiDog Authentication Server.
+ * Hotspot map page.
  *
  * @package    WiFiDogAuthServer
+ * @subpackage Templates
  * @author     Max Horvath <max.horvath@maxspot.de>
  * @copyright  2006 Max Horvath, maxspot GmbH
- * @version    Subversion $Id: common.php 927 2006-01-29 22:24:06Z max-horvath $
+ * @version    Subversion $Id: change_password.php 914 2006-01-23 05:25:43Z max-horvath $
  * @link       http://www.wifidog.org/
  */
 
-/**
- * Security function - filters super globals
- *
- * @return void
- */
-function undo_magic_quotes()
-{
-    /**
-     * Helper function used by undo_magic_quotes() only
-     *
-     * @param array  $item Item be processed
-     * @param string $key  Key of array being worked on
-     *
-     * @return array Array with un-quoted strings
-     */
-    function stripslashes_cb(&$item, $key)
-    {
-        if (is_array($item)) {
-            $item = stripslashes($item);
-        }
-    }
+*}
 
-    if (get_magic_quotes_gpc()) {
-        array_walk_recursive($_GET, 'stripslashes_cb');
-        array_walk_recursive($_POST, 'stripslashes_cb');
-        array_walk_recursive($_COOKIE, 'stripslashes_cb');
-        array_walk_recursive($_REQUEST, 'stripslashes_cb');
-        array_walk_recursive($_GLOBALS, 'stripslashes_cb');
-        array_walk_recursive($_SERVER, 'stripslashes_cb');
-    }
-}
+{if $sectionTOOLCONTENT}
+{*
+    BEGIN section TOOLCONTENT
+*}
+    <div id="login_form">
+        <ul>
+            <li><a href="{$base_ssl_path}hotspot_status.php">{"Deployed HotSpots status with coordinates"|_}</a></li>
+            <li><a href="{$base_ssl_path}node_list.php">{"Full node technical status (includes non-deployed nodes)"|_}</a></li>
+        </ul>
+    </div>
+{*
+    END section TOOLCONTENT
+*}
+{/if}
 
-/**
- * Disables APC cache (in case it has been installed) and fixes an APC bug
- *
- * @return void
- */
-function disableAPC()
-{
-    if (function_exists("apc_clear_cache")) {
-        ini_set("apc.enabled", 0);
-        ini_set("apc.optimization", 0);
+{if $sectionMAINCONTENT}
+{*
+    BEGIN section MAINCONTENT
+*}
+    <form name="hotspots_form" method="post">
+        {$selectNetworkUI}
+    </form>
 
-        /**
-         * Disable Just-In-Time creating of super globals when APC is enabled
-         *
-         * @see http://pecl.php.net/bugs/bug.php?id=4772
-         */
-        ini_set("auto_globals_jit", 0);
-    }
-}
+    <div id="map_title">
+        <div id="map_toolbox">
+            <input type="button" value="{"Show me the closest hotspot"|_}" onclick="toggleOverlay('map_postalcode_overlay');">
 
-/**
- * Disables eAccelerator cache (in case it has been installed)
- *
- * @return void
- */
-function disableEA()
-{
-    if (function_exists("eaccelerator_rm")) {
-        ini_set("eaccelerator.enable", 0);
-        ini_set("eaccelerator.optimizer", 0);
-    }
-}
+            <div id="map_postalcode_overlay">
+                {"Enter your postal code"|_}:<br/>
+                <input type="text" id="postal_code" size="10"><br/>
+                <input type="button" value="{"Show"|_}" onclick="toggleOverlay('map_postalcode_overlay'); p = document.getElementById('postal_code'); hotspots_map.findClosestHotspotByPostalCode(p.value);">
+            </div>
 
-/**
- * Set timezone if PHP version >= 5.1.0
- *
- * @return void
- */
-function dateFix()
-{
-    // Set timezone if PHP version >= 5.1.0
-    if (str_replace(".", "", phpversion()) >= 510) {
-        date_default_timezone_set(defined(DATE_TIMEZONE) ? DATE_TIMEZONE : "Canada/Eastern");
-    }
-}
+            <input type="button" value="{"Refresh map"|_}" onclick="hotspots_map.redraw();">
+        </div>
 
-/*
- * Do the magic ...
- */
+        {"Deployed HotSpots map"|_}
+    </div>
 
-// First we need to disable PHP caches
-disableAPC();
-disableEA();
+    <div id="map_outer_hotspots_list">
+        <div id="map_hotspots_list"></div>
+    </div>
 
-/*
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * c-hanging-comment-ender-p: nil
- * End:
- */
+    <div id="map_frame">
+        <br /><br />
+        <center><h2>{"Loading, please wait..."|_}</h2></center>
+    </div>
 
-?>
+    <div id="map_legend">
+        <b>{"Legend"|_}:</b>
+        <img src="{$base_ssl_path}images/hotspots_status_map_up.png"><i>{"the hotspot is operational"|_}</i>
+        <img src="{$base_ssl_path}images/hotspots_status_map_down.png"><i>{"the hotspot is down"|_}</i>
+        <img src="{$base_ssl_path}images/hotspots_status_map_unknown.png"><i>{"not monitored"|_}</i>
+    </div>
+{*
+    END section MAINCONTENT
+*}
+{/if}

@@ -92,8 +92,13 @@ class User implements GenericObject
     {
         return self :: createNewObject();
     }
-    /** Instantiate the current user
-     * @return a User object, or null if there was an error
+    /**
+     * Instantiate the current user
+     *
+     * @return mixed A User object, or null if there was an error
+     *
+     * @static
+     * @access public
      */
     public static function getCurrentUser()
     {
@@ -113,9 +118,17 @@ class User implements GenericObject
         return $user;
     }
 
-    /** Associates the user passed in parameter with the session.  This should NOT be called by anything except the Authenticators
-     * @param User a user object
-     * @return boolean true if everything went well setting the session...
+    /**
+     * Associates the user passed in parameter with the session
+     *
+     * This should NOT be called by anything except the Authenticators
+     *
+     * @param object $user User a user object
+     *
+     * @return bool True if everything went well setting the session
+     *
+     * @static
+     * @access public
      */
     public static function setCurrentUser(User $user)
     {
@@ -130,6 +143,19 @@ class User implements GenericObject
         {
             return false;
         }
+    }
+
+    /**
+     * Returns the server the user is connected to
+     *
+     * @return string Hostname of server
+     *
+     * @static
+     * @access public
+     */
+    public static function getCurrentServer()
+    {
+        return $_SERVER['SERVER_NAME'];
     }
 
     /** Instantiate a user object

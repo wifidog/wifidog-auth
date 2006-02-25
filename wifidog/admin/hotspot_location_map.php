@@ -90,8 +90,8 @@ if(!empty($_REQUEST['node_id']))
     $script .= "var current_marker_point = new GPoint($long, $lat);\n";
     $script .= "var current_marker = new GMarker(current_marker_point);\n";
     $script .= "map.addOverlay(current_marker);\n";
-    $gis_lat_name = "node_".$node->getId()."_gis_latitude";
-    $gis_long_name = "node_".$node->getId()."_gis_longitude";
+    $gis_lat_name = "node_" . md5($node->getId()) ."_gis_latitude";
+    $gis_long_name = "node_" . md5($node->getId()) . "_gis_longitude";
     $script .= "function setLocationInOriginalWindow() {\n";
     $script .= "  window.opener.document.getElementById(\"$gis_lat_name\").value = current_marker_point.y;\n";
     $script .= "  window.opener.document.getElementById(\"$gis_long_name\").value = current_marker_point.x;";

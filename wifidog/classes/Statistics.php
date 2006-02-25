@@ -50,7 +50,7 @@
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
  * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
  */
- 
+
  require_once('include/common.php');
 class Statistics
 {
@@ -196,8 +196,13 @@ EOF;
      */
     private function processDateRangeUI()
     {
-        $this->report_date_min = $_REQUEST['date_from'];
-        $this->report_date_max = $_REQUEST['date_to'];
+        if (isset($_REQUEST['date_from'])) {
+            $this->report_date_min = $_REQUEST['date_from'];
+        }
+
+        if (isset($_REQUEST['date_to'])) {
+            $this->report_date_max = $_REQUEST['date_to'];
+        }
     }
 
     /**

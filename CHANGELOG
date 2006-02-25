@@ -1,3 +1,63 @@
+2006-02-25 Max Horváth <max.horvath@maxspot.de>
+	* fixed undefined variable bugs in statistic classes (use of date_from and
+	  date_to), variables were processed directly from request, without any
+	  check
+	  This fixes ticket #71.
+	* clicking on a username in user logs now generates a individual user
+	  report as it does when clicking on a username on the online users page
+	* Changing the value of the "Is persistent" checkbox doesn't have to
+	  saved when JavaScript is enabled in the browser. Before this change
+	  you had to save a content. So if you wanted to delete a persistant content
+	  you first had to uncheck this checkbox, save the content and delete the
+	  content after saving it. If JavaScript is enabled in your browser you
+	  can go straight ahead, uncheck the checkbox and delete the content.
+	  This fixes ticket #73.
+	* when processing global arrays if magic quotes is enabled, WiFiDog will
+	  check for type variables
+	  This fixes ticket #84.
+	* the RSS feed of nodes now delivers the correct link to the nodes homepage
+	  This fixes ticket #80.
+	* small fix in schema_validate.php which should affect nobody (in schema
+	  version 9)
+	  This fixes ticket #79.
+	* fixed "Show all available contents for this hotspot" link which didn't
+	  work if WiFiDog wasn't located in the root folder of the webserver
+	* the "Show all available contents for this hotspot" link won't be shown
+	  anymore unless all requirements are meet that all content of a hotspot
+	  would be shown. The requirements are: you need to have at least one
+	  Content Group tagged artistic and locative content, with at least one
+	  content group element available for display.
+	  This fixes ticket #35.
+	* adjusting the location of a node via the Google maps geocoding service)
+	  and clicking the button "Use these coordinates" didn't work
+	  This fixes ticket #81 and #82.
+	* the content select box now only shows the content to a user of which is
+	  is the owner from (same mechanism has already been used on the content
+	  manager page) or all content if the user is a superadmin
+	* wifidog/admin/content_admin.php removed, because the content manager now
+	  uses the generic object administration interface
+	* the creation date of a network can be changed now (this value wasn't
+	  displayed in the admin interface, even though it was present in the
+	  database)
+	* revamped administration sidebar, cleaner interface for the superadmin,
+	  for the owner of a node nothing changes
+	* added "server administration" section to the administration interface
+	* Added administration of webservers. For one webserver not much changes.
+	  The SSL available setting has been moved to this section (and removed
+	  from config.php). Running WiFiDog on two or more webserver (with one
+	  database) you now can define the different hostnames of the webserver.
+	  Of course you can also define, which of those webserver serves SSL. This
+	  is for example essential for the Google maps feature (different API keys
+	  for different hostnames)
+	* for every network you now can define it's own Google Map initial values
+	  and map types
+	* Hotspots map page now supports different maps for different networks
+	* Hotspots map page now supports different map types for different networks
+	  This fixes ticket #69
+	* Hotspots map page now offers full multilingual support (text in the
+	  JavaScript file was english only)
+	* Hotspots map page now uses a Smarty template to render HTML page
+
 2006-02-21 Max Horváth <max.horvath@maxspot.de>
 	* fixed access restriction for HTMLeditor in templates folder
 	* fixed XML error in HTMLeditors CSS and HTML templates

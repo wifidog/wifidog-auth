@@ -20,7 +20,7 @@
 </tr>
 {section name=i loop=$users_array}
 <tr>
-	<td><a href="stats.php?user_id={$users_array[i].user_id}">{$users_array[i].username}</a></td>
+	<td><a href="stats.php?Statistics={$users_array[i].account_origin}&distinguish_users_by=user_id&stats_selected_users={$users_array[i].username}&UserReport=on&user_id={$users_array[i].user_id}&action=generate">{$users_array[i].username}</a></td>
 	<td>{$users_array[i].account_origin}</td>
     <td>{$users_array[i].reg_date|date_format:"%Y/%m/%d"}</td>
     {* hack, need to put info in variable before we can use $account_status_to_text *}

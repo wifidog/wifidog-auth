@@ -46,67 +46,59 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 34);
+define('REQUIRED_SCHEMA_VERSION', 35);
 
-/** Check that the database schema is up to date.  If it isn't, offer to update it. */
+/**
+ * Check that the database schema is up to date.  If it isn't, offer to update it.
+ *
+ * @return void
+ */
 function validate_schema()
 {
+    // Define globals
     global $db;
+
+    // Init values
     $row = null;
-    try
-    {
+
+    try {
         // Check the schema info
         $db->execSqlUniqueRes("SELECT * FROM schema_info WHERE tag='schema_version'", $row, false);
     }
-    catch(Exception $e) { /* Be quiet */ }
+    catch(Exception $e) {
+        /* Be quiet */
+    }
 
-    if (empty ($row))
-    {
+    if (empty ($row)) {
         echo "<html><body>";
         echo "<h1>"._("Unable to retrieve schema version. The database schema is too old to be updated.")."</h1>";
         echo "<h2>"._("Try running the")." <a href='" . SYSTEM_PATH . "install.php'>"._("installation script")."</a>.</h2>\n";
         echo "</html></body>";
         exit ();
+    } else {
+        if ($row['value'] < REQUIRED_SCHEMA_VERSION) {
+            update_schema();
+        }
     }
-    else
-        if ($row['value'] < REQUIRED_SCHEMA_VERSION)
-        {
-//			if (!empty ($_REQUEST['schema_update_confirm']) && $_REQUEST['schema_update_confirm'] == 'on')
-//			{
-                update_schema();
-/*			}
-            else
-            {
-                echo "<html><head><h1>";
-                echo _("The database schema is not up to date.  Do you want to try to update it?  This operation is irreversible.");
-                echo "</h1><form name='login_form' method='get'>\n";
-                echo "<input type='submit' name='submit' value='"._("Try to update database schema")."'>\n";
-                echo _("Yes, I am sure:")."<input type='checkbox' name='schema_update_confirm'>\n";
-                echo "</form>\n";
-                echo "</html></head>";
-                exit ();
-            } */
-        }
-        else
-        {
-            //echo "<html><head><h1>The database schema is up to date.</h1></html></head>";
-            //exit();
-        }
 }
 
 /**
  * Auto create an administrator user with the first authenticator available
+ *
+ * @return void
  */
 function check_users_not_empty()
 {
+    // Define globals
+    global $db;
+
     // Extract the first account origin, assume it's the default
     $network = Network::getDefaultNetwork();
-    if (!empty ($network))
-    {
-        global $db;
+
+    if (!empty ($network)) {
         $db->execSqlUniqueRes("SELECT user_id FROM users WHERE account_origin = '{$network->getId()}' LIMIT 1", $row, false);
-        if ($row == null)
-        {
+
+        if ($row == null) {
             echo "<html><head><h1>";
             echo _("No user matches the default network, a new user admin/admin will be created. Change the password as soon as possible !");
             echo "</html></head>";
@@ -117,73 +109,94 @@ function check_users_not_empty()
             $db->execSqlUpdate($sql, $row, false);
             exit;
         }
-    }
-    else
-    {
+    } else {
         echo "<html><head><h1>";
         echo _("Could not get a default network!");
         echo "</html></head>";
         exit ();
     }
-} /** Try to bring the database schema up to date. */
+}
+
+/**
+ * Prints the standard update message to which version the database schema
+ * will be updated
+ *
+ * @param int $version Version to which the database schema will be updated
+ *
+ * @return void
+ */
+function printUpdateVersion($version)
+{
+    if (isset($version)) {
+        echo "<h2>Preparing SQL statements to update schema to version <i>$version</i></h2>";
+    }
+}
+
+/**
+ * Try to bring the database schema up to date.
+ *
+ * @return void
+ */
 function update_schema()
 {
+    // Define globals
     global $db;
+
+    // Init values
+    $sql = '';
+
     echo "<html><head><h1>\n";
     echo _("Trying to update the database schema.");
     echo "</h1>\n";
     $db->execSqlUniqueRes("SELECT * FROM schema_info WHERE tag='schema_version'", $row, false);
-    if (empty ($row))
-    {
+
+    if (empty ($row)) {
         echo "<h1>"._("Unable to retrieve schema version.  The database schema is too old to be updated.")."</h1>";
         exit ();
-    }
-    else
-    {
+    } else {
         $schema_version = $row['value'];
-        $sql = '';
-        $new_schema_version = 2;
-        if ($schema_version < $new_schema_version)
-        {
 
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>";
+        $new_schema_version = 2;
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "ALTER TABLE users ADD COLUMN username text;\n";
             $sql .= "ALTER TABLE users ADD COLUMN account_origin text;\n";
             $db->execSql("SELECT user_id FROM users", $results, false);
-            foreach ($results as $row)
-            {
+
+            foreach ($results as $row) {
                 $user_id = $db->escapeString($row['user_id']);
                 $sql .= "UPDATE users SET username='$user_id', user_id='".get_guid()."', account_origin='LOCAL_USER' WHERE user_id='$user_id';\n";
             }
+
             $sql .= "CREATE UNIQUE INDEX idx_unique_username_and_account_origin ON users (username, account_origin);\n";
             $sql .= "CREATE UNIQUE INDEX idx_unique_email_and_account_origin ON users USING btree (email, account_origin);\n";
         }
 
         $new_schema_version = 3;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "DROP INDEX idx_unique_email_and_account_origin;\n";
             $sql .= "ALTER TABLE users DROP CONSTRAINT check_email_not_empty;\n";
         }
 
         $new_schema_version = 4;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "ALTER TABLE users ALTER COLUMN account_origin SET NOT NULL;\n";
             $sql .= "ALTER TABLE users ADD CONSTRAINT check_account_origin_not_empty CHECK (account_origin::text <> ''::text);\n";
 
-            //We must skip all other updates because schema 5 must be manually updated:
+            // We must skip all other updates because schema 5 must be manually updated:
             $schema_version = 1000000;
         }
 
         $new_schema_version = 5;
-        if ($schema_version == $new_schema_version -1)
-        {
+        if ($schema_version == $new_schema_version -1) {
             echo "<h1>Recoding database from ISO-8859-1 to UTF-8</h1>";
             echo "<h1>YOU MUST EXECUTE THESE COMMANDS FROM THE COMMAND_LINE:</h1>";
             echo "pg_dump wifidog -U wifidog > wifidog_dump.sql;<br>";
@@ -194,11 +207,11 @@ function update_schema()
             echo "psql wifidog -U wifidog -c \"UPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version'\";<br>";
             exit;
         }
-        $new_schema_version = 6;
-        if ($schema_version < $new_schema_version)
-        {
 
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>";
+        $new_schema_version = 6;
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "CREATE TABLE locales ( \n";
             $sql .= "  locales_id text PRIMARY KEY \n";
@@ -296,20 +309,18 @@ function update_schema()
         }
 
         $new_schema_version = 7;
-        if ($schema_version < $new_schema_version)
-        {
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
 
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>";
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "ALTER TABLE content ADD COLUMN is_persistent bool;\n";
             $sql .= "ALTER TABLE content ALTER COLUMN is_persistent SET DEFAULT FALSE;\n";
-
         }
 
         $new_schema_version = 8;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "CREATE TABLE flickr_photostream
                         (
@@ -335,9 +346,9 @@ function update_schema()
         }
 
         $new_schema_version = 9;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "CREATE TABLE files
                         (
@@ -345,15 +356,15 @@ function update_schema()
                           filename text,
                           mime_type text,
                           binary_data bytea,
-                          remote_size int8,
+                          remote_size bigint,
                           CONSTRAINT files_pkey PRIMARY KEY (files_id)
                         );";
         }
 
         $new_schema_version = 10;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "ALTER TABLE files ADD COLUMN url text;";
             $sql .= "ALTER TABLE flickr_photostream ADD COLUMN preferred_size text;";
@@ -367,9 +378,9 @@ function update_schema()
         }
 
         $new_schema_version = 11;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "DROP TABLE content_group_element_portal_display_log;\n";
             $sql .= "CREATE TABLE content_display_log
@@ -385,18 +396,18 @@ function update_schema()
         }
 
         $new_schema_version = 12;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "ALTER TABLE flickr_photostream DROP CONSTRAINT flickr_photostream_content_group_fkey;";
             $sql .= "ALTER TABLE flickr_photostream ADD CONSTRAINT flickr_photostream_content_fkey FOREIGN KEY (flickr_photostream_id) REFERENCES content (content_id) ON UPDATE CASCADE ON DELETE CASCADE;";
         }
 
         $new_schema_version = 13;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "ALTER TABLE content_group DROP COLUMN content_selection_mode;\n";
             $sql .= "ALTER TABLE content_group ADD COLUMN content_changes_on_mode text;\n";
@@ -421,17 +432,17 @@ function update_schema()
         }
 
         $new_schema_version = 14;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "CREATE TABLE pictures "."( "."pictures_id text NOT NULL PRIMARY KEY REFERENCES files ON DELETE CASCADE ON UPDATE CASCADE, "."width int4, "."height int4".");\n";
         }
 
         $new_schema_version = 15;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "ALTER TABLE files ADD COLUMN data_blob oid;
                                 ALTER TABLE files ADD COLUMN local_binary_size int8;
@@ -439,18 +450,18 @@ function update_schema()
         }
 
         $new_schema_version = 16;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "ALTER TABLE flickr_photostream ADD COLUMN requests_cache text; \n";
             $sql .= "ALTER TABLE flickr_photostream ADD COLUMN cache_update_timestamp timestamp; \n";
         }
 
         $new_schema_version = 17;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "ALTER TABLE nodes ADD COLUMN max_monthly_incoming int8; \n";
             $sql .= "ALTER TABLE nodes ADD COLUMN max_monthly_outgoing int8; \n";
@@ -458,17 +469,17 @@ function update_schema()
         }
 
         $new_schema_version = 18;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "ALTER TABLE content ADD COLUMN long_description text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE;\n";
         }
 
         $new_schema_version = 19;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "CREATE TABLE iframes (";
             $sql .= "iframes_id text NOT NULL PRIMARY KEY REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,";
@@ -479,18 +490,18 @@ function update_schema()
         }
 
         $new_schema_version = 20;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "ALTER TABLE nodes ADD COLUMN latitude NUMERIC(16, 6);\n";
             $sql .= "ALTER TABLE nodes ADD COLUMN longitude NUMERIC(16, 6);\n";
         }
 
         $new_schema_version = 21;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "CREATE TABLE content_rss_aggregator \n";
             $sql .= "( \n";
@@ -511,34 +522,35 @@ function update_schema()
             $sql .= "ALTER TABLE content_has_owners ALTER COLUMN is_author SET DEFAULT 'f';\n";
             $results = null;
             $db->execSql("SELECT node_id, rss_url FROM nodes", $results, false);
-            foreach ($results as $row)
-            {
-                if (!empty ($row['rss_url']))
-                {
-                    //$user_id = $db->escapeString($row['user_id']);
+
+            foreach ($results as $row) {
+                if (!empty ($row['rss_url'])) {
                     $content_id = get_guid();
                     $sql .= "\nINSERT INTO content (content_id, content_type) VALUES ('$content_id', 'RssAggregator');\n";
                     $sql .= "INSERT INTO content_rss_aggregator (content_id) VALUES ('$content_id');\n";
                     $sql .= "INSERT INTO content_rss_aggregator_feeds (content_id, url) VALUES ('$content_id', '".$row['rss_url']."');\n";
                     $node = Node :: getObject($row['node_id']);
                     $owners = $node->getOwners();
-                    foreach ($owners as $owner)
-                    {
+
+                    foreach ($owners as $owner) {
                         $sql .= "INSERT INTO content_has_owners (content_id, user_id) VALUES ('$content_id', '".$owner->getId()."');\n";
                     }
+
                     $sql .= "INSERT INTO node_has_content (content_id, node_id) VALUES ('$content_id', '".$row['node_id']."');\n";
                 }
             }
+
             $sql .= "\nALTER TABLE nodes DROP COLUMN rss_url;\n";
             $sql .= "\nDELETE FROM content WHERE content_type='HotspotRss';\n";
         }
 
         $new_schema_version = 22;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "ALTER TABLE nodes ADD COLUMN civic_number text;\n";
+
             // Dropping street_address and copying data to street_name for the sake of backward compatibility
             $sql .= "ALTER TABLE nodes ADD COLUMN street_name text;\n";
             $sql .= "UPDATE nodes SET street_name = street_address;\n";
@@ -550,9 +562,9 @@ function update_schema()
         }
 
         $new_schema_version = 23;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "CREATE TABLE node_tech_officers (\n";
             $sql .= "  node_id VARCHAR(32) REFERENCES nodes (node_id),\n";
@@ -562,17 +574,17 @@ function update_schema()
         }
 
         $new_schema_version = 24;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "ALTER TABLE content_rss_aggregator_feeds ADD COLUMN title text; \n";
         }
 
         $new_schema_version = 25;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "CREATE TABLE node_stakeholders ( \n";
             $sql .= "  node_id VARCHAR(32) REFERENCES nodes (node_id),\n";
@@ -589,9 +601,9 @@ function update_schema()
         }
 
         $new_schema_version = 26;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "CREATE TABLE networks ( \n";
             $sql .= "  network_id text NOT NULL PRIMARY KEY,\n";
@@ -627,18 +639,17 @@ function update_schema()
         }
 
         $new_schema_version = 27;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "ALTER TABLE nodes ADD COLUMN last_paged timestamp;\n";
-
         }
 
         $new_schema_version = 28;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "ALTER TABLE nodes ADD COLUMN is_splash_only_node boolean;\n";
             $sql .= "ALTER TABLE nodes ALTER COLUMN is_splash_only_node SET DEFAULT FALSE;\n";
@@ -647,17 +658,17 @@ function update_schema()
         }
 
         $new_schema_version = 29;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "ALTER TABLE flickr_photostream ADD COLUMN api_shared_secret text;\n";
         }
 
         $new_schema_version = 30;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "CREATE INDEX idx_connections_user_id ON connections (user_id);\n";
             $sql .= "CREATE INDEX idx_connections_user_mac ON connections (user_mac);\n";
@@ -665,11 +676,11 @@ function update_schema()
         }
 
         $new_schema_version = 31;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
-             $sql .= "CREATE TABLE content_display_location ( \n";
+            $sql .= "CREATE TABLE content_display_location ( \n";
             $sql .= "  display_location text NOT NULL PRIMARY KEY\n";
             $sql .= ");\n";
             $sql .= "INSERT INTO content_display_location (display_location) VALUES ('portal_page');\n";
@@ -690,18 +701,19 @@ function update_schema()
 			/* Convert the existing node logos */
             $results = null;
             $db->execSql("SELECT node_id FROM nodes", $results, false);
-                            define('HOTSPOT_LOGO_NAME', 'hotspot_logo.jpg');
-            foreach ($results as $row)
-            {
+            define('HOTSPOT_LOGO_NAME', 'hotspot_logo.jpg');
+
+            foreach ($results as $row) {
                 $php_logo_path = WIFIDOG_ABS_FILE_PATH . LOCAL_CONTENT_REL_PATH . $row['node_id'] . '/' . HOTSPOT_LOGO_NAME;
 
                 if (file_exists($php_logo_path)) {
                     $node_logo_abs_url=$db->escapeString(BASE_URL_PATH.LOCAL_CONTENT_REL_PATH.$row['node_id'].'/'.HOTSPOT_LOGO_NAME);
-                    //$user_id = $db->escapeString($row['user_id']);
                     $content_id = get_guid();
+
                     $sql .= "\nINSERT INTO content (content_id, content_type) VALUES ('$content_id', 'Picture');\n";
                     $sql .= "INSERT INTO files (files_id, url) VALUES ('$content_id', '$node_logo_abs_url');\n";
                     $sql .= "INSERT INTO pictures (pictures_id) VALUES ('$content_id');\n";
+
                     $node = Node :: getObject($row['node_id']);
                     $owners = $node->getOwners();
 
@@ -712,21 +724,20 @@ function update_schema()
                     $sql .= "INSERT INTO node_has_content (content_id, node_id, display_location) VALUES ('$content_id', '".$row['node_id']."', 'login_page');\n";
                 }
             }
-
         }
 
         $new_schema_version = 32;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "INSERT INTO locales VALUES ('de');\n";
         }
 
         $new_schema_version = 33;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "ALTER TABLE flickr_photostream ADD COLUMN photo_display_mode text;\n";
             $sql .= "ALTER TABLE flickr_photostream ALTER COLUMN photo_display_mode SET DEFAULT 'PDM_GRID'::text;\n";
@@ -735,18 +746,41 @@ function update_schema()
         }
 
         $new_schema_version = 34;
-        if ($schema_version < $new_schema_version)
-        {
-            echo "<h2>Preparing SQL statements to update schema to version  $new_schema_version</h2>\n";
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "ALTER TABLE node_stakeholders DROP CONSTRAINT \"$1\";\n";
             $sql .= "ALTER TABLE node_stakeholders ADD CONSTRAINT nodes_fkey FOREIGN KEY (node_id) REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE CASCADE;";
         }
 
+        $new_schema_version = 35;
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
+            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+            $sql .= "CREATE TABLE servers ( \n";
+            $sql .= "  server_id text NOT NULL PRIMARY KEY,\n";
+            $sql .= "  is_default_server boolean NOT NULL DEFAULT FALSE,\n";
+            $sql .= "  name text NOT NULL DEFAULT 'Unnamed server' CHECK (name<>''),\n";
+            $sql .= "  creation_date date NOT NULL DEFAULT now(),\n";
+            $sql .= "  hostname text NOT NULL DEFAULT 'localhost' CHECK (name<>''),\n";
+            $sql .= "  ssl_available BOOLEAN NOT NULL DEFAULT FALSE,\n";
+            $sql .= "  gmaps_api_key text\n";
+            $sql .= ");\n";
+            $sql .= "INSERT INTO servers (server_id, is_default_server, name, creation_date, hostname, ssl_available, gmaps_api_key) VALUES ('" . str_replace(".", "-", $_SERVER['SERVER_NAME']) . "', TRUE, 'Unnamed server', (SELECT creation_date FROM networks GROUP BY (creation_date) ORDER BY min(creation_date) LIMIT 1), '{$_SERVER['SERVER_NAME']}', " . (defined("SSL_AVAILABLE") ? (SSL_AVAILABLE ? "TRUE" : "FALSE") : "FALSE") . ", " . (defined("GMAPS_PUBLIC_API_KEY") ? "'" . GMAPS_PUBLIC_API_KEY . "'" : "''") . ");\n";
+
+            $sql .= "ALTER TABLE networks ADD COLUMN gmaps_initial_latitude NUMERIC(16, 6);\n";
+            $sql .= "ALTER TABLE networks ADD COLUMN gmaps_initial_longitude NUMERIC(16, 6);\n";
+            $sql .= "ALTER TABLE networks ADD COLUMN gmaps_initial_zoom_level integer;\n";
+            $sql .= "ALTER TABLE networks ADD COLUMN gmaps_map_type text NOT NULL DEFAULT 'G_MAP_TYPE' CHECK (gmaps_map_type<>'');\n";
+            $sql .= "UPDATE networks SET gmaps_initial_latitude = " . (defined("GMAPS_INITIAL_LATITUDE") ? "'" . GMAPS_INITIAL_LATITUDE . "'" : "'45.494511'") . ", gmaps_initial_longitude = " . (defined("GMAPS_INITIAL_LONGITUDE") ? "'" . GMAPS_INITIAL_LONGITUDE . "'" : "'-73.560285'") . ", gmaps_initial_zoom_level = " . (defined("GMAPS_INITIAL_ZOOM_LEVEL") ? "'" . GMAPS_INITIAL_ZOOM_LEVEL . "'" : "'5'") . ";\n";
+        }
+
         $db->execSqlUpdate("BEGIN;\n$sql\nCOMMIT;\nVACUUM ANALYZE;\n", true);
         //$db->execSqlUpdate("BEGIN;\n$sql\nROLLBACK;\n", true);
+
         echo "</html></head>";
-        //exit ();
     }
 }
 

@@ -264,7 +264,7 @@ class Node implements GenericObject
 	public static function getCreateNewObjectUI($network = null)
 	{
 		$html = '';
-		$html .= _("Create new node with id")." \n";
+		$html .= _("Add a new node with ID")." \n";
 		$name = "new_node_id";
 		$html .= "<input type='text' size='10' name='{$name}'>\n";
 		if ($network)
@@ -274,7 +274,7 @@ class Node implements GenericObject
 		}
 		else
 		{
-			$html .= " "._("in network:")." \n";
+			$html .= " "._("in ")." \n";
 			$html .= Network :: getSelectNetworkUI('new_node');
 		}
 		return $html;
@@ -1284,7 +1284,7 @@ class Node implements GenericObject
 		{
 			foreach ($content_rows as $content_row)
 			{
-				$retval[] = Content :: getObject($content_row['content_id']);
+				$retval[] = Content::getObject($content_row['content_id']);
 			}
 		}
 		return $retval;

@@ -64,6 +64,7 @@ define('TOOLBAR_WIDTH', '250');
 
 // Init values
 $node = null;
+$show_more_link = false;
 
 // Init session
 $session = new Session();
@@ -321,8 +322,18 @@ if(!empty($contents))
     $html .= "</span>";
     foreach ($contents as $content)
     {
-        if ($content->isDisplayableAt($node))
-        {
+        // Check for content requirements to show the "Show all contents" link
+        if (!$show_more_link) {
+            if ($content->getObjectType() == "ContentGroup") {
+                if (method_exists($content, "isArtisticContent") && method_exists($content, "isLocativeContent")) {
+                    if ($content->isArtisticContent() && $content->isLocativeContent()) {
+                        $show_more_link = true;
+                    }
+                }
+            }
+        }
+
+        if ($content->isDisplayableAt($node)) {
             $html .= "<div class='portal_content'>\n";
             $html .= $content->getUserUI();
             $html .= "</div>\n";
@@ -350,7 +361,9 @@ if($current_user)
 }
 
 // Hyperlinks to full content display page
-$html .= "<a href='/content/?gw_id={$current_node_id}'>"._("Show all available contents for this hotspot")."</a>"."\n";
+if ($show_more_link) {
+    $html .= "<a href='" . BASE_SSL_PATH . "content/?gw_id={$current_node_id}'>"._("Show all available contents for this hotspot")."</a>"."\n";
+}
 
 $html .= "<div style='clear:both;'></div>";
 $html .= "</div>\n";

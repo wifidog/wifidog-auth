@@ -595,11 +595,15 @@ if ($network)
                     /* enclosure */
                     /* guid */
 
-                    $guid = $xmldoc->createElement("guid");
-                    $guid->setAttribute('isPermaLink', 'false');
-                    $item->appendChild($guid);
-                    $textnode = $xmldoc->createTextNode($network->getHomepageURL().$node_row['node_id']);
-                    $guid->appendChild($textnode);
+                    /* guid */
+                    if (!empty($node_row['home_page_url']))
+                    {
+                        $guid = $xmldoc->createElement("guid");
+                        $guid->setAttribute('isPermaLink', 'false');
+                        $item->appendChild($guid);
+                        $textnode = $xmldoc->createTextNode($node_row['home_page_url']);
+                        $guid->appendChild($textnode);
+                    }
 
                     /* pubDate */
                     $pubDate = $xmldoc->createElement("pubDate");

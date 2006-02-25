@@ -122,15 +122,6 @@ define('CONF_USE_CRON_FOR_DB_CLEANUP', false);
 \********************************************************************/
 
 /**
- * Use SSL
- * =======
- *
- * If your webserver has SSL available set this value to true, otherwise,
- * passwords will be transmitted in clear text over the air.
- */
-define('SSL_AVAILABLE', false);
-
-/**
  * Caching
  * =======
  *
@@ -240,36 +231,6 @@ define('PHLICKR_SUPPORT', false);
  * Enable Google Maps mapping using "hotspots_map.php".
  */
 define('GMAPS_HOTSPOTS_MAP_ENABLED', true);
-
-/**
- * Google public API key
- * =====================
- *
- * In order to use the Google API you need to register your domain at Google and
- * enter the given API key.
- *
- * Sign up for an API key here
- * http://www.google.com/apis/maps/
- */
-define('GMAPS_PUBLIC_API_KEY', 'ENTER_YOUR_KEY_HERE');
-
-/**
- * Center Coordinates
- * ==================
- *
- * Enter the center coordinates for your the area of your wireless network.
- *
- * The default values are for Montréal, Canada.
- */
-
-// Latitude.
-define('GMAPS_INITIAL_LATITUDE', '45.494511');
-
-// Longitude.
-define('GMAPS_INITIAL_LONGITUDE', '-73.560285');
-
-// Zoomlevel of the Google Map.
-define('GMAPS_INITIAL_ZOOM_LEVEL', '5');
 
 /**
  * XSLT support for Hotspot status page

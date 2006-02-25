@@ -50,6 +50,7 @@ require_once('classes/GenericObject.php');
 require_once('classes/Content.php');
 require_once('classes/User.php');
 require_once('classes/Node.php');
+require_once('classes/GisPoint.php');
 require_once('classes/Cache.php');
 
 /**
@@ -59,7 +60,9 @@ require_once('classes/Cache.php');
  *
  * @package    WiFiDogAuthServer
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @author     Max Horvath <max.horvath@maxspot.de>
  * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @copyright  2006 Max Horvath, maxspot GmbH
  */
 class Network implements GenericObject
 {
@@ -163,14 +166,24 @@ class Network implements GenericObject
 
 	}
 
-	/** Get an interface to pick a network.  If there is only one network available, no interface is actually shown
-	* @param $user_prefix A identifier provided by the programmer to recognise it's generated html form
-	* @param $pre_selected_network Optional, Network object: The network to be pre-
-	* selected in the form object
-	* @param $additional_where Additional SQL conditions for the networks to
-	* select
-	* @return html markup
-	*/
+	/**
+	 * Get an interface to pick a network
+	 *
+	 * If there is only one network available, no interface is actually shown
+	 *
+     * @param string $user_prefix          A identifier provided by the
+     *                                     programmer to recognise it's
+     *                                     generated html form
+     * @param object $pre_selected_network Network object: The network to be
+     *                                     pre-selected in the form object
+     * @param string $additional_where     Additional SQL conditions for the
+     *                                     networks to select
+     *
+     * @return string HTML markup
+     *
+     * @static
+     * @access public
+     */
 	public static function getSelectNetworkUI($user_prefix, $pre_selected_network = null, $additional_where = null)
 	{
 		$html = '';
@@ -246,7 +259,7 @@ class Network implements GenericObject
 	public static function getCreateNewObjectUI()
 	{
 		$html = '';
-		$html .= _("Create new network with id")." \n";
+		$html .= _("Create a new network with ID")." \n";
 		$name = "new_network_id";
 		$html .= "<input type='text' size='10' name='{$name}'>\n";
 		return $html;
@@ -350,11 +363,38 @@ class Network implements GenericObject
 
 	/**
 	 * Retrieves the network's creation date
-	 * @return A string
+	 *
+	 * @return string Network's creation date
 	 */
 	public function getCreationDate()
 	{
 		return $this->mRow['creation_date'];
+	}
+
+	/**
+	 * Set the network's creation date
+	 *
+	 * @param string $value The new creation date
+	 *
+	 * @return bool True on success, false on failure
+	 *
+	 * @access public
+	 */
+	public function setCreationDate($value)
+	{
+	    // Define globals
+		global $db;
+
+	    // Init values
+		$_retVal = true;
+
+		if ($value != $this->getCreationDate()) {
+			$value = $db->escapeString($value);
+			$_retVal = $db->execSqlUpdate("UPDATE networks SET creation_date = '{$value}' WHERE network_id = '{$this->getId()}'", false);
+			$this->refresh();
+		}
+
+		return $_retVal;
 	}
 
 	/** Retreives the network's homepage url
@@ -566,6 +606,119 @@ class Network implements GenericObject
 			$this->refresh();
 		}
 		return $retval;
+	}
+
+	/**
+	 * Get a GisPoint object
+	 *
+	 * @return object GisPoint object
+	 *
+	 * @access public
+	 */
+	public function getGisLocation()
+	{
+		return new GisPoint($this->mRow['gmaps_initial_latitude'], $this->mRow['gmaps_initial_longitude'], $this->mRow['gmaps_initial_zoom_level']);
+	}
+
+	/**
+	 * Set the network's GisPoint object
+	 *
+	 * @param $value The new GisPoint object
+	 *
+	 * @return bool True on success, false on failure
+	 *
+	 * @access public
+	 */
+	public function setGisLocation($pt)
+	{
+	    // Define globals
+	    global $db;
+
+		if (!empty ($pt)) {
+			$lat = $db->escapeString($pt->getLatitude());
+			$long = $db->escapeString($pt->getLongitude());
+		    $alt = $db->escapeString($pt->getAltitude());
+
+			if (!empty($lat) && !empty($long) && !empty($alt)) {
+				$db->execSqlUpdate("UPDATE networks SET gmaps_initial_latitude = $lat, gmaps_initial_longitude = $long, gmaps_initial_zoom_level = $alt WHERE network_id = '{$this->getId()}'");
+			} else {
+				$db->execSqlUpdate("UPDATE networks SET gmaps_initial_latitude = NULL, gmaps_initial_longitude = NULL, gmaps_initial_zoom_level = NULL WHERE network_id = '{$this->getId()}'");
+			}
+
+			$this->refresh();
+		}
+	}
+
+	/**
+	 * Retreives the default Google maps type
+	 *
+	 * @return string Default Google maps type
+	 *
+	 * @access public
+	 */
+	public function getGisMapType()
+	{
+		return $this->mRow['gmaps_map_type'];
+	}
+
+	/**
+	 * Set the network's default Google maps type
+	 *
+	 * @param $value The new default Google maps type
+	 *
+	 * @return bool True on success, false on failure
+	 *
+	 * @access public
+	 */
+	public function setGisMapType($value)
+	{
+	    // Define globals
+		global $db;
+
+		// Init values
+		$retval = true;
+
+		if ($value != $this->getGisMapType()) {
+			$value = $db->escapeString($value);
+			$retval = $db->execSqlUpdate("UPDATE networks SET gmaps_map_type = '{$value}' WHERE network_id = '{$this->getId()}'", false);
+			$this->refresh();
+		}
+		return $retval;
+	}
+
+	/**
+	 * Get an interface to pick a Google maps type
+	 *
+     * @param string $user_prefix           A identifier provided by the
+     *                                      programmer to recognise it's
+     *                                      generated html form
+     * @param string $pre_selected_map_type The Google map type to be
+     *                                      pre-selected in the form object
+     *
+     * @return string HTML markup
+     *
+     * @static
+     * @access public
+     */
+	public static function getSelectGisMapType($user_prefix, $pre_selected_map_type = "G_MAP_TYPE")
+	{
+	    // Define globals
+		global $db;
+
+	    // Init values
+		$_map_types = array(array("G_MAP_TYPE", _("Map")), array("G_SATELLITE_TYPE", _("Satellite")), array("G_HYBRID_TYPE", _("Hybrid")));
+
+		$_name = $user_prefix;
+
+		if ($pre_selected_map_type) {
+			$_selectedID = $pre_selected_map_type;
+		} else {
+			$_selectedID = null;
+		}
+
+		$_html = FormSelectGenerator::generateFromArray($_map_types, $_selectedID, $_name, null, false);
+
+		return $_html;
 	}
 
 	/** Get's the splash-only user.  This is the user that people logged-in at a splash-only hotspot will show up as.  This user always has multiple-login capabilities.
@@ -988,6 +1141,17 @@ class Network implements GenericObject
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 
+		// creation_date
+		$name = "network_".$this->getId()."_creation_date";
+		$value = htmlspecialchars($this->getCreationDate(), ENT_QUOTES);
+
+		$html .= "<div class='admin_section_container'>\n";
+		$html .= "<div class='admin_section_title'>" . _("Network creation date") . ":</div>\n";
+		$html .= "<div class='admin_section_data'>\n";
+		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</div>\n";
+
 		// name
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("Network name")." : </div>\n";
@@ -1109,6 +1273,45 @@ class Network implements GenericObject
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 
+		// Build HTML form fields names & values
+		if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED === true) {
+    		$gis_point = $this->getGisLocation();
+    		$gis_lat_name = "network_".$this->getId()."_gis_latitude";
+    		$gis_lat_value = htmlspecialchars($gis_point->getLatitude(), ENT_QUOTES);
+    		$gis_long_name = "network_".$this->getId()."_gis_longitude";
+    		$gis_long_value = htmlspecialchars($gis_point->getLongitude(), ENT_QUOTES);
+    		$gis_alt_name = "network_".$this->getId()."_gis_altitude";
+    		$gis_alt_value = htmlspecialchars($gis_point->getAltitude(), ENT_QUOTES);
+
+    		$html .= "<div class='admin_section_container'>\n";
+    		$html .= "<div class='admin_section_title'>"._("Center latitude for your the area of your wireless network")." : </div>\n";
+    		$html .= "<div class='admin_section_data'>\n";
+    		$html .= "<input type='text' size ='15' value='$gis_lat_value' id='$gis_lat_name' name='$gis_lat_name'>\n";
+    		$html .= "</div>\n";
+    		$html .= "</div>\n";
+
+    		$html .= "<div class='admin_section_container'>\n";
+    		$html .= "<div class='admin_section_title'>"._("Center longitude for your the area of your wireless network")." : </div>\n";
+    		$html .= "<div class='admin_section_data'>\n";
+    		$html .= "<input type='text' size ='15' value='$gis_long_value' id='$gis_long_name' name='$gis_long_name'>\n";
+    		$html .= "</div>\n";
+    		$html .= "</div>\n";
+
+    		$html .= "<div class='admin_section_container'>\n";
+    		$html .= "<div class='admin_section_title'>"._("Zoomlevel of the Google Map for your the area of your wireless network")." : </div>\n";
+    		$html .= "<div class='admin_section_data'>\n";
+    		$html .= "<input type='text' size ='15' value='$gis_alt_value' id='$gis_alt_name' name='$gis_alt_name'>\n";
+    		$html .= "</div>\n";
+    		$html .= "</div>\n";
+
+    		$html .= "<div class='admin_section_container'>\n";
+    		$html .= "<div class='admin_section_title'>"._("Default Google Map type for your the area of your wireless network")." : </div>\n";
+    		$html .= "<div class='admin_section_data'>\n";
+    		$html .= $this->getSelectGisMapType("network_".$this->getId()."_gmaps_map_type", $this->getGisMapType());
+    		$html .= "</div>\n";
+    		$html .= "</div>\n";
+		}
+
 		// Create new nodes
 		$html .= "<div class='admin_section_container'>\n";
 		$html .= "<div class='admin_section_title'>"._("New node ID")." : </div>\n";
@@ -1167,6 +1370,10 @@ class Network implements GenericObject
 			throw new Exception(_('Access denied!'));
 		}
 
+		// creation_date
+		$name = "network_".$this->getId()."_creation_date";
+		$this->setCreationDate($_REQUEST[$name]);
+
 		// name
 		$name = "network_".$this->getId()."_name";
 		$this->setName($_REQUEST[$name]);
@@ -1211,6 +1418,17 @@ class Network implements GenericObject
 		//  allow_custom_portal_redirect
 		$name = "network_".$this->getId()."_allow_custom_portal_redirect";
 		$this->setCustomPortalRedirectAllowed(empty ($_REQUEST[$name]) ? false : true);
+
+		// GIS data
+		if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED === true) {
+    		$gis_lat_name = "network_".$this->getId()."_gis_latitude";
+    		$gis_long_name = "network_".$this->getId()."_gis_longitude";
+    		$gis_alt_name = "network_".$this->getId()."_gis_altitude";
+    		$this->setGisLocation(new GisPoint($_REQUEST[$gis_lat_name], $_REQUEST[$gis_long_name], $_REQUEST[$gis_alt_name]));
+
+    		$name = "network_".$this->getId()."_gmaps_map_type";
+    		$this->setGisMapType($_REQUEST[$name]);
+		}
 
 		// Node creation
 		$new_node = Node :: processCreateNewObjectUI();

@@ -61,145 +61,338 @@ require_once('admin_common.php');
 
 require_once('classes/GenericObject.php');
 require_once('classes/MainUI.php');
+require_once('classes/User.php');
+require_once('classes/Node.php');
 require_once('classes/Network.php');
+require_once('classes/Server.php');
 
-if (!empty ($_REQUEST['debug'])) {
+// Init values
+$html = "";
+$errmsg = "";
+$common_input = "";
+$displayEditButton = true;
+$displayShowAllButton = false;
+$supportsPreview = true;
+
+// Init text values
+$createText = sprintf(_("Create %s"), $_REQUEST['object_class']);
+$addText = sprintf(_("Add %s"), $_REQUEST['object_class']);
+$createLongText = sprintf(_("Create a new %s"), $_REQUEST['object_class']);
+$addLongText = sprintf(_("Add a new %s"), $_REQUEST['object_class']);
+$listAllText = sprintf(_("Show all %s"), $_REQUEST['object_class']);
+$listPersistantText = sprintf(_("Show only persistant %s"), $_REQUEST['object_class']);
+$editText = sprintf(_("Edit %s"), $_REQUEST['object_class']);
+
+$newText = $createText;
+$newLongText = $createLongText;
+
+/*
+ * Check for debugging requests
+ */
+if (!empty($_REQUEST['debug'])) {
     echo "<pre>";
     print_r($_REQUEST);
     echo "</pre>";
 }
 
-$html = "<div>";
-if (empty ($_REQUEST['object_class'])) {
+/*
+ * Check for the object class to use
+ */
+if (empty($_REQUEST['object_class'])) {
     echo "<div class='errormsg'>"._("Sorry, the 'object_class' parameter must be specified")."</div>\n";
     exit;
 } else {
     $class = $_REQUEST['object_class'];
 }
 
-if ($_REQUEST['action'] == 'new') {
-    $object = call_user_func(array ($class, 'createNewObject'));
-    $_REQUEST['action'] = 'edit';
+/*
+ * Check for action requests
+ */
+if (!isset($_REQUEST['action'])) {
+    $_REQUEST['action'] = "";
 }
-else if ($_REQUEST['action'] == 'process_new_ui') {
-    $object = call_user_func(array ($class, 'processCreateNewObjectUI'));
-        if (!$object) {
+
+if (!isset($_REQUEST['action_delete'])) {
+    $_REQUEST['action_delete'] = "";
+}
+
+/*
+ * Pre-process action requests (load required objects)
+ */
+switch ($_REQUEST['action']) {
+case "new":
+    $object = call_user_func(array($class, 'createNewObject'));
+    $_REQUEST['action'] = 'edit';
+    break;
+
+case "process_new_ui":
+    $object = call_user_func(array($class, 'processCreateNewObjectUI'));
+
+    if (!$object) {
         echo "<div class='errormsg'>"._("Sorry, the object couldn't be created.  You probably didn't fill the form properly")."</div>\n";
         exit;
     }
+
     $_REQUEST['action'] = 'edit';
-}
-else if ($_REQUEST['action'] == 'new_ui') {
-    //No need for an object
-}
- else {
-    $object = call_user_func(array ($class, 'getObject'), $_REQUEST['object_id']);
+    break;
+
+case "list":
+case "new_ui":
+    // No need for an object
+    break;
+
+default:
+    $object = call_user_func(array($class, 'getObject'), $_REQUEST['object_id']);
+    break;
 }
 
-if ($_REQUEST['action'] == 'save') {
+/*
+ * Process action requests (saving, previewing and deleting)
+ */
+switch ($_REQUEST['action']) {
+case "save":
     $object->processAdminUI();
-    //$object = call_user_func(array ($class, 'getObject'), $_REQUEST['object_id']);
     $_REQUEST['action'] = 'edit';
-}
+    break;
 
-if ($_REQUEST['action'] == 'delete') {
-    $errmsg = '';
-
-    if ($object->delete($errmsg) == true) {
-        $html .= "<div class='successmsg'>"._("Object successfully deleted")."</div>\n";
-    } else {
-        $html .= "<div class='errormsg'>"._("Deletion failed, error was: ")."$errmsg</div>\n";
-        $_REQUEST['action'] = 'edit';
-    }
-}
-if ($_REQUEST['action'] == 'new_ui') {
-
-        $html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' method='post'>";
-    $html .= "<input type='hidden' name='object_class' value='".$class."'>\n";
-        $html .= call_user_func(array ($class, 'getCreateNewObjectUI'));
-    $html .= "<input type='hidden' name='action' value='process_new_ui'>\n";
-    $html .= "<input type=submit name='new_ui_submit' value='"._("Create")." ".$class."'>\n";
-    $html .= '</form>';
-
-
-}
-else if ($_REQUEST['action'] == 'edit') {
-        if (!$object) {
-        echo "<div class='errormsg'>"._("Sorry, the 'object_id' parameter must be specified")."</div>\n";
-        exit;
-    }
-    $common_input = '';
-    if (!empty ($_REQUEST['debug'])) {
-        $common_input .= "<input type='hidden' name='debug' value='true'>\n";
-    }
-    $common_input .= "<input type='hidden' name='object_id' value='".$object->GetId()."'>\n";
-    $common_input .= "<input type='hidden' name='object_class' value='".get_class($object)."'>\n";
-
-    $html .= "<form enctype='multipart/form-data' action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' method='post'>";
-    $html .= $common_input;
-    $html .= $object->getAdminUI();
-    $html .= "<input type='hidden' name='action' value='save'>\n";
-    $html .= "<input type=submit name='save_submit' value='"._("Save")." ".get_class($object)."'>\n";
-    $html .= '</form>';
-
-    $html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' target='_blank' method='post'>";
-    $html .= $common_input;
-    $html .= "<input type='hidden' name='action' value='preview'>\n";
-    $html .= "<input type=submit name='preview_submit' value='"._("Preview")." ".get_class($object)."'>\n";
-    $html .= '</form>';
-
-    $html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' method='post'>";
-    $html .= $common_input;
-    $html .= "<input type='hidden' name='action' value='delete'>\n";
-    $html .= "<input type=submit name='delete_submit' value='"._("Delete")." ".get_class($object)."'>\n";
-    $html .= '</form>';
-}
-else if ($_REQUEST['action'] == 'preview') {
-    if (empty ($_REQUEST['node_id'])) {
+case "preview":
+    if (empty($_REQUEST['node_id'])) {
         $node_id = null;
         $node = null;
     } else {
         $node_id = $_REQUEST['node_id'];
-        $node = Node :: getObject($node_id);
-        Node :: setCurrentNode($node);
+        $node = Node::getObject($node_id);
+        Node::setCurrentNode($node);
 
-        $html .= "<h1>"._("Showing preview as it would appear at ").$node->getName()."</h1><p>";
+        $html .= "<h1>"._("Showing preview as it would appear at ") . $node->getName() . "</h1><br><br>";
     }
-    $common_input = '';
+
     if (!empty ($_REQUEST['debug'])) {
-        $common_input .= "<input type='hidden' name='debug' value='true'>\n";
+        $common_input .= "<input type='hidden' name='debug' value='true'>";
     }
-    $common_input .= "<input type='hidden' name='object_id' value='".$object->GetId()."'>\n";
-    $common_input .= "<input type='hidden' name='object_class' value='".get_class($object)."'>\n";
-    $common_input .= "<input type='hidden' name='node_id' value='".$node_id."'>\n";
 
-    $html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' target='_top' method='post'>";
+    $common_input .= "<input type='hidden' name='object_id' value='" . $object->GetId() . "'>";
+    $common_input .= "<input type='hidden' name='object_class' value='" . get_class($object) . "'>";
+    $common_input .= "<input type='hidden' name='node_id' value='" . $node_id . "'>";
+
+    $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' target='_top' method='post'>";
     $html .= $common_input;
 
     $name = "node_id";
-    $html .= Node :: getSelectNodeUI($name);
+    $html .= Node::getSelectNodeUI($name);
 
     if (method_exists($object, "getUserUI")) {
         $html .= $object->getUserUI();
     }
 
-    $html .= "<input type='hidden' name='action' value='preview'>\n";
-    $html .= "<input type='submit' name='preview_submit' value='"._("Preview")." ".get_class($object)."'>\n";
+    $html .= "<input type='hidden' name='action' value='preview'>";
+    $html .= "<input type='submit' name='preview_submit' value='"._("Preview")." ".get_class($object)."'>";
     $html .= '</form>';
 
+    $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
+    $html .= $common_input;
+    $html .= "<input type='hidden' name='action' value='edit'>";
+    $html .= "<input type=submit name='edit_submit' value='"._("Edit")." " . get_class($object) . "'>";
+    $html .= '</form>';
+    break;
+
+case "delete":
+    // Gets called only if no JavaScript was enabled in the browser
+    if ($object->delete($errmsg) == true) {
+        $html .= "<div class='successmsg'>" . _("Object successfully deleted") . "</div>";
+    } else {
+        $html .= "<div class='errormsg'>" . _("Deletion failed, error was: ") . "<br />$errmsg</div>";
+        $_REQUEST['action'] = 'edit';
+    }
+    break;
+
+default:
+    // Do nothing
+    break;
+}
+
+/*
+ * Process action requests (deleting with enabled JavaScript)
+ */
+switch ($_REQUEST['action_delete']) {
+case "delete":
+    // First save the object so we can catch any "persistent content" changes
+    $object->processAdminUI();
+
+    // Renew information about the object
+    $object = call_user_func(array($class, 'getObject'), $_REQUEST['object_id']);
+
+    // Now try to delete the content
+    if ($object->delete($errmsg) == true) {
+        $html .= "<div class='successmsg'>" . _("Object successfully deleted") . "</div>";
+        $_REQUEST['action'] = "";
+    } else {
+        $html .= "<div class='errormsg'>" . _("Deletion failed, error was: ") . "<br />$errmsg</div>";
+        $_REQUEST['action'] = 'edit';
+    }
+    break;
+
+default:
+    // Do nothing
+    break;
+}
+
+/*
+ * Process action requests (new and edit)
+ */
+switch ($_REQUEST['action']) {
+case "list":
+    $createAllowed = false;
+
+    switch ($_REQUEST['object_class']) {
+    case "Content":
+        $displayShowAllButton = true;
+        $objectSelector = Content::getSelectContentUI('object_id', null, ((isset($_REQUEST['display_content']) && $_REQUEST['display_content'] == "all_content") ? false : true), "content_type", "table");
+        $displayEditButton = false;
+        break;
+
+    case "Node":
+        $newLongText = $addLongText;
+        $objectSelector = Node::getSelectNodeUI('object_id');
+        break;
+
+    case "Network":
+        $objectSelector = Network::getSelectNetworkUI('object_id');
+        break;
+
+    case "Server":
+        $newLongText = $addLongText;
+        $objectSelector = Server::getSelectServerUI('object_id');
+        break;
+
+    default:
+        $objectSelector = "";
+        break;
+    }
+
+    if (User::getCurrentUser()->isSuperAdmin() || (User::getCurrentUser()->isOwner() && $createAllowed)) {
+        $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
+        $html .= "<input type='hidden' name='object_class' value='$class'>";
+        $html .= "<input type='hidden' name='action' value='new_ui'>";
+        $html .= "<input type='submit' name='new_submit' value='$newLongText'>\n";
+        $html .= '</form>';
+    }
+
+    if ($displayShowAllButton) {
+        $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
+        $html .= "<input type='hidden' name='object_class' value='$class'>";
+        $html .= "<input type='hidden' name='action' value='list'>\n";
+
+        if (isset($_REQUEST['display_content']) && $_REQUEST['display_content'] == "all_content") {
+            $html .= "<input type='submit' name='list_submit' value='$listPersistantText'>\n";
+        } else {
+            $html .= "<input type='hidden' name='display_content' value='all_content'>\n";
+            $html .= "<input type='submit' name='list_submit' value='$listAllText'>\n";
+        }
+
+        $html .= '</form>';
+    }
+
+    if ($objectSelector != "") {
+        if ($displayEditButton) {
+            $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
+            $html .= "<input type='hidden' name='object_class' value='$class'>";
+            $html .= "<input type='hidden' name='action' value='edit'>";
+            $html .= $objectSelector;
+            $html .= "<input type='submit' name='edit_submit' value='$editText'>\n";
+            $html .= '</form>';
+        } else {
+            $html .= $objectSelector;
+        }
+    }
+    break;
+
+case "new_ui":
+    switch ($_REQUEST['object_class']) {
+    case "Node":
+    case "Server":
+    case "Content":
+        $newText = $addText;
+        break;
+
+    default:
+        break;
+    }
+
+    $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
+    $html .= "<input type='hidden' name='object_class' value='$class'>";
+    $html .= call_user_func(array($class, 'getCreateNewObjectUI'));
+    $html .= "<input type='hidden' name='action' value='process_new_ui'>";
+    $html .= "<input type=submit name='new_ui_submit' value='$newText'>";
+    $html .= '</form>';
+    break;
+
+case "edit":
+    switch ($_REQUEST['object_class']) {
+    case "Network":
+    case "Server":
+        $supportsPreview = false;
+        break;
+
+    default:
+        break;
+    }
+
+    if (!$object) {
+        echo "<div class='errormsg'>" . _("Sorry, the 'object_id' parameter must be specified") . "</div>";
+        exit;
+    }
+
+    if (!empty ($_REQUEST['debug'])) {
+        $common_input .= "<input type='hidden' name='debug' value='true'>";
+    }
+
+    $common_input .= "<input type='hidden' name='object_id' value='" . $object->GetId() . "'>";
+    $common_input .= "<input type='hidden' name='object_class' value='" . get_class($object) . "'>";
+
+    $html .= "<form enctype='multipart/form-data' action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
+    $html .= $common_input;
+    $html .= $object->getAdminUI();
+    $html .= "<input type='hidden' name='action' value='save'>";
+    $html .= "<input type=submit name='save_submit' value='" . _("Save") . " " . get_class($object) . "'>";
+    $html .= "<script type='text/javascript'>";
+    $html .= "document.write(\"<br />\");";
+    $html .= "document.write(\"<input type='hidden' name='action_delete' value='no' id='form_action_delete' />\");";
+    $html .= "document.write(\"<input type='submit' name='action_delete_submit' onmouseup='document.getElementById(\\\"form_action_delete\\\").value = \\\"delete\\\"' onkeyup='document.getElementById(\\\"form_action_delete\\\").value = \\\"delete\\\"' value='" . _("Delete") . " " . get_class($object) . "' />\");";
+    $html .= "</script>";
+    $html .= '</form>';
+
+    if ($supportsPreview) {
+        $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' target='_blank' method='post'>";
+        $html .= $common_input;
+        $html .= "<input type='hidden' name='action' value='preview'>";
+        $html .= "<input type=submit name='preview_submit' value='" . _("Preview") . " " . get_class($object) . "'>";
+        $html .= '</form>';
+    }
+
+    // Display delete button (without check for unchecked persitant switch) only if JavaScript has been disabled
+    $html .= "<noscript>";
     $html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' method='post'>";
     $html .= $common_input;
-    $html .= "<input type='hidden' name='action' value='edit'>\n";
-    $html .= "<input type=submit name='edit_submit' value='"._("Edit")." ".get_class($object)."'>\n";
+    $html .= "<input type='hidden' name='action' value='delete'>";
+    $html .= "<input type=submit name='delete_submit' value='" . _("Delete") . " " . get_class($object) . "'>";
     $html .= '</form>';
-}
-$html .= "</div>";
+    $html .= "</noscript>";
+    break;
 
-$ui=new MainUI();
-$ui->setToolSection('ADMIN');
+default:
+    // Do nothing
+    break;
+}
+
+/*
+ * Render output
+ */
+$ui = new MainUI();
 $ui->setTitle(_("Generic object editor"));
 $ui->setHtmlHeader("<script type='text/javascript' src='" . BASE_SSL_PATH . "js/interface.js'></script>");
-$ui->setMainContent($html);
+$ui->setToolSection('ADMIN');
+$ui->setMainContent("<div>" . $html . "</div>");
 $ui->display();
 
 /*

@@ -405,9 +405,9 @@ class File extends Content
      *
      * @return bool True if file is local
      *
-     * @access private
+     * @access protected
      */
-    private function isLocalFile()
+    protected function isLocalFile()
     {
         return is_null($this->files_row['url']);
     }

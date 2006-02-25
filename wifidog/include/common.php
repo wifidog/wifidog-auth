@@ -65,7 +65,6 @@ dateFix();
  * Include path detection code
  */
 require_once('path_defines_base.php');
-require_once('path_defines_url_content.php');
 
 /**
  * Load required classes
@@ -74,10 +73,28 @@ require_once('classes/EventLogging.php');
 require_once('classes/AbstractDb.php');
 require_once('classes/Locale.php');
 require_once('classes/Dependencies.php');
+require_once('classes/Server.php');
 
 global $db;
 
 $db = new AbstractDb();
+
+/**
+ * Check for SSL support
+ */
+
+define("SSL_AVAILABLE", false);
+
+if (Server::getCurrentServer(true) != null) {
+    if (Server::getCurrentServer(true)->isSSLAvailable()) {
+        define("SSL_AVAILABLE", true);
+    }
+}
+
+/**
+ * Set paths
+ */
+require_once('path_defines_url_content.php');
 
 /* Constant shared with the gateway
  * NEVER edit these, as they mush match the C code of the gateway */

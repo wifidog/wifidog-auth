@@ -628,38 +628,107 @@ class Content implements GenericObject {
 
     }
 
-    /** Get an interface to pick content from all persistent content.
-    * @param $user_prefix A identifier provided by the programmer to recognise it's generated html form
-      @param $sql_additional_where Addidional where conditions to restrict the candidate objects
-    * @return html markup
-    */
-    public static function getSelectContentUI($user_prefix, $sql_additional_where = null)
+    /**
+     * Get an interface to pick content from all persistent content
+     *
+     * It either returns a select box or an extended table
+     *
+     * @param string $user_prefix             An identifier provided by the
+     *                                        programmer to recognise it's
+     *                                        generated HTML form
+     * @param string $sql_additional_where    Addidional where conditions to
+     *                                        restrict the candidate objects
+     * @param bool   $show_persistant_content Defines if to list persistant
+     *                                        content, only
+     * @param string $order                   Order of output (default: by
+     *                                        creation time)
+     * @param string $type_interface          Type of interface:
+     *                                          - "select": default, shows a
+     *                                            select box
+     *                                          - "table": showsa table with
+     *                                            extended information
+     *
+     * @return string HTML markup
+     *
+     * @static
+     * @access public
+     */
+    public static function getSelectContentUI($user_prefix, $sql_additional_where = null, $show_persistant_content = true, $order = "creation_timestamp", $type_interface = "select")
     {
-        $html = '';
-        $name = "{$user_prefix}";
-        $html .= _("Select existing Content : ")."\n";
+        // Define globals
         global $db;
-        $retval = array ();
-        $sql = "SELECT * FROM content WHERE is_persistent=TRUE $sql_additional_where ORDER BY creation_timestamp";
-        $db->execSql($sql, $content_rows, false);
-        if ($content_rows != null)
-        {
-            $i = 0;
-            foreach ($content_rows as $content_row)
-            {
-                $content = Content :: getObject($content_row['content_id']);
-                $tab[$i][0] = $content->getId();
-                $tab[$i][1] = $content->__toString()." (".get_class($content).")";
-                $i ++;
-            }
-            $html .= FormSelectGenerator :: generateFromArray($tab, null, $name, null, false);
 
+        // Init values
+        $_html = '';
+        $_retVal = array();
+        $_contentRows = null;
+
+        if ($type_interface != "table") {
+            $_html .= _("Select existing Content: ")."\n";
         }
-        else
-        {
-            $html .= "<div class='warningmsg'>"._("Sorry, no content available in the database")."</div>\n";
+
+        $_name = "{$user_prefix}";
+
+        if ($show_persistant_content) {
+            $_sql = "SELECT * FROM content WHERE is_persistent=TRUE $sql_additional_where ORDER BY $order";
+        } else {
+            $_sql = "SELECT * FROM content $sql_additional_where ORDER BY $order";
         }
-        return $html;
+
+        $db->execSql($_sql, $_contentRows, false);
+
+        if ($_contentRows != null) {
+            $_i = 0;
+
+            if ($type_interface == "table") {
+                $_html .= "<table class='content_admin'>\n";
+                $_html .= "<tr><th>" . _("Title") . "</th><th>" . _("Content type") . "</th><th>" . _("Description") . "</th><th></th></tr>\n";
+            }
+
+            foreach ($_contentRows as $_contentRow) {
+                $_content = Content::getObject($_contentRow['content_id']);
+
+                if (User::getCurrentUser()->isSuperAdmin() || $_content->isOwner(User::getCurrentUser())) {
+                    if ($type_interface != "table") {
+                        $_tab[$_i][0] = $_content->getId();
+                        $_tab[$_i][1] = $_content->__toString() . " (" . get_class($_content) . ")";
+                        $_i ++;
+                    } else {
+                        if (!empty($_contentRow['title'])) {
+                            $_title = Content::getObject($_contentRow['title']);
+                            $_titleUI = $_title->__toString();
+                        } else {
+                            $_titleUI = "";
+                        }
+
+                        if (!empty($_contentRow['description'])) {
+                            $_description = Content::getObject($_contentRow['description']);
+                            $_descriptionUI = $_description->__toString();
+                        } else {
+                            $_descriptionUI = "";
+                        }
+
+                        $_href = GENERIC_OBJECT_ADMIN_ABS_HREF . "?object_id={$_contentRow['content_id']}&object_class=Content&action=edit";
+                        $_html .= "<tr><td>$_titleUI</td><td><a href='$_href'>{$_contentRow['content_type']}</a></td><td>$_descriptionUI</td>\n";
+
+                        $_href = GENERIC_OBJECT_ADMIN_ABS_HREF . "?object_id={$_contentRow['content_id']}&object_class=Content&action=delete";
+                        $_html .= "<td><a href='$_href'>" . _("Delete") . "</a></td>";
+
+                        $_html .= "</tr>\n";
+                    }
+                }
+            }
+
+            if ($type_interface != "table") {
+                $_html .= FormSelectGenerator::generateFromArray($_tab, null, $_name, null, false);
+            } else {
+                $_html .= "</table>\n";
+            }
+        } else {
+            $_html .= "<div class='warningmsg'>" . _("Sorry, no content available in the database") . "</div>\n";
+        }
+
+        return $_html;
     }
 
     /** Get the selected Content object.
