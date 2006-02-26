@@ -10,6 +10,7 @@
 	* RSS and XML feed of hotspot status now actually do deliver data from
 	  the requested network (before the code accepted network selection but
 	  actually switched back to the current network)
+	* RSS feed of hotspot status page now gets announced in browser
 
 2006-02-25 Max Horváth <max.horvath@maxspot.de>
 	* fixed undefined variable bugs in statistic classes (use of date_from and
