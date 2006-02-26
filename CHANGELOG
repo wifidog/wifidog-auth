@@ -1,3 +1,16 @@
+2006-02-26 Max Horváth <max.horvath@maxspot.de>
+	* Hotspots map page now uses a direct Javascript call for the link
+	  "Show me on the map" (resulting in the browser not jumping to the top of
+	  the page if a user clicks on such a link)
+	* refactored hotspot status page, it now uses node list classes to generate
+	  output
+	* WIFI411_CSV has been removed from hotspot status page - it didn't work
+	  properly - a working version can be added to /wifidog/classes/NodeLists
+	* RSS feed of hotspot status now delivers language of user
+	* RSS and XML feed of hotspot status now actually do deliver data from
+	  the requested network (before the code accepted network selection but
+	  actually switched back to the current network)
+
 2006-02-25 Max Horváth <max.horvath@maxspot.de>
 	* fixed undefined variable bugs in statistic classes (use of date_from and
 	  date_to), variables were processed directly from request, without any
@@ -57,9 +70,6 @@
 	* Hotspots map page now offers full multilingual support (text in the
 	  JavaScript file was english only)
 	* Hotspots map page now uses a Smarty template to render HTML page
-	* Hotspots map page now uses a direct Javascript call for the link
-	  "Show me on the map" (resulting in the browser not jumping to the top of
-	  the page if a user clicks on such a link)
 
 2006-02-21 Max Horváth <max.horvath@maxspot.de>
 	* fixed access restriction for HTMLeditor in templates folder

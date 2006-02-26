@@ -15,6 +15,7 @@ for i in `find . -maxdepth 1 -mindepth 1 -type d -and -not -name "CVS"`; do
     done
     find ../classes/Content -maxdepth 1 -name "*.php" -exec xgettext --language=PHP --from-code=utf-8 -j -o $FILE --keyword=_ {} \;
     find ../classes/Geocoders -maxdepth 1 -name "*.php" -exec xgettext --language=PHP --from-code=utf-8 -j -o $FILE --keyword=_ {} \;
+    find ../classes/NodeLists -maxdepth 1 -name "*.php" -exec xgettext --language=PHP --from-code=utf-8 -j -o $FILE --keyword=_ {} \;
     find ../classes/StatisticGraph -maxdepth 1 -name "*.php" -exec xgettext --language=PHP --from-code=utf-8 -j -o $FILE --keyword=_ {} \;
     find ../classes/StatisticReport -maxdepth 1 -name "*.php" -exec xgettext --language=PHP --from-code=utf-8 -j -o $FILE --keyword=_ {} \;
     xgettext  --language=PHP --from-code=utf-8 -j -o $FILE --keyword=_ smarty.txt
