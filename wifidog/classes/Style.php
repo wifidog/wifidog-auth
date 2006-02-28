@@ -88,7 +88,7 @@ class Style
   {
     $smarty = new SmartyWifidog;
     $smarty->assign('title',$title);
-    $retval = $smarty->fetch(DEFAULT_CONTENT_SMARTY_PATH.PAGE_HEADER_NAME);
+    //$retval = $smarty->fetch(DEFAULT_CONTENT_SMARTY_PATH.PAGE_HEADER_NAME);
     global $starttime;
     $starttime = microtime();
 

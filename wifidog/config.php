@@ -320,35 +320,6 @@ define('WIFIDOG_LOGO_BANNER_NAME', 'wifidog_logo_banner.png');
 // Name of default node.
 define('DEFAULT_NODE_ID', 'default');
 
-/********************************************************************\
- * DEPRECATED VALUES                                                *
-\********************************************************************/
-
-/**
- * @deprecated since 2005-04-19
- */
-define('PAGE_HEADER_NODE', 'header.html');
-
-/**
- * @deprecated since 2005-04-19
- */
-define('PAGE_HEADER_NAME', 'header.html');
-
-/**
- * @deprecated since 2005-04-19
- */
-define('PAGE_FOOTER_NODE', 'footer.html');
-
-/**
- * @deprecated since 2005-04-19
- */
-define('PAGE_FOOTER_NAME', 'footer.html');
-
-/**
- * @deprecated since 2005-04-19
- */
-define('PORTAL_PAGE_NAME', 'portal.html');
-
 /**
  * In case this is the local.config.php you should remove the next lines.
  */

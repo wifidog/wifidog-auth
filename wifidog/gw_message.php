@@ -49,24 +49,41 @@
 require_once(dirname(__FILE__) . '/include/common.php');
 
 require_once('include/common_interface.php');
+require_once('classes/User.php');
+require_once('classes/Network.php');
+require_once('classes/MainUI.php');
+
+$ui = new MainUI();
+$errmsg = "";
 
 if (isset($_REQUEST["message"])) {
     switch ($_REQUEST["message"]) {
-        case "failed_validation":
-            $smarty->display("templates/message_failed_validation.html");
-            break;
-        case "denied":
-            $smarty->display("templates/message_denied.html");
-            break;
-        case "activate":
-            $smarty->display("templates/message_activate.html");
-            break;
-        default:
-            $smarty->display("templates/message_default.html");
-            break;
+    case "failed_validation":
+        $errmsg .= "<p>" . sprintf(_("You have failed to validate your account in %d minutes."), (User::getCurrentUser()->getNetwork()->getValidationGraceTime() / 60)) . "</p>";
+        $errmsg .= "<p>" . _("Please validate your account from somewhere else or create a new one.") . "</p>";
+        $ui->displayError($errmsg);
+        break;
+
+    case "denied":
+        $errmsg .= _("Access denied!");
+        $ui->displayError($errmsg);
+        break;
+
+    case "activate":
+        $errmsg .= "<p>" . sprintf(_("You have now been granted %d minutes of Internet access without being validated to go and activate your account."), (User::getCurrentUser()->getNetwork()->getValidationGraceTime() / 60)) . "</p>";
+        $errmsg .= "<p>" . _("If you fail to validate your account in 15 minutes, you will have to validate it from somewhere else.") . "</p>";
+        $errmsg .= "<p>" . _("If you do not receive an email from our validation server in the next minute, perhaps you have made a typo in your email address, you might have to create another account.") . "</p>";
+        $ui->displayError($errmsg);
+        break;
+
+    default:
+        $errmsg .= _("No message has been specified! (this is probably an error)");
+        $ui->displayError($errmsg);
+        break;
     }
 } else {
-    $smarty->display("templates/message_default.html");
+    $errmsg .= _("No message has been specified! (this is probably an error)");
+    $ui->displayError($errmsg);
 }
 
 /*

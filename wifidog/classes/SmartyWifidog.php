@@ -93,35 +93,11 @@ class SmartyWifidog extends Smarty {
     /* We need this for various forms to redirect properly (language form) */
     $this->assign('request_uri', $_SERVER["REQUEST_URI"]);
 
-    if(is_file(NODE_CONTENT_PHP_RELATIVE_PATH.PAGE_HEADER_NAME))
-      {
-        $this->assign('header_file',NODE_CONTENT_SMARTY_PATH.PAGE_HEADER_NAME);
-      }
-    else
-      {
-        $this->assign('header_file',DEFAULT_CONTENT_SMARTY_PATH.PAGE_HEADER_NAME);
-      }
-
-    if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.PORTAL_PAGE_NAME)) {
-        $this->assign('portal_page', NODE_CONTENT_SMARTY_PATH.PORTAL_PAGE_NAME);
-    } else {
-        $this->assign('portal_page', DEFAULT_CONTENT_SMARTY_PATH.PORTAL_PAGE_NAME);
-    }
-
-    if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.PORTAL_PAGE_NAME)) {
+    if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.LOGIN_PAGE_NAME)) {
         $this->assign('login_page', NODE_CONTENT_SMARTY_PATH.LOGIN_PAGE_NAME);
     } else {
         $this->assign('login_page', DEFAULT_CONTENT_SMARTY_PATH.LOGIN_PAGE_NAME);
     }
-
-    if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.PAGE_FOOTER_NAME))
-      {
-        $this->assign('footer_file',NODE_CONTENT_SMARTY_PATH.PAGE_FOOTER_NAME);
-      }
-    else
-      {
-        $this->assign('footer_file',DEFAULT_CONTENT_SMARTY_PATH.PAGE_FOOTER_NAME);
-      }
 
     if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.STYLESHEET_NAME))
       {

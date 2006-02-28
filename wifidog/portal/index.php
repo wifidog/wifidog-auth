@@ -39,8 +39,10 @@
  * @package    WiFiDogAuthServer
  * @author     Philippe April
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @author     Max Horvath <max.horvath@maxspot.de>
  * @copyright  2004-2006 Philippe April
  * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @copyright  2006 Max Horvath, maxspot GmbH
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
@@ -55,12 +57,14 @@ require_once('classes/Node.php');
 require_once('classes/MainUI.php');
 require_once('classes/Session.php');
 
-/**
- * Define width of toolbar
- *
- * Must match the stylesheet for the tool section width
+/*
+ * Check for missing URL switch
  */
-define('TOOLBAR_WIDTH', '250');
+if (isset($_REQUEST['missing']) && $_REQUEST['missing'] == "url") {
+    $ui = new MainUI();
+    $ui->displayError(_('For some reason, we were unable to determine the web site you initially wanted to see.  You should now enter a web address in your URL bar.'), false);
+    exit;
+}
 
 // Init values
 $node = null;
@@ -72,256 +76,193 @@ $session = new Session();
 // Get the current user
 $current_user = User::getCurrentUser();
 
-if (!empty ($_REQUEST['gw_id'])) {
-    $node = Node :: getObject($_REQUEST['gw_id']);
-}
+/*
+ * Start general request parameter processing section
+ */
+if (!empty($_REQUEST['gw_id'])) {
+    try {
+        $node = Node::getObject($_REQUEST['gw_id']);
+        $network = $node->getNetwork();
+    }
 
-if ($node == null) {
-    $smarty->display("templates/message_unknown_hotspot.html");
+    catch (Exception $e) {
+        $ui = new MainUI();
+        $ui->displayError($e->getMessage());
+        exit;
+    }
+} else {
+    $ui = new MainUI();
+    $ui->displayError(_("No Hotspot specified!"));
     exit;
 }
-
-// Get information about current network
-$network = $node->getNetwork();
 
 /*
  * If this node has a custom portal defined, and the network config allows it,
  * redirect to the custom portal
  */
 $custom_portal_url = $node->getCustomPortalRedirectUrl();
+
 if (!empty($custom_portal_url) && $network->getCustomPortalRedirectAllowed()) {
     header("Location: {$custom_portal_url}");
 }
 
 $node_id = $node->getId();
 $portal_template = $node_id.".html";
-Node :: setCurrentNode($node);
+Node::setCurrentNode($node);
 
-$ui = new MainUI();
-if (isset ($session))
-{
-    if(!empty($_REQUEST['gw_id']))
+if (isset($session)) {
+    if (!empty($_REQUEST['gw_id'])) {
         $session->set(SESS_GW_ID_VAR, $_REQUEST['gw_id']);
-
-}
-
-$tool_html = '';
-
-$tool_html .= "<h1>"._("Online users")."</h1>"."\n";
-$tool_html .= '<p class="indent">'."\n";
-$current_node = Node :: getCurrentNode();
-if ($current_node != null)
-{
-    $current_node_id = $current_node->getId();
-    $online_users = $current_node->getOnlineUsers();
-    $num_online_users = count($online_users);
-    if ($num_online_users > 0)
-    {
-        //$tool_html .= $num_online_users.' '._("other users online at this hotspot...");
-        $tool_html .= "<ul class='users_list'>\n";
-        foreach($online_users as $online_user) {
-            $tool_html .= "<li>";
-            $tool_html .= $online_user->getUsername();
-            $roles = array();
-            if ($current_node->isOwner($online_user))
-                $roles[] = _("owner");
-            if ($current_node->isTechnicalOfficer($online_user))
-                $roles[] = _("technical officer");
-            if ($roles)
-                $tool_html .= " <span class='roles'>(" . join($roles, ",") . ")</span>";
-            $tool_html .= "</li>\n";
-        }
-        $tool_html .= "</ul>\n";
-    }
-    else
-    {
-        $tool_html .= _("Nobody is online at this hotspot...");
-    }
-}
-else
-{
-    $network = Network::getCurrentNetwork();
-    $current_node_id = null;
-    $tool_html .= _("You are not currently at a hotspot...");
-}
-$tool_html .= "</p>"."\n";
-
-$tool_html .= '<script type="text/javascript">
-function getElementById(id) {
-    if (document.all) {
-    return document.getElementById(id);
-    }
-    for (i=0;i<document.forms.length;i++) {
-    if (document.forms[i].elements[id]) {return document.forms[i].elements[id]; }
     }
 }
 
-function getWindowSize(window) {
-var size_array = new Array(2);
-  var myWidth = 0, myHeight = 0;
-  if( typeof( window.innerWidth ) == "number" ) {
-    //Non-IE
-    myWidth = window.innerWidth;
-    myHeight = window.innerHeight;
-  } else if( document.documentElement &&
-      ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
-    //IE 6+ in "standards compliant mode"
-    myWidth = document.documentElement.clientWidth;
-    myHeight = document.documentElement.clientHeight;
-  } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
-    //IE 4 compatible
-    myWidth = document.body.clientWidth;
-    myHeight = document.body.clientHeight;
-  }
-  size_array[0] = myWidth;
-  size_array[1] = myHeight;
-//  window.alert( "Width = " + myWidth );
-//  window.alert( "Height = " + myHeight );
-return size_array;
-}
+$current_node = Node::getCurrentNode();
+$current_node_id = $current_node->getId();
 
+// Init ALL smarty SWITCH values
+$smarty->assign('sectionTOOLCONTENT', false);
+$smarty->assign('sectionMAINCONTENT', false);
 
-</script>';
+// Init ALL smarty values
+$smarty->assign('currentNode', null);
+$smarty->assign('numOnlineUsers', 0);
+$smarty->assign('onlineUsers', array());
+$smarty->assign('userIsAtHotspot', false);
+$smarty->assign('noUrl', true);
+$smarty->assign('url', "");
+$smarty->assign('accountValidation', false);
+$smarty->assign('validationTime', 20);
+$smarty->assign('hotspotNetworkUrl', "");
+$smarty->assign('hotspotNetworkName', "");
+$smarty->assign('networkLogoBannerUrl', "");
+$smarty->assign('networkContents', false);
+$smarty->assign('networkContentArray', array());
+$smarty->assign('nodeHomepage', false);
+$smarty->assign('nodeURL', "");
+$smarty->assign('nodeName', "");
+$smarty->assign('nodeContents', false);
+$smarty->assign('nodeContentArray', array());
+$smarty->assign('userContents', false);
+$smarty->assign('userContentArray', array());
 
+/*
+ * Tool content
+ */
 
-$tool_html .= '<p class="indent">'."\n";
-$tool_html .= "<a  id='wifidog_portal_expand' onclick=\"
-var wifidog_portal_expand = getElementById('wifidog_portal_expand');
-var wifidog_portal_collapse = getElementById('wifidog_portal_collapse');
+// Set section of Smarty template
+$smarty->assign('sectionTOOLCONTENT', true);
 
-wifidog_portal_expand.style.display = 'none';
-wifidog_portal_collapse.style.display = 'inline';
-var size_array = getWindowSize(window.opener);
-window.resizeTo(size_array[0],size_array[1]);
-\">"._("Expand portal")."</a>"."\n";
+// Set details about node
+$smarty->assign('currentNode', $current_node);
 
-$tool_html .= "<a id='wifidog_portal_collapse' onclick=\"
-var wifidog_portal_expand = getElementById('wifidog_portal_expand');
-var wifidog_portal_collapse = getElementById('wifidog_portal_collapse');
+// Set details about onlineusers
+$online_users = $current_node->getOnlineUsers();
+$num_online_users = count($online_users);
 
-wifidog_portal_expand.style.display = 'inline';
-wifidog_portal_collapse.style.display = 'none';
-var size_array = getWindowSize(window.opener);
-window.resizeTo('".TOOLBAR_WIDTH."',size_array[1]);
+foreach ($online_users as $online_user) {
+    $roles = array();
 
-\">"._("Collapse portal")."</a>"."\n";
-$tool_html .= "</p>"."\n";
-
-
-
-
-    $original_url_requested=$session->get(SESS_ORIGINAL_URL_VAR);
-    if(empty($original_url_requested))
-    {
-        $url="missing_original_url.php";
+    if ($current_node->isOwner($online_user)) {
+        $roles[] = _("owner");
     }
-    else
-    {
-        $url=$original_url_requested;
+
+    if ($current_node->isTechnicalOfficer($online_user)) {
+        $roles[] = _("technical officer");
     }
-$tool_html .= '<p class="indent">'."\n";
-$tool_html .= "<a id='wifidog_use_internet' href='$url' onclick=\"
-var size_array = getWindowSize(window);
-var original_location=window.location.href;
-//this.target='_blank';
-var old_window = window;
-var new_window = window.open('".CURRENT_REQUEST_URL."','wifidog_portal');
-new_window.blur();
-old_window.focus();
-new_window.resizeTo('".TOOLBAR_WIDTH."',size_array[1]);
 
-//old_window.location.href='test';
-//window.moveBy(300, 300);
-/*if(window.open){alert('window.open enabled');}
-else{alert('window.open DISABLED');}*/
+    if ($roles) {
+        $rolenames = join($roles, ",");
+    }
 
-\"><img src='" . BASE_SSL_PATH . "images/start.gif'></a>\n";
-$tool_html .= "</p>"."\n";
-
-$tool_html .= '<script type="text/javascript">
-//Set up if expand/collapse functionnality is to be enabled by checking if we were called from another portal window.
-
-window.is_wifidog_portal=true; //This assignement may be read by another window
-
-var wifidog_portal_expand = document.getElementById("wifidog_portal_expand");
-var wifidog_portal_collapse = document.getElementById("wifidog_portal_collapse");
-var wifidog_use_internet = document.getElementById("wifidog_use_internet");
-if(window.opener && window.opener.is_wifidog_portal==true)
-{
-wifidog_portal_expand.style.display = "inline";
-wifidog_portal_collapse.style.display = "none";
-wifidog_use_internet.style.display = "none";
+    $online_user_array[] = array('Username' => $online_user->getUsername(), 'showRoles' => count($roles) > 0, 'roles' => $rolenames);
 }
-else
-{
-wifidog_portal_expand.style.display = "none";
-wifidog_portal_collapse.style.display = "none";
+
+$smarty->assign('numOnlineUsers', $num_online_users);
+
+if ($num_online_users > 0) {
+    $smarty->assign('onlineUsers', $online_user_array);
 }
-</script>';
 
-$ui->setToolContent($tool_html);
+// Check for requested URL and if user is at a hotspot
+$original_url_requested = $session->get(SESS_ORIGINAL_URL_VAR);
 
-$hotspot_network_name = $network->getName();
-$hotspot_network_url = $network->getHomepageURL();
-$network_logo_url = COMMON_CONTENT_URL.NETWORK_LOGO_NAME;
-$network_logo_banner_url = COMMON_CONTENT_URL.NETWORK_LOGO_BANNER_NAME;
+$smarty->assign('userIsAtHotspot', Node::getCurrentRealNode() != null ? true : false);
 
-$html = '';
+if (empty($original_url_requested)) {
+    $smarty->assign('noUrl', true);
+    $smarty->assign('url', "?missing=url");
+} else {
+    $smarty->assign('noUrl', true);
+    $smarty->assign('url', $original_url_requested);
+}
+
+// Compile HTML code
+$tool_html = $smarty->fetch("templates/sites/portal.tpl");
+
+/*
+ * Main content
+ */
+
+// Reset ALL smarty SWITCH values
+$smarty->assign('sectionTOOLCONTENT', false);
+$smarty->assign('sectionMAINCONTENT', false);
+
+// Set section of Smarty template
+$smarty->assign('sectionMAINCONTENT', true);
 
 // While in validation period, alert user that he should validate his account ASAP
-if($current_user && $current_user->getAccountStatus() == ACCOUNT_STATUS_VALIDATION)
-    $html .= "<div id='warning_message_area'>"._('An email with confirmation instructions was sent to your email address.  Your account has been granted 15 minutes of access to retrieve your email and validate your account.')."</div>";
-
-$html .= "<div id='portal_container'>\n";
-
-
-/* Network section */
-
-$html .= "<div class='portal_network_section'>\n";
-$html .= "<a href='{$hotspot_network_url}'><img class='portal_section_logo' alt='{$hotspot_network_name} logo' src='{$network_logo_banner_url}' border='0'></a>\n";
-// Get all network content and EXCLUDE user subscribed content
-if($current_user)
-    $contents = Network :: getCurrentNetwork()->getAllContent(true, $current_user);
-else
-    $contents = Network :: getCurrentNetwork()->getAllContent();
-if ($contents)
-{
-    foreach ($contents as $content)
-    {
-        if ($content->isDisplayableAt($node))
-        {
-            $html .= "<div class='portal_content'>\n";
-            $html .= $content->getUserUI();
-            $html .= "</div>\n";
-        }
-    }
+if ($current_user && $current_user->getAccountStatus() == ACCOUNT_STATUS_VALIDATION) {
+    $smarty->assign('accountValidation', true);
+    $smarty->assign('validationTime', ($current_user->getNetwork()->getValidationGraceTime() / 60));
 }
-$html .= "</div>\n";
 
-/* Node section */
+/*
+ * Network section
+ */
+
+// Set network details
+$smarty->assign('hotspotNetworkUrl', $network->getHomepageURL());
+$smarty->assign('hotspotNetworkName', $network->getName());
+$smarty->assign('networkLogoBannerUrl', COMMON_CONTENT_URL . NETWORK_LOGO_BANNER_NAME);
+
+// Get all network content and EXCLUDE user subscribed content
+if ($current_user) {
+    $contents = Network::getCurrentNetwork()->getAllContent(true, $current_user);
+} else {
+    $contents = Network::getCurrentNetwork()->getAllContent();
+}
+
+if ($contents) {
+    foreach ($contents as $content) {
+        $contentArray[] = array('isDisplayableAt' => $content->isDisplayableAt($node), 'userUI' => $content->getUserUI());
+    }
+
+    // Set all content of current node
+    $smarty->assign('networkContents', true);
+    $smarty->assign('networkContentArray', $contentArray);
+}
+
+/*
+ * Node section
+ */
+
 // Get all node content and EXCLUDE user subscribed content
-if($current_user)
+if ($current_user) {
     $contents = $node->getAllContent(true, $current_user);
-else
+} else {
     $contents = $node->getAllContent();
+}
 
-if(!empty($contents))
-{
-    $html .= "<div class='portal_node_section'>\n";
-    $html .= "<span class='portal_section_title'>"._("Content from:")." ";
-    $node_homepage = $node->getHomePageURL();
-    if (!empty ($node_homepage))
-    {
-        $html .= "<a href='$node_homepage'>";
-    }
-    $html .= $node->getName();
-    if (!empty ($node_homepage))
-    {
-        $html .= "</a>\n";
-    }
-    $html .= "</span>";
-    foreach ($contents as $content)
-    {
+// Set homepage details of node
+$node_homepage = $node->getHomePageURL();
+if (!empty($node_homepage)) {
+    $smarty->assign('nodeHomepage', true);
+    $smarty->assign('nodeURL', $node_homepage);
+    $smarty->assign('nodeName', $node->getName());
+}
+
+if ($contents) {
+    foreach ($contents as $content) {
         // Check for content requirements to show the "Show all contents" link
         if (!$show_more_link) {
             if ($content->getObjectType() == "ContentGroup") {
@@ -333,42 +274,48 @@ if(!empty($contents))
             }
         }
 
-        if ($content->isDisplayableAt($node)) {
-            $html .= "<div class='portal_content'>\n";
-            $html .= $content->getUserUI();
-            $html .= "</div>\n";
-        }
+        $contentArray[] = array('isDisplayableAt' => $content->isDisplayableAt($node), 'userUI' => $content->getUserUI());
     }
-    $html .= "</div>\n";
+
+    // Set all content of current node
+    $smarty->assign('nodeContents', true);
+    $smarty->assign('nodeContentArray', $contentArray);
 }
 
-/* User section */
-if($current_user)
-{
-    $contents = User :: getCurrentUser()->getAllContent();
-    if($contents)
-    {
-        $html .= "<div class='portal_user_section'>\n";
-        $html .= "<h1>"._("My content")."</h1>\n";
-        foreach ($contents as $content)
-        {
-            $html .= "<div class='portal_content'>\n";
-            $html .= $content->getUserUI();
-            $html .= "</div>\n";
+/*
+ * User section
+ */
+
+if ($current_user) {
+    $contents = User::getCurrentUser()->getAllContent();
+
+    if ($contents) {
+        foreach ($contents as $content) {
+            $contentArray[] = array('userUI' => $content->getUserUI());
         }
-        $html .= "</div>\n";
+
+        // Set all content of current node
+        $smarty->assign('userContents', true);
+        $smarty->assign('userContentArray', $contentArray);
     }
 }
 
 // Hyperlinks to full content display page
 if ($show_more_link) {
-    $html .= "<a href='" . BASE_SSL_PATH . "content/?gw_id={$current_node_id}'>"._("Show all available contents for this hotspot")."</a>"."\n";
+    $smarty->assign('showMoreLink', true);
+    $smarty->assign('currentNodeId', $current_node_id);
 }
 
-$html .= "<div style='clear:both;'></div>";
-$html .= "</div>\n";
+// Compile HTML code
+$html_body = $smarty->fetch("templates/sites/portal.tpl");
 
-$ui->setMainContent($html);
+/*
+ * Render output
+ */
+
+$ui = new MainUI();
+$ui->setToolContent($tool_html);
+$ui->setMainContent($html_body);
 $ui->display();
 
 /*

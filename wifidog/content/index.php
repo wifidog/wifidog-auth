@@ -61,10 +61,9 @@ $node = null;
 if(!empty($_REQUEST['gw_id']))
     $node = Node :: getObject($_REQUEST['gw_id']);
 
-if ($node == null)
-{
-    $smarty->assign("tech_support_email", Network::getCurrentNetwork()->getTechSupportEmail());
-    $smarty->display("templates/message_unknown_hotspot.html");
+if ($node == null) {
+    $ui = new MainUI();
+    $ui->displayError(_("No Hotspot specified!"));
     exit;
 }
 

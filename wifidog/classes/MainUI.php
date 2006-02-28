@@ -537,20 +537,36 @@ class MainUI
         $this->smarty->display("templates/classes/MainUI_Display.tpl");
     }
 
-    function displayError($errmsg)
+    /**
+     * Display a generic error message
+     *
+     * @param string $errmsg                  The error message to be displayed
+     * @param bool   $show_tech_support_email Defines wether to show the link of
+     *                                        the tech-support
+     *
+     * @return void
+     *
+     * @access public
+     */
+    function displayError($errmsg, $show_tech_support_email = true)
     {
         // Init ALL smarty values
         $this->smarty->assign("error", "");
+        $this->smarty->assign("show_tech_support_email", false);
         $this->smarty->assign("tech_support_email", "");
 
         // Define needed error content
         $this->smarty->assign("error", $errmsg);
-        $this->smarty->assign("tech_support_email", Network::getCurrentNetwork()->getTechSupportEmail());
+
+        if ($show_tech_support_email) {
+            $this->smarty->assign("show_tech_support_email", true);
+            $this->smarty->assign("tech_support_email", Network::getCurrentNetwork()->getTechSupportEmail());
+        }
 
         /*
          * Output the error message
          */
-        $_html = $this->smarty->fetch("templates/generic_error.html");
+        $_html = $this->smarty->fetch("templates/sites/error.tpl");
 
         $this->setMainContent($_html);
         $this->display();

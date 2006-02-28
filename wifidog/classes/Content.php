@@ -555,12 +555,17 @@ class Content implements GenericObject {
             }
         $html .= "<li class='admin_section_list_item'>\n";
         $name = "{$user_prefix}_new_existing";
-        $html .= Content :: getSelectContentUI($name, "AND content_id NOT IN (SELECT content_id FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key')");
+        $_contentSelector = Content::getSelectContentUI($name, "AND content_id NOT IN (SELECT content_id FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key')");
+        $html .= $_contentSelector;
         $name = "{$user_prefix}_new_display_location";
 
         $html .= "<input type='hidden' name='{$name}' value='{$display_location}'>\n";
         $name = "{$user_prefix}_new_existing_submit";
-        $html .= "<input type='submit' name='$name' value='"._("Add")."'>";
+
+        if (strpos($_contentSelector, _("Sorry, no content available in the database")) === false) {
+            $html .= "<input type='submit' name='$name' value='"._("Add")."'>";
+        }
+
         $html .= "</li>\n";
         $html .= "<li class='admin_section_list_item'>\n";
         $html .= "Add new content: ";
@@ -720,7 +725,11 @@ class Content implements GenericObject {
             }
 
             if ($type_interface != "table") {
-                $_html .= FormSelectGenerator::generateFromArray($_tab, null, $_name, null, false);
+                if (isset($_tab)) {
+                    $_html .= FormSelectGenerator::generateFromArray($_tab, null, $_name, null, false);
+                } else {
+                    $_html .= "<div class='warningmsg'>" . _("Sorry, no content available in the database") . "</div>\n";
+                }
             } else {
                 $_html .= "</table>\n";
             }

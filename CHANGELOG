@@ -1,3 +1,36 @@
+2006-02-28 Max Horváth <max.horvath@maxspot.de>
+	* the content selector for an owner could produce notices
+	* the button add existing content in the content manager will only be shown
+	  if content is actually available
+	* the start button on the portal page won't be shown anymore if a user
+	  didn't access it from a WiFiDog hotspot
+	* deleted wifidog/templates/message_unknown_hotspot.html as this error
+	  message will be displayed using the genecir error message template
+	* display of generic error messages will be handled by the MainUI class
+	* deleted wifidog/portal/missing_original_url.php as its functions is being
+	  handled by wifidog/portal/index.php now
+	* deleted wifidog/templates/message_default.html as its functions is being
+	  handled by wifidog/gw_message.php now
+	* deleted wifidog/templates/message_activate.html as its functions is being
+	  handled by wifidog/gw_message.php now
+	* account validation hints finally show the real validation grace time
+	  (used to display 15 minutes)
+	* deleted wifidog/templates/message_denied.html as its functions is being
+	  handled by wifidog/gw_message.php now
+	* deleted wifidog/templates/message_failed_validation.html as its functions
+	  is being handled by wifidog/gw_message.php now
+	* deleted wifidog/templates/user_management_menu.html as its not being
+	  used anymore
+	* deleted wifidog/local_content/default/footer.html as its not being
+	  used anymore
+	* deleted wifidog/local_content/default/header.html as its not being
+	  used anymore
+	* deleted wifidog/local_content/default/portal.html as its not being
+	  used anymore
+	* deleted wifidog/local_content/default/new.css as its wasn't ever used
+	* deleted wifidog/local_content/README as its content isn't valid anymore
+	  used anymore
+
 2006-02-26 Max Horváth <max.horvath@maxspot.de>
 	* Hotspots map page now uses a direct Javascript call for the link
 	  "Show me on the map" (resulting in the browser not jumping to the top of

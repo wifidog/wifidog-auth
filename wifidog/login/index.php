@@ -129,9 +129,8 @@ if (!is_null($gw_id)) {
     }
 
     catch (Exception $e) {
-        $smarty->assign("error", $e->getMessage());
-        $smarty->assign("tech_support_email", Network::getCurrentNetwork()->getTechSupportEmail());
-        $smarty->display("templates/generic_error.html");
+        $ui = new MainUI();
+        $ui->displayError($e->getMessage());
         exit;
     }
 } else {

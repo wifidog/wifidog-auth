@@ -50,8 +50,10 @@
 require_once('admin_common.php');
 
 require_once('classes/Node.php');
+require_once('classes/Network.php');
 require_once('classes/AbstractGeocoder.php');
 require_once('classes/MainUI.php');
+require_once('classes/Server.php');
 
 $ui = new MainUI();
 $ui->setTitle(_("Hotspot location map"));
@@ -61,7 +63,7 @@ if(!empty($_REQUEST['node_id']))
     $node = Node::getObject($_REQUEST['node_id']);
 
     // Add Google Maps JavaScript ( must set config values )
-    $html_headers = "<script src=\"http://maps.google.com/maps?file=api&v=1&key=".GMAPS_PUBLIC_API_KEY."\" type=\"text/javascript\"></script>";
+    $html_headers = "<script src=\"http://maps.google.com/maps?file=api&v=1&key=" . Server::getCurrentServer()->getGoogleAPIKey() . "\" type=\"text/javascript\"></script>";
     $ui->setHtmlHeader($html_headers);
 
     // Create HTML body
@@ -86,6 +88,7 @@ if(!empty($_REQUEST['node_id']))
     $script .= "var map = new GMap(document.getElementById(\"map_frame\"));\n";
     $script .= "map.addControl(new GLargeMapControl());\n";
     $script .= "map.addControl(new GMapTypeControl());\n";
+    $script .= "map.setMapType(" . $node->getNetwork()->getGisMapType() . ");\n";
     $script .= "map.centerAndZoom(new GPoint($long, $lat), 1);\n";
     $script .= "var current_marker_point = new GPoint($long, $lat);\n";
     $script .= "var current_marker = new GMarker(current_marker_point);\n";
