@@ -30,6 +30,8 @@
 	* deleted wifidog/local_content/default/new.css as its wasn't ever used
 	* deleted wifidog/local_content/README as its content isn't valid anymore
 	  used anymore
+	* Login site now uses a Smarty template to render HTML page
+	* class MainUI now also delivers $isOwner variable for Smarty
 
 2006-02-26 Max Horváth <max.horvath@maxspot.de>
 	* Hotspots map page now uses a direct Javascript call for the link

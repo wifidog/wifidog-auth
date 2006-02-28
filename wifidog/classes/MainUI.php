@@ -474,6 +474,7 @@ class MainUI
         $this->smarty->assign('stylesheetURL', "");
         $this->smarty->assign('stylesheetParsedFile', "");
         $this->smarty->assign('isSuperAdmin', false);
+        $this->smarty->assign('isOwner', false);
         $this->smarty->assign('debugRequested', false);
         $this->smarty->assign('debugOutput', "");
         $this->smarty->assign('toolPaneEnabled', false);
@@ -512,6 +513,7 @@ class MainUI
 
         // Define user security levels for the template
         $this->smarty->assign('isSuperAdmin', $_currentUser && $_currentUser->isSuperAdmin());
+        $this->smarty->assign('isOwner', $_currentUser && $_currentUser->isOwner());
 
         if (isset($_REQUEST['debug_request']) && ($_currentUser && $_currentUser->isSuperAdmin())) {
             // Tell Smarty everything it needs to know
