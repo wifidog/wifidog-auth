@@ -320,14 +320,23 @@ HotspotsMap.prototype.parseHotspotsStatus = function(xml_doc)
 {
     var html_list = "";
 
+    // Detect browser and set extension of image files to use
+    if (typeof(window.innerWidth) == "number") {
+        // Non-IE
+        var image_extension = ".png";
+    } else {
+        // IE
+        var image_extension = ".gif";
+    }
+
     // Init marker icons
-    var upIcon = this.createIcon(this.server_path + "images/HotspotStatusMap/up.gif", new GSize(20, 34),
+    var upIcon = this.createIcon(this.server_path + "images/HotspotStatusMap/up" + image_extension, new GSize(20, 34),
                                  this.server_path + "images/HotspotStatusMap/shadow.png", new GSize(37, 34),
                                  new GPoint(10, 20), new GPoint(10, 1));
-    var downIcon = this.createIcon(this.server_path + "images/HotspotStatusMap/down.gif", new GSize(20, 34),
+    var downIcon = this.createIcon(this.server_path + "images/HotspotStatusMap/down" + image_extension, new GSize(20, 34),
                                    this.server_path + "images/HotspotStatusMap/shadow.png", new GSize(37, 34),
                                    new GPoint(10, 20), new GPoint(10, 1));
-    var unknownIcon = this.createIcon(this.server_path + "images/HotspotStatusMap/unknown.gif", new GSize(22, 34),
+    var unknownIcon = this.createIcon(this.server_path + "images/HotspotStatusMap/unknown" + image_extension, new GSize(22, 34),
                                       this.server_path + "images/HotspotStatusMap/blank.gif", new GSize(22, 34),
                                       new GPoint(11, 30), new GPoint(11, 1));
 
