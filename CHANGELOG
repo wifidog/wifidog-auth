@@ -1,3 +1,7 @@
+2006-03-02 Max Horváth <max.horvath@maxspot.de>
+	* converted PNGs to GIFs because Internet Explorer cannot handle alpha
+	  transparency of PNGs
+
 2006-02-28 Max Horváth <max.horvath@maxspot.de>
 	* the content selector for an owner could produce notices
 	* the button add existing content in the content manager will only be shown

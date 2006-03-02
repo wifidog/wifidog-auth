@@ -87,9 +87,9 @@
                             ?
                         {else}
                             {if $nodes[node].is_up == 't'}
-                                <img src='{$smarty.const.BASE_URL_PATH}images/hotspot_status_up.png'>
+                                <img src='{$smarty.const.BASE_URL_PATH}images/HotspotStatus/up.gif'>
                             {else}
-                                <img src='{$smarty.const.BASE_URL_PATH}images/hotspot_status_down.png'>
+                                <img src='{$smarty.const.BASE_URL_PATH}images/HotspotStatus/down.gif'>
                             {/if}
                         {/if}
 

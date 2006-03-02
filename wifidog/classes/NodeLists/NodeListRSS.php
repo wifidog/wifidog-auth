@@ -319,9 +319,9 @@ class NodeListRSS {
                 // Hotspot global status
                 if ($_node->getDeploymentStatus() != 'NON_WIFIDOG_NODE') {
                     if ($_nodeData['is_up'] == 't') {
-                        $_descriptionText .= "<img src='" . BASE_URL_PATH . "images/hotspot_status_up.png' alt='' />";
+                        $_descriptionText .= "<img src='" . BASE_URL_PATH . "images/HotspotStatus/up.gif' alt='' />";
                     } else {
-                        $_descriptionText .= "<img src='" . BASE_URL_PATH . "images/hotspot_status_down.png' alt='' />";
+                        $_descriptionText .= "<img src='" . BASE_URL_PATH . "images/HotspotStatus/down.gif' alt='' />";
                     }
                 }
 

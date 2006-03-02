@@ -96,9 +96,9 @@
 
     <div id="map_legend">
         <b>{"Legend"|_}:</b>
-        <img src="{$base_ssl_path}images/hotspots_status_map_up.png"><i>{"the hotspot is operational"|_}</i>
-        <img src="{$base_ssl_path}images/hotspots_status_map_down.png"><i>{"the hotspot is down"|_}</i>
-        <img src="{$base_ssl_path}images/hotspots_status_map_unknown.png"><i>{"not monitored"|_}</i>
+        <img src="{$base_ssl_path}images/HotspotStatusMap/up.gif"><i>{"the hotspot is operational"|_}</i>
+        <img src="{$base_ssl_path}images/HotspotStatusMap/down.gif"><i>{"the hotspot is down"|_}</i>
+        <img src="{$base_ssl_path}images/HotspotStatusMap/unknown.gif"><i>{"not monitored"|_}</i>
     </div>
 {*
     END section MAINCONTENT
