@@ -66,13 +66,27 @@ function undo_magic_quotes()
         }
     }
 
+    /**
+     * Helper function used by undo_magic_quotes() only
+     *
+     * @param mixed  $item Item be processed
+     *
+     * @return void
+     */
+    function do_stripslashes(&$item)
+    {
+        if (is_array($item)) {
+            array_walk_recursive($item, 'stripslashes_cb');
+        }
+    }
+
     if (get_magic_quotes_gpc()) {
-        array_walk_recursive($_GET, 'stripslashes_cb');
-        array_walk_recursive($_POST, 'stripslashes_cb');
-        array_walk_recursive($_COOKIE, 'stripslashes_cb');
-        array_walk_recursive($_REQUEST, 'stripslashes_cb');
-        array_walk_recursive($_GLOBALS, 'stripslashes_cb');
-        array_walk_recursive($_SERVER, 'stripslashes_cb');
+        do_stripslashes($_GET);
+        do_stripslashes($_POST);
+        do_stripslashes($_COOKIE);
+        do_stripslashes($_REQUEST);
+        do_stripslashes($_GLOBALS);
+        do_stripslashes($_SERVER);
     }
 }
 
