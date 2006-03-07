@@ -290,7 +290,7 @@ class HTMLeditor extends Content
             $_languages = new LocaleList();
 
             $_html .= "<div class='admin_class'>Langstring (" . get_class($this) . " instance)</div>\n";
-            $_html .= "<div class='admin_section_container'>\n";
+            $_html .= "<div class='admin_section_container content_html_editor'>\n";
 
             $_html .= "<ul class='admin_section_list'>\n";
 
@@ -321,6 +321,7 @@ class HTMLeditor extends Content
                     } else {
                         $_FCKeditor->Height = 200;
                     }
+                    $_FCKeditor->Width = 386;
 
                     $_html .= $_FCKeditor->CreateHtml();
 
@@ -359,6 +360,7 @@ class HTMLeditor extends Content
             } else {
                 $_FCKeditor->Height = 200;
             }
+            $_FCKeditor->Width = 386;
 
             $_html .= $_FCKeditor->CreateHtml();
 

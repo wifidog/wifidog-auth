@@ -46,7 +46,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 35);
+define('REQUIRED_SCHEMA_VERSION', 36);
 
 /**
  * Check that the database schema is up to date.  If it isn't, offer to update it.
@@ -773,8 +773,19 @@ function update_schema()
             $sql .= "ALTER TABLE networks ADD COLUMN gmaps_initial_latitude NUMERIC(16, 6);\n";
             $sql .= "ALTER TABLE networks ADD COLUMN gmaps_initial_longitude NUMERIC(16, 6);\n";
             $sql .= "ALTER TABLE networks ADD COLUMN gmaps_initial_zoom_level integer;\n";
-            $sql .= "ALTER TABLE networks ADD COLUMN gmaps_map_type text NOT NULL DEFAULT 'G_MAP_TYPE' CHECK (gmaps_map_type<>'');\n";
+            $sql .= "ALTER TABLE networks ADD COLUMN gmaps_map_type text CHECK (gmaps_map_type<>'');\n";
+            $sql .= "ALTER TABLE networks ALTER COLUMN gmaps_map_type SET DEFAULT 'G_MAP_TYPE';\n";
+            $sql .= "UPDATE networks SET gmaps_map_type = 'G_MAP_TYPE';\n";
+            $sql .= "ALTER TABLE networks ALTER COLUMN gmaps_map_type SET NOT NULL);\n";
             $sql .= "UPDATE networks SET gmaps_initial_latitude = " . (defined("GMAPS_INITIAL_LATITUDE") ? "'" . GMAPS_INITIAL_LATITUDE . "'" : "'45.494511'") . ", gmaps_initial_longitude = " . (defined("GMAPS_INITIAL_LONGITUDE") ? "'" . GMAPS_INITIAL_LONGITUDE . "'" : "'-73.560285'") . ", gmaps_initial_zoom_level = " . (defined("GMAPS_INITIAL_ZOOM_LEVEL") ? "'" . GMAPS_INITIAL_ZOOM_LEVEL . "'" : "'5'") . ";\n";
+        }
+
+        $new_schema_version = 36;
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
+            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+            $sql .= "INSERT INTO locales VALUES ('pt');\n";
         }
 
         $db->execSqlUpdate("BEGIN;\n$sql\nCOMMIT;\nVACUUM ANALYZE;\n", true);

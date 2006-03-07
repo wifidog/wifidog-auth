@@ -49,6 +49,7 @@ require_once('classes/GisPoint.php');
 require_once('classes/AbstractGeocoder.php');
 require_once('classes/Utils.php');
 require_once('classes/DateTime.php');
+require_once('classes/InterfaceElements.php');
 
 /**
  * Abstract a Node.  A Node is an actual physical transmitter.
@@ -66,6 +67,15 @@ class Node implements GenericObject
 	private $mdB; /**< An AbstractDb instance */
 	private $id;
 	private static $current_node_id = null;
+
+	/**
+	 * Defines a warning message
+	 *
+	 * @var string
+	 *
+	 * @access private
+	 */
+	private $_warningMessage;
 
 	/** Instantiate a node object
 	 * @param $id The id of the requested node
@@ -156,8 +166,7 @@ class Node implements GenericObject
 	{
 		$retval = false;
 		$user = User :: getCurrentUser();
-		if ($this->isOwner($user) || $user->isSuperAdmin())
-		{
+		if ($user->isSuperAdmin()) {
 			global $db;
 			$id = $db->escapeString($this->getId());
 			if (!$db->execSqlUpdate("DELETE FROM nodes WHERE node_id='{$id}'", false))
@@ -313,24 +322,39 @@ class Node implements GenericObject
 		return $retval;
 	}
 
-	/** Get an interface to select the deployment status
-	* @param $user_prefix A identifier provided by the programmer to recognise it's generated html form
-	* @return html markup
-	*/
+    /**
+     * Get an interface to select the deployment status
+     *
+     * @param string $user_prefix A identifier provided by the programmer to
+     *                            recognise it's generated html form
+     *
+     * @return string HTML markup
+     *
+     * @access public
+     */
 	public function getSelectDeploymentStatus($user_prefix)
 	{
+	    // Define globals
 		global $db;
-		$html = '';
-		$name = "{$user_prefix}";
-		$status_list = null;
-		$db->execSql("SELECT node_deployment_status FROM node_deployment_status", $status_list, false);
-		if ($status_list == null)
-			throw new Exception(_("No deployment statues  could be found in the database"));
 
-		$tab = array ();
-		foreach ($status_list as $status)
-			$tab[] = array ($status['node_deployment_status'], $status['node_deployment_status']);
-		$html .= FormSelectGenerator :: generateFromArray($tab, $this->getDeploymentStatus(), $name, null, false);
+		// Init values
+		$html = "";
+		$status_list = null;
+		$tab = array();
+
+		$name = "{$user_prefix}";
+		$db->execSql("SELECT node_deployment_status FROM node_deployment_status", $status_list, false);
+
+		if ($status_list == null) {
+			throw new Exception(_("No deployment statuses could be found in the database"));
+		}
+
+		foreach ($status_list as $status) {
+			$tab[] = array($status['node_deployment_status'], $status['node_deployment_status']);
+		}
+
+		$html .= FormSelectGenerator::generateFromArray($tab, $this->getDeploymentStatus(), $name, null, false);
+
 		return $html;
 	}
 
@@ -690,351 +714,269 @@ class Node implements GenericObject
 		return $retval;
 	}
 
-	/** Retrieves the admin interface of this object.
-	 * @return The HTML fragment for this interface */
+	/**
+	 * Retrieves the admin interface of this object
+	 *
+	 * @return The HTML fragment for this interface
+	 *
+	 * @access public
+	 *
+	 * @todo Most of this code will be moved to Hotspot class when the
+	 *       abtraction will be completed
+	 */
 	public function getAdminUI()
 	{
-		//TODO: Most of this code will be moved to Hotspot class when the abtraction will be completed
-
-		//pretty_print_r($_REQUEST);
-		//pretty_print_r($this->mRow);
+	    // Init values
 		$html = '';
-		$html .= "<div class='admin_container'>\n";
-		$html .= "<div class='admin_class'>Node (".get_class($this)." instance)</div>\n";
-		$html .= "<h3>"._("Edit a node")."</h3>\n";
 
-		// Display stats
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Statistics:")."</div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$this->id."_get_stats";
-		$html .= "<input type='submit' name='$name' value='"._("Get access statistics")."'>";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
-
-		// Information about the node
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Information about the node:")."</div>\n";
-
-		// Hashed node_id (this is a workaround since PHP auto-converts HTTP vars var periods, spaces or underscores )
-		$hashed_node_id = md5($this->getId());
-
-		// Node ID
-		$value = htmlspecialchars($this->getId(), ENT_QUOTES);
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("ID")." : </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$hashed_node_id."_id";
-		$html .= "<input type='text' size='20' value='$value' name='$name'>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
-
-		// Creation date
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Creation date")." : </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$hashed_node_id."_creation_date";
-		$html .= DateTime :: getSelectDateTimeUI(new DateTime($this->getCreationDate()), $name, DateTime :: INTERFACE_DATETIME_FIELD);
-		$html .= "</div>\n";
-		$html .= "</div>\n";
-
-		// Name
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Name")." : </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$hashed_node_id."_name";
-		$value = htmlspecialchars($this->getName(), ENT_QUOTES);
-		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
-
-		// Homepage URL
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Homepage URL")." : </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$hashed_node_id."_homepage_url";
-		$value = htmlspecialchars($this->getHomePageURL(), ENT_QUOTES);
-		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
-
-		// Description
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Description")." : </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$hashed_node_id."_description";
-		$value = htmlspecialchars($this->getDescription(), ENT_QUOTES);
-		$html .= "<textarea cols='50' rows='5' name='$name'>$value</textarea>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
-
-		// Map URL
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Map URL")." : </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$hashed_node_id."_map_url";
-		$value = htmlspecialchars($this->getMapURL(), ENT_QUOTES);
-		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
-
-		// Civic number
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Civic number")." : </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$hashed_node_id."_civic_number";
-		$value = htmlspecialchars($this->getCivicNumber(), ENT_QUOTES);
-		$html .= "<input type='text' size ='10' value='$value' name='$name'>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
-
-		// Street name
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Street name")." : </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$hashed_node_id."_street_name";
-		$value = htmlspecialchars($this->getStreetName(), ENT_QUOTES);
-		$html .= "<input type='text' size ='25' value='$value' name='$name'>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
-
-		// City
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("City")." : </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$hashed_node_id."_city";
-		$value = htmlspecialchars($this->getCity(), ENT_QUOTES);
-		$html .= "<input type='text' size ='25' value='$value' name='$name'>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
-
-		// Province
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Province / State")." : </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$hashed_node_id."_province";
-		$value = htmlspecialchars($this->getProvince(), ENT_QUOTES);
-		$html .= "<input type='text' size ='15' value='$value' name='$name'>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
-
-		// Postal Code
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Postal code")." : </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$hashed_node_id."_postal_code";
-		$value = htmlspecialchars($this->getPostalCode(), ENT_QUOTES);
-		$html .= "<input type='text' size ='10' value='$value' name='$name'>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
-
-		// Country
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Country")." : </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$hashed_node_id."_country";
-		$value = htmlspecialchars($this->getCountry(), ENT_QUOTES);
-		$html .= "<input type='text' size ='15' value='$value' name='$name'>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
-
-		// Public phone #
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Public phone number")." : </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$hashed_node_id."_public_phone";
-		$value = htmlspecialchars($this->getTelephone(), ENT_QUOTES);
-		$html .= "<input type='text' size ='20' value='$value' name='$name'>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
-
-		// Public mail
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Public email")." : </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$hashed_node_id."_public_email";
-		$value = htmlspecialchars($this->getEmail(), ENT_QUOTES);
-		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
-
-		// Mass transit info
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Mass transit info")." : </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$hashed_node_id."_mass_transit_info";
-		$value = htmlspecialchars($this->getTransitInfo(), ENT_QUOTES);
-		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
-
-		// End of information section
-		$html .= "</div>\n";
-
-		// Node GIS data
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("GIS data")." : </div>\n";
-
-		// Build HTML form fields names & values
-		$gis_point = $this->getGisLocation();
-		$gis_lat_name = "node_".$hashed_node_id."_gis_latitude";
-		$gis_lat_value = htmlspecialchars($gis_point->getLatitude(), ENT_QUOTES);
-		$gis_long_name = "node_".$hashed_node_id."_gis_longitude";
-		$gis_long_value = htmlspecialchars($gis_point->getLongitude(), ENT_QUOTES);
-
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Latitude")." : </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$html .= "<input type='text' size ='15' value='$gis_lat_value' id='$gis_lat_name' name='$gis_lat_name'>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
-
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Longitude")." : </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$html .= "<input type='text' size ='15' value='$gis_long_value' id='$gis_long_name' name='$gis_long_name'>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
-
-		/*
-		 * If Google Maps is enabled, call the geocoding service,
-		 * then use Google Maps to let the user choose a more precise location
-		 *
-		 * otherwise
-		 *
-		 * Simply use a geocoding service.
-		 */
-
-		if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED === true)
-		{
-			$html .= "<div class='admin_section_container'>\n";
-			$html .= "<div class='admin_section_data'>\n";
-			$html .= "<input type='submit' name='geocode_only' value='"._("Geocode only")."'>\n";
-			$html .= "<input type='button' name='google_maps_geocode' value='"._("Check using Google Maps")."' onClick='window.open(\"hotspot_location_map.php?node_id={$this->getId()}\", \"hotspot_location\", \"toolbar=0,scrollbars=1,resizable=1,location=0,statusbar=0,menubar=0,width=600,height=600\");'>\n";
-			$html .= " ("._("Use a geocoding service, then use Google Maps to pinpoint the exact location.").")";
-			$html .= "</div>\n";
-			$html .= "</div>\n";
-		}
-		else
-		{
-			$html .= "<div class='admin_section_container'>\n";
-			$html .= "<div class='admin_section_data'>\n";
-			$html .= "<input type='submit' name='geocode_only' value='"._("Geocode location")."'>\n";
-			$html .= " ("._("Use a geocoding service").")";
-			$html .= "</div>\n";
-			$html .= "</div>\n";
+		if (!User::getCurrentUser()) {
+			throw new Exception(_('Access denied!'));
 		}
 
-		// End of GIS data
-		$html .= "</div>\n";
-
-		// Node configuration section
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Node configuration:")."</div>\n";
-
+		// Get information about the network
 		$network = $this->getNetwork();
 
+		// Check if user is a admin
+		$_userIsAdmin = User::getCurrentUser()->isSuperAdmin();
+
+		/*
+		 * Hashed node_id
+		 *
+		 * This is a workaround since PHP auto-converts HTTP vars var periods,
+		 * spaces or underscores.
+		 */
+		$hashed_node_id = md5($this->getId());
+
+		/*
+		 * Check for a warning message
+		 */
+		if ($this->_warningMessage != "") {
+		    $html .= InterfaceElements::generateDiv($this->_warningMessage, "errormsg", "node_error");
+		}
+
+		/*
+		 * Begin with admin interface
+		 */
+		$html .= "<div class='admin_container'>\n";
+		$html .= "<div class='admin_class'>Node (" . get_class($this) . " instance)</div>\n";
+		$html .= "<h3>"._("Edit a node")."</h3>\n";
+
+		/*
+		 * Display stats
+		 */
+		$_title = _("Statistics");
+		$_data = InterfaceElements::generateInputSubmit("node_" . $this->id . "_get_stats", _("Get access statistics"), "node_get_stats_submit");
+		$html .= InterfaceElements::generateAdminSectionContainer("node_get_stats", $_title, $_data);
+
+		/*
+		 * Information about the node
+		 */
+		$_html_node_information = array();
+
+		// Node ID
+		$_title = _("ID");
+		if ($_userIsAdmin) {
+    		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_id", $this->getId(), "node_id_input");
+		} else {
+    		$_data  = htmlspecialchars($this->getId(), ENT_QUOTES);
+    		$_data .= InterfaceElements::generateInputHidden("node_" . $hashed_node_id . "_id", $this->getId());
+		}
+		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_id", $_title, $_data);
+
+		// Creation date
+		$_title = _("Creation date");
+		if ($_userIsAdmin) {
+            $_data = DateTime::getSelectDateTimeUI(new DateTime($this->getCreationDate()), "node_" . $hashed_node_id . "_creation_date", DateTime::INTERFACE_DATETIME_FIELD, "node_creation_date_input");
+		} else {
+            $_data  = htmlspecialchars($this->getCreationDate(), ENT_QUOTES);
+    		$_data .= InterfaceElements::generateInputHidden("node_" . $hashed_node_id . "_creation_date", $this->getCreationDate());
+		}
+		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_creation_date", $_title, $_data);
+
+		// Name
+		$_title = _("Name");
+		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_name", $this->getName(), "node_name_input");
+		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_name", $_title, $_data);
+
+		// Description
+		$_title = _("Description");
+		$_data = InterfaceElements::generateTextarea("node_" . $hashed_node_id . "_description", $this->getDescription(), 50, 5, "node_description_textarea");
+		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_description", $_title, $_data);
+
+		// Civic number
+		$_title = _("Civic number");
+		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_civic_number", $this->getCivicNumber(), "node_civic_number_input");
+		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_civic_number", $_title, $_data);
+
+		// Street name
+		$_title = _("Street name");
+		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_street_name", $this->getStreetName(), "node_street_name_input");
+		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_street_name", $_title, $_data);
+
+		// City
+		$_title = _("City");
+		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_city", $this->getCity(), "node_city_input");
+		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_city", $_title, $_data);
+
+		// Province
+		$_title = _("Province / State");
+		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_province", $this->getProvince(), "node_province_input");
+		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_province", $_title, $_data);
+
+		// Postal Code
+		$_title = _("Postal code");
+		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_postal_code", $this->getPostalCode(), "node_postal_code_input");
+		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_postal_code", $_title, $_data);
+
+		// Country
+		$_title = _("Country");
+		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_country", $this->getCountry(), "node_country_input");
+		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_country", $_title, $_data);
+
+		// Public phone #
+		$_title = _("Public phone number");
+		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_public_phone", $this->getTelephone(), "node_public_phone_input");
+		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_public_phone", $_title, $_data);
+
+		// Public mail
+		$_title = _("Public email");
+		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_public_email", $this->getEmail(), "node_public_email_input");
+		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_public_email", $_title, $_data);
+
+		// Homepage URL
+		$_title = _("Homepage URL");
+		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_homepage_url", $this->getHomePageURL(), "node_homepage_url_input");
+		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_homepage_url", $_title, $_data);
+
+		// Mass transit info
+		$_title = _("Mass transit info");
+		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_mass_transit_info", $this->getTransitInfo(), "node_mass_transit_info_input");
+		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_mass_transit_info", $_title, $_data);
+
+		// Build section
+		$html .= InterfaceElements::generateAdminSectionContainer("node_information", _("Information about the node"), implode(null, $_html_node_information));
+
+		/*
+		 * Node GIS data
+		 */
+		$_html_node_gis_data = array();
+		$gis_point = $this->getGisLocation();
+
+		// Latitude
+		$_title = _("Latitude");
+		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_gis_latitude", $gis_point->getLatitude(), "node_" . $hashed_node_id . "_gis_latitude");
+		$_html_node_gis_data[] = InterfaceElements::generateAdminSectionContainer("node_gis_latitude", $_title, $_data);
+
+		// Latitude
+		$_title = _("Longitude");
+		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_gis_longitude", $gis_point->getLongitude(), "node_" . $hashed_node_id . "_gis_longitude");
+		$_html_node_gis_data[] = InterfaceElements::generateAdminSectionContainer("node_gis_longitude", $_title, $_data);
+
+		// Call the geocoding service, if Google Maps is enabled then use Google Maps to let the user choose a more precise location
+		if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED === true) {
+		    $_data  = InterfaceElements::generateInputSubmit("geocode_only", _("Geocode only"), "geocode_only_submit");
+		    $_data .= InterfaceElements::generateInputButton("google_maps_geocode", _("Check using Google Maps"), "google_maps_geocode_button", "submit", array("onclick" => "window.open('hotspot_location_map.php?node_id={$this->getId()}', 'hotspot_location', 'toolbar = 0, scrollbars = 1, resizable = 1, location = 0, statusbar = 0, menubar = 0, width = 600, height = 600');"));
+		    $_data .= InterfaceElements::generateDiv("(" . _("Use a geocoding service, then use Google Maps to pinpoint the exact location.") . ")", "admin_section_hint", "node_gis_geocode_hint");
+		} else {
+		    $_data  = InterfaceElements::generateInputSubmit("geocode_only", _("Geocode location"), "geocode_only_submit");
+		    $_data .= InterfaceElements::generateDiv("(" . _("Use a geocoding service") . ")", "admin_section_hint", "node_gis_geocode_hint");
+		}
+
+		$_html_node_gis_data[] = InterfaceElements::generateAdminSectionContainer("node_gis_geocode", "", $_data);
+
+		// Map URL
+		$_title = _("Map URL");
+		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_map_url", $this->getMapURL(), "node_map_url_input");
+		$_html_node_gis_data[] = InterfaceElements::generateAdminSectionContainer("node_map_url", $_title, $_data);
+
+		// Build section
+		$html .= InterfaceElements::generateAdminSectionContainer("node_gis_data", _("GIS data"), implode(null, $_html_node_gis_data));
+
+		/*
+		 * Node configuration section
+		 */
+		$_html_node_config = array();
+
 		// Deployment status
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Node deployment status")." : </div>\n";
-		$html .= "<div class='admin_section_data'>\n";
-		$name = "node_".$hashed_node_id."_deployment_status";
-		$html .= self :: getSelectDeploymentStatus($name);
-		$html .= "</div>\n";
-		$html .= "</div>\n";
+		$_title = _("Node deployment status");
+		$_data = $this->getSelectDeploymentStatus("node_" . $hashed_node_id . "_deployment_status");
+		$_html_node_config[] = InterfaceElements::generateAdminSectionContainer("node_deployment_status", $_title, $_data);
 
 		//  is_splash_only_node
-		if ($network->getSplashOnlyNodesAllowed())
-		{
-			$html .= "<div class='admin_section_container'>\n";
-			$html .= "<div class='admin_section_title'>"._("Is this node splash-only (no login)?")." : </div>\n";
-			$html .= "<div class='admin_section_data'>\n";
-			$name = "node_".$hashed_node_id."_is_splash_only_node";
-			$this->isConfiguredSplashOnly() ? $checked = 'CHECKED' : $checked = '';
-			$html .= "<input type='checkbox' name='$name' $checked>\n";
-			$html .= "</div>\n";
-			$html .= "</div>\n";
+		if ($network->getSplashOnlyNodesAllowed()) {
+    		$_title = _("Is this node splash-only (no login)?");
+    		$_data = InterfaceElements::generateInputCheckbox("node_" . $hashed_node_id . "_is_splash_only_node", "", _("Yes"), $this->isConfiguredSplashOnly(), "node_is_splash_only_node_radio");
+    		$_html_node_config[] = InterfaceElements::generateAdminSectionContainer("node_is_splash_only_node", $_title, $_data);
 		}
 
 		// custom_portal_redirect_url
-		if ($network->getCustomPortalRedirectAllowed())
-		{
-			$html .= "<div class='admin_section_container'>\n";
-			$html .= "<div class='admin_section_title'>"._("URL to show instead of the portal (if this is not empty, the portal will be disabled and this URL will be shown instead)")." : </div>\n";
-			$html .= "<div class='admin_section_data'>\n";
-			$name = "node_".$hashed_node_id."_custom_portal_redirect_url";
-			$value = htmlspecialchars($this->getCustomPortalRedirectUrl(), ENT_QUOTES);
-			$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
-			$html .= "</div>\n";
-			$html .= "</div>\n";
+		if ($network->getCustomPortalRedirectAllowed()) {
+    		$_title = _("URL to show instead of the portal (if this is not empty, the portal will be disabled and this URL will be shown instead)");
+    		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_custom_portal_redirect_url", $this->getCustomPortalRedirectUrl(), "node_custom_portal_redirect_url_input");
+    		$_html_node_config[] = InterfaceElements::generateAdminSectionContainer("node_custom_portal_redirect_url", $_title, $_data);
 		}
-		// End Node configuration section
-		$html .= "</div>\n";
+
+		// Build section
+		$html .= InterfaceElements::generateAdminSectionContainer("node_config", _("Node configuration"), implode(null, $_html_node_config));
+
+		/*
+		 * Access management
+		 */
+		$_html_access_rights = array();
 
 		// Owners management
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Node owners")." : </div>\n";
-		$html .= "<ul class='admin_section_list'>\n";
-		foreach ($this->getOwners() as $owner)
-		{
-			$html .= "<li class='admin_section_list_item'>\n";
-			$html .= "<div class='admin_section_data'>\n";
-			$html .= "{$owner->getUsername()}";
-			$html .= "</div>\n";
-			$html .= "<div class='admin_section_tools'>\n";
-			$name = "node_{$this->getId()}_owner_{$owner->GetId()}_remove";
-			$html .= "<input type='submit' name='$name' value='"._("Remove owner")."'>";
-			$html .= "</div>\n";
-			$html .= "</li>\n";
+		if ($_userIsAdmin) {
+    		$_listData = "";
+
+    		foreach ($this->getOwners() as $owner) {
+    		    $_listDataContents = InterfaceElements::generateAdminSection("", $owner->getUsername(), InterfaceElements::generateInputSubmit("node_" . $this->getId() . "_owner_" . $owner->GetId() . "_remove", _("Remove owner")));
+    		    $_listData .= InterfaceElements::generateLi($_listDataContents, "", "admin_section_list_item node_owner_list");
+    		}
+
+    	    $_listData .= InterfaceElements::generateLi(User::getSelectUserUI("node_" . $this->getId() . "_new_owner", "node_" . $this->getId() . "_new_owner_submit", _("Add owner")) . InterfaceElements::generateDiv("", "clearbr"), "", "admin_section_list_item");
+
+    		$_title = _("Node owners");
+    		$_data = InterfaceElements::generateUl($_listData, "node_owner_ul", "admin_section_list");
+    	    $_html_access_rights[] .= InterfaceElements::generateAdminSectionContainer("node_owner", $_title, $_data);
 		}
-		$html .= "<li class='admin_section_list_item'>\n";
-		$name = "node_{$this->getId()}_new_owner";
-		$html .= User :: getSelectUserUI($name);
-		$name = "node_{$this->getId()}_new_owner_submit";
-		$html .= "<input type='submit' name='$name' value='"._("Add owner")."'>";
-		$html .= "</li>\n";
-		$html .= "</ul>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
 
 		// Tech officers management
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Technical officers")." : </div>\n";
-		$html .= "<ul class='admin_section_list'>\n";
-		foreach ($this->getTechnicalOfficers() as $tech_officer)
-		{
-			$html .= "<li class='admin_section_list_item'>\n";
-			$html .= "<div class='admin_section_data'>\n";
-			$html .= "{$tech_officer->getUsername()}";
-			$html .= "</div>\n";
-			$html .= "<div class='admin_section_tools'>\n";
-			$name = "node_{$this->getId()}_tech_officer_{$tech_officer->GetId()}_remove";
-			$html .= "<input type='submit' name='$name' value='"._("Remove technical officer")."'>";
-			$html .= "</div>\n";
-			$html .= "</li>\n";
+		$_listData = "";
+
+		foreach ($this->getTechnicalOfficers() as $tech_officer) {
+		    $_listDataContents = InterfaceElements::generateAdminSection("", $tech_officer->getUsername(), InterfaceElements::generateInputSubmit("node_" . $this->getId() . "_tech_officer_" . $tech_officer->GetId() . "_remove", _("Remove technical officer")));
+		    $_listData .= InterfaceElements::generateLi($_listDataContents, "", "admin_section_list_item node_tech_officer_list");
 		}
-		$html .= "<li class='admin_section_list_item'>\n";
-		$name = "node_{$this->getId()}_new_tech_officer";
-		$html .= User :: getSelectUserUI($name);
-		$name = "node_{$this->getId()}_new_tech_officer_submit";
-		$html .= "<input type='submit' name='$name' value='"._("Add technical officer")."'>";
-		$html .= "</li>\n";
-		$html .= "</ul>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
 
-		/* Node content */
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Node content (login):")."</div>\n";
-		$name = "node_{$this->id}_content_login";
-		$html .= Content :: getLinkedContentUI($name, 'node_has_content', 'node_id', $this->id, $display_location = 'login_page');
-		$html .= "</div>\n";
+	    $_listData .= InterfaceElements::generateLi(User::getSelectUserUI("node_" . $this->getId() . "_new_tech_officer", "node_" . $this->getId() . "_new_tech_officer_submit", _("Add technical officer")) . InterfaceElements::generateDiv("", "clearbr"), "", "admin_section_list_item");
 
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Node content (portal):")."</div>\n";
-		$name = "node_{$this->id}_content_portal";
-		$html .= Content :: getLinkedContentUI($name, 'node_has_content', 'node_id', $this->id, $display_location = 'portal_page');
-		$html .= "</div>\n";
+		$_title = _("Technical officers");
+		$_data = InterfaceElements::generateUl($_listData, "node_tech_officer_ul", "admin_section_list");
+	    $_html_access_rights[] .= InterfaceElements::generateAdminSectionContainer("node_tech_officer", $_title, $_data);
+
+		// Build section
+		$html .= InterfaceElements::generateAdminSectionContainer("node_access_rights", _("Access rights"), implode(null, $_html_access_rights));
+
+		/*
+		 * Node content
+		 */
+		$_html_content = array();
+
+		// Node content (login)
+		$_title = _("Node content (login)");
+		$_data = Content::getLinkedContentUI("node_" . $this->id . "_content_login", "node_has_content", "node_id", $this->id, $display_location = "login_page");
+		$_html_content[] = InterfaceElements::generateAdminSectionContainer("node_content_login", $_title, $_data);
+
+		// Node content (portal)
+		$_title = _("Node content (portal)");
+		$_data = Content::getLinkedContentUI("node_" . $this->id . "_content_portal", "node_has_content", "node_id", $this->id, $display_location = "portal_page");
+		$_html_content[] = InterfaceElements::generateAdminSectionContainer("node_content_portal", $_title, $_data);
+
+		// Build section
+		$html .= InterfaceElements::generateAdminSectionContainer("node_content", _("Node content"), implode(null, $_html_content));
+
+		$html .= "<div class='clearbr'></div>";
+		$html .= "</div>";
 
 		return $html;
 	}
@@ -1044,10 +986,14 @@ class Node implements GenericObject
 	public function processAdminUI()
 	{
 		$user = User :: getCurrentUser();
+
 		if (!$this->isOwner($user) && !$user->isSuperAdmin())
 		{
 			throw new Exception(_('Access denied!'));
 		}
+
+		// Check if user is a admin
+		$_userIsAdmin = User::getCurrentUser()->isSuperAdmin();
 
 		// Information about the node
 
@@ -1055,12 +1001,20 @@ class Node implements GenericObject
 		$hashed_node_id = md5($this->getId());
 
 		// Name
-		$name = "node_".$hashed_node_id."_name";
-		$this->setName($_REQUEST[$name]);
+		if ($_userIsAdmin) {
+    		$name = "node_".$hashed_node_id."_name";
+    		$this->setName($_REQUEST[$name]);
+		} else {
+    		$this->setName($this->getName());
+		}
 
 		// Creation date
-		$name = "node_".$hashed_node_id."_creation_date";
-		$this->setCreationDate(DateTime :: processSelectDateTimeUI($name, DateTime :: INTERFACE_DATETIME_FIELD)->getIso8601FormattedString());
+		if ($_userIsAdmin) {
+    		$name = "node_".$hashed_node_id."_creation_date";
+    		$this->setCreationDate(DateTime::processSelectDateTimeUI($name, DateTime :: INTERFACE_DATETIME_FIELD)->getIso8601FormattedString());
+		} else {
+    		$this->setCreationDate($this->getCreationDate());
+		}
 
 		// Homepage URL
 		$name = "node_".$hashed_node_id."_homepage_url";
@@ -1127,10 +1081,10 @@ class Node implements GenericObject
 					if (($point = $geocoder->getGisLocation()) !== null)
 						$this->setGisLocation($point);
 					else
-						echo _("It appears that the Geocoder could not be reached or could not geocode the given address.");
+						$this->_warningMessage = _("It appears that the Geocoder could not be reached or could not geocode the given address.");
 				}
 				else
-					echo _("You must enter a valid address.");
+					$this->_warningMessage = _("You must enter a valid address.");
 			}
 		}
 		else
@@ -1171,31 +1125,33 @@ class Node implements GenericObject
 		// End Node configuration section
 
 		// Owners processing
-		// Rebuild user id, and delete if it was selected
-		foreach ($this->getOwners() as $owner)
-		{
-			$name = "node_{$this->getId()}_owner_{$owner->GetId()}_remove";
-			if (!empty ($_REQUEST[$name]))
-			{
-				if ($this->isOwner($owner))
-					$this->removeOwner($owner);
-				else
-					echo _("Invalid user!");
-			}
-		}
+		if ($_userIsAdmin) {
+    		// Rebuild user id, and delete if it was selected
+    		foreach ($this->getOwners() as $owner)
+    		{
+    			$name = "node_{$this->getId()}_owner_{$owner->GetId()}_remove";
+    			if (!empty ($_REQUEST[$name]))
+    			{
+    				if ($this->isOwner($owner))
+    					$this->removeOwner($owner);
+    				else
+    					$this->_warningMessage = _("Invalid user!");
+    			}
+    		}
 
-		$name = "node_{$this->getId()}_new_owner_submit";
-		if (!empty ($_REQUEST[$name]))
-		{
-			$name = "node_{$this->getId()}_new_owner";
-			$owner = User :: processSelectUserUI($name);
-			if ($owner)
-			{
-				if ($this->isOwner($owner))
-					echo _("The user is already an owner of this node.");
-				else
-					$this->addOwner($owner);
-			}
+    		$name = "node_{$this->getId()}_new_owner_submit";
+    		if (!empty ($_REQUEST[$name]))
+    		{
+    			$name = "node_{$this->getId()}_new_owner";
+    			$owner = User :: processSelectUserUI($name);
+    			if ($owner)
+    			{
+    				if ($this->isOwner($owner))
+    					$this->_warningMessage = _("The user is already an owner of this node.");
+    				else
+    					$this->addOwner($owner);
+    			}
+    		}
 		}
 
 		// Technical officers processing
@@ -1208,7 +1164,7 @@ class Node implements GenericObject
 				if ($this->isTechnicalOfficer($tech_officer))
 					$this->removeTechnicalOfficer($tech_officer);
 				else
-					echo _("Invalid user!");
+					$this->_warningMessage = _("Invalid user!");
 			}
 		}
 
@@ -1220,7 +1176,7 @@ class Node implements GenericObject
 			if ($tech_officer)
 			{
 				if ($this->isTechnicalOfficer($tech_officer))
-					echo _("The user is already a technical officer of this node.");
+					$this->_warningMessage = _("The user is already a technical officer of this node.");
 				else
 					$this->addTechnicalOfficer($tech_officer);
 			}
@@ -1228,9 +1184,9 @@ class Node implements GenericObject
 
 		// Content processing
 		$name = "node_{$this->id}_content_login";
-		Content :: processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id);
+		Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id);
 		$name = "node_{$this->id}_content_portal";
-		Content :: processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id);
+		Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id);
 
 		// Name
 		$name = "node_".$hashed_node_id."_id";

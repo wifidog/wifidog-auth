@@ -46,6 +46,7 @@
  */
 require_once('classes/Network.php');
 require_once('classes/Mail.php');
+require_once('classes/InterfaceElements.php');
 
 /**
  * Abstract a User
@@ -657,20 +658,36 @@ class User implements GenericObject
         return md5(uniqid(rand(), 1));
     }
 
-    /** Get an interface to add a user to a list
-    * @param $user_prefix A identifier provided by the programmer to recognise it's generated html form
-    * @return html markup
-    */
-    static function getSelectUserUI($user_prefix)
+    /**
+     * Get an interface to add a user to a list
+     *
+     * @param string $user_prefix      A identifier provided by the programmer
+     *                                 to recognise it's generated HTML form
+     * @param string $add_button_name  Name of optional "add" button
+     * @param string $add_button_value Value of optional "add" button
+     *
+     * @return string HTML markup
+     *
+     * @static
+     * @access public
+     */
+    public static function getSelectUserUI($user_prefix, $add_button_name = null, $add_button_value = null)
     {
+        // Define globals
         global $db;
-        $html = '';
-        $html .= Network :: getSelectNetworkUI($user_prefix);
-        $html .= "<br>";
-        $name = "select_user_{$user_prefix}_username";
-        $html .= _("Username: ")."\n";
-        $html .= "<input type='text' name='$name' value=''>\n";
-        return $html;
+
+        $_networkSelector = InterfaceElements::generateDiv(Network::getSelectNetworkUI($user_prefix), "admin_section_network_selector", "admin_section_network_selector_" . $user_prefix);
+
+        // Check if we need to add an "add" button
+        if ($add_button_name && $add_button_value) {
+            $_userSelector = _("Username") . ": " .  InterfaceElements::generateInputText("select_user_" . $user_prefix . "_username", "", "", "input_text", array("onkeypress" => "if ((event.which ? event.which : event.keyCode) == 13) {form.$add_button_name.click() }"));
+            $_userSelector .= InterfaceElements::generateInputSubmit($add_button_name, $add_button_value);
+        } else {
+            $_userSelector = _("Username") . ": " .  InterfaceElements::generateInputText("select_user_" . $user_prefix . "_username");
+        }
+        $_html = InterfaceElements::generateDiv($_networkSelector . $_userSelector);
+
+        return $_html;
     }
 
     /** Get the selected user, IF one was selected and is valid

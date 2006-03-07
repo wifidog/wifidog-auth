@@ -170,21 +170,24 @@ global $AVAIL_LOCALE_ARRAY;
 
 $AVAIL_LOCALE_ARRAY = array('fr' => 'Français',
                             'en' => 'English',
-                            'de' => 'Deutsch');
+                            'de' => 'Deutsch',
+                            'pt' => 'Português');
 
 /**
  * A lot of linux distributions (Debian, BSD and Mac OS X) use locales like this:
  */
 //$AVAIL_LOCALE_ARRAY = array('fr_CA' => 'Français',
 //                            'en_US' => 'English',
-//                            'de_DE' => 'Deutsch');
+//                            'de_DE' => 'Deutsch',
+//                            'pt_PT' => 'Português');
 
 /**
  * Other linux distributions use locales like this:
  */
 //$AVAIL_LOCALE_ARRAY = array('fr_CA.UTF8' => 'Français',
 //                            'en_US.UTF8' => 'English',
-//                            'de_DE.UTF8' => 'Deutsch');
+//                            'de_DE.UTF8' => 'Deutsch',
+//                            'pt_PT.UTF8' => 'Português');
 
 /**
  * Default language

@@ -180,6 +180,11 @@ select {
 
 /*********************************************************************/
 
+.clearbr {
+	clear: both;
+}
+
+
 .logos {
     float: right;
     text-align: center;
@@ -287,6 +292,11 @@ display: compact;
     filter: gray() alpha(opacity=30);
     -moz-opacity: 0.30;
 }
+
+.generic_object_admin_edit input {
+    float: left;
+}
+
 #login_form{
     padding: 0px;
     margin: 0px;

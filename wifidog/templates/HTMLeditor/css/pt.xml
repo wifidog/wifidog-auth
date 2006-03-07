@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Styles>
+    <Style name="Title" element="span">
+        <Attribute name="class" value="user_ui_title" />
+    </Style>
+</Styles>

@@ -91,7 +91,7 @@ class FormSelectGenerator
 				$retval .= "<option ";
 				if ($value[$primaryKeyField] == $selectedPrimaryKey)
 				{
-					$retval .= "SELECTED ";
+					$retval .= 'selected="selected" ';
 				}
 				if ($displayFieldIsLangstring === true)
 				{
@@ -204,7 +204,7 @@ class FormSelectGenerator
 			$retval .= "<option ";
 			if ($value[0] == $selectedPrimaryKey)
 			{
-				$retval .= "SELECTED ";
+				$retval .= 'selected="selected" ';
 			}
 
 			$name = $value[1];
@@ -257,4 +257,5 @@ class FormSelectGenerator
  * c-hanging-comment-ender-p: nil
  * End:
  */
+
 ?>

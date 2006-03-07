@@ -398,17 +398,20 @@ class Content implements GenericObject {
     /**
      * Get a flexible interface to generate new content objects
      *
-     * @param string $user_prefix  A identifier provided by the programmer to
-     *                             recognise it's generated html form
-     * @param string $content_type If set, the created content will be of this
-     *                             type, otherwise, the user will have to choose
+     * @param string $user_prefix      A identifier provided by the programmer
+     *                                 to recognise it's generated HTML form
+     * @param string $content_type     If set, the created content will be of
+     *                                 this type, otherwise, the user will have
+     *                                 to choose
+     * @param string $display_location If set, the created content will be of this
+     *                                 type, otherwise, the user will have to choose
      *
      * @return string HTML markup
      *
      * @static
      * @access public
      */
-    public static function getNewContentUI($user_prefix, $content_type = null)
+    public static function getNewContentUI($user_prefix, $content_type = null, $display_location = "normal")
     {
         // Define globals
         global $db;
@@ -421,7 +424,12 @@ class Content implements GenericObject {
         $_name = "get_new_content_{$user_prefix}_content_type";
 
         if (empty ($content_type)) {
-            $_html .= _("Content type: ");
+            if ($display_location == "admin_section") {
+                $_label = _("Add new content") . ": ";
+            } else {
+                $_label = _("Content type") . ": ";
+            }
+
             $_i = 0;
 
             foreach ($_availableContentTypes as $_className) {
@@ -430,7 +438,14 @@ class Content implements GenericObject {
                 $_i++;
             }
 
-            $_html .= FormSelectGenerator::generateFromArray($_tab, 'TrivialLangstring', $_name, null, false);
+            if ($display_location == "admin_section") {
+                $_html .= "<div class='admin_section_data content_add'>";
+                $_html .= $_label;
+                $_html .= FormSelectGenerator::generateFromArray($_tab, 'TrivialLangstring', $_name, null, false);
+                $_html .= "</div>";
+            } else {
+                $_html .= FormSelectGenerator::generateFromArray($_tab, 'TrivialLangstring', $_name, null, false);
+            }
         } else {
             if (false === array_search($content_type, $_availableContentTypes, true)) {
                 throw new Exception(_("The following content type isn't valid: ") . $content_type);
@@ -447,7 +462,13 @@ class Content implements GenericObject {
             $_value = _("Add");
         }
 
-        $_html .= '<input type="submit" name="' . $_name . '" value="' . $_value . '">';
+            if ($display_location == "admin_section") {
+                $_html .= "<div class='admin_section_tools'>";
+                $_html .= '<input type="submit" class="submit" name="' . $_name . '" value="' . $_value . '">';
+                $_html .= "</div>";
+            } else {
+                $_html .= '<input type="submit" class="submit" name="' . $_name . '" value="' . $_value . '">';
+            }
 
         return $_html;
     }
@@ -536,41 +557,47 @@ class Content implements GenericObject {
         $current_content_sql = "SELECT * FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key' AND display_location='$display_location' ORDER BY subscribe_timestamp DESC";
         $rows = null;
         $db->execSql($current_content_sql, $rows, false);
-        $html .= "<ul class='admin_section_list'>\n";
+        $html .= "<ul class='admin_section_list node_content_list'>\n";
         if ($rows)
             foreach ($rows as $row)
             {
                 $content = Content :: getObject($row['content_id']);
                 $html .= "<li class='admin_section_list_item'>\n";
-                $html .= "<div class='admin_section_data'>\n";
+                $html .= "<div class='admin_section_data content_edit'>\n";
                 $html .= $content->getListUI();
                 $html .= "</div>\n";
                 $html .= "<div class='admin_section_tools'>\n";
                 $name = "{$user_prefix}_".$content->GetId()."_edit";
-                $html .= "<input type='button' name='$name' value='"._("Edit")."' onClick='window.location.href = \"".GENERIC_OBJECT_ADMIN_ABS_HREF."?object_class=Content&action=edit&object_id=".$content->GetId()."\";'>\n";
+                $html .= "<input type='button' class='submit' name='$name' value='"._("Edit")."' onClick='window.location.href = \"".GENERIC_OBJECT_ADMIN_ABS_HREF."?object_class=Content&action=edit&object_id=".$content->GetId()."\";'>\n";
                 $name = "{$user_prefix}_".$content->GetId()."_erase";
-                $html .= "<input type='submit' name='$name' value='"._("Remove")."'>";
+                $html .= "<input type='submit' class='submit' name='$name' value='"._("Remove")."'>";
                 $html .= "</div>\n";
+                $html .= "<div class='clearbr'></div>\n";
                 $html .= "</li>\n";
             }
         $html .= "<li class='admin_section_list_item'>\n";
+        $html .= "<div class='admin_section_data content_existing'>\n";
         $name = "{$user_prefix}_new_existing";
         $_contentSelector = Content::getSelectContentUI($name, "AND content_id NOT IN (SELECT content_id FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key')");
         $html .= $_contentSelector;
         $name = "{$user_prefix}_new_display_location";
+        $html .= "</div>\n";
 
+        $html .= "<div class='admin_section_tools'>\n";
         $html .= "<input type='hidden' name='{$name}' value='{$display_location}'>\n";
         $name = "{$user_prefix}_new_existing_submit";
 
         if (strpos($_contentSelector, _("Sorry, no content available in the database")) === false) {
-            $html .= "<input type='submit' name='$name' value='"._("Add")."'>";
+            $html .= "<input type='submit' class='submit' name='$name' value='"._("Add")."'>";
         }
 
+        $html .= "</div>\n";
+        $html .= "<div class='clearbr'></div>\n";
         $html .= "</li>\n";
         $html .= "<li class='admin_section_list_item'>\n";
-        $html .= "Add new content: ";
         $name = "{$user_prefix}_new";
-        $html .= self :: getNewContentUI($name, $content_type = null);
+        $html .= self :: getNewContentUI($name, $content_type = null, "admin_section");
+        $html .= "<div class='clearbr'></div>\n";
         $html .= "</li>\n";
         $html .= "</ul>\n";
 
@@ -668,8 +695,12 @@ class Content implements GenericObject {
         $_retVal = array();
         $_contentRows = null;
 
+		if (!User::getCurrentUser()) {
+			throw new Exception(_('Access denied!'));
+		}
+
         if ($type_interface != "table") {
-            $_html .= _("Select existing Content: ")."\n";
+            $_html .= _("Select existing content") . ": ";
         }
 
         $_name = "{$user_prefix}";
@@ -1302,7 +1333,7 @@ class Content implements GenericObject {
                 $html .= "</div>\n";
 
                 /* content_has_owners */
-                $html .= "<div class='admin_section_container'>\n";
+                $html .= "<div class='admin_section_container content_has_owners'>\n";
                 $html .= "<span class='admin_section_title'>"._("Content owner list")."</span>\n";
                 $html .= "<ul class='admin_section_list'>\n";
 

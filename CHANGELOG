@@ -1,3 +1,27 @@
+2006-03-07 Max Horváth <max.horvath@maxspot.de>
+	* init_php.php now does a 100% strict check for variable types of
+	  elements to be processed when magic_quotes are turned on
+	* fixed duplicate use of SSL_AVIABLE define in common.php
+	  This fixes ticket #95.
+	* fixed problens with slashes in htospots_map.php
+	  This fixes ticket #97.
+	* fixed variable typo in NodeListXML.php
+	* introduced new InterfaceElements class which is being used to create
+	  HTML code - this reduces HTML markup in PHP code and reduces HTML errors
+	  we had i.e. on the node administration page (unclosed div).
+	  It is being used on the node administration page now and will be updated
+	  for the other admin pages ...
+	* when adding an owner or tech officer on the node admin page and pressing
+	  enter in the input field the statistics where called (no owner or tech
+	  officer was added) - this has been fixed
+	* database schema update 35 wasn't compatible with PostgreSQL version 7,
+	  the update script has been changed to be compatible with it ...
+	  This fixes ticket #94.
+	* Gabriel Hahmann did a translation of WiFiDog-Auth in portuguese ... it has
+	  been included
+	  This fixes ticket #98.
+	* on node administration page owners have less rights than admins
+
 2006-03-02 Max Horváth <max.horvath@maxspot.de>
 	* converted PNGs to GIFs because Internet Explorer cannot handle alpha
 	  transparency of PNGs

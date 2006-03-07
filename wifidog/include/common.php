@@ -83,12 +83,14 @@ $db = new AbstractDb();
  * Check for SSL support
  */
 
-define("SSL_AVAILABLE", false);
-
 if (Server::getCurrentServer(true) != null) {
     if (Server::getCurrentServer(true)->isSSLAvailable()) {
         define("SSL_AVAILABLE", true);
+    } else {
+        define("SSL_AVAILABLE", false);
     }
+} else {
+    define("SSL_AVAILABLE", false);
 }
 
 /**

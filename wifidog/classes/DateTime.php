@@ -42,6 +42,11 @@
  */
 
 /**
+ * Load required classes
+ */
+require_once('classes/InterfaceElements.php');
+
+/**
  * @package    WiFiDogAuthServer
  * @author     Francois Proulx <francois.proulx@gmail.com>
  * @copyright  2005 Francois Proulx, Technologies Coeus inc.
@@ -55,7 +60,7 @@ class DateTime
     /**
      * @todo Complete this
      */
-    public static function getSelectDateTimeUI(DateTime $datetime, $user_prefix, $interface_type)
+    public static function getSelectDateTimeUI(DateTime $datetime, $user_prefix, $interface_type, $id = "")
     {
         $html = "";
         switch($interface_type)
@@ -70,7 +75,7 @@ class DateTime
 
         case self::INTERFACE_DATETIME_FIELD:
             $str = $datetime->getIso8601FormattedString();
-            $html = "<input type=\"text\" name=\"{$user_prefix}\" value=\"{$str}\">";
+            $html = InterfaceElements::generateInputText($user_prefix, $str, $id);
             break;
         }
 

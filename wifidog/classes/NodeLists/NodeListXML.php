@@ -251,10 +251,10 @@ class NodeListXML {
                     if ($_nodeData['is_up'] == 't') {
                         $_hotspotStatus = $this->_xmldoc->createElement("globalStatus", "100");
                     } else {
-                        $_hotsoptStatus = $this->_xmldoc->createElement("globalStatus", "0");
+                        $_hotspotStatus = $this->_xmldoc->createElement("globalStatus", "0");
                     }
 
-                    $_hotspot->appendChild($_hotsoptStatus);
+                    $_hotspot->appendChild($_hotspotStatus);
                 }
 
                 // Description

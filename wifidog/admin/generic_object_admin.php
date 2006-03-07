@@ -65,6 +65,7 @@ require_once('classes/User.php');
 require_once('classes/Node.php');
 require_once('classes/Network.php');
 require_once('classes/Server.php');
+require_once('classes/InterfaceElements.php');
 
 // Init values
 $html = "";
@@ -73,6 +74,7 @@ $common_input = "";
 $displayEditButton = true;
 $displayShowAllButton = false;
 $supportsPreview = true;
+$supportsDeletion = true;
 
 // Init text values
 $createText = sprintf(_("Create %s"), $_REQUEST['object_class']);
@@ -328,10 +330,25 @@ case "new_ui":
     break;
 
 case "edit":
+    // Process preview abilities
     switch ($_REQUEST['object_class']) {
     case "Network":
     case "Server":
         $supportsPreview = false;
+        break;
+
+    default:
+        break;
+    }
+
+    // Process deletion abilities
+    switch ($_REQUEST['object_class']) {
+    case "Network":
+    case "Node":
+    case "Server":
+        if (!User::getCurrentUser()->isSuperAdmin()) {
+            $supportsDeletion = false;
+        }
         break;
 
     default:
@@ -353,31 +370,40 @@ case "edit":
     $html .= "<form enctype='multipart/form-data' action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
     $html .= $common_input;
     $html .= $object->getAdminUI();
+    $html .= "<div class='generic_object_admin_edit'>";
     $html .= "<input type='hidden' name='action' value='save'>";
-    $html .= "<input type=submit name='save_submit' value='" . _("Save") . " " . get_class($object) . "'>";
-    $html .= "<script type='text/javascript'>";
-    $html .= "document.write(\"<br />\");";
-    $html .= "document.write(\"<input type='hidden' name='action_delete' value='no' id='form_action_delete' />\");";
-    $html .= "document.write(\"<input type='submit' name='action_delete_submit' onmouseup='document.getElementById(\\\"form_action_delete\\\").value = \\\"delete\\\"' onkeyup='document.getElementById(\\\"form_action_delete\\\").value = \\\"delete\\\"' value='" . _("Delete") . " " . get_class($object) . "' />\");";
-    $html .= "</script>";
+    $html .= "<input type='submit' class='submit' name='save_submit' value='" . _("Save") . " " . get_class($object) . "'>";
+
+    if ($supportsDeletion) {
+        $html .= "<script type='text/javascript'>";
+        $html .= "document.write(\"<input type='hidden' name='action_delete' value='no' id='form_action_delete' />\");";
+        $html .= "document.write(\"<input type='submit' class='submit' name='action_delete_submit' onmouseup='document.getElementById(\\\"form_action_delete\\\").value = \\\"delete\\\"' onkeyup='document.getElementById(\\\"form_action_delete\\\").value = \\\"delete\\\"' value='" . _("Delete") . " " . get_class($object) . "' />\");";
+        $html .= "</script>";
+    }
+
     $html .= '</form>';
 
     if ($supportsPreview) {
         $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' target='_blank' method='post'>";
         $html .= $common_input;
         $html .= "<input type='hidden' name='action' value='preview'>";
-        $html .= "<input type=submit name='preview_submit' value='" . _("Preview") . " " . get_class($object) . "'>";
+        $html .= "<input type='submit' class='submit' name='preview_submit' value='" . _("Preview") . " " . get_class($object) . "'>";
         $html .= '</form>';
     }
 
     // Display delete button (without check for unchecked persitant switch) only if JavaScript has been disabled
-    $html .= "<noscript>";
-    $html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' method='post'>";
-    $html .= $common_input;
-    $html .= "<input type='hidden' name='action' value='delete'>";
-    $html .= "<input type=submit name='delete_submit' value='" . _("Delete") . " " . get_class($object) . "'>";
-    $html .= '</form>';
-    $html .= "</noscript>";
+    if ($supportsDeletion) {
+        $html .= "<noscript>";
+        $html .= "<form action='".GENERIC_OBJECT_ADMIN_ABS_HREF."' method='post'>";
+        $html .= $common_input;
+        $html .= "<input type='hidden' name='action' value='delete'>";
+        $html .= "<input type='submit' class='submit'  name='delete_submit' value='" . _("Delete") . " " . get_class($object) . "'>";
+        $html .= '</form>';
+        $html .= "</noscript>";
+    }
+
+    $html .= "<div class='clearbr'></div>";
+    $html .= "</div>";
     break;
 
 default:
@@ -386,11 +412,18 @@ default:
 }
 
 /*
+ * Define JavaScripts
+ */
+
+$_htmlHeader  = "<script type='text/javascript' src='" . BASE_SSL_PATH . "js/interface.js'></script>";
+$_htmlHeader .= "<script type='text/javascript' src='" . BASE_SSL_PATH . "js/interface.js'></script>";
+
+/*
  * Render output
  */
 $ui = new MainUI();
 $ui->setTitle(_("Generic object editor"));
-$ui->setHtmlHeader("<script type='text/javascript' src='" . BASE_SSL_PATH . "js/interface.js'></script>");
+$ui->setHtmlHeader($_htmlHeader);
 $ui->setToolSection('ADMIN');
 $ui->setMainContent("<div>" . $html . "</div>");
 $ui->display();
