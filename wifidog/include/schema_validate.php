@@ -776,7 +776,7 @@ function update_schema()
             $sql .= "ALTER TABLE networks ADD COLUMN gmaps_map_type text CHECK (gmaps_map_type<>'');\n";
             $sql .= "ALTER TABLE networks ALTER COLUMN gmaps_map_type SET DEFAULT 'G_MAP_TYPE';\n";
             $sql .= "UPDATE networks SET gmaps_map_type = 'G_MAP_TYPE';\n";
-            $sql .= "ALTER TABLE networks ALTER COLUMN gmaps_map_type SET NOT NULL);\n";
+            $sql .= "ALTER TABLE networks ALTER COLUMN gmaps_map_type SET NOT NULL;\n";
             $sql .= "UPDATE networks SET gmaps_initial_latitude = " . (defined("GMAPS_INITIAL_LATITUDE") ? "'" . GMAPS_INITIAL_LATITUDE . "'" : "'45.494511'") . ", gmaps_initial_longitude = " . (defined("GMAPS_INITIAL_LONGITUDE") ? "'" . GMAPS_INITIAL_LONGITUDE . "'" : "'-73.560285'") . ", gmaps_initial_zoom_level = " . (defined("GMAPS_INITIAL_ZOOM_LEVEL") ? "'" . GMAPS_INITIAL_ZOOM_LEVEL . "'" : "'5'") . ";\n";
         }
 
