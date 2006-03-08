@@ -142,7 +142,7 @@
                 var size_array = getWindowSize(window);
                 var original_location=window.location.href;
                 var old_window = window;
-                var new_window = window.open('{$url}','wifidog_portal');
+                var new_window = window.open('{$currentUrl}','wifidog_portal');
 
                 new_window.blur();
                 old_window.focus();

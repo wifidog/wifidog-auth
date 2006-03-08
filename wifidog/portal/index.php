@@ -130,6 +130,7 @@ $smarty->assign('onlineUsers', array());
 $smarty->assign('userIsAtHotspot', false);
 $smarty->assign('noUrl', true);
 $smarty->assign('url', "");
+$smarty->assign('currentUrl', "");
 $smarty->assign('accountValidation', false);
 $smarty->assign('validationTime', 20);
 $smarty->assign('hotspotNetworkUrl', "");
@@ -195,6 +196,9 @@ if (empty($original_url_requested)) {
     $smarty->assign('noUrl', true);
     $smarty->assign('url', $original_url_requested);
 }
+
+// Assign current request url
+$smarty->assign('currentUrl', CURRENT_REQUEST_URL);
 
 // Compile HTML code
 $tool_html = $smarty->fetch("templates/sites/portal.tpl");
