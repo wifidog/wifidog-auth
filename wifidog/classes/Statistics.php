@@ -43,6 +43,11 @@
  */
 
 /**
+ * Load required files
+ */
+require_once('include/common.php');
+
+/**
  * Gives various statistics about the status of the network or of a specific node
  *
  * @package    WiFiDogAuthServer
@@ -50,8 +55,6 @@
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
  * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
  */
-
- require_once('include/common.php');
 class Statistics
 {
     /** An array of the of the selected networks.

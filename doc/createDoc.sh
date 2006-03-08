@@ -9,5 +9,8 @@
 # - install PEAR::PhpDocumentor version 1.3 this way:
 #   pear install PhpDocumentor-beta
 # - memory_limit flag in php.ini must be larger than 8 MB (at least 16 MB recommended)
+#
+# On systems running newer version of PHP (5.1.x) you'll need to use the CVS version
+# of PhpDocumentor, currently!
 
-phpdoc -t  . -d  ../wifidog/,. -i  *.html,*.gif,*.jpg,*.png,*.css,*.js,*.sh,*.mo,*.po,*.pl,*.txt,*.xml,README,../wifidog/classes/AbstractDbMySql.php,../wifidog/lib/FCKeditor/,../wifidog/lib/magpie/,../wifidog/lib/Phlickr/,../wifidog/lib/smarty/,../wifidog/local_content/,../wifidog/locale/,../wifidog/tmp/,../local.config.php -pp on -s on -ti "WiFiDog Documentation" -o  HTML:frames:default
+phpdoc -dh off -pp on -j off -p off -s on -ti "WiFiDog Documentation" -dn WiFiDogAuthServer -po WiFiDogAuthServer -o  HTML:frames:default -t . -d ../wifidog,. -i *.html,*.gif,*.jpg,*.png,*.css,*.js,*.sh,*.mo,*.po,*.pl,*.txt,*.xml,*.tpl,AbstractDbMySql.php,local.config.php,*/FCKeditor/*,*/magpie/*,*/Phlickr/*,*/smarty/*,*/local_content/*,*/locale/*,*/tmp/*

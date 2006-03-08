@@ -110,6 +110,9 @@ define('SYSTEM_PATH', $path_tmp);
  */
 
 if (!defined('DOCUMENT_ROOT')) {
+    /**
+     * Set detected document root
+     */
     define('DOCUMENT_ROOT', substr($_SERVER['SCRIPT_FILENAME'], 0, -strlen($_SERVER['PHP_SELF'])));
 }
 

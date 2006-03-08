@@ -428,7 +428,7 @@ class Server implements GenericObject
      *
      * @return bool True on success, false on failure
      *
-     * @access puhlic
+     * @access public
      */
 	public function setName($value)
 	{
@@ -466,7 +466,7 @@ class Server implements GenericObject
      *
      * @return bool True on success, false on failure
      *
-     * @access puhlic
+     * @access public
      */
 	public function setCreationDate($value)
 	{

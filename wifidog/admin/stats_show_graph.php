@@ -45,6 +45,10 @@
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
+
+/**
+ * Load required files
+ */
 require_once ('../include/path_defines_base.php');
 
 if (empty($_REQUEST['graph_class'])) {

@@ -1,6 +1,8 @@
 2006-03-08 Max Horváth <max.horvath@maxspot.de>
 	* fixed small bug where clicking on the start button at the portal page
 	  didn't open the wifidog portal, but the requested page
+	* updated source to generate a clean PHPdoc output
+	* updated PHPdoc generating script
 
 2006-03-07 Max Horváth <max.horvath@maxspot.de>
 	* init_php.php now does a 100% strict check for variable types of
