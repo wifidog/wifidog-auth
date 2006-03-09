@@ -518,13 +518,13 @@ class InterfaceElements
      * @static
      * @access public
      */
-	public static function generateTextarea($name, $value, $cols = 50, $rows = 5, $id = "", $class = "textarea")
+	public static function generateTextarea($name, $value = "", $cols = 50, $rows = 5, $id = "", $class = "textarea")
 	{
 	    // Init values
 		$_retVal = "";
 		$_tags = array();
 
-		if ($name && $value) {
+		if ($name) {
             $_tags = array(
                 "name" => $name,
                 "cols" => $cols,
@@ -543,7 +543,7 @@ class InterfaceElements
 
 		    $_retVal = self::_generateClosingElement("textarea", $value, $_tags);
 		} else {
-		    throw new Exception("InterfaceElements::generateTextarea() - \$name and/or \$value is missing.");
+		    throw new Exception("InterfaceElements::generateTextarea() - \$name is missing.");
 		}
 
 		return $_retVal;

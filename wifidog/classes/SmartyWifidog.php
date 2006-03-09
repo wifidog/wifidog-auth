@@ -42,6 +42,10 @@
  */
 
 /**
+ * Load required classes
+ */
+
+/**
  * Prevent caching
  */
 define('DEFAULT_CONTENT_SMARTY_PATH', LOCAL_CONTENT_REL_PATH.DEFAULT_NODE_ID.'/');
@@ -125,6 +129,9 @@ class SmartyWifidog extends Smarty {
     $this->assign('hotspot_network_url',$network->getHomepageURL());
 
      $this->assign('hotspot_id', CURRENT_NODE_ID);
+
+     /* Other useful stuff */
+     $this->assign('userIsAtHotspot', Node::getCurrentRealNode() != null ? true : false);
    }
 
 /**similar to display(), but will find the content in the appropriate local content directory */

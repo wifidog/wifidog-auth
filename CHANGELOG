@@ -1,3 +1,11 @@
+2006-03-09 Max Horváth <max.horvath@maxspot.de>
+	* fixed small bug in the InterfaceElements class
+	* fixed PHP notices in portal/index.php and Locale class
+	* fixed small bug in Authenticator class which in resulted in a fatal PHP
+	  error if a user logged out when his session was already gone
+    * using the {$isUserAtHotspot} smarty variable you can check now in every
+      template if a user calls the portal from a hotspot or not
+
 2006-03-08 Max Horváth <max.horvath@maxspot.de>
 	* fixed small bug where clicking on the start button at the portal page
 	  didn't open the wifidog portal, but the requested page

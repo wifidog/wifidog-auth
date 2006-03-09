@@ -151,8 +151,8 @@ class Locale {
     public static function getBestLanguage() {
         global $AVAIL_LOCALE_ARRAY;
 
-        if (defined($_SERVER["HTTP_ACCEPT_LANGUAGE"])) {
-            foreach(split(';', $_SERVER["HTTP_ACCEPT_LANGUAGE"]) as $lang) {
+        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            foreach(split(';', $_SERVER['HTTP_ACCEPT_LANGUAGE']) as $lang) {
                 foreach($AVAIL_LOCALE_ARRAY as $avail_lang => $lang_description) {
                     $lang = ereg_replace("[_-].*$", "", $lang);
                     $avail_lang_trimmed = ereg_replace("[_-].*$", "", $avail_lang);

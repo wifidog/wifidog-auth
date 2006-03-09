@@ -46,6 +46,7 @@
  * Load Network class
  */
 require_once('classes/Network.php');
+require_once('classes/Session.php');
 
 /**
  * Abstract class to represent an authentication source
@@ -82,7 +83,10 @@ abstract class Authenticator
      * tied to the current node will be destroyed */
     function logout($conn_id = null)
     {
+        // Define globals
         global $db;
+        global $session;
+
         $conn_id = $db->escapeString($conn_id);
         if (!empty ($conn_id))
         {
@@ -129,9 +133,11 @@ abstract class Authenticator
                 }
             }
         }
-        global $session;
-        $session->destroy();
 
+        // Try to destroy current session
+        if (method_exists($session, "destroy")) {
+            $session->destroy();
+        }
     }
 
     /** Start accounting traffic for the user

@@ -175,7 +175,7 @@ foreach ($online_users as $online_user) {
         $rolenames = join($roles, ",");
     }
 
-    $online_user_array[] = array('Username' => $online_user->getUsername(), 'showRoles' => count($roles) > 0, 'roles' => $rolenames);
+    $online_user_array[] = array('Username' => $online_user->getUsername(), 'showRoles' => count($roles) > 0, 'roles' => $rolenames ? $rolenames : "");
 }
 
 $smarty->assign('numOnlineUsers', $num_online_users);
