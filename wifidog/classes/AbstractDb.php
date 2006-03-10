@@ -1,5 +1,6 @@
 <?php
 
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -34,8 +35,6 @@
 // +-------------------------------------------------------------------+
 
 /**
- * Selects the appropriate database abstraction layer
- *
  * @package    WiFiDogAuthServer
  * @subpackage Database
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
@@ -45,9 +44,378 @@
  */
 
 /**
- * Load database specific abstraction class
+ * Database Abstraction class, deprecated, this should be transitioned to PDO over time
+ *
+ * @package    WiFiDogAuthServer
+ * @subpackage Database
+ * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
  */
-require_once(dirname(__FILE__) . '/' . CONF_DBMS);
+class AbstractDb
+{
+    // Connects to PostgreSQL database
+    function connect($db_name)
+    {
+        // Grab default database name from config file
+        if ($db_name == NULL)
+            $db_name = CONF_DATABASE_NAME;
+
+        // Build connection string
+        $conn_string = "host=".CONF_DATABASE_HOST." dbname=$db_name user=".CONF_DATABASE_USER." password=".CONF_DATABASE_PASSWORD."";
+        // Try connecting and hide warning, errors
+        $ptr_connexion = @ pg_connect($conn_string);
+
+        // Throw an exception if anything went wrong
+        if ($ptr_connexion == FALSE)
+            throw new Exception(sprintf(_("Unable to connect to database on %s"), CONF_DATABASE_HOST));
+
+        return $ptr_connexion;
+    }
+
+    /**
+     * Execute an SQL query and returns the result set or throws an error
+     *
+     * @param $sql SQL query to execute
+     * @param $resultSet A 2-dimensionnal array containing result rows, NULL if empty
+     * @param $debug When set to true the function will spit out debug informations
+     * @return TRUE indicated the query went fine, FALSE something went wrong
+     */
+    function execSql($sql, & $resultSet, $debug = false)
+    {
+            // Get a connection handle
+    $connection = $this->connect(NULL);
+
+        // In debug mode spit out the SQL query
+        if ($debug == TRUE)
+        {
+            // Header
+            echo "<hr/><p/>execSql() : "._("SQL Query")."<br/>\n<pre>{$sql}</pre></p>\n<p>"._("Query plan")." :<br/>\n";
+
+            // Prepend EXPLAIN statement to the SQL query
+            $result = pg_query($connection, "EXPLAIN ".$sql);
+            $plan_array = pg_fetch_all($result);
+            foreach ($plan_array as $plan_line)
+                echo $plan_line['QUERY PLAN']."<br/>\n";
+
+            echo "</p>\n";
+        }
+
+        // Start the clockwatch
+        $sql_starttime = microtime();
+        $result = pg_query($connection, $sql);
+        $sql_endtime = microtime();
+
+        global $sql_total_time;
+        global $sql_num_select_querys;
+
+        $sql_num_select_querys ++;
+        $parts_of_starttime = explode(' ', $sql_starttime);
+        $sql_starttime = $parts_of_starttime[0] + $parts_of_starttime[1];
+        $parts_of_endtime = explode(' ', $sql_endtime);
+        $sql_endtime = $parts_of_endtime[0] + $parts_of_endtime[1];
+        $sql_timetaken = $sql_endtime - $sql_starttime;
+        $sql_total_time = $sql_total_time + $sql_timetaken;
+
+        if ($debug == TRUE)
+            echo "<p>".sprintf(_("Elapsed time for query execution : %.6f second(s)"), $sql_timetaken)."</p>\n";
+
+        if ($result == FALSE)
+        {
+            echo "<p>execSql() : "._("An error occured while executing the following SQL query")." :<br>{$sql}</p>";
+            echo "<p>"._("Error message")." : <br/>".pg_last_error($connection)."</p>";
+            $resultSet = NULL;
+            $return_value = FALSE;
+        }
+        else
+            if (pg_num_rows($result) == 0)
+            {
+                $resultSet = NULL;
+                $return_value = TRUE;
+            }
+            else
+            {
+                $resultSet = pg_fetch_all($result);
+                $return_value = TRUE;
+                if ($debug)
+                {
+                    $num_rows = pg_num_rows($result);
+                    echo "<p>execSql() : ".sprintf(_("The query returned %d results"), $num_rows)." :<br/>\n<table>";
+                    if ($resultSet != NULL)
+                    {
+                        // Displaying column names only once
+                        echo "<tr>\n";
+                        while (list ($col_name, $col_content) = each($resultSet[0]))
+                            echo "<th>$col_name</th>\n";
+                        echo "</TR>\n";
+                    }
+                    while ($resultSet != NULL && list ($key, $value) = each($resultSet))
+                    {
+                        echo "<tr>\n";
+                        while ($value != NULL && list ($col_name, $col_content) = each($value))
+                            echo "<td>$col_content</td>\n";
+                        echo "</tr>\n";
+                    }
+                    // Reset the array pointer to the beginning
+                    reset($resultSet);
+                    echo "</table></p><hr/>\n";
+                }
+            }
+        return $return_value;
+    }
+
+    /**
+     * Returns a string in a compatible / secure way for storing in the database
+     *
+     * @param $string The string to clean up
+     * @return The cleaned-up string
+     */
+    function escapeString($string)
+    {
+        // WARNING : magic quotes must be off
+        return pg_escape_string($string);
+    }
+
+    /**
+     * Returns a cleaned-up binary string BLOG for storing in ByteA fields
+     *
+     * @param $string The string to clean up
+     * @return The cleaned-up string
+     */
+
+    function escapeBinaryString($string)
+    {
+        return pg_escape_bytea($string);
+    }
+
+    /**
+     * Reverts a ByteA escape to raw binary
+     *
+     * @param $string The string to clean up
+     * @return The cleaned-up string
+     */
+
+    function unescapeBinaryString($string)
+    {
+        return pg_unescape_bytea($string);
+
+    }
+
+    /**
+     * Executes an SQL for which, we predict to get a unique match, if that's not the case, this function will throw an error message
+     *
+     * @param string $sql    SQL query to run
+     * @param array  $retRow un array des colonnes de la rangée retournée, NULL si aucun résultats.
+     * @param bool   $debug  Si TRUE, affiche les résultats bruts de la requête
+     * @param bool   $silent If set to true, no error message will be shown
+     *
+     * @return TRUE si la requete a été effectuée avec succés, FALSE autrement.
+     */
+    function execSqlUniqueRes($sql, & $retRow, $debug = false, $silent = false)
+    {
+        $retval = true;
+
+        if ($debug == true)
+            echo "<hr/><p>"._("SQL Query")." : <br/><pre>{$sql}</pre></p>";
+
+        // Get a connection handle
+        $connection = $this->connect(NULL);
+        $sql_starttime = microtime();
+        $result = @ pg_query($connection, $sql);
+        $sql_endtime = microtime();
+
+        global $sql_total_time;
+        global $sql_num_select_unique_querys;
+
+        $sql_num_select_unique_querys ++;
+        $parts_of_starttime = explode(' ', $sql_starttime);
+        $sql_starttime = $parts_of_starttime[0] + $parts_of_starttime[1];
+        $parts_of_endtime = explode(' ', $sql_endtime);
+        $sql_endtime = $parts_of_endtime[0] + $parts_of_endtime[1];
+        $sql_timetaken = $sql_endtime - $sql_starttime;
+        $sql_total_time = $sql_total_time + $sql_timetaken;
+
+        if ($debug == true)
+            echo "<p>".sprintf(_("Elapsed time for query execution : %6f second(s)"), $sql_timetaken)."</p>\n";
+
+        if ($result == false) {
+            if (!$silent) {
+                echo "<p>execSqlUniqueRes() : "._("An error occured while executing the following SQL query")." :<br/>{$sql}</p>";
+                echo "<p>"._("Error message")." : <br/>".pg_last_error($connection)."</p>";
+            }
+
+            $retval = false;
+        } else {
+            $resultSet = pg_fetch_all($result);
+            $retRow = $resultSet[0];
+            if (pg_num_rows($result) > 1)
+            {
+                echo "<p>execSqlUniqueRes() : "._("An error occured while executing the following SQL query")." : <br/>{$sql}</p>";
+                echo "<p>".sprintf(_("The query returned %d results, although there should have been only one."), pg_num_rows($result))."</p>";
+                $retval = false;
+                $debug = true;
+            }
+
+            if ($debug)
+            {
+                $num_rows = pg_num_rows($result);
+                echo "<p>execSqlUniqueRes(): ".sprintf(_("The query returned %d result(s)"), $num_rows)." : <br/>\n<table>\n";
+                if ($resultSet != NULL)
+                {
+                    echo "<tr>\n";
+                    while (list ($col_name, $col_content) = each($resultSet[0]))
+                    {
+                        echo "<th>$col_name</th>\n";
+                    }
+                    echo "</tr>\n";
+
+                    while ($resultSet != NULL && list ($key, $value) = each($resultSet))
+                    {
+                        echo "<tr>\n";
+                        while ($value != NULL && list ($col_name, $col_content) = each($value))
+                        {
+                            echo "<td>$col_content</td>\n";
+                        }
+                        echo "</tr>\n";
+                    }
+                    reset($resultSet);
+                }
+                echo "</table></p><hr/>\n";
+            }
+
+        }
+        return $retval;
+    }
+
+    /**
+     * Execute an SQL query meant to modify the database content
+     *
+     * @param $sql SQL update query to run
+     * @param $debug Optional display debug output
+     * @return false on failure, true otherwise
+     */
+    function execSqlUpdate($sql, $debug = false)
+    {
+        // Get a connection handle
+        $connection = $this->connect(NULL);
+        if ($debug == TRUE)
+            echo "<hr/><p>execSqlUpdate(): "._("SQL Query")." : <br/>\n<pre>{$sql}</pre></p>\n";
+
+        global $sql_num_update_querys;
+        global $sql_total_time;
+
+        $sql_num_update_querys ++;
+        $sql_starttime = microtime();
+        $result = pg_query($connection, $sql);
+        $sql_endtime = microtime();
+        $parts_of_starttime = explode(' ', $sql_starttime);
+        $sql_starttime = $parts_of_starttime[0] + $parts_of_starttime[1];
+        $parts_of_endtime = explode(' ', $sql_endtime);
+        $sql_endtime = $parts_of_endtime[0] + $parts_of_endtime[1];
+        $sql_timetaken = $sql_endtime - $sql_starttime;
+        $sql_total_time = $sql_total_time + $sql_timetaken;
+
+        if ($debug == TRUE)
+        {
+            echo "<p>".sprintf(_("%d rows affected by the SQL query."), pg_affected_rows($result))."<br/>\n";
+            echo sprintf(_("Elapsed time for query execution : %6f second(s)"), $sql_timetaken)."</p>\n";
+        }
+
+        if ($result == FALSE)
+        {
+            echo "<p>execSqlUpdate(): "._("An error occured while executing the following SQL query")." : <br><pre>$sql</pre></p>";
+            echo "<p>"._("Error message")." : <br/>".pg_last_error($connection)."<br/>".pg_result_error($result)."</p>";
+        }
+        else
+            if ($debug == TRUE)
+                echo "<p>execSqlUpdate(): ".sprintf(_("%d rows affected by the SQL query."), pg_affected_rows($result))."</p><hr/>\n";
+        return $result;
+    }
+
+    /**
+     * Reads an entire large object and send it to the browser
+     */
+    function readFlushLargeObject($lo_oid)
+    {
+        $connection = $this->connect(NULL);
+
+        // Large objects calls MUST be enclosed in transaction block
+        // remember, large objects must be obtained from within a transaction
+        pg_query($connection, "begin");
+        $handle_lo = pg_lo_open($connection, $lo_oid, "r") or die("<h1>Error.. can't get handle</h1>");
+        pg_lo_read_all($handle_lo) or die("<h1>Error, can't read large object.</h1>");
+        // committing the data transaction
+        pg_query($connection, "commit");
+    }
+
+    function importLargeObject($path)
+    {
+        $connection = $this->connect(NULL);
+
+        // Large objects calls MUST be enclosed in transaction block
+        // remember, large objects must be obtained from within a transaction
+        pg_query($connection, "begin");
+        $new_oid = pg_lo_import($connection, $path);
+        // committing the data transaction
+        pg_query($connection, "commit");
+
+        return $new_oid;
+    }
+
+    function unlinkLargeObject($oid)
+    {
+        return $this->execSqlUpdate("BEGIN; SELECT lo_unlink($oid);  COMMIT;", false);
+    }
+
+    /**
+     * Builds a string suitable for the databases interval datatype and returns it.
+     *
+     * @param $duration The source Duration object
+     * @return a string suitable for storage in the database's interval datatype
+     */
+    function GetIntervalStrFromDuration($duration)
+    {
+        $str = '';
+        if ($duration->GetYears() != 0)
+            $str .= $duration->GetYears().' years ';
+        if ($duration->GetMonths() != 0)
+            $str .= $duration->GetMonths().' months ';
+        if ($duration->GetDays() != 0)
+            $str .= $duration->GetDays().' days ';
+
+        if ($duration->GetHours() != 0 || $duration->GetMinutes() != 0 || $duration->GetSeconds() != 0)
+        {
+            $str .= $duration->GetHours().':'.$duration->GetMinutes().':'.$duration->GetSeconds();
+        }
+        return $str;
+    }
+
+    /**
+     * Builds the internal duration Array from a databases interval datatype and returns it.
+     *
+     * @param $intervalstr A string in the database's interval datatype format
+     * @return the internal representration on the Duration object
+     */
+    function GetDurationArrayFromIntervalStr($intervalstr)
+    {
+        $retval = null;
+        if (empty ($intervalstr))
+        {
+            $retval['years'] = 0;
+            $retval['months'] = 0;
+            $retval['days'] = 0;
+            $retval['hours'] = 0;
+            $retval['minutes'] = 0;
+            $retval['seconds'] = 0;
+        }
+        else
+        {
+            $sql = "SELECT EXTRACT (year FROM INTERVAL '$intervalstr') AS years, EXTRACT (month FROM INTERVAL '$intervalstr') AS months, EXTRACT (day FROM INTERVAL '$intervalstr') AS days, EXTRACT (hour FROM INTERVAL '$intervalstr') AS hours, EXTRACT (minutes FROM INTERVAL '$intervalstr') AS minutes, EXTRACT (seconds FROM INTERVAL '$intervalstr') AS seconds";
+            $this->execSqlUniqueRes($sql, $retval, false);
+        }
+        return $retval;
+    }
+
+}
 
 /*
  * Local variables:
@@ -56,5 +424,4 @@ require_once(dirname(__FILE__) . '/' . CONF_DBMS);
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
 ?>

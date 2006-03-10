@@ -79,14 +79,14 @@ function undo_magic_quotes()
             array_walk_recursive($item, 'stripslashes_cb');
         }
     }
-
     if (get_magic_quotes_gpc()) {
         do_stripslashes($_GET);
         do_stripslashes($_POST);
         do_stripslashes($_COOKIE);
         do_stripslashes($_REQUEST);
-        do_stripslashes($_GLOBALS);
         do_stripslashes($_SERVER);
+        do_stripslashes($_FILES);
+        do_stripslashes($_ENV);
     }
 }
 

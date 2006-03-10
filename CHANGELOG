@@ -1,3 +1,8 @@
+2006-03-09 Benoit Grégoire  <bock@step.polymtl.ca>
+	* init_php.php: Try to fix #102 by inspection
+	* Delete AbstractDbMySql.php, and collapse AbstractDbPostgres.php into AbstractDb.php to prepare for eventual switch to PDO  file
+	* incoming_outgoing_swap.php:  Delete file, closes #85
+	
 2006-03-09 Max Horváth <max.horvath@maxspot.de>
 	* fixed small bug in the InterfaceElements class
 	* fixed PHP notices in portal/index.php and Locale class
