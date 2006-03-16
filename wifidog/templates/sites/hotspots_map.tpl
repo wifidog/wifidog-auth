@@ -52,8 +52,8 @@
 *}
     <div id="login_form">
         <ul>
-            <li><a href="{$base_ssl_path}hotspot_status.php">{"Deployed HotSpots status with coordinates"|_}</a></li>
-            <li><a href="{$base_ssl_path}node_list.php">{"Full node technical status (includes non-deployed nodes)"|_}</a></li>
+            <li><a href="{$base_url_path}hotspot_status.php">{"Deployed HotSpots status with coordinates"|_}</a></li>
+            <li><a href="{$base_url_path}node_list.php">{"Full node technical status (includes non-deployed nodes)"|_}</a></li>
         </ul>
     </div>
 {*
@@ -96,9 +96,9 @@
 
     <div id="map_legend">
         <b>{"Legend"|_}:</b>
-        <img src="{$base_ssl_path}images/HotspotStatusMap/up.gif"><i>{"the hotspot is operational"|_}</i>
-        <img src="{$base_ssl_path}images/HotspotStatusMap/down.gif"><i>{"the hotspot is down"|_}</i>
-        <img src="{$base_ssl_path}images/HotspotStatusMap/unknown.gif"><i>{"not monitored"|_}</i>
+        <img src="{$base_url_path}images/HotspotStatusMap/up.gif"><i>{"the hotspot is operational"|_}</i>
+        <img src="{$base_url_path}images/HotspotStatusMap/down.gif"><i>{"the hotspot is down"|_}</i>
+        <img src="{$base_url_path}images/HotspotStatusMap/unknown.gif"><i>{"not monitored"|_}</i>
     </div>
 {*
     END section MAINCONTENT

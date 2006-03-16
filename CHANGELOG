@@ -1,4 +1,7 @@
 2006-03-09 Benoit Grégoire  <bock@step.polymtl.ca>
+	* hotspots_map.tpl:  Use base_url_path instead of base_ssl_path
+
+2006-03-09 Benoit Grégoire  <bock@step.polymtl.ca>
 	* init_php.php: Try to fix #102 by inspection
 	* Delete AbstractDbMySql.php, and collapse AbstractDbPostgres.php into AbstractDb.php to prepare for eventual switch to PDO  file
 	* incoming_outgoing_swap.php:  Delete file, closes #85
