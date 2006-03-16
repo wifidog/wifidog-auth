@@ -53,11 +53,21 @@ require_once(dirname(__FILE__) . '/include/common.php');
 require_once('include/common_interface.php');
 require_once('classes/MainUI.php');
 require_once('classes/Network.php');
+require_once('classes/Node.php');
 require_once('classes/User.php');
 require_once('classes/Server.php');
 
+// Get information about user
+$currentUser = User::getCurrentUser();
+
 // Check if Google maps support has been enabled
 if (!defined("GMAPS_HOTSPOTS_MAP_ENABLED") || (defined("GMAPS_HOTSPOTS_MAP_ENABLED") && GMAPS_HOTSPOTS_MAP_ENABLED === false)) {
+    header("Location: hotspot_status.php");
+    exit();
+}
+
+// Check if user is at a Hotspot and if he is authenticated
+if (!is_null(Node::getCurrentRealNode()) && !$currentUser) {
     header("Location: hotspot_status.php");
     exit();
 }
@@ -70,9 +80,6 @@ $smarty->assign('sectionMAINCONTENT', false);
 $smarty->assign('isSuperAdmin', false);
 $smarty->assign('isOwner', false);
 $smarty->assign('selectNetworkUI', null);
-
-// Get information about user
-$currentUser = User::getCurrentUser();
 
 /**
  * Define user security levels for the template

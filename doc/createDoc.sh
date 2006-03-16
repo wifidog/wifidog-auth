@@ -13,4 +13,4 @@
 # On systems running newer version of PHP (5.1.x) you'll need to use the CVS version
 # of PhpDocumentor, currently!
 
-phpdoc -dh off -pp on -j off -p off -s on -ti "WiFiDog Documentation" -dn WiFiDogAuthServer -po WiFiDogAuthServer -o  HTML:frames:default -t . -d ../wifidog,. -i *.html,*.gif,*.jpg,*.png,*.css,*.js,*.sh,*.mo,*.po,*.pl,*.txt,*.xml,*.tpl,AbstractDbMySql.php,local.config.php,*/FCKeditor/*,*/magpie/*,*/Phlickr/*,*/smarty/*,*/local_content/*,*/locale/*,*/tmp/*
+phpdoc -dh off -pp on -j off -p off -s on -ti "WiFiDog Documentation" -dn WiFiDogAuthServer -po WiFiDogAuthServer -o  HTML:frames:default -t . -d ../wifidog,. -i *.html,*.gif,*.jpg,*.png,*.css,*.js,*.sh,*.mo,*.po,*.pl,*.txt,*.xml,*.tpl,local.config.php,*/FCKeditor/*,*/magpie/*,*/smarty/*,*/local_content/*,*/locale/*,*/tmp/*

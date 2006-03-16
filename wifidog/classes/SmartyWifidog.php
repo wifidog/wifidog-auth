@@ -44,6 +44,7 @@
 /**
  * Load required classes
  */
+require_once("classes/Locale.php");
 
 /**
  * Prevent caching
@@ -133,6 +134,8 @@ class SmartyWifidog extends Smarty {
 
      /* Other useful stuff */
      $this->assign('userIsAtHotspot', Node::getCurrentRealNode() != null ? true : false);
+
+     $this->assign('currentLocale', Locale::getCurrentLocale());
    }
 
 /**similar to display(), but will find the content in the appropriate local content directory */

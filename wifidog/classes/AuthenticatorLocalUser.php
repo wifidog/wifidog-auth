@@ -37,7 +37,9 @@
  * @package    WiFiDogAuthServer
  * @subpackage Authenticators
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @author     Max Horvath <max.horvath@maxspot.de>
  * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @copyright  2006 Max Horvath, maxspot GmbH
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
@@ -46,6 +48,7 @@
  * Load include files
  */
 require_once('classes/Authenticator.php');
+require_once('classes/Security.php');
 require_once('classes/User.php');
 
 /**
@@ -54,111 +57,170 @@ require_once('classes/User.php');
  * @package    WiFiDogAuthServer
  * @subpackage Authenticators
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @author     Max Horvath <max.horvath@maxspot.de>
  * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @copyright  2006 Max Horvath, maxspot GmbH
  */
 class AuthenticatorLocalUser extends Authenticator
 {
 
-    function __construct($account_orgin)
+    /**
+     * Constructor
+     *
+     * @param string $account_orgin Id of origin network
+     *
+     * @return void
+     *
+     * @access public
+     */
+    public function __construct($account_orgin)
     {
-        parent :: __construct($account_orgin);
+        // Call parent constructor
+        parent::__construct($account_orgin);
     }
 
     /**
      * Callback function used to discriminate Local User account origins
      *
-     * @param array $account_origin
-     * @return boolean True if the parameter refers to a Local User account
-     * origin
+     * @param array $account_origin Id of origin network
+     *
+     * @return bool True if the parameter refers to a Local User account origin
+     *
+     * @access private
      */
     private static function isLocalUserAccountOrigin($account_origin)
     {
         return get_class($account_origin['authenticator']) == "AuthenticatorLocalUser";
     }
 
-    /** Attempts to login a user against the authentication source.  If successfull, returns a User object
+    /**
+     * Attempts to login a user against the authentication source
      *
-     * @param string $username A valid identifying token for the source.  Not necessarily unique.  For local user, bots username and email are valid.
+     * If successfull, returns a User object
+     *
+     * @param string $username A valid identifying token for the source. Not
+     *                         necessarily unique. For local user, bots username
+     *                         and email are valid.
      * @param string $password Clear text password.
-     * @return The actual User object if sogin was successfull, false otherwise.
+     * @param string $errmsg   Reference of error message
+     *
+     * @return object The actual User object if login was successfull, false
+     *                otherwise.
+     *
+     * @access public
      */
-    function login($username, $password, & $errmsg = null)
+    public function login($username, $password, &$errmsg = null)
     {
+        // Define globals
         global $db;
+
+        // Init values
         $security = new Security();
         $retval = false;
+
         $username = $db->escapeString($username);
         $password = $db->escapeString($password);
-        $password_hash = User :: passwordHash($_REQUEST['password']);
+        $password_hash = User::passwordHash($_REQUEST['password']);
 
         $sql = "SELECT user_id FROM users WHERE (username='$username' OR email='$username') AND account_origin='".$this->getNetwork()->getId()."' AND pass='$password_hash'";
         $db->execSqlUniqueRes($sql, $user_info, false);
 
-        if ($user_info != null)
-        {
+        if ($user_info != null) {
             $user = new User($user_info['user_id']);
-            if ($user->isUserValid($errmsg))
-            {
-                $retval = & $user;
+
+            if ($user->isUserValid($errmsg)) {
+                $retval = &$user;
                 User::setCurrentUser($user);
                 $errmsg = _("Login successfull");
-            }
-            else
-            {
+            } else {
                 $retval = false;
                 //Reason for refusal is already in $errmsg
             }
-        }
-        else
-        {
+        } else {
+            /*
+             * This is only used to discriminate if the problem was a
+             * non-existent user of a wrong password.
+             */
             $user_info = null;
-            /* This is only used to discriminate if the problem was a non-existent user of a wrong password. */
             $db->execSqlUniqueRes("SELECT * FROM users WHERE (username='$username' OR email='$username') AND account_origin='".$this->getNetwork()->getId()."'", $user_info, false);
-            if ($user_info == null)
-            {
+
+            if ($user_info == null) {
                 $errmsg = _('Unknown username or email');
-            }
-            else
-            {
+            } else {
                 $errmsg = _('Incorrect password (Maybe you have CAPS LOCK on?)');
             }
+
             $retval = false;
         }
+
         return $retval;
     }
 
     /**
      * Start accounting traffic for the user
+     *
+     * @param string $conn_id The connection id for the connection to work on
+     * @param string $errmsg  Reference of error message
+     *
+     * @return bool Returns always true
+     *
+     * @access public
      */
-    function acctStart($conn_id, & $errmsg = null)
+    public function acctStart($conn_id, &$errmsg = null)
     {
-        parent :: acctStart($conn_id);
+        // Call parent method
+        parent::acctStart($conn_id);
+
         return true;
     }
 
     /**
      * Update traffic counters
+     *
+     * @param string $conn_id  The connection id for the connection to work on
+     * @param int    $incoming Incoming traffic in bytes
+     * @param int    $outgoing Outgoing traffic in bytes
+     * @param string $errmsg   Reference of error message
+     *
+     * @return bool Returns always true
+     *
+     * @access public
      */
-    function acctUpdate($conn_id, $incoming, $outgoing, & $errmsg = null)
+    public function acctUpdate($conn_id, $incoming, $outgoing, &$errmsg = null)
     {
-        // Just call the generic counters update
-        parent :: acctUpdate($conn_id, $incoming, $outgoing);
+        // Call parent method
+        parent::acctUpdate($conn_id, $incoming, $outgoing);
+
         return true;
     }
 
     /**
      * Final update and stop accounting
+     *
+     * @param string $conn_id The connection id (the token id) for the
+     *                        connection to work on
+     * @param string $errmsg  Reference of error message
+     *
+     * @return bool Returns always true
+     *
+     * @access public
      */
-    function acctStop($conn_id, & $errmsg = null)
+    public function acctStop($conn_id, &$errmsg = null)
     {
-        parent :: acctStop($conn_id);
+        // Call parent method
+        parent::acctStop($conn_id);
+
         return true;
     }
 
     /**
      * The basic AuthenticatorLocalUser allows user signup
+     *
+     * @return bool Returns if the class allows registration
+     *
+     * @access public
      */
-    function isRegistrationPermitted()
+    public function isRegistrationPermitted()
     {
         return true;
     }

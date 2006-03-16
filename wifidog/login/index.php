@@ -114,7 +114,7 @@ if (!empty($_REQUEST['url'])) {
 }
 
 // Check if user wanted to enter the administration interface
-if (!empty($_REQUEST['origin']) && $_REQUEST['origin'] = "admin") {
+if (!empty($_REQUEST['origin']) && $_REQUEST['origin'] == "admin") {
     $continueToAdmin = true;
 }
 
@@ -219,6 +219,7 @@ $smarty->assign('node', null);
 $smarty->assign('gwAddress', null);
 $smarty->assign('gwPort', null);
 $smarty->assign('gwId', null);
+$smarty->assign('origin', null);
 $smarty->assign('selectNetworkUI', null);
 $smarty->assign('username', null);
 $smarty->assign('error', null);
@@ -239,6 +240,11 @@ $smarty->assign('node', $node);
 $smarty->assign('gw_address', $gw_address);
 $smarty->assign('gw_port', $gw_port);
 $smarty->assign('gw_id', $gw_id);
+
+// Check if user wanted to enter the administration interface
+if (!empty($_REQUEST['origin'])) {
+    $smarty->assign('origin', $_REQUEST['origin']);
+}
 
 // Set network selector
 $smarty->assign('selectNetworkUI', Network::getSelectNetworkUI('auth_source'));

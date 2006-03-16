@@ -45,7 +45,7 @@
 /**
  * Load include files
  */
-require_once('classes/AuthenticatorLocalUser.php');
+require_once('classes/Authenticators/AuthenticatorLocalUser.php');
 require_once('classes/User.php');
 
 /**
@@ -59,7 +59,11 @@ require_once('classes/User.php');
 class AuthenticatorLocalUserNoSignup extends AuthenticatorLocalUser
 {
     /**
-     * The basic AuthenticatorLocalUser allows user signup
+     * The AuthenticatorLocalUserNoSignup does not allow user signup
+     *
+     * @return bool Returns if the class allows registration
+     *
+     * @access public
      */
     function isRegistrationPermitted()
     {

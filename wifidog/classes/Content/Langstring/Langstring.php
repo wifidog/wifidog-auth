@@ -271,7 +271,7 @@ class Langstring extends Content {
         $html .= "<div class='admin_class'>Langstring (".get_class($this)." instance)</div>\n";
         $html .= "<div class='admin_section_container'>\n";
 
-        $html .= _("Only these HTML tags are allowed : ").htmlentities(self :: ALLOWED_HTML_TAGS);
+        $html .= "<div class='admin_section_hint'>" . _("Only these HTML tags are allowed : ") . htmlentities(self::ALLOWED_HTML_TAGS) . "</div>";
 
         $liste_languages = new LocaleList();
         $sql = "SELECT * FROM langstring_entries WHERE langstring_entries.langstrings_id = '$this->id' ORDER BY locales_id";
@@ -327,12 +327,12 @@ class Langstring extends Content {
                 $html .= "<li class='admin_section_list_item'>\n";
                 $html .= "<div class='admin_section_data'>\n";
 
-                $html .= $liste_languages->GenererFormSelect("$value[locales_id]", "langstrings_".$this->id."_substring_$value[langstring_entries_id]_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
+                $html .= _("Language") . ": " . $liste_languages->GenererFormSelect("$value[locales_id]", "langstrings_".$this->id."_substring_$value[langstring_entries_id]_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
 
                 if ($type_interface == 'LARGE') {
-                    $html .= "<textarea name='langstrings_".$this->id."_substring_$value[langstring_entries_id]_string' cols='60' rows='3'>".htmlspecialchars($value['value'], ENT_QUOTES, 'UTF-8')."</textarea>\n";
+                    $html .= "<textarea name='langstrings_".$this->id."_substring_$value[langstring_entries_id]_string' class='textarea' cols='60' rows='3'>".htmlspecialchars($value['value'], ENT_QUOTES, 'UTF-8')."</textarea>\n";
                 } else {
-                    $html .= "<input type='text' name='langstrings_".$this->id."_substring_$value[langstring_entries_id]_string' size='44' value='".htmlspecialchars($value['value'], ENT_QUOTES, 'UTF-8')."'>\n";
+                    $html .= "<input type='text' class='input_text' name='langstrings_".$this->id."_substring_$value[langstring_entries_id]_string' size='44' value='".htmlspecialchars($value['value'], ENT_QUOTES, 'UTF-8')."'>\n";
                 }
 
                 $html .= "</div>\n";
@@ -340,7 +340,7 @@ class Langstring extends Content {
 
                 $name = "langstrings_".$this->id."_substring_$value[langstring_entries_id]_erase";
 
-                $html .= "<input type='submit' name='$name' value='"._("Delete string")."'>";
+                $html .= "<input type='submit' class='submit' name='$name' value='"._("Delete string")."'>";
                 $html .= "</div>\n";
                 $html .= "</li>\n";
             }
@@ -387,13 +387,13 @@ class Langstring extends Content {
         $html .= "<li class='admin_section_list_item'>\n";
         $html .= "<div class='admin_section_data'>\n";
 
-        $html .= $liste_languages->GenererFormSelect($locale, "langstrings_".$this->id."_substring_new_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
+        $html .= _("Language") . ": " . $liste_languages->GenererFormSelect($locale, "langstrings_".$this->id."_substring_new_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
         $new_substring_name = "langstrings_".$this->id."_substring_new_string";
 
         if ($type_interface == 'LARGE') {
-            $html .= "<textarea name='$new_substring_name' cols='60' rows='3'></textarea>\n";
+            $html .= "<textarea name='$new_substring_name' class='textarea' cols='60' rows='3'></textarea>\n";
         } else {
-            $html .= "<input type='text' name='$new_substring_name' size='44' value=''>\n";
+            $html .= "<input type='text' name='$new_substring_name' class='input_text' size='44' value=''>\n";
         }
 
         $html .= "</div>\n";
@@ -401,7 +401,7 @@ class Langstring extends Content {
 
         $new_substring_submit_name = "langstrings_".$this->id."_add_new_entry";
 
-        $html .= "<input type='submit' name='$new_substring_submit_name' value='"._("Add new string")."'>";
+        $html .= "<input type='submit' class='submit' name='$new_substring_submit_name' value='"._("Add new string")."'>";
         $html .= "</div>\n";
         $html .= "</li>\n";
 

@@ -420,73 +420,212 @@ class Network implements GenericObject
 		return $retval;
 	}
 
-	/** Retreives the network's authenticator's class.
-	 *  @return    A string */
+	/**
+	 * Retreives the network's authenticator's class name.
+	 *
+	 * @return string Name of authenticator's class
+	 *
+	 * @access public
+	 */
 	public function getAuthenticatorClassName()
 	{
 		return $this->mRow['network_authenticator_class'];
 	}
 
-	/** Set the network's authenticator's class.  The subclass of Authenticator to be used for user authentication (ex: AuthenticatorRadius)
-	 * @param $value a string, the class name of a  subclass of Authenticator
-	 * @return true on success, false on failure */
-	function setAuthenticatorClassName($value)
+	/**
+	 * Set the network's authenticator's class.
+	 *
+	 * The subclass of Authenticator to be used for user authentication
+	 * (ex: AuthenticatorRadius)
+	 *
+	 * @param string $value The class name of a  subclass of Authenticator
+	 *
+	 * @return bool True on success, false on failure
+	 *
+	 * @access public
+	 */
+	public function setAuthenticatorClassName($value)
 	{
+	    // Define globals
+		global $db;
+
+	    // Init values
 		$retval = true;
-		if ($value != $this->getAuthenticatorClassName())
-		{
-			global $db;
+
+		if ($value != $this->getAuthenticatorClassName()) {
 			$value = $db->escapeString($value);
 			$retval = $db->execSqlUpdate("UPDATE networks SET network_authenticator_class = '{$value}' WHERE network_id = '{$this->getId()}'", false);
 			$this->refresh();
 		}
+
 		return $retval;
 	}
 
-	/** Retreives the authenticator's parameters
-	 * @return A string */
+	/**
+	 * Retreives the authenticator's parameters
+	 *
+	 * @return string Authenticator's parameters
+	 *
+	 * @access public
+	 */
 	public function getAuthenticatorConstructorParams()
 	{
 		return $this->mRow['network_authenticator_params'];
 	}
 
-	/** The explicit parameters to be passed to the authenticator's constructor (ex: 'my_network_id', '192.168.0.11', 1812, 1813, 'secret_key', 'CHAP_MD5')
-	 * @param $value The new value
-	 * @return true on success, false on failure */
-	function setAuthenticatorConstructorParams($value)
+	/**
+	 * The explicit parameters to be passed to the authenticator's constructor
+	 * (ex: 'my_network_id', '192.168.0.11', 1812, 1813, 'secret_key',
+	 * 'CHAP_MD5')
+	 *
+	 * @param string $value The new value
+	 *
+	 * @return bool True on success, false on failure
+	 *
+	 * @access public
+	 */
+	public function setAuthenticatorConstructorParams($value)
 	{
+	    // Define globals
+		global $db;
+
+		// init values
 		$retval = true;
-		if ($value != $this->getAuthenticatorConstructorParams())
-		{
-			global $db;
+
+		if ($value != $this->getAuthenticatorConstructorParams()) {
 			$value = $db->escapeString($value);
 			$retval = $db->execSqlUpdate("UPDATE networks SET network_authenticator_params = '{$value}' WHERE network_id = '{$this->getId()}'", false);
 			$this->refresh();
 		}
+
 		return $retval;
 	}
 
 	/**
 	 * Get the Authenticator object for this network
 	 *
-	 * @return a subclass of Authenticator
+	 * @return object A subclass of Authenticator
 	 *
-	 * @todo Reimplement this using the muich safer call_user_func_array
+	 * @access public
 	 */
 	public function getAuthenticator()
 	{
 		require_once('classes/Authenticator.php');
 
 		// Include only the authenticator we are about to use
-		require_once('classes/' . $this->mRow['network_authenticator_class'] . '.php');
+		require_once("classes/Authenticators/" . $this->mRow['network_authenticator_class'] . ".php");
 
 		if (strpos($this->mRow['network_authenticator_params'], ';') != false) {
-			throw new Exception("Network::getAuthenticator():  Security error:  The parameters passed to the constructor of the authenticator are potentially unsafe");
+			throw new Exception("Network::getAuthenticator(): Security error: The parameters passed to the constructor of the authenticator are potentially unsafe");
 		}
 
-		$objstring = 'return new '.$this->mRow['network_authenticator_class']."(".$this->mRow['network_authenticator_params'].");";
+		return call_user_func_array(array(new ReflectionClass($this->mRow['network_authenticator_class']), 'newInstance'), explode(",", str_replace(array("'", '"'), "", str_replace(", ", ",", $this->mRow['network_authenticator_params']))));
+	}
 
-		return eval ($objstring);
+    /**
+     * Get the list of available Authenticators on the system
+     *
+     * @return array An array of class names
+     *
+     * @static
+     * @access public
+     */
+    public static function getAvailableAuthenticators()
+    {
+        // Init values
+        $_authenticators = array();
+        $_useCache = false;
+        $_cachedData = null;
+
+        // Create new cache object with a lifetime of one week
+        $_cache = new Cache("AuthenticatorClasses", "ClassFileCaches", 604800);
+
+        // Check if caching has been enabled.
+        if ($_cache->isCachingEnabled) {
+            $_cachedData = $_cache->getCachedData("mixed");
+
+            if ($_cachedData) {
+                // Return cached data.
+                $_useCache = true;
+                $_authenticators = $_cachedData;
+            }
+        }
+
+        if (!$_useCache) {
+            $_dir = WIFIDOG_ABS_FILE_PATH . "classes/Authenticators";
+            $_dirHandle = @opendir($_dir);
+
+            if ($_dirHandle) {
+                // Loop over the directory
+                while (false !== ($_filename = readdir($_dirHandle))) {
+                    // Loop through sub-directories of Content
+                    if ($_filename != '.' && $_filename != '..') {
+                        $_matches = null;
+
+                        if (preg_match("/^(.*)\.php$/", $_filename, $_matches) > 0) {
+                            // Only add files containing a corresponding Authenticator class
+                            if (is_file("{$_dir}/{$_matches[0]}")) {
+                                $_authenticators[] = $_matches[1];
+                            }
+                        }
+                    }
+                }
+
+                closedir($_dirHandle);
+            } else {
+                throw new Exception(_('Unable to open directory ') . $_dir);
+            }
+
+            // Sort the result array
+            sort($_authenticators);
+
+            // Check if caching has been enabled.
+            if ($_cache->isCachingEnabled) {
+                // Save results into cache, because it wasn't saved into cache before.
+                $_cache->saveCachedData($_authenticators, "mixed");
+            }
+        }
+
+        return $_authenticators;
+    }
+
+	/**
+	 * Get an interface to pick an Authenticator
+	 *
+     * @param string $user_prefix                A identifier provided by the
+     *                                           programmer to recognise it's
+     *                                           generated html form
+     * @param string $pre_selected_authenticator The Authenticator to be
+     *                                           pre-selected in the form object
+     *
+     * @return string HTML markup
+     *
+     * @static
+     * @access public
+     */
+	public static function getSelectAuthenticator($user_prefix, $pre_selected_authenticator = null)
+	{
+	    // Define globals
+		global $db;
+
+	    // Init values
+		$_authenticators = array();
+
+		foreach (self::getAvailableAuthenticators() as $_authenticator) {
+		    $_authenticators[] = array($_authenticator, $_authenticator);
+		}
+
+		$_name = $user_prefix;
+
+		if ($pre_selected_authenticator) {
+			$_selectedID = $pre_selected_authenticator;
+		} else {
+			$_selectedID = null;
+		}
+
+		$_html = FormSelectGenerator::generateFromArray($_authenticators, $_selectedID, $_name, null, false);
+
+		return $_html;
 	}
 
 	/**
@@ -1092,13 +1231,20 @@ class Network implements GenericObject
 		return $retval;
 	}
 
-	/**Get an array of all Content linked to the network
-	* @param boolean $exclude_subscribed_content
-	* @param User $subscriber The User object used to discriminate the content
-	* @return an array of Content or an empty arrray */
-	function getAllContent($exclude_subscribed_content = false, $subscriber = null)
+	/**
+	 * Get an array of all Content linked to the network
+	 *
+	 * @param bool   $exclude_subscribed_content Exclude subscribed content?
+	 * @param object $subscriber                 The User object used to
+	 *                                           discriminate the content
+	 *
+	 * @return array An array of Content or an empty array
+	 *
+	 * @access public
+	 */
+	public function getAllContent($exclude_subscribed_content = false, $subscriber = null)
 	{
-	    // Deine globals
+	    // Define globals
 		global $db;
 
         // Init values
@@ -1106,25 +1252,30 @@ class Network implements GenericObject
 		$retval = array ();
 
 		// Get all network, but exclude user subscribed content if asked
-		if ($exclude_subscribed_content == true && $subscriber)
+		if ($exclude_subscribed_content == true && $subscriber) {
 			$sql = "SELECT content_id FROM network_has_content WHERE network_id='$this->id' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$subscriber->getId()}') ORDER BY subscribe_timestamp DESC";
-		else
+		} else {
 			$sql = "SELECT content_id FROM network_has_content WHERE network_id='$this->id' ORDER BY subscribe_timestamp DESC";
+		}
+
 		$db->execSql($sql, $content_rows, false);
 
-		if ($content_rows != null)
-		{
-			foreach ($content_rows as $content_row)
-			{
+		if ($content_rows != null) {
+			foreach ($content_rows as $content_row) {
 				$retval[] = Content :: getObject($content_row['content_id']);
 			}
 		}
+
 		return $retval;
 	}
 
-	/** Retreives the admin interface of this object.
-	 * @return The HTML fragment for this interface */
-
+	/**
+	 * Retreives the admin interface of this object
+	 *
+	 * @return string The HTML fragment for this interface
+	 *
+	 * @access public
+	 */
 	public function getAdminUI()
 	{
 		$html = '';
@@ -1188,7 +1339,7 @@ class Network implements GenericObject
 		$html .= "<div class='admin_section_data'>\n";
 		$name = "network_".$this->getId()."_network_authenticator_class";
 		$value = htmlspecialchars($this->getAuthenticatorClassName(), ENT_QUOTES);
-		$html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+		$html .= $this->getSelectAuthenticator($name, $value);
 		$html .= "</div>\n";
 		$html .= "</div>\n";
 

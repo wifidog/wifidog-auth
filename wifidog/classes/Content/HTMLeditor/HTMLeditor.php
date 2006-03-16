@@ -302,7 +302,7 @@ class HTMLeditor extends Content
                 while (list($_key, $_value) = each($_result)) {
                     $_html .= "<li class='admin_section_list_item'>\n";
                     $_html .= "<div class='admin_section_data'>\n";
-                    $_html .= $_languages->GenererFormSelect($_value["locales_id"], "langstrings_" . $this->id . "_substring_" . $_value["langstring_entries_id"] . "_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
+                    $_html .= _("Language") . ": " . $_languages->GenererFormSelect($_value["locales_id"], "langstrings_" . $this->id . "_substring_" . $_value["langstring_entries_id"] . "_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
 
                     $_FCKeditor = new FCKeditor('langstrings_' . $this->id . '_substring_' . $_value["langstring_entries_id"] . '_string');
                     $_FCKeditor->BasePath = SYSTEM_PATH . "lib/FCKeditor/";
@@ -329,7 +329,7 @@ class HTMLeditor extends Content
                     $_html .= "<div class='admin_section_tools'>\n";
 
                     $_name = "langstrings_" . $this->id . "_substring_" . $_value["langstring_entries_id"] . "_erase";
-                    $_html .= "<input type='submit' name='$_name' value='" . _("Delete string") . "'>";
+                    $_html .= "<input type='submit' class='submit' name='$_name' value='" . _("Delete string") . "'>";
 
                     $_html .= "</div>\n";
                     $_html .= "</li>\n";
@@ -342,7 +342,7 @@ class HTMLeditor extends Content
             $_html .= "<li class='admin_section_list_item'>\n";
             $_html .= "<div class='admin_section_data'>\n";
 
-            $_html .= $_languages->GenererFormSelect($_locale, "langstrings_" . $this->id . "_substring_new_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
+            $_html .= _("Language") . ": " . $_languages->GenererFormSelect($_locale, "langstrings_" . $this->id . "_substring_new_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
 
             $_FCKeditor = new FCKeditor('langstrings_' . $this->id . '_substring_new_string');
             $_FCKeditor->BasePath = SYSTEM_PATH . "lib/FCKeditor/";
@@ -367,7 +367,7 @@ class HTMLeditor extends Content
             $_html .= "</div>\n";
             $_html .= "<div class='admin_section_tools'>\n";
 
-            $_html .= "<input type='submit' name='langstrings_" . $this->id . "_add_new_entry' value='" . _("Add new string") . "'>";
+            $_html .= "<input type='submit' class='submit' name='langstrings_" . $this->id . "_add_new_entry' value='" . _("Add new string") . "'>";
             $_html .= "</div>\n";
             $_html .= "</li>\n";
 

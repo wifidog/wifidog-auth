@@ -1,11 +1,24 @@
-2006-03-09 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-03-16 Max Horváth <max.horvath@maxspot.de>
+	* updated language files (new german strings have already been translated)
+	* added LDAP authentication
+	* Dependencies class can check for an PHP extension now
+	* Dependencies class can check for multiple files on a single dependency now
+	* Authentication classes moved to it's own directory
+	* The getAuthenticator method now uses the much safer and faster
+	  call_user_func_array function to return an authenticator object
+	* the available authenticator classes are now being displayed in a select
+	  box on the network administration page
+	* the link to and the Google hotspots map as is won't be shown to an
+	  unauthenticated user at a real hotspot
+
+2006-03-16 Benoit Grégoire  <bock@step.polymtl.ca>
 	* hotspots_map.tpl:  Use base_url_path instead of base_ssl_path
 
 2006-03-09 Benoit Grégoire  <bock@step.polymtl.ca>
 	* init_php.php: Try to fix #102 by inspection
 	* Delete AbstractDbMySql.php, and collapse AbstractDbPostgres.php into AbstractDb.php to prepare for eventual switch to PDO  file
 	* incoming_outgoing_swap.php:  Delete file, closes #85
-	
+
 2006-03-09 Max Horváth <max.horvath@maxspot.de>
 	* fixed small bug in the InterfaceElements class
 	* fixed PHP notices in portal/index.php and Locale class

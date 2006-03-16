@@ -1218,7 +1218,7 @@ class Content implements GenericObject {
 //                $html .= "</fieldset>\n";
 
                 /* title */
-                $html .= "<div class='admin_section_container'>\n";
+                $html .= "<div class='admin_section_container admin_section_edit_title'>\n";
                 $html .= "<div class='admin_section_title'>"._("Title:")."</div>\n";
                 $html .= "<div class='admin_section_data'>\n";
                 if (empty ($this->content_row['title']))
@@ -1231,16 +1231,16 @@ class Content implements GenericObject {
                     $title = self :: getObject($this->content_row['title']);
                     $html .= $title->getAdminUI();
                     $html .= "</div>\n";
-                    $html .= "<div class='admin_section_tools'>\n";
+                    $html .= "<div class='admin_section_tools admin_section_delete_title'>\n";
                     $name = "content_".$this->id."_title_erase";
-                    $html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
+                    $html .= "<input type='submit' class='submit' name='$name' value='"._("Delete")."'>";
                     $html .= "</div>\n";
                 }
                 $html .= "</div>\n";
 
                 /* is_persistent */
-                $html .= "<div class='admin_section_container'>\n";
-                $html .= "<div class='admin_section_title'>Is persistent (reusable and read-only)?: </div>\n";
+                $html .= "<div class='admin_section_container admin_section_edit_persistant'>\n";
+                $html .= "<div class='admin_section_title'>" . _("Is persistent (reusable and read-only)?") . ": </div>\n";
                 $html .= "<div class='admin_section_data'>\n";
                 $name = "content_".$this->id."_is_persistent";
                 $this->isPersistent() ? $checked = 'CHECKED' : $checked = '';
@@ -1249,7 +1249,7 @@ class Content implements GenericObject {
                 $html .= "</div>\n";
 
                 /* description */
-                $html .= "<div class='admin_section_container'>\n";
+                $html .= "<div class='admin_section_container admin_section_edit_description'>\n";
                 $html .= "<div class='admin_section_title'>"._("Description:")."</div>\n";
                 $html .= "<div class='admin_section_data'>\n";
                 if (empty ($this->content_row['description']))
@@ -1264,13 +1264,13 @@ class Content implements GenericObject {
                     $html .= "</div>\n";
                     $html .= "<div class='admin_section_tools'>\n";
                     $name = "content_".$this->id."_description_erase";
-                    $html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
+                    $html .= "<input type='submit' class='submit' name='$name' value='"._("Delete")."'>";
                     $html .= "</div>\n";
                 }
                 $html .= "</div>\n";
 
                 /* long description */
-                $html .= "<div class='admin_section_container'>\n";
+                $html .= "<div class='admin_section_container admin_section_edit_long_description'>\n";
                 $html .= "<div class='admin_section_title'>"._("Long description:")."</div>\n";
                 $html .= "<div class='admin_section_data'>\n";
                 if (empty ($this->content_row['long_description']))
@@ -1285,13 +1285,13 @@ class Content implements GenericObject {
                     $html .= "</div>\n";
                     $html .= "<div class='admin_section_tools'>\n";
                     $name = "content_".$this->id."_long_description_erase";
-                    $html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
+                    $html .= "<input type='submit' class='submit' name='$name' value='"._("Delete")."'>";
                     $html .= "</div>\n";
                 }
                 $html .= "</div>\n";
 
                 /* project_info */
-                $html .= "<div class='admin_section_container'>\n";
+                $html .= "<div class='admin_section_container admin_section_edit_project'>\n";
                 $html .= "<div class='admin_section_title'>"._("Information on this project:")."</div>\n";
                 $html .= "<div class='admin_section_data'>\n";
                 if (empty ($this->content_row['project_info']))
@@ -1306,13 +1306,13 @@ class Content implements GenericObject {
                     $html .= "</div>\n";
                     $html .= "<div class='admin_section_tools'>\n";
                     $name = "content_".$this->id."_project_info_erase";
-                    $html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
+                    $html .= "<input type='submit' class='submit' name='$name' value='"._("Delete")."'>";
                     $html .= "</div>\n";
                 }
                 $html .= "</div>\n";
 
                 /* sponsor_info */
-                $html .= "<div class='admin_section_container'>\n";
+                $html .= "<div class='admin_section_container admin_section_edit_sponsor'>\n";
                 $html .= "<div class='admin_section_title'>"._("Sponsor of this project:")."</div>\n";
                 $html .= "<div class='admin_section_data'>\n";
                 if (empty ($this->content_row['sponsor_info']))
@@ -1327,7 +1327,7 @@ class Content implements GenericObject {
                     $html .= "</div>\n";
                     $html .= "<div class='admin_section_tools'>\n";
                     $name = "content_".$this->id."_sponsor_info_erase";
-                    $html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
+                    $html .= "<input type='submit' class='submit' name='$name' value='"._("Delete")."'>";
                     $html .= "</div>\n";
                 }
                 $html .= "</div>\n";
@@ -1357,7 +1357,7 @@ class Content implements GenericObject {
                         $html .= "</div>\n";
                         $html .= "<div class='admin_section_tools'>\n";
                         $name = "content_".$this->id."_owner_".$user->GetId()."_remove";
-                        $html .= "<input type='submit' name='$name' value='"._("Remove")."'>";
+                        $html .= "<input type='submit' class='submit' name='$name' value='"._("Remove")."'>";
                         $html .= "</div>\n";
                         $html .= "</li>\n";
                     }
@@ -1370,7 +1370,7 @@ class Content implements GenericObject {
                 $html .= "<div class='admin_section_tools'>\n";
                 $name = "content_{$this->id}_add_owner_submit";
                 $value = _("Add owner");
-                $html .= "<input type='submit' name='$name' value='$value'>";
+                $html .= "<input type='submit' class='submit' name='$name' value='$value'>";
                 $html .= "</div>\n";
                 $html .= "</li>\n";
                 $html .= "</ul>\n";

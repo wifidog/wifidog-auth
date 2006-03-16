@@ -62,6 +62,9 @@
                     <input type="hidden" name="gw_port" value="{$gw_port}">
                     <input type="hidden" name="gw_id" value="{$gw_id}">
                 {/if}
+                {if $origin != null}
+                    <input type="hidden" name="origin" value="{$origin}" />
+                {/if}
 
                 {$selectNetworkUI}<br>
 

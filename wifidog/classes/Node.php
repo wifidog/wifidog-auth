@@ -381,7 +381,7 @@ class Node implements GenericObject
 		$db->execSqlUniqueRes($sql, $row, false);
 		if ($row == null)
 		{
-			throw new Exception(_("The id $node_id_str could not be found in the database"));
+			throw new Exception(sprintf(_("The node %s could not be found in the database!"), $node_id_str));
 		}
 		$this->mRow = $row;
 		$this->id = $row['node_id'];

@@ -97,7 +97,7 @@
     </p>
 
     <ul>
-        {if $googleMapsEnabled}
+        {if $googleMapsEnabled && !$userIsAtHotspot}
             <li><a href="{$base_ssl_path}hotspots_map.php">{"Deployed HotSpots map"|_}</a></li>
         {/if}
         <li><a href="{$base_ssl_path}hotspot_status.php">{"Deployed HotSpots status with coordinates"|_}</a></li>
