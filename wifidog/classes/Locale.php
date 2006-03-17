@@ -102,12 +102,6 @@ class Locale {
             $this->mCountry = $matches[2];
         }
 
-        if (empty ($matches[3])) {
-            // TODO: Optionally support subcode ?
-        } else {
-            $locale .= '_'.$matches[3];
-        }
-
         $this->mId = $locale;
     }
 

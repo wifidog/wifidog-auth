@@ -725,21 +725,9 @@ class User implements GenericObject
         $html .= "<div class='admin_section_container'>\n";
         $html .= "<div class='admin_section_title'>"._("Username")." : </div>\n";
         $html .= "<div class='admin_section_data'>\n";
-        //$name = "user_".$this->getId()."_username";
-        //$html .= "<input type='text' name='$name' value='".htmlentities($this->getUsername())."' size=30 readonly>\n";
         $html .= $this->getUsername()."\n";
         $html .= "</div>\n";
         $html .= "</div>\n";
-
-        //TODO: implement this when Network abstraction is completed
-        /*
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Network")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
-        $name = "user_".$this->getId()."_username";
-        // Show network name here
-        $html .= "</div>\n";
-        $html .= "</div>\n";*/
 
         $html .= "<div class='admin_section_container'>\n";
         $html .= "<div class='admin_section_title'>"._("Real name")." : </div>\n";

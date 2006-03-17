@@ -586,7 +586,7 @@ $api = $this->getFlickrApi();
                     $html .= "</div>\n";
                     $html .= "</div>\n";
 
-                    //TODO: Add photo batch size support
+                    //TODO: Add photo batch size UI support here
 
                     $html .= "</div>\n";
                     $html .= "</div>\n";

@@ -1,3 +1,7 @@
+2006-03-16 François Proulx <francois.proulx@gmail.com>
+	* Removed stale owner_sendfiles.php (now integrated in the Content Manager)
+	* Cleaned up a bunch of stale TODOs
+	
 2006-03-16 Max Horváth <max.horvath@maxspot.de>
 	* updated language files (new german strings have already been translated)
 	* added LDAP authentication
