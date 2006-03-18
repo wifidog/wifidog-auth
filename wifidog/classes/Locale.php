@@ -102,6 +102,14 @@ class Locale {
             $this->mCountry = $matches[2];
         }
 
+        if (empty ($matches[3])) {
+            // TODO: Optionally support subcode ?
+        } else {
+			// region
+            $locale .= '_'.$matches[3];
+			// $this->mRegion = $matches[3];
+        }
+
         $this->mId = $locale;
     }
 
@@ -116,11 +124,12 @@ class Locale {
 
     public static function getCurrentLocale() {
         global $session;
+        global $AVAIL_LOCALE_ARRAY;
         $object = null;
         $locale_id = $session->get(SESS_LANGUAGE_VAR);
 
         /* Try to guess the lang */
-        if (empty($locale_id)) {
+        if (empty($locale_id) || empty($AVAIL_LOCALE_ARRAY[$locale_id])) {
             $locale_id = self :: getBestLanguage();
         }
 
@@ -142,22 +151,67 @@ class Locale {
       * @return string Best language from list of available languages, otherwise
       * empty.
       */
-    public static function getBestLanguage() {
-        global $AVAIL_LOCALE_ARRAY;
+	public static function getBestLanguage($availableLanguages=false) {
+		global $AVAIL_LOCALE_ARRAY;
+		if (empty($availableLanguages)) $availableLanguages=$AVAIL_LOCALE_ARRAY;
 
-        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-            foreach(split(';', $_SERVER['HTTP_ACCEPT_LANGUAGE']) as $lang) {
-                foreach($AVAIL_LOCALE_ARRAY as $avail_lang => $lang_description) {
-                    $lang = ereg_replace("[_-].*$", "", $lang);
-                    $avail_lang_trimmed = ereg_replace("[_-].*$", "", $avail_lang);
+		// the HTTP_ACCEPT_LANGUAGE server string comes from the browser in the
+		// Accept-Language: header.  It is a list of browser language preferences separated by commas.
+		// the language preference is a 2 part field separated by semicolons.  the first part is the language.
+		// the languages are the iso codes.  the language may have a hyphen and a country code appended to
+		// it, like "fr-CA" or "en-gb".
+		// the second part of the language preference may be missing.  if it's not there it's assumed to be
+		// "q=1.0".  This part gives the preference rating and is an float between 0.0 and 1.0.  0.8 corresponds
+		// to 80%.
 
-                    if ($lang == $avail_lang_trimmed) {
-                        return $avail_lang;
-                    }
-                }
-            }
-        }
-    }
+		// $AVAIL_LOCALE_ARRAY, set in config.php.  this is a list of available locales.
+		// The format is different from that of HTTP_ACCEPT_LANGUAGE.  It is:
+		// LANGUAGE [ _COUNTRY [ .ENCODING ] ]
+		// where LANGUAGE and COUNTRY are 2 letter codes (usually), and encoding is something like iso88591 or utf8.
+		// for example:
+		// english or en or en_CA or en_CA.utf8 or en_CA.iso88591 or en_US.iso885915
+		// french or fr or fr_CA or fr_CA.utf8 or fr_CA.iso88591
+
+		$browser_preferences = array();
+		foreach(explode(',', empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? DEFAULT_LANG : $_SERVER['HTTP_ACCEPT_LANGUAGE']) as $lang) {
+			//echo $lang."\n";
+			if (preg_match('/^\s*([a-z_-]+).*?(?:;\s*q=([0-9.]+))?/i', $lang.';q=1.0', $split)) {
+				echo $split[1]." ... ".$split[2]."\n";
+				$browser_preferences[sprintf('%f%d', $split[2], rand(0,9999))] = strtolower($split[1]);
+			}
+		}
+
+		// sort preferences by key in reverse order, from high to low
+		// best is first, worst is last
+		krsort($browser_preferences);
+
+		foreach($browser_preferences as $score => $language_spec) {
+			//echo "$score => $language_spec\n";
+			@list($prefered_language, $prefered_country) = preg_split('/[-_]/', $language_spec);
+			// better to use explode('-', $language_spec) except that $language_spec may come from
+			// config.php DEFAULT_LANG, which may be given as a locale, with an underscore
+			// between the language and country.
+
+			$prefered_locale = empty($prefered_country) ? $prefered_language :
+				$prefered_language . '_' . strtoupper($prefered_country);
+
+			// if the browser's preference is matched exactly in $availableLanguages, great!
+			if (!empty($availableLanguages[$prefered_locale])) return $prefered_locale;
+
+			if (empty($prefered_country)) {
+				// browser doesn't care what country
+				// try to find a match in $availableLanguages ignoring the country
+				foreach($availableLanguages as $my_locale => $language_name) {
+					@list($my_language, $my_country, $my_encoding) = preg_split('/[_.]/', $my_locale);
+					if ($my_language === $prefered_language) return $my_locale;
+				}
+			}
+		}
+
+		return false;
+
+		// return array_shift(array_merge(array_intersect($browser_preferences, $availableLanguages), $availableLanguages));
+	}
 
     /**
      * @todo Don't trust the value in the cookie, verify that the value is in
@@ -173,10 +227,12 @@ class Locale {
             $locale_id = $locale->getId();
             $session->set(SESS_LANGUAGE_VAR, $locale_id);
             $retval = true;
+            $q = "parm";
         } else {
             $locale_id = DEFAULT_LANG;
             $session->set(SESS_LANGUAGE_VAR, $locale_id);
             $retval = false;
+            $q = "dflt";
         }
 
         if (GETTEXT_AVAILABLE) {
@@ -185,7 +241,7 @@ class Locale {
 
             // Test it against current PHP locale
             if ($current_locale != $locale_id) {
-                echo "Warning in /classes/Locale.php : Unable to setlocale() to ".$locale_id.", return value: $current_locale, current locale: ".setlocale(LC_ALL, 0);
+                echo "Warning in /classes/Locale.php setCurentLocale: Unable to setlocale() to ".$q.":".$locale_id.", return value: $current_locale, current locale: ".setlocale(LC_ALL, 0)."<br/>";
                 $retval = false;
             } else {
                 bindtextdomain('messages', WIFIDOG_ABS_FILE_PATH . 'locale');

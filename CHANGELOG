@@ -1,4 +1,12 @@
 2006-03-18 Rob Janes <janes.rob@gmail.com>
+	* path_defines_base working for combinations of DocumentRoot, Alias,
+	  and installed wifidog-auth directory, correctly setting SYSTEM_PATH
+	  and WIFIDOG_ABS_FILE_PATH dynamically.
+	* classes/Locale.php::getBestLanguage changed to correctly parse
+	  HTTP_ACCEPT_LANGUAGE, comma is the correct delimiter not semi-colon.
+	  Ignores SESS_LANGUAGE_VAR if invalid.
+
+2006-03-18 Rob Janes <janes.rob@gmail.com>
 	* Fixed bug #77 classes/EventLogging.php non-variable pass by reference
 
 2006-03-16 François Proulx <francois.proulx@gmail.com>
@@ -23,7 +31,8 @@
 
 2006-03-09 Benoit Grégoire  <bock@step.polymtl.ca>
 	* init_php.php: Try to fix #102 by inspection
-	* Delete AbstractDbMySql.php, and collapse AbstractDbPostgres.php into AbstractDb.php to prepare for eventual switch to PDO  file
+	* Delete AbstractDbMySql.php, and collapse AbstractDbPostgres.php
+	  into AbstractDb.php to prepare for eventual switch to PDO file.
 	* incoming_outgoing_swap.php:  Delete file, closes #85
 
 2006-03-09 Max Horváth <max.horvath@maxspot.de>
