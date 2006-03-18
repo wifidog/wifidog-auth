@@ -1,3 +1,6 @@
+2006-03-18 Rob Janes <janes.rob@gmail.com>
+	* Fixed bug #77 classes/EventLogging.php non-variable pass by reference
+
 2006-03-16 François Proulx <francois.proulx@gmail.com>
 	* Removed stale owner_sendfiles.php (now integrated in the Content Manager)
 	* Cleaned up a bunch of stale TODOs
