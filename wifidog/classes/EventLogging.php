@@ -59,7 +59,7 @@
  *
  * Output formats currently supported:
  * SyslogFormatter - like syslog, with a datestamp prefixed
- * HTMLFormatter - as table row elements
+ * HTMLTableFormatter - as table row elements
  * HTMLCommentsFormatter - as html comments
  *
  * Collection of logging messages can be turned off temporarily,
@@ -1135,10 +1135,13 @@ class EventChannel {
 
   protected $name;
 
+	protected $formattingInfo;
+
   public function __construct($pFormatter=null, $pThresholds=null, $pBlockPercolation=null, $pHoldFlag=null) {
     $this->formatter = $pFormatter;
     $this->thresholds = EventObject::ConvertThresholds($pThresholds);
     $this->eventFifo = array();
+		$this->formattingInfo = array();
     $this->blockPercolation = empty($pBlockPercolation) ? false : true;
     if (isset($pHoldFlag)) $this->holdFlag = $pHoldFlag;
   }
@@ -1174,6 +1177,24 @@ class EventChannel {
     return $sav;
   }
 
+	public function getFormattingInfo($keyword) {
+		if ($keyword===null) return null;
+		return array_key_exists($this->formattingInfo[$keyword]) ? $this->formattingInfo[$keyword] : null;
+	}
+	public function setFormattingInfo($keyword, $value=null) {
+		$sav = array_key_exists($this->formattingInfo[$keyword]) ? $this->formattingInfo[$keyword] : null;
+
+		if ($value===null)
+			unset( $this->formattingInfo[$keyword] );
+		else
+			$this->formattingInfo[$keyword] = $value;
+
+		return $sav;
+	}
+	public function getAllFormattingInfo() {
+		return $this->formattingInfo;
+	}
+
   public function checkType($event) {
     return $event->getType() == 'log' ? true : false;
   }
@@ -1199,7 +1220,7 @@ class EventChannel {
   public function processEvent($event) {
     // $dt = date("Y-m-d H:i:s (T)", $event->getTimestamp());
 
-    print $this->formatter->formatEvent($event);
+    print $this->formatter->formatEvent($event, $this->formattingInfo);
 
     return $this->blockPercolation;
   }
@@ -1286,7 +1307,7 @@ class FileChannel extends EventChannel {
   public function __construct($pFilename, $pFormatter=null, $pThresholds=null, $pBlockPercolation=null, $pHoldFlag=null) {
     parent::__construct($pFormatter, $pThresholds, $pBlockPercolation, $pHoldFlag);
     $this->filename = $pFilename;
-    $this->io = fopen($pFilename, "a");
+    $this->io = fopen($pFilename, "a");	// returns false if it fails, and issues E_WARNING message
   }
 
   public function __destruct() {
@@ -1296,7 +1317,7 @@ class FileChannel extends EventChannel {
   public function processEvent($event) {
     // $dt = date("Y-m-d H:i:s (T)", $event->getTimestamp());
 
-    if (!empty($this->io)) fwrite($this->io, $this->formatter->formatEvent($event));
+    if (!empty($this->io)) fwrite($this->io, $this->formatter->formatEvent($event, $this->formattingInfo));
 
     return $this->blockPercolation;
   }
@@ -1309,7 +1330,7 @@ class FileChannel extends EventChannel {
  * @copyright  2005-2006 Rob Janes
  */
 class EventFormatter {
-  public function formatEvent($event) {
+  public function formatEvent($event, $info=null) {
     $myErrorClass = $event->classifyErrorType();
 
     $myFilename = $event->getFilename();
@@ -1382,18 +1403,19 @@ class HTMLFormatter extends EventFormatter {
  * @copyright  2005-2006 Rob Janes
  */
 class SyslogFormatter extends EventFormatter {
-  public function formatEvent($event) {
+  public function formatEvent($event, $info=null) {
     $dt = date("Y-m-d H:i:s (T)", $event->getTimestamp());
 
     $myFilename = $event->getFilename();
     $myLinenum = $event->getLinenum();
 
-    $string = "$dt ".EventObject::PrettyErrorType($event->getLayoutType()).": ".
-      $event->getMessage().
-      (!empty($myFilename) ? " in $myFilename". (!empty($myLinenum) ? " on line $myLinenum" : "") : "");
+    $string = "$dt ".EventObject::PrettyErrorType($event->getLayoutType()).": "
+			. $event->getMessage()
+			. (!empty($myFilename) ? " in $myFilename". (!empty($myLinenum) ? " on line $myLinenum" : "") : "")
+			. "\n";
 
     if ($event->classifyErrorType() == 'error') {
-      $string .= "\n   Stack Backtrace\n" .
+      $string .= "   Stack Backtrace\n" .
 				self::FormatBacktrace($event->getContext()) .
 				"\n"
 				;
@@ -1410,7 +1432,7 @@ class SyslogFormatter extends EventFormatter {
  * @copyright  2005-2006 Rob Janes
  */
 class HTMLCommentsFormatter extends EventFormatter {
-  public function formatEvent($event) {
+  public function formatEvent($event, $info=null) {
     $myFilename = $event->getFilename();
     $myLinenum = $event->getLinenum();
 

@@ -323,6 +323,11 @@ define('WIFIDOG_LOGO_BANNER_NAME', 'wifidog_logo_banner.png');
 // Name of default node.
 define('DEFAULT_NODE_ID', 'default');
 
+// Declare warning/error/notice logging to a file.
+// Set this to false to disable logging to a file.
+// By default, logging is enabled, to file tmp/wifidog.log.
+// define('WIFIDOG_LOGFILE', 'tmp/wifidog.log');
+
 /**
  * In case this is the local.config.php you should remove the next lines.
  */

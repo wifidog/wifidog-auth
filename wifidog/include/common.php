@@ -70,6 +70,11 @@ require_once('path_defines_base.php');
  * Load required classes
  */
 require_once('classes/EventLogging.php');
+
+EventLogging::SetupErrorHandling( "strict~/var:\sDeprecated/(off)",
+								  array( 'print' => new PrintChannel(new HTMLFormatter(), 'warning,notice', null, true),
+										 'debug' => new PrintChannel(new HTMLCommentsFormatter(), '=debug', null, false) )
+								  );
 require_once('classes/AbstractDb.php');
 require_once('classes/Locale.php');
 require_once('classes/Dependencies.php');
@@ -323,6 +328,56 @@ function cmnRequireConfig($config_file = 'config.php') {
     if (!empty ($config_path))
         require_once ($config_path);
 }
+
+class WifidogSyslogFormatter extends EventFormatter {
+  public function formatEvent($event, $info=null) {
+    $dt = date("Y-m-d H:i:s (T)", $event->getTimestamp());
+
+    $myFilename = $event->getFilename();
+    $myLinenum = $event->getLinenum();
+
+	// Get information about node
+	$myCurrentNode = Node::getCurrentNode();
+	if (empty($myCurrentNode)) $myNodeName = '*nonode*';
+	else $myNodeName = $myCurrentNode->getName();
+
+	// Get information about network
+	$myNetwork = Network::getCurrentNetwork();
+	if (empty($myNetwork)) $myNetworkName = '*nonetwork*';
+	else $myNetworkName = $myNetwork->getName();
+
+	// Get information about user
+	$myCurrentUser = User::getCurrentUser();
+	if (empty($myCurrentUser)) $myUserName = '*nouser*';
+	else $myUserName = $myCurrentUser->getUsername();
+
+    $string = "$dt "
+		. EventObject::PrettyErrorType($event->getLayoutType())
+		. " >$myNetworkName >${myUserName}@$myNodeName [".$_SERVER['REQUEST_URI']."]"
+		. ": "
+		. $event->getMessage()
+		. (!empty($myFilename) ? " in $myFilename". (!empty($myLinenum) ? " on line $myLinenum" : "") : "")
+		. "\n";
+
+    if ($event->classifyErrorType() == 'error') {
+      $string .= "   Stack Backtrace\n" .
+				self::FormatBacktrace($event->getContext()) .
+				"\n"
+				;
+    }
+
+    return $string;
+  }
+}
+
+$myLogfile = !defined('WIFIDOG_LOGFILE') ? "tmp/wifidog.log" : constant('WIFIDOG_LOGFILE');
+if (!empty($myLogfile)) {
+	if (substr($myLogfile,0,1) != '/') $myLogfile = WIFIDOG_ABS_FILE_PATH.$myLogfile;
+	
+	EventLogging::stAddChannel( new FileChannel($myLogfile, new WifidogSyslogFormatter(), 'warning,notice'), 'logfile' );
+}
+
+// trigger_error("here i am", E_USER_NOTICE);
 
 /*
  * Local variables:
