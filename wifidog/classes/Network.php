@@ -239,7 +239,7 @@ class Network implements GenericObject
 	 * @param string $user_prefix A identifier provided by the programmer to
 	 *                            recognise it's generated form
 	 *
-	 * @return mixed The network object or null
+	 * @return mixed The network object or an exception
 	 *
 	 * @static
 	 * @access public
@@ -250,7 +250,7 @@ class Network implements GenericObject
 		if (!empty ($_REQUEST[$name]))
 			return new self($_REQUEST[$name]);
 		else
-			return null;
+			throw new exception (sprintf(_("Unable to retrieve the selected network, the %s REQUEST parameter does not exist")));
 	}
 
 	/** Get an interface to create a new network.

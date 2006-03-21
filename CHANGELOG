@@ -1,3 +1,10 @@
+2006-03-21 Benoit Grégoire  <bock@step.polymtl.ca>
+	* login/index.php: Remove huge security hole introduced by stylistic changes in the file.  
+	A user could login to any hotspot by simply filling a blank form because of a gratuitous 
+	change from empty to is_null everywhere.  Remove escaping or REQUEST parameters in non SQL
+	 related code, as this would lead to double unescaping down the line.  Remove logic dependent
+	  on encapsulated side effects of object method call.
+
 2006-03-19 François Proulx <francois.proulx@gmail.com>
 	* Updated French translations
 	

@@ -61,11 +61,9 @@ require_once('classes/Network.php');
 require_once('classes/MainUI.php');
 
 // Init values
-$node = null;
 $continueToAdmin = false;
 $username = null;
 $password = null;
-$auth_source = null;
 $gw_address = null;
 $gw_port = null;
 $gw_id = null;
@@ -76,15 +74,11 @@ $logout = null;
  */
 
 if (isset($_REQUEST["username"])) {
-    $username = $db->escapeString($_REQUEST["username"]);
+    $username = $_REQUEST["username"];
 }
 
 if (isset($_REQUEST["password"])) {
-    $password = $db->escapeString($_REQUEST["password"]);
-}
-
-if (isset($_REQUEST["auth_source"])) {
-    $auth_source = $db->escapeString($_REQUEST["auth_source"]);
+    $password = $_REQUEST["password"];
 }
 
 if (isset($_REQUEST["gw_address"])) {
@@ -121,7 +115,7 @@ if (!empty($_REQUEST['origin']) && $_REQUEST['origin'] == "admin") {
 /*
  * Start general request parameter processing section
  */
-if (!is_null($gw_id)) {
+if (!empty($gw_id)) {
     try {
         $node = Node::getObject($gw_id);
         $hotspot_name = $node->getName();
@@ -149,12 +143,11 @@ if (!is_null($gw_id)) {
  * the splash_only user
  */
 if ($node && $node->isSplashOnly()) {
-    if (!is_null($gw_address) && !is_null($gw_port)) {
+    if (!empty($gw_address) && !empty($gw_port)) {
         // Login from a gateway, redirect to the gateway to activate the token
         $user = $network->getSplashOnlyUser();
         $token = $user->generateConnectionToken();
         User::setCurrentUser($user);
-
         header("Location: http://" . $gw_address . ":" . $gw_port . "/wifidog/auth?token=" . $token);
     } else {
         // Virtual login, redirect to the auth server homepage
@@ -165,17 +158,16 @@ if ($node && $node->isSplashOnly()) {
 /*
  * Normal login process
  */
-if (!is_null($username) && !is_null($password) && !is_null($auth_source)) {
+if (!empty($username) && !empty($password)) {
     // Init values
     $errmsg = '';
-
     // Authenticating the user through the selected auth source.
     $network = Network::processSelectNetworkUI('auth_source');
 
     $user = $network->getAuthenticator()->login($username, $password, $errmsg);
 
     if ($user != null) {
-        if (!is_null($gw_address) && !is_null($gw_port)) {
+        if (!empty($gw_address) && !empty($gw_port)) {
             // Login from a gateway, redirect to the gateway to activate the token
             $token = $user->generateConnectionToken();
 
@@ -202,7 +194,7 @@ if (!is_null($username) && !is_null($password) && !is_null($auth_source)) {
  *
  * Once logged out, we display the login page
  */
-if ((!is_null($logout) && $logout) && ($user = User::getCurrentUser()) != null) {
+if ((!empty($logout) && $logout) && ($user = User::getCurrentUser()) != null) {
     $network->getAuthenticator()->logout();
 }
 
@@ -250,10 +242,10 @@ if (!empty($_REQUEST['origin'])) {
 $smarty->assign('selectNetworkUI', Network::getSelectNetworkUI('auth_source'));
 
 // Set user details
-$smarty->assign('username', !is_null($username) ? $username : "");
+$smarty->assign('username', !empty($username) ? $username : "");
 
 // Set error message
-$smarty->assign('error', !is_null($error) ? $error : null);
+$smarty->assign('error', !empty($error) ? $error : null);
 
 // Compile HTML code
 $html = $smarty->fetch("templates/sites/login.tpl");
@@ -277,7 +269,7 @@ $smarty->assign('sectionMAINCONTENT', true);
  */
 
 // Get all node content
-if (!is_null($node)) {
+if (!empty($node)) {
     // Set all information about current node
     $smarty->assign('hotspot_homepage_url', $node->getHomePageURL());
     $smarty->assign('hotspot_name', $node->getName());
