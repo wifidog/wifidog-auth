@@ -176,7 +176,6 @@ class Locale {
 		foreach(explode(',', empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? DEFAULT_LANG : $_SERVER['HTTP_ACCEPT_LANGUAGE']) as $lang) {
 			//echo $lang."\n";
 			if (preg_match('/^\s*([a-z_-]+).*?(?:;\s*q=([0-9.]+))?/i', $lang.';q=1.0', $split)) {
-				echo $split[1]." ... ".$split[2]."\n";
 				$browser_preferences[sprintf('%f%d', $split[2], rand(0,9999))] = strtolower($split[1]);
 			}
 		}

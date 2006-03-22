@@ -1,3 +1,9 @@
+2006-03-22 François Proulx <francois.proulx@gmail.com>
+	* Fixed Google Maps URLs bug
+	* Since Google Maps does not provide Javascript over SSL (it does but the certificate does not match)
+	  the code path to the map does not use SSL, but the outgoing URLs do.
+	* Removed lost echo in Locale.php
+	
 2006-03-21 Benoit Grégoire  <bock@step.polymtl.ca>
 	* login/index.php: Remove huge security hole introduced by stylistic changes in the file.  
 	A user could login to any hotspot by simply filling a blank form because of a gratuitous 
