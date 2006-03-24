@@ -274,7 +274,7 @@ class InterfaceElements
 		if ($name) {
 	        // Check if HTML element shall be checked
 	        if ($checked === true) {
-	            $additional_tags[] = array("checked" => "checked");
+	            $additional_tags = array_merge($additional_tags, array("checked" => "checked"));
 	        }
 
 		    $_retVal = self::_generateInputTag("checkbox", $name, $value, $id, $class, $additional_tags);
@@ -350,7 +350,7 @@ class InterfaceElements
 		if ($name) {
 	        // Check if HTML element shall be checked
 	        if ($checked === true) {
-	            $additional_tags[] = array("checked" => "checked");
+	            $additional_tags = array_merge($additional_tags, array("checked" => "checked"));
 	        }
 
 		    $_retVal = self::_generateInputTag("radio", $name, $value, $id, $class, $additional_tags);
