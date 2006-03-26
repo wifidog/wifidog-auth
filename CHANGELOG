@@ -2,6 +2,7 @@
 	* init_php.php: Fix stripslashes_cb() so it actually works, this means the aust server should work properly with auth servers with magic quotes turned on.
 	This is still not recommended however.
 	* Remove some spurious error ouptut on logout.
+	* Remove potential error in network id parsing
 
 2006-03-22 François Proulx <francois.proulx@gmail.com>
 	* Fixed Google Maps URLs bug
