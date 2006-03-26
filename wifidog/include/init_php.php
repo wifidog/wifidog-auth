@@ -61,9 +61,7 @@ function undo_magic_quotes()
      */
     function stripslashes_cb(&$item, $key)
     {
-        if (is_array($item)) {
             $item = stripslashes($item);
-        }
     }
 
     /**

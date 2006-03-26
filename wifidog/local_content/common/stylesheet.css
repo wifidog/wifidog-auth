@@ -1,3 +1,5 @@
+/********** General HTML section **********/
+
 body {
     margin: 0px;
     padding: 0px;
@@ -8,9 +10,6 @@ body {
     width : 97%;
     margin: 0px auto 20px auto;
     background-color: #FFF;
-}
-
-.bodyBackColor {
     background: #dbffa8 url("../../images/bg_body.gif") repeat-x fixed 0px 0px;
 }
 
@@ -19,6 +18,24 @@ input {
     padding: 3px;
     filter: alpha(opacity=70);
     -moz-opacity: 0.70;
+}
+
+h1 {
+    font-family: verdana, sans-serif;
+    color: #88AA4B;
+    font-size: 14px;
+}
+
+a {
+    font-family: arial, sans-serif;
+    color: #616756;
+    font-size: 11px;
+    text-decoration: underline;
+}
+
+a:hover {
+    font-family: arial, sans-serif;
+    color: #88AA4B;
 }
 
 input:hover {
@@ -30,6 +47,21 @@ input:focus {
     filter: alpha(opacity=100);
     -moz-opacity: 1.00;
 }
+
+select {
+    font-family: arial, sans-serif;
+    color: #616756;
+    font-size: 11px;
+    border: 1px solid #C8FF7A;
+    background: #C8FF7A;
+}
+
+/********** End General HTML section **********/
+
+/********** Main structure **********/
+
+
+
 
 .outer_container {
     background-color: white;
@@ -119,11 +151,7 @@ div.test {
     text-align: center;
     vertical-align: text-top;
 }
-h1 {
-    font-family: verdana, sans-serif;
-    color: #88AA4B;
-    font-size: 14px;
-}
+
 #login_form form {
     padding-left: 25px;
     margin: 0px;
@@ -137,16 +165,7 @@ img.separator {
 img.administration {
     vertical-align: middle;
 }
-a {
-    font-family: arial, sans-serif;
-    color: #616756;
-    font-size: 11px;
-    text-decoration: underline;
-}
-a:hover {
-    font-family: arial, sans-serif;
-    color: #88AA4B;
-}
+
 a.administration {
     margin: 5px;
     font-family: arial, sans-serif;
@@ -169,13 +188,6 @@ a.navigation {
     padding-left: 25px;
 }
 
-select {
-    font-family: arial, sans-serif;
-    color: #616756;
-    font-size: 11px;
-    border: 1px solid #C8FF7A;
-    background: #C8FF7A;
-}
 
 
 /*********************************************************************/
@@ -433,6 +445,8 @@ display: compact;
     display: inline;
 }
 
+/********** Content type section **********/
+
 .langstring {
     text-align: justify;
 }
@@ -538,6 +552,7 @@ display: compact;
     margin: 5px;
     padding: 5px;
 }
+
 table.content_admin {
     margin-top: 5px;
     border: 1px solid grey;
@@ -548,6 +563,10 @@ table.content_admin th {
 table.content_admin td {
     border: 1px solid grey;
 }
+
+/********** End Content type section **********/
+
+
 
 .popup { background-color: white;   border: solid darkblue    ; text-align:left}
 .link     { color: blue; text-decoration: underline }
@@ -626,7 +645,8 @@ table.content_admin td {
     font-size: 80%;
 }
 
-/* Google Maps stuff */
+/********** Google map section **********/
+
 #map_title {
     background-color: #ffeac0;
     border: 1px solid #ff9900;
@@ -670,3 +690,4 @@ table.content_admin td {
     width: 66%;
     height: 500px;
 }
+/********** End Google map section **********/

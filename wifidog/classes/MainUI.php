@@ -100,6 +100,10 @@ class MainUI
      * @access private
      */
     private $title;
+    /**
+     * Additional class of the <body> of the HTML page
+     */
+    private $page_name;
 
     /**
      * Headers of HTML page
@@ -194,6 +198,20 @@ class MainUI
     }
 
     /**
+     * Set the class name of the <body> of the resulting page.
+     *
+     * @param string $page_name_string The page name of the resulting page.  Must have no spaces.  ex:  portal, login, userprofile, etc.)
+     *
+     * @return void
+     *
+     * @access public
+     */
+    public function setPageName($page_name_string)
+    {
+        $this->page_name = $page_name_string;
+    }
+ 
+     /**
      * Add content at the very end of the <body>.
      *
      * This is NOT meant to add footers or other display content, it is meant
@@ -487,6 +505,9 @@ class MainUI
 
         // Asign title
         $this->smarty->assign('title', $this->title);
+
+        // Asign CSS class for body
+        $this->smarty->assign('page_name', $this->page_name);
 
         // Asign path to CSS stylesheet
         $this->smarty->assign('stylesheetURL', COMMON_CONTENT_URL.STYLESHEET_NAME);

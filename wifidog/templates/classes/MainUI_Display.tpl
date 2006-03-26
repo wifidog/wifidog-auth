@@ -65,7 +65,7 @@
         </style>
     </head>
 
-    <body class="bodyBackColor">
+    <body class='page {$page_name}'>
         {if $debugRequested && $isSuperAdmin}
             <pre>{$debugOutput}</pre>
         {/if}

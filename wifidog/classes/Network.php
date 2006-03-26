@@ -226,7 +226,7 @@ class Network implements GenericObject
 			foreach ($network_rows as $network_row) //iterates only once...
 			{
 				$html .= " $network_row[name] ";
-				$html .= "<input type='hidden' name='$name' value='$network_row[network_id]'>";
+				$html .= "<input type='hidden' name='$name' value='".htmlspecialchars($network_row[network_id], ENT_QUOTES, 'UTF-8')."'>";
 			}
 		}
 

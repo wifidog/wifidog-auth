@@ -310,6 +310,10 @@ if ($show_more_link) {
     $smarty->assign('showMoreLink', true);
     $smarty->assign('currentNodeId', $current_node_id);
 }
+else
+{
+        $smarty->assign('showMoreLink', false);
+}
 
 // Compile HTML code
 $html_body = $smarty->fetch("templates/sites/portal.tpl");
@@ -319,6 +323,8 @@ $html_body = $smarty->fetch("templates/sites/portal.tpl");
  */
 
 $ui = new MainUI();
+$ui->setTitle(sprintf(_("Portal page for %s"),$node->getName()));
+$ui->setPageName('portal');
 $ui->setToolContent($tool_html);
 $ui->setMainContent($html_body);
 $ui->display();

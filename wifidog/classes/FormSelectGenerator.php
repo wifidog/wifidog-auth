@@ -209,7 +209,7 @@ class FormSelectGenerator
 
 			$name = $value[1];
 			$name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
-			$primary_key = htmlentities($value[0], ENT_QUOTES, 'UTF-8');
+			$primary_key = htmlspecialchars($value[0], ENT_QUOTES, 'UTF-8');
 			$retval .= "value='{$primary_key}'>{$name}</option>\n";
 		}
 		$retval .= "</select>\n";

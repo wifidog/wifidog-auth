@@ -130,6 +130,7 @@ if (!empty($gw_id)) {
 } else {
     // Gateway ID is not set ... virtual login
     $network = Network::getCurrentNetwork();
+    $node = null;
 }
 
 /**
