@@ -99,8 +99,6 @@ else {
 /**
  * Define URLs
  */
-define('DEFAULT_CONTENT_URL', BASE_URL_PATH.LOCAL_CONTENT_REL_PATH.DEFAULT_NODE_ID.'/');
-define('DEFAULT_CONTENT_PHP_RELATIVE_PATH', LOCAL_CONTENT_REL_PATH.DEFAULT_NODE_ID.'/');
 
 if (empty ($_REQUEST['gw_id'])) {
     /**

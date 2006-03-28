@@ -1,3 +1,13 @@
+2006-03-27 Benoit Grégoire  <bock@step.polymtl.ca>
+	* First step in massive simplification of CSS and templates
+	* Implement the new main CSS structure
+  	* Implement working content assignation interface and content ordering for both network and nodes.
+  	* Display of content according to assignation work on 'portal' and 'login'.  'everywhere' not yet implemented
+	* Get rid of some ISF specific interface elements
+	* Finally replace the overly complicated start button by a "Use the Internet" link that will not
+	 get you out of your working tab
+	* Fix #118
+
 2006-03-26 Benoit Grégoire  <bock@step.polymtl.ca>
 	* init_php.php: Fix stripslashes_cb() so it actually works, this means the aust server should work properly with auth servers with magic quotes turned on.
 	This is still not recommended however.

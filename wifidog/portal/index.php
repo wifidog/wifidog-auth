@@ -1,5 +1,6 @@
 <?php
 
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -50,17 +51,17 @@
 /**
  * Load required files
  */
-require_once('../include/common.php');
+require_once ('../include/common.php');
 
-require_once('include/common_interface.php');
-require_once('classes/Node.php');
-require_once('classes/MainUI.php');
-require_once('classes/Session.php');
+require_once ('include/common_interface.php');
+require_once ('classes/Node.php');
+require_once ('classes/MainUI.php');
+require_once ('classes/Session.php');
 
 /*
  * Check for missing URL switch
  */
-if (isset($_REQUEST['missing']) && $_REQUEST['missing'] == "url") {
+if (isset ($_REQUEST['missing']) && $_REQUEST['missing'] == "url") {
     $ui = new MainUI();
     $ui->displayError(_('For some reason, we were unable to determine the web site you initially wanted to see.  You should now enter a web address in your URL bar.'), false);
     exit;
@@ -75,18 +76,16 @@ $show_more_link = false;
 $session = new Session();
 
 // Get the current user
-$current_user = User::getCurrentUser();
+$current_user = User :: getCurrentUser();
 
 /*
  * Start general request parameter processing section
  */
-if (!empty($_REQUEST['gw_id'])) {
+if (!empty ($_REQUEST['gw_id'])) {
     try {
-        $node = Node::getObject($_REQUEST['gw_id']);
+        $node = Node :: getObject($_REQUEST['gw_id']);
         $network = $node->getNetwork();
-    }
-
-    catch (Exception $e) {
+    } catch (Exception $e) {
         $ui = new MainUI();
         $ui->displayError($e->getMessage());
         exit;
@@ -103,21 +102,21 @@ if (!empty($_REQUEST['gw_id'])) {
  */
 $custom_portal_url = $node->getCustomPortalRedirectUrl();
 
-if (!empty($custom_portal_url) && $network->getCustomPortalRedirectAllowed()) {
+if (!empty ($custom_portal_url) && $network->getCustomPortalRedirectAllowed()) {
     header("Location: {$custom_portal_url}");
 }
 
 $node_id = $node->getId();
 $portal_template = $node_id.".html";
-Node::setCurrentNode($node);
+Node :: setCurrentNode($node);
 
-if (isset($session)) {
-    if (!empty($_REQUEST['gw_id'])) {
+if (isset ($session)) {
+    if (!empty ($_REQUEST['gw_id'])) {
         $session->set(SESS_GW_ID_VAR, $_REQUEST['gw_id']);
     }
 }
 
-$current_node = Node::getCurrentNode();
+$current_node = Node :: getCurrentNode();
 $current_node_id = $current_node->getId();
 
 // Init ALL smarty SWITCH values
@@ -127,7 +126,7 @@ $smarty->assign('sectionMAINCONTENT', false);
 // Init ALL smarty values
 $smarty->assign('currentNode', null);
 $smarty->assign('numOnlineUsers', 0);
-$smarty->assign('onlineUsers', array());
+$smarty->assign('onlineUsers', array ());
 $smarty->assign('userIsAtHotspot', false);
 $smarty->assign('noUrl', true);
 $smarty->assign('url', "");
@@ -138,14 +137,14 @@ $smarty->assign('hotspotNetworkUrl', "");
 $smarty->assign('hotspotNetworkName', "");
 $smarty->assign('networkLogoBannerUrl', "");
 $smarty->assign('networkContents', false);
-$smarty->assign('networkContentArray', array());
+$smarty->assign('networkContentArray', array ());
 $smarty->assign('nodeHomepage', false);
 $smarty->assign('nodeURL', "");
 $smarty->assign('nodeName', "");
 $smarty->assign('nodeContents', false);
-$smarty->assign('nodeContentArray', array());
+$smarty->assign('nodeContentArray', array ());
 $smarty->assign('userContents', false);
-$smarty->assign('userContentArray', array());
+$smarty->assign('userContentArray', array ());
 
 /*
  * Tool content
@@ -162,7 +161,7 @@ $online_users = $current_node->getOnlineUsers();
 $num_online_users = count($online_users);
 
 foreach ($online_users as $online_user) {
-    $roles = array();
+    $roles = array ();
 
     if ($current_node->isOwner($online_user)) {
         $roles[] = _("owner");
@@ -176,7 +175,7 @@ foreach ($online_users as $online_user) {
         $rolenames = join($roles, ",");
     }
 
-    $online_user_array[] = array('Username' => $online_user->getUsername(), 'showRoles' => count($roles) > 0, 'roles' => $rolenames);
+    $online_user_array[] = array ('Username' => $online_user->getUsername(), 'showRoles' => count($roles) > 0, 'roles' => $rolenames);
 }
 
 $smarty->assign('numOnlineUsers', $num_online_users);
@@ -188,9 +187,9 @@ if ($num_online_users > 0) {
 // Check for requested URL and if user is at a hotspot
 $original_url_requested = $session->get(SESS_ORIGINAL_URL_VAR);
 
-$smarty->assign('userIsAtHotspot', Node::getCurrentRealNode() != null ? true : false);
+$smarty->assign('userIsAtHotspot', Node :: getCurrentRealNode() != null ? true : false);
 
-if (empty($original_url_requested)) {
+if (empty ($original_url_requested)) {
     $smarty->assign('noUrl', true);
     $smarty->assign('url', "?missing=url");
 } else {
@@ -205,128 +204,94 @@ $smarty->assign('currentUrl', CURRENT_REQUEST_URL);
 $tool_html = $smarty->fetch("templates/sites/portal.tpl");
 
 /*
- * Main content
- */
-
-// Reset ALL smarty SWITCH values
-$smarty->assign('sectionTOOLCONTENT', false);
-$smarty->assign('sectionMAINCONTENT', false);
-
-// Set section of Smarty template
-$smarty->assign('sectionMAINCONTENT', true);
-
-// While in validation period, alert user that he should validate his account ASAP
-if ($current_user && $current_user->getAccountStatus() == ACCOUNT_STATUS_VALIDATION) {
-    $smarty->assign('accountValidation', true);
-    $smarty->assign('validationTime', ($current_user->getNetwork()->getValidationGraceTime() / 60));
-}
-
-/*
- * Network section
- */
-
-// Set network details
-$smarty->assign('hotspotNetworkUrl', $network->getHomepageURL());
-$smarty->assign('hotspotNetworkName', $network->getName());
-$smarty->assign('networkLogoBannerUrl', COMMON_CONTENT_URL . NETWORK_LOGO_BANNER_NAME);
-
-// Get all network content and EXCLUDE user subscribed content
-if ($current_user) {
-    $contents = Network::getCurrentNetwork()->getAllContent(true, $current_user);
-} else {
-    $contents = Network::getCurrentNetwork()->getAllContent();
-}
-
-if ($contents) {
-    foreach ($contents as $content) {
-        $contentArray[] = array('isDisplayableAt' => $content->isDisplayableAt($node), 'userUI' => $content->getUserUI());
-    }
-
-    // Set all content of current node
-    $smarty->assign('networkContents', true);
-    $smarty->assign('networkContentArray', $contentArray);
-}
-
-/*
- * Node section
- */
-
-// Get all node content and EXCLUDE user subscribed content
-if ($current_user) {
-    $contents = $node->getAllContent(true, $current_user);
-} else {
-    $contents = $node->getAllContent();
-}
-
-// Set homepage details of node
-$node_homepage = $node->getHomePageURL();
-if (!empty($node_homepage)) {
-    $smarty->assign('nodeHomepage', true);
-    $smarty->assign('nodeURL', $node_homepage);
-    $smarty->assign('nodeName', $node->getName());
-}
-
-if ($contents) {
-    foreach ($contents as $content) {
-        // Check for content requirements to show the "Show all contents" link
-        if (!$show_more_link) {
-            if ($content->getObjectType() == "ContentGroup") {
-                if (method_exists($content, "isArtisticContent") && method_exists($content, "isLocativeContent")) {
-                    if ($content->isArtisticContent() && $content->isLocativeContent()) {
-                        $show_more_link = true;
-                    }
-                }
-            }
-        }
-
-        $contentArray[] = array('isDisplayableAt' => $content->isDisplayableAt($node), 'userUI' => $content->getUserUI());
-    }
-
-    // Set all content of current node
-    $smarty->assign('nodeContents', true);
-    $smarty->assign('nodeContentArray', $contentArray);
-}
-
-/*
- * User section
- */
-
-if ($current_user) {
-    $contents = User::getCurrentUser()->getAllContent();
-
-    if ($contents) {
-        foreach ($contents as $content) {
-            $contentArray[] = array('userUI' => $content->getUserUI());
-        }
-
-        // Set all content of current node
-        $smarty->assign('userContents', true);
-        $smarty->assign('userContentArray', $contentArray);
-    }
-}
-
-// Hyperlinks to full content display page
-if ($show_more_link) {
-    $smarty->assign('showMoreLink', true);
-    $smarty->assign('currentNodeId', $current_node_id);
-}
-else
-{
-        $smarty->assign('showMoreLink', false);
-}
-
-// Compile HTML code
-$html_body = $smarty->fetch("templates/sites/portal.tpl");
-
-/*
  * Render output
  */
 
 $ui = new MainUI();
-$ui->setTitle(sprintf(_("Portal page for %s"),$node->getName()));
+$ui->setTitle(sprintf(_("%s portal for %s"), $network->getName(), $node->getName()));
 $ui->setPageName('portal');
-$ui->setToolContent($tool_html);
-$ui->setMainContent($html_body);
+$ui->appendContent('left_area_middle', $tool_html);
+/*
+ * Main content
+ */
+// While in validation period, alert user that he should validate his account ASAP
+if ($current_user && $current_user->getAccountStatus() == ACCOUNT_STATUS_VALIDATION) {
+    $validationMsgHtml = "<div id='warning_message_area'>\n";
+    $validationMsgHtml .= _("An email with confirmation instructions was sent to your email address.");
+    $validationMsgHtml .= sprintf(_("Your account has been granted %s minutes of access to retrieve your email and validate your account."), ($current_user->getNetwork()->getValidationGraceTime() / 60));
+    $validationMsgHtml .= "</div>\n";
+    $ui->appendContent('page_header', $validationMsgHtml);
+}
+
+// Get all network content, but exclude user subscribed content if user is known
+$content_rows = array ();
+$network_id = $db->escapeString($network->getId());
+if ($current_user) {
+    $user_id = $db->escapeString($current_user->getId());
+    $sql = "SELECT content_id, display_area FROM network_has_content WHERE network_id='$network_id' AND display_page='portal' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$user_id}') ORDER BY display_area, display_order, subscribe_timestamp DESC";
+} else {
+    $sql = "SELECT content_id, display_area FROM network_has_content WHERE network_id='$network_id'  AND display_page='portal' ORDER BY display_area, display_order, subscribe_timestamp DESC";
+}
+$db->execSql($sql, $content_rows, false);
+if ($content_rows) {
+    foreach ($content_rows as $content_row) {
+        $content = Content :: getObject($content_row['content_id']);
+        if ($content->isDisplayableAt($node)) {
+            $ui->appendContent($content_row['display_area'], $content->getUserUI());
+        }
+    }
+}
+
+// Get all node content and EXCLUDE user subscribed content
+$content_rows = array ();
+$node_id = $db->escapeString($node->getId());
+if ($current_user) {
+    $user_id = $db->escapeString($current_user->getId());
+    $sql = "SELECT content_id, display_area FROM node_has_content WHERE node_id='$node_id' AND display_page='portal' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$user_id}') ORDER BY display_area, display_order, subscribe_timestamp DESC";
+} else {
+    $sql = "SELECT content_id, display_area FROM node_has_content WHERE node_id='$node_id'  AND display_page='portal' ORDER BY display_area, display_order, subscribe_timestamp DESC";
+}
+$db->execSql($sql, $content_rows, false);
+$showMoreLink = false;
+if ($content_rows) {
+    foreach ($content_rows as $content_row) {
+        $content = Content :: getObject($content_row['content_id']);
+        if ($content->isDisplayableAt($node)) {
+            $ui->appendContent($content_row['display_area'], $content->getUserUI());
+        }
+        // Check for content requirements to show the "Show all contents" link
+        if (!$showMoreLink) {
+            if ($content->getObjectType() == "ContentGroup") {
+                if (method_exists($content, "isArtisticContent") && method_exists($content, "isLocativeContent")) {
+                    if ($content->isArtisticContent() && $content->isLocativeContent()) {
+                        $showMoreLink = true;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Get all user content
+$content_rows = array ();
+if ($current_user) {
+    $user_id = $db->escapeString($current_user->getId());
+    $sql = "SELECT content_id FROM user_has_content WHERE user_id = '{$user_id}' ORDER BY subscribe_timestamp DESC";
+    $db->execSql($sql, $content_rows, false);
+    if ($content_rows) {
+        foreach ($content_rows as $content_row) {
+            $content = Content :: getObject($content_row['content_id']);
+            if ($content->isDisplayableAt($node)) {
+                $ui->appendContent('main_area_middle', $content->getUserUI());
+            }
+        }
+    }
+}
+
+if ($showMoreLink) {
+    $link_html = "<a href='{$base_ssl_path}content/?gw_id={$currentNodeId}'>"._("Show all available contents for this hotspot")."</a>\n";
+    $ui->appendContent('main_area_middle', $link_html);
+}
 $ui->display();
 
 /*
@@ -336,5 +301,4 @@ $ui->display();
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
 ?>

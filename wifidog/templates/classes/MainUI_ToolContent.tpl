@@ -50,7 +50,6 @@
 {*
     BEGIN section START
 *}
-    <div id="tool_section">
         <div class="tool_user_info">
             <span class="tool_user_info">
                 {if $isValidUser}
@@ -94,18 +93,7 @@
                 {$techSupportInformation}
             </span>
         </div>
-    </div>
 {*
-    END section START
-*}
-{/if}
-
-{if $sectionLOGIN}
-{*
-    BEGIN section LOGIN
-
-    // No code defined ...
-
     END section START
 *}
 {/if}

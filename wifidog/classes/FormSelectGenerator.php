@@ -75,7 +75,7 @@ class FormSelectGenerator
 	 * @param $additionalSelectAttribute will be appended inside the select tag.  For example: "onclick='submit();'"
 	 * @return string The HTML SELECT element definition string
 	 */
-	function generateFromResultSet($resultSet, $primaryKeyField, $displayField, $selectedPrimaryKey, $userPrefix, $objectPrefix, $displayFieldIsLangstring, $allowNullValues, $nullCaptionString = ' - - - ', $additionalSelectAttribute)
+	static function generateFromResultSet($resultSet, $primaryKeyField, $displayField, $selectedPrimaryKey, $userPrefix, $objectPrefix, $displayFieldIsLangstring, $allowNullValues, $nullCaptionString = ' - - - ', $additionalSelectAttribute)
 	{
 		$retval = "";
 		$retval .= "<select id='{$userPrefix}{$objectPrefix}' name='{$userPrefix}{$objectPrefix}' {$additionalSelectAttribute}>\n";
@@ -145,11 +145,11 @@ class FormSelectGenerator
 	 * @param $additionalSelectAttribute will be appended inside the select tag.  For example: "onclick='submit();'"
 	 * @return string The HTML SELECT element definition string
 	 */
-	static function generateFromTable($table, $primaryKeyField, $displayField, $selectedPrimaryKey, $userPrefix, $objectPrefix, $displayFieldIsLangstring, $allowNullValues, $nullCaptionString = ' - - - ', $additionalSelectAttribute = null)
+	static function generateFromTable($table, $primaryKeyField, $displayField, $selectedPrimaryKey, $userPrefix, $objectPrefix, $displayFieldIsLangstring=false, $allowNullValues=false, $nullCaptionString = ' - - - ', $additionalSelectAttribute = null)
 	{
 		global $db;
 		$results = null;
-		$db->ExecuterSql("SELECT $primaryKeyField,  $displayField FROM $table", $results, false);
+		$db->execSql("SELECT $primaryKeyField,  $displayField FROM $table", $results, false);
 		return self :: generateFromResultSet($results, $primaryKeyField, $displayField, $selectedPrimaryKey, $userPrefix, $objectPrefix, $displayFieldIsLangstring, $allowNullValues, $nullCaptionString, $additionalSelectAttribute);
 	}
 

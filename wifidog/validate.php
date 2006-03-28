@@ -85,7 +85,7 @@ try {
 }
 
 $ui = new MainUI();
-$ui->setMainContent($smarty->fetch("templates/sites/validate.tpl"));
+$ui->appendContent('main_area_middle', $smarty->fetch("templates/sites/validate.tpl"));
 $ui->display();
 
 /*

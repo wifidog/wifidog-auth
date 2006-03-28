@@ -81,7 +81,7 @@ if (isset($_REQUEST["submit"])) {
         $user->SetPassword($new_password);
         $ui = new MainUI();
         $smarty->assign("message", _("Your password has been changed succesfully."));
-        $ui->setMainContent($smarty->fetch("templates/sites/validate.tpl"));
+        $ui->appendContent('main_area_middle', $smarty->fetch("templates/sites/validate.tpl"));
         $ui->display();
         exit;
     } catch (Exception $e) {
@@ -103,7 +103,7 @@ isset ($_REQUEST["auth_source"]) && $smarty->assign('selected_auth_source', $_RE
 
 $ui = new MainUI();
 $smarty->assign('SelectNetworkUI', Network::getSelectNetworkUI('auth_source'));
-$ui->setMainContent($smarty->fetch("templates/change_password.html"));
+$ui->appendContent('main_area_middle', $smarty->fetch("templates/change_password.html"));
 $ui->display();
 
 /*

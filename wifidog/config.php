@@ -314,12 +314,6 @@ define('HOTSPOT_STATUS_PAGE', 'hotspot_status.php');
 // Source URL for the hotspot status page
 define('GMAPS_XML_SOURCE_URL', 'hotspot_status.php?format=XML');
 
-// Path for files in LOCAL_CONTENT_REL_PATH/common/
-define('NETWORK_LOGO_NAME', 'network_logo.png');
-define('NETWORK_LOGO_BANNER_NAME', 'network_logo_banner.png');
-define('WIFIDOG_LOGO_NAME', 'wifidog_logo_banner.png');
-define('WIFIDOG_LOGO_BANNER_NAME', 'wifidog_logo_banner.png');
-
 // Name of default node.
 define('DEFAULT_NODE_ID', 'default');
 

@@ -79,7 +79,7 @@ class Picture extends File
         parent::__construct($content_id);
 
         $content_id = $db->escapeString($content_id);
-        $sql = "SELECT * FROM pictures WHERE pictures_id='$content_id'";
+        $sql = "SELECT * FROM content_file_image WHERE pictures_id='$content_id'";
         $db->execSqlUniqueRes($sql, $row, false);
 
         if ($row == null) {
@@ -87,10 +87,10 @@ class Picture extends File
              * Since the parent Content exists, the necessary data in
              * content_group had not yet been created
              */
-            $sql = "INSERT INTO pictures (pictures_id) VALUES ('$content_id')";
+            $sql = "INSERT INTO content_file_image (pictures_id) VALUES ('$content_id')";
             $db->execSqlUpdate($sql, false);
 
-            $sql = "SELECT * FROM pictures WHERE pictures_id='$content_id'";
+            $sql = "SELECT * FROM content_file_image WHERE pictures_id='$content_id'";
             $db->execSqlUniqueRes($sql, $row, false);
 
             if ($row == null) {
@@ -131,7 +131,7 @@ class Picture extends File
         if (empty($width) || is_numeric($width)) {
             empty($width) ? $width = "NULL" : $width = $this->mBd->escapeString($width);
 
-            $this->mBd->execSqlUpdate("UPDATE pictures SET width=" . $width . " WHERE pictures_id='" . $this->getId() . "'", false);
+            $this->mBd->execSqlUpdate("UPDATE content_file_image SET width=" . $width . " WHERE pictures_id='" . $this->getId() . "'", false);
             $this->refresh();
 
             $_retval = true;
@@ -169,7 +169,7 @@ class Picture extends File
         if(empty($height) || is_numeric($height)) {
             empty($height) ? $height = "NULL" : $height = $this->mBd->escapeString($height) ;
 
-            $this->mBd->execSqlUpdate("UPDATE pictures SET height=" . $height . " WHERE pictures_id='" . $this->getId() . "'", false);
+            $this->mBd->execSqlUpdate("UPDATE content_file_image SET height=" . $height . " WHERE pictures_id='" . $this->getId() . "'", false);
             $this->refresh();
 
             $_retval = true;

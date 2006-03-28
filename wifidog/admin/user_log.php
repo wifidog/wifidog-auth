@@ -65,6 +65,7 @@ if (!empty ($_REQUEST['user_id']) || !empty($user))
 }
 else
 {
+    $smarty->assign("error", null);
     $smarty->assign('sort_ids', array ('username', 'account_origin', 'reg_date'));
     $smarty->assign('direction_ids', array ('asc', 'desc'));
 
@@ -119,7 +120,7 @@ else
 
     $ui=new MainUI();
     $ui->setToolSection('ADMIN');
-    $ui->setMainContent($html);
+    $ui->appendContent('main_area_middle', $html);
     $ui->display();
 }
 

@@ -250,7 +250,7 @@ class Network implements GenericObject
 		if (!empty ($_REQUEST[$name]))
 			return new self($_REQUEST[$name]);
 		else
-			throw new exception (sprintf(_("Unable to retrieve the selected network, the %s REQUEST parameter does not exist")));
+			throw new exception (sprintf(_("Unable to retrieve the selected network, the %s REQUEST parameter does not exist"), $name));
 	}
 
 	/** Get an interface to create a new network.
@@ -1242,7 +1242,7 @@ class Network implements GenericObject
 	 *
 	 * @access public
 	 */
-	public function getAllContent($exclude_subscribed_content = false, $subscriber = null)
+	/*public function getAllContent($exclude_subscribed_content = false, $subscriber = null)
 	{
 	    // Define globals
 		global $db;
@@ -1268,7 +1268,7 @@ class Network implements GenericObject
 
 		return $retval;
 	}
-
+*/
 	/**
 	 * Retreives the admin interface of this object
 	 *
@@ -1480,32 +1480,10 @@ class Network implements GenericObject
 		$html .= "</div>\n";
 
 		// Content management
-		$html .= "<div class='admin_section_container'>\n";
-		$html .= "<div class='admin_section_title'>"._("Network content:")."</div>\n";
-		$html .= "<ul class='admin_section_list'>\n";
-		foreach ($this->getAllContent() as $content)
-		{
-			$html .= "<li class='admin_section_list_item'>\n";
-			$html .= "<div class='admin_section_data'>\n";
-			$html .= $content->getListUI();
-			$html .= "</div'>\n";
-			$html .= "<div class='admin_section_tools'>\n";
-			$name = "node_".$this->id."_content_".$content->GetId()."_edit";
-			$html .= "<input type='button' name='$name' value='"._("Edit")."' onClick='window.location.href = \"".GENERIC_OBJECT_ADMIN_ABS_HREF."?object_class=Content&action=edit&object_id=".$content->GetId()."\";'>\n";
-			$name = "content_group_".$this->id."_element_".$content->GetId()."_erase";
-			$html .= "<input type='submit' name='$name' value='"._("Remove")."'>";
-			$html .= "</div>\n";
-			$html .= "</li>\n";
-		}
-		$html .= "<li class='admin_section_list_item'>\n";
-		$name = "network_{$this->id}_new_content";
-		$html .= Content :: getSelectContentUI($name, "AND content_id NOT IN (SELECT content_id FROM network_has_content WHERE network_id='$this->id')");
-		$name = "network_{$this->id}_new_content_submit";
-		$html .= "<input type='submit' name='$name' value='"._("Add")."'>";
-		$html .= "</li>\n";
-		$html .= "</ul>\n";
-		$html .= "</div>\n";
-		$html .= "</div>\n";
+        $title = _("Network content");
+        $name = "network_" . $this->id . "_content";
+        $data = Content::getLinkedContentUI($name, "network_has_content", "network_id", $this->id, $display_page = "portal");
+        $html .= InterfaceElements::generateAdminSectionContainer("network_content", $title, $data);
 
 		return $html;
 	}
@@ -1589,23 +1567,8 @@ class Network implements GenericObject
 			header("Location: {$url}");
 		}
 		// Content management
-		foreach ($this->getAllContent() as $content)
-		{
-			$name = "content_group_".$this->id."_element_".$content->GetId()."_erase";
-			if (!empty ($_REQUEST[$name]))
-			{
-				$this->removeContent($content);
-			}
-		}
-
-		$name = "network_{$this->id}_new_content_submit";
-		if (!empty ($_REQUEST[$name]))
-		{
-			$name = "network_{$this->id}_new_content";
-			$content = Content :: processSelectContentUI($name);
-			if ($content)
-				$this->addContent($content);
-		}
+        $name = "network_" . $this->id . "_content";
+        Content::processLinkedContentUI($name, 'network_has_content', 'network_id', $this->id);
 	}
 
 	/** Add network-wide content to this network */

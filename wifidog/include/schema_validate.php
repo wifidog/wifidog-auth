@@ -46,7 +46,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 36);
+define('REQUIRED_SCHEMA_VERSION', 37);
 
 /**
  * Check that the database schema is up to date.  If it isn't, offer to update it.
@@ -787,6 +787,57 @@ function update_schema()
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "INSERT INTO locales VALUES ('pt');\n";
         }
+        
+        $new_schema_version = 37;
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+
+            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+            $sql .= "ALTER TABLE flickr_photostream RENAME TO content_flickr_photostream;\n";
+            $sql .= "ALTER TABLE embedded_content RENAME TO content_embedded_content;\n";
+            $sql .= "ALTER TABLE files RENAME TO content_file;\n";
+            $sql .= "ALTER TABLE iframes RENAME TO content_iframe;\n";
+            $sql .= "ALTER TABLE langstring_entries RENAME TO content_langstring_entries;\n";
+            $sql .= "ALTER TABLE pictures RENAME TO content_file_image;\n";
+            $sql .= "ALTER TABLE content_display_location RENAME TO content_available_display_pages; \n";
+            $sql .= "ALTER TABLE content_available_display_pages RENAME COLUMN display_location TO display_page; \n";
+            $sql .= "UPDATE content_available_display_pages SET display_page = 'login' WHERE display_page = 'login_page';\n";
+            $sql .= "UPDATE content_available_display_pages SET display_page = 'portal' WHERE display_page = 'portal_page';\n";
+            $sql .= "INSERT INTO content_available_display_pages (display_page) VALUES ('everywhere');\n";
+            $sql .= "CREATE TABLE content_available_display_areas ( display_area text PRIMARY KEY);\n";
+            $sql .= "INSERT INTO content_available_display_areas (display_area) VALUES ('page_header');\n";
+            $sql .= "INSERT INTO content_available_display_areas (display_area) VALUES ('page_footer');\n";
+            $sql .= "INSERT INTO content_available_display_areas (display_area) VALUES ('left_area-top');\n";
+            $sql .= "INSERT INTO content_available_display_areas (display_area) VALUES ('left_area_middle');\n";
+            $sql .= "INSERT INTO content_available_display_areas (display_area) VALUES ('left_area_bottom');\n";
+            $sql .= "INSERT INTO content_available_display_areas (display_area) VALUES ('main_area_top');\n";
+            $sql .= "INSERT INTO content_available_display_areas (display_area) VALUES ('main_area_middle');\n";
+            $sql .= "INSERT INTO content_available_display_areas (display_area) VALUES ('main_area_bottom');\n";
+            $sql .= "INSERT INTO content_available_display_areas (display_area) VALUES ('right_area_top');\n";
+            $sql .= "INSERT INTO content_available_display_areas (display_area) VALUES ('right_area_middle');\n";
+            $sql .= "INSERT INTO content_available_display_areas (display_area) VALUES ('right_area_bottom');\n";
+
+            $sql .= "ALTER TABLE network_has_content RENAME COLUMN display_location TO display_page;\n";
+            $sql .= "ALTER TABLE network_has_content ALTER COLUMN display_page SET DEFAULT 'portal'::text;\n";
+            $sql .= "ALTER TABLE network_has_content ADD COLUMN display_area text REFERENCES content_available_display_areas ON UPDATE CASCADE ON DELETE CASCADE;\n";
+            $sql .= "UPDATE network_has_content SET display_area = 'main_area_middle';\n";
+            $sql .= "ALTER TABLE network_has_content ALTER COLUMN display_area SET DEFAULT 'main_area_middle'::text;\n";
+            $sql .= "ALTER TABLE network_has_content ALTER COLUMN display_area SET NOT NULL;\n";
+            $sql .= "ALTER TABLE network_has_content ADD COLUMN display_order integer;\n";
+            $sql .= "UPDATE network_has_content SET display_order = 1;\n";
+            $sql .= "ALTER TABLE network_has_content ALTER COLUMN display_order SET DEFAULT 1;\n";
+            $sql .= "ALTER TABLE network_has_content ALTER COLUMN display_order SET NOT NULL;\n";
+
+            $sql .= "ALTER TABLE node_has_content RENAME COLUMN display_location TO display_page;\n";
+            $sql .= "ALTER TABLE node_has_content ALTER COLUMN display_page SET DEFAULT 'portal'::text;\n";
+            $sql .= "ALTER TABLE node_has_content ADD COLUMN display_area text REFERENCES content_available_display_areas ON UPDATE CASCADE ON DELETE CASCADE;\n";
+            $sql .= "UPDATE node_has_content SET display_area = 'main_area_middle';\n";
+            $sql .= "ALTER TABLE node_has_content ALTER COLUMN display_area SET DEFAULT 'main_area_middle'::text;\n";
+            $sql .= "ALTER TABLE node_has_content ALTER COLUMN display_area SET NOT NULL;ALTER TABLE node_has_content ADD COLUMN display_order integer;\n";
+            $sql .= "UPDATE node_has_content SET display_order = 1;\n";
+            $sql .= "ALTER TABLE node_has_content ALTER COLUMN display_order SET DEFAULT 1;\n";
+            $sql .= "ALTER TABLE node_has_content ALTER COLUMN display_order SET NOT NULL;\n";            
+        }        
 
         $db->execSqlUpdate("BEGIN;\n$sql\nCOMMIT;\nVACUUM ANALYZE;\n", true);
         //$db->execSqlUpdate("BEGIN;\n$sql\nROLLBACK;\n", true);
@@ -802,5 +853,3 @@ function update_schema()
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
-?>

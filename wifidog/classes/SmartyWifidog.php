@@ -116,10 +116,6 @@ class SmartyWifidog extends Smarty {
 /* Common content */
     $this->assign('common_content_url',COMMON_CONTENT_URL);	/* For html href and src */
     $this->assign('common_content_smarty_path',COMMON_CONTENT_SMARTY_PATH);	/* For smarty includes */
-    $this->assign('network_logo_url',COMMON_CONTENT_URL.NETWORK_LOGO_NAME);
-    $this->assign('network_logo_banner_url',COMMON_CONTENT_URL.NETWORK_LOGO_BANNER_NAME);
-    $this->assign('wifidog_logo_url', COMMON_CONTENT_URL.WIFIDOG_LOGO_NAME);
-    $this->assign('wifidog_logo_banner_url',COMMON_CONTENT_URL.WIFIDOG_LOGO_BANNER_NAME);
     $network = Network::GetCurrentNetwork();
 
 /* Useful stuff from config.php */

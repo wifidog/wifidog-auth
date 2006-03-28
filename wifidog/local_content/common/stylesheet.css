@@ -58,29 +58,75 @@ select {
 
 /********** End General HTML section **********/
 
-/********** Main structure **********/
+/********** Main structure section **********/
+#page_header {
+}
 
-
-
-
-.outer_container {
+#page_body {
     background-color: white;
     width: 100%;
     float: left;
 }
 
-#tool_section {
+#left_area {
     border: 1px solid #E9E9E9;
     float:left;
     position: relative;
     width: 250px;  /* L */
 }
 
-#main_section {
+#left_area_top {
+}
+
+#left_area_middle {
+}
+
+#left_area_bottom {
+}
+
+#main_area {
     border: 1px solid #E9E9E9;
     margin-left: 252px;
     padding: 5px;
 }
+
+#main_area_top {
+}
+
+#main_area_middle {
+}
+
+#main_area_bottom {
+}
+
+#right_area {
+}
+
+#right_area_top {
+}
+
+#right_area_middle {
+}
+
+#right_area_bottom {
+}
+
+#page_footer {
+}
+
+/********** End Main structure section **********/
+
+/********** Page specific CSS section **********/
+.portal {
+}
+
+.login {
+}
+
+/********** End Page specific CSS section **********/
+
+/********** End Main structure section **********/
+
 
 div.tool_user_info {
     background-color: #C8FF7A;

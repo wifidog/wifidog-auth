@@ -46,10 +46,6 @@
 
 *}
 
-{if $sectionTOOLCONTENT}
-{*
-    BEGIN section TOOLCONTENT
-*}
     <div id="login_form">
         <h1><a href="{$base_ssl_path}signup.php">{"Create a free account"|_}</a></h1>
 
@@ -96,43 +92,3 @@
             document.getElementById("form_username").focus();
         //-->
     </script>
-{*
-    END section TOOLCONTENT
-*}
-{/if}
-
-{if $sectionMAINCONTENT}
-{*
-    BEGIN section MAINCONTENT
-*}
-    <div class="login_body">
-        <center>
-            {if $node != null}
-                {if $hotspot_homepage_url != null}
-                    <a href="{$hotspot_homepage_url}"><h1>{$hotspot_name}</h1></a>
-                {else}
-                    <h1>{$hotspot_name}</h1>
-                {/if}
-
-                {if $contents}
-                    <table>
-                        <tr>
-                            <td>
-                                <div class="portal_node_section">
-                                    {section name=content loop=$contentArray}
-                                        {if $contentArray[content].isDisplayableAt}
-                                            <div class="portal_content">{$contentArray[content].userUI}</div>
-                                        {/if}
-                                    {/section}
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                {/if}
-            {/if}
-        </center>
-    </div>
-{*
-    END section MAINCONTENT
-*}
-{/if}

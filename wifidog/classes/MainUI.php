@@ -1,5 +1,6 @@
 <?php
 
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -45,7 +46,7 @@
  * @internal We put a call to validate_schema() here so it systematically called
  * from any UI page, but not from any machine readable pages
  */
-require_once('include/schema_validate.php');
+require_once ('include/schema_validate.php');
 validate_schema();
 
 /**
@@ -58,7 +59,7 @@ if (CONF_USE_CRON_FOR_DB_CLEANUP == false) {
 /**
  * Load required file
  */
-require_once('include/common_interface.php');
+require_once ('include/common_interface.php');
 
 /**
  * Style contains functions managing headers, footers, stylesheet, etc.
@@ -67,23 +68,22 @@ require_once('include/common_interface.php');
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
  * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
  */
-class MainUI
-{
+class MainUI {
     /**
-     * Content to be displayed in the main pane
+     * Available structural display areas where content can be placed
      *
-     * @var string
+     * @var array
      * @access private
      */
-    private $main_content;
+    private $available_display_areas;
 
     /**
-     * Content to be displayed in the tool pane
-     *
-     * @var string
-     * @access private
-     */
-    private $tool_content;
+    * Content to be displayed the page
+    *
+    * @var array
+    * @access private
+    */
+    private $contentArray;
 
     /**
      * Object for Smarty class
@@ -136,13 +136,38 @@ class MainUI
      *
      * @access public
      */
-    public function __construct()
-    {
+    public function __construct() {
+        global $db;
         // Init Smarty
         $this->smarty = new SmartyWifidog();
 
         // Set default title
-        $this->title = Network::getCurrentNetwork()->getName() . ' ' . _("authentication server");
+        $this->title = Network :: getCurrentNetwork()->getName().' '._("authentication server");
+        // Init the content array
+        $current_content_sql = "SELECT display_area FROM content_available_display_areas\n";
+        $rows = array ();
+        $db->execSql($current_content_sql, $rows, false);
+        foreach ($rows as $row) {
+            $this->contentArray[$row['display_area']] = '';
+        }
+    }
+
+    /**
+     * Add content to a structural area of the page
+     *
+     * @param string $display_area Structural area where content is to be
+     * placed.  Must be one of the display aread defined in the
+     * content_available_display_areas table
+     * 
+     * @param string $content HTML content to be added to the area
+     *
+     * @return void
+     */
+    public function appendContent($display_area, $content) {
+        if (!isset ($this->contentArray[$display_area])) {
+            throw new exception(sprintf(_('%s is not a valid structural display area'), $display_area));
+        }
+        $this->contentArray[$display_area] .= $content;
     }
 
     /**
@@ -152,8 +177,7 @@ class MainUI
      *
      * @access public
      */
-    public function isToolSectionEnabled()
-    {
+    public function isToolSectionEnabled() {
         return $this->tool_section_enabled;
     }
 
@@ -164,23 +188,8 @@ class MainUI
      *
      * @access public
      */
-    public function setToolSectionEnabled($status)
-    {
+    public function setToolSectionEnabled($status) {
         $this->tool_section_enabled = $status;
-    }
-
-    /**
-     * Set the content to be displayed in the main pane
-     *
-     * @param string $html HTML content to be displayed in the main pane
-     *
-     * @return void
-     *
-     * @access public
-     */
-    public function setMainContent($html)
-    {
-        $this->main_content = $html;
     }
 
     /**
@@ -192,8 +201,7 @@ class MainUI
      *
      * @access public
      */
-    public function setTitle($title_string)
-    {
+    public function setTitle($title_string) {
         $this->title = $title_string;
     }
 
@@ -206,27 +214,25 @@ class MainUI
      *
      * @access public
      */
-    public function setPageName($page_name_string)
-    {
+    public function setPageName($page_name_string) {
         $this->page_name = $page_name_string;
     }
- 
-     /**
-     * Add content at the very end of the <body>.
-     *
-     * This is NOT meant to add footers or other display content, it is meant
-     * to add <script></script> tag pairs that have to be executed only once
-     * the page is loaded.
-     *
-     * @param string $script A piece of script surrounded by
-     *                       <script></script> tags.
-     *
-     * @return void
-     *
-     * @access public
-     */
-    public function addFooterScript($script)
-    {
+
+    /**
+    * Add content at the very end of the <body>.
+    *
+    * This is NOT meant to add footers or other display content, it is meant
+    * to add <script></script> tag pairs that have to be executed only once
+    * the page is loaded.
+    *
+    * @param string $script A piece of script surrounded by
+    *                       <script></script> tags.
+    *
+    * @return void
+    *
+    * @access public
+    */
+    public function addFooterScript($script) {
         $this->footer_scripts[] = $script;
     }
 
@@ -239,8 +245,7 @@ class MainUI
      *
      * @access public
      */
-    public function setHtmlHeader($headers_string)
-    {
+    public function setHtmlHeader($headers_string) {
         $this->html_headers = $headers_string;
     }
 
@@ -254,105 +259,85 @@ class MainUI
      *
      * @access public
      */
-    public function setToolSection($section)
-    {
+    public function setToolSection($section) {
         // Init ALL smarty SWITCH values
         $this->smarty->assign('sectionADMIN', false);
 
         switch ($section) {
-        case "ADMIN":
-            // Set section of Smarty template
-            $this->smarty->assign('sectionADMIN', true);
+            case "ADMIN" :
+                // Set section of Smarty template
+                $this->smarty->assign('sectionADMIN', true);
 
-            // Get information about user
-            $_currentUser = User::getCurrentUser();
+                // Get information about user
+                $_currentUser = User :: getCurrentUser();
 
-            if ($_currentUser && $_currentUser->isNobody()) {
-                // The user has no permission to access the administrative functions
-                $_html = _("You do not have permissions to access any administration functions.");
-            } else {
-                // Init values
-                $_sqlAdditionalWhere = "";
+                if ($_currentUser && $_currentUser->isNobody()) {
+                    // The user has no permission to access the administrative functions
+                    $_html = _("You do not have permissions to access any administration functions.");
+                } else {
+                    // Init values
+                    $_sqlAdditionalWhere = "";
 
-                // Init ALL smarty values
-                $this->smarty->assign('isSuperAdmin', false);
-                $this->smarty->assign('isOwner', false);
-                $this->smarty->assign('formAction', "");
-                $this->smarty->assign('nodeUI', "");
-                $this->smarty->assign('networkUI', "");
+                    // Init ALL smarty values
+                    $this->smarty->assign('isSuperAdmin', false);
+                    $this->smarty->assign('isOwner', false);
+                    $this->smarty->assign('formAction', "");
+                    $this->smarty->assign('nodeUI', "");
+                    $this->smarty->assign('networkUI', "");
 
-                // Define user security levels for the template
-                $this->smarty->assign('isSuperAdmin', $_currentUser && $_currentUser->isSuperAdmin());
-                $this->smarty->assign('isOwner', $_currentUser && $_currentUser->isOwner());
-
-                /*
-                 * If the user is super admin OR owner of at least one node
-                 * show the node menu
-                 */
-                if ($_currentUser && ($_currentUser->isSuperAdmin() || $_currentUser->isOwner())) {
-                    // Assign the action URL for the form
-                    $this->smarty->assign('formAction', GENERIC_OBJECT_ADMIN_ABS_HREF);
+                    // Define user security levels for the template
+                    $this->smarty->assign('isSuperAdmin', $_currentUser && $_currentUser->isSuperAdmin());
+                    $this->smarty->assign('isOwner', $_currentUser && $_currentUser->isOwner());
 
                     /*
-                     * If current user is a owner the SQL query must be changed
-                     * to return his nodes only
+                     * If the user is super admin OR owner of at least one node
+                     * show the node menu
                      */
-                    if (!$_currentUser->isSuperAdmin()) {
-                        $_sqlAdditionalWhere = "AND node_id IN (SELECT node_id from node_stakeholders WHERE is_owner = true AND user_id='" . $_currentUser->getId() . "')";
+                    if ($_currentUser && ($_currentUser->isSuperAdmin() || $_currentUser->isOwner())) {
+                        // Assign the action URL for the form
+                        $this->smarty->assign('formAction', GENERIC_OBJECT_ADMIN_ABS_HREF);
+
+                        /*
+                         * If current user is a owner the SQL query must be changed
+                         * to return his nodes only
+                         */
+                        if (!$_currentUser->isSuperAdmin()) {
+                            $_sqlAdditionalWhere = "AND node_id IN (SELECT node_id from node_stakeholders WHERE is_owner = true AND user_id='".$_currentUser->getId()."')";
+                        }
+
+                        // Provide node select control to the template
+                        $this->smarty->assign('nodeUI', Node :: getSelectNodeUI('object_id', $_sqlAdditionalWhere));
                     }
 
-                    // Provide node select control to the template
-                    $this->smarty->assign('nodeUI', Node::getSelectNodeUI('object_id', $_sqlAdditionalWhere));
+                    // If the user is network admin show the network menu
+                    if ($_currentUser && $_currentUser->isSuperAdmin()) {
+                        // Provide network select control to the template
+                        $this->smarty->assign('networkUI', Network :: getSelectNetworkUI('object_id'));
+                    }
+
+                    // Compile HTML code
+                    $_html = $this->smarty->fetch("templates/classes/MainUI_ToolSection.tpl");
                 }
+                break;
 
-                // If the user is network admin show the network menu
-                if ($_currentUser && $_currentUser->isSuperAdmin()) {
-                    // Provide network select control to the template
-                    $this->smarty->assign('networkUI', Network::getSelectNetworkUI('object_id'));
-                }
-
-                // Compile HTML code
-                $_html = $this->smarty->fetch("templates/classes/MainUI_ToolSection.tpl");
-            }
-            break;
-
-        default:
-            $_html = _("Unknown section:") . $section;
-            break;
+            default :
+                $_html = _("Unknown section:").$section;
+                break;
         }
 
-        $this->tool_content = $_html;
-    }
-
-    /**
-     * Set the content to be displayed in the tool pane
-     *
-     * @param string $html Content to be displayed
-     *
-     * @return void
-     *
-     * @access public
-     */
-    public function setToolContent($html)
-    {
-        $this->tool_content = $html;
+        $this->appendContent('left_area_middle', $_html);
     }
 
     /**
      * Get the content to be displayed in the tool pane
      *
-     * @param string $section Section to be displayed:
-     *                          + START
-     *                          + LOGIN
-     *
      * @return string HTML markup
      *
      * @access private
      */
-    private function getToolContent($section = "START")
-    {
-        // Define globals
-        global $session;
+    private function getToolContent() {
+            // Define globals
+    global $session;
         global $AVAIL_LOCALE_ARRAY;
 
         // Init values
@@ -361,113 +346,97 @@ class MainUI
         $_gwAddress = null;
         $_gwPort = null;
         $_selected = "";
-        $_languageChooser = array();
+        $_languageChooser = array ();
 
         // Init ALL smarty SWITCH values
         $this->smarty->assign('sectionSTART', false);
         $this->smarty->assign('sectionLOGIN', false);
 
-        switch ($section) {
-        case "START":
-            // Set section of Smarty template
-            $this->smarty->assign('sectionSTART', true);
+                // Set section of Smarty template
+                $this->smarty->assign('sectionSTART', true);
 
-            // Get information about user
-            $_currentUser = User::getCurrentUser();
+                // Get information about user
+                $_currentUser = User :: getCurrentUser();
 
-            // Init ALL smarty values
-            $this->smarty->assign('networkHomepageURL', "");
-            $this->smarty->assign('networkName', "");
-            $this->smarty->assign('isValidUser', false);
-            $this->smarty->assign('username', "");
-            $this->smarty->assign('logoutParameters', "");
-            $this->smarty->assign('loginParameters', "");
-            $this->smarty->assign('formAction', "");
-            $this->smarty->assign('toolContent', "");
-            $this->smarty->assign('accountInformation', "");
-            $this->smarty->assign('techSupportInformation', "");
+                // Init ALL smarty values
+                $this->smarty->assign('networkHomepageURL', "");
+                $this->smarty->assign('networkName', "");
+                $this->smarty->assign('isValidUser', false);
+                $this->smarty->assign('username', "");
+                $this->smarty->assign('logoutParameters', "");
+                $this->smarty->assign('loginParameters', "");
+                $this->smarty->assign('formAction', "");
+                $this->smarty->assign('toolContent', "");
+                $this->smarty->assign('accountInformation', "");
+                $this->smarty->assign('techSupportInformation', "");
 
-            // Provide Smarty with information about the network
-            $this->smarty->assign('networkHomepageURL', Network::getCurrentNetwork()->getHomepageURL());
-            $this->smarty->assign('networkName', Network::getCurrentNetwork()->getName());
+                // Provide Smarty with information about the network
+                $this->smarty->assign('networkHomepageURL', Network :: getCurrentNetwork()->getHomepageURL());
+                $this->smarty->assign('networkName', Network :: getCurrentNetwork()->getName());
 
-            /*
-             * Provide Smarty information about the user's login/logout status
-             */
+                /*
+                 * Provide Smarty information about the user's login/logout status
+                 */
 
-            if ($_currentUser != null) {
-                // User is logged in
-                $this->smarty->assign('isValidUser', true);
+                if ($_currentUser != null) {
+                    // User is logged in
+                    $this->smarty->assign('isValidUser', true);
 
-                // Set username for Smarty
-                $this->smarty->assign('username', $_currentUser->getUsername());
+                    // Set username for Smarty
+                    $this->smarty->assign('username', $_currentUser->getUsername());
 
-                // Detect gateway information
-                $_gwId = $session->get(SESS_GW_ID_VAR);
-                $_gwAddress = $session->get(SESS_GW_ADDRESS_VAR);
-                $_gwPort = $session->get(SESS_GW_PORT_VAR);
+                    // Detect gateway information
+                    $_gwId = $session->get(SESS_GW_ID_VAR);
+                    $_gwAddress = $session->get(SESS_GW_ADDRESS_VAR);
+                    $_gwPort = $session->get(SESS_GW_PORT_VAR);
 
-                // If gateway information could be detected tell them Smarty
-                if ($_gwId && $_gwAddress && $_gwPort) {
-                    $this->smarty->assign('logoutParameters', "&amp;gw_id=" . $_gwId . "&amp;gw_address=" . $_gwAddress . "&amp;gw_port=" . $_gwPort);
-                }
-            } else {
-                // Detect gateway information
-                $_gwId = !empty ($_REQUEST['gw_id']) ? $_REQUEST['gw_id'] : $session->get(SESS_GW_ID_VAR);
-                $_gwAddress = !empty ($_REQUEST['gw_address']) ? $_REQUEST['gw_address'] : $session->get(SESS_GW_ADDRESS_VAR);
-                $_gwPort = !empty ($_REQUEST['gw_port']) ? $_REQUEST['gw_port'] : $session->get(SESS_GW_PORT_VAR);
-
-                // If gateway information could be detected tell them Smarty
-                if (!empty ($_gwId) && !empty ($_gwAddress) && !empty ($_gwPort)) {
-                    $this->smarty->assign('loginParameters', "?gw_id=" . $_gwId . "&amp;gw_address=" . $_gwAddress . "&amp;gw_port=" . $_gwPort);
-                }
-            }
-
-            /*
-             * Provide Smarty information for the language chooser
-             */
-
-            // Assign the action URL for the form
-            $this->smarty->assign('formAction', $_SERVER['REQUEST_URI']);
-
-            foreach ($AVAIL_LOCALE_ARRAY as $_langIds => $_langNames) {
-                if (Locale::getCurrentLocale()->getId() == $_langIds) {
-                    $_selected = ' selected="selected"';
+                    // If gateway information could be detected tell them Smarty
+                    if ($_gwId && $_gwAddress && $_gwPort) {
+                        $this->smarty->assign('logoutParameters', "&amp;gw_id=".$_gwId."&amp;gw_address=".$_gwAddress."&amp;gw_port=".$_gwPort);
+                    }
                 } else {
-                    $_selected = "";
+                    // Detect gateway information
+                    $_gwId = !empty ($_REQUEST['gw_id']) ? $_REQUEST['gw_id'] : $session->get(SESS_GW_ID_VAR);
+                    $_gwAddress = !empty ($_REQUEST['gw_address']) ? $_REQUEST['gw_address'] : $session->get(SESS_GW_ADDRESS_VAR);
+                    $_gwPort = !empty ($_REQUEST['gw_port']) ? $_REQUEST['gw_port'] : $session->get(SESS_GW_PORT_VAR);
+
+                    // If gateway information could be detected tell them Smarty
+                    if (!empty ($_gwId) && !empty ($_gwAddress) && !empty ($_gwPort)) {
+                        $this->smarty->assign('loginParameters', "?gw_id=".$_gwId."&amp;gw_address=".$_gwAddress."&amp;gw_port=".$_gwPort);
+                    }
                 }
 
-                $_languageChooser[] = '<option label="' . $_langNames . '" value="' . $_langIds . '"' . $_selected . '>' . $_langNames . '</option>';
-            }
+                /*
+                 * Provide Smarty information for the language chooser
+                 */
 
-            // Provide Smarty all available languages
-            $this->smarty->assign('languageChooser', $_languageChooser);
+                // Assign the action URL for the form
+                $this->smarty->assign('formAction', $_SERVER['REQUEST_URI']);
 
-            /*
-             * Provide Smarty information for the language chooser
-             */
+                foreach ($AVAIL_LOCALE_ARRAY as $_langIds => $_langNames) {
+                    if (Locale :: getCurrentLocale()->getId() == $_langIds) {
+                        $_selected = ' selected="selected"';
+                    } else {
+                        $_selected = "";
+                    }
 
-            // Provide content
-            $this->smarty->assign('toolContent', $this->tool_content);
+                    $_languageChooser[] = '<option label="'.$_langNames.'" value="'.$_langIds.'"'.$_selected.'>'.$_langNames.'</option>';
+                }
 
-            // Provide information
-            $this->smarty->assign('accountInformation', sprintf(_("Accounts on %s are and will stay completely free."), Network::getCurrentNetwork()->getName()));
-            $this->smarty->assign('techSupportInformation', sprintf(_("Please inform us of any problem or service interruption at: %s"), '<a href="mailto:' . Network::getCurrentNetwork()->getTechSupportEmail() . '">' . Network::getCurrentNetwork()->getTechSupportEmail() . '</a>'));
+                // Provide Smarty all available languages
+                $this->smarty->assign('languageChooser', $_languageChooser);
 
-            // Compile HTML code
-            $_html = $this->smarty->fetch("templates/classes/MainUI_ToolContent.tpl");
-            break;
+                /*
+                 * Provide Smarty information for the language chooser
+                 */
+                 
+                // Provide information
+                $this->smarty->assign('accountInformation', sprintf(_("Accounts on %s are and will stay completely free."), Network :: getCurrentNetwork()->getName()));
+                $this->smarty->assign('techSupportInformation', sprintf(_("Please inform us of any problem or service interruption at: %s"), '<a href="mailto:'.Network :: getCurrentNetwork()->getTechSupportEmail().'">'.Network :: getCurrentNetwork()->getTechSupportEmail().'</a>'));
 
-        case "LOGIN":
-            // Set section of Smarty template
-            $this->smarty->assign('sectionLOGIN', true);
-            break;
-
-        default:
-            $_html = _("Unknown section:") . $section;
-            break;
-        }
-
+                // Compile HTML code
+                $_html = $this->smarty->fetch("templates/classes/MainUI_ToolContent.tpl");
+ 
         return $_html;
     }
 
@@ -481,8 +450,7 @@ class MainUI
      * If $_REQUEST['debug_request'] is present, it will print out the
      * $_REQUEST array at the top of the page.
      */
-    public function display()
-    {
+    public function display() {
         // Init values
         $_stylesheetFile = "";
 
@@ -495,10 +463,7 @@ class MainUI
         $this->smarty->assign('isOwner', false);
         $this->smarty->assign('debugRequested', false);
         $this->smarty->assign('debugOutput', "");
-        $this->smarty->assign('toolPaneEnabled', false);
-        $this->smarty->assign('toolPaneContent', "");
-        $this->smarty->assign('mainContent', "");
-        $this->smarty->assign('footerScripts', array());
+        $this->smarty->assign('footerScripts', array ());
 
         // Add HTML headers
         $this->smarty->assign('htmlHeaders', $this->html_headers);
@@ -515,10 +480,10 @@ class MainUI
         /*
          * Include stylesheet to be parsed by Smarty
          */
-        if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH . STYLESHEET_NAME)) {
-            $_stylesheetFile = NODE_CONTENT_SMARTY_PATH . STYLESHEET_NAME;
+        if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.STYLESHEET_NAME)) {
+            $_stylesheetFile = NODE_CONTENT_SMARTY_PATH.STYLESHEET_NAME;
         } else {
-            $_stylesheetFile = DEFAULT_CONTENT_SMARTY_PATH . STYLESHEET_NAME;
+            $_stylesheetFile = DEFAULT_CONTENT_SMARTY_PATH.STYLESHEET_NAME;
         }
 
         // Asign path to CSS stylesheet to be parsed by Smarty
@@ -530,13 +495,13 @@ class MainUI
          */
 
         // Get information about user
-        $_currentUser = User::getCurrentUser();
+        $_currentUser = User :: getCurrentUser();
 
         // Define user security levels for the template
         $this->smarty->assign('isSuperAdmin', $_currentUser && $_currentUser->isSuperAdmin());
         $this->smarty->assign('isOwner', $_currentUser && $_currentUser->isOwner());
 
-        if (isset($_REQUEST['debug_request']) && ($_currentUser && $_currentUser->isSuperAdmin())) {
+        if (isset ($_REQUEST['debug_request']) && ($_currentUser && $_currentUser->isSuperAdmin())) {
             // Tell Smarty everything it needs to know
             $this->smarty->assign('debugRequested', true);
             $this->smarty->assign('debugOutput', print_r($_REQUEST, true));
@@ -546,12 +511,11 @@ class MainUI
          * Build tool pane if it has been enabled
          */
         if ($this->isToolSectionEnabled()) {
-            $this->smarty->assign('toolPaneEnabled', true);
-            $this->smarty->assign('toolPaneContent', $this->getToolContent());
+            $this->appendContent('left_area_top', $this->getToolContent());
         }
 
-        // Provide main content to Smarty
-        $this->smarty->assign('mainContent', $this->main_content);
+        // Provide the content array to Smarty
+        $this->smarty->assign('contentArray', $this->contentArray);
 
         // Provide footer scripts to Smarty
         $this->smarty->assign('footerScripts', $this->footer_scripts);
@@ -571,10 +535,9 @@ class MainUI
      *
      * @access public
      */
-    function displayError($errmsg, $show_tech_support_email = true)
-    {
-        // Init ALL smarty values
-        $this->smarty->assign("error", "");
+    function displayError($errmsg, $show_tech_support_email = true) {
+            // Init ALL smarty values
+    $this->smarty->assign("error", "");
         $this->smarty->assign("show_tech_support_email", false);
         $this->smarty->assign("tech_support_email", "");
 
@@ -583,7 +546,7 @@ class MainUI
 
         if ($show_tech_support_email) {
             $this->smarty->assign("show_tech_support_email", true);
-            $this->smarty->assign("tech_support_email", Network::getCurrentNetwork()->getTechSupportEmail());
+            $this->smarty->assign("tech_support_email", Network :: getCurrentNetwork()->getTechSupportEmail());
         }
 
         /*
@@ -591,7 +554,7 @@ class MainUI
          */
         $_html = $this->smarty->fetch("templates/sites/error.tpl");
 
-        $this->setMainContent($_html);
+        $this->appendContent('page_header', $_html);
         $this->display();
     }
 
@@ -604,5 +567,5 @@ class MainUI
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
 ?>
+

@@ -103,7 +103,7 @@ class File extends Content
         parent :: __construct($content_id);
 
         $content_id = $db->escapeString($content_id);
-        $sql = "SELECT * FROM files WHERE files_id='$content_id'";
+        $sql = "SELECT * FROM content_file WHERE files_id='$content_id'";
         $db->execSqlUniqueRes($sql, $row, false);
 
         if ($row == null) {
@@ -111,10 +111,10 @@ class File extends Content
              * Since the parent Content exists, the necessary data in
              * content_group had not yet been created
              */
-            $sql = "INSERT INTO files (files_id) VALUES ('$content_id')";
+            $sql = "INSERT INTO content_file (files_id) VALUES ('$content_id')";
             $db->execSqlUpdate($sql, false);
 
-            $sql = "SELECT * FROM files WHERE files_id='$content_id'";
+            $sql = "SELECT * FROM content_file WHERE files_id='$content_id'";
             $db->execSqlUniqueRes($sql, $row, false);
 
             if ($row == null) {
@@ -210,7 +210,7 @@ class File extends Content
             $oid = "NULL";
         }
 
-        $this->mBd->execSqlUpdate("UPDATE files SET data_blob = $oid WHERE files_id='".$this->getId()."'", false);
+        $this->mBd->execSqlUpdate("UPDATE content_file SET data_blob = $oid WHERE files_id='".$this->getId()."'", false);
         $this->refresh();
     }
 
@@ -238,7 +238,7 @@ class File extends Content
     private function setMimeType($mime_type)
     {
         $mime_type = $this->mBd->escapeString($mime_type);
-        $this->mBd->execSqlUpdate("UPDATE files SET mime_type ='".$mime_type."' WHERE files_id='".$this->getId()."'", false);
+        $this->mBd->execSqlUpdate("UPDATE content_file SET mime_type ='".$mime_type."' WHERE files_id='".$this->getId()."'", false);
         $this->refresh();
     }
 
@@ -266,7 +266,7 @@ class File extends Content
     private function setFilename($file_name)
     {
         $file_name = $this->mBd->escapeString($file_name);
-        $this->mBd->execSqlUpdate("UPDATE files SET filename ='".$file_name."' WHERE files_id='".$this->getId()."'", false);
+        $this->mBd->execSqlUpdate("UPDATE content_file SET filename ='".$file_name."' WHERE files_id='".$this->getId()."'", false);
         $this->refresh();
     }
 
@@ -327,7 +327,7 @@ class File extends Content
         if (is_numeric($size)) {
             $octet_size = $size * $unit;
 
-            $this->mBd->execSqlUpdate("UPDATE files SET local_binary_size = $octet_size WHERE files_id='" . $this->getId() . "'", false);
+            $this->mBd->execSqlUpdate("UPDATE content_file SET local_binary_size = $octet_size WHERE files_id='" . $this->getId() . "'", false);
             $this->refresh();
         }
     }
@@ -353,7 +353,7 @@ class File extends Content
         if (is_numeric($size)) {
             $octet_size = $size * $unit;
 
-            $this->mBd->execSqlUpdate("UPDATE files SET remote_size = $octet_size WHERE files_id='".$this->getId()."'", false);
+            $this->mBd->execSqlUpdate("UPDATE content_file SET remote_size = $octet_size WHERE files_id='".$this->getId()."'", false);
             $this->refresh();
         }
     }
@@ -396,7 +396,7 @@ class File extends Content
             $url = "'".$this->mBd->escapeString($url)."'";
         }
 
-        $this->mBd->execSqlUpdate("UPDATE files SET url = $url WHERE files_id='".$this->getId()."'", false);
+        $this->mBd->execSqlUpdate("UPDATE content_file SET url = $url WHERE files_id='".$this->getId()."'", false);
         $this->refresh();
     }
 
@@ -621,7 +621,7 @@ class File extends Content
                 }
             }
 
-            $this->mBd->execSqlUpdate("DELETE FROM files WHERE files_id = '".$this->getId()."'", false);
+            $this->mBd->execSqlUpdate("DELETE FROM content_file WHERE files_id = '".$this->getId()."'", false);
         } else {
             $errmsg = _("Could not delete this file, since it is persistent");
         }

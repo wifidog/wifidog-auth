@@ -58,7 +58,7 @@ $smarty->assign("users_array", $online_users);
 
 $ui = new MainUI();
 $ui->setToolSection('ADMIN');
-$ui->setMainContent($smarty->fetch("admin/templates/online_users.html"));
+$ui->appendContent('main_area_middle', $smarty->fetch("admin/templates/online_users.html"));
 $ui->display();
 
 /*

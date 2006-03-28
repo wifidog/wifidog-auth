@@ -425,7 +425,7 @@ $ui = new MainUI();
 $ui->setTitle(_("Generic object editor"));
 $ui->setHtmlHeader($_htmlHeader);
 $ui->setToolSection('ADMIN');
-$ui->setMainContent("<div>" . $html . "</div>");
+$ui->appendContent('main_area_middle', "<div>" . $html . "</div>");
 $ui->display();
 
 /*

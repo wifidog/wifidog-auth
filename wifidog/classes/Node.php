@@ -962,15 +962,10 @@ class Node implements GenericObject
 		 */
 		$_html_content = array();
 
-		// Node content (login)
-		$_title = _("Node content (login)");
-		$_data = Content::getLinkedContentUI("node_" . $this->id . "_content_login", "node_has_content", "node_id", $this->id, $display_location = "login_page");
-		$_html_content[] = InterfaceElements::generateAdminSectionContainer("node_content_login", $_title, $_data);
-
-		// Node content (portal)
-		$_title = _("Node content (portal)");
-		$_data = Content::getLinkedContentUI("node_" . $this->id . "_content_portal", "node_has_content", "node_id", $this->id, $display_location = "portal_page");
-		$_html_content[] = InterfaceElements::generateAdminSectionContainer("node_content_portal", $_title, $_data);
+		// Node content
+		$_title = _("Node content");
+		$_data = Content::getLinkedContentUI("node_" . $this->id . "_content", "node_has_content", "node_id", $this->id, "portal");
+		$_html_content[] = InterfaceElements::generateAdminSectionContainer("node_content", $_title, $_data);
 
 		// Build section
 		$html .= InterfaceElements::generateAdminSectionContainer("node_content", _("Node content"), implode(null, $_html_content));
@@ -1183,9 +1178,7 @@ class Node implements GenericObject
 		}
 
 		// Content processing
-		$name = "node_{$this->id}_content_login";
-		Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id);
-		$name = "node_{$this->id}_content_portal";
+		$name = "node_{$this->id}_content";
 		Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id);
 
 		// Name
@@ -1221,19 +1214,19 @@ class Node implements GenericObject
 	/**Get an array of all Content linked to this node
 	 * @param boolean $exclude_subscribed_content
 	* @param User $subscriber The User object used to discriminate the content
-	* @param $display_location Only select the content to be displayed in thios
+	* @param $display_page Only select the content to be displayed in thios
 	* area.  Defaults to 'portal_page'
 	* @return an array of Content or an empty arrray */
-	function getAllContent($exclude_subscribed_content = false, $subscriber = null, $display_location = 'portal_page')
+	/*function getAllContent($exclude_subscribed_content = false, $subscriber = null, $display_page = 'portal')
 	{
 		global $db;
 		$retval = array ();
 		$content_rows = null;
 		// Get all network, but exclude user subscribed content if asked
 		if ($exclude_subscribed_content == true && $subscriber)
-			$sql = "SELECT content_id FROM node_has_content WHERE node_id='{$this->id}' AND display_location='$display_location' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$subscriber->getId()}') ORDER BY subscribe_timestamp DESC";
+			$sql = "SELECT content_id FROM node_has_content WHERE node_id='{$this->id}' AND display_page='$display_page' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$subscriber->getId()}') ORDER BY subscribe_timestamp DESC";
 		else
-			$sql = "SELECT content_id FROM node_has_content WHERE node_id='{$this->id}' AND display_location='$display_location' ORDER BY subscribe_timestamp DESC";
+			$sql = "SELECT content_id FROM node_has_content WHERE node_id='{$this->id}' AND display_page='$display_page' ORDER BY subscribe_timestamp DESC";
 		$db->execSql($sql, $content_rows, false);
 
 		if ($content_rows != null)
@@ -1244,7 +1237,7 @@ class Node implements GenericObject
 			}
 		}
 		return $retval;
-	}
+	}*/
 
 	/** Get an array of all artistic and locative Content for this hotspot
 	* @return an array of Content or an empty arrray */

@@ -202,11 +202,7 @@ if ((!empty($logout) && $logout) && ($user = User::getCurrentUser()) != null) {
 /**
  * Start login interface section
  */
-
-// Init ALL smarty SWITCH values
-$smarty->assign('sectionTOOLCONTENT', false);
-$smarty->assign('sectionMAINCONTENT', false);
-
+ 
 // Init ALL smarty values
 $smarty->assign('node', null);
 $smarty->assign('gwAddress', null);
@@ -216,17 +212,10 @@ $smarty->assign('origin', null);
 $smarty->assign('selectNetworkUI', null);
 $smarty->assign('username', null);
 $smarty->assign('error', null);
-$smarty->assign('hotspot_homepage_url', null);
-$smarty->assign('hotspot_name', null);
-$smarty->assign('contents', false);
-$smarty->assign('contentArray', array());
 
 /*
  * Tool content
  */
-
-// Set section of Smarty template
-$smarty->assign('sectionTOOLCONTENT', true);
 
 // Set details about node
 $smarty->assign('node', $node);
@@ -251,52 +240,58 @@ $smarty->assign('error', !empty($error) ? $error : null);
 // Compile HTML code
 $html = $smarty->fetch("templates/sites/login.tpl");
 
+
+
+
+$ui = new MainUI();
+if($node)
+{
+$ui->setTitle(sprintf(_("%s login page for %s"),$network->getName(), $node->getName()));
+}
+else
+{
+    $ui->setTitle(_("Offsite login page"));
+}
+$ui->setPageName('login');
+$ui->appendContent('left_area_middle', $html);
 /*
  * Main content
  */
-
-// Init values
-$contentArray = array();
-
-// Reset ALL smarty SWITCH values
-$smarty->assign('sectionTOOLCONTENT', false);
-$smarty->assign('sectionMAINCONTENT', false);
-
-// Set section of Smarty template
-$smarty->assign('sectionMAINCONTENT', true);
-
-/*
- * Node section
- */
-
-// Get all node content
-if (!empty($node)) {
-    // Set all information about current node
-    $smarty->assign('hotspot_homepage_url', $node->getHomePageURL());
-    $smarty->assign('hotspot_name', $node->getName());
-
-    $contents = $node->getAllContent(true, null, 'login_page');
-
-    if ($contents) {
-        foreach ($contents as $content) {
-            $contentArray[] = array('isDisplayableAt' => $content->isDisplayableAt($node), 'userUI' => $content->getUserUI());
+// Get all network content
+$content_rows = null;
+$network_id = $db->escapeString($network->getId());
+    $sql = "SELECT content_id, display_area FROM network_has_content WHERE network_id='$network_id'  AND display_page='login' ORDER BY display_area, display_order, subscribe_timestamp DESC";
+$db->execSql($sql, $content_rows, false);
+if ($content_rows) {
+    foreach ($content_rows as $content_row) {
+        $content = Content :: getObject($content_row['content_id']);
+        if ($content->isDisplayableAt($node)) {
+            $ui->appendContent($content_row['display_area'], $content->getUserUI());
         }
-
-        // Set all content of current node
-        $smarty->assign('contents', true);
-        $smarty->assign('contentArray', $contentArray);
     }
 }
 
-// Compile HTML code
-$html_body = $smarty->fetch("templates/sites/login.tpl");
+if($node)
+{
+// Get all node content
+$content_rows = null;
+$node_id = $db->escapeString($node->getId());
+    $sql = "SELECT content_id, display_area FROM node_has_content WHERE node_id='$node_id'  AND display_page='login' ORDER BY display_area, display_order, subscribe_timestamp DESC";
+$db->execSql($sql, $content_rows, false);
+$showMoreLink = false;
+if ($content_rows) {
+    foreach ($content_rows as $content_row) {
+        $content = Content :: getObject($content_row['content_id']);
+        if ($content->isDisplayableAt($node)) {
+            $ui->appendContent($content_row['display_area'], $content->getUserUI());
+        }
+    }
+}
+}
 
 /*
  * Render output
  */
-$ui = new MainUI();
-$ui->setToolContent($html);
-$ui->setMainContent($html_body);
 $ui->display();
 
 /*
