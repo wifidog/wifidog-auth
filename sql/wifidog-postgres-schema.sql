@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'SQL_ASCII';
+SET client_encoding = 'UNICODE';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -10,12 +10,12 @@ SET client_min_messages = warning;
 -- Name: wifidog; Type: DATABASE; Schema: -; Owner: wifidog
 --
 
-CREATE DATABASE wifidog WITH TEMPLATE = template0 ENCODING = 'SQL_ASCII';
+CREATE DATABASE wifidog WITH TEMPLATE = template0 ENCODING = 'UNICODE';
 
 
 \connect wifidog
 
-SET client_encoding = 'SQL_ASCII';
+SET client_encoding = 'UNICODE';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 

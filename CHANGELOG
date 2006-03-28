@@ -1,4 +1,7 @@
 2006-03-28 François Proulx <francois.proulx@gmail.com>
+	* Fixed error in initial schema (bad client encoding)
+	
+2006-03-28 François Proulx <francois.proulx@gmail.com>
 	* Fixed schema 37 : left_area_top
 	* Updated initial schema
 	

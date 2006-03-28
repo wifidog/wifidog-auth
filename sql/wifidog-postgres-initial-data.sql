@@ -4,7 +4,7 @@ BEGIN;
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'SQL_ASCII';
+SET client_encoding = 'UNICODE';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -27,7 +27,7 @@ INSERT INTO token_status (token_status) VALUES ('USED');
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'SQL_ASCII';
+SET client_encoding = 'UNICODE';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -81,7 +81,7 @@ INSERT INTO venue_types (venue_type) VALUES ('Wi-Fi Zone');
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'SQL_ASCII';
+SET client_encoding = 'UNICODE';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -107,7 +107,7 @@ INSERT INTO node_deployment_status (node_deployment_status) VALUES ('TEMPORARILY
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'SQL_ASCII';
+SET client_encoding = 'UNICODE';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -140,7 +140,7 @@ INSERT INTO nodes (network_id, node_id, name) VALUES ('default-network', 'defaul
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'SQL_ASCII';
+SET client_encoding = 'UNICODE';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -161,7 +161,7 @@ INSERT INTO schema_info (tag, value) VALUES ('schema_version', '38');
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'SQL_ASCII';
+SET client_encoding = 'UNICODE';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
