@@ -143,7 +143,7 @@ if (!empty($gw_id)) {
  * If this is a splash-only node, skip the login interface and log-in using
  * the splash_only user
  */
-if ($node && $node->isSplashOnly()) {
+if (!empty($node) && $node->isSplashOnly()) {
     if (!empty($gw_address) && !empty($gw_port)) {
         // Login from a gateway, redirect to the gateway to activate the token
         $user = $network->getSplashOnlyUser();

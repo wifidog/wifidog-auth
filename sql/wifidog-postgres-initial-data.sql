@@ -4,7 +4,7 @@ BEGIN;
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UNICODE';
+SET client_encoding = 'SQL_ASCII';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -27,7 +27,7 @@ INSERT INTO token_status (token_status) VALUES ('USED');
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UNICODE';
+SET client_encoding = 'SQL_ASCII';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -81,7 +81,7 @@ INSERT INTO venue_types (venue_type) VALUES ('Wi-Fi Zone');
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UNICODE';
+SET client_encoding = 'SQL_ASCII';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -107,18 +107,27 @@ INSERT INTO node_deployment_status (node_deployment_status) VALUES ('TEMPORARILY
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UNICODE';
+SET client_encoding = 'SQL_ASCII';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 SET search_path = public, pg_catalog;
 
 --
--- Data for Name: content_display_location; Type: TABLE DATA; Schema: public; Owner: wifidog
+-- Data for Name: content_available_display_areas; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
-INSERT INTO content_display_location (display_location) VALUES ('portal_page');
-INSERT INTO content_display_location (display_location) VALUES ('login_page');
+INSERT INTO content_available_display_areas (display_area) VALUES ('page_header');
+INSERT INTO content_available_display_areas (display_area) VALUES ('page_footer');
+INSERT INTO content_available_display_areas (display_area) VALUES ('left_area_middle');
+INSERT INTO content_available_display_areas (display_area) VALUES ('left_area_bottom');
+INSERT INTO content_available_display_areas (display_area) VALUES ('main_area_top');
+INSERT INTO content_available_display_areas (display_area) VALUES ('main_area_middle');
+INSERT INTO content_available_display_areas (display_area) VALUES ('main_area_bottom');
+INSERT INTO content_available_display_areas (display_area) VALUES ('right_area_top');
+INSERT INTO content_available_display_areas (display_area) VALUES ('right_area_middle');
+INSERT INTO content_available_display_areas (display_area) VALUES ('right_area_bottom');
+INSERT INTO content_available_display_areas (display_area) VALUES ('left_area_top');
 
 
 --
@@ -131,7 +140,7 @@ INSERT INTO nodes (network_id, node_id, name) VALUES ('default-network', 'defaul
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UNICODE';
+SET client_encoding = 'SQL_ASCII';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -141,7 +150,7 @@ SET search_path = public, pg_catalog;
 -- Data for Name: schema_info; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
-INSERT INTO schema_info (tag, value) VALUES ('schema_version', '33');
+INSERT INTO schema_info (tag, value) VALUES ('schema_version', '38');
 
 
 --
@@ -152,7 +161,7 @@ INSERT INTO schema_info (tag, value) VALUES ('schema_version', '33');
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UNICODE';
+SET client_encoding = 'SQL_ASCII';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -165,6 +174,7 @@ SET search_path = public, pg_catalog;
 INSERT INTO locales (locales_id) VALUES ('fr');
 INSERT INTO locales (locales_id) VALUES ('en');
 INSERT INTO locales (locales_id) VALUES ('de');
+INSERT INTO locales (locales_id) VALUES ('pt');
 
 
 --

@@ -1,3 +1,7 @@
+2006-03-28 François Proulx <francois.proulx@gmail.com>
+	* Fixed schema 37 : left_area_top
+	* Updated initial schema
+	
 2006-03-27 Benoit Grégoire  <bock@step.polymtl.ca>
 	* First step in massive simplification of CSS and templates
 	* Implement the new main CSS structure

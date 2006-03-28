@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UNICODE';
+SET client_encoding = 'SQL_ASCII';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -10,12 +10,12 @@ SET client_min_messages = warning;
 -- Name: wifidog; Type: DATABASE; Schema: -; Owner: wifidog
 --
 
-CREATE DATABASE wifidog WITH TEMPLATE = template0 ENCODING = 'UNICODE';
+CREATE DATABASE wifidog WITH TEMPLATE = template0 ENCODING = 'SQL_ASCII';
 
 
 \connect wifidog
 
-SET client_encoding = 'UNICODE';
+SET client_encoding = 'SQL_ASCII';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -81,11 +81,20 @@ CREATE TABLE content (
 
 
 --
--- Name: content_display_location; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_available_display_areas; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
 
-CREATE TABLE content_display_location (
-    display_location text NOT NULL
+CREATE TABLE content_available_display_areas (
+    display_area text NOT NULL
+);
+
+
+--
+-- Name: content_available_display_pages; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE content_available_display_pages (
+    display_page text NOT NULL
 );
 
 
@@ -99,6 +108,74 @@ CREATE TABLE content_display_log (
     first_display_timestamp timestamp without time zone DEFAULT now() NOT NULL,
     node_id text NOT NULL,
     last_display_timestamp timestamp without time zone DEFAULT now() NOT NULL
+);
+
+
+--
+-- Name: content_embedded_content; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE content_embedded_content (
+    embedded_content_id text NOT NULL,
+    embedded_file_id text,
+    fallback_content_id text,
+    parameters text,
+    attributes text
+);
+
+
+--
+-- Name: content_file; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE content_file (
+    files_id text NOT NULL,
+    filename text,
+    mime_type text,
+    remote_size bigint,
+    url text,
+    data_blob oid,
+    local_binary_size bigint
+);
+
+
+--
+-- Name: content_file_image; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE content_file_image (
+    pictures_id text NOT NULL,
+    width integer,
+    height integer
+);
+
+
+--
+-- Name: content_flickr_photostream; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE content_flickr_photostream (
+    flickr_photostream_id text NOT NULL,
+    api_key text,
+    photo_selection_mode text DEFAULT 'PSM_GROUP'::text NOT NULL,
+    user_id text,
+    user_name text,
+    tags text,
+    tag_mode character varying(10) DEFAULT 'any'::character varying,
+    group_id text,
+    random boolean DEFAULT true NOT NULL,
+    min_taken_date timestamp without time zone,
+    max_taken_date timestamp without time zone,
+    photo_batch_size integer DEFAULT 10,
+    photo_count integer DEFAULT 1,
+    display_title boolean DEFAULT true NOT NULL,
+    display_description boolean DEFAULT false NOT NULL,
+    display_tags boolean DEFAULT false NOT NULL,
+    preferred_size text,
+    requests_cache text,
+    cache_update_timestamp timestamp without time zone,
+    api_shared_secret text,
+    photo_display_mode text DEFAULT 'PDM_GRID'::text NOT NULL
 );
 
 
@@ -155,6 +232,30 @@ CREATE TABLE content_has_owners (
 
 
 --
+-- Name: content_iframe; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE content_iframe (
+    iframes_id text NOT NULL,
+    url text,
+    width integer,
+    height integer
+);
+
+
+--
+-- Name: content_langstring_entries; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE content_langstring_entries (
+    langstring_entries_id text NOT NULL,
+    langstrings_id text,
+    locales_id text,
+    value text DEFAULT ''::text
+);
+
+
+--
 -- Name: content_rss_aggregator; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
 
@@ -180,87 +281,6 @@ CREATE TABLE content_rss_aggregator_feeds (
 
 
 --
--- Name: embedded_content; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
---
-
-CREATE TABLE embedded_content (
-    embedded_content_id text NOT NULL,
-    embedded_file_id text,
-    fallback_content_id text,
-    parameters text,
-    attributes text
-);
-
-
---
--- Name: files; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
---
-
-CREATE TABLE files (
-    files_id text NOT NULL,
-    filename text,
-    mime_type text,
-    remote_size bigint,
-    url text,
-    data_blob oid,
-    local_binary_size bigint
-);
-
-
---
--- Name: flickr_photostream; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
---
-
-CREATE TABLE flickr_photostream (
-    flickr_photostream_id text NOT NULL,
-    api_key text,
-    photo_selection_mode text DEFAULT 'PSM_GROUP'::text NOT NULL,
-    user_id text,
-    user_name text,
-    tags text,
-    tag_mode character varying(10) DEFAULT 'any'::character varying,
-    group_id text,
-    random boolean DEFAULT true NOT NULL,
-    min_taken_date timestamp without time zone,
-    max_taken_date timestamp without time zone,
-    photo_batch_size integer DEFAULT 10,
-    photo_count integer DEFAULT 1,
-    display_title boolean DEFAULT true NOT NULL,
-    display_description boolean DEFAULT false NOT NULL,
-    display_tags boolean DEFAULT false NOT NULL,
-    preferred_size text,
-    requests_cache text,
-    cache_update_timestamp timestamp without time zone,
-    api_shared_secret text,
-    photo_display_mode text DEFAULT 'PDM_GRID'::text NOT NULL
-);
-
-
---
--- Name: iframes; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
---
-
-CREATE TABLE iframes (
-    iframes_id text NOT NULL,
-    url text,
-    width integer,
-    height integer
-);
-
-
---
--- Name: langstring_entries; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
---
-
-CREATE TABLE langstring_entries (
-    langstring_entries_id text NOT NULL,
-    langstrings_id text,
-    locales_id text,
-    value text DEFAULT ''::text
-);
-
-
---
 -- Name: locales; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
 
@@ -277,7 +297,9 @@ CREATE TABLE network_has_content (
     network_id text NOT NULL,
     content_id text NOT NULL,
     subscribe_timestamp timestamp without time zone DEFAULT now() NOT NULL,
-    display_location text DEFAULT 'portal_page'::text NOT NULL
+    display_page text DEFAULT 'portal'::text NOT NULL,
+    display_area text DEFAULT 'main_area_middle'::text NOT NULL,
+    display_order integer DEFAULT 1 NOT NULL
 );
 
 
@@ -311,6 +333,11 @@ CREATE TABLE networks (
     allow_multiple_login boolean DEFAULT false NOT NULL,
     allow_splash_only_nodes boolean DEFAULT false NOT NULL,
     allow_custom_portal_redirect boolean DEFAULT false NOT NULL,
+    gmaps_initial_latitude numeric(16,6),
+    gmaps_initial_longitude numeric(16,6),
+    gmaps_initial_zoom_level integer,
+    gmaps_map_type text DEFAULT 'G_MAP_TYPE'::text NOT NULL,
+    CONSTRAINT networks_gmaps_map_type_check CHECK ((gmaps_map_type <> ''::text)),
     CONSTRAINT networks_name CHECK ((name <> ''::text)),
     CONSTRAINT networks_network_authenticator_class CHECK ((network_authenticator_class <> ''::text)),
     CONSTRAINT networks_validation_email_from_address CHECK ((validation_email_from_address <> ''::text))
@@ -338,7 +365,9 @@ CREATE TABLE node_has_content (
     node_id text NOT NULL,
     content_id text NOT NULL,
     subscribe_timestamp timestamp without time zone DEFAULT now() NOT NULL,
-    display_location text DEFAULT 'portal_page'::text NOT NULL
+    display_page text DEFAULT 'portal'::text NOT NULL,
+    display_area text DEFAULT 'main_area_middle'::text NOT NULL,
+    display_order integer DEFAULT 1 NOT NULL
 );
 
 
@@ -392,23 +421,29 @@ CREATE TABLE nodes (
 
 
 --
--- Name: pictures; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
---
-
-CREATE TABLE pictures (
-    pictures_id text NOT NULL,
-    width integer,
-    height integer
-);
-
-
---
 -- Name: schema_info; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
 
 CREATE TABLE schema_info (
     tag text NOT NULL,
     value text
+);
+
+
+--
+-- Name: servers; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE servers (
+    server_id text NOT NULL,
+    is_default_server boolean DEFAULT false NOT NULL,
+    name text DEFAULT 'Unnamed server'::text NOT NULL,
+    creation_date date DEFAULT now() NOT NULL,
+    hostname text DEFAULT 'localhost'::text NOT NULL,
+    ssl_available boolean DEFAULT false NOT NULL,
+    gmaps_api_key text,
+    CONSTRAINT servers_name_check CHECK ((name <> ''::text)),
+    CONSTRAINT servers_name_check1 CHECK ((name <> ''::text))
 );
 
 
@@ -492,11 +527,19 @@ ALTER TABLE ONLY connections
 
 
 --
+-- Name: content_available_display_areas_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY content_available_display_areas
+    ADD CONSTRAINT content_available_display_areas_pkey PRIMARY KEY (display_area);
+
+
+--
 -- Name: content_display_location_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
 --
 
-ALTER TABLE ONLY content_display_location
-    ADD CONSTRAINT content_display_location_pkey PRIMARY KEY (display_location);
+ALTER TABLE ONLY content_available_display_pages
+    ADD CONSTRAINT content_display_location_pkey PRIMARY KEY (display_page);
 
 
 --
@@ -567,7 +610,7 @@ ALTER TABLE ONLY content_rss_aggregator
 -- Name: files_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
 --
 
-ALTER TABLE ONLY files
+ALTER TABLE ONLY content_file
     ADD CONSTRAINT files_pkey PRIMARY KEY (files_id);
 
 
@@ -575,7 +618,7 @@ ALTER TABLE ONLY files
 -- Name: flickr_photostream_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
 --
 
-ALTER TABLE ONLY flickr_photostream
+ALTER TABLE ONLY content_flickr_photostream
     ADD CONSTRAINT flickr_photostream_pkey PRIMARY KEY (flickr_photostream_id);
 
 
@@ -583,7 +626,7 @@ ALTER TABLE ONLY flickr_photostream
 -- Name: iframes_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
 --
 
-ALTER TABLE ONLY iframes
+ALTER TABLE ONLY content_iframe
     ADD CONSTRAINT iframes_pkey PRIMARY KEY (iframes_id);
 
 
@@ -591,7 +634,7 @@ ALTER TABLE ONLY iframes
 -- Name: langstring_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
 --
 
-ALTER TABLE ONLY langstring_entries
+ALTER TABLE ONLY content_langstring_entries
     ADD CONSTRAINT langstring_entries_pkey PRIMARY KEY (langstring_entries_id);
 
 
@@ -663,7 +706,7 @@ ALTER TABLE ONLY nodes
 -- Name: pictures_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
 --
 
-ALTER TABLE ONLY pictures
+ALTER TABLE ONLY content_file_image
     ADD CONSTRAINT pictures_pkey PRIMARY KEY (pictures_id);
 
 
@@ -673,6 +716,14 @@ ALTER TABLE ONLY pictures
 
 ALTER TABLE ONLY schema_info
     ADD CONSTRAINT schema_info_pkey PRIMARY KEY (tag);
+
+
+--
+-- Name: servers_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY servers
+    ADD CONSTRAINT servers_pkey PRIMARY KEY (server_id);
 
 
 --
@@ -792,7 +843,7 @@ ALTER TABLE ONLY content_has_owners
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
-ALTER TABLE ONLY langstring_entries
+ALTER TABLE ONLY content_langstring_entries
     ADD CONSTRAINT "$1" FOREIGN KEY (langstrings_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
@@ -856,15 +907,15 @@ ALTER TABLE ONLY content_display_log
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
-ALTER TABLE ONLY pictures
-    ADD CONSTRAINT "$1" FOREIGN KEY (pictures_id) REFERENCES files(files_id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY content_file_image
+    ADD CONSTRAINT "$1" FOREIGN KEY (pictures_id) REFERENCES content_file(files_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
-ALTER TABLE ONLY iframes
+ALTER TABLE ONLY content_iframe
     ADD CONSTRAINT "$1" FOREIGN KEY (iframes_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
@@ -882,14 +933,6 @@ ALTER TABLE ONLY content_rss_aggregator
 
 ALTER TABLE ONLY content_rss_aggregator_feeds
     ADD CONSTRAINT "$1" FOREIGN KEY (content_id) REFERENCES content_rss_aggregator(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY node_stakeholders
-    ADD CONSTRAINT "$1" FOREIGN KEY (node_id) REFERENCES nodes(node_id);
 
 
 --
@@ -920,7 +963,7 @@ ALTER TABLE ONLY content_has_owners
 -- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
-ALTER TABLE ONLY langstring_entries
+ALTER TABLE ONLY content_langstring_entries
     ADD CONSTRAINT "$2" FOREIGN KEY (locales_id) REFERENCES locales(locales_id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
@@ -1041,7 +1084,7 @@ ALTER TABLE ONLY administrators
 --
 
 ALTER TABLE ONLY network_has_content
-    ADD CONSTRAINT display_location_fkey FOREIGN KEY (display_location) REFERENCES content_display_location(display_location) ON UPDATE CASCADE ON DELETE RESTRICT;
+    ADD CONSTRAINT display_location_fkey FOREIGN KEY (display_page) REFERENCES content_available_display_pages(display_page) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
@@ -1049,7 +1092,7 @@ ALTER TABLE ONLY network_has_content
 --
 
 ALTER TABLE ONLY node_has_content
-    ADD CONSTRAINT display_location_fkey FOREIGN KEY (display_location) REFERENCES content_display_location(display_location) ON UPDATE CASCADE ON DELETE RESTRICT;
+    ADD CONSTRAINT display_location_fkey FOREIGN KEY (display_page) REFERENCES content_available_display_pages(display_page) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
@@ -1088,8 +1131,16 @@ ALTER TABLE ONLY nodes
 -- Name: flickr_photostream_content_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
-ALTER TABLE ONLY flickr_photostream
+ALTER TABLE ONLY content_flickr_photostream
     ADD CONSTRAINT flickr_photostream_content_fkey FOREIGN KEY (flickr_photostream_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: network_has_content_display_area_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY network_has_content
+    ADD CONSTRAINT network_has_content_display_area_fkey FOREIGN KEY (display_area) REFERENCES content_available_display_areas(display_area) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -1106,6 +1157,22 @@ ALTER TABLE ONLY nodes
 
 ALTER TABLE ONLY network_has_content
     ADD CONSTRAINT network_id_fkey FOREIGN KEY (network_id) REFERENCES networks(network_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: node_has_content_display_area_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY node_has_content
+    ADD CONSTRAINT node_has_content_display_area_fkey FOREIGN KEY (display_area) REFERENCES content_available_display_areas(display_area) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: nodes_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY node_stakeholders
+    ADD CONSTRAINT nodes_fkey FOREIGN KEY (node_id) REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
