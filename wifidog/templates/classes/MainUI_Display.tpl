@@ -116,7 +116,7 @@
                 </div>
         {/if}        
 
-          {if !empty($contentArray.right_area_top) ||  !empty($contentArray.right_area_middle) ||  !empty($contentArray.right_area_middle)}
+          {if !empty($contentArray.right_area_top) ||  !empty($contentArray.right_area_middle) ||  !empty($contentArray.right_area_bottom)}
                 <div id="right_area">
 	                {if !empty($contentArray.right_area_top)}
 	                <div id="right_area_top">

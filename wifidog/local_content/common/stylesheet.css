@@ -63,16 +63,16 @@ select {
 }
 
 #page_body {
-    background-color: white;
     width: 100%;
     float: left;
+    background-color: white;
+
 }
 
 #left_area {
+    width: 25%;
+    float: left;
     border: 1px solid #E9E9E9;
-    float:left;
-    position: relative;
-    width: 250px;  /* L */
 }
 
 #left_area_top {
@@ -85,9 +85,8 @@ select {
 }
 
 #main_area {
-    border: 1px solid #E9E9E9;
-    margin-left: 252px;
-    padding: 5px;
+    width: 74%;
+	float: left;
 }
 
 #main_area_top {
@@ -100,6 +99,9 @@ select {
 }
 
 #right_area {
+    height: 100%;
+	border: 1px solid #E9E9E9;
+	float: left;
 }
 
 #right_area_top {
@@ -149,14 +151,11 @@ span.navigation{
 }
 
 div.language{
-    width: 250px;
-    height: 30px;
+
 }
 
 form.language{
-    position: relative;
-    top: 5px;
-    right: 5px;
+    padding: 0.5em 0.5em 0em 0em;
     text-align: right;
 }
 

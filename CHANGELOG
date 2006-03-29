@@ -1,3 +1,7 @@
+2006-03-27 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Fix bug where right_area_bottom content wouldn't be displayed.
+	* Minor CSS cleanup
+
 2006-03-28 François Proulx <francois.proulx@gmail.com>
 	* Fixed error in initial schema (bad client encoding)
 	
