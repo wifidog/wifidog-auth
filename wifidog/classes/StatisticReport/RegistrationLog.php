@@ -178,4 +178,4 @@ class RegistrationLog extends StatisticReport
  * End:
  */
 
-?>
+

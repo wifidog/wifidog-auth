@@ -130,4 +130,4 @@ class VisitsPerWeekday extends StatisticGraph
  * End:
  */
 
-?>
+

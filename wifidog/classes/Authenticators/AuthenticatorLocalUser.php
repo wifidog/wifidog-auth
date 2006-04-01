@@ -235,4 +235,3 @@ class AuthenticatorLocalUser extends Authenticator
  * End:
  */
 
-?>

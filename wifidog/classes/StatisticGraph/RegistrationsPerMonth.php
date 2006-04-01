@@ -111,4 +111,4 @@ class RegistrationsPerMonth extends StatisticGraph
  * End:
  */
 
-?>
+

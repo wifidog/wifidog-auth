@@ -528,4 +528,3 @@ class AuthenticatorRadius extends Authenticator
  * End:
  */
 
-?>

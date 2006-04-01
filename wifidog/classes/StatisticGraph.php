@@ -142,4 +142,4 @@ abstract class StatisticGraph
  * End:
  */
 
-?>
+

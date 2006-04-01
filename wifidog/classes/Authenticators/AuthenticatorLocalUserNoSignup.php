@@ -80,4 +80,3 @@ class AuthenticatorLocalUserNoSignup extends AuthenticatorLocalUser
  * End:
  */
 
-?>

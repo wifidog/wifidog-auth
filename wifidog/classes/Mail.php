@@ -368,4 +368,3 @@ class Mail
  * End:
  */
 
-?>

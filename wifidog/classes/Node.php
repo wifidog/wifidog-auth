@@ -1462,4 +1462,3 @@ class Node implements GenericObject
  * c-hanging-comment-ender-p: nil
  * End:
  */
-?>

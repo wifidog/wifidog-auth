@@ -216,4 +216,4 @@ class GeocoderCanada extends AbstractGeocoder
  * End:
  */
 
-?>
+

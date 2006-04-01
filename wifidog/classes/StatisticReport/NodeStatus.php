@@ -241,4 +241,4 @@ class NodeStatus extends StatisticReport
  * End:
  */
 
-?>
+

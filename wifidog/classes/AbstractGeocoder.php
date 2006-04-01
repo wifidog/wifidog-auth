@@ -226,4 +226,3 @@ foreach ($class_names as $class_name)
  * End:
  */
 
-?>

@@ -424,4 +424,3 @@ class AbstractDb
  * c-hanging-comment-ender-p: nil
  * End:
  */
-?>

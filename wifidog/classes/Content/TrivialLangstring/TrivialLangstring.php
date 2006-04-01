@@ -117,4 +117,4 @@ class TrivialLangstring extends Langstring
  * End:
  */
 
-?>
+

@@ -113,4 +113,4 @@ class RegistrationsCumulative extends StatisticGraph
  * End:
  */
 
-?>
+

@@ -247,4 +247,3 @@ class NodeListHTML {
  * End:
  */
 
-?>

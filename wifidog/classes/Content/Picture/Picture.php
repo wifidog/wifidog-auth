@@ -324,4 +324,4 @@ class Picture extends File
  * End:
  */
 
-?>
+

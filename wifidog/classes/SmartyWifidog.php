@@ -162,4 +162,4 @@ class SmartyWifidog extends Smarty {
  * End:
  */
 
-?>
+

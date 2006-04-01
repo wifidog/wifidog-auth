@@ -108,4 +108,4 @@ $Dataset->addPoint($row['hour'] . "h", $row['connections']);
  * End:
  */
 
-?>
+

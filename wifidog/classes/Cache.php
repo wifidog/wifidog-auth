@@ -306,4 +306,3 @@ class Cache
  * End:
  */
 
-?>

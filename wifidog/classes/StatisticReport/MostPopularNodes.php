@@ -155,4 +155,4 @@ class MostPopularNodes extends StatisticReport
  * End:
  */
 
-?>
+

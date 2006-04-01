@@ -819,4 +819,3 @@ class User implements GenericObject
  * End:
  */
 
-?>

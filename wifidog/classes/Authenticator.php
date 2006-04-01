@@ -298,4 +298,3 @@ abstract class Authenticator
  * End:
  */
 
-?>

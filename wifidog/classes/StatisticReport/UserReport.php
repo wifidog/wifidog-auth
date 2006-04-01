@@ -333,4 +333,3 @@ class UserReport extends StatisticReport
  * End:
  */
 
-?>

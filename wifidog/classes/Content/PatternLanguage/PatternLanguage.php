@@ -237,4 +237,4 @@ class PatternLanguage extends ContentGroup
  * End:
  */
 
-?>
+

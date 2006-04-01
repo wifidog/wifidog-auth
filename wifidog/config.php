@@ -168,11 +168,11 @@ define('DATE_TIMEZONE', 'Canada/Eastern');
  */
 global $AVAIL_LOCALE_ARRAY;
 
-$AVAIL_LOCALE_ARRAY = array('fr' => 'Français',
+/*$AVAIL_LOCALE_ARRAY = array('fr' => 'Français',
                             'en' => 'English',
                             'de' => 'Deutsch',
                             'pt' => 'Português');
-
+*/
 /**
  * A lot of linux distributions (Debian, BSD and Mac OS X) use locales like this:
  */
@@ -184,10 +184,10 @@ $AVAIL_LOCALE_ARRAY = array('fr' => 'Français',
 /**
  * Other linux distributions use locales like this:
  */
-//$AVAIL_LOCALE_ARRAY = array('fr_CA.UTF8' => 'Français',
-//                            'en_US.UTF8' => 'English',
-//                            'de_DE.UTF8' => 'Deutsch',
-//                            'pt_PT.UTF8' => 'Português');
+$AVAIL_LOCALE_ARRAY = array('fr_CA.UTF8' => 'Français',
+                            'en_US.UTF8' => 'English',
+                            'de_DE.UTF8' => 'Deutsch',
+                            'pt_PT.UTF8' => 'Português');
 
 /**
  * Default language
@@ -200,7 +200,7 @@ $AVAIL_LOCALE_ARRAY = array('fr' => 'Français',
  * - fr_CA
  * - fr_CA.UTF8
  */
-define('DEFAULT_LANG', 'fr');
+define('DEFAULT_LANG', 'fr_CA.UTF8');
 
 /********************************************************************\
  * WIFIDOG FEATURES CONFIGURATION                                   *
@@ -225,7 +225,7 @@ define('RSS_SUPPORT', true);
  * Normally PHLICKR_REL_PATH is "lib/", Phlickr being installed in directory
  * "Phlickr".
  */
-define('PHLICKR_SUPPORT', false);
+define('PHLICKR_SUPPORT', true);
 
 /**
  * Google Maps support

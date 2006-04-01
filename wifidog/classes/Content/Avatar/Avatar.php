@@ -195,4 +195,4 @@ class Avatar extends Picture
  * End:
  */
 
-?>
+

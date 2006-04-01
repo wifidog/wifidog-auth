@@ -569,4 +569,4 @@ class HTMLeditor extends Content
  * End:
  */
 
-?>
+

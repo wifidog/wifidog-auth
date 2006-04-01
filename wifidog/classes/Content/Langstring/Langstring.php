@@ -597,4 +597,4 @@ class Langstring extends Content {
  * End:
  */
 
-?>
+

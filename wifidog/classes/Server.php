@@ -871,4 +871,3 @@ class Server implements GenericObject
  * End:
  */
 
-?>

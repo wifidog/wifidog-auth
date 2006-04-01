@@ -351,4 +351,3 @@ class AuthenticatorLDAP extends Authenticator
  * End:
  */
 
-?>

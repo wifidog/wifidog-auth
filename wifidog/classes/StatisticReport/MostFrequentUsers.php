@@ -145,4 +145,4 @@ class MostFrequentUsers extends StatisticReport
  * End:
  */
 
-?>
+
