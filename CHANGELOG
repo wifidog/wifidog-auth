@@ -1,3 +1,6 @@
+2006-04-01 François Proulx <francois.proulx@gmail.com>
+	* Dumped initial schema from working install
+	
 2006-03-27 Benoit Grégoire  <bock@step.polymtl.ca>
 	* dump_initial_data_postgres.sh:  Add the content_available_display_pages table to the dump, can someone re-generate the initial data from a working install
 	* Remove the ?> tags from all the classes.

@@ -134,6 +134,29 @@ INSERT INTO content_available_display_areas (display_area) VALUES ('left_area_to
 -- PostgreSQL database dump complete
 --
 
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'UNICODE';
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for Name: content_available_display_pages; Type: TABLE DATA; Schema: public; Owner: wifidog
+--
+
+INSERT INTO content_available_display_pages (display_page) VALUES ('login');
+INSERT INTO content_available_display_pages (display_page) VALUES ('portal');
+INSERT INTO content_available_display_pages (display_page) VALUES ('everywhere');
+
+
+--
+-- PostgreSQL database dump complete
+--
+
 INSERT INTO networks (network_id, is_default_network, network_authenticator_class, network_authenticator_params) VALUES ('default-network', true, 'AuthenticatorLocalUser', '\'default-network\'');
 INSERT INTO nodes (network_id, node_id, name) VALUES ('default-network', 'default', 'Unknown node');
 --
