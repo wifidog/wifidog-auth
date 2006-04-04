@@ -102,7 +102,7 @@ class IFrame extends Content
      *
      * @access private
      */
-    private function getUrl()
+    protected function getUrl()
     {
         return $this->iframe_row['url'];
     }
@@ -116,7 +116,7 @@ class IFrame extends Content
      *
      * @access private
      */
-    private function setUrl($url)
+    protected function setUrl($url)
     {
         $url = $this->mDb->escapeString($url);
         $this->mDb->execSqlUpdate("UPDATE content_iframe SET url = '{$url}' WHERE iframes_id = '{$this->getId()}';");
