@@ -50,7 +50,7 @@ if (!empty ($_REQUEST['file_id']))
 {
     global $db;
     $file_id = $db->escapeString($_REQUEST['file_id']);
-    $sql = "SELECT * FROM files WHERE files_id = '$file_id'";
+    $sql = "SELECT * FROM content_file WHERE files_id = '$file_id'";
     $db->execSqlUniqueRes($sql, $file_row, false);
 
     if ($file_row && $file_row['data_blob'])
