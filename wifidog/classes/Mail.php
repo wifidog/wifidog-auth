@@ -49,6 +49,10 @@
  * @author     Francois Proulx <francois.proulx@gmail.com>
  * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
  */
+
+require_once('include/class.phpmailer.php');
+require_once('include/class.smtp.php');
+
 class Mail
 {
 	/**
@@ -307,21 +311,32 @@ class Mail
 	 */
 	public function send()
 	{
-        if ($this->getRecipientName() != "") {
-            $headers  = "To: \"" . $this->getRecipientName() . "\" <" . $this->getRecipientEmail() . ">\r\n";
-	    }
+        $mail = new PHPMailer();
+        $mail->CharSet = "utf-8";
+        
+        $mail->Mailer = EMAIL_MAILER;        
+        if (EMAIL_MAILER == 'smtp') {
+            $mail->Host = EMAIL_HOST;
+            $mail->SMTPAuth = EMAIL_AUTH;
 
-		$headers  = "From: \"" . $this->getSenderName() . "\" <" . $this->getSenderEmail() . ">\r\n";
-		$headers .= "Reply-To: " . $this->getSenderEmail() . "\r\n";
-		$headers .= "Content-Type: text/plain; charset=utf-8";
+            if (EMAIL_AUTH) {
+                $mail->Username = EMAIL_USERNAME;
+                $mail->Password = EMAIL_PASSWORD;
+            }
+        }
+        
+        $mail->AddAddress($this->getRecipientEmail(), $this->getRecipientName());
+        $mail->From = $this->getSenderEmail();
+        $mail->FromName = $this->getSenderName();
+        $mail->Sender = $this->getSenderEmail(); // add Sender Name
+        $mail->Subject = $this->getMessageSubject();
+        $mail->Body = $this->getMessageBody();
 
-		if (defined("WIFIDOG_NAME")) {
-		  $headers .= "\r\n" . "X-Mailer: " . WIFIDOG_NAME . defined("WIFIDOG_VERSION") ? "/" . WIFIDOG_VERSION : "";
-		}
-
-		$args = "-f" . $this->getSenderEmail();
-
-		return mail($this->getRecipientEmail(), $this->getMessageSubject(), $this->getMessageBody(), $headers, $args);
+        $result = $mail->Send();
+        if (!$result) {
+            print $mail->ErrorInfo;
+        }
+        return $result;
 	}
 
 	/**

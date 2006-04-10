@@ -322,6 +322,23 @@ define('DEFAULT_NODE_ID', 'default');
 // By default, logging is enabled, to file tmp/wifidog.log.
 // define('WIFIDOG_LOGFILE', 'tmp/wifidog.log');
 
+ /**
+  * Email configuration
+  * ===============================
+  *
+  * Internal configuration values for WiFiDog - don't touch!
+  */
+
+define('EMAIL_MAILER', 'mail'); // "mail", "sendmail", or "smtp"
+  
+// Valid only for SMTP
+define('EMAIL_HOST', '');
+define('EMAIL_AUTH', false);
+
+// Valid if EMAIL_AUTH is true
+define('EMAIL_USERNAME', '');
+define('EMAIL_PASSWORD', '');
+
 /**
  * In case this is the local.config.php you should remove the next lines.
  */
