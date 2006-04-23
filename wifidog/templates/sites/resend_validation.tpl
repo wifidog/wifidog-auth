@@ -58,10 +58,10 @@
         <h1>{"I'm having difficulties"|_}:</h1>
 
         <ul>
-            <li><a href="{$base_ssl_path}lost_username.php">{"I Forgot my username"|_}</a></li>
-            <li><a href="{$base_ssl_path}lost_password.php">{"I Forgot my password"|_}</a></li>
-            <li><a href="{$base_ssl_path}resend_validation.php">{"Re-send the validation email"|_}</a></li>
-            <li><a href="{$base_ssl_path}faq.php">{"Frequently asked questions"|_}</a></li>
+            <li><a href="{$system_path}lost_username.php">{"I Forgot my username"|_}</a></li>
+            <li><a href="{$system_path}lost_password.php">{"I Forgot my password"|_}</a></li>
+            <li><a href="{$system_path}resend_validation.php">{"Re-send the validation email"|_}</a></li>
+            <li><a href="{$system_path}faq.php">{"Frequently asked questions"|_}</a></li>
         </ul>
     </div>
 {*
@@ -76,7 +76,8 @@
     <fieldset class="pretty_fieldset">
         <legend>{"Re-send validation email"|_}</legend>
 
-        <form name="form">
+        <form name="form" method="post" onsubmit="return false" action="{$base_ssl_path}resend_validation.php">
+		<input type="hidden" name="form_request" value="resend_validation">
             {if $SelectNetworkUI}
                 {$SelectNetworkUI}
             {/if}
@@ -84,28 +85,52 @@
             <table>
                 <tr>
                     <th>{"Your username"|_}:</th>
-                    <td><input type="text" name="username" value="{$username}" size="20" id="form_username"></td>
+                    <td><input type="text" name="username" value="{$username}" size="20" id="form_username" onkeypress="return focusNext(this.form, 'form_submit', event)"></td>
                 </tr>
                 <tr>
                     <th></th>
-                    <td><input class="submit" type="submit" name="submit" value="{"Re-send"|_}"></td>
+                    <td><input class="submit" type="submit" name="form_submit" value="{"Re-send"|_}" onclick="if (validateForm(this.form)) this.form.submit()"></td>
                 </tr>
             </table>
         </form>
     </fieldset>
 
     <div id="help">
-        {if $error}
-            <div class="errormsg">{$error}</div>
-        {else}
-            {"Please enter your username and the validation email will be resent to your email address"|_}.
-        {/if}
+	{"Please enter your username and the validation email will be resent to your email address"|_}.
     </div>
 
+	<div id="form_errormsg" class="errormsg">
+	{if $error}
+		{$error}
+	{/if}
+	</div>
+
     <script type="text/javascript">
-        <!--
-            document.getElementById("form_username").focus();
-        //-->
+	<!--
+        {literal}
+		var messages = {
+        {/literal}
+		  username_required: "{'Username is required.'|_}",
+		  username_invalid: "{'Username contains invalid characters.'|_}",
+        {literal}
+		};
+
+		document.getElementById("form_username").focus();
+
+		function validateForm(form) {
+		  if (!isValidUsername(form.username)) {
+			if (isEmpty(form.username))
+			  document.getElementById("form_errormsg").innerHTML = messages.username_required;
+			else
+			  document.getElementById("form_errormsg").innerHTML = messages.username_invalid;
+
+			return false;
+		  }
+
+		  return true;
+		}
+		{/literal}
+	//-->
     </script>
 {*
     END section MAINCONTENT

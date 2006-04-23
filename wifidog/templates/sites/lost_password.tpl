@@ -58,10 +58,10 @@
         <h1>{"I'm having difficulties"|_}:</h1>
 
         <ul>
-            <li><a href="{$base_ssl_path}lost_username.php">{"I Forgot my username"|_}</a></li>
-            <li><a href="{$base_ssl_path}lost_password.php">{"I Forgot my password"|_}</a></li>
-            <li><a href="{$base_ssl_path}resend_validation.php">{"Re-send the validation email"|_}</a></li>
-            <li><a href="{$base_ssl_path}faq.php">{"Frequently asked questions"|_}</a></li>
+            <li><a href="{$system_path}lost_username.php">{"I Forgot my username"|_}</a></li>
+            <li><a href="{$system_path}lost_password.php">{"I Forgot my password"|_}</a></li>
+            <li><a href="{$system_path}resend_validation.php">{"Re-send the validation email"|_}</a></li>
+            <li><a href="{$system_path}faq.php">{"Frequently asked questions"|_}</a></li>
         </ul>
     </div>
 {*
@@ -76,7 +76,8 @@
     <fieldset class="pretty_fieldset">
        <legend>{"Lost password"|_}</legend>
 
-        <form name="form" method="post">
+        <form name="form" method="post" onsubmit="return false" action="{$base_ssl_path}lost_password.php">
+		<input type="hidden" name="form_request" value="lost_password">
             {if $SelectNetworkUI}
                 {$SelectNetworkUI}
             {/if}
@@ -84,32 +85,75 @@
             <table>
                 <tr>
                     <th>{"Your username"|_}:</th>
-                    <td><input type="text" name="username" value="{$username}" size="20" id="form_username"></td>
+                    <td><input type="text" name="username" value="{$username}" size="20" id="form_username" onkeypress="return focusNext(this.form, 'email', event)"></td>
                 </tr>
                 <tr>
                     <th>{"Your email address"|_}:</th>
-                    <td><input type="text" name="email" value="{$email}" size="20"></td>
+                    <td><input type="text" name="email" value="{$email}" size="20" onkeypress="return focusNext(this.form, 'form_submit', event)"></td>
                 </tr>
                 <tr>
                     <th></th>
-                    <td><input class="submit" type="submit" name="submit" value="{"Reset my password"|_}"></td>
+                    <td><input class="submit" type="submit" name="form_submit" value="{"Reset my password"|_}" onclick="if (validateForm(this.form)) this.form.submit()"></td>
                 </tr>
             </table>
         </form>
     </fieldset>
 
     <div id="help">
-        {if $error}
-            <div class="errormsg">{$error}</div>
-        {else}
-            {"Please enter your username or email address to reset your password"|_}.
-        {/if}
+    {"Please enter your username or email address to reset your password"|_}.
     </div>
 
+    <div id="form_errormsg" class="errormsg">
+    {if $error}
+		{$error}
+	{/if}
+	</div>
+
     <script type="text/javascript">
-        <!--
-            document.getElementById("form_username").focus();
-        //-->
+    <!--
+        {literal}
+		var messages = {
+        {/literal}
+		  username_required: "{'Please specify a username or email address'|_}",
+		  username_invalid: "{'Username contains invalid characters.'|_}",
+		  email_invalid: "{'The email address must be valid (i.e. user@domain.com). Please understand that we also black-listed various temporary-email-address providers.'|_}"
+        {literal}
+		};
+
+        document.getElementById("form_username").focus();
+
+		function validateForm(form) {
+		  if (!isValidUsername(form.username)) {
+			if (isEmpty(form.username)) {
+			  if (isEmpty(form.email)) {
+				// username and email cannot both be empty
+				document.getElementById("form_errormsg").innerHTML = messages.username_required;
+				return false;
+			  }
+			}
+			else {
+			  document.getElementById("form_errormsg").innerHTML = messages.username_invalid;
+			  return false;
+			}
+		  }
+
+		  if (!isValidEmail(form.email)) {
+			if (isNotEmpty(form.email)) {
+			  document.getElementById("form_errormsg").innerHTML = messages.email_invalid;
+			  return false;
+			}
+			else if (isEmpty(form.username)) {
+			  // username and email cannot both be empty
+			  document.getElementById("form_errormsg").innerHTML = messages.username_required;
+			  return false;
+			}
+		  }
+
+		  return true;
+		}
+
+		{/literal}
+    //-->
     </script>
 {*
     END section MAINCONTENT

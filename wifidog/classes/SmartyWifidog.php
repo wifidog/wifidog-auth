@@ -120,6 +120,7 @@ class SmartyWifidog extends Smarty {
 
 /* Useful stuff from config.php */
 
+	$this->assign('system_path', SYSTEM_PATH);
 	$this->assign('base_url_path', BASE_URL_PATH);
 	$this->assign('base_ssl_path', BASE_SSL_PATH);
     $this->assign('base_non_ssl_path', BASE_NON_SSL_PATH);

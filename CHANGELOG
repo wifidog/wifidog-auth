@@ -1,3 +1,14 @@
+2006-04-17 Rob Janes <janes.rob@gmail.com>
+	* javascript for validating and navigating forms.
+	* help text (untranslated).
+	* EVENT_LOGGING enabling/disabling flag.
+	* use SYSTEM_PATH instead of BASE_URL_PATH and BASE_SSL_PATH where ever appropriate.
+	* standardize Smarty variables for Network and User info by adding assignSmartyValues($smarty, $self) to Network and User.
+	* change_password only allowed if logged in.
+	* non-superadmin can only use change_password to change their own password.
+	* superadmin can use change_password to change any user password by entering in their password for the old password.
+	* page_header div defined and positioned in MainUI
+
 2006-04-04 Benoit Grégoire  <bock@step.polymtl.ca>
 	* /classes/Content/IFrame/IFrame.php: Change a few methods from private to protected as the private methods broke IFrameRest
 

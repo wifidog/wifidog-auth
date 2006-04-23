@@ -51,19 +51,19 @@ define('BASE_NON_SSL_PATH', 'http://'.$_SERVER['SERVER_NAME'].SYSTEM_PATH);
 
 //echo "<pre>";print_r($_SERVER);echo "</pre>";
 
-$curent_url = 'http';
+$current_url = 'http';
 if ($_SERVER['SERVER_PORT'] == '443') {
-    $curent_url .= 's';
+    $current_url .= 's';
 }
-$curent_url .= '://'.$_SERVER['HTTP_HOST'];
+$current_url .= '://'.$_SERVER['HTTP_HOST'];
 if ($_SERVER['SERVER_PORT'] != 80 && $_SERVER['SERVER_PORT'] != 443)
-    $curent_url .= ':'.$_SERVER['SERVER_PORT'];
-$curent_url .= $_SERVER['REQUEST_URI'];
+    $current_url .= ':'.$_SERVER['SERVER_PORT'];
+$current_url .= $_SERVER['REQUEST_URI'];
 
 /**
  * Define current request URL
  */
-define('CURRENT_REQUEST_URL', $curent_url);
+define('CURRENT_REQUEST_URL', $current_url);
 
 if (SSL_AVAILABLE) {
     /**
@@ -81,20 +81,21 @@ else {
 }
 
 /* If we actually ARE in SSL mode, make all URLS http:// to avoid security warnings. */
-if (isset ($_SERVER['HTTPS'])) {
-    /**
-     * Define base web address to use (this time using SLL)
-     */
-    define('BASE_URL_PATH', BASE_SSL_PATH);
-}
-else {
+// no no no just use the SYSTEM_PATH ... use /login/index.php rather than http://auth.wirelesstoronto.ca/login/index.php
+// if (isset ($_SERVER['HTTPS'])) {
+//    /**
+//     * Define base web address to use (this time using SLL)
+//     */
+//    define('BASE_URL_PATH', BASE_SSL_PATH);
+// }
+// else {
     /**
      * Define base web address to use
      *
      * @ignore
      */
     define('BASE_URL_PATH', BASE_NON_SSL_PATH);
-}
+// }
 
 /**
  * Define URLs
@@ -117,12 +118,16 @@ if (empty ($_REQUEST['gw_id'])) {
 /**
  * Define URLs
  */
-define('NODE_CONTENT_URL', BASE_URL_PATH.LOCAL_CONTENT_REL_PATH.CURRENT_NODE_ID.'/');
+// define('NODE_CONTENT_URL', BASE_URL_PATH.LOCAL_CONTENT_REL_PATH.CURRENT_NODE_ID.'/');
+define('NODE_CONTENT_URL', SYSTEM_PATH.LOCAL_CONTENT_REL_PATH.CURRENT_NODE_ID.'/');
 define('NODE_CONTENT_PHP_RELATIVE_PATH', LOCAL_CONTENT_REL_PATH.CURRENT_NODE_ID.'/');
 
-define('COMMON_CONTENT_URL', BASE_URL_PATH.LOCAL_CONTENT_REL_PATH.'common/');
+// define('COMMON_CONTENT_URL', BASE_URL_PATH.LOCAL_CONTENT_REL_PATH.'common/');
+define('COMMON_CONTENT_URL', SYSTEM_PATH.LOCAL_CONTENT_REL_PATH.'common/');
 
-define('GENERIC_OBJECT_ADMIN_ABS_HREF', BASE_URL_PATH.'admin/generic_object_admin.php');
-define('CONTENT_ADMIN_ABS_HREF', BASE_URL_PATH.'admin/content_admin.php');
+// define('GENERIC_OBJECT_ADMIN_ABS_HREF', BASE_URL_PATH.'admin/generic_object_admin.php');
+define('GENERIC_OBJECT_ADMIN_ABS_HREF', SYSTEM_PATH.'admin/generic_object_admin.php');
+// define('CONTENT_ADMIN_ABS_HREF', BASE_URL_PATH.'admin/content_admin.php');
+define('CONTENT_ADMIN_ABS_HREF', SYSTEM_PATH.'admin/content_admin.php');
 
 ?>

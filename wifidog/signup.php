@@ -160,7 +160,7 @@ $smarty->assign('auth_sources', "");
 $smarty->assign('selected_auth_source', "");
 $smarty->assign('SelectNetworkUI', "");
 
-if (isset ($_REQUEST["submit"])) {
+if (isset ($_REQUEST["form_request"]) && $_REQUEST["form_request"] == "signup") {
     // Secure entered values
     $username = trim($_REQUEST['username']);
     $email = trim($_REQUEST['email']);
@@ -220,28 +220,33 @@ if (isset ($_REQUEST["submit"])) {
         $created_user = User::createUser(get_guid(), $username, $network, $email, $password);
         $created_user->sendValidationEmail();
 
+		// Authenticate this new user automatically
+		$errmsg = "";
+		$authenticated_user = $network->getAuthenticator()->login($username, $password, $errmsg);
+
+		// While in validation period, alert user that he should validate his account ASAP
+		$validationMsgHtml = "<div id='warning_message_area'>\n";
+		$validationMsgHtml .= _("An email with confirmation instructions was sent to your email address.");
+		$validationMsgHtml .= sprintf(_("Your account has been granted %s minutes of access to retrieve your email and validate your account."), ($network->getValidationGraceTime() / 60));
+		$validationMsgHtml .= _('You may now open a browser window or start your email client and go to any remote Internet address to obtain the validation email.');
+		$validationMsgHtml .= "</div>\n";
+
         // If the user is at a REAL hotspot, give him his sign-up minutes right away
         $gw_id = $session->get(SESS_GW_ID_VAR);
         $gw_address = $session->get(SESS_GW_ADDRESS_VAR);
         $gw_port = $session->get(SESS_GW_PORT_VAR);
 
         if ($gw_id && $gw_address && $gw_port) {
-            // Init values
-            $errmsg = "";
-
-            // Authenticate this new user automatically
-            $authenticated_user = $network->getAuthenticator()->login($username, $password, $errmsg);
-
             // Make sure the user IDs match
             if(($created_user->getId() == $authenticated_user->getId())) {
                 $token = $created_user->generateConnectionToken();
 
-                header("Location: http://" . $gw_address . ":" . $gw_port . "/wifidog/auth?token=" . $token);
+                $redirURL = "http://" . $gw_address . ":" . $gw_port . "/wifidog/auth?token=" . $token;
             } else {
-                header("Location: " . BASE_NON_SSL_PATH);
+                $redirURL = BASE_NON_SSL_PATH;
             }
-        } else {
-            $smarty->assign('message', _('An email with confirmation instructions was sent to your email address.  Your account has been granted 15 minutes of access to retrieve your email and validate your account.  You may now open a browser window and go to any remote Internet address to obtain the login page.'));
+
+			MainUI::redirect($redirURL, 0);
         }
 
         // Compile HTML code
@@ -251,8 +256,13 @@ if (isset ($_REQUEST["submit"])) {
          * Render output
          */
         $ui = new MainUI();
+
         $ui->appendContent('left_area_middle', $html);
         $ui->appendContent('main_area_middle', $html_body);
+
+		// $ui->appendContent('page_header', $validationMsgHtml);
+		$ui->appendContent('main_area_top', $validationMsgHtml);
+
         $ui->display();
 
         // We're done ...
@@ -275,6 +285,17 @@ if (isset ($_REQUEST["submit"])) {
 /*
  * Tool content
  */
+
+if (isset ($_REQUEST["form_request"]) && $_REQUEST["form_request"] == "login") {
+    $username = trim($_REQUEST['username']);
+	if (strpos($username, "@") === false)
+		$smarty->assign('username', $username);
+	else {
+		$email = $username;
+		$username = "";
+		$smarty->assign('email', $email);
+	}
+}
 
 // Set section of Smarty template
 $smarty->assign('sectionTOOLCONTENT', true);

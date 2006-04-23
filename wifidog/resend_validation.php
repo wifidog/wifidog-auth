@@ -65,13 +65,14 @@ $smarty->assign('sectionTOOLCONTENT', false);
 $smarty->assign('sectionMAINCONTENT', false);
 
 // Init ALL smarty values
+$smarty->assign('username', "");
 $smarty->assign('message', "");
 $smarty->assign('error', "");
 $smarty->assign('auth_sources', "");
 $smarty->assign('selected_auth_source', "");
 $smarty->assign('SelectNetworkUI', "");
 
-if (isset($_REQUEST["submit"])) {
+if (isset($_REQUEST["form_request"])) {
     $account_origin = Network::getObject($_REQUEST['auth_source']);
 
     try {

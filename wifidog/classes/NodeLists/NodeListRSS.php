@@ -246,7 +246,7 @@ class NodeListRSS {
         $_docs->appendChild($_textNode);
 
         // image
-        if (file_exists(WIFIDOG_ABS_FILE_PATH . "local_content/common/" . NETWORK_LOGO_NAME)) {
+        if (defined('NETWORK_LOGO_NAME') && file_exists(WIFIDOG_ABS_FILE_PATH . "local_content/common/" . constant('NETWORK_LOGO_NAME'))) {
             $_image = $this->_xmldoc->createElement("image");
             $_channel->appendChild($_image);
 
@@ -319,9 +319,9 @@ class NodeListRSS {
                 // Hotspot global status
                 if ($_node->getDeploymentStatus() != 'NON_WIFIDOG_NODE') {
                     if ($_nodeData['is_up'] == 't') {
-                        $_descriptionText .= "<img src='" . BASE_URL_PATH . "images/HotspotStatus/up.gif' alt='' />";
+                        $_descriptionText .= "<img src='" . SYSTEM_PATH . "images/HotspotStatus/up.gif' alt='' />";
                     } else {
-                        $_descriptionText .= "<img src='" . BASE_URL_PATH . "images/HotspotStatus/down.gif' alt='' />";
+                        $_descriptionText .= "<img src='" . SYSTEM_PATH . "images/HotspotStatus/down.gif' alt='' />";
                     }
                 }
 

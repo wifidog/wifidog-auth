@@ -71,7 +71,10 @@ $smarty->assign('auth_sources', "");
 $smarty->assign('selected_auth_source', "");
 $smarty->assign('SelectNetworkUI', "");
 
-if (isset($_REQUEST['submit'])) {
+$smarty->assign('username', "");
+$smarty->assign('email', "");
+
+if (isset($_REQUEST['form_request'])) {
     $account_origin = Network::getObject($_REQUEST['auth_source']);
 
     try {

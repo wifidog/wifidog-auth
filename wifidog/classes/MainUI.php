@@ -129,6 +129,8 @@ class MainUI {
      */
     private $footer_scripts = array ();
 
+	private $shrink_left_area = false;
+
     /**
      * Contructor
      *
@@ -205,6 +207,10 @@ class MainUI {
         $this->title = $title_string;
     }
 
+    public function shrinkLeftArea() {
+		$this->shrink_left_area = true;
+	}
+
     /**
      * Set the class name of the <body> of the resulting page.
      *
@@ -279,15 +285,10 @@ class MainUI {
                     $_sqlAdditionalWhere = "";
 
                     // Init ALL smarty values
-                    $this->smarty->assign('isSuperAdmin', false);
-                    $this->smarty->assign('isOwner', false);
+					User::assignSmartyValues($this->smarty, $_currentUser);
                     $this->smarty->assign('formAction', "");
                     $this->smarty->assign('nodeUI', "");
                     $this->smarty->assign('networkUI', "");
-
-                    // Define user security levels for the template
-                    $this->smarty->assign('isSuperAdmin', $_currentUser && $_currentUser->isSuperAdmin());
-                    $this->smarty->assign('isOwner', $_currentUser && $_currentUser->isOwner());
 
                     /*
                      * If the user is super admin OR owner of at least one node
@@ -358,21 +359,18 @@ class MainUI {
                 // Get information about user
                 $_currentUser = User :: getCurrentUser();
 
-                // Init ALL smarty values
-                $this->smarty->assign('networkHomepageURL', "");
-                $this->smarty->assign('networkName', "");
-                $this->smarty->assign('isValidUser', false);
-                $this->smarty->assign('username', "");
+				User::assignSmartyValues($this->smarty, $_currentUser);
+
                 $this->smarty->assign('logoutParameters', "");
                 $this->smarty->assign('loginParameters', "");
                 $this->smarty->assign('formAction', "");
                 $this->smarty->assign('toolContent', "");
                 $this->smarty->assign('accountInformation', "");
                 $this->smarty->assign('techSupportInformation', "");
+                $this->smarty->assign('shrinkLeftArea', $this->shrink_left_area);
 
                 // Provide Smarty with information about the network
-                $this->smarty->assign('networkHomepageURL', Network :: getCurrentNetwork()->getHomepageURL());
-                $this->smarty->assign('networkName', Network :: getCurrentNetwork()->getName());
+				Network::assignSmartyValues($this->smarty);
 
                 /*
                  * Provide Smarty information about the user's login/logout status
@@ -380,10 +378,6 @@ class MainUI {
 
                 if ($_currentUser != null) {
                     // User is logged in
-                    $this->smarty->assign('isValidUser', true);
-
-                    // Set username for Smarty
-                    $this->smarty->assign('username', $_currentUser->getUsername());
 
                     // Detect gateway information
                     $_gwId = $session->get(SESS_GW_ID_VAR);
@@ -446,7 +440,7 @@ class MainUI {
      * @return void
      *
      * @access public
-     * @internal Uses a few request parameters to displaty debug information.
+     * @internal Uses a few request parameters to display debug information.
      * If $_REQUEST['debug_request'] is present, it will print out the
      * $_REQUEST array at the top of the page.
      */
@@ -459,8 +453,8 @@ class MainUI {
         $this->smarty->assign('title', "");
         $this->smarty->assign('stylesheetURL', "");
         $this->smarty->assign('stylesheetParsedFile', "");
-        $this->smarty->assign('isSuperAdmin', false);
-        $this->smarty->assign('isOwner', false);
+        // $this->smarty->assign('isSuperAdmin', false);
+        // $this->smarty->assign('isOwner', false);
         $this->smarty->assign('debugRequested', false);
         $this->smarty->assign('debugOutput', "");
         $this->smarty->assign('footerScripts', array ());
@@ -495,17 +489,9 @@ class MainUI {
          */
 
         // Get information about user
-        $_currentUser = User :: getCurrentUser();
+		User::assignSmartyValues($this->smarty);
 
-        // Define user security levels for the template
-        $this->smarty->assign('isSuperAdmin', $_currentUser && $_currentUser->isSuperAdmin());
-        $this->smarty->assign('isOwner', $_currentUser && $_currentUser->isOwner());
-
-        if (isset ($_REQUEST['debug_request']) && ($_currentUser && $_currentUser->isSuperAdmin())) {
-            // Tell Smarty everything it needs to know
-            $this->smarty->assign('debugRequested', true);
-            $this->smarty->assign('debugOutput', print_r($_REQUEST, true));
-        }
+		$this->appendContent('page_header', $this->customBanner());
 
         /*
          * Build tool pane if it has been enabled
@@ -536,8 +522,8 @@ class MainUI {
      * @access public
      */
     function displayError($errmsg, $show_tech_support_email = true) {
-            // Init ALL smarty values
-    $this->smarty->assign("error", "");
+        // Init ALL smarty values
+    	$this->smarty->assign("error", "");
         $this->smarty->assign("show_tech_support_email", false);
         $this->smarty->assign("tech_support_email", "");
 
@@ -558,6 +544,34 @@ class MainUI {
         $this->display();
     }
 
+	static public function redirect($redirect_url, $redirect_to_title=null, $timeout=60) {
+		if (!$redirect_to_title) {
+			$network = Network :: getCurrentNetwork();
+			$redirect_to_title = $network ? sprintf(_("%s Login"), $network->getName()) : _("Login");
+		}
+
+		header("Location: $redirect_url");
+		echo "<html>\n" .
+			"<head><meta http-equiv='Refresh' content='$timeout; URL=$redirect_url'/></head>\n".
+			"<body>\n" .
+			"<noscript>\n" .
+			"<span style='display:none;'>\n" .
+			"<h1>" . $redirect_to_title . "</h1>\n" .
+			sprintf(_("Click <a href='%s'>here</a> to continue"), $redirect_url) . "<br/>\n" .
+			_("The transfer from secure login back to regular http may cause a warning.") . "\n" .
+  			"</span>\n" .
+			"</noscript>\n" .
+			"</body>\n" .
+			"</html>\n"
+			;
+		exit;
+	}
+
+	public function customBanner() {
+		$custom_banner = '';
+
+		return $custom_banner;
+	}
 }
 
 /*

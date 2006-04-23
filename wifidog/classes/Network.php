@@ -1626,6 +1626,19 @@ class Network implements GenericObject
 		$this->__construct($this->id);
 	}
 
+	public static function assignSmartyValues($smarty, $net=null) {
+		if (!$net) $net = Network::getCurrentNetwork();
+
+		$smarty->assign('networkName', $net ? $net->getName() : '');
+		$smarty->assign('networkHomepageURL', $net ? $net->getHomepageURL() : '');
+		// Set networks usage information
+		$smarty->assign('networkNumValidUsers', $net ? $net->getNumValidUsers() : 0);
+		$smarty->assign('networkNumOnlineUsers', $net ? $net->getNumOnlineUsers() : 0);
+
+		// Set networks node information
+		$smarty->assign('networkNumDeployedNodes', $net ? $net->getNumDeployedNodes() : 0);
+		$smarty->assign('networkNumOnlineNodes', $net ? $net->getNumOnlineNodes() : 0);
+	}
 }
 
 /*

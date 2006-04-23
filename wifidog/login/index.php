@@ -39,6 +39,25 @@
  * The login page will both display the login page, and process login and logout
  * request.
  *
+ * Hotspots redirect newly active PCs to this page with this url:
+ * Refering to the wifidog.conf installed on the hotspot:
+ *
+ * {PROTOCOL}://{HOSTNAME}:{PORT}{PATH}login?gw_address=A&gw_port=P&gw_id=I&url=URL
+ *
+ * PROTOCOL, HOSTNAME, PORT and PATH refer to the settings for the hotspot's
+ * currently selected authserver.
+ * PROTOCOL http or https if SSLAvailable is yes for the hotspot's current authserver
+ * HOSTNAME Hostname of the current authserver
+ * PORT is HTTPPort or SSLPort of the current authserver
+ * PATH is the Path of the current authserver.  PATH starts and ends with a /
+ *
+ * gw_address is GatewayAddress from the config file
+ * gw_port is GatewayPort
+ * gw_id is GatewayID, is node id
+ * url is the original url requested but redirected here by the hotspot wifidog
+ *
+ * http://auth.wirelesstoronto.ca:80/login?gw_address=207.50.119.2&gw_port=2060&gw_id=215&url=http://hotmail.com
+ *
  * @package    WiFiDogAuthServer
  * @author     Benoit Gregoire <bock@step.polymtl.ca>
  * @author     Max Horvath <max.horvath@maxspot.de>
@@ -59,6 +78,7 @@ require_once('classes/Node.php');
 require_once('classes/User.php');
 require_once('classes/Network.php');
 require_once('classes/MainUI.php');
+// require_once('lib/magpie/rss_fetch.inc'); // Added so RSS code which depends on the Magpie RSS functions will work. //
 
 // Init values
 $continueToAdmin = false;
@@ -68,6 +88,8 @@ $gw_address = null;
 $gw_port = null;
 $gw_id = null;
 $logout = null;
+
+$create_a_free_account = _("Create a free account");
 
 /*
  * General request parameter processing section
@@ -100,6 +122,11 @@ if (isset($_REQUEST["logout"])) {
     $logout = $_REQUEST['logout'];
 }
 
+if (isset($_REQUEST["form_signup"]) && $_REQUEST["form_signup"] == $create_a_free_account) {
+	MainUI::redirect(SYSTEM_PATH . "signup.php");
+	exit;
+}
+
 /*
  * Store original URL typed by user
  */
@@ -118,8 +145,6 @@ if (!empty($_REQUEST['origin']) && $_REQUEST['origin'] == "admin") {
 if (!empty($gw_id)) {
     try {
         $node = Node::getObject($gw_id);
-        $hotspot_name = $node->getName();
-        $network = $node->getNetwork();
     }
 
     catch (Exception $e) {
@@ -127,10 +152,12 @@ if (!empty($gw_id)) {
         $ui->displayError($e->getMessage());
         exit;
     }
+
+	$network = $node->getNetwork();
 } else {
     // Gateway ID is not set ... virtual login
     $network = Network::getCurrentNetwork();
-    $node = null;
+    $node = Node::getObject('default');
 }
 
 /**
@@ -159,35 +186,31 @@ if (!empty($node) && $node->isSplashOnly()) {
 /*
  * Normal login process
  */
-if (!empty($username) && !empty($password)) {
-    // Init values
-    $errmsg = '';
-    // Authenticating the user through the selected auth source.
-    $network = Network::processSelectNetworkUI('auth_source');
+if (isset ($_REQUEST["form_request"]) && $_REQUEST["form_request"] == "login") {
+	if (!empty($username) && !empty($password)) {
+		// Init values
+		$errmsg = '';
+		// Authenticating the user through the selected auth source.
+		$network = Network::processSelectNetworkUI('auth_source');
 
-    $user = $network->getAuthenticator()->login($username, $password, $errmsg);
+		$user = $network->getAuthenticator()->login($username, $password, $errmsg);
 
-    if ($user != null) {
-        if (!empty($gw_address) && !empty($gw_port)) {
-            // Login from a gateway, redirect to the gateway to activate the token
-            $token = $user->generateConnectionToken();
+		if ($user != null) {
+			if (!empty($gw_address) && !empty($gw_port)) {
+				// Login from a gateway, redirect to the gateway to activate the token
+				$token = $user->generateConnectionToken();
 
-            header("Location: http://" . $gw_address . ":" . $gw_port . "/wifidog/auth?token=" . $token);
-        } else {
-            // Virtual login, redirect to the auth server homepage
-            header("Location: " . BASE_SSL_PATH . ($continueToAdmin ? "admin/" : ""));
-        }
+				header("Location: http://" . $gw_address . ":" . $gw_port . "/wifidog/auth?token=" . $token);
+			} else {
+				// Virtual login, redirect to the auth server homepage
+				header("Location: " . BASE_SSL_PATH . ($continueToAdmin ? "admin/" : ""));
+			}
 
-        exit;
-    } else {
-        $error = $errmsg;
-    }
-} else {
-    /*
-     * Note that this is executed even when we have just arrived at the login
-     * page, so  the user is reminded to supply a username and password
-     */
-    $error = _('Your must specify your username and password');
+			exit;
+		} else {
+			$error = $errmsg;
+		}
+	}
 }
 
 /*
@@ -203,16 +226,6 @@ if ((!empty($logout) && $logout) && ($user = User::getCurrentUser()) != null) {
  * Start login interface section
  */
  
-// Init ALL smarty values
-$smarty->assign('node', null);
-$smarty->assign('gwAddress', null);
-$smarty->assign('gwPort', null);
-$smarty->assign('gwId', null);
-$smarty->assign('origin', null);
-$smarty->assign('selectNetworkUI', null);
-$smarty->assign('username', null);
-$smarty->assign('error', null);
-
 /*
  * Tool content
  */
@@ -224,9 +237,7 @@ $smarty->assign('gw_port', $gw_port);
 $smarty->assign('gw_id', $gw_id);
 
 // Check if user wanted to enter the administration interface
-if (!empty($_REQUEST['origin'])) {
-    $smarty->assign('origin', $_REQUEST['origin']);
-}
+$smarty->assign('origin', empty($_REQUEST['origin']) ? null : $_REQUEST['origin']);
 
 // Set network selector
 $smarty->assign('selectNetworkUI', Network::getSelectNetworkUI('auth_source'));
@@ -237,23 +248,21 @@ $smarty->assign('username', !empty($username) ? $username : "");
 // Set error message
 $smarty->assign('error', !empty($error) ? $error : null);
 
+$smarty->assign('create_a_free_account', $create_a_free_account);
+
 // Compile HTML code
 $html = $smarty->fetch("templates/sites/login.tpl");
 
-
-
-
 $ui = new MainUI();
-if($node)
-{
-$ui->setTitle(sprintf(_("%s login page for %s"),$network->getName(), $node->getName()));
-}
-else
-{
+if($node) {
+	$ui->setTitle(sprintf(_("%s login page for %s"), $network->getName(), $node->getName()));
+} else {
     $ui->setTitle(_("Offsite login page"));
 }
 $ui->setPageName('login');
+$ui->shrinkLeftArea();
 $ui->appendContent('left_area_middle', $html);
+
 /*
  * Main content
  */
@@ -289,6 +298,25 @@ if ($content_rows) {
 }
 }
 
+$ui->appendContent('main_area_middle',
+	"\n<h1>" . sprintf(_("Welcome to the %s Hotspot network."), $network->getName()) . "</h1>\n" .
+
+	"<p>" .
+	_("Please use the login/signup form on the left to activate your connection with the internet.") .
+	"</p>\n".
+
+	"<p>" .
+	_("If you already have an account please use that to login.") . " " .
+	_("Thanks to the hospitality of your proprietor, this is a surfing free zone.") . " " .
+	_("Once you login you are welcome to use the internet as long as you like.") .
+	"</p>\n" .
+
+	"<p>" .
+	sprintf(_("If you are new to %s, please use the form on the left to create a new account."), $network->getName()) . " " .
+	_("There will be no charge for this service.") .
+	"</p>\n"
+);
+
 /*
  * Render output
  */
@@ -301,3 +329,5 @@ $ui->display();
  * c-hanging-comment-ender-p: nil
  * End:
  */
+
+?>

@@ -1610,7 +1610,7 @@ msgstr ""
 "aktualisiert zu werden."
 
 #: ../login/index.php:124 ../login/index.php:125 ../login/index.php:197
-msgid "Your must specify your username and password"
+msgid "You must specify your username and password"
 msgstr "Sie müssen ihren Benutzernamen und ihr Passwort angeben"
 
 #: ../login/index.php:148 ../login/index.php:149 smarty.txt:113 smarty.txt:135

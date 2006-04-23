@@ -3096,7 +3096,7 @@ msgstr "Votre adresse de courriel doit &ecirc;tre valide afin que votre compte p
 #: ../login/index.php:124
 #: ../login/index.php:125
 #: ../login/index.php:197
-msgid "Your must specify your username and password"
+msgid "You must specify your username and password"
 msgstr "Veuillez entrer un nom d'usager et un mot de passe"
 
 #: smarty.txt:5

@@ -52,8 +52,11 @@
 *}
     <div id="login_form">
         <ul>
-            <li><a href="{$base_ssl_path}change_password.php">{"Change password"|_}</a></li>
-            <li><a href="{$base_ssl_path}faq.php">{"I have trouble connecting and I would like some help"|_}</a></li>
+			{if $isValidUser}
+            <li><a href="{$system_path}change_password.php">{"Change password"|_}</a></li>
+			{else}
+            <li><a href="{$system_path}faq.php">{"I have trouble connecting and I would like some help"|_}</a></li>
+			{/if}
         </ul>
     </div>
 {*
@@ -98,11 +101,11 @@
 
     <ul>
         {if $googleMapsEnabled && !$userIsAtHotspot}
-            <li><a href="{$base_non_ssl_path}hotspots_map.php">{"Deployed HotSpots map"|_}</a></li>
+            <li><a href="{$system_path}hotspots_map.php">{"Deployed HotSpots map"|_}</a></li>
         {/if}
-        <li><a href="{$base_ssl_path}hotspot_status.php">{"Deployed HotSpots status with coordinates"|_}</a></li>
-        <li><a href="{$base_ssl_path}node_list.php">{"Full node technical status (includes non-deployed nodes)"|_}</a></li>
-        <li><a href="{$base_ssl_path}admin/index.php">{"Administration"|_}</a></li>
+        <li><a href="{$system_path}hotspot_status.php">{"Deployed HotSpots status with coordinates"|_}</a></li>
+        <li><a href="{$system_path}node_list.php">{"Full node technical status (includes non-deployed nodes)"|_}</a></li>
+        <li><a href="{$system_path}admin/index.php">{"Administration"|_}</a></li>
     </ul>
 {*
     END section MAINCONTENT

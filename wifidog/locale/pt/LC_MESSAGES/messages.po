@@ -2565,7 +2565,7 @@ msgstr ""
 "ativada"
 
 #: ../login/index.php:124 ../login/index.php:125 ../login/index.php:197
-msgid "Your must specify your username and password"
+msgid "You must specify your username and password"
 msgstr "Voc&ecirc; precisa especificar seu usu&aacute;rio e senha"
 
 #: smarty.txt:5 smarty.txt:6

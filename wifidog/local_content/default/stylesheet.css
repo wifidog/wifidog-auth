@@ -10,19 +10,19 @@
 {literal}
 .bodyBackColor {
 {/literal}
- 	background : #dbffa8 url({$base_url_path}images/bg_body.gif) repeat-x fixed 0px 0px;
+ 	background : #dbffa8 url({$system_path}images/bg_body.gif) repeat-x fixed 0px 0px;
 {literal}
 }
 
 div.navigation {
 {/literal}
-	background-image: url({$base_url_path}images/01_nav.gif);
+	background-image: url({$system_path}images/01_nav.gif);
 {literal}
 }
 
 div.avis{
 {/literal}
-	background-image: url({$base_url_path}images/03_avis.gif);
+	background-image: url({$system_path}images/03_avis.gif);
 {literal}
 }
 {/literal}

@@ -71,10 +71,12 @@ require_once('path_defines_base.php');
  */
 require_once('classes/EventLogging.php');
 
-EventLogging::SetupErrorHandling( "strict~/var:\sDeprecated/(off)",
-								  array( 'print' => new PrintChannel(new HTMLFormatter(), 'warning,notice', null, true),
-										 'debug' => new PrintChannel(new HTMLCommentsFormatter(), '=debug', null, false) )
-								  );
+if (!defined('EVENT_LOGGING') || constant('EVENT_LOGGING')) {
+	EventLogging::SetupErrorHandling( "strict~/var:\sDeprecated/(off)",
+									  array( 'print' => new PrintChannel(new HTMLFormatter(), 'warning,notice', null, true),
+											 'debug' => new PrintChannel(new HTMLCommentsFormatter(), '=debug', null, false) )
+									  );
+}
 require_once('classes/AbstractDb.php');
 require_once('classes/Locale.php');
 require_once('classes/Dependencies.php');
@@ -370,14 +372,16 @@ class WifidogSyslogFormatter extends EventFormatter {
   }
 }
 
-$myLogfile = !defined('WIFIDOG_LOGFILE') ? "tmp/wifidog.log" : constant('WIFIDOG_LOGFILE');
-if (!empty($myLogfile)) {
-	if (substr($myLogfile,0,1) != '/') $myLogfile = WIFIDOG_ABS_FILE_PATH.$myLogfile;
+if (!defined('EVENT_LOGGING') || constant('EVENT_LOGGING')) {
+	$myLogfile = !defined('WIFIDOG_LOGFILE') ? "tmp/wifidog.log" : constant('WIFIDOG_LOGFILE');
+	if (!empty($myLogfile)) {
+		if (substr($myLogfile,0,1) != '/') $myLogfile = WIFIDOG_ABS_FILE_PATH.$myLogfile;
 	
-	EventLogging::stAddChannel( new FileChannel($myLogfile, new WifidogSyslogFormatter(), 'warning,notice'), 'logfile' );
-}
+		EventLogging::stAddChannel( new FileChannel($myLogfile, new WifidogSyslogFormatter(), 'warning,notice'), 'logfile' );
+	}
 
-// trigger_error("here i am", E_USER_NOTICE);
+	// trigger_error("here i am", E_USER_NOTICE);
+}
 
 /*
  * Local variables:

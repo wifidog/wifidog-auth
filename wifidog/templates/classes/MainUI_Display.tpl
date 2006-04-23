@@ -59,6 +59,7 @@
         <title>{$title}</title>
 
 		<link rel="stylesheet" type="text/css" href="{$stylesheetURL}">
+		<script src="{$system_path}js/formutils.js"></script>
 
         <style type="text/css">
             {include file="$stylesheetParsedFile"}
@@ -70,6 +71,9 @@
         	<div class='page_header'>
             {if $debugRequested}
             	<pre>{$debugOutput}</pre>
+        	{/if}
+			{if !empty($contentArray.page_header)}
+				{$contentArray.page_header}
         	{/if}
         	</div>
     	{/if} 

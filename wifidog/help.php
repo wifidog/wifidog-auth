@@ -34,76 +34,30 @@
 // +-------------------------------------------------------------------+
 
 /**
- * WiFiDog Authentication Server home page
+ * FAQ page
  *
  * @package    WiFiDogAuthServer
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
- * @copyright  2006 Max Horvath, maxspot GmbH
- * @version    Subversion $Id$
+ * @author     Philippe April
+ * @copyright  2005-2006 Philippe April
+ * @version    Subversion $Id: faq.php 1009 2006-03-28 08:08:08Z benoitg $
  * @link       http://www.wifidog.org/
  */
 
 /**
- * Don't change the first require_once() as we didn't add WiFiDogs installation
- * path to the global include_path variable of PHP, yet!
+ * Load required files
  */
 require_once(dirname(__FILE__) . '/include/common.php');
 
 require_once('include/common_interface.php');
 require_once('classes/MainUI.php');
 require_once('classes/Network.php');
-require_once('classes/Node.php');
-require_once('classes/User.php');
 
-// Init ALL smarty SWITCH values
-$smarty->assign('sectionTOOLCONTENT', false);
-$smarty->assign('sectionMAINCONTENT', false);
+Network::assignSmartyValues($smarty);
+$smarty->assign('read_the_faq',
+	sprintf('Read the <a href="%sfaq.php">faq</a> document for more information.', SYSTEM_PATH));
 
-// Init ALL smarty values
-$smarty->assign('googleMapsEnabled', false);
-
-// Get information about network
-$network = Network::getCurrentNetwork();
-Network::assignSmartyValues($smarty, $network);
-
-// Get information about user
-User::assignSmartyValues($smarty);
-
-/*
- * Tool content
- */
-
-// Set section of Smarty template
-$smarty->assign('sectionTOOLCONTENT', true);
-
-// Compile HTML code
-$html = $smarty->fetch("templates/sites/index.tpl");
-
-/*
- * Main content
- */
-
-// Reset ALL smarty SWITCH values
-$smarty->assign('sectionTOOLCONTENT', false);
-$smarty->assign('sectionMAINCONTENT', false);
-
-// Set section of Smarty template
-$smarty->assign('sectionMAINCONTENT', true);
-
-// Set Google maps information
-$smarty->assign('googleMapsEnabled', defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED);
-
-// Compile HTML code
-$html_body = $smarty->fetch("templates/sites/index.tpl");
-
-/*
- * Render output
- */
 $ui = new MainUI();
-$ui->appendContent('left_area_middle', $html);
-$ui->appendContent('main_area_middle', $html_body);
+$ui->appendContent('main_area_middle', $smarty->fetch("templates/sites/help.tpl"));
 $ui->display();
 
 /*

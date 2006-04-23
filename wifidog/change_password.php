@@ -54,16 +54,42 @@ require_once('classes/MainUI.php');
 require_once('include/common_interface.php');
 require_once('classes/User.php');
 
-isset($_REQUEST["username"]) && $smarty->assign("username", $_REQUEST["username"]);
+$smarty->assign('error', '');
 
-if (isset($_REQUEST["submit"])) {
+$smarty->assign('username', '');
+$smarty->assign('oldpassword', '');
+$smarty->assign('newpassword', '');
+$smarty->assign('newpassword_again', '');
+
+$user = User::getCurrentUser();
+if ($user) {
+	User::assignSmartyValues($smarty, $user);
+
+	if ($user->isSuperAdmin() && isset($_REQUEST['username'])) {
+		$smarty->assign('username', $_REQUEST['username']);
+		$username = $_REQUEST['username'];
+	}
+	else
+		$username = $user->getUsername();
+
+	// $user->getEmail();
+	// $user->getRealName();
+	// $user->getWebsiteURL();
+	// $user->isSuperAdmin();
+	// $user->isOwner();
+}
+else {
+	$smarty->assign('error', _("You must login before you can change your password."));
+}
+
+if ($user && isset($_REQUEST["form_request"])) {
     try {
         // If the source is present and that it's in our, save it to a var for later use
         $account_origin = Network::getObject($_REQUEST['auth_source']);
 
         if (!$account_origin || !$_REQUEST["username"] || !$_REQUEST["oldpassword"] || !$_REQUEST["newpassword"] || !$_REQUEST["newpassword_again"])
             throw new Exception(_('You MUST fill in all the fields.'));
-        $username = $db->escapeString(trim($_REQUEST['username']));
+
         $current_password = $db->escapeString(trim($_REQUEST['oldpassword']));
         $new_password = $db->escapeString(trim($_REQUEST['newpassword']));
 
@@ -74,15 +100,39 @@ if (isset($_REQUEST["submit"])) {
             throw new Exception(_("Passwords do not match."));
 
         // Warning for now, password change only works for local users, registered through our signup process.
-        $user = User::getUserByUsernameAndOrigin($username, $account_origin);
-        if ($user->getPasswordHash() != User::passwordHash($current_password))
-            throw new Exception(_("Wrong password."));
+		if ($username == $user->getUsername()) {
+			$victim = $user;
 
-        $user->SetPassword($new_password);
+			if ($victim->getPasswordHash() != User::passwordHash($current_password))
+				throw new Exception(_("Wrong password."));
+
+			$victim->setPassword($new_password);
+			$smarty->assign("message", _("Your password has been changed succesfully."));
+		}
+		else {
+			if ($user->isSuperAdmin()) {
+				$username =  $db->escapeString(trim($_REQUEST['username']));
+				$victim = User::getUserByUsernameAndOrigin($username, $account_origin);
+
+				if (!$victim)
+					throw new Exception(sprintf(_('Sorry, user %s does not exist !'), $username));
+
+				if ($victim->getPasswordHash() != User::passwordHash($current_password)
+					&& $user->getPasswordHash() != User::passwordHash($current_password))
+					throw new Exception(_("Wrong password."));
+
+				$victim->setPassword($new_password);
+				$smarty->assign("message", sprintf(_('The password for %s has been successfully changed.'), $username));
+			}
+			else {
+				throw new Exception(_('Sorry, invalid change password request !'));
+			}
+		}
+
         $ui = new MainUI();
-        $smarty->assign("message", _("Your password has been changed succesfully."));
         $ui->appendContent('main_area_middle', $smarty->fetch("templates/sites/validate.tpl"));
         $ui->display();
+
         exit;
     } catch (Exception $e) {
         $smarty->assign("error", $e->getMessage());

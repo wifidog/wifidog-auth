@@ -809,6 +809,28 @@ class User implements GenericObject
       $this->__construct($this->id);
     }
 
+    /** Set Smarty template values.  Standardization routine. */
+	public static function assignSmartyValues($smarty, $user=null) {
+		if (!$user) $user = User::getCurrentUser();
+		$smarty->assign('username', $user ? $user->getUsername() : '');
+
+		/**
+		 * Define user security levels for the template
+		 *
+		 * These values are used in the default template of WiFoDog but could be
+		 * used in a customized template to restrict certain links to specific
+		 * user access levels.
+		 */
+		$smarty->assign('isValidUser', $user ? true : false);
+		$smarty->assign('isSuperAdmin', $user && $user->isSuperAdmin());
+		$smarty->assign('isOwner', $user && $user->isOwner());
+
+        if (isset ($_REQUEST['debug_request']) && ($user && $user->isSuperAdmin())) {
+            // Tell Smarty everything it needs to know
+            $smarty->assign('debugRequested', true);
+            $smarty->assign('debugOutput', print_r($_REQUEST, true));
+        }
+	}
 }
 
 /*

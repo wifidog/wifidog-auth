@@ -47,12 +47,11 @@
 *}
 
     <div id="login_form">
-        <h1><a href="{$base_ssl_path}signup.php">{"Create a free account"|_}</a></h1>
-
-        <h1>{"I already have an account"|_}:</h1>
+        <h1>{"Login or Signup here"|_}:</h1>
 
         <p class="indent">
-            <form name="login_form" method="post">
+            <form name="login_form" method="post" onsubmit="return false" action="{$base_ssl_path}login/index.php">
+			<input type="hidden" name="form_request" value="login">
                 {if $node != null}
                     <input type="hidden" name="gw_address" value="{$gw_address}">
                     <input type="hidden" name="gw_port" value="{$gw_port}">
@@ -65,30 +64,83 @@
                 {$selectNetworkUI}<br>
 
                 {"Username (or email)"|_}:<br>
-                <input type="text" name="username" value="{$username}" size="20" id="form_username"><br>
+                <input type="text" name="username" value="{$username}" size="20" id="form_username" onkeypress="return focusNext(this.form, 'password', event)"><br>
                 {"Password"|_}:<br>
-                <input type="password" name="password" size="20"><br>
+                <input type="password" name="password" size="20" id="form_password" onkeypress="return focusNext(this.form, 'form_submit', event)"><br>
 
-                {if $error != null}
-                    <div class="errormsg">{$error}</div>
-                {/if}
+                <div id="form_errormsg" class="errormsg">
+				{if $error == null}
+				  &nbsp;
+				{else}
+				  {$error}
+				{/if}
+				</div>
 
-                <input class="submit" type="submit" name="submit" value="{"Login"|_}">
+                <input class="submit" type="button" name="form_submit" value="{"Login"|_}" onclick="if (validateForm(this.form)) this.form.submit()">
+				&nbsp;
+                <input class="submit" type="button" name="form_signup" value="{$create_a_free_account}" onclick="this.form.action='{$base_ssl_path}signup.php'; this.form.submit()">
             </form>
         </p>
+
+		<div id="help">
+		{"You must specify your username and password"|_}.
+		</div>
 
         <h1>{"I'm having difficulties"|_}:</h1>
 
         <ul>
-            <li><a href="{$base_ssl_path}lost_username.php">{"I Forgot my username"|_}</a></li>
-            <li><a href="{$base_ssl_path}lost_password.php">{"I Forgot my password"|_}</a></li>
-            <li><a href="{$base_ssl_path}resend_validation.php">{"Re-send the validation email"|_}</a></li>
-            <li><a href="{$base_ssl_path}faq.php">{"Frequently asked questions"|_}</a></li>
+            <li><a href="{$system_path}lost_username.php">{"I Forgot my username"|_}</a></li>
+            <li><a href="{$system_path}lost_password.php">{"I Forgot my password"|_}</a></li>
+            <li><a href="{$system_path}resend_validation.php">{"Re-send the validation email"|_}</a></li>
+            <li><a href="{$system_path}faq.php">{"Frequently asked questions"|_}</a></li>
         </ul>
     </div>
 
     <script type="text/javascript">
         <!--
-            document.getElementById("form_username").focus();
+		{literal}
+		var messages = {
+		{/literal}
+		  empty_form: "{"You must specify your username and password"|_}",
+		  username_required: "{'Username is required.'|_}",
+		  username_invalid: "{'Username contains invalid characters.'|_}",
+		  email_invalid: "{'A valid email address is required.'|_}",
+		  password_empty: "{'A password of at least 6 characters is required.'|_}",
+		  password_invalid: "{'Password contains invalid characters.'|_}",
+		  password_short: "{'Password is too short, it must be 6 characters minimum'|_}"
+		{literal}
+		};
+
+		document.getElementById("form_username").focus();
+
+		function validateForm(form) {
+		  if (!isValidUsername(form.username)) {
+			if (isEmpty(form.username)) {
+			  document.getElementById("form_errormsg").innerHTML = messages.username_required;
+			  return false;
+			}
+			else {
+			  if (!isValidEmail(form.username)) {
+				document.getElementById("form_errormsg").innerHTML = messages.username_invalid;
+				return false;
+			  }
+			}
+		  }
+
+		  if (!isValidPassword(form.password)) {
+			if (isEmpty(form.password))
+			  document.getElementById("form_errormsg").innerHTML = messages.password_empty;
+			else if (form.password.value.length<6)
+			  document.getElementById("form_errormsg").innerHTML = messages.password_short;
+			else
+			  document.getElementById("form_errormsg").innerHTML = messages.password_invalid;
+
+			return false;
+		  }
+
+		  return true;
+		}
+
+		{/literal}
         //-->
     </script>
