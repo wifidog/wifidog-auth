@@ -545,7 +545,8 @@ class EventLogging {
     $eo = new EventObject($pException->getMessage());
     $eo->setFilename($pException->getFile());
     $eo->setLinenum($pException->getLine());
-    $eo->setContext($t = $pException->getTrace());
+    $t = $pException->getTrace();
+    $eo->setContext($t);
 
     self::stBroadcastEvent($eo);
   }
