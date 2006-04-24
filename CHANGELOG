@@ -1,3 +1,14 @@
+2006-04-24 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Revert Rob's SYSTEM_PATH change.  Sorry about that.  The devs spent hours to finally get the PATH
+	 stuff consistent and fixing the countless bugs that this process introduced. 
+	 Maybe some links still need to use BASE_URL_PATH instead of BASE_SSL_PATH,
+	(or vice-versa) but it was on purpose that SYSTEM_PATH was not made available to Smarty.  
+	We already have 3 defines to be used for links and html refs, that's enough
+	 BASE_SSL_PATH should be used to enter SSL mode (if available)
+ 	 BASE_NON_SSL_PATH should be used to break out of SSL mode of when we
+ 	 explicitely do not want someting to be referenced over http
+ 	 BASE_URL_PATH should be used in all other cases to avoid needless SSL warning
+	
 2006-04-17 Rob Janes <janes.rob@gmail.com>
 	* javascript for validating and navigating forms.
 	* help text (untranslated).

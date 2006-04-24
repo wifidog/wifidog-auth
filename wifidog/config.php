@@ -182,7 +182,7 @@ global $AVAIL_LOCALE_ARRAY;
 //                            'pt_PT' => 'Português');
 
 /**
- * Other linux distributions use locales like this:
+ * Other linux distributions (Ubuntu, Mandriva 10.1) use locales like this:
  */
 $AVAIL_LOCALE_ARRAY = array('fr_CA.UTF8' => 'Français',
                             'en_US.UTF8' => 'English',

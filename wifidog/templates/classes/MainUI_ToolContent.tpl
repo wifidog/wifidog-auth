@@ -54,18 +54,18 @@
             <span class="tool_user_info">
                 {if $isValidUser}
                     <p>{"Logged in as"|_}: {$username}</p>
-                    <a class="administration" href="{$system_path}user_profile.php"><img class="administration" src="{$system_path}images/profile.gif">{"My Profile"|_}</a>
-                    <a class="administration" href="{$system_path}login/?logout=true{$logoutParameters}"><img class="administration" src="{$system_path}images/logout.gif">{"Logout"|_}</a>
+                    <a class="administration" href="{$base_ssl_path}user_profile.php"><img class="administration" src="{$base_url_path}images/profile.gif">{"My Profile"|_}</a>
+                    <a class="administration" href="{$base_ssl_path}login/?logout=true{$logoutParameters}"><img class="administration" src="{$base_url_path}images/logout.gif">{"Logout"|_}</a>
                 {else}
 					{if !$shrinkLeftArea}
                     <p>
                         {"I am not logged in."|_}<br>
-                        <a href="{$system_path}login/{$loginParameters}">{"Login"|_}</a>
+                        <a href="{$base_ssl_path}login/{$loginParameters}">{"Login"|_}</a>
                     </p>
 					{/if}
 
-                    <a class="administration" href="{$networkHomepageURL}"><img class="administration" src="{$system_path}images/lien_ext.gif">{$networkName}</a>
-                    <a class="administration" href="{$system_path}faq.php"><img class="administration" src="{$system_path}images/where.gif">{"Where am I?"|_}</a>
+                    <a class="administration" href="{$networkHomepageURL}"><img class="administration" src="{$base_url_path}images/lien_ext.gif">{$networkName}</a>
+                    <a class="administration" href="{$base_url_path}faq.php"><img class="administration" src="{$base_url_path}images/where.gif">{"Where am I?"|_}</a>
                 {/if}
             </span>
         </div>

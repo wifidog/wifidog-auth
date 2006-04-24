@@ -72,7 +72,7 @@ function validate_schema()
     if (empty ($row)) {
         echo "<html><body>";
         echo "<h1>"._("Unable to retrieve schema version. The database schema is too old to be updated.")."</h1>";
-        echo "<h2>"._("Try running the")." <a href='" . SYSTEM_PATH . "install.php'>"._("installation script")."</a>.</h2>\n";
+        echo "<h2>"._("Try running the")." <a href='" . BASE_URL_PATH . "install.php'>"._("installation script")."</a>.</h2>\n";
         echo "</html></body>";
         exit ();
     } else {

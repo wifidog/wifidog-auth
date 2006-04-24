@@ -42,7 +42,13 @@
  * @link       http://www.wifidog.org/
  */
 
-/* This section deals with PATHs used in URLs and local content */
+/* This section deals with PATHs used in URLs and local content
+ * BASE_SSL_PATH should be used to enter SSL mode (if available)
+ * BASE_NON_SSL_PATH should be used to break out of SSL mode of when we
+ * explicitely do not want someting to be referenced over http
+ * BASE_URL_PATH should be used in all other cases to avoid needless SSL warning
+ * 
+ *   */
 
 /**
  * Define base web address without SLL
@@ -80,22 +86,28 @@ else {
     define('BASE_SSL_PATH', BASE_NON_SSL_PATH);
 }
 
-/* If we actually ARE in SSL mode, make all URLS http:// to avoid security warnings. */
-// no no no just use the SYSTEM_PATH ... use /login/index.php rather than http://auth.wirelesstoronto.ca/login/index.php
-// if (isset ($_SERVER['HTTPS'])) {
-//    /**
-//     * Define base web address to use (this time using SLL)
-//     */
-//    define('BASE_URL_PATH', BASE_SSL_PATH);
-// }
-// else {
+/* If we actually ARE in SSL mode, make all URLS https:// to avoid security warnings. */
+ if (isset ($_SERVER['HTTPS'])) {
+    /**
+     * Define base web address to use (this time using SLL)
+     */
+    define('BASE_URL_PATH', BASE_SSL_PATH);
+ }
+ else {
     /**
      * Define base web address to use
      *
      * @ignore
      */
     define('BASE_URL_PATH', BASE_NON_SSL_PATH);
-// }
+ }
+
+
+/***************************************************************************************************
+ *  NOTE:  This stuff has to go elsewhere or be removed as part of the layout system refactoring.   
+ * benoitg, 24/04/2006 
+ * ***************************************************************************************/
+
 
 /**
  * Define URLs

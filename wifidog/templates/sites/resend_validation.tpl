@@ -58,10 +58,10 @@
         <h1>{"I'm having difficulties"|_}:</h1>
 
         <ul>
-            <li><a href="{$system_path}lost_username.php">{"I Forgot my username"|_}</a></li>
-            <li><a href="{$system_path}lost_password.php">{"I Forgot my password"|_}</a></li>
-            <li><a href="{$system_path}resend_validation.php">{"Re-send the validation email"|_}</a></li>
-            <li><a href="{$system_path}faq.php">{"Frequently asked questions"|_}</a></li>
+            <li><a href="{$base_url_path}lost_username.php">{"I Forgot my username"|_}</a></li>
+            <li><a href="{$base_url_path}lost_password.php">{"I Forgot my password"|_}</a></li>
+            <li><a href="{$base_url_path}resend_validation.php">{"Re-send the validation email"|_}</a></li>
+            <li><a href="{$base_url_path}faq.php">{"Frequently asked questions"|_}</a></li>
         </ul>
     </div>
 {*

@@ -123,7 +123,7 @@ if (isset($_REQUEST["logout"])) {
 }
 
 if (isset($_REQUEST["form_signup"]) && $_REQUEST["form_signup"] == $create_a_free_account) {
-	MainUI::redirect(SYSTEM_PATH . "signup.php");
+	MainUI::redirect(BASE_URL_PATH . "signup.php");
 	exit;
 }
 

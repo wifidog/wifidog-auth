@@ -56,10 +56,10 @@
 
                 <div class="admin_section_data">
                     <ul>
-                        <li><a href="{$system_path}admin/user_log.php">{"User logs"|_}</a></li>
-                        <li><a href="{$system_path}admin/online_users.php">{"Online Users"|_}</a></li>
-                        <li><a href="{$system_path}admin/stats.php">{"Statistics"|_}</a></li>
-                        <li><a href="{$system_path}admin/import_user_database.php">{"Import NoCat user database"|_}</a></li>
+                        <li><a href="{$base_url_path}admin/user_log.php">{"User logs"|_}</a></li>
+                        <li><a href="{$base_url_path}admin/online_users.php">{"Online Users"|_}</a></li>
+                        <li><a href="{$base_url_path}admin/stats.php">{"Statistics"|_}</a></li>
+                        <li><a href="{$base_url_path}admin/import_user_database.php">{"Import NoCat user database"|_}</a></li>
                     </ul>
                 </div>
             </div>
@@ -86,8 +86,8 @@
 
                 <div class="admin_section_data">
                     <ul>
-                        <li><a href="{$system_path}admin/generic_object_admin.php?object_class=Node&action=list">{"Nodes"|_}</a></li>
-                        <li><a href="{$system_path}admin/generic_object_admin.php?object_class=Node&action=new_ui">{"Add new Node"|_}</a></li>
+                        <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Node&action=list">{"Nodes"|_}</a></li>
+                        <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Node&action=new_ui">{"Add new Node"|_}</a></li>
                     </ul>
                 </div>
             {/if}
@@ -99,7 +99,7 @@
 
                 <div class="admin_section_data">
                     <ul>
-                        <li><a href="{$system_path}admin/generic_object_admin.php?object_class=Network&action=list">{"Networks"|_}</a></li>
+                        <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Network&action=list">{"Networks"|_}</a></li>
                     </ul>
                 </div>
             </div>
@@ -109,8 +109,8 @@
 
                 <div class="admin_section_data">
                     <ul>
-                        <li><a href="{$system_path}admin/generic_object_admin.php?object_class=Server&action=list">{"Servers"|_}</a></li>
-                        <li><a href="{$system_path}admin/generic_object_admin.php?object_class=Content&action=list">{"Content"|_}</a></li>
+                        <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Server&action=list">{"Servers"|_}</a></li>
+                        <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Content&action=list">{"Content"|_}</a></li>
                     </ul>
                 </div>
             </div>
