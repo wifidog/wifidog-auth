@@ -169,7 +169,7 @@ class AuthenticatorLDAP extends Authenticator
     			ldap_set_option($connect, LDAP_OPT_PROTOCOL_VERSION, 3);
 
     			// bind to ldap connection
-    			if (strlen(trim($mldap_rdn)) == 0) {
+                if (strlen(trim($this->mldap_rdn)) == 0) {
     				if (($bind = @ldap_bind($connect)) == false) {
     					$errmsg = _("Error while connecting to the LDAP server.");
     					return false;
@@ -183,7 +183,7 @@ class AuthenticatorLDAP extends Authenticator
 
     			// search for user
     			if (($res_id = ldap_search($connect, "o=$o", "$f=$username")) == false)  {
-    				$errmsg = _("Error while obtaingin your LDAP information.");
+    				$errmsg = _("Error while obtaining your LDAP information.");
 
     				return false;
     			}

@@ -1,5 +1,8 @@
 2006-04-24 Benoit Grégoire  <bock@step.polymtl.ca>
-	* Major locale handling changes.  Hopefully abstract out the UTF8 problems once and for all, 
+	* AuthenticatorLDAP.php:  Merge patch from jguevara@unitec.edu.  Fixes #125
+
+2006-04-24 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Major system locale handling overhaull.  Hopefully abstract out the UTF8 problems once and for all, 
 	allowing everyone to define them the same way.  Fix a few bugs along the way.  
 	Should also be a little faster.
 
