@@ -67,15 +67,7 @@ Header("Content-Type: text/html; charset=utf-8");
 class Style
 {
   function Style() {
-    $session = new Session();
-    if (!empty($_REQUEST['lang']))
-      {
-        $session->set('SESS_LANGUAGE_VAR', $_REQUEST['lang']);
-      }
 
-    if ($session->get('SESS_LANGUAGE_VAR')) {
-        setlocale(LC_ALL, $session->get('SESS_LANGUAGE_VAR'));
-    }
   }
 
   /**Display HTML headers

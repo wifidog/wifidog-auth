@@ -370,7 +370,7 @@ class User implements GenericObject
       global $session;
       $locale = $this->mRow['prefered_locale'];
       if (empty($locale) && !empty($session))
-	$locale = $session->get('SESS_LANGUAGE_VAR');
+	$locale = $session->get(SESS_LANGUAGE_VAR);
       if (empty($locale))
 	$locale = DEFAULT_LANG;
       return $locale;

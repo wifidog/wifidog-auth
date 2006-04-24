@@ -1,4 +1,9 @@
 2006-04-24 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Major locale handling changes.  Hopefully abstract out the UTF8 problems once and for all, 
+	allowing everyone to define them the same way.  Fix a few bugs along the way.  
+	Should also be a little faster.
+
+2006-04-24 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Revert Rob's SYSTEM_PATH change.  Sorry about that.  The devs spent hours to finally get the PATH
 	 stuff consistent and fixing the countless bugs that this process introduced. 
 	 Maybe some links still need to use BASE_URL_PATH instead of BASE_SSL_PATH,

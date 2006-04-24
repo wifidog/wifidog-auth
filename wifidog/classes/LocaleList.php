@@ -130,7 +130,7 @@ class LocaleList {
         if ($user = User :: getCurrentUser()) {
             $locale = $user->getPreferedLocale();
         } else {
-            $locale = $session->get('SESS_LANGUAGE_VAR');
+            $locale = $session->get(SESS_LANGUAGE_VAR);
 
             if (empty ($locale)) {
                 $locale = DEFAULT_LANG;

@@ -47,10 +47,13 @@
 require_once('classes/Locale.php');
 
 if (!empty ($_REQUEST['wifidog_language'])) {
-    Locale::setCurrentLocale(Locale::getObject($_REQUEST['wifidog_language']));
+    
+            //echo "Setting to $_REQUEST[wifidog_language]<br/>";
+        $session->set(SESS_LANGUAGE_VAR, $_REQUEST['wifidog_language']);
 }
 
 $locale = Locale::getCurrentLocale();
+Locale::setCurrentLocale($locale);
 $locale_id = $locale->getId();
 
 if (isset ($smarty)) {

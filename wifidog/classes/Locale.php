@@ -127,6 +127,7 @@ class Locale {
         global $AVAIL_LOCALE_ARRAY;
         $object = null;
         $locale_id = $session->get(SESS_LANGUAGE_VAR);
+        //echo sprintf("Debug in /classes/Locale.php getCurrentLocale(): session->get(SESS_LANGUAGE_VAR)=%s", $session->get(SESS_LANGUAGE_VAR))."<br/>";
 
         /* Try to guess the lang */
         if (empty($locale_id) || empty($AVAIL_LOCALE_ARRAY[$locale_id])) {
@@ -136,10 +137,8 @@ class Locale {
         /* If we still don't have it, fill in default */
         if (empty ($locale_id)) {
             $object = self :: getObject(DEFAULT_LANG);
-            self :: setCurrentLocale($object);
         } else {
             $object = self :: getObject($locale_id);
-            self :: setCurrentLocale($object);
         }
 
         return $object;
@@ -212,48 +211,57 @@ class Locale {
 		// return array_shift(array_merge(array_intersect($browser_preferences, $availableLanguages), $availableLanguages));
 	}
 
-    /**
-     * @todo Don't trust the value in the cookie, verify that the value is in
-     * the AVAILABLE locales set in the config.
+    /** Initialise the system locale (gettext, setlocale, etc.)
      * @return boolean true on success, false on failure.
      */
     public static function setCurrentLocale($locale) {
         global $session;
+         global $AVAIL_LOCALE_ARRAY;
         $retval = false;
-
+ 
         // Get new locale ID, assume default if null
         if ($locale != null) {
             $locale_id = $locale->getId();
-            $session->set(SESS_LANGUAGE_VAR, $locale_id);
             $retval = true;
-            $q = "parm";
+            $q = "parameter";
         } else {
             $locale_id = DEFAULT_LANG;
-            $session->set(SESS_LANGUAGE_VAR, $locale_id);
             $retval = false;
-            $q = "dflt";
+            $q = "default";
         }
+        //pretty_print_r($locale);
+        //echo sprintf("Debug in /classes/Locale.php setCurentLocale(): locale_id=%s", $locale_id)."<br/>";
 
         if (GETTEXT_AVAILABLE) {
+            $lang_only_locale_id = substr ($locale_id, 0 , 2);
+                   if(!isset($AVAIL_LOCALE_ARRAY[$locale_id]) && !isset($AVAIL_LOCALE_ARRAY[$lang_only_locale_id]))
+                   {
+                     echo srintf("Warning in /classes/Locale.php setCurentLocale: Neither %s or %s are available in AVAIL_LOCALE_ARRAY", $locale_id, $lang_only_locale_id)."<br/>";
+                   }
             // Try to set locale
-            $current_locale = setlocale(LC_ALL, $locale_id);
+            $candidate_locale_array[] = str_ireplace('.UTF8', '', $locale_id).'.UTF-8';
+            $candidate_locale_array[] = str_ireplace('.UTF8', '', $locale_id);
+            $candidate_locale_array[] = $lang_only_locale_id.'.UTF-8';
+            $candidate_locale_array[] = $lang_only_locale_id;
+
+             
+            $current_locale = setlocale(LC_ALL, $candidate_locale_array);
+               //echo sprintf("Warning in /classes/Locale.php setCurentLocale: Unable to setlocale() to %s: %s.  I tried %s, %s, %s, %s, and got return value: %s, current locale is: %s",$q, $locale_id, $candidate_locale_array[0], $candidate_locale_array[1], $candidate_locale_array[2], $candidate_locale_array[3], $current_locale, setlocale(LC_ALL, 0))."<br/>";
 
             // Test it against current PHP locale
-            if ($current_locale != $locale_id) {
-                echo "Warning in /classes/Locale.php setCurentLocale: Unable to setlocale() to ".$q.":".$locale_id.", return value: $current_locale, current locale: ".setlocale(LC_ALL, 0)."<br/>";
+            if (substr ($current_locale, 0 , 2) != $lang_only_locale_id) {
+                echo sprintf("Warning in /classes/Locale.php setCurentLocale: Unable to setlocale() to %s: %s.  I tried %s, %s, %s, %s, and got return value: %s, current locale is: %s",$q, $locale_id, $candidate_locale_array[0], $candidate_locale_array[1], $candidate_locale_array[2], $candidate_locale_array[3], $current_locale, setlocale(LC_ALL, 0))."<br/>";
                 $retval = false;
             } else {
                 bindtextdomain('messages', WIFIDOG_ABS_FILE_PATH . 'locale');
                 bind_textdomain_codeset('messages', 'UTF-8');
                 textDomain('messages');
 
-                putenv("LC_ALL=".$locale_id);
-                putenv("LANGUAGE=".$locale_id);
-                $session->set(SESS_LANGUAGE_VAR, $locale_id);
+                putenv("LC_ALL=".$current_locale);
+                putenv("LANGUAGE=".$current_locale);
                 $retval = true;
             }
         }
-
         return $retval;
     }
 

@@ -168,39 +168,34 @@ define('DATE_TIMEZONE', 'Canada/Eastern');
  */
 global $AVAIL_LOCALE_ARRAY;
 
-/*$AVAIL_LOCALE_ARRAY = array('fr' => 'Français',
-                            'en' => 'English',
-                            'de' => 'Deutsch',
-                            'pt' => 'Português');
-*/
-/**
- * A lot of linux distributions (Debian, BSD and Mac OS X) use locales like this:
- */
-//$AVAIL_LOCALE_ARRAY = array('fr_CA' => 'Français',
-//                            'en_US' => 'English',
-//                            'de_DE' => 'Deutsch',
-//                            'pt_PT' => 'Português');
 
 /**
- * Other linux distributions (Ubuntu, Mandriva 10.1) use locales like this:
+ * Array of available languages for the user.  Each entry must have:
+ * -The language code (the part before the _) be present in wifidog/locales
+ * -Have the entire locale available in your system locale
+ * OR
+ * -Have a system locale available with only the language (ex: an en locale).
+ * Note that if you specify en_UK and en_US, and have only en available the
+ * system will NOT warn you that both will have identical results.
+ * Note that even if your system uses locales like fr_CA.UTF8, you do not need
+ * to change this, ifidog will translate for you.
+ * @TODO:  Setting an array of only one entry should disable the language select
+ * box.
  */
-$AVAIL_LOCALE_ARRAY = array('fr_CA.UTF8' => 'Français',
-                            'en_US.UTF8' => 'English',
-                            'de_DE.UTF8' => 'Deutsch',
-                            'pt_PT.UTF8' => 'Português');
+$AVAIL_LOCALE_ARRAY = array('fr_CA' => 'Français',
+                            'en_US' => 'English',
+                            'de_DE' => 'Deutsch',
+                            'pt_PT' => 'Português');
 
 /**
  * Default language
  * ================
  *
- * Define the default language of the WiFiDOG auth server.
- *
- * Remember to change this value to a valid locale, i.e.:
- * - fr
- * - fr_CA
- * - fr_CA.UTF8
+ * Define the default language of the WiFiDOG auth server.  The language code
+ * (the part before the _) must be part of the array above (the country
+ * subcode may differ, and should be set to your country subcode)
  */
-define('DEFAULT_LANG', 'fr_CA.UTF8');
+define('DEFAULT_LANG', 'fr_CA');
 
 /********************************************************************\
  * WIFIDOG FEATURES CONFIGURATION                                   *
