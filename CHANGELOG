@@ -1,4 +1,7 @@
 2006-04-24 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Dependencies.php:  Small fix in case gettext isn't installed
+
+2006-04-24 Benoit Grégoire  <bock@step.polymtl.ca>
 	* AuthenticatorLDAP.php:  Merge patch from jguevara@unitec.edu.  Fixes #125
 
 2006-04-24 Benoit Grégoire  <bock@step.polymtl.ca>

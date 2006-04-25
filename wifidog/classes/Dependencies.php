@@ -42,7 +42,7 @@
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
-
+require_once ('classes/Locale.php');//Necessary in case gettext isn't defined
 /**
  * This class checks the existence of components required by WiFiDog.
  * Note that it implicitely depends on the defines in include/path_defines_base.php
