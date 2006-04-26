@@ -1,3 +1,8 @@
+2006-04-25 François Proulx <francois.proulx@gmail.com>
+	* Updated JavaScript code to work with Google Maps v2 API
+	* v2 will now provide full maps of European countries and is a bit faster
+	* Updated the schema accordingly with new GMaps values
+	
 2006-04-24 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Dependencies.php:  Small fix in case gettext isn't installed
 

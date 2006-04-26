@@ -96,7 +96,7 @@ $smarty->assign('isOwner', $currentUser && $currentUser->isOwner());
  */
 
 // Add Google Maps JavaScript (must set config values)
-$html_headers  = "<script src='http://maps.google.com/maps?file=api&v=1&key=" . Server::getCurrentServer()->getGoogleAPIKey() . "' type='text/javascript'></script>";
+$html_headers  = "<script src='http://maps.google.com/maps?file=api&amp;v=2&amp;&key=" . Server::getCurrentServer()->getGoogleAPIKey() . "' type='text/javascript'></script>";
 $html_headers .= "<script src='js/hotspots_status_map.js' type='text/javascript'></script>";
 
 /*

@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UNICODE';
+SET client_encoding = 'UTF8';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -10,12 +10,12 @@ SET client_min_messages = warning;
 -- Name: wifidog; Type: DATABASE; Schema: -; Owner: wifidog
 --
 
-CREATE DATABASE wifidog WITH TEMPLATE = template0 ENCODING = 'UNICODE';
+CREATE DATABASE wifidog WITH TEMPLATE = template0 ENCODING = 'UTF8';
 
 
 \connect wifidog
 
-SET client_encoding = 'UNICODE';
+SET client_encoding = 'UTF8';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -80,6 +80,8 @@ CREATE TABLE content (
 );
 
 
+SET default_with_oids = false;
+
 --
 -- Name: content_available_display_areas; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
@@ -88,6 +90,8 @@ CREATE TABLE content_available_display_areas (
     display_area text NOT NULL
 );
 
+
+SET default_with_oids = true;
 
 --
 -- Name: content_available_display_pages; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
@@ -336,7 +340,7 @@ CREATE TABLE networks (
     gmaps_initial_latitude numeric(16,6),
     gmaps_initial_longitude numeric(16,6),
     gmaps_initial_zoom_level integer,
-    gmaps_map_type text DEFAULT 'G_MAP_TYPE'::text NOT NULL,
+    gmaps_map_type text DEFAULT 'G_NORMAL_MAP'::text NOT NULL,
     CONSTRAINT networks_gmaps_map_type_check CHECK ((gmaps_map_type <> ''::text)),
     CONSTRAINT networks_name CHECK ((name <> ''::text)),
     CONSTRAINT networks_network_authenticator_class CHECK ((network_authenticator_class <> ''::text)),
@@ -430,6 +434,8 @@ CREATE TABLE schema_info (
 );
 
 
+SET default_with_oids = false;
+
 --
 -- Name: servers; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
@@ -446,6 +452,8 @@ CREATE TABLE servers (
     CONSTRAINT servers_name_check1 CHECK ((name <> ''::text))
 );
 
+
+SET default_with_oids = true;
 
 --
 -- Name: token_status; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 

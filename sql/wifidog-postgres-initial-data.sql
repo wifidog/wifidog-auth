@@ -4,7 +4,7 @@ BEGIN;
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UNICODE';
+SET client_encoding = 'UTF8';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -27,7 +27,7 @@ INSERT INTO token_status (token_status) VALUES ('USED');
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UNICODE';
+SET client_encoding = 'UTF8';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -81,7 +81,7 @@ INSERT INTO venue_types (venue_type) VALUES ('Wi-Fi Zone');
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UNICODE';
+SET client_encoding = 'UTF8';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -107,7 +107,7 @@ INSERT INTO node_deployment_status (node_deployment_status) VALUES ('TEMPORARILY
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UNICODE';
+SET client_encoding = 'UTF8';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -138,7 +138,7 @@ INSERT INTO content_available_display_areas (display_area) VALUES ('left_area_to
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UNICODE';
+SET client_encoding = 'UTF8';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -163,7 +163,7 @@ INSERT INTO nodes (network_id, node_id, name) VALUES ('default-network', 'defaul
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UNICODE';
+SET client_encoding = 'UTF8';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -173,7 +173,7 @@ SET search_path = public, pg_catalog;
 -- Data for Name: schema_info; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
-INSERT INTO schema_info (tag, value) VALUES ('schema_version', '38');
+INSERT INTO schema_info (tag, value) VALUES ('schema_version', '39');
 
 
 --
@@ -184,7 +184,7 @@ INSERT INTO schema_info (tag, value) VALUES ('schema_version', '38');
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UNICODE';
+SET client_encoding = 'UTF8';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 

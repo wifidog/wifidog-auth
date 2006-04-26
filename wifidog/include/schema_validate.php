@@ -46,7 +46,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 38);
+define('REQUIRED_SCHEMA_VERSION', 39);
 
 /**
  * Check that the database schema is up to date.  If it isn't, offer to update it.
@@ -841,11 +841,26 @@ function update_schema()
         
         $new_schema_version = 38;
         if ($schema_version < $new_schema_version) {
-        		printUpdateVersion($new_schema_version);
-        		$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+        	printUpdateVersion($new_schema_version);
+        	$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
          	$sql .= "UPDATE content_available_display_areas SET display_area='left_area_top' WHERE display_area='left_area-top';\n";
         }
-
+        
+        $new_schema_version = 39;
+        if ($schema_version < $new_schema_version) {
+        		printUpdateVersion($new_schema_version);
+        	$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+        	
+        	// Update to new Gmaps v2 constants
+         	$sql .= "ALTER TABLE networks ALTER COLUMN gmaps_map_type SET DEFAULT 'G_NORMAL_MAP'::text;\n";
+         	$sql .= "UPDATE networks SET gmaps_map_type='G_NORMAL_MAP' WHERE gmaps_map_type = 'G_MAP_TYPE'; \n";
+         	$sql .= "UPDATE networks SET gmaps_map_type='G_HYBRID_MAP' WHERE gmaps_map_type = 'G_HYBRID_TYPE'; \n";
+         	$sql .= "UPDATE networks SET gmaps_map_type='G_SATELLITE_MAP' WHERE gmaps_map_type = 'G_SATELLITE_TYPE'; \n";
+         	
+         	// Use formula given here : http://www.google.com/apis/maps/documentation/upgrade.html#Upgrade
+         	$sql .= "UPDATE networks SET gmaps_initial_zoom_level = 17 - gmaps_initial_zoom_level; \n";
+        }
+        
         $db->execSqlUpdate("BEGIN;\n$sql\nCOMMIT;\nVACUUM ANALYZE;\n", true);
         //$db->execSqlUpdate("BEGIN;\n$sql\nROLLBACK;\n", true);
 

@@ -839,13 +839,13 @@ class Network implements GenericObject
      * @static
      * @access public
      */
-	public static function getSelectGisMapType($user_prefix, $pre_selected_map_type = "G_MAP_TYPE")
+	public static function getSelectGisMapType($user_prefix, $pre_selected_map_type = "G_NORMAL_MAP")
 	{
 	    // Define globals
 		global $db;
 
 	    // Init values
-		$_map_types = array(array("G_MAP_TYPE", _("Map")), array("G_SATELLITE_TYPE", _("Satellite")), array("G_HYBRID_TYPE", _("Hybrid")));
+		$_map_types = array(array("G_NORMAL_MAP", _("Map")), array("G_SATELLITE_MAP", _("Satellite")), array("G_HYBRID_MAP", _("Hybrid")));
 
 		$_name = $user_prefix;
 

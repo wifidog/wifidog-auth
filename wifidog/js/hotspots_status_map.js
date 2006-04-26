@@ -58,7 +58,7 @@ function HotspotsMap(viewport, external_object_name, translations, server_path)
 
     if (GBrowserIsCompatible()) {
         // Create the map attribute
-        this.map = new GMap(document.getElementById(viewport));
+        this.map = new GMap2(document.getElementById(viewport));
         this.map.addControl(new GLargeMapControl());
         this.map.addControl(new GMapTypeControl());
 
@@ -297,20 +297,11 @@ HotspotsMap.prototype.loadHotspotsStatus = function()
 {
     // Make sure the source has been set
     if (this.xml_source != null) {
-        // Fool the async callback
+        // Drop the pointer to this in a global var for async needs
         var self = this;
-        var request = GXmlHttp.create();
-
-        // Download asynchronously the hotspots data
-        request.open("GET", this.xml_source, true);
-
-        // Once completed, start parsing
-        request.onreadystatechange = function() {
-            if (request.readyState == 4) {
-                self.parseHotspotsStatus(request.responseXML);
-            }
-        }
-        request.send(null);
+        GDownloadUrl(this.xml_source, function(data, responseCode) {
+        	self.parseHotspotsStatus(GXml.parse(data));
+		});
     } else {
         return false;
     }
@@ -405,7 +396,7 @@ HotspotsMap.prototype.setHotspotsInfoList = function(hotspots_info_list)
 
 HotspotsMap.prototype.setInitialPosition = function(lat, lng, zoom)
 {
-    this.map.centerAndZoom(new GPoint(lng, lat), zoom);
+    this.map.setCenter(new GLatLng(lat, lng), zoom);
 }
 
 HotspotsMap.prototype.setMapType = function(map_type)
