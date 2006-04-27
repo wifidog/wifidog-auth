@@ -255,7 +255,8 @@ case "list":
 
     case "Node":
         $newLongText = $addLongText;
-        $objectSelector = Node::getSelectNodeUI('object_id');
+        $objectSelector = Node::getSelectNodeUI('object_id',null,"table");
+        $displayEditButton = false;
         break;
 
     case "Network":

@@ -229,30 +229,56 @@ class Node implements GenericObject
 	* @param $sql_additional_where Addidional where conditions to restrict the candidate objects
 	* @return html markup
 	*/
-	public static function getSelectNodeUI($user_prefix, $sql_additional_where = null)
+	public static function getSelectNodeUI($user_prefix, $sql_additional_where = null,$type_interface = "select")
 	{
 		global $db;
 		$html = '';
 		$name = "{$user_prefix}";
-		$html .= _("Node: ");
-		$sql = "SELECT node_id, name from nodes WHERE 1=1 $sql_additional_where ORDER BY node_id";
+		$sql = "SELECT node_id, name, node_deployment_status, is_splash_only_node from nodes WHERE 1=1 $sql_additional_where ORDER BY node_id";
 		$node_rows = null;
 		$db->execSql($sql, $node_rows, false);
 		if ($node_rows != null)
 		{
-			// Naturally-sorting by node_id
 			Utils :: natsort2d($node_rows, "node_id");
-			$i = 0;
-			foreach ($node_rows as $node_row)
-			{
-				$tab[$i][0] = $node_row['node_id'];
-				$tab[$i][1] = $node_row['node_id'].": ".$node_row['name'];
-				$i ++;
+			if ($type_interface != "table") {
+				$html .= _("Node");
+				$html .=  ": ";
+				// Naturally-sorting by node_id
+				$i = 0;
+				foreach ($node_rows as $node_row)
+				{
+					$tab[$i][0] = $node_row['node_id'];
+					$tab[$i][1] = $node_row['node_id'].": ".$node_row['name'];
+					$i ++;
+				}
+				$html .= FormSelectGenerator :: generateFromArray($tab, null, $name, null, false);
+			} else {
+				$html .= "<fieldset class='pretty_fieldset'>\n\t<legend>Node List</legend>\n";
+				$html .= "\t<span class='node_admin'>Filter: <input type='text' maxlength='40' size='40' id='nodes_list_filter' name='nodes_list_filter' /></span>\n\t<br/>\n";
+				$html .= "\t<!--[if IE]><style type='text/css'>#node_list_div table.scrollable>tbody { height: 15px; }</style><![endif]-->\n";
+				$html .= "\t<script src='" . BASE_URL_PATH . "js/filtertable.js' type='text/javascript' language='javascript' charset='utf-8'></script>\n";
+				$html .= "\t<script src='" . BASE_URL_PATH . "js/sorttable.js' type='text/javascript' language='javascript' charset='utf-8'></script>\n";
+				$html .= "\t<div id='node_list_div' class='node_admin tableContainer'>\n";
+				$html .= "\t\t<table id='nodes_list' class='node_admin filterable scrollable sortable'>\n\n";
+				$html .= "\t\t\t<thead class='fixedHeader'>\n\t\t\t\t<tr class='nofilter'>\n\t\t\t\t\t<th>Node Name</th>\n\t\t\t\t\t<th>Node ID</th>\n\t\t\t\t\t<th>Deployment Status</th>\n\t\t\t\t</tr>\n\t\t\t</thead>\n\t\t\t<tbody>";
+				
+				$i = 0;
+				foreach ($node_rows as $node_row)
+				{
+					$href = GENERIC_OBJECT_ADMIN_ABS_HREF."?object_id={$node_row['node_id']}&object_class=Node&action=edit";
+					$html .= "\t\t\t\t<tr class='row' onclick=\"javascript:location.href='{$href}'\">\n\t\t\t\t\t<td>{$node_row['name']}<noscript>(<a href='{$href}'>edit</a>)</noscript></td>\n\t\t\t\t\t<td>{$node_row['node_id']}</td>\n\t\t\t\t\t<td>{$node_row['node_deployment_status']}</td>\n\t\t\t\t</tr>\n";
+				}
+				$html .= "\t\t\t</tbody>\n\t\t</table>\n";
+				$html .= "\t</div>\n";
+				$html .= "</fieldset>\n";
+				
 			}
-			$html .= FormSelectGenerator :: generateFromArray($tab, null, $name, null, false);
+		} else {
+			$html .= "<div class='warningmsg'>"._("Sorry, no nodes available in the database")."</div>\n";
 		}
 		return $html;
 	}
+	
 
 	/** Get the selected Network object.
 	 * @param $user_prefix A identifier provided by the programmer to recognise it's generated form
