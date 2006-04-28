@@ -1,3 +1,6 @@
+2006-04-28 François Proulx <francois.proulx@gmail.com>	
+	* Fixed error in initial data script
+	
 2006-04-28 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog/login/index.php: Correctly use DEFAULT_NODE_ID from config.php instead of hardcoded 'default'
 
