@@ -1,3 +1,6 @@
+2006-04-28 Benoit Grégoire  <bock@step.polymtl.ca>
+	* wifidog/login/index.php: Correctly use DEFAULT_NODE_ID from config.php instead of hardcoded 'default'
+
 2006-04-28 François Proulx <francois.proulx@gmail.com>
 	* Fixed initial_data schema script so that it adds a dummy server.
 	
