@@ -231,8 +231,8 @@ class NodeListHTML {
          */
         $this->_mainUI->setTitle(_("Hotspot list"));
         $this->_mainUI->SetHtmlHeader('<link rel="alternate" type="application/rss+xml" title="' . $this->_network->getName() . ": " . _("Newest Hotspots") . '" href="' . BASE_SSL_PATH . 'hotspot_status.php?format=RSS">');
-        $this->_mainUI->appendContent('left_area_middle', $_html);
-        $this->_mainUI->appendContent('main_area_middle', $_html_body);
+        $this->_mainUI->addContent('left_area_middle', $_html);
+        $this->_mainUI->addContent('main_area_middle', $_html_body);
 
         $this->_mainUI->display();
     }

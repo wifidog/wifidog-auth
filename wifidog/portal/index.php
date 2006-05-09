@@ -210,7 +210,7 @@ $tool_html = $smarty->fetch("templates/sites/portal.tpl");
 $ui = new MainUI();
 $ui->setTitle(sprintf(_("%s portal for %s"), $network->getName(), $node->getName()));
 $ui->setPageName('portal');
-$ui->appendContent('left_area_middle', $tool_html);
+$ui->addContent('left_area_middle', $tool_html);
 /*
  * Main content
  */
@@ -220,7 +220,7 @@ if ($current_user && $current_user->getAccountStatus() == ACCOUNT_STATUS_VALIDAT
     $validationMsgHtml .= _("An email with confirmation instructions was sent to your email address.");
     $validationMsgHtml .= sprintf(_("Your account has been granted %s minutes of access to retrieve your email and validate your account."), ($current_user->getNetwork()->getValidationGraceTime() / 60));
     $validationMsgHtml .= "</div>\n";
-    $ui->appendContent('page_header', $validationMsgHtml);
+    $ui->addContent('page_header', $validationMsgHtml);
 }
 
 // Get all network content, but exclude user subscribed content if user is known
@@ -228,16 +228,16 @@ $content_rows = array ();
 $network_id = $db->escapeString($network->getId());
 if ($current_user) {
     $user_id = $db->escapeString($current_user->getId());
-    $sql = "SELECT content_id, display_area FROM network_has_content WHERE network_id='$network_id' AND display_page='portal' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$user_id}') ORDER BY display_area, display_order, subscribe_timestamp DESC";
+    $sql = "SELECT content_id, display_area, display_order FROM network_has_content WHERE network_id='$network_id' AND display_page='portal' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$user_id}') ORDER BY display_area, display_order, subscribe_timestamp DESC";
 } else {
-    $sql = "SELECT content_id, display_area FROM network_has_content WHERE network_id='$network_id'  AND display_page='portal' ORDER BY display_area, display_order, subscribe_timestamp DESC";
+    $sql = "SELECT content_id, display_area, display_order FROM network_has_content WHERE network_id='$network_id'  AND display_page='portal' ORDER BY display_area, display_order, subscribe_timestamp DESC";
 }
 $db->execSql($sql, $content_rows, false);
 if ($content_rows) {
     foreach ($content_rows as $content_row) {
         $content = Content :: getObject($content_row['content_id']);
         if ($content->isDisplayableAt($node)) {
-            $ui->appendContent($content_row['display_area'], $content->getUserUI());
+            $ui->addContent($content_row['display_area'], $content->getUserUI(), $content_row['display_order']);
         }
     }
 }
@@ -247,9 +247,9 @@ $content_rows = array ();
 $node_id = $db->escapeString($node->getId());
 if ($current_user) {
     $user_id = $db->escapeString($current_user->getId());
-    $sql = "SELECT content_id, display_area FROM node_has_content WHERE node_id='$node_id' AND display_page='portal' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$user_id}') ORDER BY display_area, display_order, subscribe_timestamp DESC";
+    $sql = "SELECT content_id, display_area, display_order FROM node_has_content WHERE node_id='$node_id' AND display_page='portal' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$user_id}') ORDER BY display_area, display_order, subscribe_timestamp DESC";
 } else {
-    $sql = "SELECT content_id, display_area FROM node_has_content WHERE node_id='$node_id'  AND display_page='portal' ORDER BY display_area, display_order, subscribe_timestamp DESC";
+    $sql = "SELECT content_id, display_area, display_order FROM node_has_content WHERE node_id='$node_id'  AND display_page='portal' ORDER BY display_area, display_order, subscribe_timestamp DESC";
 }
 $db->execSql($sql, $content_rows, false);
 $showMoreLink = false;
@@ -257,7 +257,7 @@ if ($content_rows) {
     foreach ($content_rows as $content_row) {
         $content = Content :: getObject($content_row['content_id']);
         if ($content->isDisplayableAt($node)) {
-            $ui->appendContent($content_row['display_area'], $content->getUserUI());
+            $ui->addContent($content_row['display_area'], $content->getUserUI(), $content_row['display_order']);
         }
         // Check for content requirements to show the "Show all contents" link
         if (!$showMoreLink) {
@@ -282,7 +282,7 @@ if ($current_user) {
         foreach ($content_rows as $content_row) {
             $content = Content :: getObject($content_row['content_id']);
             if ($content->isDisplayableAt($node)) {
-                $ui->appendContent('main_area_middle', $content->getUserUI());
+                $ui->addContent('main_area_middle', $content->getUserUI());
             }
         }
     }
@@ -290,7 +290,7 @@ if ($current_user) {
 
 if ($showMoreLink) {
     $link_html = "<a href='{$base_ssl_path}content/?gw_id={$currentNodeId}'>"._("Show all available contents for this hotspot")."</a>\n";
-    $ui->appendContent('main_area_middle', $link_html);
+    $ui->addContent('main_area_middle', $link_html);
 }
 $ui->display();
 

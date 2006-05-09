@@ -1,3 +1,9 @@
+2006-05-09 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Finish content assignation system
+	* Content ordering is now global (network, nodes and everywhere content cand now be in mixed order).
+  	* Implement 'everywhere' content
+  	* Change MainUI::apendContent to MainUI::addContent
+
 2006-04-28 François Proulx <francois.proulx@gmail.com>	
 	* Fixed error in initial data script
 	

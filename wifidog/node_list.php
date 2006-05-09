@@ -132,7 +132,7 @@ $smarty->assign("sort_by_param", $sort_by_param);
 require_once('classes/MainUI.php');
 
 $ui = new MainUI();
-$ui->appendContent('main_area_middle', $smarty->fetch("templates/node_list.html"));
+$ui->addContent('main_area_middle', $smarty->fetch("templates/node_list.html"));
 $ui->display();
 
 /*

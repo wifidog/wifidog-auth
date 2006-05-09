@@ -92,9 +92,9 @@ $body_html .= "</div>";
 
 
 $ui=new MainUI();
-$ui->appendContent('left_area_middle', $tool_html);
+$ui->addContent('left_area_middle', $tool_html);
 $ui->setTitle(_("Pattern Language - About"));
-$ui->appendContent('main_area_middle', $body_html);
+$ui->addContent('main_area_middle', $body_html);
 $ui->display();
 
 /*

@@ -261,61 +261,33 @@ if($node) {
 }
 $ui->setPageName('login');
 $ui->shrinkLeftArea();
-$ui->appendContent('left_area_middle', $html);
+$ui->addContent('left_area_middle', $html);
 
 /*
  * Main content
  */
-// Get all network content
-$content_rows = null;
-$network_id = $db->escapeString($network->getId());
-    $sql = "SELECT content_id, display_area FROM network_has_content WHERE network_id='$network_id'  AND display_page='login' ORDER BY display_area, display_order, subscribe_timestamp DESC";
-$db->execSql($sql, $content_rows, false);
-if ($content_rows) {
-    foreach ($content_rows as $content_row) {
-        $content = Content :: getObject($content_row['content_id']);
-        if ($content->isDisplayableAt($node)) {
-            $ui->appendContent($content_row['display_area'], $content->getUserUI());
+ 
+         // Get all network content and node "login" content
+        $content_rows = null;
+        $network_id = $network->getId();
+        $sql_network = "(SELECT content_id, display_area, display_order, subscribe_timestamp FROM network_has_content WHERE network_id='$network_id'  AND display_page='login') ";
+        $sql_node = null;
+        if ($node) {
+            // Get all node content
+            $node_id = $db->escapeString($node->getId());
+            $sql_node = "UNION (SELECT content_id, display_area, display_order, subscribe_timestamp FROM node_has_content WHERE node_id='$node_id'  AND display_page='login')";
         }
-    }
-}
+        $sql = "SELECT * FROM ($sql_network $sql_node) AS content_everywhere ORDER BY display_area, display_order, subscribe_timestamp DESC";
 
-if($node)
-{
-// Get all node content
-$content_rows = null;
-$node_id = $db->escapeString($node->getId());
-    $sql = "SELECT content_id, display_area FROM node_has_content WHERE node_id='$node_id'  AND display_page='login' ORDER BY display_area, display_order, subscribe_timestamp DESC";
-$db->execSql($sql, $content_rows, false);
-$showMoreLink = false;
-if ($content_rows) {
-    foreach ($content_rows as $content_row) {
-        $content = Content :: getObject($content_row['content_id']);
-        if ($content->isDisplayableAt($node)) {
-            $ui->appendContent($content_row['display_area'], $content->getUserUI());
+        $db->execSql($sql, $content_rows, false);
+        if ($content_rows) {
+            foreach ($content_rows as $content_row) {
+                $content = Content :: getObject($content_row['content_id']);
+                if ($content->isDisplayableAt($node)) {
+                    $ui->addContent($content_row['display_area'], $content->getUserUI(), $content_row['display_order']);
+                }
+            }
         }
-    }
-}
-}
-
-$ui->appendContent('main_area_middle',
-	"\n<h1>" . sprintf(_("Welcome to the %s Hotspot network."), $network->getName()) . "</h1>\n" .
-
-	"<p>" .
-	_("Please use the login/signup form on the left to activate your connection with the internet.") .
-	"</p>\n".
-
-	"<p>" .
-	_("If you already have an account please use that to login.") . " " .
-	_("Thanks to the hospitality of your proprietor, this is a surfing free zone.") . " " .
-	_("Once you login you are welcome to use the internet as long as you like.") .
-	"</p>\n" .
-
-	"<p>" .
-	sprintf(_("If you are new to %s, please use the form on the left to create a new account."), $network->getName()) . " " .
-	_("There will be no charge for this service.") .
-	"</p>\n"
-);
 
 /*
  * Render output

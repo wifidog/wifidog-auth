@@ -52,7 +52,7 @@ require_once('include/common_interface.php');
 require_once('classes/MainUI.php');
 
 $ui = new MainUI();
-$ui->appendContent('main_area_middle', $smarty->fetch("templates/faq.html"));
+$ui->addContent('main_area_middle', $smarty->fetch("templates/faq.html"));
 $ui->display();
 
 /*

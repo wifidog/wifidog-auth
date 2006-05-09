@@ -113,7 +113,7 @@ $tool_html .= '<p class="indent">'."\n";
 $tool_html .= "<a href='content.php?gw_id={$current_node_id}' target='_blank.right'><img src='/images/start.gif'></a>"."\n";
 $tool_html .= "</p>"."\n";
 */
-$ui->appendContent('left_area_middle', $tool_html);
+$ui->addContent('left_area_middle', $tool_html);
 
 
 $html = '';
@@ -148,7 +148,7 @@ if(!empty($contents))
     $html .= "</div>\n";
 }
 
-$ui->appendContent('main_area_middle', $html);
+$ui->addContent('main_area_middle', $html);
 $ui->display();
 
 /*

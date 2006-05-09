@@ -130,7 +130,7 @@ if ($user && isset($_REQUEST["form_request"])) {
 		}
 
         $ui = new MainUI();
-        $ui->appendContent('main_area_middle', $smarty->fetch("templates/sites/validate.tpl"));
+        $ui->addContent('main_area_middle', $smarty->fetch("templates/sites/validate.tpl"));
         $ui->display();
 
         exit;
@@ -153,7 +153,7 @@ isset ($_REQUEST["auth_source"]) && $smarty->assign('selected_auth_source', $_RE
 
 $ui = new MainUI();
 $smarty->assign('SelectNetworkUI', Network::getSelectNetworkUI('auth_source'));
-$ui->appendContent('main_area_middle', $smarty->fetch("templates/change_password.html"));
+$ui->addContent('main_area_middle', $smarty->fetch("templates/change_password.html"));
 $ui->display();
 
 /*

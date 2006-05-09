@@ -66,7 +66,7 @@ if(!$current_user) {
     $ui->setToolSection('ADMIN');
 }
 
-$ui->appendContent('main_area_middle', $html);
+$ui->addContent('main_area_middle', $html);
 $ui->display();
 
 /*

@@ -67,82 +67,82 @@
     </head>
 
     <body id='page' class='{$page_name}'>
-    	{if !empty($contentArray.page_header) || $debugRequested}
+    	{if !empty($contentDisplayArray.page_header) || $debugRequested}
         	<div class='page_header'>
             {if $debugRequested}
             	<pre>{$debugOutput}</pre>
         	{/if}
-			{if !empty($contentArray.page_header)}
-				{$contentArray.page_header}
+			{if !empty($contentDisplayArray.page_header)}
+				{$contentDisplayArray.page_header}
         	{/if}
         	</div>
     	{/if} 
 
 
         <div id="page_body">
-        {if !empty($contentArray.left_area_top) ||  !empty($contentArray.left_area_middle) ||  !empty($contentArray.left_area_middle)}
+        {if !empty($contentDisplayArray.left_area_top) ||  !empty($contentDisplayArray.left_area_middle) ||  !empty($contentDisplayArray.left_area_middle)}
                 <div id="left_area">
-	                {if !empty($contentArray.left_area_top)}
+	                {if !empty($contentDisplayArray.left_area_top)}
 	                <div id="left_area_top">
-	                    {$contentArray.left_area_top}
+	                    {$contentDisplayArray.left_area_top}
 	                </div>
 	                {/if}
-	                {if !empty($contentArray.left_area_middle)}
+	                {if !empty($contentDisplayArray.left_area_middle)}
 	                <div id="left_area_middle">
-	                    {$contentArray.left_area_middle}
+	                    {$contentDisplayArray.left_area_middle}
 	                </div>
 	                {/if}
-	                {if !empty($contentArray.left_area_bottom)}
+	                {if !empty($contentDisplayArray.left_area_bottom)}
 	                <div id="left_area_bottom">
-	                    {$contentArray.left_area_bottom}
+	                    {$contentDisplayArray.left_area_bottom}
 	                </div>
 	                {/if}   
                 </div>
         {/if}
         
-        {if !empty($contentArray.main_area_top) ||  !empty($contentArray.main_area_middle) ||  !empty($contentArray.main_area_middle)}
+        {if !empty($contentDisplayArray.main_area_top) ||  !empty($contentDisplayArray.main_area_middle) ||  !empty($contentDisplayArray.main_area_middle)}
                 <div id="main_area">
-	                {if !empty($contentArray.main_area_top)}
+	                {if !empty($contentDisplayArray.main_area_top)}
 	                <div id="main_area_top">
-	                    {$contentArray.main_area_top}
+	                    {$contentDisplayArray.main_area_top}
 	                </div>
 	                {/if}
-	                {if !empty($contentArray.main_area_middle)}
+	                {if !empty($contentDisplayArray.main_area_middle)}
 	                <div id="main_area_middle">
-	                    {$contentArray.main_area_middle}
+	                    {$contentDisplayArray.main_area_middle}
 	                </div>
 	                {/if}
-	                {if !empty($contentArray.main_area_bottom)}
+	                {if !empty($contentDisplayArray.main_area_bottom)}
 	                <div id="main_area_bottom">
-	                    {$contentArray.main_area_bottom}
+	                    {$contentDisplayArray.main_area_bottom}
 	                </div>
 	                {/if}   
                 </div>
         {/if}        
 
-          {if !empty($contentArray.right_area_top) ||  !empty($contentArray.right_area_middle) ||  !empty($contentArray.right_area_bottom)}
+          {if !empty($contentDisplayArray.right_area_top) ||  !empty($contentDisplayArray.right_area_middle) ||  !empty($contentDisplayArray.right_area_bottom)}
                 <div id="right_area">
-	                {if !empty($contentArray.right_area_top)}
+	                {if !empty($contentDisplayArray.right_area_top)}
 	                <div id="right_area_top">
-	                    {$contentArray.right_area_top}
+	                    {$contentDisplayArray.right_area_top}
 	                </div>
 	                {/if}
-	                {if !empty($contentArray.right_area_middle)}
+	                {if !empty($contentDisplayArray.right_area_middle)}
 	                <div id="right_area_middle">
-	                    {$contentArray.right_area_middle}
+	                    {$contentDisplayArray.right_area_middle}
 	                </div>
 	                {/if}
-	                {if !empty($contentArray.right_area_bottom)}
+	                {if !empty($contentDisplayArray.right_area_bottom)}
 	                <div id="right_area_bottom">
-	                    {$contentArray.right_area_bottom}
+	                    {$contentDisplayArray.right_area_bottom}
 	                </div>
 	                {/if}   
                 </div>
         {/if}   
         </div>
-    {if !empty($contentArray.page_footer)}
+    {if !empty($contentDisplayArray.page_footer)}
         <div class='page_footer'>
-			{$contentArray.page_footer}
+			{$contentDisplayArray.page_footer}
         </div>
     {/if} 
 

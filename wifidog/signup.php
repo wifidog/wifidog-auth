@@ -257,11 +257,11 @@ if (isset ($_REQUEST["form_request"]) && $_REQUEST["form_request"] == "signup") 
          */
         $ui = new MainUI();
 
-        $ui->appendContent('left_area_middle', $html);
-        $ui->appendContent('main_area_middle', $html_body);
+        $ui->addContent('left_area_middle', $html);
+        $ui->addContent('main_area_middle', $html_body);
 
-		// $ui->appendContent('page_header', $validationMsgHtml);
-		$ui->appendContent('main_area_top', $validationMsgHtml);
+		// $ui->addContent('page_header', $validationMsgHtml);
+		$ui->addContent('main_area_top', $validationMsgHtml);
 
         $ui->display();
 
@@ -344,8 +344,8 @@ $html_body = $smarty->fetch("templates/sites/signup.tpl");
  * Render output
  */
 $ui = new MainUI();
-$ui->appendContent('left_area_middle', $html);
-$ui->appendContent('main_area_middle', $html_body);
+$ui->addContent('left_area_middle', $html);
+$ui->addContent('main_area_middle', $html_body);
 $ui->display();
 
 /*

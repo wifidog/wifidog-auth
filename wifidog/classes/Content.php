@@ -968,7 +968,7 @@ class Content implements GenericObject {
         return $retval;
     }
 
-    /** Is this Content element displayable at this hotspot, many classer override this
+    /** Is this Content element displayable at this hotspot, many classes override this
      * @param $node Node, optionnal
      * @return true or false */
     public function isDisplayableAt($node) {

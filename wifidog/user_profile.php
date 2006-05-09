@@ -79,10 +79,10 @@ if($user)
 }
 
 $ui=new MainUI();
-$ui->appendContent('left_area_middle', $tool_html);
+$ui->addContent('left_area_middle', $tool_html);
 $smarty->assign("title", _("User Profile"));
 //TODO: Write User profiles
-$ui->appendContent('main_area_middle', $body_html);
+$ui->addContent('main_area_middle', $body_html);
 $ui->display();
 
 /*

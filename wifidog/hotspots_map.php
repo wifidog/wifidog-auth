@@ -168,8 +168,8 @@ $script .= "</script>\n";
 $ui = new MainUI();
 $ui->setTitle(_("Hotspots status map"));
 $ui->setHtmlHeader($html_headers);
-$ui->appendContent('left_area_middle', $html);
-$ui->appendContent('main_area_middle', $html_body);
+$ui->addContent('left_area_middle', $html);
+$ui->addContent('main_area_middle', $html_body);
 $ui->addFooterScript($script);
 $ui->display();
 

@@ -70,7 +70,7 @@ if(!empty($_REQUEST['node_id']))
     $html = _("Click anywhere on the map to extract the GIS location, then click on the button to save the data.")."<br>";
     $html .= "<div id=\"map_frame\"></div>\n";
     $html .= "<input type='button' value='"._("Use these coordinates")."' onClick='setLocationInOriginalWindow();'>\n";
-    $ui->appendContent('main_area_middle', $html);
+    $ui->addContent('main_area_middle', $html);
 
     if($node->getGisLocation() !== null)
     {

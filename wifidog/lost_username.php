@@ -124,8 +124,8 @@ if (isset($_REQUEST["form_request"])) {
          * Render output
          */
         $ui = new MainUI();
-        $ui->appendContent('left_area_middle', $html);
-        $ui->appendContent('main_area_middle', $html_body);
+        $ui->addContent('left_area_middle', $html);
+        $ui->addContent('main_area_middle', $html_body);
         $ui->display();
 
         // We're done ...
@@ -194,8 +194,8 @@ $html_body = $smarty->fetch("templates/sites/lost_username.tpl");
  * Render output
  */
 $ui = new MainUI();
-$ui->appendContent('left_area_middle', $html);
-$ui->appendContent('main_area_middle', $html_body);
+$ui->addContent('left_area_middle', $html);
+$ui->addContent('main_area_middle', $html_body);
 $ui->display();
 
 /*
