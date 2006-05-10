@@ -7,6 +7,6 @@ wifidog/media/base_theme/stylesheet.css.  This theme pack should only override t
 */
 /********** General HTML section **********/
 #left_area_top {
-    background: #dbffa8 url("network_logo_banner.png") repeat-x fixed 0px 0px;
+    background: #dbffa8 url("images/network_logo_banner.png") repeat-x fixed 0px 0px;
 }
 

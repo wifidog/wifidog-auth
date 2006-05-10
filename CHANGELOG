@@ -1,4 +1,12 @@
 2006-05-09 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Working (if slightly basic) theme manager.  You can pick the theme in the network configuration.
+	To add your own theme, read wifidog/media/network_theme_packs/README.txt
+	* Cleanup and document the wifidog directory structure
+	* Minor HTML corrections for content types
+	* Completely rip out the old local_content system, and a bunch of obsolete defines and config variables.
+	* Get rid of PHP generated stylesheets
+	
+2006-05-09 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Finish content assignation system
 	* Content ordering is now global (network, nodes and everywhere content cand now be in mixed order).
   	* Implement 'everywhere' content
