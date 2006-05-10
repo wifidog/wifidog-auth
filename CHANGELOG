@@ -1,3 +1,8 @@
+2006-05-10 François Proulx <francois.proulx@gmail.com>
+	* Added sweetTitles tooltips script, now if you need to add tooltips simply add the 'title' attribute to you html <a>, <attr>, <accroym> tags
+	* Fixed usort bug in MainUI
+	* Fixed download (wget) in install.php
+
 2006-05-09 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Working (if slightly basic) theme manager.  You can pick the theme in the network configuration.
 	To add your own theme, read wifidog/media/network_theme_packs/README.txt
@@ -5,27 +10,27 @@
 	* Minor HTML corrections for content types
 	* Completely rip out the old local_content system, and a bunch of obsolete defines and config variables.
 	* Get rid of PHP generated stylesheets
-	
+
 2006-05-09 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Finish content assignation system
 	* Content ordering is now global (network, nodes and everywhere content cand now be in mixed order).
   	* Implement 'everywhere' content
   	* Change MainUI::apendContent to MainUI::addContent
 
-2006-04-28 François Proulx <francois.proulx@gmail.com>	
+2006-04-28 François Proulx <francois.proulx@gmail.com>
 	* Fixed error in initial data script
-	
+
 2006-04-28 Benoit Grégoire  <bock@step.polymtl.ca>
 	* wifidog/login/index.php: Correctly use DEFAULT_NODE_ID from config.php instead of hardcoded 'default'
 
 2006-04-28 François Proulx <francois.proulx@gmail.com>
 	* Fixed initial_data schema script so that it adds a dummy server.
-	
+
 2006-04-25 François Proulx <francois.proulx@gmail.com>
 	* Updated JavaScript code to work with Google Maps v2 API
 	* v2 will now provide full maps of European countries and is a bit faster
 	* Updated the schema accordingly with new GMaps values
-	
+
 2006-04-24 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Dependencies.php:  Small fix in case gettext isn't installed
 
@@ -33,21 +38,21 @@
 	* AuthenticatorLDAP.php:  Merge patch from jguevara@unitec.edu.  Fixes #125
 
 2006-04-24 Benoit Grégoire  <bock@step.polymtl.ca>
-	* Major system locale handling overhaull.  Hopefully abstract out the UTF8 problems once and for all, 
-	allowing everyone to define them the same way.  Fix a few bugs along the way.  
+	* Major system locale handling overhaull.  Hopefully abstract out the UTF8 problems once and for all,
+	allowing everyone to define them the same way.  Fix a few bugs along the way.
 	Should also be a little faster.
 
 2006-04-24 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Revert Rob's SYSTEM_PATH change.  Sorry about that.  The devs spent hours to finally get the PATH
-	 stuff consistent and fixing the countless bugs that this process introduced. 
+	 stuff consistent and fixing the countless bugs that this process introduced.
 	 Maybe some links still need to use BASE_URL_PATH instead of BASE_SSL_PATH,
-	(or vice-versa) but it was on purpose that SYSTEM_PATH was not made available to Smarty.  
+	(or vice-versa) but it was on purpose that SYSTEM_PATH was not made available to Smarty.
 	We already have 3 defines to be used for links and html refs, that's enough
 	 BASE_SSL_PATH should be used to enter SSL mode (if available)
  	 BASE_NON_SSL_PATH should be used to break out of SSL mode of when we
  	 explicitely do not want someting to be referenced over http
  	 BASE_URL_PATH should be used in all other cases to avoid needless SSL warning
-	
+
 2006-04-17 Rob Janes <janes.rob@gmail.com>
 	* javascript for validating and navigating forms.
 	* help text (untranslated).
@@ -64,7 +69,7 @@
 
 2006-04-01 François Proulx <francois.proulx@gmail.com>
 	* Dumped initial schema from working install
-	
+
 2006-03-31 Benoit Grégoire  <bock@step.polymtl.ca>
 	* dump_initial_data_postgres.sh:  Add the content_available_display_pages table to the dump, can someone re-generate the initial data from a working install
 	* Remove the ?> tags from all the classes.
@@ -75,11 +80,11 @@
 
 2006-03-28 François Proulx <francois.proulx@gmail.com>
 	* Fixed error in initial schema (bad client encoding)
-	
+
 2006-03-28 François Proulx <francois.proulx@gmail.com>
 	* Fixed schema 37 : left_area_top
 	* Updated initial schema
-	
+
 2006-03-27 Benoit Grégoire  <bock@step.polymtl.ca>
 	* First step in massive simplification of CSS and templates
 	* Implement the new main CSS structure
@@ -101,17 +106,17 @@
 	* Since Google Maps does not provide Javascript over SSL (it does but the certificate does not match)
 	  the code path to the map does not use SSL, but the outgoing URLs do.
 	* Removed lost echo in Locale.php
-	
+
 2006-03-21 Benoit Grégoire  <bock@step.polymtl.ca>
-	* login/index.php: Remove huge security hole introduced by stylistic changes in the file.  
-	A user could login to any hotspot by simply filling a blank form because of a gratuitous 
+	* login/index.php: Remove huge security hole introduced by stylistic changes in the file.
+	A user could login to any hotspot by simply filling a blank form because of a gratuitous
 	change from empty to is_null everywhere.  Remove escaping or REQUEST parameters in non SQL
 	 related code, as this would lead to double unescaping down the line.  Remove logic dependent
 	  on encapsulated side effects of object method call.
 
 2006-03-19 François Proulx <francois.proulx@gmail.com>
 	* Updated French translations
-	
+
 2006-03-18 Rob Janes <janes.rob@gmail.com>
 	* path_defines_base working for combinations of DocumentRoot, Alias,
 	  and installed wifidog-auth directory, correctly setting SYSTEM_PATH
@@ -126,7 +131,7 @@
 2006-03-16 François Proulx <francois.proulx@gmail.com>
 	* Removed stale owner_sendfiles.php (now integrated in the Content Manager)
 	* Cleaned up a bunch of stale TODOs
-	
+
 2006-03-16 Max Horváth <max.horvath@maxspot.de>
 	* updated language files (new german strings have already been translated)
 	* added LDAP authentication

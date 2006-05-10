@@ -161,9 +161,9 @@ class MainUI {
      * @param string $display_area Structural area where content is to be
      * placed.  Must be one of the display aread defined in the
      * content_available_display_areas table
-     * 
+     *
      * @param string $content HTML content to be added to the area
-     * 
+     *
      * @param integer $display_order_index The order in which the content should
      * be displayed
      *
@@ -192,7 +192,7 @@ class MainUI {
      */
     private function generateDisplayContent() {
         //pretty_print_r($this->_contentArray);
-        usort($this->_contentArray, array ('MainUI', '_contentArrayCmp'));
+        usort($this->_contentArray, array($this, "_contentArrayCmp"));
         foreach ($this->_contentArray as $content_fragment) {
             $this->_contentDisplayArray[$content_fragment['display_area']] .= $content_fragment['content'];
         }

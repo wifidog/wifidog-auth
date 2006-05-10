@@ -323,6 +323,14 @@ function refreshButton() {
 EndHTML;
 }
 
+function downloadFile($remoteURL, $localPath) {
+	set_time_limit(1500); // 25 minutes timeout
+	if(copy($remoteURL, $localPath))
+		return true;
+	else
+		return false;
+}
+
 ###################################
 #
 /*function debugButton() {
@@ -578,9 +586,11 @@ EndHTML;
             list ($url, $filename) = split("=", $smarty_full_url);
 
             print "Download source code ($filename) : ";
-            if (!file_exists($filename))
-                exec("wget \"$smarty_full_url\" 2>&1", $output, $return);
-            if (!file_exists($filename)) {
+            if (!file_exists("/tmp/".$filename))
+                //exec("wget \"$smarty_full_url\" 2>&1", $output, $return);
+                downloadFile($smarty_full_url, "/tmp/".$filename);
+
+            if (!file_exists("/tmp/".$filename)) {
                 print "<B STYLE=\"color:red\">Error</B><P>Current working directory : <B>$basepath/tmp/smarty</B>";
                 $output = implode("\n", $output);
                 print "<PRE><B>wget \"$smarty_full_url\"</B>\n$output</PRE>";
@@ -591,7 +601,7 @@ EndHTML;
             }
 
             print "Uncompressing : ";
-            $dir_array = split(".tar.gz", $filename);
+            $dir_array = split(".tar.gz", "/tmp/".$filename);
             $dirname = array_shift($dir_array);
 
             if (!file_exists($dirname))
@@ -622,9 +632,11 @@ EndHTML;
             $filename = array_pop($filename_array);
 
             print "Download source code ($filename) : ";
-            if (!file_exists($filename))
-                exec("wget \"$magpierss_full_url\" 2>&1", $output, $return);
-            if (!file_exists($filename)) {
+            if (!file_exists("/tmp/".$filename))
+                //exec("wget \"$magpierss_full_url\" 2>&1", $output, $return);
+                downloadFile($smarty_full_url, "/tmp/".$filename);
+
+            if (!file_exists("/tmp/".$filename)) {
                 print "<B STYLE=\"color:red\">Error</B><P>Current working directory : <B>$basepath/tmp/smarty</B>";
                 $output = implode("\n", $output);
                 print "<PRE><B>wget \"$magpierss_full_url\"</B>\n$output</PRE>";
@@ -635,7 +647,7 @@ EndHTML;
             }
 
             print "Uncompressing : ";
-            $dir_array = split(".tar.gz", $filename);
+            $dir_array = split(".tar.gz", "/tmp/".$filename);
             $dirname = array_shift($dir_array);
             if (!file_exists($dirname))
                 exec("tar -xzf $dirname.tar.gz &>/tmp/tar.output", $output, $return);
@@ -671,9 +683,11 @@ EndHTML;
             $filename = array_pop($filename_array);
 
             print "Download source code ($filename) : ";
-            if (!file_exists($filename))
-                exec("wget \"$phlickr_full_url\" 2>&1", $output, $return);
-            if (!file_exists($filename)) { # Error occured, print output of wget
+            if (!file_exists("/tmp/".$filename))
+                //exec("wget \"$phlickr_full_url\" 2>&1", $output, $return);
+                downloadFile($smarty_full_url, "/tmp/".$filename);
+
+            if (!file_exists("/tmp/".$filename)) { # Error occured, print output of wget
                 print "<B STYLE=\"color:red\">Error</B><P>Current working directory : <B>$basepath/tmp/smarty</B>";
                 $output = implode("\n", $output);
                 print "<PRE><B>wget \"$phlickr_full_url\"</B>\n$output</PRE>";
@@ -684,7 +698,7 @@ EndHTML;
             }
 
             print "Uncompressing : ";
-            $dirname_array = split(".tgz", $filename);
+            $dirname_array = split(".tgz", "/tmp/".$filename);
             $dirname = array_shift($dirname_array);
             if (!file_exists($dirname))
                 exec("tar -xzf $dirname.tgz &>/tmp/tar.output", $output, $return);

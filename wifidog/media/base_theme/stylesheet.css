@@ -1,4 +1,4 @@
-/* Important note:  You may not assume ANYTHING about the path to images or media 
+/* Important note:  You may not assume ANYTHING about the path to images or media
 that isn't under this file's theme pack.  In other words, no ../ relative links. */
 /********** General HTML section **********/
 body {
@@ -249,6 +249,24 @@ a.navigation {
 
 
 /** Messages */
+
+/* Fading Tooltips By Dustin Diaz*/
+body div#toolTip {
+	position:absolute;
+	z-index:1000;
+	width:320px;
+	background:#000;
+/*	border:2px double #fff;*/
+	text-align:left;
+	padding:5px;
+	min-height:1em;
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+}
+body div#toolTip p { margin:0;padding:0;color:#fff;font:11px/12px verdana,arial,sans-serif; }
+body div#toolTip p em { display:block;margin-top:3px;color:#f60;font-style:normal;font-weight:bold; }
+body div#toolTip p em span { font-weight:bold;color:#fff; }
+
 .errormsg {
     font-weight: bold;
     color: red;

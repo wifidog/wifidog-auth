@@ -45,26 +45,21 @@
  */
 
 *}
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-
 <html>
-
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta http-equiv="Pragma" content="no-cache">
         <meta http-equiv="Expires" content="-1">
         {$htmlHeaders}
-
         <title>{$title}</title>
-
         {foreach from=$stylesheetUrlArray item=stylesheetUrl}
           <link rel="stylesheet" type="text/css" href="{$stylesheetUrl}">
-        {/foreach}		
+        {/foreach}
 		<script src="{$base_url_path}js/formutils.js"></script>
-
+		<script src="{$base_url_path}js/addEvent.js"></script>
+		<script src="{$base_url_path}js/sweetTitles.js"></script>
     </head>
-
     <body id='page' class='{$page_name}'>
     	{if !empty($contentDisplayArray.page_header) || $debugRequested}
         	<div class='page_header'>
@@ -75,9 +70,7 @@
 				{$contentDisplayArray.page_header}
         	{/if}
         	</div>
-    	{/if} 
-
-
+    	{/if}
         <div id="page_body">
         {if !empty($contentDisplayArray.left_area_top) ||  !empty($contentDisplayArray.left_area_middle) ||  !empty($contentDisplayArray.left_area_middle)}
                 <div id="left_area">
@@ -95,10 +88,9 @@
 	                <div id="left_area_bottom">
 	                    {$contentDisplayArray.left_area_bottom}
 	                </div>
-	                {/if}   
+	                {/if}
                 </div>
         {/if}
-        
         {if !empty($contentDisplayArray.main_area_top) ||  !empty($contentDisplayArray.main_area_middle) ||  !empty($contentDisplayArray.main_area_middle)}
                 <div id="main_area">
 	                {if !empty($contentDisplayArray.main_area_top)}
@@ -115,10 +107,9 @@
 	                <div id="main_area_bottom">
 	                    {$contentDisplayArray.main_area_bottom}
 	                </div>
-	                {/if}   
+	                {/if}
                 </div>
-        {/if}        
-
+        {/if}
           {if !empty($contentDisplayArray.right_area_top) ||  !empty($contentDisplayArray.right_area_middle) ||  !empty($contentDisplayArray.right_area_bottom)}
                 <div id="right_area">
 	                {if !empty($contentDisplayArray.right_area_top)}
@@ -135,15 +126,15 @@
 	                <div id="right_area_bottom">
 	                    {$contentDisplayArray.right_area_bottom}
 	                </div>
-	                {/if}   
+	                {/if}
                 </div>
-        {/if}   
+        {/if}
         </div>
     {if !empty($contentDisplayArray.page_footer)}
         <div class='page_footer'>
 			{$contentDisplayArray.page_footer}
         </div>
-    {/if} 
+    {/if}
 
         {foreach from=$footerScripts item=currScript}
           {$currScript}
