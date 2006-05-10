@@ -277,8 +277,7 @@ class Picture extends File
         $width = $this->getWidth();
         $height = $this->getHeight();
 
-        $html .= "<div class='user_ui_container'>\n";
-        $html .= "<div class='user_ui_object_class'>Picture (".get_class($this)." instance)</div>\n";
+        $html .= "<div class='user_ui_container ".get_class($this)."'>\n";
 
         if (empty($width)) {
             $width = "";

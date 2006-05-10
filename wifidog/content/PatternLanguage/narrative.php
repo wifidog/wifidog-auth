@@ -95,7 +95,7 @@ try
 
     if ($user)
     {
-        $body_html = "<img src='".BASE_SSL_PATH."images/PatternLanguage/header.gif'>\n";
+        $body_html = "<img src='images/header.gif'>\n";
         $body_html .= "<h1>"._("Narrative for ")."{$user->getUsername()}</h1>\n";
         $body_html .= "<div class='pattern_language_body'>\n";
         $body_html .= $pattern_language->displayNarrative($user);
@@ -103,7 +103,7 @@ try
     }
     else
     {
-        $body_html = "<img src='".BASE_SSL_PATH."images/PatternLanguage/header.gif'><p>\n";
+        $body_html = "<img src='images/header.gif'><p>\n";
         $body_html .= _("You must be logged in to read your narrative");
     }
 }

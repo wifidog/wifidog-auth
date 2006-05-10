@@ -36,8 +36,8 @@
 
 /**
  * @package    WiFiDogAuthServer
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
@@ -65,8 +65,8 @@ require_once ('include/common_interface.php');
  * Style contains functions managing headers, footers, stylesheet, etc.
  *
  * @package    WiFiDogAuthServer
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class MainUI {
 
@@ -510,13 +510,11 @@ class MainUI {
     public function display() {
 
         // Init values
-        $_stylesheetFile = "";
 
         // Init ALL smarty values
         $this->smarty->assign('htmlHeaders', "");
         $this->smarty->assign('title', "");
         $this->smarty->assign('stylesheetURL', "");
-        $this->smarty->assign('stylesheetParsedFile', "");
         // $this->smarty->assign('isSuperAdmin', false);
         // $this->smarty->assign('isOwner', false);
         $this->smarty->assign('debugRequested', false);
@@ -532,21 +530,13 @@ class MainUI {
         // Asign CSS class for body
         $this->smarty->assign('page_name', $this->_pageName);
 
-        // Asign path to CSS stylesheet
-        $this->smarty->assign('stylesheetURL', COMMON_CONTENT_URL.STYLESHEET_NAME);
-
-        /*
-         * Include stylesheet to be parsed by Smarty
-         */
-        if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.STYLESHEET_NAME)) {
-            $_stylesheetFile = NODE_CONTENT_SMARTY_PATH.STYLESHEET_NAME;
+        // Asign path to CSS stylesheets
+        $stylesheetUrlArray[] = BASE_THEME_URL.STYLESHEET_NAME;
+        $networkThemePack = Network :: getCurrentNetwork()->getThemePack();
+        if($networkThemePack){
+        $stylesheetUrlArray[] = $networkThemePack->getStylesheetUrl();
         }
-        else {
-            $_stylesheetFile = DEFAULT_CONTENT_SMARTY_PATH.STYLESHEET_NAME;
-        }
-
-        // Asign path to CSS stylesheet to be parsed by Smarty
-        $this->smarty->assign('stylesheetParsedFile', $_stylesheetFile);
+        $this->smarty->assign('stylesheetUrlArray', $stylesheetUrlArray);
 
         /*
          * Allow super admin to display debug output if requested by using

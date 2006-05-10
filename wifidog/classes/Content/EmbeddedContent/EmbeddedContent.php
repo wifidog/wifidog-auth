@@ -323,8 +323,7 @@ class EmbeddedContent extends Content
         $embedded_content_file = null;
         $fallback_content = null;
 
-        $html .= "<div class='user_ui_container'>\n";
-        $html .= "<div class='user_ui_object_class'>EmbeddedContent (".get_class($this)." instance)</div>\n";
+        $html .= "<div class='user_ui_container ".get_class($this)."'>\n";
 
         /* Get both objects if they exist */
         if (!empty ($this->embedded_content_row['embedded_file_id'])) {

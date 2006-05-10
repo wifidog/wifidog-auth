@@ -35,8 +35,8 @@
 
 /**
  * @package    WiFiDogAuthServer
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
@@ -177,19 +177,6 @@ function garbage_collect() {
     $expiration = time() - 60 * 10;
     $expiration = iso8601_date($expiration);
     $db->execSqlUpdate("UPDATE connections SET token_status='".TOKEN_USED."' WHERE last_updated < '$expiration' AND token_status = '".TOKEN_INUSE."'", false);
-}
-
-/** Get the url from the local content_specific folder if the file exists, and from the default content folder otherwise */
-function find_local_content_url($filename) {
-    //echo "find_local_content_url():  Looking for:                  ".NODE_CONTENT_PHP_RELATIVE_PATH.$filename."<br>\n";
-    if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.$filename)) {
-        $retval = NODE_CONTENT_URL.$filename;
-    }
-    else {
-        $retval = DEFAULT_CONTENT_URL.$filename;
-    }
-    //echo "find_local_content_url():  Returned:                  $retval<br>\n";
-    return $retval;
 }
 
 /** Return a 32 byte guid valid for database use */

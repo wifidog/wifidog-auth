@@ -38,9 +38,9 @@
  *
  * @package    WiFiDogAuthServer
  * @author     Philippe April
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @copyright  2004-2006 Philippe April
- * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */

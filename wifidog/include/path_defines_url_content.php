@@ -36,8 +36,8 @@
 
 /**
  * @package    WiFiDogAuthServer
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
@@ -130,12 +130,8 @@ if (empty ($_REQUEST['gw_id'])) {
 /**
  * Define URLs
  */
-// define('NODE_CONTENT_URL', BASE_URL_PATH.LOCAL_CONTENT_REL_PATH.CURRENT_NODE_ID.'/');
-define('NODE_CONTENT_URL', SYSTEM_PATH.LOCAL_CONTENT_REL_PATH.CURRENT_NODE_ID.'/');
-define('NODE_CONTENT_PHP_RELATIVE_PATH', LOCAL_CONTENT_REL_PATH.CURRENT_NODE_ID.'/');
-
-// define('COMMON_CONTENT_URL', BASE_URL_PATH.LOCAL_CONTENT_REL_PATH.'common/');
-define('COMMON_CONTENT_URL', SYSTEM_PATH.LOCAL_CONTENT_REL_PATH.'common/');
+define('COMMON_IMAGES_URL', BASE_URL_PATH.'media/common_images/');
+define('BASE_THEME_URL', BASE_URL_PATH.'media/base_theme/');
 
 // define('GENERIC_OBJECT_ADMIN_ABS_HREF', BASE_URL_PATH.'admin/generic_object_admin.php');
 define('GENERIC_OBJECT_ADMIN_ABS_HREF', SYSTEM_PATH.'admin/generic_object_admin.php');

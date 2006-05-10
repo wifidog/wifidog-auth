@@ -487,8 +487,7 @@ class HTMLeditor extends Content
         // Init values
         $_html = "";
 
-        $_html .= "<div class='user_ui_container'>\n";
-        $_html .= "<div class='user_ui_object_class'>HTMLeditor (" . get_class($this) . " instance)</div>\n";
+        $_html .= "<div class='user_ui_container ".get_class($this)."'>\n";
         $_html .= "<div class='langstring'>\n";
 
         // Check FCKeditor support

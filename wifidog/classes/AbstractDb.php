@@ -37,8 +37,8 @@
 /**
  * @package    WiFiDogAuthServer
  * @subpackage Database
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
@@ -48,8 +48,8 @@
  *
  * @package    WiFiDogAuthServer
  * @subpackage Database
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class AbstractDb
 {

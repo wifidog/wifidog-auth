@@ -40,10 +40,10 @@
  *
  * @package    WiFiDogAuthServer
  * @subpackage Authenticators
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @author     Francois Proulx <francois.proulx@gmail.com>
  * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
  * @copyright  2006 Max Horvath, maxspot GmbH
  * @version    Subversion $Id$
@@ -62,10 +62,10 @@ require_once('classes/User.php');
  *
  * @package    WiFiDogAuthServer
  * @subpackage Authenticators
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @author     Francois Proulx <francois.proulx@gmail.com>
  * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
  * @copyright  2006 Max Horvath, maxspot GmbH
  */

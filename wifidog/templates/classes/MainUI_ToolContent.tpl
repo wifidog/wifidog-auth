@@ -54,8 +54,8 @@
             <span class="tool_user_info">
                 {if $isValidUser}
                     <p>{"Logged in as"|_}: {$username}</p>
-                    <a class="administration" href="{$base_ssl_path}user_profile.php"><img class="administration" src="{$base_url_path}images/profile.gif">{"My Profile"|_}</a>
-                    <a class="administration" href="{$base_ssl_path}login/?logout=true{$logoutParameters}"><img class="administration" src="{$base_url_path}images/logout.gif">{"Logout"|_}</a>
+                    <a class="administration" href="{$base_ssl_path}user_profile.php"><img class="administration" src="{$common_images_url}profile.gif">{"My Profile"|_}</a>
+                    <a class="administration" href="{$base_ssl_path}login/?logout=true{$logoutParameters}"><img class="administration" src="{$common_images_url}logout.gif">{"Logout"|_}</a>
                 {else}
 					{if !$shrinkLeftArea}
                     <p>
@@ -64,8 +64,8 @@
                     </p>
 					{/if}
 
-                    <a class="administration" href="{$networkHomepageURL}"><img class="administration" src="{$base_url_path}images/lien_ext.gif">{$networkName}</a>
-                    <a class="administration" href="{$base_url_path}faq.php"><img class="administration" src="{$base_url_path}images/where.gif">{"Where am I?"|_}</a>
+                    <a class="administration" href="{$networkHomepageURL}"><img class="administration" src="{$common_images_url}lien_ext.gif">{$networkName}</a>
+                    <a class="administration" href="{$base_url_path}faq.php"><img class="administration" src="{$common_images_url}where.gif">{"Where am I?"|_}</a>
                 {/if}
             </span>
         </div>

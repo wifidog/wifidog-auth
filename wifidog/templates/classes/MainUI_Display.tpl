@@ -58,12 +58,11 @@
 
         <title>{$title}</title>
 
-		<link rel="stylesheet" type="text/css" href="{$stylesheetURL}">
+        {foreach from=$stylesheetUrlArray item=stylesheetUrl}
+          <link rel="stylesheet" type="text/css" href="{$stylesheetUrl}">
+        {/foreach}		
 		<script src="{$base_url_path}js/formutils.js"></script>
 
-        <style type="text/css">
-            {include file="$stylesheetParsedFile"}
-        </style>
     </head>
 
     <body id='page' class='{$page_name}'>

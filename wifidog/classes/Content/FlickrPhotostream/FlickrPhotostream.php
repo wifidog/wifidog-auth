@@ -711,8 +711,7 @@ $api = $this->getFlickrApi();
         $html = '';
 
         if ($this->_PhlickrAvailable) {
-            $html .= "<div class='user_ui_container'>\n";
-            $html .= "<div class='user_ui_object_class'>FlickrPhotostream (".get_class($this)." instance)</div>\n";
+            $html .= "<div class='user_ui_container ".get_class($this)."'>\n";
 
             $api = $this->getFlickrApi();
             if (!is_null($api))

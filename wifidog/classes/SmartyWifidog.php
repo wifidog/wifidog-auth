@@ -35,8 +35,8 @@
 
 /**
  * @package    WiFiDogAuthServer
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
@@ -45,13 +45,6 @@
  * Load required classes
  */
 require_once("classes/Locale.php");
-
-/**
- * Prevent caching
- */
-define('DEFAULT_CONTENT_SMARTY_PATH', LOCAL_CONTENT_REL_PATH.DEFAULT_NODE_ID.'/');
-define('NODE_CONTENT_SMARTY_PATH', LOCAL_CONTENT_REL_PATH.CURRENT_NODE_ID.'/');
-define('COMMON_CONTENT_SMARTY_PATH', LOCAL_CONTENT_REL_PATH.'common/');
 
 // Check if Smarty installed, if not redirect user to web-base installation
 if (Dependencies::check("Smarty", $errmsg)) {
@@ -70,8 +63,8 @@ if (Dependencies::check("Smarty", $errmsg)) {
 
 /**
  * @package    WiFiDogAuthServer
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class SmartyWifidog extends Smarty {
 
@@ -98,24 +91,7 @@ class SmartyWifidog extends Smarty {
     /* We need this for various forms to redirect properly (language form) */
     $this->assign('request_uri', $_SERVER["REQUEST_URI"]);
 
-    if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.LOGIN_PAGE_NAME)) {
-        $this->assign('login_page', NODE_CONTENT_SMARTY_PATH.LOGIN_PAGE_NAME);
-    } else {
-        $this->assign('login_page', DEFAULT_CONTENT_SMARTY_PATH.LOGIN_PAGE_NAME);
-    }
-
-    if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.STYLESHEET_NAME))
-      {
-        $this->assign('stylesheet_file',NODE_CONTENT_SMARTY_PATH.STYLESHEET_NAME);
-      }
-    else
-      {
-        $this->assign('stylesheet_file',DEFAULT_CONTENT_SMARTY_PATH.STYLESHEET_NAME);
-      }
-
 /* Common content */
-    $this->assign('common_content_url',COMMON_CONTENT_URL);	/* For html href and src */
-    $this->assign('common_content_smarty_path',COMMON_CONTENT_SMARTY_PATH);	/* For smarty includes */
     $network = Network::GetCurrentNetwork();
 
 /* Useful stuff from config.php */
@@ -123,6 +99,7 @@ class SmartyWifidog extends Smarty {
 	$this->assign('base_url_path', BASE_URL_PATH);
 	$this->assign('base_ssl_path', BASE_SSL_PATH);
     $this->assign('base_non_ssl_path', BASE_NON_SSL_PATH);
+    $this->assign('common_images_url', COMMON_IMAGES_URL);
     $this->assign('hotspot_network_name',$network->getName());
     $this->assign('hotspot_network_url',$network->getHomepageURL());
 
@@ -132,19 +109,6 @@ class SmartyWifidog extends Smarty {
      $this->assign('userIsAtHotspot', Node::getCurrentRealNode() != null ? true : false);
 
      $this->assign('currentLocale', Locale::getCurrentLocale());
-   }
-
-/**similar to display(), but will find the content in the appropriate local content directory */
-   function displayLocalContent($template_filename)
-   {
-     if (is_file(NODE_CONTENT_PHP_RELATIVE_PATH.$template_filename))
-       {
-     $this->display(NODE_CONTENT_SMARTY_PATH.$template_filename);
-       }
-     else
-       {
-     $this->display(DEFAULT_CONTENT_SMARTY_PATH.$template_filename);
-       }
    }
 
    function SetTemplateDir( $template_dir)

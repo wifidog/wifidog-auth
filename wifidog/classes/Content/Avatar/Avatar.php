@@ -163,8 +163,7 @@ class Avatar extends Picture
         // Init values
         $html = '';
 
-        $html .= "<div class='user_ui_container'>\n";
-        $html .= "<div class='user_ui_object_class'>Picture (".get_class($this)." instance)</div>\n";
+        $html .= "<div class='user_ui_container ".get_class($this)."'>\n";
 
         $html .= "<img src='".htmlentities($this->getFileUrl())."' alt='".$this->getFileName()."''>";
         $html .= "</div>\n";

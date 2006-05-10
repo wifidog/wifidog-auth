@@ -567,8 +567,7 @@ class File extends Content
         // Init values
         $html = '';
 
-        $html .= "<div class='user_ui_container'>\n";
-        $html .= "<div class='user_ui_object_class'>File (".get_class($this)." instance)</div>\n";
+        $html .= "<div class='user_ui_container ".get_class($this)."'>\n";
 
         if($this->getFileSize() > 0) {
             $append_size = " (".$this->getFileSize(self :: UNIT_KILOBYTES)." "._("KB").")";

@@ -1,5 +1,6 @@
+/* Important note:  You may not assume ANYTHING about the path to images or media 
+that isn't under this file's theme pack.  In other words, no ../ relative links. */
 /********** General HTML section **********/
-
 body {
     margin: 0px;
     padding: 0px;
@@ -10,7 +11,7 @@ body {
     width : 97%;
     margin: 0px auto 20px auto;
     background-color: #FFF;
-    background: #dbffa8 url("../../images/bg_body.gif") repeat-x fixed 0px 0px;
+    background: #dbffa8 url("images/bg_body.gif") repeat-x fixed 0px 0px;
 }
 
 input {
@@ -129,7 +130,6 @@ select {
 
 /********** End Main structure section **********/
 
-
 div.tool_user_info {
     background-color: #C8FF7A;
     padding: 2px;
@@ -141,7 +141,7 @@ span.tool_user_info {
 div.navigation{
     text-align: center;
     font-size: 11px;
-    background-image: url(../../images/01_nav.gif);
+    background-image: url(images/01_nav.gif);
     background-repeat: repeat;
     background-position: left top;
     padding: 10px 5px 10px 5px;
@@ -177,7 +177,7 @@ form.language{
 }
 div.avis {
     padding: 20px 10px 10px 10px;
-    background-image: url(../../images/03_avis.gif);
+    background-image: url(images/03_avis.gif);
     background-repeat: repeat-x;
     background-position: left top;
     background-color: #FDFDFD;
@@ -399,9 +399,6 @@ a.navigation {
     margin: 2px;
     padding: 2px;
 }
-.user_ui_object_class {
-    display: none;
-}
 .user_ui_container {
     display: block;
 }
@@ -496,8 +493,8 @@ a.navigation {
     text-align: justify;
 }
 .flickr_photo {
-    background: url(../../images/flickr_shadowAlpha.png) no-repeat bottom right !important;
-    background: url(../../images/flickr_shadow.gif) no-repeat bottom right;
+    background: url(images/flickr_shadowAlpha.png) no-repeat bottom right !important;
+    background: url(images/flickr_shadow.gif) no-repeat bottom right;
     margin: 10px 0 0 10px !important;
     margin: 10px 0 0 5px;
 }

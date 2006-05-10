@@ -39,8 +39,8 @@
  *
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
@@ -56,8 +56,8 @@ require_once('classes/Node.php');
  *
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class ContentGroupElement extends Content
 {
@@ -444,8 +444,7 @@ class ContentGroupElement extends Content
             $displayed_content_html = $displayed_content->getUserUI();
         }
 
-        $html .= "<div class='user_ui_container'>\n";
-        $html .= "<div class='user_ui_object_class'>ContentGroupElement (".get_class($this)." instance)</div>\n";
+        $html .= "<div class='user_ui_container ".get_class($this)."'>\n";
         $html .= $displayed_content_html;
         $html .= $subclass_user_interface;
         $html .= "</div>\n";

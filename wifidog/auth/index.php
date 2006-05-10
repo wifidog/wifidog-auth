@@ -37,9 +37,9 @@
  * This is the main auth handler, be very carefull while editing this file!
  *
  * @package    WiFiDogAuthServer
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @author     Philippe April
- * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  * @copyright  2004-2006 Philippe April
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/

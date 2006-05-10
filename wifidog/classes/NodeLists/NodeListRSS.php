@@ -132,10 +132,10 @@ class NodeListRSS {
      *
      * @return void
      *
-     * @author     Benoit Gregoire <bock@step.polymtl.ca>
+     * @author     Benoit Grégoire <bock@step.polymtl.ca>
      * @author     Francois Proulx <francois.proulx@gmail.com>
      * @author     Max Horvath <max.horvath@maxspot.de>
-     * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+     * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
      * @copyright  2004-2006 Francois Proulx, Technologies Coeus inc.
      * @copyright  2006 Max Horvath, maxspot GmbH
      *
@@ -246,7 +246,7 @@ class NodeListRSS {
         $_docs->appendChild($_textNode);
 
         // image
-        if (defined('NETWORK_LOGO_NAME') && file_exists(WIFIDOG_ABS_FILE_PATH . "local_content/common/" . constant('NETWORK_LOGO_NAME'))) {
+        /*if (defined('NETWORK_LOGO_NAME') && file_exists(WIFIDOG_ABS_FILE_PATH . "local_content/common/" . constant('NETWORK_LOGO_NAME'))) {
             $_image = $this->_xmldoc->createElement("image");
             $_channel->appendChild($_image);
 
@@ -289,7 +289,7 @@ class NodeListRSS {
             $_image->appendChild($_description);
             $_textNode = $this->_xmldoc->createTextNode(_("List of the most recent Hotspots opened by the network: ") . $this->_network->getName());
             $_description->appendChild($_textNode);
-        }
+        }*/
 
         // Node details
         if ($this->_nodes) {
@@ -319,9 +319,9 @@ class NodeListRSS {
                 // Hotspot global status
                 if ($_node->getDeploymentStatus() != 'NON_WIFIDOG_NODE') {
                     if ($_nodeData['is_up'] == 't') {
-                        $_descriptionText .= "<img src='" . BASE_URL_PATH . "images/HotspotStatus/up.gif' alt='' />";
+                        $_descriptionText .= "<img src='" . COMMON_IMAGES_URL . "HotspotStatus/up.gif' alt='up' />";
                     } else {
-                        $_descriptionText .= "<img src='" . BASE_URL_PATH . "images/HotspotStatus/down.gif' alt='' />";
+                        $_descriptionText .= "<img src='" . COMMON_IMAGES_URL . "HotspotStatus/down.gif' alt='down' />";
                     }
                 }
 

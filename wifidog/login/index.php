@@ -59,9 +59,9 @@
  * http://auth.wirelesstoronto.ca:80/login?gw_address=207.50.119.2&gw_port=2060&gw_id=215&url=http://hotmail.com
  *
  * @package    WiFiDogAuthServer
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  * @copyright  2006 Max Horvath, maxspot GmbH
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/

@@ -40,9 +40,9 @@
  * file or make a local copy of it named local.config.php.
  *
  * @package    WiFiDogAuthServer
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  * @copyright  2005-2006 Max Horvath, maxspot GmbH
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
@@ -296,12 +296,8 @@ define('PHLICKR_REL_PATH',  'lib/');
  * Internal configuration values for WiFiDog - don't touch!
  */
 
-// Path to the directory containing the different node specific directories.
-// Relative to BASE_URL_PATH.
-define('LOCAL_CONTENT_REL_PATH', 'local_content/');
-
-// These are the file names of the different templates that can be put in
-// the CONTENT_PATH/(node_id)/ folders.
+// Filenames and directories
+define('NETWORK_THEME_PACKS_DIR', 'media/network_theme_packs/');
 define('STYLESHEET_NAME', 'stylesheet.css');
 define('LOGIN_PAGE_NAME', 'login.html');
 define('HOTSPOT_STATUS_PAGE', 'hotspot_status.php');

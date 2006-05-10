@@ -36,8 +36,8 @@
 /**
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
@@ -52,8 +52,8 @@ require_once('classes/Content/ContentGroup/ContentGroupElement.php');
  *
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class ContentGroup extends Content
 {
@@ -746,8 +746,7 @@ class ContentGroup extends Content
     public function getUserUI($subclass_user_interface = null, $hide_elements = false)
     {
         $html = '';
-        $html .= "<div class='user_ui_container'>\n";
-        $html .= "<div class='user_ui_object_class'>ContentGroup (".get_class($this)." instance)</div>\n";
+        $html .= "<div class='user_ui_container  ".get_class($this)."'>\n";
 
         if($hide_elements == false)
         {

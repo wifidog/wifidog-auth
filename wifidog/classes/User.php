@@ -35,8 +35,8 @@
 
 /**
  * @package    WiFiDogAuthServer
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
@@ -52,8 +52,8 @@ require_once('classes/InterfaceElements.php');
  * Abstract a User
  *
  * @package    WiFiDogAuthServer
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class User implements GenericObject
 {
@@ -234,13 +234,13 @@ class User implements GenericObject
         return $object;
     }
 
-    public static function purgeUnvalidatedUsers($days_since_creation)
+/*    public static function purgeUnvalidatedUsers($days_since_creation)
     {
         global $db;
         $days_since_creation = $db->escapeString($days_since_creation);
 
         //$db->execSqlUpdate("INSERT INTO users (user_id,username, account_origin,email,pass,account_status,validation_token,reg_date) VALUES ('$id_str','$username_str','$account_origin_str','$email_str','$password_hash','$status','$token',NOW())");
-    }
+    }*/
 
     /** @param $object_id The id of the user */
     function __construct($object_id)

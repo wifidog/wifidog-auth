@@ -85,7 +85,7 @@ $tool_html .=  $pattern_language->getSponsorInfo()->__toString();
 $tool_html .= "</div>";
 
 // Body
-$body_html = "<img src='".BASE_SSL_PATH."images/PatternLanguage/header.gif'>\n";
+$body_html = "<img src='images/header.gif'>\n";
 $body_html .= "<h1>"._("Archives")."</h1>\n";
 $body_html .= "<div class='pattern_language_body'>\n";
 $body_html .= "<ul class='pattern_language_menu'>";

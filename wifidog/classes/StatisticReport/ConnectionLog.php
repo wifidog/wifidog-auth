@@ -36,8 +36,8 @@
 /**
  * @package    WiFiDogAuthServer
  * @subpackage Statistics
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
@@ -52,8 +52,8 @@ require_once('classes/StatisticReport.php');
  *
  * @package    WiFiDogAuthServer
  * @subpackage Statistics
- * @author     Benoit Gregoire
- * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @author     Benoit Grégoire
+ * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class ConnectionLog extends StatisticReport
 {

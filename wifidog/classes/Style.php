@@ -35,8 +35,8 @@
 
 /**
  * @package    WiFiDogAuthServer
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  * @deprecated 2005-05-30 This file is NOT used anymore, kept until we move SQL
@@ -59,8 +59,8 @@ Header("Content-Type: text/html; charset=utf-8");
  * Style contains functions managing headers, footers, stylesheet, etc.
  *
  * @package    WiFiDogAuthServer
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  * @deprecated 2005-05-30 This class is NOT used anymore, kept until we move SQL
  * stats somewhere else.
  */
@@ -80,7 +80,6 @@ class Style
   {
     $smarty = new SmartyWifidog;
     $smarty->assign('title',$title);
-    //$retval = $smarty->fetch(DEFAULT_CONTENT_SMARTY_PATH.PAGE_HEADER_NAME);
     global $starttime;
     $starttime = microtime();
 

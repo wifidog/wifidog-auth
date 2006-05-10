@@ -37,8 +37,8 @@
 /**
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
@@ -55,8 +55,8 @@ require_once ('classes/Cache.php');
  *
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class Content implements GenericObject {
     /**
@@ -1023,9 +1023,8 @@ class Content implements GenericObject {
      * @return The HTML fragment for this interface */
     public function getUserUI($subclass_user_interface = null) {
         $html = '';
-        $html .= "<div class='user_ui_main_outer'>\n";
+        $html .= "<div class='user_ui_main_outer ".get_class($this)."'>\n";
         $html .= "<div class='user_ui_main_inner'>\n";
-        $html .= "<div class='user_ui_object_class'>Content (".get_class($this)." instance)</div>\n";
 
         if (!empty ($this->content_row['title'])) {
             $html .= "<div class='user_ui_title'>\n";

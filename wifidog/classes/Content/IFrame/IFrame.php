@@ -313,8 +313,7 @@ class IFrame extends Content
         // Init values
         $html = '';
 
-        $html .= "<div class='user_ui_container'>\n";
-        $html .= "<div class='user_ui_object_class'>IFrame (".get_class($this)." instance)</div>\n";
+        $html .= "<div class='user_ui_container ".get_class($this)."'>\n";
         $html .= "<iframe width='{$this->getWidth()}' height='{$this->getHeight()}' frameborder='1' src='{$this->getGeneratedUrl()}'>"._("Your browser does not support IFrames.")."</iframe>\n";
         $html .= $subclass_user_interface;
         $html .= "</div>\n";

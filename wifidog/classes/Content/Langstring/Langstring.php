@@ -36,8 +36,8 @@
 /**
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
@@ -56,8 +56,8 @@ require_once('classes/LocaleList.php');
  *
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
- * @author     Benoit Gregoire <bock@step.polymtl.ca>
- * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class Langstring extends Content {
     /**
@@ -518,8 +518,7 @@ class Langstring extends Content {
         // Init values
         $html = '';
 
-        $html .= "<div class='user_ui_container'>\n";
-        $html .= "<div class='user_ui_object_class'>Langstring (".get_class($this)." instance)</div>\n";
+        $html .= "<div class='user_ui_container ".get_class($this)."'>\n";
         $html .= "<div class='langstring'>\n";
         $html .= $this->getString();
         $html .= $subclass_user_interface;
