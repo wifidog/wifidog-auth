@@ -51,7 +51,7 @@ function HotspotsMapTranslations(browser_support, homepage, show_on_map, loading
 }
 
 // Constructor
-function HotspotsMap(viewport, external_object_name, translations, server_path)
+function HotspotsMap(viewport, external_object_name, translations, images_path)
 {
     // Init translations
     this.translations = translations;
@@ -72,7 +72,7 @@ function HotspotsMap(viewport, external_object_name, translations, server_path)
         this.external_object_name = external_object_name;
 
         // Init server path
-        this.server_path = server_path;
+        this.images_path = images_path;
     } else {
         alert(this.translations.browser_support);
     }
@@ -321,14 +321,14 @@ HotspotsMap.prototype.parseHotspotsStatus = function(xml_doc)
     }
 
     // Init marker icons
-    var upIcon = this.createIcon(this.server_path + "images/HotspotStatusMap/up" + image_extension, new GSize(20, 34),
-                                 this.server_path + "images/HotspotStatusMap/shadow.png", new GSize(37, 34),
+    var upIcon = this.createIcon(this.images_path + "HotspotStatusMap/up" + image_extension, new GSize(20, 34),
+                                 this.images_path + "HotspotStatusMap/shadow.png", new GSize(37, 34),
                                  new GPoint(10, 20), new GPoint(10, 1));
-    var downIcon = this.createIcon(this.server_path + "images/HotspotStatusMap/down" + image_extension, new GSize(20, 34),
-                                   this.server_path + "images/HotspotStatusMap/shadow.png", new GSize(37, 34),
+    var downIcon = this.createIcon(this.images_path + "HotspotStatusMap/down" + image_extension, new GSize(20, 34),
+                                   this.images_path + "HotspotStatusMap/shadow.png", new GSize(37, 34),
                                    new GPoint(10, 20), new GPoint(10, 1));
-    var unknownIcon = this.createIcon(this.server_path + "images/HotspotStatusMap/unknown" + image_extension, new GSize(22, 34),
-                                      this.server_path + "images/HotspotStatusMap/blank.gif", new GSize(22, 34),
+    var unknownIcon = this.createIcon(this.images_path + "HotspotStatusMap/unknown" + image_extension, new GSize(22, 34),
+                                      this.images_path + "HotspotStatusMap/blank.gif", new GSize(22, 34),
                                       new GPoint(11, 30), new GPoint(11, 1));
 
     // Parse the XML DOM

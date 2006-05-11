@@ -1,4 +1,7 @@
 2006-05-10 François Proulx <francois.proulx@gmail.com>
+	* Fixed Google Maps script path to images.
+
+2006-05-10 François Proulx <francois.proulx@gmail.com>
 	* Added sweetTitles tooltips script, now if you need to add tooltips simply add the 'title' attribute to you html <a>, <attr>, <accroym> tags
 	* Fixed usort bug in MainUI
 	* Fixed download (wget) in install.php

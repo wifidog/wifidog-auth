@@ -153,7 +153,7 @@ $script .= "            }\n";
 $script .= "        }\n";
 $script .= "    }\n";
 $script .= "    translations = new HotspotsMapTranslations('" . addcslashes(_("Sorry, your browser does not support Google Maps."), "'") . "', '" . addcslashes(_("Homepage"), "'") . "', '" . addcslashes(_("Show me on the map"), "'") . "', '" . addcslashes(_("Loading, please wait..."), "'") . "');\n";
-$script .= "    hotspots_map = new HotspotsMap('map_frame', 'hotspots_map', translations, '" . BASE_NON_SSL_PATH . "');\n";
+$script .= "    hotspots_map = new HotspotsMap('map_frame', 'hotspots_map', translations, '" . COMMON_IMAGES_URL . "');\n";
 $script .= "    hotspots_map.setXmlSourceUrl('" . GMAPS_XML_SOURCE_URL . "');\n";
 $script .= "    hotspots_map.setHotspotsInfoList('map_hotspots_list');\n";
 $script .= "    hotspots_map.setInitialPosition(" . $gis_data->getLatitude() . ", " . $gis_data->getLongitude() . ", " . $gis_data->getAltitude() . ");\n";
