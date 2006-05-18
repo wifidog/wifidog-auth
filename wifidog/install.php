@@ -162,84 +162,146 @@ $requiredMySQLVersion = '0.0.0'; // Todo
 $requiredPostgeSQLVersion = '0.0.0'; // Todo
 
 # Needed files/directories with write access
-$dir_array = array ('tmp', 'tmp/magpie_cache', 'lib/smarty', 'tmp/smarty/templates_c', 'lib/magpie', 'lib/Phlickr', 'config.php');
-
-$smarty_full_url    = 'http://smarty.php.net/do_download.php?download_file=Smarty-2.6.7.tar.gz';
-$magpierss_full_url = 'http://easynews.dl.sourceforge.net/sourceforge/magpierss/magpierss-0.71.1.tar.gz';
-$phlickr_full_url   = 'http://easynews.dl.sourceforge.net/sourceforge/phlickr/Phlickr-0.2.4.tgz';
-
-$neededPackages = array(
-  'smarty'    => array('needed' => 1, 'available' => 0, 'message' => '', 'file' => 'lib/smarty/Smarty.class.php'),
-  'magpierss' => array('needed' => 0, 'available' => 0, 'message' => '', 'file' => 'lib/magpie/rss_fetch.inc'),
-  'phlickr'   => array('needed' => 0, 'available' => 0, 'message' => '', 'file' => 'lib/Phlickr/Photo.php')
+$dir_array = array (
+    'tmp',
+    'tmp/magpie_cache',
+    'lib/smarty',
+    'tmp/smarty/templates_c',
+    'lib/magpie',
+    'lib/Phlickr',
+    'config.php'
 );
 
-$neededExtentions = array(
-  'xml'      => array('needed'    => 0,
-                      'available' => 0,
-                      'message'   => '<B>xml</B> extention is missing',
-                      'note'      => 'Required for RSS support'),
-  'pgsql'    => array('needed'    => 1,
-                      'available' => 0,
-                      'message'   => '<B>Posgresql</B> extention is missing',
-                      'note'      => 'Required to connect to Postgresql database'),
-  'mysql'    => array('needed'    => 0,
-                      'available' => 0,
-                      'message'   => '<B>MySQL</B> extention is missing',
-                      'note'      => 'Required to connect to MySQL database (experimental and not working)'),
-  'dom'      => array('needed'    => 1,
-                      'available' => 0,
-                      'message'   => '<B>DOM</B> extention is missing',
-                      'note'      => 'Required if you want to export the list of HotSpots as a RSS feed'),
-  'gettext'  => array('needed'    => 0,
-                      'available' => 0,
-                      'message'   => 'Gettext is unavailable, the auth-server will work, but you will loose internationalization',
-                      'note'      => 'Internationalization support'),
-  'mbstring' => array('needed'    => 1,
-                      'available' => 0,
-                      'message'   => '<B>mbstring</B> extention is missing',
-                      'note'      => 'Required for core auth-server and RSS support'),
-  'mcrypt'   => array('needed'    => 0,
-                      'available' => 0,
-                      'message'   => '<B>mcrypt</B> extention is missing',
-                      'note'      => 'Required for RADIUS support'),
-  'mhash'    => array('needed'    => 0,
-                      'available' => 0,
-                      'message'   => '<B>mhash</B> extention is missing',
-                      'note'      => 'Required for RADIUS support'),
-  'xmlrpc'   => array('needed'    => 0,
-                      'available' => 0,
-                      'message'   => '<B>xmlrpc</B> extention is missing',
-                      'note'      => 'Required for RADIUS support')
+$smarty_full_url = 'http://smarty.php.net/do_download.php?download_file=Smarty-2.6.13.tar.gz';
+$magpierss_full_url = 'http://easynews.dl.sourceforge.net/sourceforge/magpierss/magpierss-0.72.tar.gz';
+$phlickr_full_url = 'http://easynews.dl.sourceforge.net/sourceforge/phlickr/Phlickr-0.2.4.tgz';
+
+$neededPackages = array (
+    'smarty' => array (
+        'needed' => 1,
+        'available' => 0,
+        'message' => '',
+        'file' => 'lib/smarty/Smarty.class.php'
+    ),
+    'magpierss' => array (
+        'needed' => 0,
+        'available' => 0,
+        'message' => '',
+        'file' => 'lib/magpie/rss_fetch.inc'
+    ),
+    'phlickr' => array (
+        'needed' => 0,
+        'available' => 0,
+        'message' => '',
+        'file' => 'lib/Phlickr/Photo.php'
+    )
+);
+
+$neededExtentions = array (
+    'xml' => array (
+        'needed' => 0,
+        'available' => 0,
+        'message' => '<B>xml</B> extention is missing',
+        'note' => 'Required for RSS support'
+    ),
+    'pgsql' => array (
+        'needed' => 1,
+        'available' => 0,
+        'message' => '<B>Posgresql</B> extention is missing',
+        'note' => 'Required to connect to Postgresql database'
+    ),
+    'dom' => array (
+        'needed' => 1,
+        'available' => 0,
+        'message' => '<B>DOM</B> extention is missing',
+        'note' => 'Required if you want to export the list of HotSpots as a RSS feed'
+    ),
+    'gettext' => array (
+        'needed' => 0,
+        'available' => 0,
+        'message' => 'Gettext is unavailable, the auth-server will work, but you will loose internationalization',
+        'note' => 'Internationalization support'
+    ),
+    'mbstring' => array (
+        'needed' => 1,
+        'available' => 0,
+        'message' => '<B>mbstring</B> extention is missing',
+        'note' => 'Required for core auth-server and RSS support'
+    ),
+    'mcrypt' => array (
+        'needed' => 0,
+        'available' => 0,
+        'message' => '<B>mcrypt</B> extention is missing',
+        'note' => 'Required for RADIUS support'
+    ),
+    'mhash' => array (
+        'needed' => 0,
+        'available' => 0,
+        'message' => '<B>mhash</B> extention is missing',
+        'note' => 'Required for RADIUS support'
+    ),
+    'xmlrpc' => array (
+        'needed' => 0,
+        'available' => 0,
+        'message' => '<B>xmlrpc</B> extention is missing',
+        'note' => 'Required for RADIUS support'
+    )
 );
 
 $loadedExtensions = array_flip(get_loaded_extensions()); # Debug : An empty array for $loadedExtensions will show needed dependencies
 
-$neededPEARPackages = array(
-  'radius'      => array('needed' => 0, 'available' => 0, 'command' => "return dl('radius.so');",                'message' => 'Try in command line : pear install radius'),
-  'Auth_RADIUS' => array('needed' => 0, 'available' => 0, 'command' => "return include_once 'Auth/RADIUS.php';", 'message' => 'Try in command line : pear install Auth_RADIUS'),
-  'Crypt_CHAP'  => array('needed' => 0, 'available' => 0, 'command' => "return include_once 'Crypt/CHAP.php';",  'message' => 'Try in command line : pear install Crypt_CHAP (mhash and mcrypt extensions are needed)')
+$neededPEARPackages = array (
+    'radius' => array (
+        'needed' => 0,
+        'available' => 0,
+        'command' => "return dl('radius.so');",
+        'message' => 'Try in command line : pear install radius'
+    ),
+    'Auth_RADIUS' => array (
+        'needed' => 0,
+        'available' => 0,
+        'command' => "return include_once 'Auth/RADIUS.php';",
+        'message' => 'Try in command line : pear install Auth_RADIUS'
+    ),
+    'Crypt_CHAP' => array (
+        'needed' => 0,
+        'available' => 0,
+        'command' => "return include_once 'Crypt/CHAP.php';",
+        'message' => 'Try in command line : pear install Crypt_CHAP (mhash and mcrypt extensions are needed)'
+    )
 );
 
-$optionsInfo = array(
-  'SSL_AVAILABLE'                => array('title'   => 'SSL Support',
-                                          'depend'  => 'return 1;',
-                                          'message' => '&nbsp;'),
-  'RSS_SUPPORT'                  => array('title'   => 'RSS Support',
-                                          'depend'  => 'return ($neededExtentions[\'xml\'][\'available\'] && $neededPackages[\'magpierss\'][\'available\']);',
-                                          'message' => 'Missing <B>xml</B> extentions or <B>MagpieRSS</B>'),
-  'PHLICKR_SUPPORT'              => array('title'   => 'Flickr Photostream content support',
-                                          'depend'  => 'return $neededPackages[\'phlickr\'][\'available\'];',
-                                          'message' => '<B>Phlickr</B> library not installed'),
-  'CONF_USE_CRON_FOR_DB_CLEANUP' => array('title'   => 'Use cron for DB cleanup',
-                                          'depend'  => 'return 1;',
-                                          'message' => '&nbsp;'),
-  'XSLT_SUPPORT'                 => array('title'   => 'XSLT Support',
-                                          'depend'  => 'return 1;',
-                                          'message' => '&nbsp;'),
-  'GMAPS_HOTSPOTS_MAP_ENABLED'   => array('title'   => 'Google Maps Support',
-                                          'depend'  => 'return 1;',
-                                          'message' => '&nbsp;')
+$optionsInfo = array (
+    'SSL_AVAILABLE' => array (
+        'title' => 'SSL Support',
+        'depend' => 'return 1;',
+        'message' => '&nbsp;'
+    ),
+    'RSS_SUPPORT' => array (
+        'title' => 'RSS Support',
+        'depend' => 'return ($neededExtentions[\'xml\'][\'available\'] && $neededPackages[\'magpierss\'][\'available\']);',
+        'message' => 'Missing <B>xml</B> extentions or <B>MagpieRSS</B>'
+    ),
+    'PHLICKR_SUPPORT' => array (
+        'title' => 'Flickr Photostream content support',
+        'depend' => 'return $neededPackages[\'phlickr\'][\'available\'];',
+        'message' => '<B>Phlickr</B> library not installed'
+    ),
+    'CONF_USE_CRON_FOR_DB_CLEANUP' => array (
+        'title' => 'Use cron for DB cleanup',
+        'depend' => 'return 1;',
+        'message' => '&nbsp;'
+    ),
+    'XSLT_SUPPORT' => array (
+        'title' => 'XSLT Support',
+        'depend' => 'return 1;',
+        'message' => '&nbsp;'
+    ),
+    'GMAPS_HOTSPOTS_MAP_ENABLED' => array (
+        'title' => 'Google Maps Support',
+        'depend' => 'return 1;',
+        'message' => '&nbsp;'
+    )
 );
 
 foreach ($neededExtentions as $key => $value) { # Detect availables extentions
@@ -253,7 +315,7 @@ foreach ($neededPEARPackages as $key => $value) { # Detect availables PEAR Packa
 }
 
 foreach ($neededPackages as $key => $value) { # Detect installed libraries (smarty, ...)
-    if (file_exists(WIFIDOG_ABS_FILE_PATH.$neededPackages[$key]['file']))
+    if (file_exists(WIFIDOG_ABS_FILE_PATH . $neededPackages[$key]['file']))
         $neededPackages[$key]['available'] = 1;
 }
 
@@ -266,7 +328,7 @@ if (!empty ($config)) # If not empty, save javascript 'config' variable to confi
 ### Read Configuration file. Keys and Values => define('FOO', 'BRAK');
 # Use config.php if local.config.php does not exist
 //if(!file_exists(WIFIDOG_ABS_FILE_PATH."$LOCAL_CONFIG_FILE"))
-$contentArray = file(WIFIDOG_ABS_FILE_PATH."$CONFIG_FILE");
+$contentArray = file(WIFIDOG_ABS_FILE_PATH . "$CONFIG_FILE");
 //else
 //  $contentArray = file(WIFIDOG_ABS_FILE_PATH."$LOCAL_CONFIG_FILE");
 
@@ -276,8 +338,14 @@ foreach ($contentArray as $line) {
     #print "$line<BR>"; # Debug
     if (preg_match("/^define\((.+)\);/", $line, $matchesArray)) {
         list ($key, $value) = explode(',', $matchesArray[1]);
-        $pattern = array ("/^'/", "/'$/");
-        $replacement = array ('', '');
+        $pattern = array (
+            "/^'/",
+            "/'$/"
+        );
+        $replacement = array (
+            '',
+            ''
+        );
         $key = preg_replace($pattern, $replacement, trim($key));
         $value = preg_replace($pattern, $replacement, trim($value));
         $configArray[$key] = $value;
@@ -323,12 +391,27 @@ function refreshButton() {
 EndHTML;
 }
 
+/** Use PHP internal functions to download a file */
 function downloadFile($remoteURL, $localPath) {
-	set_time_limit(1500); // 25 minutes timeout
-	if(copy($remoteURL, $localPath))
-		return true;
-	else
-		return false;
+    set_time_limit(1500); // 25 minutes timeout
+    if (copy($remoteURL, $localPath))
+        return true;
+    else
+        return false;
+}
+/** Use PHP internal functions to download a file */
+function execVerbose($command, & $output, & $return_var) {
+    print "$command";
+    $retval = exec($command.'  2>&1', & $output, & $return_var); 
+    if ($return_var != 0) {
+        print "<p style='color:red'>Error:</em>  Command did not complete successfully  (returned $return_var): <br/>\n";
+        if ($output) {
+            foreach ($output as $output_line)
+                print " $output_line <br/>\n";
+        }
+        print "</p>\n";
+    }
+    return $retval;
 }
 
 ###################################
@@ -348,9 +431,9 @@ EndHTML;
 
     print "Download source code ($filename) : ";
     if (!file_exists($filename))
-      exec("wget \"$url\"", $output, $return);
+      execVerbose("wget \"$url\"", $output, $return);
     if (!file_exists($filename)) // wget success if file exists
-      exec("wget \"$full_url\" 2>&1", $output_array, $return);
+      execVerbose("wget \"$full_url\" 2>&1", $output_array, $return);
     if (!file_exists($filename)) {
       print "<B STYLE=\"color:red\">Error</B><P>Current working directory : <B>$basepath/tmp/smarty</B>";
       $output = implode("\n", $output_array);
@@ -364,14 +447,12 @@ EndHTML;
     $dirname = array_shift(split(".tar.gz", $filename));
 
     if (!file_exists($dirname))
-      exec("tar -xzf $dirname.tar.gz &>/tmp/tar.output", $output, $return);
+      execVerbose("tar -xzf $dirname.tar.gz", $output, $return);
     print "OK<BR>";
-
-    exec("pwd", $output, $return);
     print "Copying : ";
     if (!file_exists('../../lib/smarty/Smarty.class.php'));
-      exec("cp -r $dirname/libs/* ../../lib/smarty &>/tmp/cp.output", $output, $return);
-      exec("cp -r $dirname/libs/* ../../lib/smarty &>/tmp/cp.output", $output, $return);
+      execVerbose("cp -r $dirname/libs/* ../../lib/smarty", $output, $return);
+      execVerbose("cp -r $dirname/libs/* ../../lib/smarty", $output, $return);
       $copy
     print "OK<BR>";
 }*/
@@ -383,8 +464,8 @@ function saveConfig($data) {
 
     global $CONFIG_FILE;
 
-    $contentArray = file(WIFIDOG_ABS_FILE_PATH."$CONFIG_FILE");
-    $fd = fopen(WIFIDOG_ABS_FILE_PATH."$CONFIG_FILE", 'w');
+    $contentArray = file(WIFIDOG_ABS_FILE_PATH . "$CONFIG_FILE");
+    $fd = fopen(WIFIDOG_ABS_FILE_PATH . "$CONFIG_FILE", 'w');
 
     $defineArrayToken = array ();
     $defineArrayToken = explode('|', $data);
@@ -399,16 +480,28 @@ function saveConfig($data) {
         #print "L=$line<BR>\n";
         if (preg_match("/^define\((.+)\);/", $line, $matchesArray)) {
             list ($key, $value) = explode(',', $matchesArray[1]);
-            $pattern = array ("/^'/", "/'$/");
-            $replacement = array ('', '');
+            $pattern = array (
+                "/^'/",
+                "/'$/"
+            );
+            $replacement = array (
+                '',
+                ''
+            );
             $key = preg_replace($pattern, $replacement, trim($key));
             //$value = preg_replace($pattern, $replacement, trim($value));
 
             if (array_key_exists($key, $defineArray)) { // A new value is defined
                 #print "$key EXISTS<BR>";
                 #print "define => (" . $defineArray[$key] . ")<BR>";
-                $pattern = array ("/^\\\'/", "/\\\'$/");
-                $replacement = array ("'", "'");
+                $pattern = array (
+                    "/^\\\'/",
+                    "/\\\'$/"
+                );
+                $replacement = array (
+                    "'",
+                    "'"
+                );
                 $value = preg_replace($pattern, $replacement, trim($defineArray[$key]));
                 #print "(define('$key', $value);)<BR>";
                 fwrite($fd, "define('$key', $value);\n"); # Write the new define($name, $value)
@@ -511,7 +604,12 @@ switch ($page) {
 
         refreshButton();
         if ($error != 1) {
-            navigation(array (array ("title" => "Next", "page" => "permission")));
+            navigation(array (
+                array (
+                    "title" => "Next",
+                    "page" => "permission"
+                )
+            ));
         }
 
         break;
@@ -527,31 +625,31 @@ switch ($page) {
         $cmd_chown = '';
         $error = 0;
 
-        print "<P><B>Installation directory</B>: ".WIFIDOG_ABS_FILE_PATH."</P>";
+        print "<P><B>Installation directory</B>: " . WIFIDOG_ABS_FILE_PATH . "</P>";
         print "<P><B>HTTP daemon UNIX username/group</B>: $process_username/$process_group</P>";
         #    print "<P><B>HTTPD group</B>: $process_group<BR</P>";
         print "<P><TABLE BORDER=\"1\"><TR><TD><B>Directory</B></TD></TD><TD><B>Owner</B></TD><TD><B>Writable</B></TD></TR>\n";
 
         foreach ($dir_array as $dir) {
             print "<TR><TD>$dir</TD>";
-            if (!file_exists(WIFIDOG_ABS_FILE_PATH."$dir")) {
+            if (!file_exists(WIFIDOG_ABS_FILE_PATH . "$dir")) {
                 print "<TD COLSPAN=\"2\" STYLE=\"text-align:center;\">Missing</TD></TR>\n";
-                $cmd_mkdir .= WIFIDOG_ABS_FILE_PATH."$dir ";
-                $cmd_chown .= WIFIDOG_ABS_FILE_PATH."$dir ";
+                $cmd_mkdir .= WIFIDOG_ABS_FILE_PATH . "$dir ";
+                $cmd_chown .= WIFIDOG_ABS_FILE_PATH . "$dir ";
                 $error = 1;
                 continue;
             }
 
-            $dir_info = posix_getpwuid(fileowner(WIFIDOG_ABS_FILE_PATH."$dir"));
+            $dir_info = posix_getpwuid(fileowner(WIFIDOG_ABS_FILE_PATH . "$dir"));
             $dir_owner_username = $dir_info['name'];
             print "<TD>$dir_owner_username</TD>";
 
-            if (is_writable(WIFIDOG_ABS_FILE_PATH."$dir")) {
+            if (is_writable(WIFIDOG_ABS_FILE_PATH . "$dir")) {
                 print "<TD>YES</TD>";
             }
             else {
                 print "<TD>NO</TD>";
-                $cmd_chown .= WIFIDOG_ABS_FILE_PATH."$dir ";
+                $cmd_chown .= WIFIDOG_ABS_FILE_PATH . "$dir ";
                 $error = 1;
             }
             print "</TR>\n";
@@ -560,7 +658,16 @@ switch ($page) {
 
         if ($error != 1) {
             print "<P><B>Note:</B> Please validate that 'Installation directory' value is the right one. If this value is wrong, the PATH de automatic detection will not work as expected";
-            navigation(array (array ("title" => "Back", "page" => "version"), array ("title" => "Next", "page" => "smarty")));
+            navigation(array (
+                array (
+                    "title" => "Back",
+                    "page" => "version"
+                ),
+                array (
+                    "title" => "Next",
+                    "page" => "smarty"
+                )
+            ));
         }
         else {
             refreshButton();
@@ -568,7 +675,7 @@ switch ($page) {
             if (!empty ($cmd_mkdir))
                 print "<P><B>For instance</B> : mkdir $cmd_mkdir";
             if (!empty ($cmd_chown))
-                print "<P><B>For instance</B> : chown -R $process_username:$process_group $cmd_chown";
+                print "<P><B>For instance</B> :<br/>chgrp -R $process_group $cmd_chown;<br/>chmod g+wx $cmd_chown;";
             print "<P>After permissions modification done, hit the REFRESH button to see the NEXT button and continue with the installation";
         }
         break;
@@ -582,15 +689,15 @@ EndHTML;
             print "Already installed !<br/>";
         }
         else {
-            chdir(WIFIDOG_ABS_FILE_PATH."tmp");
+            chdir(WIFIDOG_ABS_FILE_PATH . "tmp");
             list ($url, $filename) = split("=", $smarty_full_url);
 
             print "Download source code ($filename) : ";
-            if (!file_exists("/tmp/".$filename))
-                //exec("wget \"$smarty_full_url\" 2>&1", $output, $return);
-                downloadFile($smarty_full_url, "/tmp/".$filename);
+            if (!file_exists(WIFIDOG_ABS_FILE_PATH."tmp/" . $filename))
+                //execVerbose("wget \"$smarty_full_url\" 2>&1", $output, $return);
+                downloadFile($smarty_full_url, WIFIDOG_ABS_FILE_PATH."tmp/" . $filename);
 
-            if (!file_exists("/tmp/".$filename)) {
+            if (!file_exists(WIFIDOG_ABS_FILE_PATH."tmp/" . $filename)) {
                 print "<B STYLE=\"color:red\">Error</B><P>Current working directory : <B>$basepath/tmp/smarty</B>";
                 $output = implode("\n", $output);
                 print "<PRE><B>wget \"$smarty_full_url\"</B>\n$output</PRE>";
@@ -601,22 +708,29 @@ EndHTML;
             }
 
             print "Uncompressing : ";
-            $dir_array = split(".tar.gz", "/tmp/".$filename);
+            $dir_array = split(".tar.gz", WIFIDOG_ABS_FILE_PATH."tmp/" . $filename);
             $dirname = array_shift($dir_array);
 
             if (!file_exists($dirname))
-                exec("tar -xzf $dirname.tar.gz &>/tmp/tar.output", $output, $return);
+                execVerbose("tar -xzf $dirname.tar.gz", $output, $return);
             print "OK<BR>";
-
-            exec("pwd", $output, $return);
             print "Copying : ";
-            if (!file_exists(WIFIDOG_ABS_FILE_PATH."lib/smarty"));
-            exec("cp -r $dirname/libs/* ".WIFIDOG_ABS_FILE_PATH."/lib/smarty &>/tmp/cp.output", $output, $return); # TODO : Utiliser SMARTY_REL_PATH
+            if (!file_exists(WIFIDOG_ABS_FILE_PATH . "lib/smarty"));
+            execVerbose("cp -r $dirname/libs/* " . WIFIDOG_ABS_FILE_PATH . "/lib/smarty", $output, $return); # TODO : Utiliser SMARTY_REL_PATH
             print "OK<BR>";
 
             refreshButton();
         }
-        navigation(array (array ("title" => "Back", "page" => "permission"), array ("title" => "Next", "page" => "magpierss")));
+        navigation(array (
+            array (
+                "title" => "Back",
+                "page" => "permission"
+            ),
+            array (
+                "title" => "Next",
+                "page" => "magpierss"
+            )
+        ));
         break;
         ###################################
     case 'magpierss' : // Download, uncompress and install MagpieRSS
@@ -624,19 +738,28 @@ EndHTML;
 
         if ($neededPackages['magpierss']['available']) {
             print "Already installed !<BR>";
-            navigation(array (array ("title" => "Back", "page" => "smarty"), array ("title" => "Next", "page" => "phlickr")));
+            navigation(array (
+                array (
+                    "title" => "Back",
+                    "page" => "smarty"
+                ),
+                array (
+                    "title" => "Next",
+                    "page" => "phlickr"
+                )
+            ));
         }
         elseif ($action == 'install') {
-            chdir(WIFIDOG_ABS_FILE_PATH."tmp");
+            chdir(WIFIDOG_ABS_FILE_PATH . "tmp");
             $filename_array = preg_split("/\//", $magpierss_full_url);
             $filename = array_pop($filename_array);
 
             print "Download source code ($filename) : ";
-            if (!file_exists("/tmp/".$filename))
-                //exec("wget \"$magpierss_full_url\" 2>&1", $output, $return);
-                downloadFile($smarty_full_url, "/tmp/".$filename);
+            if (!file_exists(WIFIDOG_ABS_FILE_PATH."tmp/" . $filename))
+                //execVerbose("wget \"$magpierss_full_url\" 2>&1", $output, $return);
+                downloadFile($magpierss_full_url, WIFIDOG_ABS_FILE_PATH."tmp/" . $filename);
 
-            if (!file_exists("/tmp/".$filename)) {
+            if (!file_exists(WIFIDOG_ABS_FILE_PATH."tmp/" . $filename)) {
                 print "<B STYLE=\"color:red\">Error</B><P>Current working directory : <B>$basepath/tmp/smarty</B>";
                 $output = implode("\n", $output);
                 print "<PRE><B>wget \"$magpierss_full_url\"</B>\n$output</PRE>";
@@ -647,26 +770,49 @@ EndHTML;
             }
 
             print "Uncompressing : ";
-            $dir_array = split(".tar.gz", "/tmp/".$filename);
+            $dir_array = split(".tar.gz", WIFIDOG_ABS_FILE_PATH."tmp/" . $filename);
             $dirname = array_shift($dir_array);
             if (!file_exists($dirname))
-                exec("tar -xzf $dirname.tar.gz &>/tmp/tar.output", $output, $return);
+                execVerbose("tar -xzf $dirname.tar.gz", $output, $return);
             print "OK<BR>";
 
             print "Copying : ";
-            exec("cp -r $dirname/* ../lib/magpie &>/tmp/cp.output", $output, $return); # TODO : Utiliser MAGPIE_REL_PATH
+            execVerbose("cp -r $dirname/* ".WIFIDOG_ABS_FILE_PATH."lib/magpie", $output, $return); # TODO : Utiliser MAGPIE_REL_PATH
             print "OK<BR>";
 
             refreshButton();
-            navigation(array (array ("title" => "Back", "page" => "smarty"), array ("title" => "Next", "page" => "phlickr")));
+            navigation(array (
+                array (
+                    "title" => "Back",
+                    "page" => "smarty"
+                ),
+                array (
+                    "title" => "Next",
+                    "page" => "phlickr"
+                )
+            ));
         }
         else {
             print<<< EndHTML
-<P><A HREF="http://magpierss.sourceforge.net/">MagpieRSS</A> provides an XML-based (expat) RSS parser in PHP. MagpieRSS is needed by Wifidog for RSS feeds. It's is recommended to install MagpieRSS, if you don't, RSS feeds options will be disable.
+<P><A HREF="http://magpierss.sourceforge.net/">MagpieRSS</A> provides an XML-based (expat) RSS parser in PHP. MagpieRSS is needed by Wifidog for RSS feeds. It's is recommended to install MagpieRSS, if you don't, RSS feeds options will be disabled.
 
 <P>Do you want to install MagpieRSS ?
 EndHTML;
-            navigation(array (array ("title" => "Back", "page" => "smarty"), array ("title" => "Install", "page" => "magpierss", "action" => "install"), array ("title" => "Next", "page" => "phlickr")));
+            navigation(array (
+                array (
+                    "title" => "Back",
+                    "page" => "smarty"
+                ),
+                array (
+                    "title" => "Install",
+                    "page" => "magpierss",
+                    "action" => "install"
+                ),
+                array (
+                    "title" => "Next",
+                    "page" => "phlickr"
+                )
+            ));
         }
         break;
         ###################################
@@ -675,19 +821,28 @@ EndHTML;
 
         if ($neededPackages['phlickr']['available']) {
             print "Already installed !<BR>";
-            navigation(array (array ("title" => "Back", "page" => "magpierss"), array ("title" => "Next", "page" => "database")));
+            navigation(array (
+                array (
+                    "title" => "Back",
+                    "page" => "magpierss"
+                ),
+                array (
+                    "title" => "Next",
+                    "page" => "database"
+                )
+            ));
         }
         elseif ($action == 'install') {
-            chdir(WIFIDOG_ABS_FILE_PATH."tmp");
+            chdir(WIFIDOG_ABS_FILE_PATH . "tmp");
             $filename_array = preg_split("/\//", $phlickr_full_url);
             $filename = array_pop($filename_array);
 
             print "Download source code ($filename) : ";
-            if (!file_exists("/tmp/".$filename))
-                //exec("wget \"$phlickr_full_url\" 2>&1", $output, $return);
-                downloadFile($smarty_full_url, "/tmp/".$filename);
+            if (!file_exists(WIFIDOG_ABS_FILE_PATH."tmp/" . $filename))
+                //execVerbose("wget \"$phlickr_full_url\" 2>&1", $output, $return);
+                downloadFile($smarty_full_url, WIFIDOG_ABS_FILE_PATH."tmp/" . $filename);
 
-            if (!file_exists("/tmp/".$filename)) { # Error occured, print output of wget
+            if (!file_exists(WIFIDOG_ABS_FILE_PATH."tmp/" . $filename)) { # Error occured, print output of wget
                 print "<B STYLE=\"color:red\">Error</B><P>Current working directory : <B>$basepath/tmp/smarty</B>";
                 $output = implode("\n", $output);
                 print "<PRE><B>wget \"$phlickr_full_url\"</B>\n$output</PRE>";
@@ -698,20 +853,29 @@ EndHTML;
             }
 
             print "Uncompressing : ";
-            $dirname_array = split(".tgz", "/tmp/".$filename);
+            $dirname_array = split(".tgz", WIFIDOG_ABS_FILE_PATH."tmp/" . $filename);
             $dirname = array_shift($dirname_array);
             if (!file_exists($dirname))
-                exec("tar -xzf $dirname.tgz &>/tmp/tar.output", $output, $return);
+                execVerbose("tar -xzf $dirname.tgz", $output, $return);
             print "OK<BR>";
 
             print "Copying : ";
-            if (!file_exists('../../lib/Phlickr/Photo.php'))
-                exec("cp -r $dirname/* ../lib/Phlickr &>/tmp/cp.output", $output, $return); # TODO : Utiliser PHLICKR_REL_PATH
+            if (!file_exists(WIFIDOG_ABS_FILE_PATH.'/Phlickr/Photo.php'))
+                execVerbose("cp -r $dirname/* ".WIFIDOG_ABS_FILE_PATH."lib/Phlickr", $output, $return); # TODO : Utiliser PHLICKR_REL_PATH
             print "OK<BR>";
 
             refreshButton();
             // Skipping jpgraph install
-            navigation(array (array ("title" => "Back", "page" => "magpierss"), array ("title" => "Next", "page" => "database")));
+            navigation(array (
+                array (
+                    "title" => "Back",
+                    "page" => "magpierss"
+                ),
+                array (
+                    "title" => "Next",
+                    "page" => "database"
+                )
+            ));
         }
         else {
             print<<< EndHTML
@@ -719,7 +883,21 @@ EndHTML;
 
 <P>Do you want to install Phlickr ?
 EndHTML;
-            navigation(array (array ("title" => "Back", "page" => "magpierss"), array ("title" => "Install", "page" => "phlickr", "action" => "install"), array ("title" => "Next", "page" => "database")));
+            navigation(array (
+                array (
+                    "title" => "Back",
+                    "page" => "magpierss"
+                ),
+                array (
+                    "title" => "Install",
+                    "page" => "phlickr",
+                    "action" => "install"
+                ),
+                array (
+                    "title" => "Next",
+                    "page" => "database"
+                )
+            ));
         }
         break;
         ###################################
@@ -728,15 +906,24 @@ EndHTML;
 
         if ($neededPackages['jpgraph']['available']) {
             print "Already installed !<BR>";
-            navigation(array (array ("title" => "Back", "page" => "phlickr"), array ("title" => "Next", "page" => "database")));
+            navigation(array (
+                array (
+                    "title" => "Back",
+                    "page" => "phlickr"
+                ),
+                array (
+                    "title" => "Next",
+                    "page" => "database"
+                )
+            ));
         }
         elseif ($action == 'install') {
-            chdir(WIFIDOG_ABS_FILE_PATH."tmp");
+            chdir(WIFIDOG_ABS_FILE_PATH . "tmp");
             $filename = array_pop(preg_split("/\//", $jpgraph_full_url));
 
             print "Download source code ($filename) : ";
             if (!file_exists($filename))
-                exec("wget \"$jpgraph_full_url\" 2>&1", $output, $return);
+                execVerbose("wget \"$jpgraph_full_url\" 2>&1", $output, $return);
             if (!file_exists($filename)) { # Error occured, print output of wget
                 print "<B STYLE=\"color:red\">Error</B><P>Current working directory : <B>$basepath/tmp</B>";
                 $output = implode("\n", $output);
@@ -750,17 +937,26 @@ EndHTML;
             print "Uncompressing : ";
             $dirname = array_shift(split(".tar.gz", $filename));
             if (!file_exists($dirname))
-                exec("tar -xzf $dirname.tar.gz &>/tmp/tar.output", $output, $return);
+                execVerbose("tar -xzf $dirname.tar.gz", $output, $return);
             print "OK<BR>";
 
             print "Copying : ";
-            if (!file_exists('../../lib/jpgraph/jpgraph.php'))
-                exec("cp $dirname/src/* ../lib/jpgraph &>/tmp/cp.output", $output, $return); # TODO : Utiliser JPGRAPH_REL_PATH
+            if (!file_exists(WIFIDOG_ABS_FILE_PATH."lib/jpgraph/jpgraph.php"))
+                execVerbose("cp $dirname/src/* ".WIFIDOG_ABS_FILE_PATH."lib/jpgraph", $output, $return); # TODO : Utiliser JPGRAPH_REL_PATH
 
             print "OK<BR>";
 
             refreshButton();
-            navigation(array (array ("title" => "Back", "page" => "phlickr"), array ("title" => "Next", "page" => "database")));
+            navigation(array (
+                array (
+                    "title" => "Back",
+                    "page" => "phlickr"
+                ),
+                array (
+                    "title" => "Next",
+                    "page" => "database"
+                )
+            ));
         }
         else {
             print<<< EndHTML
@@ -769,7 +965,21 @@ JpGraph is not currently use by Wifidog (will be use for statistique graph in a 
 
 <P>Do you want to install JpGraph ?
 EndHTML;
-            navigation(array (array ("title" => "Back", "page" => "phlickr"), array ("title" => "Install", "page" => "jpgraph", "action" => "install"), array ("title" => "Next", "page" => "database")));
+            navigation(array (
+                array (
+                    "title" => "Back",
+                    "page" => "phlickr"
+                ),
+                array (
+                    "title" => "Install",
+                    "page" => "jpgraph",
+                    "action" => "install"
+                ),
+                array (
+                    "title" => "Next",
+                    "page" => "database"
+                )
+            ));
         }
         break;
         ###################################
@@ -792,9 +1002,9 @@ EndHTML;
                 if ($neededExtentions[$dbname_lower]['available'] == 0) # Validate dependencie
                     continue;
                 if ($CONF_DBMS == $key)
-                    print "    <OPTION value=\"$key\" SELECTED>".$matchesArray[2]."</OPTION>\n";
+                    print "    <OPTION value=\"$key\" SELECTED>" . $matchesArray[2] . "</OPTION>\n";
                 else
-                    print "    <OPTION value=\"$key\">".$matchesArray[2]."</OPTION>\n";
+                    print "    <OPTION value=\"$key\">" . $matchesArray[2] . "</OPTION>\n";
             }
         }
 
@@ -818,11 +1028,14 @@ EndHTML;
   }
 </script>
 
-<P><B>Note</B> : MySQL support is currently broken</P>
-
 EndHTML;
 
-        navigation(array (array ("title" => "Back", "page" => "magpierss"))); #, array("title" => "Next", "page" => "testdatabase")));
+        navigation(array (
+            array (
+                "title" => "Back",
+                "page" => "magpierss"
+            )
+        )); #, array("title" => "Next", "page" => "testdatabase")));
         print<<< EndHTML
 <P><A HREF="#" ONCLICK="javascript: document.myform.page.value='testdatabase'; submitDatabaseValue(); document.myform.submit();" CLASS="button">Next</A></P>
 
@@ -832,8 +1045,7 @@ EndHTML;
         ###################################
     case 'testdatabase' :
         print "<H1>Database connection</H1>";
-        /* TODO : Tester la version minimale requise de MySQL et Postgresql
-                  Tester si MySQL supporte InnoDB                           */
+        /* TODO : Tester la version minimale requise de Postgresql                */
 
         switch ($CONF_DBMS) {
             case 'DBMS_POSTGRES' :
@@ -856,7 +1068,16 @@ EndHTML;
 
                 print "</UL>";
                 refreshButton();
-                navigation(array (array ("title" => "Back", "page" => "database"), array ("title" => "Next", "page" => "dbinit")));
+                navigation(array (
+                    array (
+                        "title" => "Back",
+                        "page" => "database"
+                    ),
+                    array (
+                        "title" => "Next",
+                        "page" => "dbinit"
+                    )
+                ));
                 break;
                 ###################################
             case 'DBMS_MYSQL' :
@@ -878,25 +1099,49 @@ EndHTML;
 
                     if ($select_db == TRUE) {
                         print "Success</UL>";
-                        navigation(array (array ("title" => "Back", "page" => "database"), array ("title" => "Next", "page" => "dbinit")));
+                        navigation(array (
+                            array (
+                                "title" => "Back",
+                                "page" => "database"
+                            ),
+                            array (
+                                "title" => "Next",
+                                "page" => "dbinit"
+                            )
+                        ));
                     }
                     else {
                         print "</UL>ERROR (Unable to select the database)<BR>";
                         refreshButton();
-                        navigation(array (array ("title" => "Back", "page" => "database")));
+                        navigation(array (
+                            array (
+                                "title" => "Back",
+                                "page" => "database"
+                            )
+                        ));
                     }
                 }
                 else {
                     print "Unable to connect to database on <B>$CONF_DATABASE_HOST</B><BR>The database must be online to continue.<P>Please go back and retry with correct values";
                     refreshButton();
-                    navigation(array (array ("title" => "Back", "page" => "database")));
+                    navigation(array (
+                        array (
+                            "title" => "Back",
+                            "page" => "database"
+                        )
+                    ));
                 }
                 break;
             default :
                 print<<<EndHTML
           The CONF_DBMS value <B>$CONF_DBMS</B> is not currently suported by this install script.
 EndHTML;
-                navigation(array (array ("title" => "Back", "page" => "database")));
+                navigation(array (
+                    array (
+                        "title" => "Back",
+                        "page" => "database"
+                    )
+                ));
         }
         break;
         ###################################
@@ -916,9 +1161,9 @@ EndHTML;
         $replacements[3] = '-- ';
         $replacements[4] = '-- ';
 
-        $content_schema_array = file(WIFIDOG_ABS_FILE_PATH."../sql/wifidog-postgres-schema.sql") or die("<B>Error</B>: Can not open $basepath/../sql/wifidog-postgres-schema.sql"); # Read SQL schema file
+        $content_schema_array = file(WIFIDOG_ABS_FILE_PATH . "../sql/wifidog-postgres-schema.sql") or die("<B>Error</B>: Can not open $basepath/../sql/wifidog-postgres-schema.sql"); # Read SQL schema file
         $content_schema = implode("", $content_schema_array);
-        $content_data_array = file(WIFIDOG_ABS_FILE_PATH."../sql/wifidog-postgres-initial-data.sql"); # Read SQL initial data file
+        $content_data_array = file(WIFIDOG_ABS_FILE_PATH . "../sql/wifidog-postgres-initial-data.sql"); # Read SQL initial data file
         $content_data = implode("", $content_data_array);
 
         $db_schema_version = ''; # Schema version query from database
@@ -932,7 +1177,7 @@ EndHTML;
                 if (preg_match("/\('schema_version', '(\d+)'\);/", $content_data, $matchesArray)) # Get schema_version from initial data file
                     $file_db_version = $matchesArray[1];
 
-                $contentArray = file(WIFIDOG_ABS_FILE_PATH."include/schema_validate.php");
+                $contentArray = file(WIFIDOG_ABS_FILE_PATH . "include/schema_validate.php");
                 foreach ($contentArray as $line) {
                     #print "$line<BR>"; # Debug
                     if (preg_match("/^define\('REQUIRED_SCHEMA_VERSION', (\d+)\);/", $line, $matchesArray)) {
@@ -950,11 +1195,33 @@ EndHTML;
                     print "<P>On <B>$CONF_DATABASE_HOST</B>, Database <B>$CONF_DATABASE_NAME</B> exists and is ";
                     if ($db_shema_version == $file_schema_version) {
                         print "up to date (shema version <B>$db_shema_version</B>).";
-                        navigation(array (array ("title" => "Back", "page" => "database"), array ("title" => "Next", "page" => "options")));
+                        navigation(array (
+                            array (
+                                "title" => "Back",
+                                "page" => "database"
+                            ),
+                            array (
+                                "title" => "Next",
+                                "page" => "options"
+                            )
+                        ));
                     }
                     elseif ($db_shema_version < $file_schema_version) {
                         print "at schema version <B>$db_shema_version</B>. The required schema version is <B>$file_schema_version</B><P>Please upgrade the database";
-                        navigation(array (array ("title" => "Back", "page" => "database"), array ("title" => "Upgrade", "page" => "schema_validate"), array ("title" => "Next", "page" => "options")));
+                        navigation(array (
+                            array (
+                                "title" => "Back",
+                                "page" => "database"
+                            ),
+                            array (
+                                "title" => "Upgrade",
+                                "page" => "schema_validate"
+                            ),
+                            array (
+                                "title" => "Next",
+                                "page" => "options"
+                            )
+                        ));
                     }
                     else {
                         print "Error : Unexpected result";
@@ -965,16 +1232,25 @@ EndHTML;
                 print "<UL><LI>Creating wifidog database schema : ";
                 $content_schema = preg_replace($patterns, $replacements, $content_schema); # Comment bad SQL lines
 
-                $result = pg_query($connection, $content_schema) or die("<B>".pg_last_error()."</B> <=<BR>");
+                $result = pg_query($connection, $content_schema) or die("<B>" . pg_last_error() . "</B> <=<BR>");
                 print "OK";
 
                 print "<LI>Creating wifidog database initial data : ";
                 $content_data = preg_replace($patterns, $replacements, $content_data); # Comment bad SQL lines
 
-                $result = pg_query($connection, $content_data) or die("<B>".pg_last_error()."</B> <=<BR>");
+                $result = pg_query($connection, $content_data) or die("<B>" . pg_last_error() . "</B> <=<BR>");
                 print "OK</UL>";
 
-                navigation(array (array ("title" => "Back", "page" => "database"), array ("title" => "Next", "page" => "options")));
+                navigation(array (
+                    array (
+                        "title" => "Back",
+                        "page" => "database"
+                    ),
+                    array (
+                        "title" => "Next",
+                        "page" => "options"
+                    )
+                ));
                 break;
                 ###################################
             case 'DBMS_MYSQL' :
@@ -1092,16 +1368,30 @@ EndHTML;
 
                 $result = mysql_query($content_mysql);
                 if (!$result) {
-                    die('Invalid query: '.mysql_error());
+                    die('Invalid query: ' . mysql_error());
                 }
 
-                navigation(array (array ("title" => "Back", "page" => "database"), array ("title" => "Next", "page" => "dbinit")));
+                navigation(array (
+                    array (
+                        "title" => "Back",
+                        "page" => "database"
+                    ),
+                    array (
+                        "title" => "Next",
+                        "page" => "dbinit"
+                    )
+                ));
                 break;
             default :
                 print<<<EndHTML
           The CONF_DBMS value <B>$CONF_DBMS</B> is not currently suported by this install script.
 EndHTML;
-                navigation(array (array ("title" => "Back", "page" => "database")));
+                navigation(array (
+                    array (
+                        "title" => "Back",
+                        "page" => "database"
+                    )
+                ));
         }
         break;
 
@@ -1109,7 +1399,7 @@ EndHTML;
     case 'schema_validate' :
         print "<H1>Database schema upgrade</H1>\n";
 
-        require_once (dirname(__FILE__).'/include/common.php');
+        require_once (dirname(__FILE__) . '/include/common.php');
 
         require_once ('classes/AbstractDb.php');
         require_once ('classes/Session.php');
@@ -1117,7 +1407,16 @@ EndHTML;
 
         validate_schema();
 
-        navigation(array (array ("title" => "Back", "page" => "dbinit"), array ("title" => "Next", "page" => "options")));
+        navigation(array (
+            array (
+                "title" => "Back",
+                "page" => "dbinit"
+            ),
+            array (
+                "title" => "Next",
+                "page" => "options"
+            )
+        ));
 
         //navigation(array(array("title" => "Back", "page" => "dbinit")));
         break;
@@ -1181,7 +1480,12 @@ EndHTML;
 </script>
 
 EndHTML;
-        navigation(array (array ("title" => "Back", "page" => "dbinit")));
+        navigation(array (
+            array (
+                "title" => "Back",
+                "page" => "dbinit"
+            )
+        ));
 
         print<<< EndHTML
 <P><A HREF="#" ONCLICK="javascript: document.myform.page.value='languages'; submitOptionsValue(); document.myform.submit();" CLASS="button">Next</A></P>
@@ -1199,9 +1503,18 @@ EndHTML;
 <DIV style="border:solid black;">Warning: language.php: Unable to setlocale() to fr, return value: , current locale: LC_CTYPE=en_US.UTF-8;LC_NUMERIC=C; [...]</DIV>
 <P><B>I repeat</B> : This is an example of message you can see in the top of your working auth-server if language are not set correctly. To change these values please edit <B>config.php</B> in auth-server install directory. Look for "Available locales" and "Default language" header in config.php.
 EndHTML;
-        //    exec("locale -a 2>&1", $output, $return);
+        //    execVerbose("locale -a 2>&1", $output, $return);
 
-        navigation(array (array ("title" => "Back", "page" => "options"), array ("title" => "Next", "page" => "radius")));
+        navigation(array (
+            array (
+                "title" => "Back",
+                "page" => "options"
+            ),
+            array (
+                "title" => "Next",
+                "page" => "radius"
+            )
+        ));
         break;
 
         ###################################
@@ -1217,7 +1530,16 @@ EndHTML;
         #$neededPEARPackages['Auth_RADIUS']['available'];
         #$neededPEARPackages['Crypt_CHAP']['available'];
 
-        navigation(array (array ("title" => "Back", "page" => "languages"), array ("title" => "Next", "page" => "admin")));
+        navigation(array (
+            array (
+                "title" => "Back",
+                "page" => "languages"
+            ),
+            array (
+                "title" => "Next",
+                "page" => "admin"
+            )
+        ));
         break;
 
         ###################################
@@ -1235,8 +1557,8 @@ EndHTML;
 
         if ($action == 'create') {
             //      require_once(dirname(__FILE__) . '/config.php');
-            require_once (dirname(__FILE__).'/include/common.php');
-            require_once (dirname(__FILE__).'/classes/User.php');
+            require_once (dirname(__FILE__) . '/include/common.php');
+            require_once (dirname(__FILE__) . '/classes/User.php');
 
             $created_user = User :: createUser(get_guid(), $username, Network :: getDefaultNetwork(), $email, $password);
             $user_id = $created_user->getId();
@@ -1253,7 +1575,16 @@ EndHTML;
 
         if (!empty ($username_db)) {
             print "<P>Your administrator user account is <B>$username_db</B>";
-            navigation(array (array ("title" => "Back", "page" => "radius"), array ("title" => "Next", "page" => "network")));
+            navigation(array (
+                array (
+                    "title" => "Back",
+                    "page" => "radius"
+                ),
+                array (
+                    "title" => "Next",
+                    "page" => "network"
+                )
+            ));
         }
         else {
             print<<<EndHTML
@@ -1294,7 +1625,12 @@ EndHTML;
         </script>
 
 EndHTML;
-            navigation(array (array ("title" => "Back", "page" => "radius")));
+            navigation(array (
+                array (
+                    "title" => "Back",
+                    "page" => "radius"
+                )
+            ));
             print "<P><A HREF=\"#\" ONCLICK=\"javascript: submitValue();\" CLASS=\"button\">Next</A></P>\n";
         }
         break;
@@ -1349,7 +1685,12 @@ EndHTML;
 
 EndHTML;
 
-        navigation(array (array ("title" => "Back", "page" => "admin")));
+        navigation(array (
+            array (
+                "title" => "Back",
+                "page" => "admin"
+            )
+        ));
 
         print<<< EndHTML
 <P><A HREF="#" ONCLICK="javascript: document.myform.page.value='hotspot'; submitOptionsValue(); document.myform.submit();" CLASS="button">Next</A></P>
@@ -1361,7 +1702,16 @@ EndHTML;
     case 'hotspot' :
         print "<H1>Hotspot</H1>";
         print "<P>A default hotspot has already been created<P>Use administration interface to add more hotspots.";
-        navigation(array (array ("title" => "Back", "page" => "network"), array ("title" => "Next", "page" => "end")));
+        navigation(array (
+            array (
+                "title" => "Back",
+                "page" => "network"
+            ),
+            array (
+                "title" => "Next",
+                "page" => "end"
+            )
+        ));
         break;
 
         ###################################
@@ -1375,7 +1725,7 @@ EndHTML;
 
         ###################################
     case 'end' :
-        $url = 'http://'.$_SERVER['HTTP_HOST'].SYSTEM_PATH;
+        $url = 'http://' . $_SERVER['HTTP_HOST'] . SYSTEM_PATH;
         print<<<EndHTML
   <H1>Thanks for using Wifidog</H1>
   Redirection to your new WifiDog Authentification Server in 3 seconds
@@ -1412,7 +1762,7 @@ EndHTML;
             if (preg_match("/^  case '(\w+)':/", $line, $matchesArray)) { # Parse for "case" regex
                 if ($matchesArray[1] == 'toc')
                     continue;
-                print "<LI><A HREF=\"".$_SERVER['SCRIPT_NAME']."?page=".$matchesArray[1]."\">".$matchesArray[1]."</A>\n"; # Display a Table of Content
+                print "<LI><A HREF=\"" . $_SERVER['SCRIPT_NAME'] . "?page=" . $matchesArray[1] . "\">" . $matchesArray[1] . "</A>\n"; # Display a Table of Content
             }
         }
         print "</UL>\n";
@@ -1500,7 +1850,12 @@ The current auth-server version is <B>$WIFIDOG_VERSION</B>.</P>
 
 EndHTML;
 
-        navigation(array (array ("title" => "Next", "page" => "version")));
+        navigation(array (
+            array (
+                "title" => "Next",
+                "page" => "version"
+            )
+        ));
 }
 ?>
 

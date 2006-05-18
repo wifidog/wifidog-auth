@@ -272,8 +272,21 @@ class User implements GenericObject
     }
 
     /** Get a user display suitable for a user list.  Will include link to the user profile. */
-    function getUserListUI()
+    function getListUI()
     {
+        /*    $roles = array ();
+
+    if ($current_node->isOwner($online_user)) {
+        $roles[] = _("owner");
+    }
+
+    if ($current_node->isTechnicalOfficer($online_user)) {
+        $roles[] = _("technical officer");
+    }
+
+    if ($roles) {
+        $rolenames = join($roles, ",");
+    }*/
         $html = '';
         $html .= $this->getUserName();
         return $html;
@@ -282,6 +295,26 @@ class User implements GenericObject
     function getUsername()
     {
         return $this->mRow['username'];
+    }
+    
+     /** Set the user's username
+     * @param $value The new value
+     * @return true on success, false on failure
+     * @throws exception if the user tries to set a duplicate username
+     */
+    function setUsername($value) {
+        $retval = true;
+        if ($value != $this->getUsername()) {
+            global $db;
+            $value = $db->escapeString($value);
+            $retval = @$db->execSqlUpdate("UPDATE users SET username = '{$value}' WHERE user_id='{$this->id}'", false);
+            if(!$retval)
+            {
+                throw new exception (sprintf(_("Sorry, the username %s is not available"), $value));
+            }
+            $this->refresh();
+        }
+        return $retval;
     }
 
     public function getEmail()
@@ -299,69 +332,22 @@ class User implements GenericObject
       $this->mRow['email'] = $email; // unescaped
     }
 
-    public function getRealName()
-    {
-      return $this->mRow['real_name'];
-    }
-
-    public function setRealName($realname)
-    {
-      $realname_str = $this->mDb->escapeString($realname);
-      if (!($update = $this->mDb->execSqlUpdate("UPDATE users SET real_name='{$realname_str}' WHERE user_id='{$this->id}'")))
-	{
-	  throw new Exception(_("Could not update real name."));
-	}
-      $this->mRow['real_name'] = $realname; // unescaped
-    }
-
-    function setIsAdvertised($value)
+    function setIsInvisible($value)
     {
       $retval = true;
       if ($value != $this->isAdvertised())
 	{
 	  global $db;
 	  $value ? $value = 'TRUE' : $value = 'FALSE';
-	  $retval = $db->execSqlUpdate("UPDATE users SET never_show_username = {$value} WHERE user_id = '{$this->getId()}'", false);
+	  $retval = $db->execSqlUpdate("UPDATE users SET is_invisible = {$value} WHERE user_id = '{$this->getId()}'", false);
 	  $this->refresh();
 	}
       return $retval;
     }
 
-    public function isAdvertised()
+    public function isInvisible()
     {
-      return (($this->mRow['never_show_username'] == 't') ? true : false);
-    }
-
-    public function getWebsiteURL()
-    {
-      return $this->mRow['website'];
-    }
-
-    public function setWebsiteURL($website)
-    {
-      $website_str = $this->mDb->escapeString($website);
-      if (!($update = $this->mDb->execSqlUpdate("UPDATE users SET website='{$website_str}' WHERE user_id='{$this->id}'")))
-	{
-	  throw new Exception(_("Could not update website URL."));
-	}
-      $this->mRow['website'] = $website;
-    }
-
-    public function getUsernameVisiblity()
-    {
-      return !$this->mRow['never_show_username'];
-    }
-
-    public function setUsernameVisiblity($visible)
-    {
-      $invisible = !$visible;
-      if (!($update = $this->mDb->execSqlUpdate("UPDATE users SET never_show_username=".
-						($invisible ? 'true' : 'false').
-						" WHERE user_id='{$this->id}'")))
-	{
-	  throw new Exception(_("Could not update username visibility flag."));
-	}
-      $this->mRow['never_show_username'] = $invisible;
+      return (($this->mRow['is_invisible'] == 't') ? true : false);
     }
 
     /**What locale (language) does the user prefer? */
@@ -718,17 +704,24 @@ class User implements GenericObject
     public function getAdminUI()
     {
         global $db;
+        $currentUser= self::getCurrentUser();
         $html = '';
         $html .= "<div class='admin_container'>\n";
         $html .= "<div class='admin_class'>User instance</div>\n";
-
+        
+if($this==$currentUser || $this->getNetwork()->hasAdminAccess($currentUser))
+{
+    //username
         $html .= "<div class='admin_section_container'>\n";
         $html .= "<div class='admin_section_title'>"._("Username")." : </div>\n";
         $html .= "<div class='admin_section_data'>\n";
-        $html .= $this->getUsername()."\n";
+        $name = "user_".$this->getId()."_username";
+        $html .= "<input type='text' name='$name' value='".htmlentities($this->getUsername())."' size=30>\n";
+        $html .= _("Be carefull when changing this: it's the username you use to log in!");
         $html .= "</div>\n";
         $html .= "</div>\n";
-
+}
+/*
         $html .= "<div class='admin_section_container'>\n";
         $html .= "<div class='admin_section_title'>"._("Real name")." : </div>\n";
         $html .= "<div class='admin_section_data'>\n";
@@ -744,13 +737,21 @@ class User implements GenericObject
         $html .= "<input type='text' name='$name' value='".htmlentities($this->getWebsiteURL())."' size=30 readonly>\n";
         $html .= "</div>\n";
         $html .= "</div>\n";
-
+*/
         $html .= "</div>\n";
         return $html;
     }
 
     public function processAdminUI()
     {
+                global $db;
+        $currentUser= self::getCurrentUser();
+        if($this==$currentUser || $this->getNetwork()->hasAdminAccess($currentUser))
+{
+    //username
+        $name = "user_".$this->getId()."_username";
+        $this->setUsername($_REQUEST[$name]);
+ }
     }
 
     public function delete(& $errmsg)
@@ -813,7 +814,7 @@ class User implements GenericObject
 	public static function assignSmartyValues($smarty, $user=null) {
 		if (!$user) $user = User::getCurrentUser();
 		$smarty->assign('username', $user ? $user->getUsername() : '');
-
+        $smarty->assign('userId', $user ? $user->getId() : '');
 		/**
 		 * Define user security levels for the template
 		 *

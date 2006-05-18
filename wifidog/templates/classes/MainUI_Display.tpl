@@ -62,7 +62,7 @@
     </head>
     <body id='page' class='{$page_name}'>
     	{if !empty($contentDisplayArray.page_header) || $debugRequested}
-        	<div class='page_header'>
+        	<div id='page_header'>
             {if $debugRequested}
             	<pre>{$debugOutput}</pre>
         	{/if}
@@ -131,7 +131,7 @@
         {/if}
         </div>
     {if !empty($contentDisplayArray.page_footer)}
-        <div class='page_footer'>
+        <div id='page_footer'>
 			{$contentDisplayArray.page_footer}
         </div>
     {/if}

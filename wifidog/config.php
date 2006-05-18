@@ -209,7 +209,7 @@ define('DEFAULT_LANG', 'fr_CA');
  *
  * Normally MAGPIE_REL_PATH is "lib/magpie/".
  */
-define('RSS_SUPPORT', false);
+define('RSS_SUPPORT', true);
 
 /**
  * Flickr Photostream content support
@@ -220,7 +220,7 @@ define('RSS_SUPPORT', false);
  * Normally PHLICKR_REL_PATH is "lib/", Phlickr being installed in directory
  * "Phlickr".
  */
-define('PHLICKR_SUPPORT', false);
+define('PHLICKR_SUPPORT', true);
 
 /**
  * Google Maps support

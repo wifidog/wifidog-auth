@@ -1295,7 +1295,7 @@ class Content implements GenericObject {
                         $html .= "<div class='admin_section_data'>\n";
                         $user = User :: getObject($content_owner_row['user_id']);
 
-                        $html .= $user->getUserListUI();
+                        $html .= $user->getListUI();
                         $name = "content_".$this->id."_owner_".$user->GetId()."_is_author";
                         $html .= " Is content author? ";
 

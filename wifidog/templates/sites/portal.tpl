@@ -58,7 +58,7 @@
 
                 <ul class="users_list">
                     {section name=onlineUser loop=$onlineUsers}
-                        <li>{$onlineUsers[onlineUser].Username}{if $onlineUsers[onlineUser].showRoles} <span class="roles">{$onlineUsers[onlineUser].roles}</span>{/if}</li>
+                        <li>{$onlineUsers}</li>
                     {/section}
                 </ul>
             {else}

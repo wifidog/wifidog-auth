@@ -59,29 +59,25 @@ class File extends Content
 
     /**
      * File size unit: Byte
-     *
-     * @access private
+     
      */
     const UNIT_BYTES = 1;
 
     /**
      * File size unit: KB
-     *
-     * @access private
+     
      */
     const UNIT_KILOBYTES = 1024;
 
     /**
      * File size unit: MB
-     *
-     * @access private
+     
      */
     const UNIT_MEGABYTES = 1048576;
 
     /**
      * File size unit: GB
-     *
-     * @access private
+     
      */
     const UNIT_GIGABYTES = 1073741824;
 
@@ -132,8 +128,7 @@ class File extends Content
      * @param string $upload_field The form field that contains the data
      *
      * @return bool True if successful
-     *
-     * @access private
+     
      */
     private function setBinaryDataFromPostVar($upload_field)
     {
@@ -187,8 +182,7 @@ class File extends Content
      * Returns the binary data from the database
      *
      * @return string Binary data from the database
-     *
-     * @access private
+     
      */
     private function getBinaryDataOid()
     {
@@ -201,8 +195,7 @@ class File extends Content
      * @param string $oid Binary data
      *
      * @return void
-     *
-     * @access private
+     
      */
     private function setBinaryDataOid($oid)
     {
@@ -218,10 +211,8 @@ class File extends Content
      * Returns the MIME type of the file
      *
      * @return string MIME type of file
-     *
-     * @access private
      */
-    protected function getMimeType()
+    public function getMimeType()
     {
         return $this->files_row['mime_type'];
     }
@@ -232,8 +223,6 @@ class File extends Content
      * @param string $mime_type
      *
      * @return void
-     *
-     * @access private
      */
     private function setMimeType($mime_type)
     {
@@ -246,8 +235,7 @@ class File extends Content
      * Returns the filename of the file
      *
      * @return string Filename of file
-     *
-     * @access private
+     
      */
     protected function getFilename()
     {
@@ -260,8 +248,6 @@ class File extends Content
      * @param string $file_name Filename of the file
      *
      * @return void
-     *
-     * @access private
      */
     private function setFilename($file_name)
     {
@@ -282,8 +268,6 @@ class File extends Content
      *                       + self::GIGABYTES
      *
      * @return float Size of file
-     *
-     * @access private
      */
     protected function getFileSize($unit = self::UNIT_BYTES)
     {
@@ -319,8 +303,6 @@ class File extends Content
      *                       + self::GIGABYTES
      *
      * @return void
-     *
-     * @access private
      */
     private function setLocalFileSize($size, $unit = self::UNIT_BYTES)
     {
@@ -345,8 +327,7 @@ class File extends Content
      *                       + self::GIGABYTES
      *
      * @return void
-     *
-     * @access private
+     
      */
     private function setRemoteFileSize($size, $unit = self::UNIT_KILOBYTES)
     {
@@ -362,10 +343,8 @@ class File extends Content
      * Get URL of file
      *
      * @return string URL of file
-     *
-     * @access private
      */
-    protected function getFileUrl()
+    public function getFileUrl()
     {
         // Init values
         $_retval = null;
@@ -385,8 +364,7 @@ class File extends Content
      * @param string $url
      *
      * @return void
-     *
-     * @access private
+     
      */
     private function setURL($url)
     {
@@ -404,8 +382,6 @@ class File extends Content
      * Returns if file is a local file
      *
      * @return bool True if file is local
-     *
-     * @access protected
      */
     protected function isLocalFile()
     {
@@ -419,8 +395,6 @@ class File extends Content
      *                                         administration interface
      *
      * @return string HTML code for the administration interface
-     *
-     * @access public
      */
     public function getAdminUI($subclass_admin_interface = null)
     {
@@ -510,8 +484,6 @@ class File extends Content
      * Processes the input of the administration interface for RssAggregator
      *
      * @return void
-     *
-     * @access public
      */
     public function processAdminUI()
     {
@@ -559,8 +531,6 @@ class File extends Content
      * Retreives the user interface of this object.
      *
      * @return string The HTML fragment for this interface
-     *
-     * @access public
      */
     public function getUserUI()
     {
@@ -587,8 +557,6 @@ class File extends Content
      * subclass will call the constructor from the wrong scope.
      *
      * @return void
-     *
-     * @access private
      */
     private function refresh()
     {

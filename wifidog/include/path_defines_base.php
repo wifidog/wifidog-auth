@@ -44,9 +44,6 @@
  * All  you need is already available here.
  *
  * The following constants are defined here:
- *   + DOCUMENT_ROOT:         The absolute filesystem path of the webserver
- *                            document root.  Doesn't really matter much
- *                            what this is anymore.
  *   + SYSTEM_PATH:           The url path to the base /wifidog directory.
  *                            Use "/" if the apache DocumentRoot (DOCUMENT_ROOT)
  *                            is the wifidog directory.  Due to apache
@@ -60,7 +57,6 @@
  * document root is <code>/var/www/wifidog-auth/wifidog</code>, the constants
  * will have the following values:
  *
- *   + DOCUMENT_ROOT:         /var/www/wifidog-auth/wifidog
  *   + SYSTEM_PATH:           /
  *   + WIFIDOG_ABS_FILE_PATH: /var/www/wifidog-auth/wifidog/
  *
@@ -110,7 +106,7 @@ define('SYSTEM_PATH', $path_tmp);
  * End of tests ...
  */
 
-if (!defined('DOCUMENT_ROOT') || !defined('SYSTEM_PATH') || !defined('WIFIDOG_ABS_FILE_PATH')) {
+if (!defined('SYSTEM_PATH') || !defined('WIFIDOG_ABS_FILE_PATH')) {
   /**
    * Detect wifidog-auth directory base
    */
@@ -140,7 +136,6 @@ if (!defined('DOCUMENT_ROOT') || !defined('SYSTEM_PATH') || !defined('WIFIDOG_AB
   // original $apache_path is DOCUMENT_ROOT + common path to the current script
   // and, SYSTEM_PATH is not equal to DOCUMENT_ROOT
   if (substr($apache_path,-1,1) == '/' && $apache_path != '/') $apache_path = substr($apache_path,0,-1);
-  if (!defined('DOCUMENT_ROOT')) define('DOCUMENT_ROOT', $apache_path);
   if ($browser_url == "" || substr($browser_url,-1,1) != '/') $browser_url .= '/';
   if (!defined('SYSTEM_PATH')) define('SYSTEM_PATH', $browser_url);
 
@@ -153,7 +148,6 @@ if (!defined('DOCUMENT_ROOT') || !defined('SYSTEM_PATH') || !defined('WIFIDOG_AB
  *
 
 echo "SYSTEM_PATH: " . SYSTEM_PATH . "<br/>";
-echo "DOCUMENT_ROOT: " . DOCUMENT_ROOT . "<br/>";
 echo "WIFIDOG_ABS_FILE_PATH: " . WIFIDOG_ABS_FILE_PATH . "<br/>";
 exit;
 
@@ -164,8 +158,6 @@ exit;
 /*
  * Add system path of WiFiDog installation to PHPs include path
  */
-
-//set_include_path(DOCUMENT_ROOT.SYSTEM_PATH.PATH_SEPARATOR.get_include_path());
 set_include_path(substr(WIFIDOG_ABS_FILE_PATH,0,-1).PATH_SEPARATOR.get_include_path());
 
 ?>

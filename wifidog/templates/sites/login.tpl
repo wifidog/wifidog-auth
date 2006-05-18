@@ -82,10 +82,6 @@
             </form>
         </p>
 
-		<div id="help">
-		{"You must specify your username and password"|_}.
-		</div>
-
         <h1>{"I'm having difficulties"|_}:</h1>
 
         <ul>
@@ -105,7 +101,7 @@
 		  username_required: "{'Username is required.'|_}",
 		  username_invalid: "{'Username contains invalid characters.'|_}",
 		  email_invalid: "{'A valid email address is required.'|_}",
-		  password_empty: "{'A password of at least 6 characters is required.'|_}",
+		  password_empty: "{'A password is required.'|_}",
 		  password_invalid: "{'Password contains invalid characters.'|_}",
 		  password_short: "{'Password is too short, it must be 6 characters minimum'|_}"
 		{literal}
@@ -127,14 +123,9 @@
 			}
 		  }
 
-		  if (!isValidPassword(form.password)) {
-			if (isEmpty(form.password))
-			  document.getElementById("form_errormsg").innerHTML = messages.password_empty;
-			else if (form.password.value.length<6)
-			  document.getElementById("form_errormsg").innerHTML = messages.password_short;
-			else
-			  document.getElementById("form_errormsg").innerHTML = messages.password_invalid;
 
+			if (isEmpty(form.password)){
+			  document.getElementById("form_errormsg").innerHTML = messages.password_empty;
 			return false;
 		  }
 

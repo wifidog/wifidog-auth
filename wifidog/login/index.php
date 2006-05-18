@@ -261,7 +261,10 @@ if($node) {
 }
 $ui->setPageName('login');
 $ui->shrinkLeftArea();
-$ui->addContent('left_area_middle', $html);
+ $welcome_msg = sprintf("<span>%s</span><em>%s<em>",_("Welcome"), $node->getName());
+ $ui->addContent('page_header', "<h1>$welcome_msg</h1>");
+
+$ui->addContent('main_area_top', $html);
 
 /*
  * Main content

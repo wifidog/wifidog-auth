@@ -161,21 +161,8 @@ $online_users = $current_node->getOnlineUsers();
 $num_online_users = count($online_users);
 
 foreach ($online_users as $online_user) {
-    $roles = array ();
 
-    if ($current_node->isOwner($online_user)) {
-        $roles[] = _("owner");
-    }
-
-    if ($current_node->isTechnicalOfficer($online_user)) {
-        $roles[] = _("technical officer");
-    }
-
-    if ($roles) {
-        $rolenames = join($roles, ",");
-    }
-
-    $online_user_array[] = array ('Username' => $online_user->getUsername(), 'showRoles' => count($roles) > 0, 'roles' => $rolenames);
+    $online_user_array[] = $online_user->getListUI();
 }
 
 $smarty->assign('numOnlineUsers', $num_online_users);
@@ -214,6 +201,8 @@ $ui->addContent('left_area_middle', $tool_html);
 /*
  * Main content
  */
+ $welcome_msg = sprintf("<span>%s</span><em>%s<em>",_("Welcome"), $node->getName());
+ $ui->addContent('page_header', "<h1>$welcome_msg</h1>");
 // While in validation period, alert user that he should validate his account ASAP
 if ($current_user && $current_user->getAccountStatus() == ACCOUNT_STATUS_VALIDATION) {
     $validationMsgHtml = "<div id='warning_message_area'>\n";

@@ -864,11 +864,26 @@ function update_schema()
         if ($schema_version < $new_schema_version) {
                 printUpdateVersion($new_schema_version);
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
-            
-            // Update to new Gmaps v2 constants
             $sql .= "ALTER TABLE networks ADD COLUMN theme_pack text;\n";            
             $sql .= "ALTER TABLE networks ALTER COLUMN theme_pack SET DEFAULT NULL;\n";
         }        
+        /*
+        $new_schema_version = 41;
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+            
+            $sql .= "ALTER TABLE users DROP COLUMN real_name text;\n";  
+            $sql .= "ALTER TABLE users DROP COLUMN website text;\n"; 
+                        $sql .= "ALTER TABLE users RENAME COLUMN never_show_username is_invisible;\n";         
+            $sql .= "CREATE TABLE user_profiles (\n";
+            $sql .= "   user_profile_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,\n"; 
+            $sql .= "   display_area text PRIMARY KEY,\n";
+            $sql .= "   real_name text,\n";
+            $sql .= "   website text,\n";
+            $sql .= ");\n";
+            
+        }       */ 
         $db->execSqlUpdate("BEGIN;\n$sql\nCOMMIT;\nVACUUM ANALYZE;\n", true);
         //$db->execSqlUpdate("BEGIN;\n$sql\nROLLBACK;\n", true);
 

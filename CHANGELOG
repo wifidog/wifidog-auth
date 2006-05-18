@@ -1,3 +1,12 @@
+2006-05-18 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Fix loging form incorrectly attempting to validate the password, preventing many existing
+	accounts from logging-in.
+	* Interim commit, begin simplifying the html ans stylesheets, and re-doing the general look.
+	This is incomplete, this commit was done to fix the problem above.
+	* install.php:  Fix path problems, make shel command errors visible.  Update magpie and smarty url to latest versions (note that this won't 
+	automatically update an existing install).  Didn't touch phlickr as I didn't know the implications  
+	* Add interactive scripts in sql/ to easily backup and restore a wifidog auth server database.
+
 2006-05-10 François Proulx <francois.proulx@gmail.com>
 	* Fixed Google Maps script path to images.
 

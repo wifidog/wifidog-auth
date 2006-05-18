@@ -6,12 +6,8 @@ body {
     padding: 0px;
     font-family: arial, sans-serif;
     color: black;
-    font-size: small;
-
-    width : 97%;
-    margin: 0px auto 20px auto;
+    font-size: 0.8em;
     background-color: #FFF;
-    background: #dbffa8 url("images/bg_body.gif") repeat-x fixed 0px 0px;
 }
 
 input {
@@ -24,13 +20,13 @@ input {
 h1 {
     font-family: verdana, sans-serif;
     color: #88AA4B;
-    font-size: 14px;
+    font-size: 1.5em;
 }
 
 a {
     font-family: arial, sans-serif;
     color: #616756;
-    font-size: 11px;
+    font-size: 0.8em;
     text-decoration: underline;
 }
 
@@ -52,7 +48,6 @@ input:focus {
 select {
     font-family: arial, sans-serif;
     color: #616756;
-    font-size: 11px;
     border: 1px solid #C8FF7A;
     background: #C8FF7A;
 }
@@ -61,42 +56,100 @@ select {
 
 /********** Main structure section **********/
 #page_header {
+		padding: 5px 5px 5px 74px;
+		background: #f5f5f5 url('images/wifidog_thumbnail_transparent.gif') no-repeat 0px 0px;
+	margin: 0px 0px 0px 0px;
+	border-bottom: 1px solid #d7d5d5;
+	min-height: 60px;
+	
 }
 
+#page_header h1 {
+	width: 250px;
+	margin-top: 5px;
+
+	font-size: 2em;
+	color: #999;
+}
+#page_header h1 em {
+	font-size: 1em;
+	color: #666;
+}
+
+#page_header h1 span {
+	display: block;
+	font-size: 0.6em;
+}
 #page_body {
+		padding: 0em;
+		margin: 0em;
     width: 100%;
     float: left;
-    background-color: white;
-
 }
 
 #left_area {
     width: 25%;
     float: left;
-    border: 1px solid #E9E9E9;
+	margin: 0em;
+    /*border: 1px solid #E9E9E9;*/
 }
 
 #left_area_top {
+	background: #f5f5f5 url('images/back_header_fade.gif') repeat-x bottom left;
+	margin: -1px 1em 1em 1em;
+	padding: 0.1em 1em 1em 1em;
+	border-right: 1px solid #e7e7e7;
+	border-bottom: 1px solid #d7d5d5;
+	border-left: 1px solid #e7e7e7;
 }
 
 #left_area_middle {
+	background: #EBFFEB;
+	margin: 1em;
+	padding: 1em;
+	border: 1px solid #C2FFC2;
 }
 
 #left_area_bottom {
+	background: #F9FFC9;
+	margin: 1em;
+	padding: 1em;
+	border: 1px solid #EFFF72;
 }
 
 #main_area {
     width: 74%;
 	float: left;
+		margin: 0em ;
+		padding: 0em;
+		/*border: 1px solid #E9E9E9;*/
 }
 
 #main_area_top {
+	background: #f5f5f5 url('images/back_header_fade.gif') repeat-x bottom left;
+	margin: -1px 1em 1em 1em;
+	padding: 0.1em 1em 1em 1em;
+	border-right: 1px solid #e7e7e7;
+	border-bottom: 1px solid #d7d5d5;
+	border-left: 1px solid #e7e7e7;
 }
 
 #main_area_middle {
+		margin: 1em;
+	padding: 1em;
 }
 
+/* NOT GOOT ENOUGH, doesn't work with explorer.  Best solution is to override in description and sponsor */
+#main_area_middle>.user_ui_main_outer {
+	    	background: #E9F6FF;
+	margin: 1em 0em 1em 0em;
+	padding: 1em;
+	border: 1px solid #B4DFFF;
+	color: #3D586B;
+	}
 #main_area_bottom {
+		margin: 1em;
+	padding: 1em;
 }
 
 #right_area {
@@ -131,23 +184,13 @@ select {
 /********** End Main structure section **********/
 
 div.tool_user_info {
-    background-color: #C8FF7A;
-    padding: 2px;
+		margin: 0em;
+	padding: 0em;
 }
 
 span.tool_user_info {
-}
-
-div.navigation{
-    text-align: center;
-    font-size: 11px;
-    background-image: url(images/01_nav.gif);
-    background-repeat: repeat;
-    background-position: left top;
-    padding: 10px 5px 10px 5px;
-}
-
-span.navigation{
+			margin: 0em;
+	padding: 0em;
 }
 
 div.language{
@@ -189,7 +232,6 @@ div.anysection {
     padding: 0px 5px 0px 5px;
     font-family: arial, sans-serif;
     color: #616756;
-    font-size: 11px;
     text-align: left;
 }
 div.test {
@@ -411,6 +453,8 @@ body div#toolTip p em span { font-weight:bold;color:#fff; }
 /*	display: inline;*/
     display: block;
 }
+
+
 .user_ui_main_inner {
     display: block;
 /*	border: 1px solid gray;*/
@@ -491,7 +535,7 @@ body div#toolTip p em span { font-weight:bold;color:#fff; }
 .portal_network_section h1, .portal_network_section h1 a {
     font-family: verdana, sans-serif;
     color: #88AA4B;
-    font-size: 14px;
+    font-size: 1.2em;
 }
 .portal_user_section {
 /*	background-color:	#CFDCE6;*/
@@ -694,7 +738,7 @@ table.content_admin td {
 }
 
 .pretty_fieldset a {
-    font-size: 12pt;
+    #font-size: 12pt;
 }
 
 .pretty_fieldset .red {

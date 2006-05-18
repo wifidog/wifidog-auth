@@ -483,14 +483,6 @@ class MainUI {
         // Provide Smarty all available languages
         $this->smarty->assign('languageChooser', $_languageChooser);
 
-        /*
-         * Provide Smarty information for the language chooser
-         */
-
-        // Provide information
-        $this->smarty->assign('accountInformation', sprintf(_("Accounts on %s are and will stay completely free."), Network :: getCurrentNetwork()->getName()));
-        $this->smarty->assign('techSupportInformation', sprintf(_("Please inform us of any problem or service interruption at: %s"), '<a href="mailto:'.Network :: getCurrentNetwork()->getTechSupportEmail().'">'.Network :: getCurrentNetwork()->getTechSupportEmail().'</a>'));
-
         // Compile HTML code
         $_html = $this->smarty->fetch("templates/classes/MainUI_ToolContent.tpl");
 

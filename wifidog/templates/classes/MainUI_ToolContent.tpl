@@ -54,7 +54,7 @@
             <span class="tool_user_info">
                 {if $isValidUser}
                     <p>{"Logged in as"|_}: {$username}</p>
-                    <a class="administration" href="{$base_ssl_path}user_profile.php"><img class="administration" src="{$common_images_url}profile.gif">{"My Profile"|_}</a>
+                    <a class="administration" href="{$base_ssl_path}admin/generic_object_admin.php?object_id={$userId}&object_class=User&action=edit"><img class="administration" src="{$common_images_url}profile.gif">{"Preferences"|_}</a>
                     <a class="administration" href="{$base_ssl_path}login/?logout=true{$logoutParameters}"><img class="administration" src="{$common_images_url}logout.gif">{"Logout"|_}</a>
                 {else}
 					{if !$shrinkLeftArea}
@@ -68,10 +68,6 @@
                     <a class="administration" href="{$base_url_path}faq.php"><img class="administration" src="{$common_images_url}where.gif">{"Where am I?"|_}</a>
                 {/if}
             </span>
-        </div>
-
-        <div class="navigation">
-            <span class="navigation">{$networkName} {"Building your wireless community"|_}</span>
         </div>
 
         <div class="language">
@@ -89,14 +85,6 @@
             {$toolContent}
         </div>
 
-		{if !$shrinkLeftArea}
-        <div class="avis">
-            <span class="avis">
-                {$accountInformation}
-                {$techSupportInformation}
-            </span>
-        </div>
-		{/if}
 {*
     END section START
 *}
