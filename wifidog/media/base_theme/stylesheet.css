@@ -101,6 +101,7 @@ select {
 	border-right: 1px solid #e7e7e7;
 	border-bottom: 1px solid #d7d5d5;
 	border-left: 1px solid #e7e7e7;
+	float: left;
 }
 
 #left_area_middle {
@@ -108,6 +109,7 @@ select {
 	margin: 1em;
 	padding: 1em;
 	border: 1px solid #C2FFC2;
+	float: left;
 }
 
 #left_area_bottom {
@@ -115,6 +117,7 @@ select {
 	margin: 1em;
 	padding: 1em;
 	border: 1px solid #EFFF72;
+	float: left;
 }
 
 #main_area {
@@ -132,11 +135,13 @@ select {
 	border-right: 1px solid #e7e7e7;
 	border-bottom: 1px solid #d7d5d5;
 	border-left: 1px solid #e7e7e7;
+	float: left;
 }
 
 #main_area_middle {
 		margin: 1em;
 	padding: 1em;
+		float: left;
 }
 
 /* NOT GOOT ENOUGH, doesn't work with explorer.  Best solution is to override in description and sponsor */
@@ -150,12 +155,10 @@ select {
 #main_area_bottom {
 		margin: 1em;
 	padding: 1em;
+	float: left;
 }
 
 #right_area {
-    height: 100%;
-	border: 1px solid #E9E9E9;
-	float: left;
 }
 
 #right_area_top {
@@ -239,9 +242,20 @@ div.test {
     vertical-align: text-top;
 }
 
+/* The login form (including header) */
+#login_form {
+	float: left;
+	margin: 1em;
+		text-align: center;
+}
 #login_form form {
-    padding-left: 25px;
-    margin: 0px;
+    padding-left: 1em;
+}
+
+/* The help text for the login form */
+#login_help {
+   	float: left;
+    margin-left: 4em;
 }
 img.separator {
     display: inline;

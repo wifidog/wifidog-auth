@@ -48,8 +48,6 @@
 
     <div id="login_form">
         <h1>{"Login or Signup here"|_}:</h1>
-
-        <p class="indent">
             <form name="login_form" method="post" onsubmit="return false" action="{$base_ssl_path}login/index.php">
 			<input type="hidden" name="form_request" value="login">
                 {if $node != null}
@@ -80,8 +78,8 @@
 				&nbsp;
                 <input class="submit" type="button" name="form_signup" value="{$create_a_free_account}" onclick="this.form.action='{$base_ssl_path}signup.php'; this.form.submit()">
             </form>
-        </p>
-
+    </div>
+    <div id="login_help">
         <h1>{"I'm having difficulties"|_}:</h1>
 
         <ul>
