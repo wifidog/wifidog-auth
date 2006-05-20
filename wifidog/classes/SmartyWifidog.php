@@ -85,7 +85,8 @@ class SmartyWifidog extends Smarty {
          */
         $this->register_modifier("_","_");
 
-        $this->caching = false;
+        $this->caching = true;
+        $this->compile_check = true;
         $this->assign('app_name','Wifidog auth server');
 
     /* We need this for various forms to redirect properly (language form) */
