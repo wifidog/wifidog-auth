@@ -58,7 +58,7 @@
 
                 <ul class="users_list">
                     {section name=onlineUser loop=$onlineUsers}
-                        <li>{$onlineUsers}</li>
+                        <li>{$onlineUsers[onlineUser]}</li>
                     {/section}
                 </ul>
             {else}
