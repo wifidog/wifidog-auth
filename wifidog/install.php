@@ -167,6 +167,7 @@ $dir_array = array (
     'tmp/magpie_cache',
     'lib/smarty',
     'tmp/smarty/templates_c',
+    'tmp/smarty/cache',
     'lib/magpie',
     'lib/Phlickr',
     'config.php'
@@ -840,7 +841,7 @@ EndHTML;
             print "Download source code ($filename) : ";
             if (!file_exists(WIFIDOG_ABS_FILE_PATH."tmp/" . $filename))
                 //execVerbose("wget \"$phlickr_full_url\" 2>&1", $output, $return);
-                downloadFile($smarty_full_url, WIFIDOG_ABS_FILE_PATH."tmp/" . $filename);
+                downloadFile($phlickr_full_url, WIFIDOG_ABS_FILE_PATH."tmp/" . $filename);
 
             if (!file_exists(WIFIDOG_ABS_FILE_PATH."tmp/" . $filename)) { # Error occured, print output of wget
                 print "<B STYLE=\"color:red\">Error</B><P>Current working directory : <B>$basepath/tmp/smarty</B>";
