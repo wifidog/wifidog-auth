@@ -95,7 +95,7 @@ select {
     float: left;
 	margin: 0em;
 	padding: 0em;
-    border: 1px solid #E9E9E9;
+    /*border: 1px solid #E9E9E9;*/
 }
 
 #left_area_top {
@@ -129,7 +129,7 @@ select {
 	float: right;
 		margin: 0em ;
 		padding: 0em;
-		border: 1px solid #E9E9E9;
+		/*border: 1px solid #E9E9E9;*/
 }
 
 * html #main_area {/* Stupid IE hack */
@@ -444,31 +444,44 @@ body div#toolTip p em span { font-weight:bold;color:#fff; }
 .user_ui_main_outer {
 /*	display: inline;*/
     display: block;
+    background: #E9F6FF;
+	color: #3D586B;
+	border: 1px solid #B4DFFF;
+	margin: 1em;
+    padding: 0.1em;
 }
-
+.user_ui_title .user_ui_main_outer,
+.user_ui_description .user_ui_main_outer
+ {
+    margin: 0em;
+    padding: 0em;
+    border: none;
+    	}
 
 .user_ui_main_inner {
     display: block;
 /*	border: 1px solid gray;*/
-    margin: 2px;
-    padding: 2px;
+
+
 }
 .user_ui_container {
     display: block;
-    	background: #E9F6FF;
-	color: #3D586B;
+    margin: 0em;
+    padding: 0em;
+
 }
 .user_ui_title {
     display: block;
     font-size: 1em;
     font-weight: bold;
+    margin: 0em;
+    padding: 0em;
 }
-#main_area_middle .user_ui_container {
 
-}
 .user_ui_title a {
     font-size: medium;
     font-weight: bold;
+    
 }
 .user_ui_authors {
     display: block;
@@ -476,13 +489,19 @@ body div#toolTip p em span { font-weight:bold;color:#fff; }
     color: #386b04;
     padding: 5px;
     background: #cafd84;
+        margin: 0em;
+    padding: 0em;
 }
 .user_ui_description {
     text-align: justify;
     font-weight: bold;
     border : 1px solid #46a43a;
-    background-color : #daedd8;
+    /*background-color : #daedd8;*/
+    margin: 0em;
+    padding: 0.5em;
+    
 }
+
 .user_ui_footer {
     display: block;
     padding: 5px;
