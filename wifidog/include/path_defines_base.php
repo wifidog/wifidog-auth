@@ -45,12 +45,13 @@
  *
  * The following constants are defined here:
  *   + SYSTEM_PATH:           The url path to the base /wifidog directory.
- *                            Use "/" if the apache DocumentRoot (DOCUMENT_ROOT)
+ *                           Use "/" if the apache DocumentRoot (DOCUMENT_ROOT)
  *                            is the wifidog directory.  Due to apache
  *                            aliases the SYSTEM_PATH may not correspond
- *                            with any real directory path.
- *   + WIFIDOG_ABS_FILE_PATH: The absolute filesystem path to the /wifidog
- *                            directory.
+ *                            with
+ * any real directory path. Note that this constant is NOT defined when wifidog
+ * is called from the command line + WIFIDOG_ABS_FILE_PATH: The absolute
+ * filesystem path to the /wifidog directory.
  *
  * Examples:
  * If you have wifidog installed in <code>/var/www/wifidog-auth</code> and your

@@ -101,7 +101,7 @@
 
     <ul>
         {if $googleMapsEnabled} {* This needs to be imporved before being deployed  {if $googleMapsEnabled && !$userIsAtHotspot}*}
-            <li><a href="{$base_url_path}hotspots_map.php">{"Deployed HotSpots map"|_}</a></li>
+            <li><a href="{$base_non_ssl_path}hotspots_map.php">{"Deployed HotSpots map"|_}</a></li>
         {/if}
         <li><a href="{$base_url_path}hotspot_status.php">{"Deployed HotSpots status with coordinates"|_}</a></li>
         <li><a href="{$base_url_path}node_list.php">{"Full node technical status (includes non-deployed nodes)"|_}</a></li>

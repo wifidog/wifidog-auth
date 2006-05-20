@@ -1,4 +1,7 @@
 2006-05-20 Benoit Grégoire  <bock@step.polymtl.ca>
+	* USE_BASE_NON_SSL_PATH for hotspot map, else internet explorer whines endlessly
+	
+2006-05-20 Benoit Grégoire  <bock@step.polymtl.ca>
 	* index.tpl:  Fix link to the map not being displayed at a hotspot, even when you are logged in.  There needs to be much better logick before we export such things to smarty templates.
 
 2006-05-20 François Proulx <francois.proulx@gmail.com>

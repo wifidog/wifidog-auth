@@ -53,9 +53,9 @@
     <div id="login_form">
         <ul>
             {if $GMapsEnabled && !$userIsAtHotspot}
-                <li><a href="{$base_ssl_path}hotspots_map.php">{"Deployed HotSpots map"|_}</a></li>
+                <li><a href="{$base_non_ssl_path}hotspots_map.php">{"Deployed HotSpots map"|_}</a></li>
             {/if}
-            <li><a href="{$base_ssl_path}node_list.php">{"Full node technical status (includes non-deployed nodes)"|_}</a></li>
+            <li><a href="{$base_non_ssl_path}node_list.php">{"Full node technical status (includes non-deployed nodes)"|_}</a></li>
         </ul>
     </div>
 {*
