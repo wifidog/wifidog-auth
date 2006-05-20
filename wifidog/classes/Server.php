@@ -754,7 +754,7 @@ class Server implements GenericObject
 		$_html .= "</div>\n";
 
 		// gmaps_api_key
-		if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED === true) {
+		if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED == true) {
     		$_name = "server_" . $this->getId() . "_gmaps_api_key";
     		$_value = htmlspecialchars($this->getGoogleAPIKey(), ENT_QUOTES);
 
@@ -810,7 +810,7 @@ class Server implements GenericObject
 		}
 
 		// gmaps_api_key
-		if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED === true) {
+		if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED == true) {
         	$_name = "server_" . $this->getId() . "_gmaps_api_key";
         	$this->setGoogleAPIKey($_REQUEST[$_name]);
 		}

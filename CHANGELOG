@@ -1,4 +1,7 @@
-2006-05-10 François Proulx <francois.proulx@gmail.com>
+2006-05-20 Benoit Grégoire  <bock@step.polymtl.ca>
+	* index.tpl:  Fix link to the map not being displayed at a hotspot, even when you are logged in.  There needs to be much better logick before we export such things to smarty templates.
+
+2006-05-20 François Proulx <francois.proulx@gmail.com>
 	* Added /wifidog/contrib and /wifidog/contrib/xslt directories
 	* Posted Île Sans Fil XSLT example stylesheet for converting the hotspot_status page
 		* Browser view

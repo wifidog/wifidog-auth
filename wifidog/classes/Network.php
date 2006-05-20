@@ -1388,7 +1388,7 @@ class Network implements GenericObject {
         $html .= "</div>\n";
 
         // Build HTML form fields names & values
-        if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED === true) {
+        if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED == true) {
             $gis_point = $this->getGisLocation();
             $gis_lat_name = "network_".$this->getId()."_gis_latitude";
             $gis_lat_value = htmlspecialchars($gis_point->getLatitude(), ENT_QUOTES);
@@ -1520,7 +1520,7 @@ class Network implements GenericObject {
         $this->setCustomPortalRedirectAllowed(empty ($_REQUEST[$name]) ? false : true);
 
         // GIS data
-        if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED === true) {
+        if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED == true) {
             $gis_lat_name = "network_".$this->getId()."_gis_latitude";
             $gis_long_name = "network_".$this->getId()."_gis_longitude";
             $gis_alt_name = "network_".$this->getId()."_gis_altitude";
