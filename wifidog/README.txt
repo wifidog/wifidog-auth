@@ -2,10 +2,11 @@ Directory: wifidog/
 This is the main wifidog directory, it contains most of the wifidog system.
 
 Subdirectories:
-admin:		PHP scripts for the adminstrative interface 
+admin:		PHP scripts for the adminstrative interface
 auth:		Gateway authentication responder
 classes: 	All the PHP classes
-content:	Scripts and reports for specific content types (such as PatternLanguage)
+content:     Scripts and reports for specific content types (such as PatternLanguage)
+contrib:     Various scripts and templates given as examples
 cron:		PHP scripts meant to be executed on a regular basis
 include:	PHP includes
 js:		Javascripts

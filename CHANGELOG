@@ -1,3 +1,11 @@
+2006-05-10 François Proulx <francois.proulx@gmail.com>
+	* Added /wifidog/contrib and /wifidog/contrib/xslt directories
+	* Posted Île Sans Fil XSLT example stylesheet for converting the hotspot_status page
+		* Browser view
+		* PDA view (by Jean-Pierre Lessard <jplprog@videotron.ca>)
+		* Simply use in this manner :
+		http://wifidog-server.org/hotspot_status.php?format=XML&xslt=http://wifidog-server.org/contrib/xslt/hotspot_status_browser.xsl
+
 2006-05-20 Benoit Grégoire  <bock@step.polymtl.ca>
 	* page.php:  Fix bugs in various files preventing the system from working from the command line.
 
@@ -12,8 +20,8 @@
 	accounts from logging-in.
 	* Interim commit, begin simplifying the html ans stylesheets, and re-doing the general look.
 	This is incomplete, this commit was done to fix the problem above.
-	* install.php:  Fix path problems, make shel command errors visible.  Update magpie and smarty url to latest versions (note that this won't 
-	automatically update an existing install).  Didn't touch phlickr as I didn't know the implications  
+	* install.php:  Fix path problems, make shel command errors visible.  Update magpie and smarty url to latest versions (note that this won't
+	automatically update an existing install).  Didn't touch phlickr as I didn't know the implications
 	* Add interactive scripts in sql/ to easily backup and restore a wifidog auth server database.
 
 2006-05-10 François Proulx <francois.proulx@gmail.com>
