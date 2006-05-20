@@ -100,7 +100,6 @@ require_once('classes/AbstractDb.php');
 require_once('classes/Locale.php');
 require_once('classes/Dependencies.php');
 require_once('classes/Server.php');
- echo "test\n";
 global $db;
 
 $db = new AbstractDb();
