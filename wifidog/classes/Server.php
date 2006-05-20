@@ -45,7 +45,6 @@
  * Load required classes
  */
 require_once('classes/GenericObject.php');
-require_once('classes/User.php');
 
 /**
  * Administration interface for defining all servers WiFiDog is running on
@@ -207,6 +206,10 @@ class Server implements GenericObject
 	 */
 	public static function getCurrentServer($siltent = false)
 	{
+        if(empty($_SERVER['SERVER_NAME']))
+        {
+            return null; //We were probably called from the command line
+        }
 	    // Define globals
 		global $db;
 
@@ -389,6 +392,7 @@ class Server implements GenericObject
      */
 	public static function processCreateNewObjectUI()
 	{
+        require_once('classes/User.php');
 	    // Init values
 		$_retVal = null;
 
@@ -774,6 +778,7 @@ class Server implements GenericObject
      */
 	public function processAdminUI()
 	{
+        require_once('classes/User.php');
 		if (!User::getCurrentUser()->isSuperAdmin()) {
 			throw new Exception(_('Access denied!'));
 		}
@@ -822,7 +827,8 @@ class Server implements GenericObject
      */
 	public function delete(&$errmsg)
 	{
-	    // Define globals
+	    require_once('classes/User.php');
+        // Define globals
 		global $db;
 
 	    // Init values

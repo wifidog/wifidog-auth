@@ -49,6 +49,25 @@ require_once('init_php.php');
 /**
  * Include configuration file
  */
+ /** search parent directory hierarchy for a file */
+function cmnSearchParentDirectories($dirname, $searchfor) {
+    $pieces = explode(DIRECTORY_SEPARATOR, $dirname);
+    $is_absolute = substr($dirname, 0, 1) === DIRECTORY_SEPARATOR ? 1 : 0;
+
+    for ($i = count($pieces); $i > $is_absolute; $i --) {
+        $filename = implode(DIRECTORY_SEPARATOR, array_merge(array_slice($pieces, 0, $i), array ($searchfor)));
+        if (file_exists($filename))
+            return $filename;
+    }
+
+    return false;
+}
+ function cmnRequireConfig($config_file = 'config.php') {
+    global $AVAIL_LOCALE_ARRAY; // so that nobody has to change their custom config.php
+    $config_path = cmnSearchParentDirectories(dirname(__FILE__), $config_file);
+    if (!empty ($config_path))
+        require_once ($config_path);
+}
 cmnRequireConfig();
 
 /**
@@ -81,7 +100,7 @@ require_once('classes/AbstractDb.php');
 require_once('classes/Locale.php');
 require_once('classes/Dependencies.php');
 require_once('classes/Server.php');
-
+ echo "test\n";
 global $db;
 
 $db = new AbstractDb();
@@ -107,9 +126,12 @@ if (Server::getCurrentServer(true) != null) {
 }
 
 /**
- * Set paths
+ * Set the URL paths, but only if we are NOT called from the command line
  */
+if (defined('SYSTEM_PATH'))
+{
 require_once('path_defines_url_content.php');
+}
 
 /* Constant shared with the gateway
  * NEVER edit these, as they mush match the C code of the gateway */
@@ -209,19 +231,7 @@ function cmnDirectorySlash($dirname) {
     return empty ($dirname) ? DIRECTORY_SEPARATOR : substr($dirname, -1, 1) === DIRECTORY_SEPARATOR ? $dirname : $dirname.DIRECTORY_SEPARATOR;
 }
 
-/** search parent directory hierarchy for a file */
-function cmnSearchParentDirectories($dirname, $searchfor) {
-    $pieces = explode(DIRECTORY_SEPARATOR, $dirname);
-    $is_absolute = substr($dirname, 0, 1) === DIRECTORY_SEPARATOR ? 1 : 0;
 
-    for ($i = count($pieces); $i > $is_absolute; $i --) {
-        $filename = implode(DIRECTORY_SEPARATOR, array_merge(array_slice($pieces, 0, $i), array ($searchfor)));
-        if (file_exists($filename))
-            return $filename;
-    }
-
-    return false;
-}
 
 /** join file path pieces together */
 function cmnJoinPath() {
@@ -309,13 +319,6 @@ function cmnIncludePackage($rel_path, $private = false) {
     }
 
     return false; // package was not found
-}
-
-function cmnRequireConfig($config_file = 'config.php') {
-    global $AVAIL_LOCALE_ARRAY; // so that nobody has to change their custom config.php
-    $config_path = cmnSearchParentDirectories(dirname(__FILE__), $config_file);
-    if (!empty ($config_path))
-        require_once ($config_path);
 }
 
 class WifidogSyslogFormatter extends EventFormatter {

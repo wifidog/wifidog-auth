@@ -4,7 +4,7 @@ that isn't under this file's theme pack.  In other words, no ../ relative links.
 body {
     margin: 0px;
     padding: 0px;
-    font-family: arial, sans-serif;
+    font-family:  sans-serif;;
     color: black;
     font-size: 0.8em;
     background-color: #FFF;
@@ -151,14 +151,6 @@ select {
 		float: left;
 }
 
-/* NOT GOOT ENOUGH, doesn't work with explorer.  Best solution is to override in description and sponsor */
-#main_area_middle>.user_ui_main_outer {
-	    	background: #E9F6FF;
-	margin: 1em 0em 1em 0em;
-	padding: 1em;
-	border: 1px solid #B4DFFF;
-	color: #3D586B;
-	}
 #main_area_bottom {
 		margin: 1em;
 	padding: 1em;
@@ -463,15 +455,16 @@ body div#toolTip p em span { font-weight:bold;color:#fff; }
 }
 .user_ui_container {
     display: block;
+    	background: #E9F6FF;
+	color: #3D586B;
 }
 .user_ui_title {
     display: block;
-    font-size: medium;
+    font-size: 1em;
     font-weight: bold;
+}
+#main_area_middle .user_ui_container {
 
-    color: #46a43a;
-    border : 1px solid #46a43a;
-    background-color : #daedd8;
 }
 .user_ui_title a {
     font-size: medium;

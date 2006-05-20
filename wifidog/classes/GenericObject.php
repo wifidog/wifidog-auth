@@ -44,7 +44,6 @@
 /**
  * Load content classes
  */
-require_once('classes/Content.php');
 
 /**
  * Any object that implement this interface can be administered in a generic way.

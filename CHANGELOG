@@ -1,4 +1,7 @@
 2006-05-20 Benoit Grégoire  <bock@step.polymtl.ca>
+	* page.php:  Fix bugs in various files preventing the system from working from the command line.
+
+2006-05-20 Benoit Grégoire  <bock@step.polymtl.ca>
 	* More install script fixes:  Phlickr wouldn't install, and the permissions of wifidog/tmp/smarty/cache weren't checked.
 
 2006-05-20 Benoit Grégoire  <bock@step.polymtl.ca>
