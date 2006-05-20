@@ -61,16 +61,17 @@ require_once('classes/Server.php');
 $currentUser = User::getCurrentUser();
 
 // Check if Google maps support has been enabled
-if (!defined("GMAPS_HOTSPOTS_MAP_ENABLED") || (defined("GMAPS_HOTSPOTS_MAP_ENABLED") && GMAPS_HOTSPOTS_MAP_ENABLED === false)) {
+if (!defined("GMAPS_HOTSPOTS_MAP_ENABLED") || (defined("GMAPS_HOTSPOTS_MAP_ENABLED") && GMAPS_HOTSPOTS_MAP_ENABLED == false)) {
     header("Location: hotspot_status.php");
     exit();
 }
 
 // Check if user is at a Hotspot and if he is authenticated
-if (!is_null(Node::getCurrentRealNode()) && !$currentUser) {
+/*This code is definitely not ready for prime time
+ * if (!is_null(Node::getCurrentRealNode()) && !$currentUser) {
     header("Location: hotspot_status.php");
     exit();
-}
+}*/
 
 // Init ALL smarty SWITCH values
 $smarty->assign('sectionTOOLCONTENT', false);
