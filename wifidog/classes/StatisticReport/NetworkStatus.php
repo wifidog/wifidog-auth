@@ -91,7 +91,7 @@ class NetworkStatus extends StatisticReport
             //pretty_print_r($this->stats->getSelectedNodes ());
             foreach ($selected_network as $network_id => $networkObject)
             {
-                $html .= "<fieldset class='pretty_fieldset'>";
+                $html .= "<fieldset>";
                 $html .= "<legend>".$networkObject->getName()."</legend>";
                 $html .= "<table>";
 

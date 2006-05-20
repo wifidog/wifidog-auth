@@ -97,7 +97,7 @@ abstract class StatisticReport
     public function getReportUI($child_html)
     {
         $html = '';
-        $html .= "<fieldset class='pretty_fieldset'>";
+        $html .= "<fieldset>";
         $html .= "<legend>".$this->getReportName()."</legend>";
         $html .= $child_html;
         $html .= "</fieldset>";

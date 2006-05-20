@@ -105,7 +105,7 @@ class ConnectionLog extends StatisticReport
             }
             $db->execSql($sql, $rows, false);
 
-            $html .= "<fieldset class='pretty_fieldset'>";
+            $html .= "<fieldset>";
             $html .= "<legend>"._("Number of unique Users:").count($rows)."</legend>";
             $html .= "<table>";
             $html .= "<thead>";
@@ -155,7 +155,7 @@ class ConnectionLog extends StatisticReport
 
             $number_of_connections = count($rows);
 
-            $html .= "<fieldset class='pretty_fieldset'>";
+            $html .= "<fieldset>";
             $html .= "<legend>"._("Number of non-unique connections:").$number_of_connections."</legend>";
             $html .= "<table>";
             $html .= "<thead>";

@@ -112,7 +112,7 @@ class RegistrationLog extends StatisticReport
         $db->execSqlUpdate($registration_node_table_sql, false);
         $real_first_connections_table_sql = "DROP TABLE $real_first_connections_table_name;";
         $db->execSqlUpdate($real_first_connections_table_sql, false);
-        $html .= "<fieldset class='pretty_fieldset'>";
+        $html .= "<fieldset>";
         $html .= "<legend>"._("Users who signed up here")."</legend>";
         $html .= "<table>";
         $html .= "<thead>";

@@ -1,4 +1,7 @@
 2006-05-18 Benoit Grégoire  <bock@step.polymtl.ca>
+	* More stylesheet and HTML work
+
+2006-05-18 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix loging form incorrectly attempting to validate the password, preventing many existing
 	accounts from logging-in.
 	* Interim commit, begin simplifying the html ans stylesheets, and re-doing the general look.

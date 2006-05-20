@@ -91,11 +91,11 @@ class NodeStatus extends StatisticReport
             //pretty_print_r($this->stats->getSelectedNodes ());
             foreach ($selected_nodes as $node_id => $nodeObject)
             {
-                $html .= "<fieldset class='pretty_fieldset'>";
+                $html .= "<fieldset>";
                 $html .= "<legend>".$nodeObject->getName()."</legend>";
 
                 /* Status */
-                $html .= "<fieldset class='pretty_fieldset'>";
+                $html .= "<fieldset>";
                 $html .= "<legend>"._("Status")."</legend>";
                 $html .= "<table>";
 
@@ -128,7 +128,7 @@ class NodeStatus extends StatisticReport
                 /* End Status */
 
                 /* Profile */
-                $html .= "<fieldset class='pretty_fieldset'>";
+                $html .= "<fieldset>";
                 $html .= "<legend>"._("Profile")."</legend>";
                 $html .= "<table>";
 
@@ -200,7 +200,7 @@ class NodeStatus extends StatisticReport
                 /* End Profile */
 
                 /* Statistics */
-                $html .= "<fieldset class='pretty_fieldset'>";
+                $html .= "<fieldset>";
                 $html .= "<legend>"._("Statistics")."</legend>";
                 $html .= "<table>";
                 $date_constraint = $this->stats->getSqlDateConstraint();

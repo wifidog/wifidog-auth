@@ -105,13 +105,9 @@ class RssAggregator extends Content
         $db->execSqlUniqueRes($sql, $row, false);
 
         if ($row == null) {
-            /*
-             *Since the parent Content exists, the necessary data in content_group had not yet been created
-             */
             $sql_new = "INSERT INTO content_rss_aggregator (content_id) VALUES ('$content_id')";
             $db->execSqlUpdate($sql_new, false);
             $db->execSqlUniqueRes($sql, $row, false);
-
             if ($row == null) {
                 throw new Exception(_("The RssAggregator content with the following id could not be found in the database: ").$content_id);
             }

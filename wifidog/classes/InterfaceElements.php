@@ -645,10 +645,15 @@ class InterfaceElements
      */
 	public static function generateAdminSectionContainer($id = "", $title = "", $data = "", $tools = "")
 	{
-		// Generate div
-		$_retVal = self::generateDiv(self::generateAdminSection($title, $data, $tools, $id), "admin_section_container", $id);
-
-		return $_retVal;
+        
+         // Process title of admin section container
+        if ($title != "") {
+            $_title = "<legend>$title</legend>";
+        }
+        $_retVal = "<fieldset>$_title\n";
+        $_retVal .= self::generateDiv(self::generateAdminSection(null, $data, $tools, $id), "admin_section_container", $id);
+        $_retVal .= "</fieldset>\n";
+        return $_retVal;
 	}
 
 }

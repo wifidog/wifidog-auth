@@ -103,7 +103,7 @@ $html_body = $smarty->fetch("templates/sites/index.tpl");
  */
 $ui = new MainUI();
 $ui->addContent('left_area_middle', $html);
-$ui->addContent('main_area_middle', $html_body);
+$ui->addContent('main_area_top', $html_body);
 $ui->display();
 
 /*

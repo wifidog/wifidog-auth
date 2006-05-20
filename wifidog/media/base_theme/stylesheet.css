@@ -19,7 +19,7 @@ input {
 
 h1 {
     font-family: verdana, sans-serif;
-    color: #88AA4B;
+	color: #666;
     font-size: 1.5em;
 }
 
@@ -65,7 +65,6 @@ select {
 }
 
 #page_header h1 {
-	width: 250px;
 	margin-top: 5px;
 
 	font-size: 2em;
@@ -87,11 +86,16 @@ select {
     float: left;
 }
 
+#page_body h1{
+		background: url('images/bullet_box_arrow.gif') no-repeat 0 0px;
+		padding-left: 24px;
+}	
 #left_area {
     width: 25%;
     float: left;
 	margin: 0em;
-    /*border: 1px solid #E9E9E9;*/
+	padding: 0em;
+    border: 1px solid #E9E9E9;
 }
 
 #left_area_top {
@@ -122,12 +126,15 @@ select {
 
 #main_area {
     width: 74%;
-	float: left;
+	float: right;
 		margin: 0em ;
 		padding: 0em;
-		/*border: 1px solid #E9E9E9;*/
+		border: 1px solid #E9E9E9;
 }
 
+* html #main_area {/* Stupid IE hack */
+	width: 65%; 
+}
 #main_area_top {
 	background: #f5f5f5 url('images/back_header_fade.gif') repeat-x bottom left;
 	margin: -1px 1em 1em 1em;
@@ -246,6 +253,7 @@ div.test {
 #login_form {
 	float: left;
 	margin: 1em;
+	padding: 0em 1em;
 		text-align: center;
 }
 #login_form form {
@@ -255,7 +263,9 @@ div.test {
 /* The help text for the login form */
 #login_help {
    	float: left;
-    margin-left: 4em;
+    margin: 1em 1em 1em 4em;
+    padding: 0em 1em;
+    border: 1px solid #d7d5d5;
 }
 img.separator {
     display: inline;
@@ -428,21 +438,6 @@ body div#toolTip p em span { font-weight:bold;color:#fff; }
     float: left;
 }
 
-#login_form{
-    padding: 0px;
-    margin: 0px;
-}
-
-#login_form h1 a {
-    font-size: large;
-}
-
-.login_body {
-    text-align: center;
-}
-.login_body h1 {
-    font-size: large;
-}
 /* This is the warning message area ( Alerting the user to validation his account ASAP ) */
 #warning_message_area {
     background-color: red;
@@ -453,15 +448,6 @@ body div#toolTip p em span { font-weight:bold;color:#fff; }
 }
 
 .portal_content {
- 	/*
-  	display: inline;
-  	border: outset #999999;
-  	background: #fafff3;
- 	*/
-    float: left;
-    margin: 2px;
-    display: block;
-    width: 100%;
 }
 .user_ui_main_outer {
 /*	display: inline;*/
@@ -727,35 +713,30 @@ table.content_admin td {
 #std_table th { font-size: 14pt; background-color: #e1f5da;}
 #std_table td.item { font-weight: bold; }
 
-.pretty_fieldset {
-    background-color: #e1f5da;
-    font-family: Verdana, Arial, Helvetica, sans-serif;
+fieldset {
+    background-color: #f5f5f5;
+    border: 1px solid #d7d5d5;
 }
-.pretty_fieldset legend {
-    font-size: 14pt;
+fieldset legend {
+    font-size: 1em;
+    font-weight: bold;
 }
-.pretty_fieldset table {
+fieldset table {
     width: 100%;
     border-collapse: collapse;
 }
-.pretty_fieldset tr.odd {
-    background-color: #d1e5ca;
+fieldset tr.odd {
+    background-color: #fff;
 }
-.pretty_fieldset th {
+fieldset th {
     text-align: left;
     /*text-transform: uppercase;*/
 }
 
-.pretty_fieldset div {
-    border: 1px dotted black;
-    background-color: #fff;
+fieldset a {
 }
 
-.pretty_fieldset a {
-    #font-size: 12pt;
-}
-
-.pretty_fieldset .red {
+fieldset .red {
     background-color: red;
 }
 

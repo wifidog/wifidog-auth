@@ -613,56 +613,56 @@ EOF;
     public function getAdminUI()
     {
         $html = '';
-        $html .= "<h3>"._("Report configuration")."</h3>\n";
+        $html .= "<h1>"._("Report configuration")."</h1>\n";
         $html .= "<div class='admin_container'>\n";
 
         // Network
-        $html .= "<div class='admin_section_container'>\n";
-        //$html .= "<div class='admin_section_title'>".." : </div>\n";
+        $html .= "<fieldset>\n";
+        //$html .= "<legend>".." : </legend>\n";
         $html .= "<div class='admin_section_data'>\n";
         $html .= Network :: getSelectNetworkUI('Statistics', reset($this->report_selected_networks));
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</fieldset>\n";
 
         // Date range
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Restrict the time range for which statistics will be computed")." : </div>\n";
+        $html .= "<fieldset>\n";
+        $html .= "<legend>"._("Restrict the time range for which statistics will be computed")." : </legend>\n";
         $html .= "<div class='admin_section_data'>\n";
         $html .= $this->getDateRangeUI();
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</fieldset>\n";
 
         // Selected nodes
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Restrict stats to the following nodes")." : </div>\n";
+        $html .= "<fieldset>\n";
+        $html .= "<legend>"._("Restrict stats to the following nodes")." : </legend>\n";
         $html .= "<div class='admin_section_data'>\n";
         $html .= $this->getSelectedNodesUI();
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</fieldset>\n";
 
         // Unique user criteria
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Distinguish users by")." : </div>\n";
+        $html .= "<fieldset>\n";
+        $html .= "<legend>"._("Distinguish users by")." : </legend>\n";
         $html .= "<div class='admin_section_data'>\n";
         $html .= $this->getDistinguishUsersByUI();
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</fieldset>\n";
 
         // Selected users
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Restrict stats to the selected users")." : </div>\n";
+        $html .= "<fieldset>\n";
+        $html .= "<legend>"._("Restrict stats to the selected users")." : </legend>\n";
         $html .= "<div class='admin_section_data'>\n";
         $html .= $this->getSelectedUsersUI();
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</fieldset>\n";
 
         // Reports
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Selected reports")." : </div>\n";
+        $html .= "<fieldset>\n";
+        $html .= "<legend>"._("Selected reports")." : </legend>\n";
         $html .= "<div class='admin_section_data'>\n";
         $html .= $this->getSelectedReportsUI();
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</fieldset>\n";
         $html .= "</div>\n";
         return $html;
     }

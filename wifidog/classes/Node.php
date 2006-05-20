@@ -253,7 +253,7 @@ class Node implements GenericObject
 				}
 				$html .= FormSelectGenerator :: generateFromArray($tab, null, $name, null, false);
 			} else {
-				$html .= "<fieldset class='pretty_fieldset'>\n\t<legend>Node List</legend>\n";
+				$html .= "<fieldset>\n\t<legend>Node List</legend>\n";
 				$html .= "\t<span class='node_admin'>Filter: <input type='text' maxlength='40' size='40' id='nodes_list_filter' name='nodes_list_filter' /></span>\n\t<br/>\n";
 				$html .= "\t<!--[if IE]><style type='text/css'>#node_list_div table.scrollable>tbody { height: 15px; }</style><![endif]-->\n";
 				$html .= "\t<script src='" . BASE_URL_PATH . "js/filtertable.js' type='text/javascript' language='javascript' charset='utf-8'></script>\n";

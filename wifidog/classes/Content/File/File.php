@@ -403,7 +403,7 @@ class File extends Content
 
         $html .= "<div class='admin_class'>File (".get_class($this)." instance)</div>\n";
 
-        $html .= "<div class='admin_section_container'>\n";
+        $html .= "<div class='admin_section'>\n";
         $html .= "<div class='admin_section_title'>";
         $html .= "<input type='radio' name='file_mode".$this->getId()."' value='by_upload' ". ($this->isLocalFile() ? "CHECKED" : "").">";
         $html .= _("Upload a new file (Uploading a new one will replace any existing file)")." : </div>\n";
@@ -413,7 +413,7 @@ class File extends Content
         $html .= "</div>\n";
         $html .= "</div>\n";
 
-        $html .= "<div class='admin_section_container'>\n";
+        $html .= "<div class='admin_section'>\n";
         $html .= "<div class='admin_section_title'>";
         $html .= "<input type='radio' name='file_mode".$this->getId()."' value='remote' ". (!$this->isLocalFile() ? "CHECKED" : "").">";
         $html .= _("Remote file via URL")." : </div>\n";
@@ -429,7 +429,7 @@ class File extends Content
         $html .= "</div>\n";
 
         if (!$this->isLocalFile()) {
-            $html .= "<div class='admin_section_container'>\n";
+            $html .= "<div class='admin_section'>\n";
             $html .= "<div class='admin_section_title'>"._("File URL")." : </div>\n";
             $html .= "<div class='admin_section_data'>\n";
             $html .= $this->getFileUrl();
@@ -437,7 +437,7 @@ class File extends Content
             $html .= "</div>\n";
         }
 
-        $html .= "<div class='admin_section_container'>\n";
+        $html .= "<div class='admin_section'>\n";
         $html .= "<div class='admin_section_title'>"._("Filename to display")." : </div>\n";
         $html .= "<div class='admin_section_data'>\n";
         $html .= '<input type="text" name="file_file_name'.$this->getId().'" value="'.$this->getFilename().'" />';
@@ -445,21 +445,21 @@ class File extends Content
         $html .= "</div>\n";
 
         if ($this->isLocalFile()) {
-            $html .= "<div class='admin_section_container'>\n";
+            $html .= "<div class='admin_section'>\n";
             $html .= "<div class='admin_section_title'>"._("MIME type")." : </div>\n";
             $html .= "<div class='admin_section_data'>\n";
             $html .= '<input type="text" name="file_mime_type'.$this->getId().'" value="'.$this->getMimeType().'" />';
             $html .= "</div>\n";
             $html .= "</div>\n";
 
-            $html .= "<div class='admin_section_container'>\n";
+            $html .= "<div class='admin_section'>\n";
             $html .= "<div class='admin_section_title'>"._("Locally stored file size")." : </div>\n";
             $html .= "<div class='admin_section_data'>\n";
             $html .= $this->getFileSize(self :: UNIT_KILOBYTES)." "._("KB");
             $html .= "</div>\n";
             $html .= "</div>\n";
         } else {
-            $html .= "<div class='admin_section_container'>\n";
+            $html .= "<div class='admin_section'>\n";
             $html .= "<div class='admin_section_title'>"._("Remote file size (Automatically converted from KB to Bytes)")." : </div>\n";
             $html .= "<div class='admin_section_data'>\n";
             // The hidden field contains old value to determine if we have to update ( this prevents unwanted successive floating point evaluation )
@@ -469,7 +469,7 @@ class File extends Content
             $html .= "</div>\n";
         }
 
-        $html .= "<div class='admin_section_container'>\n";
+        $html .= "<div class='admin_section'>\n";
         $html .= "<div class='admin_section_data'>\n";
         $html .= "<a href='".$this->getFileUrl()."'>"._("Download")." ".$this->getFilename()." (".$this->getFileSize(self :: UNIT_KILOBYTES)." "._("KB").")</a>";
         $html .= "</div>\n";

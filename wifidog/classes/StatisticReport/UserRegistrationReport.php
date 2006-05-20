@@ -90,7 +90,7 @@ class UserRegistrationReport extends StatisticReport
         /* End cumulative registration graph */
 
         /* First connection per node */
-        $html .= "<fieldset class='pretty_fieldset'>";
+        $html .= "<fieldset>";
         $html .= "<legend>"._("First connection per node")."</legend>";
         $node_usage_stats = null;
         $distinguish_users_by = $this->stats->getDistinguishUsersBy();

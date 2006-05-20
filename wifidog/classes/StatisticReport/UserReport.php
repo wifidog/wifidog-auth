@@ -113,7 +113,7 @@ class UserReport extends StatisticReport
 
                     $userinfo['account_status_description'] = $account_status_to_text[$userinfo['account_status']];
 
-                    $html .= "<fieldset class='pretty_fieldset'>\n";
+                    $html .= "<fieldset>\n";
                     $html .= "<legend>"._("Profile")."</legend>\n";
 
                     $html .= "<table>\n";
@@ -168,7 +168,7 @@ class UserReport extends StatisticReport
                 }
 
                 /******* Connections **********/
-                $html .= "<fieldset class='pretty_fieldset'>\n";
+                $html .= "<fieldset>\n";
                 $candidate_connections_sql = $this->stats->getSqlCandidateConnectionsQuery("*");
                 $sql = "$candidate_connections_sql ORDER BY timestamp_in DESC";
                 $db->execSql($sql, $connections, false);
@@ -250,7 +250,7 @@ class UserReport extends StatisticReport
                     $sql = "$candidate_connections_sql group by user_mac order by nb desc";
                     $db->execSql($sql, $rows, false);
 
-                    $html .= "<fieldset class='pretty_fieldset'>\n";
+                    $html .= "<fieldset>\n";
                     $html .= "<legend>".sprintf(_("%d MAC addresses"), count($rows))."</legend>\n";
                     $html .= "<table>\n";
                     $html .= "<thead>\n";
@@ -286,7 +286,7 @@ class UserReport extends StatisticReport
                     $sql = "$candidate_connections_sql group by connections.user_id, username order by nb desc, connections.user_id,username";
                     $db->execSql($sql, $rows, false);
 
-                    $html .= "<fieldset class='pretty_fieldset'>\n";
+                    $html .= "<fieldset>\n";
                     $html .= "<legend>".sprintf(_("%d users"), count($rows))."</legend>\n";
                     $html .= "<table>\n";
                     $html .= "<thead>\n";

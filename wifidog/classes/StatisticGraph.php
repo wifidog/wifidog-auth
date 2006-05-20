@@ -109,7 +109,7 @@ abstract class StatisticGraph
         $session->set('current_statistics_object', $statistics_object);
         self :: $stats = $statistics_object; /* Update it in case someone whants to use it right now */
         $html = '';
-        $html .= "<fieldset class='pretty_fieldset'>";
+        $html .= "<fieldset>";
         $html .= "<legend>".$this->getGraphName()."</legend>";
         $errormsg = '';
         if ($this->isAvailable($errormsg))

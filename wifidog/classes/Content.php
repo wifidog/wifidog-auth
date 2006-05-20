@@ -534,7 +534,7 @@ class Content implements GenericObject {
         $html .= "<th>"._('Display page').'</th><th>'._('Area').'</th><th>'._('Order').'</th><th>'._('Content').'</th><th>'._('Actions').'</th>'."\n";
         if ($rows)
             foreach ($rows as $row) {
-                $content = Content :: getObject($row['content_id']);
+                $content = self :: getObject($row['content_id']);
                 $html .= "<tr class='already_linked_content'>\n";
                 /* Display page */
                 $name = "{$user_prefix}_".$content->GetId()."_display_page";

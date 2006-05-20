@@ -51,69 +51,51 @@
     BEGIN section ADMIN
 *}
     {if $isSuperAdmin}
-            <div class='admin_section_container'>
-                <div class="admin_section_title">{"User administration"|_}:</div>
-
-                <div class="admin_section_data">
+            <fieldset>
+                <legend>{"User administration"|_}:</legend>
                     <ul>
                         <li><a href="{$base_url_path}admin/user_log.php">{"User logs"|_}</a></li>
                         <li><a href="{$base_url_path}admin/online_users.php">{"Online Users"|_}</a></li>
                         <li><a href="{$base_url_path}admin/stats.php">{"Statistics"|_}</a></li>
                         <li><a href="{$base_url_path}admin/import_user_database.php">{"Import NoCat user database"|_}</a></li>
                     </ul>
-                </div>
-            </div>
+            </fieldset>
     {/if}
 
     {if $isSuperAdmin || $isOwner}
-        <div class="admin_section_container">
+        <fieldset>
+        	<legend>{"Node administration"|_}:</legend>
             {if !$isSuperAdmin}
                 <form action="{$formAction}" method="post">
-                    <div class="admin_section_title">{"Node administration"|_}:</div>
-
-                    <div class="admin_section_data">
                         <div id="NodeSelector">{$nodeUI}</div>
-                    </div>
 
-                    <div class="admin_section_tools">
                         <input type="hidden" name="object_class" value="Node">
                         <input type="hidden" name="action" value="edit">
                         <input type="submit" name="edit_submit" value="{"Edit"|_}">
-                    </div>
                 </form>
             {else}
-                <div class="admin_section_title">{"Node administration"|_}:</div>
-
-                <div class="admin_section_data">
                     <ul>
                         <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Node&action=list">{"Nodes"|_}</a></li>
                         <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Node&action=new_ui">{"Add new Node"|_}</a></li>
                     </ul>
-                </div>
             {/if}
-        </div>
+        </fieldset>
 
         {if $isSuperAdmin}
-            <div class='admin_section_container'>
-                <div class="admin_section_title">{"Network administration"|_}:</div>
-
-                <div class="admin_section_data">
+            <fieldset>
+                <legend>{"Network administration"|_}:</legend>
                     <ul>
                         <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Network&action=list">{"Networks"|_}</a></li>
                     </ul>
-                </div>
-            </div>
+            </fieldset>
 
-            <div class='admin_section_container'>
-                <div class="admin_section_title">{"Server administration"|_}:</div>
-
-                <div class="admin_section_data">
+            <fieldset>
+                <legend>{"Server administration"|_}:</legend>
                     <ul>
                         <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Server&action=list">{"Servers"|_}</a></li>
                         <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Content&action=list">{"Content"|_}</a></li>
                     </ul>
-                </div>
-            </div>
+            </fieldset>
         {/if}
     {/if}
 {*

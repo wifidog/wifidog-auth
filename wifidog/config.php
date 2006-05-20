@@ -209,7 +209,7 @@ define('DEFAULT_LANG', 'fr_CA');
  *
  * Normally MAGPIE_REL_PATH is "lib/magpie/".
  */
-define('RSS_SUPPORT', true);
+define('RSS_SUPPORT', false);
 
 /**
  * Flickr Photostream content support
