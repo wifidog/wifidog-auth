@@ -761,7 +761,7 @@ fieldset .red {
     vertical-align: middle;
 }
 #map_outer_hotspots_list {
-	position: static;
+	position: relative;
 	width: 33%;
     height: 500px;
     background-color: #FFFFFF;
@@ -772,7 +772,7 @@ fieldset .red {
     padding: 10px;
 }
 #map_frame {
-	position: static;
+	position: relative;
 	width: 66%;
     height: 500px;
     font-size: 10pt;
