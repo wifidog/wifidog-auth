@@ -790,11 +790,6 @@ $api = $this->getFlickrApi();
                                 $photo = $photos[0];
                                 if (is_object($photo))
                                 {
-                                    /*
-                                    // Set the hover block
-                                    $html .= "<div id=\"flickr_photo_hover_{$photo->getId()}\" class=\"flickr_photo_hover\">\n";
-                                    */
-
                                     if ($this->shouldDisplayTitle())
                                     {
                                         $title = $photo->getTitle();
@@ -841,7 +836,7 @@ $api = $this->getFlickrApi();
                                     //$html .= "</div>\n";
 
                                     $html .= '<div class="flickr_photo_block">'."\n";
-                                    $html .= "<div class=\"flickr_photo\"><a href=\"{$photo->buildUrl()}\"><img onmouseout=\"document.getElementById('flickr_photo_hover_{$photo->getId()}').style.display='none'\" onmouseover=\"document.getElementById('flickr_photo_hover_{$photo->getId()}').style.display='block'\" src=\"{$photo->buildImgUrl($size)}\"></a></div>\n";
+                                    $html .= "<div class=\"flickr_photo\"><a href=\"{$photo->buildUrl()}\"><img src=\"{$photo->buildImgUrl($size)}\" /></a></div>\n";
                                     $html .= "</div>\n";
                                 }
                                 break;

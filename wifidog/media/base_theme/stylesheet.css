@@ -87,10 +87,11 @@ select {
     float: left;
 	margin: 0em;
 	padding: 0em;
-    /*border: 1px solid #E9E9E9;*/
 }
 
 #left_area_top {
+	position: relative;
+	width: 90%;
 	background: #f5f5f5 url('images/back_header_fade.gif') repeat-x bottom left;
 	margin: -1px 1em 1em 1em;
 	padding: 0.1em 1em 1em 1em;
@@ -101,11 +102,19 @@ select {
 }
 
 #left_area_middle {
+	position: relative;
+	width: 90%;
 	background: #EBFFEB;
 	margin: 1em;
 	padding: 1em;
 	border: 1px solid #C2FFC2;
 	float: left;
+}
+
+#left_area_middle ul {
+	margin: 0 0 0 1em;
+	padding: 0 0 0 1em;
+	text-align: left;
 }
 
 #left_area_bottom {
@@ -119,9 +128,9 @@ select {
 #main_area {
     width: 74%;
 	float: right;
-		margin: 0em ;
-		padding: 0em;
-		/*border: 1px solid #E9E9E9;*/
+	margin: 0em ;
+	padding: 0em;
+	/*border: 1px solid #E9E9E9;*/
 }
 
 * html #main_area {/* Stupid IE hack */
@@ -138,13 +147,13 @@ select {
 }
 
 #main_area_middle {
-		margin: 1em;
+	margin: 1em;
 	padding: 1em;
-		float: left;
+	float: left;
 }
 
 #main_area_bottom {
-		margin: 1em;
+	margin: 1em;
 	padding: 1em;
 	float: left;
 }
@@ -178,13 +187,13 @@ select {
 /********** End Main structure section **********/
 
 div.tool_user_info {
-		margin: 0em;
-	padding: 0em;
+	margin: 0;
+	padding: 0;
 }
 
 span.tool_user_info {
-			margin: 0em;
-	padding: 0em;
+	margin: 0;
+	padding: 0;
 }
 
 div.language{
@@ -235,9 +244,9 @@ div.test {
 /* The login form (including header) */
 #login_form {
 	float: left;
-	margin: 1em;
-	padding: 0em 1em;
-		text-align: center;
+/*	margin: 1em;
+	padding: 0em 1em;*/
+	text-align: center;
 }
 #login_form form {
     padding-left: 1em;
@@ -261,10 +270,8 @@ img.administration {
 }
 
 a.administration {
-    margin: 5px;
     color: #616756;
-    font-size: 11px;
-    font-weight: bold;
+    font-size: 8pt;
     text-decoration: none;
 }
 a.navigation {
@@ -440,12 +447,11 @@ body div#toolTip p em span { font-weight:bold;color:#fff; }
     padding: 0.1em;
 }
 .user_ui_title .user_ui_main_outer,
-.user_ui_description .user_ui_main_outer
- {
+.user_ui_description .user_ui_main_outer {
     margin: 0em;
     padding: 0em;
     border: none;
-    	}
+}
 
 .user_ui_main_inner {
     display: block;
@@ -484,8 +490,7 @@ body div#toolTip p em span { font-weight:bold;color:#fff; }
 .user_ui_description {
     text-align: justify;
     font-weight: bold;
-    border : 1px solid #46a43a;
-    /*background-color : #daedd8;*/
+    border: 1px solid #B4DFFF;
     margin: 0em;
     padding: 0.5em;
 
@@ -711,10 +716,11 @@ table.content_admin td {
 #std_table td.item { font-weight: bold; }
 
 fieldset {
-    background-color: #f5f5f5;
-    border: 1px solid #d7d5d5;
+	background-color: #E9F6FF;
+    border: 1px solid #B4DFFF;
 }
 fieldset legend {
+    color: #37678A;
     font-size: 1em;
     font-weight: bold;
 }
@@ -727,14 +733,10 @@ fieldset tr.odd {
 }
 fieldset th {
     text-align: left;
-    /*text-transform: uppercase;*/
-}
-
-fieldset a {
 }
 
 fieldset .red {
-    background-color: red;
+    background-color: #CC0000;
 }
 
 .smaller {

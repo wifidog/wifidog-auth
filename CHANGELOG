@@ -1,4 +1,9 @@
 2006-05-20 François Proulx <francois.proulx@gmail.com>
+	* Completed french translations
+	* Fixed Flickr javascript
+	* Various stylesheet improvements to tighten up the portal and admin
+
+2006-05-20 François Proulx <francois.proulx@gmail.com>
 	* Various stylesheet improvements, started working on Île Sans Fil network specific theme pack
 	* Fixed a few layout bugs
 
