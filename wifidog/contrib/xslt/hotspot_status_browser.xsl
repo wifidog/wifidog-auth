@@ -30,10 +30,10 @@
                     <xsl:variable name="globalStatus" select="globalStatus"/>
                     <xsl:choose>
                         <xsl:when test="$globalStatus = '100'">
-                            <img src="http://auth.ilesansfil.org/images/hotspot_status_up.png" alt="Up"/>
+                            <img src="http://auth.ilesansfil.org/media/common_images/HotspotStatus/up.gif" alt="Up"/>
                         </xsl:when>
                         <xsl:when test="$globalStatus = '0'">
-                            <img src="http://auth.ilesansfil.org/images/hotspot_status_down.png" alt="Down"/>
+                            <img src="http://auth.ilesansfil.org/media/common_images/HotspotStatus/down.gif" alt="Down"/>
                         </xsl:when>
                         <xsl:otherwise>
 			  <b><xsl:text>?</xsl:text></b>
