@@ -147,6 +147,8 @@ select {
 }
 
 #main_area_middle {
+	position: relative;
+	width: 95%;
 	margin: 1em;
 	padding: 1em;
 	float: left;
@@ -727,11 +729,6 @@ fieldset .red {
 
 /********** Google map section **********/
 
-/* crappy IE VML hack */
-v\:* {
-	behavior:url(#default#VML);
-}
-
 #map_title {
     background-color: #E9F6FF;
     border: 1px solid #B4DFFF;
@@ -764,9 +761,10 @@ v\:* {
     vertical-align: middle;
 }
 #map_outer_hotspots_list {
-    background-color: #FFFFFF;
-    width: 33%;
+	position: static;
+	width: 33%;
     height: 500px;
+    background-color: #FFFFFF;
     overflow: auto;
     float: right;
 }
@@ -774,9 +772,10 @@ v\:* {
     padding: 10px;
 }
 #map_frame {
-    font-size: 10pt;
-    width: 66%;
+	position: static;
+	width: 66%;
     height: 500px;
+    font-size: 10pt;
 }
 /********** End Google map section **********/
 
