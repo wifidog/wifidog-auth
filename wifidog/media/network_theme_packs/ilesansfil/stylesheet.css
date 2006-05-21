@@ -1,12 +1,12 @@
-/* Important notes:  
--You may not assume ANYTHING about the path to images or media 
-that isn't under this file's theme pack.  In other words, no ../ relative links. 
--This stylesheet will be applied after the one in 
+/* Important notes:
+-You may not assume ANYTHING about the path to images or media
+that isn't under this file's theme pack.  In other words, no ../ relative links.
+-This stylesheet will be applied after the one in
 wifidog/media/base_theme/stylesheet.css.  This theme pack should only override the elements
  in the base stylesheet that you want to change.
 */
-/********** General HTML section **********/
-#left_area_top {
-    background: #dbffa8 url("images/network_logo_banner.png") repeat-x fixed 0px 0px;
-}
 
+/* Redefine network logo */
+#page_header {
+	background: #f5f5f5 url('images/isf_logo_web.gif') no-repeat 10px 10px;
+}

@@ -204,7 +204,7 @@ class Server implements GenericObject
 	 * @static
 	 * @access public
 	 */
-	public static function getCurrentServer($siltent = false)
+	public static function getCurrentServer($silent = false)
 	{
         if(empty($_SERVER['SERVER_NAME']))
         {
@@ -218,9 +218,9 @@ class Server implements GenericObject
 		$_server_row = null;
 
 		$sql = "SELECT server_id FROM servers WHERE hostname='{$_SERVER['SERVER_NAME']}' ORDER BY creation_date LIMIT 1";
-		$db->execSqlUniqueRes($sql, $_server_row, false, $siltent);
+		$db->execSqlUniqueRes($sql, $_server_row, false, $silent);
 
-		if ($_server_row == null && !$siltent) {
+		if ($_server_row == null && !$silent) {
 			throw new Exception(_("Server::getCurrentServer: Fatal error: Unable to find current server in the database!"));
 		} else if ($_server_row != null) {
     		$_retVal = new self($_server_row['server_id']);

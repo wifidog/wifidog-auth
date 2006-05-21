@@ -75,7 +75,7 @@
 
             <div id="map_postalcode_overlay">
                 {"Enter your postal code"|_}:<br/>
-                <input type="text" id="postal_code" size="10"><br/>
+                <input type="text" id="postal_code" size="10"><p/>
                 <input type="button" value="{"Show"|_}" onclick="toggleOverlay('map_postalcode_overlay'); p = document.getElementById('postal_code'); hotspots_map.findClosestHotspotByPostalCode(p.value);">
             </div>
 

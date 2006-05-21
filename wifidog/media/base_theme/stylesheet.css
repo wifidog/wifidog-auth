@@ -1,72 +1,64 @@
 /* Important note:  You may not assume ANYTHING about the path to images or media
 that isn't under this file's theme pack.  In other words, no ../ relative links. */
-/********** General HTML section **********/
+/********** General HTML elements redefinition section **********/
 body {
     margin: 0px;
     padding: 0px;
-    font-family:  sans-serif;;
+    font-family: "Lucida Grande", "Verdana", sans-serif;
     color: black;
     font-size: 0.8em;
     background-color: #FFF;
 }
 
-input {
-    border: 1px solid #daedd8;
-    padding: 3px;
-    filter: alpha(opacity=70);
-    -moz-opacity: 0.70;
-}
-
-h1 {
-    font-family: verdana, sans-serif;
-	color: #666;
-    font-size: 1.5em;
-}
-
 a {
-    font-family: arial, sans-serif;
     color: #616756;
     font-size: 0.8em;
     text-decoration: underline;
 }
 
+img {
+	border: none;
+}
+
 a:hover {
-    font-family: arial, sans-serif;
     color: #88AA4B;
 }
 
+h1 {
+	color: #666;
+    font-size: 1.5em;
+}
+
+input {
+    border: 1px solid #aaa;
+}
 input:hover {
-    border: 1px solid #46a43a;
+    border: 1px solid #70cb70;
 }
 
 input:focus {
-    border: 1px solid #46a43a;
-    filter: alpha(opacity=100);
-    -moz-opacity: 1.00;
+    border: 1px solid #70cb70;
 }
 
 select {
-    font-family: arial, sans-serif;
-    color: #616756;
-    border: 1px solid #C8FF7A;
-    background: #C8FF7A;
+    color: #666;
+    border: 1px solid #70cb70;
+    background: #EBFFEB;
 }
 
-/********** End General HTML section **********/
+/********** End General HTML elements redefinitionsection **********/
 
 /********** Main structure section **********/
 #page_header {
-		padding: 5px 5px 5px 74px;
-		background: #f5f5f5 url('images/wifidog_thumbnail_transparent.gif') no-repeat 0px 0px;
+	padding: 5px 5px 5px 74px;
+	background: #f5f5f5 url('images/wifidog_thumbnail_transparent.gif') no-repeat 0px 0px;
 	margin: 0px 0px 0px 0px;
 	border-bottom: 1px solid #d7d5d5;
 	min-height: 60px;
-	
 }
 
 #page_header h1 {
 	margin-top: 5px;
-
 	font-size: 2em;
 	color: #999;
 }
@@ -80,8 +72,8 @@ select {
 	font-size: 0.6em;
 }
 #page_body {
-		padding: 0em;
-		margin: 0em;
+	padding: 0em;
+	margin: 0em;
     width: 100%;
     float: left;
 }
@@ -89,7 +81,7 @@ select {
 #page_body h1{
 		background: url('images/bullet_box_arrow.gif') no-repeat 0 0px;
 		padding-left: 24px;
-}	
+}
 #left_area {
     width: 25%;
     float: left;
@@ -133,7 +125,7 @@ select {
 }
 
 * html #main_area {/* Stupid IE hack */
-	width: 65%; 
+	width: 65%;
 }
 #main_area_top {
 	background: #f5f5f5 url('images/back_header_fade.gif') repeat-x bottom left;
@@ -232,7 +224,6 @@ span.avis {
 }
 div.anysection {
     padding: 0px 5px 0px 5px;
-    font-family: arial, sans-serif;
     color: #616756;
     text-align: left;
 }
@@ -271,7 +262,6 @@ img.administration {
 
 a.administration {
     margin: 5px;
-    font-family: arial, sans-serif;
     color: #616756;
     font-size: 11px;
     font-weight: bold;
@@ -282,7 +272,6 @@ a.navigation {
     top: 10px;
     padding-left: 5px;
     padding-right: 5px;
-    font-family: arial, sans-serif;
     color: #616756;
     font-size: 11px;
     text-decoration: none;
@@ -321,7 +310,7 @@ body div#toolTip {
 	-webkit-border-radius:5px;
 	-moz-border-radius:5px;
 }
-body div#toolTip p { margin:0;padding:0;color:#fff;font:11px/12px verdana,arial,sans-serif; }
+body div#toolTip p { margin:0;padding:0;color:#fff;font:11px/12px; }
 body div#toolTip p em { display:block;margin-top:3px;color:#f60;font-style:normal;font-weight:bold; }
 body div#toolTip p em span { font-weight:bold;color:#fff; }
 
@@ -481,7 +470,7 @@ body div#toolTip p em span { font-weight:bold;color:#fff; }
 .user_ui_title a {
     font-size: medium;
     font-weight: bold;
-    
+
 }
 .user_ui_authors {
     display: block;
@@ -499,7 +488,7 @@ body div#toolTip p em span { font-weight:bold;color:#fff; }
     /*background-color : #daedd8;*/
     margin: 0em;
     padding: 0.5em;
-    
+
 }
 
 .user_ui_footer {
@@ -540,12 +529,10 @@ body div#toolTip p em span { font-weight:bold;color:#fff; }
     margin: 3px;
 }
 .portal_node_section h1, .portal_node_section h1 a {
-    font-family: verdana, sans-serif;
     color: #88AA4B;
     font-size: 14px;
 }
 .portal_network_section h1, .portal_network_section h1 a {
-    font-family: verdana, sans-serif;
     color: #88AA4B;
     font-size: 1.2em;
 }
@@ -644,13 +631,11 @@ body div#toolTip p em span { font-weight:bold;color:#fff; }
     list-style-type: square;
 }
 .pattern_language_big_links {
-    font-family: verdana, sans-serif;
     color: #88AA4B;
     font-size: medium;
     font-weight: bold;
 }
 .pattern_language_big_links:hover {
-    font-family: verdana, sans-serif;
     color: #88AA4B;
     font-size: medium;
     font-weight: bold;
@@ -759,10 +744,12 @@ fieldset .red {
 /********** Google map section **********/
 
 #map_title {
-    background-color: #ffeac0;
-    border: 1px solid #ff9900;
+    background-color: #E9F6FF;
+    border: 1px solid #B4DFFF;
+    margin-top: 5px;
     padding: 5px;
-    font: 14pt "Arial",sans-serif;
+    font-size: 14pt;
+    color: #37678A;
     font-weight: bold;
 }
 #map_toolbox {
@@ -770,24 +757,25 @@ fieldset .red {
     float: right;
 }
 #map_postalcode_overlay {
+	position: absolute;
     display: none;
-    background-color: #ffeac0;
-    border: 1px solid #ff9900;
-    padding: 10px;
-    font: 10pt "Arial",sans-serif;
-    font-weight: bold;
-    position: absolute;
     z-index: 10;
+    background-color: #E9F6FF;
+    border: 1px solid #B4DFFF;
+    padding: 10px;
+    font-size: 10pt;
+    font-weight: bold;
 }
 #map_legend {
-    background-color: #ffeac0;
-    border: 1px solid #ff9900;
+    background-color: #E9F6FF;
+    border: 1px solid #B4DFFF;
     padding: 5px;
-    font: 10pt "Arial",sans-serif;
+    font-size: 10pt;
+    color: #37678A;
     vertical-align: middle;
 }
 #map_outer_hotspots_list {
-    background-color: #ffffff;
+    background-color: #FFFFFF;
     width: 33%;
     height: 500px;
     overflow: auto;
@@ -797,7 +785,7 @@ fieldset .red {
     padding: 10px;
 }
 #map_frame {
-    font: 10pt "Arial",sans-serif;
+    font-size: 10pt;
     width: 66%;
     height: 500px;
 }

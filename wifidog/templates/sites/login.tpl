@@ -45,43 +45,42 @@
  */
 
 *}
-
     <div id="login_form">
         <h1>{"Login or Signup here"|_}:</h1>
-            <form name="login_form" method="post" onsubmit="return false" action="{$base_ssl_path}login/index.php">
-			<input type="hidden" name="form_request" value="login">
-                {if $node != null}
-                    <input type="hidden" name="gw_address" value="{$gw_address}">
-                    <input type="hidden" name="gw_port" value="{$gw_port}">
-                    <input type="hidden" name="gw_id" value="{$gw_id}">
-                {/if}
-                {if $origin != null}
-                    <input type="hidden" name="origin" value="{$origin}" />
-                {/if}
+        <form name="login_form" action="{$base_ssl_path}login/index.php" method="post" onsubmit="return validateForm(this);">
+        		<input type="hidden" name="form_request" value="login">
+            {if $node != null}
+                <input type="hidden" name="gw_address" value="{$gw_address}">
+                <input type="hidden" name="gw_port" value="{$gw_port}">
+                <input type="hidden" name="gw_id" value="{$gw_id}">
+            {/if}
+            {if $origin != null}
+                <input type="hidden" name="origin" value="{$origin}" />
+            {/if}
 
-                {$selectNetworkUI}<br>
+			<p>
+            {$selectNetworkUI}
+            </p>
 
-                {"Username (or email)"|_}:<br>
-                <input type="text" name="username" value="{$username}" size="20" id="form_username" onkeypress="return focusNext(this.form, 'password', event)"><br>
-                {"Password"|_}:<br>
-                <input type="password" name="password" size="20" id="form_password" onkeypress="return focusNext(this.form, 'form_submit', event)"><br>
+            {"Username (or email)"|_}:<br/>
+            <input type="text" name="username" id="form_username" tabindex="1" value="{$username}" size="20" /><br/>
+            {"Password"|_}:<br/>
+            <input type="password" name="password" id="form_password" tabindex="2" size="20" /><br/>
 
-                <div id="form_errormsg" class="errormsg">
-				{if $error == null}
-				  &nbsp;
-				{else}
-				  {$error}
-				{/if}
-				</div>
+            <div id="form_errormsg" class="errormsg">
+			{if $error == null}
+			  &nbsp;
+			{else}
+			  {$error}
+			{/if}
+			</div>
 
-                <input class="submit" type="button" name="form_submit" value="{"Login"|_}" onclick="if (validateForm(this.form)) this.form.submit()">
-				&nbsp;
-                <input class="submit" type="button" name="form_signup" value="{$create_a_free_account}" onclick="this.form.action='{$base_ssl_path}signup.php'; this.form.submit()">
-            </form>
+            <input class="submit" type="submit" tabindex="3" name="form_submit" value="{"Login"|_}" />&nbsp;
+            <input class="submit" type="button" tabindex="4" name="form_signup" value="{$create_a_free_account}" onclick="location.href='{$base_ssl_path}signup.php';" />
+        </form>
     </div>
     <div id="login_help">
         <h1>{"I'm having difficulties"|_}:</h1>
-
         <ul>
             <li><a href="{$base_url_path}lost_username.php">{"I Forgot my username"|_}</a></li>
             <li><a href="{$base_url_path}lost_password.php">{"I Forgot my password"|_}</a></li>
@@ -89,7 +88,6 @@
             <li><a href="{$base_url_path}faq.php">{"Frequently asked questions"|_}</a></li>
         </ul>
     </div>
-
     <script type="text/javascript">
         <!--
 		{literal}

@@ -225,7 +225,7 @@ if ((!empty($logout) && $logout) && ($user = User::getCurrentUser()) != null) {
 /**
  * Start login interface section
  */
- 
+
 /*
  * Tool content
  */
@@ -261,7 +261,7 @@ if($node) {
 }
 $ui->setPageName('login');
 $ui->shrinkLeftArea();
- $welcome_msg = sprintf("<span>%s</span><em>%s<em>",_("Welcome"), $node->getName());
+ $welcome_msg = sprintf("<span>%s</span><em>%s</em>",_("Welcome to"), $node->getName());
  $ui->addContent('page_header', "<h1>$welcome_msg</h1>");
 
 $ui->addContent('main_area_top', $html);
@@ -269,7 +269,7 @@ $ui->addContent('main_area_top', $html);
 /*
  * Main content
  */
- 
+
          // Get all network content and node "login" content
         $content_rows = null;
         $network_id = $network->getId();
