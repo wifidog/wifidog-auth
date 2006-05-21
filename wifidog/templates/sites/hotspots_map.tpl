@@ -89,7 +89,7 @@
         <div id="map_hotspots_list"></div>
     </div>
 
-    <div id="map_frame">
+    <div id="map_frame" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
         <br /><br />
         <center><h2>{"Loading, please wait..."|_}</h2></center>
     </div>

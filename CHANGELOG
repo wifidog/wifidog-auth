@@ -1,3 +1,7 @@
+2006-05-21 François Proulx <francois.proulx@gmail.com>
+	* Think I've fixed Google Maps on IE.
+		* need to test on another system..
+
 2006-05-20 François Proulx <francois.proulx@gmail.com>
 	* Completed french translations
 	* Fixed Flickr javascript

@@ -141,7 +141,7 @@ if (!empty($_REQUEST['network_map'])) {
 $gis_data = $network->getGisLocation();
 
 // The onLoad code should only be called once all DIV are created.
-$script  = "<script type=\"text/javascript\"><!--\n";
+$script  = "<script type=\"text/javascript\">//<![CDATA[\n";
 $script .= "    function toggleOverlay(name)\n";
 $script .= "    {\n";
 $script .= "        o = document.getElementById('map_postalcode_overlay');\n";
@@ -160,7 +160,7 @@ $script .= "    hotspots_map.setHotspotsInfoList('map_hotspots_list');\n";
 $script .= "    hotspots_map.setInitialPosition(" . $gis_data->getLatitude() . ", " . $gis_data->getLongitude() . ", " . $gis_data->getAltitude() . ");\n";
 $script .= "    hotspots_map.setMapType(" . $network->getGisMapType() . ");\n";
 $script .= "    hotspots_map.redraw();\n";
-$script .= "//-->\n";
+$script .= "//]]>\n";
 $script .= "</script>\n";
 
 /*
