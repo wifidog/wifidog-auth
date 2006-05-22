@@ -1,4 +1,7 @@
 2006-05-21 François Proulx <francois.proulx@gmail.com>
+	* Stupid IE CSS bug fixed
+
+2006-05-21 François Proulx <francois.proulx@gmail.com>
 	* Fixed various bugs in content system
 	* stylesheet work
 

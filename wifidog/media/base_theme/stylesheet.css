@@ -134,7 +134,7 @@ select {
 }
 
 * html #main_area {/* Stupid IE hack */
-	width: 74%;
+	width: 69%;
 }
 #main_area_top {
 	background: #f5f5f5 url('images/back_header_fade.gif') repeat-x bottom left;
