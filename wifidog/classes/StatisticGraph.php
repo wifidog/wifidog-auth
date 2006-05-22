@@ -47,6 +47,7 @@
  */
 require_once('classes/Statistics.php');
 require_once('classes/Session.php');
+require_once('classes/Node.php');
 /**
  * An abstract class.  All statistics must inherit from this class
  *
