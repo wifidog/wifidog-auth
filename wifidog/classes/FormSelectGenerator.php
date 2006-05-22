@@ -190,7 +190,7 @@ class FormSelectGenerator
 	 * @param $additionalSelectAttribute will be appended inside the select tag.  For example: "onclick='submit();'"
 	 * @return string The HTML SELECT element definition string For example: "onclick='submit();'
 	 */
-	public static function generateFromArray($array, $selectedPrimaryKey, $userPrefix, $objectPrefix, $allowNullValues, $nullCaptionString = ' - - - ', $additionalSelectAttribute = "")
+	public static function generateFromArray($array, $selectedPrimaryKey, $userPrefix, $objectPrefix, $allowNullValues, $nullCaptionString = ' - - - ', $additionalSelectAttribute = "", $max_length = -1)
 	{
 		$retval = "";
 		$retval .= "<select id='{$userPrefix}{$objectPrefix}' name='{$userPrefix}{$objectPrefix}' {$additionalSelectAttribute}>\n";
@@ -208,7 +208,13 @@ class FormSelectGenerator
 			}
 
 			$name = $value[1];
-			$name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+			// Restrict to max length and append "..."
+			if($max_length == -1)
+				$name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+			else if(strlen($name) > $max_length)
+				$name = substr($name, 0, $max_length)."...";
+
+			//$name = htmlspecialchars($max_length != null ? $name : strlen($name) > $max_length ? substr($name, 0, $max_length)."..." : $name, ENT_QUOTES, 'UTF-8');
 			$primary_key = htmlspecialchars($value[0], ENT_QUOTES, 'UTF-8');
 			$retval .= "value='{$primary_key}'>{$name}</option>\n";
 		}

@@ -24,7 +24,7 @@
     <td><a href="stats.php?Statistics={$users_array[i].account_origin}&distinguish_users_by=user_id&stats_selected_users={$users_array[i].username}&UserReport=on&user_id={$users_array[i].user_id}&action=generate">{$users_array[i].username}</a></td>
     <td>{$users_array[i].account_origin}</td>
     <td>{$users_array[i].timestamp_in|date_format:"%Y/%m/%d %H:%M:%S"}</td>
-    <td>{$users_array[i].incoming}/{$users_array[i].outgoing}</td>
+    <td>{$users_array[i].incoming|fsize_format}/{$users_array[i].outgoing|fsize_format}</td>
     <td></td>
 </tr>
 {/section}

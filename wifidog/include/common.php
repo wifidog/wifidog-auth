@@ -92,9 +92,9 @@ require_once('classes/EventLogging.php');
 
 if (!defined('EVENT_LOGGING') || constant('EVENT_LOGGING')) {
 	EventLogging::SetupErrorHandling( "strict~/var:\sDeprecated/(off)",
-									  array( 'print' => new PrintChannel(new HTMLFormatter(), 'warning,notice', null, true),
-											 'debug' => new PrintChannel(new HTMLCommentsFormatter(), '=debug', null, false) )
-									  );
+	array( 'print' => new PrintChannel(new HTMLFormatter(), 'warning,notice', null, true),
+		   'debug' => new PrintChannel(new HTMLCommentsFormatter(), '=debug', null, false) )
+	);
 }
 require_once('classes/AbstractDb.php');
 require_once('classes/Locale.php');
@@ -365,7 +365,7 @@ if (!defined('EVENT_LOGGING') || constant('EVENT_LOGGING')) {
 	$myLogfile = !defined('WIFIDOG_LOGFILE') ? "tmp/wifidog.log" : constant('WIFIDOG_LOGFILE');
 	if (!empty($myLogfile)) {
 		if (substr($myLogfile,0,1) != '/') $myLogfile = WIFIDOG_ABS_FILE_PATH.$myLogfile;
-	
+
 		EventLogging::stAddChannel( new FileChannel($myLogfile, new WifidogSyslogFormatter(), 'warning,notice'), 'logfile' );
 	}
 

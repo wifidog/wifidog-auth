@@ -1,3 +1,8 @@
+2006-05-22 François Proulx <francois.proulx@gmail.com>
+	* Added generateFromArray parameter (max_length)
+	* Restricts select content ui combo box to 40 chars
+	* Added Smarty plugin modifier.fsize_format.php
+
 2006-05-21 François Proulx <francois.proulx@gmail.com>
 	* Stupid IE CSS bug fixed
 

@@ -30,9 +30,9 @@
 		<tr class="{cycle values="odd,even"}">
 		    <td class="status">
 		    {if $nodes[node].online == 't'}
-		    <img src='{$smarty.const.BASE_URL_PATH}images/HotspotStatus/up.gif'>
+		    <img src='{$smarty.const.COMMON_IMAGES_URL}HotspotStatus/up.gif'>
 		    {else}
-		    <img src='{$smarty.const.BASE_URL_PATH}images/HotspotStatus/down.gif'>
+		    <img src='{$smarty.const.COMMON_IMAGES_URL}HotspotStatus/down.gif'>
 		    {$nodes[node].duration.days} {"days"|_} {$nodes[node].duration.hours}{"h"|_} {$nodes[node].duration.minutes}{"min"|_}<br />
 		    {/if}
 		    {$nodes[node].last_heartbeat_user_agent}

@@ -781,7 +781,7 @@ class Content implements GenericObject {
 
             if ($type_interface != "table") {
                 if (isset ($tab)) {
-                    $html .= FormSelectGenerator :: generateFromArray($tab, null, $name, null, false);
+                    $html .= FormSelectGenerator :: generateFromArray($tab, null, $name, null, false, null, null, 40);
                 } else {
                     $html .= "<div class='warningmsg'>"._("Sorry, no content available in the database")."</div>\n";
                 }
