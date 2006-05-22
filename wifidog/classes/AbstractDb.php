@@ -63,7 +63,7 @@ class AbstractDb
         // Build connection string
         $conn_string = "host=".CONF_DATABASE_HOST." dbname=$db_name user=".CONF_DATABASE_USER." password=".CONF_DATABASE_PASSWORD."";
         // Try connecting and hide warning, errors
-        $ptr_connexion = @ pg_connect($conn_string);
+        $ptr_connexion = @ pg_pconnect($conn_string);
 
         // Throw an exception if anything went wrong
         if ($ptr_connexion == FALSE)

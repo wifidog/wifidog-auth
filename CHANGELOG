@@ -1,4 +1,7 @@
 2006-05-22 François Proulx <francois.proulx@gmail.com>
+	* Use Pgsql persistent connections
+
+2006-05-22 François Proulx <francois.proulx@gmail.com>
 	* Removed unnecessary debug message
 	* Fixed getNumOnlineUsers to count users by MAC on splash only nodes
 
