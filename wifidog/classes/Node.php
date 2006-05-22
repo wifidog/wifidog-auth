@@ -1321,7 +1321,10 @@ class Node implements GenericObject
 		global $db;
 		$retval = array ();
 		$row = null;
-		$db->execSqlUniqueRes("SELECT COUNT(DISTINCT users.user_id) as count FROM users,connections WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}'", $row, false);
+		if(!$this->isConfiguredSplashOnly())
+			$db->execSqlUniqueRes("SELECT COUNT(DISTINCT users.user_id) as count FROM users,connections WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}'", $row, false);
+		else
+			$db->execSqlUniqueRes("SELECT COUNT(DISTINCT connections.user_mac) as count FROM connections WHERE connections.token_status='".TOKEN_INUSE."' AND connections.node_id='{$this->id}'", $row, false);
 		return $row['count'];
 	}
 

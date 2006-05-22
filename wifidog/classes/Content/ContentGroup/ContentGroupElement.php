@@ -531,7 +531,6 @@ class ContentGroupElement extends Content
     {
         if ($this->isPersistent() == false && !empty ($this->content_group_element_row['displayed_content_id'])) {
             $displayed_content = self::getObject($this->content_group_element_row['displayed_content_id']);
-            print_r($displayed_content);
         }
     }
 }
