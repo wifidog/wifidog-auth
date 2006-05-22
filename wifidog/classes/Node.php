@@ -261,7 +261,7 @@ class Node implements GenericObject
 				$html .= "\t<div id='node_list_div' class='node_admin tableContainer'>\n";
 				$html .= "\t\t<table id='nodes_list' class='node_admin filterable scrollable sortable'>\n\n";
 				$html .= "\t\t\t<thead class='fixedHeader'>\n\t\t\t\t<tr class='nofilter'>\n\t\t\t\t\t<th>Node Name</th>\n\t\t\t\t\t<th>Node ID</th>\n\t\t\t\t\t<th>Deployment Status</th>\n\t\t\t\t</tr>\n\t\t\t</thead>\n\t\t\t<tbody>";
-				
+
 				$i = 0;
 				foreach ($node_rows as $node_row)
 				{
@@ -271,14 +271,14 @@ class Node implements GenericObject
 				$html .= "\t\t\t</tbody>\n\t\t</table>\n";
 				$html .= "\t</div>\n";
 				$html .= "</fieldset>\n";
-				
+
 			}
 		} else {
 			$html .= "<div class='warningmsg'>"._("Sorry, no nodes available in the database")."</div>\n";
 		}
 		return $html;
 	}
-	
+
 
 	/** Get the selected Network object.
 	 * @param $user_prefix A identifier provided by the programmer to recognise it's generated form

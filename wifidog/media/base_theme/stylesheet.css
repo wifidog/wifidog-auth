@@ -128,13 +128,13 @@ select {
 #main_area {
     width: 74%;
 	float: right;
-	margin: 0em ;
-	padding: 0em;
+	margin: 0;
+	padding: 0;
 	/*border: 1px solid #E9E9E9;*/
 }
 
 * html #main_area {/* Stupid IE hack */
-	width: 65%;
+	width: 74%;
 }
 #main_area_top {
 	background: #f5f5f5 url('images/back_header_fade.gif') repeat-x bottom left;
@@ -149,8 +149,8 @@ select {
 #main_area_middle {
 	position: relative;
 	width: 90%;
-	margin: 1em;
-	padding: 1em;
+	margin: 0.5em;
+	padding: 0;
 	float: left;
 }
 
@@ -312,7 +312,6 @@ body div#toolTip {
 	z-index:1000;
 	width:320px;
 	background:#000;
-/*	border:2px double #fff;*/
 	text-align:left;
 	padding:5px;
 	min-height:1em;
@@ -325,7 +324,7 @@ body div#toolTip p em span { font-weight:bold;color:#fff; }
 
 .errormsg {
     font-weight: bold;
-    color: red;
+    color: #CC0000;
 }
 .warningmsg {
     font-weight: bold;
@@ -333,7 +332,7 @@ body div#toolTip p em span { font-weight:bold;color:#fff; }
 }
 .successmsg {
     font-weight: bold;
-    color: green;
+    color: #00CC00;
 }
 .msg {
     font-weight: bold;
@@ -412,7 +411,7 @@ body div#toolTip p em span { font-weight:bold;color:#fff; }
 
 /* This is the warning message area ( Alerting the user to validation his account ASAP ) */
 #warning_message_area {
-    background-color: red;
+    background-color: #CC0000;
     color: white;
     font-size: large;
     font-weight: bold;

@@ -678,40 +678,36 @@ class RssPressReview
                         .rpr_item_title {
                         margin: 0em 0em 0em 0em;
                         padding: 0em 0em 0em 0em;}
-
-
                         .rpr_item_link { }
                         .rpr_expand_switch { font-weight: bolder;
-                        text-decoration: none;
-                        /*border: 1px solid black*/ }
+                        text-decoration: none;}
 
                         .rpr_popup_inner_div {
                         padding: 0.5em;
-                        border: 2px outset #324C48;
-                        background-color: #f9f9f9;
+                        background-color: #000;
+                        color: #fff;
                         visibility: hidden;
                         position: absolute;
                         left: 4em;
                         top: 1.5em;
-                        width: 350px;
-                        -moz-opacity: 0.95; filter: alpha(opacity=95);
-                        z-index: 1;
+                        width: 400px;
+                        z-index: 100;
+                        opacity: 0.90; filter: alpha(opacity=90);
+                        -webkit-border-radius:5px;
+                        -moz-border-radius:5px;
+                        border-radius:5px;
                         }
-
                         .rpr_popup_inner_div_expanded {
                         margin:  0.5em 1em 0em 1em;
                         padding: 0.5em;
-                        border: 2px outset #324C48;
-                        background-color: #f9f9f9;
+                        border: 1px solid #C2FFC2;
+                        background-color: #EBFFEB;
+                        color: #000000;
                         }
-
                         .rpr_popup_outer_div {
                          position: relative;
                         }
-
-
                         </style>
-
                         ';
 
         }

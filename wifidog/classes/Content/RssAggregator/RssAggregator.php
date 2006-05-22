@@ -135,10 +135,8 @@ class RssAggregator extends Content
                 $this->press_review->addSourceFeed($feed_row['url'], $feed_row['default_publication_interval'], $feed_row['bias']);
                 $title = $this->press_review->getFeedTitle($feed_row['url']);
 
-                /*
-                 * Update the stored feed title if it changed.
-                 * This allows the system to know every feed's title without continuously looking them up
-                 */
+                // Update the stored feed title if it changed.
+                //This allows the system to know every feed's title without continuously looking them up
                  if(!empty($title) && $title!=$feed_row['title']) {
                      $title = $db->escapeString($title);
                      $url = $db->escapeString($feed_row['url']);

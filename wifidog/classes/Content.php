@@ -508,7 +508,7 @@ class Content implements GenericObject {
      * @param string $link_table             Table to link from
      * @param string $link_table_obj_key_col Column in linked table to match
      * @param string $link_table_obj_key     Key to be found in linked table
-     * @param string $default_display_page       
+     * @param string $default_display_page
      * @param string $default_display_area
      * @return string HTML markup
      *
@@ -530,6 +530,7 @@ class Content implements GenericObject {
         $current_content_sql = "SELECT * FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key' ORDER BY display_page, display_area, display_order, subscribe_timestamp DESC";
         $rows = null;
         $db->execSql($current_content_sql, $rows, false);
+
         $html .= "<table class='already_linked_content'>\n";
         $html .= "<th>"._('Display page').'</th><th>'._('Area').'</th><th>'._('Order').'</th><th>'._('Content').'</th><th>'._('Actions').'</th>'."\n";
         if ($rows)
@@ -1329,7 +1330,7 @@ class Content implements GenericObject {
         return $html;
     }
     /** Process admin interface of this object.  When an object overrides this method, they should call the parent processAdminUI at the BEGINING of processing.
-    
+
     */
     public function processAdminUI() {
         if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {

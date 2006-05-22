@@ -3689,7 +3689,7 @@ msgstr ""
 #: ../include/schema_validate.php:95 ../include/schema_validate.php:96
 #: ../include/schema_validate.php:106 ../include/schema_validate.php:114
 msgid "Could not get a default network!"
-msgstr ""
+msgstr "Impossible de trouver un réseau par défaut !"
 
 #: ../portal/index.php:143 smarty.txt:144
 msgid "Expand portal"
@@ -3704,13 +3704,13 @@ msgstr "Réduire le portail"
 msgid ""
 "For some reason, we were unable to determine the web site you initially "
 "wanted to see.  You should now enter a web address in your URL bar."
-msgstr ""
+msgstr "Nous n'avons pas pu déterminer l'adresse du site Web que vous tentiez d'accéder initialement. Vous pouvez tout simplement pointer votre navigateur vers le site Web de votre choix."
 
 #: ../classes/Content/ContentGroup.php:197
 #: ../classes/Content/ContentGroup/ContentGroup.php:231
 msgid ""
 "Invalid content selection mode (must be part of CONTENT_CHANGES_ON_MODES)"
-msgstr ""
+msgstr "Mode de sélection des contenus invalide (doit faire partie de CONTENT_CHANGES_ON_MODES)"
 
 #: ../classes/Content/FlickrPhotostream.php:383
 #: ../classes/Content/FlickrPhotostream.php:385
@@ -4973,7 +4973,7 @@ msgstr ""
 msgid ""
 "Server::getCurrentServer: Fatal error: Unable to find current server in the "
 "database!"
-msgstr ""
+msgstr "Erreur fatale : Impossible de trouver la configuration du serveur par défaut. Server::getCurrentServer"
 
 #: ../classes/Server.php:256 ../classes/Server.php:259
 msgid "Unable to insert the new server in the database!"
