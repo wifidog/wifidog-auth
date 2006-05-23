@@ -130,7 +130,7 @@ define('CONF_USE_CRON_FOR_DB_CLEANUP', false);
  *
  * If you haven't installed PEAR::Cache_Lite, caching won't be enabled at all.
  */
-define('USE_CACHE_LITE', true);
+define('USE_CACHE_LITE', false);
 
 /**
  * Timezone
