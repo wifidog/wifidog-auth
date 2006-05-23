@@ -1,4 +1,7 @@
 2006-05-22 François Proulx <francois.proulx@gmail.com>
+	* Fixed isValidUsername() Js function to allow caret and dot characters
+
+2006-05-22 François Proulx <francois.proulx@gmail.com>
 	* Use Pgsql persistent connections
 
 2006-05-22 François Proulx <francois.proulx@gmail.com>

@@ -32,7 +32,7 @@ function isNumber(elem) {
 
 function isValidUsername(elem) {
   var str = elem.value;
-  var re = /^[0-9a-zA-Z_]+$/;
+  var re = /^[.0-9a-zA-Z_-]+$/;
   if (!str.match(re)) {
 	focusElement(elem.form.name, elem.name);
 	return false;
