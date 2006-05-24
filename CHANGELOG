@@ -1,4 +1,7 @@
 2006-05-24 François Proulx <francois.proulx@gmail.com>
+	* Stylesheet changes for left_area_bottom content block.
+
+2006-05-24 François Proulx <francois.proulx@gmail.com>
 	* Simplified Google Maps JS code to use more of the v2 abstraction
 	* Improved admin panels CSS classes
 

@@ -125,6 +125,12 @@ select {
 	float: left;
 }
 
+#left_area_bottom .user_ui_main_outer {
+	background: transparent;
+	border: none;
+	color: #000000;
+}
+
 #main_area {
     width: 74%;
 	float: right;
