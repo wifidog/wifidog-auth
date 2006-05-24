@@ -531,7 +531,7 @@ class Content implements GenericObject {
         $rows = null;
         $db->execSql($current_content_sql, $rows, false);
 
-        $html .= "<table class='already_linked_content'>\n";
+        $html .= "<table class='content_management_tools'>\n";
         $html .= "<th>"._('Display page').'</th><th>'._('Area').'</th><th>'._('Order').'</th><th>'._('Content').'</th><th>'._('Actions').'</th>'."\n";
         if ($rows)
             foreach ($rows as $row) {
@@ -579,7 +579,7 @@ class Content implements GenericObject {
         $html .= "</tr>\n";
 
         /* Add new content */
-        $html .= "<tr class='add_existing_content'>\n";
+        $html .= "<tr class='add_new_content'>\n";
         $name = "{$user_prefix}_new_display_page";
         $html .= "<td>".FormSelectGenerator :: generateFromTable('content_available_display_pages', 'display_page', 'display_page', $default_display_page, $name, null)."</td>\n";
         $name = "{$user_prefix}_new_display_area";

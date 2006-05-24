@@ -354,6 +354,29 @@ body div#toolTip p em span { font-weight:bold;color:#fff; }
     width:auto;
 }
 
+.content_management_tools {
+	border: 1px solid #DDDDFF;
+    background-color: #FBFBFF;
+}
+
+/** Content management tools */
+.content_management_tools th {
+	background-color: #444;
+	color: #FFFFFF;
+	text-align: center;
+}
+
+.already_linked_content {
+}
+
+.add_existing_content {
+	font-weight: bold;
+}
+
+.add_new_content {
+	font-weight: bold;
+}
+
  /* The class name of the container */
 .admin_class {
     /*float: left;*/
@@ -364,8 +387,8 @@ body div#toolTip p em span { font-weight:bold;color:#fff; }
 
 .admin_section_container {
     display: block;
-    border: 1px solid #DDDDFF;
-    background-color: #FBFBFF;
+/*    border: 1px solid #DDDDFF;
+    background-color: #FBFBFF;*/
     margin: 5px;
     width:auto;
 }

@@ -1,6 +1,10 @@
+2006-05-24 François Proulx <francois.proulx@gmail.com>
+	* Simplified Google Maps JS code to use more of the v2 abstraction
+	* Improved admin panels CSS classes
+
 2006-05-23 Benoit Grégoire  <bock@step.polymtl.ca>
 	* config.php:  Disable USE_CACHE_LITE, it's definitely not stable, and causes very hard to track down problems with Internet Explorer.
-	
+
 2006-05-22 François Proulx <francois.proulx@gmail.com>
 	* Fixed isValidUsername() Js function to allow caret and dot characters
 

@@ -80,27 +80,13 @@ function HotspotsMap(viewport, external_object_name, translations, images_path)
 
 HotspotsMap.prototype.getGPointFromPostalCode = function(postal_code)
 {
-    // Fool the async callback
-    var geocoded_point = null;
-    var request = GXmlHttp.create();
+
+    // Save the reference to "this" in a global var for async needs
     var self = this;
-
-    // Download asynchronously the hotspots data
-    request.open("GET", "geocoder.php?postal_code=" + postal_code, true);
-
-    // Once completed, start parsing
-    request.onreadystatechange = function()
-    {
-        if (request.readyState == 4) {
-            if (request.responseXML != undefined) {
-                var xml_doc = request.responseXML;
-                var gis = xml_doc.documentElement;
-                self.findClosestHotspotByGPoint(new GPoint(GXml.value(gis.getElementsByTagName("long")[0]), GXml.value(gis.getElementsByTagName("lat")[0])));
-            }
-        }
-    }
-
-    request.send(null);
+    GDownloadUrl("geocoder.php?postal_code=" + postal_code, function(data, responseCode) {
+	    var root_node = GXml.parse(data).documentElement
+	    	self.findClosestHotspotByCoords(new GLatLng(GXml.value(root_node.getElementsByTagName("lat")[0]), GXml.value(root_node.getElementsByTagName("long")[0])));
+	});
 }
 
 HotspotsMap.prototype.findClosestHotspotByPostalCode = function(postal_code)
@@ -110,21 +96,23 @@ HotspotsMap.prototype.findClosestHotspotByPostalCode = function(postal_code)
     }
 }
 
-HotspotsMap.prototype.findClosestHotspotByGPoint = function(pt)
+HotspotsMap.prototype.findClosestHotspotByCoords = function(coord)
 {
-    if (pt != null && this.markers.length > 0) {
+    if (coord != null && this.markers.length > 0) {
         // Init values
         var dist = null;
         var hotspot_id = null;
 
         // For each registered markers
         for(i in this.markers) {
-            // Compute the distance in meters between the two points
-            tmp = this.computeDistance(pt, this.markers[i].point);
+        	   if(this.markers[i] && this.markers[i].getPoint) {
+	            // Compute the distance in meters between the two points
+	            tmp = coord.distanceFrom( this.markers[i].getPoint());
 
-            if(dist == null || tmp < dist) {
-                dist = tmp
-                hotspot_id = i;
+	            if(dist == null || tmp < dist) {
+	                dist = tmp
+	                hotspot_id = i;
+	            }
             }
         }
 
@@ -133,24 +121,6 @@ HotspotsMap.prototype.findClosestHotspotByGPoint = function(pt)
             this.openInfoBubble(hotspot_id);
         }
     }
-}
-
-// Computes the distance between two GPoint in meters
-HotspotsMap.prototype.computeDistance = function(pt1, pt2)
-{
-    x1 = this.convertDegreesToRadian(pt1.y);
-    y1 = this.convertDegreesToRadian(pt1.x);
-    x2 = this.convertDegreesToRadian(pt2.y);
-    y2 = this.convertDegreesToRadian(pt2.x);
-
-    // This makes the assumptions that points are not to far away from each other
-    // (a few tens of kilometers) and approximately at the same altitude
-    return 6378800 * (Math.acos(Math.sin(x1) * Math.sin(x2) + Math.cos(x1) * Math.cos(x2) * Math.cos(y2 - y1)));
-}
-
-HotspotsMap.prototype.convertDegreesToRadian = function(deg)
-{
-    return deg / (180 / Math.PI);
 }
 
 HotspotsMap.prototype.buildHtmlFromHotspot = function(hotspot_element, icon)
