@@ -46,7 +46,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 40);
+define('REQUIRED_SCHEMA_VERSION', 41);
 
 /**
  * Check that the database schema is up to date.  If it isn't, offer to update it.
@@ -787,7 +787,7 @@ function update_schema()
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
             $sql .= "INSERT INTO locales VALUES ('pt');\n";
         }
-        
+
         $new_schema_version = 37;
         if ($schema_version < $new_schema_version) {
             printUpdateVersion($new_schema_version);
@@ -836,27 +836,27 @@ function update_schema()
             $sql .= "ALTER TABLE node_has_content ALTER COLUMN display_area SET NOT NULL;ALTER TABLE node_has_content ADD COLUMN display_order integer;\n";
             $sql .= "UPDATE node_has_content SET display_order = 1;\n";
             $sql .= "ALTER TABLE node_has_content ALTER COLUMN display_order SET DEFAULT 1;\n";
-            $sql .= "ALTER TABLE node_has_content ALTER COLUMN display_order SET NOT NULL;\n";            
-        }        
-        
+            $sql .= "ALTER TABLE node_has_content ALTER COLUMN display_order SET NOT NULL;\n";
+        }
+
         $new_schema_version = 38;
         if ($schema_version < $new_schema_version) {
         	printUpdateVersion($new_schema_version);
         	$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
          	$sql .= "UPDATE content_available_display_areas SET display_area='left_area_top' WHERE display_area='left_area-top';\n";
         }
-        
+
         $new_schema_version = 39;
         if ($schema_version < $new_schema_version) {
         		printUpdateVersion($new_schema_version);
         	$sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
-        	
+
         	// Update to new Gmaps v2 constants
          	$sql .= "ALTER TABLE networks ALTER COLUMN gmaps_map_type SET DEFAULT 'G_NORMAL_MAP'::text;\n";
          	$sql .= "UPDATE networks SET gmaps_map_type='G_NORMAL_MAP' WHERE gmaps_map_type = 'G_MAP_TYPE'; \n";
          	$sql .= "UPDATE networks SET gmaps_map_type='G_HYBRID_MAP' WHERE gmaps_map_type = 'G_HYBRID_TYPE'; \n";
          	$sql .= "UPDATE networks SET gmaps_map_type='G_SATELLITE_MAP' WHERE gmaps_map_type = 'G_SATELLITE_TYPE'; \n";
-         	
+
          	// Use formula given here : http://www.google.com/apis/maps/documentation/upgrade.html#Upgrade
          	$sql .= "UPDATE networks SET gmaps_initial_zoom_level = 17 - gmaps_initial_zoom_level; \n";
         }
@@ -864,26 +864,34 @@ function update_schema()
         if ($schema_version < $new_schema_version) {
                 printUpdateVersion($new_schema_version);
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
-            $sql .= "ALTER TABLE networks ADD COLUMN theme_pack text;\n";            
+            $sql .= "ALTER TABLE networks ADD COLUMN theme_pack text;\n";
             $sql .= "ALTER TABLE networks ALTER COLUMN theme_pack SET DEFAULT NULL;\n";
-        }        
-        /*
+        }
+
         $new_schema_version = 41;
         if ($schema_version < $new_schema_version) {
             printUpdateVersion($new_schema_version);
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
-            
-            $sql .= "ALTER TABLE users DROP COLUMN real_name text;\n";  
-            $sql .= "ALTER TABLE users DROP COLUMN website text;\n"; 
-                        $sql .= "ALTER TABLE users RENAME COLUMN never_show_username is_invisible;\n";         
+            $sql .= "INSERT INTO locales (locales_id) VALUES('ja');\n";
+        }
+
+        /*
+        $new_schema_version = 42;
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+
+            $sql .= "ALTER TABLE users DROP COLUMN real_name text;\n";
+            $sql .= "ALTER TABLE users DROP COLUMN website text;\n";
+                        $sql .= "ALTER TABLE users RENAME COLUMN never_show_username is_invisible;\n";
             $sql .= "CREATE TABLE user_profiles (\n";
-            $sql .= "   user_profile_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,\n"; 
+            $sql .= "   user_profile_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,\n";
             $sql .= "   display_area text PRIMARY KEY,\n";
             $sql .= "   real_name text,\n";
             $sql .= "   website text,\n";
             $sql .= ");\n";
-            
-        }       */ 
+
+        }       */
         $db->execSqlUpdate("BEGIN;\n$sql\nCOMMIT;\nVACUUM ANALYZE;\n", true);
         //$db->execSqlUpdate("BEGIN;\n$sql\nROLLBACK;\n", true);
 

@@ -1,4 +1,7 @@
 2006-05-26 François Proulx <francois.proulx@gmail.com>
+	* Added 'ja' to database locales table
+	
+2006-05-26 François Proulx <francois.proulx@gmail.com>
 	* Added Japanese translation .po file (Thanks to taedu AT ninjin-net DOT net)
 
 2006-05-24 François Proulx <francois.proulx@gmail.com>
