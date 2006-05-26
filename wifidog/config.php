@@ -185,6 +185,7 @@ global $AVAIL_LOCALE_ARRAY;
 $AVAIL_LOCALE_ARRAY = array('fr_CA' => 'Français',
                             'en_US' => 'English',
                             'de_DE' => 'Deutsch',
+                            'ja_JP' => '日本語 (Japanese)',
                             'pt_PT' => 'Português');
 
 /**
@@ -321,7 +322,7 @@ define('DEFAULT_NODE_ID', 'default');
   */
 
 define('EMAIL_MAILER', 'mail'); // "mail", "sendmail", or "smtp"
-  
+
 // Valid only for SMTP
 define('EMAIL_HOST', '');
 define('EMAIL_AUTH', false);
