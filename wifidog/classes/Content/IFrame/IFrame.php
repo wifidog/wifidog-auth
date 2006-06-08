@@ -229,43 +229,40 @@ class IFrame extends Content
      *                                         administration interface
      *
      * @return string HTML code for the administration interface
-     *
-     * @access public
      */
-    public function getAdminUI($subclass_admin_interface = null)
+    public function getAdminUI($subclass_admin_interface = null, $title=null)
     {
         // Init values
         $html = '';
-
-        $html .= "<div class='admin_class'>IFrame (".get_class($this)." instance)</div>\n";
-
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_data'>\n";
-        $html .= "<div class='admin_section_title'>"._("Width (suggested width is 600 (pixels))")." : </div>\n";
+ 		$html .= "<ul class='admin_element_list'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_data'>\n";
+        $html .= "<div class='admin_element_label'>"._("Width (suggested width is 600 (pixels))")." : </div>\n";
         $name = "iframe_".$this->id."_width";
         $html .= "<input type='text' name='{$name}' value='{$this->getWidth()}'>";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $name = "iframe_".$this->id."_height";
-        $html .= "<div class='admin_section_title'>"._("Height (suggested width is 400 (pixels))")." : </div>\n";
+        $html .= "<div class='admin_element_label'>"._("Height (suggested width is 400 (pixels))")." : </div>\n";
         $html .= "<input type='text' name='{$name}' value='{$this->getHeight()}'>";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_data'>\n";
-        $html .= "<div class='admin_section_title'>"._("HTML content URL")." : </div>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_data'>\n";
+        $html .= "<div class='admin_element_label'>"._("HTML content URL")." : </div>\n";
         $name = "iframe_".$this->id."_url";
         $html .= "<input type='text' size=80 name='$name' value='".$this->getUrl()."'\n";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
+ 		$html .= "</ul>\n";
 
         $html .= $subclass_admin_interface;
 
-        return parent::getAdminUI($html);
+        return parent::getAdminUI($html, $title);
     }
 
     /**

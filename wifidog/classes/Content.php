@@ -402,12 +402,16 @@ class Content implements GenericObject {
      * @static
      * @access public
      */
-    public static function getNewContentUI($user_prefix, $content_type = null) {
+    public static function getNewContentUI($user_prefix, $content_type = null, $title = null) {
             // Define globals
     global $db;
 
         // Init values
         $html = "";
+        $html .= "<fieldset class='admin_container Content'>\n";
+		if(!empty($title)){
+		$html .= "<legend>$title</legend>\n";
+		}
 
         $availableContentTypes = self :: getAvailableContentTypes();
 
@@ -423,7 +427,7 @@ class Content implements GenericObject {
                 $tab[$i][1] = $className;
                 $i ++;
             }
-            $html .= "<div class='admin_section_data content_add'>";
+            $html .= "<div class='admin_element_data content_add'>";
             $html .= $label;
             $html .= FormSelectGenerator :: generateFromArray($tab, 'TrivialLangstring', $name, null, false);
             $html .= "</div>";
@@ -443,10 +447,10 @@ class Content implements GenericObject {
             $value = _("Add");
         }
 
-        $html .= "<div class='admin_section_tools'>";
+        $html .= "<div class='admin_element_tools'>";
         $html .= '<input type="submit" class="submit" name="'.$name.'" value="'.$value.'">';
         $html .= "</div>";
-
+        $html .= "</fieldset>\n";
         return $html;
     }
 
@@ -564,18 +568,11 @@ class Content implements GenericObject {
         $html .= "<td>".FormSelectGenerator :: generateFromTable('content_available_display_areas', 'display_area', 'display_area', $default_display_area, $name, null)."</td>\n";
         $name = "{$user_prefix}_new_existing_display_order";
         $html .= "<td><input type='text' name='$name' value='1' size=2 class='linked_content_order'></td>\n";
-        $html .= "<td>\n";
+        $html .= "<td colspan=2>\n";
         $name = "{$user_prefix}_new_existing";
-        $contentSelector = Content :: getSelectContentUI($name, "AND content_id NOT IN (SELECT content_id FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key')");
+        $contentSelector = Content :: getSelectExistingContentUI($name, "AND content_id NOT IN (SELECT content_id FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key')");
         $html .= $contentSelector;
         $html .= "</td>\n";
-
-        if (strpos($contentSelector, _("Sorry, no content available in the database")) === false) {
-            $html .= "<td>\n";
-            $name = "{$user_prefix}_new_existing_submit";
-            $html .= "<input type='submit' class='submit' name='$name' value='"._("Add")."'>";
-            $html .= "</td>\n";
-        }
         $html .= "</tr>\n";
 
         /* Add new content */
@@ -710,12 +707,12 @@ class Content implements GenericObject {
      * @static
      * @access public
      */
-    public static function getSelectContentUI($user_prefix, $sql_additional_where = null, $show_persistant_content = true, $order = "creation_timestamp", $type_interface = "select") {
+    public static function getSelectExistingContentUI($user_prefix, $sql_additional_where = null, $show_persistant_content = true, $order = "creation_timestamp", $type_interface = "select") {
             // Define globals
     global $db;
 
         // Init values
-        $html = '';
+        $html = '';        
         $retVal = array ();
         $contentRows = null;
 
@@ -724,6 +721,10 @@ class Content implements GenericObject {
         }
 
         if ($type_interface != "table") {
+                    $html .= "<fieldset class='admin_container Content'>\n";
+        if(!empty($title)){
+		$html .= "<legend>$title</legend>\n";
+		}
             $html .= _("Add existing content").": ";
         }
 
@@ -782,9 +783,15 @@ class Content implements GenericObject {
             if ($type_interface != "table") {
                 if (isset ($tab)) {
                     $html .= FormSelectGenerator :: generateFromArray($tab, null, $name, null, false, null, null, 40);
+                     $name = "get_existing_content_{$user_prefix}_add";
+                     $value = _("Add");
+                     $html .= "<div class='admin_element_tools'>";
+        			$html .= '<input type="submit" class="submit" name="'.$name.'" value="'.$value.'">';
+        			$html .= "</div>";
                 } else {
                     $html .= "<div class='warningmsg'>"._("Sorry, no content available in the database")."</div>\n";
                 }
+                $html .= "</fieldset>\n";
             } else {
                 $html .= "</table>\n";
             }
@@ -1138,13 +1145,15 @@ class Content implements GenericObject {
      * element of a children.
      * @return string The HTML fragment for this interface.
      */
-    public function getAdminUI($subclass_admin_interface = null) {
+    public function getAdminUI($subclass_admin_interface = null, $title=null) {
         global $db;
 
         $html = '';
-        $html .= "<div class='admin_container'>\n";
-        $html .= "<div class='admin_class'>Content (".get_class($this)." instance)</div>\n";
-
+        $html .= "<fieldset class='admin_container ".get_class($this)."'>\n";
+		if(!empty($title)){
+		$html .= "<legend>$title</legend>\n";
+		}
+		$html .= "<ul class='admin_element_list'>\n";
         if ($this->getObjectType() == 'Content') {
             // The object hasn't yet been typed.
             $html .= _("You must select a content type: ");
@@ -1159,141 +1168,122 @@ class Content implements GenericObject {
             $html .= FormSelectGenerator :: generateFromArray($tab, null, "content_".$this->id."_content_type", "Content", false);
         } else {
             if ($this->is_trivial_content == false) {
-                //                The next lines are a preview of a new suggested input mode
-                //                ==========================================================
-                //
-                //                // title
-                //                $html .= "<fieldset class='admin_section_container'>\n";
-                //                $html .= "<legend class='admin_section_title'>"._("Title:")."</legend>\n";
-                //                $html .= "<div class='admin_section_data'>\n";
-                //
-                //                if (empty ($this->content_row['title'])) {
-                //                    $html .= self :: getNewContentUI("title_{$this->id}_new");
-                //                    $html .= "</div>\n";
-                //                } else {
-                //                    $title = self :: getObject($this->content_row['title']);
-                //                    $html .= $title->getAdminUI("SMALL");
-                //                    $html .= "</div>\n";
-                //                    $html .= "<div class='admin_section_tools'>\n";
-                //                    $name = "content_".$this->id."_title_erase";
-                //                    $html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
-                //                    $html .= "</div>\n";
-                //                }
-                //
-                //                $html .= "</fieldset>\n";
-
+        		$html .= "<fieldset class='admin_element_group'>\n";
+				$html .= "<legend>".sprintf(_("%s MetaData"),get_class($this))."</legend>\n";
+		
                 /* title */
-                $html .= "<div class='admin_section_container admin_section_edit_title'>\n";
-                $html .= "<div class='admin_section_title'>"._("Title:")."</div>\n";
-                $html .= "<div class='admin_section_data'>\n";
+                $html .= "<li class='admin_element_item_container admin_section_edit_title'>\n";
+                $html .= "<div class='admin_element_data'>\n";
                 if (empty ($this->content_row['title'])) {
-                    $html .= self :: getNewContentUI("title_{$this->id}_new");
+                    $html .= self :: getNewContentUI("title_{$this->id}_new", null, _("Title:"));
                     $html .= "</div>\n";
                 } else {
                     $title = self :: getObject($this->content_row['title']);
-                    $html .= $title->getAdminUI();
+                    $html .= $title->getAdminUI(null, _("Title:"));
                     $html .= "</div>\n";
-                    $html .= "<div class='admin_section_tools admin_section_delete_title'>\n";
+                    $html .= "<div class='admin_element_tools admin_section_delete_title'>\n";
                     $name = "content_".$this->id."_title_erase";
-                    $html .= "<input type='submit' class='submit' name='$name' value='"._("Delete")."'>";
+                    $html .= "<input type='submit' class='submit' name='$name' value='".sprintf(_("Delete %s (%s)"),_("title"),get_class($title))."'>";
                     $html .= "</div>\n";
                 }
-                $html .= "</div>\n";
+                $html .= "</li>\n";
 
-                /* is_persistent */
-                $html .= "<div class='admin_section_container admin_section_edit_persistant'>\n";
-                $html .= "<div class='admin_section_title'>"._("Is persistent (reusable and read-only)?").": </div>\n";
-                $html .= "<div class='admin_section_data'>\n";
+
+
+                /* description */
+                $html .= "<li class='admin_element_item_container admin_section_edit_description'>\n";
+                $html .= "<div class='admin_element_data'>\n";
+                if (empty ($this->content_row['description'])) {
+                    $html .= self :: getNewContentUI("description_{$this->id}_new", null, _("Description:"));
+                    $html .= "</div>\n";
+                } else {
+                    $description = self :: getObject($this->content_row['description']);
+                    $html .= $description->getAdminUI(null, _("Description:"));
+                    $html .= "</div>\n";
+                    $html .= "<div class='admin_element_tools'>\n";
+                    $name = "content_".$this->id."_description_erase";
+                    $html .= "<input type='submit' class='submit' name='$name' value='".sprintf(_("Delete %s (%s)"),_("description"),get_class($description))."'>";
+                    $html .= "</div>\n";
+                }
+                $html .= "</li>\n";
+
+                /* long description */
+                $html .= "<li class='admin_element_item_container admin_section_edit_long_description'>\n";
+                $html .= "<div class='admin_element_data'>\n";
+                if (empty ($this->content_row['long_description'])) {
+                    $html .= self :: getNewContentUI("long_description_{$this->id}_new", null, _("Long description:"));
+                    $html .= "</div>\n";
+                } else {
+                    $description = self :: getObject($this->content_row['long_description']);
+                    $html .= $description->getAdminUI(null, _("Long description:"));
+                    $html .= "</div>\n";
+                    $html .= "<div class='admin_element_tools'>\n";
+                    $name = "content_".$this->id."_long_description_erase";
+                    $html .= "<input type='submit' class='submit' name='$name' value='".sprintf(_("Delete %s (%s)"),_("long description"),get_class($description))."'>";
+                    $html .= "</div>\n";
+                }
+                $html .= "</li>\n";
+
+                /* project_info */
+                $html .= "<li class='admin_element_item_container admin_section_edit_project'>\n";
+                $html .= "<div class='admin_element_data'>\n";
+                if (empty ($this->content_row['project_info'])) {
+                    $html .= self :: getNewContentUI("project_info_{$this->id}_new", null, _("Information on this project:"));
+                    $html .= "</div>\n";
+                } else {
+                    $project_info = self :: getObject($this->content_row['project_info']);
+                    $html .= $project_info->getAdminUI(null, _("Information on this project:"));
+                    $html .= "</div>\n";
+                    $html .= "<div class='admin_element_tools'>\n";
+                    $name = "content_".$this->id."_project_info_erase";
+                    $html .= "<input type='submit' class='submit' name='$name' value='".sprintf(_("Delete %s (%s)"),_("project information"),get_class($project_info))."'>";
+                    $html .= "</div>\n";
+                }
+                $html .= "</li>\n";
+
+                /* sponsor_info */
+                $html .= "<li class='admin_element_item_container admin_section_edit_sponsor'>\n";
+                $html .= "<div class='admin_element_data'>\n";
+                if (empty ($this->content_row['sponsor_info'])) {
+                    $html .= self :: getNewContentUI("sponsor_info_{$this->id}_new", null, _("Sponsor of this project:"));
+                    $html .= "</div>\n";
+                } else {
+                    $sponsor_info = self :: getObject($this->content_row['sponsor_info']);
+                    $html .= $sponsor_info->getAdminUI(null, _("Sponsor of this project:"));
+                    $html .= "</div>\n";
+                    $html .= "<div class='admin_element_tools'>\n";
+                    $name = "content_".$this->id."_sponsor_info_erase";
+                    $html .= "<input type='submit' class='submit' name='$name' value='".sprintf(_("Delete %s (%s)"),_("sponsor"),get_class($sponsor_info))."'>";
+                    $html .= "</div>\n";
+                }
+                $html .= "</li>\n";
+                $html .= "</fieldset>\n";
+ 
+        		$html .= "<fieldset class='admin_element_group'>\n";
+				$html .= "<legend>".sprintf(_("%s access control"),get_class($this))."</legend>\n";
+		        
+		        /* is_persistent */
+                $html .= "<li class='admin_element_item_container admin_section_edit_persistant'>\n";
+                $html .= "<div class='admin_element_label'>"._("Is persistent (reusable and read-only)?").": </div>\n";
+                $html .= "<div class='admin_element_data'>\n";
                 $name = "content_".$this->id."_is_persistent";
                 $this->isPersistent() ? $checked = 'CHECKED' : $checked = '';
                 $html .= "<input type='checkbox' name='$name' $checked>\n";
                 $html .= "</div>\n";
-                $html .= "</div>\n";
-
-                /* description */
-                $html .= "<div class='admin_section_container admin_section_edit_description'>\n";
-                $html .= "<div class='admin_section_title'>"._("Description:")."</div>\n";
-                $html .= "<div class='admin_section_data'>\n";
-                if (empty ($this->content_row['description'])) {
-                    $html .= self :: getNewContentUI("description_{$this->id}_new");
-                    $html .= "</div>\n";
-                } else {
-                    $description = self :: getObject($this->content_row['description']);
-                    $html .= $description->getAdminUI();
-                    $html .= "</div>\n";
-                    $html .= "<div class='admin_section_tools'>\n";
-                    $name = "content_".$this->id."_description_erase";
-                    $html .= "<input type='submit' class='submit' name='$name' value='"._("Delete")."'>";
-                    $html .= "</div>\n";
-                }
-                $html .= "</div>\n";
-
-                /* long description */
-                $html .= "<div class='admin_section_container admin_section_edit_long_description'>\n";
-                $html .= "<div class='admin_section_title'>"._("Long description:")."</div>\n";
-                $html .= "<div class='admin_section_data'>\n";
-                if (empty ($this->content_row['long_description'])) {
-                    $html .= self :: getNewContentUI("long_description_{$this->id}_new");
-                    $html .= "</div>\n";
-                } else {
-                    $description = self :: getObject($this->content_row['long_description']);
-                    $html .= $description->getAdminUI();
-                    $html .= "</div>\n";
-                    $html .= "<div class='admin_section_tools'>\n";
-                    $name = "content_".$this->id."_long_description_erase";
-                    $html .= "<input type='submit' class='submit' name='$name' value='"._("Delete")."'>";
-                    $html .= "</div>\n";
-                }
-                $html .= "</div>\n";
-
-                /* project_info */
-                $html .= "<div class='admin_section_container admin_section_edit_project'>\n";
-                $html .= "<div class='admin_section_title'>"._("Information on this project:")."</div>\n";
-                $html .= "<div class='admin_section_data'>\n";
-                if (empty ($this->content_row['project_info'])) {
-                    $html .= self :: getNewContentUI("project_info_{$this->id}_new");
-                    $html .= "</div>\n";
-                } else {
-                    $project_info = self :: getObject($this->content_row['project_info']);
-                    $html .= $project_info->getAdminUI();
-                    $html .= "</div>\n";
-                    $html .= "<div class='admin_section_tools'>\n";
-                    $name = "content_".$this->id."_project_info_erase";
-                    $html .= "<input type='submit' class='submit' name='$name' value='"._("Delete")."'>";
-                    $html .= "</div>\n";
-                }
-                $html .= "</div>\n";
-
-                /* sponsor_info */
-                $html .= "<div class='admin_section_container admin_section_edit_sponsor'>\n";
-                $html .= "<div class='admin_section_title'>"._("Sponsor of this project:")."</div>\n";
-                $html .= "<div class='admin_section_data'>\n";
-                if (empty ($this->content_row['sponsor_info'])) {
-                    $html .= self :: getNewContentUI("sponsor_info_{$this->id}_new");
-                    $html .= "</div>\n";
-                } else {
-                    $sponsor_info = self :: getObject($this->content_row['sponsor_info']);
-                    $html .= $sponsor_info->getAdminUI();
-                    $html .= "</div>\n";
-                    $html .= "<div class='admin_section_tools'>\n";
-                    $name = "content_".$this->id."_sponsor_info_erase";
-                    $html .= "<input type='submit' class='submit' name='$name' value='"._("Delete")."'>";
-                    $html .= "</div>\n";
-                }
-                $html .= "</div>\n";
-
+                $html .= "</li>\n";
+                
                 /* content_has_owners */
-                $html .= "<div class='admin_section_container content_has_owners'>\n";
-                $html .= "<span class='admin_section_title'>"._("Content owner list")."</span>\n";
-                $html .= "<ul class='admin_section_list'>\n";
+                $html .= "<li class='admin_element_item_container content_has_owners'>\n";
+                $html .= "<div class='admin_element_label'>"._("Content owner list")."</div>\n";
+                $html .= "<ul class='admin_element_list'>\n";
 
                 global $db;
                 $sql = "SELECT * FROM content_has_owners WHERE content_id='$this->id'";
                 $db->execSql($sql, $content_owner_rows, false);
                 if ($content_owner_rows != null) {
                     foreach ($content_owner_rows as $content_owner_row) {
-                        $html .= "<li class='admin_section_list_item'>\n";
-                        $html .= "<div class='admin_section_data'>\n";
+                        $html .= "<li class='admin_element_item_container'>\n";
+                        $html .= "<div class='admin_element_data'>\n";
                         $user = User :: getObject($content_owner_row['user_id']);
 
                         $html .= $user->getListUI();
@@ -1303,30 +1293,29 @@ class Content implements GenericObject {
                         $content_owner_row['is_author'] == 't' ? $checked = 'CHECKED' : $checked = '';
                         $html .= "<input type='checkbox' name='$name' $checked>\n";
                         $html .= "</div>\n";
-                        $html .= "<div class='admin_section_tools'>\n";
+                        $html .= "<div class='admin_element_tools'>\n";
                         $name = "content_".$this->id."_owner_".$user->GetId()."_remove";
-                        $html .= "<input type='submit' class='submit' name='$name' value='"._("Remove")."'>";
+                        $html .= "<input type='submit' class='submit' name='$name' value='"._("Remove owner")."'>";
                         $html .= "</div>\n";
                         $html .= "</li>\n";
                     }
                 }
 
-                $html .= "<li class='admin_section_list_item'>\n";
-                $html .= "<div class='admin_section_data'>\n";
-                $html .= User :: getSelectUserUI("content_{$this->id}_new_owner");
-                $html .= "</div>\n";
-                $html .= "<div class='admin_section_tools'>\n";
-                $name = "content_{$this->id}_add_owner_submit";
-                $value = _("Add owner");
-                $html .= "<input type='submit' class='submit' name='$name' value='$value'>";
+                $html .= "<li class='admin_element_item_container'>\n";
+                $html .= "<div class='admin_element_data'>\n";
+                $add_button_name = "content_{$this->id}_add_owner_submit";
+                $add_button_value = _("Add owner");
+                $html .= User :: getSelectUserUI("content_{$this->id}_new_owner", $add_button_name, $add_button_value);
                 $html .= "</div>\n";
                 $html .= "</li>\n";
                 $html .= "</ul>\n";
-                $html .= "</div>\n";
-            }
+                $html .= "</li>\n";
+                $html .= "</fieldset>\n";
+            }//End if is trivial content
         }
         $html .= $subclass_admin_interface;
-        $html .= "</div>\n";
+        $html .= "</ul>\n";
+        $html .= "</fieldset>\n";
         return $html;
     }
     /** Process admin interface of this object.  When an object overrides this method, they should call the parent processAdminUI at the BEGINING of processing.
@@ -1357,10 +1346,6 @@ class Content implements GenericObject {
                             $title->processAdminUI();
                         }
                     }
-
-                    /* is_persistent */
-                    $name = "content_".$this->id."_is_persistent";
-                    !empty ($_REQUEST[$name]) ? $this->setIsPersistent(true) : $this->setIsPersistent(false);
 
                     /* description */
                     if (empty ($this->content_row['description'])) {
@@ -1433,6 +1418,11 @@ class Content implements GenericObject {
                             $sponsor_info->processAdminUI();
                         }
                     }
+                    
+                    /* is_persistent */
+                    $name = "content_".$this->id."_is_persistent";
+                    !empty ($_REQUEST[$name]) ? $this->setIsPersistent(true) : $this->setIsPersistent(false);
+
                     /* content_has_owners */
                     $sql = "SELECT * FROM content_has_owners WHERE content_id='$this->id'";
                     $db->execSql($sql, $content_owner_rows, false);

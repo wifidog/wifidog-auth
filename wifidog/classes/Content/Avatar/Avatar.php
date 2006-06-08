@@ -78,41 +78,37 @@ class Avatar extends Picture
      *                                         administration interface
      *
      * @return string HTML code for the administration interface
-     *
-     * @access public
      */
-    public function getAdminUI($subclass_admin_interface = null)
+    public function getAdminUI($subclass_admin_interface = null, $title=null)
     {
         // Init values
         $html = '';
-
-        $html .= "<div class='admin_class'>Avatar (".get_class($this)." instance)</div>\n";
-
+		$html .= "<ul class='admin_element_list'>\n";
         // Show File admin UI + display the picture
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_data'>\n";
-        $html .= "<div class='admin_section_title'>"._("Picture preview")." : </div>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_data'>\n";
+        $html .= "<div class='admin_element_label'>"._("Picture preview")." : </div>\n";
         $html .= "<br>\n";
 
         $html .= "<img src='".htmlentities($this->getFileUrl())."' alt='".$this->getFileName()."''>";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>";
         $html .= "<input type='radio' name='file_mode".$this->getId()."' value='by_upload' ". ($this->isLocalFile() ? "CHECKED" : "").">";
         $html .= _("Upload a new file (Uploading a new one will replace any existing file)")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $html .= '<input type="hidden" name="MAX_FILE_SIZE" value="1073741824" />';
         $html .= '<input name="file_file_upload'.$this->getId().'" type="file" />';
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>";
         $html .= "<input type='radio' name='file_mode".$this->getId()."' value='remote' ". (!$this->isLocalFile() ? "CHECKED" : "").">";
         $html .= _("Remote file via URL")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<div class='admin_element_data'>\n";
 
         if ($this->isLocalFile()) {
             $html .= "<input name='file_url".$this->getId()."' type='text' size='50'/>";
@@ -121,20 +117,19 @@ class Avatar extends Picture
         }
 
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         if (!$this->isLocalFile()) {
-            $html .= "<div class='admin_section_container'>\n";
-            $html .= "<div class='admin_section_title'>"._("File URL")." : </div>\n";
-            $html .= "<div class='admin_section_data'>\n";
+            $html .= "<li class='admin_element_item_container'>\n";
+            $html .= "<div class='admin_element_label'>"._("File URL")." : </div>\n";
+            $html .= "<div class='admin_element_data'>\n";
             $html .= $this->getFileUrl();
             $html .= "</div>\n";
-            $html .= "</div>\n";
+            $html .= "</li>\n";
         }
-
+		$html .= "</ul>\n";
         $html .= $subclass_admin_interface;
-
-        return $html;
+        return parent :: getAdminUI($html, $title);
     }
 
     /**

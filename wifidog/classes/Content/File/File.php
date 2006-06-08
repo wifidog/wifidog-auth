@@ -396,28 +396,26 @@ class File extends Content
      *
      * @return string HTML code for the administration interface
      */
-    public function getAdminUI($subclass_admin_interface = null)
+    public function getAdminUI($subclass_admin_interface = null, $title=null)
     {
         // Init values
         $html = '';
 
-        $html .= "<div class='admin_class'>File (".get_class($this)." instance)</div>\n";
-
-        $html .= "<div class='admin_section'>\n";
-        $html .= "<div class='admin_section_title'>";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>";
         $html .= "<input type='radio' name='file_mode".$this->getId()."' value='by_upload' ". ($this->isLocalFile() ? "CHECKED" : "").">";
         $html .= _("Upload a new file (Uploading a new one will replace any existing file)")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $html .= '<input type="hidden" name="MAX_FILE_SIZE" value="1073741824" />';
         $html .= '<input name="file_file_upload'.$this->getId().'" type="file" />';
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
-        $html .= "<div class='admin_section'>\n";
-        $html .= "<div class='admin_section_title'>";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>";
         $html .= "<input type='radio' name='file_mode".$this->getId()."' value='remote' ". (!$this->isLocalFile() ? "CHECKED" : "").">";
         $html .= _("Remote file via URL")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<div class='admin_element_data'>\n";
 
         if ($this->isLocalFile()) {
             $html .= "<input name='file_url".$this->getId()."' type='text' size='50'/>";
@@ -426,58 +424,58 @@ class File extends Content
         }
 
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         if (!$this->isLocalFile()) {
-            $html .= "<div class='admin_section'>\n";
-            $html .= "<div class='admin_section_title'>"._("File URL")." : </div>\n";
-            $html .= "<div class='admin_section_data'>\n";
+            $html .= "<div class='admin_element_item_container'>\n";
+            $html .= "<div class='admin_element_label'>"._("File URL")." : </div>\n";
+            $html .= "<div class='admin_element_data'>\n";
             $html .= $this->getFileUrl();
             $html .= "</div>\n";
-            $html .= "</div>\n";
+            $html .= "</li>\n";
         }
 
-        $html .= "<div class='admin_section'>\n";
-        $html .= "<div class='admin_section_title'>"._("Filename to display")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Filename to display")." : </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $html .= '<input type="text" name="file_file_name'.$this->getId().'" value="'.$this->getFilename().'" />';
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         if ($this->isLocalFile()) {
-            $html .= "<div class='admin_section'>\n";
-            $html .= "<div class='admin_section_title'>"._("MIME type")." : </div>\n";
-            $html .= "<div class='admin_section_data'>\n";
+            $html .= "<li class='admin_element_item_container'>\n";
+            $html .= "<div class='admin_element_label'>"._("MIME type")." : </div>\n";
+            $html .= "<div class='admin_element_data'>\n";
             $html .= '<input type="text" name="file_mime_type'.$this->getId().'" value="'.$this->getMimeType().'" />';
             $html .= "</div>\n";
-            $html .= "</div>\n";
+            $html .= "</li>\n";
 
-            $html .= "<div class='admin_section'>\n";
-            $html .= "<div class='admin_section_title'>"._("Locally stored file size")." : </div>\n";
-            $html .= "<div class='admin_section_data'>\n";
+            $html .= "<li class='admin_element_item_container'>\n";
+            $html .= "<div class='admin_element_label'>"._("Locally stored file size")." : </div>\n";
+            $html .= "<div class='admin_element_data'>\n";
             $html .= $this->getFileSize(self :: UNIT_KILOBYTES)." "._("KB");
             $html .= "</div>\n";
-            $html .= "</div>\n";
+            $html .= "</li>\n";
         } else {
-            $html .= "<div class='admin_section'>\n";
-            $html .= "<div class='admin_section_title'>"._("Remote file size (Automatically converted from KB to Bytes)")." : </div>\n";
-            $html .= "<div class='admin_section_data'>\n";
+            $html .= "<div class='admin_element_item_container'>\n";
+            $html .= "<div class='admin_element_label'>"._("Remote file size (Automatically converted from KB to Bytes)")." : </div>\n";
+            $html .= "<div class='admin_element_data'>\n";
             // The hidden field contains old value to determine if we have to update ( this prevents unwanted successive floating point evaluation )
             $html .= '<input type="hidden" name="file_old_remote_size'.$this->getId().'" value="'.$this->getFileSize().'" />';
             $html .= '<input type="text" name="file_remote_size'.$this->getId().'" value="'.$this->getFileSize().'" />';
             $html .= "</div>\n";
-            $html .= "</div>\n";
+            $html .= "</li>\n";
         }
 
-        $html .= "<div class='admin_section'>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $html .= "<a href='".$this->getFileUrl()."'>"._("Download")." ".$this->getFilename()." (".$this->getFileSize(self :: UNIT_KILOBYTES)." "._("KB").")</a>";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         $html .= $subclass_admin_interface;
 
-        return parent::getAdminUI($html);
+        return parent::getAdminUI($html, $title);
     }
 
     /**

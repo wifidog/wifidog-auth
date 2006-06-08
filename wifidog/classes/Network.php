@@ -1233,159 +1233,158 @@ class Network implements GenericObject {
      */
     public function getAdminUI() {
         $html = '';
-        $html .= "<h3>"._("Network management")."</h3>\n";
-        $html .= "<div class='admin_container'>\n";
-        $html .= "<div class='admin_class'>Network (".get_class($this)." instance)</div>\n";
-
+        $html .= "<fieldset class='admin_container ".get_class($this)."'>\n";
+        $html .= "<legend>"._("Network management")."</legend>\n";
+        $html .= "<ul class='admin_element_list'>\n";
         // network_id
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Network ID")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Network ID")." : </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $value = htmlspecialchars($this->getId(), ENT_QUOTES);
         $html .= $value;
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         // creation_date
         $name = "network_".$this->getId()."_creation_date";
         $value = htmlspecialchars($this->getCreationDate(), ENT_QUOTES);
 
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Network creation date").":</div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Network creation date").":</div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         // name
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Network name")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Network name")." : </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $name = "network_".$this->getId()."_name";
         $value = htmlspecialchars($this->getName(), ENT_QUOTES);
         $html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         // homepage_url
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Network's web site")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Network's web site")." : </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $name = "network_".$this->getId()."_homepage_url";
         $value = htmlspecialchars($this->getHomepageURL(), ENT_QUOTES);
         $html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         // tech_support_email
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Technical support email")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Technical support email")." : </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $name = "network_".$this->getId()."_tech_support_email";
         $value = htmlspecialchars($this->getTechSupportEmail(), ENT_QUOTES);
         $html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         //  network_authenticator_class
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Network authenticator class.  The subclass of Authenticator to be used for user authentication (ex: AuthenticatorRadius)")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Network authenticator class.  The subclass of Authenticator to be used for user authentication (ex: AuthenticatorRadius)")." : </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $name = "network_".$this->getId()."_network_authenticator_class";
         $value = htmlspecialchars($this->getAuthenticatorClassName(), ENT_QUOTES);
         $html .= $this->getSelectAuthenticator($name, $value);
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         //  network_authenticator_params
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("The explicit parameters to be passed to the authenticator (ex: 'my_network_id', '192.168.0.11', 1812, 1813, 'secret_key', 'CHAP_MD5')")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("The explicit parameters to be passed to the authenticator (ex: 'my_network_id', '192.168.0.11', 1812, 1813, 'secret_key', 'CHAP_MD5')")." : </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $name = "network_".$this->getId()."_network_authenticator_params";
         $value = htmlspecialchars($this->getAuthenticatorConstructorParams(), ENT_QUOTES);
         $html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         //  is_default_network
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Is this network the default network?")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Is this network the default network?")." : </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $name = "network_".$this->getId()."_is_default_network";
         $this->isDefaultNetwork() ? $checked = 'CHECKED' : $checked = '';
         $html .= "<input type='checkbox' name='$name' $checked>\n";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         //  validation_grace_time
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("The length of the validation grace period in seconds.  A new user is granted Internet access for this period check his email and validate his account.")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("The length of the validation grace period in seconds.  A new user is granted Internet access for this period check his email and validate his account.")." : </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $name = "network_".$this->getId()."_validation_grace_time";
         $value = htmlspecialchars($this->getValidationGraceTime(), ENT_QUOTES);
         $html .= "<input type='text' size ='5' value='$value' name='$name'>\n";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         //  validation_email_from_address
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("This will be the from adress of the validation email")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("This will be the from adress of the validation email")." : </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $name = "network_".$this->getId()."_validation_email_from_address";
         $value = htmlspecialchars($this->getValidationEmailFromAddress(), ENT_QUOTES);
         $html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         //  theme_pack
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Selected theme pack for this network")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Selected theme pack for this network")." : </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $name = "network_".$this->getId()."_theme_pack";
         $html .= ThemePack :: getSelectUI($name, $this->getThemePack());
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         //  allow_multiple_login
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Can an account be connected more than once at the same time?")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Can an account be connected more than once at the same time?")." : </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $name = "network_".$this->getId()."_allow_multiple_login";
         $this->getMultipleLoginAllowed() ? $checked = 'CHECKED' : $checked = '';
         $html .= "<input type='checkbox' name='$name' $checked>\n";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         //  allow_splash_only_nodes
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Are nodes allowed to be set as splash-only (no login)?")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Are nodes allowed to be set as splash-only (no login)?")." : </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $name = "network_".$this->getId()."_allow_splash_only_nodes";
         $this->getSplashOnlyNodesAllowed() ? $checked = 'CHECKED' : $checked = '';
         $html .= "<input type='checkbox' name='$name' $checked>\n";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         //  allow_custom_portal_redirect
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Are nodes allowed to redirect users to an arbitrary web page instead of the portal?")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Are nodes allowed to redirect users to an arbitrary web page instead of the portal?")." : </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $name = "network_".$this->getId()."_allow_custom_portal_redirect";
         $this->getCustomPortalRedirectAllowed() ? $checked = 'CHECKED' : $checked = '';
         $html .= "<input type='checkbox' name='$name' $checked>\n";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         //	network_stakeholders
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Network stakeholders")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Network stakeholders")." : </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         //$name = "network_".$this->getId()."_allow_custom_portal_redirect";
         //$this->getCustomPortalRedirectAllowed()? $checked='CHECKED': $checked='';
         //$html .= "<input type='checkbox' name='$name' $checked>\n";
         $html .= "WRITEME!";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         // Build HTML form fields names & values
         if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED == true) {
@@ -1397,57 +1396,56 @@ class Network implements GenericObject {
             $gis_alt_name = "network_".$this->getId()."_gis_altitude";
             $gis_alt_value = htmlspecialchars($gis_point->getAltitude(), ENT_QUOTES);
 
-            $html .= "<div class='admin_section_container'>\n";
-            $html .= "<div class='admin_section_title'>"._("Center latitude for your the area of your wireless network")." : </div>\n";
-            $html .= "<div class='admin_section_data'>\n";
+            $html .= "<li class='admin_element_item_container'>\n";
+            $html .= "<div class='admin_element_label'>"._("Center latitude for your the area of your wireless network")." : </div>\n";
+            $html .= "<div class='admin_element_data'>\n";
             $html .= "<input type='text' size ='15' value='$gis_lat_value' id='$gis_lat_name' name='$gis_lat_name'>\n";
             $html .= "</div>\n";
-            $html .= "</div>\n";
+            $html .= "</li>\n";
 
-            $html .= "<div class='admin_section_container'>\n";
-            $html .= "<div class='admin_section_title'>"._("Center longitude for your the area of your wireless network")." : </div>\n";
-            $html .= "<div class='admin_section_data'>\n";
+            $html .= "<li class='admin_element_item_container'>\n";
+            $html .= "<div class='admin_element_label'>"._("Center longitude for your the area of your wireless network")." : </div>\n";
+            $html .= "<div class='admin_element_data'>\n";
             $html .= "<input type='text' size ='15' value='$gis_long_value' id='$gis_long_name' name='$gis_long_name'>\n";
             $html .= "</div>\n";
-            $html .= "</div>\n";
+            $html .= "</li>\n";
 
-            $html .= "<div class='admin_section_container'>\n";
-            $html .= "<div class='admin_section_title'>"._("Zoomlevel of the Google Map for your the area of your wireless network")." : </div>\n";
-            $html .= "<div class='admin_section_data'>\n";
+            $html .= "<li class='admin_element_item_container'>\n";
+            $html .= "<div class='admin_element_label'>"._("Zoomlevel of the Google Map for your the area of your wireless network")." : </div>\n";
+            $html .= "<div class='admin_element_data'>\n";
             $html .= "<input type='text' size ='15' value='$gis_alt_value' id='$gis_alt_name' name='$gis_alt_name'>\n";
             $html .= "</div>\n";
-            $html .= "</div>\n";
+            $html .= "</li>\n";
 
-            $html .= "<div class='admin_section_container'>\n";
-            $html .= "<div class='admin_section_title'>"._("Default Google Map type for your the area of your wireless network")." : </div>\n";
-            $html .= "<div class='admin_section_data'>\n";
+            $html .= "<li class='admin_element_item_container'>\n";
+            $html .= "<div class='admin_element_label'>"._("Default Google Map type for your the area of your wireless network")." : </div>\n";
+            $html .= "<div class='admin_element_data'>\n";
             $html .= $this->getSelectGisMapType("network_".$this->getId()."_gmaps_map_type", $this->getGisMapType());
             $html .= "</div>\n";
-            $html .= "</div>\n";
+            $html .= "</li>\n";
         }
 
         // Create new nodes
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("New node ID")." : </div>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("New node ID")." : </div>\n";
 
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<div class='admin_element_data'>\n";
 
         $html .= Node :: getCreateNewObjectUI($this);
-
-        $html .= "<div class='admin_section_tools'>\n";
+        $html .= "</div>\n";
+                $html .= "<div class='admin_element_tools'>\n";
         $name = "network_{$this->getId()}_create_node";
         $html .= "<input type='submit' name='{$name}' value='"._("Create a new node")."'>\n";
         $html .= "</div>\n";
-
-        $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         // Content management
         $title = _("Network content");
         $name = "network_".$this->id."_content";
         $data = Content :: getLinkedContentUI($name, "network_has_content", "network_id", $this->id, $display_page = "portal");
         $html .= InterfaceElements :: generateAdminSectionContainer("network_content", $title, $data);
-
+        $html .= "</ul>\n";
+        $html .= "</fieldset>\n";
         return $html;
     }
 

@@ -351,15 +351,107 @@ body div#toolTip p em span { font-weight:bold;color:#fff; }
     width:auto;
 }
 
-/* The admin container */
+/********** generic object admin interface **********/
+/* Fieldset, wraps every output of displyAdminUI.  
+All admin_container are also admin_element_group (to ensure that
+ nesting will be explicit) and include the classname of the object as
+ the object class (such as 'Langstring')*/
 .admin_container {
-    display: block;
-    /*border: 2px solid grey; */
-    background-color: white;
-    margin: 3px;
-    width:auto;
+    border-left: 2px solid #DDDDFF;
+    border-top: 2px solid #DDDDFF;
+    border-bottom: 2px solid #DDDDFF;
 }
 
+/* noramlly a fieldset, logically wraps groups of related 
+options.*/
+.admin_element_group
+{
+    border-left: 2px dotted #DDDDFF;
+    border-top: 2px dotted #DDDDFF;
+    border-bottom: 2px dotted #DDDDFF;
+	}
+	
+.admin_container, .admin_element_group{
+	display: block;
+    border-right: none;
+    background-color: white;
+    margin: 0.1em 0px 0.1em 0.1em;
+    padding-right: 0px;
+    width:auto;
+    }
+/* Contains a list of administrative properties of an object */
+.admin_element_list {
+	/*background-color: red;*/
+	margin: 0em 0em 0em 0em;
+	padding: 0em 0em 0em 0em;
+}
+
+/* Contains an administrative property (possibly a complex, nested one) of an object */
+.admin_element_item_container {
+    /*background-color: lightblue;*/
+    margin: 0.1em 0em 0.1em 0.1em;
+    padding: 0em;
+    width:auto;
+}
+li.admin_element_item_container {
+        display: block;
+}
+tr.admin_element_item_container {
+}
+/* The label of the admin element. Optional */
+.admin_element_label {
+    font-weight: bold;
+}
+div.admin_element_label {
+	display: inline;
+}
+td.admin_element_label, th.admin_element_label {
+}
+
+/* The actual admin element data.  Can contain another admin_element_group */
+div.admin_element_data {
+	display: inline;
+}
+td.admin_element_data, th.admin_element_data {
+}
+
+/* Interaction elements (buttons mostly) are in this container.  Optional */
+.admin_element_tools {
+ border: 0px;
+ margin: 0px;
+ }
+ div.admin_element_tools {
+	display: inline;
+}
+td.admin_element_tools, th.admin_element_tools {
+}
+ /* Get it touching the border to the admin container it's relevant for */
+.admin_element_tools .submit
+{
+    border: 2px solid #DDDDFF;
+    margin:-0.2em 0em 0.1em 0.1em;
+}
+.submit {
+    border: 2px solid #daedd8;
+}
+.submit:hover {
+    border : 2px solid #46a43a;
+    background-color: #daedd8;
+}
+.submit_disabled {
+    border: 2px solid #daedd8;
+}
+
+/********** End generic object admin interface **********/
+.user_select_user_ui_container div
+{
+	display: inline;
+	}
+
+.user_select_user_ui_container .submit
+{
+	display: inline;
+	}
 .content_management_tools {
 	border: 1px solid #DDDDFF;
     background-color: #FBFBFF;
@@ -383,57 +475,10 @@ body div#toolTip p em span { font-weight:bold;color:#fff; }
 	font-weight: bold;
 }
 
- /* The class name of the container */
-.admin_class {
-    /*float: left;*/
-    color:grey;
-    border: none;
-    display: none;
-}
 
-.admin_section_container {
-    display: block;
-/*    border: 1px solid #DDDDFF;
-    background-color: #FBFBFF;*/
-    margin: 5px;
-    width:auto;
-}
 #NodeSelector select {
     width: 100%;
 }
-/*.admin_section_title {
-    padding-left: 5px;
-    padding-right: 5px;
-    font-weight: bold;  }
-*/
-.admin_section_title {
-    display: inline;
-    font-weight: bold;
-}
-.admin_section_data {
-    display: inline;
-}
-.admin_section_tools { display: inline;}
-
-.admin_section_button {
-    border: 1px solid #daedd8;
-    margin-left: 2px;
-    margin-bottom: -5px;
-    padding: 2px;
-    padding-top: 1px;
-}
-.admin_section_button:hover {
-    border : 1px solid #46a43a;
-    background-color: #daedd8;
-}
-.admin_section_button_disabled {
-    border: 1px solid #daedd8;
-    margin-left: 2px;
-    margin-bottom: -5px;
-    padding: 2px;
-    padding-top: 1px;
-}
-
 .generic_object_admin_edit input {
     float: left;
 }

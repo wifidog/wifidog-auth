@@ -188,7 +188,7 @@ class Picture extends File
      *
      * @access public
      */
-    public function getAdminUI($subclass_admin_interface = null)
+    public function getAdminUI($subclass_admin_interface = null, $title=null)
     {
         // Init values
         $html = '';
@@ -196,26 +196,26 @@ class Picture extends File
         $height = $this->getHeight();
 
 
-        $html .= "<div class='admin_class'>Picture (".get_class($this)." instance)</div>\n";
+        $html .= "<ul class='admin_element_list'>\n";
 
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_data'>\n";
-        $html .= "<div class='admin_section_title'>"._("Width (leave empty if you want to keep original width)")." : </div>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_data'>\n";
+        $html .= "<div class='admin_element_label'>"._("Width (leave empty if you want to keep original width)")." : </div>\n";
         $html .= "<input type='text' name='pictures_{$this->getId()}_width' value='{$width}'>";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_data'>\n";
-        $html .= "<div class='admin_section_title'>"._("Height (leave empty if you want to keep original height)")." : </div>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_data'>\n";
+        $html .= "<div class='admin_element_label'>"._("Height (leave empty if you want to keep original height)")." : </div>\n";
         $html .= "<input type='text' name='pictures_{$this->getId()}_height' value='{$height}'>";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         // Show File admin UI + display the picture
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_data'>\n";
-        $html .= "<div class='admin_section_title'>"._("Picture preview")." : </div>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_data'>\n";
+        $html .= "<div class='admin_element_label'>"._("Picture preview")." : </div>\n";
 
         if (empty($width)) {
             $width = "";
@@ -231,11 +231,12 @@ class Picture extends File
 
         $html .= "<img src='".htmlentities($this->getFileUrl())."' $width $height alt='".$this->getFileName()."''>";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
+        $html .= "</ul>\n";        
 
         $html .= $subclass_admin_interface;
 
-        return parent::getAdminUI($html);
+        return parent::getAdminUI($html, $title);
     }
 
     /**

@@ -674,52 +674,51 @@ class Server implements GenericObject
 	    // Init values
 		$_html = '';
 
-		$_html .= "<h3>"._("Server management")."</h3>\n";
-		$_html .= "<div class='admin_container'>\n";
-		$_html .= "<div class='admin_class'>Server (" . get_class($this) . " instance)</div>\n";
-
+		$_html .= "<fieldset class='admin_container ".get_class($this)."'>\n";
+		$_html .= "<legend>"._("Server management")."</legend>\n";
+        $_html .= "<ul class='admin_element_list'>\n";
 		// server_id
 		$_value = htmlspecialchars($this->getId(), ENT_QUOTES);
 
-		$_html .= "<div class='admin_section_container'>\n";
-		$_html .= "<div class='admin_section_title'>" . _("Server ID") . ":</div>\n";
-		$_html .= "<div class='admin_section_data'>\n";
+		$_html .= "<li class='admin_element_item_container'>\n";
+		$_html .= "<div class='admin_element_label'>" . _("Server ID") . ":</div>\n";
+		$_html .= "<div class='admin_element_data'>\n";
 		$_html .= $_value;
 		$_html .= "</div>\n";
-		$_html .= "</div>\n";
+		$_html .= "</li>\n";
 
 		// creation_date
 		$_name = "server_" . $this->getId() . "_creation_date";
 		$_value = htmlspecialchars($this->getCreationDate(), ENT_QUOTES);
 
-		$_html .= "<div class='admin_section_container'>\n";
-		$_html .= "<div class='admin_section_title'>" . _("Creation date") . ":</div>\n";
-		$_html .= "<div class='admin_section_data'>\n";
+		$_html .= "<li class='admin_element_item_container'>\n";
+		$_html .= "<div class='admin_element_label'>" . _("Creation date") . ":</div>\n";
+		$_html .= "<div class='admin_element_data'>\n";
 		$_html .= "<input type='text' size='50' value='$_value' name='$_name'>\n";
 		$_html .= "</div>\n";
-		$_html .= "</div>\n";
+		$_html .= "</li>\n";
 
 		// name
 		$_name = "server_" . $this->getId() . "_name";
 		$_value = htmlspecialchars($this->getName(), ENT_QUOTES);
 
-		$_html .= "<div class='admin_section_container'>\n";
-		$_html .= "<div class='admin_section_title'>" . _("Server name") . ":</div>\n";
-		$_html .= "<div class='admin_section_data'>\n";
+		$_html .= "<li class='admin_element_item_container'>\n";
+		$_html .= "<div class='admin_element_label'>" . _("Server name") . ":</div>\n";
+		$_html .= "<div class='admin_element_data'>\n";
 		$_html .= "<input type='text' size='50' value='$_value' name='$_name'>\n";
 		$_html .= "</div>\n";
-		$_html .= "</div>\n";
+		$_html .= "</li>\n";
 
 		// hostname
 		$_name = "server_" . $this->getId() . "_hostname";
 		$_value = htmlspecialchars($this->getHostname(), ENT_QUOTES);
 
-		$_html .= "<div class='admin_section_container'>\n";
-		$_html .= "<div class='admin_section_title'>" . _("Hostname") . ":</div>\n";
-		$_html .= "<div class='admin_section_data'>\n";
+		$_html .= "<li class='admin_element_item_container'>\n";
+		$_html .= "<div class='admin_element_label'>" . _("Hostname") . ":</div>\n";
+		$_html .= "<div class='admin_element_data'>\n";
 		$_html .= "<input type='text' size='50' value='$_value' name='$_name'>\n";
 		$_html .= "</div>\n";
-		$_html .= "</div>\n";
+		$_html .= "</li>\n";
 
 		//  is_default_server
 		$_name = "server_" . $this->getId() . "_is_default_server";
@@ -730,12 +729,12 @@ class Server implements GenericObject
 		    $_checked = "";
 		}
 
-		$_html .= "<div class='admin_section_container'>\n";
-		$_html .= "<div class='admin_section_title'>" . _("Is this server the default server?") . ":</div>\n";
-		$_html .= "<div class='admin_section_data'>\n";
+		$_html .= "<li class='admin_element_item_container'>\n";
+		$_html .= "<div class='admin_element_label'>" . _("Is this server the default server?") . ":</div>\n";
+		$_html .= "<div class='admin_element_data'>\n";
 		$_html .= "<input type='checkbox' name='$_name' $_checked>\n";
 		$_html .= "</div>\n";
-		$_html .= "</div>\n";
+		$_html .= "</li>\n";
 
 		//  ssl_available
 		$_name = "server_" . $this->getId() . "_ssl_available";
@@ -746,26 +745,27 @@ class Server implements GenericObject
 		    $_checked = "";
 		}
 
-		$_html .= "<div class='admin_section_container'>\n";
-		$_html .= "<div class='admin_section_title'>" . _("Use SSL on this server?") . ":</div>\n";
-		$_html .= "<div class='admin_section_data'>\n";
+		$_html .= "<li class='admin_element_item_container'>\n";
+		$_html .= "<div class='admin_element_label'>" . _("Use SSL on this server?") . ":</div>\n";
+		$_html .= "<div class='admin_element_data'>\n";
 		$_html .= "<input type='checkbox' name='$_name' $_checked>\n";
 		$_html .= "</div>\n";
-		$_html .= "</div>\n";
+		$_html .= "</li>\n";
 
 		// gmaps_api_key
 		if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED == true) {
     		$_name = "server_" . $this->getId() . "_gmaps_api_key";
     		$_value = htmlspecialchars($this->getGoogleAPIKey(), ENT_QUOTES);
 
-    		$_html .= "<div class='admin_section_container'>\n";
-    		$_html .= "<div class='admin_section_title'>" . _("Google public API key") . ":</div>\n";
-    		$_html .= "<div class='admin_section_data'>\n";
+    		$_html .= "<li class='admin_element_item_container'>\n";
+    		$_html .= "<div class='admin_element_label'>" . _("Google public API key") . ":</div>\n";
+    		$_html .= "<div class='admin_element_data'>\n";
     		$_html .= "<input type='text' size='50' value='$_value' name='$_name'>\n";
     		$_html .= "</div>\n";
-    		$_html .= "</div>\n";
+    		$_html .= "</li>\n";
 		}
-
+        $_html .= "</ul>\n";
+        $_html .= "</fieldset>\n";
 		return $_html;
 	}
 

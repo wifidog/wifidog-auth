@@ -402,7 +402,7 @@ class RssAggregator extends Content
      *
      * @access public
      */
-    public function getAdminUI($subclass_admin_interface = null)
+    public function getAdminUI($subclass_admin_interface = null, $title=null)
     {
         // Define globals
         global $db;
@@ -414,27 +414,26 @@ class RssAggregator extends Content
         $i = 0;
 
 
-        $html .= "<div class='admin_class'>ContentGroup (".get_class($this)." instance)</div>\n";
-
+        $html .= "<ul class='admin_element_list'>\n";
         /*
          * number_of_display_items
          */
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Total number of items to display (from all feeds)").": </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Total number of items to display (from all feeds)").": </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
 
         $name = "rss_aggregator_".$this->id."_display_num_items";
         $value = $this->getDisplayNumItems();
         $html .= "<input type='text' size='2' value='$value' name='$name'>\n";
 
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         /*
          * algorithm_strength
          */
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>\n";
         $html .= _("How much bonus feeds that do not publish as often get over feed that publish more often.
                     The default is 0.75, with a typical range between 0 and 1.
                     At 0, you have a classic RSS aggregator, meaning the n most recent entries picked from all feeds
@@ -444,25 +443,25 @@ class RssAggregator extends Content
                     there will be 5 of each.  While that may not sound usefull, it still is, as the feed's distribution is
                     usually not homogenous.");
         $html .= ": </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<div class='admin_element_data'>\n";
 
         $name = "rss_aggregator_".$this->id."_algorithm_strength";
         $value = $this->getAlgorithmStrength();
         $html .= "<input type='text' size='2' value='$value' name='$name'>\n";
 
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         /*
          * max_item_age
          */
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>\n";
         $html .= _("Set the oldest entries (in seconds) you are willing to see.  Any entries older than this will not
                     be considered at all for display, even if it means that the configured number of items to be displayed isn't reached.
                     It's only usefull if all your feed publish very rarely, and you don't want very old entries to show up.");
         $html .= ": </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<div class='admin_element_data'>\n";
 
         $name = "rss_aggregator_".$this->id."_max_item_age";
         $value = $this->getMaxItemAge();
@@ -470,23 +469,23 @@ class RssAggregator extends Content
 
         $html .= _("seconds");
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         /*
          * rss_aggregator_element (table)
          */
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Feeds:")."</div>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Feeds:")."</div>\n";
 
-        $html .= "<ul class='admin_section_list'>\n";
+        $html .= "<ul class='admin_element_list'>\n";
 
         foreach ($this->content_rss_aggregator_feeds_rows as $feed_row) {
-            $html .= "<li class='admin_section_list_item'>\n";
+            $html .= "<li class='admin_element_item_container'>\n";
 
-            $html .= "<div class='admin_section_data'>\n";
+            $html .= "<div class='admin_element_data'>\n";
             $html .= $this->getFeedAdminUI($feed_row);
             $html .= "</div'>\n";
-            $html .= "<div class='admin_section_tools'>\n";
+            $html .= "<div class='admin_element_tools'>\n";
 
             /*
              * Delete feeds
@@ -500,7 +499,7 @@ class RssAggregator extends Content
         /*
          * Add new feed
          */
-        $html .= "<li class='admin_section_list_item'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<b>"._("Add a new feed or pick one from the other feeds in the system (most_popular_first)")."</b><br>";
 
         $sql = "SELECT count, content_rss_aggregator_feeds.url, title FROM content_rss_aggregator_feeds
@@ -530,11 +529,11 @@ class RssAggregator extends Content
 
         $html .= "</li>\n";
         $html .= "</ul>\n";
-        $html .= "</div>\n";
-
+        $html .= "</li>\n";
+        $html .= "</ul>\n";
         $html .= $subclass_admin_interface;
 
-        return parent::getAdminUI($html);
+        return parent::getAdminUI($html, $title);
     }
 
     /**
@@ -604,49 +603,48 @@ class RssAggregator extends Content
     {
         // Init values
         $html = '';
+        $html .= "<ul class='admin_element_list'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>".$feed_row['title']."</div>\n";
 
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>".$feed_row['title']."</div>\n";
-        $html .= "</div>\n";
-
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<div class='admin_element_data'>\n";
 
         /*
          * URL
          */
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("URL").": \n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("URL").": \n";
 
         if(	!$this->press_review->isFeedAvailable($feed_row['url'])) {
             $html .= "<br/><span class='warningmsg'>"._("WARNING:  Either the feed couldn't be retrieved, or it couldn't be parsed.  Please double check the URL.")."</span>";
         }
 
         $html .= "</div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<div class='admin_element_data'>\n";
 
         $name = "rss_aggregator_".$this->id."_feed_".md5($feed_row['url'])."_url";
         $value = $feed_row['url'];
         $html .= "<input type='text' size='60' value='$value' name='$name'>\n";
 
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         /*
          * default_publication_interval
          */
-        $html .= "<div class='admin_section_container'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
         $calculated_pub_interval = $this->press_review->getFeedPublicationInterval($feed_row['url']);
 
         if ($calculated_pub_interval == true) {
             $html .= sprintf(_("The feed publishes an item every %.2f day(s)"), $calculated_pub_interval / (60 * 60 * 24));
         } else {
-            $html .= "<div class='admin_section_title'><span class='warningmsg'>"._("WARNING:  This feed does not include the publication dates.
+            $html .= "<div class='admin_element_label'><span class='warningmsg'>"._("WARNING:  This feed does not include the publication dates.
                                                                                      The system needs to be able to compute approximate publication
                                                                                      date for each entry, so the entry can be weighted against the
                                                                                      others. In order for the aggregator to do a good job, you need
                                                                                      to estimate fublication frequency of the items, in days.
                                                                                      If unset, defaults to one day.").": </span></div>\n";
-            $html .= "<div class='admin_section_data'>\n";
+            $html .= "<div class='admin_element_data'>\n";
             $name = "rss_aggregator_".$this->id."_feed_".md5($feed_row['url'])."_default_publication_interval";
 
             if (!empty ($feed_row['default_publication_interval'])) {
@@ -659,29 +657,29 @@ class RssAggregator extends Content
             $html .= "</div>\n";
         }
 
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         /*
          * bias
          */
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("The bias to be given to the source by the selection algorithm.
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("The bias to be given to the source by the selection algorithm.
                                                         Bias must be > 0 , typical values would be between 0.75 and 1.5
                                                         and default is 1 (no bias).  A bias of 2 will cause the items
                                                         to \"look\" twice as recent to the algorithm. A bias of 0.5 to
                                                         look twice as old. Be carefull, a bias of 2 will statistically
                                                         because the feed to have MORE than twice as many items displayed.").": </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<div class='admin_element_data'>\n";
 
         $name = "rss_aggregator_".$this->id."_feed_".md5($feed_row['url'])."_bias";
         $value = $feed_row['bias'];
         $html .= "<input type='text' size='60' value='$value' name='$name'>\n";
 
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
-        $html .= "</div>\n";
-
+        $html .= "</li>\n";
+        $html .= "</ul>\n";
         return $html;
     }
 

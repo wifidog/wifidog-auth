@@ -434,43 +434,42 @@ $api = $this->getFlickrApi();
         $this->refresh();
     }
 
-    public function getAdminUI($subclass_admin_interface = null)
+    public function getAdminUI($subclass_admin_interface = null, $title=null)
     {
         // Init values
         $html = '';
+ 		$html .= "<ul class='admin_element_list'>\n";
 
         if ($this->_PhlickrAvailable) {
             $generator = new FormSelectGenerator();
 
-            $html .= "<div class='admin_class'>Flickr Photostream (".get_class($this)." instance)</div>\n";
-
-            $html .= "<div class='admin_section_container'>\n";
-            $html .= "<div class='admin_section_title'>"._("Flickr API key")." <a href='http://www.flickr.com/services/api/misc.api_keys.html'>(?)</a> : </div>\n";
-            $html .= "<div class='admin_section_data'>\n";
+            $html .= "<li class='admin_element_item_container'>\n";
+            $html .= "<div class='admin_element_label'>"._("Flickr API key")." <a href='http://www.flickr.com/services/api/misc.api_keys.html'>(?)</a> : </div>\n";
+            $html .= "<div class='admin_element_data'>\n";
             $name = "flickr_photostream_".$this->id."_api_key";
             $html .= "<input type='text' name='$name' value='".$this->getApiKey()."'\n";
             $html .= "</div>\n";
-            $html .= "</div>\n";
+            $html .= "</li>\n";
 
-            $html .= "<div class='admin_section_container'>\n";
-            $html .= "<div class='admin_section_title'>"._("Shared secret")." : </div>\n";
-            $html .= "<div class='admin_section_data'>\n";
+            $html .= "<li class='admin_element_item_container'>\n";
+            $html .= "<div class='admin_element_label'>"._("Shared secret")." : </div>\n";
+            $html .= "<div class='admin_element_data'>\n";
             $name = "flickr_photostream_".$this->id."_api_shared_secret";
             $html .= "<input type='text' name='$name' value='".$this->getApiSharedSecret()."'\n";
             $html .= "</div>\n";
-            $html .= "</div>\n";
+            $html .= "</li>\n";
 
-            $html .= "<div class='admin_section_container'>\n";
-            $html .= "<div class='admin_section_title'>"._("Photos display mode")." : </div>\n";
-            $html .= "<div class='admin_section_data'>\n";
+            $html .= "<li class='admin_element_item_container'>\n";
+            $html .= "<div class='admin_element_label'>"._("Photos display mode")." : </div>\n";
+            $html .= "<div class='admin_element_data'>\n";
             $display_modes = array (array (0 => self :: DISPLAY_GRID, 1 => _("Grid display")), array (0 => self :: DISPLAY_FEATURE, 1 => _("Feature photo (last one)")), array (0 => self :: DISPLAY_FEATURE_WITH_RANDOM, 1 => _("Feature photo + one at random")));
             $html .= $generator->generateFromArray($display_modes, $this->getDisplayMode(), "DisplayMode".$this->getID(), "FlickrPhotostream", false, null);
             $html .= "</div>\n";
-            $html .= "</div>\n";
+            $html .= "</li>\n";
 
-            $html .= "<div class='admin_section_container'>\n";
-            $html .= "<div class='admin_section_title'>"._("Flick photo selection mode :")."</div>\n";
-            $html .= "<div class='admin_section_data'>\n";
+            $html .= "<li class='admin_element_item_container'>\n";
+            $html .= "<div class='admin_element_label'>"._("Flick photo selection mode :")."</div>\n";
+            $html .= "<div class='admin_element_data'>\n";
 
             $selection_modes = array (array (0 => self :: SELECT_BY_GROUP, 1 => _("Select by group")), array (0 => self :: SELECT_BY_TAGS, 1 => _("Select by tags")), array (0 => self :: SELECT_BY_USER, 1 => _("Select by user")));
             $html .= $generator->generateFromArray($selection_modes, $this->getSelectionMode(), "SelectionMode".$this->getID(), "FlickrPhotostream", false, null, "onChange='submit()'");
@@ -487,24 +486,24 @@ $api = $this->getFlickrApi();
                         case self :: SELECT_BY_USER :
                             if ($this->getFlickrUserId())
                             {
-                                $html .= "<div class='admin_section_container'>\n";
-                                $html .= "<div class='admin_section_title'>"._("Flickr User ID + Username")." : </div>\n";
-                                $html .= "<div class='admin_section_data'>\n";
+                                $html .= "<li class='admin_element_item_container'>\n";
+                                $html .= "<div class='admin_element_label'>"._("Flickr User ID + Username")." : </div>\n";
+                                $html .= "<div class='admin_element_data'>\n";
                                 $html .= $this->getUserName()." [".$this->getFlickrUserId()."]";
                                 $name = "flickr_photostream_".$this->id."_reset_user_id";
                                 $html .= " <b>( <input type='checkbox' name='$name' value='true'>"._("Reset Flickr User ID")." )</b>";
                                 $html .= "</div>\n";
-                                $html .= "</div>\n";
+                                $html .= "</li>\n";
                             }
                             else
                             {
-                                $html .= "<div class='admin_section_container'>\n";
-                                $html .= "<div class='admin_section_title'>"._("Flickr User E-mail")." : </div>\n";
-                                $html .= "<div class='admin_section_data'>\n";
+                                $html .= "<li class='admin_element_item_container'>\n";
+                                $html .= "<div class='admin_element_label'>"._("Flickr User E-mail")." : </div>\n";
+                                $html .= "<div class='admin_element_data'>\n";
                                 $name = "flickr_photostream_".$this->id."_email";
                                 $html .= "<input type='text' name='$name' value=''>";
                                 $html .= "</div>\n";
-                                $html .= "</div>\n";
+                                $html .= "</li>\n";
                             }
                             break;
                     }
@@ -514,9 +513,9 @@ $api = $this->getFlickrApi();
                         case self :: SELECT_BY_GROUP :
                             if ($this->getFlickrUserId())
                             {
-                                $html .= "<div class='admin_section_container'>\n";
-                                $html .= "<div class='admin_section_title'>"._("Group Photo Pool")." : </div>\n";
-                                $html .= "<div class='admin_section_data'>\n";
+                                $html .= "<li class='admin_element_item_container'>\n";
+                                $html .= "<div class='admin_element_label'>"._("Group Photo Pool")." : </div>\n";
+                                $html .= "<div class='admin_element_data'>\n";
                                 $group_photo_pools = array ();
 
                                 $flickr_user = new Phlickr_User($this->getFlickrApi(), $this->getFlickrUserId());
@@ -531,65 +530,65 @@ $api = $this->getFlickrApi();
                                     $html .= _("Could not find any group photo pool.");
 
                                 $html .= "</div>\n";
-                                $html .= "</div>\n";
+                                $html .= "</li>\n";
                             }
                             break;
                         case self :: SELECT_BY_TAGS :
-                            $html .= "<div class='admin_section_container'>\n";
-                            $html .= "<div class='admin_section_title'>"._("Tags (comma-separated)")." : </div>\n";
-                            $html .= "<div class='admin_section_data'>\n";
+                            $html .= "<li class='admin_element_item_container'>\n";
+                            $html .= "<div class='admin_element_label'>"._("Tags (comma-separated)")." : </div>\n";
+                            $html .= "<div class='admin_element_data'>\n";
                             $name = "flickr_photostream_".$this->id."_tags";
                             $html .= "<input type='text' name='$name' value='".$this->getTags()."'>";
                             $tag_modes = array (array (0 => self :: TAG_MODE_ANY, 1 => _("Match any tag")), array (0 => self :: TAG_MODE_ALL, 1 => _("Match all tags")));
                             $html .= $generator->generateFromArray($tag_modes, $this->getTagMode(), "TagMode".$this->getID(), "FlickrPhotostream", false, null, "onChange='submit()'");
                             $html .= "</div>\n";
-                            $html .= "</div>\n";
+                            $html .= "</li>\n";
                             break;
                     }
 
-                    $html .= "<div class='admin_section_container'>\n";
-                    $html .= "<div class='admin_section_title'>"._("Flickr photo display options")." : </div>\n";
-                    $html .= "<div class='admin_section_data'>\n";
+                    $html .= "<li class='admin_element_item_container'>\n";
+                    $html .= "<div class='admin_element_label'>"._("Flickr photo display options")." : </div>\n";
+                    $html .= "<div class='admin_element_data'>\n";
 
-                    $html .= "<div class='admin_section_container'>\n";
-                    $html .= "<div class='admin_section_title'>"._("Show Flickr photo title ?")." : </div>\n";
-                    $html .= "<div class='admin_section_data'>\n";
+                    $html .= "<li class='admin_element_item_container'>\n";
+                    $html .= "<div class='admin_element_label'>"._("Show Flickr photo title ?")." : </div>\n";
+                    $html .= "<div class='admin_element_data'>\n";
                     $name = "flickr_photostream_".$this->id."_display_title";
                     $this->shouldDisplayTitle() ? $checked = 'CHECKED' : $checked = '';
                     $html .= "<input type='checkbox' name='$name' $checked>\n";
                     $html .= "</div>\n";
-                    $html .= "</div>\n";
+                    $html .= "</li>\n";
 
-                    $html .= "<div class='admin_section_container'>\n";
-                    $html .= "<div class='admin_section_title'>"._("Show Flickr tags ?")." : </div>\n";
-                    $html .= "<div class='admin_section_data'>\n";
+                    $html .= "<li class='admin_element_item_container'>\n";
+                    $html .= "<div class='admin_element_label'>"._("Show Flickr tags ?")." : </div>\n";
+                    $html .= "<div class='admin_element_data'>\n";
                     $name = "flickr_photostream_".$this->id."_display_tags";
                     $this->shouldDisplayTags() ? $checked = 'CHECKED' : $checked = '';
                     $html .= "<input type='checkbox' name='$name' $checked>\n";
                     $html .= "</div>\n";
-                    $html .= "</div>\n";
+                    $html .= "</li>\n";
 
-                    $html .= "<div class='admin_section_container'>\n";
-                    $html .= "<div class='admin_section_title'>"._("Show Flickr photo description ?")." : </div>\n";
-                    $html .= "<div class='admin_section_data'>\n";
+                    $html .= "<li class='admin_element_item_container'>\n";
+                    $html .= "<div class='admin_element_label'>"._("Show Flickr photo description ?")." : </div>\n";
+                    $html .= "<div class='admin_element_data'>\n";
                     $name = "flickr_photostream_".$this->id."_display_description";
                     $this->shouldDisplayDescription() ? $checked = 'CHECKED' : $checked = '';
                     $html .= "<input type='checkbox' name='$name' $checked>\n";
                     $html .= "</div>\n";
-                    $html .= "</div>\n";
+                    $html .= "</li>\n";
 
-                    $html .= "<div class='admin_section_container'>\n";
-                    $html .= "<div class='admin_section_title'>"._("Preferred size")." : </div>\n";
-                    $html .= "<div class='admin_section_data'>\n";
+                    $html .= "<li class='admin_element_item_container'>\n";
+                    $html .= "<div class='admin_element_label'>"._("Preferred size")." : </div>\n";
+                    $html .= "<div class='admin_element_data'>\n";
                     $preferred_sizes = array (array (0 => self :: SIZE_SQUARED_75x75, 1 => _("Squared 75x75")), array (0 => self :: SIZE_THUMB_100x75, 1 => _("Thumbnail 100x75")), array (0 => self :: SIZE_SMALL_240x180, 1 => _("Small 240x180")), array (0 => self :: SIZE_MEDIUM_500x375, 1 => _("Medium 500x375")), array (0 => self :: SIZE_LARGE_1024, 1 => _("Large 1024x*")), array (0 => self :: SIZE_ORIGINAL, 1 => _("Original size")));
                     $html .= $generator->generateFromArray($preferred_sizes, $this->getPreferredSize(), "PreferredSize".$this->getID(), "FlickrPhotostream", false, null, "onChange='submit()'");
                     $html .= "</div>\n";
-                    $html .= "</div>\n";
+                    $html .= "</li>\n";
 
                     //TODO: Add photo batch size UI support here
 
-                    $html .= "</div>\n";
-                    $html .= "</div>\n";
+                    $html .= "</li>\n";
+                    $html .= "</li>\n";
                 }
                 catch (Phlickr_ConnectionException $e)
                 {
@@ -611,18 +610,17 @@ $api = $this->getFlickrApi();
             }
             else
             {
-                $html .= "<div class='admin_section_container'>\n";
-                $html .= "<div class='admin_section_title'>"._("YOU MUST SPECIFY AN API KEY BEFORE YOU CAN GO ON.")."</div>\n";
-                $html .= "</div>\n";
+                $html .= "<li class='admin_element_item_container'>\n";
+                $html .= "<div class='admin_element_label'>"._("YOU MUST SPECIFY AN API KEY BEFORE YOU CAN GO ON.")."</div>\n";
+                $html .= "</li>\n";
             }
 
             $html .= $subclass_admin_interface;
         } else {
-            $html .= "<div class='admin_class'>Flickr Photostream (".get_class($this)." instance)</div>\n";
             $html .= _("PEAR::Phlickr is not installed");
         }
 
-        return parent::getAdminUI($html);
+        return parent::getAdminUI($html, $title);
     }
 
     function processAdminUI()

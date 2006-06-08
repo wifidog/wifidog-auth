@@ -589,7 +589,7 @@ class InterfaceElements
 	}
 
     /**
-     * Generates the divs for an HTML "admin_section_container" element
+     * Generates the divs for an HTML "admin_element_item_container" element
      *
      * @param string $title   Title of HTML element
      * @param string $data    Data  of HTML element
@@ -611,17 +611,17 @@ class InterfaceElements
 
 		// Process title of admin section container
 		if ($title != "") {
-		    $_title = self::generateDiv($title . ":", "admin_section_title", ($main_id ? $main_id . "_title" : ""));
+		    $_title = self::generateDiv($title . ":", "admin_element_label", ($main_id ? $main_id . "_title" : ""));
 		}
 
 		// Process data of admin section container
 		if ($data != "") {
-		    $_data = self::generateDiv($data, "admin_section_data", ($main_id ? $main_id . "_data" : ""));
+		    $_data = self::generateDiv($data, "admin_element_data", ($main_id ? $main_id . "_data" : ""));
 		}
 
 		// Process tools of admin section container
 		if ($tools != "") {
-		    $_tools = self::generateDiv($tools, "admin_section_tools", ($main_id ? $main_id . "_tools" : ""));
+		    $_tools = self::generateDiv($tools, "admin_element_tools", ($main_id ? $main_id . "_tools" : ""));
 		}
 
 		// Generate final HTML markup
@@ -631,7 +631,7 @@ class InterfaceElements
 	}
 
     /**
-     * Generates an HTML "admin_section_container" element
+     * Generates an HTML "admin_element_item_container" element
      *
      * @param string $id       Id of HTML element
      * @param string $title    Title of HTML element
@@ -651,7 +651,7 @@ class InterfaceElements
             $title = "<legend>$title</legend>";
 
         $_retVal = "<fieldset>$title\n";
-        $_retVal .= self::generateDiv(self::generateAdminSection(null, $data, $tools, $id), "admin_section_container", $id);
+        $_retVal .= self::generateDiv(self::generateAdminSection(null, $data, $tools, $id), "admin_element_item_container", $id);
         $_retVal .= "</fieldset>\n";
         return $_retVal;
 	}

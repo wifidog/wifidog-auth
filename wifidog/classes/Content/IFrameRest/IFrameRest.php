@@ -119,12 +119,11 @@ class IFrameRest extends IFrame
     {
         // Init values
         $html = '';
+ 		$html .= "<ul class='admin_element_list'>\n";
 
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_data'>\n";
-        $html .= "<div class='admin_section_title'>"._("Actual URL after substitution")." : </div>\n";
-
-        $html .= "</div>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Actual URL after substitution")." : </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $html .= "<p>\n";
         $html .= _("The IFrameRest content type is meant to allow the result of REST-style queries to remote systems to be displayed in a IFrame.  To that end, The following strings will be replaced in the URL:");
         $html .= "</p>\n";
@@ -151,8 +150,9 @@ class IFrameRest extends IFrame
 
         $html .= "<a href='$generated_url'>$generated_url</a>";
         $html .= "</div>\n";
+        $html .= "</li>\n";
 
-        return parent::getAdminUI($html);
+        return parent::getAdminUI($html, $title);
     }
 
     /**

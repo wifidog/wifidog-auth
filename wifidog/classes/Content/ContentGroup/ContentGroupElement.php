@@ -181,7 +181,7 @@ class ContentGroupElement extends Content
     /**
      * Like the same method as defined in Content, this method will create a
      * ContentGroupElement based on the content type specified by
-     * getNewContentUI OR get an existing element by getSelectContentUI
+     * getNewContentUI OR get an existing element by getSelectExistingContentUI
      *
      * @param string $user_prefix                A identifier provided by the programmer to
      *                                           recognise it's generated form
@@ -262,32 +262,34 @@ class ContentGroupElement extends Content
      *
      * @access public
      */
-    public function getAdminUI($subclass_admin_interface = null)
+    public function getAdminUI($subclass_admin_interface = null, $title=null)
     {
         // Define globals
         global $db;
 
         // Init values
         $html = '';
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<fieldset class='admin_element_group'>\n";
+		$html .= "<legend>". sprintf(_("%s %d display order and location"), get_class($this), $this->getDisplayOrder())."</legend>\n";
+        
         $allowed_node_rows = null;
-
-        $html .= "<div class='admin_class'>ContentGroupElement (".get_class($this)." instance)</div>\n";
-
+		$html .= "<ul class='admin_element_list'>\n";
         /* display_order */
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>Display order: </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>Display order: </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $name = "content_group_element_".$this->id."_display_order";
         $html .= "<input type='text' name='$name' value='".$this->getDisplayOrder()."' size='2'>\n";
         $html .= _("(Ignored if display type is random)")."\n";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         /* content_group_element_has_allowed_nodes */
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("AllowedNodes:")."</div>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("AllowedNodes:")."</div>\n";
         $html .= _("(Content can be displayed on ANY node unless one or more nodes are selected)")."\n";
-        $html .= "<ul class='admin_section_list'>\n";
+        $html .= "<ul class='admin_element_list'>\n";
 
         $sql = "SELECT * FROM content_group_element_has_allowed_nodes WHERE content_group_element_id='$this->id'";
         $db->execSql($sql, $allowed_node_rows, false);
@@ -295,11 +297,11 @@ class ContentGroupElement extends Content
         if ($allowed_node_rows != null) {
             foreach ($allowed_node_rows as $allowed_node_row) {
                 $node = Node :: getObject($allowed_node_row['node_id']);
-                $html .= "<li class='admin_section_list_item'>\n";
-                $html .= "<div class='admin_section_data'>\n";
+                $html .= "<li class='admin_element_item_container'>\n";
+                $html .= "<div class='admin_element_data'>\n";
                 $html .= "".$node->GetId().": ".$node->GetName()."";
                 $html .= "</div>\n";
-                $html .= "<div class='admin_section_tools'>\n";
+                $html .= "<div class='admin_element_tools'>\n";
                 $name = "content_group_element_".$this->id."_allowed_node_".$node->GetId()."_remove";
                 $html .= "<input type='submit' name='$name' value='"._("Remove")."'>";
                 $html .= "</div>\n";
@@ -307,7 +309,7 @@ class ContentGroupElement extends Content
             }
         }
 
-        $html .= "<li class='admin_section_list_item'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
 
         $sql_additional_where = "AND node_id NOT IN (SELECT node_id FROM content_group_element_has_allowed_nodes WHERE content_group_element_id='$this->id')";
         $name = "content_group_element_{$this->id}_new_allowed_node";
@@ -315,33 +317,34 @@ class ContentGroupElement extends Content
         $name = "content_group_element_{$this->id}_new_allowed_node_submit";
         $html .= "<input type='submit' name='$name' value='"._("Add new allowed node")."'>";
         $html .= "</li'>\n";
-
         $html .= "</ul>\n";
-        $html .= "</div>\n";
-
+        
+        $html .= "</li>\n";
+        $html .= "</fieldset>\n";
+        $html .= "</li>\n";
+        
         /* displayed_content_id */
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<span class='admin_section_title'>"._("Displayed content:")."</span>\n";
-
+        $html .= "<li class='admin_element_item_container'>\n";
         if (empty ($this->content_group_element_row['displayed_content_id'])) {
-            $html .= "<b>"._("Add a new displayed content OR select an existing one")."</b><br>";
+          $html .= "<div class='errormsg'>Sorry, display element is missing.</div>\n";
+/*        	$html .= "<fieldset class='admin_element_group'>\n";
+			$html .= "<legend>"._("Add a new displayed content OR select an existing one")."</legend>\n";
             $html .= self :: getNewContentUI("content_group_element_{$this->id}_new_displayed_content")."<br>";
-            $html .= self :: getSelectContentUI("content_group_element_{$this->id}_new_displayed_existing_element", "AND content_id != '$this->id'");
-            $html .= "<input type='submit' name='content_group_element_{$this->id}_new_displayed_existing_element_add' value='"._("Add")."'>";
+            $html .= self :: getSelectExistingContentUI("content_group_element_{$this->id}_new_displayed_existing_element", "AND content_id != '$this->id'");
+			$html .= "</fieldset>\n";*/
         } else {
             $displayed_content = self :: getObject($this->content_group_element_row['displayed_content_id']);
-            $html .= $displayed_content->getAdminUI();
-            $html .= "<div class='admin_section_tools'>\n";
+            $html .= $displayed_content->getAdminUI(null, sprintf(_("%s %d displayed content (%s)"), get_class($this), $this->getDisplayOrder(), get_class($displayed_content)));
+            /*$html .= "<div class='admin_element_tools'>\n";
             $name = "content_group_element_{$this->id}_erase_displayed_content";
             $html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
-            $html .= "</div>\n";
+            $html .= "</div>\n";*/
         }
-
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         $html .= $subclass_admin_interface;
 
-        return parent :: getAdminUI($html);
+        return parent :: getAdminUI($html, $title);
     }
 
     /**

@@ -783,9 +783,9 @@ class Node implements GenericObject
 		/*
 		 * Begin with admin interface
 		 */
-		$html .= "<div class='admin_container'>\n";
-		$html .= "<div class='admin_class'>Node (" . get_class($this) . " instance)</div>\n";
-		$html .= "<h3>"._("Edit a node")."</h3>\n";
+		$html .= "<fieldset class='admin_container ".get_class($this)."'>\n";
+		$html .= "<legend>"._("Edit a node")."</legend>\n";
+		$html .= "<ul class='admin_element_list'>\n";
 
 		/*
 		 * Display stats
@@ -956,13 +956,13 @@ class Node implements GenericObject
 
     		foreach ($this->getOwners() as $owner) {
     		    $_listDataContents = InterfaceElements::generateAdminSection("", $owner->getUsername(), InterfaceElements::generateInputSubmit("node_" . $this->getId() . "_owner_" . $owner->GetId() . "_remove", _("Remove owner")));
-    		    $_listData .= InterfaceElements::generateLi($_listDataContents, "", "admin_section_list_item node_owner_list");
+    		    $_listData .= InterfaceElements::generateLi($_listDataContents, "", "admin_element_item_container node_owner_list");
     		}
 
-    	    $_listData .= InterfaceElements::generateLi(User::getSelectUserUI("node_" . $this->getId() . "_new_owner", "node_" . $this->getId() . "_new_owner_submit", _("Add owner")) . InterfaceElements::generateDiv("", "clearbr"), "", "admin_section_list_item");
+    	    $_listData .= InterfaceElements::generateLi(User::getSelectUserUI("node_" . $this->getId() . "_new_owner", "node_" . $this->getId() . "_new_owner_submit", _("Add owner")) . InterfaceElements::generateDiv("", "clearbr"), "", "admin_element_item_container");
 
     		$_title = _("Node owners");
-    		$_data = InterfaceElements::generateUl($_listData, "node_owner_ul", "admin_section_list");
+    		$_data = InterfaceElements::generateUl($_listData, "node_owner_ul", "admin_element_list");
     	    $_html_access_rights[] .= InterfaceElements::generateAdminSectionContainer("node_owner", $_title, $_data);
 		}
 
@@ -971,13 +971,13 @@ class Node implements GenericObject
 
 		foreach ($this->getTechnicalOfficers() as $tech_officer) {
 		    $_listDataContents = InterfaceElements::generateAdminSection("", $tech_officer->getUsername(), InterfaceElements::generateInputSubmit("node_" . $this->getId() . "_tech_officer_" . $tech_officer->GetId() . "_remove", _("Remove technical officer")));
-		    $_listData .= InterfaceElements::generateLi($_listDataContents, "", "admin_section_list_item node_tech_officer_list");
+		    $_listData .= InterfaceElements::generateLi($_listDataContents, "", "admin_element_item_container node_tech_officer_list");
 		}
 
-	    $_listData .= InterfaceElements::generateLi(User::getSelectUserUI("node_" . $this->getId() . "_new_tech_officer", "node_" . $this->getId() . "_new_tech_officer_submit", _("Add technical officer")) . InterfaceElements::generateDiv("", "clearbr"), "", "admin_section_list_item");
+	    $_listData .= InterfaceElements::generateLi(User::getSelectUserUI("node_" . $this->getId() . "_new_tech_officer", "node_" . $this->getId() . "_new_tech_officer_submit", _("Add technical officer")) . InterfaceElements::generateDiv("", "clearbr"), "", "admin_element_item_container");
 
 		$_title = _("Technical officers");
-		$_data = InterfaceElements::generateUl($_listData, "node_tech_officer_ul", "admin_section_list");
+		$_data = InterfaceElements::generateUl($_listData, "node_tech_officer_ul", "admin_element_list");
 	    $_html_access_rights[] .= InterfaceElements::generateAdminSectionContainer("node_tech_officer", $_title, $_data);
 
 		// Build section
@@ -996,8 +996,8 @@ class Node implements GenericObject
 		// Build section
 		$html .= InterfaceElements::generateAdminSectionContainer("node_content", _("Node content"), implode(null, $_html_content));
 
-		$html .= "<div class='clearbr'></div>";
-		$html .= "</div>";
+		$html .= "</ul>\n";
+		$html .= "</fieldset>";
 
 		return $html;
 	}

@@ -169,15 +169,14 @@ class EmbeddedContent extends Content
      *
      * @access public
      */
-    public function getAdminUI($subclass_admin_interface = null)
+    public function getAdminUI($subclass_admin_interface = null, $title=null)
     {
         $html = '';
-        $html .= "<div class='admin_class'>EmbeddedContent (".get_class($this)." instance)</div>\n";
-
+ 		$html .= "<ul class='admin_element_list'>\n";
         /* Embedded content Content */
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Embedded content")." : <br></div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Embedded content")." : <br></div>\n";
+        $html .= "<div class='admin_element_data'>\n";
 
         if (empty ($this->embedded_content_row['embedded_file_id'])) {
             // Mandate File
@@ -189,34 +188,34 @@ class EmbeddedContent extends Content
             $html .= $embedded_content_file->getAdminUI();
 
             $html .= "</div>\n";
-            $html .= "<div class='admin_section_tools'>\n";
+            $html .= "<div class='admin_element_tools'>\n";
             $name = "embeddedcontent_".$this->id."_embedded_file_erase";
 
-            $html .= "<div class='admin_section_container'>\n";
-            $html .= "<div class='admin_section_title'>"._("Attributes")." : </div>\n";
-            $html .= "<div class='admin_section_data'>\n";
+            $html .= "<li class='admin_element_item_container'>\n";
+            $html .= "<div class='admin_element_label'>"._("Attributes")." : </div>\n";
+            $html .= "<div class='admin_element_data'>\n";
             $html .= "<br><i>"._("It is recommended to specify at least <b>width='x' height='y'</b> as attributes")."</i><br>\n";
             $html .= '<textarea name="embedded_content_attributes'.$this->getId().'" cols="60" rows="3">'.htmlspecialchars($this->getAttributes(), ENT_QUOTES, 'UTF-8').'</textarea>';
             $html .= "</div>\n";
-            $html .= "</div>\n";
+            $html .= "</li>\n";
 
-            $html .= "<div class='admin_section_container'>\n";
-            $html .= "<div class='admin_section_title'>"._("Parameters")." : </div>\n";
-            $html .= "<div class='admin_section_data'>\n";
+            $html .= "<li class='admin_element_item_container'>\n";
+            $html .= "<div class='admin_element_label'>"._("Parameters")." : </div>\n";
+            $html .= "<div class='admin_element_data'>\n";
             $html .= '<br><textarea name="embedded_content_parameters'.$this->getId().'" cols="60" rows="3">'.htmlspecialchars($this->getParameters(), ENT_QUOTES, 'UTF-8').'</textarea>';
             $html .= "</div>\n";
-            $html .= "</div>\n";
+            $html .= "</li>\n";
 
             $html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
             $html .= "</div>\n";
         }
 
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         /* Fallback content */
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Fallback content (Can be another embedded content to create a fallback hierarchy)")." : <br></div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<div class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Fallback content (Can be another embedded content to create a fallback hierarchy)")." : <br></div>\n";
+        $html .= "<div class='admin_element_data'>\n";
 
         if (empty ($this->embedded_content_row['fallback_content_id'])) {
             $html .= self::getNewContentUI("fallback_content_{$this->id}_new");
@@ -227,17 +226,16 @@ class EmbeddedContent extends Content
             $html .= $fallback_content->getAdminUI();
 
             $html .= "</div>\n";
-            $html .= "<div class='admin_section_tools'>\n";
+            $html .= "<div class='admin_element_tools'>\n";
             $name = "fallback_content_".$this->id."_fallback_content_erase";
             $html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
             $html .= "</div>\n";
         }
-
-        $html .= "</div>\n";
-
+        $html .= "</li>\n";
+        $html .= "</ul>\n";
         $html .= $subclass_admin_interface;
 
-        return parent::getAdminUI($html);
+        return parent::getAdminUI($html, $title);
     }
 
     /**

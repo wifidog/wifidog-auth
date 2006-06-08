@@ -288,11 +288,11 @@ class HTMLeditor extends Content
             $_result = null;
             $_html = '';
             $_languages = new LocaleList();
+	 		$html .= "<ul class='admin_element_list'>\n";
 
-            $_html .= "<div class='admin_class'>Langstring (" . get_class($this) . " instance)</div>\n";
-            $_html .= "<div class='admin_section_container content_html_editor'>\n";
+            $_html .= "<li class='admin_element_item_container content_html_editor'>\n";
 
-            $_html .= "<ul class='admin_section_list'>\n";
+            $_html .= "<ul class='admin_element_list'>\n";
 
             $_sql = "SELECT * FROM content_langstring_entries WHERE content_langstring_entries.langstrings_id = '$this->id' ORDER BY locales_id";
             $this->mBd->execSql($_sql, $_result, FALSE);
@@ -300,8 +300,8 @@ class HTMLeditor extends Content
             // Show existing content
             if ($_result != null) {
                 while (list($_key, $_value) = each($_result)) {
-                    $_html .= "<li class='admin_section_list_item'>\n";
-                    $_html .= "<div class='admin_section_data'>\n";
+                    $_html .= "<li class='admin_element_item_container'>\n";
+                    $_html .= "<div class='admin_element_data'>\n";
                     $_html .= _("Language") . ": " . $_languages->GenererFormSelect($_value["locales_id"], "langstrings_" . $this->id . "_substring_" . $_value["langstring_entries_id"] . "_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
 
                     $_FCKeditor = new FCKeditor('langstrings_' . $this->id . '_substring_' . $_value["langstring_entries_id"] . '_string');
@@ -326,7 +326,7 @@ class HTMLeditor extends Content
                     $_html .= $_FCKeditor->CreateHtml();
 
                     $_html .= "</div>\n";
-                    $_html .= "<div class='admin_section_tools'>\n";
+                    $_html .= "<div class='admin_element_tools'>\n";
 
                     $_name = "langstrings_" . $this->id . "_substring_" . $_value["langstring_entries_id"] . "_erase";
                     $_html .= "<input type='submit' class='submit' name='$_name' value='" . _("Delete string") . "'>";
@@ -339,8 +339,8 @@ class HTMLeditor extends Content
             // Editor for new content
             $_locale = LocaleList::GetDefault();
 
-            $_html .= "<li class='admin_section_list_item'>\n";
-            $_html .= "<div class='admin_section_data'>\n";
+            $_html .= "<li class='admin_element_item_container'>\n";
+            $_html .= "<div class='admin_element_data'>\n";
 
             $_html .= _("Language") . ": " . $_languages->GenererFormSelect($_locale, "langstrings_" . $this->id . "_substring_new_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
 
@@ -365,17 +365,17 @@ class HTMLeditor extends Content
             $_html .= $_FCKeditor->CreateHtml();
 
             $_html .= "</div>\n";
-            $_html .= "<div class='admin_section_tools'>\n";
+            $_html .= "<div class='admin_element_tools'>\n";
 
             $_html .= "<input type='submit' class='submit' name='langstrings_" . $this->id . "_add_new_entry' value='" . _("Add new string") . "'>";
             $_html .= "</div>\n";
             $_html .= "</li>\n";
 
             $_html .= "</ul>\n";
-            $_html .= "</div>\n";
+            $_html .= "</li>\n";
+            $_html .= "</ul>\n";
         } else {
             $_html = '';
-            $_html .= "<div class='admin_class'>HTMLeditor (".get_class($this)." instance)</div>\n";
             $_html .= _("FCKeditor is not installed");
         }
 

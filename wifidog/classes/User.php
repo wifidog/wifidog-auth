@@ -671,7 +671,7 @@ class User implements GenericObject
         } else {
             $_userSelector = _("Username") . ": " .  InterfaceElements::generateInputText("select_user_" . $user_prefix . "_username");
         }
-        $_html = InterfaceElements::generateDiv($_networkSelector . $_userSelector);
+        $_html = InterfaceElements::generateDiv($_networkSelector . $_userSelector, 'user_select_user_ui_container');
 
         return $_html;
     }
@@ -706,39 +706,38 @@ class User implements GenericObject
         global $db;
         $currentUser= self::getCurrentUser();
         $html = '';
-        $html .= "<div class='admin_container'>\n";
-        $html .= "<div class='admin_class'>User instance</div>\n";
-        
+        $html .= "<fieldset class='admin_container ".get_class($this)."'>\n";
+        $html .= "<ul class='admin_element_list'>\n";
 if($this==$currentUser || $this->getNetwork()->hasAdminAccess($currentUser))
 {
     //username
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Username")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Username")." : </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $name = "user_".$this->getId()."_username";
         $html .= "<input type='text' name='$name' value='".htmlentities($this->getUsername())."' size=30>\n";
         $html .= _("Be carefull when changing this: it's the username you use to log in!");
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 }
 /*
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Real name")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Real name")." : </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $name = "user_".$this->getId()."_real_name";
         $html .= "<input type='text' name='$name' value='".htmlentities($this->getRealName())."' size=30 readonly>\n";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Website URL")." : </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Website URL")." : </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $name = "user_".$this->getId()."_website";
         $html .= "<input type='text' name='$name' value='".htmlentities($this->getWebsiteURL())."' size=30 readonly>\n";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 */
-        $html .= "</div>\n";
+        $html .= "</fieldset>\n";
         return $html;
     }
 

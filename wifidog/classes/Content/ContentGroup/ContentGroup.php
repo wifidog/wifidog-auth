@@ -322,35 +322,36 @@ class ContentGroup extends Content
         $this->temporary_display_num_elements = $temporary_num_elements;
     }
 
-    public function getAdminUI($subclass_admin_interface = null)
+    public function getAdminUI($subclass_admin_interface = null, $title=null)
     {
         $html = '';
-        $html .= "<div class='admin_class'>ContentGroup (".get_class($this)." instance)</div>\n";
+   		$html .= "<fieldset class='admin_element_group'>\n";
+		$html .= "<legend>".sprintf(_("%s configuration"),get_class($this))."</legend>\n";
 
         /* is_artistic_content */
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>Is artistic content?: </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>Is artistic content?: </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $name = "content_group_".$this->id."_is_artistic_content";
         $this->isArtisticContent() ? $checked = 'CHECKED' : $checked = '';
         $html .= "<input type='checkbox' name='$name' $checked>\n";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         /* is_locative_content */
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>". ("Is locative content?").": </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>". ("Is locative content?").": </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $name = "content_group_".$this->id."_is_locative_content";
         $this->isLocativeContent() ? $checked = 'CHECKED' : $checked = '';
         $html .= "<input type='checkbox' name='$name' $checked>\n";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         /* content_ordering_mode */
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("In what order should the content displayed?").": </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("In what order should the content displayed?").": </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $name = "content_group_".$this->id."_content_ordering_mode";
 
         $i = 0;
@@ -363,12 +364,12 @@ class ContentGroup extends Content
         }
         $html .= FormSelectGenerator :: generateFromArray($tab, $this->getContentOrderingMode(), $name, null, false);
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         /*content_changes_on_mode */
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("When does the content rotate?").": </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("When does the content rotate?").": </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $name = "content_group_".$this->id."_content_changes_on_mode";
         $i = 0;
         $tab = null;
@@ -380,12 +381,12 @@ class ContentGroup extends Content
         }
         $html .= FormSelectGenerator :: generateFromArray($tab, $this->getContentChangesOnMode(), $name, null, false);
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         /* allow_repeat*/
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Can content be shown more than once to the same user?").": </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Can content be shown more than once to the same user?").": </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $name = "content_group_".$this->id."_allow_repeat";
         $i = 0;
         $tab = null;
@@ -397,46 +398,47 @@ class ContentGroup extends Content
         }
         $html .= FormSelectGenerator :: generateFromArray($tab, $this->getAllowRepeat(), $name, null, false);
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         /*display_num_elements*/
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>". ("Pick how many elements for each display?").": </div>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>". ("Pick how many elements for each display?").": </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $name = "content_group_".$this->id."_display_num_elements";
         $value = $this->getDisplayNumElements();
         $html .= "<input type='text' size='2' value='$value' name='$name'>\n";
         $html .= "</div>\n";
-        $html .= "</div>\n";
+        $html .= "</li>\n";
+        $html .= "</fieldset>\n";
+        
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<fieldset class='admin_element_group'>\n";
+		$html .= "<legend>".sprintf(_("%s display element list"),get_class($this))."</legend>\n";
 
-        /* content_group_element (table)*/
-        $html .= "<div class='admin_section_container'>\n";
-        $html .= "<div class='admin_section_title'>"._("Content group elements:")."</div>\n";
+        /* content_group_element*/
 
-        $html .= "<ul class='admin_section_list'>\n";
+        $html .= "<ul class='admin_element_list'>\n";
         foreach ($this->getElements() as $element)
         {
-            $html .= "<li class='admin_section_list_item'>\n";
-            $html .= "<div class='admin_section_data'>\n";
-            $html .= $element->getAdminUI();
-            $html .= "</div'>\n";
-            $html .= "<div class='admin_section_tools'>\n";
+            $html .= "<li class='admin_element_item_container'>\n";
+            $html .= $element->getAdminUI(null, sprintf(_("%s %d"), get_class($element), $element->getDisplayOrder()));
+            $html .= "<div class='admin_element_tools'>\n";
             $name = "content_group_".$this->id."_element_".$element->GetId()."_erase";
-            $html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
+            $html .= "<input type='submit' class='submit' name='$name' value='".sprintf(_("Delete %s %d"),get_class($element), $element->getDisplayOrder())."'>";
             $html .= "</div>\n";
             $html .= "</li>\n";
         }
-        $html .= "<li class='admin_section_list_item'>\n";
-        $html .= "<b>"._("Add a new content OR select previously created content")."</b><br>";
+        $html .= "<li class='admin_element_item_container'>\n";
         $html .= self :: getNewContentUI("content_group_{$this->id}_new_element")."<br>";
-        $html .= self :: getSelectContentUI("content_group_{$this->id}_existing_element", "AND content_id != '$this->id'");
-        $html .= "<input type='submit' name='content_group_{$this->id}_existing_element_add' value='"._("Add")."'>";
+        $html .= "</li>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= self :: getSelectExistingContentUI("content_group_{$this->id}_existing_element", "AND content_id != '$this->id'");
         $html .= "</li>\n";
         $html .= "</ul>\n";
-        $html .= "</div>\n";
-
+        $html .= "</fieldset>\n";
+        $html .= "</li>\n";
         $html .= $subclass_admin_interface;
-        return parent :: getAdminUI($html);
+        return parent :: getAdminUI($html, $title);
     }
 
     function processAdminUI()

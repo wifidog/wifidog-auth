@@ -249,7 +249,7 @@ case "list":
     switch ($_REQUEST['object_class']) {
     case "Content":
         $displayShowAllButton = true;
-        $objectSelector = Content::getSelectContentUI('object_id', null, ((isset($_REQUEST['display_content']) && $_REQUEST['display_content'] == "all_content") ? false : true), "content_type", "table");
+        $objectSelector = Content::getSelectExistingContentUI('object_id', null, ((isset($_REQUEST['display_content']) && $_REQUEST['display_content'] == "all_content") ? false : true), "content_type", "table");
         $displayEditButton = false;
         break;
 

@@ -156,11 +156,11 @@ EOF;
 
         $to_presets = array (_("No restriction...") => "", _("yesterday") => strftime("%Y-%m-%d 11:59", strtotime("-1 day")), _("today") => strftime("%Y-%m-%d 11:59", time()), _("2 days ago") => strftime("%Y-%m-%d 11:59", strtotime("-2 days")), _("3 days ago") => strftime("%Y-%m-%d 11:59", strtotime("-3 days")), _("1 week ago") => strftime("%Y-%m-%d 11:59", strtotime("-1 week")), _("2 weeks ago") => strftime("%Y-%m-%d 11:59", strtotime("-2 weeks")), _("3 weeks ago") => strftime("%Y-%m-%d 11:59", strtotime("-3 weeks")), _("1 month ago") => strftime("%Y-%m-%d 11:59", strtotime("-1 month")), _("2 months ago") => strftime("%Y-%m-%d 11:59", strtotime("-2 months")), _("6 months ago") => strftime("%Y-%m-%d 11:59", strtotime("-6 months")), _("1 year ago") => strftime("%Y-%m-%d 11:59", strtotime("-1 year")), _("-") => "", _("Select from and to...") => "", _("yesterday (whole day)") => strftime("%Y-%m-%d 11:59", strtotime("-1 day")).",".strftime("%Y-%m-%d 00:00", strtotime("-1 day")), _("today (whole day)") => strftime("%Y-%m-%d %H:%M", time()).",".strftime("%Y-%m-%d 00:00", time()), _("this month") => strftime("%Y-%m-%d %H:%M", time()).",".strftime("%Y-%m-01 00:00", time()), _("last month") => strftime("%Y-%m-01 00:00", time()).",".strftime("%Y-%m-01 00:00", strtotime("-1 month")), _("this year") => strftime("%Y-%m-%d %H:%M", time()).",".strftime("%Y-01-01 00:00", time()), _("forever") => strftime("%Y-%m-%d %H:%M", time()).",1970-01-01 00:00");
 
-        $html .= "<table>";
-        $html .= "<tr>";
-        $html .= "    <th>"._("From").":</th>";
-        $html .= "    <td><input type='text' name='date_from' value='{$this->report_date_min}'></td>";
-        $html .= "    <td>";
+        $html .= "<table class='admin_element_list'>";
+        $html .= "<tr class='admin_element_item_container'>";
+        $html .= "    <th class='admin_element_label'>"._("From").":</th>";
+        $html .= "    <td class='admin_element_data'><input type='text' name='date_from' value='{$this->report_date_min}'></td>";
+        $html .= "    <td class='admin_element_tools'>";
         $html .= "    <select onChange=\"javascript:change_value(this.value,this.form.date_from,this.form.date_to);\">";
 
         foreach ($from_presets as $label => $value)
@@ -173,10 +173,10 @@ EOF;
         $html .= "    </select>\n";
         $html .= "    </td>\n";
         $html .= "</tr>\n";
-        $html .= "<tr>\n";
-        $html .= "    <th>"._("To").":</th>\n";
-        $html .= "    <td><input type=\"text\" name=\"date_to\" value=\"{$this->report_date_max}\"></td>\n";
-        $html .= "    <td>\n";
+        $html .= "<tr class='admin_element_item_container'>\n";
+        $html .= "    <th class='admin_element_label'>"._("To").":</th>\n";
+        $html .= "    <td class='admin_element_data'><input type=\"text\" name=\"date_to\" value=\"{$this->report_date_max}\"></td>\n";
+        $html .= "    <td class='admin_element_data'>\n";
         $html .= "    <select onChange=\"javascript:change_value(this.value,this.form.date_to,this.form.date_from);\">\n";
 
         foreach ($to_presets as $label => $value)
@@ -583,12 +583,17 @@ EOF;
     private function getSelectedReportsUI()
     {
         $html = '';
-        $html .= "<ul>\n";
+		$html .= "<ul class='admin_element_list'>\n";
+
         foreach (self :: getAvailableReports() as $key => $name)
         {
             array_key_exists($key, $this->report_selected_reports) ? $checked = ' CHECKED ' : $checked = '';
-            $html .= "<li><input type='checkbox' name='$key' $checked /> $name</li>\n";
-        }
+        	$html .= "<li class='admin_element_item_container'>\n";
+            $html .= "<div class='admin_element_tools'><input type='checkbox' name='$key' $checked /></div>\n";
+            $html .= "<div class='admin_element_label'>$name</div>\n";
+            
+        	$html .= "</li>\n";
+        	}
         $html .= "</ul>\n";
 
         return $html;
@@ -613,57 +618,64 @@ EOF;
     public function getAdminUI()
     {
         $html = '';
-        $html .= "<h1>"._("Report configuration")."</h1>\n";
-        $html .= "<div class='admin_container'>\n";
-
+        $html .= "<fieldset class='admin_container'>\n";
+        $html .= "<legend>"._("Report configuration")."</legend>\n";
+		$html .= "<ul class='admin_element_list'>\n";
         // Network
-        $html .= "<fieldset>\n";
-        //$html .= "<legend>".." : </legend>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $html .= Network :: getSelectNetworkUI('Statistics', reset($this->report_selected_networks));
         $html .= "</div>\n";
-        $html .= "</fieldset>\n";
+        $html .= "</li>\n";
 
         // Date range
-        $html .= "<fieldset>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<fieldset class='admin_element_group'>\n";
         $html .= "<legend>"._("Restrict the time range for which statistics will be computed")." : </legend>\n";
-        $html .= "<div class='admin_section_data'>\n";
         $html .= $this->getDateRangeUI();
-        $html .= "</div>\n";
         $html .= "</fieldset>\n";
+        $html .= "</li>\n";
 
         // Selected nodes
-        $html .= "<fieldset>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<fieldset class='admin_element_group'>\n";
         $html .= "<legend>"._("Restrict stats to the following nodes")." : </legend>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $html .= $this->getSelectedNodesUI();
         $html .= "</div>\n";
         $html .= "</fieldset>\n";
+        $html .= "</li>\n";
+
 
         // Unique user criteria
-        $html .= "<fieldset>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<fieldset class='admin_element_group'>\n";
         $html .= "<legend>"._("Distinguish users by")." : </legend>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $html .= $this->getDistinguishUsersByUI();
         $html .= "</div>\n";
         $html .= "</fieldset>\n";
-
+        $html .= "</li>\n";
         // Selected users
-        $html .= "<fieldset>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<fieldset class='admin_element_group'>\n";
         $html .= "<legend>"._("Restrict stats to the selected users")." : </legend>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $html .= $this->getSelectedUsersUI();
         $html .= "</div>\n";
-        $html .= "</fieldset>\n";
-
+        $html .= "</fieldset class='admin_element_group'>\n";
+        $html .= "</li>\n";
         // Reports
+        $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<fieldset>\n";
         $html .= "<legend>"._("Selected reports")." : </legend>\n";
-        $html .= "<div class='admin_section_data'>\n";
+        $html .= "<div class='admin_element_data'>\n";
         $html .= $this->getSelectedReportsUI();
         $html .= "</div>\n";
         $html .= "</fieldset>\n";
-        $html .= "</div>\n";
+        $html .= "</ul>\n";
+        $html .= "</fieldset>\n";
+        $html .= "</li>\n";
         return $html;
     }
 
