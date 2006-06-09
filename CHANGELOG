@@ -1,4 +1,7 @@
 2006-06-08 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Fix 151.  It was still around after all.
+	
+2006-06-08 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Completely refactor the look and html of the content manager, statistics and most object's administrative interfaces.  
 	Should be much simpler and clearer now.
 	No refactoring of the editing flow has been done yet.

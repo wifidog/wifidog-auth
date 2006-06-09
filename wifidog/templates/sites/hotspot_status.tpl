@@ -105,9 +105,7 @@
                         {/if}
 
                         {if $nodes[node].node_deployment_status == 'NON_WIFIDOG_NODE' && $nodes[node].is_up != 't'}
-                            <br />
-                            {$nodes[node].duration.days} {"days"|_} {$nodes[node].duration.hours}{"h"|_} {$nodes[node].duration.minutes}{"min"|_}
-                            <br />
+                            {"Hotspot not monitored"|_}
                         {/if}
                     </td>
 
