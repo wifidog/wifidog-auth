@@ -105,6 +105,7 @@
                         {/if}
 
                         {if $nodes[node].node_deployment_status == 'NON_WIFIDOG_NODE' && $nodes[node].is_up != 't'}
+                            <br />
                             {"Hotspot not monitored"|_}
                         {/if}
                     </td>
