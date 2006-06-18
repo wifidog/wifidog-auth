@@ -46,7 +46,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 41);
+define('REQUIRED_SCHEMA_VERSION', 42);
 
 /**
  * Check that the database schema is up to date.  If it isn't, offer to update it.
@@ -875,8 +875,20 @@ function update_schema()
             $sql .= "INSERT INTO locales (locales_id) VALUES('ja');\n";
         }
 
-        /*
         $new_schema_version = 42;
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+            $sql .= "ALTER TABLE content_file ADD COLUMN creation_date TIMESTAMP;\n";
+            $sql .= "ALTER TABLE content_file ALTER COLUMN creation_date SET DEFAULT NOW();\n";
+            $sql .= "ALTER TABLE content_file ADD COLUMN last_update_date TIMESTAMP;\n";
+            $sql .= "ALTER TABLE content_file ALTER COLUMN last_update_date SET DEFAULT NOW();\n";
+            $sql .= "UPDATE content_file SET creation_date = NOW(), last_update_date = NOW();\n";
+            $sql .= "ALTER TABLE content_file_image ADD COLUMN hyperlink_url TEXT;\n";
+        }
+
+        /*
+        $new_schema_version = 43;
         if ($schema_version < $new_schema_version) {
             printUpdateVersion($new_schema_version);
             $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
@@ -892,6 +904,7 @@ function update_schema()
             $sql .= ");\n";
 
         }       */
+
         $db->execSqlUpdate("BEGIN;\n$sql\nCOMMIT;\nVACUUM ANALYZE;\n", true);
         //$db->execSqlUpdate("BEGIN;\n$sql\nROLLBACK;\n", true);
 

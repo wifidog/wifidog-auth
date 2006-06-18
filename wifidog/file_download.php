@@ -1,5 +1,6 @@
 <?php
 
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -44,34 +45,48 @@
 /**
  * Load required files
  */
-require_once(dirname(__FILE__) . '/include/common.php');
+require_once (dirname(__FILE__) . '/include/common.php');
 
 if (!empty ($_REQUEST['file_id']))
 {
-    global $db;
-    $file_id = $db->escapeString($_REQUEST['file_id']);
-    $sql = "SELECT * FROM content_file WHERE files_id = '$file_id'";
-    $db->execSqlUniqueRes($sql, $file_row, false);
+	global $db;
+	$file_id = $db->escapeString($_REQUEST['file_id']);
+	$sql = "SELECT * FROM content_file WHERE files_id = '$file_id'";
+	$db->execSqlUniqueRes($sql, $file_row, false);
 
-    if ($file_row && $file_row['data_blob'])
-    {
-        //headers to send to the browser before beginning the binary download
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Cache-Control: public");
-        header("Content-Description: File Transfer");
-        header('Content-Type: '.$file_row['mime_type']);
-        header("Content-Transfer-Encoding: binary");
-        header('Accept-Ranges: bytes');
-        if(strpos($file_row['mime_type'], "image") === false)
-            header('Content-Length: '.$file_row['local_binary_size']); //this is the size of the zipped file
-        header('Keep-Alive: timeout=15, max=100');
-        header('Content-Disposition: inline; filename="'.$file_row['filename'].'"');
+	if ($file_row && $file_row['data_blob'])
+	{
+		// Check if the HTTP request is asking if the file has been modified since a certain date.
+		$last_modified_date = isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])? $_SERVER['HTTP_IF_MODIFIED_SINCE'] : 0;
+		if($last_modified_date && $_SERVER['REQUEST_METHOD'] == "GET" && strtotime($last_modified_date) >= strtotime($file_row['last_update_date']))
+		   header("HTTP/1.1 304 Not Modified");
+		else
+		{
+			//headers to send to the browser before beginning the binary download
+			header("Pragma: public");
+			// Send last update date to proxy / cache the binary
+			header("Last-Modified: " . gmdate("D, d M Y H:i:s", strtotime($file_row['last_update_date'])) . " GMT");
+			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+			header("Cache-Control: public");
+			header("Content-Description: File Transfer");
+			header('Content-Type: ' . $file_row['mime_type']);
+			header("Content-Transfer-Encoding: binary");
+			header('Accept-Ranges: bytes');
+			if (strpos($file_row['mime_type'], "image") === false)
+				header('Content-Length: ' .$file_row['local_binary_size']); //this is the size of the zipped file
+			header('Keep-Alive: timeout=15, max=100');
+			header('Content-Disposition: inline; filename="' . $file_row['filename'] . '"');
 
-        $db->readFlushLargeObject($file_row['data_blob']);
-    }
+			// Do not send binary if this is only a HEAD request
+			if ($_SERVER["REQUEST_METHOD"] != "HEAD")
+				$db->readFlushLargeObject($file_row['data_blob']);
+		}
+	}
+	else
+		header("HTTP/1.1 404 Not Found");
 }
+else
+	header("HTTP/1.1 404 Not Found");
 
 /*
  * Local variables:
@@ -80,5 +95,4 @@ if (!empty ($_REQUEST['file_id']))
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
 ?>

@@ -116,7 +116,7 @@ class FormSelectGenerator
 				{
 					$nom = $value[$displayField];
 				}
-				$nom = htmlspecialchars($nom, ENT_QUOTES, 'UTF-8');
+				$nom = htmlentities($nom, ENT_QUOTES, 'UTF-8');
 				$primary_key = htmlentities($value[$primaryKeyField], ENT_QUOTES, 'UTF-8');
 				$retval .= "value='$primary_key'>$nom</option>\n";
 			}
@@ -209,13 +209,11 @@ class FormSelectGenerator
 
 			$name = $value[1];
 			// Restrict to max length and append "..."
-			if($max_length == -1)
-				$name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
-			else if(strlen($name) > $max_length)
+			if($max_length != -1 && strlen($name) > $max_length)
 				$name = substr($name, 0, $max_length)."...";
 
-			//$name = htmlspecialchars($max_length != null ? $name : strlen($name) > $max_length ? substr($name, 0, $max_length)."..." : $name, ENT_QUOTES, 'UTF-8');
-			$primary_key = htmlspecialchars($value[0], ENT_QUOTES, 'UTF-8');
+			$name = htmlentities($name, ENT_QUOTES, "UTF-8");
+			$primary_key = htmlentities($value[0], ENT_QUOTES, 'UTF-8');
 			$retval .= "value='{$primary_key}'>{$name}</option>\n";
 		}
 		$retval .= "</select>\n";

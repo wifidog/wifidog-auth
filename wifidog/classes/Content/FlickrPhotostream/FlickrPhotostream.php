@@ -77,12 +77,12 @@ class FlickrPhotostream extends Content
     const TAG_MODE_ALL = 'ALL_TAGS';
 
     /* Sizes */
-    const SIZE_SQUARED_75x75 = Phlickr_Photo :: SIZE_75PX;
-    const SIZE_THUMB_100x75 = Phlickr_Photo :: SIZE_100PX;
-    const SIZE_SMALL_240x180 = Phlickr_Photo :: SIZE_240PX;
-    const SIZE_MEDIUM_500x375 = Phlickr_Photo :: SIZE_500PX;
-    const SIZE_LARGE_1024 = Phlickr_Photo :: SIZE_1024PX;
-    const SIZE_ORIGINAL = Phlickr_Photo :: SIZE_ORIGINAL;
+    const SIZE_SQUARED_75x75 = "s";
+    const SIZE_THUMB_100x75 = "t";
+    const SIZE_SMALL_240x180 = "m";
+    const SIZE_MEDIUM_500x375 = "-";
+    const SIZE_LARGE_1024 = "b";
+    const SIZE_ORIGINAL = "o";
 
     /* 15 minutes cache age SHOULD ADD cron tab */
     const MAX_CACHE_AGE = 600;

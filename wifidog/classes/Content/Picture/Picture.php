@@ -179,6 +179,36 @@ class Picture extends File
     }
 
     /**
+     * Get destination URL (hyperlink) of Picture
+     *
+     * @return string URL of file
+     */
+    public function getHyperlinkUrl()
+    {
+        return $this->pictures_row['hyperlink_url'];
+    }
+
+    /**
+     * Sets destination URL (hyperlink) of a Picture
+     *
+     * @param string $url
+     *
+     * @return void
+
+     */
+    private function setHyperlinkUrl($url)
+    {
+        if ($url == null) {
+            $url = "NULL";
+        } else {
+            $url = "'".$this->mBd->escapeString($url)."'";
+        }
+
+        $this->mBd->execSqlUpdate("UPDATE content_file_image SET hyperlink_url = $url WHERE pictures_id='".$this->getId()."'", false);
+        $this->refresh();
+    }
+
+    /**
      * Shows the administration interface for Picture.
      *
      * @param string $subclass_admin_interface HTML code to be added after the
@@ -194,9 +224,17 @@ class Picture extends File
         $html = '';
         $width = $this->getWidth();
         $height = $this->getHeight();
+        $hyperlink_url = htmlspecialchars($this->getHyperlinkUrl(), ENT_QUOTES);
 
 
         $html .= "<ul class='admin_element_list'>\n";
+
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_data'>\n";
+        $html .= "<div class='admin_element_label'>"._("Hyperlink URL (leave empty if you don't need it)")." : </div>\n";
+        $html .= "<input type='text' name='pictures_{$this->getId()}_hyperlink_url' value='{$hyperlink_url}'>";
+        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<div class='admin_element_data'>\n";
@@ -229,10 +267,17 @@ class Picture extends File
             $height = "height='$height'";
         }
 
-        $html .= "<img src='".htmlentities($this->getFileUrl())."' $width $height alt='".$this->getFileName()."''>";
+        $hyperlink_url = $this->getHyperlinkUrl();
+
+        // Wrap around a hyperlink tag if a URL exists.
+        if(!empty($hyperlink_url))
+        		$html .= "<a href=\"".htmlspecialchars($hyperlink_url ,ENT_QUOTES)."\"><img src='".htmlspecialchars($this->getFileUrl())."' $width $height alt='".$this->getFileName()."''></a>";
+        	else
+        		$html .= "<img src='".htmlspecialchars($this->getFileUrl())."' $width $height alt='".$this->getFileName()."''>";
+
         $html .= "</div>\n";
         $html .= "</li>\n";
-        $html .= "</ul>\n";        
+        $html .= "</ul>\n";
 
         $html .= $subclass_admin_interface;
 
@@ -251,13 +296,9 @@ class Picture extends File
         if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
             parent :: processAdminUI();
 
-            if (!empty($_REQUEST["pictures_{$this->getId()}_width"])) {
-                $this->setWidth(intval($_REQUEST["pictures_{$this->getId()}_width"]));
-            }
-
-            if (!empty($_REQUEST["pictures_{$this->getId()}_height"])) {
-                $this->setHeight(intval($_REQUEST["pictures_{$this->getId()}_height"]));
-            }
+            $this->setHyperlinkUrl($_REQUEST["pictures_{$this->getId()}_hyperlink_url"]);
+            $this->setWidth(intval($_REQUEST["pictures_{$this->getId()}_width"]));
+            $this->setHeight(intval($_REQUEST["pictures_{$this->getId()}_height"]));
         }
     }
 
@@ -277,6 +318,7 @@ class Picture extends File
         $html = '';
         $width = $this->getWidth();
         $height = $this->getHeight();
+        $hyperlink_url = $this->getHyperlinkUrl();
 
         $html .= "<div class='user_ui_container ".get_class($this)."'>\n";
 
@@ -292,7 +334,12 @@ class Picture extends File
             $height = "height='$height'";
         }
 
-        $html .= "<img src='".htmlentities($this->getFileUrl())."' $width $height alt='".$this->getFileName()."''>";
+        // Wrap around a hyperlink tag if a URL exists.
+        if(!empty($hyperlink_url))
+        		$html .= "<a href=\"".htmlspecialchars($hyperlink_url ,ENT_QUOTES)."\"><img src='".htmlspecialchars($this->getFileUrl())."' $width $height alt='".$this->getFileName()."''></a>";
+        	else
+        		$html .= "<img src='".htmlspecialchars($this->getFileUrl())."' $width $height alt='".$this->getFileName()."''>";
+
         $html .= "</div>\n";
 
         return $html;

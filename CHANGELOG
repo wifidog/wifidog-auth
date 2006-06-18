@@ -1,3 +1,9 @@
+2006-06-18 François Proulx <francois.proulx@gmail.com>
+	* Added creation_date , last_update_date support to File content (with proper HTTP caching handling)
+	* Added hyperlinks URL support in Picture content
+	* Fixed constants in Flickr Content
+	* Fixed #171 (Can't add existing content to Node)
+
 2006-06-17 François Proulx <francois.proulx@gmail.com>
 	* First iteration of JiWire CSV export
 		* Use : hotspot_status.php?format=JiWireCSV

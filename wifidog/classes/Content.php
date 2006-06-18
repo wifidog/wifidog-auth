@@ -520,8 +520,8 @@ class Content implements GenericObject {
      * @access public
      */
     public static function getLinkedContentUI($user_prefix, $link_table, $link_table_obj_key_col, $link_table_obj_key, $default_display_page = 'portal', $default_display_area = 'main_area_middle') {
-            // Define globals
-    global $db;
+         // Define globals
+    		global $db;
 
         // Init values
         $html = "";
@@ -644,7 +644,7 @@ class Content implements GenericObject {
                 }
             }
         /* Add existing content */
-        $name = "{$user_prefix}_new_existing_submit";
+        $name = "{$user_prefix}_new_existing_add";
         if (!empty ($_REQUEST[$name])) {
             $name = "{$user_prefix}_new_existing";
             $content = Content :: processSelectContentUI($name);
@@ -712,7 +712,7 @@ class Content implements GenericObject {
     global $db;
 
         // Init values
-        $html = '';        
+        $html = '';
         $retVal = array ();
         $contentRows = null;
 
@@ -783,7 +783,8 @@ class Content implements GenericObject {
             if ($type_interface != "table") {
                 if (isset ($tab)) {
                     $html .= FormSelectGenerator :: generateFromArray($tab, null, $name, null, false, null, null, 40);
-                     $name = "get_existing_content_{$user_prefix}_add";
+                    //DEBUG!! get_existing_content_
+                     $name = "{$user_prefix}_add";
                      $value = _("Add");
                      $html .= "<div class='admin_element_tools'>";
         			$html .= '<input type="submit" class="submit" name="'.$name.'" value="'.$value.'">';
@@ -1170,7 +1171,7 @@ class Content implements GenericObject {
             if ($this->is_trivial_content == false) {
         		$html .= "<fieldset class='admin_element_group'>\n";
 				$html .= "<legend>".sprintf(_("%s MetaData"),get_class($this))."</legend>\n";
-		
+
                 /* title */
                 $html .= "<li class='admin_element_item_container admin_section_edit_title'>\n";
                 $html .= "<div class='admin_element_data'>\n";
@@ -1258,10 +1259,10 @@ class Content implements GenericObject {
                 }
                 $html .= "</li>\n";
                 $html .= "</fieldset>\n";
- 
+
         		$html .= "<fieldset class='admin_element_group'>\n";
 				$html .= "<legend>".sprintf(_("%s access control"),get_class($this))."</legend>\n";
-		        
+
 		        /* is_persistent */
                 $html .= "<li class='admin_element_item_container admin_section_edit_persistant'>\n";
                 $html .= "<div class='admin_element_label'>"._("Is persistent (reusable and read-only)?").": </div>\n";
@@ -1271,7 +1272,7 @@ class Content implements GenericObject {
                 $html .= "<input type='checkbox' name='$name' $checked>\n";
                 $html .= "</div>\n";
                 $html .= "</li>\n";
-                
+
                 /* content_has_owners */
                 $html .= "<li class='admin_element_item_container content_has_owners'>\n";
                 $html .= "<div class='admin_element_label'>"._("Content owner list")."</div>\n";
@@ -1418,7 +1419,7 @@ class Content implements GenericObject {
                             $sponsor_info->processAdminUI();
                         }
                     }
-                    
+
                     /* is_persistent */
                     $name = "content_".$this->id."_is_persistent";
                     !empty ($_REQUEST[$name]) ? $this->setIsPersistent(true) : $this->setIsPersistent(false);

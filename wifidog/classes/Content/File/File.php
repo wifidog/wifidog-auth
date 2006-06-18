@@ -59,25 +59,25 @@ class File extends Content
 
     /**
      * File size unit: Byte
-     
+
      */
     const UNIT_BYTES = 1;
 
     /**
      * File size unit: KB
-     
+
      */
     const UNIT_KILOBYTES = 1024;
 
     /**
      * File size unit: MB
-     
+
      */
     const UNIT_MEGABYTES = 1048576;
 
     /**
      * File size unit: GB
-     
+
      */
     const UNIT_GIGABYTES = 1073741824;
 
@@ -128,7 +128,7 @@ class File extends Content
      * @param string $upload_field The form field that contains the data
      *
      * @return bool True if successful
-     
+
      */
     private function setBinaryDataFromPostVar($upload_field)
     {
@@ -146,11 +146,11 @@ class File extends Content
             // Updating database
             // Create a new BLOB
             $new_oid = $this->mBd->importLargeObject($_FILES[$upload_field]['tmp_name']);
+            // Switch to new OID and touch file
             $this->setBinaryDataOid($new_oid);
             $this->setLocalFileSize($_FILES[$upload_field]['size']);
             $this->setMimeType($_FILES[$upload_field]['type']);
             $this->setFilename($_FILES[$upload_field]['name']);
-            $this->refresh();
 
             $_retval = true;
         } else {
@@ -182,7 +182,7 @@ class File extends Content
      * Returns the binary data from the database
      *
      * @return string Binary data from the database
-     
+
      */
     private function getBinaryDataOid()
     {
@@ -195,7 +195,7 @@ class File extends Content
      * @param string $oid Binary data
      *
      * @return void
-     
+
      */
     private function setBinaryDataOid($oid)
     {
@@ -204,6 +204,37 @@ class File extends Content
         }
 
         $this->mBd->execSqlUpdate("UPDATE content_file SET data_blob = $oid WHERE files_id='".$this->getId()."'", false);
+        // Touch and refresh this object
+        $this->touch();
+    }
+
+	/**
+	 * Return creation date (read-only)
+	 *
+	 * @return string ISO-8601-2000 timestamp
+	 */
+    public function getCreationDate()
+    {
+    		return $this->files_row['creation_date'];
+    }
+
+	/**
+	 * Return update date
+	 *
+	 * @return string ISO-8601-2000 timestamp
+	 */
+    public function getLastUpdateDate()
+    {
+    		return $this->files_row['last_update_date'];
+    }
+
+    /**
+	 * Touch file, update timestamp
+	 *
+	 */
+    public function touch()
+    {
+    		$this->mBd->execSqlUpdate("UPDATE content_file SET last_update_date = NOW() WHERE files_id='".$this->getId()."'", false);
         $this->refresh();
     }
 
@@ -228,14 +259,15 @@ class File extends Content
     {
         $mime_type = $this->mBd->escapeString($mime_type);
         $this->mBd->execSqlUpdate("UPDATE content_file SET mime_type ='".$mime_type."' WHERE files_id='".$this->getId()."'", false);
-        $this->refresh();
+        // Touch and refresh this object
+        $this->touch();
     }
 
     /**
      * Returns the filename of the file
      *
      * @return string Filename of file
-     
+
      */
     protected function getFilename()
     {
@@ -253,7 +285,8 @@ class File extends Content
     {
         $file_name = $this->mBd->escapeString($file_name);
         $this->mBd->execSqlUpdate("UPDATE content_file SET filename ='".$file_name."' WHERE files_id='".$this->getId()."'", false);
-        $this->refresh();
+        // Touch and refresh this object
+        $this->touch();
     }
 
     /**
@@ -327,7 +360,7 @@ class File extends Content
      *                       + self::GIGABYTES
      *
      * @return void
-     
+
      */
     private function setRemoteFileSize($size, $unit = self::UNIT_KILOBYTES)
     {
@@ -364,7 +397,7 @@ class File extends Content
      * @param string $url
      *
      * @return void
-     
+
      */
     private function setURL($url)
     {
@@ -400,6 +433,20 @@ class File extends Content
     {
         // Init values
         $html = '';
+
+        $html .= "<div class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Creation date")." : </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
+        $html .= $this->getCreationDate();
+        $html .= "</div>\n";
+        $html .= "</li>\n";
+
+        $html .= "<div class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Last update date")." : </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
+        $html .= $this->getLastUpdateDate();
+        $html .= "</div>\n";
+        $html .= "</li>\n";
 
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<div class='admin_element_label'>";
