@@ -1,15 +1,21 @@
+2006-06-17 François Proulx <francois.proulx@gmail.com>
+	* First iteration of JiWire CSV export
+		* Use : hotspot_status.php?format=JiWireCSV
+	* Fully working, but Excel doesn't seem to handle well UTF-8
+	  investigation in progress.
+
 2006-06-08 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix #151.  It was still around after all.
-	
+
 2006-06-08 Benoit Grégoire  <bock@step.polymtl.ca>
-	* Completely refactor the look and html of the content manager, statistics and most object's administrative interfaces.  
+	* Completely refactor the look and html of the content manager, statistics and most object's administrative interfaces.
 	Should be much simpler and clearer now.
 	No refactoring of the editing flow has been done yet.
 	* Spell check the french translation, and add a few of the missing strings.
-	
+
 2006-05-26 François Proulx <francois.proulx@gmail.com>
 	* Added 'ja' to database locales table
-	
+
 2006-05-26 François Proulx <francois.proulx@gmail.com>
 	* Added Japanese translation .po file (Thanks to taedu AT ninjin-net DOT net)
 
