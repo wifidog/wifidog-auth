@@ -309,6 +309,8 @@ define('GMAPS_XML_SOURCE_URL', 'hotspot_status.php?format=XML');
 // Name of default node.
 define('DEFAULT_NODE_ID', 'default');
 
+//Enable logging by the EventLogging class
+define('EVENT_LOGGING',true);
 // Declare warning/error/notice logging to a file.
 // Set this to false to disable logging to a file.
 // By default, logging is enabled, to file tmp/wifidog.log.

@@ -90,7 +90,7 @@ require_once('path_defines_base.php');
  */
 require_once('classes/EventLogging.php');
 
-if (!defined('EVENT_LOGGING') || constant('EVENT_LOGGING')) {
+if (EVENT_LOGGING==true) {
 	EventLogging::SetupErrorHandling( "strict~/var:\sDeprecated/(off)",
 	array( 'print' => new PrintChannel(new HTMLFormatter(), 'warning,notice', null, true),
 		   'debug' => new PrintChannel(new HTMLCommentsFormatter(), '=debug', null, false) )
@@ -361,7 +361,7 @@ class WifidogSyslogFormatter extends EventFormatter {
   }
 }
 
-if (!defined('EVENT_LOGGING') || constant('EVENT_LOGGING')) {
+if (EVENT_LOGGING==true) {
 	$myLogfile = !defined('WIFIDOG_LOGFILE') ? "tmp/wifidog.log" : constant('WIFIDOG_LOGFILE');
 	if (!empty($myLogfile)) {
 		if (substr($myLogfile,0,1) != '/') $myLogfile = WIFIDOG_ABS_FILE_PATH.$myLogfile;

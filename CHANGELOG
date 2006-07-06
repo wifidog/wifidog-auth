@@ -1,3 +1,11 @@
+2006-07-05 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Fix #175. 
+	* Fix the "Registration Log" and "User registration report" reports giving incorrect statistics
+	* Allow disabling EventLogging class in config.php, to make SQL debuging possible (The class was traping errors before AbstractDb could output them)
+	* Make EVENT_LOGGING default to false for now, as it turns out EventLogging was the cause of the 
+	Spurious PEAR output ("Runtime Notice: ") we've been seeing.  That is probably only because we don't 
+	understand how to properly control it's logging level.
+
 2006-06-18 François Proulx <francois.proulx@gmail.com>
 	* Added creation_date , last_update_date support to File content (with proper HTTP caching handling)
 	* Added hyperlinks URL support in Picture content

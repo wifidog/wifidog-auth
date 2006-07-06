@@ -68,7 +68,6 @@ abstract class StatisticGraph
     final public static function getObject($classname)
     {
         require_once('classes/StatisticGraph/' . $classname . '.php');
-
         return new $classname ();
     }
 

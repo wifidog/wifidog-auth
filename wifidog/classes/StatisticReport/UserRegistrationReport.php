@@ -96,7 +96,7 @@ class UserRegistrationReport extends StatisticReport
         $distinguish_users_by = $this->stats->getDistinguishUsersBy();
 
         /* The following query will retreive the list of the REAL first connection of each user, no matter where or when.*/
-        $sql_real_first_connections = $this->stats->getSqlRealFirstConnectionsQuery();
+        $sql_real_first_connections = $this->stats->getSqlRealFirstConnectionsQuery('connections.conn_id', false);
         //$db->execSql($sql_real_first_connections, $tmp, true);
         $real_first_connections_table_name = "real_first_conn_table_name_".session_id();
 
@@ -108,7 +108,7 @@ class UserRegistrationReport extends StatisticReport
         $candidate_connections_sql = $this->stats->getSqlCandidateConnectionsQuery("DISTINCT ON(connections.$distinguish_users_by) connections.$distinguish_users_by, conn_id, connections.node_id, nodes.name,timestamp_in ");
         //$db->execSql($candidate_connections_sql, $tmp, true);
 
-        $first_connection_table_sql = "$candidate_connections_sql ORDER BY connections.$distinguish_users_by, connections.node_id, nodes.name, timestamp_in DESC\n";
+        $first_connection_table_sql = "$candidate_connections_sql ORDER BY connections.$distinguish_users_by, timestamp_in\n";
         //$db->execSql($first_connection_table_sql, $node_usage_stats, true);
 
         $first_connection_table_name = "first_connection_table_name_".session_id();
@@ -154,7 +154,7 @@ class UserRegistrationReport extends StatisticReport
             $html .= "  <th>".$total."</th>";
             $html .= "</tr>";
             $html .= "<tr>";
-            $html .= "  <td colspan=2>"._("Note:  This is actually a list of how many new user's first connection occured at each hotspot, taking report restrictions into account.").":</td>";
+            $html .= "  <td colspan=2>"._("Note:  This is actually a list of how many new user's first connection occured at each hotspot, taking report restrictions into account.  It includes non-validated users who successfully connected.")."</td>";
             $html .= "</tr>";
             $html .= "</tfoot>";
             $html .= "</table>";

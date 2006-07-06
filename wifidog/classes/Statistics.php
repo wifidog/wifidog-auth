@@ -303,7 +303,7 @@ EOF;
             {
                 $id = $db->escapeString($id);
                 $first ? $sql .= "" : $sql .= " OR ";
-                $sql .= "$column = '$id'";
+                $sql .= "users.$column = '$id'";
                 $first = false;
             }
             $sql .= ") \n";
@@ -358,12 +358,17 @@ EOF;
         $sql = '';
         $distinguish_users_by = $this->getDistinguishUsersBy();
         $user_constraint = $this->getSqlUserConstraint();
-
-        $sql .= "SELECT DISTINCT ON(connections.$distinguish_users_by) connections.conn_id  \n";
+        $join_users_sql = '';
+        if ($join_users || !empty($user_constraint))
+        {
+            $join_users_sql = "JOIN users ON (connections.user_id = users.user_id)";
+        }
+        $sql .= "SELECT DISTINCT ON(connections.$distinguish_users_by) $select_columns  \n";
         $sql .= "FROM connections  \n";
+        $sql .= "$join_users_sql \n";
         $sql .= "WHERE (incoming!=0 OR outgoing!=0) \n";
         $sql .= " {$user_constraint}";
-        $sql .= "  ORDER BY connections.$distinguish_users_by, timestamp_in DESC";
+        $sql .= "  ORDER BY connections.$distinguish_users_by, timestamp_in";
 
         return $sql;
     }

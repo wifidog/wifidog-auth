@@ -86,7 +86,7 @@ class RegistrationLog extends StatisticReport
         $distinguish_users_by = $this->stats->getDistinguishUsersBy();
 
         /* The following query will retreive the list of the REAL first connection of each user, no matter where or when.*/
-        $sql_real_first_connections = $this->stats->getSqlRealFirstConnectionsQuery();
+        $sql_real_first_connections = $this->stats->getSqlRealFirstConnectionsQuery('connections.conn_id', false);
         //$db->execSql($sql_real_first_connections, $tmp, true);
         $real_first_connections_table_name = "real_first_conn_table_name_".session_id();
 
@@ -96,7 +96,7 @@ class RegistrationLog extends StatisticReport
 
         /* Now retrieves the oldest connection matching the report restriction, and only keep it if it's really the user's first connection */
         $candidate_connections_sql = $this->stats->getSqlCandidateConnectionsQuery("connections.$distinguish_users_by,users.username,users.reg_date, conn_id, nodes.name ", true);
-        //$db->execSql($candidate_connections_sql, $tmp, true);
+        $db->execSql($candidate_connections_sql, $tmp, false);
 
         $first_connection_table_name = "first_conn_table_name_".session_id();
         $registration_node_table_sql = "CREATE TEMP TABLE  $first_connection_table_name AS ($candidate_connections_sql);\n  \n";
