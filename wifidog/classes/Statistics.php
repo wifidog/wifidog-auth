@@ -331,7 +331,7 @@ EOF;
         $network_constraint = $this->getSqlNetworkConstraint('nodes.network_id');
         $user_constraint = $this->getSqlUserConstraint();
         $join_users_sql = '';
-        if ($join_users)
+        if ($join_users || !empty($user_constraint))
         {
             $join_users_sql = "JOIN users ON (connections.user_id = users.user_id)";
         }

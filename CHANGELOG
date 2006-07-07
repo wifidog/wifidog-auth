@@ -1,3 +1,6 @@
+2006-07-07 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Fix a bug in some reports when selecting a single user.
+
 2006-07-05 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix #175. 
 	* Fix the "Registration Log" and "User registration report" reports giving incorrect statistics
