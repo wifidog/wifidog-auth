@@ -1,3 +1,6 @@
+2006-07-20 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Fix a bug where having an empty username would break statistics.
+
 2006-07-07 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix a bug in some reports when selecting a single user.
 

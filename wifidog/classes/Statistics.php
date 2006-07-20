@@ -535,26 +535,28 @@ EOF;
     {
         $this->report_selected_users = array ();
         $user_obj = null;
-        if ($this->report_distinguish_users_by == 'user_id')
+        if(!empty($_REQUEST['stats_selected_users']))
         {
-            global $db;
-            $username = $db->escapeString($_REQUEST['stats_selected_users']);
-            $row = null;
-            $db->execSqlUniqueRes("SELECT user_id FROM users WHERE username='$username'", $row);
-            if ($row)
+            if ($this->report_distinguish_users_by == 'user_id')
             {
-                $user_id = $row['user_id'];
-                $user_obj = User :: getObject($user_id);
-                $this->report_selected_users[$user_id] = $user_obj;
+                    global $db;
+                $username = $db->escapeString($_REQUEST['stats_selected_users']);
+                $row = null;
+                $db->execSqlUniqueRes("SELECT user_id FROM users WHERE username='$username'", $row, true);
+                if ($row)
+                {
+                    $user_id = $row['user_id'];
+                    $user_obj = User :: getObject($user_id);
+                    $this->report_selected_users[$user_id] = $user_obj;
+                }
+            }
+            else
+            {
+                //We have a MAC address
+                if (!empty ($_REQUEST['stats_selected_users']))
+                    $this->report_selected_users[$_REQUEST['stats_selected_users']] = null;
             }
         }
-        else
-        {
-            //We have a MAC address
-            if (!empty ($_REQUEST['stats_selected_users']))
-                $this->report_selected_users[$_REQUEST['stats_selected_users']] = null;
-        }
-
     }
 
     /**
