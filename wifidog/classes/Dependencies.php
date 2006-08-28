@@ -42,7 +42,12 @@
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
-require_once ('classes/Locale.php');//Necessary in case gettext isn't defined
+
+// Detect Gettext support
+if (!function_exists('gettext')) {
+    require_once ('classes/Locale.php');
+}
+
 /**
  * This class checks the existence of components required by WiFiDog.
  * Note that it implicitely depends on the defines in include/path_defines_base.php
@@ -69,6 +74,7 @@ class Dependencies
 	   "HtmlSafe" => array ("name" => "PEAR::HTML_Safe", "files" => "HTML/Safe.php", "PhpExtension" => false, "localLib" => false),
 	   "Radius" => array ("name" => "PEAR::RADIUS", "files" => array("Auth/RADIUS.php", "Crypt/CHAP.php"), "PhpExtension" => false, "localLib" => false),
 	   "FCKeditor" => array ("name" => "FCKeditor", "files" => "lib/FCKeditor/fckeditor.php", "PhpExtension" => false, "localLib" => true),
+	   "FPDF" => array ("name" => "FPDF", "files" => "lib/fpdf/fpdf.php", "PhpExtension" => false, "localLib" => true),
 	   "Smarty" => array ("name" => "Smarty", "files" => "lib/smarty/Smarty.class.php", "PhpExtension" => false, "localLib" => true)
 	   );
 

@@ -1,14 +1,19 @@
+2006-08-28 Max Horváth <max.horvath@maxspot.de>
+	* Integrated KML node list export
+	* Integrated PDF node list export
+	* Updated Sprintf formatted strings in some Smarty templates
+
 2006-08-27 Benoit Grégoire  <bock@step.polymtl.ca>
 	* clickthrough.php, HyperLink.php:  Implement working hyperlink clickthrough tracking (no reporting yet).
 	  Works for Langstring, FlickrPhotoStream, Picture, RssAggregator and their subclasses.
 	* Make HTMLeditor inherit from Langstring.  Allowed a massive reduction of line count and will stop the codebases from needlessly drifting apart.
 	* Do not log content displayed as metadata, and log their clickthrough as the parent's.
-	
+
 2006-08-27 François Proulx <francois.proulx@gmail.com>
 	* Updated French translations
 	* Now using Sprintf formatted strings in some Smarty templates (see example in templates/sites/index.tpl).
 	* Integrated back the SQL profiling functions
-	
+
 2006-07-20 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix a bug where having an empty username would break statistics.
 
@@ -16,11 +21,11 @@
 	* Fix a bug in some reports when selecting a single user.
 
 2006-07-05 Benoit Grégoire  <bock@step.polymtl.ca>
-	* Fix #175. 
+	* Fix #175.
 	* Fix the "Registration Log" and "User registration report" reports giving incorrect statistics
 	* Allow disabling EventLogging class in config.php, to make SQL debuging possible (The class was traping errors before AbstractDb could output them)
-	* Make EVENT_LOGGING default to false for now, as it turns out EventLogging was the cause of the 
-	Spurious PEAR output ("Runtime Notice: ") we've been seeing.  That is probably only because we don't 
+	* Make EVENT_LOGGING default to false for now, as it turns out EventLogging was the cause of the
+	Spurious PEAR output ("Runtime Notice: ") we've been seeing.  That is probably only because we don't
 	understand how to properly control it's logging level.
 
 2006-06-18 François Proulx <francois.proulx@gmail.com>

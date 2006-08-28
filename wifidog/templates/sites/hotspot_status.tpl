@@ -55,6 +55,11 @@
             {if $GMapsEnabled && !$userIsAtHotspot}
                 <li><a href="{$base_non_ssl_path}hotspots_map.php">{"Deployed HotSpots map"|_}</a></li>
             {/if}
+            {if $PdfSupported}
+                <li><a href="?format=PDF">{"Get this list as a PDF file"|_}</a></li>
+            {/if}
+            <li><a href="?format=RSS">{"Get this list as a RSS feed"|_}</a></li>
+            <li><a href="?format=KML">{"Get this list for Google Earth"|_}</a></li>
             <li><a href="{$base_non_ssl_path}node_list.php">{"Full node technical status (includes non-deployed nodes)"|_}</a></li>
         </ul>
     </div>
@@ -71,7 +76,7 @@
         <table>
             <thead>
                 <tr>
-                    <th colspan=6>{"Status of the"|_} {$num_deployed_nodes} {"open"|_} {$hotspot_network_name} {"Hotspots (Get this list as a <a href='?format=RSS'>RSS feed</a>)"|_}</th>
+                    <th colspan="6">{"Status of the %d open %s Hotspots"|_|sprintf:$num_deployed_nodes:$hotspot_network_name}</th>
                 </tr>
                 <tr>
                     <th>{"Hotspot / Status"|_}</th>
@@ -116,7 +121,7 @@
                             <br />
                         {/if}
 
-                        {"Opened on"|_} {$nodes[node].creation_date}
+                        {"Opened on %s"|_|sprintf:$nodes[node].creation_date}
                     </td>
 
                     <td>

@@ -15,6 +15,8 @@ PREREQUISITES
   support must be manually disabled if you do not install it)
 - FCKeditor 2.2 (http://www.fckeditor.net/) (Required if you want to edit
   content with a HTML text editor aka WYSIWYG editor)
+- FPDF 1.53+ (http://www.fpdf.org/) (Required if you want to export the node
+  list into a PDF file)
 - PEAR (if you need RADIUS auth support, see below)
 - Phlickr 0.2.5+ installed as a PEAR package (http://phlickr.sourceforge.net/)
   (required if you want to use the content class accessing Flickr photo albums)

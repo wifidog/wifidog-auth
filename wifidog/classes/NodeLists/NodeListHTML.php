@@ -45,6 +45,7 @@
 /**
  * Load required classes
  */
+require_once('classes/Dependencies.php');
 require_once('classes/Network.php');
 require_once('classes/Node.php');
 require_once('classes/MainUI.php');
@@ -177,6 +178,7 @@ class NodeListHTML {
         $this->_smarty->assign('GMapsEnabled', false);
         $this->_smarty->assign('nodes', array());
         $this->_smarty->assign('num_deployed_nodes', 0);
+        $this->_smarty->assign('PdfSupported', false);
 
         /*
          * Tool content
@@ -195,6 +197,11 @@ class NodeListHTML {
         if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED == true) {
             $this->_smarty->assign('GMapsEnabled', true);
         }
+
+        if (Dependencies::check("FPDF")) {
+            $this->_smarty->assign('PdfSupported', true);
+        }
+
         // Set section of Smarty template
         $this->_smarty->assign('sectionTOOLCONTENT', true);
 
