@@ -341,7 +341,8 @@ class Picture extends File
         		$html .= "<img src='".htmlspecialchars($this->getFileUrl())."' $width $height alt='".$this->getFileName()."''>";
 
         $html .= "</div>\n";
-
+        /* Handle hyperlink clicktrough logging */
+        $html = $this->replaceHyperLinks($html);
         return $html;
     }
 

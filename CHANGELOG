@@ -1,3 +1,9 @@
+2006-08-27 Benoit Grégoire  <bock@step.polymtl.ca>
+	* clickthrough.php, HyperLink.php:  Implement working hyperlink clickthrough tracking (no reporting yet).
+	  Works for Langstring, FlickrPhotoStream, Picture, RssAggregator and their subclasses.
+	* Make HTMLeditor inherit from Langstring.  Allowed a massive reduction of line count and will stop the codebases from needlessly drifting apart.
+	* Do not log content displayed as metadata, and log their clickthrough as the parent's.
+	
 2006-08-27 François Proulx <francois.proulx@gmail.com>
 	* Updated French translations
 	* Now using Sprintf formatted strings in some Smarty templates (see example in templates/sites/index.tpl).

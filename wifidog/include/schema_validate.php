@@ -46,7 +46,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 42);
+define('REQUIRED_SCHEMA_VERSION', 43);
 
 /**
  * Check that the database schema is up to date.  If it isn't, offer to update it.
@@ -887,6 +887,19 @@ function update_schema()
             $sql .= "ALTER TABLE content_file_image ADD COLUMN hyperlink_url TEXT;\n";
         }
 
+        $new_schema_version = 43;
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+            $sql .= "CREATE TABLE content_clickthrough_log ( \n";
+            $sql .= "  user_id text REFERENCES users (user_id) ON UPDATE CASCADE ON DELETE CASCADE,\n";
+            $sql .= "  content_id text NOT NULL REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE,\n";
+            $sql .= "  clickthrough_timestamp timestamp NOT NULL DEFAULT now(),\n";
+            $sql .= "  node_id text NOT NULL REFERENCES nodes ON UPDATE CASCADE ON DELETE CASCADE,\n";
+            $sql .= "  destination_url text NOT NULL CHECK (destination_url<>'')\n";
+            $sql .= ");\n";
+        }
+        
         /*
         $new_schema_version = 43;
         if ($schema_version < $new_schema_version) {

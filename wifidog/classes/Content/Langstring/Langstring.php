@@ -104,7 +104,8 @@ class Langstring extends Content {
 
         // Check if caching has been enabled.
         if ($_cacheLanguage->isCachingEnabled) {
-            if ($_cachedData = $_cacheLanguage->getCachedData()) {
+            $_cachedData = $_cacheLanguage->getCachedData();
+            if ($_cachedData) {
                 // Return cached data.
                 $_useCache = true;
                 $retval = $_cachedData;
@@ -127,7 +128,7 @@ class Langstring extends Content {
             $this->mBd->execSqlUniqueRes($sql, $row, false);
 
             if ($row == null) {
-                $retval = "(Langstring vide)";
+                $retval = sprintf(_("(Empty $s)"), get_class($this));
             } else {
                 $retval = $row['value'];
 
@@ -512,7 +513,8 @@ class Langstring extends Content {
         $html .= $subclass_user_interface;
         $html .= "</div>\n";
         $html .= "</div>\n";
-
+        /* Handle hyperlink clicktrough logging */
+        $html = $this->replaceHyperLinks($html);
         return parent::getUserUI($html);
     }
 

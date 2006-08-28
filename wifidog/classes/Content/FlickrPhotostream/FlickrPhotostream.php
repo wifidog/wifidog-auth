@@ -875,7 +875,8 @@ $api = $this->getFlickrApi();
 
         $html .= $subclass_user_interface;
         $html .= "</div>\n";
-
+        /* Handle hyperlink clicktrough logging */
+        $html = $this->replaceHyperLinks($html);
         return parent::getUserUI($html);
     }
 

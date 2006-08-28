@@ -49,7 +49,7 @@
 require_once ('classes/FormSelectGenerator.php');
 require_once ('classes/GenericObject.php');
 require_once ('classes/Cache.php');
-
+require_once ('classes/HyperLink.php');
 /**
  * Defines any type of content
  *
@@ -103,6 +103,9 @@ class Content implements GenericObject {
      * @access private
      */
     private $is_logging_enabled;
+    
+    /** Log as part of this other content */
+    private $log_as_content;
 
     /**
      * Constructor
@@ -135,6 +138,7 @@ class Content implements GenericObject {
 
         // By default content display logging is enabled
         $this->setLoggingStatus(true);
+        $this->log_as_content &= $this;
     }
 
     /**
@@ -1038,6 +1042,7 @@ class Content implements GenericObject {
         if (!empty ($this->content_row['title'])) {
             $html .= "<div class='user_ui_title'>\n";
             $title = self :: getObject($this->content_row['title']);
+            $title->setLogAsContent($this);
             // If the content logging is disabled, all the children will inherit this property temporarly
             if ($this->getLoggingStatus() == false)
                 $title->setLoggingStatus(false);
@@ -1062,6 +1067,7 @@ class Content implements GenericObject {
         if (!empty ($this->content_row['description'])) {
             $html .= "<div class='user_ui_description'>\n";
             $description = self :: getObject($this->content_row['description']);
+            $description->setLogAsContent($this);
             // If the content logging is disabled, all the children will inherit this property temporarly
             if ($this->getLoggingStatus() == false)
                 $description->setLoggingStatus(false);
@@ -1074,6 +1080,7 @@ class Content implements GenericObject {
                 $html .= "<div class='user_ui_projet_info'>\n";
                 $html .= "<b>"._("Project information:")."</b>";
                 $project_info = self :: getObject($this->content_row['project_info']);
+                $project_info->setLogAsContent($this);
                 // If the content logging is disabled, all the children will inherit this property temporarly
                 if ($this->getLoggingStatus() == false)
                     $project_info->setLoggingStatus(false);
@@ -1085,6 +1092,7 @@ class Content implements GenericObject {
                 $html .= "<div class='user_ui_sponsor_info'>\n";
                 $html .= "<b>"._("Project sponsor:")."</b>";
                 $sponsor_info = self :: getObject($this->content_row['sponsor_info']);
+                $sponsor_info->setLogAsContent($this);
                 // If the content logging is disabled, all the children will inherit this property temporarly
                 if ($this->getLoggingStatus() == false)
                     $sponsor_info->setLoggingStatus(false);
@@ -1102,9 +1110,18 @@ class Content implements GenericObject {
         return $html;
     }
 
+
+/** Allow logging as part of another content (usually the parent for metadata).  
+ * Redirects clickthrough logging to the parent's content id, and does not log
+ * display */
+protected function setLogAsContent(Content $content)
+{
+   $this->log_as_content = $content;
+}
+
     /** Log that this content has just been displayed to the user.  Will only log if the user is logged in */
     private function logContentDisplay() {
-        if ($this->getLoggingStatus() == true) {
+        if ($this->getLoggingStatus() == true && $this->log_as_content->getId()==$this->getId()) {
             // DEBUG::
             //echo "Logging ".get_class($this)." :: ".$this->__toString()."<br>";
             $user = User :: getCurrentUser();
@@ -1124,6 +1141,14 @@ class Content implements GenericObject {
                 $db->execSqlUpdate($sql, false);
             }
         }
+    }
+    /** Handle replacements of hyperlinks for clickthrough tracking (if appropriate) */
+    protected function replaceHyperLinks(&$html) {
+        /* Handle hyperlink clicktrough logging */
+        if ($this->getLoggingStatus() == true) {
+            $html = HyperLink :: replaceHyperLinks($html, $this->log_as_content);
+            }
+        return $html;
     }
 
     /** Retreives the list interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.

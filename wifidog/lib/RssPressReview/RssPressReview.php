@@ -34,7 +34,6 @@
 // +-------------------------------------------------------------------+
 
 /**
- * @package    WiFiDogAuthServer
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id$
@@ -49,7 +48,6 @@
 define('DEFAULT_PUBLICATION_INTERVAL', (1 * 24 * 3600));
 
 /**
- * @package    WiFiDogAuthServer
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  */

@@ -1,5 +1,6 @@
 <?php
 
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -45,7 +46,7 @@
 /**
  * Load required class
  */
-require_once('classes/LocaleList.php');
+require_once ('classes/LocaleList.php');
 
 /**
  * Defines path to cache directory of Magpie
@@ -60,8 +61,7 @@ define('MAGPIE_CACHE_DIR', WIFIDOG_ABS_FILE_PATH . 'tmp/magpie_cache/');
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  */
-class RssAggregator extends Content
-{
+class RssAggregator extends Content {
     /**
      * @var string
      * @access private
@@ -89,8 +89,7 @@ class RssAggregator extends Content
      *
      * @access protected
      */
-    protected function __construct($content_id)
-    {
+    protected function __construct($content_id) {
         // Define globals
         global $db;
 
@@ -98,7 +97,7 @@ class RssAggregator extends Content
         $row = null;
         $content_rss_aggregator_rows = null;
 
-        parent::__construct($content_id);
+        parent :: __construct($content_id);
         $content_id = $db->escapeString($content_id);
 
         $sql = "SELECT *, EXTRACT(EPOCH FROM max_item_age) as max_item_age_seconds FROM content_rss_aggregator WHERE content_id='$content_id'";
@@ -109,7 +108,7 @@ class RssAggregator extends Content
             $db->execSqlUpdate($sql_new, false);
             $db->execSqlUniqueRes($sql, $row, false);
             if ($row == null) {
-                throw new Exception(_("The RssAggregator content with the following id could not be found in the database: ").$content_id);
+                throw new Exception(_("The RssAggregator content with the following id could not be found in the database: ") . $content_id);
             }
         }
 
@@ -120,12 +119,13 @@ class RssAggregator extends Content
 
         if ($content_rss_aggregator_rows != null) {
             $this->content_rss_aggregator_feeds_rows = $content_rss_aggregator_rows;
-        } else {
+        }
+        else {
             $this->content_rss_aggregator_feeds_rows = array ();
         }
 
         if (RSS_SUPPORT) {
-            require_once('lib/RssPressReview/RssPressReview.php');
+            require_once ('lib/RssPressReview/RssPressReview.php');
 
             $this->press_review = new RssPressReview(WIFIDOG_ABS_FILE_PATH . MAGPIE_REL_PATH, "UTF-8");
             $this->press_review->setAlgorithmStrength($this->content_rss_aggregator_row['algorithm_strength']);
@@ -137,14 +137,15 @@ class RssAggregator extends Content
 
                 // Update the stored feed title if it changed.
                 //This allows the system to know every feed's title without continuously looking them up
-                 if(!empty($title) && $title!=$feed_row['title']) {
-                     $title = $db->escapeString($title);
-                     $url = $db->escapeString($feed_row['url']);
-                     $db->execSqlUpdate("UPDATE content_rss_aggregator_feeds SET title = '$title' WHERE url='$url'", false);
-                     $this->refresh();
-                 }
+                if (!empty ($title) && $title != $feed_row['title']) {
+                    $title = $db->escapeString($title);
+                    $url = $db->escapeString($feed_row['url']);
+                    $db->execSqlUpdate("UPDATE content_rss_aggregator_feeds SET title = '$title' WHERE url='$url'", false);
+                    $this->refresh();
+                }
             }
-        } else {
+        }
+        else {
             $html = _("RSS support is disabled");
         }
 
@@ -158,8 +159,7 @@ class RssAggregator extends Content
      *
      * @access public
      */
-    public function getDisplayNumItems()
-    {
+    public function getDisplayNumItems() {
         return $this->content_rss_aggregator_row['number_of_display_items'];
     }
 
@@ -173,8 +173,7 @@ class RssAggregator extends Content
      *
      * @access public
      */
-    public function setDisplayNumItems($num_items, &$errormsg = null)
-    {
+    public function setDisplayNumItems($num_items, & $errormsg = null) {
         // Init values
         $retval = false;
 
@@ -189,11 +188,13 @@ class RssAggregator extends Content
             $this->refresh();
 
             $retval = true;
-        } elseif ($num_items < 1) {
+        }
+        elseif ($num_items < 1) {
             $errormsg = _("You must display at least one element");
 
             $retval = false;
-        } else {
+        }
+        else {
             /*
              * Successfull, but nothing modified
              */
@@ -211,8 +212,7 @@ class RssAggregator extends Content
      *
      * @access public
      */
-    public function getAlgorithmStrength()
-    {
+    public function getAlgorithmStrength() {
         return $this->content_rss_aggregator_row['algorithm_strength'];
     }
 
@@ -239,8 +239,7 @@ class RssAggregator extends Content
      *
      * @access public
      */
-    public function setAlgorithmStrength($strength, &$errormsg = null)
-    {
+    public function setAlgorithmStrength($strength, & $errormsg = null) {
         // Init values
         $retval = false;
 
@@ -255,7 +254,8 @@ class RssAggregator extends Content
             $this->refresh();
 
             $retval = true;
-        } else {
+        }
+        else {
             /*
              * Successfull, but nothing modified
              */
@@ -271,8 +271,7 @@ class RssAggregator extends Content
      *
      * @access public
      */
-    public function getMaxItemAge()
-    {
+    public function getMaxItemAge() {
         $retval = $this->content_rss_aggregator_row['max_item_age_seconds'];
 
         if (empty ($retval)) {
@@ -297,8 +296,7 @@ class RssAggregator extends Content
      *
      * @access public
      */
-    public function setMaxItemAge($max_item_age, &$errormsg = null)
-    {
+    public function setMaxItemAge($max_item_age, & $errormsg = null) {
         // Init values
         $retval = false;
 
@@ -321,11 +319,13 @@ class RssAggregator extends Content
             $this->refresh();
 
             $retval = true;
-        } elseif ($max_item_age <= 0) {
+        }
+        elseif ($max_item_age <= 0) {
             $errormsg = _("The maximum age must be a positive integer or null");
 
             $retval = false;
-        } else {
+        }
+        else {
             /*
              * Successfull, but nothing modified
              */
@@ -344,8 +344,7 @@ class RssAggregator extends Content
      *
      * @access public
      */
-    public function addFeed($url)
-    {
+    public function addFeed($url) {
         // Define globals
         global $db;
 
@@ -372,8 +371,7 @@ class RssAggregator extends Content
      *
      * @access public
      */
-    public function removeFeed($url)
-    {
+    public function removeFeed($url) {
         // Define globals
         global $db;
 
@@ -391,7 +389,6 @@ class RssAggregator extends Content
         return $retval;
     }
 
-
     /**
      * Shows the administration interface for RssAggregator
      *
@@ -402,8 +399,7 @@ class RssAggregator extends Content
      *
      * @access public
      */
-    public function getAdminUI($subclass_admin_interface = null, $title=null)
-    {
+    public function getAdminUI($subclass_admin_interface = null, $title = null) {
         // Define globals
         global $db;
 
@@ -413,16 +409,15 @@ class RssAggregator extends Content
         $tab = array ();
         $i = 0;
 
-
         $html .= "<ul class='admin_element_list'>\n";
         /*
          * number_of_display_items
          */
         $html .= "<li class='admin_element_item_container'>\n";
-        $html .= "<div class='admin_element_label'>"._("Total number of items to display (from all feeds)").": </div>\n";
+        $html .= "<div class='admin_element_label'>" . _("Total number of items to display (from all feeds)") . ": </div>\n";
         $html .= "<div class='admin_element_data'>\n";
 
-        $name = "rss_aggregator_".$this->id."_display_num_items";
+        $name = "rss_aggregator_" . $this->id . "_display_num_items";
         $value = $this->getDisplayNumItems();
         $html .= "<input type='text' size='2' value='$value' name='$name'>\n";
 
@@ -435,17 +430,17 @@ class RssAggregator extends Content
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<div class='admin_element_label'>\n";
         $html .= _("How much bonus feeds that do not publish as often get over feed that publish more often.
-                    The default is 0.75, with a typical range between 0 and 1.
-                    At 0, you have a classic RSS aggregator, meaning the n most recent entries picked from all feeds
-                    will be displayed. 1 is usually as high as you'll want to go:  Assuming that all
-                    an homogenous internal distribution (ex:  one feed publishes exactly one entry a day, the
-                    second once every two days, and the third once every three days), and you ask for 15 entries,
-                    there will be 5 of each.  While that may not sound usefull, it still is, as the feed's distribution is
-                    usually not homogenous.");
+                            The default is 0.75, with a typical range between 0 and 1.
+                            At 0, you have a classic RSS aggregator, meaning the n most recent entries picked from all feeds
+                            will be displayed. 1 is usually as high as you'll want to go:  Assuming that all
+                            an homogenous internal distribution (ex:  one feed publishes exactly one entry a day, the
+                            second once every two days, and the third once every three days), and you ask for 15 entries,
+                            there will be 5 of each.  While that may not sound usefull, it still is, as the feed's distribution is
+                            usually not homogenous.");
         $html .= ": </div>\n";
         $html .= "<div class='admin_element_data'>\n";
 
-        $name = "rss_aggregator_".$this->id."_algorithm_strength";
+        $name = "rss_aggregator_" . $this->id . "_algorithm_strength";
         $value = $this->getAlgorithmStrength();
         $html .= "<input type='text' size='2' value='$value' name='$name'>\n";
 
@@ -458,12 +453,12 @@ class RssAggregator extends Content
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<div class='admin_element_label'>\n";
         $html .= _("Set the oldest entries (in seconds) you are willing to see.  Any entries older than this will not
-                    be considered at all for display, even if it means that the configured number of items to be displayed isn't reached.
-                    It's only usefull if all your feed publish very rarely, and you don't want very old entries to show up.");
+                            be considered at all for display, even if it means that the configured number of items to be displayed isn't reached.
+                            It's only usefull if all your feed publish very rarely, and you don't want very old entries to show up.");
         $html .= ": </div>\n";
         $html .= "<div class='admin_element_data'>\n";
 
-        $name = "rss_aggregator_".$this->id."_max_item_age";
+        $name = "rss_aggregator_" . $this->id . "_max_item_age";
         $value = $this->getMaxItemAge();
         $html .= "<input type='text' size='10' value='$value' name='$name'>\n";
 
@@ -475,7 +470,7 @@ class RssAggregator extends Content
          * rss_aggregator_element (table)
          */
         $html .= "<li class='admin_element_item_container'>\n";
-        $html .= "<div class='admin_element_label'>"._("Feeds:")."</div>\n";
+        $html .= "<div class='admin_element_label'>" . _("Feeds:") . "</div>\n";
 
         $html .= "<ul class='admin_element_list'>\n";
 
@@ -490,8 +485,8 @@ class RssAggregator extends Content
             /*
              * Delete feeds
              */
-            $name = "rss_aggregator_".$this->id."_feed_".md5($feed_row['url'])."_delete";
-            $html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
+            $name = "rss_aggregator_" . $this->id . "_feed_" . md5($feed_row['url']) . "_delete";
+            $html .= "<input type='submit' name='$name' value='" . _("Delete") . "'>";
             $html .= "</div>\n";
             $html .= "</li>\n";
         }
@@ -500,24 +495,24 @@ class RssAggregator extends Content
          * Add new feed
          */
         $html .= "<li class='admin_element_item_container'>\n";
-        $html .= "<b>"._("Add a new feed or pick one from the other feeds in the system (most_popular_first)")."</b><br>";
+        $html .= "<b>" . _("Add a new feed or pick one from the other feeds in the system (most_popular_first)") . "</b><br>";
 
         $sql = "SELECT count, content_rss_aggregator_feeds.url, title FROM content_rss_aggregator_feeds
-                JOIN (SELECT url, count(content_rss_aggregator_feeds.url) as count
-                FROM content_rss_aggregator_feeds
-                WHERE content_rss_aggregator_feeds.url NOT IN (SELECT url FROM content_rss_aggregator_feeds WHERE content_id='{$this->id}')
-                GROUP BY content_rss_aggregator_feeds.content_id, content_rss_aggregator_feeds.url)
-                AS available_feeds
-                ON (available_feeds.url=content_rss_aggregator_feeds.url)
-                ORDER by count DESC";
+                        JOIN (SELECT url, count(content_rss_aggregator_feeds.url) as count
+                        FROM content_rss_aggregator_feeds
+                        WHERE content_rss_aggregator_feeds.url NOT IN (SELECT url FROM content_rss_aggregator_feeds WHERE content_id='{$this->id}')
+                        GROUP BY content_rss_aggregator_feeds.content_id, content_rss_aggregator_feeds.url)
+                        AS available_feeds
+                        ON (available_feeds.url=content_rss_aggregator_feeds.url)
+                        ORDER by count DESC";
 
         $db->execSql($sql, $feed_urls, false);
 
         foreach ($feed_urls as $feed_row) {
             $tab[$i][0] = $feed_row['url'];
-            empty($feed_row['title']) ? $title = $feed_row['url'] : $title = $feed_row['title'];
+            empty ($feed_row['title']) ? $title = $feed_row['url'] : $title = $feed_row['title'];
             $tab[$i][1] = sprintf(_("%s, used %d times"), $title, $feed_row['count']);
-            $i ++;
+            $i++;
         }
 
         $name = "rss_aggregator_{$this->id}_feed_add";
@@ -525,7 +520,7 @@ class RssAggregator extends Content
         $html .= FormSelectGenerator :: generateFromArray($tab, null, 'existing_feeds', 'RssAggregator', true, _('Type URL manually'), "onchange='this.form.$name.value=this.value;'");
 
         $name = "rss_aggregator_{$this->id}_feed_add_button";
-        $html .= "<input type='submit' name='$name' value='"._("Add")."'>";
+        $html .= "<input type='submit' name='$name' value='" . _("Add") . "'>";
 
         $html .= "</li>\n";
         $html .= "</ul>\n";
@@ -533,7 +528,7 @@ class RssAggregator extends Content
         $html .= "</ul>\n";
         $html .= $subclass_admin_interface;
 
-        return parent::getAdminUI($html, $title);
+        return parent :: getAdminUI($html, $title);
     }
 
     /**
@@ -543,27 +538,26 @@ class RssAggregator extends Content
      *
      * @access public
      */
-    public function processAdminUI()
-    {
+    public function processAdminUI() {
         if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
-            parent::processAdminUI();
+            parent :: processAdminUI();
 
             /*
              * number_of_display_items
              */
-            $name = "rss_aggregator_".$this->id."_display_num_items";
+            $name = "rss_aggregator_" . $this->id . "_display_num_items";
             $this->setDisplayNumItems($_REQUEST[$name]);
 
             /*
              * algorithm_strength
              */
-            $name = "rss_aggregator_".$this->id."_algorithm_strength";
+            $name = "rss_aggregator_" . $this->id . "_algorithm_strength";
             $this->setAlgorithmStrength($_REQUEST[$name]);
 
             /*
              * max_item_age
              */
-            $name = "rss_aggregator_".$this->id."_max_item_age";
+            $name = "rss_aggregator_" . $this->id . "_max_item_age";
             $this->setMaxItemAge($_REQUEST[$name]);
 
             /*
@@ -581,7 +575,7 @@ class RssAggregator extends Content
                 /*
                  * Delete feeds
                  */
-                $name = "rss_aggregator_".$this->id."_feed_".md5($feed_row['url'])."_delete";
+                $name = "rss_aggregator_" . $this->id . "_feed_" . md5($feed_row['url']) . "_delete";
 
                 if (isset ($_REQUEST[$name])) {
                     $this->removeFeed($feed_row['url']);
@@ -599,13 +593,12 @@ class RssAggregator extends Content
      *
      * @access private
      */
-    private function getFeedAdminUI($feed_row)
-    {
+    private function getFeedAdminUI($feed_row) {
         // Init values
         $html = '';
         $html .= "<ul class='admin_element_list'>\n";
         $html .= "<li class='admin_element_item_container'>\n";
-        $html .= "<div class='admin_element_label'>".$feed_row['title']."</div>\n";
+        $html .= "<div class='admin_element_label'>" . $feed_row['title'] . "</div>\n";
 
         $html .= "<div class='admin_element_data'>\n";
 
@@ -613,16 +606,16 @@ class RssAggregator extends Content
          * URL
          */
         $html .= "<li class='admin_element_item_container'>\n";
-        $html .= "<div class='admin_element_label'>"._("URL").": \n";
+        $html .= "<div class='admin_element_label'>" . _("URL") . ": \n";
 
-        if(	!$this->press_review->isFeedAvailable($feed_row['url'])) {
-            $html .= "<br/><span class='warningmsg'>"._("WARNING:  Either the feed couldn't be retrieved, or it couldn't be parsed.  Please double check the URL.")."</span>";
+        if (!$this->press_review->isFeedAvailable($feed_row['url'])) {
+            $html .= "<br/><span class='warningmsg'>" . _("WARNING:  Either the feed couldn't be retrieved, or it couldn't be parsed.  Please double check the URL.") . "</span>";
         }
 
         $html .= "</div>\n";
         $html .= "<div class='admin_element_data'>\n";
 
-        $name = "rss_aggregator_".$this->id."_feed_".md5($feed_row['url'])."_url";
+        $name = "rss_aggregator_" . $this->id . "_feed_" . md5($feed_row['url']) . "_url";
         $value = $feed_row['url'];
         $html .= "<input type='text' size='60' value='$value' name='$name'>\n";
 
@@ -637,19 +630,21 @@ class RssAggregator extends Content
 
         if ($calculated_pub_interval == true) {
             $html .= sprintf(_("The feed publishes an item every %.2f day(s)"), $calculated_pub_interval / (60 * 60 * 24));
-        } else {
-            $html .= "<div class='admin_element_label'><span class='warningmsg'>"._("WARNING:  This feed does not include the publication dates.
-                                                                                     The system needs to be able to compute approximate publication
-                                                                                     date for each entry, so the entry can be weighted against the
-                                                                                     others. In order for the aggregator to do a good job, you need
-                                                                                     to estimate fublication frequency of the items, in days.
-                                                                                     If unset, defaults to one day.").": </span></div>\n";
+        }
+        else {
+            $html .= "<div class='admin_element_label'><span class='warningmsg'>" . _("WARNING:  This feed does not include the publication dates.
+                                                                                                 The system needs to be able to compute approximate publication
+                                                                                                 date for each entry, so the entry can be weighted against the
+                                                                                                 others. In order for the aggregator to do a good job, you need
+                                                                                                 to estimate fublication frequency of the items, in days.
+                                                                                                 If unset, defaults to one day.") . ": </span></div>\n";
             $html .= "<div class='admin_element_data'>\n";
-            $name = "rss_aggregator_".$this->id."_feed_".md5($feed_row['url'])."_default_publication_interval";
+            $name = "rss_aggregator_" . $this->id . "_feed_" . md5($feed_row['url']) . "_default_publication_interval";
 
             if (!empty ($feed_row['default_publication_interval'])) {
                 $value = $feed_row['default_publication_interval'] / (60 * 60 * 24);
-            } else {
+            }
+            else {
                 $value = '';
             }
 
@@ -663,15 +658,15 @@ class RssAggregator extends Content
          * bias
          */
         $html .= "<li class='admin_element_item_container'>\n";
-        $html .= "<div class='admin_element_label'>"._("The bias to be given to the source by the selection algorithm.
-                                                        Bias must be > 0 , typical values would be between 0.75 and 1.5
-                                                        and default is 1 (no bias).  A bias of 2 will cause the items
-                                                        to \"look\" twice as recent to the algorithm. A bias of 0.5 to
-                                                        look twice as old. Be carefull, a bias of 2 will statistically
-                                                        because the feed to have MORE than twice as many items displayed.").": </div>\n";
+        $html .= "<div class='admin_element_label'>" . _("The bias to be given to the source by the selection algorithm.
+                                                                Bias must be > 0 , typical values would be between 0.75 and 1.5
+                                                                and default is 1 (no bias).  A bias of 2 will cause the items
+                                                                to \"look\" twice as recent to the algorithm. A bias of 0.5 to
+                                                                look twice as old. Be carefull, a bias of 2 will statistically
+                                                                cause the feed to have MORE than twice as many items displayed.") . ": </div>\n";
         $html .= "<div class='admin_element_data'>\n";
 
-        $name = "rss_aggregator_".$this->id."_feed_".md5($feed_row['url'])."_bias";
+        $name = "rss_aggregator_" . $this->id . "_feed_" . md5($feed_row['url']) . "_bias";
         $value = $feed_row['bias'];
         $html .= "<input type='text' size='60' value='$value' name='$name'>\n";
 
@@ -692,8 +687,7 @@ class RssAggregator extends Content
      *
      * @access private
      */
-    private function processFeedAdminUI($feed_row)
-    {
+    private function processFeedAdminUI($feed_row) {
         // Define globals
         global $db;
 
@@ -702,7 +696,7 @@ class RssAggregator extends Content
         /*
          * bias
          */
-        $name = "rss_aggregator_".$this->id."_feed_".md5($feed_row['url'])."_bias";
+        $name = "rss_aggregator_" . $this->id . "_feed_" . md5($feed_row['url']) . "_bias";
         $original_bias = $db->escapeString($feed_row['bias']);
         $bias = $db->escapeString($_REQUEST[$name]);
 
@@ -712,9 +706,11 @@ class RssAggregator extends Content
              */
             $db->execSqlUpdate("UPDATE content_rss_aggregator_feeds SET bias = '$bias' WHERE content_id = '$this->id' AND url='$original_url'", false);
             $this->refresh();
-        } elseif (!is_numeric($bias) || $bias <= 0) {
+        }
+        elseif (!is_numeric($bias) || $bias <= 0) {
             echo _("The bias must be a positive real number");
-        } else {
+        }
+        else {
             /*
              * Successfull, but nothing modified
              */
@@ -723,7 +719,7 @@ class RssAggregator extends Content
         /*
          * default_publication_interval
          */
-        $name = "rss_aggregator_".$this->id."_feed_".md5($feed_row['url'])."_default_publication_interval";
+        $name = "rss_aggregator_" . $this->id . "_feed_" . md5($feed_row['url']) . "_default_publication_interval";
 
         if (isset ($_REQUEST[$name])) {
             $original_default_publication_interval = $db->escapeString($feed_row['default_publication_interval']);
@@ -739,9 +735,11 @@ class RssAggregator extends Content
 
                 $db->execSqlUpdate("UPDATE content_rss_aggregator_feeds SET default_publication_interval = $default_publication_interval WHERE content_id = '$this->id' AND url='$original_url'", false);
                 $this->refresh();
-            } elseif (!is_numeric($bias) || $bias <= 0) {
+            }
+            elseif (!is_numeric($bias) || $bias <= 0) {
                 echo _("The default publication must must be a positive integer or empty");
-            } else {
+            }
+            else {
                 /*
                  * Successfull, but nothing modified
                  */
@@ -751,7 +749,7 @@ class RssAggregator extends Content
         /*
          * URL, we must change it last or we won't find the row again
          */
-        $name = "rss_aggregator_".$this->id."_feed_".md5($feed_row['url'])."_url";
+        $name = "rss_aggregator_" . $this->id . "_feed_" . md5($feed_row['url']) . "_url";
         $url = $db->escapeString($_REQUEST[$name]);
 
         if (!empty ($url) && $url != $feed_row['url']) {
@@ -760,9 +758,11 @@ class RssAggregator extends Content
              */
             $db->execSqlUpdate("UPDATE content_rss_aggregator_feeds SET url = '$url' WHERE content_id = '$this->id' AND url='$original_url'", false);
             $this->refresh();
-        } elseif (empty ($url)) {
+        }
+        elseif (empty ($url)) {
             echo _("The URL cannot be empty!");
-        } else {
+        }
+        else {
             /*
              * Successfull, but nothing modified
              */
@@ -776,28 +776,30 @@ class RssAggregator extends Content
      *
      * @access public
      */
-    public function getUserUI()
-    {
+    public function getUserUI() {
         // Init values
         $html = '';
 
-        $html .= "<div class='user_ui_data  ".get_class($this)."'>\n";
+        $html .= "<div class='user_ui_data  " . get_class($this) . "'>\n";
 
         if (RSS_SUPPORT) {
             try {
                 $html = $this->press_review->get_rss_html($this->content_rss_aggregator_row['number_of_display_items']);
             }
-
             catch (Exception $e) {
                 $html = sprintf(_("Could not get RSS feed: %s"), $feed_row['url']);
             }
-        } else {
+        /* Handle hyperlink clicktrough logging */
+        $html = $this->replaceHyperLinks($html);
+
+        }
+        else {
             $html = _("RSS support is disabled");
         }
 
         $html .= "</div>\n";
 
-        return parent::getUserUI($html);
+        return parent :: getUserUI($html);
     }
 
     /**
@@ -812,8 +814,7 @@ class RssAggregator extends Content
      *
      * @access private
      */
-    private function refresh()
-    {
+    private function refresh() {
         $this->__construct($this->id);
     }
 }
@@ -825,5 +826,3 @@ class RssAggregator extends Content
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
-
