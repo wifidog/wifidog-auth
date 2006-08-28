@@ -68,35 +68,30 @@
 {*
     BEGIN section MAINCONTENT
 *}
-    <p>
-        {"The"|_} {$networkName}
-        {"network currently has"|_} {$networkNumValidUsers} {"valid"|_}
-        {if $networkNumValidUsers == 1}
-            {"user,"|_}
+	<p>
+		{if $networkNumOnlineUsers == 1}
+			{"The %s network currently has one valid user."|_|sprintf:$networkName}
+		{else}
+			{"The %s network currently has %d valid users."|_|sprintf:$networkName:$networkNumValidUsers}
+		{/if}
+
+		{if $networkNumOnlineUsers == 1}
+			{"One user is currently online."|_|sprintf:$networkNumOnlineUsers}
+		{else}
+			{"%d users are currently online."|_|sprintf:$networkNumOnlineUsers}
+		{/if}
+		<br/>
+		{if $networkNumDeployedNodes == 1}
+        		{"This network currently has 1 deployed hotspot."|_}
         {else}
-            {"users,"|_}
+        		{"This network currently has %d deployed hotspots."|_|sprintf:$networkNumDeployedNodes}
         {/if}
-        {$networkNumOnlineUsers}
-        {if $networkNumOnlineUsers == 1}
-            {"user is"|_}
-        {else}
-            {"users are"|_}
-        {/if}
-        {"currently online"|_}.
-        <br>
-        {"It currently has"|_} {$networkNumDeployedNodes} {"deployed"|_}
-        {if $networkNumDeployedNodes == 1}
-            {"hotspot,"|_}
-        {else}
-            {"hotspots,"|_}
-        {/if}
-        {$networkNumOnlineNodes}
+
         {if $networkNumOnlineNodes == 1}
-            {"hotspot is"|_}
+            {"One hotspot is currently operationnal."|_}
         {else}
-            {"hotspots are"|_}
+            {"%d hotspots are currently operationnal."|_|sprintf:$networkNumOnlineNodes}
         {/if}
-        {"currently operational"|_}.
     </p>
 
     <ul>

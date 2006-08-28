@@ -2,7 +2,7 @@
 
 open INPUT, "<$ARGV[0]";
 while(<INPUT>) {
-    while ($_ =~ m/{"(.*?)"|_}/) {
+    while ($_ =~ m/{"(.*?)"|_.*}/) {
         if ($1) {
             print "_(\"$1\")\n";
         }

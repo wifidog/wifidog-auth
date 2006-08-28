@@ -182,6 +182,13 @@ function convert_nocat_password_hash($hash) {
     return $hash.'==';
 }
 
+function cmp_query_time($a, $b) {
+    if ($a['total_time'] == $b['total_time']) {
+        return 0;
+    }
+    return ($a['total_time'] < $b['total_time']) ? -1 : 1;
+}
+
 function iso8601_date($unix_timestamp) {
     $tzd = date('O', $unix_timestamp);
     $tzd = substr(chunk_split($tzd, 3, ':'), 0, 6);
@@ -361,7 +368,7 @@ class WifidogSyslogFormatter extends EventFormatter {
   }
 }
 
-if (EVENT_LOGGING==true) {
+if (defined("EVENT_LOGGING") && EVENT_LOGGING == true) {
 	$myLogfile = !defined('WIFIDOG_LOGFILE') ? "tmp/wifidog.log" : constant('WIFIDOG_LOGFILE');
 	if (!empty($myLogfile)) {
 		if (substr($myLogfile,0,1) != '/') $myLogfile = WIFIDOG_ABS_FILE_PATH.$myLogfile;

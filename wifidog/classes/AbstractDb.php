@@ -82,8 +82,8 @@ class AbstractDb
      */
     function execSql($sql, & $resultSet, $debug = false)
     {
-            // Get a connection handle
-    $connection = $this->connect(NULL);
+         // Get a connection handle
+    		$connection = $this->connect(NULL);
 
         // In debug mode spit out the SQL query
         if ($debug == TRUE)
@@ -105,18 +105,9 @@ class AbstractDb
         $result = pg_query($connection, $sql);
         $sql_endtime = microtime();
 
-        global $sql_total_time;
-        global $sql_num_select_querys;
+        $sql_timetaken = $this->logQueries($sql, 'SELECT', $sql_starttime, $sql_endtime);
 
-        $sql_num_select_querys ++;
-        $parts_of_starttime = explode(' ', $sql_starttime);
-        $sql_starttime = $parts_of_starttime[0] + $parts_of_starttime[1];
-        $parts_of_endtime = explode(' ', $sql_endtime);
-        $sql_endtime = $parts_of_endtime[0] + $parts_of_endtime[1];
-        $sql_timetaken = $sql_endtime - $sql_starttime;
-        $sql_total_time = $sql_total_time + $sql_timetaken;
-
-        if ($debug == TRUE)
+		if ($debug == TRUE)
             echo "<p>".sprintf(_("Elapsed time for query execution : %.6f second(s)"), $sql_timetaken)."</p>\n";
 
         if ($result == FALSE)
@@ -162,6 +153,63 @@ class AbstractDb
             }
         return $return_value;
     }
+
+    /* Logs a sql query for profiling purposes */
+	function logQueries($sql, $type, $sql_starttime, $sql_endtime)
+	{
+		if(defined("LOG_SQL_QUERIES") && LOG_SQL_QUERIES == true) {
+			$parts_of_starttime = explode(' ', $sql_starttime);
+			$sql_starttime = $parts_of_starttime[0] + $parts_of_starttime[1];
+			$parts_of_endtime = explode(' ', $sql_endtime);
+			$sql_endtime = $parts_of_endtime[0] + $parts_of_endtime[1];
+			$sql_timetaken = $sql_endtime - $sql_starttime;
+
+			global $sql_executed_queries_array;
+			if (!isset ($sql_executed_queries_array))
+			{
+				$sql_executed_queries_array = array ();
+			}
+			if (!array_key_exists($sql, $sql_executed_queries_array))
+			{
+				$sql_executed_queries_array[$sql] = array ();
+				$sql_executed_queries_array[$sql]['num'] = 0;
+				$sql_executed_queries_array[$sql]['total_time'] = 0;
+			}
+
+			$sql_executed_queries_array[$sql]['num'] = $sql_executed_queries_array[$sql]['num'] + 1;
+			$sql_executed_queries_array[$sql]['type'] = $type;
+			$sql_executed_queries_array[$sql]['total_time'] = $sql_executed_queries_array[$sql]['total_time'] + $sql_timetaken;
+
+			global $sql_total_time;
+			$sql_total_time += $sql_timetaken;
+
+			switch ($type)
+			{
+				case 'SELECT' :
+					global $sql_num_select_querys;
+					$sql_num_select_querys ++;
+					global $sql_select_total_time;
+					$sql_select_total_time += $sql_timetaken;
+
+					break;
+				case 'SELECT_UNIQUE' :
+					global $sql_num_select_unique_querys;
+					$sql_num_select_unique_querys ++;
+					global $sql_select_unique_total_time;
+					$sql_select_unique_total_time += $sql_timetaken;
+					break;
+				case 'UPDATE' :
+					global $sql_num_update_querys;
+					$sql_num_update_querys ++;
+					global $sql_update_total_time;
+					$sql_update_total_time += $sql_timetaken;
+					break;
+				default :
+					echo "Error: AbstractDb::SqlLog(): Unknown query type: $type";
+			}
+			return $sql_timetaken;
+		}
+	}
 
     /**
      * Returns a string in a compatible / secure way for storing in the database
@@ -223,7 +271,7 @@ class AbstractDb
         $result = @ pg_query($connection, $sql);
         $sql_endtime = microtime();
 
-        global $sql_total_time;
+        /*global $sql_total_time;
         global $sql_num_select_unique_querys;
 
         $sql_num_select_unique_querys ++;
@@ -235,7 +283,11 @@ class AbstractDb
         $sql_total_time = $sql_total_time + $sql_timetaken;
 
         if ($debug == true)
-            echo "<p>".sprintf(_("Elapsed time for query execution : %6f second(s)"), $sql_timetaken)."</p>\n";
+            echo "<p>".sprintf(_("Elapsed time for query execution : %6f second(s)"), $sql_timetaken)."</p>\n";*/
+
+        $sql_timetaken = $this->logQueries($sql, 'SELECT_UNIQUE', $sql_starttime, $sql_endtime);
+		if ($debug == TRUE)
+            echo "<p>".sprintf(_("Elapsed time for query execution : %.6f second(s)"), $sql_timetaken)."</p>\n";
 
         if ($result == false) {
             if (!$silent) {
@@ -300,20 +352,21 @@ class AbstractDb
         if ($debug == TRUE)
             echo "<hr/><p>execSqlUpdate(): "._("SQL Query")." : <br/>\n<pre>{$sql}</pre></p>\n";
 
-        global $sql_num_update_querys;
+        /*global $sql_num_update_querys;
         global $sql_total_time;
 
-        $sql_num_update_querys ++;
+        $sql_num_update_querys ++;*/
         $sql_starttime = microtime();
         $result = pg_query($connection, $sql);
         $sql_endtime = microtime();
-        $parts_of_starttime = explode(' ', $sql_starttime);
+        /*$parts_of_starttime = explode(' ', $sql_starttime);
         $sql_starttime = $parts_of_starttime[0] + $parts_of_starttime[1];
         $parts_of_endtime = explode(' ', $sql_endtime);
         $sql_endtime = $parts_of_endtime[0] + $parts_of_endtime[1];
         $sql_timetaken = $sql_endtime - $sql_starttime;
-        $sql_total_time = $sql_total_time + $sql_timetaken;
+        $sql_total_time = $sql_total_time + $sql_timetaken;*/
 
+        $sql_timetaken = $this->logQueries($sql, 'UPDATE', $sql_starttime, $sql_endtime);
         if ($debug == TRUE)
         {
             echo "<p>".sprintf(_("%d rows affected by the SQL query."), pg_affected_rows($result))."<br/>\n";

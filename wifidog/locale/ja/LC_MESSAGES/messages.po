@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-08 16:40-0400\n"
+"POT-Creation-Date: 2006-08-24 02:24-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -127,7 +127,7 @@ msgid "Show me on the map"
 msgstr "地図で現在地を確認"
 
 #: ../hotspots_map.php:155 smarty.txt:71 smarty.txt:121
-#: ../hotspots_map.php:156 smarty.txt:120 smarty.txt:69
+#: ../hotspots_map.php:156 smarty.txt:120 smarty.txt:69 smarty.txt:46
 msgid "Loading, please wait..."
 msgstr "ロード中。しばらくお待ちください。"
 
@@ -271,6 +271,7 @@ msgstr ""
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:899
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:896
 #: ../classes/Network.php:1458 ../classes/Content.php:727
+#: ../classes/Content.php:720
 msgid "Access denied!"
 msgstr "アクセスできません!"
 
@@ -398,7 +399,7 @@ msgstr "保存"
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:209
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:231
 #: ../classes/Content/RssAggregator/RssAggregator.php:494
-#: ../classes/Content.php:783 smarty.txt:199
+#: ../classes/Content.php:783 smarty.txt:199 ../classes/Content.php:776
 msgid "Delete"
 msgstr "削除"
 
@@ -507,7 +508,7 @@ msgstr "指定されたホットスポットはありません!"
 
 #: ../content/index.php:82 smarty.txt:18 smarty.txt:76 smarty.txt:217
 #: smarty.txt:9 smarty.txt:88 smarty.txt:192 smarty.txt:87 smarty.txt:191
-#: smarty.txt:74 smarty.txt:214
+#: smarty.txt:74 smarty.txt:214 smarty.txt:69 smarty.txt:114
 msgid "Online users"
 msgstr "オンラインユーザー"
 
@@ -819,7 +820,8 @@ msgstr "プロファイル"
 #: ../classes/StatisticReport/NetworkStatus.php:99 ../classes/Node.php:823
 #: smarty.txt:15 smarty.txt:184 smarty.txt:197 smarty.txt:205 smarty.txt:6
 #: smarty.txt:180 smarty.txt:201 smarty.txt:206 smarty.txt:179 smarty.txt:200
-#: smarty.txt:181 smarty.txt:194 smarty.txt:202
+#: smarty.txt:181 smarty.txt:194 smarty.txt:202 smarty.txt:93 smarty.txt:97
+#: smarty.txt:122
 msgid "Name"
 msgstr "名前"
 
@@ -839,12 +841,13 @@ msgstr "設置日"
 #: ../classes/Node.php:828 smarty.txt:108 smarty.txt:208 smarty.txt:70
 #: smarty.txt:183 ../classes/Content.php:745 smarty.txt:69 smarty.txt:182
 #: ../classes/Content.php:753 smarty.txt:106 smarty.txt:205
+#: ../classes/Content.php:746 smarty.txt:36 smarty.txt:100
 msgid "Description"
 msgstr "説明"
 
 #: ../classes/StatisticReport/NodeStatus.php:156
 #: ../classes/StatisticReport/UserReport.php:137 smarty.txt:191 smarty.txt:218
-#: smarty.txt:217 smarty.txt:188
+#: smarty.txt:217 smarty.txt:188 smarty.txt:129
 msgid "Network"
 msgstr "ネットワーク"
 
@@ -924,7 +927,8 @@ msgstr "ユーザーID: %s はデータベース上で見つかりません。"
 #: ../classes/User.php:686 ../classes/User.php:726 smarty.txt:190
 #: smarty.txt:219 ../classes/User.php:669 ../classes/User.php:672
 #: ../classes/User.php:716 smarty.txt:194 smarty.txt:217 smarty.txt:193
-#: smarty.txt:216 ../classes/User.php:715 smarty.txt:187
+#: smarty.txt:216 ../classes/User.php:715 smarty.txt:187 smarty.txt:116
+#: smarty.txt:128
 msgid "Username"
 msgstr "ユーザー名"
 
@@ -941,7 +945,7 @@ msgid "Member since"
 msgstr "メンバー登録日"
 
 #: ../classes/StatisticReport/UserReport.php:152 smarty.txt:193 smarty.txt:220
-#: smarty.txt:219 smarty.txt:190
+#: smarty.txt:219 smarty.txt:190 smarty.txt:131
 msgid "Account Status"
 msgstr "アカウントステータス"
 
@@ -976,7 +980,7 @@ msgstr "トークンステータス"
 #: ../classes/StatisticReport/MostPopularNodes.php:109
 #: ../classes/StatisticReport/UserRegistrationReport.php:131
 #: ../classes/Node.php:244 smarty.txt:218 smarty.txt:193 smarty.txt:192
-#: smarty.txt:215
+#: smarty.txt:215 smarty.txt:115
 msgid "Node"
 msgstr "ノード"
 
@@ -1060,6 +1064,7 @@ msgstr ""
 
 #: ../classes/StatisticReport/NetworkStatus.php:104 ../classes/Server.php:692
 #: ../classes/Node.php:813 ../classes/Server.php:696 ../classes/Server.php:695
+#: ../classes/Content/File/File.php:438
 msgid "Creation date"
 msgstr "作成日"
 
@@ -1233,6 +1238,7 @@ msgstr "一時フォルダーの喪失"
 #: ../classes/Content/Avatar/Avatar.php:104
 #: ../classes/Content/File/File.php:409 ../classes/Content/File/File.php:407
 #: ../classes/Content/Avatar/Avatar.php:100
+#: ../classes/Content/File/File.php:454
 msgid "Upload a new file (Uploading a new one will replace any existing file)"
 msgstr ""
 "新しいファイルのアップロード(新しいファイルをアップロードし、既存のファイルと"
@@ -1242,6 +1248,7 @@ msgstr ""
 #: ../classes/Content/Avatar/Avatar.php:114
 #: ../classes/Content/File/File.php:419 ../classes/Content/File/File.php:417
 #: ../classes/Content/Avatar/Avatar.php:110
+#: ../classes/Content/File/File.php:464
 msgid "Remote file via URL"
 msgstr "送信ファイルのURL"
 
@@ -1249,21 +1256,22 @@ msgstr "送信ファイルのURL"
 #: ../classes/Content/Avatar/Avatar.php:128
 #: ../classes/Content/File/File.php:433 ../classes/Content/File/File.php:431
 #: ../classes/Content/Avatar/Avatar.php:124
+#: ../classes/Content/File/File.php:478
 msgid "File URL"
 msgstr "ファイルのURL"
 
 #: ../classes/Content/File/File.php:467 ../classes/Content/File/File.php:441
-#: ../classes/Content/File/File.php:439
+#: ../classes/Content/File/File.php:439 ../classes/Content/File/File.php:486
 msgid "Filename to display"
 msgstr "ファイル名を表示"
 
 #: ../classes/Content/File/File.php:475 ../classes/Content/File/File.php:449
-#: ../classes/Content/File/File.php:447
+#: ../classes/Content/File/File.php:447 ../classes/Content/File/File.php:494
 msgid "MIME type"
 msgstr "MIMEタイプ"
 
 #: ../classes/Content/File/File.php:482 ../classes/Content/File/File.php:456
-#: ../classes/Content/File/File.php:454
+#: ../classes/Content/File/File.php:454 ../classes/Content/File/File.php:501
 msgid "Locally stored file size"
 msgstr "ローカルファイルサイズ"
 
@@ -1274,11 +1282,13 @@ msgstr "ローカルファイルサイズ"
 #: ../classes/Content/File/File.php:543 ../classes/Content/File/File.php:456
 #: ../classes/Content/File/File.php:472 ../classes/Content/File/File.php:541
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:364
+#: ../classes/Content/File/File.php:503 ../classes/Content/File/File.php:519
+#: ../classes/Content/File/File.php:588
 msgid "KB"
 msgstr "KB"
 
 #: ../classes/Content/File/File.php:489 ../classes/Content/File/File.php:463
-#: ../classes/Content/File/File.php:461
+#: ../classes/Content/File/File.php:461 ../classes/Content/File/File.php:508
 msgid "Remote file size (Automatically converted from KB to Bytes)"
 msgstr "送信ファイルサイズ（自動的にキロバイトからバイトに変換されます)"
 
@@ -1287,11 +1297,12 @@ msgstr "送信ファイルサイズ（自動的にキロバイトからバイト
 #: ../classes/Content/File/File.php:474 ../classes/Content/File/File.php:548
 #: ../classes/Content/File/File.php:472 ../classes/Content/File/File.php:546
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:364
+#: ../classes/Content/File/File.php:519 ../classes/Content/File/File.php:593
 msgid "Download"
 msgstr "ダウンロード"
 
 #: ../classes/Content/File/File.php:625 ../classes/Content/File/File.php:593
-#: ../classes/Content/File/File.php:591
+#: ../classes/Content/File/File.php:591 ../classes/Content/File/File.php:638
 msgid "Could not delete this file, since it is persistent"
 msgstr "ファイルを削除できませんでした。"
 
@@ -1633,7 +1644,7 @@ msgstr "ファイルオブジェクトまたはそれに類する何かを選択
 #: ../classes/Content.php:1539 ../classes/Content.php:1540
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:411
 #: ../classes/Content/Langstring/Langstring.php:552
-#: ../classes/Content.php:1537
+#: ../classes/Content.php:1537 ../classes/Content.php:1531
 msgid ""
 "Content is persistent (you must make it non persistent before you can delete "
 "it)"
@@ -1694,7 +1705,7 @@ msgstr "表示されたコンテンツを新しく追加するか、既存の物
 #: ../classes/Content/RssAggregator/RssAggregator.php:529 smarty.txt:224
 #: ../classes/Content/RssAggregator/RssAggregator.php:528
 #: ../classes/Content.php:447 ../classes/Content.php:580
-#: ../classes/Content.php:794
+#: ../classes/Content.php:794 ../classes/Content.php:788 smarty.txt:113
 msgid "Add"
 msgstr "追加"
 
@@ -1760,7 +1771,7 @@ msgstr "使用可能なHTMLタグ : "
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:345 smarty.txt:63
 #: smarty.txt:62 smarty.txt:61
 #: ../classes/Content/Langstring/Langstring.php:323
-#: ../classes/Content/Langstring/Langstring.php:381
+#: ../classes/Content/Langstring/Langstring.php:381 smarty.txt:24
 msgid "Language"
 msgstr "言語"
 
@@ -1780,7 +1791,7 @@ msgstr "新しい文字列の追加"
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:554
 #: ../classes/Content.php:1547 ../classes/Content.php:1548
 #: ../classes/Content/Langstring/Langstring.php:570
-#: ../classes/Content.php:1545
+#: ../classes/Content.php:1545 ../classes/Content.php:1539
 msgid "Access denied (not owner of content)"
 msgstr "アクセスできません。（このコンテンツのオーナーではありません。）"
 
@@ -2003,16 +2014,19 @@ msgid "FCKeditor is not installed"
 msgstr "FCKeditorがインストールされていません。"
 
 #: ../classes/Content/Picture/Picture.php:203
+#: ../classes/Content/Picture/Picture.php:241
 msgid "Width (leave empty if you want to keep original width)"
 msgstr "横 (空欄の場合、元の横幅を使用します)"
 
 #: ../classes/Content/Picture/Picture.php:210
+#: ../classes/Content/Picture/Picture.php:248
 msgid "Height (leave empty if you want to keep original height)"
 msgstr "高さ（空欄の場合、元の高さを使用します）"
 
 #: ../classes/Content/Picture/Picture.php:218
 #: ../classes/Content/Avatar/Avatar.php:94
 #: ../classes/Content/Avatar/Avatar.php:90
+#: ../classes/Content/Picture/Picture.php:256
 msgid "Picture preview"
 msgstr "画像プレビュー"
 
@@ -2455,36 +2469,37 @@ msgid "To"
 msgstr "終了"
 
 #: ../classes/Statistics.php:480 ../classes/Statistics.php:481
+#: ../classes/Statistics.php:485
 msgid "Invalid parameter"
 msgstr "不正なパラメーター"
 
 #: ../classes/Statistics.php:616 ../classes/Statistics.php:617
-#: ../classes/Statistics.php:622
+#: ../classes/Statistics.php:622 ../classes/Statistics.php:629
 msgid "Report configuration"
 msgstr "レポートの設定"
 
 #: ../classes/Statistics.php:629 ../classes/Statistics.php:630
-#: ../classes/Statistics.php:634
+#: ../classes/Statistics.php:634 ../classes/Statistics.php:641
 msgid "Restrict the time range for which statistics will be computed"
 msgstr "統計を算出する期間を設定"
 
 #: ../classes/Statistics.php:637 ../classes/Statistics.php:638
-#: ../classes/Statistics.php:642
+#: ../classes/Statistics.php:642 ../classes/Statistics.php:649
 msgid "Restrict stats to the following nodes"
 msgstr "統計を算出するノードを選択"
 
 #: ../classes/Statistics.php:645 ../classes/Statistics.php:646
-#: ../classes/Statistics.php:653
+#: ../classes/Statistics.php:653 ../classes/Statistics.php:660
 msgid "Distinguish users by"
 msgstr "ユーザーの識別方法"
 
 #: ../classes/Statistics.php:653 ../classes/Statistics.php:654
-#: ../classes/Statistics.php:662
+#: ../classes/Statistics.php:662 ../classes/Statistics.php:669
 msgid "Restrict stats to the selected users"
 msgstr "統計を算出するユーザー"
 
 #: ../classes/Statistics.php:661 ../classes/Statistics.php:662
-#: ../classes/Statistics.php:671
+#: ../classes/Statistics.php:671 ../classes/Statistics.php:678
 msgid "Selected reports"
 msgstr "出力するレポートの選択"
 
@@ -2538,7 +2553,8 @@ msgid "Unable to connect to database on %s"
 msgstr "%s のデータベースに接続することができません。"
 
 #: ../classes/AbstractDb.php:92 ../classes/AbstractDb.php:218
-#: ../classes/AbstractDb.php:301
+#: ../classes/AbstractDb.php:301 ../classes/AbstractDb.php:266
+#: ../classes/AbstractDb.php:353
 msgid "SQL Query"
 msgstr "SQLクエリー"
 
@@ -2546,43 +2562,49 @@ msgstr "SQLクエリー"
 msgid "Query plan"
 msgstr "クエリー"
 
-#: ../classes/AbstractDb.php:120
+#: ../classes/AbstractDb.php:120 ../classes/AbstractDb.php:111
+#: ../classes/AbstractDb.php:290
 #, php-format
 msgid "Elapsed time for query execution : %.6f second(s)"
 msgstr "クエリー実行からの経過時間 : %.6f 秒"
 
 #: ../classes/AbstractDb.php:124 ../classes/AbstractDb.php:242
 #: ../classes/AbstractDb.php:252 ../classes/AbstractDb.php:325
+#: ../classes/AbstractDb.php:115 ../classes/AbstractDb.php:294
+#: ../classes/AbstractDb.php:304 ../classes/AbstractDb.php:378
 msgid "An error occured while executing the following SQL query"
 msgstr "実行されたSQLクエリーでエラーが発生しました。"
 
 #: ../classes/AbstractDb.php:125 ../classes/AbstractDb.php:243
-#: ../classes/AbstractDb.php:326
+#: ../classes/AbstractDb.php:326 ../classes/AbstractDb.php:116
+#: ../classes/AbstractDb.php:295 ../classes/AbstractDb.php:379
 msgid "Error message"
 msgstr "エラーメッセージ"
 
-#: ../classes/AbstractDb.php:142
+#: ../classes/AbstractDb.php:142 ../classes/AbstractDb.php:133
 #, php-format
 msgid "The query returned %d results"
 msgstr "クエリーの実行結果 %d "
 
 #: ../classes/AbstractDb.php:238 ../classes/AbstractDb.php:320
+#: ../classes/AbstractDb.php:373
 #, php-format
 msgid "Elapsed time for query execution : %6f second(s)"
 msgstr "クエリー実行からの経過時間 : %6f 秒"
 
-#: ../classes/AbstractDb.php:253
+#: ../classes/AbstractDb.php:253 ../classes/AbstractDb.php:305
 #, php-format
 msgid ""
 "The query returned %d results, although there should have been only one."
 msgstr "クエリーの実行結果が %d でしたが、唯一つでした。"
 
-#: ../classes/AbstractDb.php:261
+#: ../classes/AbstractDb.php:261 ../classes/AbstractDb.php:313
 #, php-format
 msgid "The query returned %d result(s)"
 msgstr "クエリーの実行結果 %d "
 
 #: ../classes/AbstractDb.php:319 ../classes/AbstractDb.php:330
+#: ../classes/AbstractDb.php:372 ../classes/AbstractDb.php:383
 #, php-format
 msgid "%d rows affected by the SQL query."
 msgstr "%d 列がSQLクエリーにより影響を受けました。"
@@ -2685,6 +2707,7 @@ msgstr ""
 
 #: ../classes/Content.php:227 ../classes/Content.php:1149
 #: ../classes/Content.php:1150 ../classes/Content.php:1166
+#: ../classes/Content.php:1160
 msgid "You must select a content type: "
 msgstr "コンテントタイプを選択してください:"
 
@@ -2694,7 +2717,7 @@ msgstr "新しいコンテントタイプの追加"
 
 #: ../classes/Content.php:432 ../classes/Content.php:883
 #: ../classes/Content.php:884 ../classes/Content.php:436
-#: ../classes/Content.php:898
+#: ../classes/Content.php:898 ../classes/Content.php:892
 msgid "The following content type isn't valid: "
 msgstr "入力されたコンテントタイプは有効ではありません:"
 
@@ -2732,114 +2755,121 @@ msgstr "アクション"
 #: ../classes/Content.php:791 ../classes/Content.php:573
 #: ../classes/Content.php:786 ../classes/Content.php:792
 #: ../classes/Content.php:577 ../classes/Content.php:799
-#: ../classes/Content.php:806
+#: ../classes/Content.php:806 ../classes/Content.php:793
+#: ../classes/Content.php:800
 msgid "Sorry, no content available in the database"
 msgstr "申し訳ありません。このデータベースの中にコンテンツはありません。"
 
 #: ../classes/Content.php:726 ../classes/Content.php:727
-#: ../classes/Content.php:735
+#: ../classes/Content.php:735 ../classes/Content.php:728
 msgid "Add existing content"
 msgstr "現在のコンテンツの追加"
 
 #: ../classes/Content.php:744 ../classes/Content.php:745
-#: ../classes/Content.php:753
+#: ../classes/Content.php:753 ../classes/Content.php:746
 msgid "Title"
 msgstr "タイトル"
 
 #: ../classes/Content.php:744 ../classes/Content.php:745
-#: ../classes/Content.php:753
+#: ../classes/Content.php:753 ../classes/Content.php:746
 msgid "Content type"
 msgstr "コンテントタイプ"
 
 #: ../classes/Content.php:888 ../classes/Content.php:889
-#: ../classes/Content.php:903
+#: ../classes/Content.php:903 ../classes/Content.php:897
 msgid "Update was unsuccessfull (database error)"
 msgstr "アップデートに失敗しました（データベースエラー）"
 
 #: ../classes/Content.php:905 ../classes/Content.php:906
-#: ../classes/Content.php:920
+#: ../classes/Content.php:920 ../classes/Content.php:914
 msgid "Unable to insert the new Owner into database."
 msgstr "データベースに新しいオーナーを追加できませんでした。"
 
 #: ../classes/Content.php:922 ../classes/Content.php:923
-#: ../classes/Content.php:937
+#: ../classes/Content.php:937 ../classes/Content.php:931
 msgid "Unable to remove the owner from the database."
 msgstr "データベースからオーナーを削除できませんでした。"
 
 #: ../classes/Content.php:1046 ../classes/Content.php:1047
-#: ../classes/Content.php:1061
+#: ../classes/Content.php:1061 ../classes/Content.php:1055
 msgid "Author(s):"
 msgstr "製作者:"
 
 #: ../classes/Content.php:1066 ../classes/Content.php:1067
-#: ../classes/Content.php:1081
+#: ../classes/Content.php:1081 ../classes/Content.php:1075
 msgid "Project information:"
 msgstr "プロジェクト情報:"
 
 #: ../classes/Content.php:1077 ../classes/Content.php:1078
-#: ../classes/Content.php:1092
+#: ../classes/Content.php:1092 ../classes/Content.php:1086
 msgid "Project sponsor:"
 msgstr "プロジェクトスポンサー:"
 
 #: ../classes/Content.php:1186 ../classes/Content.php:1187
 #: ../classes/Content.php:1185 ../classes/Content.php:1189
+#: ../classes/Content.php:1179 ../classes/Content.php:1183
 msgid "Title:"
 msgstr "タイトル:"
 
 #: ../classes/Content.php:1204 ../classes/Content.php:1205
-#: ../classes/Content.php:1274
+#: ../classes/Content.php:1274 ../classes/Content.php:1268
 msgid "Is persistent (reusable and read-only)?"
 msgstr "残しますか（読み込み専用で再利用可能）？"
 
 #: ../classes/Content.php:1214 ../classes/Content.php:1215
 #: ../classes/Content.php:1204 ../classes/Content.php:1208
+#: ../classes/Content.php:1198 ../classes/Content.php:1202
 msgid "Description:"
 msgstr "解説:"
 
 #: ../classes/Content.php:1232 ../classes/Content.php:1233
 #: ../classes/Content.php:1221 ../classes/Content.php:1225
+#: ../classes/Content.php:1215 ../classes/Content.php:1219
 msgid "Long description:"
 msgstr "詳細説明:"
 
 #: ../classes/Content.php:1250 ../classes/Content.php:1251
 #: ../classes/Content.php:1238 ../classes/Content.php:1242
+#: ../classes/Content.php:1232 ../classes/Content.php:1236
 msgid "Information on this project:"
 msgstr "このプロジェクトに関する情報:"
 
 #: ../classes/Content.php:1268 ../classes/Content.php:1269
 #: ../classes/Content.php:1255 ../classes/Content.php:1259
+#: ../classes/Content.php:1249 ../classes/Content.php:1253
 msgid "Sponsor of this project:"
 msgstr "このプロジェクトのスポンサー:"
 
 #: ../classes/Content.php:1286 ../classes/Content.php:1287
-#: ../classes/Content.php:1284
+#: ../classes/Content.php:1284 ../classes/Content.php:1278
 msgid "Content owner list"
 msgstr "コンテンツオーナー一覧"
 
 #: ../classes/Content.php:1319 ../classes/Node.php:962
 #: ../classes/Content.php:1320 ../classes/Content.php:1314
+#: ../classes/Content.php:1308
 msgid "Add owner"
 msgstr "オーナーの追加"
 
 #: ../classes/Content.php:1454 ../classes/Content.php:1455
-#: ../classes/Content.php:1452
+#: ../classes/Content.php:1452 ../classes/Content.php:1446
 msgid "Unable to set as author in the database."
 msgstr "データベースに製作者を追加できませんでした。"
 
-#: ../classes/MainUI.php:148
+#: ../classes/MainUI.php:148 ../classes/MainUI.php:151
 msgid "authentication server"
 msgstr "認証サーバー"
 
-#: ../classes/MainUI.php:175
+#: ../classes/MainUI.php:175 ../classes/MainUI.php:181
 #, php-format
 msgid "%s is not a valid structural display area"
 msgstr " %s は構造上の表示可能エリアではありません。"
 
-#: ../classes/MainUI.php:342
+#: ../classes/MainUI.php:342 ../classes/MainUI.php:374
 msgid "You do not have permissions to access any administration functions."
 msgstr "あなたは管理機能を利用する権限を持っていません。"
 
-#: ../classes/MainUI.php:386
+#: ../classes/MainUI.php:386 ../classes/MainUI.php:422
 msgid "Unknown section:"
 msgstr "不明なセクション:"
 
@@ -2854,22 +2884,25 @@ msgid "Please inform us of any problem or service interruption at: %s"
 msgstr "何か問題があったときには、サービス窓口へどうぞ : %s"
 
 #: ../classes/MainUI.php:607 ../classes/MainUI.php:599
+#: ../classes/MainUI.php:688
 #, php-format
 msgid "%s Login"
 msgstr "%s ログイン"
 
 #: ../classes/MainUI.php:607 smarty.txt:60 smarty.txt:154
 #: ../classes/MainUI.php:599 smarty.txt:133 smarty.txt:59 smarty.txt:132
-#: smarty.txt:148
+#: smarty.txt:148 ../classes/MainUI.php:688
 msgid "Login"
 msgstr "ログイン"
 
 #: ../classes/MainUI.php:611 ../classes/MainUI.php:603
+#: ../classes/MainUI.php:692
 #, php-format
 msgid "Click <a href='%s'>here</a> to continue"
 msgstr "<a href='%s'>こちらをクリック</a>して、操作を継続してください。"
 
 #: ../classes/MainUI.php:611 ../classes/MainUI.php:603
+#: ../classes/MainUI.php:692
 msgid ""
 "The transfer from secure login back to regular http may cause a warning."
 msgstr "セキュアログインから通常のHTTPに移動しようとしたための警告です。"
@@ -2920,7 +2953,7 @@ msgid "Get access statistics"
 msgstr "統計情報の取得"
 
 #: ../classes/Node.php:803 smarty.txt:204 smarty.txt:179 smarty.txt:178
-#: smarty.txt:201
+#: smarty.txt:201 smarty.txt:96
 msgid "ID"
 msgstr "ID"
 
@@ -2949,22 +2982,22 @@ msgid "Country"
 msgstr "国"
 
 #: ../classes/Node.php:863 smarty.txt:211 smarty.txt:186 smarty.txt:185
-#: smarty.txt:208
+#: smarty.txt:208 smarty.txt:103
 msgid "Public phone number"
 msgstr "代表電話番号"
 
 #: ../classes/Node.php:868 smarty.txt:212 smarty.txt:187 smarty.txt:186
-#: smarty.txt:209
+#: smarty.txt:209 smarty.txt:104
 msgid "Public email"
 msgstr "代表E-mailアドレス"
 
 #: ../classes/Node.php:873 smarty.txt:207 smarty.txt:182 smarty.txt:181
-#: smarty.txt:204
+#: smarty.txt:204 smarty.txt:99
 msgid "Homepage URL"
 msgstr "ホームページURL"
 
 #: ../classes/Node.php:878 smarty.txt:213 smarty.txt:188 smarty.txt:187
-#: smarty.txt:210
+#: smarty.txt:210 smarty.txt:105
 msgid "Mass transit info"
 msgstr "公共交通情報"
 
@@ -3004,7 +3037,7 @@ msgid "Use a geocoding service"
 msgstr "ジオコーディングサービスの利用"
 
 #: ../classes/Node.php:914 smarty.txt:209 smarty.txt:184 smarty.txt:183
-#: smarty.txt:206
+#: smarty.txt:206 smarty.txt:101
 msgid "Map URL"
 msgstr "Map URL"
 
@@ -3013,7 +3046,7 @@ msgid "GIS data"
 msgstr "GIS データ"
 
 #: ../classes/Node.php:927 smarty.txt:214 smarty.txt:189 smarty.txt:188
-#: smarty.txt:211
+#: smarty.txt:211 smarty.txt:106
 msgid "Node deployment status"
 msgstr "ノード配置ステータス"
 
@@ -3038,6 +3071,7 @@ msgid "Node configuration"
 msgstr "ノード設定"
 
 #: ../classes/Node.php:958 ../classes/Content.php:1305
+#: ../classes/Content.php:1299
 msgid "Remove owner"
 msgstr "オーナーの削除"
 
@@ -3115,7 +3149,8 @@ msgid "Change my password"
 msgstr "パスワードを変更します。"
 
 #: smarty.txt:3 smarty.txt:122 smarty.txt:169 smarty.txt:16 smarty.txt:84
-#: smarty.txt:167 smarty.txt:83 smarty.txt:166 smarty.txt:120
+#: smarty.txt:167 smarty.txt:83 smarty.txt:166 smarty.txt:120 smarty.txt:62
+#: smarty.txt:75
 msgid "Your username"
 msgstr "ユーザー名"
 
@@ -3131,7 +3166,7 @@ msgstr "新しいパスワード"
 msgid "(again)"
 msgstr "（確認のためもう一度）"
 
-#: smarty.txt:9 smarty.txt:22
+#: smarty.txt:9 smarty.txt:22 smarty.txt:7
 msgid ""
 "Please enter your current username, your current password, and your new "
 "password (with confirmation)"
@@ -3144,7 +3179,7 @@ msgstr ""
 msgid "You must specify your username and password"
 msgstr "ユーザー名とパスワードを指定してください。"
 
-#: smarty.txt:11 smarty.txt:2
+#: smarty.txt:11 smarty.txt:2 smarty.txt:19
 msgid "Status of all nodes of the"
 msgstr "全ノードのステータス"
 
@@ -3155,20 +3190,22 @@ msgstr "ネットワーク"
 
 #: smarty.txt:14 smarty.txt:183 smarty.txt:196 smarty.txt:5 smarty.txt:200
 #: smarty.txt:205 smarty.txt:199 smarty.txt:204 smarty.txt:180 smarty.txt:193
+#: smarty.txt:92 smarty.txt:121
 msgid "Id"
 msgstr "ノードID"
 
-#: smarty.txt:16 smarty.txt:7
+#: smarty.txt:16 smarty.txt:7 smarty.txt:20
 msgid "Local content demo"
 msgstr "ローカルコンテンツのデモ"
 
 #: smarty.txt:17 smarty.txt:114 smarty.txt:198 smarty.txt:8 smarty.txt:76
 #: smarty.txt:207 smarty.txt:75 smarty.txt:206 smarty.txt:112 smarty.txt:195
+#: smarty.txt:40 smarty.txt:94
 msgid "Opened on"
 msgstr "開設日"
 
 #: smarty.txt:19 smarty.txt:111 smarty.txt:10 smarty.txt:73 smarty.txt:72
-#: smarty.txt:109
+#: smarty.txt:109 smarty.txt:21
 msgid "days"
 msgstr "日"
 
@@ -3190,11 +3227,12 @@ msgstr "ログインページ"
 msgid "Portal page"
 msgstr "ポータルページ"
 
-#: smarty.txt:24
+#: smarty.txt:24 smarty.txt:8
 msgid "Frequently Asked Questions"
 msgstr "よくある質問"
 
-#: smarty.txt:25 smarty.txt:29 smarty.txt:33
+#: smarty.txt:25 smarty.txt:29 smarty.txt:33 smarty.txt:9 smarty.txt:11
+#: smarty.txt:13
 msgid "Q:"
 msgstr "Q:"
 
@@ -3202,7 +3240,8 @@ msgstr "Q:"
 msgid "Do I have to pay to get access to the Internet"
 msgstr "インターネットへ接続するために料金が必要ですか"
 
-#: smarty.txt:27 smarty.txt:31 smarty.txt:35
+#: smarty.txt:27 smarty.txt:31 smarty.txt:35 smarty.txt:10 smarty.txt:12
+#: smarty.txt:14
 msgid "A:"
 msgstr "A:"
 
@@ -3244,7 +3283,7 @@ msgstr ""
 msgid "Here is an overview of the steps"
 msgstr "手続きの概要"
 
-#: smarty.txt:37
+#: smarty.txt:37 smarty.txt:15
 msgid ""
 "Pick a username, enter your email address, and enter the password you would "
 "like. An email will be sent to you with a link you can click to validate "
@@ -3254,7 +3293,7 @@ msgstr ""
 "ください。E-mailが送信され、あなたのアカウントを有効にするためのリンクが記載"
 "されているので、それをクリックしてください。"
 
-#: smarty.txt:38
+#: smarty.txt:38 smarty.txt:16
 msgid ""
 "Once the account is created, you need Internet access in order to check your "
 "email and click the validation link. In order to get temporary access to the "
@@ -3266,7 +3305,7 @@ msgstr ""
 "インターネットアクセス権を再取得するには、どこかのURL（例えば www.google.co."
 "jp など）へアクセスし、再度ログインページへ移動してください。"
 
-#: smarty.txt:39
+#: smarty.txt:39 smarty.txt:17
 msgid ""
 "Enter your login information. You will be given 15 minutes of Internet "
 "access, plenty of time to check your email and click on the link"
@@ -3274,12 +3313,12 @@ msgstr ""
 "ログイン情報を入力してください。15分間の、インターネットアクセス権が与えられ"
 "るE-mailが届きますので、メールを確認し、リンク先へアクセスしてください。"
 
-#: smarty.txt:40
+#: smarty.txt:40 smarty.txt:18
 msgid "Once that last step is done, you will have full free Internet access"
 msgstr ""
 "最終手続きが終了しました。自由にインターネットへアクセスすることが出来ます。"
 
-#: smarty.txt:41
+#: smarty.txt:41 smarty.txt:25
 msgid "User administration"
 msgstr "ユーザー管理"
 
@@ -3295,7 +3334,7 @@ msgstr "オンラインユーザー"
 msgid "Import NoCat user database"
 msgstr "NoCatのユーザーデータベースをインポート"
 
-#: smarty.txt:46 smarty.txt:48
+#: smarty.txt:46 smarty.txt:48 smarty.txt:26
 msgid "Node administration"
 msgstr "ノード管理"
 
@@ -3307,7 +3346,7 @@ msgstr "ノード"
 msgid "Add new Node"
 msgstr "新しいノードの追加"
 
-#: smarty.txt:51 smarty.txt:50
+#: smarty.txt:51 smarty.txt:50 smarty.txt:27
 msgid "Network administration"
 msgstr "ネットワーク管理"
 
@@ -3315,7 +3354,7 @@ msgstr "ネットワーク管理"
 msgid "Networks"
 msgstr "ネットワーク"
 
-#: smarty.txt:53 smarty.txt:52
+#: smarty.txt:53 smarty.txt:52 smarty.txt:28
 msgid "Server administration"
 msgstr "サーバー管理"
 
@@ -3323,7 +3362,7 @@ msgstr "サーバー管理"
 msgid "Servers"
 msgstr "サーバー"
 
-#: smarty.txt:56 smarty.txt:55
+#: smarty.txt:56 smarty.txt:55 smarty.txt:22
 msgid "Logged in as"
 msgstr "ログイン"
 
@@ -3335,7 +3374,7 @@ msgstr "プロファイル"
 msgid "Logout"
 msgstr "ログアウト"
 
-#: smarty.txt:59 smarty.txt:58
+#: smarty.txt:59 smarty.txt:58 smarty.txt:23
 msgid "I am not logged in."
 msgstr "現在ログインしていません。"
 
@@ -3358,29 +3397,29 @@ msgstr "ホットスポットの展開状況"
 msgid "Full node technical status (includes non-deployed nodes)"
 msgstr "全ノードの状況表示（未配置ノードも含む）"
 
-#: smarty.txt:66 smarty.txt:116 smarty.txt:115 smarty.txt:64
+#: smarty.txt:66 smarty.txt:116 smarty.txt:115 smarty.txt:64 smarty.txt:41
 msgid "Show me the closest hotspot"
 msgstr "閉じられたホットスポットの閲覧"
 
-#: smarty.txt:67 smarty.txt:117 smarty.txt:116 smarty.txt:65
+#: smarty.txt:67 smarty.txt:117 smarty.txt:116 smarty.txt:65 smarty.txt:42
 msgid "Enter your postal code"
 msgstr "郵便番号を入力してください。"
 
-#: smarty.txt:68 smarty.txt:118 smarty.txt:117 smarty.txt:66
+#: smarty.txt:68 smarty.txt:118 smarty.txt:117 smarty.txt:66 smarty.txt:43
 msgid "Show"
 msgstr "一覧"
 
-#: smarty.txt:69 smarty.txt:119 smarty.txt:118 smarty.txt:67
+#: smarty.txt:69 smarty.txt:119 smarty.txt:118 smarty.txt:67 smarty.txt:44
 msgid "Refresh map"
 msgstr "地図の再読み込み"
 
 #: smarty.txt:70 smarty.txt:102 smarty.txt:143 smarty.txt:64 smarty.txt:120
 #: smarty.txt:157 smarty.txt:63 smarty.txt:119 smarty.txt:156 smarty.txt:68
-#: smarty.txt:100 smarty.txt:141
+#: smarty.txt:100 smarty.txt:141 smarty.txt:45
 msgid "Deployed HotSpots map"
 msgstr "ホットスポット配置図"
 
-#: smarty.txt:72 smarty.txt:122 smarty.txt:121 smarty.txt:70
+#: smarty.txt:72 smarty.txt:122 smarty.txt:121 smarty.txt:70 smarty.txt:47
 msgid "Legend"
 msgstr "警告"
 
@@ -3396,15 +3435,15 @@ msgstr "ホットスポットがダウンしています。"
 msgid "not monitored"
 msgstr "モニター以外"
 
-#: smarty.txt:77 smarty.txt:89 smarty.txt:88 smarty.txt:75
+#: smarty.txt:77 smarty.txt:89 smarty.txt:88 smarty.txt:75 smarty.txt:70
 msgid "user is online at this hotspot"
 msgstr "このホットスポットからオンラインのユーザー"
 
-#: smarty.txt:78 smarty.txt:90 smarty.txt:89 smarty.txt:76
+#: smarty.txt:78 smarty.txt:90 smarty.txt:89 smarty.txt:76 smarty.txt:71
 msgid "users are online at this hotspot"
 msgstr "このホットスポットからオンラインのユーザー"
 
-#: smarty.txt:79 smarty.txt:91 smarty.txt:90 smarty.txt:77
+#: smarty.txt:79 smarty.txt:91 smarty.txt:90 smarty.txt:77 smarty.txt:72
 msgid "Nobody is online at this hotspot"
 msgstr "このホットスポットからオンラインのユーザーはいません。"
 
@@ -3415,7 +3454,8 @@ msgstr "インターネットを利用する"
 #: smarty.txt:81 smarty.txt:116 smarty.txt:156 smarty.txt:163 smarty.txt:172
 #: smarty.txt:78 smarty.txt:93 smarty.txt:134 smarty.txt:161 smarty.txt:170
 #: smarty.txt:77 smarty.txt:92 smarty.txt:133 smarty.txt:160 smarty.txt:169
-#: smarty.txt:79 smarty.txt:114 smarty.txt:149
+#: smarty.txt:79 smarty.txt:114 smarty.txt:149 smarty.txt:59 smarty.txt:60
+#: smarty.txt:65 smarty.txt:73
 msgid "I'm having difficulties"
 msgstr "問題がある時はこちら"
 
@@ -3449,26 +3489,26 @@ msgstr "認証E-mailの再送信"
 msgid "Frequently asked questions"
 msgstr "FAQ"
 
-#: smarty.txt:86 smarty.txt:98 smarty.txt:97 smarty.txt:84
+#: smarty.txt:86 smarty.txt:98 smarty.txt:97 smarty.txt:84 smarty.txt:78
 msgid "Register a free account with"
 msgstr "フリーアカウントの登録"
 
-#: smarty.txt:87 smarty.txt:99 smarty.txt:98 smarty.txt:85
+#: smarty.txt:87 smarty.txt:99 smarty.txt:98 smarty.txt:85 smarty.txt:79
 msgid "Username desired"
 msgstr "希望するユーザー名"
 
 #: smarty.txt:88 smarty.txt:123 smarty.txt:178 smarty.txt:85 smarty.txt:100
 #: smarty.txt:176 smarty.txt:84 smarty.txt:99 smarty.txt:175 smarty.txt:86
-#: smarty.txt:121
+#: smarty.txt:121 smarty.txt:63 smarty.txt:67 smarty.txt:80
 msgid "Your email address"
 msgstr "E-mailアドレス"
 
 #: smarty.txt:89 smarty.txt:153 smarty.txt:101 smarty.txt:132 smarty.txt:100
-#: smarty.txt:131 smarty.txt:87 smarty.txt:147
+#: smarty.txt:131 smarty.txt:87 smarty.txt:147 smarty.txt:58 smarty.txt:81
 msgid "Password"
 msgstr "パスワード"
 
-#: smarty.txt:90 smarty.txt:102 smarty.txt:101 smarty.txt:88
+#: smarty.txt:90 smarty.txt:102 smarty.txt:101 smarty.txt:88 smarty.txt:82
 msgid "Password (again)"
 msgstr "パスワード（確認）"
 
@@ -3476,11 +3516,11 @@ msgstr "パスワード（確認）"
 msgid "Sign-up"
 msgstr "登録"
 
-#: smarty.txt:92 smarty.txt:104 smarty.txt:103 smarty.txt:90
+#: smarty.txt:92 smarty.txt:104 smarty.txt:103 smarty.txt:90 smarty.txt:83
 msgid "Please note"
 msgstr "記録"
 
-#: smarty.txt:93 smarty.txt:105 smarty.txt:104 smarty.txt:91
+#: smarty.txt:93 smarty.txt:105 smarty.txt:104 smarty.txt:91 smarty.txt:84
 msgid ""
 "While accounts are free, we <em>strongly</em> suggest that you use your "
 "previously created account if you have one."
@@ -3488,26 +3528,26 @@ msgstr ""
 "しばらくの間、アカウントは自由です。もしあなたがすでにアカウントを持っている"
 "ならば、そちらのアカウントを使っていただけるよう強く望みます。"
 
-#: smarty.txt:94 smarty.txt:106 smarty.txt:105 smarty.txt:92
+#: smarty.txt:94 smarty.txt:106 smarty.txt:105 smarty.txt:92 smarty.txt:85
 msgid ""
 "<b>Your email address must be valid</b> in order for your account to be "
 "activated."
 msgstr ""
 "あなたのアカウントを有効にするためには、E-mailアドレスが必須となります。"
 
-#: smarty.txt:95 smarty.txt:107 smarty.txt:106 smarty.txt:93
+#: smarty.txt:95 smarty.txt:107 smarty.txt:106 smarty.txt:93 smarty.txt:86
 msgid "A validation email will be sent to that email address."
 msgstr "このE-mailアドレスに、認証用E-mailを送信します。"
 
-#: smarty.txt:96 smarty.txt:108 smarty.txt:107 smarty.txt:94
+#: smarty.txt:96 smarty.txt:108 smarty.txt:107 smarty.txt:94 smarty.txt:87
 msgid "To fully activate your account you must respond to that email."
 msgstr "全ての機能を有効にするためには、E-mailを確認する必要があります。"
 
-#: smarty.txt:97 smarty.txt:109 smarty.txt:108 smarty.txt:95
+#: smarty.txt:97 smarty.txt:109 smarty.txt:108 smarty.txt:95 smarty.txt:88
 msgid "Note to free web-based email users"
 msgstr "フリーメールで登録している利用者一覧"
 
-#: smarty.txt:98 smarty.txt:110 smarty.txt:109 smarty.txt:96
+#: smarty.txt:98 smarty.txt:110 smarty.txt:109 smarty.txt:96 smarty.txt:89
 msgid ""
 "Sometimes our validation email ends up in the 'spam' folder of some "
 "providers. If you have not received any email with the validation URL 5 "
@@ -3517,11 +3557,11 @@ msgstr ""
 "断されることがあります。もしあなたが５分以上経過しても私たちからのメールを受"
 "け取ることができない場合、迷惑メールフォルダーを確認してみてください。"
 
-#: smarty.txt:99 smarty.txt:111 smarty.txt:110 smarty.txt:97
+#: smarty.txt:99 smarty.txt:111 smarty.txt:110 smarty.txt:97 smarty.txt:90
 msgid "You can also use the following links if you need help"
 msgstr "何かわからないことがあれば、以下のリンクを参考にしてください。"
 
-#: smarty.txt:104 smarty.txt:66 smarty.txt:65 smarty.txt:102
+#: smarty.txt:104 smarty.txt:66 smarty.txt:65 smarty.txt:102 smarty.txt:34
 msgid "Status of the"
 msgstr "ステータス数"
 
@@ -3533,19 +3573,19 @@ msgstr "稼動中の"
 msgid "Hotspots (Get this list as a <a href='?format=RSS'>RSS feed</a>)"
 msgstr "ホットスポット(この一覧を取得するための<a href='?format=RSS'>RSS</a>)"
 
-#: smarty.txt:107 smarty.txt:69 smarty.txt:68 smarty.txt:105
+#: smarty.txt:107 smarty.txt:69 smarty.txt:68 smarty.txt:105 smarty.txt:35
 msgid "Hotspot / Status"
 msgstr "ステータス / ホットスポット"
 
-#: smarty.txt:109 smarty.txt:71 smarty.txt:70 smarty.txt:107
+#: smarty.txt:109 smarty.txt:71 smarty.txt:70 smarty.txt:107 smarty.txt:37
 msgid "Location"
 msgstr "設置場所"
 
-#: smarty.txt:110 smarty.txt:72 smarty.txt:71 smarty.txt:108
+#: smarty.txt:110 smarty.txt:72 smarty.txt:71 smarty.txt:108 smarty.txt:38
 msgid "Hotspot in testing phase"
 msgstr "テストフェーズ中のホットスポット"
 
-#: smarty.txt:121 smarty.txt:83 smarty.txt:82 smarty.txt:119
+#: smarty.txt:121 smarty.txt:83 smarty.txt:82 smarty.txt:119 smarty.txt:61
 msgid "Lost password"
 msgstr "パスワード紛失"
 
@@ -3553,7 +3593,7 @@ msgstr "パスワード紛失"
 msgid "Reset my password"
 msgstr "パスワードの初期化"
 
-#: smarty.txt:125 smarty.txt:87 smarty.txt:86 smarty.txt:123
+#: smarty.txt:125 smarty.txt:87 smarty.txt:86 smarty.txt:123 smarty.txt:64
 msgid "Please enter your username or email address to reset your password"
 msgstr ""
 "パスワードを初期化したいユーザー名またはE-mailアドレスを入力してください。"
@@ -3622,7 +3662,7 @@ msgstr "稼動中です"
 msgid "Administration"
 msgstr "管理"
 
-#: smarty.txt:147 smarty.txt:126 smarty.txt:125 smarty.txt:156
+#: smarty.txt:147 smarty.txt:126 smarty.txt:125 smarty.txt:156 smarty.txt:30
 msgid ""
 "We are a not-for-profit group dedicated to making no-fee wireless Internet "
 "access generally available."
@@ -3630,23 +3670,23 @@ msgstr ""
 "私たちは非営利団体で、費用なしでアクセスできるワイヤレスインターネット環境構"
 "築を目指しています。"
 
-#: smarty.txt:150 smarty.txt:129 smarty.txt:128 smarty.txt:159
+#: smarty.txt:150 smarty.txt:129 smarty.txt:128 smarty.txt:159 smarty.txt:33
 msgid "For a complete and up-to-date listing of our nodes, visit"
 msgstr "私たちのノードへようこそ。"
 
-#: smarty.txt:151 smarty.txt:130 smarty.txt:129 smarty.txt:145
+#: smarty.txt:151 smarty.txt:130 smarty.txt:129 smarty.txt:145 smarty.txt:56
 msgid "Login or Signup here"
 msgstr "ログインまたは登録"
 
-#: smarty.txt:152 smarty.txt:131 smarty.txt:130 smarty.txt:146
+#: smarty.txt:152 smarty.txt:131 smarty.txt:130 smarty.txt:146 smarty.txt:57
 msgid "Username (or email)"
 msgstr "ユーザー名（またはE-mail）"
 
-#: smarty.txt:162 smarty.txt:63 smarty.txt:62 smarty.txt:155
+#: smarty.txt:162 smarty.txt:63 smarty.txt:62 smarty.txt:155 smarty.txt:29
 msgid "Please get in touch with "
 msgstr "ここに触れてください。"
 
-#: smarty.txt:168 smarty.txt:166 smarty.txt:165
+#: smarty.txt:168 smarty.txt:166 smarty.txt:165 smarty.txt:74
 msgid "Re-send validation email"
 msgstr "認証メールの再送信"
 
@@ -3654,7 +3694,7 @@ msgstr "認証メールの再送信"
 msgid "Re-send"
 msgstr "再送"
 
-#: smarty.txt:171 smarty.txt:169 smarty.txt:168
+#: smarty.txt:171 smarty.txt:169 smarty.txt:168 smarty.txt:76
 msgid ""
 "Please enter your username and the validation email will be resent to your "
 "email address"
@@ -3662,7 +3702,7 @@ msgstr ""
 "あなたのユーザー名と有効なE-mailアドレスを入力してください。メールを再送信い"
 "たします。"
 
-#: smarty.txt:177 smarty.txt:175 smarty.txt:174
+#: smarty.txt:177 smarty.txt:175 smarty.txt:174 smarty.txt:66
 msgid "Lost username"
 msgstr "ユーザー名の紛失"
 
@@ -3670,40 +3710,40 @@ msgstr "ユーザー名の紛失"
 msgid "Retrieve"
 msgstr "回収"
 
-#: smarty.txt:180 smarty.txt:178 smarty.txt:177
+#: smarty.txt:180 smarty.txt:178 smarty.txt:177 smarty.txt:68
 msgid "Please enter your email address to recover your username"
 msgstr ""
 "あなたのE-mailアドレスを入力してください。あなたのユーザー名をメールでご連絡"
 "いたします。"
 
 #: smarty.txt:181 smarty.txt:194 smarty.txt:198 smarty.txt:203 smarty.txt:197
-#: smarty.txt:202 smarty.txt:178 smarty.txt:191
+#: smarty.txt:202 smarty.txt:178 smarty.txt:191 smarty.txt:91 smarty.txt:120
 msgid "Configurations of all nodes of the"
 msgstr "全ノードの設定"
 
 #: smarty.txt:185 smarty.txt:199 smarty.txt:224 smarty.txt:202 smarty.txt:208
 #: smarty.txt:222 smarty.txt:201 smarty.txt:207 smarty.txt:221 smarty.txt:182
-#: smarty.txt:196
+#: smarty.txt:196 smarty.txt:95 smarty.txt:110 smarty.txt:123
 msgid "Action"
 msgstr "アクション"
 
-#: smarty.txt:186 smarty.txt:213 smarty.txt:212 smarty.txt:183
+#: smarty.txt:186 smarty.txt:213 smarty.txt:212 smarty.txt:183 smarty.txt:124
 msgid "User list"
 msgstr "ユーザー一覧"
 
-#: smarty.txt:187 smarty.txt:214 smarty.txt:213 smarty.txt:184
+#: smarty.txt:187 smarty.txt:214 smarty.txt:213 smarty.txt:184 smarty.txt:125
 msgid "Sort by:"
 msgstr "整列 :"
 
-#: smarty.txt:188 smarty.txt:215 smarty.txt:214 smarty.txt:185
+#: smarty.txt:188 smarty.txt:215 smarty.txt:214 smarty.txt:185 smarty.txt:126
 msgid "Direction:"
 msgstr "方向 :"
 
-#: smarty.txt:189 smarty.txt:216 smarty.txt:215 smarty.txt:186
+#: smarty.txt:189 smarty.txt:216 smarty.txt:215 smarty.txt:186 smarty.txt:127
 msgid "Sort"
 msgstr "整列"
 
-#: smarty.txt:192 smarty.txt:219 smarty.txt:218 smarty.txt:189
+#: smarty.txt:192 smarty.txt:219 smarty.txt:218 smarty.txt:189 smarty.txt:130
 msgid "Registered On"
 msgstr "登録日"
 
@@ -3715,43 +3755,43 @@ msgstr "オーナー"
 msgid "Add a new node"
 msgstr "新しいノードの追加"
 
-#: smarty.txt:206 smarty.txt:181 smarty.txt:180 smarty.txt:203
+#: smarty.txt:206 smarty.txt:181 smarty.txt:180 smarty.txt:203 smarty.txt:98
 msgid "RSS URL"
 msgstr "RSS URL"
 
-#: smarty.txt:210 smarty.txt:185 smarty.txt:184 smarty.txt:207
+#: smarty.txt:210 smarty.txt:185 smarty.txt:184 smarty.txt:207 smarty.txt:102
 msgid "Street address"
 msgstr "通りの名前"
 
-#: smarty.txt:215 smarty.txt:190 smarty.txt:189 smarty.txt:212
+#: smarty.txt:215 smarty.txt:190 smarty.txt:189 smarty.txt:212 smarty.txt:107
 msgid "Add new node"
 msgstr "新しいノードの追加"
 
-#: smarty.txt:216 smarty.txt:191 smarty.txt:190 smarty.txt:213
+#: smarty.txt:216 smarty.txt:191 smarty.txt:190 smarty.txt:213 smarty.txt:108
 msgid "Update node"
 msgstr "ノードのアップデート"
 
-#: smarty.txt:220 smarty.txt:195 smarty.txt:194 smarty.txt:217
+#: smarty.txt:220 smarty.txt:195 smarty.txt:194 smarty.txt:217 smarty.txt:117
 msgid "Origin"
 msgstr "オリジナル"
 
-#: smarty.txt:221 smarty.txt:196 smarty.txt:195 smarty.txt:218
+#: smarty.txt:221 smarty.txt:196 smarty.txt:195 smarty.txt:218 smarty.txt:118
 msgid "Logged in Since"
 msgstr "登録日"
 
-#: smarty.txt:222 smarty.txt:197 smarty.txt:196 smarty.txt:219
+#: smarty.txt:222 smarty.txt:197 smarty.txt:196 smarty.txt:219 smarty.txt:119
 msgid "Traffic IN/OUT"
 msgstr "In/Outトラフィック"
 
-#: smarty.txt:223 smarty.txt:221 smarty.txt:220
+#: smarty.txt:223 smarty.txt:221 smarty.txt:220 smarty.txt:109
 msgid "Administrators"
 msgstr "管理者"
 
-#: smarty.txt:225 smarty.txt:223 smarty.txt:222
+#: smarty.txt:225 smarty.txt:223 smarty.txt:222 smarty.txt:111
 msgid "Give a user rights to administer this node"
 msgstr "このノードの管理者権限をユーザーに与えてください。"
 
-#: smarty.txt:226 smarty.txt:224 smarty.txt:223
+#: smarty.txt:226 smarty.txt:224 smarty.txt:223 smarty.txt:112
 msgid "User ID"
 msgstr "ユーザーID"
 
@@ -3814,39 +3854,41 @@ msgstr ""
 msgid "Delete %s %d"
 msgstr ""
 
-#: ../classes/Content.php:1179
+#: ../classes/Content.php:1179 ../classes/Content.php:1173
 #, php-format
 msgid "%s MetaData"
 msgstr ""
 
 #: ../classes/Content.php:1193 ../classes/Content.php:1212
 #: ../classes/Content.php:1229 ../classes/Content.php:1246
-#: ../classes/Content.php:1263
+#: ../classes/Content.php:1263 ../classes/Content.php:1187
+#: ../classes/Content.php:1206 ../classes/Content.php:1223
+#: ../classes/Content.php:1240 ../classes/Content.php:1257
 #, php-format
 msgid "Delete %s (%s)"
 msgstr ""
 
-#: ../classes/Content.php:1193
+#: ../classes/Content.php:1193 ../classes/Content.php:1187
 msgid "title"
 msgstr ""
 
-#: ../classes/Content.php:1212
+#: ../classes/Content.php:1212 ../classes/Content.php:1206
 msgid "description"
 msgstr ""
 
-#: ../classes/Content.php:1229
+#: ../classes/Content.php:1229 ../classes/Content.php:1223
 msgid "long description"
 msgstr ""
 
-#: ../classes/Content.php:1246
+#: ../classes/Content.php:1246 ../classes/Content.php:1240
 msgid "project information"
 msgstr ""
 
-#: ../classes/Content.php:1263
+#: ../classes/Content.php:1263 ../classes/Content.php:1257
 msgid "sponsor"
 msgstr ""
 
-#: ../classes/Content.php:1270
+#: ../classes/Content.php:1270 ../classes/Content.php:1264
 #, php-format
 msgid "%s access control"
 msgstr ""
@@ -3855,14 +3897,70 @@ msgstr ""
 msgid "Filter:"
 msgstr ""
 
-#: smarty.txt:157
+#: smarty.txt:157 smarty.txt:31
 msgid ""
 "Our aim is to encourage the growth of wireless networking and to build "
 "community in interesting and innovative ways."
 msgstr ""
 
-#: smarty.txt:158
+#: smarty.txt:158 smarty.txt:32
 msgid ""
 "We do this by setting up wireless Internet networks in parks, cafés, "
 "restaurants, bars and other publically-accessible locations across the city."
+msgstr ""
+
+#: ../classes/Content/File/File.php:445
+msgid "Last update date"
+msgstr ""
+
+#: ../classes/Content/Picture/Picture.php:234
+msgid "Hyperlink URL (leave empty if you don't need it)"
+msgstr ""
+
+#: ../classes/StatisticReport/UserRegistrationReport.php:157
+msgid ""
+"Note:  This is actually a list of how many new user's first connection "
+"occured at each hotspot, taking report restrictions into account.  It "
+"includes non-validated users who successfully connected."
+msgstr ""
+
+#: smarty.txt:39
+msgid "Hotspot not monitored"
+msgstr ""
+
+#: smarty.txt:48
+#, php-format
+msgid "The %s network currently has one valid user."
+msgstr ""
+
+#: smarty.txt:49
+#, php-format
+msgid "The %s network currently has %d valid users."
+msgstr ""
+
+#: smarty.txt:50
+msgid "One user is currently online."
+msgstr ""
+
+#: smarty.txt:51
+#, php-format
+msgid "%d users are currently online."
+msgstr ""
+
+#: smarty.txt:52
+msgid "This network currently has 1 deployed hotspot."
+msgstr ""
+
+#: smarty.txt:53
+#, php-format
+msgid "This network currently has %d deployed hotspots."
+msgstr ""
+
+#: smarty.txt:54
+msgid "One hotspot is currently operationnal."
+msgstr ""
+
+#: smarty.txt:55
+#, php-format
+msgid "%d hotspots are currently operationnal."
 msgstr ""

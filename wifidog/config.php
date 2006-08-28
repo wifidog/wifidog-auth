@@ -117,6 +117,12 @@ define('CONF_DATABASE_NAME', 'wifidog');
  */
 define('CONF_USE_CRON_FOR_DB_CLEANUP', false);
 
+/**
+ * SQL queries profiling
+ */
+
+define('LOG_SQL_QUERIES', false);
+
 /********************************************************************\
  * WEBSERVER CONFIGURATION                                          *
 \********************************************************************/
