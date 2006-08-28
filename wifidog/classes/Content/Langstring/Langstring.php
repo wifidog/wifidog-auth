@@ -128,7 +128,7 @@ class Langstring extends Content {
             $this->mBd->execSqlUniqueRes($sql, $row, false);
 
             if ($row == null) {
-                $retval = sprintf(_("(Empty $s)"), get_class($this));
+                $retval = sprintf(_("(Empty %s)"), get_class($this));
             } else {
                 $retval = $row['value'];
 

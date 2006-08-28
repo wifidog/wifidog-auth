@@ -1236,23 +1236,19 @@ class Network implements GenericObject {
         $html .= "<fieldset class='admin_container ".get_class($this)."'>\n";
         $html .= "<legend>"._("Network management")."</legend>\n";
         $html .= "<ul class='admin_element_list'>\n";
+
+        // Content management
+        $title = _("Network content");
+        $name = "network_".$this->id."_content";
+        $data = Content :: getLinkedContentUI($name, "network_has_content", "network_id", $this->id, $display_page = "portal");
+        $html .= InterfaceElements :: generateAdminSectionContainer("network_content", $title, $data);
+
         // network_id
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<div class='admin_element_label'>"._("Network ID")." : </div>\n";
         $html .= "<div class='admin_element_data'>\n";
         $value = htmlspecialchars($this->getId(), ENT_QUOTES);
         $html .= $value;
-        $html .= "</div>\n";
-        $html .= "</li>\n";
-
-        // creation_date
-        $name = "network_".$this->getId()."_creation_date";
-        $value = htmlspecialchars($this->getCreationDate(), ENT_QUOTES);
-
-        $html .= "<li class='admin_element_item_container'>\n";
-        $html .= "<div class='admin_element_label'>"._("Network creation date").":</div>\n";
-        $html .= "<div class='admin_element_data'>\n";
-        $html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
         $html .= "</div>\n";
         $html .= "</li>\n";
 
@@ -1266,6 +1262,17 @@ class Network implements GenericObject {
         $html .= "</div>\n";
         $html .= "</li>\n";
 
+        // creation_date
+        $name = "network_".$this->getId()."_creation_date";
+        $value = htmlspecialchars($this->getCreationDate(), ENT_QUOTES);
+
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>"._("Network creation date").":</div>\n";
+        $html .= "<div class='admin_element_data'>\n";
+        $html .= "<input type='text' size ='50' value='$value' name='$name'>\n";
+        $html .= "</div>\n";
+        $html .= "</li>\n";
+        
         // homepage_url
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<div class='admin_element_label'>"._("Network's web site")." : </div>\n";
@@ -1439,11 +1446,6 @@ class Network implements GenericObject {
         $html .= "</div>\n";
         $html .= "</li>\n";
 
-        // Content management
-        $title = _("Network content");
-        $name = "network_".$this->id."_content";
-        $data = Content :: getLinkedContentUI($name, "network_has_content", "network_id", $this->id, $display_page = "portal");
-        $html .= InterfaceElements :: generateAdminSectionContainer("network_content", $title, $data);
         $html .= "</ul>\n";
         $html .= "</fieldset>\n";
         return $html;
@@ -1457,14 +1459,18 @@ class Network implements GenericObject {
         if (!$this->hasAdminAccess($user)) {
             throw new Exception(_('Access denied!'));
         }
-
-        // creation_date
-        $name = "network_".$this->getId()."_creation_date";
-        $this->setCreationDate($_REQUEST[$name]);
+        
+        // Content management
+        $name = "network_".$this->id."_content";
+        Content :: processLinkedContentUI($name, 'network_has_content', 'network_id', $this->id);
 
         // name
         $name = "network_".$this->getId()."_name";
         $this->setName($_REQUEST[$name]);
+        
+        // creation_date
+        $name = "network_".$this->getId()."_creation_date";
+        $this->setCreationDate($_REQUEST[$name]);
 
         // homepage_url
         $name = "network_".$this->getId()."_homepage_url";
@@ -1534,9 +1540,6 @@ class Network implements GenericObject {
             $url = GENERIC_OBJECT_ADMIN_ABS_HREF."?".http_build_query(array ("object_class" => "Node", "action" => "edit", "object_id" => $new_node->getId()));
             header("Location: {$url}");
         }
-        // Content management
-        $name = "network_".$this->id."_content";
-        Content :: processLinkedContentUI($name, 'network_has_content', 'network_id', $this->id);
     }
 
     /** Add network-wide content to this network */

@@ -809,20 +809,26 @@ class Node implements GenericObject
 		}
 		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_id", $_title, $_data);
 
-		// Creation date
-		$_title = _("Creation date");
-		if ($_userIsAdmin) {
-            $_data = DateTime::getSelectDateTimeUI(new DateTime($this->getCreationDate()), "node_" . $hashed_node_id . "_creation_date", DateTime::INTERFACE_DATETIME_FIELD, "node_creation_date_input");
-		} else {
-            $_data  = htmlspecialchars($this->getCreationDate(), ENT_QUOTES);
-    		$_data .= InterfaceElements::generateInputHidden("node_" . $hashed_node_id . "_creation_date", $this->getCreationDate());
-		}
-		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_creation_date", $_title, $_data);
-
-		// Name
+        //Node content
+        $_html_content = array();
+        $_title = _("Node content");
+        $_data = Content::getLinkedContentUI("node_" . $hashed_node_id . "_content", "node_has_content", "node_id", $this->id, "portal");
+        $html .= InterfaceElements::generateAdminSectionContainer("node_content", $_title, $_data);
+ 
+ 		// Name
 		$_title = _("Name");
 		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_name", $this->getName(), "node_name_input");
 		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_name", $_title, $_data);
+
+        // Creation date
+        $_title = _("Creation date");
+        if ($_userIsAdmin) {
+            $_data = DateTime::getSelectDateTimeUI(new DateTime($this->getCreationDate()), "node_" . $hashed_node_id . "_creation_date", DateTime::INTERFACE_DATETIME_FIELD, "node_creation_date_input");
+        } else {
+            $_data  = htmlspecialchars($this->getCreationDate(), ENT_QUOTES);
+            $_data .= InterfaceElements::generateInputHidden("node_" . $hashed_node_id . "_creation_date", $this->getCreationDate());
+        }
+        $_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_creation_date", $_title, $_data);
 
 		// Description
 		$_title = _("Description");
@@ -983,19 +989,6 @@ class Node implements GenericObject
 		// Build section
 		$html .= InterfaceElements::generateAdminSectionContainer("node_access_rights", _("Access rights"), implode(null, $_html_access_rights));
 
-		/*
-		 * Node content
-		 */
-		$_html_content = array();
-
-		// Node content
-		$_title = _("Node content");
-		$_data = Content::getLinkedContentUI("node_" . $this->id . "_content", "node_has_content", "node_id", $this->id, "portal");
-		$_html_content[] = InterfaceElements::generateAdminSectionContainer("node_content", $_title, $_data);
-
-		// Build section
-		$html .= InterfaceElements::generateAdminSectionContainer("node_content", _("Node content"), implode(null, $_html_content));
-
 		$html .= "</ul>\n";
 		$html .= "</fieldset>";
 
@@ -1020,6 +1013,9 @@ class Node implements GenericObject
 
 		// Hashed node_id (this is a workaround since PHP auto-converts HTTP vars var periods, spaces or underscores )
 		$hashed_node_id = md5($this->getId());
+       // Content processing
+        $name = "node_{$hashed_node_id}_content";
+        Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id);
 
 		// Name
 		if ($_userIsAdmin) {
@@ -1029,7 +1025,7 @@ class Node implements GenericObject
     		$this->setName($this->getName());
 		}
 
-		// Creation date
+ 		// Creation date
 		if ($_userIsAdmin) {
     		$name = "node_".$hashed_node_id."_creation_date";
     		$this->setCreationDate(DateTime::processSelectDateTimeUI($name, DateTime :: INTERFACE_DATETIME_FIELD)->getIso8601FormattedString());
@@ -1203,11 +1199,7 @@ class Node implements GenericObject
 			}
 		}
 
-		// Content processing
-		$name = "node_{$this->id}_content";
-		Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id);
-
-		// Name
+		// Id
 		$name = "node_".$hashed_node_id."_id";
 		$this->setId($_REQUEST[$name]);
 	}

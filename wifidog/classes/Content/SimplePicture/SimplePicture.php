@@ -38,25 +38,23 @@
  * @subpackage ContentClasses
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
- * @version    Subversion $Id$
+ * @version    Subversion $Id: TrivialLangstring.php 1031 2006-05-10 18:56:02Z benoitg $
  * @link       http://www.wifidog.org/
  */
 
 /**
  * Load required classes
  */
-require_once('classes/LocaleList.php');
-require_once('classes/Locale.php');
 
 /**
- * Represents a simple Langstring (no title, description, etc.)
+ * Represents a simple picture (no title, description, etc.)
  *
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  */
-class TrivialLangstring extends Langstring
+class SimplePicture extends Picture
 {
     /**
      * Constructor
@@ -73,21 +71,9 @@ class TrivialLangstring extends Langstring
         $this->setIsTrivialContent(true);
 
         /*
-         * A TrivialLangstring is NEVER persistent
+         * A SimplePicture is NEVER persistent
          */
         parent::setIsPersistent(false);
-    }
-
-    /**
-     * A short string representation of the content
-     *
-     * @return string Returns the content
-     *
-     * @access public
-     */
-    public function __toString()
-    {
-        return $this->getString();
     }
 
     /**
