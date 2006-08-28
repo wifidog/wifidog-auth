@@ -138,7 +138,7 @@ class Content implements GenericObject {
 
         // By default content display logging is enabled
         $this->setLoggingStatus(true);
-        $this->log_as_content &= $this;
+        $this->log_as_content =& $this;
     }
 
     /**
