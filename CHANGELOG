@@ -1,7 +1,13 @@
+2006-08-29 Max Horváth <max.horvath@maxspot.de>
+	* Cleaned up PHPdoc tags
+	* Updated german translation
+	* Updated portuguese translation, thanks to Gabriel Hahmann
+	* Added spanish translation, thanks to Ricardo Jose Guevara Ochoa
+
 2006-08-28 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Add SimplePicture content type
 	* Fix #225 (For both nodes and networks)
-	
+
 2006-08-28 Max Horváth <max.horvath@maxspot.de>
 	* Integrated KML node list export
 	* Integrated PDF node list export

@@ -185,14 +185,16 @@ global $AVAIL_LOCALE_ARRAY;
  * system will NOT warn you that both will have identical results.
  * Note that even if your system uses locales like fr_CA.UTF8, you do not need
  * to change this, ifidog will translate for you.
- * @TODO:  Setting an array of only one entry should disable the language select
- * box.
+ *
+ * @todo Setting an array of only one entry should disable the language select
+ *       box.
  */
 $AVAIL_LOCALE_ARRAY = array('fr_CA' => 'Français',
                             'en_US' => 'English',
                             'de_DE' => 'Deutsch',
-                            'ja_JP' => '日本語 (Japanese)',
-                            'pt_PT' => 'Português');
+                            'es_ES' => 'Español',
+                            'pt_BR' => 'Português',
+                            'ja_JP' => '日本語');
 
 /**
  * Default language

@@ -218,7 +218,7 @@ class Locale {
         global $session;
          global $AVAIL_LOCALE_ARRAY;
         $retval = false;
- 
+
         // Get new locale ID, assume default if null
         if ($locale != null) {
             $locale_id = $locale->getId();
@@ -244,7 +244,7 @@ class Locale {
             $candidate_locale_array[] = $lang_only_locale_id.'.UTF-8';
             $candidate_locale_array[] = $lang_only_locale_id;
 
-             
+
             $current_locale = setlocale(LC_ALL, $candidate_locale_array);
                //echo sprintf("Warning in /classes/Locale.php setCurentLocale: Unable to setlocale() to %s: %s.  I tried %s, %s, %s, %s, and got return value: %s, current locale is: %s",$q, $locale_id, $candidate_locale_array[0], $candidate_locale_array[1], $candidate_locale_array[2], $candidate_locale_array[3], $current_locale, setlocale(LC_ALL, 0))."<br/>";
 
@@ -380,30 +380,32 @@ class Locale {
 
         switch ($preflang_result['languages_iso_639_1_id']) {
             case ('fr') :
-                {
-                    $str .= "$resultats[french_name], $resultats[country_french_name]";
-                    break;
-                }
+                $str .= "$resultats[french_name], $resultats[country_french_name]";
+                break;
+
             case ('en') :
-                {
-                    $str .= "$resultats[english_name], $resultats[country_english_name]";
-                    break;
-                }
+                $str .= "$resultats[english_name], $resultats[country_english_name]";
+                break;
+
+            case ('es') :
+                $str .= "$resultats[spanish_name], $resultats[country_spanish_name]";
+                break;
+
             case ('de') :
-                {
-                    $str .= "$resultats[german_name], $resultats[country_german_name]";
-                    break;
-                }
+                $str .= "$resultats[german_name], $resultats[country_german_name]";
+                break;
+
+            case ('ja') :
+                $str .= "$resultats[japanese_name], $resultats[country_japanese_name]";
+                break;
+
             case ('pt') :
-                {
-                    $str .= "$resultats[portuguese_name], $resultats[country_portuguese_name]";
-                    break;
-                }
+                $str .= "$resultats[portuguese_name], $resultats[country_portuguese_name]";
+                break;
+
             default :
-                {
-                    $str .= "$resultats[french_name], $resultats[country_french_name]";
-                    break;
-                }
+                $str .= "$resultats[french_name], $resultats[country_french_name]";
+                break;
         }
 
         return $str;

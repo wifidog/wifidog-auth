@@ -42,6 +42,12 @@
  */
 
 /**
+ * Load required classes
+ */
+require_once('include/class.phpmailer.php');
+require_once('include/class.smtp.php');
+
+/**
  * This a wrapper class conforming RFC822 capable of sending valid UTF-8 MIME
  * headers
  *
@@ -49,10 +55,6 @@
  * @author     Francois Proulx <francois.proulx@gmail.com>
  * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
  */
-
-require_once('include/class.phpmailer.php');
-require_once('include/class.smtp.php');
-
 class Mail
 {
 	/**
@@ -313,8 +315,8 @@ class Mail
 	{
         $mail = new PHPMailer();
         $mail->CharSet = "utf-8";
-        
-        $mail->Mailer = EMAIL_MAILER;        
+
+        $mail->Mailer = EMAIL_MAILER;
         if (EMAIL_MAILER == 'smtp') {
             $mail->Host = EMAIL_HOST;
             $mail->SMTPAuth = EMAIL_AUTH;
@@ -324,7 +326,7 @@ class Mail
                 $mail->Password = EMAIL_PASSWORD;
             }
         }
-        
+
         $mail->AddAddress($this->getRecipientEmail(), $this->getRecipientName());
         $mail->From = $this->getSenderEmail();
         $mail->FromName = $this->getSenderName();

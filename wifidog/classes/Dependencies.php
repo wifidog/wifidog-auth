@@ -45,6 +45,9 @@
 
 // Detect Gettext support
 if (!function_exists('gettext')) {
+    /**
+     * Load Locale class if Gettext support is not available
+     */
     require_once ('classes/Locale.php');
 }
 

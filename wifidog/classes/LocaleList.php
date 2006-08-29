@@ -71,7 +71,9 @@ class LocaleList {
         $_humanLanguages = array('fr' => _("French"),
                                  'en' => _("English"),
                                  'de' => _("German"),
-                                 'pt' => _("Portuguese"));
+                                 'es' => _("Spanish"),
+                                 'pt' => _("Portuguese"),
+                                 'ja' => _("Japanese"));
 
         if (array_key_exists($locale, $_humanLanguages)) {
             $_retvalue = $_humanLanguages[$locale];

@@ -1,6 +1,5 @@
 <?php
 
-
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -43,27 +42,79 @@
  */
 
 /**
- * Load required file
- */
-
-/**
  * Theme packs contain stylesheets and graphical elements to customize the
  * general look of the system.
+ *
+ * @package    WiFiDogAuthServer
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class ThemePack {
+    /**
+     * ID of ThemePack
+     *
+     * @var string
+     * @access private
+     */
     private $_id;
+
+    /**
+     * Name of ThemePack
+     *
+     * @var string
+     * @access private
+     */
     private $_name;
+
+    /**
+     * Description of ThemePack
+     *
+     * @var string
+     * @access private
+     */
     private $_description;
+
+    /**
+     * Constructor
+     *
+     * @param string $themePackId The id of the theme pack (actually, the
+     *                            folder name without the path)
+     *
+     * @return void
+     *
+     * @access private
+     */
+    private function __construct($themePackId) {
+        $handle = @ opendir(WIFIDOG_ABS_FILE_PATH . NETWORK_THEME_PACKS_DIR . $themePackId.'/');
+
+        if (!$handle) {
+            throw new exception(sprintf(_("Theme pack %s cannot be found in %s"), $themePackId, WIFIDOG_ABS_FILE_PATH . NETWORK_THEME_PACKS_DIR . $themePackId . '/'));
+        }
+
+        $this->_id = $themePackId;
+        $this->_name = file_get_contents(WIFIDOG_ABS_FILE_PATH . NETWORK_THEME_PACKS_DIR . $this->_id . '/name.txt');
+
+        if ($this->_name == null) {
+            $this->_name = sprintf(_("%s (Theme did not include a name.txt file)"), $this->_id);
+        }
+
+        $this->_description = file_get_contents(WIFIDOG_ABS_FILE_PATH . NETWORK_THEME_PACKS_DIR . $this->_id . '/description.txt');
+
+        if ($this->_description == null) {
+            $this->_description = sprintf(_("%s (Theme did not include a description.txt file)"), $this->_name);
+        }
+    }
+
     /**
      * Get an interface to pick a theme pack
      *
      * If there is only one network available, no interface is actually shown
      *
-     * @param string $userPrefix          A identifier provided by the
+     * @param string $userPrefix           An identifier provided by the
      *                                     programmer to recognise it's
      *                                     generated html form
      * @param object $preSelectedThemePack Theme object: The theme to be pre-
-     * selected in the form object
+     *                                     selected in the form object
      *
      * @return string HTML markup
      *
@@ -77,13 +128,14 @@ class ThemePack {
 
         if ($preSelectedThemePack) {
             $selected_id = $preSelectedThemePack->getId();
-        }
-        else {
+        } else {
             $selected_id = null;
         }
+
         if ($handle = @ opendir(WIFIDOG_ABS_FILE_PATH.NETWORK_THEME_PACKS_DIR)) {
             $tab = array ();
             $i = 0;
+
             while (false !== ($directory = readdir($handle))) {
                 if ($directory != '.' && $directory != '..' && $directory != '.svn' && is_dir(WIFIDOG_ABS_FILE_PATH.NETWORK_THEME_PACKS_DIR.$directory.'/')) {
                     $theme_pack = new self($directory);
@@ -94,15 +146,14 @@ class ThemePack {
                 }
             }
             closedir($handle);
-        }
-        else {
+        } else {
             throw new exception(_("Unable to open the network theme packs directory"));
         }
+
         //pretty_print_r($tab);
         if (count($tab) > 0) {
             $html .= FormSelectGenerator :: generateFromArray($tab, $selected_id, $name, null, true);
-        }
-        else {
+        } else {
             $html .= sprintf(_("No network theme packs available in %s"), WIFIDOG_ABS_FILE_PATH.NETWORK_THEME_PACKS_DIR);
             $html .= "<input type='hidden' name='$name' value=''>";
         }
@@ -110,57 +161,67 @@ class ThemePack {
         return $html;
     }
 
-    /** @param $themePackId The id of the theme pack (actually, the folder name without the path) */
-    private function __construct($themePackId) {
-        $handle = @ opendir(WIFIDOG_ABS_FILE_PATH.NETWORK_THEME_PACKS_DIR.$themePackId.'/');
-        if (!$handle) {
-            throw new exception(sprintf(_("Theme pack %s cannot be found in %s"), $themePackId, WIFIDOG_ABS_FILE_PATH.NETWORK_THEME_PACKS_DIR.$themePackId.'/'));
-        }
-        $this->_id = $themePackId;
-        $this->_name = file_get_contents(WIFIDOG_ABS_FILE_PATH.NETWORK_THEME_PACKS_DIR.$this->_id.'/name.txt');
-        if ($this->_name == null) {
-            $this->_name = sprintf(_("%s (Theme did not include a name.txt file)"), $this->_id);
-        }
-        $this->_description = file_get_contents(WIFIDOG_ABS_FILE_PATH.NETWORK_THEME_PACKS_DIR.$this->_id.'/description.txt');
-        if ($this->_description == null) {
-            $this->_description = sprintf(_("%s (Theme did not include a description.txt file)"), $this->_name);
-        }
-
-    }
-
-    /** Get an instance of the object
+    /**
+     * Get an instance of the object
+     *
+     * @param object $id The object id
+     *
+     * @return object The Content object, or null if there was an error (an
+     *                exception is also thrown)
+     *
      * @see GenericObject
-     * @param $id The object id
-     * @return the Content object, or null if there was an error (an exception is also thrown)
+     * @static
+     * @access public
      */
     static public function getObject($id) {
         return new self($id);
     }
-    /** Retreives the id of the object
-     * @return The id, a string */
+
+    /**
+     * Retreives the id of the object
+     *
+     * @return string The id
+     *
+     * @access public
+     */
     public function getId() {
         return $this->_id;
     }
 
-    /** Retreives the name of the ThemePack
-    * @return a string */
+    /**
+     * Retreives the name of the ThemePack
+     *
+     * @return string Name of ThemePack
+     *
+     * @access public
+     */
     public function getName() {
         return $this->_name;
     }
 
-    /** Retreives the description of the ThemePack
-     * @return a string */
+    /**
+     * Retreives the description of the ThemePack
+     *
+     * @return string Description of ThemePack
+     *
+     * @access public
+     */
     public function getDescription() {
         return $this->_description;
     }
 
-    /** Retreives the url of this theme's stylesheet
-    * @return url */
+    /**
+     * Retreives the url of this theme's stylesheet
+     *
+     * @return string URL of this theme's stylesheet
+     *
+     * @access public
+     */
     public function getStylesheetUrl() {
-        return BASE_URL_PATH.NETWORK_THEME_PACKS_DIR.$this->_id.'/stylesheet.css';
+        return BASE_URL_PATH . NETWORK_THEME_PACKS_DIR . $this->_id . '/stylesheet.css';
     }
 
-} //End class
+}
 
 /*
  * Local variables:
