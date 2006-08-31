@@ -221,7 +221,7 @@ class Server implements GenericObject
 		$db->execSqlUniqueRes($sql, $_server_row, false, $silent);
 
 		if ($_server_row == null && !$silent) {
-			throw new Exception(_("Server::getCurrentServer: Fatal error: Unable to find current server in the database!"));
+			throw new Exception(sprintf(_("Server::getCurrentServer: Fatal error: Unable to find a server matching hostname %s in the database!"), $_SERVER['SERVER_NAME']));
 		} else if ($_server_row != null) {
     		$_retVal = new self($_server_row['server_id']);
 		}

@@ -873,18 +873,6 @@ class Content implements GenericObject {
         }
     }
 
-    /**
-     * Get content sponsor info
-     * @return content a content sub-class
-     */
-    public function getSponsorInfo() {
-        try {
-            return self :: getObject($this->content_row['sponsor_info']);
-        } catch (Exception $e) {
-            return null;
-        }
-    }
-
     /** Set the object type of this object
      * Note that after using this, the object must be re-instanciated to have the right type
      * */
@@ -1039,7 +1027,7 @@ class Content implements GenericObject {
         $html .= "<div class='user_ui_main_outer ".get_class($this)."'>\n";
         $html .= "<div class='user_ui_main_inner'>\n";
 
-        if (!empty ($this->content_row['title'])) {
+        if (!empty ($this->content_row['title'])  && $this->titleShouldDisplay()) {
             $html .= "<div class='user_ui_title'>\n";
             $title = self :: getObject($this->content_row['title']);
             $title->setLogAsContent($this);
@@ -1075,7 +1063,7 @@ class Content implements GenericObject {
             $html .= "</div>\n";
         }
 
-        if (!empty ($this->content_row['project_info']) || !empty ($this->content_row['sponsor_info'])) {
+        if (!empty ($this->content_row['project_info']) ) {
             if (!empty ($this->content_row['project_info'])) {
                 $html .= "<div class='user_ui_projet_info'>\n";
                 $html .= "<b>"._("Project information:")."</b>";
@@ -1085,18 +1073,6 @@ class Content implements GenericObject {
                 if ($this->getLoggingStatus() == false)
                     $project_info->setLoggingStatus(false);
                 $html .= $project_info->getUserUI();
-                $html .= "</div>\n";
-            }
-
-            if (!empty ($this->content_row['sponsor_info'])) {
-                $html .= "<div class='user_ui_sponsor_info'>\n";
-                $html .= "<b>"._("Project sponsor:")."</b>";
-                $sponsor_info = self :: getObject($this->content_row['sponsor_info']);
-                $sponsor_info->setLogAsContent($this);
-                // If the content logging is disabled, all the children will inherit this property temporarly
-                if ($this->getLoggingStatus() == false)
-                    $sponsor_info->setLoggingStatus(false);
-                $html .= $sponsor_info->getUserUI();
                 $html .= "</div>\n";
             }
         }
@@ -1193,17 +1169,25 @@ protected function setLogAsContent(Content $content)
 
             $html .= FormSelectGenerator :: generateFromArray($tab, null, "content_".$this->id."_content_type", "Content", false);
         } else {
+           // Content metadata
             if ($this->is_trivial_content == false) {
         		$html .= "<fieldset class='admin_element_group'>\n";
 				$html .= "<legend>".sprintf(_("%s MetaData"),get_class($this))."</legend>\n";
 
+                /* title_is_displayed */
+                $html_title_is_displayed = _("Display the title?").": \n";
+                $name = "content_".$this->id."_title_is_displayed";
+                $this->titleShouldDisplay() ? $checked = 'CHECKED' : $checked = '';
+                $html_title_is_displayed .= "<input type='checkbox' name='$name' $checked>\n";
+                
                 /* title */
                 $html .= "<li class='admin_element_item_container admin_section_edit_title'>\n";
-                $html .= "<div class='admin_element_data'>\n";
+                $html .= "<div class='admin_element_data'>\n";  
                 if (empty ($this->content_row['title'])) {
-                    $html .= self :: getNewContentUI("title_{$this->id}_new", null, _("Title:"));
+                    $html .= self :: getNewContentUI("title_{$this->id}_new", null, _("Title:"));                
                     $html .= "</div>\n";
                 } else {
+                    $html .= $html_title_is_displayed; 
                     $title = self :: getObject($this->content_row['title']);
                     $html .= $title->getAdminUI(null, _("Title:"));
                     $html .= "</div>\n";
@@ -1213,8 +1197,6 @@ protected function setLogAsContent(Content $content)
                     $html .= "</div>\n";
                 }
                 $html .= "</li>\n";
-
-
 
                 /* description */
                 $html .= "<li class='admin_element_item_container admin_section_edit_description'>\n";
@@ -1266,26 +1248,10 @@ protected function setLogAsContent(Content $content)
                     $html .= "</div>\n";
                 }
                 $html .= "</li>\n";
-
-                /* sponsor_info */
-                $html .= "<li class='admin_element_item_container admin_section_edit_sponsor'>\n";
-                $html .= "<div class='admin_element_data'>\n";
-                if (empty ($this->content_row['sponsor_info'])) {
-                    $html .= self :: getNewContentUI("sponsor_info_{$this->id}_new", null, _("Sponsor of this project:"));
-                    $html .= "</div>\n";
-                } else {
-                    $sponsor_info = self :: getObject($this->content_row['sponsor_info']);
-                    $html .= $sponsor_info->getAdminUI(null, _("Sponsor of this project:"));
-                    $html .= "</div>\n";
-                    $html .= "<div class='admin_element_tools'>\n";
-                    $name = "content_".$this->id."_sponsor_info_erase";
-                    $html .= "<input type='submit' class='submit' name='$name' value='".sprintf(_("Delete %s (%s)"),_("sponsor"),get_class($sponsor_info))."'>";
-                    $html .= "</div>\n";
-                }
-                $html .= "</li>\n";
-                $html .= "</fieldset>\n";
-
-        		$html .= "<fieldset class='admin_element_group'>\n";
+            }//End content medatada
+            
+            if ($this->is_trivial_content == false || $this->isPersistent()) {        		
+                $html .= "<fieldset class='admin_element_group'>\n";
 				$html .= "<legend>".sprintf(_("%s access control"),get_class($this))."</legend>\n";
 
 		        /* is_persistent */
@@ -1294,7 +1260,7 @@ protected function setLogAsContent(Content $content)
                 $html .= "<div class='admin_element_data'>\n";
                 $name = "content_".$this->id."_is_persistent";
                 $this->isPersistent() ? $checked = 'CHECKED' : $checked = '';
-                $html .= "<input type='checkbox' name='$name' $checked>\n";
+                $html .= "<input type='checkbox' name='$name' $checked onChange='submit();'>\n";
                 $html .= "</div>\n";
                 $html .= "</li>\n";
 
@@ -1337,7 +1303,8 @@ protected function setLogAsContent(Content $content)
                 $html .= "</ul>\n";
                 $html .= "</li>\n";
                 $html .= "</fieldset>\n";
-            }//End if is trivial content
+
+            }
         }
         $html .= $subclass_admin_interface;
         $html .= "</ul>\n";
@@ -1354,6 +1321,13 @@ protected function setLogAsContent(Content $content)
                 $content_type = FormSelectGenerator :: getResult("content_".$this->id."_content_type", "Content");
                 $this->setContentType($content_type);
             } else
+            {//Content medatada
+                            /* title_is_displayed */
+                if (!empty ($this->content_row['title'])){
+                $name = "content_".$this->id."_title_is_displayed";
+                !empty ($_REQUEST[$name]) ? $this->setTitleIsDisplayed(true) : $this->setTitleIsDisplayed(false);
+                }
+                
                 if ($this->is_trivial_content == false) {
                     /* title */
                     if (empty ($this->content_row['title'])) {
@@ -1426,25 +1400,9 @@ protected function setLogAsContent(Content $content)
                             $project_info->processAdminUI();
                         }
                     }
+                }//End content metadata
 
-                    /* sponsor_info */
-                    if (empty ($this->content_row['sponsor_info'])) {
-                        $sponsor_info = self :: processNewContentUI("sponsor_info_{$this->id}_new");
-                        if ($sponsor_info != null) {
-                            $sponsor_info_id = $sponsor_info->GetId();
-                            $db->execSqlUpdate("UPDATE content SET sponsor_info = '$sponsor_info_id' WHERE content_id = '$this->id'", FALSE);
-                        }
-                    } else {
-                        $sponsor_info = self :: getObject($this->content_row['sponsor_info']);
-                        $name = "content_".$this->id."_sponsor_info_erase";
-                        if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true) {
-                            $db->execSqlUpdate("UPDATE content SET sponsor_info = NULL WHERE content_id = '$this->id'", FALSE);
-                            $sponsor_info->delete($errmsg);
-                        } else {
-                            $sponsor_info->processAdminUI();
-                        }
-                    }
-
+           if ($this->is_trivial_content == false || $this->isPersistent()) {
                     /* is_persistent */
                     $name = "content_".$this->id."_is_persistent";
                     !empty ($_REQUEST[$name]) ? $this->setIsPersistent(true) : $this->setIsPersistent(false);
@@ -1481,7 +1439,7 @@ protected function setLogAsContent(Content $content)
                     if (!empty ($_REQUEST[$name]) && $user != null) {
                         $this->addOwner($user);
                     }
-
+           }
                 }
             $this->refresh();
         }
@@ -1514,6 +1472,30 @@ protected function setLogAsContent(Content $content)
         return $user->removeContent($this);
     }
 
+    /** If the title is not empty, should it be displayed?
+    * @return true or false */
+    public function titleShouldDisplay() {
+        if ($this->content_row['title_is_displayed'] == 't') {
+            $retval = true;
+        } else {
+            $retval = false;
+        }
+        return $retval;
+    }
+
+    /** If the title is not empty, should it be displayed?
+     * @param $should_display true or false
+     * */
+    public function setTitleIsDisplayed($should_display) {
+        if ($should_display != $this->titleShouldDisplay()) /* Only update database if there is an actual change */ {
+            $should_display ? $should_display_sql = 'TRUE' : $should_display_sql = 'FALSE';
+            global $db;
+            $db->execSqlUpdate("UPDATE content SET title_is_displayed = $should_display_sql WHERE content_id = '$this->id'", false);
+            $this->refresh();
+        }
+
+    }
+
     /** Persistent (or read-only) content is meant for re-use.  It will not be deleted when the delete() method is called.  When a containing element (ContentGroup, ContentGroupElement) is deleted, it calls delete on all the content it includes.  If the content is persistent, only the association will be removed.
     * @return true or false */
     public function isPersistent() {
@@ -1524,7 +1506,7 @@ protected function setLogAsContent(Content $content)
         }
         return $retval;
     }
-
+    
     /** Set if the content group is persistent
      * @param $is_locative_content true or false
      * */

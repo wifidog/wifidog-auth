@@ -46,7 +46,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 44);
+define('REQUIRED_SCHEMA_VERSION', 45);
 
 /**
  * Check that the database schema is up to date.  If it isn't, offer to update it.
@@ -908,6 +908,33 @@ function update_schema()
             $sql .= "INSERT INTO locales (locales_id) VALUES('es');\n";
         }
 
+        $new_schema_version = 45;
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+            $sql .= "ALTER TABLE content DROP COLUMN sponsor_info;\n";
+            $sql .= "ALTER TABLE users DROP CONSTRAINT account_origin_fkey;\n";
+            $sql .= "ALTER TABLE users ADD CONSTRAINT account_origin_fkey FOREIGN KEY (account_origin) REFERENCES networks (network_id) ON UPDATE CASCADE ON DELETE CASCADE;\n";
+            $sql .= "ALTER TABLE nodes DROP CONSTRAINT network_id_fkey;\n";
+            $sql .= "ALTER TABLE nodes ADD CONSTRAINT network_id_fkey FOREIGN KEY (network_id) REFERENCES networks (network_id) ON UPDATE CASCADE ON DELETE CASCADE;\n";
+        	$sql .= "ALTER TABLE users DROP CONSTRAINT check_account_origin_not_empty;\n";
+        	$sql .= "ALTER TABLE connections DROP CONSTRAINT fk_nodes;\n";
+        	$sql .= "ALTER TABLE connections ADD CONSTRAINT fk_nodes FOREIGN KEY (node_id) REFERENCES nodes (node_id) ON UPDATE CASCADE ON DELETE CASCADE;\n";
+        	$sql .= "ALTER TABLE connections DROP CONSTRAINT fk_users;\n";
+        	$sql .= "ALTER TABLE connections ADD CONSTRAINT fk_users FOREIGN KEY (user_id) REFERENCES users (user_id) ON UPDATE CASCADE ON DELETE CASCADE;\n";
+        	$sql .= "ALTER TABLE node_stakeholders DROP CONSTRAINT \"$2\";\n";
+        	$sql .= "ALTER TABLE node_stakeholders ADD CONSTRAINT fk_users FOREIGN KEY (user_id) REFERENCES users (user_id) ON UPDATE CASCADE ON DELETE CASCADE;\n";
+			$sql .= "ALTER TABLE network_stakeholders DROP CONSTRAINT \"$1\";\n";   
+			$sql .= "ALTER TABLE network_stakeholders ADD CONSTRAINT fk_network FOREIGN KEY (network_id) REFERENCES networks (network_id) ON UPDATE CASCADE ON DELETE CASCADE;\n";
+			$sql .= "ALTER TABLE network_stakeholders DROP CONSTRAINT \"$2\";\n";
+			$sql .= "ALTER TABLE network_stakeholders ADD CONSTRAINT fk_users FOREIGN KEY (user_id) REFERENCES users (user_id) ON UPDATE CASCADE ON DELETE CASCADE;\n";
+			$sql .= "ALTER TABLE content ADD COLUMN title_is_displayed bool;\n";
+			$sql .= "ALTER TABLE content ALTER COLUMN title_is_displayed SET DEFAULT true;\n";
+            $sql .= "UPDATE content SET title_is_displayed=true;\n";		
+            $sql .= "ALTER TABLE content ALTER COLUMN title_is_displayed SET NOT NULL;\n\n";
+			     	
+        
+        }
         /*
         $new_schema_version = 44;
         if ($schema_version < $new_schema_version) {

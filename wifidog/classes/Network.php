@@ -176,7 +176,6 @@ class Network implements GenericObject {
     public static function getSelectNetworkUI($user_prefix, $pre_selected_network = null, $additional_where = null) {
         $html = '';
         $name = $user_prefix;
-        $html .= _("Network:")." \n";
 
         if ($pre_selected_network) {
             $selected_id = $pre_selected_network->getId();
@@ -201,13 +200,15 @@ class Network implements GenericObject {
                 $tab[$i][1] = $network_row['name'];
                 $i ++;
             }
+            $html .= _("Network:")." \n";
             $html .= FormSelectGenerator :: generateFromArray($tab, $selected_id, $name, null, false);
 
         }
         else {
             foreach ($network_rows as $network_row) //iterates only once...
                 {
-                $html .= " $network_row[name] ";
+                //$html .= _("Network:")." \n";
+                //$html .= " $network_row[name] ";
                 $html .= "<input type='hidden' name='$name' value='".htmlspecialchars($network_row['network_id'], ENT_QUOTES, 'UTF-8')."'>";
             }
         }

@@ -1,3 +1,13 @@
+2006-08-31 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Server.php:  Make sure getCurrentServer returns the default server if the hostname isn't recognised.
+	* Content manager:
+		-Allow deleting simple (trivial) but persistent content
+		-Remove the sponsor info field from Content Metadata.  Best practices is now to use the project info field to show this information.
+	* Add the necessary schema constraints to allow manually deleting networks, nodes and users.  Be carefull, removing any of theses will remove all traces of connection statistics as well.  You've been warned.
+	* Do not display the network in the login interface if there is only one.
+	* Add a pseudo-random content ordering mode.  Pick content elements randomly, but do not display the same content twice untill all content has been seen.
+	* Allow setting a title but not displaying it (very usefull for reusable content)
+	
 2006-08-29 Max Horváth <max.horvath@maxspot.de>
 	* Cleaned up PHPdoc tags
 	* Updated german translation
