@@ -1,3 +1,6 @@
+2006-09-01 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Content.php:  Improve handling of simple but persistent content.
+	
 2006-08-31 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Server.php:  Make sure getCurrentServer returns the default server if the hostname isn't recognised.
 	* Content manager:

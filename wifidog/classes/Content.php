@@ -1170,7 +1170,7 @@ protected function setLogAsContent(Content $content)
             $html .= FormSelectGenerator :: generateFromArray($tab, null, "content_".$this->id."_content_type", "Content", false);
         } else {
            // Content metadata
-            if ($this->is_trivial_content == false) {
+            if ($this->is_trivial_content == false || $this->isPersistent()) {
         		$html .= "<fieldset class='admin_element_group'>\n";
 				$html .= "<legend>".sprintf(_("%s MetaData"),get_class($this))."</legend>\n";
 
@@ -1197,7 +1197,9 @@ protected function setLogAsContent(Content $content)
                     $html .= "</div>\n";
                 }
                 $html .= "</li>\n";
-
+            }
+            
+            if ($this->is_trivial_content == false) {
                 /* description */
                 $html .= "<li class='admin_element_item_container admin_section_edit_description'>\n";
                 $html .= "<div class='admin_element_data'>\n";
@@ -1248,8 +1250,12 @@ protected function setLogAsContent(Content $content)
                     $html .= "</div>\n";
                 }
                 $html .= "</li>\n";
-            }//End content medatada
+            }
             
+            //End content medatada
+                        if ($this->is_trivial_content == false || $this->isPersistent()) {
+                        $html .= "</fieldset>\n";
+                        }
             if ($this->is_trivial_content == false || $this->isPersistent()) {        		
                 $html .= "<fieldset class='admin_element_group'>\n";
 				$html .= "<legend>".sprintf(_("%s access control"),get_class($this))."</legend>\n";
@@ -1322,13 +1328,14 @@ protected function setLogAsContent(Content $content)
                 $this->setContentType($content_type);
             } else
             {//Content medatada
-                            /* title_is_displayed */
+
+                
+                            if ($this->is_trivial_content == false || $this->isPersistent()) {
+                                            /* title_is_displayed */
                 if (!empty ($this->content_row['title'])){
                 $name = "content_".$this->id."_title_is_displayed";
                 !empty ($_REQUEST[$name]) ? $this->setTitleIsDisplayed(true) : $this->setTitleIsDisplayed(false);
                 }
-                
-                if ($this->is_trivial_content == false) {
                     /* title */
                     if (empty ($this->content_row['title'])) {
                         $title = self :: processNewContentUI("title_{$this->id}_new");
@@ -1346,7 +1353,8 @@ protected function setLogAsContent(Content $content)
                             $title->processAdminUI();
                         }
                     }
-
+                            }
+                            if ($this->is_trivial_content == false) {
                     /* description */
                     if (empty ($this->content_row['description'])) {
                         $description = self :: processNewContentUI("description_{$this->id}_new");
