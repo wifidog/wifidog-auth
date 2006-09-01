@@ -542,7 +542,7 @@ EOF;
                     global $db;
                 $username = $db->escapeString($_REQUEST['stats_selected_users']);
                 $row = null;
-                $db->execSqlUniqueRes("SELECT user_id FROM users WHERE username='$username'", $row, true);
+                $db->execSqlUniqueRes("SELECT user_id FROM users WHERE username='$username'", $row, false);
                 if ($row)
                 {
                     $user_id = $row['user_id'];
