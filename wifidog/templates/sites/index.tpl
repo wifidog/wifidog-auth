@@ -69,7 +69,7 @@
     BEGIN section MAINCONTENT
 *}
 	<p>
-		{if $networkNumOnlineUsers == 1}
+		{if $networkNumValidUsers == 1}
 			{"The %s network currently has one valid user."|_|sprintf:$networkName}
 		{else}
 			{"The %s network currently has %d valid users."|_|sprintf:$networkName:$networkNumValidUsers}

@@ -729,16 +729,18 @@ if ($content_ordering_mode == 'PSEUDO_RANDOM') {
         return $retval;
     }
 
-    /** Delete this Content from the database
-    */
+    /**
+     * Delete this Content from the database
+     */
     public function delete(& $errmsg) {
         if ($this->isPersistent() == false) {
             foreach ($this->getElements() as $element) {
                 $element->delete($errmsg);
             }
         }
-        return parent :: delete($errmsg);
+        return parent::delete($errmsg);
     }
+
     /** Reloads the object from the database.  Should normally be called after a set operation.
     * This function is private because calling it from a subclass will call the
     * constructor from the wrong scope */

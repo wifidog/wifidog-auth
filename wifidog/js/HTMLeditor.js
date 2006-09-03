@@ -41,10 +41,13 @@
  */
 
 // WiFiDOG skin
-FCKConfig.SkinPath = FCKConfig.BasePath + '../../../content/HTMLeditor/';
+FCKConfig.SkinPath = FCKConfig.BasePath + 'skins/office2003/';
 
 // Path to our CSS defenitions
-FCKConfig.EditorAreaCSS = FCKConfig.BasePath + '../../../local_content/common/stylesheet.css';
+FCKConfig.EditorAreaCSS = FCKConfig.BasePath + '../../../media/base_theme/stylesheet.css';
+
+// Preload images
+FCKConfig.PreloadImages = [ FCKConfig.SkinPath + 'images/toolbar.start.gif', FCKConfig.SkinPath + 'images/toolbar.buttonarrow.gif' ] ;
 
 // Don't show script sources in source mode
 FCKConfig.ProtectedSource.Add(/<script[\s\S]*?\/script>/gi);	// <SCRIPT> tags.

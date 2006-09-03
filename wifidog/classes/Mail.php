@@ -70,7 +70,8 @@ class Mail
 	   "mailexpire.com", "mailinator.com", "mailnull.com", "mymailoasis.com",
 	   "mytrashmail.com", "simplicato.net", "sneakemail.com", "sofort-mail.de",
 	   "spamcon.org", "spamex.com", "spamgourmet.com", "spamhole.com",
-	   "spammotel.com", "trash-mail.de", "woodyland.org"
+	   "spammotel.com", "trash-mail.de", "woodyland.org", "dumpmail.de",
+	   "antispam24.de", "nervmich.net", "spamday.com", "throwaway.de"
 	   );
 
 	/**

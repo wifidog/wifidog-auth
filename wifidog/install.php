@@ -241,6 +241,12 @@ $neededExtentions = array (
         'message' => '<B>mhash</B> extention is missing',
         'note' => 'Required for RADIUS support'
     ),
+    'session' => array (
+        'needed' => 1,
+        'available' => 0,
+        'message' => '<B>session</B> extention is missing',
+        'note' => 'Required for core auth-server'
+    ),
     'xmlrpc' => array (
         'needed' => 0,
         'available' => 0,
@@ -403,7 +409,7 @@ function downloadFile($remoteURL, $localPath) {
 /** Use PHP internal functions to download a file */
 function execVerbose($command, & $output, & $return_var) {
     print "$command";
-    $retval = exec($command.'  2>&1', & $output, & $return_var); 
+    $retval = exec($command.'  2>&1', & $output, & $return_var);
     if ($return_var != 0) {
         print "<p style='color:red'>Error:</em>  Command did not complete successfully  (returned $return_var): <br/>\n";
         if ($output) {

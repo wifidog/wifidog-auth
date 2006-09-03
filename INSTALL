@@ -13,7 +13,7 @@ PREREQUISITES
 - Smarty template engine (http://smarty.php.net/)
 - Magpierss (http://magpierss.sourceforge.net/) (Required for RSS support. RSS
   support must be manually disabled if you do not install it)
-- FCKeditor 2.2 (http://www.fckeditor.net/) (Required if you want to edit
+- FCKeditor 2.3+ (http://www.fckeditor.net/) (Required if you want to edit
   content with a HTML text editor aka WYSIWYG editor)
 - FPDF 1.53+ (http://www.fpdf.org/) (Required if you want to export the node
   list into a PDF file)

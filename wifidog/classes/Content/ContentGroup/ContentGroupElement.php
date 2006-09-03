@@ -272,7 +272,7 @@ class ContentGroupElement extends Content
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<fieldset class='admin_element_group'>\n";
 		$html .= "<legend>". sprintf(_("%s %d display order and location"), get_class($this), $this->getDisplayOrder())."</legend>\n";
-        
+
         $allowed_node_rows = null;
 		$html .= "<ul class='admin_element_list'>\n";
         /* display_order */
@@ -318,11 +318,11 @@ class ContentGroupElement extends Content
         $html .= "<input type='submit' name='$name' value='"._("Add new allowed node")."'>";
         $html .= "</li'>\n";
         $html .= "</ul>\n";
-        
+
         $html .= "</li>\n";
         $html .= "</fieldset>\n";
         $html .= "</li>\n";
-        
+
         /* displayed_content_id */
         $html .= "<li class='admin_element_item_container'>\n";
         if (empty ($this->content_group_element_row['displayed_content_id'])) {
@@ -534,8 +534,8 @@ class ContentGroupElement extends Content
     {
         if ($this->isPersistent() == false && !empty ($this->content_group_element_row['displayed_content_id'])) {
             $displayed_content = self::getObject($this->content_group_element_row['displayed_content_id']);
-            $displayed_content->delete(& $errmsg);
-            parent::delete(& $errmsg);
+            $displayed_content->delete($errmsg);
+            parent::delete($errmsg);
         }
     }
 }

@@ -411,7 +411,7 @@ class EmbeddedContent extends Content
             $errmsg = _("Content is persistent (you must make it non persistent before you can delete it)");
         }
 
-        return parent :: delete($errmsg);
+        return parent::delete($errmsg);
     }
 
 }

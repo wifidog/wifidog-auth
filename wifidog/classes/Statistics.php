@@ -393,7 +393,7 @@ EOF;
             $user_id = $db->escapeString($user->getId());
             $sql_join = " JOIN node_stakeholders ON (nodes.node_id=node_stakeholders.node_id AND user_id='$user_id') ";
         }
-        $sql = "SELECT nodes.node_id, nodes.name from nodes $sql_join WHERE 1=1 ORDER BY node_id";
+        $sql = "SELECT nodes.node_id, nodes.name from nodes $sql_join WHERE 1=1 ORDER BY lower(node_id)";
         $node_rows = null;
         $db->execSql($sql, $node_rows, false);
         $html .= "<select multiple size = 6 name='$name'>\n";
@@ -598,7 +598,7 @@ EOF;
         	$html .= "<li class='admin_element_item_container'>\n";
             $html .= "<div class='admin_element_tools'><input type='checkbox' name='$key' $checked /></div>\n";
             $html .= "<div class='admin_element_label'>$name</div>\n";
-            
+
         	$html .= "</li>\n";
         	}
         $html .= "</ul>\n";

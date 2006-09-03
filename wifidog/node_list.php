@@ -90,6 +90,11 @@ else
 	}
 }
 
+// Check if ordering should ignore uppper and lower case
+if ($sort_by_param == "name" || $sort_by_param == "node_id") {
+    $sort_by_param = "lower(" . $sort_by_param . ")";
+}
+
 // Sort according to above instructions
 if ($sort_by_using_sql === true)
     $sql = "SELECT node_id, name, last_heartbeat_user_agent, (NOW()-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((NOW()-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS online, creation_date, node_deployment_status FROM nodes WHERE node_deployment_status != 'PERMANENTLY_CLOSED' ORDER BY {$sort_by_param}";

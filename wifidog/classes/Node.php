@@ -234,7 +234,7 @@ class Node implements GenericObject
 		global $db;
 		$html = '';
 		$name = "{$user_prefix}";
-		$sql = "SELECT node_id, name, node_deployment_status, is_splash_only_node from nodes WHERE 1=1 $sql_additional_where ORDER BY node_id";
+		$sql = "SELECT node_id, name, node_deployment_status, is_splash_only_node from nodes WHERE 1=1 $sql_additional_where ORDER BY lower(node_id)";
 		$node_rows = null;
 		$db->execSql($sql, $node_rows, false);
 		if ($node_rows != null)
@@ -814,7 +814,7 @@ class Node implements GenericObject
         $_title = _("Node content");
         $_data = Content::getLinkedContentUI("node_" . $hashed_node_id . "_content", "node_has_content", "node_id", $this->id, "portal");
         $html .= InterfaceElements::generateAdminSectionContainer("node_content", $_title, $_data);
- 
+
  		// Name
 		$_title = _("Name");
 		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_name", $this->getName(), "node_name_input");
@@ -1452,19 +1452,33 @@ class Node implements GenericObject
 		return $retval;
 	}
 
-	/** Check if an node exists */
-	private function nodeExists($id)
+	/**
+	 * Checks if an node exists
+	 *
+	 * @param string $id Id of node to be checked
+	 *
+	 * @return bool True if node exists, else false
+	 *
+	 * @static
+	 * @access private
+	 */
+	private static function nodeExists($id)
 	{
+	    // Define globals
 		global $db;
+
+		// Init values
 		$retval = false;
+
 		$id_str = $db->escapeString($id);
 		$sql = "SELECT * FROM nodes WHERE node_id='{$id_str}'";
 		$row = null;
 		$db->execSqlUniqueRes($sql, $row, false);
-		if ($row != null)
-		{
+
+		if ($row != null) {
 			$retval = true;
 		}
+
 		return $retval;
 	}
 
