@@ -67,6 +67,22 @@ require_once('classes/Network.php');
 require_once('classes/Server.php');
 require_once('classes/InterfaceElements.php');
 
+// Check user permissions
+try {
+    $user = User::getCurrentUser();
+
+    if (!isset($user)) {
+        throw new Exception(_('Access denied!'));
+    } else if ((!$user->isSuperAdmin() && !$user->isOwner()) || $user->isNobody()) {
+        throw new Exception(_('Access denied!'));
+    }
+} catch (Exception $e) {
+    $ui = new MainUI();
+    $ui->setToolSection('ADMIN');
+    $ui->displayError($e->getMessage(), false);
+    exit;
+}
+
 // Init values
 $html = "";
 $errmsg = "";

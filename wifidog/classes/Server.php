@@ -402,9 +402,18 @@ class Server implements GenericObject
 			$_serverId = $_REQUEST[$_name];
 
 			if ($_serverId) {
-				if (!User::getCurrentUser()->isSuperAdmin()) {
-					throw new Exception(_("Access denied"));
-				}
+			    try {
+    				if (!User::getCurrentUser()->isSuperAdmin()) {
+    					throw new Exception(_("Access denied"));
+    				}
+                } catch (Exception $e) {
+                    require_once('classes/MainUI.php');
+
+                    $ui = new MainUI();
+                    $ui->setToolSection('ADMIN');
+                    $ui->displayError($e->getMessage(), false);
+                    exit;
+                }
 
 				$_retVal = self::createNewObject($_serverId);
 			}
@@ -779,9 +788,17 @@ class Server implements GenericObject
 	public function processAdminUI()
 	{
         require_once('classes/User.php');
-		if (!User::getCurrentUser()->isSuperAdmin()) {
-			throw new Exception(_('Access denied!'));
-		}
+
+        try {
+    		if (!User::getCurrentUser()->isSuperAdmin()) {
+    			throw new Exception(_('Access denied!'));
+    		}
+        } catch (Exception $e) {
+            $ui = new MainUI();
+            $ui->setToolSection('ADMIN');
+            $ui->displayError($e->getMessage(), false);
+            exit;
+        }
 
 		// creation_date
 		$_name = "server_" . $this->getId() . "_creation_date";
@@ -876,4 +893,3 @@ class Server implements GenericObject
  * c-hanging-comment-ender-p: nil
  * End:
  */
-

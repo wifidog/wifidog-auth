@@ -50,6 +50,7 @@ require_once('classes/AbstractGeocoder.php');
 require_once('classes/Utils.php');
 require_once('classes/DateTime.php');
 require_once('classes/InterfaceElements.php');
+require_once('classes/MainUI.php');
 
 /**
  * Abstract a Node.  A Node is an actual physical transmitter.
@@ -67,6 +68,14 @@ class Node implements GenericObject
 	private $mdB; /**< An AbstractDb instance */
 	private $id;
 	private static $current_node_id = null;
+
+	/**
+	 * List of deployment statuses
+	 *
+	 * @var array
+	 * @access private
+	 */
+	private $_deploymentStatuses = array();
 
 	/**
 	 * Defines a warning message
@@ -186,42 +195,60 @@ class Node implements GenericObject
 		return $retval;
 	}
 
-	/** Create a new Node in the database
-	 * @param $node_id The id to be given to the new node.  If not present, a
-	 * guid will be assigned.
-	 * @param $network Network object.  The node's network.  If not present,
-	 * the current Network will be assigned
+	/**
+	 * Create a new Node in the database
 	 *
-	 * @return the newly created Node object, or null if there was an error
+	 * @param string $node_id The Id to be given to the new node.  If not
+	 *                        present, guid will be assigned.
+	 * @param object $network Network object.  The node's network.  If not
+	 *                        present, the current Network will be assigned
+	 *
+	 * @return mixed The newly created Node object, or null if there was
+	 *               an error
+	 *
+	 * @static
+	 * @access public
 	 */
-	static function createNewObject($node_id = null, $network = null)
+	public static function createNewObject($node_id = null, $network = null)
 	{
+	    // Define globals
 		global $db;
-		if (empty ($node_id))
-		{
+
+		if (empty ($node_id)) {
 			$node_id = get_guid();
 		}
+
 		$node_id = $db->escapeString($node_id);
 
-		if (empty ($network))
-		{
-			$network = Network :: getCurrentNetwork();
+		if (empty ($network)) {
+			$network = Network::getCurrentNetwork();
 		}
+
 		$network_id = $db->escapeString($network->getId());
 
 		$node_deployment_status = $db->escapeString("IN_PLANNING");
 		$node_name = _("New node");
-		if (Node :: nodeExists($node_id))
-			throw new Exception(_('This node already exists.'));
 
-		$sql = "INSERT INTO nodes (node_id, network_id, creation_date, node_deployment_status, name) VALUES ('$node_id', '$network_id', NOW(),'$node_deployment_status', '$node_name')";
+		try {
+            if (Node::nodeExists($node_id)) {
+                throw new Exception(_('This node already exists.'));
+            }
 
-		if (!$db->execSqlUpdate($sql, false))
-		{
-			throw new Exception(_('Unable to insert new node into database!'));
-		}
-		$object = new self($node_id);
-		return $object;
+            $sql = "INSERT INTO nodes (node_id, network_id, creation_date, node_deployment_status, name) VALUES ('$node_id', '$network_id', NOW(),'$node_deployment_status', '$node_name')";
+
+            if (!$db->execSqlUpdate($sql, false)) {
+                throw new Exception(_('Unable to insert new node into database!'));
+            }
+
+            $object = new self($node_id);
+
+            return $object;
+        } catch (Exception $e) {
+            $ui = new MainUI();
+            $ui->setToolSection('ADMIN');
+            $ui->displayError($e->getMessage(), false);
+            exit;
+        }
 	}
 
 	/** Get an interface to pick a node.
@@ -234,11 +261,21 @@ class Node implements GenericObject
 		global $db;
 		$html = '';
 		$name = "{$user_prefix}";
+
+    	$_deploymentStatuses = array(
+    	    "DEPLOYED" => _("Deployed"),
+    	    "IN_PLANNING" => _("In planning"),
+    	    "IN_TESTING" => _("In testing"),
+    	    "NON_WIFIDOG_NODE" => _("Non-Wifidog node"),
+    	    "PERMANENTLY_CLOSED" => _("Permanently closed"),
+    	    "TEMPORARILY_CLOSED" => _("Temporarily closed")
+    	    );
+
 		$sql = "SELECT node_id, name, node_deployment_status, is_splash_only_node from nodes WHERE 1=1 $sql_additional_where ORDER BY lower(node_id)";
 		$node_rows = null;
 		$db->execSql($sql, $node_rows, false);
-		if ($node_rows != null)
-		{
+
+		if ($node_rows != null) {
 			Utils :: natsort2d($node_rows, "node_id");
 			if ($type_interface != "table") {
 				$html .= _("Node");
@@ -266,7 +303,8 @@ class Node implements GenericObject
 				foreach ($node_rows as $node_row)
 				{
 					$href = GENERIC_OBJECT_ADMIN_ABS_HREF."?object_id={$node_row['node_id']}&object_class=Node&action=edit";
-					$html .= "\t\t\t\t<tr class='row' onclick=\"javascript:location.href='{$href}'\">\n\t\t\t\t\t<td>{$node_row['name']}<noscript>(<a href='{$href}'>edit</a>)</noscript></td>\n\t\t\t\t\t<td>{$node_row['node_id']}</td>\n\t\t\t\t\t<td>{$node_row['node_deployment_status']}</td>\n\t\t\t\t</tr>\n";
+					$_deployStatusNode = $node_row['node_deployment_status'];
+					$html .= "\t\t\t\t<tr class='row' onclick=\"javascript:location.href='{$href}'\">\n\t\t\t\t\t<td>{$node_row['name']}<noscript>(<a href='{$href}'>edit</a>)</noscript></td>\n\t\t\t\t\t<td>{$node_row['node_id']}</td>\n\t\t\t\t\t<td>{$_deploymentStatuses[$_deployStatusNode]}</td>\n\t\t\t\t</tr>\n";
 				}
 				$html .= "\t\t\t</tbody>\n\t\t</table>\n";
 				$html .= "\t</div>\n";
@@ -316,35 +354,44 @@ class Node implements GenericObject
 
 	}
 
-	/** Process the new object interface.
-	 *  Will return the new object if the user has the credentials and the form was fully filled.
+	/**
+	 * Process the new object interface.
+	 *
+	 * Will return the new object if the user has the credentials and the form was fully filled.
 	 * @return the node object or null if no new node was created.
 	 */
-	static function processCreateNewObjectUI()
+	public static function processCreateNewObjectUI()
 	{
+	    // Init values
 		$retval = null;
 		$name = "new_node_id";
-		if (!empty ($_REQUEST[$name]))
-		{
+
+		if (!empty ($_REQUEST[$name])) {
 			$node_id = $_REQUEST[$name];
 			$name = "new_node_network_id";
-			if (!empty ($_REQUEST[$name]))
-			{
-				$network = Network :: getObject($_REQUEST[$name]);
+
+			if (!empty ($_REQUEST[$name])) {
+				$network = Network::getObject($_REQUEST[$name]);
+			} else {
+				$network = Network::processSelectNetworkUI('new_node');
 			}
-			else
-			{
-				$network = Network :: processSelectNetworkUI('new_node');
-			}
-			if ($node_id && $network)
-			{
-				if (!$network->hasAdminAccess(User :: getCurrentUser()))
-				{
-					throw new Exception(_("Access denied"));
-				}
-				$retval = self :: createNewObject($node_id, $network);
+
+			if ($node_id && $network) {
+			    try {
+    				if (!$network->hasAdminAccess(User :: getCurrentUser())) {
+    					throw new Exception(_("Access denied"));
+    				}
+                } catch (Exception $e) {
+                    $ui = new MainUI();
+                    $ui->setToolSection('ADMIN');
+                    $ui->displayError($e->getMessage(), false);
+                    exit;
+                }
+
+				$retval = self::createNewObject($node_id, $network);
 			}
 		}
+
 		return $retval;
 	}
 
@@ -376,7 +423,8 @@ class Node implements GenericObject
 		}
 
 		foreach ($status_list as $status) {
-			$tab[] = array($status['node_deployment_status'], $status['node_deployment_status']);
+		    $_statusvalue = $status['node_deployment_status'];
+			$tab[] = array($_statusvalue, $this->_deploymentStatuses["$_statusvalue"]);
 		}
 
 		$html .= FormSelectGenerator::generateFromArray($tab, $this->getDeploymentStatus(), $name, null, false);
@@ -384,9 +432,15 @@ class Node implements GenericObject
 		return $html;
 	}
 
-	/** Get the selected deployment status
-	 * @param $user_prefix A identifier provided by the programmer to recognise it's generated form
-	 * @return the deployment status
+	/**
+	 * Get the selected deployment status
+	 *
+	 * @param string $user_prefix An identifier provided by the programmer to
+	 *                            recognise it's generated form
+	 *
+	 * @return string The deployment status
+	 *
+	 * @access public
 	 */
 	public function processSelectDeploymentStatus($user_prefix)
 	{
@@ -409,6 +463,16 @@ class Node implements GenericObject
 		{
 			throw new Exception(sprintf(_("The node %s could not be found in the database!"), $node_id_str));
 		}
+
+    	$this->_deploymentStatuses = array(
+    	    "DEPLOYED" => _("Deployed"),
+    	    "IN_PLANNING" => _("In planning"),
+    	    "IN_TESTING" => _("In testing"),
+    	    "NON_WIFIDOG_NODE" => _("Non-Wifidog node"),
+    	    "PERMANENTLY_CLOSED" => _("Permanently closed"),
+    	    "TEMPORARILY_CLOSED" => _("Temporarily closed")
+    	    );
+
 		$this->mRow = $row;
 		$this->id = $row['node_id'];
 	}
@@ -743,7 +807,7 @@ class Node implements GenericObject
 	/**
 	 * Retrieves the admin interface of this object
 	 *
-	 * @return The HTML fragment for this interface
+	 * @return string The HTML fragment for this interface
 	 *
 	 * @access public
 	 *
@@ -755,9 +819,16 @@ class Node implements GenericObject
 	    // Init values
 		$html = '';
 
-		if (!User::getCurrentUser()) {
-			throw new Exception(_('Access denied!'));
-		}
+		try {
+    		if (!User::getCurrentUser()) {
+    			throw new Exception(_('Access denied!'));
+    		}
+        } catch (Exception $e) {
+            $ui = new MainUI();
+            $ui->setToolSection('ADMIN');
+            $ui->displayError($e->getMessage(), false);
+            exit;
+        }
 
 		// Get information about the network
 		$network = $this->getNetwork();
@@ -995,16 +1066,27 @@ class Node implements GenericObject
 		return $html;
 	}
 
-	/** Process admin interface of this object.
-	*/
+	/**
+	 * Process admin interface of this object.
+	 *
+	 * @return void
+	 *
+	 * @access public
+	 */
 	public function processAdminUI()
 	{
-		$user = User :: getCurrentUser();
+		$user = User::getCurrentUser();
 
-		if (!$this->isOwner($user) && !$user->isSuperAdmin())
-		{
-			throw new Exception(_('Access denied!'));
-		}
+		try {
+    		if (!$this->isOwner($user) && !$user->isSuperAdmin()) {
+    			throw new Exception(_('Access denied!'));
+    		}
+        } catch (Exception $e) {
+            $ui = new MainUI();
+            $ui->setToolSection('ADMIN');
+            $ui->displayError($e->getMessage(), false);
+            exit;
+        }
 
 		// Check if user is a admin
 		$_userIsAdmin = User::getCurrentUser()->isSuperAdmin();
@@ -1287,36 +1369,70 @@ class Node implements GenericObject
 		return $retval;
 	}
 
-	/** The list of users online at this node
-	 * @return An array of User object, or en empty array */
-	function getOnlineUsers()
+	/**
+	 * The list of users online at this node
+	 *
+	 * @return array An array of User object, or an empty array
+	 *
+	 * @access public
+	 */
+	public function getOnlineUsers()
 	{
+	    // Define globals
 		global $db;
-		$retval = array ();
+
+		// Init values
+		$retval = array();
 		$users = null;
+		$anonUsers = 0;
+
 		$db->execSql("SELECT users.user_id FROM users,connections WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}'", $users, false);
-		if ($users != null)
-		{
-			foreach ($users as $user_row)
-			{
-				$retval[] = User :: getObject($user_row['user_id']);
+
+		if ($users != null) {
+			foreach ($users as $user_row) {
+			    if ($this->isConfiguredSplashOnly()) {
+			        if (User::getObject($user_row['user_id']) == "SPLASH_ONLY_USER") {
+			            $anonUsers++;
+			        } else {
+				        $retval[] = User::getObject($user_row['user_id']);
+			        }
+			    } else {
+				    $retval[] = User::getObject($user_row['user_id']);
+			    }
 			}
+
+		    if ($this->isConfiguredSplashOnly() && $anonUsers == 1) {
+			    $retval[] = "One anonymous user";
+		    } else if ($this->isConfiguredSplashOnly() && $anonUsers > 1) {
+			    $retval[] = sprintf("%d anonymous users", $anonUsers);
+		    }
 		}
+
 		return $retval;
 	}
 
-	/** Find out how many users are online this specific Node
-	 * @return Number of online users
+	/**
+	 * Find out how many users are online this specific Node
+	 *
+	 * @return int Number of online users
+	 *
+	 * @access public
 	 */
-	function getNumOnlineUsers()
+	public function getNumOnlineUsers()
 	{
+	    // Define globals
 		global $db;
+
+		// Init values
 		$retval = array ();
 		$row = null;
-		if(!$this->isConfiguredSplashOnly())
+
+		if (!$this->isConfiguredSplashOnly()) {
 			$db->execSqlUniqueRes("SELECT COUNT(DISTINCT users.user_id) as count FROM users,connections WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}'", $row, false);
-		else
+		} else {
 			$db->execSqlUniqueRes("SELECT COUNT(DISTINCT connections.user_mac) as count FROM connections WHERE connections.token_status='".TOKEN_INUSE."' AND connections.node_id='{$this->id}'", $row, false);
+		}
+
 		return $row['count'];
 	}
 

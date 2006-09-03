@@ -1,3 +1,17 @@
+2006-09-03 Max Horváth <max.horvath@maxspot.de>
+	* The term SPLASH_ONLY_USER displayed to people visiting the portal has been
+	  replaced by the more meaningful term "anonymous user" (fixes #106)
+	* When creating a new node and choosing an existing node_id there will be
+	  shown an error message (fixes #223)
+	* If one or more nodes aren't monitored they now will be announced on the
+	  front page (instead of just showing the number of monitored online nodes)
+	  (fixes #100)
+	* Display more meaningful error messages if required user permissions are
+	  missing (fixes #242)
+	* Refactored Network->getAdminUI() to match look and feel of
+	  Node->getAdminUI (fixes #140)
+	* Show descriptive status of node (fixes #241)
+
 2006-09-02 Max Horváth <max.horvath@maxspot.de>
 	* Installation script checks for PHP session extension (fixes #139)
 	* Removed "Call-time pass-by-reference has been deprecated" warnings

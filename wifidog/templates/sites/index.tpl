@@ -92,6 +92,14 @@
         {else}
             {"%d hotspots are currently operationnal."|_|sprintf:$networkNumOnlineNodes}
         {/if}
+
+        {if $networkNumNonMonitoredNodes > 0}
+            {if $networkNumNonMonitoredNodes == 1}
+                {"Because of one hotspot not being monitored we don't know if it is currently operationnal."|_}
+            {else}
+                {"Because of %d hotspots not being monitored we don't know if they are currently operationnal."|_|sprintf:$networkNumNonMonitoredNodes}
+            {/if}
+        {/if}
     </p>
 
     <ul>

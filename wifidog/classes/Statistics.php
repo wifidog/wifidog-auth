@@ -46,6 +46,7 @@
  * Load required files
  */
 require_once('include/common.php');
+require_once('classes/MainUI.php');
 
 /**
  * Gives various statistics about the status of the network or of a specific node
@@ -377,47 +378,62 @@ EOF;
      * Get an interface to pick to which nodes the statistics apply.
      *
      * @return string HTML markup
+     *
+     * @access private
      */
     private function getSelectedNodesUI()
     {
+        // Define globals
         global $db;
+
+        // Init values
         $html = '';
+
         $name = "statistics_selected_nodes[]";
-        $user = User :: getCurrentUser();
-        if ($user->isSuperAdmin())
-        {
-            $sql_join = '';
-        }
-        else
-        {
-            $user_id = $db->escapeString($user->getId());
-            $sql_join = " JOIN node_stakeholders ON (nodes.node_id=node_stakeholders.node_id AND user_id='$user_id') ";
-        }
-        $sql = "SELECT nodes.node_id, nodes.name from nodes $sql_join WHERE 1=1 ORDER BY lower(node_id)";
-        $node_rows = null;
-        $db->execSql($sql, $node_rows, false);
-        $html .= "<select multiple size = 6 name='$name'>\n";
+        $user = User::getCurrentUser();
 
-        /*count($this->report_selected_nodes)==0?$selected=' SELECTED ':$selected='';
-                    $html.= "<option value='' $selected>"._("Statistics for all nodes")."</option>\n";
-        */
-        if ($node_rows != null)
-        {
-            foreach ($node_rows as $node_row)
-            {
-                $html .= "<option ";
-                if (array_key_exists($node_row['node_id'], $this->report_selected_nodes))
-                {
-                    $html .= " SELECTED ";
-                }
-
-                $nom = $node_row['node_id'].": ".$node_row['name'];
-                $nom = htmlspecialchars($nom, ENT_QUOTES, 'UTF-8');
-                $primary_key = htmlentities($node_row['node_id'], ENT_QUOTES, 'UTF-8');
-                $html .= "value='$primary_key'>$nom</option>\n";
+        try {
+            if (!isset($user)) {
+                throw new Exception(_('Access denied!'));
+            } else if ((!$user->isSuperAdmin() && !$user->isOwner()) || $user->isNobody()) {
+                throw new Exception(_('Access denied!'));
             }
+
+            if ($user->isSuperAdmin()) {
+                $sql_join = '';
+            } else {
+                $user_id = $db->escapeString($user->getId());
+                $sql_join = " JOIN node_stakeholders ON (nodes.node_id=node_stakeholders.node_id AND user_id='$user_id') ";
+            }
+
+            $sql = "SELECT nodes.node_id, nodes.name from nodes $sql_join WHERE 1=1 ORDER BY lower(node_id)";
+            $node_rows = null;
+            $db->execSql($sql, $node_rows, false);
+            $html .= "<select multiple size = 6 name='$name'>\n";
+
+            if ($node_rows != null) {
+                foreach ($node_rows as $node_row) {
+                    $html .= "<option ";
+
+                    if (array_key_exists($node_row['node_id'], $this->report_selected_nodes)) {
+                        $html .= " SELECTED ";
+                    }
+
+                    $nom = $node_row['node_id'].": ".$node_row['name'];
+                    $nom = htmlspecialchars($nom, ENT_QUOTES, 'UTF-8');
+                    $primary_key = htmlentities($node_row['node_id'], ENT_QUOTES, 'UTF-8');
+                    $html .= "value='$primary_key'>$nom</option>\n";
+                }
+            }
+
+            $html .= "</select>\n";
+        } catch (Exception $e) {
+            $ui = new MainUI();
+            $ui->setToolSection('ADMIN');
+            $ui->displayError($e->getMessage(), false);
+            exit;
         }
-        $html .= "</select>\n";
+
         return $html;
     }
 

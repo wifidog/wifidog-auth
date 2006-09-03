@@ -50,6 +50,8 @@ require_once ('classes/FormSelectGenerator.php');
 require_once ('classes/GenericObject.php');
 require_once ('classes/Cache.php');
 require_once ('classes/HyperLink.php');
+require_once ('classes/MainUI.php');
+
 /**
  * Defines any type of content
  *
@@ -103,7 +105,7 @@ class Content implements GenericObject {
      * @access private
      */
     private $is_logging_enabled;
-    
+
     /** Log as part of this other content */
     private $log_as_content;
 
@@ -711,24 +713,34 @@ class Content implements GenericObject {
      * @static
      * @access public
      */
-    public static function getSelectExistingContentUI($user_prefix, $sql_additional_where = null, $show_persistant_content = true, $order = "creation_timestamp", $type_interface = "select") {
-            // Define globals
-    global $db;
+    public static function getSelectExistingContentUI($user_prefix, $sql_additional_where = null, $show_persistant_content = true, $order = "creation_timestamp", $type_interface = "select")
+    {
+        // Define globals
+        global $db;
 
         // Init values
         $html = '';
         $retVal = array ();
         $contentRows = null;
 
-        if (!User :: getCurrentUser()) {
-            throw new Exception(_('Access denied!'));
+        try {
+            if (!User :: getCurrentUser()) {
+                throw new Exception(_('Access denied!'));
+            }
+        } catch (Exception $e) {
+            $ui = new MainUI();
+            $ui->setToolSection('ADMIN');
+            $ui->displayError($e->getMessage(), false);
+            exit;
         }
 
         if ($type_interface != "table") {
-                    $html .= "<fieldset class='admin_container Content'>\n";
-        if(!empty($title)){
-		$html .= "<legend>$title</legend>\n";
-		}
+            $html .= "<fieldset class='admin_container Content'>\n";
+
+            if (!empty($title)) {
+                $html .= "<legend>$title</legend>\n";
+            }
+
             $html .= _("Add existing content").": ";
         }
 
@@ -751,9 +763,9 @@ class Content implements GenericObject {
             }
 
             foreach ($contentRows as $contentRow) {
-                $content = Content :: getObject($contentRow['content_id']);
+                $content = Content::getObject($contentRow['content_id']);
 
-                if (User :: getCurrentUser()->isSuperAdmin() || $content->isOwner(User :: getCurrentUser())) {
+                if (User::getCurrentUser()->isSuperAdmin() || $content->isOwner(User::getCurrentUser())) {
                     if ($type_interface != "table") {
                         $tab[$i][0] = $content->getId();
                         $tab[$i][1] = $content->__toString()." (".get_class($content).")";
@@ -1087,7 +1099,7 @@ class Content implements GenericObject {
     }
 
 
-/** Allow logging as part of another content (usually the parent for metadata).  
+/** Allow logging as part of another content (usually the parent for metadata).
  * Redirects clickthrough logging to the parent's content id, and does not log
  * display */
 protected function setLogAsContent(Content $content)
@@ -1179,15 +1191,15 @@ protected function setLogAsContent(Content $content)
                 $name = "content_".$this->id."_title_is_displayed";
                 $this->titleShouldDisplay() ? $checked = 'CHECKED' : $checked = '';
                 $html_title_is_displayed .= "<input type='checkbox' name='$name' $checked>\n";
-                
+
                 /* title */
                 $html .= "<li class='admin_element_item_container admin_section_edit_title'>\n";
-                $html .= "<div class='admin_element_data'>\n";  
+                $html .= "<div class='admin_element_data'>\n";
                 if (empty ($this->content_row['title'])) {
-                    $html .= self :: getNewContentUI("title_{$this->id}_new", null, _("Title:"));                
+                    $html .= self :: getNewContentUI("title_{$this->id}_new", null, _("Title:"));
                     $html .= "</div>\n";
                 } else {
-                    $html .= $html_title_is_displayed; 
+                    $html .= $html_title_is_displayed;
                     $title = self :: getObject($this->content_row['title']);
                     $html .= $title->getAdminUI(null, _("Title:"));
                     $html .= "</div>\n";
@@ -1198,7 +1210,7 @@ protected function setLogAsContent(Content $content)
                 }
                 $html .= "</li>\n";
             }
-            
+
             if ($this->is_trivial_content == false) {
                 /* description */
                 $html .= "<li class='admin_element_item_container admin_section_edit_description'>\n";
@@ -1251,12 +1263,12 @@ protected function setLogAsContent(Content $content)
                 }
                 $html .= "</li>\n";
             }
-            
+
             //End content medatada
                         if ($this->is_trivial_content == false || $this->isPersistent()) {
                         $html .= "</fieldset>\n";
                         }
-            if ($this->is_trivial_content == false || $this->isPersistent()) {        		
+            if ($this->is_trivial_content == false || $this->isPersistent()) {
                 $html .= "<fieldset class='admin_element_group'>\n";
 				$html .= "<legend>".sprintf(_("%s access control"),get_class($this))."</legend>\n";
 
@@ -1329,7 +1341,7 @@ protected function setLogAsContent(Content $content)
             } else
             {//Content medatada
 
-                
+
                             if ($this->is_trivial_content == false || $this->isPersistent()) {
                                             /* title_is_displayed */
                 if (!empty ($this->content_row['title'])){
@@ -1514,7 +1526,7 @@ protected function setLogAsContent(Content $content)
         }
         return $retval;
     }
-    
+
     /** Set if the content group is persistent
      * @param $is_locative_content true or false
      * */
