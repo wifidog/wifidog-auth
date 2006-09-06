@@ -46,7 +46,7 @@
 /**
  * Load required classes
  */
-require_once('classes/User.php');
+require_once ('classes/User.php');
 
 /**
  * Abstraction and utilities to handle HyperLinks
@@ -56,6 +56,8 @@ require_once('classes/User.php');
  * @copyright  2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class HyperLink {
+    const pattern = '/(<a\s.*?HREF=[\'"]?)((?:http|https|ftp).*?)([\'"\s].*?>)/mi';
+
     /**
      * Find http, https and ftp hyperlinks in a string
      *
@@ -64,37 +66,37 @@ class HyperLink {
      * @return array of URLs
     
      */
-    public static function findHyperLinks(&$string) {
-        $pattern = '/<a\s.*?HREF=[\'"]?((?:http|https|ftp).*?)[\'"\s].*?>/mi';
-        //pretty_print_r($pattern);
+    private static function findHyperLinks(& $string) {
+        //pretty_print_r(self::pattern);
         $matches = null;
-        $num_matches = preg_match_all($pattern, $string, $matches);
+        $num_matches = preg_match_all(self :: pattern, $string, $matches);
+
+        return $matches;
+    }
+
+    /** Get the  clickthrough-logged equivalent of a sincle URL (http, https or ftp) */
+    private static function getClickThroughLink($hyperlink, Content & $content, $node, $user) {
+        $node ? $node_id = urlencode($node->getId()) : $node_id = null;
+        $user ? $user_id = urlencode($user->getId()) : $user_id = null;
+        return BASE_URL_PATH . "clickthrough.php?destination_url=" . urlencode($hyperlink) . "&content_id=" . urlencode($content->getId()) . "&node_id={$node_id}&user_id={$user_id}";
+    }
+
+    /** Replace all hyperlinks in the source string with their clickthrough-logged equivalents */
+    public static function replaceHyperLinks(& $string, Content & $content) {
+        $matches = self :: findHyperLinks($string);
         //pretty_print_r($matches);
-        return $matches[1];
-    }
-
-/** Get the  clickthrough-logged equivalent of a sincle URL (http, https or ftp) */
-    public static function getClickThroughLink($hyperlink, Content &$content, $node, $user) {
-        $node?$node_id=urlencode($node->getId()):$node_id=null;
-        $user?$user_id=urlencode($user->getId()):$user_id=null;
-        return BASE_URL_PATH . "clickthrough.php?destination_url=" . urlencode($hyperlink) . "&content_id=".urlencode($content->getId())."&node_id={$node_id}&user_id={$user_id}";
-    }
-
-/** Replace all hyperlinks in the source string with their clickthrough-logged equivalents */
-    public static function replaceHyperLinks(&$string, Content &$content) {
-        $links = self :: findHyperLinks($string);
-        if(!empty($links))
-        {
-            $node = Node::getCurrentNode();
-        $user = User::getCurrentUser();
-        foreach ($links as $link) {
-            $replacements[] = self :: getClickThroughLink($link, $content, $node, $user);
-        }
-        //pretty_print_r($replacements);
-        return str_replace($links, $replacements, $string);
-        }
-        else
-        {
+        if (!empty ($matches[2])) {
+            $node = Node :: getCurrentNode();
+            $user = User :: getCurrentUser();
+            $i = 0;
+            foreach ($matches[2] as $link) {
+                $new_link = self :: getClickThroughLink($link, $content, $node, $user);
+                $replacements[] = $matches[1][$i] . $new_link . $matches[3][$i];
+                $i++;
+            }
+            //pretty_print_r($replacements);
+            return str_replace($matches[0], $replacements, $string);
+        } else {
             return $string;
         }
     }

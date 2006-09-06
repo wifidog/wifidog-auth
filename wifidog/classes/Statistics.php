@@ -46,7 +46,6 @@
  * Load required files
  */
 require_once('include/common.php');
-require_once('classes/MainUI.php');
 
 /**
  * Gives various statistics about the status of the network or of a specific node
@@ -392,7 +391,6 @@ EOF;
         $name = "statistics_selected_nodes[]";
         $user = User::getCurrentUser();
 
-        try {
             if (!isset($user)) {
                 throw new Exception(_('Access denied!'));
             } else if ((!$user->isSuperAdmin() && !$user->isOwner()) || $user->isNobody()) {
@@ -427,12 +425,7 @@ EOF;
             }
 
             $html .= "</select>\n";
-        } catch (Exception $e) {
-            $ui = new MainUI();
-            $ui->setToolSection('ADMIN');
-            $ui->displayError($e->getMessage(), false);
-            exit;
-        }
+
 
         return $html;
     }

@@ -391,18 +391,10 @@ class Server implements GenericObject
 			$_serverId = $_REQUEST[$_name];
 
 			if ($_serverId) {
-			    try {
     				if (!User::getCurrentUser()->isSuperAdmin()) {
     					throw new Exception(_("Access denied"));
     				}
-                } catch (Exception $e) {
-                    require_once('classes/MainUI.php');
 
-                    $ui = new MainUI();
-                    $ui->setToolSection('ADMIN');
-                    $ui->displayError($e->getMessage(), false);
-                    exit;
-                }
 
 				$_retVal = self::createNewObject($_serverId);
 			}

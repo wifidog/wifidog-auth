@@ -50,7 +50,6 @@ require_once ('classes/FormSelectGenerator.php');
 require_once ('classes/GenericObject.php');
 require_once ('classes/Cache.php');
 require_once ('classes/HyperLink.php');
-require_once ('classes/MainUI.php');
 
 /**
  * Defines any type of content
@@ -723,16 +722,9 @@ class Content implements GenericObject {
             $content_type_filter = ContentTypeFilter :: getObject(array ());
         }
 
-        try {
             if (!User :: getCurrentUser()) {
                 throw new Exception(_('Access denied!'));
             }
-        } catch (Exception $e) {
-            $ui = new MainUI();
-            $ui->setToolSection('ADMIN');
-            $ui->displayError($e->getMessage(), false);
-            exit;
-        }
 
         if ($type_interface != "table") {
             $html .= "<fieldset class='admin_container Content'>\n";

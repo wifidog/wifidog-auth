@@ -53,8 +53,7 @@ require_once('classes/Node.php');
 require_once('classes/GisPoint.php');
 require_once('classes/Cache.php');
 require_once('classes/ThemePack.php');
-require_once('classes/InterfaceElements.php');
-require_once('classes/MainUI.php');
+
 
 /**
  * Abstract a Network.
@@ -1490,6 +1489,7 @@ class Network implements GenericObject
      */
     public function getAdminUI()
     {
+        require_once('classes/InterfaceElements.php');
         // Init values
         $html = '';
 
@@ -1694,17 +1694,10 @@ class Network implements GenericObject
     {
         $user = User::getCurrentUser();
 
-        try {
             if (!$this->hasAdminAccess($user)) {
                 throw new Exception(_('Access denied!'));
             }
-        } catch (Exception $e) {
-            $ui = new MainUI();
-            $ui->setToolSection('ADMIN');
-            $ui->displayError($e->getMessage(), false);
-            exit;
-        }
-
+            
         // Content management
         $name = "network_".$this->id."_content";
         Content :: processLinkedContentUI($name, 'network_has_content', 'network_id', $this->id);

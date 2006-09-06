@@ -49,8 +49,6 @@ require_once('classes/GisPoint.php');
 require_once('classes/AbstractGeocoder.php');
 require_once('classes/Utils.php');
 require_once('classes/DateTime.php');
-require_once('classes/InterfaceElements.php');
-require_once('classes/MainUI.php');
 
 /**
  * Abstract a Node.  A Node is an actual physical transmitter.
@@ -229,7 +227,6 @@ class Node implements GenericObject
 		$node_deployment_status = $db->escapeString("IN_PLANNING");
 		$node_name = _("New node");
 
-		try {
             if (Node::nodeExists($node_id)) {
                 throw new Exception(_('This node already exists.'));
             }
@@ -243,12 +240,6 @@ class Node implements GenericObject
             $object = new self($node_id);
 
             return $object;
-        } catch (Exception $e) {
-            $ui = new MainUI();
-            $ui->setToolSection('ADMIN');
-            $ui->displayError($e->getMessage(), false);
-            exit;
-        }
 	}
 
 	/** Get an interface to pick a node.
@@ -814,19 +805,12 @@ class Node implements GenericObject
 	 */
 	public function getAdminUI()
 	{
+	    require_once('classes/InterfaceElements.php');
 	    // Init values
 		$html = '';
-
-		try {
     		if (!User::getCurrentUser()) {
     			throw new Exception(_('Access denied!'));
     		}
-        } catch (Exception $e) {
-            $ui = new MainUI();
-            $ui->setToolSection('ADMIN');
-            $ui->displayError($e->getMessage(), false);
-            exit;
-        }
 
 		// Get information about the network
 		$network = $this->getNetwork();
@@ -1075,16 +1059,10 @@ class Node implements GenericObject
 	{
 		$user = User::getCurrentUser();
 
-		try {
     		if (!$this->isOwner($user) && !$user->isSuperAdmin()) {
     			throw new Exception(_('Access denied!'));
     		}
-        } catch (Exception $e) {
-            $ui = new MainUI();
-            $ui->setToolSection('ADMIN');
-            $ui->displayError($e->getMessage(), false);
-            exit;
-        }
+
 
 		// Check if user is a admin
 		$_userIsAdmin = User::getCurrentUser()->isSuperAdmin();

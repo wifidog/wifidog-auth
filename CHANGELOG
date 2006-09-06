@@ -1,4 +1,8 @@
 2006-09-06 Benoit Grégoire  <bock@step.polymtl.ca>
+
+	* HyperLink.php:  Fix bug where a link with identical text as it's link would see the text replaced by the clickthrough-tracked equivalent.
+
+2006-09-06 Benoit Grégoire  <bock@step.polymtl.ca>
 	* ContentTypeFilter:  New class, implements #159.  Allows to filter content type according to various criteria.  Will be used more extensively in the profile manager.
 	* Content manager:  Use content type filter to only allow Simple content types (Content without metadata) to be used for metadata.
 	* New content type BannerAdGroup.  Used (primarily) to display banner adds, or any other image rotation.  Size constraints not yet implemented
@@ -10,7 +14,8 @@
 	* Finally fix #127
 	* At last, working content scheduled display and expiration for ContentGroups.  Archiving does not yet have a UI.  Content that expires will simply seem to disapear.
 	* Fix #247 (somebody filed a bug before I commited, conveniently saving me the need to describe it).	
-	* The Fix for #106 in [1089] returned non-objects, causing error messages and not displaying what it was meant to display.   
+	* The Fix for #106 in [1089] returned non-objects, causing error messages and not displaying what it was meant to display. 
+		Used Guest instead of Annonymous, which will probably be used for different purpose in the future.  
 		This re-fix does not include duplicate counting yet.  Splash users are not the only users that could log-in multiple times.  
 		I don't have a staging server here, a fix will be commited in a few minutes if something goes wrong.
 	* Cleanup coments.

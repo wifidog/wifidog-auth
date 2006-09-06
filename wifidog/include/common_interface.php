@@ -58,12 +58,10 @@ require_once('init_php.php');
  * Load required files
  */
 require_once('classes/Session.php');
-require_once('classes/Statistics.php');
 require_once('classes/SmartyWifidog.php');
 require_once('classes/User.php');
 
 $session = new Session();
-$stats = new Statistics();
 $smarty = new SmartyWifidog;
 
 require_once('include/language.php');
