@@ -58,8 +58,6 @@ class IFrame extends Content
      * @param string $content_id Content id
      *
      * @return void
-     *
-     * @access public
      */
     public function __construct($content_id)
     {
@@ -99,8 +97,7 @@ class IFrame extends Content
      * Return the IFrame URL
      *
      * @return mixed (string or null) IFrame URL if it has been set
-     *
-     * @access private
+
      */
     protected function getUrl()
     {
@@ -113,8 +110,7 @@ class IFrame extends Content
      * @param string $url IFrame URL
      *
      * @return void
-     *
-     * @access private
+
      */
     protected function setUrl($url)
     {
@@ -129,8 +125,7 @@ class IFrame extends Content
      * DO NOT DELETE IT.
      *
      * @return mixed (string or null) IFrame URL if it has been set
-     *
-     * @access private
+
      */
     private function getGeneratedUrl()
     {
@@ -141,8 +136,7 @@ class IFrame extends Content
      * Gets the width of an IFrame
      *
      * @return mixed (int or null) Width of IFrame
-     *
-     * @access private
+
      */
     private function getWidth()
     {
@@ -155,8 +149,7 @@ class IFrame extends Content
      * @param int $width Width to be set
      *
      * @return bool True if width was a valid value and could be set
-     *
-     * @access private
+
      */
     private function setWidth($width)
     {
@@ -183,8 +176,7 @@ class IFrame extends Content
      * Gets the height of an IFrame
      *
      * @return mixed (int or null) Height of IFrame
-     *
-     * @access private
+
      */
     private function getHeight()
     {
@@ -197,8 +189,7 @@ class IFrame extends Content
      * @param int $height Height to be set
      *
      * @return bool True if height was a valid value and could be set
-     *
-     * @access private
+
      */
     private function setHeight($height)
     {
@@ -269,8 +260,6 @@ class IFrame extends Content
      * Processes the input of the administration interface for IFrame
      *
      * @return void
-     *
-     * @access public
      */
     public function processAdminUI()
     {
@@ -302,8 +291,6 @@ class IFrame extends Content
      * @param string $subclass_admin_interface HTML content of the interface
      *                                         element of a children
      * @return string The HTML fragment for this interface
-     *
-     * @access public
      */
     public function getUserUI($subclass_user_interface = null)
     {
@@ -327,8 +314,7 @@ class IFrame extends Content
      * the constructor from the wrong scope
      *
      * @return void
-     *
-     * @access private
+
      */
     private function refresh()
     {

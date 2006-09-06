@@ -68,8 +68,7 @@ abstract class Authenticator
      * Object of current network
      *
      * @var object
-     *
-     * @access private
+
      */
     private $mNetwork;
 
@@ -79,8 +78,6 @@ abstract class Authenticator
      * @param string $network_id Id of network
      *
      * @return void
-     *
-     * @access public
      */
     public function __construct($network_id)
     {
@@ -91,8 +88,6 @@ abstract class Authenticator
      * Returns object of current network
      *
      * @return object Object of current network
-     *
-     * @access public
      */
     public function getNetwork()
     {
@@ -103,8 +98,6 @@ abstract class Authenticator
      * Attempts to login a user against the authentication source
      *
      * If successfull, returns a User object.
-     *
-     * @access public
      */
     public function login()
     {
@@ -123,8 +116,6 @@ abstract class Authenticator
      *                        destroyed.
      *
      * @return void
-     *
-     * @access public
      */
     public function logout($conn_id = null)
     {
@@ -189,8 +180,6 @@ abstract class Authenticator
      * @param string $conn_id The connection id for the connection to work on
      *
      * @return void
-     *
-     * @access public
      */
     public function acctStart($conn_id)
     {
@@ -243,8 +232,6 @@ abstract class Authenticator
      * @param int    $outgoing Outgoing traffic in bytes
      *
      * @return void
-     *
-     * @access public
      */
     public function acctUpdate($conn_id, $incoming, $outgoing)
     {
@@ -263,8 +250,6 @@ abstract class Authenticator
      *                        connection to work on
      *
      * @return void
-     *
-     * @access public
      * */
     public function acctStop($conn_id)
     {
@@ -280,8 +265,6 @@ abstract class Authenticator
      * Property method that tells if the class allows registration
      *
      * @return bool Returns if the class allows registration
-     *
-     * @access public
      */
     public function isRegistrationPermitted()
     {

@@ -63,8 +63,7 @@ class ContentGroupElement extends Content
 {
 
     /**
-     * @var array
-     * @access private
+
      */
     private $content_group_element_row;
 
@@ -73,10 +72,7 @@ class ContentGroupElement extends Content
      *
      * @param string $content_id Content Id
      *
-     * @return void
-     *
-     * @access protected
-     */
+     * @return void     */
     protected function __construct($content_id)
     {
         // Define globals
@@ -86,8 +82,6 @@ class ContentGroupElement extends Content
         $row = null;
 
         parent :: __construct($content_id);
-
-        $this->setIsTrivialContent(true);
         $content_id = $db->escapeString($content_id);
 
         $sql_select = "SELECT * FROM content_group_element WHERE content_group_element_id='$content_id'";
@@ -104,7 +98,11 @@ class ContentGroupElement extends Content
         /* A content group element is NEVER persistent */
         parent::setIsPersistent(false);
     }
-
+    /** When a content object is set as Simple, it means that is is used merely to contain it's own data.  No title, description or other metadata will be set or displayed, during display or administration
+     * @return true or false */
+    public function isSimpleContent() {
+        return true;
+    }
     /**
      * Replace and delete the old displayed_content (if any) by the new
      * content (or no content)
@@ -114,8 +112,7 @@ class ContentGroupElement extends Content
      *                                      deleted.
      *
      * @return void
-     *
-     * @access private
+
      */
     private function replaceDisplayedContent($new_displayed_content)
     {
@@ -147,8 +144,6 @@ class ContentGroupElement extends Content
      * Get the order of the element in the content group
      *
      * @return string the order of the element in the content group
-     *
-     * @access public
      */
     public function getDisplayOrder()
     {
@@ -161,8 +156,6 @@ class ContentGroupElement extends Content
      * @param string $order Order how items should be displayed
      *
      * @return void
-     *
-     * @access public
      */
     public function setDisplayOrder($order)
     {
@@ -191,8 +184,6 @@ class ContentGroupElement extends Content
      *                                           new content.
      *
      * @return object The ContentGroup object, or null if the user didn't greate one
-     *
-     * @access public
      * @static
      */
     public static function processNewContentUI($user_prefix, ContentGroup $content_group, $associate_existing_content = false)
@@ -251,6 +242,58 @@ class ContentGroupElement extends Content
 
         return $content_group_element_object;
     }
+    /** If set, content will only be displayed from this date on. */
+    function getValidFromDate()
+    {
+        return $this->content_group_element_row['valid_from_timestamp'];
+    }
+
+    /** If set, content will only be displayed from this date on. 
+     * @param string @date Start date.  To always display, set to null or an empty string */
+    function setValidFromDate($date)
+    {
+        // Define globals
+        global $db;
+        if($date != $this->getValidFromDate())
+        {
+        if(!empty($date))
+        {
+        $date = "'".$db->escapeString($date)."'";
+        }
+        else
+        {
+          $date = 'NULL';  
+        }
+        $db->execSqlUpdate("UPDATE content_group_element SET valid_from_timestamp = {$date} WHERE content_group_element_id = '{$this->getId()}'");
+        $this->refresh();
+        }
+    }
+    /** If set, content will only be displayed untill this date (and will then be archived). */
+    function getValidUntilDate()
+    {
+        return $this->content_group_element_row['valid_until_timestamp'];
+    }
+
+    /** If set, content will only be displayed untill this date (and will then be archived). 
+     * @param string @date End date.  To always display, set to null or an empty string */
+    function setValidUntilDate($date)
+    {
+        // Define globals
+        global $db;
+                if($date != $this->getValidUntilDate())
+        {
+        if(!empty($date))
+        {
+        $date = "'".$db->escapeString($date)."'";
+        }
+        else
+        {
+          $date = 'NULL';  
+        }
+        $db->execSqlUpdate("UPDATE content_group_element SET valid_until_timestamp = {$date} WHERE content_group_element_id = '{$this->getId()}'");
+        $this->refresh();
+        }
+    }
 
     /**
      * Shows the administration interface for ContentGroupElement
@@ -259,8 +302,6 @@ class ContentGroupElement extends Content
      *                                         administration interface
      *
      * @return string HTML code for the administration interface
-     *
-     * @access public
      */
     public function getAdminUI($subclass_admin_interface = null, $title=null)
     {
@@ -271,7 +312,7 @@ class ContentGroupElement extends Content
         $html = '';
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<fieldset class='admin_element_group'>\n";
-		$html .= "<legend>". sprintf(_("%s %d display order and location"), get_class($this), $this->getDisplayOrder())."</legend>\n";
+		$html .= "<legend>". sprintf(_("%s %d display conditions"), get_class($this), $this->getDisplayOrder())."</legend>\n";
 
         $allowed_node_rows = null;
 		$html .= "<ul class='admin_element_list'>\n";
@@ -284,11 +325,28 @@ class ContentGroupElement extends Content
         $html .= _("(Ignored if display type is random)")."\n";
         $html .= "</div>\n";
         $html .= "</li>\n";
+        
+        $html .= "<li class='admin_element_item_container'>\n"; 
+        // valid_from_timestamp
+        $html .= "<div class='admin_element_label'>"._("Only display from")."</div>\n";
+        $html .= "<div class='admin_element_data'>\n";        
+        $name = "content_group_element_".$this->id."_valid_from";
+        $html .= DateTime::getSelectDateTimeUI(new DateTime($this->getValidFromDate()), $name, DateTime::INTERFACE_DATETIME_FIELD, null);
+        $html .= "</div>\n";
 
+        // valid_until_timestamp
+        $html .= "<div class='admin_element_label'>until</div>\n";
+        $html .= "<div class='admin_element_data'>\n";
+        $name = "content_group_element_".$this->id."_valid_until";
+        $html .= DateTime::getSelectDateTimeUI(new DateTime($this->getValidUntilDate()), $name, DateTime::INTERFACE_DATETIME_FIELD, null);
+        $html .= "</div>\n";
+        
+        $html .= _("(Content can be displayed at any date if no start or end date is specified.  Warning:  If you do not specify a specifig time of day, midnight is assumed.)")."\n";
+        $html .= "</li>\n";
+        
         /* content_group_element_has_allowed_nodes */
         $html .= "<li class='admin_element_item_container'>\n";
-        $html .= "<div class='admin_element_label'>"._("AllowedNodes:")."</div>\n";
-        $html .= _("(Content can be displayed on ANY node unless one or more nodes are selected)")."\n";
+        $html .= "<div class='admin_element_label'>"._("Only display at node(s):")."</div>\n";
         $html .= "<ul class='admin_element_list'>\n";
 
         $sql = "SELECT * FROM content_group_element_has_allowed_nodes WHERE content_group_element_id='$this->id'";
@@ -318,6 +376,7 @@ class ContentGroupElement extends Content
         $html .= "<input type='submit' name='$name' value='"._("Add new allowed node")."'>";
         $html .= "</li'>\n";
         $html .= "</ul>\n";
+        $html .= _("(Content can be displayed at ANY node unless one or more nodes are selected)")."\n";
 
         $html .= "</li>\n";
         $html .= "</fieldset>\n";
@@ -351,8 +410,6 @@ class ContentGroupElement extends Content
      * Processes the input of the administration interface for ContentGroupElement
      *
      * @return void
-     *
-     * @access public
      */
     public function processAdminUI()
     {
@@ -368,6 +425,15 @@ class ContentGroupElement extends Content
         /* display_order */
         $name = "content_group_element_".$this->id."_display_order";
         $this->setDisplayOrder($_REQUEST[$name]);
+
+        // valid_from_timestamp
+        $name = "content_group_element_".$this->id."_valid_from";
+        $this->setValidFromDate(DateTime::processSelectDateTimeUI($name, DateTime :: INTERFACE_DATETIME_FIELD)->getIso8601FormattedString());
+
+        // valid_until_timestamp
+
+        $name = "content_group_element_".$this->id."_valid_until";
+        $this->setValidUntilDate(DateTime::processSelectDateTimeUI($name, DateTime :: INTERFACE_DATETIME_FIELD)->getIso8601FormattedString());
 
         /* content_group_element_has_allowed_nodes */
         $sql = "SELECT * FROM content_group_element_has_allowed_nodes WHERE content_group_element_id='$this->id'";
@@ -428,8 +494,6 @@ class ContentGroupElement extends Content
      * Retreives the user interface of this object.
      *
      * @return string The HTML fragment for this interface
-     *
-     * @access public
      */
     public function getUserUI($subclass_user_interface = null)
     {
@@ -461,8 +525,6 @@ class ContentGroupElement extends Content
      * @param string $node Node Id
      *
      * @return bool True if it is displayable
-     *
-     * @access public
      */
     public function isDisplayableAt($node)
     {
@@ -509,8 +571,6 @@ class ContentGroupElement extends Content
      * @param object $user User object: the user to be tested.
      *
      * @return bool True if the user is a owner, false if he isn't or if the user is null
-     *
-     * @access public
      */
     public function isOwner($user)
     {
@@ -524,8 +584,6 @@ class ContentGroupElement extends Content
      * @param string $errmsg Reference to error message
      *
      * @return bool True if deletion was successful
-     *
-     * @access public
      * @internal Persistent content will not be deleted
      *
      * @todo Implement proper access control
@@ -537,6 +595,11 @@ class ContentGroupElement extends Content
             $displayed_content->delete($errmsg);
             parent::delete($errmsg);
         }
+    }
+        /** Reloads the object from the database.  Should normally be called after a set operation */
+    protected function refresh()
+    {
+        $this->__construct($this->id);
     }
 }
 

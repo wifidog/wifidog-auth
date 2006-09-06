@@ -86,8 +86,7 @@ if (Dependencies::check("FPDF")) {
              * Is document is protected?
              *
              * @var bool
-             *
-             * @access private
+
              */
             private $_encrypted;
 
@@ -95,8 +94,7 @@ if (Dependencies::check("FPDF")) {
              * U entry in pdf document
              *
              * @var string
-             *
-             * @access private
+
              */
             private $_uValue;
 
@@ -104,8 +102,7 @@ if (Dependencies::check("FPDF")) {
              * O entry in pdf document
              *
              * @var string
-             *
-             * @access private
+
              */
             private $_oValue;
 
@@ -113,8 +110,7 @@ if (Dependencies::check("FPDF")) {
              * P entry in pdf document
              *
              * @var string
-             *
-             * @access private
+
              */
             private $_pValue;
 
@@ -122,8 +118,7 @@ if (Dependencies::check("FPDF")) {
              * Encryption object id
              *
              * @var string
-             *
-             * @access private
+
              */
             private $_encObjectId;
 
@@ -131,8 +126,7 @@ if (Dependencies::check("FPDF")) {
              * Last encrypted RC4 key (cached for optimization)
              *
              * @var string
-             *
-             * @access private
+
              */
             private $_lastRC4Key;
 
@@ -140,8 +134,7 @@ if (Dependencies::check("FPDF")) {
              * Last computed RC4 key
              *
              * @var string
-             *
-             * @access private
+
              */
             private $_lastRC4KeyC;
 
@@ -149,8 +142,7 @@ if (Dependencies::check("FPDF")) {
              * Array of column widths
              *
              * @var array
-             *
-             * @access private
+
              */
             private $_widths;
 
@@ -158,8 +150,7 @@ if (Dependencies::check("FPDF")) {
              * Array of column alignments
              *
              * @var array
-             *
-             * @access private
+
              */
             private $_aligns;
 
@@ -182,8 +173,6 @@ if (Dependencies::check("FPDF")) {
              *                              - a5
              *
              * @return void
-             *
-             * @access public
              */
             public function __construct($orientation = 'L', $unit = 'mm', $format = 'letter')
             {
@@ -215,8 +204,6 @@ if (Dependencies::check("FPDF")) {
              *                            restrictions if that password is entered
              *
              * @return void
-             *
-             * @access public
              */
             public function SetProtection($permissions = array(), $userPass = '', $ownerPass = null)
             {
@@ -250,8 +237,6 @@ if (Dependencies::check("FPDF")) {
              * @param array $w Array of column widths
              *
              * @return void
-             *
-             * @access public
              */
             public function SetWidths($w)
             {
@@ -264,8 +249,6 @@ if (Dependencies::check("FPDF")) {
              * @param array $a Array of column alignments
              *
              * @return void
-             *
-             * @access public
              */
             function SetAligns($a)
             {
@@ -279,8 +262,6 @@ if (Dependencies::check("FPDF")) {
              * @param array $data   Data of table
              *
              * @return void
-             *
-             * @access public
              */
             public function nodeList($header, $data)
             {
@@ -447,8 +428,7 @@ if (Dependencies::check("FPDF")) {
              * Defines basic values of the PDF file
              *
              * @return void
-             *
-             * @access private
+
              */
             function _putinfo()
             {
@@ -487,8 +467,7 @@ if (Dependencies::check("FPDF")) {
              * @param string $s String to be processed
              *
              * @return void
-             *
-             * @access private
+
              */
             function _putstream($s)
             {
@@ -505,8 +484,7 @@ if (Dependencies::check("FPDF")) {
              * @param string $s String to be processed
              *
              * @return string Processed string
-             *
-             * @access private
+
              */
             function _textstring($s)
             {
@@ -524,8 +502,7 @@ if (Dependencies::check("FPDF")) {
              * @param int $n Number of object
              *
              * @return Computed key
-             *
-             * @access private
+
              */
             private function _objectkey($n)
             {
@@ -538,8 +515,7 @@ if (Dependencies::check("FPDF")) {
              * @param string $s String to be processed
              *
              * @return Processed string
-             *
-             * @access private
+
              */
             function _escape($s)
             {
@@ -556,8 +532,7 @@ if (Dependencies::check("FPDF")) {
              * encryption
              *
              * @return void
-             *
-             * @access private
+
              */
             private function _putencryption()
             {
@@ -573,8 +548,7 @@ if (Dependencies::check("FPDF")) {
              * Extends parent _putresources function with encryption
              *
              * @return void
-             *
-             * @access private
+
              */
             function _putresources()
             {
@@ -594,8 +568,7 @@ if (Dependencies::check("FPDF")) {
              * Extends parent _puttrailer function with encryption
              *
              * @return void
-             *
-             * @access private
+
              */
             function _puttrailer()
             {
@@ -614,8 +587,7 @@ if (Dependencies::check("FPDF")) {
              * @param string $text String to be encrypted
              *
              * @return Encrypted string
-             *
-             * @access private
+
              */
             private function _RC4($key, $text)
             {
@@ -661,8 +633,7 @@ if (Dependencies::check("FPDF")) {
              * @param string $string String to be converted
              *
              * @return Converted string
-             *
-             * @access private
+
              */
             private function _md5_16($string)
             {
@@ -676,8 +647,7 @@ if (Dependencies::check("FPDF")) {
              * @param string $ownerPass Owner password to be used
              *
              * @return Computed O value
-             *
-             * @access private
+
              */
             private function _GenOvalue($userPass, $ownerPass)
             {
@@ -691,8 +661,7 @@ if (Dependencies::check("FPDF")) {
              * Compute U value
              *
              * @return Computed U value
-             *
-             * @access private
+
              */
             private function _GenUvalue()
             {
@@ -707,8 +676,7 @@ if (Dependencies::check("FPDF")) {
              * @param int    $protection Protection to be used
              *
              * @return Generated encryption key
-             *
-             * @access private
+
              */
             private function _generateencryptionkey($userPass, $ownerPass, $protection)
             {
@@ -736,8 +704,7 @@ if (Dependencies::check("FPDF")) {
              * @param int $h Height of page
              *
              * @return void
-             *
-             * @access private
+
              */
             private function _checkPageBreak($h)
             {
@@ -754,8 +721,7 @@ if (Dependencies::check("FPDF")) {
              * @param string $txt Text to be calculated
              *
              * @return Number of lines
-             *
-             * @access private
+
              */
             private function _nbLines($w, $txt)
             {
@@ -850,8 +816,7 @@ class NodeListPDF
      * Is FPDF available?
      *
      * @var bool
-     *
-     * @access private
+
      */
     private $_pdfAvailable = false;
 
@@ -859,8 +824,7 @@ class NodeListPDF
      * PdfWifidog object
      *
      * @var object
-     *
-     * @access private
+
      */
     private $_pdf;
 
@@ -868,8 +832,7 @@ class NodeListPDF
      * Format of page
      *
      * @var string
-     *
-     * @access private
+
      */
     private $_pdfFormat = "letter";
 
@@ -877,8 +840,7 @@ class NodeListPDF
      * Sort list by?
      *
      * @var string
-     *
-     * @access private
+
      */
     private $_pdfSort = "name";
 
@@ -886,8 +848,7 @@ class NodeListPDF
      * Format of date
      *
      * @var string
-     *
-     * @access private
+
      */
     private $_pdfDate = "m/d/Y";
 
@@ -895,8 +856,7 @@ class NodeListPDF
      * Path of logo
      *
      * @var string
-     *
-     * @access private
+
      */
     private $_pdfImage = "media/base_theme/images/wifidog_logo.jpg";
 
@@ -904,8 +864,7 @@ class NodeListPDF
      * Network to generate the list from
      *
      * @var object
-     *
-     * @access private
+
      */
     private $_network;
 
@@ -913,8 +872,7 @@ class NodeListPDF
      * Nodes to generate the list from
      *
      * @var array
-     *
-     * @access private
+
      */
     private $_nodes;
 
@@ -922,8 +880,7 @@ class NodeListPDF
      * Object of current user
      *
      * @var object
-     *
-     * @access private
+
      */
     private $_currentUser;
 
@@ -931,8 +888,6 @@ class NodeListPDF
      * Constructor
      *
      * @return void
-     *
-     * @access public
      */
     public function __construct(&$network)
     {
@@ -1029,8 +984,6 @@ class NodeListPDF
      * Sets header of output
      *
      * @return void
-     *
-     * @access public
      */
     public function setHeader()
     {
@@ -1051,8 +1004,6 @@ class NodeListPDF
      *                            the class
      *
      * @return string The PDF file
-     *
-     * @access public
      */
     public function getOutput($return_object = false)
     {

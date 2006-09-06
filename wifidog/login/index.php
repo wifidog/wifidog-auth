@@ -157,7 +157,7 @@ if (!empty($gw_id)) {
 } else {
     // Gateway ID is not set ... virtual login
     $network = Network::getCurrentNetwork();
-    $node = Node::getObject(DEFAULT_NODE_ID);
+    $node = null;
 }
 
 /**
@@ -261,9 +261,13 @@ if($node) {
 }
 $ui->setPageName('login');
 $ui->shrinkLeftArea();
- $welcome_msg = sprintf("<span>%s</span><em>%s</em>",_("Welcome to"), $node->getName());
+if($node){
+    $name = $node->getName();
+}
+else {
+$name = $network->getName();}
+ $welcome_msg = sprintf("<span>%s</span><em>%s</em>",_("Welcome to"), $name);
  $ui->addContent('page_header', "<h1>$welcome_msg</h1>");
-
 $ui->addContent('main_area_top', $html);
 
 /*

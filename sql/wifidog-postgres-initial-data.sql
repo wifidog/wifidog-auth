@@ -1,4 +1,3 @@
-\connect wifidog;
 BEGIN;
 --
 -- PostgreSQL database dump
@@ -174,7 +173,7 @@ SET search_path = public, pg_catalog;
 -- Data for Name: schema_info; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
-INSERT INTO schema_info (tag, value) VALUES ('schema_version', '39');
+INSERT INTO schema_info (tag, value) VALUES ('schema_version', '46');
 
 
 --
@@ -199,6 +198,8 @@ INSERT INTO locales (locales_id) VALUES ('fr');
 INSERT INTO locales (locales_id) VALUES ('en');
 INSERT INTO locales (locales_id) VALUES ('de');
 INSERT INTO locales (locales_id) VALUES ('pt');
+INSERT INTO locales (locales_id) VALUES ('ja');
+INSERT INTO locales (locales_id) VALUES ('es');
 
 
 --

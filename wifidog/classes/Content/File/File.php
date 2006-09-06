@@ -85,8 +85,6 @@ class File extends Content
      * Constructor
      *
      * @param string $content_id Content id
-     *
-     * @access public
      */
     public function __construct($content_id)
     {
@@ -614,8 +612,6 @@ class File extends Content
      * @param string $errmsg Reference to error message
      *
      * @return bool True if deletion was successful
-     *
-     * @access public
      * @internal Persistent content will not be deleted
      */
     public function delete(&$errmsg)

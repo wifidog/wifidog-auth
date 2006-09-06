@@ -75,8 +75,7 @@ class AuthenticatorRadius extends Authenticator
      * Hostname of the RADIUS server
      *
      * @var string
-     *
-     * @access private
+
      */
     private $mRadius_hostname;
 
@@ -84,8 +83,7 @@ class AuthenticatorRadius extends Authenticator
      * Authentication port of the RADIUS server
      *
      * @var int
-     *
-     * @access private
+
      */
     private $mRadius_auth_port;
 
@@ -93,8 +91,7 @@ class AuthenticatorRadius extends Authenticator
      * Accounting port of the RADIUS server
      *
      * @var int
-     *
-     * @access private
+
      */
     private $mRadius_acct_port;
 
@@ -102,8 +99,7 @@ class AuthenticatorRadius extends Authenticator
      * The secret key between between this client and the server
      *
      * @var string
-     *
-     * @access private
+
      */
     private $mRadius_secret_key;
 
@@ -111,8 +107,7 @@ class AuthenticatorRadius extends Authenticator
      * The encryption method choosen for the requests
      *
      * @var string
-     *
-     * @access private
+
      */
     private $mRadius_encryption_method;
 
@@ -132,8 +127,6 @@ class AuthenticatorRadius extends Authenticator
      *                                  requests
      *
      * @return void
-     *
-     * @access public
      */
     public function __construct($account_orgin, $host = "localhost", $auth_port = 1812, $acct_port = 1813, $secret_key = "", $encryption_method = "CHAP_MD5")
     {
@@ -175,8 +168,6 @@ class AuthenticatorRadius extends Authenticator
      *
      * @return object The actual User object if login was successfull,
      *                false otherwise.
-     *
-     * @access public
      */
     public function login($username, $password, &$errmsg = null)
     {
@@ -313,8 +304,6 @@ class AuthenticatorRadius extends Authenticator
      * @param string $errmsg  Reference of error message
      *
      * @return bool Returns whether successful or not
-     *
-     * @access public
      */
     public function acctStart($conn_id, &$errmsg = null)
     {
@@ -382,8 +371,6 @@ class AuthenticatorRadius extends Authenticator
      * @param string $errmsg   Reference of error message
      *
      * @return bool Returns whether successful or not
-     *
-     * @access public
      */
     function acctUpdate($conn_id, $incoming, $outgoing, & $errmsg = null)
     {
@@ -454,8 +441,6 @@ class AuthenticatorRadius extends Authenticator
      * @param string $errmsg  Reference of error message
      *
      * @return bool Returns whether successful or not
-     *
-     * @access public
      */
     function acctStop($conn_id, &$errmsg = null)
     {

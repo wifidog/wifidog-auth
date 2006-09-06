@@ -65,10 +65,7 @@ class EmbeddedContent extends Content
      *
      * @param string $content_id Content Id
      *
-     * @return void
-     *
-     * @access protected
-     */
+     * @return void     */
     protected function __construct($content_id)
     {
         // Define globals
@@ -98,17 +95,19 @@ class EmbeddedContent extends Content
         }
 
         $this->mBd = &$db;
-        $this->setIsTrivialContent(true);
         $this->setIsPersistent(false);
         $this->embedded_content_row = $row;
     }
-
+    /** When a content object is set as Simple, it means that is is used merely to contain it's own data.  No title, description or other metadata will be set or displayed, during display or administration
+     * @return true or false */
+    public function isSimpleContent() {
+        return true;
+    }
     /**
      * Returns the attributes of embedded content
      *
      * @return string Attributes of the embedded content
-     *
-     * @access private
+
      */
     private function getAttributes()
     {
@@ -121,8 +120,7 @@ class EmbeddedContent extends Content
      * @param string $attributes_str Attributes of the embedded content
      *
      * @return void
-     *
-     * @access private
+
      */
     private function setAttributes($attributes_str)
     {
@@ -135,8 +133,7 @@ class EmbeddedContent extends Content
      * Returns parameters of embedded content
      *
      * @return string Parameters of the embedded content
-     *
-     * @access private
+
      */
     private function getParameters()
     {
@@ -149,8 +146,7 @@ class EmbeddedContent extends Content
      * @param string $paramters_str Parameters of the embedded content
      *
      * @return void
-     *
-     * @access private
+
      */
     private function setParameters($paramters_str)
     {
@@ -166,8 +162,6 @@ class EmbeddedContent extends Content
      *                                         administration interface
      *
      * @return string HTML code for the administration interface
-     *
-     * @access public
      */
     public function getAdminUI($subclass_admin_interface = null, $title=null)
     {
@@ -242,8 +236,6 @@ class EmbeddedContent extends Content
      * Processes the input of the administration interface for embedded content
      *
      * @return void
-     *
-     * @access public
      */
     public function processAdminUI()
     {
@@ -311,8 +303,6 @@ class EmbeddedContent extends Content
      * Retreives the user interface of this object.
      *
      * @return string The HTML fragment for this interface
-     *
-     * @access public
      */
     public function getUserUI()
     {
@@ -377,8 +367,7 @@ class EmbeddedContent extends Content
      * subclass will call the constructor from the wrong scope.
      *
      * @return void
-     *
-     * @access private
+
      */
     private function refresh()
     {
@@ -391,8 +380,6 @@ class EmbeddedContent extends Content
      * @param string $errmsg Reference to error message
      *
      * @return bool True if deletion was successful
-     *
-     * @access public
      * @internal Persistent content will not be deleted
      */
     public function delete(&$errmsg)

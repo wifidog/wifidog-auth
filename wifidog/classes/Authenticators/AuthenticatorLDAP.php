@@ -68,8 +68,7 @@ class AuthenticatorLDAP extends Authenticator
      * Hostname of the LDAP  server
      *
      * @var string
-     *
-     * @access private
+
      */
     private $mldap_hostname;
 
@@ -77,8 +76,7 @@ class AuthenticatorLDAP extends Authenticator
      * The Relative Distinguished Name of the LDAP server
      *
      * @var string
-     *
-     * @access private
+
      */
     private $mldap_rdn;
 
@@ -86,8 +84,7 @@ class AuthenticatorLDAP extends Authenticator
      * The password of the LDAP server
      *
      * @var string
-     *
-     * @access private
+
      */
     private $mldap_pass;
 
@@ -95,8 +92,7 @@ class AuthenticatorLDAP extends Authenticator
      * The base dn of the server
      *
      * @var string
-     *
-     * @access private
+
      */
     private $mldap_o;
 
@@ -105,8 +101,7 @@ class AuthenticatorLDAP extends Authenticator
      * name server
      *
      * @var string
-     *
-     * @access private
+
      */
     private $mldap_filter;
 
@@ -128,8 +123,6 @@ class AuthenticatorLDAP extends Authenticator
      *                              LDAP search, i.e.: uid, mail, name server
      *
      * @return void
-     *
-     * @access public
      */
 	public function __construct($account_orgin, $host, $rdn, $pass, $o, $filter)
     {
@@ -155,8 +148,7 @@ class AuthenticatorLDAP extends Authenticator
      * @param string $errmsg      Reference of error message
      *
      * @return bool True if the parameter refers to a Local User account origin
-     *
-     * @access private
+
      */
 	private function checkLdapUser($username, $password, $ldap_server, $o, $f, &$errmsg = null )
 	{
@@ -236,8 +228,6 @@ class AuthenticatorLDAP extends Authenticator
      *
      * @return object The actual User object if login was successfull, false
      *                otherwise.
-     *
-     * @access public
      */
 	public function login($username, $password, &$errmsg = null)
 	{
@@ -291,8 +281,6 @@ class AuthenticatorLDAP extends Authenticator
      * @param string $errmsg  Reference of error message
      *
      * @return bool Returns always true
-     *
-     * @access public
      */
     public function acctStart($conn_id, &$errmsg = null)
     {
@@ -311,8 +299,6 @@ class AuthenticatorLDAP extends Authenticator
      * @param string $errmsg   Reference of error message
      *
      * @return bool Returns always true
-     *
-     * @access public
      */
     public function acctUpdate($conn_id, $incoming, $outgoing, &$errmsg = null)
     {
@@ -330,8 +316,6 @@ class AuthenticatorLDAP extends Authenticator
      * @param string $errmsg  Reference of error message
      *
      * @return bool Returns always true
-     *
-     * @access public
      */
     public function acctStop($conn_id, &$errmsg = null)
     {

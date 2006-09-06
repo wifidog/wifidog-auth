@@ -56,24 +56,20 @@ class HtmlSafe
     /**
      * Defines if PEAR::HTML_Safe will be used or not
      *
-     * @var bool
-     * @access public
      */
     public $isHtmlSafeEnabled = false;
 
     /**
      * PEAR::HTML_Safe object.
      *
-     * @var object
-     * @access private
+
      */
     private $_HtmlSafe;
 
     /**
      * List of dangerous tags (such tags will be deleted)
      *
-     * @var array
-     * @access private
+
      */
     private $_deleteTags = array(
         'applet', 'base', 'basefont', 'bgsound', 'blink', 'body',
@@ -85,16 +81,14 @@ class HtmlSafe
      * List of dangerous tags (such tags will be deleted, and all content
      * inside this tags will be also removed)
      *
-     * @var array
-     * @access private
+
      */
     private $_deleteTagsContent = array('script', 'style', 'title', 'xml');
 
     /**
      * List of dangerous attributes
      *
-     * @var array
-     * @access private
+
      */
     private $_attributes = array('dynsrc', 'id', 'name');
 
@@ -102,8 +96,6 @@ class HtmlSafe
      * Constructor.
      *
      * @return void
-     *
-     * @access public
      */
     public function __construct()
     {
@@ -137,8 +129,7 @@ class HtmlSafe
      *                          be appended to the current list of tags
      *
      * @return bool True on a successful change of list of tags
-     *
-     * @access private
+
      */
     private function _setTags(&$tagList, $tags, $appendTags = false)
     {
@@ -162,8 +153,6 @@ class HtmlSafe
      * Returns list of dangerous tags
      *
      * @return array List of dangerous tags
-     *
-     * @access public
      */
     public function getDeleteTags()
     {
@@ -179,8 +168,6 @@ class HtmlSafe
      *                          tags
      *
      * @return bool True on a successful change of list of dangerous tags
-     *
-     * @access public
      */
     public function setDeleteTags($deleteTags, $appendTags = false)
     {
@@ -197,8 +184,6 @@ class HtmlSafe
      * Returns list of dangerous tags
      *
      * @return array List of dangerous tags
-     *
-     * @access public
      */
     public function getDeleteTagsContent()
     {
@@ -214,8 +199,6 @@ class HtmlSafe
      *                                 list of dangerous tags
      *
      * @return bool True on a successful change of list of dangerous tags
-     *
-     * @access public
      */
     public function setDeleteTagsContent($deleteTagsContent, $appendTags = false)
     {
@@ -232,8 +215,6 @@ class HtmlSafe
      * Returns list of dangerous attributes
      *
      * @return array List of dangerous attributes
-     *
-     * @access public
      */
     public function getAttributes()
     {
@@ -249,8 +230,6 @@ class HtmlSafe
      *                          dangerous attributes
      *
      * @return bool True on a successful change of list of dangerous attributes
-     *
-     * @access public
      */
     public function setAttributes($attributes, $appendTags = false)
     {
@@ -269,8 +248,6 @@ class HtmlSafe
      * @param string $html HTML markup to be parsed
      *
      * @return string Parsed and stripped down HTML markup
-     *
-     * @access public
      */
     public function parseHtml($html)
     {

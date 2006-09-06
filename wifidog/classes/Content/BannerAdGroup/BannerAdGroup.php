@@ -37,26 +37,24 @@
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
- * @version    Subversion $Id$
+ * @copyright  2006 Benoit Grégoire, Technologies Coeus inc.
+ * @version    Subversion $Id: TrivialLangstring.php 1031 2006-05-10 18:56:02Z benoitg $
  * @link       http://www.wifidog.org/
  */
 
 /**
  * Load required classes
  */
-require_once('classes/LocaleList.php');
-require_once('classes/Locale.php');
-
+require_once('classes/Content/ContentGroup/ContentGroup.php');
 /**
- * Represents a simple Langstring (no title, description, etc.)
+ * Represents a list of banner ads
  *
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
+ * @copyright  2006 Benoit Grégoire, Technologies Coeus inc.
  */
-class TrivialLangstring extends Langstring
+class BannerAdGroup extends ContentGroup
 {
     /**
      * Constructor
@@ -67,27 +65,17 @@ class TrivialLangstring extends Langstring
     protected function __construct($content_id)
     {
         parent::__construct($content_id);
-
-        /*
-         * A TrivialLangstring is NEVER persistent
-         */
-        parent::setIsPersistent(false);
+        $criteria_array = array(array('isContentType',array(array('SimplePicture'))));
+        $allowed_content_types=ContentTypeFilter::getObject($criteria_array);
+        $this->setAllowedContentTypes($allowed_content_types);
     }
+
     /** When a content object is set as Simple, it means that is is used merely to contain it's own data.  No title, description or other metadata will be set or displayed, during display or administration
      * @return true or false */
     public function isSimpleContent() {
         return true;
     }
-    /**
-     * A short string representation of the content
-     *
-     * @return string Returns the content
-     */
-    public function __toString()
-    {
-        return $this->getString();
-    }
-
+    
     /**
      * Reloads the object from the database.
      *
@@ -103,7 +91,6 @@ class TrivialLangstring extends Langstring
     {
         $this->__construct($this->id);
     }
-
 }
 
 /*

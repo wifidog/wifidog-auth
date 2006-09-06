@@ -53,24 +53,21 @@ class ThemePack {
     /**
      * ID of ThemePack
      *
-     * @var string
-     * @access private
+
      */
     private $_id;
 
     /**
      * Name of ThemePack
      *
-     * @var string
-     * @access private
+
      */
     private $_name;
 
     /**
      * Description of ThemePack
      *
-     * @var string
-     * @access private
+
      */
     private $_description;
 
@@ -81,8 +78,7 @@ class ThemePack {
      *                            folder name without the path)
      *
      * @return void
-     *
-     * @access private
+
      */
     private function __construct($themePackId) {
         $handle = @ opendir(WIFIDOG_ABS_FILE_PATH . NETWORK_THEME_PACKS_DIR . $themePackId.'/');
@@ -117,9 +113,7 @@ class ThemePack {
      *                                     selected in the form object
      *
      * @return string HTML markup
-     *
-     * @static
-     * @access public
+
      */
     public static function getSelectUI($userPrefix, $preSelectedThemePack = null) {
         $html = '';
@@ -169,9 +163,7 @@ class ThemePack {
      * @return object The Content object, or null if there was an error (an
      *                exception is also thrown)
      *
-     * @see GenericObject
-     * @static
-     * @access public
+
      */
     static public function getObject($id) {
         return new self($id);
@@ -181,8 +173,6 @@ class ThemePack {
      * Retreives the id of the object
      *
      * @return string The id
-     *
-     * @access public
      */
     public function getId() {
         return $this->_id;
@@ -192,8 +182,6 @@ class ThemePack {
      * Retreives the name of the ThemePack
      *
      * @return string Name of ThemePack
-     *
-     * @access public
      */
     public function getName() {
         return $this->_name;
@@ -203,8 +191,6 @@ class ThemePack {
      * Retreives the description of the ThemePack
      *
      * @return string Description of ThemePack
-     *
-     * @access public
      */
     public function getDescription() {
         return $this->_description;
@@ -214,8 +200,6 @@ class ThemePack {
      * Retreives the url of this theme's stylesheet
      *
      * @return string URL of this theme's stylesheet
-     *
-     * @access public
      */
     public function getStylesheetUrl() {
         return BASE_URL_PATH . NETWORK_THEME_PACKS_DIR . $this->_id . '/stylesheet.css';

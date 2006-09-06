@@ -61,21 +61,21 @@ class SimplePicture extends Picture
      *
      * @param string $content_id Content id
      *
-     * @return void
-     *
-     * @access protected
-     */
+     * @return void     */
     protected function __construct($content_id)
     {
         parent::__construct($content_id);
-        $this->setIsTrivialContent(true);
 
         /*
          * A SimplePicture is NEVER persistent
          */
         parent::setIsPersistent(false);
     }
-
+    /** When a content object is set as Simple, it means that is is used merely to contain it's own data.  No title, description or other metadata will be set or displayed, during display or administration
+     * @return true or false */
+    public function isSimpleContent() {
+        return true;
+    }
     /**
      * Reloads the object from the database.
      *
@@ -85,8 +85,7 @@ class SimplePicture extends Picture
      * constructor from the wrong scope
      *
      * @return void
-     *
-     * @access private
+
      */
     private function refresh()
     {

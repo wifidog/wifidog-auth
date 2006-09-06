@@ -91,7 +91,15 @@ $displayEditButton = true;
 $displayShowAllButton = false;
 $supportsPreview = true;
 $supportsDeletion = true;
-
+/*
+ * Check for the object class to use
+ */
+if (empty($_REQUEST['object_class'])) {
+    echo "<div class='errormsg'>"._("Sorry, the 'object_class' parameter must be specified")."</div>\n";
+    exit;
+} else {
+    $class = $_REQUEST['object_class'];
+}
 // Init text values
 $createText = sprintf(_("Create %s"), $_REQUEST['object_class']);
 $addText = sprintf(_("Add %s"), $_REQUEST['object_class']);
@@ -111,16 +119,6 @@ if (!empty($_REQUEST['debug'])) {
     echo "<pre>";
     print_r($_REQUEST);
     echo "</pre>";
-}
-
-/*
- * Check for the object class to use
- */
-if (empty($_REQUEST['object_class'])) {
-    echo "<div class='errormsg'>"._("Sorry, the 'object_class' parameter must be specified")."</div>\n";
-    exit;
-} else {
-    $class = $_REQUEST['object_class'];
 }
 
 /*
@@ -265,7 +263,8 @@ case "list":
     switch ($_REQUEST['object_class']) {
     case "Content":
         $displayShowAllButton = true;
-        $objectSelector = Content::getSelectExistingContentUI('object_id', null, ((isset($_REQUEST['display_content']) && $_REQUEST['display_content'] == "all_content") ? false : true), "content_type", "table");
+        ((isset($_REQUEST['display_content']) && $_REQUEST['display_content'] == "all_content") ? $sql_additional_where = null : $sql_additional_where = " AND is_persistent=TRUE ");
+        $objectSelector = Content::getSelectExistingContentUI('object_id', $sql_additional_where, null, "content_type", "table");
         $displayEditButton = false;
         break;
 

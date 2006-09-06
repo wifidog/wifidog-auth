@@ -46,7 +46,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 45);
+define('REQUIRED_SCHEMA_VERSION', 46);
 
 /**
  * Check that the database schema is up to date.  If it isn't, offer to update it.
@@ -932,9 +932,35 @@ function update_schema()
 			$sql .= "ALTER TABLE content ALTER COLUMN title_is_displayed SET DEFAULT true;\n";
             $sql .= "UPDATE content SET title_is_displayed=true;\n";		
             $sql .= "ALTER TABLE content ALTER COLUMN title_is_displayed SET NOT NULL;\n\n";
-			     	
-        
         }
+        
+        $new_schema_version = 46;
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+            $sql .= "ALTER TABLE content_group_element ADD COLUMN valid_from_timestamp timestamp;\n";
+            $sql .= "ALTER TABLE content_group_element ADD COLUMN valid_until_timestamp timestamp;\n";
+            $sql .= "CREATE INDEX idx_content_group_element_valid_from_timestamp ON content_group_element (valid_from_timestamp);\n";
+            $sql .= "CREATE INDEX idx_content_group_element_valid_until_timestamp ON content_group_element (valid_until_timestamp);\n";
+        }
+        /*
+        $new_schema_version = ;
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+            $sql .= "\n";
+            $sql .= "\n";
+            $sql .= "\n";
+            $sql .= "\n";
+            $sql .= "\n";
+            $sql .= "\n";
+            $sql .= "\n";
+            $sql .= "\n";
+            $sql .= "\n";
+            $sql .= "\n";
+            $sql .= "\n";
+        }
+         */
         /*
         $new_schema_version = 44;
         if ($schema_version < $new_schema_version) {

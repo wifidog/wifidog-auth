@@ -93,7 +93,7 @@
                 <legend>{"Server administration"|_}:</legend>
                     <ul>
                         <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Server&action=list">{"Servers"|_}</a></li>
-                        <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Content&action=list">{"Content"|_}</a></li>
+                        <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Content&action=list">{"Content library"|_}</a></li>
                     </ul>
             </fieldset>
         {/if}

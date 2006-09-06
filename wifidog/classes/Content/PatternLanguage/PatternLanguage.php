@@ -62,10 +62,7 @@ class PatternLanguage extends ContentGroup
      *
      * @param string $content_id Content Id
      *
-     * @return void
-     *
-     * @access protected
-     */
+     * @return void     */
     protected function __construct($content_id)
     {
         parent::__construct($content_id);
@@ -80,8 +77,6 @@ class PatternLanguage extends ContentGroup
      * Get all pattern language objects
      *
      * @return function
-     *
-     * @access public
      * @static
      */
     public static function getAllContent()
@@ -99,8 +94,6 @@ class PatternLanguage extends ContentGroup
      *                                         element of a children
      *
      * @return The HTML fragment for this interface
-     *
-     * @access public
      */
     public function getUserUI($subclass_user_interface = null)
     {
@@ -151,8 +144,6 @@ class PatternLanguage extends ContentGroup
      * @param string $user The user who's narrative you want to grab
      *
      * @return the archive page HTML
-     *
-     * @access public
      */
     public function displayNarrative(User $user)
     {
@@ -186,8 +177,6 @@ class PatternLanguage extends ContentGroup
      * Get the list of all narratives
      *
      * @return the archive page HTML
-     *
-     * @access public
      */
     public function getNarrativeList()
     {
@@ -219,8 +208,7 @@ class PatternLanguage extends ContentGroup
      * constructor from the wrong scope
      *
      * @return void
-     *
-     * @access private
+
      */
     private function refresh()
     {

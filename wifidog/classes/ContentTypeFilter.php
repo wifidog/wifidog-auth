@@ -1,5 +1,6 @@
 <?php
 
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -37,75 +38,83 @@
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
- * @version    Subversion $Id$
+ * @copyright  2006 Benoit Grégoire, Technologies Coeus inc.
+ * @version    Subversion $Id: Content.php 1086 2006-09-01 11:00:58 +0000 (Fri, 01 Sep 2006) benoitg $
  * @link       http://www.wifidog.org/
  */
 
 /**
  * Load required classes
  */
-require_once('classes/LocaleList.php');
-require_once('classes/Locale.php');
-
+require_once ('classes/Content.php');
 /**
- * Represents a simple Langstring (no title, description, etc.)
+ * Defines any type of content
  *
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  */
-class TrivialLangstring extends Langstring
-{
+class ContentTypeFilter {
+    public $criteria_array;
+
     /**
      * Constructor
      *
-     * @param string $content_id Content id
-     *
-     * @return void     */
-    protected function __construct($content_id)
-    {
-        parent::__construct($content_id);
-
-        /*
-         * A TrivialLangstring is NEVER persistent
-         */
-        parent::setIsPersistent(false);
-    }
-    /** When a content object is set as Simple, it means that is is used merely to contain it's own data.  No title, description or other metadata will be set or displayed, during display or administration
-     * @return true or false */
-    public function isSimpleContent() {
-        return true;
-    }
-    /**
-     * A short string representation of the content
-     *
-     * @return string Returns the content
-     */
-    public function __toString()
-    {
-        return $this->getString();
-    }
-
-    /**
-     * Reloads the object from the database.
-     *
-     * Should normally be called after a set operation.
-     *
-     * This function is private because calling it from a subclass will call the
-     * constructor from the wrong scope
+     * @param string $content_id Id of content
      *
      * @return void
-
      */
-    private function refresh()
-    {
-        $this->__construct($this->id);
+    private function __construct() {
     }
 
-}
+    /**
+     * Get the content object, specific to it's content type
+     *
+     * @param string $criteria_array an array of functions call on the objects.  For each one, the method must exist and return true.
+     * Format is array(array(callback_funct, array(callback_funct_parameters))
+     *
+     * @return object The Content object, or null if there was an error
+     *                (an exception is also thrown)
+     */
+    public static function getObject($criteria_array) {
+        $object = new self();
+        $object->criteria_array = $criteria_array;
+                //pretty_print_r($object->criteria_array);
+        return $object;
+    }
+    /** Is this class name an acceptable content type?  Will call all functions in the criteria array, but ADDING THE CANDIDATE CLASSNAME as the LAST parameter.
+     * @param string $classname The classname to check
+     * @return true or false.  Will also silently return false if the class does not exist */
+    public function isAcceptableContentClass($classname) {
+        $retval = true;
+                /*pretty_print_r($this->criteria_array);
+                $reflector = new ReflectionClass($classname);
+                $methods = $reflector->getMethods();
+                pretty_print_r($methods);*/
+        if(is_array($this->criteria_array))
+        {
+            foreach ($this->criteria_array as $criteria) {
+                //echo "call_user_func_array called with: ";
+                //pretty_print_r($criteria);
 
+                if(!method_exists ($classname, $criteria[0]))
+                {
+                    throw new exception (sprintf("Class %s does not implement method %s", $classname, $criteria[0]));
+                }
+                $criteria[1][]=$classname;
+                if(!call_user_func_array(array($classname,$criteria[0]), $criteria[1])) {
+                    //The content type does not meet the criteria 
+                    $retval=false;
+                    break;                   
+                }
+                //$retval ? $result ="TRUE" : $result="FALSE";
+                //echo "call_user_func_array result: $result<br>";
+            }
+        }
+        return $retval;
+    }
+} //end class
 /*
  * Local variables:
  * tab-width: 4
@@ -113,5 +122,3 @@ class TrivialLangstring extends Langstring
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
-

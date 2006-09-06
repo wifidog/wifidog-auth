@@ -218,9 +218,7 @@ class Network implements GenericObject
      *                                     networks to select
      *
      * @return string HTML markup
-     *
-     * @static
-     * @access public
+
      */
     public static function getSelectNetworkUI($user_prefix, $pre_selected_network = null, $additional_where = null)
     {
@@ -256,8 +254,8 @@ class Network implements GenericObject
         } else {
             foreach ($network_rows as $network_row) //iterates only once...
                 {
-                //$html .= _("Network:")." \n";
-                //$html .= " $network_row[name] ";
+                $html .= _("Network:")." \n";
+                $html .= " $network_row[name] ";
                 $html .= "<input type='hidden' name='$name' value='".htmlspecialchars($network_row['network_id'], ENT_QUOTES, 'UTF-8')."'>";
             }
         }
@@ -272,9 +270,7 @@ class Network implements GenericObject
      *                            recognise it's generated form
      *
      * @return mixed The network object or an exception
-     *
-     * @static
-     * @access public
+
      */
     public static function processSelectNetworkUI($user_prefix)
     {
@@ -513,8 +509,6 @@ class Network implements GenericObject
      * @param string $value The new creation date
      *
      * @return bool True on success, false on failure
-     *
-     * @access public
      */
     public function setCreationDate($value)
     {
@@ -573,8 +567,6 @@ class Network implements GenericObject
      * Retreives the network's authenticator's class name.
      *
      * @return string Name of authenticator's class
-     *
-     * @access public
      */
     public function getAuthenticatorClassName()
     {
@@ -590,8 +582,6 @@ class Network implements GenericObject
      * @param string $value The class name of a  subclass of Authenticator
      *
      * @return bool True on success, false on failure
-     *
-     * @access public
      */
     public function setAuthenticatorClassName($value)
     {
@@ -614,8 +604,6 @@ class Network implements GenericObject
      * Retreives the authenticator's parameters
      *
      * @return string Authenticator's parameters
-     *
-     * @access public
      */
     public function getAuthenticatorConstructorParams()
     {
@@ -630,8 +618,6 @@ class Network implements GenericObject
      * @param string $value The new value
      *
      * @return bool True on success, false on failure
-     *
-     * @access public
      */
     public function setAuthenticatorConstructorParams($value)
     {
@@ -654,8 +640,6 @@ class Network implements GenericObject
      * Get the Authenticator object for this network
      *
      * @return object A subclass of Authenticator
-     *
-     * @access public
      */
     public function getAuthenticator()
     {
@@ -675,9 +659,7 @@ class Network implements GenericObject
      * Get the list of available Authenticators on the system
      *
      * @return array An array of class names
-     *
-     * @static
-     * @access public
+
      */
     public static function getAvailableAuthenticators()
     {
@@ -749,9 +731,7 @@ class Network implements GenericObject
      *                                           pre-selected in the form object
      *
      * @return string HTML markup
-     *
-     * @static
-     * @access public
+
      */
     public static function getSelectAuthenticator($user_prefix, $pre_selected_authenticator = null)
     {
@@ -969,8 +949,6 @@ class Network implements GenericObject
      * Get a GisPoint object
      *
      * @return object GisPoint object
-     *
-     * @access public
      */
     public function getGisLocation()
     {
@@ -983,8 +961,6 @@ class Network implements GenericObject
      * @param $value The new GisPoint object
      *
      * @return bool True on success, false on failure
-     *
-     * @access public
      */
     public function setGisLocation($pt)
     {
@@ -1011,8 +987,6 @@ class Network implements GenericObject
      * Retreives the default Google maps type
      *
      * @return string Default Google maps type
-     *
-     * @access public
      */
     public function getGisMapType()
     {
@@ -1025,8 +999,6 @@ class Network implements GenericObject
      * @param $value The new default Google maps type
      *
      * @return bool True on success, false on failure
-     *
-     * @access public
      */
     public function setGisMapType($value)
     {
@@ -1054,9 +1026,7 @@ class Network implements GenericObject
      *                                      pre-selected in the form object
      *
      * @return string HTML markup
-     *
-     * @static
-     * @access public
+
      */
     public static function getSelectGisMapType($user_prefix, $pre_selected_map_type = "G_NORMAL_MAP")
     {
@@ -1109,8 +1079,6 @@ class Network implements GenericObject
      * Find out the total number of users in this networks's database
      *
      * @return int Number of users
-     *
-     * @access public
      */
     public function getNumUsers()
     {
@@ -1159,8 +1127,6 @@ class Network implements GenericObject
      * Find out how many users are valid in this networks's database
      *
      * @return int Number of valid users
-     *
-     * @access public
      */
     public function getNumValidUsers()
     {
@@ -1210,8 +1176,6 @@ class Network implements GenericObject
      * specific Hotspot on the network
      *
      * @return int Number of online users
-     *
-     * @access public
      */
     public function getNumOnlineUsers()
     {
@@ -1260,8 +1224,6 @@ class Network implements GenericObject
      * Find out how many nodes are registered in this networks's database
      *
      * @return int Number of nodes
-     *
-     * @access public
      */
     public function getNumNodes()
     {
@@ -1310,8 +1272,6 @@ class Network implements GenericObject
      * Find out how many nodes are deployed in this networks's database
      *
      * @return int Number of deployed nodes
-     *
-     * @access public
      */
     public function getNumDeployedNodes()
     {
@@ -1362,8 +1322,6 @@ class Network implements GenericObject
      * @param bool $nonMonitoredOnly Return number of non-monitored nodes only
      *
      * @return int Number of deployed nodes which are online
-     *
-     * @access public
      */
     public function getNumOnlineNodes($nonMonitoredOnly = false)
     {
@@ -1496,8 +1454,6 @@ class Network implements GenericObject
      *                                           discriminate the content
      *
      * @return array An array of Content or an empty array
-     *
-     * @access public
      */
     /*public function getAllContent($exclude_subscribed_content = false, $subscriber = null)
     {
@@ -1531,8 +1487,6 @@ class Network implements GenericObject
      * Retreives the admin interface of this object
      *
      * @return string The HTML fragment for this interface
-     *
-     * @access public
      */
     public function getAdminUI()
     {

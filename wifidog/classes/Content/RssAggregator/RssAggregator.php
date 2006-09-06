@@ -63,20 +63,17 @@ define('MAGPIE_CACHE_DIR', WIFIDOG_ABS_FILE_PATH . 'tmp/magpie_cache/');
  */
 class RssAggregator extends Content {
     /**
-     * @var string
-     * @access private
+
      */
     private $content_rss_aggregator_row;
 
     /**
-     * @var array
-     * @access private
+
      */
     private $content_rss_aggregator_feeds_rows;
 
     /**
-     * @var array
-     * @access private
+
      */
     private $press_review;
 
@@ -85,10 +82,7 @@ class RssAggregator extends Content {
      *
      * @param string $content_id Content id
      *
-     * @return void
-     *
-     * @access protected
-     */
+     * @return void     */
     protected function __construct($content_id) {
         // Define globals
         global $db;
@@ -148,16 +142,12 @@ class RssAggregator extends Content {
         else {
             $html = _("RSS support is disabled");
         }
-
-        $this->setIsTrivialContent(false);
     }
 
     /**
      * Total number of items to display (from all feeds)
      *
      * @return integer
-     *
-     * @access public
      */
     public function getDisplayNumItems() {
         return $this->content_rss_aggregator_row['number_of_display_items'];
@@ -170,8 +160,6 @@ class RssAggregator extends Content {
      * @param string $errormsg Reference to error message
      *
      * @return bool True if successfull
-     *
-     * @access public
      */
     public function setDisplayNumItems($num_items, & $errormsg = null) {
         // Init values
@@ -209,8 +197,6 @@ class RssAggregator extends Content {
      * publish more often.
      *
      * @return int
-     *
-     * @access public
      */
     public function getAlgorithmStrength() {
         return $this->content_rss_aggregator_row['algorithm_strength'];
@@ -236,8 +222,6 @@ class RssAggregator extends Content {
      * @param string $errormsg Reference to error message
      *
      * @return true if successfull
-     *
-     * @access public
      */
     public function setAlgorithmStrength($strength, & $errormsg = null) {
         // Init values
@@ -268,8 +252,6 @@ class RssAggregator extends Content {
      * The maximum age of the items displayed
      *
      * @return mixed (integer or null) Maximum age of an item in seconds
-     *
-     * @access public
      */
     public function getMaxItemAge() {
         $retval = $this->content_rss_aggregator_row['max_item_age_seconds'];
@@ -293,8 +275,6 @@ class RssAggregator extends Content {
      * @param string $errormsg     Reference to error message
      *
      * @return bool True if successfull
-     *
-     * @access public
      */
     public function setMaxItemAge($max_item_age, & $errormsg = null) {
         // Init values
@@ -341,8 +321,6 @@ class RssAggregator extends Content {
      * @param string $url Feed's url
      *
      * @return bool True on success, false on failure
-     *
-     * @access public
      */
     public function addFeed($url) {
         // Define globals
@@ -368,8 +346,6 @@ class RssAggregator extends Content {
      * @param string $url Feed's url
      *
      * @return bool True on success, false on failure
-     *
-     * @access public
      */
     public function removeFeed($url) {
         // Define globals
@@ -396,8 +372,6 @@ class RssAggregator extends Content {
      *                                         administration interface
      *
      * @return string HTML code for the administration interface
-     *
-     * @access public
      */
     public function getAdminUI($subclass_admin_interface = null, $title = null) {
         // Define globals
@@ -535,8 +509,6 @@ class RssAggregator extends Content {
      * Processes the input of the administration interface for RssAggregator
      *
      * @return void
-     *
-     * @access public
      */
     public function processAdminUI() {
         if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
@@ -590,8 +562,7 @@ class RssAggregator extends Content {
      * @param  array $feed_row The database row of the content_rss_aggregator_feeds table
      *
      * @return string HTML code for the administration interface
-     *
-     * @access private
+
      */
     private function getFeedAdminUI($feed_row) {
         // Init values
@@ -684,8 +655,7 @@ class RssAggregator extends Content {
      * @param array $feed_row The database row of the content_rss_aggregator_feeds table
      *
      * @return void
-     *
-     * @access private
+
      */
     private function processFeedAdminUI($feed_row) {
         // Define globals
@@ -773,8 +743,6 @@ class RssAggregator extends Content {
      * Retreives the user interface of this object.
      *
      * @return string The HTML fragment for this interface
-     *
-     * @access public
      */
     public function getUserUI() {
         // Init values
@@ -811,8 +779,7 @@ class RssAggregator extends Content {
      * the constructor from the wrong scope
      *
      * @return void
-     *
-     * @access private
+
      */
     private function refresh() {
         $this->__construct($this->id);

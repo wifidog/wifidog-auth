@@ -72,15 +72,13 @@ CREATE TABLE content (
     title text,
     description text,
     project_info text,
-    sponsor_info text,
     creation_timestamp timestamp without time zone DEFAULT now(),
     is_persistent boolean DEFAULT false,
     long_description text,
+    title_is_displayed boolean DEFAULT true NOT NULL,
     CONSTRAINT content_type_not_empty_string CHECK ((content_type <> ''::text))
 );
 
-
-SET default_with_oids = false;
 
 --
 -- Name: content_available_display_areas; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
@@ -91,8 +89,6 @@ CREATE TABLE content_available_display_areas (
 );
 
 
-SET default_with_oids = true;
-
 --
 -- Name: content_available_display_pages; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
@@ -101,6 +97,24 @@ CREATE TABLE content_available_display_pages (
     display_page text NOT NULL
 );
 
+
+SET default_with_oids = false;
+
+--
+-- Name: content_clickthrough_log; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE content_clickthrough_log (
+    user_id text,
+    content_id text NOT NULL,
+    clickthrough_timestamp timestamp without time zone DEFAULT now() NOT NULL,
+    node_id text NOT NULL,
+    destination_url text NOT NULL,
+    CONSTRAINT content_clickthrough_log_destination_url_check CHECK ((destination_url <> ''::text))
+);
+
+
+SET default_with_oids = true;
 
 --
 -- Name: content_display_log; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
@@ -139,7 +153,9 @@ CREATE TABLE content_file (
     remote_size bigint,
     url text,
     data_blob oid,
-    local_binary_size bigint
+    local_binary_size bigint,
+    creation_date timestamp without time zone DEFAULT now(),
+    last_update_date timestamp without time zone DEFAULT now()
 );
 
 
@@ -150,7 +166,8 @@ CREATE TABLE content_file (
 CREATE TABLE content_file_image (
     pictures_id text NOT NULL,
     width integer,
-    height integer
+    height integer,
+    hyperlink_url text
 );
 
 
@@ -208,7 +225,9 @@ CREATE TABLE content_group_element (
     content_group_id text NOT NULL,
     display_order integer DEFAULT 1,
     displayed_content_id text,
-    force_only_allowed_node boolean
+    force_only_allowed_node boolean,
+    valid_from_timestamp timestamp without time zone,
+    valid_until_timestamp timestamp without time zone
 );
 
 
@@ -341,7 +360,8 @@ CREATE TABLE networks (
     gmaps_initial_longitude numeric(16,6),
     gmaps_initial_zoom_level integer,
     gmaps_map_type text DEFAULT 'G_NORMAL_MAP'::text NOT NULL,
-    CONSTRAINT networks_gmaps_map_type_check CHECK ((gmaps_map_type <> ''::text)),
+    theme_pack text,
+    CONSTRAINT networks_gmaps_map_type CHECK ((gmaps_map_type <> ''::text)),
     CONSTRAINT networks_name CHECK ((name <> ''::text)),
     CONSTRAINT networks_network_authenticator_class CHECK ((network_authenticator_class <> ''::text)),
     CONSTRAINT networks_validation_email_from_address CHECK ((validation_email_from_address <> ''::text))
@@ -434,8 +454,6 @@ CREATE TABLE schema_info (
 );
 
 
-SET default_with_oids = false;
-
 --
 -- Name: servers; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
@@ -448,12 +466,10 @@ CREATE TABLE servers (
     hostname text DEFAULT 'localhost'::text NOT NULL,
     ssl_available boolean DEFAULT false NOT NULL,
     gmaps_api_key text,
-    CONSTRAINT servers_name_check CHECK ((name <> ''::text)),
-    CONSTRAINT servers_name_check1 CHECK ((name <> ''::text))
+    CONSTRAINT servers_hostname CHECK ((name <> ''::text)),
+    CONSTRAINT servers_name CHECK ((name <> ''::text))
 );
 
-
-SET default_with_oids = true;
 
 --
 -- Name: token_status; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
@@ -492,7 +508,6 @@ CREATE TABLE users (
     real_name text,
     website text,
     prefered_locale text,
-    CONSTRAINT check_account_origin_not_empty CHECK ((account_origin <> ''::text)),
     CONSTRAINT check_user_not_empty CHECK (((user_id)::text <> ''::text))
 );
 
@@ -795,6 +810,20 @@ CREATE INDEX idx_content_group_element_content_group_id ON content_group_element
 
 
 --
+-- Name: idx_content_group_element_valid_from_timestamp; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE INDEX idx_content_group_element_valid_from_timestamp ON content_group_element USING btree (valid_from_timestamp);
+
+
+--
+-- Name: idx_content_group_element_valid_until_timestamp; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE INDEX idx_content_group_element_valid_until_timestamp ON content_group_element USING btree (valid_until_timestamp);
+
+
+--
 -- Name: idx_token; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
 --
 
@@ -944,14 +973,6 @@ ALTER TABLE ONLY content_rss_aggregator_feeds
 
 
 --
--- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY network_stakeholders
-    ADD CONSTRAINT "$1" FOREIGN KEY (network_id) REFERENCES networks(network_id);
-
-
---
 -- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -1019,16 +1040,8 @@ ALTER TABLE ONLY content_display_log
 -- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
-ALTER TABLE ONLY node_stakeholders
-    ADD CONSTRAINT "$2" FOREIGN KEY (user_id) REFERENCES users(user_id);
-
-
---
--- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY network_stakeholders
-    ADD CONSTRAINT "$2" FOREIGN KEY (user_id) REFERENCES users(user_id);
+ALTER TABLE ONLY network_has_content
+    ADD CONSTRAINT "$2" FOREIGN KEY (display_area) REFERENCES content_available_display_areas(display_area) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -1056,11 +1069,11 @@ ALTER TABLE ONLY content_display_log
 
 
 --
--- Name: $4; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $3; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
-ALTER TABLE ONLY content
-    ADD CONSTRAINT "$4" FOREIGN KEY (sponsor_info) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+ALTER TABLE ONLY node_has_content
+    ADD CONSTRAINT "$3" FOREIGN KEY (display_area) REFERENCES content_available_display_areas(display_area) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -1076,7 +1089,7 @@ ALTER TABLE ONLY content
 --
 
 ALTER TABLE ONLY users
-    ADD CONSTRAINT account_origin_fkey FOREIGN KEY (account_origin) REFERENCES networks(network_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+    ADD CONSTRAINT account_origin_fkey FOREIGN KEY (account_origin) REFERENCES networks(network_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -1085,6 +1098,30 @@ ALTER TABLE ONLY users
 
 ALTER TABLE ONLY administrators
     ADD CONSTRAINT administrators_ibfk_1 FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: content_clickthrough_log_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY content_clickthrough_log
+    ADD CONSTRAINT content_clickthrough_log_content_id_fkey FOREIGN KEY (content_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: content_clickthrough_log_node_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY content_clickthrough_log
+    ADD CONSTRAINT content_clickthrough_log_node_id_fkey FOREIGN KEY (node_id) REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: content_clickthrough_log_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY content_clickthrough_log
+    ADD CONSTRAINT content_clickthrough_log_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -1104,6 +1141,14 @@ ALTER TABLE ONLY node_has_content
 
 
 --
+-- Name: fk_network; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY network_stakeholders
+    ADD CONSTRAINT fk_network FOREIGN KEY (network_id) REFERENCES networks(network_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: fk_node_deployment_status; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -1116,7 +1161,7 @@ ALTER TABLE ONLY nodes
 --
 
 ALTER TABLE ONLY connections
-    ADD CONSTRAINT fk_nodes FOREIGN KEY (node_id) REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+    ADD CONSTRAINT fk_nodes FOREIGN KEY (node_id) REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -1124,7 +1169,23 @@ ALTER TABLE ONLY connections
 --
 
 ALTER TABLE ONLY connections
-    ADD CONSTRAINT fk_users FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+    ADD CONSTRAINT fk_users FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_users; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY node_stakeholders
+    ADD CONSTRAINT fk_users FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_users; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY network_stakeholders
+    ADD CONSTRAINT fk_users FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -1144,22 +1205,6 @@ ALTER TABLE ONLY content_flickr_photostream
 
 
 --
--- Name: network_has_content_display_area_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY network_has_content
-    ADD CONSTRAINT network_has_content_display_area_fkey FOREIGN KEY (display_area) REFERENCES content_available_display_areas(display_area) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: network_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY nodes
-    ADD CONSTRAINT network_id_fkey FOREIGN KEY (network_id) REFERENCES networks(network_id) ON UPDATE CASCADE ON DELETE RESTRICT;
-
-
---
 -- Name: network_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -1168,11 +1213,11 @@ ALTER TABLE ONLY network_has_content
 
 
 --
--- Name: node_has_content_display_area_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: network_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
-ALTER TABLE ONLY node_has_content
-    ADD CONSTRAINT node_has_content_display_area_fkey FOREIGN KEY (display_area) REFERENCES content_available_display_areas(display_area) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY nodes
+    ADD CONSTRAINT network_id_fkey FOREIGN KEY (network_id) REFERENCES networks(network_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

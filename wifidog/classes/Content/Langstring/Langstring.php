@@ -69,8 +69,6 @@ class Langstring extends Content {
      * Constructor
      *
      * @param string $content_id Content id
-     *
-     * @access public
      */
     public function __construct($content_id)
     {
@@ -87,8 +85,6 @@ class Langstring extends Content {
      * la première chaîne disponible
      *
      * @return string Chaîne UTF-8 retournée
-     *
-     * @access public
      */
     public function getString()
     {
@@ -155,8 +151,6 @@ class Langstring extends Content {
      *
      * @return bool True si une chaîne a été ajoutée à la base de donnée,
      * false autrement.
-     *
-     * @access public
      */
     public function addString($string, $locale, $allow_empty_string = false)
     {
@@ -203,8 +197,6 @@ class Langstring extends Content {
      *                       exemple: 'fr_CA', peut être NULL
      *
      * @return bool True si une chaîne a été ajoutée à la base de donnée, false autrement.
-     *
-     * @access public
      */
     public function UpdateString($string, $locale)
     {
@@ -255,8 +247,6 @@ class Langstring extends Content {
      *                               pour voir toutes les chaînes, LARGE pour
      *                               avoir un textarea.
      * @return string HTML code of administration interface
-     *
-     * @access public
      */
     public function getAdminUI($type_interface = "LARGE", $title=null)
     {
@@ -404,8 +394,6 @@ class Langstring extends Content {
      * Processes the input of the administration interface for Langstring
      *
      * @return void
-     *
-     * @access public
      */
     public function processAdminUI()
     {
@@ -499,8 +487,6 @@ class Langstring extends Content {
      *                                         element of a children
      *
      * @return string The HTML fragment for this interface
-     *
-     * @access public
      */
     public function getUserUI($subclass_user_interface = null)
     {
@@ -527,8 +513,7 @@ class Langstring extends Content {
      * the constructor from the wrong scope
      *
      * @return void
-     *
-     * @access private
+
      */
     private function refresh()
     {
@@ -541,8 +526,6 @@ class Langstring extends Content {
      * @param string $errmsg Reference to error message
      *
      * @return bool True if deletion was successful
-     *
-     * @access public
      * @internal Persistent content will not be deleted
      */
     public function delete(&$errmsg)

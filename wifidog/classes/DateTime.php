@@ -112,7 +112,7 @@ class DateTime
     private $hours = 0;
     private $minutes = 0;
     private $seconds = 0;
-
+    private $is_empty_date = true;
     /**
     * @param string $datetime_str formatted date string (ideally ISO-8601-2000)
     */
@@ -126,12 +126,28 @@ class DateTime
             $this->hours = $date_attributes["hours"];
             $this->minutes = $date_attributes["minutes"];
             $this->seconds = $date_attributes["seconds"];
+            $this->is_empty_date = false;
         }
+        else
+        {
+            $this->is_empty_date = true;
+        }
+    }
+
+    public function isEmpty()
+    {
+            return $this->is_empty_date;
     }
 
     public function getIso8601FormattedString()
     {
+        if($this->is_empty_date)
+        {
+            return null;
+        }
+        else{
         return sprintf("%04d-%02d-%02d", $this->getYear(), $this->getMonth(), $this->getDayOfMonth());
+        }
     }
 
     public function getDayOfMonth()

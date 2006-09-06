@@ -86,7 +86,7 @@ try {
     $db->execSql($sql, $nodes_results, false);
 
     if ($nodes_results == null)
-    	throw new Exception(_("No nodes could not be found in the database"));
+    	throw new Exception(_("No deployed nodes could not be found in the database"));
 
     foreach ($nodes_results as $node_row)
     {
@@ -96,13 +96,12 @@ try {
         #echo $nodeObject->getLastHeartbeatTimestamp();
         #echo " - ";
         try {
-            page_if_down_since($nodeObject, 120);
-            page_if_down_since($nodeObject, 60);
-            page_if_down_since($nodeObject, 30);
-            page_if_down_since($nodeObject, 20);
-            page_if_down_since($nodeObject, 15);
-            page_if_down_since($nodeObject, 10);
-            page_if_down_since($nodeObject, 5);
+            page_if_down_since($nodeObject, 43200);//A month
+            page_if_down_since($nodeObject, 10080);//A week
+            page_if_down_since($nodeObject, 1440);//A day
+            page_if_down_since($nodeObject, 120);//Two hours
+            page_if_down_since($nodeObject, 30);//30 min
+            page_if_down_since($nodeObject, 5);//5 min
         } catch (Exception $e) {
             # Do nothing, we cronned this
             #echo $e->getMessage() . "<br>";

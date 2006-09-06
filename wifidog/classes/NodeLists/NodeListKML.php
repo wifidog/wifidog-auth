@@ -64,8 +64,7 @@ class NodeListKML {
      * XML DOM Document that will contain all the data concerning the nodes
      *
      * @var object
-     *
-     * @access private
+
      */
     private $_xmldoc;
 
@@ -73,8 +72,7 @@ class NodeListKML {
      * Network to generate the list from
      *
      * @var object
-     *
-     * @access private
+
      */
     private $_network;
 
@@ -82,8 +80,7 @@ class NodeListKML {
      * Nodes to generate the list from
      *
      * @var array
-     *
-     * @access private
+
      */
     private $_nodes;
 
@@ -91,8 +88,6 @@ class NodeListKML {
      * Constructor
      *
      * @return void
-     *
-     * @access public
      */
     public function __construct(&$network)
     {
@@ -114,8 +109,6 @@ class NodeListKML {
      * Sets header of output
      *
      * @return void
-     *
-     * @access public
      */
     public function setHeader()
     {
@@ -142,8 +135,6 @@ class NodeListKML {
      * @copyright  2004-2006 Francois Proulx, Technologies Coeus inc.
      * @copyright  2006 Max Horvath, maxspot GmbH
 	 * @copyright  2006 Joe Bowser
-     *
-     * @access public
      */
     public function getOutput($return_object = false)
     {

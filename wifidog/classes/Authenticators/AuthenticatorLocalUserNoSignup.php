@@ -62,8 +62,6 @@ class AuthenticatorLocalUserNoSignup extends AuthenticatorLocalUser
      * The AuthenticatorLocalUserNoSignup does not allow user signup
      *
      * @return bool Returns if the class allows registration
-     *
-     * @access public
      */
     function isRegistrationPermitted()
     {

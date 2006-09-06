@@ -56,40 +56,34 @@ class Cache
     /**
      * Defines if caching is enabled or not
      *
-     * @var bool
-     * @access public
      */
     public $isCachingEnabled = false;
 
     /**
      * Lifetime of cache (value in seconds or null).
      *
-     * @var mixed (int or null)
-     * @access private
+
      */
     private $_lifeTime = null;
 
     /**
      * PEAR::Cache_Lite object.
      *
-     * @var object
-     * @access private
+
      */
     private $_cacheLite;
 
     /**
      * ID of PEAR::Cache_Lite object.
      *
-     * @var mixed (string or null)
-     * @access private
+
      */
     private $_cacheID = null;
 
     /**
      * Group of PEAR::Cache_Lite object.
      *
-     * @var string
-     * @access private
+
      */
     private $_cacheGroup = "default";
 
@@ -100,8 +94,6 @@ class Cache
      * @param string $group Group of PEAR::Cache_Lite object.
      *
      * @return void
-     *
-     * @access public
      */
     public function __construct($id, $group = "default", $lifeTime = null)
     {
@@ -140,8 +132,7 @@ class Cache
      * Return if PEAR::Cache_Lite is available and caching has been enabled.
      *
      * @return bool Caching enabled or disabled.
-     *
-     * @access private
+
      */
     private function _cachingEnabled()
     {
@@ -164,8 +155,6 @@ class Cache
      *
      * @return int Lifetime of an cache object in seconds or null if lifetime
      *             is unlimited
-     *
-     * @access public
      */
     public function getLifeTime()
     {
@@ -179,8 +168,6 @@ class Cache
      *                      unlimited
      *
      * @return void
-     *
-     * @access public
      */
     public function setLifeTime($lifetime)
     {
@@ -200,8 +187,6 @@ class Cache
      *                            + mixed
      *
      * @return string Data of cache.
-     *
-     * @access public
      */
     public function getCachedData($cacheType = "string")
     {
@@ -235,8 +220,6 @@ class Cache
      *                            + mixed
      *
      * @return bool Saving data into cache was successful or not.
-     *
-     * @access public
      */
     public function saveCachedData($data, $cacheType = "string")
     {
@@ -259,8 +242,6 @@ class Cache
      * enabled.
      *
      * @return bool Removing data from cache was successful or not.
-     *
-     * @access public
      */
     public function eraseCachedData()
     {
@@ -280,8 +261,6 @@ class Cache
      * enabled.
      *
      * @return bool Removing data from cache was successful or not.
-     *
-     * @access public
      */
     public function eraseCachedGroupData()
     {

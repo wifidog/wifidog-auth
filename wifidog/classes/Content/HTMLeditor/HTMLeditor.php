@@ -67,8 +67,7 @@ class HTMLeditor extends Content
     /**
      * Defines if the FCKeditor library has been installed
      *
-     * @var bool
-     * @access private
+
      */
     private $_FCKeditorAvailable = false;
 
@@ -77,10 +76,7 @@ class HTMLeditor extends Content
      *
      * @param int $content_id ID of content.
      *
-     * @return void
-     *
-     * @access protected
-     */
+     * @return void     */
     protected function __construct($content_id)
     {
         parent::__construct($content_id);
@@ -276,8 +272,6 @@ class HTMLeditor extends Content
      * @param int    $num_nouveau    Number of new HTML editors to be created.
      *
      * @return string HTML code for the administration interface.
-     *
-     * @access public
      */
     public function getAdminUI($type_interface = 'LARGE')
     {
@@ -384,8 +378,6 @@ class HTMLeditor extends Content
      * Processes the input of the administration interface for HTMLeditor
      *
      * @return void
-     *
-     * @access public
      */
     public function processAdminUI()
     {

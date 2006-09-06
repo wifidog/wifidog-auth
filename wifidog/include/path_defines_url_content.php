@@ -108,25 +108,6 @@ else {
  * benoitg, 24/04/2006 
  * ***************************************************************************************/
 
-
-/**
- * Define URLs
- */
-
-if (empty ($_REQUEST['gw_id'])) {
-    /**
-     * Define id of current node
-     */
-    define('CURRENT_NODE_ID', DEFAULT_NODE_ID);
-} else {
-    /**
-     * Define id of current node
-     *
-     * @ignore
-     */
-    define('CURRENT_NODE_ID', trim($_REQUEST['gw_id']));
-}
-
 /**
  * Define URLs
  */

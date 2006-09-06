@@ -63,9 +63,6 @@ class Security
      * won't be run, when the user has no admin priviliges
      *
      * @return void Halts execution if user has no admin priviliges
-     *
-     * @static
-     * @access public
      */
     public static function requireAdmin()
     {
@@ -86,9 +83,7 @@ class Security
      *
      * @return mixed Halts execution if user has no admin priviliges or returns
      *               true
-     *
-     * @static
-     * @access public
+
      */
     public static function requireOwner($node_id)
     {

@@ -55,8 +55,6 @@ class Session
      * Constructor
      *
      * @return void
-     *
-     * @access public
      */
     public function __construct()
     {
@@ -74,8 +72,6 @@ class Session
      * @param mixed $value value of variable
      *
      * @return void
-     *
-     * @access public
      */
     public function set($name, $value)
     {
@@ -88,8 +84,6 @@ class Session
      * @param string $name Name of variable
      *
      * @return mixed Value of session varaible or false if unable to get value
-     *
-     * @access public
      */
     public function get($name)
     {
@@ -106,8 +100,6 @@ class Session
      * @param string $name Name of variable
      *
      * @return bool True if successful
-     *
-     * @access public
      */
     public function remove($name)
     {
@@ -124,8 +116,6 @@ class Session
      * Delete the whole session
      *
      * @return void
-     *
-     * @access public
      */
     public function destroy()
     {
@@ -137,8 +127,6 @@ class Session
      * Reinitializes the whole session
      *
      * @return void
-     *
-     * @access public
      */
     public function restart()
     {
@@ -155,8 +143,6 @@ class Session
      * @param bool $print If true session will be printed
      *
      * @return mixed If $print is false the session data will be returned
-     *
-     * @access public
      */
     public function dump($print = true)
     {

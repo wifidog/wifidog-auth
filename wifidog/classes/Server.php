@@ -59,8 +59,7 @@ class Server implements GenericObject
      * The server Id
      *
      * @var string
-     *
-     * @access private
+
      */
 	private $_id;
 
@@ -105,8 +104,6 @@ class Server implements GenericObject
      * Retreives the Id of the object
      *
      * @return string The Id
-     *
-     * @access public
      */
 	public function getId()
 	{
@@ -121,9 +118,7 @@ class Server implements GenericObject
      *                is also thrown)
      *
      * @see GenericObject
-     *
-     * @static
-     * @access public
+
      */
 	public static function getObject($id)
 	{
@@ -279,9 +274,7 @@ class Server implements GenericObject
      *                                    servers to select
      *
      * @return string HTML markup
-     *
-     * @static
-     * @access public
+
      */
     public static function getSelectServerUI($user_prefix, $pre_selected_server = null, $additional_where = null)
     {
@@ -362,9 +355,7 @@ class Server implements GenericObject
      * Get an interface to create a new server
      *
      * @return string HTML markup
-     *
-     * @static
-     * @access public
+
      */
 	public static function getCreateNewObjectUI()
 	{
@@ -386,9 +377,7 @@ class Server implements GenericObject
      * was fully filled.
      *
      * @return string The server object or null if no new server was created
-     *
-     * @static
-     * @access public
+
      */
 	public static function processCreateNewObjectUI()
 	{
@@ -426,8 +415,6 @@ class Server implements GenericObject
      * Retrieves the server name
      *
      * @return string Name of server
-     *
-     * @access public
      */
 	public function getName()
 	{
@@ -440,8 +427,6 @@ class Server implements GenericObject
      * @param string $value The new name of server
      *
      * @return bool True on success, false on failure
-     *
-     * @access public
      */
 	public function setName($value)
 	{
@@ -478,8 +463,6 @@ class Server implements GenericObject
      * @param string $value The new creation date of server
      *
      * @return bool True on success, false on failure
-     *
-     * @access public
      */
 	public function setCreationDate($value)
 	{
@@ -502,8 +485,6 @@ class Server implements GenericObject
      * Retreives the servers's hostname
      *
      * @return string Hostname of server
-     *
-     * @access public
      */
 	public function getHostname()
 	{
@@ -516,8 +497,6 @@ class Server implements GenericObject
      * @param string $value The new hostname of server
      *
      * @return bool True on success, false on failure
-     *
-     * @access public
      */
 	public function setHostname($value)
 	{
@@ -540,8 +519,6 @@ class Server implements GenericObject
      * Is the server the default server?
      *
      * @return bool True or false
-     *
-     * @access public
      */
 	public function isDefaultServer()
 	{
@@ -562,8 +539,6 @@ class Server implements GenericObject
      * is_default_server for all other servers
      *
      * @return bool True on success, false on failure
-     *
-     * @access public
      */
 	public function setAsDefaultServer()
 	{
@@ -587,8 +562,6 @@ class Server implements GenericObject
      * Does the server serve SSL encryption?
      *
      * @return bool True or false
-     *
-     * @access public
      */
 	public function isSSLAvailable()
 	{
@@ -608,8 +581,6 @@ class Server implements GenericObject
      * @param bool $value The new value if the server serves SSL encryption
      *
      * @return bool True on success, false on failure
-     *
-     * @access public
      */
 	public function setSSLAvailable($value)
 	{
@@ -637,8 +608,6 @@ class Server implements GenericObject
      * Retreives the servers's Google maps API key
      *
      * @return string Google maps API key of server
-     *
-     * @access public
      */
 	public function getGoogleAPIKey()
 	{
@@ -651,8 +620,6 @@ class Server implements GenericObject
      * @param string $value The new Google maps API key of server
      *
      * @return bool True on success, false on failure
-     *
-     * @access public
      */
 	public function setGoogleAPIKey($value)
 	{
@@ -675,8 +642,6 @@ class Server implements GenericObject
      * Retreives the admin interface of this object
      *
      * @return string The HTML fragment for this interface
-     *
-     * @access public
      */
 	public function getAdminUI()
 	{
@@ -782,8 +747,6 @@ class Server implements GenericObject
      * Process admin interface of this object
      *
      * @return void
-     *
-     * @access public
      */
 	public function processAdminUI()
 	{
@@ -839,8 +802,6 @@ class Server implements GenericObject
      * @param string &$errmsg Returns an explanation of the error on failure
      *
      * @return bool True on success, false on failure or access denied
-     *
-     * @access public
      */
 	public function delete(&$errmsg)
 	{
@@ -875,10 +836,7 @@ class Server implements GenericObject
      *
      * Should normally be called after a set operation
      *
-     * @return void
-     *
-     * @access protected
-     */
+     * @return void     */
 	protected function refresh()
 	{
 		$this->__construct($this->_id);

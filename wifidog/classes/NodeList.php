@@ -61,8 +61,7 @@ class NodeList {
      *
      * @var string
      *
-     * @static
-     * @access private
+
      */
     private static $_classesDir;
 
@@ -70,8 +69,6 @@ class NodeList {
      * NodeList being used
      *
      * @var object
-     *
-     * @access public
      */
     public $nodeList;
 
@@ -82,8 +79,6 @@ class NodeList {
      * @param object $network      Object of network to generate list from
      *
      * @return void
-     *
-     * @access public
      */
     public function __construct($nodeListType, &$network)
     {
@@ -110,9 +105,7 @@ class NodeList {
      * Get the list of available node list types on the system
      *
      * @return array An array of class names
-     *
-     * @static
-     * @access public
+
      */
     public static function getAvailableNodeListTypes()
     {

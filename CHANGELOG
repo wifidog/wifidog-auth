@@ -1,3 +1,21 @@
+2006-09-06 Benoit Grégoire  <bock@step.polymtl.ca>
+	* ContentTypeFilter:  New class, implements #159.  Allows to filter content type according to various criteria.  Will be used more extensively in the profile manager.
+	* Content manager:  Use content type filter to only allow Simple content types (Content without metadata) to be used for metadata.
+	* New content type BannerAdGroup.  Used (primarily) to display banner adds, or any other image rotation.  Size constraints not yet implemented
+	* Move externally maintained class.phpmailer.php, class.smtp.php into lib where they belong
+	* DateTime.php: Make class handle an empty date sensibly.
+	* Network.php:  Show the network again when there is only one.  It was confusing in some screens.
+	* page.php:  Clarify error message, and set a more reasonnable paging cascade:
+		5 min, 30 min, 2 hours, 1 day, 1 week, 1 month
+	* Finally fix #127
+	* At last, working content scheduled display and expiration for ContentGroups.  Archiving does not yet have a UI.  Content that expires will simply seem to disapear.
+	* Fix #247 (somebody filed a bug before I commited, conveniently saving me the need to describe it).	
+	* The Fix for #106 in [1089] returned non-objects, causing error messages and not displaying what it was meant to display.   
+		This re-fix does not include duplicate counting yet.  Splash users are not the only users that could log-in multiple times.  
+		I don't have a staging server here, a fix will be commited in a few minutes if something goes wrong.
+	* Cleanup coments.
+	* Sync schemas
+
 2006-09-03 Max Horváth <max.horvath@maxspot.de>
 	* The term SPLASH_ONLY_USER displayed to people visiting the portal has been
 	  replaced by the more meaningful term "anonymous user" (fixes #106)
@@ -25,7 +43,8 @@
 	* Added more trash mail services to the black list (fixes #149)
 
 2006-09-01 Benoit Grégoire  <bock@step.polymtl.ca>
-	* Fix #189, #173,
+	* Fix #189, #173
+
 
 2006-09-01 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Content.php:  Improve handling of simple but persistent content.

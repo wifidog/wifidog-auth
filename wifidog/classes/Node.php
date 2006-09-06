@@ -402,8 +402,6 @@ class Node implements GenericObject
      *                            recognise it's generated html form
      *
      * @return string HTML markup
-     *
-     * @access public
      */
 	public function getSelectDeploymentStatus($user_prefix)
 	{
@@ -1390,22 +1388,8 @@ class Node implements GenericObject
 
 		if ($users != null) {
 			foreach ($users as $user_row) {
-			    if ($this->isConfiguredSplashOnly()) {
-			        if (User::getObject($user_row['user_id']) == "SPLASH_ONLY_USER") {
-			            $anonUsers++;
-			        } else {
-				        $retval[] = User::getObject($user_row['user_id']);
-			        }
-			    } else {
 				    $retval[] = User::getObject($user_row['user_id']);
-			    }
 			}
-
-		    if ($this->isConfiguredSplashOnly() && $anonUsers == 1) {
-			    $retval[] = "One anonymous user";
-		    } else if ($this->isConfiguredSplashOnly() && $anonUsers > 1) {
-			    $retval[] = sprintf("%d anonymous users", $anonUsers);
-		    }
 		}
 
 		return $retval;

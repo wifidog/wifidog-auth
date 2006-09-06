@@ -93,8 +93,7 @@ class FlickrPhotostream extends Content
     /**
      * Defines if the Phlickr classes have been installed
      *
-     * @var bool
-     * @access private
+
      */
     var $_PhlickrAvailable = false;
 

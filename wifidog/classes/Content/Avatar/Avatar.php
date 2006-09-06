@@ -61,16 +61,18 @@ class Avatar extends Picture
      * Constructor
      * @param string $content_id Content id
      *
-     * @return void
-     *
-     * @access protected
-     */
+     * @return void     */
     protected function __construct($content_id)
     {
         parent :: __construct($content_id);
-        $this->setIsTrivialContent(true);
     }
 
+    /** When a content object is set as Simple, it means that is is used merely to contain it's own data.  No title, description or other metadata will be set or displayed, during display or administration
+     * @return true or false */
+    public function isSimpleContent() {
+        return true;
+    }
+    
     /**
      * Shows the administration interface for Avatar
      *
@@ -136,8 +138,6 @@ class Avatar extends Picture
      * Processes the input of the administration interface for RssAggregator
      *
      * @return void
-     *
-     * @access public
      */
     public function processAdminUI()
     {
@@ -150,8 +150,6 @@ class Avatar extends Picture
      * Retreives the user interface of this object.
      *
      * @return string The HTML fragment for this interface
-     *
-     * @access public
      */
     public function getUserUI()
     {
@@ -172,8 +170,7 @@ class Avatar extends Picture
      * subclass will call the constructor from the wrong scope.
      *
      * @return void
-     *
-     * @access private
+
      */
     private function refresh()
     {

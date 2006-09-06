@@ -97,9 +97,7 @@ class User implements GenericObject
      * Instantiate the current user
      *
      * @return mixed A User object, or null if there was an error
-     *
-     * @static
-     * @access public
+
      */
     public static function getCurrentUser()
     {
@@ -127,9 +125,7 @@ class User implements GenericObject
      * @param object $user User a user object
      *
      * @return bool True if everything went well setting the session
-     *
-     * @static
-     * @access public
+
      */
     public static function setCurrentUser(User $user)
     {
@@ -150,9 +146,7 @@ class User implements GenericObject
      * Returns the server the user is connected to
      *
      * @return string Hostname of server
-     *
-     * @static
-     * @access public
+
      */
     public static function getCurrentServer()
     {
@@ -288,6 +282,10 @@ class User implements GenericObject
         $rolenames = join($roles, ",");
     }*/
         $html = '';
+        if($this->isSplashOnlyUser())
+        {
+        	$html .= _("Guest");
+        }
         $html .= $this->getUserName();
         return $html;
     }
@@ -473,6 +471,17 @@ class User implements GenericObject
 		return false;
 	}
 
+/** Is this user the Splash Only User() */
+    public function isSplashOnlyUser()
+	{
+if($this->mRow['user_id'] == "SPLASH_ONLY_USER") {
+return true;
+}
+else {
+return false;
+}
+	}
+	
     function getValidationToken()
     {
         return $this->mRow['validation_token'];
@@ -653,9 +662,7 @@ class User implements GenericObject
      * @param string $add_button_value Value of optional "add" button
      *
      * @return string HTML markup
-     *
-     * @static
-     * @access public
+
      */
     public static function getSelectUserUI($user_prefix, $add_button_name = null, $add_button_value = null)
     {

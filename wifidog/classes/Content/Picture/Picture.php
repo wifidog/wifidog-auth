@@ -64,10 +64,7 @@ class Picture extends File
     /**
      * Constructor
      *
-     * @param string $content_id Content id
-     *
-     * @access protected
-     */
+     * @param string $content_id Content id     */
     protected function __construct($content_id)
     {
         // Define globals
@@ -106,8 +103,7 @@ class Picture extends File
      * Gets the width of an image
      *
      * @return mixed (int or null) Width of image
-     *
-     * @access private
+
      */
     private function getWidth()
     {
@@ -120,8 +116,7 @@ class Picture extends File
      * @param int $width Width to be set
      *
      * @return bool True if width was a valid value and could be set
-     *
-     * @access private
+
      */
     private function setWidth($width)
     {
@@ -144,8 +139,7 @@ class Picture extends File
      * Gets the height of an image
      *
      * @return mixed (int or null) Height of image
-     *
-     * @access private
+
      */
     private function getHeight()
     {
@@ -158,8 +152,7 @@ class Picture extends File
      * @param int $height Height to be set
      *
      * @return bool True if height was a valid value and could be set
-     *
-     * @access private
+
      */
     function setHeight($height)
     {
@@ -215,8 +208,6 @@ class Picture extends File
      *                                         administration interface
      *
      * @return string HTML code for the administration interface
-     *
-     * @access public
      */
     public function getAdminUI($subclass_admin_interface = null, $title=null)
     {
@@ -288,8 +279,6 @@ class Picture extends File
      * Processes the input of the administration interface for Picture
      *
      * @return void
-     *
-     * @access public
      */
     public function processAdminUI()
     {
@@ -309,8 +298,6 @@ class Picture extends File
      * it's output at the END of processing.
      *
      * @return string The HTML fragment for this interface
-     *
-     * @access public
      */
     public function getUserUI()
     {
@@ -343,7 +330,7 @@ class Picture extends File
         $html .= "</div>\n";
         /* Handle hyperlink clicktrough logging */
         $html = $this->replaceHyperLinks($html);
-        return $html;
+        return Content::getUserUI($html);
     }
 
     /**
@@ -355,8 +342,7 @@ class Picture extends File
      * the constructor from the wrong scope
      *
      * @return void
-     *
-     * @access private
+
      */
     private function refresh()
     {

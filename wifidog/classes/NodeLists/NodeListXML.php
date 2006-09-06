@@ -62,8 +62,7 @@ class NodeListXML {
      * XML DOM Document that will contain all the data concerning the nodes
      *
      * @var object
-     *
-     * @access private
+
      */
     private $_xmldoc;
 
@@ -71,8 +70,7 @@ class NodeListXML {
      * Network to generate the list from
      *
      * @var object
-     *
-     * @access private
+
      */
     private $_network;
 
@@ -80,8 +78,7 @@ class NodeListXML {
      * Nodes to generate the list from
      *
      * @var array
-     *
-     * @access private
+
      */
     private $_nodes;
 
@@ -89,8 +86,6 @@ class NodeListXML {
      * Constructor
      *
      * @return void
-     *
-     * @access public
      */
     public function __construct(&$network)
     {
@@ -112,8 +107,6 @@ class NodeListXML {
      * Sets header of output
      *
      * @return void
-     *
-     * @access public
      */
     public function setHeader()
     {
@@ -136,8 +129,6 @@ class NodeListXML {
      * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
      * @copyright  2004-2006 Francois Proulx, Technologies Coeus inc.
      * @copyright  2006 Max Horvath, maxspot GmbH
-     *
-     * @access public
      */
     public function getOutput($return_object = false)
     {

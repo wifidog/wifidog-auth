@@ -70,8 +70,6 @@ class AuthenticatorLocalUser extends Authenticator
      * @param string $account_orgin Id of origin network
      *
      * @return void
-     *
-     * @access public
      */
     public function __construct($account_orgin)
     {
@@ -85,8 +83,7 @@ class AuthenticatorLocalUser extends Authenticator
      * @param array $account_origin Id of origin network
      *
      * @return bool True if the parameter refers to a Local User account origin
-     *
-     * @access private
+
      */
     private static function isLocalUserAccountOrigin($account_origin)
     {
@@ -106,8 +103,6 @@ class AuthenticatorLocalUser extends Authenticator
      *
      * @return object The actual User object if login was successfull, false
      *                otherwise.
-     *
-     * @access public
      */
     public function login($username, $password, &$errmsg = null)
     {
@@ -163,8 +158,6 @@ class AuthenticatorLocalUser extends Authenticator
      * @param string $errmsg  Reference of error message
      *
      * @return bool Returns always true
-     *
-     * @access public
      */
     public function acctStart($conn_id, &$errmsg = null)
     {
@@ -183,8 +176,6 @@ class AuthenticatorLocalUser extends Authenticator
      * @param string $errmsg   Reference of error message
      *
      * @return bool Returns always true
-     *
-     * @access public
      */
     public function acctUpdate($conn_id, $incoming, $outgoing, &$errmsg = null)
     {
@@ -202,8 +193,6 @@ class AuthenticatorLocalUser extends Authenticator
      * @param string $errmsg  Reference of error message
      *
      * @return bool Returns always true
-     *
-     * @access public
      */
     public function acctStop($conn_id, &$errmsg = null)
     {
@@ -217,8 +206,6 @@ class AuthenticatorLocalUser extends Authenticator
      * The basic AuthenticatorLocalUser allows user signup
      *
      * @return bool Returns if the class allows registration
-     *
-     * @access public
      */
     public function isRegistrationPermitted()
     {

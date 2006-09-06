@@ -160,8 +160,6 @@ class SmartyWifidog extends Smarty {
     $this->assign('hotspot_network_name',$network->getName());
     $this->assign('hotspot_network_url',$network->getHomepageURL());
 
-     $this->assign('hotspot_id', CURRENT_NODE_ID);
-
      /* Other useful stuff */
      $this->assign('userIsAtHotspot', Node::getCurrentRealNode() != null ? true : false);
 

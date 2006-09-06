@@ -67,8 +67,7 @@ class NodeListJiWireCSV {
      * Network to generate the list from
      *
      * @var object
-     *
-     * @access private
+
      */
     private $_network;
 
@@ -76,8 +75,7 @@ class NodeListJiWireCSV {
      * Nodes to generate the list from
      *
      * @var array
-     *
-     * @access private
+
      */
     private $_nodes;
 
@@ -85,8 +83,6 @@ class NodeListJiWireCSV {
      * Constructor
      *
      * @return void
-     *
-     * @access public
      */
     public function __construct(&$network)
     {
@@ -106,8 +102,6 @@ class NodeListJiWireCSV {
      * Sets header of output
      *
      * @return void
-     *
-     * @access public
      */
     public function setHeader()
     {
@@ -135,8 +129,6 @@ class NodeListJiWireCSV {
      * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
      * @copyright  2004-2006 Francois Proulx, Technologies Coeus inc.
      * @copyright  2006 Max Horvath, maxspot GmbH
-     *
-     * @access public
      */
     public function getOutput($return_object = false)
     {

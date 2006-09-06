@@ -60,8 +60,7 @@ class InterfaceElements
      * @throws Exception if $name is missing
      * @throws Exception if $tags is not an array
      *
-     * @static
-     * @access private
+
      */
 	private static function _generateClosingElement($name, $content = "", $tags = array())
 	{
@@ -99,8 +98,7 @@ class InterfaceElements
      * @throws Exception if $name or $tags is missing
      * @throws Exception if $tags is not an array
      *
-     * @static
-     * @access private
+
      */
 	private static function _generateNonClosingElement($name, $tags)
 	{
@@ -141,8 +139,7 @@ class InterfaceElements
      *
      * @throws Exception if $type or $name is missing
      *
-     * @static
-     * @access private
+
      */
 	private static function _generateInputTag($type, $name, $value = "", $id = "", $class = "submit", $additional_tags = array())
 	{
@@ -191,9 +188,7 @@ class InterfaceElements
      * @param string $id      Id of HTML div element
      *
      * @return string HTML markup
-     *
-     * @static
-     * @access public
+
      */
 	public static function generateDiv($content = "", $class = "", $id = "")
 	{
@@ -228,9 +223,7 @@ class InterfaceElements
      * @return string HTML markup
      *
      * @throws Exception if $name or $value is missing
-     *
-     * @static
-     * @access public
+
      */
 	public static function generateInputButton($name, $value, $id = "", $class = "submit", $additional_tags = array())
 	{
@@ -262,9 +255,7 @@ class InterfaceElements
      * @return string HTML markup
      *
      * @throws Exception if $name or $value is missing
-     *
-     * @static
-     * @access public
+
      */
 	public static function generateInputCheckbox($name, $value = "", $description = "", $checked = false, $id = "", $in_div = true, $class = "checkbox", $additional_tags = array(), $additional_tags_label = array())
 	{
@@ -305,9 +296,7 @@ class InterfaceElements
      * @return string HTML markup
      *
      * @throws Exception if $name is missing
-     *
-     * @static
-     * @access public
+
      */
 	public static function generateInputHidden($name, $value = "", $additional_tags = array())
 	{
@@ -338,9 +327,7 @@ class InterfaceElements
      * @return string HTML markup
      *
      * @throws Exception if $name or $value is missing
-     *
-     * @static
-     * @access public
+
      */
 	public static function generateInputRadio($name, $value = "", $description = "", $checked = false, $id = "", $class = "radio", $additional_tags = array(), $additional_tags_label = array())
 	{
@@ -378,9 +365,7 @@ class InterfaceElements
      * @return string HTML markup
      *
      * @throws Exception if $name or $value is missing
-     *
-     * @static
-     * @access public
+
      */
 	public static function generateInputSubmit($name, $value, $id = "", $class = "submit", $additional_tags = array())
 	{
@@ -408,9 +393,7 @@ class InterfaceElements
      * @return string HTML markup
      *
      * @throws Exception if $name is missing
-     *
-     * @static
-     * @access public
+
      */
 	public static function generateInputText($name, $value = "", $id = "", $class = "input_text", $additional_tags = array())
 	{
@@ -437,9 +420,7 @@ class InterfaceElements
      * @return string HTML markup
      *
      * @throws Exception if $for or $content is missing
-     *
-     * @static
-     * @access public
+
      */
 	public static function generateLabel($content, $for, $additional_tags = array())
 	{
@@ -472,9 +453,7 @@ class InterfaceElements
      * @return string HTML markup
      *
      * @throws Exception if $contents is missing
-     *
-     * @static
-     * @access public
+
      */
 	public static function generateLi($contents, $id = "", $class = "")
 	{
@@ -514,9 +493,7 @@ class InterfaceElements
      * @return string HTML markup
      *
      * @throws Exception if $name or $value is missing
-     *
-     * @static
-     * @access public
+
      */
 	public static function generateTextarea($name, $value = "", $cols = 50, $rows = 5, $id = "", $class = "textarea")
 	{
@@ -559,9 +536,7 @@ class InterfaceElements
      * @return string HTML markup
      *
      * @throws Exception if $values is missing
-     *
-     * @static
-     * @access public
+
      */
 	public static function generateUl($values, $id = "", $class = "")
 	{
@@ -597,9 +572,7 @@ class InterfaceElements
      * @param string $main_id Id of parent HTML element
      *
      * @return string HTML markup
-     *
-     * @static
-     * @access public
+
      */
 	public static function generateAdminSection($title = "", $data = "", $tools = "", $main_id = "")
 	{
@@ -639,9 +612,7 @@ class InterfaceElements
      * @param string $tools    Tools of HTML element
      *
      * @return string HTML markup
-     *
-     * @static
-     * @access public
+
      */
 	public static function generateAdminSectionContainer($id = "", $title = "", $data = "", $tools = "")
 	{

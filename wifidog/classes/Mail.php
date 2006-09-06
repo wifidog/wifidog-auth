@@ -44,8 +44,8 @@
 /**
  * Load required classes
  */
-require_once('include/class.phpmailer.php');
-require_once('include/class.smtp.php');
+require_once('lib/PHPMailer/class.phpmailer.php');
+require_once('lib/SMTP/class.smtp.php');
 
 /**
  * This a wrapper class conforming RFC822 capable of sending valid UTF-8 MIME
@@ -134,8 +134,7 @@ class Mail
      * @param string $header Header of email
      *
      * @return string Encoded MIME header
-     *
-     * @access private
+
      *
      * @see http://www.php.net/manual/en/function.mb-send-mail.php
      */

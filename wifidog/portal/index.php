@@ -164,7 +164,14 @@ foreach ($online_users as $online_user) {
 
     $online_user_array[] = $online_user->getListUI();
 }
+/* 
+			    		    if ($this->isConfiguredSplashOnly() && $anonUsers == 1) {
+			    $retval[] = "One anonymous user";
+		    } else if ($this->isConfiguredSplashOnly() && $anonUsers > 1) {
+			    $retval[] = sprintf("%d anonymous users", $anonUsers);
+		    }
 
+ */
 $smarty->assign('numOnlineUsers', $num_online_users);
 
 if ($num_online_users > 0) {

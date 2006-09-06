@@ -65,8 +65,7 @@ class NodeListHTML {
      * Smarty object
      *
      * @var object
-     *
-     * @access private
+
      */
     private $_smarty;
 
@@ -74,8 +73,7 @@ class NodeListHTML {
      * Network to generate the list from
      *
      * @var object
-     *
-     * @access private
+
      */
     private $_network;
 
@@ -83,8 +81,7 @@ class NodeListHTML {
      * Nodes to generate the list from
      *
      * @var array
-     *
-     * @access private
+
      */
     private $_nodes;
 
@@ -92,8 +89,7 @@ class NodeListHTML {
      * Object of current user
      *
      * @var object
-     *
-     * @access private
+
      */
     private $_currentUser;
 
@@ -101,8 +97,7 @@ class NodeListHTML {
      * Object of MainUI class
      *
      * @var object
-     *
-     * @access private
+
      */
     private $_mainUI;
 
@@ -110,8 +105,6 @@ class NodeListHTML {
      * Constructor
      *
      * @return void
-     *
-     * @access public
      */
     public function __construct(&$network)
     {
@@ -139,8 +132,6 @@ class NodeListHTML {
      * Sets header of output
      *
      * @return void
-     *
-     * @access public
      */
     public function setHeader()
     {
@@ -163,8 +154,6 @@ class NodeListHTML {
      * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
      * @copyright  2004-2006 Francois Proulx, Technologies Coeus inc.
      * @copyright  2006 Max Horvath, maxspot GmbH
-     *
-     * @access public
      */
     public function getOutput($return_object = false)
     {

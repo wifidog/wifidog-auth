@@ -64,45 +64,26 @@ class Content implements GenericObject {
     /**
      * Id of content
      *
-     * @var string
-     *
-     * @access protected
-     */
+     * @var string     */
     protected $id;
 
     /**
      * Array containg content from database
      *
-     * @var array
-     *
-     * @access protected
-     */
+     * @var array     */
     protected $content_row;
 
     /**
      * Type of content
      *
      * @var string
-     *
-     * @access private
      */
     private $content_type;
-
-    /**
-     * Definesif content is trivial or not
-     *
-     * @var bool
-     *
-     * @access private
-     */
-    private $is_trivial_content;
 
     /**
      * Defines if logging is enabled or not
      *
      * @var bool
-     *
-     * @access private
      */
     private $is_logging_enabled;
 
@@ -115,8 +96,6 @@ class Content implements GenericObject {
      * @param string $content_id Id of content
      *
      * @return void
-     *
-     * @access private
      */
     private function __construct($content_id) {
         // Define globals
@@ -131,7 +110,7 @@ class Content implements GenericObject {
         $db->execSqlUniqueRes($sql, $row, false);
 
         if ($row == null) {
-            throw new Exception(_("The content with the following id could not be found in the database: ").$content_id);
+            throw new Exception(_("The content with the following id could not be found in the database: ") . $content_id);
         }
 
         $this->content_row = $row;
@@ -140,15 +119,13 @@ class Content implements GenericObject {
 
         // By default content display logging is enabled
         $this->setLoggingStatus(true);
-        $this->log_as_content =& $this;
+        $this->log_as_content = & $this;
     }
 
     /**
      * A short string representation of the content
      *
      * @return string String representation of the content
-     *
-     * @access public
      */
     public function __toString() {
         if (empty ($this->content_row['title'])) {
@@ -170,13 +147,11 @@ class Content implements GenericObject {
      *
      * @return object The newly created Content object, or null if there was an
      *                error (an exception is also trown)
-     *
-     * @static
-     * @access public
+    
      */
     public static function createNewObject($content_type = "Content", $id = null) {
-            // Define globals
-    global $db;
+        // Define globals
+        global $db;
 
         if (empty ($id)) {
             $contentId = get_guid();
@@ -211,9 +186,6 @@ class Content implements GenericObject {
      * Get an interface to create a new object.
      *
      * @return string HTML markup
-     *
-     * @static
-     * @access public
      */
     public static function getCreateNewObjectUI() {
         // Init values
@@ -224,7 +196,7 @@ class Content implements GenericObject {
         foreach (self :: getAvailableContentTypes() as $className) {
             $tab[$i][0] = $className;
             $tab[$i][1] = $className;
-            $i ++;
+            $i++;
         }
 
         if (empty ($tab)) {
@@ -245,9 +217,6 @@ class Content implements GenericObject {
      * filled (else the object returns null).
      *
      * @return object The node object or null if no new node was created
-     *
-     * @static
-     * @access public
      */
     public static function processCreateNewObjectUI() {
         // Init values
@@ -269,9 +238,7 @@ class Content implements GenericObject {
      *
      * @return object The Content object, or null if there was an error
      *                (an exception is also thrown)
-     *
-     * @static
-     * @access public
+    
      */
     public static function getObject($content_id) {
         // Define globals
@@ -285,22 +252,21 @@ class Content implements GenericObject {
         $db->execSqlUniqueRes($sql, $row, false);
 
         if ($row == null) {
-            throw new Exception(_("The content with the following id could not be found in the database: ").$content_id);
+            throw new Exception(_("The content with the following id could not be found in the database: ") . $content_id);
         }
-
-        $contentType = $row['content_type'];
-        $object = new $contentType ($content_id);
-
-        return $object;
+        if (!class_exists($row['content_type'])) {
+            //throw new Exception(_("The following content type isn't valid: ").$row['content_type']);
+            return null;
+        } else {
+            $object = new $row['content_type'] ($content_id);
+            return $object;
+        }
     }
 
     /**
      * Get the list of available content type on the system
      *
      * @return array An array of class names
-     *
-     * @static
-     * @access public
      */
     public static function getAvailableContentTypes() {
         // Init values
@@ -323,7 +289,7 @@ class Content implements GenericObject {
         }
 
         if (!$useCache) {
-            $dir = WIFIDOG_ABS_FILE_PATH."classes/Content";
+            $dir = WIFIDOG_ABS_FILE_PATH . "classes/Content";
             $dirHandle = @ opendir($dir);
 
             if ($dirHandle) {
@@ -340,7 +306,7 @@ class Content implements GenericObject {
 
                 closedir($dirHandle);
             } else {
-                throw new Exception(_('Unable to open directory ').$dir);
+                throw new Exception(_('Unable to open directory ') . $dir);
             }
 
             // Cleanup PHP file extensions and sort the result array
@@ -356,7 +322,46 @@ class Content implements GenericObject {
 
         return $contentTypes;
     }
+    /**
+     * Check if the ContentType is available on the system     *
+     * @param string $classname The classname to check
+     * @return true or flase
+     */
+    public static function isContentTypeAvailable($classname) {
+        if (false === array_search($classname, Content :: getAvailableContentTypes(), true)) {
+            //throw new Exception(_("The following content type isn't valid: ").$contentType);
+            return false;
+        } else {
+            return true;
+        }
 
+    }
+
+    /**
+     * Check if this class is a class or subclass of one of the content types given as parameter
+     * *
+     * @param array $candidates The classnames to check
+     * @return true or flase
+     */
+    public static function isContentType($candidates, $classname) {
+        $retval = false;
+        if (false === is_array($candidates)) {
+            throw new exception("classnames must be an array");
+        }
+        $classname_reflector = new ReflectionClass($classname);
+
+        foreach ($candidates as $candidate) {
+            $candidate_reflector = new ReflectionClass($candidate);
+            //echo"classname: $classname, candidate: $candidate<br>";
+            if ($classname_reflector->isSubclassOf($candidate_reflector)) {
+                //The content meets the criteria 
+                //echo "TRUE<br>";
+                $retval = true;
+                break;
+            }
+        }
+        return $retval;
+    }
     /**
      * Get all content
      *
@@ -365,13 +370,10 @@ class Content implements GenericObject {
      * @param string $content_type Type of content
      *
      * @return mixed Requested content
-     *
-     * @static
-     * @access public
      */
     public static function getAllContent($content_type = "") {
-            // Define globals
-    global $db;
+        // Define globals
+        global $db;
 
         // Init values
         $whereClause = "";
@@ -399,62 +401,64 @@ class Content implements GenericObject {
      *
      * @param string $user_prefix      A identifier provided by the programmer
      *                                 to recognise it's generated HTML form
-     * @param string $content_type     If set, the created content will be of
-     *                                 this type, otherwise, the user will have
+     * @param string $content_type_filter     If set, the created content must match the filter.  Of only one type matches, 
+     * the content will be of this type, otherwise, the user will have
      *                                 to choose
      *
      * @return string HTML markup
-     *
-     * @static
-     * @access public
      */
-    public static function getNewContentUI($user_prefix, $content_type = null, $title = null) {
-            // Define globals
-    global $db;
+    public static function getNewContentUI($user_prefix, $content_type_filter = null, $title = null) {
+        // Define globals
+        global $db;
 
         // Init values
         $html = "";
         $html .= "<fieldset class='admin_container Content'>\n";
-		if(!empty($title)){
-		$html .= "<legend>$title</legend>\n";
-		}
+        if (!empty ($title)) {
+            $html .= "<legend>$title</legend>\n";
+        }
 
         $availableContentTypes = self :: getAvailableContentTypes();
 
         $name = "get_new_content_{$user_prefix}_content_type";
 
-        if (empty ($content_type)) {
-            $label = _("Add new Content of type").": ";
+        if (!$content_type_filter) {
+            //Get an empty filter
+            $content_type_filter = ContentTypeFilter :: getObject(array ());
+        }
 
-            $i = 0;
-
-            foreach ($availableContentTypes as $className) {
+        $i = 0;
+        $tab = array ();
+        foreach ($availableContentTypes as $className) {
+            if ($content_type_filter->isAcceptableContentClass($className)) {
                 $tab[$i][0] = $className;
                 $tab[$i][1] = $className;
-                $i ++;
+                $i++;
             }
+        }
+        if (count($tab) > 1) {
+            $label = _("Add new Content of type") . ": ";
             $html .= "<div class='admin_element_data content_add'>";
             $html .= $label;
             $html .= FormSelectGenerator :: generateFromArray($tab, 'TrivialLangstring', $name, null, false);
             $html .= "</div>";
-        } else {
-            if (false === array_search($content_type, $availableContentTypes, true)) {
-                throw new Exception(_("The following content type isn't valid: ").$content_type);
+        } else
+            if (count($tab) == 1) {
+                $html .= '<input type="hidden" name="' . $name . '" value="' . $tab[0][0] . '">';
+            } else {
+                throw new Exception(_("No content type matches the filter."));
             }
-
-            $html .= '<input type="hidden" name="'.$name.'" value="'.$content_type.'">';
-        }
 
         $name = "get_new_content_{$user_prefix}_add";
 
-        if ($content_type) {
-            $value = sprintf(_("Add a %s"), $content_type);
+        if (count($tab) == 1) {
+            $value = sprintf(_("Add a %s"), $tab[0][1]);
         } else {
             $value = _("Add");
         }
 
         $html .= "<div class='admin_element_tools'>";
-        $html .= '<input type="submit" class="submit" name="'.$name.'" value="'.$value.'">';
+        $html .= '<input type="submit" class="submit" name="' . $name . '" value="' . $value . '">';
         $html .= "</div>";
         $html .= "</fieldset>\n";
         return $html;
@@ -471,13 +475,11 @@ class Content implements GenericObject {
      *                                           existing object
      *
      * @return object The Content object, or null if the user didn't create one
-     *
-     * @static
-     * @access public
+    
      */
     public static function processNewContentUI($user_prefix, $associate_existing_content = false) {
-            // Init values
-    $object = null;
+        // Init values
+        $object = null;
 
         if ($associate_existing_content == true) {
             $name = "{$user_prefix}_add";
@@ -521,13 +523,11 @@ class Content implements GenericObject {
      * @param string $default_display_page
      * @param string $default_display_area
      * @return string HTML markup
-     *
-     * @static
-     * @access public
+    
      */
     public static function getLinkedContentUI($user_prefix, $link_table, $link_table_obj_key_col, $link_table_obj_key, $default_display_page = 'portal', $default_display_area = 'main_area_middle') {
-         // Define globals
-    		global $db;
+        // Define globals
+        global $db;
 
         // Init values
         $html = "";
@@ -542,26 +542,26 @@ class Content implements GenericObject {
         $db->execSql($current_content_sql, $rows, false);
 
         $html .= "<table class='content_management_tools'>\n";
-        $html .= "<th>"._('Display page').'</th><th>'._('Area').'</th><th>'._('Order').'</th><th>'._('Content').'</th><th>'._('Actions').'</th>'."\n";
+        $html .= "<th>" . _('Display page') . '</th><th>' . _('Area') . '</th><th>' . _('Order') . '</th><th>' . _('Content') . '</th><th>' . _('Actions') . '</th>' . "\n";
         if ($rows)
             foreach ($rows as $row) {
                 $content = self :: getObject($row['content_id']);
                 $html .= "<tr class='already_linked_content'>\n";
                 /* Display page */
-                $name = "{$user_prefix}_".$content->GetId()."_display_page";
-                $html .= "<td>".FormSelectGenerator :: generateFromTable('content_available_display_pages', 'display_page', 'display_page', $row['display_page'], $name, null)."</td>\n";
-                $name = "{$user_prefix}_".$content->GetId()."_display_area";
-                $html .= "<td>".FormSelectGenerator :: generateFromTable('content_available_display_areas', 'display_area', 'display_area', $row['display_area'], $name, null)."</td>\n";
-                $name = "{$user_prefix}_".$content->GetId()."_display_order";
+                $name = "{$user_prefix}_" . $content->GetId() . "_display_page";
+                $html .= "<td>" . FormSelectGenerator :: generateFromTable('content_available_display_pages', 'display_page', 'display_page', $row['display_page'], $name, null) . "</td>\n";
+                $name = "{$user_prefix}_" . $content->GetId() . "_display_area";
+                $html .= "<td>" . FormSelectGenerator :: generateFromTable('content_available_display_areas', 'display_area', 'display_area', $row['display_area'], $name, null) . "</td>\n";
+                $name = "{$user_prefix}_" . $content->GetId() . "_display_order";
                 $html .= "<td><input type='text' name='$name' value='{$row['display_order']}' size=2 class='linked_content_order'></td>\n";
                 $html .= "<td>\n";
                 $html .= $content->getListUI();
                 $html .= "</td>\n";
                 $html .= "<td>\n";
-                $name = "{$user_prefix}_".$content->GetId()."_edit";
-                $html .= "<input type='button' class='submit' name='$name' value='"._("Edit")."' onClick='window.location.href = \"".GENERIC_OBJECT_ADMIN_ABS_HREF."?object_class=Content&action=edit&object_id=".$content->GetId()."\";'>\n";
-                $name = "{$user_prefix}_".$content->GetId()."_erase";
-                $html .= "<input type='submit' class='submit' name='$name' value='"._("Remove")."'>";
+                $name = "{$user_prefix}_" . $content->GetId() . "_edit";
+                $html .= "<input type='button' class='submit' name='$name' value='" . _("Edit") . "' onClick='window.location.href = \"" . GENERIC_OBJECT_ADMIN_ABS_HREF . "?object_class=Content&action=edit&object_id=" . $content->GetId() . "\";'>\n";
+                $name = "{$user_prefix}_" . $content->GetId() . "_erase";
+                $html .= "<input type='submit' class='submit' name='$name' value='" . _("Remove") . "'>";
                 $html .= "</td>\n";
                 $html .= "</tr>\n";
             }
@@ -569,9 +569,9 @@ class Content implements GenericObject {
         /* Add existing content */
         $html .= "<tr class='add_existing_content'>\n";
         $name = "{$user_prefix}_new_existing_display_page";
-        $html .= "<td>".FormSelectGenerator :: generateFromTable('content_available_display_pages', 'display_page', 'display_page', $default_display_page, $name, null)."</td>\n";
+        $html .= "<td>" . FormSelectGenerator :: generateFromTable('content_available_display_pages', 'display_page', 'display_page', $default_display_page, $name, null) . "</td>\n";
         $name = "{$user_prefix}_new_existing_display_area";
-        $html .= "<td>".FormSelectGenerator :: generateFromTable('content_available_display_areas', 'display_area', 'display_area', $default_display_area, $name, null)."</td>\n";
+        $html .= "<td>" . FormSelectGenerator :: generateFromTable('content_available_display_areas', 'display_area', 'display_area', $default_display_area, $name, null) . "</td>\n";
         $name = "{$user_prefix}_new_existing_display_order";
         $html .= "<td><input type='text' name='$name' value='1' size=2 class='linked_content_order'></td>\n";
         $html .= "<td colspan=2>\n";
@@ -584,9 +584,9 @@ class Content implements GenericObject {
         /* Add new content */
         $html .= "<tr class='add_new_content'>\n";
         $name = "{$user_prefix}_new_display_page";
-        $html .= "<td>".FormSelectGenerator :: generateFromTable('content_available_display_pages', 'display_page', 'display_page', $default_display_page, $name, null)."</td>\n";
+        $html .= "<td>" . FormSelectGenerator :: generateFromTable('content_available_display_pages', 'display_page', 'display_page', $default_display_page, $name, null) . "</td>\n";
         $name = "{$user_prefix}_new_display_area";
-        $html .= "<td>".FormSelectGenerator :: generateFromTable('content_available_display_areas', 'display_area', 'display_area', $default_display_area, $name, null)."</td>\n";
+        $html .= "<td>" . FormSelectGenerator :: generateFromTable('content_available_display_areas', 'display_area', 'display_area', $default_display_area, $name, null) . "</td>\n";
         $name = "{$user_prefix}_new_display_order";
         $html .= "<td><input type='text' name='$name' value='1' size=2 class='linked_content_order'></td>\n";
         $html .= "<td colspan=2>\n";
@@ -618,13 +618,13 @@ class Content implements GenericObject {
                 $content = Content :: getObject($row['content_id']);
                 $content_id = $db->escapeString($content->getId());
                 $sql = null;
-                $name = "{$user_prefix}_".$content->GetId()."_erase";
+                $name = "{$user_prefix}_" . $content->GetId() . "_erase";
                 if (!empty ($_REQUEST[$name])) {
                     $sql .= "DELETE FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key' AND content_id = '$content_id';\n";
 
                 } else {
                     /* Display page */
-                    $name = "{$user_prefix}_".$content->GetId()."_display_page";
+                    $name = "{$user_prefix}_" . $content->GetId() . "_display_page";
                     $new_display_page = FormSelectGenerator :: getResult($name, null);
                     if ($new_display_page != $row['display_page']) {
                         $new_display_page = $db->escapeString($new_display_page);
@@ -632,14 +632,14 @@ class Content implements GenericObject {
 
                     }
                     /* Display area */
-                    $name = "{$user_prefix}_".$content->GetId()."_display_area";
+                    $name = "{$user_prefix}_" . $content->GetId() . "_display_area";
                     $new_display_area = FormSelectGenerator :: getResult($name, null);
                     if ($new_display_area != $row['display_area']) {
                         $new_display_area = $db->escapeString($new_display_area);
                         $sql .= "UPDATE $link_table SET display_area='$new_display_area' WHERE $link_table_obj_key_col='$link_table_obj_key' AND content_id = '$content_id';\n";
                     }
                     /* Display order */
-                    $name = "{$user_prefix}_".$content->GetId()."_display_order";
+                    $name = "{$user_prefix}_" . $content->GetId() . "_display_order";
                     if ($_REQUEST[$name] != $row['display_order']) {
                         $new_display_order = $db->escapeString($_REQUEST[$name]);
                         $sql .= "UPDATE $link_table SET display_order='$new_display_order' WHERE $link_table_obj_key_col='$link_table_obj_key' AND content_id = '$content_id';\n";
@@ -698,8 +698,7 @@ class Content implements GenericObject {
      *                                        generated HTML form
      * @param string $sql_additional_where    Addidional where conditions to
      *                                        restrict the candidate objects
-     * @param bool   $show_persistant_content Defines if to list persistant
-     *                                        content, only
+     * @param string $content_type_filter     If set, the created content must match the filter.
      * @param string $order                   Order of output (default: by
      *                                        creation time)
      * @param string $type_interface          Type of interface:
@@ -709,12 +708,9 @@ class Content implements GenericObject {
      *                                            extended information
      *
      * @return string HTML markup
-     *
-     * @static
-     * @access public
+    
      */
-    public static function getSelectExistingContentUI($user_prefix, $sql_additional_where = null, $show_persistant_content = true, $order = "creation_timestamp", $type_interface = "select")
-    {
+    public static function getSelectExistingContentUI($user_prefix, $sql_additional_where = null, $content_type_filter = null, $order = "creation_timestamp", $type_interface = "select") {
         // Define globals
         global $db;
 
@@ -722,6 +718,10 @@ class Content implements GenericObject {
         $html = '';
         $retVal = array ();
         $contentRows = null;
+        if ($content_type_filter == null) {
+            //Get an empty filter
+            $content_type_filter = ContentTypeFilter :: getObject(array ());
+        }
 
         try {
             if (!User :: getCurrentUser()) {
@@ -737,20 +737,16 @@ class Content implements GenericObject {
         if ($type_interface != "table") {
             $html .= "<fieldset class='admin_container Content'>\n";
 
-            if (!empty($title)) {
+            if (!empty ($title)) {
                 $html .= "<legend>$title</legend>\n";
             }
 
-            $html .= _("Add existing content").": ";
+            $html .= _("Add existing content") . ": ";
         }
 
         $name = "{$user_prefix}";
 
-        if ($show_persistant_content) {
-            $sql = "SELECT * FROM content WHERE is_persistent=TRUE $sql_additional_where ORDER BY $order";
-        } else {
-            $sql = "SELECT * FROM content $sql_additional_where ORDER BY $order";
-        }
+        $sql = "SELECT * FROM content WHERE 1=1 $sql_additional_where ORDER BY $order";
 
         $db->execSql($sql, $contentRows, false);
 
@@ -759,39 +755,41 @@ class Content implements GenericObject {
 
             if ($type_interface == "table") {
                 $html .= "<table class='content_admin'>\n";
-                $html .= "<tr><th>"._("Title")."</th><th>"._("Content type")."</th><th>"._("Description")."</th><th></th></tr>\n";
+                $html .= "<tr><th>" . _("Title") . "</th><th>" . _("Content type") . "</th><th>" . _("Description") . "</th><th></th></tr>\n";
             }
 
             foreach ($contentRows as $contentRow) {
-                $content = Content::getObject($contentRow['content_id']);
-
-                if (User::getCurrentUser()->isSuperAdmin() || $content->isOwner(User::getCurrentUser())) {
-                    if ($type_interface != "table") {
-                        $tab[$i][0] = $content->getId();
-                        $tab[$i][1] = $content->__toString()." (".get_class($content).")";
-                        $i ++;
-                    } else {
-                        if (!empty ($contentRow['title'])) {
-                            $title = Content :: getObject($contentRow['title']);
-                            $titleUI = $title->__toString();
+                $content = Content :: getObject($contentRow['content_id']);
+                //echo get_class($content)." ".$contentRow['content_id']."<br>";
+                if ($content && $content_type_filter->isAcceptableContentClass(get_class($content))) {
+                    if (User :: getCurrentUser()->isSuperAdmin() || $content->isOwner(User :: getCurrentUser())) {
+                        if ($type_interface != "table") {
+                            $tab[$i][0] = $content->getId();
+                            $tab[$i][1] = $content->__toString() . " (" . get_class($content) . ")";
+                            $i++;
                         } else {
-                            $titleUI = "";
+                            if (!empty ($contentRow['title'])) {
+                                $title = Content :: getObject($contentRow['title']);
+                                $titleUI = $title->__toString();
+                            } else {
+                                $titleUI = "";
+                            }
+
+                            if (!empty ($contentRow['description'])) {
+                                $description = Content :: getObject($contentRow['description']);
+                                $descriptionUI = $description->__toString();
+                            } else {
+                                $descriptionUI = "";
+                            }
+
+                            $href = GENERIC_OBJECT_ADMIN_ABS_HREF . "?object_id={$contentRow['content_id']}&object_class=Content&action=edit";
+                            $html .= "<tr><td>$titleUI</td><td><a href='$href'>{$contentRow['content_type']}</a></td><td>$descriptionUI</td>\n";
+
+                            $href = GENERIC_OBJECT_ADMIN_ABS_HREF . "?object_id={$contentRow['content_id']}&object_class=Content&action=delete";
+                            $html .= "<td><a href='$href'>" . _("Delete") . "</a></td>";
+
+                            $html .= "</tr>\n";
                         }
-
-                        if (!empty ($contentRow['description'])) {
-                            $description = Content :: getObject($contentRow['description']);
-                            $descriptionUI = $description->__toString();
-                        } else {
-                            $descriptionUI = "";
-                        }
-
-                        $href = GENERIC_OBJECT_ADMIN_ABS_HREF."?object_id={$contentRow['content_id']}&object_class=Content&action=edit";
-                        $html .= "<tr><td>$titleUI</td><td><a href='$href'>{$contentRow['content_type']}</a></td><td>$descriptionUI</td>\n";
-
-                        $href = GENERIC_OBJECT_ADMIN_ABS_HREF."?object_id={$contentRow['content_id']}&object_class=Content&action=delete";
-                        $html .= "<td><a href='$href'>"._("Delete")."</a></td>";
-
-                        $html .= "</tr>\n";
                     }
                 }
             }
@@ -800,20 +798,20 @@ class Content implements GenericObject {
                 if (isset ($tab)) {
                     $html .= FormSelectGenerator :: generateFromArray($tab, null, $name, null, false, null, null, 40);
                     //DEBUG!! get_existing_content_
-                     $name = "{$user_prefix}_add";
-                     $value = _("Add");
-                     $html .= "<div class='admin_element_tools'>";
-        			$html .= '<input type="submit" class="submit" name="'.$name.'" value="'.$value.'">';
-        			$html .= "</div>";
+                    $name = "{$user_prefix}_add";
+                    $value = _("Add");
+                    $html .= "<div class='admin_element_tools'>";
+                    $html .= '<input type="submit" class="submit" name="' . $name . '" value="' . $value . '">';
+                    $html .= "</div>";
                 } else {
-                    $html .= "<div class='warningmsg'>"._("Sorry, no content available in the database")."</div>\n";
+                    $html .= "<div class='warningmsg'>" . _("Sorry, no elligible content available in the database") . "</div>\n";
                 }
                 $html .= "</fieldset>\n";
             } else {
                 $html .= "</table>\n";
             }
         } else {
-            $html .= "<div class='warningmsg'>"._("Sorry, no content available in the database")."</div>\n";
+            $html .= "<div class='warningmsg'>" . _("Sorry, no elligible content available in the database") . "</div>\n";
         }
 
         return $html;
@@ -891,9 +889,8 @@ class Content implements GenericObject {
     private function setContentType($content_type) {
         global $db;
         $content_type = $db->escapeString($content_type);
-        $available_content_types = self :: getAvailableContentTypes();
-        if (false === array_search($content_type, $available_content_types, true)) {
-            throw new Exception(_("The following content type isn't valid: ").$content_type);
+        if (!self :: isContentTypeAvailable($content_type)) {
+            throw new Exception(_("The following content type isn't valid: ") . $content_type);
         }
         $sql = "UPDATE content SET content_type = '$content_type' WHERE content_id='$this->id'";
 
@@ -909,8 +906,8 @@ class Content implements GenericObject {
      * @return true on success, false on failure */
     public function addOwner(User $user, $is_author = false) {
         global $db;
-        $content_id = "'".$this->id."'";
-        $user_id = "'".$db->escapeString($user->getId())."'";
+        $content_id = "'" . $this->id . "'";
+        $user_id = "'" . $db->escapeString($user->getId()) . "'";
         $is_author ? $is_author = 'TRUE' : $is_author = 'FALSE';
         $sql = "INSERT INTO content_has_owners (content_id, user_id, is_author) VALUES ($content_id, $user_id, $is_author)";
 
@@ -926,8 +923,8 @@ class Content implements GenericObject {
      */
     public function deleteOwner(User $user, $is_author = false) {
         global $db;
-        $content_id = "'".$this->id."'";
-        $user_id = "'".$db->escapeString($user->getId())."'";
+        $content_id = "'" . $this->id . "'";
+        $user_id = "'" . $db->escapeString($user->getId()) . "'";
 
         $sql = "DELETE FROM content_has_owners WHERE content_id=$content_id AND user_id=$user_id";
 
@@ -1025,21 +1022,20 @@ class Content implements GenericObject {
         return $this->id;
     }
 
-    /** When a content object is set as trivial, it means that is is used merely to contain it's own data.  No title, description or other data will be set or displayed, during display or administration
-     * @param $is_trivial true or false */
-    public function setIsTrivialContent($is_trivial) {
-        $this->is_trivial_content = $is_trivial;
+    /** When a content object is set as Simple, it means that is is used merely to contain it's own data.  No title, description or other metadata will be set or displayed, during display or administration
+     * @return true or false */
+    public function isSimpleContent() {
+        return false;
     }
-
     /** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
      * @param $subclass_admin_interface Html content of the interface element of a children
      * @return The HTML fragment for this interface */
     public function getUserUI($subclass_user_interface = null) {
         $html = '';
-        $html .= "<div class='user_ui_main_outer ".get_class($this)."'>\n";
+        $html .= "<div class='user_ui_main_outer " . get_class($this) . "'>\n";
         $html .= "<div class='user_ui_main_inner'>\n";
 
-        if (!empty ($this->content_row['title'])  && $this->titleShouldDisplay()) {
+        if (!empty ($this->content_row['title']) && $this->titleShouldDisplay()) {
             $html .= "<div class='user_ui_title'>\n";
             $title = self :: getObject($this->content_row['title']);
             $title->setLogAsContent($this);
@@ -1059,7 +1055,7 @@ class Content implements GenericObject {
             $html .= "<div class='user_ui_authors'>\n";
             $html .= _("Author(s):");
             foreach ($authors as $user) {
-                $html .= $user->getUsername()." ";
+                $html .= $user->getUsername() . " ";
             }
             $html .= "</div>\n";
         }
@@ -1075,10 +1071,10 @@ class Content implements GenericObject {
             $html .= "</div>\n";
         }
 
-        if (!empty ($this->content_row['project_info']) ) {
+        if (!empty ($this->content_row['project_info'])) {
             if (!empty ($this->content_row['project_info'])) {
                 $html .= "<div class='user_ui_projet_info'>\n";
-                $html .= "<b>"._("Project information:")."</b>";
+                $html .= "<b>" . _("Project information:") . "</b>";
                 $project_info = self :: getObject($this->content_row['project_info']);
                 $project_info->setLogAsContent($this);
                 // If the content logging is disabled, all the children will inherit this property temporarly
@@ -1098,18 +1094,16 @@ class Content implements GenericObject {
         return $html;
     }
 
-
-/** Allow logging as part of another content (usually the parent for metadata).
- * Redirects clickthrough logging to the parent's content id, and does not log
- * display */
-protected function setLogAsContent(Content $content)
-{
-   $this->log_as_content = $content;
-}
+    /** Allow logging as part of another content (usually the parent for metadata).
+     * Redirects clickthrough logging to the parent's content id, and does not log
+     * display */
+    protected function setLogAsContent(Content $content) {
+        $this->log_as_content = $content;
+    }
 
     /** Log that this content has just been displayed to the user.  Will only log if the user is logged in */
     private function logContentDisplay() {
-        if ($this->getLoggingStatus() == true && $this->log_as_content->getId()==$this->getId()) {
+        if ($this->getLoggingStatus() == true && $this->log_as_content->getId() == $this->getId()) {
             // DEBUG::
             //echo "Logging ".get_class($this)." :: ".$this->__toString()."<br>";
             $user = User :: getCurrentUser();
@@ -1131,11 +1125,11 @@ protected function setLogAsContent(Content $content)
         }
     }
     /** Handle replacements of hyperlinks for clickthrough tracking (if appropriate) */
-    protected function replaceHyperLinks(&$html) {
+    protected function replaceHyperLinks(& $html) {
         /* Handle hyperlink clicktrough logging */
         if ($this->getLoggingStatus() == true) {
             $html = HyperLink :: replaceHyperLinks($html, $this->log_as_content);
-            }
+        }
         return $html;
     }
 
@@ -1145,7 +1139,7 @@ protected function setLogAsContent(Content $content)
     public function getListUI($subclass_list_interface = null) {
         $html = '';
         $html .= "<div class='list_ui_container'>\n";
-        $html .= $this->__toString()." (".get_class($this).")\n";
+        $html .= $this->__toString() . " (" . get_class($this) . ")\n";
         $html .= $subclass_list_interface;
         $html .= "</div>\n";
         return $html;
@@ -1159,15 +1153,15 @@ protected function setLogAsContent(Content $content)
      * element of a children.
      * @return string The HTML fragment for this interface.
      */
-    public function getAdminUI($subclass_admin_interface = null, $title=null) {
+    public function getAdminUI($subclass_admin_interface = null, $title = null) {
         global $db;
 
         $html = '';
-        $html .= "<fieldset class='admin_container ".get_class($this)."'>\n";
-		if(!empty($title)){
-		$html .= "<legend>$title</legend>\n";
-		}
-		$html .= "<ul class='admin_element_list'>\n";
+        $html .= "<fieldset class='admin_container " . get_class($this) . "'>\n";
+        if (!empty ($title)) {
+            $html .= "<legend>$title</legend>\n";
+        }
+        $html .= "<ul class='admin_element_list'>\n";
         if ($this->getObjectType() == 'Content') {
             // The object hasn't yet been typed.
             $html .= _("You must select a content type: ");
@@ -1176,19 +1170,26 @@ protected function setLogAsContent(Content $content)
             foreach (self :: getAvailableContentTypes() as $classname) {
                 $tab[$i][0] = $classname;
                 $tab[$i][1] = $classname;
-                $i ++;
+                $i++;
             }
 
-            $html .= FormSelectGenerator :: generateFromArray($tab, null, "content_".$this->id."_content_type", "Content", false);
+            $html .= FormSelectGenerator :: generateFromArray($tab, null, "content_" . $this->id . "_content_type", "Content", false);
         } else {
-           // Content metadata
-            if ($this->is_trivial_content == false || $this->isPersistent()) {
-        		$html .= "<fieldset class='admin_element_group'>\n";
-				$html .= "<legend>".sprintf(_("%s MetaData"),get_class($this))."</legend>\n";
+            $criteria_array = array (
+                array (
+                    'isSimpleContent'
+                )
+            );
+            $metadada_allowed_content_types = ContentTypeFilter :: getObject($criteria_array);
+
+            // Content metadata
+            if ($this->isSimpleContent() == false || $this->isPersistent()) {
+                $html .= "<fieldset class='admin_element_group'>\n";
+                $html .= "<legend>" . sprintf(_("%s MetaData"), get_class($this)) . "</legend>\n";
 
                 /* title_is_displayed */
-                $html_title_is_displayed = _("Display the title?").": \n";
-                $name = "content_".$this->id."_title_is_displayed";
+                $html_title_is_displayed = _("Display the title?") . ": \n";
+                $name = "content_" . $this->id . "_title_is_displayed";
                 $this->titleShouldDisplay() ? $checked = 'CHECKED' : $checked = '';
                 $html_title_is_displayed .= "<input type='checkbox' name='$name' $checked>\n";
 
@@ -1196,7 +1197,7 @@ protected function setLogAsContent(Content $content)
                 $html .= "<li class='admin_element_item_container admin_section_edit_title'>\n";
                 $html .= "<div class='admin_element_data'>\n";
                 if (empty ($this->content_row['title'])) {
-                    $html .= self :: getNewContentUI("title_{$this->id}_new", null, _("Title:"));
+                    $html .= self :: getNewContentUI("title_{$this->id}_new", $metadada_allowed_content_types, _("Title:"));
                     $html .= "</div>\n";
                 } else {
                     $html .= $html_title_is_displayed;
@@ -1204,27 +1205,27 @@ protected function setLogAsContent(Content $content)
                     $html .= $title->getAdminUI(null, _("Title:"));
                     $html .= "</div>\n";
                     $html .= "<div class='admin_element_tools admin_section_delete_title'>\n";
-                    $name = "content_".$this->id."_title_erase";
-                    $html .= "<input type='submit' class='submit' name='$name' value='".sprintf(_("Delete %s (%s)"),_("title"),get_class($title))."'>";
+                    $name = "content_" . $this->id . "_title_erase";
+                    $html .= "<input type='submit' class='submit' name='$name' value='" . sprintf(_("Delete %s (%s)"), _("title"), get_class($title)) . "'>";
                     $html .= "</div>\n";
                 }
                 $html .= "</li>\n";
             }
 
-            if ($this->is_trivial_content == false) {
+            if ($this->isSimpleContent() == false) {
                 /* description */
                 $html .= "<li class='admin_element_item_container admin_section_edit_description'>\n";
                 $html .= "<div class='admin_element_data'>\n";
                 if (empty ($this->content_row['description'])) {
-                    $html .= self :: getNewContentUI("description_{$this->id}_new", null, _("Description:"));
+                    $html .= self :: getNewContentUI("description_{$this->id}_new", $metadada_allowed_content_types, _("Description:"));
                     $html .= "</div>\n";
                 } else {
                     $description = self :: getObject($this->content_row['description']);
                     $html .= $description->getAdminUI(null, _("Description:"));
                     $html .= "</div>\n";
                     $html .= "<div class='admin_element_tools'>\n";
-                    $name = "content_".$this->id."_description_erase";
-                    $html .= "<input type='submit' class='submit' name='$name' value='".sprintf(_("Delete %s (%s)"),_("description"),get_class($description))."'>";
+                    $name = "content_" . $this->id . "_description_erase";
+                    $html .= "<input type='submit' class='submit' name='$name' value='" . sprintf(_("Delete %s (%s)"), _("description"), get_class($description)) . "'>";
                     $html .= "</div>\n";
                 }
                 $html .= "</li>\n";
@@ -1233,15 +1234,15 @@ protected function setLogAsContent(Content $content)
                 $html .= "<li class='admin_element_item_container admin_section_edit_long_description'>\n";
                 $html .= "<div class='admin_element_data'>\n";
                 if (empty ($this->content_row['long_description'])) {
-                    $html .= self :: getNewContentUI("long_description_{$this->id}_new", null, _("Long description:"));
+                    $html .= self :: getNewContentUI("long_description_{$this->id}_new", $metadada_allowed_content_types, _("Long description:"));
                     $html .= "</div>\n";
                 } else {
                     $description = self :: getObject($this->content_row['long_description']);
                     $html .= $description->getAdminUI(null, _("Long description:"));
                     $html .= "</div>\n";
                     $html .= "<div class='admin_element_tools'>\n";
-                    $name = "content_".$this->id."_long_description_erase";
-                    $html .= "<input type='submit' class='submit' name='$name' value='".sprintf(_("Delete %s (%s)"),_("long description"),get_class($description))."'>";
+                    $name = "content_" . $this->id . "_long_description_erase";
+                    $html .= "<input type='submit' class='submit' name='$name' value='" . sprintf(_("Delete %s (%s)"), _("long description"), get_class($description)) . "'>";
                     $html .= "</div>\n";
                 }
                 $html .= "</li>\n";
@@ -1250,33 +1251,35 @@ protected function setLogAsContent(Content $content)
                 $html .= "<li class='admin_element_item_container admin_section_edit_project'>\n";
                 $html .= "<div class='admin_element_data'>\n";
                 if (empty ($this->content_row['project_info'])) {
-                    $html .= self :: getNewContentUI("project_info_{$this->id}_new", null, _("Information on this project:"));
+                    $html .= self :: getNewContentUI("project_info_{$this->id}_new", $metadada_allowed_content_types, _("Information on this project:"));
                     $html .= "</div>\n";
                 } else {
                     $project_info = self :: getObject($this->content_row['project_info']);
                     $html .= $project_info->getAdminUI(null, _("Information on this project:"));
                     $html .= "</div>\n";
                     $html .= "<div class='admin_element_tools'>\n";
-                    $name = "content_".$this->id."_project_info_erase";
-                    $html .= "<input type='submit' class='submit' name='$name' value='".sprintf(_("Delete %s (%s)"),_("project information"),get_class($project_info))."'>";
+                    $name = "content_" . $this->id . "_project_info_erase";
+                    $html .= "<input type='submit' class='submit' name='$name' value='" . sprintf(_("Delete %s (%s)"), _("project information"), get_class($project_info)) . "'>";
                     $html .= "</div>\n";
                 }
                 $html .= "</li>\n";
             }
 
             //End content medatada
-                        if ($this->is_trivial_content == false || $this->isPersistent()) {
-                        $html .= "</fieldset>\n";
-                        }
-            if ($this->is_trivial_content == false || $this->isPersistent()) {
-                $html .= "<fieldset class='admin_element_group'>\n";
-				$html .= "<legend>".sprintf(_("%s access control"),get_class($this))."</legend>\n";
+            if ($this->isSimpleContent() == false || $this->isPersistent()) {
+                $html .= "</fieldset>\n";
+            }
 
-		        /* is_persistent */
+            if ($this->isSimpleContent() == false || $this->isPersistent()) {
+
+                $html .= "<fieldset class='admin_element_group'>\n";
+                $html .= "<legend>" . sprintf(_("%s access control"), get_class($this)) . "</legend>\n";
+
+                /* is_persistent */
                 $html .= "<li class='admin_element_item_container admin_section_edit_persistant'>\n";
-                $html .= "<div class='admin_element_label'>"._("Is persistent (reusable and read-only)?").": </div>\n";
+                $html .= "<div class='admin_element_label'>" . _("Is persistent (reusable and read-only)?") . ": </div>\n";
                 $html .= "<div class='admin_element_data'>\n";
-                $name = "content_".$this->id."_is_persistent";
+                $name = "content_" . $this->id . "_is_persistent";
                 $this->isPersistent() ? $checked = 'CHECKED' : $checked = '';
                 $html .= "<input type='checkbox' name='$name' $checked onChange='submit();'>\n";
                 $html .= "</div>\n";
@@ -1284,7 +1287,7 @@ protected function setLogAsContent(Content $content)
 
                 /* content_has_owners */
                 $html .= "<li class='admin_element_item_container content_has_owners'>\n";
-                $html .= "<div class='admin_element_label'>"._("Content owner list")."</div>\n";
+                $html .= "<div class='admin_element_label'>" . _("Content owner list") . "</div>\n";
                 $html .= "<ul class='admin_element_list'>\n";
 
                 global $db;
@@ -1297,15 +1300,15 @@ protected function setLogAsContent(Content $content)
                         $user = User :: getObject($content_owner_row['user_id']);
 
                         $html .= $user->getListUI();
-                        $name = "content_".$this->id."_owner_".$user->GetId()."_is_author";
+                        $name = "content_" . $this->id . "_owner_" . $user->GetId() . "_is_author";
                         $html .= " Is content author? ";
 
                         $content_owner_row['is_author'] == 't' ? $checked = 'CHECKED' : $checked = '';
                         $html .= "<input type='checkbox' name='$name' $checked>\n";
                         $html .= "</div>\n";
                         $html .= "<div class='admin_element_tools'>\n";
-                        $name = "content_".$this->id."_owner_".$user->GetId()."_remove";
-                        $html .= "<input type='submit' class='submit' name='$name' value='"._("Remove owner")."'>";
+                        $name = "content_" . $this->id . "_owner_" . $user->GetId() . "_remove";
+                        $html .= "<input type='submit' class='submit' name='$name' value='" . _("Remove owner") . "'>";
                         $html .= "</div>\n";
                         $html .= "</li>\n";
                     }
@@ -1330,24 +1333,23 @@ protected function setLogAsContent(Content $content)
         return $html;
     }
     /** Process admin interface of this object.  When an object overrides this method, they should call the parent processAdminUI at the BEGINING of processing.
-
+    
     */
     public function processAdminUI() {
         if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
             global $db;
             if ($this->getObjectType() == 'Content') /* The object hasn't yet been typed */ {
-                $content_type = FormSelectGenerator :: getResult("content_".$this->id."_content_type", "Content");
+                $content_type = FormSelectGenerator :: getResult("content_" . $this->id . "_content_type", "Content");
                 $this->setContentType($content_type);
-            } else
-            {//Content medatada
+            } else {
+                //Content medatada
 
-
-                            if ($this->is_trivial_content == false || $this->isPersistent()) {
-                                            /* title_is_displayed */
-                if (!empty ($this->content_row['title'])){
-                $name = "content_".$this->id."_title_is_displayed";
-                !empty ($_REQUEST[$name]) ? $this->setTitleIsDisplayed(true) : $this->setTitleIsDisplayed(false);
-                }
+                if ($this->isSimpleContent() == false || $this->isPersistent()) {
+                    /* title_is_displayed */
+                    if (!empty ($this->content_row['title'])) {
+                        $name = "content_" . $this->id . "_title_is_displayed";
+                        !empty ($_REQUEST[$name]) ? $this->setTitleIsDisplayed(true) : $this->setTitleIsDisplayed(false);
+                    }
                     /* title */
                     if (empty ($this->content_row['title'])) {
                         $title = self :: processNewContentUI("title_{$this->id}_new");
@@ -1357,7 +1359,7 @@ protected function setLogAsContent(Content $content)
                         }
                     } else {
                         $title = self :: getObject($this->content_row['title']);
-                        $name = "content_".$this->id."_title_erase";
+                        $name = "content_" . $this->id . "_title_erase";
                         if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true) {
                             $db->execSqlUpdate("UPDATE content SET title = NULL WHERE content_id = '$this->id'", FALSE);
                             $title->delete($errmsg);
@@ -1365,8 +1367,8 @@ protected function setLogAsContent(Content $content)
                             $title->processAdminUI();
                         }
                     }
-                            }
-                            if ($this->is_trivial_content == false) {
+                }
+                if ($this->isSimpleContent() == false) {
                     /* description */
                     if (empty ($this->content_row['description'])) {
                         $description = self :: processNewContentUI("description_{$this->id}_new");
@@ -1376,7 +1378,7 @@ protected function setLogAsContent(Content $content)
                         }
                     } else {
                         $description = self :: getObject($this->content_row['description']);
-                        $name = "content_".$this->id."_description_erase";
+                        $name = "content_" . $this->id . "_description_erase";
                         if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true) {
                             $db->execSqlUpdate("UPDATE content SET description = NULL WHERE content_id = '$this->id'", FALSE);
                             $description->delete($errmsg);
@@ -1394,7 +1396,7 @@ protected function setLogAsContent(Content $content)
                         }
                     } else {
                         $long_description = self :: getObject($this->content_row['long_description']);
-                        $name = "content_".$this->id."_long_description_erase";
+                        $name = "content_" . $this->id . "_long_description_erase";
                         if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true) {
                             $db->execSqlUpdate("UPDATE content SET long_description = NULL WHERE content_id = '$this->id'", FALSE);
                             $long_description->delete($errmsg);
@@ -1412,7 +1414,7 @@ protected function setLogAsContent(Content $content)
                         }
                     } else {
                         $project_info = self :: getObject($this->content_row['project_info']);
-                        $name = "content_".$this->id."_project_info_erase";
+                        $name = "content_" . $this->id . "_project_info_erase";
                         if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true) {
                             $db->execSqlUpdate("UPDATE content SET project_info = NULL WHERE content_id = '$this->id'", FALSE);
                             $project_info->delete($errmsg);
@@ -1420,11 +1422,11 @@ protected function setLogAsContent(Content $content)
                             $project_info->processAdminUI();
                         }
                     }
-                }//End content metadata
+                } //End content metadata
 
-           if ($this->is_trivial_content == false || $this->isPersistent()) {
+                if ($this->isSimpleContent() == false || $this->isPersistent()) {
                     /* is_persistent */
-                    $name = "content_".$this->id."_is_persistent";
+                    $name = "content_" . $this->id . "_is_persistent";
                     !empty ($_REQUEST[$name]) ? $this->setIsPersistent(true) : $this->setIsPersistent(false);
 
                     /* content_has_owners */
@@ -1434,11 +1436,11 @@ protected function setLogAsContent(Content $content)
                         foreach ($content_owner_rows as $content_owner_row) {
                             $user = User :: getObject($content_owner_row['user_id']);
                             $user_id = $user->getId();
-                            $name = "content_".$this->id."_owner_".$user->GetId()."_remove";
+                            $name = "content_" . $this->id . "_owner_" . $user->GetId() . "_remove";
                             if (!empty ($_REQUEST[$name])) {
                                 $this->deleteOwner($user);
                             } else {
-                                $name = "content_".$this->id."_owner_".$user->GetId()."_is_author";
+                                $name = "content_" . $this->id . "_owner_" . $user->GetId() . "_is_author";
                                 $content_owner_row['is_author'] == 't' ? $is_author = true : $is_author = false;
                                 !empty ($_REQUEST[$name]) ? $should_be_author = true : $should_be_author = false;
                                 if ($is_author != $should_be_author) {
@@ -1459,8 +1461,8 @@ protected function setLogAsContent(Content $content)
                     if (!empty ($_REQUEST[$name]) && $user != null) {
                         $this->addOwner($user);
                     }
-           }
                 }
+            }
             $this->refresh();
         }
     }
@@ -1578,7 +1580,7 @@ foreach ($class_names as $class_name) {
     /**
      * Load requested content class
      */
-    require_once ('classes/Content/'.$class_name.'/'.$class_name.'.php');
+    require_once ('classes/Content/' . $class_name . '/' . $class_name . '.php');
 }
 
 /*
