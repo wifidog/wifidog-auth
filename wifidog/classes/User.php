@@ -263,7 +263,9 @@ class User implements GenericObject {
         if ($this->isSplashOnlyUser()) {
             $html .= _("Guest");
         }
-        $html .= $this->getUserName();
+        else {
+        	$html .= $this->getUserName();
+        }
         return $html;
     }
 
