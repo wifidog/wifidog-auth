@@ -193,7 +193,6 @@ function iso8601_date($unix_timestamp) {
     $tzd = date('O', $unix_timestamp);
     $tzd = substr(chunk_split($tzd, 3, ':'), 0, 6);
     $date = date('Y-m-d\TH:i:s', $unix_timestamp).$tzd;
-
     return $date;
 }
 

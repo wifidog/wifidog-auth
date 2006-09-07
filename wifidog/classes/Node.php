@@ -996,9 +996,10 @@ class Node implements GenericObject
 
 		// custom_portal_redirect_url
 		if ($network->getCustomPortalRedirectAllowed()) {
-    		$_title = _("URL to show instead of the portal (if this is not empty, the portal will be disabled and this URL will be shown instead)");
+    		$_title = _("URL to show instead of the portal");
     		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_custom_portal_redirect_url", $this->getCustomPortalRedirectUrl(), "node_custom_portal_redirect_url_input");
-    		$_html_node_config[] = InterfaceElements::generateAdminSectionContainer("node_custom_portal_redirect_url", $_title, $_data);
+    		$_data .= _("If this is not empty, the portal will be disabled and this URL will be shown instead");
+    		 $_html_node_config[] = InterfaceElements::generateAdminSectionContainer("node_custom_portal_redirect_url", $_title, $_data);
 		}
 
 		// Build section

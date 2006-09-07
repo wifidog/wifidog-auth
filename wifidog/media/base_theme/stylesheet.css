@@ -492,8 +492,6 @@ td.admin_element_tools, th.admin_element_tools {
     text-align: center;
 }
 
-.portal_content {
-}
 .user_ui_main_outer {
 /*	display: inline;*/
     display: block;
@@ -503,6 +501,14 @@ td.admin_element_tools, th.admin_element_tools {
 	margin: 1em;
     padding: 0.1em;
 }
+
+.isSimpleContent{
+    background: none;
+	border: none;
+	margin: 0em;
+    padding: 0.1em;
+}
+
 .user_ui_title .user_ui_main_outer,
 .user_ui_description .user_ui_main_outer {
     margin: 0em;

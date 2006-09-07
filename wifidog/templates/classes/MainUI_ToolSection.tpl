@@ -76,7 +76,6 @@
             {else}
                     <ul>
                         <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Node&action=list">{"Nodes"|_}</a></li>
-                        <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Node&action=new_ui">{"Add new Node"|_}</a></li>
                     </ul>
             {/if}
         </fieldset>
@@ -93,7 +92,7 @@
                 <legend>{"Server administration"|_}:</legend>
                     <ul>
                         <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Server&action=list">{"Servers"|_}</a></li>
-                        <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Content&action=list">{"Content library"|_}</a></li>
+                        <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Content&action=list">{"Reusable content library"|_}</a></li>
                     </ul>
             </fieldset>
         {/if}

@@ -558,7 +558,7 @@ class Content implements GenericObject {
                 $html .= "</td>\n";
                 $html .= "<td>\n";
                 $name = "{$user_prefix}_" . $content->GetId() . "_edit";
-                $html .= "<input type='button' class='submit' name='$name' value='" . _("Edit") . "' onClick='window.location.href = \"" . GENERIC_OBJECT_ADMIN_ABS_HREF . "?object_class=Content&action=edit&object_id=" . $content->GetId() . "\";'>\n";
+                $html .= "<input type='button' class='submit' name='$name' value='" . _("Edit") . "' onClick='window.open(\"" . GENERIC_OBJECT_ADMIN_ABS_HREF . "?object_class=Content&action=edit&object_id=" . $content->GetId() . "\");'>\n";
                 $name = "{$user_prefix}_" . $content->GetId() . "_erase";
                 $html .= "<input type='submit' class='submit' name='$name' value='" . _("Remove") . "'>";
                 $html .= "</td>\n";
@@ -733,7 +733,7 @@ class Content implements GenericObject {
                 $html .= "<legend>$title</legend>\n";
             }
 
-            $html .= _("Add existing content") . ": ";
+            $html .= _("Add reusable content from library") . ": ";
         }
 
         $name = "{$user_prefix}";
@@ -1024,7 +1024,8 @@ class Content implements GenericObject {
      * @return The HTML fragment for this interface */
     public function getUserUI($subclass_user_interface = null) {
         $html = '';
-        $html .= "<div class='user_ui_main_outer " . get_class($this) . "'>\n";
+        $this->isSimpleContent() ? $isSimpleContentClass = 'isSimpleContent' : $isSimpleContentClass = null;
+        $html .= "<div class='user_ui_main_outer " . get_class($this) . " $isSimpleContentClass'>\n";
         $html .= "<div class='user_ui_main_inner'>\n";
 
         if (!empty ($this->content_row['title']) && $this->titleShouldDisplay()) {
@@ -1038,10 +1039,15 @@ class Content implements GenericObject {
             $html .= "</div>\n";
         }
 
-        $html .= "<table><tr>\n";
+if($this->isSimpleContent())
+{
+    $html .= "\n$subclass_user_interface\n";
+}
+else{
+$html .= "<table><tr>\n";
         $html .= "<td>\n$subclass_user_interface</td>\n";
-
         $html .= "<td>\n";
+}
         $authors = $this->getAuthors();
         if (count($authors) > 0) {
             $html .= "<div class='user_ui_authors'>\n";
@@ -1076,10 +1082,11 @@ class Content implements GenericObject {
                 $html .= "</div>\n";
             }
         }
-
+if(!$this->isSimpleContent())
+{
         $html .= "</td>\n";
         $html .= "</tr></table>\n";
-
+}
         $html .= "</div>\n";
         $html .= "</div>\n";
         $this->logContentDisplay();
@@ -1269,7 +1276,7 @@ class Content implements GenericObject {
 
                 /* is_persistent */
                 $html .= "<li class='admin_element_item_container admin_section_edit_persistant'>\n";
-                $html .= "<div class='admin_element_label'>" . _("Is persistent (reusable and read-only)?") . ": </div>\n";
+                $html .= "<div class='admin_element_label'>" . _("Is part of reusable content library (protected from deletion)?") . ": </div>\n";
                 $html .= "<div class='admin_element_data'>\n";
                 $name = "content_" . $this->id . "_is_persistent";
                 $this->isPersistent() ? $checked = 'CHECKED' : $checked = '';

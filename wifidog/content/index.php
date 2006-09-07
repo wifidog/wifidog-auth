@@ -52,11 +52,6 @@ require_once('classes/MainUI.php');
 require_once('include/common_interface.php');
 require_once('classes/Node.php');
 
-if (CONF_USE_CRON_FOR_DB_CLEANUP == false)
-{
-    garbage_collect();
-}
-
 $node = null;
 if(!empty($_REQUEST['gw_id']))
     $node = Node :: getObject($_REQUEST['gw_id']);
@@ -141,9 +136,7 @@ if(!empty($contents))
 
     foreach ($contents as $content)
     {
-        $html .= "<div class='portal_content'>\n";
         $html .= $content->getUserUI();
-        $html .= "</div>";
     }
     $html .= "</div>\n";
 }

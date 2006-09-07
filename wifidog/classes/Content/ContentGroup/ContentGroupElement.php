@@ -453,7 +453,6 @@ class ContentGroupElement extends Content {
 			if ($displayed_content != null) {
 				$displayed_content_id = $displayed_content->GetId();
 				$db->execSqlUpdate("UPDATE content_group_element SET displayed_content_id = '$displayed_content_id' WHERE content_group_element_id = '$this->id'", FALSE);
-				$displayed_content->setIsPersistent(false);
 			}
 		} else {
 			$displayed_content = self :: getObject($this->content_group_element_row['displayed_content_id']);

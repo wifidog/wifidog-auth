@@ -493,11 +493,9 @@ class Langstring extends Content {
         // Init values
         $html = '';
 
-        $html .= "<div class='user_ui_container ".get_class($this)."'>\n";
         $html .= "<div class='langstring'>\n";
         $html .= $this->getString();
         $html .= $subclass_user_interface;
-        $html .= "</div>\n";
         $html .= "</div>\n";
         /* Handle hyperlink clicktrough logging */
         $html = $this->replaceHyperLinks($html);

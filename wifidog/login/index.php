@@ -218,7 +218,7 @@ if (isset ($_REQUEST["form_request"]) && $_REQUEST["form_request"] == "login") {
  *
  * Once logged out, we display the login page
  */
-if ((!empty($logout) && $logout) && ($user = User::getCurrentUser()) != null) {
+if ((!empty($logout) && $logout) && ($user = User::getCurrentUser()) != null  && !$user->isSplashOnlyUser()) {
     $network->getAuthenticator()->logout();
 }
 

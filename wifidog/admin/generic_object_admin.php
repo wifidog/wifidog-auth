@@ -235,9 +235,6 @@ case "delete":
     // First save the object so we can catch any "persistent content" changes
     $object->processAdminUI();
 
-    // Renew information about the object
-    $object = call_user_func(array($class, 'getObject'), $_REQUEST['object_id']);
-
     // Now try to delete the content
     if ($object->delete($errmsg) == true) {
         $html .= "<div class='successmsg'>" . _("Object successfully deleted") . "</div>";

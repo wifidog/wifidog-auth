@@ -1,5 +1,24 @@
 2006-09-06 Benoit Grégoire  <bock@step.polymtl.ca>
-
+	* Fix #63
+	* Fix problem with my Splash only user fix (I used match on the user_id instead of the username).
+	* Prevent the Splash only user from logging out, wrecking havock in the tokens.
+	* Do not allow SplashOnlyUser to set his preferences.
+	* Assigning a reusable content to a contentgroup element would make it non-reusable.
+Usability and UI fixes:
+	* Allow other users to log in when they are at a splash only node.
+	* Make isSimpleContent class available for Simple content types.  Make it borderless and backgroundless in the default theme_pack.
+	* Simplify HTML output for simple content.
+	* Fix IE layout bug in node admin
+	* Content linked to nodes and networks now edits in a new window.
+	* Remove "Add new node" menu item for consistency.
+	
+2006-09-06 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Remove most inclusions of MainUI in classes. 
+	That completely broke authentication (circular dependencies). 
+	Fixes 245.
+    Unfixes 242. Exceptions should not be caught in the context
+    they are thrown in. Else there no point in throwing exception in the
+    first place. 
 	* HyperLink.php:  Fix bug where a link with identical text as it's link would see the text replaced by the clickthrough-tracked equivalent.
 
 2006-09-06 Benoit Grégoire  <bock@step.polymtl.ca>
