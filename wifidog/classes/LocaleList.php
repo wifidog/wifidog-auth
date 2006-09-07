@@ -93,21 +93,24 @@ class LocaleList {
      * @param boolean permetValeurNulle, TRUE ou FALSE
      * @return string L'élément select généré
      */
-    function GenererFormSelect($selectedClefPrimaire, $prefixeNomSelectUsager, $prefixeNomSelectObjet, $permetValeurNulle) {
+    function GenererFormSelect($selectedClefPrimaire, $prefixeNomSelectUsager, $prefixeNomSelectObjet, $permetValeurNulle, $exclude_array = null) {
         $retval = "";
         $resultats = "";
-
+if($exclude_array==null) {
+    $exclude_array = array();
+}
         $sql = "SELECT * FROM locales ORDER BY locales_id";
         $this->mBd->execSql($sql, $resultats, FALSE);
 
         $retval = "";
         $retval .= "<select name='$prefixeNomSelectUsager$prefixeNomSelectObjet'>\n";
 
-        if ($permetValeurNulle == true) {
+        if ($permetValeurNulle == true && !in_array ('', $exclude_array)) {
             $retval .= "<option value=''>---</option>\n";
         }
 
         while (list ($key, $value) = each($resultats)) {
+            if(!in_array ($value['locales_id'], $exclude_array)) {
             $retval .= "<option ";
 
             if ($value['locales_id'] == $selectedClefPrimaire || $selectedClefPrimaire == null && $selectedClefPrimaire == $this->GetDefault()) {
@@ -116,6 +119,7 @@ class LocaleList {
 
             $retval .= "value='$value[locales_id]'>" . $this->getHumanLanguage($value["locales_id"]);
             $retval .= "</option>\n";
+            }
         }
 
         $retval .= "</select>\n";

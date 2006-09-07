@@ -409,7 +409,7 @@ class ContentGroup extends Content {
 		$html .= self :: getNewContentUI("content_group_{$this->id}_new_element", $this->allowed_content_types);
 		$html .= "</li>\n";
 		$html .= "<li class='admin_element_item_container'>\n";
-		$html .= self :: getSelectExistingContentUI("content_group_{$this->id}_existing_element", "AND content_id != '$this->id'", $this->allowed_content_types);
+		$html .= self :: getSelectExistingContentUI("content_group_{$this->id}_existing_element", "AND content_id != '$this->id' AND is_persistent=TRUE", $this->allowed_content_types);
 		$html .= "</li>\n";
 		$html .= "</ul>\n";
 		$html .= "</fieldset>\n";

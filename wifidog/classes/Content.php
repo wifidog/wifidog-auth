@@ -575,7 +575,7 @@ class Content implements GenericObject {
         $html .= "<td><input type='text' name='$name' value='1' size=2 class='linked_content_order'></td>\n";
         $html .= "<td colspan=2>\n";
         $name = "{$user_prefix}_new_existing";
-        $contentSelector = Content :: getSelectExistingContentUI($name, "AND content_id NOT IN (SELECT content_id FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key')");
+        $contentSelector = Content :: getSelectExistingContentUI($name, "AND is_persistent=TRUE AND content_id NOT IN (SELECT content_id FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key')");
         $html .= $contentSelector;
         $html .= "</td>\n";
         $html .= "</tr>\n";

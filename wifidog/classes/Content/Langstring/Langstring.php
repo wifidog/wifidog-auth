@@ -259,12 +259,13 @@ class Langstring extends Content {
  		$html .= "<ul class='admin_element_list'>\n";
         $liste_languages = new LocaleList();
         $sql = "SELECT * FROM content_langstring_entries WHERE content_langstring_entries.langstrings_id = '$this->id' ORDER BY locales_id";
-        $this->mBd->execSql($sql, $result, FALSE); //echo "type_interface: $type_interface\n";
+        $this->mBd->execSql($sql, $result, false); //echo "type_interface: $type_interface\n";
 
 
-
+		$exclude_array = array();
         if ($result != null) {
             while (list ($key, $value) = each($result)) {
+                $exclude_array[$value['locales_id']] = $value['locales_id'];
 //                The next lines are a preview of a new suggested input mode
 //                ==========================================================
 //
@@ -369,7 +370,7 @@ class Langstring extends Content {
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<div class='admin_element_data'>\n";
 
-        $html .= _("Language") . ": " . $liste_languages->GenererFormSelect($locale, "langstrings_".$this->id."_substring_new_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
+        $html .= _("Language") . ": " . $liste_languages->GenererFormSelect($locale, "langstrings_".$this->id."_substring_new_language", 'Langstring::AfficherInterfaceAdmin', TRUE, $exclude_array);
         $new_substring_name = "langstrings_".$this->id."_substring_new_string";
 
         if ($type_interface == 'LARGE') {

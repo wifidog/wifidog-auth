@@ -85,7 +85,7 @@ class TrivialLangstring extends Langstring
      */
     public function __toString()
     {
-        return $this->getString();
+        return strip_tags($this->getString());
     }
 
     /**
