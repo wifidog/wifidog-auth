@@ -1,4 +1,7 @@
 2006-09-07 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Add missing require of Statistics.php in stats.php
+
+2006-09-07 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix non persistent content being available to add to nodes, networks and content groups.
 	* Prevent a user from entering the same language twice in a langstring.  Fixes #226
 	

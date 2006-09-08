@@ -143,7 +143,7 @@ define('USE_CACHE_LITE', false);
  * ========
  *
  * Since PHP 5.1.0 date functions have been rewritten and require to set
- * a valid timezone.
+ * a valid timezone.  This is ONLY used on PHP >=5.1
  *
  * You'll find a list of valid identifiers at:
  * http://www.php.net/manual/en/timezones.php

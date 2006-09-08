@@ -49,6 +49,7 @@ require_once('admin_common.php');
 
 require_once('classes/MainUI.php');
 require_once('classes/Utils.php');
+require_once('classes/Statistics.php');
 
 $current_user = User :: getCurrentUser();
 
