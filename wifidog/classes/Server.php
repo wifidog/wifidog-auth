@@ -166,7 +166,7 @@ class Server implements GenericObject
 	 * @static
 	 * @access public
 	 */
-	public static function getDefaultServer()
+	public static function getDefaultServer($silent=false)
 	{
 	    // Define globals
 		global $db;
@@ -179,7 +179,12 @@ class Server implements GenericObject
 		$db->execSqlUniqueRes($sql, $_server_row, false);
 
 		if ($_server_row == null) {
+		    if($silent) {
+		        return null;
+		    }
+		    else {
 			throw new Exception(_("Server::getDefaultServer: Fatal error: Unable to find the default server!"));
+		    }
 		}
 
 		$_retVal = new self($_server_row['server_id']);

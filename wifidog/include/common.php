@@ -1,5 +1,6 @@
 <?php
 
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -44,25 +45,27 @@
 /**
  * Include PHP initialization file file
  */
-require_once('init_php.php');
+require_once ('init_php.php');
 
 /**
  * Include configuration file
  */
- /** search parent directory hierarchy for a file */
+/** search parent directory hierarchy for a file */
 function cmnSearchParentDirectories($dirname, $searchfor) {
     $pieces = explode(DIRECTORY_SEPARATOR, $dirname);
     $is_absolute = substr($dirname, 0, 1) === DIRECTORY_SEPARATOR ? 1 : 0;
 
-    for ($i = count($pieces); $i > $is_absolute; $i --) {
-        $filename = implode(DIRECTORY_SEPARATOR, array_merge(array_slice($pieces, 0, $i), array ($searchfor)));
+    for ($i = count($pieces); $i > $is_absolute; $i--) {
+        $filename = implode(DIRECTORY_SEPARATOR, array_merge(array_slice($pieces, 0, $i), array (
+            $searchfor
+        )));
         if (file_exists($filename))
             return $filename;
     }
 
     return false;
 }
- function cmnRequireConfig($config_file = 'config.php') {
+function cmnRequireConfig($config_file = 'config.php') {
     global $AVAIL_LOCALE_ARRAY; // so that nobody has to change their custom config.php
     $config_path = cmnSearchParentDirectories(dirname(__FILE__), $config_file);
     if (!empty ($config_path))
@@ -83,23 +86,21 @@ dateFix();
 /**
  * Include path detection code
  */
-require_once('path_defines_base.php');
+require_once ('path_defines_base.php');
 
 /**
  * Load required classes
  */
-require_once('classes/EventLogging.php');
+require_once ('classes/EventLogging.php');
 
-if (EVENT_LOGGING==true) {
-	EventLogging::SetupErrorHandling( "strict~/var:\sDeprecated/(off)",
-	array( 'print' => new PrintChannel(new HTMLFormatter(), 'warning,notice', null, true),
-		   'debug' => new PrintChannel(new HTMLCommentsFormatter(), '=debug', null, false) )
-	);
+if (EVENT_LOGGING == true) {
+    EventLogging :: SetupErrorHandling("strict~/var:\sDeprecated/(off)", array (
+    'print' => new PrintChannel(new HTMLFormatter(), 'warning,notice', null, true), 'debug' => new PrintChannel(new HTMLCommentsFormatter(), '=debug', null, false)));
 }
-require_once('classes/AbstractDb.php');
-require_once('classes/Locale.php');
-require_once('classes/Dependencies.php');
-require_once('classes/Server.php');
+require_once ('classes/AbstractDb.php');
+require_once ('classes/Locale.php');
+require_once ('classes/Dependencies.php');
+require_once ('classes/Server.php');
 global $db;
 
 $db = new AbstractDb();
@@ -107,9 +108,12 @@ $db = new AbstractDb();
 /**
  * Check for SSL support
  */
-
-if (Server::getCurrentServer(true) != null) {
-    if (Server::getCurrentServer(true)->isSSLAvailable()) {
+$server = Server :: getCurrentServer(true);
+if ($server == null) {
+    $server = Server :: getDefaultServer(true);
+}
+if ($server != null) {
+    if ($server->isSSLAvailable()) {
         /**
          * @ignore
          */
@@ -127,9 +131,8 @@ if (Server::getCurrentServer(true) != null) {
 /**
  * Set the URL paths, but only if we are NOT called from the command line
  */
-if (defined('SYSTEM_PATH'))
-{
-require_once('path_defines_url_content.php');
+if (defined('SYSTEM_PATH')) {
+    require_once ('path_defines_url_content.php');
 }
 
 /* Constant shared with the gateway
@@ -179,7 +182,7 @@ define('SESS_GW_ID_VAR', 'SESS_GW_ID');
 * @return The 32 character hash.
 */
 function convert_nocat_password_hash($hash) {
-    return $hash.'==';
+    return $hash . '==';
 }
 
 function cmp_query_time($a, $b) {
@@ -192,7 +195,7 @@ function cmp_query_time($a, $b) {
 function iso8601_date($unix_timestamp) {
     $tzd = date('O', $unix_timestamp);
     $tzd = substr(chunk_split($tzd, 3, ':'), 0, 6);
-    $date = date('Y-m-d\TH:i:s', $unix_timestamp).$tzd;
+    $date = date('Y-m-d\TH:i:s', $unix_timestamp) . $tzd;
     return $date;
 }
 
@@ -203,7 +206,7 @@ function garbage_collect() {
     // 10 minutes
     $expiration = time() - 60 * 10;
     $expiration = iso8601_date($expiration);
-    $db->execSqlUpdate("UPDATE connections SET token_status='".TOKEN_USED."' WHERE last_updated < '$expiration' AND token_status = '".TOKEN_INUSE."'", false);
+    $db->execSqlUpdate("UPDATE connections SET token_status='" . TOKEN_USED . "' WHERE last_updated < '$expiration' AND token_status = '" . TOKEN_INUSE . "'", false);
 }
 
 /** Return a 32 byte guid valid for database use */
@@ -225,18 +228,16 @@ function cmnPopDir($dirname = null, $popcount = 1) {
     if ($dirname === DIRECTORY_SEPARATOR)
         return DIRECTORY_SEPARATOR;
     if (substr($dirname, -1, 1) === DIRECTORY_SEPARATOR)
-        $popcount ++;
+        $popcount++;
 
     $popped = implode(DIRECTORY_SEPARATOR, array_slice(explode(DIRECTORY_SEPARATOR, $dirname), 0, - $popcount));
 
-    return empty ($popped) ? DIRECTORY_SEPARATOR : substr($popped, -1, 1) === DIRECTORY_SEPARATOR ? $popped : $popped.DIRECTORY_SEPARATOR;
+    return empty ($popped) ? DIRECTORY_SEPARATOR : substr($popped, -1, 1) === DIRECTORY_SEPARATOR ? $popped : $popped . DIRECTORY_SEPARATOR;
 }
 
 function cmnDirectorySlash($dirname) {
-    return empty ($dirname) ? DIRECTORY_SEPARATOR : substr($dirname, -1, 1) === DIRECTORY_SEPARATOR ? $dirname : $dirname.DIRECTORY_SEPARATOR;
+    return empty ($dirname) ? DIRECTORY_SEPARATOR : substr($dirname, -1, 1) === DIRECTORY_SEPARATOR ? $dirname : $dirname . DIRECTORY_SEPARATOR;
 }
-
-
 
 /** join file path pieces together */
 function cmnJoinPath() {
@@ -244,7 +245,7 @@ function cmnJoinPath() {
 
     //$arguments = func_get_args();
 
-    for ($i = 0; $i < func_num_args(); $i ++) {
+    for ($i = 0; $i < func_num_args(); $i++) {
         $pathelement = func_get_arg($i);
         if ($pathelement == '')
             continue;
@@ -256,12 +257,11 @@ function cmnJoinPath() {
                 $fullpath .= substr($pathelement, 1);
             else
                 $fullpath .= $pathelement;
-        }
-        else {
+        } else {
             if (substr($pathelement, 0, 1) == DIRECTORY_SEPARATOR)
                 $fullpath .= $pathelement;
             else
-                $fullpath .= DIRECTORY_SEPARATOR.$pathelement;
+                $fullpath .= DIRECTORY_SEPARATOR . $pathelement;
         }
     }
 
@@ -271,7 +271,9 @@ function cmnJoinPath() {
 /** find a named file in the include path */
 function cmnFindPackage($rel_path, $private = false) {
 
-    $paths = isset ($private) && ($private === true || $private === 'PRIVATE') ? array (WIFIDOG_ABS_FILE_PATH) : explode(PATH_SEPARATOR, get_include_path());
+    $paths = isset ($private) && ($private === true || $private === 'PRIVATE') ? array (
+        WIFIDOG_ABS_FILE_PATH
+    ) : explode(PATH_SEPARATOR, get_include_path());
 
     foreach ($paths as $topdir) {
         $package = cmnJoinPath($topdir, $rel_path);
@@ -289,7 +291,9 @@ function cmnFindPackage($rel_path, $private = false) {
 /** require_once a named file */
 function cmnRequirePackage($rel_path, $private = false) {
 
-    $paths = isset ($private) && ($private === true || $private === 'PRIVATE') ? array (WIFIDOG_ABS_FILE_PATH) : explode(PATH_SEPARATOR, get_include_path());
+    $paths = isset ($private) && ($private === true || $private === 'PRIVATE') ? array (
+        WIFIDOG_ABS_FILE_PATH
+    ) : explode(PATH_SEPARATOR, get_include_path());
 
     foreach ($paths as $topdir) {
         $package = cmnJoinPath($topdir, $rel_path);
@@ -309,7 +313,9 @@ function cmnRequirePackage($rel_path, $private = false) {
 /** include_once a named file */
 function cmnIncludePackage($rel_path, $private = false) {
 
-    $paths = isset ($private) && ($private === true || $private === 'PRIVATE') ? array (WIFIDOG_ABS_FILE_PATH) : explode(PATH_SEPARATOR, get_include_path());
+    $paths = isset ($private) && ($private === true || $private === 'PRIVATE') ? array (
+        WIFIDOG_ABS_FILE_PATH
+    ) : explode(PATH_SEPARATOR, get_include_path());
 
     foreach ($paths as $topdir) {
         $package = cmnJoinPath($topdir, $rel_path);
@@ -327,55 +333,55 @@ function cmnIncludePackage($rel_path, $private = false) {
 }
 
 class WifidogSyslogFormatter extends EventFormatter {
-  public function formatEvent($event, $info=null) {
-    $dt = date("Y-m-d H:i:s (T)", $event->getTimestamp());
+    public function formatEvent($event, $info = null) {
+        $dt = date("Y-m-d H:i:s (T)", $event->getTimestamp());
 
-    $myFilename = $event->getFilename();
-    $myLinenum = $event->getLinenum();
+        $myFilename = $event->getFilename();
+        $myLinenum = $event->getLinenum();
 
-	// Get information about node
-	$myCurrentNode = Node::getCurrentNode();
-	if (empty($myCurrentNode)) $myNodeName = '*nonode*';
-	else $myNodeName = $myCurrentNode->getName();
+        // Get information about node
+        $myCurrentNode = Node :: getCurrentNode();
+        if (empty ($myCurrentNode))
+            $myNodeName = '*nonode*';
+        else
+            $myNodeName = $myCurrentNode->getName();
 
-	// Get information about network
-	$myNetwork = Network::getCurrentNetwork();
-	if (empty($myNetwork)) $myNetworkName = '*nonetwork*';
-	else $myNetworkName = $myNetwork->getName();
+        // Get information about network
+        $myNetwork = Network :: getCurrentNetwork();
+        if (empty ($myNetwork))
+            $myNetworkName = '*nonetwork*';
+        else
+            $myNetworkName = $myNetwork->getName();
 
-	// Get information about user
-	$myCurrentUser = User::getCurrentUser();
-	if (empty($myCurrentUser)) $myUserName = '*nouser*';
-	else $myUserName = $myCurrentUser->getUsername();
+        // Get information about user
+        $myCurrentUser = User :: getCurrentUser();
+        if (empty ($myCurrentUser))
+            $myUserName = '*nouser*';
+        else
+            $myUserName = $myCurrentUser->getUsername();
 
-    $string = "$dt "
-		. EventObject::PrettyErrorType($event->getLayoutType())
-		. " >$myNetworkName >${myUserName}@$myNodeName [".$_SERVER['REQUEST_URI']."]"
-		. ": "
-		. $event->getMessage()
-		. (!empty($myFilename) ? " in $myFilename". (!empty($myLinenum) ? " on line $myLinenum" : "") : "")
-		. "\n";
+        $string = "$dt " . EventObject :: PrettyErrorType($event->getLayoutType()) . " >$myNetworkName >${myUserName}@$myNodeName [" . $_SERVER['REQUEST_URI'] . "]" . ": " . $event->getMessage() . (!empty ($myFilename) ? " in $myFilename" . (!empty ($myLinenum) ? " on line $myLinenum" : "") : "") . "\n";
 
-    if ($event->classifyErrorType() == 'error') {
-      $string .= "   Stack Backtrace\n" .
-				self::FormatBacktrace($event->getContext()) .
-				"\n"
-				;
+        if ($event->classifyErrorType() == 'error') {
+            $string .= "   Stack Backtrace\n" .
+            self :: FormatBacktrace($event->getContext()) .
+            "\n";
+        }
+
+        return $string;
     }
-
-    return $string;
-  }
 }
 
 if (defined("EVENT_LOGGING") && EVENT_LOGGING == true) {
-	$myLogfile = !defined('WIFIDOG_LOGFILE') ? "tmp/wifidog.log" : constant('WIFIDOG_LOGFILE');
-	if (!empty($myLogfile)) {
-		if (substr($myLogfile,0,1) != '/') $myLogfile = WIFIDOG_ABS_FILE_PATH.$myLogfile;
+    $myLogfile = !defined('WIFIDOG_LOGFILE') ? "tmp/wifidog.log" : constant('WIFIDOG_LOGFILE');
+    if (!empty ($myLogfile)) {
+        if (substr($myLogfile, 0, 1) != '/')
+            $myLogfile = WIFIDOG_ABS_FILE_PATH . $myLogfile;
 
-		EventLogging::stAddChannel( new FileChannel($myLogfile, new WifidogSyslogFormatter(), 'warning,notice'), 'logfile' );
-	}
+        EventLogging :: stAddChannel(new FileChannel($myLogfile, new WifidogSyslogFormatter(), 'warning,notice'), 'logfile');
+    }
 
-	// trigger_error("here i am", E_USER_NOTICE);
+    // trigger_error("here i am", E_USER_NOTICE);
 }
 
 /*
@@ -385,5 +391,4 @@ if (defined("EVENT_LOGGING") && EVENT_LOGGING == true) {
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
 ?>
