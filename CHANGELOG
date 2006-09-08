@@ -1,4 +1,7 @@
 2006-09-07 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Fix PHPMailer that I've broken earlier
+	
+2006-09-07 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Slightly rework SSL detection so that it uses the default server if a current one isn't available.
 		Fixes server passing passwords in the clear if the hostname disn't match (DOH!).
 		We really should properly split the Server class into a singleton Server class and multiple VirtualHost classes.

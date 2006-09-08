@@ -45,7 +45,7 @@
  * Load required classes
  */
 require_once('lib/PHPMailer/class.phpmailer.php');
-require_once('lib/SMTP/class.smtp.php');
+require_once('lib/PHPMailer/class.smtp.php');
 
 /**
  * This a wrapper class conforming RFC822 capable of sending valid UTF-8 MIME
