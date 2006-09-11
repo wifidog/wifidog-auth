@@ -146,7 +146,7 @@ class Content implements GenericObject {
      *
      * @return object The newly created Content object, or null if there was an
      *                error (an exception is also trown)
-    
+
      */
     public static function createNewObject($content_type = "Content", $id = null) {
         // Define globals
@@ -237,7 +237,7 @@ class Content implements GenericObject {
      *
      * @return object The Content object, or null if there was an error
      *                (an exception is also thrown)
-    
+
      */
     public static function getObject($content_id) {
         // Define globals
@@ -353,7 +353,7 @@ class Content implements GenericObject {
             $candidate_reflector = new ReflectionClass($candidate);
             //echo"classname: $classname, candidate: $candidate<br>";
             if ($classname_reflector->isSubclassOf($candidate_reflector)) {
-                //The content meets the criteria 
+                //The content meets the criteria
                 //echo "TRUE<br>";
                 $retval = true;
                 break;
@@ -400,7 +400,7 @@ class Content implements GenericObject {
      *
      * @param string $user_prefix      A identifier provided by the programmer
      *                                 to recognise it's generated HTML form
-     * @param string $content_type_filter     If set, the created content must match the filter.  Of only one type matches, 
+     * @param string $content_type_filter     If set, the created content must match the filter.  Of only one type matches,
      * the content will be of this type, otherwise, the user will have
      *                                 to choose
      *
@@ -474,7 +474,7 @@ class Content implements GenericObject {
      *                                           existing object
      *
      * @return object The Content object, or null if the user didn't create one
-    
+
      */
     public static function processNewContentUI($user_prefix, $associate_existing_content = false) {
         // Init values
@@ -522,7 +522,7 @@ class Content implements GenericObject {
      * @param string $default_display_page
      * @param string $default_display_area
      * @return string HTML markup
-    
+
      */
     public static function getLinkedContentUI($user_prefix, $link_table, $link_table_obj_key_col, $link_table_obj_key, $default_display_page = 'portal', $default_display_area = 'main_area_middle') {
         // Define globals
@@ -707,7 +707,7 @@ class Content implements GenericObject {
      *                                            extended information
      *
      * @return string HTML markup
-    
+
      */
     public static function getSelectExistingContentUI($user_prefix, $sql_additional_where = null, $content_type_filter = null, $order = "creation_timestamp", $type_interface = "select") {
         // Define globals
@@ -1332,7 +1332,7 @@ if(!$this->isSimpleContent())
         return $html;
     }
     /** Process admin interface of this object.  When an object overrides this method, they should call the parent processAdminUI at the BEGINING of processing.
-    
+
     */
     public function processAdminUI() {
         if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {

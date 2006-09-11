@@ -67,12 +67,6 @@ class Avatar extends Picture
         parent :: __construct($content_id);
     }
 
-    /** When a content object is set as Simple, it means that is is used merely to contain it's own data.  No title, description or other metadata will be set or displayed, during display or administration
-     * @return true or false */
-    public function isSimpleContent() {
-        return true;
-    }
-    
     /**
      * Shows the administration interface for Avatar
      *
@@ -175,6 +169,12 @@ class Avatar extends Picture
     private function refresh()
     {
         $this->__construct($this->id);
+    }
+
+    /** When a content object is set as Simple, it means that is is used merely to contain it's own data.  No title, description or other metadata will be set or displayed, during display or administration
+     * @return true or false */
+    public function isSimpleContent() {
+        return true;
     }
 }
 

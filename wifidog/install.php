@@ -173,7 +173,7 @@ $dir_array = array (
     'config.php'
 );
 
-$smarty_full_url = 'http://smarty.php.net/do_download.php?download_file=Smarty-2.6.13.tar.gz';
+$smarty_full_url = 'http://smarty.php.net/do_download.php?download_file=Smarty-2.6.14.tar.gz';
 $magpierss_full_url = 'http://easynews.dl.sourceforge.net/sourceforge/magpierss/magpierss-0.72.tar.gz';
 $phlickr_full_url = 'http://easynews.dl.sourceforge.net/sourceforge/phlickr/Phlickr-0.2.4.tgz';
 

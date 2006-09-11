@@ -437,12 +437,14 @@ $api = $this->getFlickrApi();
     {
         // Init values
         $html = '';
- 		$html .= "<ul class='admin_element_list'>\n";
+        $html .= "<fieldset class='admin_element_group'>\n";
+        $html .= "<legend>" . sprintf(_("%s: Options"), get_class($this)) . "</legend>\n";
+        $html .= "<ul class='admin_element_list'>\n";
 
         if ($this->_PhlickrAvailable) {
             $generator = new FormSelectGenerator();
 
-            $html .= "<li class='admin_element_item_container'>\n";
+            $html .= "<li class='admin_element_item_container admin_section_edit_title'>\n";
             $html .= "<div class='admin_element_label'>"._("Flickr API key")." <a href='http://www.flickr.com/services/api/misc.api_keys.html'>(?)</a> : </div>\n";
             $html .= "<div class='admin_element_data'>\n";
             $name = "flickr_photostream_".$this->id."_api_key";
@@ -618,6 +620,8 @@ $api = $this->getFlickrApi();
         } else {
             $html .= _("PEAR::Phlickr is not installed");
         }
+
+        $html .= "</fieldset>\n";
 
         return parent::getAdminUI($html, $title);
     }

@@ -1,20 +1,25 @@
+2006-09-11 François Proulx <francois.proulx@gmail.com>
+	* Changed install.php req. for Smarty 2.6.17 is mandatory
+	* ContentTypeFilter.php fixed the method checking function
+	* Fixed errors in French translation file
+
 2006-09-07 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix PHPMailer that I've broken earlier
-	
+
 2006-09-07 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Slightly rework SSL detection so that it uses the default server if a current one isn't available.
 		Fixes server passing passwords in the clear if the hostname disn't match (DOH!).
 		We really should properly split the Server class into a singleton Server class and multiple VirtualHost classes.
 	* Re-apply fixed HTMLeditor patch.  (Original description:  Make HTMLeditor inherit from Langstring.  Allowed a massive reduction of
 	  line count and will stop the codebases from needlessly drifting apart.)
-	
+
 2006-09-07 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Add missing require of Statistics.php in stats.php
 
 2006-09-07 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix non persistent content being available to add to nodes, networks and content groups.
 	* Prevent a user from entering the same language twice in a langstring.  Fixes #226
-	
+
 2006-09-06 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix #63
 	* Fix problem with my Splash only user fix (I used match on the user_id instead of the username).
@@ -28,14 +33,14 @@ Usability and UI fixes:
 	* Fix IE layout bug in node admin
 	* Content linked to nodes and networks now edits in a new window.
 	* Remove "Add new node" menu item for consistency.
-	
+
 2006-09-06 Benoit Grégoire  <bock@step.polymtl.ca>
-	* Remove most inclusions of MainUI in classes. 
-	That completely broke authentication (circular dependencies). 
+	* Remove most inclusions of MainUI in classes.
+	That completely broke authentication (circular dependencies).
 	Fixes 245.
     Unfixes 242. Exceptions should not be caught in the context
     they are thrown in. Else there no point in throwing exception in the
-    first place. 
+    first place.
 	* HyperLink.php:  Fix bug where a link with identical text as it's link would see the text replaced by the clickthrough-tracked equivalent.
 
 2006-09-06 Benoit Grégoire  <bock@step.polymtl.ca>
@@ -49,10 +54,10 @@ Usability and UI fixes:
 		5 min, 30 min, 2 hours, 1 day, 1 week, 1 month
 	* Finally fix #127
 	* At last, working content scheduled display and expiration for ContentGroups.  Archiving does not yet have a UI.  Content that expires will simply seem to disapear.
-	* Fix #247 (somebody filed a bug before I commited, conveniently saving me the need to describe it).	
-	* The Fix for #106 in [1089] returned non-objects, causing error messages and not displaying what it was meant to display. 
-		Used Guest instead of Annonymous, which will probably be used for different purpose in the future.  
-		This re-fix does not include duplicate counting yet.  Splash users are not the only users that could log-in multiple times.  
+	* Fix #247 (somebody filed a bug before I commited, conveniently saving me the need to describe it).
+	* The Fix for #106 in [1089] returned non-objects, causing error messages and not displaying what it was meant to display.
+		Used Guest instead of Annonymous, which will probably be used for different purpose in the future.
+		This re-fix does not include duplicate counting yet.  Splash users are not the only users that could log-in multiple times.
 		I don't have a staging server here, a fix will be commited in a few minutes if something goes wrong.
 	* Cleanup coments.
 	* Sync schemas

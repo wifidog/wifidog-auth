@@ -98,15 +98,16 @@ class ContentTypeFilter {
                 //echo "call_user_func_array called with: ";
                 //pretty_print_r($criteria);
 
-                if(!method_exists ($classname, $criteria[0]))
+                if(is_callable(array($classname,$criteria[0])) === false)
                 {
                     throw new exception (sprintf("Class %s does not implement method %s", $classname, $criteria[0]));
                 }
+
                 $criteria[1][]=$classname;
                 if(!call_user_func_array(array($classname,$criteria[0]), $criteria[1])) {
-                    //The content type does not meet the criteria 
+                    //The content type does not meet the criteria
                     $retval=false;
-                    break;                   
+                    break;
                 }
                 //$retval ? $result ="TRUE" : $result="FALSE";
                 //echo "call_user_func_array result: $result<br>";
