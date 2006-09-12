@@ -67,21 +67,6 @@ require_once('classes/Network.php');
 require_once('classes/Server.php');
 require_once('classes/InterfaceElements.php');
 
-// Check user permissions
-try {
-    $user = User::getCurrentUser();
-
-    if (!isset($user)) {
-        throw new Exception(_('Access denied!'));
-    } else if ((!$user->isSuperAdmin() && !$user->isOwner()) || $user->isNobody()) {
-        throw new Exception(_('Access denied!'));
-    }
-} catch (Exception $e) {
-    $ui = new MainUI();
-    $ui->setToolSection('ADMIN');
-    $ui->displayError($e->getMessage(), false);
-    exit;
-}
 
 // Init values
 $html = "";
@@ -285,13 +270,11 @@ case "list":
         break;
     }
 
-    if (User::getCurrentUser()->isSuperAdmin() || (User::getCurrentUser()->isOwner() && $createAllowed)) {
         $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
         $html .= "<input type='hidden' name='object_class' value='$class'>";
         $html .= "<input type='hidden' name='action' value='new_ui'>";
         $html .= "<input type='submit' name='new_submit' value='$newLongText'>\n";
         $html .= '</form>';
-    }
 
     if ($displayShowAllButton) {
         $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";

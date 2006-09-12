@@ -754,7 +754,6 @@ class Content implements GenericObject {
                 $content = Content :: getObject($contentRow['content_id']);
                 //echo get_class($content)." ".$contentRow['content_id']."<br>";
                 if ($content && $content_type_filter->isAcceptableContentClass(get_class($content))) {
-                    if (User :: getCurrentUser()->isSuperAdmin() || $content->isOwner(User :: getCurrentUser())) {
                         if ($type_interface != "table") {
                             $tab[$i][0] = $content->getId();
                             $tab[$i][1] = $content->__toString() . " (" . get_class($content) . ")";
@@ -782,7 +781,6 @@ class Content implements GenericObject {
 
                             $html .= "</tr>\n";
                         }
-                    }
                 }
             }
 
@@ -1156,6 +1154,13 @@ if(!$this->isSimpleContent())
         global $db;
 
         $html = '';
+        if(!(User :: getCurrentUser()->isSuperAdmin() || $this->isOwner(User :: getCurrentUser())))
+        {
+                    $html .= $this->getListUI();
+                    $html .= ' '._("(You do not have access to edit this piece of content)");
+        }
+        else
+        {
         $html .= "<fieldset class='admin_container " . get_class($this) . "'>\n";
         if (!empty ($title)) {
             $html .= "<legend>$title</legend>\n";
@@ -1329,6 +1334,7 @@ if(!$this->isSimpleContent())
         $html .= $subclass_admin_interface;
         $html .= "</ul>\n";
         $html .= "</fieldset>\n";
+        }
         return $html;
     }
     /** Process admin interface of this object.  When an object overrides this method, they should call the parent processAdminUI at the BEGINING of processing.

@@ -368,13 +368,6 @@ class MainUI
 				// Get information about user
 				$_currentUser = User :: getCurrentUser();
 
-				if ($_currentUser && $_currentUser->isNobody())
-				{
-					// The user has no permission to access the administrative functions
-					$_html = _("You do not have permissions to access any administration functions.");
-				}
-				else
-				{
 					// Init values
 					$_sqlAdditionalWhere = "";
 
@@ -415,7 +408,6 @@ class MainUI
 
 					// Compile HTML code
 					$_html = $this->smarty->fetch("templates/classes/MainUI_ToolSection.tpl");
-				}
 				break;
 
 			default :

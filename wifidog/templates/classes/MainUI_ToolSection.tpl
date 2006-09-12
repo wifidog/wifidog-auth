@@ -62,8 +62,10 @@
             </fieldset>
     {/if}
 
-    {if $isSuperAdmin || $isOwner}
-        <fieldset>
+
+
+            {if $isSuperAdmin || $isOwner}
+            <fieldset>
         	<legend>{"Node administration"|_}:</legend>
             {if !$isSuperAdmin}
                 <form action="{$formAction}" method="post">
@@ -78,25 +80,27 @@
                         <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Node&action=list">{"Nodes"|_}</a></li>
                     </ul>
             {/if}
-        </fieldset>
+            </fieldset>
+            {/if}
 
-        {if $isSuperAdmin}
+
+			{if $isSuperAdmin}
             <fieldset>
                 <legend>{"Network administration"|_}:</legend>
                     <ul>
                         <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Network&action=list">{"Networks"|_}</a></li>
                     </ul>
             </fieldset>
-
+			{/if}
             <fieldset>
                 <legend>{"Server administration"|_}:</legend>
                     <ul>
+                        {if $isSuperAdmin}
                         <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Server&action=list">{"Servers"|_}</a></li>
+        				{/if}
                         <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Content&action=list">{"Reusable content library"|_}</a></li>
                     </ul>
             </fieldset>
-        {/if}
-    {/if}
 {*
     END section ADMIN
 *}

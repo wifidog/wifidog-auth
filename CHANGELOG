@@ -1,3 +1,6 @@
+2006-09-07 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Access to the Content manager was broken for normal users, again.
+
 2006-09-11 François Proulx <francois.proulx@gmail.com>
 	* Changed install.php req. for Smarty 2.6.17 is mandatory
 	* ContentTypeFilter.php fixed the method checking function
