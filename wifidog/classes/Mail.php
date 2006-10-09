@@ -128,6 +128,15 @@ class Mail
 	 */
 	private $_body;
 
+	/**
+	 * Priority of email
+	 *
+	 * @var boolean
+	 *
+	 * @access private
+	 */
+	private $_highPriority;
+
     /**
      * Encodes the MIME header
      *
@@ -305,6 +314,32 @@ class Mail
 	}
 
 	/**
+	 * Returns the priority of the email
+	 *
+	 * @return boolean Whether high priority or not
+	 *
+	 * @access public
+	 */
+	public function getHighPriority()
+	{
+		return $this->_highPriority;
+	}
+
+	/**
+	 * Sets the priority of the email
+	 *
+	 * @param boolean $boolean Whether high priority or not
+	 *
+	 * @return void
+	 *
+	 * @access public
+	 */
+	public function setHighPriority($boolean)
+	{
+		$this->_highPriority = $boolean ? true : false;
+	}
+
+	/**
 	 * Packs email and sends it according to RFC822
 	 *
 	 * @return bool True if email could be sent
@@ -331,6 +366,9 @@ class Mail
         $mail->From = $this->getSenderEmail();
         $mail->FromName = $this->getSenderName();
         $mail->Sender = $this->getSenderEmail(); // add Sender Name
+        if ($this->getHighPriority()) {
+            $mail->Priority = 1;
+        }
         $mail->Subject = $this->getMessageSubject();
         $mail->Body = $this->getMessageBody();
 
