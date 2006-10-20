@@ -223,7 +223,7 @@ class UserReport extends StatisticReport
                         }
 
                         $html .= "  <td>".$connection['token_status']."</td>\n";
-                        $html .= "  <td><a href='?date_from={$_REQUEST['date_from']}&date_to={$_REQUEST['date_to']}&node_id={$nodeObject->getId()}'>{$nodeObject->getName()}</a></td>\n";
+                        $html .= "  <td><a href='?date_from={$_date_from}&date_to={$_date_to}&node_id={$nodeObject->getId()}'>{$nodeObject->getName()}</a></td>\n";
                         $html .= "  <td>".$connection['user_ip']."</td>\n";
                         $html .= "  <td>".Utils :: convertBytesToWords($connection['incoming'])."</td>\n";
                         $html .= "  <td>".Utils :: convertBytesToWords($connection['outgoing'])."</td>\n";
