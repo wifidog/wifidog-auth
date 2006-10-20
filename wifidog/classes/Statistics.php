@@ -404,7 +404,7 @@ EOF;
                 $sql_join = " JOIN node_stakeholders ON (nodes.node_id=node_stakeholders.node_id AND user_id='$user_id') ";
             }
 
-            $sql = "SELECT nodes.node_id, nodes.name from nodes $sql_join WHERE 1=1 ORDER BY lower(node_id)";
+            $sql = "SELECT nodes.node_id, nodes.name from nodes $sql_join WHERE 1=1 ORDER BY lower(nodes.node_id)";
             $node_rows = null;
             $db->execSql($sql, $node_rows, false);
             $html .= "<select multiple size = 6 name='$name'>\n";
