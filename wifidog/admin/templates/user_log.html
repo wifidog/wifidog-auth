@@ -38,6 +38,7 @@ Page:
 {section name=i loop=$pages}
 <a {if $pages[i].selected}style="font-weight: bold;" {/if}href="?sort={$sort}&direction={$direction}&page={$pages[i].number}">{$pages[i].number}</a>
 {/section}
+</div>
 {/if}
 
 {/if}
