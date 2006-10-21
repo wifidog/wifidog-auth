@@ -258,7 +258,6 @@ else if ($_REQUEST['action'] == 'upload_file')
     $html .=  "<h2>$count_success user(s) successfully imported ($count_mangled of them had their username modified), $count_reject user(s)rejected</h2>\n";
       }
   }
-        $html .=  "</div>\n";
         $html .=  "</fieldset>\n";
 
     $ui=new MainUI();
