@@ -73,6 +73,14 @@ class ContentTypeFilter {
      *
      * @param string $criteria_array an array of functions call on the objects.  For each one, the method must exist and return true.
      * Format is array(array(callback_funct, array(callback_funct_parameters))
+     * Note that callback_funct is a method of the object to be verified, so it must not have a static classname.
+     * Example:  To get Simple content types that are a subclass of file, the array would be
+     *                     $criteria_array = array(array('isSimpleContent'),
+                                			array('isContentType',array(array('File')))
+                                			);
+     * Note the second callback: isContentType, takes a SINGLE parameter, but that parameter is an array.  
+     * Since the $criteria_array specifies callback parameter as a list, passing 'File' to isContentType
+     *  is written as array(array('File'))
      *
      * @return object The Content object, or null if there was an error
      *                (an exception is also thrown)

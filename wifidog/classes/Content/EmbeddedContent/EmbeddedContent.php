@@ -174,7 +174,8 @@ class EmbeddedContent extends Content
 
         if (empty ($this->embedded_content_row['embedded_file_id'])) {
             // Mandate File
-            $html .= self :: getNewContentUI("embedded_file_{$this->id}_new", "File");
+            $criteria_array = array(array('isContentType',array(array('File'))));
+            $html .= self :: getNewContentUI("embedded_file_{$this->id}_new", ContentTypeFilter::getObject($criteria_array));
             $html .= "</div>\n";
         } else {
             $embedded_content_file = self::getObject($this->embedded_content_row['embedded_file_id']);
@@ -212,7 +213,9 @@ class EmbeddedContent extends Content
         $html .= "<div class='admin_element_data'>\n";
 
         if (empty ($this->embedded_content_row['fallback_content_id'])) {
-            $html .= self::getNewContentUI("fallback_content_{$this->id}_new");
+            //Textual content make sense for fallback content, su just exclude ContentGroup
+            $criteria_array = array(array('isNotContentType',array(array('ContentGroup'))));
+            $html .= self::getNewContentUI("fallback_content_{$this->id}_new", ContentTypeFilter::getObject($criteria_array));
             $html .= "</div>\n";
         } else {
             $fallback_content = self::getObject($this->embedded_content_row['fallback_content_id']);

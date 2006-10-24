@@ -361,6 +361,17 @@ class Content implements GenericObject {
         }
         return $retval;
     }
+    
+     /**
+     * Check if this class is NOT any of the class or subclass of one of the content types given as parameter
+     * It's the opposite of isContentType()
+     * 
+     * @param array $candidates The classnames to check
+     * @return true or flase
+     */
+    public static function isNotContentType($candidates, $classname) {
+        return !self::isContentType($candidates, $classname);
+    }
     /**
      * Get all content
      *

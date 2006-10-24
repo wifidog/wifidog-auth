@@ -1,3 +1,9 @@
+2006-10-24 Benoit Grégoire  <bock@step.polymtl.ca>
+	* EmbeddedContent.php:  Fix content type selection (admin interface of EmbeddedContent was broken)
+	* Full spanish translation curtesy of jguevara @@ unitec.edu (closes #254)
+	* Some documentation updates for content filters
+	* Content.php:  Add isNotContentType() method.
+	
 2006-09-07 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Access to the Content manager was broken for normal users, again.
 
