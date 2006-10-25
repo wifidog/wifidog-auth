@@ -70,6 +70,7 @@
             </span>
         </div>
 
+        {if count($languageChooser) > 1}
         <div class="language">
             <form class="language" name="lang_form" method="post" action="{$formAction}">
                 {"Language"|_}:
@@ -80,6 +81,7 @@
                 </select>
             </form>
         </div>
+        {/if}
 
         <div class="tool_content">
             {$toolContent}
