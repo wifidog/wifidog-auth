@@ -1,3 +1,6 @@
+2006-10-24 Benoit Grégoire  <bock@step.polymtl.ca>
+	* auth/index.php: Add some defensive coding and debug output when the token is invalid.
+
 2006-10-24 Damien Raude-Morvan <drazzib@drazzib.com>
 	* Fix french translation used for account validation to use same number of token as original message.
 	* Only show language combo when there is more than one language to select.

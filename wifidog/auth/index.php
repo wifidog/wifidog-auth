@@ -51,7 +51,6 @@
 require_once('../include/common.php');
 
 require_once('classes/Network.php');
-
 $auth_response = ACCOUNT_STATUS_DENIED;
 $auth_message = '';
 
@@ -132,6 +131,11 @@ if ($info != null)
                         {
                             $auth_response = $info['account_status'];
                         }
+                    }
+                    else
+                    {
+                        $auth_response = ACCOUNT_STATUS_DENIED;
+                        $auth_message .= "| Invalid token status: ".$token_to_text[$info['token_status']].". ";
                     }
 
                 }
