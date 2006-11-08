@@ -1,4 +1,9 @@
 2006-11-07 Benoit Grégoire  <bock@step.polymtl.ca>
+	* install.php:  Put an end of line after the password, make it easier to read.  
+	Make the install script check the permissions of lib/smarty/plugins directory to avoid smarty errors
+	* Statistics.php:  A little gift for France wireless:  Make aggregate statistics available across networks
+	
+2006-11-07 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix # 268, #269 as well as greg's problems by moving all token and registration date arithmetics
 	 to the database, and standardize on SQL-standard CURRENT_TIMESTAMP.  
 	Fixes operational problems when PHP and PostGres don't have the same timezone 

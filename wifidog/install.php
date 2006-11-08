@@ -64,7 +64,7 @@ if (!file_exists($password_file)) {
     $possible_charactors = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     $password = "";
     while (strlen($random_password) < 8) {
-        $random_password .= substr($possible_charactors, rand() % (strlen($possible_charactors)), 1);
+        $random_password .= substr($possible_charactors, rand() % (strlen($possible_charactors)), 1)."\n";
     }
     $fd = fopen($password_file, 'w');
     fwrite($fd, $random_password);
@@ -166,6 +166,7 @@ $dir_array = array (
     'tmp',
     'tmp/magpie_cache',
     'lib/smarty',
+    'lib/smarty/plugins',
     'tmp/smarty/templates_c',
     'tmp/smarty/cache',
     'lib/magpie',
@@ -1087,58 +1088,6 @@ EndHTML;
                 ));
                 break;
                 ###################################
-            case 'DBMS_MYSQL' :
-                $ptr_connexion = @ mysql_connect($CONF_DATABASE_HOST, $CONF_DATABASE_USER, $CONF_DATABASE_PASSWORD);
-                print "<UL>\n";
-
-                if ($ptr_connexion == TRUE) {
-                    print "<LI>MySQL database connection : Success";
-
-                    $mysql_server_version = mysql_get_server_info();
-                    print ("<LI>MySQL server version: $mysql_server_version");
-
-                    #if ($mysql_server_version > $requiredMySQLVersion) { Todo : Do something }
-
-                    #printf("<LI>MySQL host info: %s\n", mysql_get_host_info());
-
-                    print "<LI>Select DB $CONF_DATABASE_NAME : ";
-                    $select_db = mysql_select_db($CONF_DATABASE_NAME);
-
-                    if ($select_db == TRUE) {
-                        print "Success</UL>";
-                        navigation(array (
-                            array (
-                                "title" => "Back",
-                                "page" => "database"
-                            ),
-                            array (
-                                "title" => "Next",
-                                "page" => "dbinit"
-                            )
-                        ));
-                    }
-                    else {
-                        print "</UL>ERROR (Unable to select the database)<BR>";
-                        refreshButton();
-                        navigation(array (
-                            array (
-                                "title" => "Back",
-                                "page" => "database"
-                            )
-                        ));
-                    }
-                }
-                else {
-                    print "Unable to connect to database on <B>$CONF_DATABASE_HOST</B><BR>The database must be online to continue.<P>Please go back and retry with correct values";
-                    refreshButton();
-                    navigation(array (
-                        array (
-                            "title" => "Back",
-                            "page" => "database"
-                        )
-                    ));
-                }
-                break;
             default :
                 print<<<EndHTML
           The CONF_DBMS value <B>$CONF_DBMS</B> is not currently suported by this install script.
@@ -1260,135 +1209,6 @@ EndHTML;
                 ));
                 break;
                 ###################################
-            case 'DBMS_MYSQL' :
-                print "MYSQL ... (Not working)<BR>\n";
-                $ptr_connexion = @ mysql_connect($CONF_DATABASE_HOST, $CONF_DATABASE_USER, $CONF_DATABASE_PASSWORD);
-                $select_db = mysql_select_db($CONF_DATABASE_NAME);
-
-                $previous_line = ''; # Used to remove "," on the line before CONSTRAINT removed line.
-
-                if ($debug)
-                    print "<PRE>";
-
-                $inTable = 0;
-                foreach ($content_schema_array as $lineNum => $line) {
-                    #          if (preg_match("/^--/", $line)) continue; # Remove commented lines
-                    #          if (preg_match("/^$/", $line))  continue; # Remove empty lines
-                    if ($debug)
-                        print "<B>ORI</B> $line";
-                    if (preg_match("/^CREATE TABLE/", $line, $matchesArray))
-                        $inTable = 1;
-                    if ($inTable) {
-                        if ($inTable && preg_match("/^\);$/", $line, $matchesArray)) {
-                            #print "<B STYLE=\"color:#FF0000;\">OUT</B>\n";
-
-                            # PG    => );
-                            # MySQL => ) TYPE=InnoDB;
-                            $line = preg_replace("/^\);$/", ") TYPE=InnoDB;", $line);
-                            $inTable = 0;
-                        }
-                        else {
-                            #print "<B>IN  \n</B>"; # The line is in CREATE TABLE
-
-                            if (preg_match("/\s*CONSTRAINT.*\n$/", $line)) { # Remove CONSTRAINT. TODO : support constraint
-                                $line = preg_replace("/\s*CONSTRAINT.*\n$/", "", $line);
-                                $previous_line = preg_replace("/,$/", "", $previous_line);
-                                #print "<B STYLE=\"color:#FF0000;\">ICI : L=$line PL=$previous_line</B>";
-                            }
-                            # Mettre TYPE=InnoDB uniquement pour table avec CONSTRAINT ???
-
-                            # PG    =>  token_status character varying(10) NOT NULL
-                            # MySQL => `token_status` character varying(10) NOT NULL
-                            $line = preg_replace("/^(\s+)(\w+)/", "\${1}`\${2}`", $line);
-
-                            $line = preg_replace("/DEFAULT ('.*')::character varying NOT NULL/", "NOT NULL default \${1}", $line);
-
-                            $line = preg_replace("/text DEFAULT [\w':]+/", "text DEFAULT ''", $line); # MySQL does not support "text" default value
-                            #??? Erreur : 1101 - BLOB/TEXT column 'venue_type' can't have a default value. Solution : Changer 'text' pour varchar ???
-
-                            # PG    =>  token_status character varying(10) NOT NULL
-                            # MySQL =>  token_status VARCHAR(10) NOT NULL
-                            $line = preg_replace("/character varying\(/", "VARCHAR(", $line);
-
-                            $line = preg_replace("/::character varying/", "", $line); # Remove string "::character varying"
-
-                            # PG    => account_status integer,
-                            # MySQL => account_status int,
-                            $line = preg_replace("/integer/", "int", $line);
-
-                            # TODO : Comprendre : Le timestamp de postgres est sous le format '2005-04-07 16:33:49.917127'
-                            #                     datetime de MySQL est '0000-00-00 00:00:00'
-                            $line = preg_replace("/timestamp without time zone/", "datetime", $line);
-
-                            $line = preg_replace("/now\(\)/", "'NOW()'", $line);
-
-                            #$line = preg_replace("/::text/", "", $line);
-
-                            $line = preg_replace("/false/", "0", $line); # Change "false" strings for 0 (zero)
-                            $line = preg_replace("/true/", "1", $line); # Change "true" strings for 1 (one)
-                            $line = preg_replace("/WITHOUT OIDS/", "", $line); # Remove "WITHOUT OIDS"
-
-                            # PG    => binary_data bytea,
-                            # MySQL => binary_data MEDIUMBLOB
-                            # Uploading, Saving and Downloading Binary Data in a MySQL Database http://www.onlamp.com/lpt/a/370
-                            $line = preg_replace("/bytea/", "MEDIUMBLOB", $line); # maximum 16777215 (2^24 - 1) bytes
-                        } ### End of else. Regex in CREATE TABLE {};
-                    } ### End of if ($inTable).
-
-                    # PG    => CREATE INDEX idx_token ON connections USING btree (token);
-                    # MySQL => CREATE INDEX idx_token USING btree ON connections (token);
-                    $line = preg_replace("/(ON \w+) USING btree/", "USING btree \${1}", $line);
-
-                    # SQL-query : CREATE UNIQUE INDEX idx_unique_username_and_account_origin USING btree ON users(username,account_origin)
-                    # MySQL said: #1170 - BLOB/TEXT column 'username' used in key specification without a key length
-                    # Solution : http://www.dbforums.com/t1100992.html
-                    $line = preg_replace("/CREATE UNIQUE INDEX idx_unique_username_and_account_origin USING btree ON users \(username, account_origin\);/", "CREATE UNIQUE INDEX idx_unique_username_and_account_origin USING btree ON users (username(100), account_origin(100));", $line);
-
-                    $line = preg_replace("/CREATE INDEX idx_content_group_element_content_group_id USING btree ON content_group_element \(content_group_id\);/", "CREATE INDEX idx_content_group_element_content_group_id USING btree ON content_group_element (content_group_id(100));", $line);
-
-                    if ($debug)
-                        print "NEW $line";
-                    $content_mysql .= $previous_line;
-                    $previous_line = $line;
-                } ### End of foreach ($content_schema_array as $lineNum => $line)
-
-                $content_mysql .= $previous_line; # TODO: verif save the last line ?
-                if ($debug)
-                    print "<B STYLE=\"color:#FF0000;\">####################################################################</B>\n\n$content_mysql"; # Debug
-                if ($debug)
-                    print "</PRE>";
-
-                #        $content_data = implode("", $content_mysql);
-
-                $patterns[3] = '/SET client_encoding/';
-                $patterns[4] = '/SET check_function_bodies/';
-                $patterns[5] = '/SET search_path/';
-                $replacements[3] = '-- ';
-                $replacements[4] = '-- ';
-                $replacements[5] = '-- ';
-
-                $content_mysql = preg_replace($patterns, $replacements, $content_mysql);
-
-                print "<PRE>$content_mysql</PRE>"; # Debug
-
-                exit ();
-
-                $result = mysql_query($content_mysql);
-                if (!$result) {
-                    die('Invalid query: ' . mysql_error());
-                }
-
-                navigation(array (
-                    array (
-                        "title" => "Back",
-                        "page" => "database"
-                    ),
-                    array (
-                        "title" => "Next",
-                        "page" => "dbinit"
-                    )
-                ));
-                break;
             default :
                 print<<<EndHTML
           The CONF_DBMS value <B>$CONF_DBMS</B> is not currently suported by this install script.

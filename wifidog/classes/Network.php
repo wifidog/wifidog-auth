@@ -215,11 +215,11 @@ class Network implements GenericObject
      *                                     pre-selected in the form object
      * @param string $additional_where     Additional SQL conditions for the
      *                                     networks to select
-     *
+     * @param string $additional_where     boolean Allow not selecting any network
      * @return string HTML markup
 
      */
-    public static function getSelectNetworkUI($user_prefix, $pre_selected_network = null, $additional_where = null)
+    public static function getSelectNetworkUI($user_prefix, $pre_selected_network = null, $additional_where = null, $allow_empty = false)
     {
         $html = '';
         $name = $user_prefix;
@@ -248,7 +248,7 @@ class Network implements GenericObject
                 $i ++;
             }
             $html .= _("Network:")." \n";
-            $html .= FormSelectGenerator :: generateFromArray($tab, $selected_id, $name, null, false);
+            $html .= FormSelectGenerator :: generateFromArray($tab, $selected_id, $name, null, $allow_empty);
 
         } else {
             foreach ($network_rows as $network_row) //iterates only once...
@@ -268,7 +268,7 @@ class Network implements GenericObject
      * @param string $user_prefix A identifier provided by the programmer to
      *                            recognise it's generated form
      *
-     * @return mixed The network object or an exception
+     * @return mixed The network object or null
 
      */
     public static function processSelectNetworkUI($user_prefix)
@@ -278,7 +278,7 @@ class Network implements GenericObject
         if (!empty ($_REQUEST[$name])) {
             return new self($_REQUEST[$name]);
         } else {
-            throw new exception(sprintf(_("Unable to retrieve the selected network, the %s REQUEST parameter does not exist"), $name));
+            return null;
         }
     }
 

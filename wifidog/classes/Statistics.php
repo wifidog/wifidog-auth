@@ -82,8 +82,6 @@ class Statistics
     private $report_selected_users = array ();
     function __construct()
     {
-        $network = Network :: GetCurrentNetwork();
-        $this->report_selected_networks[$network->getId()] = $network;
         $this->user_distinguish_by_options = array ('user_id' => _("Usernames"), 'user_mac' => _("MAC adresses"));
 
     }
@@ -640,7 +638,7 @@ EOF;
         // Network
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<div class='admin_element_data'>\n";
-        $html .= Network :: getSelectNetworkUI('Statistics', reset($this->report_selected_networks));
+        $html .= Network :: getSelectNetworkUI('Statistics', reset($this->report_selected_networks), null, User::getCurrentUser()->isSuperAdmin());
         $html .= "</div>\n";
         $html .= "</li>\n";
 
@@ -698,8 +696,14 @@ EOF;
     public function processAdminUI()
     {
         $network = Network :: processSelectNetworkUI('Statistics');
-        $this->report_selected_networks = array ();
-        $this->report_selected_networks[$network->getId()] = $network;
+        if($network)
+        {
+        	 $this->report_selected_networks[$network->getId()] = $network;
+        }
+        else
+        {
+        Security::requireAdmin();
+        }
         $this->processDateRangeUI();
         $this->processSelectedNodesUI();
         $this->processDistinguishUsersByUI();
