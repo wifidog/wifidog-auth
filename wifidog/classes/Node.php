@@ -231,7 +231,7 @@ class Node implements GenericObject
                 throw new Exception(_('This node already exists.'));
             }
 
-            $sql = "INSERT INTO nodes (node_id, network_id, creation_date, node_deployment_status, name) VALUES ('$node_id', '$network_id', NOW(),'$node_deployment_status', '$node_name')";
+            $sql = "INSERT INTO nodes (node_id, network_id, creation_date, node_deployment_status, name) VALUES ('$node_id', '$network_id', CURRENT_TIMESTAMP,'$node_deployment_status', '$node_name')";
 
             if (!$db->execSqlUpdate($sql, false)) {
                 throw new Exception(_('Unable to insert new node into database!'));

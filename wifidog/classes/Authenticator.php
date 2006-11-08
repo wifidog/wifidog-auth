@@ -126,7 +126,7 @@ abstract class Authenticator
         $conn_id = $db->escapeString($conn_id);
 
         if (!empty ($conn_id)) {
-            $db->execSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id='$conn_id'", $info, false);
+            $db->execSqlUniqueRes("SELECT CURRENT_TIMESTAMP, *, CASE WHEN ((CURRENT_TIMESTAMP - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id='$conn_id'", $info, false);
 
             $user = User::getObject($info['user_id']);
             $network = $user->getNetwork();
@@ -187,7 +187,7 @@ abstract class Authenticator
         global $db;
 
         $conn_id = $db->escapeString($conn_id);
-        $db->execSqlUniqueRes("SELECT NOW(), *, CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id='$conn_id'", $info, false);
+        $db->execSqlUniqueRes("SELECT CURRENT_TIMESTAMP, *, CASE WHEN ((CURRENT_TIMESTAMP - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id='$conn_id'", $info, false);
         $network = Network::getObject($info['network_id']);
         $splash_user_id = $network->getSplashOnlyUser()->getId();
         $auth_response = $info['account_status'];
@@ -195,7 +195,7 @@ abstract class Authenticator
         // Login the user
         $mac = $db->escapeString($_REQUEST['mac']);
         $ip = $db->escapeString($_REQUEST['ip']);
-        $sql = "UPDATE connections SET "."token_status='".TOKEN_INUSE."',"."user_mac='$mac',"."user_ip='$ip',"."last_updated=NOW()"."WHERE conn_id='{$conn_id}';";
+        $sql = "UPDATE connections SET "."token_status='".TOKEN_INUSE."',"."user_mac='$mac',"."user_ip='$ip',"."last_updated=CURRENT_TIMESTAMP"."WHERE conn_id='{$conn_id}';";
         $db->execSqlUpdate($sql, false);
 
         if ($splash_user_id != $info['user_id'] && $network->getMultipleLoginAllowed() === false) {
@@ -240,7 +240,7 @@ abstract class Authenticator
 
         // Write traffic counters to database
         $conn_id = $db->escapeString($conn_id);
-        $db->execSqlUpdate("UPDATE connections SET "."incoming='$incoming',"."outgoing='$outgoing',"."last_updated=NOW() "."WHERE conn_id='{$conn_id}'");
+        $db->execSqlUpdate("UPDATE connections SET "."incoming='$incoming',"."outgoing='$outgoing',"."last_updated=CURRENT_TIMESTAMP "."WHERE conn_id='{$conn_id}'");
     }
 
     /**
@@ -258,7 +258,7 @@ abstract class Authenticator
 
         // Stop traffic counters update
         $conn_id = $db->escapeString($conn_id);
-        $db->execSqlUpdate("UPDATE connections SET "."timestamp_out=NOW(),"."token_status='".TOKEN_USED."' "."WHERE conn_id='{$conn_id}';\n", false);
+        $db->execSqlUpdate("UPDATE connections SET "."timestamp_out=CURRENT_TIMESTAMP,"."token_status='".TOKEN_USED."' "."WHERE conn_id='{$conn_id}';\n", false);
     }
 
     /**

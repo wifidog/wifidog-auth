@@ -1124,7 +1124,7 @@ if(!$this->isSimpleContent())
                 $sql = "SELECT * FROM content_display_log WHERE user_id='$user_id' AND node_id='$node_id' AND content_id='$this->id'";
                 $db->execSql($sql, $log_rows, false);
                 if ($log_rows != null) {
-                    $sql = "UPDATE content_display_log SET last_display_timestamp = NOW() WHERE user_id='$user_id' AND content_id='$this->id' AND node_id='$node_id'";
+                    $sql = "UPDATE content_display_log SET last_display_timestamp = CURRENT_TIMESTAMP WHERE user_id='$user_id' AND content_id='$this->id' AND node_id='$node_id'";
                 } else {
                     $sql = "INSERT INTO content_display_log (user_id, content_id, node_id) VALUES ('$user_id', '$this->id', '$node_id')";
                 }

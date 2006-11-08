@@ -1,3 +1,10 @@
+2006-11-07 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Fix # 268, #269 as well as greg's problems by moving all token and registration date arithmetics
+	 to the database, and standardize on SQL-standard CURRENT_TIMESTAMP.  
+	Fixes operational problems when PHP and PostGres don't have the same timezone 
+	(which appears to be the case on Fedora by default). 
+	Note that the page.php script still has PHP date arithmetics, but at least should be self-consistent.
+
 2006-10-24 Benoit Grégoire  <bock@step.polymtl.ca>
 	* auth/index.php: Add some defensive coding and debug output when the token is invalid.
 

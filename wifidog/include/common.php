@@ -192,21 +192,13 @@ function cmp_query_time($a, $b) {
     return ($a['total_time'] < $b['total_time']) ? -1 : 1;
 }
 
-function iso8601_date($unix_timestamp) {
-    $tzd = date('O', $unix_timestamp);
-    $tzd = substr(chunk_split($tzd, 3, ':'), 0, 6);
-    $date = date('Y-m-d\TH:i:s', $unix_timestamp) . $tzd;
-    return $date;
-}
-
 /** Cleanup dangling tokens and connections from the database, left if a gateway crashed, etc. */
 function garbage_collect() {
     global $db;
 
     // 10 minutes
-    $expiration = time() - 60 * 10;
-    $expiration = iso8601_date($expiration);
-    $db->execSqlUpdate("UPDATE connections SET token_status='" . TOKEN_USED . "' WHERE last_updated < '$expiration' AND token_status = '" . TOKEN_INUSE . "'", false);
+    $expiration = '10 minutes';
+    $db->execSqlUpdate("UPDATE connections SET token_status='" . TOKEN_USED . "' WHERE last_updated < (CURRENT_TIMESTAMP - interval '$expiration') AND token_status = '" . TOKEN_INUSE . "';", false);
 }
 
 /** Return a 32 byte guid valid for database use */

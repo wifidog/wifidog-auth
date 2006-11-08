@@ -1356,9 +1356,9 @@ class Network implements GenericObject
             $_network_id = $db->escapeString($this->id);
 
             if ($nonMonitoredOnly) {
-                $db->execSqlUniqueRes("SELECT COUNT(node_id) FROM nodes WHERE network_id = '$_network_id' AND node_deployment_status = 'NON_WIFIDOG_NODE' AND ((NOW()-last_heartbeat_timestamp) >= interval '5 minutes')", $_row, false);
+                $db->execSqlUniqueRes("SELECT COUNT(node_id) FROM nodes WHERE network_id = '$_network_id' AND node_deployment_status = 'NON_WIFIDOG_NODE' AND ((CURRENT_TIMESTAMP-last_heartbeat_timestamp) >= interval '5 minutes')", $_row, false);
             } else {
-                $db->execSqlUniqueRes("SELECT COUNT(node_id) FROM nodes WHERE network_id = '$_network_id' AND (node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE') AND ((NOW()-last_heartbeat_timestamp) < interval '5 minutes')", $_row, false);
+                $db->execSqlUniqueRes("SELECT COUNT(node_id) FROM nodes WHERE network_id = '$_network_id' AND (node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE') AND ((CURRENT_TIMESTAMP-last_heartbeat_timestamp) < interval '5 minutes')", $_row, false);
             }
 
             // String has been found

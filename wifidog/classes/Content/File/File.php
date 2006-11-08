@@ -232,7 +232,7 @@ class File extends Content
 	 */
     public function touch()
     {
-    		$this->mBd->execSqlUpdate("UPDATE content_file SET last_update_date = NOW() WHERE files_id='".$this->getId()."'", false);
+    		$this->mBd->execSqlUpdate("UPDATE content_file SET last_update_date = CURRENT_TIMESTAMP WHERE files_id='".$this->getId()."'", false);
         $this->refresh();
     }
 

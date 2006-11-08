@@ -195,11 +195,10 @@ else if ($_REQUEST['action'] == 'upload_file')
         {
           $status = ACCOUNT_STATUS_ALLOWED;
           $token = User::generateToken();
-          $reg_date = iso8601_date(time());
           $password_hash = $db->escapeString($user['passwd_hash']);
           $username =  $db->escapeString($username);
           $email =  $db->escapeString($user['email']);
-          $sql = "INSERT INTO users (user_id, username,email,pass,account_status,validation_token,reg_date) VALUES ('".get_guid()."','$username','$email','$password_hash','{$status}','{$token}','{$reg_date}')";
+          $sql = "INSERT INTO users (user_id, username,email,pass,account_status,validation_token,reg_date) VALUES ('".get_guid()."','$username','$email','$password_hash','{$status}','{$token}',CURRENT_TIMESTAMP)";
           $update_successful = $db->execSqlUpdate($sql);
           if ($update_successful)
         {

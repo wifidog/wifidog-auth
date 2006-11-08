@@ -205,7 +205,7 @@ class User implements GenericObject {
         $status = ACCOUNT_STATUS_VALIDATION;
         $token = User :: generateToken();
 
-        $db->execSqlUpdate("INSERT INTO users (user_id,username, account_origin,email,pass,account_status,validation_token,reg_date) VALUES ('$id_str','$username_str','$account_origin_str','$email_str','$password_hash','$status','$token',NOW())");
+        $db->execSqlUpdate("INSERT INTO users (user_id,username, account_origin,email,pass,account_status,validation_token,reg_date) VALUES ('$id_str','$username_str','$account_origin_str','$email_str','$password_hash','$status','$token',CURRENT_TIMESTAMP)");
 
         $object = new self($id);
         return $object;
@@ -216,7 +216,7 @@ class User implements GenericObject {
             global $db;
             $days_since_creation = $db->escapeString($days_since_creation);
     
-            //$db->execSqlUpdate("INSERT INTO users (user_id,username, account_origin,email,pass,account_status,validation_token,reg_date) VALUES ('$id_str','$username_str','$account_origin_str','$email_str','$password_hash','$status','$token',NOW())");
+            //$db->execSqlUpdate("INSERT INTO users (user_id,username, account_origin,email,pass,account_status,validation_token,reg_date) VALUES ('$id_str','$username_str','$account_origin_str','$email_str','$password_hash','$status','$token',CURRENT_TIMESTAMP)");
         }*/
 
     /** @param $object_id The id of the user */
@@ -370,7 +370,7 @@ class User implements GenericObject {
             $retval = true;
         } else
             if ($account_status == ACCOUNT_STATUS_VALIDATION) {
-                $sql = "SELECT CASE WHEN ((NOW() - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired, networks.validation_grace_time FROM users  JOIN networks ON (users.account_origin = networks.network_id) WHERE (user_id='{$this->id}')";
+                $sql = "SELECT CASE WHEN ((CURRENT_TIMESTAMP - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired, networks.validation_grace_time FROM users  JOIN networks ON (users.account_origin = networks.network_id) WHERE (user_id='{$this->id}')";
                 $db->execSqlUniqueRes($sql, $user_info, false);
 
                 if ($user_info['validation_grace_time_expired'] == 't') {
@@ -448,7 +448,7 @@ class User implements GenericObject {
 
             if ($session && $node_ip && $session->get(SESS_GW_ID_VAR)) {
                 $node_id = $db->escapeString($session->get(SESS_GW_ID_VAR));
-                $db->execSqlUpdate("INSERT INTO connections (user_id, token, token_status, timestamp_in, node_id, node_ip, last_updated) VALUES ('" . $this->getId() . "', '$token', '" . TOKEN_UNUSED . "', NOW(), '$node_id', '$node_ip', NOW())", false);
+                $db->execSqlUpdate("INSERT INTO connections (user_id, token, token_status, timestamp_in, node_id, node_ip, last_updated) VALUES ('" . $this->getId() . "', '$token', '" . TOKEN_UNUSED . "', CURRENT_TIMESTAMP, '$node_id', '$node_ip', CURRENT_TIMESTAMP)", false);
                 $retval = $token;
             } else
                 $retval = false;

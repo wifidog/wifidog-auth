@@ -116,7 +116,7 @@ class FlickrPhotostream extends Content
 
             $content_id = $db->escapeString($content_id);
 
-            $sql = "SELECT *, EXTRACT(EPOCH FROM AGE(NOW(), cache_update_timestamp)) as cache_age FROM content_flickr_photostream WHERE flickr_photostream_id='$content_id'";
+            $sql = "SELECT *, EXTRACT(EPOCH FROM AGE(CURRENT_TIMESTAMP, cache_update_timestamp)) as cache_age FROM content_flickr_photostream WHERE flickr_photostream_id='$content_id'";
             $db->execSqlUniqueRes($sql, $row, false);
             if ($row == null)
             {
@@ -162,7 +162,7 @@ $api = $this->getFlickrApi();
             $old_cache = $this->mBd->unescapeBinaryString($this->flickr_photostream_row['requests_cache']);
             $age = is_null($this->flickr_photostream_row['cache_age']) ? self :: MAX_CACHE_AGE : $this->flickr_photostream_row['cache_age'];
             if ($force_overwrite === true || ($age >= self :: MAX_CACHE_AGE) || ($new_cache !== $old_cache))
-                $this->mBd->execSqlUpdate("UPDATE content_flickr_photostream SET cache_update_timestamp = NOW(), requests_cache = '".$this->mBd->escapeBinaryString($new_cache)."' WHERE flickr_photostream_id = '".$this->getId()."'", false);
+                $this->mBd->execSqlUpdate("UPDATE content_flickr_photostream SET cache_update_timestamp = CURRENT_TIMESTAMP, requests_cache = '".$this->mBd->escapeBinaryString($new_cache)."' WHERE flickr_photostream_id = '".$this->getId()."'", false);
         }
     }
 
