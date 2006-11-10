@@ -64,16 +64,16 @@ if (!file_exists($password_file)) {
     $possible_charactors = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     $password = "";
     while (strlen($random_password) < 8) {
-        $random_password .= substr($possible_charactors, rand() % (strlen($possible_charactors)), 1)."\n";
+        $random_password .= substr($possible_charactors, rand() % (strlen($possible_charactors)), 1);
     }
     $fd = fopen($password_file, 'w');
-    fwrite($fd, $random_password);
+    fwrite($fd, $random_password."\n");
     fclose($fd);
 }
 
 # Read password file
 $fd = fopen($password_file, "rb");
-$password = fread($fd, filesize($password_file));
+$password = trim(fread($fd, filesize($password_file)));
 fclose($fd);
 
 $auth = false;
@@ -280,11 +280,13 @@ $neededPEARPackages = array (
 );
 
 $optionsInfo = array (
+/* TODO:  SSL is now configured in the DB, but should still be handled by the install script
     'SSL_AVAILABLE' => array (
         'title' => 'SSL Support',
         'depend' => 'return 1;',
         'message' => '&nbsp;'
     ),
+    */
     'RSS_SUPPORT' => array (
         'title' => 'RSS Support',
         'depend' => 'return ($neededExtentions[\'xml\'][\'available\'] && $neededPackages[\'magpierss\'][\'available\']);',
@@ -345,6 +347,7 @@ $configArray = array ();
 foreach ($contentArray as $line) {
     #print "$line<BR>"; # Debug
     if (preg_match("/^define\((.+)\);/", $line, $matchesArray)) {
+       //echo '<pre>';print_r($matchesArray);echo '</pre>';
         list ($key, $value) = explode(',', $matchesArray[1]);
         $pattern = array (
             "/^'/",
@@ -359,7 +362,7 @@ foreach ($contentArray as $line) {
         $configArray[$key] = $value;
     }
 }
-
+//echo '<pre>';print_r($configArray);echo '</pre>';
 # Database connections variables
 $CONF_DBMS = $configArray['CONF_DBMS'];
 $CONF_DATABASE_HOST = $configArray['CONF_DATABASE_HOST'];
@@ -1253,17 +1256,20 @@ EndHTML;
         # TODO : Tester que la connection SSL est fonctionnelle
         #        Options avancees : Supporter les define de [SMARTY|MAGPIE|PHLICKR|JPGRAPH]_REL_PATH
         print<<< EndHTML
-<H1>Options</H1>
+<H1>Available options</H1>
   <TABLE border="1">
 
 EndHTML;
 
         #$neededPackages['phlickr']['available'] = 0;
         #$neededExtentions['xml']['available'] = 0;
+        //echo '<pre>';print_r($optionsInfo);echo '</pre>';
         foreach ($optionsInfo as $name => $foo) { # Foreach generate all <TABLE> fields
             $value = $configArray[$name]; # Value of option in config.php
             $title = $optionsInfo[$name]['title']; # Field Title
             $message = $optionsInfo[$name]['message']; # Message why option is disable
+            if(empty($value))
+                $message .= ", ERROR: unable to find the '$name' directive in the config file";
             $depend = @ eval ($optionsInfo[$name]['depend']); # Evaluate the dependencie
             $selectedTrue = '';
             $selectedFalse = ''; # Initialize value

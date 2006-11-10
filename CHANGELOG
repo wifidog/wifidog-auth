@@ -1,4 +1,7 @@
 2006-11-07 Benoit Grégoire  <bock@step.polymtl.ca>
+	* install.php:  Fix password generation I inadvertently broke.  Remove misleading info about SSL
+
+2006-11-07 Benoit Grégoire  <bock@step.polymtl.ca>
 	* install.php:  Put an end of line after the password, make it easier to read.  
 	Make the install script check the permissions of lib/smarty/plugins directory to avoid smarty errors
 	* Statistics.php:  A little gift for France wireless:  Make aggregate statistics available across networks
