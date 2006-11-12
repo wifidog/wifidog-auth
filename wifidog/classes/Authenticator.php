@@ -195,7 +195,7 @@ abstract class Authenticator
         // Login the user
         $mac = $db->escapeString($_REQUEST['mac']);
         $ip = $db->escapeString($_REQUEST['ip']);
-        $sql = "UPDATE connections SET "."token_status='".TOKEN_INUSE."',"."user_mac='$mac',"."user_ip='$ip',"."last_updated=CURRENT_TIMESTAMP"."WHERE conn_id='{$conn_id}';";
+        $sql = "UPDATE connections SET token_status='".TOKEN_INUSE."',user_mac='$mac',user_ip='$ip',last_updated=CURRENT_TIMESTAMP WHERE conn_id='{$conn_id}';";
         $db->execSqlUpdate($sql, false);
 
         if ($splash_user_id != $info['user_id'] && $network->getMultipleLoginAllowed() === false) {

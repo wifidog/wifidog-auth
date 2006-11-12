@@ -1,3 +1,6 @@
+2006-11-11 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Authenticator.php:  Critical: Fix SQL query syntax in acctStart()
+	
 2006-11-07 Benoit Grégoire  <bock@step.polymtl.ca>
 	* install.php:  Fix password generation I inadvertently broke.  Remove misleading info about SSL
 
