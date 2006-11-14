@@ -122,7 +122,7 @@ class Node implements GenericObject
 		return true;
 	}
 
-	/** Get the current node to which a user is physically connected, if any.  This is done by an IP adress lookup against the last reported IP adress of the node
+	/** Get the current node to which a user is physically connected, if any.  This is done by an IP address lookup against the last reported IP address of the node
 	 * @param 	 * @return a Node object, or null if it can't be found.
 	 */
 	public static function getCurrentRealNode()

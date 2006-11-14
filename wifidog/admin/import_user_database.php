@@ -44,11 +44,10 @@
  * Load common include file
  */
 require_once('admin_common.php');
-
 require_once('classes/MainUI.php');
 
 Security::requireAdmin();
-
+$db = AbstractDb::getObject(); 
 $html = '';
 
 /** Affiche les informations sur le fichier envoy� par le client
@@ -73,7 +72,7 @@ if(empty($_REQUEST['action']))
     $html .=  "<input name='userfile' type='file' />\n";
     $html .=  "<input type='hidden' name='action' value='upload_file' />\n";
     $html .=  "<input type='hidden' name='MAX_FILE_SIZE' value='300000' />\n";
-    $html .=  "<p>"._("Accept users with no email adresses (Normally, NoCat usernames are expected to be the user's email adress, and the username is generated from the prefix.")."\n";
+    $html .=  "<p>"._("Accept users with no email addresses (Normally, NoCat usernames are expected to be the user's email address, and the username is generated from the prefix.")."\n";
     $html .=  "<input type='checkbox' name='accept_empty_email' value='true' /></p>\n";
     $html .=  "<p><input name='upload' type='submit' value='"._("Upload file")."' />\n";
 
@@ -178,7 +177,7 @@ else if ($_REQUEST['action'] == 'upload_file')
       else if(empty($_REQUEST['accept_empty_email']))
         {
           $import_user[$username]['is_rejected']=true;
-          $import_user[$username]['reject_reason'] .= "<p class=error>"._('Sorry, the user must have a email adress.')."</p>\n";null;
+          $import_user[$username]['reject_reason'] .= "<p class=error>"._('Sorry, the user must have a email address.')."</p>\n";null;
         }
       else
         {

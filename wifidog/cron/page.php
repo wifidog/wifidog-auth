@@ -51,6 +51,7 @@ require_once('classes/Network.php');
 require_once('classes/Node.php');
 
 function page_if_down_since($nodeObject, $minutes) {
+    $db = AbstractDb::getObject(); 
     $last_heartbeat = strtotime($nodeObject->getLastHeartbeatTimestamp());
 
     if (time() - $last_heartbeat > 60*$minutes) {

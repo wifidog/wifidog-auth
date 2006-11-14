@@ -585,6 +585,8 @@ class ContentGroup extends Content {
 				$sql_last_order = "SELECT display_order FROM content_group_element \n";
 				$sql_last_order .= "JOIN content_display_log ON (content_group_element_id=content_id) \n";
 				$sql_last_order .= " WHERE content_group_id='$this->id' \n";
+                $sql_last_order .= " AND user_id='$user_id' \n";
+
 				$sql_last_order .= " ORDER BY last_display_timestamp DESC LIMIT 1";
 				$db->execSqlUniqueRes($sql_last_order, $last_order_row, false);
 				if ($last_order_row['display_order'] != null) {

@@ -53,7 +53,20 @@
  */
 class AbstractDb
 {
+    /* Properties used for statistics */
+        private $construct_start_time;
+        private $sql_total_time;
+        private $sql_num_select_querys;
+        private $sql_select_total_time;
+        private $sql_num_select_unique_querys;
+        private $sql_select_unique_total_time;
+        private $sql_num_update_querys;
+        private $sql_update_total_time;
+        private $sql_executed_queries_array;
+        
     private static $object;
+    
+    /** Nothe that you should call the first instance of AbstractDb as soon as possible to get reliabel SQL vs PHP statistics.*/
     public static function getObject() {
     	if (self::$object==null)
     	{
@@ -63,6 +76,7 @@ class AbstractDb
     }
     /** Constructor */
     private function __construct()  {
+        $this->construct_start_time = microtime();
     }
     
     // Connects to PostgreSQL database
@@ -169,60 +183,86 @@ class AbstractDb
     /* Logs a sql query for profiling purposes */
 	function logQueries($sql, $type, $sql_starttime, $sql_endtime)
 	{
+        $parts_of_starttime = explode(' ', $sql_starttime);
+        $sql_starttime = $parts_of_starttime[0] + $parts_of_starttime[1];
+        $parts_of_endtime = explode(' ', $sql_endtime);
+        $sql_endtime = $parts_of_endtime[0] + $parts_of_endtime[1];
+        $sql_timetaken = $sql_endtime - $sql_starttime;
 		if(defined("LOG_SQL_QUERIES") && LOG_SQL_QUERIES == true) {
-			$parts_of_starttime = explode(' ', $sql_starttime);
-			$sql_starttime = $parts_of_starttime[0] + $parts_of_starttime[1];
-			$parts_of_endtime = explode(' ', $sql_endtime);
-			$sql_endtime = $parts_of_endtime[0] + $parts_of_endtime[1];
-			$sql_timetaken = $sql_endtime - $sql_starttime;
 
-			global $sql_executed_queries_array;
-			if (!isset ($sql_executed_queries_array))
+			if (!isset ($this->sql_executed_queries_array))
 			{
-				$sql_executed_queries_array = array ();
+				$this->sql_executed_queries_array = array ();
 			}
-			if (!array_key_exists($sql, $sql_executed_queries_array))
+			if (!array_key_exists($sql, $this->sql_executed_queries_array))
 			{
-				$sql_executed_queries_array[$sql] = array ();
-				$sql_executed_queries_array[$sql]['num'] = 0;
-				$sql_executed_queries_array[$sql]['total_time'] = 0;
+				$this->sql_executed_queries_array[$sql] = array ();
+				$this->sql_executed_queries_array[$sql]['num'] = 0;
+				$this->sql_executed_queries_array[$sql]['total_time'] = 0;
 			}
 
-			$sql_executed_queries_array[$sql]['num'] = $sql_executed_queries_array[$sql]['num'] + 1;
-			$sql_executed_queries_array[$sql]['type'] = $type;
-			$sql_executed_queries_array[$sql]['total_time'] = $sql_executed_queries_array[$sql]['total_time'] + $sql_timetaken;
+			$this->sql_executed_queries_array[$sql]['num'] = $this->sql_executed_queries_array[$sql]['num'] + 1;
+			$this->sql_executed_queries_array[$sql]['type'] = $type;
+			$this->sql_executed_queries_array[$sql]['total_time'] = $this->sql_executed_queries_array[$sql]['total_time'] + $sql_timetaken;
 
-			global $sql_total_time;
-			$sql_total_time += $sql_timetaken;
+			$this->sql_total_time += $sql_timetaken;
 
 			switch ($type)
 			{
 				case 'SELECT' :
-					global $sql_num_select_querys;
-					$sql_num_select_querys ++;
-					global $sql_select_total_time;
-					$sql_select_total_time += $sql_timetaken;
-
+					$this->sql_num_select_querys ++;
+					$this->sql_select_total_time += $sql_timetaken;
 					break;
 				case 'SELECT_UNIQUE' :
-					global $sql_num_select_unique_querys;
-					$sql_num_select_unique_querys ++;
-					global $sql_select_unique_total_time;
-					$sql_select_unique_total_time += $sql_timetaken;
+					$this->sql_num_select_unique_querys ++;
+					$this->sql_select_unique_total_time += $sql_timetaken;
 					break;
 				case 'UPDATE' :
-					global $sql_num_update_querys;
-					$sql_num_update_querys ++;
-					global $sql_update_total_time;
-					$sql_update_total_time += $sql_timetaken;
+					$this->sql_num_update_querys ++;
+					$this->sql_update_total_time += $sql_timetaken;
 					break;
 				default :
 					echo "Error: AbstractDb::SqlLog(): Unknown query type: $type";
 			}
-			return $sql_timetaken;
 		}
+        return $sql_timetaken;
 	}
+    
+/** Get log results (profiling has to be enabled).*/
+    public function getSqlQueriesLog()
+    {
+        $retval = "";
 
+/* PHP time */
+        $parts_of_starttime = explode(' ', $this->construct_start_time);
+        $php_starttime = $parts_of_starttime[0] + $parts_of_starttime[1];
+        $parts_of_endtime = explode(' ', microtime());
+        $php_endtime = $parts_of_endtime[0] + $parts_of_endtime[1];
+        $php_timetaken = $php_endtime - $php_starttime;
+        $display_php_total_time = number_format($php_timetaken, 3); // optional
+/* SQL time */
+        $display_sql_total_time = number_format($this->sql_total_time, 3); // optional
+        $sql_num_querys = $this->sql_num_select_querys + $this->sql_num_select_unique_querys + $this->sql_num_update_querys;
+
+        $select_time_fraction = number_format(100 * ($this->sql_select_total_time / $this->sql_total_time), 0) . "%";
+        $select_unique_time_fraction = number_format(100 * ($this->sql_select_unique_total_time / $this->sql_total_time), 0) . "%";
+        $update_time_fraction = number_format(100 * ($this->sql_update_total_time / $this->sql_total_time), 0) . "%";
+
+/* Display */
+        $sql_php_time_fraction = number_format(100 * ($this->sql_total_time / $display_php_total_time), 0) . "%";
+        $retval .= "<div class='content'>\n";
+        $retval .= "<p>$sql_num_querys queries took $display_sql_total_time second(s)\n";
+        $retval .= "({$this->sql_num_select_querys} SELECT ($select_time_fraction), {$this->sql_num_select_unique_querys} SELECT UNIQUE ($select_unique_time_fraction), {$this->sql_num_update_querys} UPDATE ($update_time_fraction)) \n";
+        $retval .= "representing $sql_php_time_fraction of the $display_php_total_time seconds total execution time</p>";
+        $retval .= "</div>\n";
+
+        uasort($this->sql_executed_queries_array, "cmp_query_time");
+        $this->sql_executed_queries_array = array_reverse($this->sql_executed_queries_array, true);
+        $retval .= "<div class='content'>Sorted by execution time: <pre>\n";
+        $retval .= var_export($this->sql_executed_queries_array, true);
+        $retval .= "</pre></div>\n";
+        return $retval;
+    }
     /**
      * Returns a string in a compatible / secure way for storing in the database
      *
@@ -282,20 +322,6 @@ class AbstractDb
         $sql_starttime = microtime();
         $result = @ pg_query($connection, $sql);
         $sql_endtime = microtime();
-
-        /*global $sql_total_time;
-        global $sql_num_select_unique_querys;
-
-        $sql_num_select_unique_querys ++;
-        $parts_of_starttime = explode(' ', $sql_starttime);
-        $sql_starttime = $parts_of_starttime[0] + $parts_of_starttime[1];
-        $parts_of_endtime = explode(' ', $sql_endtime);
-        $sql_endtime = $parts_of_endtime[0] + $parts_of_endtime[1];
-        $sql_timetaken = $sql_endtime - $sql_starttime;
-        $sql_total_time = $sql_total_time + $sql_timetaken;
-
-        if ($debug == true)
-            echo "<p>".sprintf(_("Elapsed time for query execution : %6f second(s)"), $sql_timetaken)."</p>\n";*/
 
         $sql_timetaken = $this->logQueries($sql, 'SELECT_UNIQUE', $sql_starttime, $sql_endtime);
 		if ($debug == TRUE)
@@ -364,19 +390,9 @@ class AbstractDb
         if ($debug == TRUE)
             echo "<hr/><p>execSqlUpdate(): "._("SQL Query")." : <br/>\n<pre>{$sql}</pre></p>\n";
 
-        /*global $sql_num_update_querys;
-        global $sql_total_time;
-
-        $sql_num_update_querys ++;*/
         $sql_starttime = microtime();
         $result = pg_query($connection, $sql);
         $sql_endtime = microtime();
-        /*$parts_of_starttime = explode(' ', $sql_starttime);
-        $sql_starttime = $parts_of_starttime[0] + $parts_of_starttime[1];
-        $parts_of_endtime = explode(' ', $sql_endtime);
-        $sql_endtime = $parts_of_endtime[0] + $parts_of_endtime[1];
-        $sql_timetaken = $sql_endtime - $sql_starttime;
-        $sql_total_time = $sql_total_time + $sql_timetaken;*/
 
         $sql_timetaken = $this->logQueries($sql, 'UPDATE', $sql_starttime, $sql_endtime);
         if ($debug == TRUE)
@@ -479,9 +495,7 @@ class AbstractDb
         }
         return $retval;
     }
-
 }
-
 /*
  * Local variables:
  * tab-width: 4

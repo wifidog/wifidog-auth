@@ -63,7 +63,7 @@ class Statistics
     private $report_date_min; /**< Minimum timestamp */
     /** Maximum timestamp */
     private $report_date_max;
-    /** How to distinguish unique users.  Either 'user_mac' (MAC adresses) or 'user_id' */
+    /** How to distinguish unique users.  Either 'user_mac' (MAC addresses) or 'user_id' */
     private $report_distinguish_users_by = 'user_id';
 
     /* Options on how to distinguish users ,see constructor */
@@ -82,7 +82,7 @@ class Statistics
     private $report_selected_users = array ();
     function __construct()
     {
-        $this->user_distinguish_by_options = array ('user_id' => _("Usernames"), 'user_mac' => _("MAC adresses"));
+        $this->user_distinguish_by_options = array ('user_id' => _("Usernames"), 'user_mac' => _("MAC addresses"));
 
     }
 
@@ -301,7 +301,7 @@ EOF;
             {
                 $id = $db->escapeString($id);
                 $first ? $sql .= "" : $sql .= " OR ";
-                $sql .= "users.$column = '$id'";
+                $sql .= "connections.$column = '$id'";
                 $first = false;
             }
             $sql .= ") \n";
@@ -527,7 +527,7 @@ EOF;
         }
         $html .= "    <input type='text' name=\"stats_selected_users\" value='$value'>";
 
-        $type_caption = $this->user_distinguish_by_options[$this->report_distinguish_users_by];
+        $type_caption = _("Username or MAC address, depending on selection above");
         $html .= " $type_caption\n";
 
         return $html;

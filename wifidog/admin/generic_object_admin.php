@@ -177,7 +177,7 @@ case "preview":
     $common_input .= "<input type='hidden' name='object_class' value='" . get_class($object) . "'>";
     $common_input .= "<input type='hidden' name='node_id' value='" . $node_id . "'>";
 
-    $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' target='_top' method='post'>";
+    $html .= "<form name='generic_object_form' action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' target='_top' method='post'>";
     $html .= $common_input;
 
     $name = "node_id";

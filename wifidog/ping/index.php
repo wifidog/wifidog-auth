@@ -50,7 +50,7 @@
 require_once('../include/common.php');
 
 echo "Pong";
-
+$db = AbstractDb::getObject(); 
 $node_id = $db->escapeString($_REQUEST['gw_id']);
 $user_agent =  $db->escapeString($_SERVER['HTTP_USER_AGENT']);
 $db->execSqlUpdate("UPDATE nodes SET last_heartbeat_ip='$_SERVER[REMOTE_ADDR]', last_heartbeat_timestamp=CURRENT_TIMESTAMP, last_heartbeat_user_agent='$user_agent' WHERE node_id='$node_id'");

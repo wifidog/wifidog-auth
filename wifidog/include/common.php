@@ -46,6 +46,10 @@
  * Include PHP initialization file file
  */
 require_once ('init_php.php');
+/**
+ * Include path detection code
+ */
+require_once ('path_defines_base.php');
 
 /**
  * Include configuration file
@@ -72,7 +76,21 @@ function cmnRequireConfig($config_file = 'config.php') {
         require_once ($config_path);
 }
 cmnRequireConfig();
+/**
+ * Load required classes
+ */
+require_once ('classes/AbstractDb.php');
+AbstractDb::getObject();//This is here so we gett reliable SQL vs PHP profiling
+ 
+require_once ('classes/Locale.php');
+require_once ('classes/Dependencies.php');
+require_once ('classes/Server.php');
 
+require_once ('classes/EventLogging.php');
+if (EVENT_LOGGING == true) {
+    EventLogging :: SetupErrorHandling("strict~/var:\sDeprecated/(off)", array (
+    'print' => new PrintChannel(new HTMLFormatter(), 'warning,notice', null, true), 'debug' => new PrintChannel(new HTMLCommentsFormatter(), '=debug', null, false)));
+}
 /**
  * Filter super globals
  */
@@ -82,26 +100,6 @@ undo_magic_quotes();
  * Set default timezone
  */
 dateFix();
-
-/**
- * Include path detection code
- */
-require_once ('path_defines_base.php');
-
-/**
- * Load required classes
- */
-require_once ('classes/EventLogging.php');
-
-if (EVENT_LOGGING == true) {
-    EventLogging :: SetupErrorHandling("strict~/var:\sDeprecated/(off)", array (
-    'print' => new PrintChannel(new HTMLFormatter(), 'warning,notice', null, true), 'debug' => new PrintChannel(new HTMLCommentsFormatter(), '=debug', null, false)));
-}
-require_once ('classes/AbstractDb.php');
-require_once ('classes/Locale.php');
-require_once ('classes/Dependencies.php');
-require_once ('classes/Server.php');
-$db = AbstractDb::getObject();
 
 /**
  * Check for SSL support

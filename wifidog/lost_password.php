@@ -56,6 +56,7 @@ require_once('include/common_interface.php');
 require_once('classes/User.php');
 require_once('classes/MainUI.php');
 $smarty = SmartyWifidog::getObject();
+$db = AbstractDb::getObject(); 
 /**
  * Process recovering username
  */

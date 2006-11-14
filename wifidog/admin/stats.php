@@ -52,6 +52,7 @@ require_once('classes/Utils.php');
 require_once('classes/Statistics.php');
 
 $current_user = User :: getCurrentUser();
+$db = AbstractDb::getObject(); 
 
 $statistics = new Statistics();
 if (!empty ($_REQUEST['action']) && $_REQUEST['action'] == 'generate')
@@ -90,7 +91,7 @@ try
 	{
 		$html .= "<h2>{$stats_title}</h2>";
 	}
-	$html .= "<form>";
+	$html .= "<form name='stats_form'>";
 	$html .= $statistics->getAdminUI();
 
 	if (isset ($_REQUEST['node_id']))
@@ -113,9 +114,9 @@ try
 	$html .= "<input type='hidden' name='action' value='generate'>";
 
 	$html .= "<input type='submit' value='"._("Generate statistics")."'>";
-	$html .= "</form>";
 	$html .= "<hr>";
 	$html .= $statistics->getReportUI();
+    $html .= "</form>";
 }
 catch (exception $e)
 {

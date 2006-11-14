@@ -53,6 +53,7 @@ require_once('classes/User.php');
 require_once('classes/Node.php');
 require_once('classes/MainUI.php');
 $smarty = SmartyWifidog::getObject();
+$db = AbstractDb::getObject(); 
 try {
     if (!isset($_REQUEST["token"]))
         throw new Exception(_('No token specified!'));

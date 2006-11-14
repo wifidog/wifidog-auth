@@ -206,6 +206,10 @@ class NodeListXML {
                 // Node ID
                 $_nodeId = $this->_xmldoc->createElement("nodeId", $_node->getId());
                 $_nodeMetadataNode->appendChild($_nodeId);
+                
+                // Online Users
+                $_nodeUserNum = $this->_xmldoc->createElement("numOnlineUsers", $_node->GetNumOnlineUsers());
+                $_nodeMetadataNode->appendChild($_nodeUserNum);
 
                 $_nodeCreationDate = $this->_xmldoc->createElement("creationDate", $_node->getCreationDate());
                 $_nodeMetadataNode->appendChild($_nodeCreationDate);

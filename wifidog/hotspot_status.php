@@ -56,6 +56,7 @@ require_once('include/common_interface.php');
 require_once('classes/Network.php');
 require_once('classes/NodeList.php');
 $smarty = SmartyWifidog::getObject();
+$db = AbstractDb::getObject(); 
 if (!empty ($_REQUEST['format'])) {
     $format = $db->escapeString($_REQUEST['format']);
 } else {

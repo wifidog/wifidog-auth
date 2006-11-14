@@ -595,40 +595,6 @@ class MainUI
 		return $_html;
 	}
 
-	public function getSqlQueriesLog()
-	{
-		global $sql_total_time;
-		global $sql_num_select_querys;
-		global $sql_select_total_time;
-		global $sql_num_select_unique_querys;
-		global $sql_select_unique_total_time;
-		global $sql_num_update_querys;
-		global $sql_update_total_time;
-		global $sql_executed_queries_array;
-
-		$retval = "";
-
-		$display_sql_total_time = number_format($sql_total_time, 3); // optional
-		$sql_num_querys = $sql_num_select_querys + $sql_num_select_unique_querys + $sql_num_update_querys;
-
-		$select_time_fraction = number_format(100 * ($sql_select_total_time / $sql_total_time), 0) . "%";
-		$select_unique_time_fraction = number_format(100 * ($sql_select_unique_total_time / $sql_total_time), 0) . "%";
-		$update_time_fraction = number_format(100 * ($sql_update_total_time / $sql_total_time), 0) . "%";
-
-		$retval .= "<div class='content'>\n";
-		$retval .= "<P>$sql_num_querys queries took $display_sql_total_time second(s)\n";
-		$retval .= "($sql_num_select_querys SELECT ($select_time_fraction), $sql_num_select_unique_querys SELECT UNIQUE ($select_unique_time_fraction), $sql_num_update_querys UPDATE ($update_time_fraction))</P>\n";
-		$retval .= "</div>\n";
-
-		uasort($sql_executed_queries_array, "cmp_query_time");
-		$sql_executed_queries_array = array_reverse($sql_executed_queries_array, true);
-		$retval .= "<div class='content'>Sorted by execution time: <pre>\n";
-		$retval .= var_export($sql_executed_queries_array, true);
-		$retval .= "</pre></div>\n";
-
-		return $retval;
-	}
-
 	/**
 	 * Display the main page
 	 *
@@ -641,6 +607,7 @@ class MainUI
 	 */
 	public function display()
 	{
+        $db=AbstractDb::getObject();
 		// Init values
 		// Asign base CSS and theme pack CSS stylesheet
 		$this->appendStylesheetURL(BASE_THEME_URL . STYLESHEET_NAME);
@@ -659,10 +626,6 @@ class MainUI
 		}
 		$this->addEverywhereContent();
 		$this->generateDisplayContent();
-		
-		// Add SQL queries log
-		if(defined("LOG_SQL_QUERIES") && LOG_SQL_QUERIES == true)
-			$this->addContent("page_footer", $this->getSqlQueriesLog());
 
 		// Init ALL smarty values
 		$this->smarty->assign('htmlHeaders', "");
@@ -691,12 +654,16 @@ class MainUI
 		// Get information about user
 		User :: assignSmartyValues($this->smarty);
 
-		// Provide the content array to Smarty
-		$this->smarty->assign('contentDisplayArray', $this->_contentDisplayArray);
-
 		// Provide footer scripts to Smarty
 		$this->smarty->assign('footerScripts', $this->_footerScripts);
 
+        // Add SQL queries log (must be done manually here at the very end to catch everything)
+        if(defined("LOG_SQL_QUERIES") && LOG_SQL_QUERIES == true)
+            $this->_contentDisplayArray['page_footer'] .= $db->getSqlQueriesLog();
+        
+        // Provide the content array to Smarty
+        $this->smarty->assign('contentDisplayArray', $this->_contentDisplayArray);
+            
 		// Compile HTML code and output it
 		$this->smarty->display("templates/classes/MainUI_Display.tpl");
 	}

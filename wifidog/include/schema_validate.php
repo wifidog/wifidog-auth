@@ -46,7 +46,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 46);
+define('REQUIRED_SCHEMA_VERSION', 48);
 
 /**
  * Check that the database schema is up to date.  If it isn't, offer to update it.
@@ -943,6 +943,45 @@ function update_schema()
             $sql .= "CREATE INDEX idx_content_group_element_valid_from_timestamp ON content_group_element (valid_from_timestamp);\n";
             $sql .= "CREATE INDEX idx_content_group_element_valid_until_timestamp ON content_group_element (valid_until_timestamp);\n";
         }
+        
+        $new_schema_version = 47;
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+            $sql .= "ALTER TABLE users DROP COLUMN real_name;\n";
+            $sql .= "ALTER TABLE users DROP COLUMN website;\n";
+            $sql .= "ALTER TABLE content_display_log ADD COLUMN num_display integer;\n";
+            $sql .= "UPDATE content_display_log SET num_display=1;\n";
+            $sql .= "ALTER TABLE content_display_log ALTER COLUMN num_display SET NOT NULL;\n";
+            $sql .= "ALTER TABLE content_display_log ALTER COLUMN num_display SET DEFAULT 1;\n";
+            $sql .= "ALTER TABLE content_clickthrough_log ADD COLUMN num_clickthrough integer;\n";
+            $sql .= "UPDATE content_clickthrough_log SET num_clickthrough=1;\n";
+            $sql .= "ALTER TABLE content_clickthrough_log ALTER COLUMN num_clickthrough SET NOT NULL;\n";
+            $sql .= "ALTER TABLE content_clickthrough_log ALTER COLUMN num_clickthrough SET DEFAULT 1;\n";
+            $sql .= "ALTER TABLE content_clickthrough_log RENAME COLUMN clickthrough_timestamp TO first_clickthrough_timestamp;\n";
+            $sql .= "ALTER TABLE content_clickthrough_log ADD COLUMN last_clickthrough_timestamp timestamp;\n";
+            $sql .= "UPDATE content_clickthrough_log SET last_clickthrough_timestamp=first_clickthrough_timestamp;\n";
+            $sql .= "ALTER TABLE content_clickthrough_log ALTER COLUMN last_clickthrough_timestamp SET NOT NULL;\n";
+            $sql .= "ALTER TABLE content_clickthrough_log ALTER COLUMN last_clickthrough_timestamp SET DEFAULT NOW();\n";
+        }
+        $new_schema_version = 48;
+        if ($schema_version < $new_schema_version) {
+            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+            $sql .= "DELETE FROM content_clickthrough_log WHERE user_id IS NULL;\n";
+            $sql .= "ALTER TABLE content_clickthrough_log ALTER COLUMN user_id SET NOT NULL;\n";
+            $results = null;
+            $db->execSql("SELECT COUNT(*) as num_clickthrough, MIN(first_clickthrough_timestamp) as first_clickthrough_timestamp, MAX(last_clickthrough_timestamp) as last_clickthrough_timestamp, user_id, content_id, node_id, destination_url FROM content_clickthrough_log GROUP BY user_id, content_id, node_id, destination_url HAVING COUNT(*) > 1", $results, false);
+            foreach ($results as $row) {
+                $sql .= "DELETE FROM content_clickthrough_log WHERE user_id='$row[user_id]' AND content_id='$row[content_id]' AND node_id='$row[node_id]' AND destination_url='$row[destination_url]';\n";
+                if(!empty($row['user_id'])){
+                    $sql .= "INSERT INTO content_clickthrough_log (num_clickthrough, first_clickthrough_timestamp, last_clickthrough_timestamp, user_id, content_id, node_id, destination_url) VALUES ($row[num_clickthrough], '$row[first_clickthrough_timestamp]', '$row[last_clickthrough_timestamp]', '$row[user_id]', '$row[content_id]', '$row[node_id]', '$row[destination_url]');\n";
+                }
+            }
+            $sql .= "ALTER TABLE content_clickthrough_log ADD CONSTRAINT content_clickthrough_log_pkey PRIMARY KEY(content_id, user_id, node_id, destination_url);\n";
+            $sql .= "ALTER TABLE content_display_log DROP CONSTRAINT content_group_element_portal_display_log_pkey;\n";            
+            $sql .= "ALTER TABLE content_display_log ADD CONSTRAINT content_display_log_pkey PRIMARY KEY(content_id, user_id, node_id);\n";
+ 
+        }
         /*
         $new_schema_version = ;
         if ($schema_version < $new_schema_version) {
@@ -961,23 +1000,7 @@ function update_schema()
             $sql .= "\n";
         }
          */
-        /*
-        $new_schema_version = 44;
-        if ($schema_version < $new_schema_version) {
-            printUpdateVersion($new_schema_version);
-            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
 
-            $sql .= "ALTER TABLE users DROP COLUMN real_name text;\n";
-            $sql .= "ALTER TABLE users DROP COLUMN website text;\n";
-                        $sql .= "ALTER TABLE users RENAME COLUMN never_show_username is_invisible;\n";
-            $sql .= "CREATE TABLE user_profiles (\n";
-            $sql .= "   user_profile_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,\n";
-            $sql .= "   display_area text PRIMARY KEY,\n";
-            $sql .= "   real_name text,\n";
-            $sql .= "   website text,\n";
-            $sql .= ");\n";
-
-        }       */
 
         $db->execSqlUpdate("BEGIN;\n$sql\nCOMMIT;\nVACUUM ANALYZE;\n", true);
         //$db->execSqlUpdate("BEGIN;\n$sql\nROLLBACK;\n", true);

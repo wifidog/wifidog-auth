@@ -80,6 +80,7 @@ require_once('classes/Network.php');
 require_once('classes/MainUI.php');
 $smarty = SmartyWifidog::getObject();
 $session = Session::getObject();
+$db = AbstractDb::getObject(); 
 // Init values
 $continueToAdmin = false;
 $username = null;

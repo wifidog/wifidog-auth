@@ -837,7 +837,7 @@ class Network implements GenericObject
     }
 
     /**
-     * Retreives the FROM adress of the validation email
+     * Retreives the FROM address of the validation email
      *
      * @return string A string
      *
@@ -849,7 +849,7 @@ class Network implements GenericObject
     }
 
     /**
-     * Set the FROM adress of the validation email
+     * Set the FROM address of the validation email
      *
      * @param string $value The new value
      *
@@ -1156,7 +1156,6 @@ class Network implements GenericObject
             // Get number of valid users
             $_network_id = $db->escapeString($this->id);
             $db->execSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_status = ".ACCOUNT_STATUS_ALLOWED." AND account_origin='$_network_id'", $_row, false);
-
             // String has been found
             $_retval = $_row['count'];
 
@@ -1613,7 +1612,7 @@ class Network implements GenericObject
 		$html_network_user_verification[] = InterfaceElements::generateAdminSectionContainer("network_validation_grace_time", $title, $data, $help);
 
         //  validation_email_from_address
-		$title = _("This will be the from adress of the validation email");
+		$title = _("This will be the from address of the validation email");
 		$data = InterfaceElements::generateInputText("network_" . $this->getId() . "_validation_email_from_address", $this->getValidationEmailFromAddress(), "network_validation_email_from_address_input");
 		$html_network_user_verification[] = InterfaceElements::generateAdminSectionContainer("network_validation_email_from_address", $title, $data);
 

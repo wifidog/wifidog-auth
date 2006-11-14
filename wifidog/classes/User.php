@@ -370,11 +370,11 @@ class User implements GenericObject {
             $retval = true;
         } else
             if ($account_status == ACCOUNT_STATUS_VALIDATION) {
-                $sql = "SELECT CASE WHEN ((CURRENT_TIMESTAMP - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired, networks.validation_grace_time FROM users  JOIN networks ON (users.account_origin = networks.network_id) WHERE (user_id='{$this->id}')";
+                $sql = "SELECT CASE WHEN ((CURRENT_TIMESTAMP - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired, EXTRACT(EPOCH FROM networks.validation_grace_time) as validation_grace_time FROM users  JOIN networks ON (users.account_origin = networks.network_id) WHERE (user_id='{$this->id}')";
                 $db->execSqlUniqueRes($sql, $user_info, false);
 
                 if ($user_info['validation_grace_time_expired'] == 't') {
-                    $errmsg = sprintf(_("Sorry, your %s minutes grace period to retrieve your email and validate your account has now expired. You will have to connect to the internet and validate your account from another location or create a new account. For help, please %s click here %s."), $user_info['validation_grace_time_expired'], '<a href="' . BASE_URL_PATH . 'faq.php' . '">', '</a>');
+                    $errmsg = sprintf(_("Sorry, your %.0f minutes grace period to retrieve your email and validate your account has now expired. You will have to connect to the internet and validate your account from another location. For more help, please %s click here %s."), $user_info['validation_grace_time']/60, '<a href="' . BASE_URL_PATH . 'faq.php' . '">', '</a>');
                     $retval = false;
                 } else {
                     $errmsg = _("Your account is currently valid.");

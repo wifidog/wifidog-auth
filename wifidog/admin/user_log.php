@@ -50,7 +50,8 @@ require_once('classes/MainUI.php');
 require_once('classes/User.php');
 
 Security::requireAdmin();
-
+$db = AbstractDb::getObject(); 
+$smarty = SmartyWifidog::getObject(); 
 $total = array ();
 $total['incoming'] = 0;
 $total['outgoing'] = 0;

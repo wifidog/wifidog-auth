@@ -590,7 +590,7 @@ class File extends Content
 
         $html .= "<div class='download_button'><a href='".htmlentities($this->getFileUrl())."'>"._("Download")." ".$this->getFilename()."$append_size</a></div>";
         $html .= "</div>\n";
-
+        $html = $this->replaceHyperLinks($html);
         return parent::getUserUI($html);
     }
 

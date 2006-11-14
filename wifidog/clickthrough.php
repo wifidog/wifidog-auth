@@ -50,13 +50,19 @@ require_once (dirname(__FILE__) . '/include/common.php');
 $db = AbstractDb::getObject(); 
 if (!empty ($_REQUEST['destination_url'])) {
        
-    if (!empty ($_REQUEST['content_id'])) {
+    if (!empty ($_REQUEST['content_id']) && !empty ($_REQUEST['node_id']) && !empty ($_REQUEST['user_id'])  ) {
         $destination_url = $db->escapeString($_REQUEST['destination_url']);
         $content_id = $db->escapeString($_REQUEST['content_id']);
-        empty ($_REQUEST['node_id']) ? $node_id = 'NULL' : $node_id = "'" . $db->escapeString($_REQUEST['node_id']) . "'";
-        empty ($_REQUEST['user_id']) ? $user_id = 'NULL' : $user_id = "'" . $db->escapeString($_REQUEST['user_id']) . "'";
-        $sql = "INSERT INTO content_clickthrough_log (user_id, content_id, node_id, destination_url) VALUES($user_id, '$content_id', $node_id, '$destination_url')\n";
-        $db->execSqlUpdate($sql, false);
+        $node_id = $db->escapeString($_REQUEST['node_id']);
+        $user_id = $db->escapeString($_REQUEST['user_id']);
+        $sql = "SELECT * FROM content_clickthrough_log WHERE content_id='$content_id' AND user_id='$user_id' AND node_id='$node_id' AND destination_url='$destination_url'";
+        $db->execSql($sql, $log_rows, false);
+                if ($log_rows != null) {
+                    $sql = "UPDATE content_clickthrough_log SET num_clickthrough = num_clickthrough +1, last_clickthrough_timestamp = CURRENT_TIMESTAMP WHERE  content_id='$content_id' AND user_id='$user_id' AND node_id='$node_id' AND destination_url='$destination_url'";
+                } else {
+                    $sql = "INSERT INTO content_clickthrough_log (user_id, content_id, node_id, destination_url) VALUES('$user_id', '$content_id', '$node_id', '$destination_url')\n";
+                }
+                $db->execSqlUpdate($sql, false);
     } 
 header("Location: " . $_REQUEST['destination_url']);
 } 

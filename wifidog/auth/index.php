@@ -49,8 +49,8 @@
  * Load common include file
  */
 require_once('../include/common.php');
-
 require_once('classes/Network.php');
+$db = AbstractDb::getObject(); 
 $auth_response = ACCOUNT_STATUS_DENIED;
 $auth_message = '';
 

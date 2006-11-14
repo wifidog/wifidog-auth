@@ -58,6 +58,7 @@ require_once ('classes/Node.php');
 require_once ('classes/MainUI.php');
 require_once ('classes/Session.php');
 $smarty = SmartyWifidog::getObject();
+$db = AbstractDb::getObject(); 
 /*
  * Check for missing URL switch
  */

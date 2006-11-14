@@ -1,3 +1,17 @@
+2006-11-14 Benoit Grégoire  <bock@step.polymtl.ca>
+	* File.php:  Clickthrough weren't logged, DOH!
+	* User.php:  Error message on validation expired didn't properly output the validation grace time.
+	* Statistics.php:  Fix #271: Getting statistics for a single MAC address was broken.  
+	* NodeListXML.php:  Small patch by Josephus to add the number of online users
+	* Improve CPU usage of the content manager
+	* AbstractDb:  Fix query time not being displayed in debug mode if profiling was turned off.
+					Add total execution time statistics.
+	* Fix logging of content clickthrough and display.  Unique users and node data is reliable for existing data.  
+		Number of prints is underestimated (repeat prints for the same user, same content at same node didn't get counted)
+		 for data before this patch.  
+		Same with number of clickthrough for File content types and derivatives (picture, etc.).
+	* ContentReport.php:  Add content report (does not support most option yet, but still very usefull.
+	
 2006-11-13 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Make the MainUI, SmartyWifidog and Session and AbstractDb classes singletons
 	* Implement two pass content display.  All Content can now implement a prepareGetUserUI(), allowing them to interact with MainUI and other Content before display.  
@@ -5,7 +19,7 @@
 	* SmartyWifidog.php Turn on security, begin preparing for standardisation of Smarty variables
 	* New Content type:  Stylesheet.  Allows specific nodes, or even specific content groups to have custom stylesheets.
 	* Langstring.php:  Make getAdminUI calling conventions coherent with other content types.
-	
+
 2006-11-11 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Authenticator.php:  Critical: Fix SQL query syntax in acctStart()
 	

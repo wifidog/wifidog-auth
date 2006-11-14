@@ -117,7 +117,7 @@ class MostFrequentUsers extends StatisticReport
                     $display_id = $user->getUsername();
                 }
                 else
-                { //We only have a MAC adress
+                { //We only have a MAC address
                     $display_id = $row['user_mac'];
                 }
                 $html .= "  <td>{$display_id}</a></td>\n";
