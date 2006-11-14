@@ -123,7 +123,7 @@ catch (exception $e)
 	$html .= $e->getMessage();
 	$html .= "</p>";
 }
-$ui = new MainUI();
+$ui = MainUI::getObject();
 $ui->setToolSection('ADMIN');
 $ui->addContent('main_area_middle', $html);
 $ui->display();

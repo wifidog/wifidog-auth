@@ -56,8 +56,8 @@ require_once(dirname(__FILE__) . '/include/common.php');
 require_once('include/common_interface.php');
 require_once('classes/Node.php');
 require_once('classes/Utils.php');
-
-global $db;
+$smarty = SmartyWifidog::getObject();
+$db = AbstractDb::getObject();
 
 // Set the sort parameter, defaults to name
 if (empty ($_REQUEST["sort_by"]))
@@ -147,7 +147,7 @@ $smarty->assign("sort_by_param", $sort_by_param);
 
 require_once('classes/MainUI.php');
 
-$ui = new MainUI();
+$ui = MainUI::getObject();
 $ui->addContent('main_area_middle', $smarty->fetch("templates/node_list.html"));
 $ui->display();
 

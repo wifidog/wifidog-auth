@@ -49,7 +49,8 @@ require_once('../../include/common.php');
 require_once('include/common_interface.php');
 require_once('classes/MainUI.php');
 require_once('classes/Content/PatternLanguage.php');
-
+$smarty = SmartyWifidog::getObject();
+$session = Session::getObject();
 // This trick is done to allow displaying of Pattern Language right away if there is only one available.
 if(!empty($_REQUEST['content_id']))
 {
@@ -91,7 +92,7 @@ $body_html .= $pattern_language->getLongDescription()->__toString();
 $body_html .= "</div>";
 
 
-$ui=new MainUI();
+$ui=MainUI::getObject();
 $ui->addContent('left_area_middle', $tool_html);
 $ui->setTitle(_("Pattern Language - About"));
 $ui->addContent('main_area_middle', $body_html);

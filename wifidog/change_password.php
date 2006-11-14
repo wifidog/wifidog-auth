@@ -53,7 +53,8 @@ require_once(dirname(__FILE__) . '/include/common.php');
 require_once('classes/MainUI.php');
 require_once('include/common_interface.php');
 require_once('classes/User.php');
-
+$smarty = SmartyWifidog::getObject();
+$smarty = SmartyWifidog::getObject();
 $smarty->assign('error', '');
 
 $smarty->assign('username', '');
@@ -129,7 +130,7 @@ if ($user && isset($_REQUEST["form_request"])) {
 			}
 		}
 
-        $ui = new MainUI();
+        $ui = MainUI::getObject();
         $ui->addContent('main_area_middle', $smarty->fetch("templates/sites/validate.tpl"));
         $ui->display();
 
@@ -151,7 +152,7 @@ isset ($sources) && $smarty->assign('auth_sources', $sources);
 // Pass the account_origin along, if it's set
 isset ($_REQUEST["auth_source"]) && $smarty->assign('selected_auth_source', $_REQUEST["auth_source"]);
 
-$ui = new MainUI();
+$ui = MainUI::getObject();
 $smarty->assign('SelectNetworkUI', Network::getSelectNetworkUI('auth_source'));
 $ui->addContent('main_area_middle', $smarty->fetch("templates/change_password.html"));
 $ui->display();

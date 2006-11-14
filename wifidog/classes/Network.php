@@ -108,7 +108,7 @@ class Network implements GenericObject
     public static function getAllNetworks()
     {
         $retval = array ();
-        global $db;
+        $db = AbstractDb::getObject();
         $sql = "SELECT network_id FROM networks ORDER BY is_default_network DESC";
         $network_rows = null;
         $db->execSql($sql, $network_rows, false);
@@ -134,7 +134,7 @@ class Network implements GenericObject
     public static function getDefaultNetwork($real_network_only = false)
     {
         $retval = null;
-        global $db;
+        $db = AbstractDb::getObject();
         $sql = "SELECT network_id FROM networks WHERE is_default_network=TRUE ORDER BY creation_date LIMIT 1";
         $network_row = null;
         $db->execSqlUniqueRes($sql, $network_row, false);
@@ -187,7 +187,7 @@ class Network implements GenericObject
      */
     public static function createNewObject($network_id = null)
     {
-        global $db;
+        $db = AbstractDb::getObject();
         if (empty ($network_id)) {
             $network_id = get_guid();
         }
@@ -230,7 +230,7 @@ class Network implements GenericObject
             $selected_id = null;
         }
 
-        global $db;
+        $db = AbstractDb::getObject();
         $additional_where = $db->escapeString($additional_where);
         $sql = "SELECT network_id, name FROM networks WHERE 1=1 $additional_where ORDER BY is_default_network DESC";
         $network_rows = null;
@@ -328,7 +328,7 @@ class Network implements GenericObject
                         throw new Exception(_("Access denied"));
                     }
                 } catch (Exception $e) {
-                    $ui = new MainUI();
+                    $ui = MainUI::getObject();
                     $ui->setToolSection('ADMIN');
                     $ui->displayError($e->getMessage(), false);
                     exit;
@@ -352,8 +352,8 @@ class Network implements GenericObject
      */
     private function __construct($p_network_id)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         $network_id_str = $db->escapeString($p_network_id);
         $sql = "SELECT *, EXTRACT(EPOCH FROM validation_grace_time) as validation_grace_time_seconds FROM networks WHERE network_id='$network_id_str'";
@@ -405,7 +405,7 @@ class Network implements GenericObject
         $retval = true;
 
         if ($value != $this->getName()) {
-            global $db;
+            $db = AbstractDb::getObject();
             $value = $db->escapeString($value);
             $retval = $db->execSqlUpdate("UPDATE networks SET tech_support_email = '{$value}' WHERE network_id = '{$this->getId()}'", false);
             $this->refresh();
@@ -441,7 +441,7 @@ class Network implements GenericObject
         $retval = true;
 
         if ($value != $this->getName()) {
-            global $db;
+            $db = AbstractDb::getObject();
             $value = $db->escapeString($value);
             $retval = $db->execSqlUpdate("UPDATE networks SET name = '{$value}' WHERE network_id = '{$this->getId()}'", false);
             $this->refresh();
@@ -481,7 +481,7 @@ class Network implements GenericObject
         $retval = true;
 
         if ($value != $this->getThemePack()) {
-            global $db;
+            $db = AbstractDb::getObject();
             empty($value)?$value="NULL":$value="'".$db->escapeString($value->getId())."'";
             $retval = $db->execSqlUpdate("UPDATE networks SET theme_pack = {$value} WHERE network_id = '{$this->getId()}'", false);
             $this->refresh();
@@ -511,8 +511,8 @@ class Network implements GenericObject
      */
     public function setCreationDate($value)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $_retVal = true;
@@ -553,7 +553,7 @@ class Network implements GenericObject
         $retval = true;
 
         if ($value != $this->getName()) {
-            global $db;
+            $db = AbstractDb::getObject();
             $value = $db->escapeString($value);
             $retval = $db->execSqlUpdate("UPDATE networks SET homepage_url = '{$value}' WHERE network_id = '{$this->getId()}'", false);
             $this->refresh();
@@ -584,8 +584,8 @@ class Network implements GenericObject
      */
     public function setAuthenticatorClassName($value)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $retval = true;
@@ -620,8 +620,8 @@ class Network implements GenericObject
      */
     public function setAuthenticatorConstructorParams($value)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // init values
         $retval = true;
@@ -734,8 +734,8 @@ class Network implements GenericObject
      */
     public static function getSelectAuthenticator($user_prefix, $pre_selected_authenticator = null)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $_authenticators = array ();
@@ -787,7 +787,7 @@ class Network implements GenericObject
         $retval = true;
 
         if (!$this->isDefaultNetwork()) {
-            global $db;
+            $db = AbstractDb::getObject();
             $sql = "UPDATE networks SET is_default_network = FALSE;\n";
             $sql .= "UPDATE networks SET is_default_network = TRUE WHERE network_id = '{$this->getId()}';\n";
             $retval = $db->execSqlUpdate($sql, false);
@@ -827,7 +827,7 @@ class Network implements GenericObject
         $retval = true;
 
         if ($value != $this->getValidationGraceTime()) {
-            global $db;
+            $db = AbstractDb::getObject();
             $value = $db->escapeString($value);
             $retval = $db->execSqlUpdate("UPDATE networks SET validation_grace_time = '{$value} seconds' WHERE network_id = '{$this->getId()}'", false);
             $this->refresh();
@@ -863,7 +863,7 @@ class Network implements GenericObject
         $retval = true;
 
         if ($value != $this->getValidationEmailFromAddress()) {
-            global $db;
+            $db = AbstractDb::getObject();
             $value = $db->escapeString($value);
             $retval = $db->execSqlUpdate("UPDATE networks SET validation_email_from_address = '{$value}' WHERE network_id = '{$this->getId()}'", false);
             $this->refresh();
@@ -899,7 +899,7 @@ class Network implements GenericObject
         $retval = true;
 
         if ($value != $this->getMultipleLoginAllowed()) {
-            global $db;
+            $db = AbstractDb::getObject();
             $value ? $value = 'TRUE' : $value = 'FALSE';
             $retval = $db->execSqlUpdate("UPDATE networks SET allow_multiple_login = {$value} WHERE network_id = '{$this->getId()}'", false);
             $this->refresh();
@@ -935,7 +935,7 @@ class Network implements GenericObject
         $retval = true;
 
         if ($value != $this->getSplashOnlyNodesAllowed()) {
-            global $db;
+            $db = AbstractDb::getObject();
             $value ? $value = 'TRUE' : $value = 'FALSE';
             $retval = $db->execSqlUpdate("UPDATE networks SET allow_splash_only_nodes = {$value} WHERE network_id = '{$this->getId()}'", false);
             $this->refresh();
@@ -963,8 +963,8 @@ class Network implements GenericObject
      */
     public function setGisLocation($pt)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         if (!empty ($pt)) {
             $lat = $db->escapeString($pt->getLatitude());
@@ -1001,8 +1001,8 @@ class Network implements GenericObject
      */
     public function setGisMapType($value)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $retval = true;
@@ -1029,8 +1029,8 @@ class Network implements GenericObject
      */
     public static function getSelectGisMapType($user_prefix, $pre_selected_map_type = "G_NORMAL_MAP")
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $_map_types = array (array ("G_NORMAL_MAP", _("Map")), array ("G_SATELLITE_MAP", _("Satellite")), array ("G_HYBRID_MAP", _("Hybrid")));
@@ -1081,8 +1081,8 @@ class Network implements GenericObject
      */
     public function getNumUsers()
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $_retval = 0;
@@ -1129,8 +1129,8 @@ class Network implements GenericObject
      */
     public function getNumValidUsers()
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $_retval = 0;
@@ -1178,8 +1178,8 @@ class Network implements GenericObject
      */
     public function getNumOnlineUsers()
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $_retval = 0;
@@ -1226,8 +1226,8 @@ class Network implements GenericObject
      */
     public function getNumNodes()
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $_retval = 0;
@@ -1274,8 +1274,8 @@ class Network implements GenericObject
      */
     public function getNumDeployedNodes()
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $_retval = 0;
@@ -1324,8 +1324,8 @@ class Network implements GenericObject
      */
     public function getNumOnlineNodes($nonMonitoredOnly = false)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $_retval = 0;
@@ -1403,7 +1403,7 @@ class Network implements GenericObject
         $retval = true;
 
         if ($value != $this->getCustomPortalRedirectAllowed()) {
-            global $db;
+            $db = AbstractDb::getObject();
             $value ? $value = 'TRUE' : $value = 'FALSE';
             $retval = $db->execSqlUpdate("UPDATE networks SET allow_custom_portal_redirect = {$value} WHERE network_id = '{$this->getId()}'", false);
             $this->refresh();
@@ -1421,8 +1421,8 @@ class Network implements GenericObject
      */
     public function hasAdminAccess(User $user)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $row = null;
@@ -1456,8 +1456,8 @@ class Network implements GenericObject
      */
     /*public function getAllContent($exclude_subscribed_content = false, $subscriber = null)
     {
-        // Define globals
-    	global $db;
+        
+    	$db = AbstractDb::getObject();
 
         // Init values
         $content_rows = null;
@@ -1791,8 +1791,8 @@ class Network implements GenericObject
      */
     public function addContent(Content $content)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         $content_id = $db->escapeString($content->getId());
         $sql = "INSERT INTO network_has_content (network_id, content_id) VALUES ('$this->id','$content_id')";
@@ -1810,8 +1810,8 @@ class Network implements GenericObject
      */
     public function removeContent(Content $content)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         $content_id = $db->escapeString($content->getId());
         $sql = "DELETE FROM network_has_content WHERE network_id='$this->id' AND content_id='$content_id'";
@@ -1839,7 +1839,7 @@ class Network implements GenericObject
             if ($this->isDefaultNetwork() === true) {
                 $errmsg = _('Cannot delete default network, create another one and select it before remove this one.');
             } else {
-                global $db;
+                $db = AbstractDb::getObject();
                 $id = $db->escapeString($this->getId());
                 if (!$db->execSqlUpdate("DELETE FROM networks WHERE network_id='{$id}'", false)) {
                     $errmsg = _('Could not delete network!');

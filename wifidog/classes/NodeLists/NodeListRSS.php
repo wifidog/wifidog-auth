@@ -90,8 +90,8 @@ class NodeListRSS {
      */
     public function __construct(&$network)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init XML Document
         $this->_xmldoc = new DOMDocument("1.0", "UTF-8");
@@ -134,8 +134,8 @@ class NodeListRSS {
      */
     public function getOutput($return_object = false)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Root node
         $_rss = $this->_xmldoc->createElement("rss");

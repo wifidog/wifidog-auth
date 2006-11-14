@@ -56,7 +56,7 @@ require_once('classes/MainUI.php');
 require_once('classes/Network.php');
 require_once('classes/Node.php');
 require_once('classes/User.php');
-
+$smarty = SmartyWifidog::getObject();
 // Init ALL smarty SWITCH values
 $smarty->assign('sectionTOOLCONTENT', false);
 $smarty->assign('sectionMAINCONTENT', false);
@@ -101,7 +101,7 @@ $html_body = $smarty->fetch("templates/sites/index.tpl");
 /*
  * Render output
  */
-$ui = new MainUI();
+$ui = MainUI::getObject();
 $ui->addContent('left_area_middle', $html);
 $ui->addContent('main_area_top', $html_body);
 $ui->display();

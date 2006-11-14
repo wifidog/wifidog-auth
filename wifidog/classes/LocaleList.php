@@ -52,7 +52,7 @@
 class LocaleList {
 
     function __construct() {
-        global $db;
+        $db = AbstractDb::getObject();
         $this->mBd = & $db; //for backward compatibility
     }
 
@@ -131,7 +131,7 @@ if($exclude_array==null) {
      * Retourne le language par défaut, selon les préférences de l'usager
      */
     function GetDefault() {
-        global $session;
+        $session = Session::getObject();
 
         if ($user = User :: getCurrentUser()) {
             $locale = $user->getPreferedLocale();

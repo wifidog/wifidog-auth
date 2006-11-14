@@ -97,7 +97,7 @@ class User implements GenericObject {
      */
     public static function getCurrentUser() {
         require_once ('classes/Session.php');
-        $session = new Session();
+        $session = Session::getObject();
         $user = null;
         try {
             $user = self :: getObject($session->get(SESS_USER_ID_VAR));
@@ -121,7 +121,7 @@ class User implements GenericObject {
      */
     public static function setCurrentUser(User $user) {
         try {
-            $session = new Session();
+            $session = Session::getObject();
             $session->set(SESS_USER_ID_VAR, $user->getId());
             $session->set(SESS_PASSWORD_HASH_VAR, $user->getPasswordHash());
             return true;
@@ -146,7 +146,7 @@ class User implements GenericObject {
      * @return a User object, or null if there was an error
      */
     public static function getUserByUsernameAndOrigin($username, Network $account_origin) {
-        global $db;
+        $db = AbstractDb::getObject();
         $object = null;
 
         $username_str = $db->escapeString($username);
@@ -164,7 +164,7 @@ class User implements GenericObject {
      * @return a User object, or null if there was an error
      */
     public static function getUserByEmailAndOrigin($email, Network $account_origin) {
-        global $db;
+        $db = AbstractDb::getObject();
         $object = null;
 
         $email_str = $db->escapeString($email);
@@ -193,7 +193,7 @@ class User implements GenericObject {
      * @return the newly created User object, or null if there was an error
      */
     static function createUser($id, $username, Network $account_origin, $email, $password) {
-        global $db;
+        $db = AbstractDb::getObject();
 
         $object = null;
         $id_str = $db->escapeString($id);
@@ -213,7 +213,7 @@ class User implements GenericObject {
 
     /*    public static function purgeUnvalidatedUsers($days_since_creation)
         {
-            global $db;
+            $db = AbstractDb::getObject();
             $days_since_creation = $db->escapeString($days_since_creation);
     
             //$db->execSqlUpdate("INSERT INTO users (user_id,username, account_origin,email,pass,account_status,validation_token,reg_date) VALUES ('$id_str','$username_str','$account_origin_str','$email_str','$password_hash','$status','$token',CURRENT_TIMESTAMP)");
@@ -221,7 +221,7 @@ class User implements GenericObject {
 
     /** @param $object_id The id of the user */
     function __construct($object_id) {
-        global $db;
+        $db = AbstractDb::getObject();
         $this->mDb = & $db;
         $object_id_str = $db->escapeString($object_id);
         $sql = "SELECT * FROM users WHERE user_id='{$object_id_str}'";
@@ -281,7 +281,7 @@ class User implements GenericObject {
     function setUsername($value) {
         $retval = true;
         if ($value != $this->getUsername()) {
-            global $db;
+            $db = AbstractDb::getObject();
             $value = $db->escapeString($value);
             $retval = @ $db->execSqlUpdate("UPDATE users SET username = '{$value}' WHERE user_id='{$this->id}'", false);
             if (!$retval) {
@@ -307,7 +307,7 @@ class User implements GenericObject {
     function setIsInvisible($value) {
         $retval = true;
         if ($value != $this->isAdvertised()) {
-            global $db;
+            $db = AbstractDb::getObject();
             $value ? $value = 'TRUE' : $value = 'FALSE';
             $retval = $db->execSqlUpdate("UPDATE users SET is_invisible = {$value} WHERE user_id = '{$this->getId()}'", false);
             $this->refresh();
@@ -321,7 +321,7 @@ class User implements GenericObject {
 
     /**What locale (language) does the user prefer? */
     public function getPreferedLocale() {
-        global $session;
+        $session = Session::getObject();
         $locale = $this->mRow['prefered_locale'];
         if (empty ($locale) && !empty ($session))
             $locale = $session->get(SESS_LANGUAGE_VAR);
@@ -351,7 +351,7 @@ class User implements GenericObject {
     }
 
     function setAccountStatus($status) {
-        global $db;
+        $db = AbstractDb::getObject();
 
         $status_str = $db->escapeString($status);
         if (!($update = $db->execSqlUpdate("UPDATE users SET account_status='{$status_str}' WHERE user_id='{$this->id}'"))) {
@@ -363,7 +363,7 @@ class User implements GenericObject {
     /** Is the user valid?  Valid means that the account is validated or hasn't exhausted it's validation period.
      $errmsg: Returs the reason why the account is or isn't valid */
     function isUserValid(& $errmsg = null) {
-        global $db;
+        $db = AbstractDb::getObject();
         $retval = false;
         $account_status = $this->getAccountStatus();
         if ($account_status == ACCOUNT_STATUS_ALLOWED) {
@@ -388,7 +388,7 @@ class User implements GenericObject {
     }
 
     public function isSuperAdmin() {
-        global $db;
+        $db = AbstractDb::getObject();
         //$this->session->dump();
 
         $db->execSqlUniqueRes("SELECT * FROM users NATURAL JOIN administrators WHERE (users.user_id='$this->id')", $user_info, false);
@@ -404,7 +404,7 @@ class User implements GenericObject {
      * Tells if the current user is owner of at least one hotspot.
      */
     public function isOwner() {
-        global $db;
+        $db = AbstractDb::getObject();
         $db->execSql("SELECT * FROM node_stakeholders WHERE is_owner = true AND user_id='{$this->getId()}'", $row, false);
         if ($row != null)
             return true;
@@ -413,7 +413,7 @@ class User implements GenericObject {
     }
 
     public function isNobody() {
-        global $db;
+        $db = AbstractDb::getObject();
         $db->execSqlUniqueRes("SELECT DISTINCT user_id FROM (SELECT user_id FROM network_stakeholders WHERE user_id='{$this->getId()}' UNION SELECT user_id FROM node_stakeholders WHERE user_id='{$this->getId()}' UNION SELECT user_id FROM administrators WHERE user_id='{$this->getId()}') as tmp", $row, false);
         if ($row == null)
             return true;
@@ -438,8 +438,8 @@ class User implements GenericObject {
     */
     function generateConnectionToken() {
         if ($this->isUserValid()) {
-            global $db;
-            global $session;
+            $db = AbstractDb::getObject();
+            $session = Session::getObject();
 
             $token = self :: generateToken();
             if ($_SERVER['REMOTE_ADDR']) {
@@ -459,7 +459,7 @@ class User implements GenericObject {
     }
 
     function setPassword($password) {
-        global $db;
+        $db = AbstractDb::getObject();
 
         $new_password_hash = User :: passwordHash($password);
         if (!($update = $db->execSqlUpdate("UPDATE users SET pass='$new_password_hash' WHERE user_id='{$this->id}'"))) {
@@ -475,7 +475,7 @@ class User implements GenericObject {
     /** Return all the users
      */
     static function getAllUsers() {
-        global $db;
+        $db = AbstractDb::getObject();
 
         $db->execSql("SELECT * FROM users", $objects, false);
         if ($objects == null) {
@@ -531,7 +531,7 @@ class User implements GenericObject {
     }
 
     static function userExists($id) {
-        global $db;
+        $db = AbstractDb::getObject();
         $id_str = $db->escapeString($id);
         $sql = "SELECT * FROM users WHERE user_id='{$id_str}'";
         $db->execSqlUniqueRes($sql, $row, false);
@@ -539,7 +539,7 @@ class User implements GenericObject {
     }
 
     public static function emailExists($id) {
-        global $db;
+        $db = AbstractDb::getObject();
         $id_str = $db->escapeString($id);
         $sql = "SELECT * FROM users WHERE email='{$id_str}'";
         $db->execSqlUniqueRes($sql, $row, false);
@@ -612,8 +612,8 @@ class User implements GenericObject {
     
      */
     public static function getSelectUserUI($user_prefix, $add_button_name = null, $add_button_value = null) {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         $_networkSelector = InterfaceElements :: generateDiv(Network :: getSelectNetworkUI($user_prefix), "admin_section_network_selector", "admin_section_network_selector_" . $user_prefix);
 
@@ -651,7 +651,7 @@ class User implements GenericObject {
     }
 
     public function getAdminUI() {
-        global $db;
+        $db = AbstractDb::getObject();
         $currentUser = self :: getCurrentUser();
         $html = '';
         $html .= "<fieldset class='admin_container " . get_class($this) . "'>\n";
@@ -689,7 +689,7 @@ class User implements GenericObject {
     }
 
     public function processAdminUI() {
-        global $db;
+        $db = AbstractDb::getObject();
         $currentUser = self :: getCurrentUser();
         if ($this == $currentUser || $this->getNetwork()->hasAdminAccess($currentUser)) {
             //username
@@ -710,7 +710,7 @@ class User implements GenericObject {
 
     /** Add content to this user ( subscription ) */
     public function addContent(Content $content) {
-        global $db;
+        $db = AbstractDb::getObject();
         $content_id = $db->escapeString($content->getId());
         $sql = "INSERT INTO user_has_content (user_id, content_id) VALUES ('$this->id','$content_id')";
         $db->execSqlUpdate($sql, false);
@@ -719,7 +719,7 @@ class User implements GenericObject {
 
     /** Remove content from this node */
     public function removeContent(Content $content) {
-        global $db;
+        $db = AbstractDb::getObject();
         $content_id = $db->escapeString($content->getId());
         $sql = "DELETE FROM user_has_content WHERE user_id='$this->id' AND content_id='$content_id'";
         $db->execSqlUpdate($sql, false);
@@ -729,7 +729,7 @@ class User implements GenericObject {
     /**Get an array of all Content linked to this node
     * @return an array of Content or an empty arrray */
     function getAllContent() {
-        global $db;
+        $db = AbstractDb::getObject();
         $retval = array ();
         $sql = "SELECT * FROM user_has_content WHERE user_id='$this->id' ORDER BY subscribe_timestamp";
         $db->execSql($sql, $content_rows, false);

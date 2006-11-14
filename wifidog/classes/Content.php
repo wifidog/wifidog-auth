@@ -97,8 +97,8 @@ class Content implements GenericObject {
      * @return void
      */
     private function __construct($content_id) {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $row = null;
@@ -149,8 +149,8 @@ class Content implements GenericObject {
 
      */
     public static function createNewObject($content_type = "Content", $id = null) {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         if (empty ($id)) {
             $contentId = get_guid();
@@ -240,8 +240,8 @@ class Content implements GenericObject {
 
      */
     public static function getObject($content_id) {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $row = null;
@@ -382,8 +382,8 @@ class Content implements GenericObject {
      * @return mixed Requested content
      */
     public static function getAllContent($content_type = "") {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $whereClause = "";
@@ -418,8 +418,8 @@ class Content implements GenericObject {
      * @return string HTML markup
      */
     public static function getNewContentUI($user_prefix, $content_type_filter = null, $title = null) {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $html = "";
@@ -536,8 +536,8 @@ class Content implements GenericObject {
 
      */
     public static function getLinkedContentUI($user_prefix, $link_table, $link_table_obj_key_col, $link_table_obj_key, $default_display_page = 'portal', $default_display_area = 'main_area_middle') {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $html = "";
@@ -615,7 +615,7 @@ class Content implements GenericObject {
      * @return the Content object, or null if the user didn't greate one
      */
     static function processLinkedContentUI($user_prefix, $link_table, $link_table_obj_key_col, $link_table_obj_key) {
-        global $db;
+        $db = AbstractDb::getObject();
         $link_table = $db->escapeString($link_table);
         $link_table_obj_key_col = $db->escapeString($link_table_obj_key_col);
         $link_table_obj_key = $db->escapeString($link_table_obj_key);
@@ -721,8 +721,8 @@ class Content implements GenericObject {
 
      */
     public static function getSelectExistingContentUI($user_prefix, $sql_additional_where = null, $content_type_filter = null, $order = "creation_timestamp", $type_interface = "select") {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $html = '';
@@ -888,7 +888,7 @@ class Content implements GenericObject {
      * Note that after using this, the object must be re-instanciated to have the right type
      * */
     private function setContentType($content_type) {
-        global $db;
+        $db = AbstractDb::getObject();
         $content_type = $db->escapeString($content_type);
         if (!self :: isContentTypeAvailable($content_type)) {
             throw new Exception(_("The following content type isn't valid: ") . $content_type);
@@ -906,7 +906,7 @@ class Content implements GenericObject {
      * @param $is_author Optionnal, true or false.  Set to true if the user is one of the actual authors of the Content
      * @return true on success, false on failure */
     public function addOwner(User $user, $is_author = false) {
-        global $db;
+        $db = AbstractDb::getObject();
         $content_id = "'" . $this->id . "'";
         $user_id = "'" . $db->escapeString($user->getId()) . "'";
         $is_author ? $is_author = 'TRUE' : $is_author = 'FALSE';
@@ -923,7 +923,7 @@ class Content implements GenericObject {
      * @param $user The user to be removed from the owners list
      */
     public function deleteOwner(User $user, $is_author = false) {
-        global $db;
+        $db = AbstractDb::getObject();
         $content_id = "'" . $this->id . "'";
         $user_id = "'" . $db->escapeString($user->getId()) . "'";
 
@@ -958,7 +958,7 @@ class Content implements GenericObject {
      * displayed before, an empty string otherwise.
      */
     public function getLastDisplayTimestamp($user = null, $node = null) {
-        global $db;
+        $db = AbstractDb::getObject();
         $retval = '';
         $sql = "SELECT EXTRACT(EPOCH FROM last_display_timestamp) as last_display_unix_timestamp FROM content_display_log WHERE content_id='{$this->id}' \n";
 
@@ -990,7 +990,7 @@ class Content implements GenericObject {
      * @param $user User object:  the user to be tested.
      * @return true if the user is a owner, false if he isn't of the user is null */
     public function isOwner($user) {
-        global $db;
+        $db = AbstractDb::getObject();
         $retval = false;
         if ($user != null) {
             $user_id = $db->escapeString($user->GetId());
@@ -1006,7 +1006,7 @@ class Content implements GenericObject {
     /** Get the authors of the Content
      * @return null or array of User objects */
     public function getAuthors() {
-        global $db;
+        $db = AbstractDb::getObject();
         $retval = array ();
         $sql = "SELECT user_id FROM content_has_owners WHERE content_id='$this->id' AND is_author=TRUE";
         $db->execSqlUniqueRes($sql, $content_owner_row, false);
@@ -1028,6 +1028,14 @@ class Content implements GenericObject {
     public function isSimpleContent() {
         return false;
     }
+    
+    /** This function will be called by MainUI for each Content BEFORE any getUserUI function is called to allow two pass Content display.
+     * Two pass Content display allows such things as modyfying headers, title, creating content type that accumulate content from other pieces (like RSS feeds)
+     * @return null
+     */    
+     public function prepareGetUserUI() {
+        return null;
+    }  
     /** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
      * @param $subclass_admin_interface Html content of the interface element of a children
      * @return The HTML fragment for this interface */
@@ -1119,7 +1127,7 @@ if(!$this->isSimpleContent())
             if ($user != null && $node != null) {
                 $user_id = $user->getId();
                 $node_id = $node->getId();
-                global $db;
+                $db = AbstractDb::getObject();
 
                 $sql = "SELECT * FROM content_display_log WHERE user_id='$user_id' AND node_id='$node_id' AND content_id='$this->id'";
                 $db->execSql($sql, $log_rows, false);
@@ -1162,7 +1170,7 @@ if(!$this->isSimpleContent())
      * @return string The HTML fragment for this interface.
      */
     public function getAdminUI($subclass_admin_interface = null, $title = null) {
-        global $db;
+        $db = AbstractDb::getObject();
 
         $html = '';
         if(!(User :: getCurrentUser()->isSuperAdmin() || $this->isOwner(User :: getCurrentUser())))
@@ -1305,7 +1313,7 @@ if(!$this->isSimpleContent())
                 $html .= "<div class='admin_element_label'>" . _("Content owner list") . "</div>\n";
                 $html .= "<ul class='admin_element_list'>\n";
 
-                global $db;
+                $db = AbstractDb::getObject();
                 $sql = "SELECT * FROM content_has_owners WHERE content_id='$this->id'";
                 $db->execSql($sql, $content_owner_rows, false);
                 if ($content_owner_rows != null) {
@@ -1353,7 +1361,7 @@ if(!$this->isSimpleContent())
     */
     public function processAdminUI() {
         if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
-            global $db;
+            $db = AbstractDb::getObject();
             if ($this->getObjectType() == 'Content') /* The object hasn't yet been typed */ {
                 $content_type = FormSelectGenerator :: getResult("content_" . $this->id . "_content_type", "Content");
                 $this->setContentType($content_type);
@@ -1489,7 +1497,7 @@ if(!$this->isSimpleContent())
      * @return boolean
      */
     public function isUserSubscribed(User $user) {
-        global $db;
+        $db = AbstractDb::getObject();
         $sql = "SELECT content_id FROM user_has_content WHERE user_id = '{$user->getId()}' AND content_id = '{$this->getId()}';";
         $db->execSqlUniqueRes($sql, $row, false);
 
@@ -1527,7 +1535,7 @@ if(!$this->isSimpleContent())
     public function setTitleIsDisplayed($should_display) {
         if ($should_display != $this->titleShouldDisplay()) /* Only update database if there is an actual change */ {
             $should_display ? $should_display_sql = 'TRUE' : $should_display_sql = 'FALSE';
-            global $db;
+            $db = AbstractDb::getObject();
             $db->execSqlUpdate("UPDATE content SET title_is_displayed = $should_display_sql WHERE content_id = '$this->id'", false);
             $this->refresh();
         }
@@ -1552,7 +1560,7 @@ if(!$this->isSimpleContent())
         if ($is_persistent != $this->isPersistent()) /* Only update database if there is an actual change */ {
             $is_persistent ? $is_persistent_sql = 'TRUE' : $is_persistent_sql = 'FALSE';
 
-            global $db;
+            $db = AbstractDb::getObject();
             $db->execSqlUpdate("UPDATE content SET is_persistent = $is_persistent_sql WHERE content_id = '$this->id'", false);
             $this->refresh();
         }
@@ -1575,7 +1583,7 @@ if(!$this->isSimpleContent())
         if ($this->isPersistent()) {
             $errmsg = _("Content is persistent (you must make it non persistent before you can delete it)");
         } else {
-            global $db;
+            $db = AbstractDb::getObject();
             if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
                 $sql = "DELETE FROM content WHERE content_id='$this->id'";
                 $db->execSqlUpdate($sql, false);

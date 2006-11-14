@@ -51,12 +51,12 @@ require_once('classes/MainUI.php');
 
 Security::requireAdmin();
 
-global $db;
+$db = AbstractDb::getObject();
 $online_users = null;
 $db->execSql("SELECT connections.user_id, name, username, account_origin, timestamp_in, incoming, outgoing FROM connections,users,nodes WHERE token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND nodes.node_id=connections.node_id ORDER BY account_origin, timestamp_in DESC", $online_users);
 $smarty->assign("users_array", $online_users);
 
-$ui = new MainUI();
+$ui = MainUI::getObject();
 $ui->setToolSection('ADMIN');
 $ui->addContent('main_area_middle', $smarty->fetch("admin/templates/online_users.html"));
 $ui->display();

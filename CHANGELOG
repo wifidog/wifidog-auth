@@ -1,3 +1,11 @@
+2006-11-13 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Make the MainUI, SmartyWifidog and Session and AbstractDb classes singletons
+	* Implement two pass content display.  All Content can now implement a prepareGetUserUI(), allowing them to interact with MainUI and other Content before display.  
+	  Allow creating content such as stylesheets, feed accumulators, etc. 
+	* SmartyWifidog.php Turn on security, begin preparing for standardisation of Smarty variables
+	* New Content type:  Stylesheet.  Allows specific nodes, or even specific content groups to have custom stylesheets.
+	* Langstring.php:  Make getAdminUI calling conventions coherent with other content types.
+	
 2006-11-11 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Authenticator.php:  Critical: Fix SQL query syntax in acctStart()
 	

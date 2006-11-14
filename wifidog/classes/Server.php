@@ -81,8 +81,8 @@ class Server implements GenericObject
 	 */
 	private function __construct($p_server_id)
 	{
-	    // Define globals
-		global $db;
+	    
+		$db = AbstractDb::getObject();
 
 		// Init values
 		$_row = null;
@@ -136,8 +136,8 @@ class Server implements GenericObject
 	 */
 	public static function getAllServers()
 	{
-	    // Define globals
-		global $db;
+	    
+		$db = AbstractDb::getObject();
 
 	    // Init values
 		$_retVal = array ();
@@ -168,8 +168,8 @@ class Server implements GenericObject
 	 */
 	public static function getDefaultServer($silent=false)
 	{
-	    // Define globals
-		global $db;
+	    
+		$db = AbstractDb::getObject();
 
 		// Init values
 		$_retVal = null;
@@ -210,8 +210,8 @@ class Server implements GenericObject
         {
             return null; //We were probably called from the command line
         }
-	    // Define globals
-		global $db;
+	    
+		$db = AbstractDb::getObject();
 
 		// Init values
 		$_retVal = null;
@@ -244,8 +244,8 @@ class Server implements GenericObject
 	 */
 	public static function createNewObject($server_id = null)
 	{
-	    // Define globals
-		global $db;
+	    
+		$db = AbstractDb::getObject();
 
 		if (empty($server_id)) {
 			$server_id = get_guid();
@@ -283,8 +283,8 @@ class Server implements GenericObject
      */
     public static function getSelectServerUI($user_prefix, $pre_selected_server = null, $additional_where = null)
     {
-        // Define globals
-		global $db;
+        
+		$db = AbstractDb::getObject();
 
         // Init values
 		$_html = "";
@@ -427,8 +427,8 @@ class Server implements GenericObject
      */
 	public function setName($value)
 	{
-	    // Define globals
-		global $db;
+	    
+		$db = AbstractDb::getObject();
 
 	    // Init values
 		$_retVal = true;
@@ -463,8 +463,8 @@ class Server implements GenericObject
      */
 	public function setCreationDate($value)
 	{
-	    // Define globals
-		global $db;
+	    
+		$db = AbstractDb::getObject();
 
 	    // Init values
 		$_retVal = true;
@@ -497,8 +497,8 @@ class Server implements GenericObject
      */
 	public function setHostname($value)
 	{
-	    // Define globals
-		global $db;
+	    
+		$db = AbstractDb::getObject();
 
 		// Init values
 		$_retVal = true;
@@ -539,8 +539,8 @@ class Server implements GenericObject
      */
 	public function setAsDefaultServer()
 	{
-	    // Define globals
-		global $db;
+	    
+		$db = AbstractDb::getObject();
 
 	    // Init values
 		$_retVal = false;
@@ -581,8 +581,8 @@ class Server implements GenericObject
      */
 	public function setSSLAvailable($value)
 	{
-	    // Define globals
-		global $db;
+	    
+		$db = AbstractDb::getObject();
 
 	    // Init values
 		$_retVal = false;
@@ -620,8 +620,8 @@ class Server implements GenericObject
      */
 	public function setGoogleAPIKey($value)
 	{
-	    // Define globals
-		global $db;
+	    
+		$db = AbstractDb::getObject();
 
 		// Init values
 		$_retVal = true;
@@ -754,7 +754,7 @@ class Server implements GenericObject
     			throw new Exception(_('Access denied!'));
     		}
         } catch (Exception $e) {
-            $ui = new MainUI();
+            $ui = MainUI::getObject();
             $ui->setToolSection('ADMIN');
             $ui->displayError($e->getMessage(), false);
             exit;
@@ -803,8 +803,8 @@ class Server implements GenericObject
 	public function delete(&$errmsg)
 	{
 	    require_once('classes/User.php');
-        // Define globals
-		global $db;
+        
+		$db = AbstractDb::getObject();
 
 	    // Init values
 		$_retVal = false;

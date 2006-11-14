@@ -57,12 +57,12 @@ require_once ('include/common_interface.php');
 require_once ('classes/Node.php');
 require_once ('classes/MainUI.php');
 require_once ('classes/Session.php');
-
+$smarty = SmartyWifidog::getObject();
 /*
  * Check for missing URL switch
  */
 if (isset ($_REQUEST['missing']) && $_REQUEST['missing'] == "url") {
-    $ui = new MainUI();
+    $ui = MainUI::getObject();
     $ui->displayError(_('For some reason, we were unable to determine the web site you initially wanted to see.  You should now enter a web address in your URL bar.'), false);
     exit;
 }
@@ -73,7 +73,7 @@ $rolenames = "";
 $show_more_link = false;
 
 // Init session
-$session = new Session();
+$session = Session::getObject();
 
 // Get the current user
 $current_user = User :: getCurrentUser();
@@ -86,12 +86,12 @@ if (!empty ($_REQUEST['gw_id'])) {
         $node = Node :: getObject($_REQUEST['gw_id']);
         $network = $node->getNetwork();
     } catch (Exception $e) {
-        $ui = new MainUI();
+        $ui = MainUI::getObject();
         $ui->displayError($e->getMessage());
         exit;
     }
 } else {
-    $ui = new MainUI();
+    $ui = MainUI::getObject();
     $ui->displayError(_("No Hotspot specified!"));
     exit;
 }
@@ -201,7 +201,7 @@ $tool_html = $smarty->fetch("templates/sites/portal.tpl");
  * Render output
  */
 
-$ui = new MainUI();
+$ui = MainUI::getObject();
 $ui->setTitle(sprintf(_("%s portal for %s"), $network->getName(), $node->getName()));
 $ui->setPageName('portal');
 $ui->addContent('left_area_middle', $tool_html);
@@ -233,7 +233,7 @@ if ($content_rows) {
     foreach ($content_rows as $content_row) {
         $content = Content :: getObject($content_row['content_id']);
         if ($content->isDisplayableAt($node)) {
-            $ui->addContent($content_row['display_area'], $content->getUserUI(), $content_row['display_order']);
+            $ui->addContent($content_row['display_area'], $content, $content_row['display_order']);
         }
     }
 }
@@ -253,7 +253,7 @@ if ($content_rows) {
     foreach ($content_rows as $content_row) {
         $content = Content :: getObject($content_row['content_id']);
         if ($content->isDisplayableAt($node)) {
-            $ui->addContent($content_row['display_area'], $content->getUserUI(), $content_row['display_order']);
+            $ui->addContent($content_row['display_area'], $content, $content_row['display_order']);
         }
         // Check for content requirements to show the "Show all contents" link
         if (!$showMoreLink) {
@@ -278,7 +278,7 @@ if ($current_user) {
         foreach ($content_rows as $content_row) {
             $content = Content :: getObject($content_row['content_id']);
             if ($content->isDisplayableAt($node)) {
-                $ui->addContent('main_area_middle', $content->getUserUI());
+                $ui->addContent('main_area_middle', $content);
             }
         }
     }

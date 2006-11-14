@@ -80,7 +80,7 @@ class HighestBandwidthUsers extends StatisticReport
      */
     public function getReportUI($child_html = null)
     {
-        global $db;
+        $db = AbstractDb::getObject();
         $html = '';
         $distinguish_users_by = $this->stats->getDistinguishUsersBy();
         $candidate_connections_sql = $this->stats->getSqlCandidateConnectionsQuery(" connections.$distinguish_users_by, SUM(incoming+outgoing) AS total, SUM(incoming) AS total_incoming, SUM(outgoing) AS total_outgoing ", false);

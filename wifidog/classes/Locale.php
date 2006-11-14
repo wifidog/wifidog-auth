@@ -67,7 +67,7 @@ if (!function_exists('gettext')) {
      */
     define('GETTEXT_AVAILABLE', true);
 }
-
+require_once('classes/Session.php');
 /**
  * Designates a human language, possibly localized ie fr_CA
  *
@@ -123,7 +123,7 @@ class Locale {
     }
 
     public static function getCurrentLocale() {
-        global $session;
+        $session = Session::getObject();
         global $AVAIL_LOCALE_ARRAY;
         $object = null;
         $locale_id = $session->get(SESS_LANGUAGE_VAR);
@@ -215,7 +215,7 @@ class Locale {
      * @return boolean true on success, false on failure.
      */
     public static function setCurrentLocale($locale) {
-        global $session;
+        $session = Session::getObject();
          global $AVAIL_LOCALE_ARRAY;
         $retval = false;
 

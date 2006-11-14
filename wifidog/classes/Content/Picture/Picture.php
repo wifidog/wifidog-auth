@@ -67,8 +67,8 @@ class Picture extends File
      * @param string $content_id Content id     */
     protected function __construct($content_id)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $row = null;

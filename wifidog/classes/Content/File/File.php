@@ -88,8 +88,8 @@ class File extends Content
      */
     public function __construct($content_id)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $row = null;

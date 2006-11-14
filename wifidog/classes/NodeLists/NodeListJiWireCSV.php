@@ -86,8 +86,8 @@ class NodeListJiWireCSV {
      */
     public function __construct(&$network)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init network
         $this->_network = $network;

@@ -48,7 +48,6 @@ require_once('../include/common.php');
 
 require_once('include/common_interface.php');
 require_once('classes/Security.php');
-
 /*
  * Local variables:
  * tab-width: 4

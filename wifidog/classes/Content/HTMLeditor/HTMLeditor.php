@@ -58,12 +58,6 @@ require_once('classes/Content/Langstring/Langstring.php');
  */
 class HTMLeditor extends Langstring
 {
-
-    /**
-     * HTML allowed to be used
-     */
-    const ALLOWED_HTML_TAGS = "<p><div><pre><address><h1><h2><h3><h4><h5><h6><br><b><strong><i><em><u><span><ol><ul><li><a><img><embed><table><tbody><thead><th><tr><td><hr>";
-
     /**
      * Defines if the FCKeditor library has been installed
      *
@@ -80,6 +74,7 @@ class HTMLeditor extends Langstring
     protected function __construct($content_id)
     {
         parent::__construct($content_id);
+		$this->allowed_html_tags = "<p><div><pre><address><h1><h2><h3><h4><h5><h6><br><b><strong><i><em><u><span><ol><ul><li><a><img><embed><table><tbody><thead><th><tr><td><hr>";
 
         // Check FCKeditor support
         if (Dependencies::check("FCKeditor")) {
@@ -88,22 +83,24 @@ class HTMLeditor extends Langstring
             $this->_FCKeditorAvailable = true;
         }
     }
-
     /**
-     * Shows the administration interface for HTMLeditor.
-     *
-     * @param string $type_interface SIMPLE for a small HTML editor, LARGE
-     *                               for a larger HTML editor (default).
-     * @param int    $num_nouveau    Number of new HTML editors to be created.
-     *
-     * @return string HTML code for the administration interface.
+     * Retreives the admin interface of this object. Anything that overrides
+     * this method should call the parent method with it's output at the END of
+     * processing.
+     * @param string $subclass_admin_interface HTML content of the interface
+     * element of a children.
+     * @param string $type_interface SIMPLE pour éditer un seul champ, COMPLETE
+     *                               pour voir toutes les chaînes, LARGE pour
+     *                               avoir un textarea.
+     * @return string The HTML fragment for this interface.
      */
-    public function getAdminUI($type_interface = 'LARGE')
+    public function getAdminUI($subclass_admin_interface = null, $title = null, $type_interface = "LARGE")
     {
         if ($this->_FCKeditorAvailable) {
             // Init values
             $_result = null;
             $_html = '';
+            $_html .= $subclass_admin_interface;
             $_languages = new LocaleList();
 	 		$_html .= "<ul class='admin_element_list'>\n";
 
@@ -196,7 +193,7 @@ class HTMLeditor extends Langstring
             $_html .= _("FCKeditor is not installed");
         }
 
-        return Content :: getAdminUI($_html);
+        return Content :: getAdminUI($_html, $title);
     }
 
  

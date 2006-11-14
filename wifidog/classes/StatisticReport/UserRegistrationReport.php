@@ -77,7 +77,7 @@ class UserRegistrationReport extends StatisticReport
      */
     public function getReportUI($child_html = null)
     {
-        global $db;
+        $db = AbstractDb::getObject();
         $html = '';
         /* Monthly registration graph */
         $graph = StatisticGraph :: getObject('RegistrationsPerMonth');

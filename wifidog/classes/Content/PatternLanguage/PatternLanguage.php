@@ -147,8 +147,8 @@ class PatternLanguage extends ContentGroup
      */
     public function displayNarrative(User $user)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $html = "";
@@ -180,8 +180,8 @@ class PatternLanguage extends ContentGroup
      */
     public function getNarrativeList()
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $narratives = array();

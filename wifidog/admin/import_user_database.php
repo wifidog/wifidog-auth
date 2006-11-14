@@ -259,7 +259,7 @@ else if ($_REQUEST['action'] == 'upload_file')
   }
         $html .=  "</fieldset>\n";
 
-    $ui=new MainUI();
+    $ui=MainUI::getObject();
     $ui->setToolSection('ADMIN');
     $ui->addContent('main_area_middle', $html);
     $ui->display();

@@ -92,7 +92,7 @@ abstract class StatisticGraph
      * @param $statistics_object Mandatory to give the report it's context */
     protected function __construct()
     {
-        $session = new Session();
+        $session = Session::getObject();
         self :: $stats = $session->get('current_statistics_object');
     }
 
@@ -105,7 +105,7 @@ abstract class StatisticGraph
      */
     public function getReportUI(Statistics $statistics_object, $child_html = null)
     {
-        $session = new Session();
+        $session = Session::getObject();
         $session->set('current_statistics_object', $statistics_object);
         self :: $stats = $statistics_object; /* Update it in case someone whants to use it right now */
         $html = '';

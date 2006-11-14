@@ -60,27 +60,7 @@ require_once('init_php.php');
 require_once('classes/Session.php');
 require_once('classes/SmartyWifidog.php');
 require_once('classes/User.php');
-
-$session = new Session();
-$smarty = new SmartyWifidog;
-
 require_once('include/language.php');
-
-try
-{
-    $username = null;
-    $current_user = User :: getCurrentUser();
-    if ($current_user != null)
-    {
-        $username = $current_user->getUsername();
-    }
-
-    $smarty->assign("auth_user", $username);
-}
-catch (Exception $e)
-{
-    ;
-}
 
 /*
  * Local variables:

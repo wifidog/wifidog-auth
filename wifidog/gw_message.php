@@ -53,7 +53,7 @@ require_once('classes/User.php');
 require_once('classes/Network.php');
 require_once('classes/MainUI.php');
 
-$ui = new MainUI();
+$ui = MainUI::getObject();
 $errmsg = "";
 
 if (isset($_REQUEST["message"])) {

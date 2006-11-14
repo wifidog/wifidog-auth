@@ -118,7 +118,7 @@ else
     $html .= "</fieldset>";
     $html .= $smarty->fetch("admin/templates/user_log.html");
 
-    $ui=new MainUI();
+    $ui=MainUI::getObject();
     $ui->setToolSection('ADMIN');
     $ui->addContent('main_area_middle', $html);
     $ui->display();

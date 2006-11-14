@@ -119,9 +119,9 @@ abstract class Authenticator
      */
     public function logout($conn_id = null)
     {
-        // Define globals
-        global $db;
-        global $session;
+        
+        $db = AbstractDb::getObject();
+        $session = Session::getObject();
 
         $conn_id = $db->escapeString($conn_id);
 
@@ -183,8 +183,8 @@ abstract class Authenticator
      */
     public function acctStart($conn_id)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         $conn_id = $db->escapeString($conn_id);
         $db->execSqlUniqueRes("SELECT CURRENT_TIMESTAMP, *, CASE WHEN ((CURRENT_TIMESTAMP - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id='$conn_id'", $info, false);
@@ -235,8 +235,8 @@ abstract class Authenticator
      */
     public function acctUpdate($conn_id, $incoming, $outgoing)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Write traffic counters to database
         $conn_id = $db->escapeString($conn_id);
@@ -253,8 +253,8 @@ abstract class Authenticator
      * */
     public function acctStop($conn_id)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Stop traffic counters update
         $conn_id = $db->escapeString($conn_id);

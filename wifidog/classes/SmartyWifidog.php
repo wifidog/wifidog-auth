@@ -122,15 +122,25 @@ function smarty_modifier_fsize_format($size,$format = '',$precision = 2, $dec_po
  * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class SmartyWifidog extends Smarty {
-
-   function __construct()
+    private static $object;
+    public static function getObject() {
+    	if (self::$object==null)
+    	{
+    		self::$object=new self();
+    	}
+    	return self::$object;
+    }
+   private function __construct()
    {
 
         // Class Constructor. These automatically get set with each new instance.
 
         $this->Smarty();
-
-        $this->template_dir = WIFIDOG_ABS_FILE_PATH;
+		//Now that we have user-definable templates, we must turn on security
+		$this->security = true;
+		//pretty_print_r($this->security_settings);
+		$this->security_settings['MODIFIER_FUNCS'][] = 'sprintf';
+		$this->template_dir = WIFIDOG_ABS_FILE_PATH;
         $this->compile_dir = $this->template_dir . 'tmp/smarty/templates_c/';
         $this->config_dir = $this->template_dir . 'tmp/smarty/configs/';
         $this->cache_dir = $this->template_dir . 'tmp/smarty/cache/';

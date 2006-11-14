@@ -63,7 +63,7 @@ if (CONF_USE_CRON_FOR_DB_CLEANUP == false)
 require_once ('include/common_interface.php');
 
 /**
- * Style contains functions managing headers, footers, stylesheet, etc.
+ * Singleton class for managing headers, footers, stylesheet, etc.
  *
  * @package    WiFiDogAuthServer
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
@@ -71,6 +71,8 @@ require_once ('include/common_interface.php');
  */
 class MainUI
 {
+/** holder for the singleton */
+	private static $object;
 
 	/**
 	* Content to be displayed the page
@@ -108,6 +110,9 @@ class MainUI
 	 */
 	private $_pageName;
 
+	/** list of URLs to stylesheet to be included */
+	private $stylesheetUrlArray=array();
+
 	/**
 	 * Headers of HTML page
 	 *
@@ -133,7 +138,17 @@ class MainUI
 	private $_footerScripts = array ();
 
 	private $_shrinkLeftArea = false;
-
+    /**
+     * Get the MainUI object
+     * @return object The MainUI object
+     */
+    public static function getObject() {
+    	if (self::$object==null)
+    	{
+    		self::$object=new self();
+    	}
+    	return self::$object;
+    }
 	/**
 	 * Contructor
 	 *
@@ -141,11 +156,11 @@ class MainUI
 	 *
 	 * @access public
 	 */
-	public function __construct()
+	private function __construct()
 	{
-		global $db;
+		$db = AbstractDb::getObject();
 		// Init Smarty
-		$this->smarty = new SmartyWifidog();
+		$this->smarty = SmartyWifidog::getObject();
 
 		// Set default title
 		$this->title = Network :: getCurrentNetwork()->getName() . ' ' . _("authentication server");
@@ -166,7 +181,7 @@ class MainUI
 	 * placed.  Must be one of the display aread defined in the
 	 * content_available_display_areas table
 	 *
-	 * @param string $content HTML content to be added to the area
+	 * @param string $content Either a Content object (recommended) or raw HTML content to be added to the area
 	 *
 	 * @param integer $display_order_index The order in which the content should
 	 * be displayed
@@ -197,7 +212,13 @@ class MainUI
 		return ($a['display_order'] < $b['display_order']) ? -1 : 1;
 	}
 
-	/**
+	/** Main processing function do generate the final content.
+	 * It will successively call prepareGetUserUI() on all content objects, 
+	 * and then getUserUI() on all objects.  Note that the point of calling
+	 * prepareGetUserUI is to allow that function to call methods of MainUI 
+	 * (such ans changing headers, etc.).  However, please note that you should not 
+	 * call MainUI::addContent() from prepareGetUserUI, as prepareGetUserUI() wouldn't
+	 * in turn get called on objects added this way.
 	 * Orders the content and put it in the _contentDisplayArray array
 	 *
 	 * @return void
@@ -209,9 +230,44 @@ class MainUI
 			$this,
 			"_contentArrayCmp"
 		));
+		
+		//Fist pass (preparation pass)
 		foreach ($this->_contentArray as $content_fragment)
 		{
-			$this->_contentDisplayArray[$content_fragment['display_area']] .= $content_fragment['content'];
+			$content=$content_fragment['content'];
+
+		if (is_object($content))
+		{
+    		if ($content instanceof Content)
+			{
+			    //echo "<h1>prepareGetUserUI on ".$content->getId()."</h1>";
+				$content->prepareGetUserUI();
+			}
+			else
+			{
+			throw new exception ("Object must be a subclass of Content");
+			}
+		}
+
+		}
+		foreach ($this->_contentArray as $content_fragment)
+		{
+		    $content=$content_fragment['content'];
+	   		if (is_object($content))
+		{
+			if ($content instanceof Content)
+			{
+				$this->_contentDisplayArray[$content_fragment['display_area']] .= $content->getUserUI();
+			}
+			else
+			{
+			throw new exception ("Object must be a subclass of Content");
+			}
+		}
+		else
+		{
+		    $this->_contentDisplayArray[$content_fragment['display_area']] .= $content;
+		}
 		}
 
 	}
@@ -224,7 +280,7 @@ class MainUI
 	 */
 	private function addEverywhereContent()
 	{
-		global $db;
+		$db = AbstractDb::getObject();
 		// Get all network content and node "everywhere" content
 		$content_rows = null;
 		$network_id = $db->escapeString(Network :: getCurrentNetwork()->getId());
@@ -247,7 +303,7 @@ class MainUI
 				$content = Content :: getObject($content_row['content_id']);
 				if ($content->isDisplayableAt($node))
 				{
-					$this->addContent($content_row['display_area'], $content->getUserUI(), $content_row['display_order']);
+					$this->addContent($content_row['display_area'], $content, $content_row['display_order']);
 				}
 			}
 		}
@@ -343,7 +399,21 @@ class MainUI
 	{
 		$this->_htmlHeaders = $headers_string;
 	}
-
+	
+	/**
+	 * Add a stylesheet URL to the main page
+	 *
+	 * @param string Stylesheet URL
+	 *
+	 * @return void
+	 *
+	 * @access public
+	 */
+	public function appendStylesheetURL($stylesheet_url)
+	{
+	    //Note:  using the URL as value AND key will remove duplicate while keeping the stylesheet inclusion order, because of the way foreach is implemented in PHP
+		$this->stylesheetUrlArray[$stylesheet_url] = $stylesheet_url;
+	}
 	/**
 	 * Set the section to be displayed in the tool pane
 	 *
@@ -427,8 +497,8 @@ class MainUI
 	 */
 	private function getToolContent()
 	{
-		// Define globals
-		global $session;
+		
+		$session = Session::getObject();
 		global $AVAIL_LOCALE_ARRAY;
 
 		// Init values
@@ -571,17 +641,31 @@ class MainUI
 	 */
 	public function display()
 	{
-
 		// Init values
-
+		// Asign base CSS and theme pack CSS stylesheet
+		$this->appendStylesheetURL(BASE_THEME_URL . STYLESHEET_NAME);
+		$networkThemePack = Network :: getCurrentNetwork()->getThemePack();
+		if ($networkThemePack) {
+				$this->appendStylesheetURL($networkThemePack->getStylesheetUrl());
+		}
+		
+		//Handle content (must be done before headers and anything else is handled)
+		/*
+		 * Build tool pane if it has been enabled
+		 */
+		if ($this->isToolSectionEnabled())
+		{
+			$this->addContent('left_area_top', $this->getToolContent());
+		}
+		$this->addEverywhereContent();
+		$this->generateDisplayContent();
+		
 		// Add SQL queries log
 		if(defined("LOG_SQL_QUERIES") && LOG_SQL_QUERIES == true)
 			$this->addContent("page_footer", $this->getSqlQueriesLog());
 
 		// Init ALL smarty values
 		$this->smarty->assign('htmlHeaders', "");
-		$this->smarty->assign('title', "");
-		$this->smarty->assign('stylesheetURL', "");
 		// $this->smarty->assign('isSuperAdmin', false);
 		// $this->smarty->assign('isOwner', false);
 		$this->smarty->assign('debugRequested', false);
@@ -596,15 +680,8 @@ class MainUI
 
 		// Asign CSS class for body
 		$this->smarty->assign('page_name', $this->_pageName);
-
-		// Asign path to CSS stylesheets
-		$stylesheetUrlArray[] = BASE_THEME_URL . STYLESHEET_NAME;
-		$networkThemePack = Network :: getCurrentNetwork()->getThemePack();
-		if ($networkThemePack)
-		{
-			$stylesheetUrlArray[] = $networkThemePack->getStylesheetUrl();
-		}
-		$this->smarty->assign('stylesheetUrlArray', $stylesheetUrlArray);
+		
+		$this->smarty->assign('stylesheetUrlArray', $this->stylesheetUrlArray);
 
 		/*
 		 * Allow super admin to display debug output if requested by using
@@ -614,18 +691,6 @@ class MainUI
 		// Get information about user
 		User :: assignSmartyValues($this->smarty);
 
-		//Handle content
-
-		$this->addContent('page_header', $this->customBanner());
-		/*
-		 * Build tool pane if it has been enabled
-		 */
-		if ($this->isToolSectionEnabled())
-		{
-			$this->addContent('left_area_top', $this->getToolContent());
-		}
-		$this->addEverywhereContent();
-		$this->generateDisplayContent();
 		// Provide the content array to Smarty
 		$this->smarty->assign('contentDisplayArray', $this->_contentDisplayArray);
 
@@ -683,13 +748,6 @@ class MainUI
 		header("Location: $redirect_url");
 		echo "<html>\n" . "<head><meta http-equiv='Refresh' content='$timeout; URL=$redirect_url'/></head>\n" . "<body>\n" . "<noscript>\n" . "<span style='display:none;'>\n" . "<h1>" . $redirect_to_title . "</h1>\n" . sprintf(_("Click <a href='%s'>here</a> to continue"), $redirect_url) . "<br/>\n" . _("The transfer from secure login back to regular http may cause a warning.") . "\n" . "</span>\n" . "</noscript>\n" . "</body>\n" . "</html>\n";
 		exit;
-	}
-
-	public function customBanner()
-	{
-		$custom_banner = '';
-
-		return $custom_banner;
 	}
 }
 

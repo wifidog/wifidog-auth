@@ -50,6 +50,7 @@ require_once('../include/common.php');
 
 require_once('classes/MainUI.php');
 require_once('include/common_interface.php');
+$smarty = SmartyWifidog::getObject();
 require_once('classes/Node.php');
 
 $node = null;
@@ -57,7 +58,7 @@ if(!empty($_REQUEST['gw_id']))
     $node = Node :: getObject($_REQUEST['gw_id']);
 
 if ($node == null) {
-    $ui = new MainUI();
+    $ui = MainUI::getObject();
     $ui->displayError(_("No Hotspot specified!"));
     exit;
 }
@@ -66,11 +67,9 @@ $node_id = $node->getId();
 $portal_template = $node_id.".html";
 Node :: setCurrentNode($node);
 
-$ui = new MainUI();
-if (isset ($session))
-{
-    $smarty->assign("original_url_requested", $session->get(SESS_ORIGINAL_URL_VAR));
-}
+$ui = MainUI::getObject();
+$session = Session::getObject();
+$smarty->assign("original_url_requested", $session->get(SESS_ORIGINAL_URL_VAR));
 
 $tool_html = '';
 

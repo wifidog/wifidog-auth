@@ -101,9 +101,7 @@ require_once ('classes/AbstractDb.php');
 require_once ('classes/Locale.php');
 require_once ('classes/Dependencies.php');
 require_once ('classes/Server.php');
-global $db;
-
-$db = new AbstractDb();
+$db = AbstractDb::getObject();
 
 /**
  * Check for SSL support
@@ -194,7 +192,7 @@ function cmp_query_time($a, $b) {
 
 /** Cleanup dangling tokens and connections from the database, left if a gateway crashed, etc. */
 function garbage_collect() {
-    global $db;
+    $db = AbstractDb::getObject();
 
     // 10 minutes
     $expiration = '10 minutes';

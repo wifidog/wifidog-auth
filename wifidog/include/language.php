@@ -47,7 +47,7 @@
 require_once('classes/Locale.php');
 
 if (!empty ($_REQUEST['wifidog_language'])) {
-    
+        $session = Session::getObject();
             //echo "Setting to $_REQUEST[wifidog_language]<br/>";
         $session->set(SESS_LANGUAGE_VAR, $_REQUEST['wifidog_language']);
 }

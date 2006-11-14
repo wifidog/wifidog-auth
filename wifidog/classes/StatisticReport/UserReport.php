@@ -79,8 +79,8 @@ class UserReport extends StatisticReport
      */
     public function getReportUI($child_html = null)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
         global $account_status_to_text;
         global $token_to_text;
 

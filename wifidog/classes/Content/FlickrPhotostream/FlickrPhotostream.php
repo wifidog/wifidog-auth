@@ -107,7 +107,7 @@ class FlickrPhotostream extends Content
 
         if (Dependencies::check("Phlickr", $errmsg)) {
             // Defined globals
-            global $db;
+            $db = AbstractDb::getObject();
 
             // Load Phlickr classes
             require_once("Phlickr/Api.php");

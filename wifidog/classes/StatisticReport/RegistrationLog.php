@@ -79,7 +79,7 @@ class RegistrationLog extends StatisticReport
      */
     public function getReportUI($child_html = null)
     {
-        global $db;
+        $db = AbstractDb::getObject();
         $html = '';
         /* Users who signed up here */
 

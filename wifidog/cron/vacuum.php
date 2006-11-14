@@ -46,8 +46,8 @@
  */
 require_once(dirname(__FILE__) . '/../include/common.php');
 
-// Define globals
-global $db;
+
+$db = AbstractDb::getObject();
 
 // Run vacuum
 $db->execSqlUpdate("VACUUM ANALYZE;", true);

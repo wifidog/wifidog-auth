@@ -52,7 +52,7 @@ require_once('include/common_interface.php');
 require_once('classes/User.php');
 require_once('classes/Node.php');
 require_once('classes/MainUI.php');
-
+$smarty = SmartyWifidog::getObject();
 try {
     if (!isset($_REQUEST["token"]))
         throw new Exception(_('No token specified!'));
@@ -75,16 +75,17 @@ try {
 
     // Try to current physical node:  if possible it will regenerate the session accordingly with the connection token.
     $current_user_node = Node::getCurrentRealNode();
-    if($current_user_node)
-            $gw_id = $session->set(SESS_GW_ID_VAR, $current_user_node->getId());
-
+    if($current_user_node) {
+        $session = Session::getObject();
+        $gw_id = $session->set(SESS_GW_ID_VAR, $current_user_node->getId());
+    }
     // Show activation message
     $smarty->assign('message', _("Your account has been succesfully activated!\n\nYou may now browse to a remote Internet address and take advantage of the free Internet access!\n\nIf you get prompted for a login, enter the username and password you have just created."));
 } catch (Exception $e) {
     $smarty->assign('message', $e->getMessage());
 }
 
-$ui = new MainUI();
+$ui = MainUI::getObject();
 $ui->addContent('main_area_middle', $smarty->fetch("templates/sites/validate.tpl"));
 $ui->display();
 

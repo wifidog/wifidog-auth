@@ -127,7 +127,7 @@ class Node implements GenericObject
 	 */
 	public static function getCurrentRealNode()
 	{
-		global $db;
+		$db = AbstractDb::getObject();
 		$retval = null;
 		$sql = "SELECT node_id, last_heartbeat_ip from nodes WHERE last_heartbeat_ip='$_SERVER[REMOTE_ADDR]' ORDER BY last_heartbeat_timestamp DESC";
 		$node_rows = null;
@@ -174,7 +174,7 @@ class Node implements GenericObject
 		$retval = false;
 		$user = User :: getCurrentUser();
 		if ($user->isSuperAdmin()) {
-			global $db;
+			$db = AbstractDb::getObject();
 			$id = $db->escapeString($this->getId());
 			if (!$db->execSqlUpdate("DELETE FROM nodes WHERE node_id='{$id}'", false))
 			{
@@ -209,8 +209,8 @@ class Node implements GenericObject
 	 */
 	public static function createNewObject($node_id = null, $network = null)
 	{
-	    // Define globals
-		global $db;
+	    
+		$db = AbstractDb::getObject();
 
 		if (empty ($node_id)) {
 			$node_id = get_guid();
@@ -249,7 +249,7 @@ class Node implements GenericObject
 	*/
 	public static function getSelectNodeUI($user_prefix, $sql_additional_where = null,$type_interface = "select")
 	{
-		global $db;
+		$db = AbstractDb::getObject();
 		$html = '';
 		$name = "{$user_prefix}";
 
@@ -373,7 +373,7 @@ class Node implements GenericObject
     					throw new Exception(_("Access denied"));
     				}
                 } catch (Exception $e) {
-                    $ui = new MainUI();
+                    $ui = MainUI::getObject();
                     $ui->setToolSection('ADMIN');
                     $ui->displayError($e->getMessage(), false);
                     exit;
@@ -396,8 +396,8 @@ class Node implements GenericObject
      */
 	public function getSelectDeploymentStatus($user_prefix)
 	{
-	    // Define globals
-		global $db;
+	    
+		$db = AbstractDb::getObject();
 
 		// Init values
 		$html = "";
@@ -441,7 +441,7 @@ class Node implements GenericObject
 	/** @param $node_id The id of the node */
 	private function __construct($node_id)
 	{
-		global $db;
+		$db = AbstractDb::getObject();
 		$this->mDb = & $db;
 
 		$node_id_str = $db->escapeString($node_id);
@@ -761,7 +761,7 @@ class Node implements GenericObject
 		$retval = true;
 		if ($value != $this->isConfiguredSplashOnly())
 		{
-			global $db;
+			$db = AbstractDb::getObject();
 			$value ? $value = 'TRUE' : $value = 'FALSE';
 			$retval = $db->execSqlUpdate("UPDATE nodes SET is_splash_only_node = {$value} WHERE node_id = '{$this->getId()}'", false);
 			$this->refresh();
@@ -785,7 +785,7 @@ class Node implements GenericObject
 		$retval = true;
 		if ($value != $this->getCustomPortalRedirectUrl())
 		{
-			global $db;
+			$db = AbstractDb::getObject();
 			$value = $db->escapeString($value);
 			$retval = $db->execSqlUpdate("UPDATE nodes SET custom_portal_redirect_url = '{$value}' WHERE node_id = '{$this->getId()}'", false);
 			$this->refresh();
@@ -1272,7 +1272,7 @@ class Node implements GenericObject
 	/** Add content to this node */
 	public function addContent(Content $content)
 	{
-		global $db;
+		$db = AbstractDb::getObject();
 		$content_id = $db->escapeString($content->getId());
 		$sql = "INSERT INTO node_has_content (node_id, content_id) VALUES ('$this->id','$content_id')";
 		$db->execSqlUpdate($sql, false);
@@ -1282,7 +1282,7 @@ class Node implements GenericObject
 	/** Remove content from this node */
 	public function removeContent(Content $content)
 	{
-		global $db;
+		$db = AbstractDb::getObject();
 		$content_id = $db->escapeString($content->getId());
 		$sql = "DELETE FROM node_has_content WHERE node_id='$this->id' AND content_id='$content_id'";
 		$db->execSqlUpdate($sql, false);
@@ -1296,7 +1296,7 @@ class Node implements GenericObject
 	* @return an array of Content or an empty arrray */
 	/*function getAllContent($exclude_subscribed_content = false, $subscriber = null, $display_page = 'portal')
 	{
-		global $db;
+		$db = AbstractDb::getObject();
 		$retval = array ();
 		$content_rows = null;
 		// Get all network, but exclude user subscribed content if asked
@@ -1320,7 +1320,7 @@ class Node implements GenericObject
 	* @return an array of Content or an empty arrray */
 	function getAllLocativeArtisticContent()
 	{
-		global $db;
+		$db = AbstractDb::getObject();
 		$retval = array ();
 		$sql = "SELECT * FROM content_group JOIN content ON (content.content_id = content_group.content_group_id) JOIN node_has_content ON (node_has_content.content_id = content_group.content_group_id AND node_has_content.node_id = '{$this->getId()}') WHERE is_persistent = true AND is_artistic_content = true AND is_locative_content = true ORDER BY subscribe_timestamp DESC";
 		$content_rows = null;
@@ -1355,8 +1355,8 @@ class Node implements GenericObject
 	 */
 	public function getOnlineUsers()
 	{
-	    // Define globals
-		global $db;
+	    
+		$db = AbstractDb::getObject();
 
 		// Init values
 		$retval = array();
@@ -1383,8 +1383,8 @@ class Node implements GenericObject
 	 */
 	public function getNumOnlineUsers()
 	{
-	    // Define globals
-		global $db;
+	    
+		$db = AbstractDb::getObject();
 
 		// Init values
 		$retval = array ();
@@ -1403,7 +1403,7 @@ class Node implements GenericObject
 	 * @return An array of User object, or en empty array */
 	function getOwners()
 	{
-		global $db;
+		$db = AbstractDb::getObject();
 		$retval = array ();
 		$owners = null;
 		$db->execSql("SELECT user_id FROM node_stakeholders WHERE is_owner = true AND node_id='{$this->id}'", $owners, false);
@@ -1423,7 +1423,7 @@ class Node implements GenericObject
 	 * @return An array of User object, or en empty array */
 	function getTechnicalOfficers()
 	{
-		global $db;
+		$db = AbstractDb::getObject();
 		$retval = array ();
 		$officers = null;
 		$db->execSql("SELECT user_id FROM node_stakeholders WHERE is_tech_officer = true AND node_id='{$this->id}'", $officers, false);
@@ -1442,7 +1442,7 @@ class Node implements GenericObject
 	 */
 	function addOwner(User $user)
 	{
-		global $db;
+		$db = AbstractDb::getObject();
 		$rows = null;
 		$db->execSql("SELECT * FROM node_stakeholders WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}'", $rows, false);
 		if (!$rows)
@@ -1460,7 +1460,7 @@ class Node implements GenericObject
 	 */
 	function addTechnicalOfficer(User $user)
 	{
-		global $db;
+		$db = AbstractDb::getObject();
 		$rows = null;
 		$db->execSql("SELECT * FROM node_stakeholders WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}'", $rows, false);
 		if (!$rows)
@@ -1478,7 +1478,7 @@ class Node implements GenericObject
 	 */
 	function removeOwner(User $user)
 	{
-		global $db;
+		$db = AbstractDb::getObject();
 		if (!$db->execSqlUpdate("UPDATE node_stakeholders SET is_owner = false WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}';", false))
 			throw new Exception(_('Could not remove owner'));
 	}
@@ -1488,7 +1488,7 @@ class Node implements GenericObject
 	 */
 	function removeTechnicalOfficer(User $user)
 	{
-		global $db;
+		$db = AbstractDb::getObject();
 		if (!$db->execSqlUpdate("UPDATE node_stakeholders SET is_tech_officer = false WHERE node_id = '{$this->getId()}' AND user_id = '{$user->getId()}';", false))
 			throw new Exception(_('Could not remove tech officer'));
 	}
@@ -1497,7 +1497,7 @@ class Node implements GenericObject
 	 * @return true our false*/
 	function isOwner(User $user)
 	{
-		global $db;
+		$db = AbstractDb::getObject();
 		if ($user != null)
 		{
 			$user_id = $user->getId();
@@ -1516,7 +1516,7 @@ class Node implements GenericObject
 	 * @return true our false*/
 	function isTechnicalOfficer(User $user)
 	{
-		global $db;
+		$db = AbstractDb::getObject();
 		if ($user != null)
 		{
 			$user_id = $user->getId();
@@ -1543,8 +1543,8 @@ class Node implements GenericObject
 	 */
 	private static function nodeExists($id)
 	{
-	    // Define globals
-		global $db;
+	    
+		$db = AbstractDb::getObject();
 
 		// Init values
 		$retval = false;

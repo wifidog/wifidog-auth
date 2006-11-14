@@ -50,8 +50,8 @@ require_once(dirname(__FILE__) . '/include/common.php');
 
 require_once('include/common_interface.php');
 require_once('classes/MainUI.php');
-
-$ui = new MainUI();
+$smarty = SmartyWifidog::getObject();
+$ui = MainUI::getObject();
 $ui->addContent('main_area_middle', $smarty->fetch("templates/faq.html"));
 $ui->display();
 

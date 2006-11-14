@@ -108,9 +108,9 @@ class NodeListHTML {
      */
     public function __construct(&$network)
     {
-        // Define globals
-        global $db;
-        global $smarty;
+        
+        $db = AbstractDb::getObject();
+        $smarty = SmartyWifidog::getObject();
 
         // Init Smarty
         $this->_smarty = &$smarty;
@@ -122,7 +122,7 @@ class NodeListHTML {
         $this->_currentUser = User::getCurrentUser();
 
         // Init MainUI class
-        $this->_mainUI = new MainUI();
+        $this->_mainUI = MainUI::getObject();
 
         // Query the database, sorting by node name
         $db->execSql("SELECT *, (CURRENT_TIMESTAMP-last_heartbeat_timestamp) AS since_last_heartbeat, EXTRACT(epoch FROM creation_date) as creation_date_epoch, CASE WHEN ((CURRENT_TIMESTAMP-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up FROM nodes WHERE network_id = '" . $db->escapeString($this->_network->getId()) . "' AND (node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE') ORDER BY lower(name)", $this->_nodes, false);

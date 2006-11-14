@@ -56,7 +56,7 @@ require_once('classes/Network.php');
 require_once('classes/Node.php');
 require_once('classes/User.php');
 require_once('classes/Server.php');
-
+$smarty = SmartyWifidog::getObject();
 // Get information about user
 $currentUser = User::getCurrentUser();
 
@@ -166,7 +166,7 @@ $script .= "</script>\n";
 /*
  * Render output
  */
-$ui = new MainUI();
+$ui = MainUI::getObject();
 $ui->setTitle(_("Hotspots status map"));
 $ui->setHtmlHeader($html_headers);
 $ui->addContent('left_area_middle', $html);

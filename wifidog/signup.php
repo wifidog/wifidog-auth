@@ -57,7 +57,7 @@ require_once('classes/User.php');
 require_once('classes/Security.php');
 require_once('classes/MainUI.php');
 require_once('classes/Mail.php');
-
+$smarty = SmartyWifidog::getObject();
 /**
  * Load custom signup URL if it has been defined in config.php
  */
@@ -232,6 +232,7 @@ if (isset ($_REQUEST["form_request"]) && $_REQUEST["form_request"] == "signup") 
 		$validationMsgHtml .= "</div>\n";
 
         // If the user is at a REAL hotspot, give him his sign-up minutes right away
+		$session = Session::getObject();
         $gw_id = $session->get(SESS_GW_ID_VAR);
         $gw_address = $session->get(SESS_GW_ADDRESS_VAR);
         $gw_port = $session->get(SESS_GW_PORT_VAR);
@@ -255,7 +256,7 @@ if (isset ($_REQUEST["form_request"]) && $_REQUEST["form_request"] == "signup") 
         /*
          * Render output
          */
-        $ui = new MainUI();
+        $ui = MainUI::getObject();
 
         $ui->addContent('left_area_middle', $html);
         $ui->addContent('main_area_middle', $html_body);
@@ -343,7 +344,7 @@ $html_body = $smarty->fetch("templates/sites/signup.tpl");
 /*
  * Render output
  */
-$ui = new MainUI();
+$ui = MainUI::getObject();
 $ui->addContent('left_area_middle', $html);
 $ui->addContent('main_area_middle', $html_body);
 $ui->display();

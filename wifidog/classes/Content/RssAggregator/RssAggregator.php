@@ -84,8 +84,8 @@ class RssAggregator extends Content {
      *
      * @return void     */
     protected function __construct($content_id) {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $row = null;
@@ -167,7 +167,7 @@ class RssAggregator extends Content {
             /*
              * Only update database if the mode is valid and there is an actual change
              */
-            global $db;
+            $db = AbstractDb::getObject();
 
             $num_items = $db->escapeString($num_items);
             $db->execSqlUpdate("UPDATE content_rss_aggregator SET number_of_display_items = $num_items WHERE content_id = '$this->id'", false);
@@ -228,7 +228,7 @@ class RssAggregator extends Content {
             /*
              * Only update database if the mode is valid and there is an actual change
              */
-            global $db;
+            $db = AbstractDb::getObject();
 
             $strength = $db->escapeString($strength);
             $db->execSqlUpdate("UPDATE content_rss_aggregator SET algorithm_strength = '$strength' WHERE content_id = '$this->id'", false);
@@ -284,7 +284,7 @@ class RssAggregator extends Content {
             /*
              * Only update database if the mode is valid and there is an actual change
              */
-            global $db;
+            $db = AbstractDb::getObject();
 
             if ($max_item_age == null) {
                 $max_item_age = 'NULL';
@@ -318,8 +318,8 @@ class RssAggregator extends Content {
      * @return bool True on success, false on failure
      */
     public function addFeed($url) {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $retval = false;
@@ -343,8 +343,8 @@ class RssAggregator extends Content {
      * @return bool True on success, false on failure
      */
     public function removeFeed($url) {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $retval = false;
@@ -369,8 +369,8 @@ class RssAggregator extends Content {
      * @return string HTML code for the administration interface
      */
     public function getAdminUI($subclass_admin_interface = null, $title = null) {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $html = '';
@@ -651,8 +651,8 @@ class RssAggregator extends Content {
     
      */
     private function processFeedAdminUI($feed_row) {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         $original_url = $db->escapeString($feed_row['url']);
 

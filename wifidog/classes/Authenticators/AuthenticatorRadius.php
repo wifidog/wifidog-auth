@@ -171,8 +171,8 @@ class AuthenticatorRadius extends Authenticator
      */
     public function login($username, $password, &$errmsg = null)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $security = new Security();
@@ -307,8 +307,8 @@ class AuthenticatorRadius extends Authenticator
      */
     public function acctStart($conn_id, &$errmsg = null)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $info = null;
@@ -377,10 +377,8 @@ class AuthenticatorRadius extends Authenticator
         // Call generic traffic updater (local database)
         parent::acctUpdate($conn_id, $incoming, $outgoing);
 
-        // Define globals
-        global $db;
-
         // Init values
+        $db = AbstractDb::getObject();
         $info = null;
         $conn_id = $db->escapeString($conn_id);
 
@@ -447,8 +445,8 @@ class AuthenticatorRadius extends Authenticator
         // Call parent method
         parent::acctStop($conn_id);
 
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $info = null;

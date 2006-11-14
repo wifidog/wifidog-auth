@@ -50,13 +50,20 @@
  */
 class Session
 {
-
+    private static $object;
+    public static function getObject() {
+    	if (self::$object==null)
+    	{
+    		self::$object=new self();
+    	}
+    	return self::$object;
+    }
     /**
      * Constructor
      *
      * @return void
      */
-    public function __construct()
+    private function __construct()
     {
         $session_id = session_id();
 

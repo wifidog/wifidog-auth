@@ -76,7 +76,7 @@ class RegistrationsCumulative extends StatisticGraph
     public function showImageData()
     {
         require_once ("Image/Graph.php");
-        global $db;
+        $db = AbstractDb::getObject();
 
         $Graph = & Image_Graph :: factory("Image_Graph", array (600, 200));
         $Plotarea = & $Graph->add(Image_Graph :: factory("Image_Graph_Plotarea"));

@@ -55,8 +55,8 @@ define('REQUIRED_SCHEMA_VERSION', 46);
  */
 function validate_schema()
 {
-    // Define globals
-    global $db;
+    
+    $db = AbstractDb::getObject();
 
     // Init values
     $row = null;
@@ -89,8 +89,8 @@ function validate_schema()
  */
 function check_users_not_empty()
 {
-    // Define globals
-    global $db;
+    
+    $db = AbstractDb::getObject();
 
     // Extract the first account origin, assume it's the default
     $network = Network::getDefaultNetwork();
@@ -139,8 +139,8 @@ function printUpdateVersion($version)
  */
 function update_schema()
 {
-    // Define globals
-    global $db;
+    
+    $db = AbstractDb::getObject();
 
     // Init values
     $sql = '';

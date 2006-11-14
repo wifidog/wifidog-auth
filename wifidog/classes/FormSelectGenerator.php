@@ -56,7 +56,7 @@ class FormSelectGenerator
 	 */
 	function __construct()
 	{
-		global $db;
+		$db = AbstractDb::getObject();
 		$this->mAbstractBd = $db;
 	}
 
@@ -147,7 +147,7 @@ class FormSelectGenerator
 	 */
 	static function generateFromTable($table, $primaryKeyField, $displayField, $selectedPrimaryKey, $userPrefix, $objectPrefix, $displayFieldIsLangstring=false, $allowNullValues=false, $nullCaptionString = ' - - - ', $additionalSelectAttribute = null)
 	{
-		global $db;
+		$db = AbstractDb::getObject();
 		$results = null;
 		$db->execSql("SELECT $primaryKeyField,  $displayField FROM $table", $results, false);
 		return self :: generateFromResultSet($results, $primaryKeyField, $displayField, $selectedPrimaryKey, $userPrefix, $objectPrefix, $displayFieldIsLangstring, $allowNullValues, $nullCaptionString, $additionalSelectAttribute);

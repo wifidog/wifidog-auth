@@ -215,7 +215,7 @@ EOF;
      */
     public function getSqlDateConstraint($column = 'timestamp_in')
     {
-        global $db;
+        $db = AbstractDb::getObject();
         $column = $db->escapeString($column);
         $sql = '';
         if ($date_min = $db->escapeString($this->report_date_min))
@@ -238,7 +238,7 @@ EOF;
      */
     public function getSqlNodeConstraint($column)
     {
-        global $db;
+        $db = AbstractDb::getObject();
         $column = $db->escapeString($column);
         $sql = '';
         if (count($this->report_selected_nodes) > 0)
@@ -264,7 +264,7 @@ EOF;
      */
     public function getSqlNetworkConstraint($column)
     {
-        global $db;
+        $db = AbstractDb::getObject();
         $column = $db->escapeString($column);
         $sql = '';
         if (count($this->report_selected_networks) > 0)
@@ -290,7 +290,7 @@ EOF;
      */
     public function getSqlUserConstraint()
     {
-        global $db;
+        $db = AbstractDb::getObject();
         $column = $db->escapeString($this->report_distinguish_users_by);
         $sql = '';
         if (count($this->report_selected_users) > 0)
@@ -380,8 +380,8 @@ EOF;
      */
     private function getSelectedNodesUI()
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $html = '';
@@ -546,7 +546,7 @@ EOF;
         {
             if ($this->report_distinguish_users_by == 'user_id')
             {
-                    global $db;
+                    $db = AbstractDb::getObject();
                 $username = $db->escapeString($_REQUEST['stats_selected_users']);
                 $row = null;
                 $db->execSqlUniqueRes("SELECT user_id FROM users WHERE username='$username'", $row, false);

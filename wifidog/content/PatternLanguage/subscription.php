@@ -50,7 +50,8 @@ require_once('include/common_interface.php');
 require_once('classes/User.php');
 require_once('classes/Content/PatternLanguage.php');
 require_once('classes/MainUI.php');
-
+$smarty = SmartyWifidog::getObject();
+$session = Session::getObject();
 // This trick is done to allow displaying of Pattern Language right away if there is only one available.
 if(!empty($_REQUEST['content_id']))
 {
@@ -140,7 +141,7 @@ else
 
 $body_html .= "</div>\n";
 
-$ui = new MainUI();
+$ui = MainUI::getObject();
 $ui->addContent('left_area_middle', $tool_html);
 $ui->setTitle(_("Pattern Language - Subscription"));
 $ui->addContent('main_area_middle', $body_html);

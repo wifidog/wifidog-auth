@@ -79,7 +79,7 @@ class NetworkStatus extends StatisticReport
      */
     public function getReportUI($child_html = null)
     {
-        global $db;
+        $db = AbstractDb::getObject();
         $html = '';
         $selected_network = $this->stats->getSelectedNetworks();
         if (count($selected_network) == 0)

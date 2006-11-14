@@ -55,7 +55,7 @@ require_once(dirname(__FILE__) . '/include/common.php');
 require_once('include/common_interface.php');
 require_once('classes/User.php');
 require_once('classes/MainUI.php');
-
+$smarty = SmartyWifidog::getObject();
 /**
  * Process recovering username
  */
@@ -139,7 +139,7 @@ if (isset($_REQUEST['form_request'])) {
         /*
          * Render output
          */
-        $ui = new MainUI();
+        $ui = MainUI::getObject();
         $ui->addContent('left_area_middle', $html);
         $ui->addContent('main_area_middle', $html_body);
         $ui->display();
@@ -209,7 +209,7 @@ $html_body = $smarty->fetch("templates/sites/lost_password.tpl");
 /*
  * Render output
  */
-$ui = new MainUI();
+$ui = MainUI::getObject();
 $ui->addContent('left_area_middle', $html);
 $ui->addContent('main_area_middle', $html_body);
 $ui->display();

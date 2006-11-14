@@ -55,7 +55,7 @@ require_once('classes/AbstractGeocoder.php');
 require_once('classes/MainUI.php');
 require_once('classes/Server.php');
 
-$ui = new MainUI();
+$ui = MainUI::getObject();
 $ui->setTitle(_("Hotspot location map"));
 
 if(!empty($_REQUEST['node_id']))

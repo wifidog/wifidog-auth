@@ -89,8 +89,8 @@ class NodeListXML {
      */
     public function __construct(&$network)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init XML Document
         $this->_xmldoc = new DOMDocument("1.0", "UTF-8");

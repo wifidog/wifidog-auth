@@ -231,8 +231,8 @@ class AuthenticatorLDAP extends Authenticator
      */
 	public function login($username, $password, &$errmsg = null)
 	{
-	    // Define globals
-		global $db;
+	    
+		$db = AbstractDb::getObject();
 
 		// Init values
 		$security = new Security();

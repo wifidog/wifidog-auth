@@ -68,8 +68,8 @@ class EmbeddedContent extends Content
      * @return void     */
     protected function __construct($content_id)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init values
         $row = null;
@@ -243,8 +243,8 @@ class EmbeddedContent extends Content
     public function processAdminUI()
     {
         if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
-            // Define globals
-            global $db;
+            
+            $db = AbstractDb::getObject();
 
             // Init values
             $errmsg = null;

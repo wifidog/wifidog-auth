@@ -49,7 +49,8 @@ require_once('../../include/common.php');
 require_once('include/common_interface.php');
 require_once('classes/MainUI.php');
 require_once('classes/Content/PatternLanguage.php');
-
+$smarty = SmartyWifidog::getObject();
+$session = Session::getObject();
 // This trick is done to allow displaying of Pattern Language right away if there is only one available.
 if(!empty($_REQUEST['content_id']))
 {
@@ -101,7 +102,7 @@ $body_html .= "<li>Atwater Library : 1200 Atwater. 514-935-7344. info@atwaterlib
 $body_html .= "</ul>\n";
 $body_html .= "</div>\n";
 
-$ui=new MainUI();
+$ui=MainUI::getObject();
 $ui->addContent('left_area_middle', $tool_html);
 $ui->setTitle(_("Pattern Language - Hotspots list"));
 $ui->addContent('main_area_middle', $body_html);

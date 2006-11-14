@@ -53,7 +53,7 @@ require_once('classes/MainUI.php');
 $html = '';
 
 // Load MainUI class
-$ui = new MainUI();
+$ui = MainUI::getObject();
 
 // Get information about curent user
 $current_user = User::getCurrentUser();

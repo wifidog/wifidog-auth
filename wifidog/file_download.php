@@ -49,7 +49,7 @@ require_once (dirname(__FILE__) . '/include/common.php');
 
 if (!empty ($_REQUEST['file_id']))
 {
-	global $db;
+	$db = AbstractDb::getObject();
 	$file_id = $db->escapeString($_REQUEST['file_id']);
 	$sql = "SELECT * FROM content_file WHERE files_id = '$file_id'";
 	$db->execSqlUniqueRes($sql, $file_row, false);

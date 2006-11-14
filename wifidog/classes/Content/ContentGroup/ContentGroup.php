@@ -84,15 +84,15 @@ class ContentGroup extends Content {
 	// this is the actual publicly available status ( so if is_expandable == true it CANNOT be true )
 	private $expand_status = false;
 	private $temporary_display_num_elements;
-
+	private $display_elements;
 	private $content_selection_mode;
 	private $content_group_row;
 	/** ContentTypeFilter object */
 	protected $allowed_content_types;
 
 	protected function __construct($content_id) {
-		// Define globals
-		global $db;
+		
+		$db = AbstractDb::getObject();
 
 		// Init values
 		$row = null;
@@ -144,7 +144,7 @@ class ContentGroup extends Content {
 		if ($is_artistic_content != $this->isArtisticContent()) /* Only update database if there is an actual change */ {
 			$is_artistic_content ? $is_artistic_content_sql = 'TRUE' : $is_artistic_content_sql = 'FALSE';
 
-			global $db;
+			$db = AbstractDb::getObject();
 			$db->execSqlUpdate("UPDATE content_group SET is_artistic_content = $is_artistic_content_sql WHERE content_group_id = '$this->id'", false);
 			$this->refresh();
 		}
@@ -169,7 +169,7 @@ class ContentGroup extends Content {
 		if ($is_locative_content != $this->isLocativeContent()) /* Only update database if there is an actual change */ {
 			$is_locative_content ? $is_locative_content_sql = 'TRUE' : $is_locative_content_sql = 'FALSE';
 
-			global $db;
+			$db = AbstractDb::getObject();
 			$db->execSqlUpdate("UPDATE content_group SET is_locative_content = $is_locative_content_sql WHERE content_group_id = '$this->id'", false);
 			$this->refresh();
 		}
@@ -189,7 +189,7 @@ class ContentGroup extends Content {
 	protected function setContentOrderingMode($content_ordering_mode, & $errormsg = null) {
 		$retval = false;
 		if (isset ($this->CONTENT_ORDERING_MODES[$content_ordering_mode]) && $content_ordering_mode != $this->getContentOrderingMode()) /* Only update database if the mode is valid and there is an actual change */ {
-			global $db;
+			$db = AbstractDb::getObject();
 			$content_ordering_mode = $db->escapeString($content_ordering_mode);
 			$db->execSqlUpdate("UPDATE content_group SET content_ordering_mode = '$content_ordering_mode' WHERE content_group_id = '$this->id'", false);
 			$this->refresh();
@@ -218,7 +218,7 @@ class ContentGroup extends Content {
 	protected function setContentChangesOnMode($content_changes_on_mode, & $errormsg = null) {
 		$retval = false;
 		if (isset ($this->CONTENT_CHANGES_ON_MODES[$content_changes_on_mode]) && $content_changes_on_mode != $this->getContentChangesOnMode()) /* Only update database if the mode is valid and there is an actual change */ {
-			global $db;
+			$db = AbstractDb::getObject();
 			$content_changes_on_mode = $db->escapeString($content_changes_on_mode);
 			$db->execSqlUpdate("UPDATE content_group SET content_changes_on_mode = '$content_changes_on_mode' WHERE content_group_id = '$this->id'", false);
 			$this->refresh();
@@ -247,7 +247,7 @@ class ContentGroup extends Content {
 	protected function setAllowRepeat($allow_repeat, & $errormsg = null) {
 		$retval = false;
 		if (isset ($this->ALLOW_REPEAT_MODES[$allow_repeat]) && $allow_repeat != $this->getAllowRepeat()) /* Only update database if the mode is valid and there is an actual change */ {
-			global $db;
+			$db = AbstractDb::getObject();
 			$allow_repeat = $db->escapeString($allow_repeat);
 			$db->execSqlUpdate("UPDATE content_group SET allow_repeat = '$allow_repeat' WHERE content_group_id = '$this->id'", false);
 			$this->refresh();
@@ -279,7 +279,7 @@ class ContentGroup extends Content {
 	protected function setDisplayNumElements($display_num_elements, & $errormsg = null) {
 		$retval = false;
 		if (($display_num_elements > 0) && $display_num_elements != $this->getDisplayNumElements()) /* Only update database if the mode is valid and there is an actual change */ {
-			global $db;
+			$db = AbstractDb::getObject();
 			$display_num_elements = $db->escapeString($display_num_elements);
 			$db->execSqlUpdate("UPDATE content_group SET display_num_elements = '$display_num_elements' WHERE content_group_id = '$this->id'", false);
 			$this->refresh();
@@ -490,8 +490,10 @@ class ContentGroup extends Content {
 	/**Get the next element or elements to be displayed, depending on the display mode
 	* @return an array of ContentGroupElement or an empty arrray */
 	function getDisplayElements() {
-		// Define globals
-		global $db;
+	    //This function is very expensive, cache the results
+		if(!is_array($this->display_elements)){
+		
+		$db = AbstractDb::getObject();
 
 		// Init values
 		$retval = array ();
@@ -641,7 +643,9 @@ class ContentGroup extends Content {
 		*/
 		$retval = array_merge($new_objects, $redisplay_objects);
 		//echo count($retval).' returned <br>';
-		return $retval;
+		$this->display_elements=$retval;
+		}
+		return $this->display_elements;
 	}
 
 	/**
@@ -688,6 +692,18 @@ class ContentGroup extends Content {
 		return $this->expand_status;
 	}
 
+    /** This function will be called by MainUI for each Content BEFORE any getUserUI function is called to allow two pass Content display.
+     * Two pass Content display allows such things as modyfying headers, title, creating content type that accumulate content from other pieces (like RSS feeds)
+     * @return null
+     */
+	public function prepareGetUserUI() {
+			$display_elements = $this->getDisplayElements();
+				foreach ($display_elements as $display_element) {
+					$display_element->prepareGetUserUI();
+				}
+		return parent :: prepareGetUserUI();
+	}
+
 	/** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
 	 * @param $subclass_admin_interface Html content of the interface element of a children
 	 * @param boolean $hide_elements allows the child class ( for example
@@ -721,8 +737,8 @@ class ContentGroup extends Content {
 	/**Get all elements
 	 * @return an array of ContentGroupElement or an empty arrray */
 	function getElements($additional_where=null) {
-		// Define globals
-		global $db;
+		
+		$db = AbstractDb::getObject();
 
 		// Init values
 		$retval = array ();

@@ -78,8 +78,8 @@ require_once('classes/Node.php');
 require_once('classes/User.php');
 require_once('classes/Network.php');
 require_once('classes/MainUI.php');
-// require_once('lib/magpie/rss_fetch.inc'); // Added so RSS code which depends on the Magpie RSS functions will work. //
-
+$smarty = SmartyWifidog::getObject();
+$session = Session::getObject();
 // Init values
 $continueToAdmin = false;
 $username = null;
@@ -148,7 +148,7 @@ if (!empty($gw_id)) {
     }
 
     catch (Exception $e) {
-        $ui = new MainUI();
+        $ui = MainUI::getObject();
         $ui->displayError($e->getMessage());
         exit;
     }
@@ -253,7 +253,7 @@ $smarty->assign('create_a_free_account', $create_a_free_account);
 // Compile HTML code
 $html = $smarty->fetch("templates/sites/login.tpl");
 
-$ui = new MainUI();
+$ui = MainUI::getObject();
 if($node) {
 	$ui->setTitle(sprintf(_("%s login page for %s"), $network->getName(), $node->getName()));
 } else {
@@ -291,7 +291,7 @@ $ui->addContent('main_area_top', $html);
             foreach ($content_rows as $content_row) {
                 $content = Content :: getObject($content_row['content_id']);
                 if ($content->isDisplayableAt($node)) {
-                    $ui->addContent($content_row['display_area'], $content->getUserUI(), $content_row['display_order']);
+                    $ui->addContent($content_row['display_area'], $content, $content_row['display_order']);
                 }
             }
         }

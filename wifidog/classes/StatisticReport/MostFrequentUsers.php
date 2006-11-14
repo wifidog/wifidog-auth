@@ -81,7 +81,7 @@ class MostFrequentUsers extends StatisticReport
      */
     public function getReportUI($child_html = null)
     {
-        global $db;
+        $db = AbstractDb::getObject();
         $html = '';
         $distinguish_users_by = $this->stats->getDistinguishUsersBy();
         $candidate_connections_sql = $this->stats->getSqlCandidateConnectionsQuery("DISTINCT $distinguish_users_by, date_trunc('day', timestamp_in) AS date");

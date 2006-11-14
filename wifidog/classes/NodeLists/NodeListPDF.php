@@ -786,7 +786,7 @@ if (Dependencies::check("FPDF")) {
             }
         }
     } else {
-        $ui = new MainUI();
+        $ui = MainUI::getObject();
 
         $errmsg = _("To protect the server the PDF file has not been created, because the server is too busy right now!");
         $ui->displayError($errmsg);
@@ -794,7 +794,7 @@ if (Dependencies::check("FPDF")) {
         exit();
     }
 } else {
-    $ui = new MainUI();
+    $ui = MainUI::getObject();
 
     $errmsg = _("PDF file cannot be created because the FPDF library is not installed!");
     $ui->displayError($errmsg);
@@ -891,8 +891,8 @@ class NodeListPDF
      */
     public function __construct(&$network)
     {
-        // Define globals
-        global $db;
+        
+        $db = AbstractDb::getObject();
 
         // Init network
         $this->_network = $network;

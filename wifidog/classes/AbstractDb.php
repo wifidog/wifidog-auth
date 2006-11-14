@@ -53,6 +53,18 @@
  */
 class AbstractDb
 {
+    private static $object;
+    public static function getObject() {
+    	if (self::$object==null)
+    	{
+    		self::$object=new self();
+    	}
+    	return self::$object;
+    }
+    /** Constructor */
+    private function __construct()  {
+    }
+    
     // Connects to PostgreSQL database
     function connect($db_name)
     {

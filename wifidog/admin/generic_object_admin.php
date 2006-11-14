@@ -69,6 +69,7 @@ require_once('classes/InterfaceElements.php');
 
 
 // Init values
+$ui = MainUI::getObject();
 $html = "";
 $errmsg = "";
 $common_input = "";
@@ -183,7 +184,7 @@ case "preview":
     $html .= Node::getSelectNodeUI($name);
 
     if (method_exists($object, "getUserUI")) {
-        $html .= $object->getUserUI();
+        $ui->addContent('main_area_middle', $object, 1);
     }
 
     $html .= "<input type='hidden' name='action' value='preview'>";
@@ -417,7 +418,7 @@ $_htmlHeader .= "<script type='text/javascript' src='" . BASE_SSL_PATH . "js/int
 /*
  * Render output
  */
-$ui = new MainUI();
+
 $ui->setTitle(_("Generic object editor"));
 $ui->setHtmlHeader($_htmlHeader);
 $ui->setToolSection('ADMIN');

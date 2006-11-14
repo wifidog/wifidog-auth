@@ -47,7 +47,7 @@
  */
 require_once (dirname(__FILE__) . '/include/common.php');
 
-global $db; 
+$db = AbstractDb::getObject(); 
 if (!empty ($_REQUEST['destination_url'])) {
        
     if (!empty ($_REQUEST['content_id'])) {

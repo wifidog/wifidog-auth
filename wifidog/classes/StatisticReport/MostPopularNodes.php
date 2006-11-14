@@ -80,7 +80,7 @@ class MostPopularNodes extends StatisticReport
      */
     public function getReportUI($child_html = null)
     {
-        global $db;
+        $db = AbstractDb::getObject();
         $html = '';
         $node_usage_stats = null;
 

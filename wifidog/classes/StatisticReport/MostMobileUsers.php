@@ -80,7 +80,7 @@ class MostMobileUsers extends StatisticReport
      */
     public function getReportUI($child_html = null)
     {
-        global $db;
+        $db = AbstractDb::getObject();
         $html = '';
         $distinguish_users_by = $this->stats->getDistinguishUsersBy();
         $candidate_connections_sql = $this->stats->getSqlCandidateConnectionsQuery("COUNT(DISTINCT connections.node_id) AS num_hotspots_visited, $distinguish_users_by");

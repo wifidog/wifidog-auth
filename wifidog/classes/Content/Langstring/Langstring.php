@@ -60,11 +60,7 @@ require_once('classes/LocaleList.php');
  * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class Langstring extends Content {
-    /**
-     * HTML allowed to be used
-     */
-    const ALLOWED_HTML_TAGS = "<a><br><b><h1><h2><h3><h4><i><img><li><ol><p><strong><u><ul><li>";
-
+    protected $allowed_html_tags;
     /**
      * Constructor
      *
@@ -72,10 +68,13 @@ class Langstring extends Content {
      */
     public function __construct($content_id)
     {
-        // Define globals
-        global $db;
-
         parent::__construct($content_id);
+        
+        $db = AbstractDb::getObject();
+	    /**
+    	 * HTML allowed to be used
+     	*/
+   		$this->allowed_html_tags = "<a><br><b><h1><h2><h3><h4><i><img><li><ol><p><strong><u><ul><li>";
         $this->mBd = &$db;
     }
 
@@ -241,21 +240,27 @@ class Langstring extends Content {
     }
 
     /**
-     * Affiche l'interface d'administration de l'objet
-     *
+     * Retreives the admin interface of this object. Anything that overrides
+     * this method should call the parent method with it's output at the END of
+     * processing.
+     * @param string $subclass_admin_interface HTML content of the interface
+     * element of a children.
      * @param string $type_interface SIMPLE pour éditer un seul champ, COMPLETE
      *                               pour voir toutes les chaînes, LARGE pour
      *                               avoir un textarea.
-     * @return string HTML code of administration interface
+     * @return string The HTML fragment for this interface.
      */
-    public function getAdminUI($type_interface = "LARGE", $title=null)
+    public function getAdminUI($subclass_admin_interface = null, $title = null, $type_interface = "LARGE")
     {
         // Init values.
         $html = '';
+        $html .= $subclass_admin_interface;
         $result = "";
         //$variantsCounter = 0;
         //$_hideNewContent = false;
-        $html .= "<div class='admin_section_hint'>" . _("Only these HTML tags are allowed : ") . htmlentities(self::ALLOWED_HTML_TAGS) . "</div>";
+        if(!empty($this->allowed_html_tags)) {
+        	$html .= "<div class='admin_section_hint'>" . _("Only these HTML tags are allowed : ") . htmlentities($this->allowed_html_tags) . "</div>";
+        }
  		$html .= "<ul class='admin_element_list'>\n";
         $liste_languages = new LocaleList();
         $sql = "SELECT * FROM content_langstring_entries WHERE content_langstring_entries.langstrings_id = '$this->id' ORDER BY locales_id";
@@ -432,7 +437,7 @@ class Langstring extends Content {
                     } else {
                         // Strip HTML tags !
                         $string = $_REQUEST["langstrings_".$this->id."_substring_$value[langstring_entries_id]_string"];
-                        $string = $this->mBd->escapeString(strip_tags($string, self :: ALLOWED_HTML_TAGS));
+                        $string = $this->mBd->escapeString(strip_tags($string, $this->allowed_html_tags));
 
                         // If PEAR::HTML_Safe is available strips down all potentially dangerous content
                         $_HtmlSafe = new HtmlSafe();
@@ -535,7 +540,7 @@ class Langstring extends Content {
         if ($this->isPersistent()) {
             $errmsg = _("Content is persistent (you must make it non persistent before you can delete it)");
         } else {
-            global $db;
+            $db = AbstractDb::getObject();
 
             if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
                 $_sql = "DELETE FROM content WHERE content_id='$this->id'";
