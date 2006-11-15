@@ -236,32 +236,24 @@ class MainUI
 		{
 			$content=$content_fragment['content'];
 
-		if (is_object($content))
-		{
-    		if ($content instanceof Content)
+    		if (method_exists($content,'prepareGetUserUI'))
 			{
 			    //echo "<h1>prepareGetUserUI on ".$content->getId()."</h1>";
 				$content->prepareGetUserUI();
 			}
-			else
-			{
-			throw new exception ("Object must be a subclass of Content");
-			}
-		}
-
 		}
 		foreach ($this->_contentArray as $content_fragment)
 		{
 		    $content=$content_fragment['content'];
 	   		if (is_object($content))
 		{
-			if ($content instanceof Content)
+			if (method_exists($content,'getUserUI'))
 			{
 				$this->_contentDisplayArray[$content_fragment['display_area']] .= $content->getUserUI();
 			}
 			else
 			{
-			throw new exception ("Object must be a subclass of Content");
+			throw new exception ("Object must implement getUserUI");
 			}
 		}
 		else

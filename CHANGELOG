@@ -1,4 +1,7 @@
 2006-11-14 Benoit Grégoire  <bock@step.polymtl.ca>
+	* MainUI.php:  Allow displaying any object with a getUserUI() method directly as content.
+
+2006-11-14 Benoit Grégoire  <bock@step.polymtl.ca>
 	* generic_object_admin.php:  Fix interface options for the user object, but this is the wrong way to go about it.  THese options should be class properties.
 
 2006-11-14 Benoit Grégoire  <bock@step.polymtl.ca>
