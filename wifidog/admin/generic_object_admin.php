@@ -331,6 +331,7 @@ case "edit":
     switch ($_REQUEST['object_class']) {
     case "Network":
     case "Server":
+    case "User":
         $supportsPreview = false;
         break;
 
@@ -340,6 +341,9 @@ case "edit":
 
     // Process deletion abilities
     switch ($_REQUEST['object_class']) {
+    case "User":
+        $supportsDeletion = false;
+        break;
     case "Network":
     case "Node":
     case "Server":
