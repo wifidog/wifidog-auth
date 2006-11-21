@@ -1,4 +1,11 @@
 2006-11-21 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Change schema update method.  Will now do one transaction
+	 per schema version, allowing each schema to assume that
+	  the current schema is the previous one.  Also allows not
+	  starting over when there is a problem.
+	  Fixes schema update problems with the last commit
+	
+2006-11-21 Benoit Grégoire  <bock@step.polymtl.ca>
 	* RssAggregator.php:  At long last, sync with FeedPressReview 2.0
 	 http://projects.coeus.ca/feedpressreview/ (formerly rsspressreview)  and
 	  make most of it's features directly available from the web interface.
