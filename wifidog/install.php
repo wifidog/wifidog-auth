@@ -48,7 +48,6 @@
  * Load required files
  */
 require_once ('include/path_defines_base.php');
-
 empty ($_REQUEST['page']) ? $page = 'Welcome' : $page = $_REQUEST['page']; # The page to be loaded
 empty ($_REQUEST['action']) ? $action = '' : $action = $_REQUEST['action']; # The action to be done (in page)
 empty ($_REQUEST['debug']) ? $debug = 0 : $debug = $_REQUEST['debug']; # Use for MySQL debugging
@@ -164,12 +163,13 @@ $requiredPostgeSQLVersion = '0.0.0'; // Todo
 # Needed files/directories with write access
 $dir_array = array (
     'tmp',
-    'tmp/magpie_cache',
+    'tmp/simplepie_cache',
     'lib/smarty',
     'lib/smarty/plugins',
     'tmp/smarty/templates_c',
     'tmp/smarty/cache',
-    'lib/magpie',
+    'lib/simplepie',
+    'lib/feedpressreview',
     'lib/Phlickr',
     'config.php'
 );
@@ -185,13 +185,21 @@ $neededPackages = array (
         'message' => '',
         'file' => 'lib/smarty/Smarty.class.php'
     ),
-    'magpierss' => array (
+    'simplepie' => array (
         'needed' => 0,
         'available' => 0,
         'message' => '',
-        'file' => 'lib/magpie/rss_fetch.inc'
+        'file' => 'lib/simplepie/simplepie.inc',
+        'svn_source' => 'http://svn.simplepie.org/simplepie/branches/1.0_b3/'
     ),
-    'phlickr' => array (
+    'feedpressreview' => array (
+        'needed' => 0,
+        'available' => 0,
+        'message' => '',
+        'file' => 'lib/feedpressreview/FeedPressReview.inc',
+        'svn_source' => 'http://projects.coeus.ca/svn/feedpressreview/trunk/'
+    ),
+        'phlickr' => array (
         'needed' => 0,
         'available' => 0,
         'message' => '',
@@ -411,17 +419,19 @@ function downloadFile($remoteURL, $localPath) {
         return false;
 }
 /** Use PHP internal functions to download a file */
-function execVerbose($command, & $output, & $return_var) {
+function execVerbose($command, & $output, & $return_var, $always_show_output = true) {
     print "$command";
     $retval = exec($command.'  2>&1', & $output, & $return_var);
-    if ($return_var != 0) {
-        print "<p style='color:red'>Error:</em>  Command did not complete successfully  (returned $return_var): <br/>\n";
-        if ($output) {
+    if ($return_var != 0)
+        print "<p style='color:red'><em>Error:</em>  Command did not complete successfully  (returned $return_var): <br/>\n";
+    else
+        print "<p style='color:green'>Command completed successfully  (returned $return_var): <br/>\n";
+        
+        if (($return_var != 0 || $always_show_output) && $output) {
             foreach ($output as $output_line)
                 print " $output_line <br/>\n";
         }
         print "</p>\n";
-    }
     return $retval;
 }
 
@@ -683,10 +693,12 @@ switch ($page) {
         else {
             refreshButton();
             print "<P>You need to allow UNIX user <B>$process_username</B> to write to these directories (mkdir, chown or chmod)</P>";
+            if (!empty ($cmd_mkdir) || !empty ($cmd_mkdir))
+                print "<p><b>For instance, you may want to use the following commands</b> :</p>\n";
             if (!empty ($cmd_mkdir))
-                print "<P><B>For instance</B> : mkdir $cmd_mkdir";
+                print "mkdir $cmd_mkdir <br />";
             if (!empty ($cmd_chown))
-                print "<P><B>For instance</B> :<br/>chgrp -R $process_group $cmd_chown;<br/>chmod g+wx $cmd_chown;";
+                print "chgrp -R $process_group $cmd_chown;<br/>chmod g+wx $cmd_chown;<br/>";
             print "<P>After permissions modification done, hit the REFRESH button to see the NEXT button and continue with the installation";
         }
         break;
@@ -739,15 +751,15 @@ EndHTML;
             ),
             array (
                 "title" => "Next",
-                "page" => "magpierss"
+                "page" => "simplepie"
             )
         ));
         break;
         ###################################
-    case 'magpierss' : // Download, uncompress and install MagpieRSS
-        print "<H1>MagpieRSS installation</H1>\n";
+    case 'simplepie' : // Download, uncompress and install SimplePie
+        print "<H1>SimplePie installation</H1>\n";
 
-        if ($neededPackages['magpierss']['available']) {
+        if ($neededPackages['simplepie']['available']) {
             print "Already installed !<BR>";
             navigation(array (
                 array (
@@ -756,40 +768,73 @@ EndHTML;
                 ),
                 array (
                     "title" => "Next",
+                    "page" => "feedpressreview"
+                )
+            ));
+        }
+        elseif ($action == 'install') {
+
+            print "Download source code frpm svn($filename) : ";
+            execVerbose("svn co ".escapeshellarg($neededPackages['simplepie']['svn_source'])." ".escapeshellarg(WIFIDOG_ABS_FILE_PATH."lib/simplepie"), $output, $return);
+            #execVerbose("locale", $output, $return);
+
+            refreshButton();
+            navigation(array (
+                array (
+                    "title" => "Back",
+                    "page" => "smarty"
+                ),
+                array (
+                    "title" => "Next",
+                    "page" => "feedpressreview"
+                )
+            ));
+        }
+        else {
+            print<<< EndHTML
+<P><A HREF="http://simplepie.org/">SimplePie</A> is a dependency of provides an RSS parser in PHP. It is required for RssPressReview.  It's is recommended to install it, if you don't, RSS feeds options will be disabled.
+
+<P>Do you want to install SimplePie ?
+EndHTML;
+            navigation(array (
+                array (
+                    "title" => "Back",
+                    "page" => "smarty"
+                ),
+                array (
+                    "title" => "Install",
+                    "page" => "simplepie",
+                    "action" => "install"
+                ),
+                array (
+                    "title" => "Next",
+                    "page" => "feedpressreview"
+                )
+            ));
+        }
+        break;
+        ###################################
+    case 'feedpressreview' : // Download, uncompress and install feedpressreview
+        print "<H1>Feed press review installation</H1>\n";
+
+        if ($neededPackages['feedpressreview']['available']) {
+            print "Already installed !<BR>";
+            navigation(array (
+                array (
+                    "title" => "Back",
+                    "page" => "simplepie"
+                ),
+                array (
+                    "title" => "Next",
                     "page" => "phlickr"
                 )
             ));
         }
         elseif ($action == 'install') {
-            chdir(WIFIDOG_ABS_FILE_PATH . "tmp");
-            $filename_array = preg_split("/\//", $magpierss_full_url);
-            $filename = array_pop($filename_array);
 
-            print "Download source code ($filename) : ";
-            if (!file_exists(WIFIDOG_ABS_FILE_PATH."tmp/" . $filename))
-                //execVerbose("wget \"$magpierss_full_url\" 2>&1", $output, $return);
-                downloadFile($magpierss_full_url, WIFIDOG_ABS_FILE_PATH."tmp/" . $filename);
-
-            if (!file_exists(WIFIDOG_ABS_FILE_PATH."tmp/" . $filename)) {
-                print "<B STYLE=\"color:red\">Error</B><P>Current working directory : <B>$basepath/tmp/smarty</B>";
-                $output = implode("\n", $output);
-                print "<PRE><B>wget \"$magpierss_full_url\"</B>\n$output</PRE>";
-                exit ();
-            }
-            else {
-                print "OK<BR>";
-            }
-
-            print "Uncompressing : ";
-            $dir_array = split(".tar.gz", WIFIDOG_ABS_FILE_PATH."tmp/" . $filename);
-            $dirname = array_shift($dir_array);
-            if (!file_exists($dirname))
-                execVerbose("tar -xzf $dirname.tar.gz", $output, $return);
-            print "OK<BR>";
-
-            print "Copying : ";
-            execVerbose("cp -r $dirname/* ".WIFIDOG_ABS_FILE_PATH."lib/magpie", $output, $return); # TODO : Utiliser MAGPIE_REL_PATH
-            print "OK<BR>";
+            print "Download source code frpm svn($filename) : ";
+            execVerbose("svn co ".escapeshellarg($neededPackages['feedpressreview']['svn_source'])." ".escapeshellarg(WIFIDOG_ABS_FILE_PATH."lib/feedpressreview"), $output, $return);
+            #execVerbose("locale", $output, $return);
 
             refreshButton();
             navigation(array (
@@ -805,18 +850,18 @@ EndHTML;
         }
         else {
             print<<< EndHTML
-<P><A HREF="http://magpierss.sourceforge.net/">MagpieRSS</A> provides an XML-based (expat) RSS parser in PHP. MagpieRSS is needed by Wifidog for RSS feeds. It's is recommended to install MagpieRSS, if you don't, RSS feeds options will be disabled.
+<P><A HREF="http://projects.coeus.ca/feedpressreview/">Feed press review</A> is a dependency that provides a Feed aggregator in PHP.  It is recommended to install it.  If you don't, RSS feeds options will be disabled.
 
-<P>Do you want to install MagpieRSS ?
+<P>Do you want to install FeedPressReview ?
 EndHTML;
             navigation(array (
                 array (
                     "title" => "Back",
-                    "page" => "smarty"
+                    "page" => "simplepie"
                 ),
                 array (
                     "title" => "Install",
-                    "page" => "magpierss",
+                    "page" => "feedpressreview",
                     "action" => "install"
                 ),
                 array (
@@ -835,7 +880,7 @@ EndHTML;
             navigation(array (
                 array (
                     "title" => "Back",
-                    "page" => "magpierss"
+                    "page" => "simplepie"
                 ),
                 array (
                     "title" => "Next",

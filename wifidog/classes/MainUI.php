@@ -379,17 +379,18 @@ class MainUI
 	}
 
 	/**
-	 * Set the HTML page headers
+	 * Append HTML markup (normally <script> elements) to the <head> element to
+	 * the final page.
 	 *
-	 * @param string $headers_string HTML page headers
+	 * @param string $headers_string HTML markup suitable for the HEAD element
 	 *
 	 * @return void
 	 *
 	 * @access public
 	 */
-	public function setHtmlHeader($headers_string)
+	public function appendHtmlHeadContent($headers_string)
 	{
-		$this->_htmlHeaders = $headers_string;
+		$this->_htmlHeaders .= $headers_string."\n";
 	}
 	
 	/**

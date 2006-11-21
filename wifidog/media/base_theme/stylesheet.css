@@ -199,11 +199,6 @@ div.tool_user_info {
 	padding: 0;
 }
 
-span.tool_user_info {
-	margin: 0;
-	padding: 0;
-}
-
 div.language{
 
 }
@@ -334,7 +329,7 @@ body div#toolTip p em span { font-weight:bold;color:#fff; }
 }
 .warningmsg {
     font-weight: bold;
-    color: teal;
+    color: orange;
 }
 .successmsg {
     font-weight: bold;
@@ -618,6 +613,97 @@ td.admin_element_tools, th.admin_element_tools {
 .langstring {
     text-align: justify;
 }
+
+/* RssAggregator */
+.fpr_item_title {
+	display: inline;
+	}
+.fpr_feed_title {
+	display: inline;
+	}
+.fpr_title_date {
+	font-weight: lighter;
+	}
+.fpr_title_str  { 
+	display: inline;
+	} 
+.fpr_item_title .fpr_title_str  {
+	 font-weight: bold;
+	 }          
+.fpr_list {
+	padding: 0em 0em 0em 0em;
+	margin: 0em 0em 0em 1em;
+	}
+.fpr_item { 
+	list-style-type: none;
+	display: block;
+	}
+fpr_empty_feeds {
+	}
+.fpr_mouseover {
+	display: inline
+	}
+.fpr_item_link {
+	}
+.fpr_expand_switch { 
+	text-decoration: none;
+	}                 
+.fpr_popup_inner_div {
+	padding: 0.5em;
+	visibility: hidden;
+	position: absolute;
+	left: 4em;
+	top: 1.5em;
+	width: 100%;
+	z-index: 100;
+	opacity: 0.90; filter: alpha(opacity=90);
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background-color: #EBFFEB;
+	color: #000000;
+	border: 1px solid #C2FFC2;
+	}
+.fpr_popup_inner_div_expanded {
+	margin:  0em 0em 0em 0.5em;
+	padding: 0.5em;
+	border-top: 1px solid #FFFFFF;
+	border-right: 1px solid #B4DFFF;
+	border-bottom: 1px solid #B4DFFF;
+	border-left: 1px solid #FFFFFF;
+	color: #000000;
+	}
+.fpr_popup_outer_div {
+	position: relative;
+	}
+.fpr_feed_image {
+	float: right;
+	}
+	.fpr_text {
+	display: block;
+	}
+.fpr_text P {
+	}
+.fpr_enclosure {
+	max-width: 320px;
+	max-height: 240px;
+	display: inline;
+	float:right;
+	}
+.fpr_enclosure_inner {
+	display: block;
+	}
+.fpr_clear {
+	clear: right;
+	}
+.fpr_enclosure_download {
+	text-align: center;
+	}
+.fpr_item_metadata {
+	float:right;
+	}
+
+
 .flickr_photo {
     background: url(images/flickr_shadowAlpha.png) no-repeat bottom right !important;
     background: url(images/flickr_shadow.gif) no-repeat bottom right;

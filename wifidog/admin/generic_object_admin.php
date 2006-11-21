@@ -424,7 +424,7 @@ $_htmlHeader .= "<script type='text/javascript' src='" . BASE_SSL_PATH . "js/int
  */
 
 $ui->setTitle(_("Generic object editor"));
-$ui->setHtmlHeader($_htmlHeader);
+$ui->appendHtmlHeadContent($_htmlHeader);
 $ui->setToolSection('ADMIN');
 $ui->addContent('main_area_middle', "<div>" . $html . "</div>");
 $ui->display();

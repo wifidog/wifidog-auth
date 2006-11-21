@@ -70,14 +70,15 @@ if (isset($_REQUEST["message"])) {
         break;
 
     case "activate":
-        $errmsg .= "<p>" . sprintf(_("You have now been granted %d minutes of Internet access without being validated to go and activate your account."), (User::getCurrentUser()->getNetwork()->getValidationGraceTime() / 60)) . "</p>";
-        $errmsg .= "<p>" . _("If you fail to validate your account in 15 minutes, you will have to validate it from somewhere else.") . "</p>";
+        $minutes_grace_time = User::getCurrentUser()->getNetwork()->getValidationGraceTime() / 60;
+        $errmsg .= "<p>" . sprintf(_("You have now been granted %d minutes of Internet access without being validated to go and activate your account."), $minutes_grace_time) . "</p>";
+        $errmsg .= "<p>" . sprintf(_("If you fail to validate your account in %d minutes, you will have to validate it from somewhere else."), $minutes_grace_time) . "</p>";
         $errmsg .= "<p>" . _("If you do not receive an email from our validation server in the next minute, perhaps you have made a typo in your email address, you might have to create another account.") . "</p>";
         $ui->displayError($errmsg);
         break;
 
     default:
-        $errmsg .= _("No message has been specified! (this is probably an error)");
+        $errmsg .= _("Unknown message specified! (this is probably an error)");
         $ui->displayError($errmsg);
         break;
     }

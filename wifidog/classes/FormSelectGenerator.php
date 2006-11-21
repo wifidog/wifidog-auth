@@ -182,7 +182,7 @@ class FormSelectGenerator
 	 * field_num: [0] = The value of the primary key (that will be returned if the element is selected)
 	 * field_num: [1] = The name of the value, displayed to the user
 	 *
-	 * @param $array : The SQL query to run
+	 * @param $array : T The array used to generate the values
 	 * @param $selectedPrimaryKey : Optional.  Which element should be selected by default, use null to select the first one
 	 * @param $objectPrefix : An arbitrary prefix, chosen by the calling object, to guarantee unicity
 	 * @param $allowNullValues, TRUE or FALSE
@@ -220,6 +220,31 @@ class FormSelectGenerator
 		return $retval;
 	}
 
+    /**
+     * Generates an HTML SELECT element from an array containing the data
+     *
+     * You must provide a an array such as tab[primary_key][key_label]
+     * primary_key: The value of the primary key (that will be returned if the
+     * element is selected) 
+     * key_label: The name of the value, displayed to the user
+     *
+     * @param $array : The array used to generate the values
+     * @param $selectedPrimaryKey : Optional.  Which element should be selected by default, use null to select the first one
+     * @param $objectPrefix : An arbitrary prefix, chosen by the calling object, to guarantee unicity
+     * @param $allowNullValues, TRUE or FALSE
+     * @param $nullCaptionString, string displayed in place of null values
+     * @param $additionalSelectAttribute will be appended inside the select tag.  For example: "onclick='submit();'"
+     * @return string The HTML SELECT element definition string For example: "onclick='submit();'
+     */
+    public static function generateFromKeyLabelArray($array, $selectedPrimaryKey, $userPrefix, $objectPrefix, $allowNullValues, $nullCaptionString = ' - - - ', $additionalSelectAttribute = "", $max_length = -1)
+    {
+        $converted_array = array();
+        foreach ($array as $key => $value)
+        {
+            $converted_array[] = array($key, $value);
+        }
+        return self::generateFromArray($converted_array, $selectedPrimaryKey, $userPrefix, $objectPrefix, $allowNullValues, $nullCaptionString, $additionalSelectAttribute, $max_length);    
+    }
 	/**
 	 * Returns the element selected
 	 * @param $userPrefix : An arbitrary prefix, chosen by the user, to guarantee unicity

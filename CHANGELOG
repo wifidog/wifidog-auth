@@ -1,3 +1,20 @@
+2006-11-21 Benoit Grégoire  <bock@step.polymtl.ca>
+	* RssAggregator.php:  At long last, sync with FeedPressReview 2.0
+	 http://projects.coeus.ca/feedpressreview/ (formerly rsspressreview)  and
+	  make most of it's features directly available from the web interface.
+	This gives us:  	
+	-Now based on SimplePie http://simplepie.org/ (magpie was no longuer maintained)
+	-Now unobtrusively displays almost all item and feed metadata
+	-Supports images
+	-Supports podcasts and enclosures
+	-More accurate algorithm
+	-Criteria based default feed expansion
+	-More real-estate efficient, and improved UI
+	The admin interface is now also more real-estate efficient (uses the hover help code commited by François that no one used yet).
+	
+	Warning: This changes the dependencies of the auth server.  Your RSS feeds will be disabled untill you re-run the install script.
+	* gw_message.php:  Fix validation period not being displayed.
+
 2006-11-14 Benoit Grégoire  <bock@step.polymtl.ca>
 	* MainUI.php:  Allow displaying any object with a getUserUI() method directly as content.
 

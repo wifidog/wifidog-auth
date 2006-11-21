@@ -46,7 +46,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 48);
+define('REQUIRED_SCHEMA_VERSION', 49);
 
 /**
  * Check that the database schema is up to date.  If it isn't, offer to update it.
@@ -982,6 +982,27 @@ function update_schema()
             $sql .= "ALTER TABLE content_display_log ADD CONSTRAINT content_display_log_pkey PRIMARY KEY(content_id, user_id, node_id);\n";
  
         }
+        $new_schema_version = 49;
+        if ($schema_version < $new_schema_version) {
+            printUpdateVersion($new_schema_version);
+            $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+            $sql .= "ALTER TABLE content_rss_aggregator ADD COLUMN feed_expansion text;\n";
+            $sql .= "ALTER TABLE content_rss_aggregator ALTER COLUMN feed_expansion SET DEFAULT 'FIRST';\n";
+            $sql .= "UPDATE content_rss_aggregator SET feed_expansion='FIRST';\n";
+            $sql .= "ALTER TABLE content_rss_aggregator ALTER COLUMN feed_expansion SET NOT NULL;\n";
+            
+            $sql .= "ALTER TABLE content_rss_aggregator ADD COLUMN feed_ordering text;\n";
+            $sql .= "ALTER TABLE content_rss_aggregator ALTER COLUMN feed_ordering SET DEFAULT 'REVERSE_DATE';\n";
+            $sql .= "UPDATE content_rss_aggregator SET feed_ordering='REVERSE_DATE';\n";
+            $sql .= "ALTER TABLE content_rss_aggregator ALTER COLUMN feed_ordering SET NOT NULL;\n";
+            
+            $sql .= "ALTER TABLE content_rss_aggregator ADD COLUMN display_empty_feeds boolean;\n";
+            $sql .= "ALTER TABLE content_rss_aggregator ALTER COLUMN display_empty_feeds SET DEFAULT TRUE;\n";
+            $sql .= "UPDATE content_rss_aggregator SET display_empty_feeds=TRUE;\n";
+            $sql .= "ALTER TABLE content_rss_aggregator ALTER COLUMN display_empty_feeds SET NOT NULL;\n";
+        }        
+
+        
         /*
         $new_schema_version = ;
         if ($schema_version < $new_schema_version) {

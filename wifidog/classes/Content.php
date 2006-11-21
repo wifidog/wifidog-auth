@@ -321,6 +321,16 @@ class Content implements GenericObject {
 
         return $contentTypes;
     }
+     /**
+     * Check if this specific ContentType is usable (all dependencies
+     * met,etc.
+     * This method is meant to be overloaded by the different content classes
+     * @return true or flase
+     */
+    public static function isContentTypeFunctional() {
+            return true;
+    } 
+    
     /**
      * Check if the ContentType is available on the system     *
      * @param string $classname The classname to check
@@ -331,9 +341,8 @@ class Content implements GenericObject {
             //throw new Exception(_("The following content type isn't valid: ").$contentType);
             return false;
         } else {
-            return true;
+            return $classname.isContentTypeFunctional();
         }
-
     }
 
     /**
@@ -1117,6 +1126,27 @@ if(!$this->isSimpleContent())
         $this->log_as_content = $content;
     }
 
+    /** Get the last time this content was displayed
+     * @param $user User, optionnal.  If present, the date is the last time the
+     * content was displayed for this user
+     * @param $node Node, optionnal.  If present, the date is the last time the
+     * content was displayed at this node 
+	 @return PHP timestamp or null */
+    public function getLastDisplayedTimestamp($user = null, $node = null) {
+            $retval = null;
+            $log_row = null;
+            $user?$user_sql=" AND user_id='{$user->getId()}' ":$user_sql='';
+            $node?$node_sql=" AND node_id='{$node->getId()}' ":$node_sql='';
+               $db = AbstractDb::getObject();
+
+                $sql = "SELECT EXTRACT('epoch' FROM last_display_timestamp) as last_display_timestamp FROM content_display_log WHERE content_id='$this->id' $user_sql $node_sql ORDER BY last_display_timestamp DESC limit 1";
+                $db->execSqlUniqueRes($sql, $log_row, false);
+                if ($log_row != null) {
+                $retval = $log_row['last_display_timestamp'];
+            }
+            return $retval;
+    }
+    
     /** Log that this content has just been displayed to the user.  Will only log if the user is logged in */
     private function logContentDisplay() {
         if ($this->getLoggingStatus() == true && $this->log_as_content->getId() == $this->getId()) {

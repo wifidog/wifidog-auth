@@ -64,7 +64,7 @@ if(!empty($_REQUEST['node_id']))
 
     // Add Google Maps JavaScript ( must set config values )
     $html_headers = "<script src=\"http://maps.google.com/maps?file=api&v=1&key=" . Server::getCurrentServer()->getGoogleAPIKey() . "\" type=\"text/javascript\"></script>";
-    $ui->setHtmlHeader($html_headers);
+    $ui->appendHtmlHeadContent($html_headers);
 
     // Create HTML body
     $html = _("Click anywhere on the map to extract the GIS location, then click on the button to save the data.")."<br>";

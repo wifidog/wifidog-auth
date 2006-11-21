@@ -51,7 +51,7 @@ require_once ('classes/LocaleList.php');
 /**
  * Defines path to cache directory of Magpie
  */
-define('MAGPIE_CACHE_DIR', WIFIDOG_ABS_FILE_PATH . 'tmp/magpie_cache/');
+define('SIMPLEPIE_CACHE_DIR', WIFIDOG_ABS_FILE_PATH . 'tmp/simplepie_cache/');
 
 /**
  * Interim code to display the RSS feed for a hotspot
@@ -76,7 +76,17 @@ class RssAggregator extends Content {
     
      */
     private $press_review;
-
+    /**
+     * Check if this specific ContentType is usable (all dependencies
+     * met,etc.
+     * This method is meant to be overloaded by the different content classes
+     * @return true or flase
+     */
+    public static function isContentTypeFunctional() {
+        $retval = (@include_once ('lib/feedpressreview/FeedPressReview.inc')) && (@include_once ('lib/simplepie/simplepie.inc'));
+           return  ($retval);
+    } 
+    
     /**
      * Constructor
      *
@@ -90,7 +100,7 @@ class RssAggregator extends Content {
         // Init values
         $row = null;
         $content_rss_aggregator_rows = null;
-
+        $this->press_review=null;
         parent :: __construct($content_id);
         $content_id = $db->escapeString($content_id);
 
@@ -116,14 +126,25 @@ class RssAggregator extends Content {
         } else {
             $this->content_rss_aggregator_feeds_rows = array ();
         }
+    }
 
-        if (RSS_SUPPORT) {
-            require_once ('lib/RssPressReview/RssPressReview.php');
-
-            $this->press_review = new RssPressReview(WIFIDOG_ABS_FILE_PATH . MAGPIE_REL_PATH, "UTF-8");
-            $this->press_review->setAlgorithmStrength($this->content_rss_aggregator_row['algorithm_strength']);
-            $this->press_review->setMaxItemAge($this->content_rss_aggregator_row['max_item_age']);
-
+/** Initialize the FeedPressReview object with the Aggregator's values
+ * Will set the press_review object property 
+ * @return FeedPressReviewThe new press_review object property */
+private function initFeedPressReview()
+{
+            if (self::isContentTypeFunctional() && $this->press_review==null) {
+            $this->press_review = new FeedPressReview();
+            $this->press_review->setConfigCacheDir(SIMPLEPIE_CACHE_DIR);
+            $this->press_review->setConfigAlgorithmStrength($this->getAlgorithmStrength());
+            $this->press_review->setConfigMaxItemAge($this->getMaxItemAge());
+            $this->press_review->setConfigFeedOrdering($this->getFeedOrdering());
+            $this->press_review->setConfigFeedExpansion($this->getFeedExpansionMode());
+            $user = User :: getCurrentUser();
+            $last_display_timestamp = $this->getLastDisplayedTimestamp($user, null);
+            //$last_display_timestamp = time()-24*3600;
+            $this->press_review->setConfigLastDisplayed($last_display_timestamp);
+            
             foreach ($this->content_rss_aggregator_feeds_rows as $feed_row) {
                 $this->press_review->addSourceFeed($feed_row['url'], $feed_row['default_publication_interval'], $feed_row['bias']);
                 $title = $this->press_review->getFeedTitle($feed_row['url']);
@@ -131,17 +152,16 @@ class RssAggregator extends Content {
                 // Update the stored feed title if it changed.
                 //This allows the system to know every feed's title without continuously looking them up
                 if (!empty ($title) && $title != $feed_row['title']) {
+                    $db=AbstractDb::getObject();
                     $title = $db->escapeString($title);
                     $url = $db->escapeString($feed_row['url']);
                     $db->execSqlUpdate("UPDATE content_rss_aggregator_feeds SET title = '$title' WHERE url='$url'", false);
                     $this->refresh();
                 }
             }
-        } else {
-            $html = _("RSS support is disabled");
         }
-    }
-
+        return $this->press_review;
+}
     /**
      * Total number of items to display (from all feeds)
      *
@@ -186,6 +206,101 @@ class RssAggregator extends Content {
             $retval = true;
         }
 
+        return $retval;
+    }
+
+    /** Should empty feeds be shown?
+     *
+     * @return boolean
+     */
+    public function getDisplayEmptyFeed() {
+        if ($this->content_rss_aggregator_row['display_empty_feeds'] == 't') {
+            $retval = true;
+        } else {
+            $retval = false;
+        }
+        return $retval;
+    }
+
+    /** Should empty feeds be shown?
+     * @param boolean $value 
+     * @return true if successfull
+     */
+    public function setDisplayEmptyFeed($value) {
+        $retval = true;  
+            if ($value != $this->getDisplayEmptyFeed()) /* Only update database if there is an actual change */ {
+            $value ? $value_sql = 'TRUE' : $value_sql = 'FALSE';
+
+            $db = AbstractDb::getObject();
+            $retval = $db->execSqlUpdate("UPDATE content_rss_aggregator SET display_empty_feeds = $value_sql WHERE content_id = '$this->id'", false);
+            $this->refresh();
+        }
+        return $retval;
+    }
+    
+    /** In what order should feeds be displayed?
+     *
+     * @return text
+     */
+    public function getFeedOrdering() {
+        return $this->content_rss_aggregator_row['feed_ordering'];
+    }
+
+    /** In what order should feeds be displayed?
+     * @param text $value 
+     * @return true if successfull
+     */
+    public function setFeedOrdering($value) {
+        // Init values
+        $retval = false;
+        if ($value != $this->getFeedOrdering()) {
+            /*
+             * Only update database if the mode is valid and there is an actual change
+             */
+            $db = AbstractDb::getObject();
+            $value = $db->escapeString($value);
+            $db->execSqlUpdate("UPDATE content_rss_aggregator SET feed_ordering = '$value' WHERE content_id = '$this->id'", false);
+            $this->refresh();
+            $retval = true;
+        } else {
+            /*
+             * Successfull, but nothing modified
+             */
+            $retval = true;
+        }
+        return $retval;
+    }
+
+    /** Which feed items should be expanded
+     *
+     * @return text
+     */
+    public function getFeedExpansionMode() {
+        return $this->content_rss_aggregator_row['feed_expansion'];
+    }
+
+    /** Which feed items should be expanded
+     * @param text $value 
+	 * @return true if successfull
+     */
+    public function setFeedExpansionMode($value) {
+        // Init values
+        $retval = false;
+        if ($value != $this->getFeedExpansionMode()) {
+            /*
+             * Only update database if the mode is valid and there is an actual change
+             */
+            $db = AbstractDb::getObject();
+            $value = $db->escapeString($value);
+            $db->execSqlUpdate("UPDATE content_rss_aggregator SET feed_expansion = '$value' WHERE content_id = '$this->id'", false);
+            $this->refresh();
+            $retval = true;
+        } else {
+            /*
+             * Successfull, but nothing modified
+             */
+            $retval = true;
+        }
         return $retval;
     }
 
@@ -369,7 +484,7 @@ class RssAggregator extends Content {
      * @return string HTML code for the administration interface
      */
     public function getAdminUI($subclass_admin_interface = null, $title = null) {
-        
+        $this->initFeedPressReview();
         $db = AbstractDb::getObject();
 
         // Init values
@@ -398,14 +513,15 @@ class RssAggregator extends Content {
          */
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<div class='admin_element_label'>\n";
-        $html .= _("How much bonus feeds that do not publish as often get over feed that publish more often.
+        $title = _("How much bonus feeds that do not publish as often get over feed that publish more often.
                                             The default is 0.75, with a typical range between 0 and 1.
                                             At 0, you have a classic RSS aggregator, meaning the n most recent entries picked from all feeds
-                                            will be displayed. 1 is usually as high as you'll want to go:  Assuming that all
+                                            will be displayed. 1 is usually as high as you'll want to go:  Assuming that all feeds have 
                                             an homogenous internal distribution (ex:  one feed publishes exactly one entry a day, the
                                             second once every two days, and the third once every three days), and you ask for 15 entries,
                                             there will be 5 of each.  While that may not sound usefull, it still is, as the feed's distribution is
                                             usually not homogenous.");
+        $html .= "<a href=\"#\" title=\"$title\">"._("Algorithm Strength")."</a>\n";                                    
         $html .= ": </div>\n";
         $html .= "<div class='admin_element_data'>\n";
 
@@ -415,15 +531,59 @@ class RssAggregator extends Content {
 
         $html .= "</div>\n";
         $html .= "</li>\n";
+        
+        /*
+         * feed_expansion
+         */
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>\n";
+        $title = _("Set the criteria that determines which feed items will be shown expanded by default.");
+        $html .= "<a href=\"#\" title=\"$title\">"._("Feed item expansion criteria")."</a>\n";                                    
+        $html .= ": </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
+        $array = FeedPressReview::getFeedExpansionAllowedOptions();
+        $value = $this->getFeedExpansionMode();
+        $name = "rss_aggregator_" . $this->id . "_feed_expansion";
+        $html .= FormSelectGenerator::generateFromKeyLabelArray($array, $value, $name, null, false);
+        $html .= "</div>\n";
+        $html .= "</li>\n";
+        /*
+         * feed_ordering
+         */
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>\n";
+        $title = _("Set in which order the feeds are displayed, and if items from all source should be merged together");
+        $html .= "<a href=\"#\" title=\"$title\">"._("Item ordering")."</a>\n";                                    
+        $html .= ": </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
+        $array = FeedPressReview::getFeedOrderingAllowedOptions();
+        $value = $this->getFeedOrdering();
+        $name = "rss_aggregator_" . $this->id . "_feed_ordering";
+        $html .= FormSelectGenerator::generateFromKeyLabelArray($array, $value, $name, null, false);
+        $html .= "</div>\n";
+        $html .= "</li>\n";
+
+        /*
+         * display_empty_feeds
+         */
+                $html .= "<li class='admin_element_item_container'>\n";
+                $html .= "<div class='admin_element_label'>" . _("Display empty feeds?") . ": </div>\n";
+                $html .= "<div class='admin_element_data'>\n";
+                $name = "rss_aggregator_" . $this->id . "_display_empty_feeds";
+                $this->getDisplayEmptyFeed() ? $checked = 'CHECKED' : $checked = '';
+                $html .= "<input type='checkbox' name='$name' $checked>\n";
+                $html .= "</div>\n";
+                $html .= "</li>\n";
 
         /*
          * max_item_age
          */
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<div class='admin_element_label'>\n";
-        $html .= _("Set the oldest entries (in seconds) you are willing to see.  Any entries older than this will not
+        $title = _("Set the oldest entries (in seconds) you are willing to see.  Any entries older than this will not
                                             be considered at all for display, even if it means that the configured number of items to be displayed isn't reached.
                                             It's only usefull if all your feed publish very rarely, and you don't want very old entries to show up.");
+        $html .= "<a href=\"#\" title=\"$title\">"._("Maximum age (seconds)")."</a>\n";     
         $html .= ": </div>\n";
         $html .= "<div class='admin_element_data'>\n";
 
@@ -466,14 +626,14 @@ class RssAggregator extends Content {
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<b>" . _("Add a new feed or pick one from the other feeds in the system (most_popular_first)") . "</b><br>";
 
-        $sql = "SELECT count, content_rss_aggregator_feeds.url, title FROM content_rss_aggregator_feeds
+        $sql = "SELECT DISTINCT ON (count, content_rss_aggregator_feeds.url) count, content_rss_aggregator_feeds.url, title FROM content_rss_aggregator_feeds
                                         JOIN (SELECT url, count(content_rss_aggregator_feeds.url) as count
                                         FROM content_rss_aggregator_feeds
                                         WHERE content_rss_aggregator_feeds.url NOT IN (SELECT url FROM content_rss_aggregator_feeds WHERE content_id='{$this->id}')
-                                        GROUP BY content_rss_aggregator_feeds.content_id, content_rss_aggregator_feeds.url)
+                                        GROUP BY content_rss_aggregator_feeds.url, content_rss_aggregator_feeds.url)
                                         AS available_feeds
                                         ON (available_feeds.url=content_rss_aggregator_feeds.url)
-                                        ORDER by count DESC";
+                                        ORDER by count desc, content_rss_aggregator_feeds.url DESC";
 
         $db->execSql($sql, $feed_urls, false);
         if ($feed_urls) {
@@ -520,6 +680,23 @@ class RssAggregator extends Content {
              */
             $name = "rss_aggregator_" . $this->id . "_algorithm_strength";
             $this->setAlgorithmStrength($_REQUEST[$name]);
+       /*
+         * feed_expansion
+         */
+
+        $name = "rss_aggregator_" . $this->id . "_feed_expansion";
+            $this->setFeedExpansionMode($_REQUEST[$name]);
+        /*
+         * feed_ordering
+         */
+        $name = "rss_aggregator_" . $this->id . "_feed_ordering";
+            $this->setFeedOrdering($_REQUEST[$name]);
+
+        /*
+         * display_empty_feeds
+         */
+                $name = "rss_aggregator_" . $this->id . "_display_empty_feeds";
+                !empty ($_REQUEST[$name]) ? $this->setDisplayEmptyFeed(true) : $this->setDisplayEmptyFeed(false);
 
             /*
              * max_item_age
@@ -527,19 +704,10 @@ class RssAggregator extends Content {
             $name = "rss_aggregator_" . $this->id . "_max_item_age";
             $this->setMaxItemAge($_REQUEST[$name]);
 
-            /*
-             * Add new feed
-             */
-            $name = "rss_aggregator_{$this->id}_feed_add";
-
-            if (!empty ($_REQUEST[$name])) {
-                $this->addFeed($_REQUEST[$name]);
-            }
-
             foreach ($this->content_rss_aggregator_feeds_rows as $feed_row) {
                 $this->processFeedAdminUI($feed_row);
 
-                /*
+                           /*
                  * Delete feeds
                  */
                 $name = "rss_aggregator_" . $this->id . "_feed_" . md5($feed_row['url']) . "_delete";
@@ -547,6 +715,13 @@ class RssAggregator extends Content {
                 if (isset ($_REQUEST[$name])) {
                     $this->removeFeed($feed_row['url']);
                 }
+            }
+            /*
+             * Add new feed
+             */
+            $name = "rss_aggregator_{$this->id}_feed_add";
+            if (!empty ($_REQUEST[$name])) {
+                $this->addFeed($_REQUEST[$name]);
             }
         }
     }
@@ -561,13 +736,13 @@ class RssAggregator extends Content {
      */
     private function getFeedAdminUI($feed_row) {
         // Init values
+        $this->initFeedPressReview();
         $html = '';
+        $html .= "<fieldset class='admin_container " . get_class($this) . "'>\n";
+        if (!empty ($feed_row['title'])) {
+            $html .= "<legend>{$feed_row['title']}</legend>\n";
+        }
         $html .= "<ul class='admin_element_list'>\n";
-        $html .= "<li class='admin_element_item_container'>\n";
-        $html .= "<div class='admin_element_label'>" . $feed_row['title'] . "</div>\n";
-
-        $html .= "<div class='admin_element_data'>\n";
-
         /*
          * URL
          */
@@ -622,12 +797,16 @@ class RssAggregator extends Content {
          * bias
          */
         $html .= "<li class='admin_element_item_container'>\n";
-        $html .= "<div class='admin_element_label'>" . _("The bias to be given to the source by the selection algorithm.
+        $html .= "<div class='admin_element_label'>";
+        $title = _("The bias to be given to the source by the selection algorithm.
                                                                                     Bias must be > 0 , typical values would be between 0.75 and 1.5
                                                                                     and default is 1 (no bias).  A bias of 2 will cause the items
-                                                                                    to \"look\" twice as recent to the algorithm. A bias of 0.5 to
+                                                                                    to look twice as recent to the algorithm. A bias of 0.5 to
                                                                                     look twice as old. Be carefull, a bias of 2 will statistically
-                                                                                    cause the feed to have MORE than twice as many items displayed.") . ": </div>\n";
+                                                                                    cause the feed to have MORE than twice as many items displayed.");
+       
+        $html .= "<a href=\"#\" title=\"$title\">"._("Algorithm bias for this feed")."</a>\n";      
+        $html .= ": </div>\n";
         $html .= "<div class='admin_element_data'>\n";
 
         $name = "rss_aggregator_" . $this->id . "_feed_" . md5($feed_row['url']) . "_bias";
@@ -636,9 +815,8 @@ class RssAggregator extends Content {
 
         $html .= "</div>\n";
         $html .= "</li>\n";
-
-        $html .= "</li>\n";
         $html .= "</ul>\n";
+        $html .= "</fieldset>\n";
         return $html;
     }
 
@@ -728,6 +906,23 @@ class RssAggregator extends Content {
              */
         }
     }
+    /** This function will be called by MainUI for each Content BEFORE any getUserUI function is called to allow two pass Content display.
+     * Two pass Content display allows such things as modyfying headers, title, creating content type that accumulate content from other pieces (like RSS feeds)
+     * @return null
+     */
+    public function prepareGetUserUI() {
+         if (self::isContentTypeFunctional()) {
+                            $this->initFeedPressReview();
+                                   static $headerWritten = false;
+        if(!$headerWritten) {
+        $mainui = MainUI::getObject();
+        //$mainui->appendStylesheetURL(BASE_URL_PATH . 'lib/feedpressreview/feedpressreview.css');
+        $mainui->appendHtmlHeadContent("<script type='text/javascript' src='".BASE_URL_PATH . 'lib/feedpressreview/feedpressreview.js'."'></script>");
+        }
+         }
+        return parent :: prepareGetUserUI();
+    }
+    
 
     /**
      * Retreives the user interface of this object.
@@ -737,12 +932,12 @@ class RssAggregator extends Content {
     public function getUserUI() {
         // Init values
         $html = '';
-
         $html .= "<div class='user_ui_data  " . get_class($this) . "'>\n";
 
-        if (RSS_SUPPORT) {
+        if (self::isContentTypeFunctional()) {
+            $this->initFeedPressReview();
             try {
-                $html = $this->press_review->get_rss_html($this->content_rss_aggregator_row['number_of_display_items']);
+                $html = $this->press_review->getOutputHtml($this->content_rss_aggregator_row['number_of_display_items'], $this->getDisplayEmptyFeed(), _("See more"), _("-"));
             } catch (Exception $e) {
                 $html = sprintf(_("Could not get RSS feed: %s"), $feed_row['url']);
             }

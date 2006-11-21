@@ -51,7 +51,6 @@
     BEGIN section START
 *}
         <div class="tool_user_info">
-            <span class="tool_user_info">
                 {if $isValidUser}
                     <p>{"Logged in as"|_}: {$username}</p>
                     <a class="administration" href="{$base_ssl_path}admin/generic_object_admin.php?object_id={$userId}&object_class=User&action=edit"><img class="administration" src="{$common_images_url}profile.gif">&nbsp;{"Preferences"|_}</a>
@@ -67,18 +66,18 @@
                     <a class="administration" href="{$networkHomepageURL}"><img class="administration" src="{$common_images_url}lien_ext.gif">&nbsp;{$networkName}</a>
                     <a class="administration" href="{$base_url_path}faq.php"><img class="administration" src="{$common_images_url}where.gif">&nbsp;{"Where am I?"|_}</a>
                 {/if}
-            </span>
         </div>
 
         {if count($languageChooser) > 1}
         <div class="language">
             <form class="language" name="lang_form" method="post" action="{$formAction}">
-                {"Language"|_}:
+                <div>{"Language"|_}:
                 <select name="wifidog_language" onchange="javascript: document.lang_form.submit();">
                     {foreach from=$languageChooser item=currLanguage}
                         {$currLanguage}
                     {/foreach}
                 </select>
+                </div>
             </form>
         </div>
         {/if}

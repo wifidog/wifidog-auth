@@ -211,16 +211,6 @@ define('DEFAULT_LANG', 'fr_CA');
 \********************************************************************/
 
 /**
- * RSS support
- * ===========
- *
- * If set to true, MAGPIERSS must be installed in MAGPIE_REL_PATH.
- *
- * Normally MAGPIE_REL_PATH is "lib/magpie/".
- */
-define('RSS_SUPPORT', true);
-
-/**
  * Flickr Photostream content support
  * ==================================
  *
@@ -288,9 +278,6 @@ define('WIFIDOG_VERSION', '(Development)');
  *
  * Paths to libraries used by the WiFiDOG auth server.
  */
-
-// Path to Magpie RSS Parser.
-define('MAGPIE_REL_PATH', 'lib/magpie/');
 
 // Path to Smarty Template engine.
 define('SMARTY_REL_PATH',  'lib/smarty/');
