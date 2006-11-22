@@ -1,5 +1,6 @@
 <?php
 
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -35,54 +36,59 @@
 
 /**
  * @package    WiFiDogAuthServer
- * @author     Philippe April
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
- * @copyright  2004-2006 Philippe April
- * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
- * @version    Subversion $Id$
+ * @author     Benoit Grégoire
+ * @copyright  2006 Technologies Coeus inc.
+ * @version    Subversion $Id: $
  * @link       http://www.wifidog.org/
  */
 
 /**
  * Load required files
  */
-require_once(dirname(__FILE__) . '/include/common.php');
+require_once (dirname(__FILE__) . '/../../include/common.php');
+require_once('classes/Content.php');
+if (!empty ($_REQUEST['content_id']))
+{
+	$db = AbstractDb::getObject();
+	$content = Content::getObject($_REQUEST['content_id']);
+	$content_str = $content->getString();
+	if ($content instanceof Stylesheet)
+	{
+		// Check if the HTTP request is asking if the file has been modified since a certain date.
+		$last_modified_date = isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])? $_SERVER['HTTP_IF_MODIFIED_SINCE'] : 0;
+		if($last_modified_date && $_SERVER['REQUEST_METHOD'] == "GET" && strtotime($last_modified_date) >= time()){//TODO:  IMPLEMENT MODIFICATION TIME CHECK, but WATCH out for mutable content due to multiple language;strtotime($file_row['last_update_date']))
+		   header("HTTP/1.1 304 Not Modified");
+	    }
+		else
+		{
+			//headers to send to the browser before beginning the binary download
+			header("Pragma: public");
+			// Send last update date to proxy / cache the binary
+			header("Last-Modified: " . gmdate("D, d M Y H:i:s", time()) . " GMT");//TODO:  IMPLEMENT MODIFICATION TIME CHECK;strtotime($file_row['last_update_date']))
+			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+			header("Cache-Control: public");
+			header('Content-Type: text/css');
+			header('Accept-Ranges: bytes');
+		/* Compute correct length (parts of the code from egroupware): */
+		$has_mbstring = extension_loaded('mbstring') ||@dl(PHP_SHLIB_PREFIX.'mbstring.'.PHP_SHLIB_SUFFIX);
+$has_mb_shadow = (int) ini_get('mbstring.func_overload');
 
-require_once('include/common_interface.php');
-require_once('classes/User.php');
-require_once('classes/Node.php');
-require_once('classes/MainUI.php');
-$smarty = SmartyWifidog::getObject();
-$db = AbstractDb::getObject(); 
-try {
-    if (!isset($_REQUEST["token"]))
-        throw new Exception(_('No token specified!'));
-
-    if (!isset($_REQUEST["user_id"]))
-        throw new Exception(_('No user ID specified!'));
-
-    $validated_user = User::getObject($_REQUEST['user_id']);
-
-    if ($db->escapeString($_REQUEST['token']) != $validated_user->getValidationToken())
-        throw new Exception(_('The validation token does not match the one in the database.'));
-
-    if ($validated_user->getAccountStatus() == ACCOUNT_STATUS_ALLOWED)
-        throw new Exception(_('Your account has already been activated.'));
-
-    // This user wants to validate his account, the token is OK and he's not trying to pass the same token more than once
-    // Activate his account and let him in NOW
-    $validated_user->SetAccountStatus(ACCOUNT_STATUS_ALLOWED);
-    User::setCurrentUser($validated_user);
-
-    // Show activation message
-    $smarty->assign('message', _("Your account has been succesfully activated!\n\nYou may now browse to a remote Internet address and take advantage of the free Internet access!\n\nIf you get prompted for a login, enter the username and password you have just created."));
-} catch (Exception $e) {
-    $smarty->assign('message', $e->getMessage());
+if ($has_mbstring && ($has_mb_shadow & 2) ) {
+   $size = mb_strlen($content_str,'latin1');
+} else {
+   $size = strlen($content_str);
 }
-
-$ui = MainUI::getObject();
-$ui->addContent('main_area_middle', $smarty->fetch("templates/sites/validate.tpl"));
-$ui->display();
+				header('Content-Length: ' .$size); //this is the size of the zipped file
+			// Do not send binary if this is only a HEAD request
+			if ($_SERVER["REQUEST_METHOD"] != "HEAD")
+				echo $content_str;
+		}
+	}
+	else
+		header("HTTP/1.1 404 Not Found");
+}
+else
+	header("HTTP/1.1 404 Not Found");
 
 /*
  * Local variables:
@@ -91,5 +97,4 @@ $ui->display();
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
 ?>

@@ -95,6 +95,16 @@ class Node implements GenericObject
 		return $object;
 	}
 
+	/** Instantiate a node object using it's gateway id
+	 * @param $gwId The id of the requested node
+	 * @return a Node object, or null if there was an error
+	 */
+	static function getObjectByGatewayId($gwId)
+	{
+		$object = null;
+		$object = new self($gwId, 'GATEWAY_ID');
+		return $object;
+	}
 	/** Get the current node for which the portal is displayed or to which a user is physically connected.
 	 * @param $real_node_only true or false.  If true, the real physical node where the user is connected is returned, and the node set by setCurrentNode is ignored.
 	 * @return a Node object, or null if it can't be found.
@@ -438,14 +448,24 @@ class Node implements GenericObject
 		return $_REQUEST[$name];
 	}
 
-	/** @param $node_id The id of the node */
-	private function __construct($node_id)
+	/** @param $id The id of the node 
+	 * @param $idType 'NODE_ID' or 'GATEWAY_ID'*/
+	private function __construct($id, $idType='NODE_ID')
 	{
 		$db = AbstractDb::getObject();
 		$this->mDb = & $db;
 
-		$node_id_str = $db->escapeString($node_id);
-		$sql = "SELECT * FROM nodes WHERE node_id='$node_id_str'";
+		$id_str = $db->escapeString($id);
+		switch ($idType) {
+		    case 'NODE_ID': $sqlWhere = "node_id='$id_str'";
+		    break;
+		    case 'GATEWAY_ID': $sqlWhere = "gw_id='$id_str'";
+		    break;
+		    default:
+		    throw new exception('Unknown idType parameter');
+		}
+		$sqlWhere = 
+		$sql = "SELECT * FROM nodes WHERE $sqlWhere";
 		$row = null;
 		$db->execSqlUniqueRes($sql, $row, false);
 		if ($row == null)
@@ -471,21 +491,23 @@ class Node implements GenericObject
 		return $this->id;
 	}
 
-	/** Changing the id of a Node is supported.
-	 *  Be carefull to anly call this when all other changes are processed,
-	 * or the id used to generate the form names may no longer match.
+/** Get the id of the gateway associated with this node */
+	function getGatewayId()
+	{
+		return $this->mRow['gw_id'];
+	}
+	/** Change the gateway ID of the gateway asociated with this node.
 	 * @param $id, string, the new node id.
 	 * @return true on success, false on failure. Check this,
 	 * as it's possible that someone will enter an existing id, especially
 	 * if the MAC address is used and hardware is recycled.
 	 */
-	function setId($id)
+	function setGatewayId($id)
 	{
 		$id = $this->mDb->escapeString($id);
-		$retval = $this->mDb->execSqlUpdate("UPDATE nodes SET node_id = '{$id}' WHERE node_id = '{$this->getId()}'");
+		$retval = $this->mDb->execSqlUpdate("UPDATE nodes SET gw_id = '{$id}' WHERE node_id = '{$this->getId()}'");
 		if ($retval)
 		{
-			$this->id = $id;
 			$this->refresh();
 		}
 		return $retval;
@@ -818,13 +840,7 @@ class Node implements GenericObject
 		// Check if user is a admin
 		$_userIsAdmin = User::getCurrentUser()->isSuperAdmin();
 
-		/*
-		 * Hashed node_id
-		 *
-		 * This is a workaround since PHP auto-converts HTTP vars var periods,
-		 * spaces or underscores.
-		 */
-		$hashed_node_id = md5($this->getId());
+		$node_id = $this->getId();
 
 		/*
 		 * Check for a warning message
@@ -852,90 +868,90 @@ class Node implements GenericObject
 		 */
 		$_html_node_information = array();
 
-		// Node ID
-		$_title = _("ID");
+		// Gateway ID
+		$_title = _("Gateway ID");
 		if ($_userIsAdmin) {
-    		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_id", $this->getId(), "node_id_input");
+    		$_data = InterfaceElements::generateInputText("node_" . $node_id . "_gw_id", $this->getGatewayId(), "gw_id_input");
 		} else {
     		$_data  = htmlspecialchars($this->getId(), ENT_QUOTES);
-    		$_data .= InterfaceElements::generateInputHidden("node_" . $hashed_node_id . "_id", $this->getId());
+    		$_data .= InterfaceElements::generateInputHidden("node_" . $node_id . "_gw_id", $this->getGatewayId());
 		}
 		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_id", $_title, $_data);
 
         //Node content
         $_html_content = array();
         $_title = _("Node content");
-        $_data = Content::getLinkedContentUI("node_" . $hashed_node_id . "_content", "node_has_content", "node_id", $this->id, "portal");
+        $_data = Content::getLinkedContentUI("node_" . $node_id . "_content", "node_has_content", "node_id", $this->id, "portal");
         $html .= InterfaceElements::generateAdminSectionContainer("node_content", $_title, $_data);
 
  		// Name
 		$_title = _("Name");
-		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_name", $this->getName(), "node_name_input");
+		$_data = InterfaceElements::generateInputText("node_" . $node_id . "_name", $this->getName(), "node_name_input");
 		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_name", $_title, $_data);
 
         // Creation date
         $_title = _("Creation date");
         if ($_userIsAdmin) {
-            $_data = DateTime::getSelectDateTimeUI(new DateTime($this->getCreationDate()), "node_" . $hashed_node_id . "_creation_date", DateTime::INTERFACE_DATETIME_FIELD, "node_creation_date_input");
+            $_data = DateTime::getSelectDateTimeUI(new DateTime($this->getCreationDate()), "node_" . $node_id . "_creation_date", DateTime::INTERFACE_DATETIME_FIELD, "node_creation_date_input");
         } else {
             $_data  = htmlspecialchars($this->getCreationDate(), ENT_QUOTES);
-            $_data .= InterfaceElements::generateInputHidden("node_" . $hashed_node_id . "_creation_date", $this->getCreationDate());
+            $_data .= InterfaceElements::generateInputHidden("node_" . $node_id . "_creation_date", $this->getCreationDate());
         }
         $_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_creation_date", $_title, $_data);
 
 		// Description
 		$_title = _("Description");
-		$_data = InterfaceElements::generateTextarea("node_" . $hashed_node_id . "_description", $this->getDescription(), 50, 5, "node_description_textarea");
+		$_data = InterfaceElements::generateTextarea("node_" . $node_id . "_description", $this->getDescription(), 50, 5, "node_description_textarea");
 		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_description", $_title, $_data);
 
 		// Civic number
 		$_title = _("Civic number");
-		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_civic_number", $this->getCivicNumber(), "node_civic_number_input");
+		$_data = InterfaceElements::generateInputText("node_" . $node_id . "_civic_number", $this->getCivicNumber(), "node_civic_number_input");
 		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_civic_number", $_title, $_data);
 
 		// Street name
 		$_title = _("Street name");
-		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_street_name", $this->getStreetName(), "node_street_name_input");
+		$_data = InterfaceElements::generateInputText("node_" . $node_id . "_street_name", $this->getStreetName(), "node_street_name_input");
 		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_street_name", $_title, $_data);
 
 		// City
 		$_title = _("City");
-		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_city", $this->getCity(), "node_city_input");
+		$_data = InterfaceElements::generateInputText("node_" . $node_id . "_city", $this->getCity(), "node_city_input");
 		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_city", $_title, $_data);
 
 		// Province
 		$_title = _("Province / State");
-		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_province", $this->getProvince(), "node_province_input");
+		$_data = InterfaceElements::generateInputText("node_" . $node_id . "_province", $this->getProvince(), "node_province_input");
 		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_province", $_title, $_data);
 
 		// Postal Code
 		$_title = _("Postal code");
-		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_postal_code", $this->getPostalCode(), "node_postal_code_input");
+		$_data = InterfaceElements::generateInputText("node_" . $node_id . "_postal_code", $this->getPostalCode(), "node_postal_code_input");
 		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_postal_code", $_title, $_data);
 
 		// Country
 		$_title = _("Country");
-		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_country", $this->getCountry(), "node_country_input");
+		$_data = InterfaceElements::generateInputText("node_" . $node_id . "_country", $this->getCountry(), "node_country_input");
 		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_country", $_title, $_data);
 
 		// Public phone #
 		$_title = _("Public phone number");
-		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_public_phone", $this->getTelephone(), "node_public_phone_input");
+		$_data = InterfaceElements::generateInputText("node_" . $node_id . "_public_phone", $this->getTelephone(), "node_public_phone_input");
 		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_public_phone", $_title, $_data);
 
 		// Public mail
 		$_title = _("Public email");
-		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_public_email", $this->getEmail(), "node_public_email_input");
+		$_data = InterfaceElements::generateInputText("node_" . $node_id . "_public_email", $this->getEmail(), "node_public_email_input");
 		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_public_email", $_title, $_data);
 
 		// Homepage URL
 		$_title = _("Homepage URL");
-		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_homepage_url", $this->getHomePageURL(), "node_homepage_url_input");
+		$_data = InterfaceElements::generateInputText("node_" . $node_id . "_homepage_url", $this->getHomePageURL(), "node_homepage_url_input");
 		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_homepage_url", $_title, $_data);
 
 		// Mass transit info
 		$_title = _("Mass transit info");
-		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_mass_transit_info", $this->getTransitInfo(), "node_mass_transit_info_input");
+		$_data = InterfaceElements::generateInputText("node_" . $node_id . "_mass_transit_info", $this->getTransitInfo(), "node_mass_transit_info_input");
 		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_mass_transit_info", $_title, $_data);
 
 		// Build section
@@ -949,12 +965,12 @@ class Node implements GenericObject
 
 		// Latitude
 		$_title = _("Latitude");
-		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_gis_latitude", $gis_point->getLatitude(), "node_" . $hashed_node_id . "_gis_latitude");
+		$_data = InterfaceElements::generateInputText("node_" . $node_id . "_gis_latitude", $gis_point->getLatitude(), "node_" . $node_id . "_gis_latitude");
 		$_html_node_gis_data[] = InterfaceElements::generateAdminSectionContainer("node_gis_latitude", $_title, $_data);
 
 		// Latitude
 		$_title = _("Longitude");
-		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_gis_longitude", $gis_point->getLongitude(), "node_" . $hashed_node_id . "_gis_longitude");
+		$_data = InterfaceElements::generateInputText("node_" . $node_id . "_gis_longitude", $gis_point->getLongitude(), "node_" . $node_id . "_gis_longitude");
 		$_html_node_gis_data[] = InterfaceElements::generateAdminSectionContainer("node_gis_longitude", $_title, $_data);
 
 		// Call the geocoding service, if Google Maps is enabled then use Google Maps to let the user choose a more precise location
@@ -971,7 +987,7 @@ class Node implements GenericObject
 
 		// Map URL
 		$_title = _("Map URL");
-		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_map_url", $this->getMapURL(), "node_map_url_input");
+		$_data = InterfaceElements::generateInputText("node_" . $node_id . "_map_url", $this->getMapURL(), "node_map_url_input");
 		$_html_node_gis_data[] = InterfaceElements::generateAdminSectionContainer("node_map_url", $_title, $_data);
 
 		// Build section
@@ -984,20 +1000,20 @@ class Node implements GenericObject
 
 		// Deployment status
 		$_title = _("Node deployment status");
-		$_data = $this->getSelectDeploymentStatus("node_" . $hashed_node_id . "_deployment_status");
+		$_data = $this->getSelectDeploymentStatus("node_" . $node_id . "_deployment_status");
 		$_html_node_config[] = InterfaceElements::generateAdminSectionContainer("node_deployment_status", $_title, $_data);
 
 		//  is_splash_only_node
 		if ($network->getSplashOnlyNodesAllowed()) {
     		$_title = _("Is this node splash-only (no login)?");
-    		$_data = InterfaceElements::generateInputCheckbox("node_" . $hashed_node_id . "_is_splash_only_node", "", _("Yes"), $this->isConfiguredSplashOnly(), "node_is_splash_only_node_radio");
+    		$_data = InterfaceElements::generateInputCheckbox("node_" . $node_id . "_is_splash_only_node", "", _("Yes"), $this->isConfiguredSplashOnly(), "node_is_splash_only_node_radio");
     		$_html_node_config[] = InterfaceElements::generateAdminSectionContainer("node_is_splash_only_node", $_title, $_data);
 		}
 
 		// custom_portal_redirect_url
 		if ($network->getCustomPortalRedirectAllowed()) {
     		$_title = _("URL to show instead of the portal");
-    		$_data = InterfaceElements::generateInputText("node_" . $hashed_node_id . "_custom_portal_redirect_url", $this->getCustomPortalRedirectUrl(), "node_custom_portal_redirect_url_input");
+    		$_data = InterfaceElements::generateInputText("node_" . $node_id . "_custom_portal_redirect_url", $this->getCustomPortalRedirectUrl(), "node_custom_portal_redirect_url_input");
     		$_data .= _("If this is not empty, the portal will be disabled and this URL will be shown instead");
     		 $_html_node_config[] = InterfaceElements::generateAdminSectionContainer("node_custom_portal_redirect_url", $_title, $_data);
 		}
@@ -1070,15 +1086,18 @@ class Node implements GenericObject
 
 		// Information about the node
 
-		// Hashed node_id (this is a workaround since PHP auto-converts HTTP vars var periods, spaces or underscores )
-		$hashed_node_id = md5($this->getId());
+		$node_id = $this->getId();
+		
+		// Gateway Id
+		$name = "node_" . $node_id . "_gw_id";
+		$this->setGatewayId($_REQUEST[$name]);
        // Content processing
-        $name = "node_{$hashed_node_id}_content";
+        $name = "node_{$node_id}_content";
         Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id);
 
 		// Name
 		if ($_userIsAdmin) {
-    		$name = "node_".$hashed_node_id."_name";
+    		$name = "node_".$node_id."_name";
     		$this->setName($_REQUEST[$name]);
 		} else {
     		$this->setName($this->getName());
@@ -1086,58 +1105,58 @@ class Node implements GenericObject
 
  		// Creation date
 		if ($_userIsAdmin) {
-    		$name = "node_".$hashed_node_id."_creation_date";
+    		$name = "node_".$node_id."_creation_date";
     		$this->setCreationDate(DateTime::processSelectDateTimeUI($name, DateTime :: INTERFACE_DATETIME_FIELD)->getIso8601FormattedString());
 		} else {
     		$this->setCreationDate($this->getCreationDate());
 		}
 
 		// Homepage URL
-		$name = "node_".$hashed_node_id."_homepage_url";
+		$name = "node_".$node_id."_homepage_url";
 		$this->setHomePageUrl($_REQUEST[$name]);
 
 		// Description
-		$name = "node_".$hashed_node_id."_description";
+		$name = "node_".$node_id."_description";
 		$this->setDescription($_REQUEST[$name]);
 
 		// Map URL
-		$name = "node_".$hashed_node_id."_map_url";
+		$name = "node_".$node_id."_map_url";
 		$this->setMapUrl($_REQUEST[$name]);
 
 		// Civic number
-		$name = "node_".$hashed_node_id."_civic_number";
+		$name = "node_".$node_id."_civic_number";
 		$this->setCivicNumber($_REQUEST[$name]);
 
 		// Street name
-		$name = "node_".$hashed_node_id."_street_name";
+		$name = "node_".$node_id."_street_name";
 		$this->setStreetName($_REQUEST[$name]);
 
 		// City
-		$name = "node_".$hashed_node_id."_city";
+		$name = "node_".$node_id."_city";
 		$this->setCity($_REQUEST[$name]);
 
 		// Province
-		$name = "node_".$hashed_node_id."_province";
+		$name = "node_".$node_id."_province";
 		$this->setProvince($_REQUEST[$name]);
 
 		// Postal Code
-		$name = "node_".$hashed_node_id."_postal_code";
+		$name = "node_".$node_id."_postal_code";
 		$this->setPostalCode($_REQUEST[$name]);
 
 		// Country
-		$name = "node_".$hashed_node_id."_country";
+		$name = "node_".$node_id."_country";
 		$this->setCountry($_REQUEST[$name]);
 
 		// Public phone #
-		$name = "node_".$hashed_node_id."_public_phone";
+		$name = "node_".$node_id."_public_phone";
 		$this->setTelephone($_REQUEST[$name]);
 
 		// Public mail
-		$name = "node_".$hashed_node_id."_public_email";
+		$name = "node_".$node_id."_public_email";
 		$this->setEmail($_REQUEST[$name]);
 
 		// Mass transit info
-		$name = "node_".$hashed_node_id."_mass_transit_info";
+		$name = "node_".$node_id."_mass_transit_info";
 		$this->setTransitInfo($_REQUEST[$name]);
 
 		// GIS data
@@ -1166,8 +1185,8 @@ class Node implements GenericObject
 		else
 		{
 			// Use what has been set by the user.
-			$gis_lat_name = "node_".$hashed_node_id."_gis_latitude";
-			$gis_long_name = "node_".$hashed_node_id."_gis_longitude";
+			$gis_lat_name = "node_".$node_id."_gis_latitude";
+			$gis_long_name = "node_".$node_id."_gis_longitude";
 			$this->setGisLocation(new GisPoint($_REQUEST[$gis_lat_name], $_REQUEST[$gis_long_name], .0));
 		}
 
@@ -1181,20 +1200,20 @@ class Node implements GenericObject
 		$network = $this->getNetwork();
 
 		// Deployment status
-		$name = "node_".$hashed_node_id."_deployment_status";
+		$name = "node_".$node_id."_deployment_status";
 		$this->setDeploymentStatus(self :: processSelectDeploymentStatus($name));
 
 		//  is_splash_only_node
 		if ($network->getSplashOnlyNodesAllowed())
 		{
-			$name = "node_".$hashed_node_id."_is_splash_only_node";
+			$name = "node_".$node_id."_is_splash_only_node";
 			$this->setIsConfiguredSplashOnly(empty ($_REQUEST[$name]) ? false : true);
 		}
 
 		// custom_portal_redirect_url
 		if ($network->getCustomPortalRedirectAllowed())
 		{
-			$name = "node_".$hashed_node_id."_custom_portal_redirect_url";
+			$name = "node_".$node_id."_custom_portal_redirect_url";
 			$this->setCustomPortalRedirectUrl($_REQUEST[$name]);
 		}
 
@@ -1257,16 +1276,12 @@ class Node implements GenericObject
 					$this->addTechnicalOfficer($tech_officer);
 			}
 		}
-
-		// Id
-		$name = "node_".$hashed_node_id."_id";
-		$this->setId($_REQUEST[$name]);
 	}
 
 	// Redirect to this node's portal page
 	public function getUserUI()
 	{
-		header("Location: ".BASE_SSL_PATH."portal/?gw_id=".$this->getId());
+		header("Location: ".BASE_SSL_PATH."portal/?node_id=".$this->getId());
 	}
 
 	/** Add content to this node */

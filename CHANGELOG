@@ -1,3 +1,12 @@
+2006-11-22 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Major schema update (this one is going to make your database grind for a while, sorry
+	about that...)
+	Fix a long standing design problem with the node table, where the ID could be changed.  
+	This caused performance problems when replacing gateways, and caused problems when
+	exporting data to other systems.  Among other things, it will allow us to finally
+	 finish the JiWire output.
+	* Stylesheet.php:  New content type.  Takes advantage of two pass content display to create stylesheets to be used only at a specific node, or with a specific content.
+	
 2006-11-21 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Change schema update method.  Will now do one transaction
 	 per schema version, allowing each schema to assume that

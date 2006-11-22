@@ -53,7 +53,7 @@
  *
  * gw_address is GatewayAddress from the config file
  * gw_port is GatewayPort
- * gw_id is GatewayID, is node id
+ * gw_id is GatewayID
  * url is the original url requested but redirected here by the hotspot wifidog
  *
  * http://auth.wirelesstoronto.ca:80/login?gw_address=207.50.119.2&gw_port=2060&gw_id=215&url=http://hotmail.com
@@ -145,7 +145,11 @@ if (!empty($_REQUEST['origin']) && $_REQUEST['origin'] == "admin") {
  */
 if (!empty($gw_id)) {
     try {
-        $node = Node::getObject($gw_id);
+        $node = Node::getObjectByGatewayId($gw_id);
+        if($node)
+        {
+            $session->set(SESS_NODE_ID_VAR, $node->getId);
+        }
     }
 
     catch (Exception $e) {
@@ -242,7 +246,6 @@ $smarty->assign('origin', empty($_REQUEST['origin']) ? null : $_REQUEST['origin'
 
 // Set network selector
 $smarty->assign('selectNetworkUI', Network::getSelectNetworkUI('auth_source'));
-
 // Set user details
 $smarty->assign('username', !empty($username) ? $username : "");
 

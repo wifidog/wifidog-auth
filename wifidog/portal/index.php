@@ -82,9 +82,9 @@ $current_user = User :: getCurrentUser();
 /*
  * Start general request parameter processing section
  */
-if (!empty ($_REQUEST['gw_id'])) {
+if (!empty ($_REQUEST['node_id'])) {
     try {
-        $node = Node :: getObject($_REQUEST['gw_id']);
+        $node = Node :: getObject($_REQUEST['node_id']);
         $network = $node->getNetwork();
     } catch (Exception $e) {
         $ui = MainUI::getObject();
@@ -112,8 +112,8 @@ $portal_template = $node_id.".html";
 Node :: setCurrentNode($node);
 
 if (isset ($session)) {
-    if (!empty ($_REQUEST['gw_id'])) {
-        $session->set(SESS_GW_ID_VAR, $_REQUEST['gw_id']);
+    if ($node) {
+        $session->set(SESS_NODE_ID_VAR, $node_id);
     }
 }
 
@@ -286,7 +286,7 @@ if ($current_user) {
 }
 
 if ($showMoreLink) {
-    $link_html = "<a href='{$base_ssl_path}content/?gw_id={$currentNodeId}'>"._("Show all available contents for this hotspot")."</a>\n";
+    $link_html = "<a href='{$base_ssl_path}content/?node_id={$currentNodeId}'>"._("Show all available contents for this hotspot")."</a>\n";
     $ui->addContent('main_area_middle', $link_html);
 }
 $ui->display();

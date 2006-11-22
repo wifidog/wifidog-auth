@@ -55,7 +55,7 @@ require_once('classes/Node.php');
 
 $node = null;
 if(!empty($_REQUEST['gw_id']))
-    $node = Node :: getObject($_REQUEST['gw_id']);
+    $node = Node :: getObject($_REQUEST['node_id']);
 
 if ($node == null) {
     $ui = MainUI::getObject();
@@ -104,7 +104,7 @@ $tool_html .= "</p>"."\n";
 
 /*
 $tool_html .= '<p class="indent">'."\n";
-$tool_html .= "<a href='content.php?gw_id={$current_node_id}' target='_blank.right'><img src='/images/start.gif'></a>"."\n";
+$tool_html .= "<a href='content.php?node_id={$current_node_id}' target='_blank.right'><img src='/images/start.gif'></a>"."\n";
 $tool_html .= "</p>"."\n";
 */
 $ui->addContent('left_area_middle', $tool_html);

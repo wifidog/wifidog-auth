@@ -172,6 +172,7 @@ define('SESS_LANGUAGE_VAR', 'SESS_LANGUAGE');
 define('SESS_GW_ADDRESS_VAR', 'SESS_GW_ADDRESS');
 define('SESS_GW_PORT_VAR', 'SESS_GW_PORT');
 define('SESS_GW_ID_VAR', 'SESS_GW_ID');
+define('SESS_NODE_ID_VAR', 'SESS_GW_ID');/**<Deprecated benoitg 22/11/2006*/
 /* End session constants */
 
 /** Convert a password hash form a NoCat passwd file into the same format as get_password_hash().
