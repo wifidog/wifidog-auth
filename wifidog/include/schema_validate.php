@@ -157,12 +157,9 @@ function update_schema() {
             } else {
                 echo "<h2>Update to schema $i successfull</h2>";
             }
-            ob_flush();
         }
         echo "<h2>Vacuuming database (this might take a little while)</h2>";
-        ob_flush();
         echo "<h2>Vacuuming complete</h2>";
-        ob_flush();
         $db->execSqlUniqueRes("VACUUM ANALYZE;\n", $row, false);
 
     }
