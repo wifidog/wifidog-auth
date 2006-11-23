@@ -445,9 +445,9 @@ class User implements GenericObject {
             if ($_SERVER['REMOTE_ADDR']) {
                 $node_ip = $db->escapeString($_SERVER['REMOTE_ADDR']);
             }
-
-            if ($session && $node_ip && $session->get(SESS_GW_ID_VAR)) {
-                $node_id = $db->escapeString($session->get(SESS_GW_ID_VAR));
+            if ($session && $node_ip && $session->get(SESS_NODE_ID_VAR)) {
+                //echo "$session && $node_ip && {$session->get(SESS_NODE_ID_VAR)}";
+                $node_id = $db->escapeString($session->get(SESS_NODE_ID_VAR));
                 $db->execSqlUpdate("INSERT INTO connections (user_id, token, token_status, timestamp_in, node_id, node_ip, last_updated) VALUES ('" . $this->getId() . "', '$token', '" . TOKEN_UNUSED . "', CURRENT_TIMESTAMP, '$node_id', '$node_ip', CURRENT_TIMESTAMP)", false);
                 $retval = $token;
             } else

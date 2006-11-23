@@ -139,7 +139,6 @@ if (!empty($_REQUEST['url'])) {
 if (!empty($_REQUEST['origin']) && $_REQUEST['origin'] == "admin") {
     $continueToAdmin = true;
 }
-
 /*
  * Start general request parameter processing section
  */
@@ -148,7 +147,7 @@ if (!empty($gw_id)) {
         $node = Node::getObjectByGatewayId($gw_id);
         if($node)
         {
-            $session->set(SESS_NODE_ID_VAR, $node->getId);
+            $session->set(SESS_NODE_ID_VAR, $node->getId());
         }
     }
 
@@ -204,8 +203,14 @@ if (isset ($_REQUEST["form_request"]) && $_REQUEST["form_request"] == "login") {
 			if (!empty($gw_address) && !empty($gw_port)) {
 				// Login from a gateway, redirect to the gateway to activate the token
 				$token = $user->generateConnectionToken();
-
+                if(!$token)
+                {
+                    throw new exception(sprintf(_("Unable to generate token for user %s"),$user->getUsername()));
+                }
+                else
+                {
 				header("Location: http://" . $gw_address . ":" . $gw_port . "/wifidog/auth?token=" . $token);
+                }
 			} else {
 				// Virtual login, redirect to the auth server homepage
 				header("Location: " . BASE_SSL_PATH . ($continueToAdmin ? "admin/" : ""));
