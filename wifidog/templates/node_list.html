@@ -30,9 +30,9 @@
 		<tr class="{cycle values="odd,even"}">
 		    <td class="status">
 		    {if $nodes[node].online == 't'}
-		    <img src='{$smarty.const.COMMON_IMAGES_URL}HotspotStatus/up.gif'>
+		    <img src='{$common_images_url}HotspotStatus/up.gif'>
 		    {else}
-		    <img src='{$smarty.const.COMMON_IMAGES_URL}HotspotStatus/down.gif'>
+		    <img src='{$common_images_url}HotspotStatus/down.gif'>
 		    {$nodes[node].duration.days} {"days"|_} {$nodes[node].duration.hours}{"h"|_} {$nodes[node].duration.minutes}{"min"|_}<br />
 		    {/if}
 		    {$nodes[node].last_heartbeat_user_agent}
@@ -40,8 +40,8 @@
 		    <td>{$nodes[node].node_id}</td>
 		    <td>{$nodes[node].name}</td>
 		    <td>
-		    <a href='{$smarty.const.BASE_SSL_PATH}login/index.php?gw_id={$nodes[node].gw_id}&gw_address=127.0.0.1&gw_port=80'>{"Login page"|_}</a><br />
-		    <a href='{$smarty.const.BASE_URL_PATH}portal/index.php?node_id={$nodes[node].node_id}'>{"Portal page"|_}</a>
+		    <a href='{base_ssl_path}login/index.php?gw_id={$nodes[node].gw_id}&gw_address=127.0.0.1&gw_port=80'>{"Login page"|_}</a><br />
+		    <a href='{$base_url_path}portal/index.php?node_id={$nodes[node].node_id}'>{"Portal page"|_}</a>
 		    </td>
 		    <td style="font-size: 8pt;">{$nodes[node].creation_date}<br>
 		    {$nodes[node].node_deployment_status}

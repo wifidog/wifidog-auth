@@ -1,4 +1,8 @@
 2006-11-22 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Fix minor problems with template using obsolete constants
+	* Delete a bunch of unused templates
+	
+2006-11-22 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix broken auth
 	* Fix broken portal when called from gateway
 	
