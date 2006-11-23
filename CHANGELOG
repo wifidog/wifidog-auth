@@ -1,5 +1,7 @@
 2006-11-22 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix broken auth
+	* Fix broken portal when called from gateway
+	
 2006-11-22 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Major schema update (this one is going to make your database grind for a while, sorry
 	about that...)

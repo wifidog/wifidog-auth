@@ -91,6 +91,16 @@ if (!empty ($_REQUEST['node_id'])) {
         $ui->displayError($e->getMessage());
         exit;
     }
+}
+else if (!empty ($_REQUEST['gw_id'])) {//This section MUST remain, the gw_id calling convention is hard_coded into the gateway
+    try {
+        $node = Node :: getObjectByGatewayId($_REQUEST['gw_id']);
+        $network = $node->getNetwork();
+    } catch (Exception $e) {
+        $ui = MainUI::getObject();
+        $ui->displayError($e->getMessage());
+        exit;
+    }
 } else {
     $ui = MainUI::getObject();
     $ui->displayError(_("No Hotspot specified!"));
