@@ -206,8 +206,8 @@ class Node implements GenericObject
 	/**
 	 * Create a new Node in the database
 	 *
-	 * @param string $node_id The Id to be given to the new node.  If not
-	 *                        present, guid will be assigned.
+	 * @param string $gw_id The Id of the gatewqay to be associated with
+	 * thisnode. If not present, a dummy value will be assigned.
 	 * @param object $network Network object.  The node's network.  If not
 	 *                        present, the current Network will be assigned
 	 *
@@ -217,16 +217,18 @@ class Node implements GenericObject
 	 * @static
 	 * @access public
 	 */
-	public static function createNewObject($node_id = null, $network = null)
+	public static function createNewObject($gw_id = null, $network = null)
 	{
-	    
 		$db = AbstractDb::getObject();
-
-		if (empty ($node_id)) {
+        if (empty ($gw_id)) {
+            $gw_id = $db->escapeString(_('PUT_GATEWAY_ID_HERE'));
+        }
+        else
+        {
+                    $gw_id = $db->escapeString($gw_id);
+        }
 			$node_id = get_guid();
-		}
 
-		$node_id = $db->escapeString($node_id);
 
 		if (empty ($network)) {
 			$network = Network::getCurrentNetwork();
@@ -236,12 +238,18 @@ class Node implements GenericObject
 
 		$node_deployment_status = $db->escapeString("IN_PLANNING");
 		$node_name = _("New node");
-
-            if (Node::nodeExists($node_id)) {
-                throw new Exception(_('This node already exists.'));
+$duplicate = null;
+try{
+  $duplicate = Node::getObjectByGatewayId($gw_id);
+}
+catch (Exception $e)
+{
+}
+            if ($duplicate) {
+                throw new Exception(sprintf(_('Sorry, a node for the gateway %s already exists.'),$gw_id));
             }
 
-            $sql = "INSERT INTO nodes (node_id, network_id, creation_date, node_deployment_status, name) VALUES ('$node_id', '$network_id', CURRENT_TIMESTAMP,'$node_deployment_status', '$node_name')";
+            $sql = "INSERT INTO nodes (node_id, gw_id, network_id, creation_date, node_deployment_status, name) VALUES ('$node_id', '$gw_id', '$network_id', CURRENT_TIMESTAMP,'$node_deployment_status', '$node_name')";
 
             if (!$db->execSqlUpdate($sql, false)) {
                 throw new Exception(_('Unable to insert new node into database!'));
@@ -338,8 +346,8 @@ class Node implements GenericObject
 	public static function getCreateNewObjectUI($network = null)
 	{
 		$html = '';
-		$html .= _("Add a new node with ID")." \n";
-		$name = "new_node_id";
+		$html .= _("Add a new node for the gateway ID")." \n";
+		$name = "new_node_gw_id";
 		$html .= "<input type='text' size='10' name='{$name}'>\n";
 		if ($network)
 		{
@@ -365,10 +373,15 @@ class Node implements GenericObject
 	{
 	    // Init values
 		$retval = null;
-		$name = "new_node_id";
+		$name = "new_node_gw_id";
 
 		if (!empty ($_REQUEST[$name])) {
-			$node_id = $_REQUEST[$name];
+			$gw_id = $_REQUEST[$name];
+        }
+        else
+        {
+            $gw_id = null;
+        }
 			$name = "new_node_network_id";
 
 			if (!empty ($_REQUEST[$name])) {
@@ -377,7 +390,7 @@ class Node implements GenericObject
 				$network = Network::processSelectNetworkUI('new_node');
 			}
 
-			if ($node_id && $network) {
+			if ($network) {
 			    try {
     				if (!$network->hasAdminAccess(User :: getCurrentUser())) {
     					throw new Exception(_("Access denied"));
@@ -389,9 +402,8 @@ class Node implements GenericObject
                     exit;
                 }
 
-				$retval = self::createNewObject($node_id, $network);
+				$retval = self::createNewObject($gw_id, $network);
 			}
-		}
 
 		return $retval;
 	}
@@ -470,7 +482,7 @@ class Node implements GenericObject
 		$db->execSqlUniqueRes($sql, $row, false);
 		if ($row == null)
 		{
-			throw new Exception(sprintf(_("The node %s could not be found in the database!"), $node_id_str));
+			throw new Exception(sprintf(_("The node with %s: %s could not be found in the database!"), $idType, $id_str));
 		}
 
     	$this->_deploymentStatuses = array(
@@ -1543,36 +1555,6 @@ class Node implements GenericObject
 				$retval = true;
 			}
 		}
-		return $retval;
-	}
-
-	/**
-	 * Checks if an node exists
-	 *
-	 * @param string $id Id of node to be checked
-	 *
-	 * @return bool True if node exists, else false
-	 *
-	 * @static
-	 * @access private
-	 */
-	private static function nodeExists($id)
-	{
-	    
-		$db = AbstractDb::getObject();
-
-		// Init values
-		$retval = false;
-
-		$id_str = $db->escapeString($id);
-		$sql = "SELECT * FROM nodes WHERE node_id='{$id_str}'";
-		$row = null;
-		$db->execSqlUniqueRes($sql, $row, false);
-
-		if ($row != null) {
-			$retval = true;
-		}
-
 		return $retval;
 	}
 

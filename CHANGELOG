@@ -1,3 +1,6 @@
+2006-11-23 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Fix bug un node creation
+	
 2006-11-22 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix minor problems with template using obsolete constants
 	* Delete a bunch of unused templates
