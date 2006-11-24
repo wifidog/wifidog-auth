@@ -987,11 +987,11 @@ catch (Exception $e)
 
 		// Call the geocoding service, if Google Maps is enabled then use Google Maps to let the user choose a more precise location
 		if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED === true) {
-		    $_data  = InterfaceElements::generateInputSubmit("geocode_only", _("Geocode only"), "geocode_only_submit");
+		    $_data  = InterfaceElements::generateInputSubmit("geocode_only", _("Geocode the address or postal code above"), "geocode_only_submit");
 		    $_data .= InterfaceElements::generateInputButton("google_maps_geocode", _("Check using Google Maps"), "google_maps_geocode_button", "submit", array("onclick" => "window.open('hotspot_location_map.php?node_id={$this->getId()}', 'hotspot_location', 'toolbar = 0, scrollbars = 1, resizable = 1, location = 0, statusbar = 0, menubar = 0, width = 600, height = 600');"));
 		    $_data .= InterfaceElements::generateDiv("(" . _("Use a geocoding service, then use Google Maps to pinpoint the exact location.") . ")", "admin_section_hint", "node_gis_geocode_hint");
 		} else {
-		    $_data  = InterfaceElements::generateInputSubmit("geocode_only", _("Geocode location"), "geocode_only_submit");
+		    $_data  = InterfaceElements::generateInputSubmit("geocode_only", _("Geocode the address or postal code above"), "geocode_only_submit");
 		    $_data .= InterfaceElements::generateDiv("(" . _("Use a geocoding service") . ")", "admin_section_hint", "node_gis_geocode_hint");
 		}
 
@@ -1087,7 +1087,7 @@ catch (Exception $e)
 	public function processAdminUI()
 	{
 		$user = User::getCurrentUser();
-
+//pretty_print_r($_REQUEST);
     		if (!$this->isOwner($user) && !$user->isSuperAdmin()) {
     			throw new Exception(_('Access denied!'));
     		}
@@ -1193,6 +1193,10 @@ catch (Exception $e)
 				else
 					$this->_warningMessage = _("You must enter a valid address.");
 			}
+            else
+            {
+                $this->_warningMessage = _("Unable to create geocoder.  Are you sure you set the country?");
+            }
 		}
 		else
 		{

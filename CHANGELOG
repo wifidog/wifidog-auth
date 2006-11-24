@@ -1,5 +1,9 @@
 2006-11-23 Benoit Grégoire  <bock@step.polymtl.ca>
-	* Fix bug un node creation
+	* Fix bug in node creation
+	* Add error message for geooder wwhen you didn't set the country
+	* Clarify error messages and description for the geocoder.
+	* Make the google-map locator for nodes use the network center coordinates.
+	  This change makes it usable when you didn't use the geocoder first. 
 	
 2006-11-22 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix minor problems with template using obsolete constants
