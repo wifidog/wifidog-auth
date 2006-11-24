@@ -7,9 +7,13 @@
 				<a href="?sort_by=last_heartbeat_user_agent">{"Status"|_}</a>
 				{if $sort_by_param == "last_heartbeat_user_agent"}<img src="{$common_images_url}sort_by_asc.gif">{/if}
 			</th>
-			<th>
-				<a href="?sort_by=node_id">{"Id"|_}</a>
+			{* <th>
+				<a href="?sort_by=node_id">{"Node id"|_}</a>
 				{if $sort_by_param == "node_id"}<img src="{$common_images_url}sort_by_asc.gif">{/if}
+			</th> *}
+			<th>
+				<a href="?sort_by=gw_id">{"Gateway id"|_}</a>
+				{if $sort_by_param == "gw_id"}<img src="{$common_images_url}sort_by_asc.gif">{/if}
 			</th>
 			<th>
 				<a href="?sort_by=name">{"Name"|_}</a>
@@ -37,7 +41,8 @@
 		    {/if}
 		    {$nodes[node].last_heartbeat_user_agent}
 		    </td>
-		    <td>{$nodes[node].node_id}</td>
+		    {* <td>{$nodes[node].node_id}</td> *}
+		    <td>{$nodes[node].gw_id}</td>
 		    <td>{$nodes[node].name}</td>
 		    <td>
 		    <a href='{$base_ssl_path}login/index.php?gw_id={$nodes[node].gw_id}&gw_address=127.0.0.1&gw_port=80'>{"Login page"|_}</a><br />

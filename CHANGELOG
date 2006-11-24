@@ -4,6 +4,7 @@
 	* Clarify error messages and description for the geocoder.
 	* Make the google-map locator for nodes use the network center coordinates.
 	  This change makes it usable when you didn't use the geocoder first. 
+	* Show the gateway id in the technical nodelist.
 	
 2006-11-22 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix minor problems with template using obsolete constants

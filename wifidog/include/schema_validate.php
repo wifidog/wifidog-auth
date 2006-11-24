@@ -172,7 +172,7 @@ function update_schema() {
 function real_update_schema($targetSchema) {
     $sql = '';
     $db = AbstractDb :: getObject();
-    $db->execSqlUniqueRes("SELECT * FROM schema_info WHERE tag='schema_version'", $row, false);
+    $db->execSqlUniqueRes("SELECT * FROM schema_info WHERE tag='schema_version'", $row, false);//Re-check the schema version, it could have been updated by another thread
     $schema_version = $row['value'];
 
     $new_schema_version = 2;
