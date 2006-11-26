@@ -1,3 +1,9 @@
+2006-11-26 Benoit Grégoire  <bock@step.polymtl.ca>
+	* lost_username.tpl, lost_password.tpl, resend_validation.tpl:  Fix #259 by commenting out
+	all Javascript. I hate removing outside contributions, but the lost_username, 
+	lost password and re-send validation email have been broken for months and no one 
+	stepped-in to fix it.
+	 
 2006-11-23 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix bug in node creation
 	* Add error message for geooder wwhen you didn't set the country

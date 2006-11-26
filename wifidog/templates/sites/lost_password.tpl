@@ -76,7 +76,7 @@
     <fieldset class="pretty_fieldset">
        <legend>{"Lost password"|_}</legend>
 
-        <form name="form" method="post" onsubmit="return false" action="{$base_ssl_path}lost_password.php">
+        <form name="form" method="post" {* onsubmit="return false" *} action="{$base_ssl_path}lost_password.php">
 		<input type="hidden" name="form_request" value="lost_password">
             {if $SelectNetworkUI}
                 {$SelectNetworkUI}
@@ -85,15 +85,15 @@
             <table>
                 <tr>
                     <th>{"Your username"|_}:</th>
-                    <td><input type="text" name="username" value="{$username}" size="20" id="form_username" onkeypress="return focusNext(this.form, 'email', event)"></td>
+                    <td><input type="text" name="username" value="{$username}" size="20" id="form_username" {* onkeypress="return focusNext(this.form, 'email', event)" *}></td>
                 </tr>
                 <tr>
                     <th>{"Your email address"|_}:</th>
-                    <td><input type="text" name="email" value="{$email}" size="20" onkeypress="return focusNext(this.form, 'form_submit', event)"></td>
+                    <td><input type="text" name="email" value="{$email}" size="20"{* onkeypress="return focusNext(this.form, 'form_submit', event)" *}></td>
                 </tr>
                 <tr>
                     <th></th>
-                    <td><input class="submit" type="submit" name="form_submit" value="{"Reset my password"|_}" onclick="if (validateForm(this.form)) this.form.submit()"></td>
+                    <td><input class="submit" type="submit" name="form_submit" value="{"Reset my password"|_}" {* onclick="if (validateForm(this.form)) this.form.submit()" *}></td>
                 </tr>
             </table>
         </form>
@@ -108,7 +108,7 @@
 		{$error}
 	{/if}
 	</div>
-
+{*  If no one steps-in to maintain this, it will be removed benoitg 2006-11-26
     <script type="text/javascript">
     <!--
         {literal}
@@ -155,6 +155,7 @@
 		{/literal}
     //-->
     </script>
+    *}
 {*
     END section MAINCONTENT
 *}

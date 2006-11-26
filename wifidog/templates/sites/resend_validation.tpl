@@ -76,7 +76,7 @@
     <fieldset class="pretty_fieldset">
         <legend>{"Re-send validation email"|_}</legend>
 
-        <form name="form" method="post" onsubmit="return false" action="{$base_ssl_path}resend_validation.php">
+        <form name="form" method="post" {* onsubmit="return false" *} action="{$base_ssl_path}resend_validation.php">
 		<input type="hidden" name="form_request" value="resend_validation">
             {if $SelectNetworkUI}
                 {$SelectNetworkUI}
@@ -85,11 +85,11 @@
             <table>
                 <tr>
                     <th>{"Your username"|_}:</th>
-                    <td><input type="text" name="username" value="{$username}" size="20" id="form_username" onkeypress="return focusNext(this.form, 'form_submit', event)"></td>
+                    <td><input type="text" name="username" value="{$username}" size="20" id="form_username" {* onkeypress="return focusNext(this.form, 'form_submit', event)"*}></td>
                 </tr>
                 <tr>
                     <th></th>
-                    <td><input class="submit" type="submit" name="form_submit" value="{"Re-send"|_}" onclick="if (validateForm(this.form)) this.form.submit()"></td>
+                    <td><input class="submit" type="submit" name="form_submit" value="{"Re-send"|_}"{* onclick="if (validateForm(this.form)) this.form.submit()" *}></td>
                 </tr>
             </table>
         </form>
@@ -105,7 +105,9 @@
 	{/if}
 	</div>
 
-    <script type="text/javascript">
+  {*  If no one steps-in to maintain this, it will be removed benoitg 2006-11-26
+  
+  <script type="text/javascript">
 	<!--
         {literal}
 		var messages = {
@@ -131,7 +133,7 @@
 		}
 		{/literal}
 	//-->
-    </script>
+    </script> *}
 {*
     END section MAINCONTENT
 *}

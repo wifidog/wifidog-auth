@@ -75,23 +75,15 @@
 *}
     <fieldset class="pretty_fieldset">
         <legend>{"Lost username"|_}</legend>
-
-        <form name="form" method="post" onsubmit="return false" action="{$base_ssl_path}lost_username.php">
-		<input type="hidden" name="form_request" value="lost_username">
+        <form name="form" method="post" {* onsubmit="return false" *} action="{$base_ssl_path}lost_username.php">
+            <p>
+            <input type="hidden" name="form_request" value="lost_username">
             {if $SelectNetworkUI}
             {$SelectNetworkUI}
             {/if}
-
-            <table>
-                <tr>
-                    <th>{"Your email address"|_}:</th>
-                    <td><input type="text" name="email" value="{$email}" size="20" id="form_email" onkeypress="return focusNext(this.form, 'form_submit', event)"></td>
-                </tr>
-                <tr>
-                    <th></th>
-                    <td><input class="submit" type="submit" name="form_submit" value="{"Retrieve"|_}" onclick="if (validateForm(this.form)) this.form.submit()"></td>
-                </tr>
-            </table>
+            {"Your email address"|_}: 
+            <input type="text" name="email" value="{$email}" size="20" id="form_email" {*onkeypress="return focusNext(this.form, 'form_submit', event)"*}>
+			<input class="submit" type="submit" name="form_submit" value="{"Retrieve"|_}" {*onclick="if (validateForm(this.form)) this.form.submit()"*}>
         </form>
     </fieldset>
 
@@ -105,7 +97,8 @@
 	{/if}
 	</div>
 
-    <script type="text/javascript">
+{*   If no one steps-in to maintain this, it will be removed benoitg 2006-11-26
+  <script type="text/javascript">
     <!--
         {literal}
 		var messages = {
@@ -131,6 +124,7 @@
 		{/literal}
     //-->
     </script>
+    *}
 {*
     END section MAINCONTENT
 *}
