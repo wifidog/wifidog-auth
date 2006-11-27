@@ -569,10 +569,10 @@ class ContentGroup extends Content {
 			/*'YES' => "Content can be shown more than once", 'NO' => "Content can only be shown once", 'ONCE_PER_NODE' => "Content can be shown more than once, but not at the same node"*/
 			$allow_repeat = $this->getAllowRepeat();
 			if ($allow_repeat == 'NO') {
-				$sql_repeat .= "AND content_group_element_id NOT IN (SELECT content_id FROM content_display_log WHERE user_id = '$user_id') \n";
+				$sql_repeat = "AND content_group_element_id NOT IN (SELECT content_id FROM content_display_log WHERE user_id = '$user_id') \n";
 			}
 			elseif ($allow_repeat == 'ONCE_PER_NODE') {
-				$sql_repeat .= "AND content_group_element_id NOT IN (SELECT content_id FROM content_display_log WHERE user_id = '$user_id' AND  node_id = '$node_id') \n";
+				$sql_repeat = "AND content_group_element_id NOT IN (SELECT content_id FROM content_display_log WHERE user_id = '$user_id' AND  node_id = '$node_id') \n";
 			} else {
 				$sql_repeat = null;
 			}
