@@ -97,7 +97,7 @@ class FormSelectGenerator
 				{
 					if (!empty ($value[$displayField]))
 					{
-						$langstring = new Langstring($value[$displayField]);
+						$langstring = Content::getObject($value[$displayField]);
 						if ($langstring->IsEmpty())
 						{
 							$nom = $value[$primaryKeyField]._(" (Empty langstring, ID is displayed)");

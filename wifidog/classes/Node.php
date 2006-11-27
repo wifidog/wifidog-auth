@@ -48,7 +48,7 @@ require_once('classes/User.php');
 require_once('classes/GisPoint.php');
 require_once('classes/AbstractGeocoder.php');
 require_once('classes/Utils.php');
-require_once('classes/DateTime.php');
+require_once('classes/DateTimeWD.php');
 
 /**
  * Abstract a Node.  A Node is an actual physical transmitter.
@@ -904,7 +904,7 @@ catch (Exception $e)
         // Creation date
         $_title = _("Creation date");
         if ($_userIsAdmin) {
-            $_data = DateTime::getSelectDateTimeUI(new DateTime($this->getCreationDate()), "node_" . $node_id . "_creation_date", DateTime::INTERFACE_DATETIME_FIELD, "node_creation_date_input");
+            $_data = DateTimeWD::getSelectDateTimeUI(new DateTimeWD($this->getCreationDate()), "node_" . $node_id . "_creation_date", DateTimeWD::INTERFACE_DATETIME_FIELD, "node_creation_date_input");
         } else {
             $_data  = htmlspecialchars($this->getCreationDate(), ENT_QUOTES);
             $_data .= InterfaceElements::generateInputHidden("node_" . $node_id . "_creation_date", $this->getCreationDate());
@@ -1118,7 +1118,7 @@ catch (Exception $e)
  		// Creation date
 		if ($_userIsAdmin) {
     		$name = "node_".$node_id."_creation_date";
-    		$this->setCreationDate(DateTime::processSelectDateTimeUI($name, DateTime :: INTERFACE_DATETIME_FIELD)->getIso8601FormattedString());
+    		$this->setCreationDate(DateTimeWD::processSelectDateTimeUI($name, DateTimeWD :: INTERFACE_DATETIME_FIELD)->getIso8601FormattedString());
 		} else {
     		$this->setCreationDate($this->getCreationDate());
 		}

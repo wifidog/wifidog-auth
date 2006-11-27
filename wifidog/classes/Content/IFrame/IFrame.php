@@ -59,7 +59,7 @@ class IFrame extends Content
      *
      * @return void
      */
-    public function __construct($content_id)
+    protected function __construct($content_id)
     {
         
         $db = AbstractDb::getObject();

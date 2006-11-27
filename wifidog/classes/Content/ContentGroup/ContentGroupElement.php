@@ -327,14 +327,14 @@ class ContentGroupElement extends Content {
         $html .= "<div class='admin_element_label'>" . _("Only display from") . "</div>\n";
         $html .= "<div class='admin_element_data'>\n";
         $name = "content_group_element_" . $this->id . "_valid_from";
-        $html .= DateTime :: getSelectDateTimeUI(new DateTime($this->getValidFromDate()), $name, DateTime :: INTERFACE_DATETIME_FIELD, null);
+        $html .= DateTimeWD :: getSelectDateTimeUI(new DateTimeWD($this->getValidFromDate()), $name, DateTimeWD :: INTERFACE_DATETIME_FIELD, null);
         $html .= "</div>\n";
 
         // valid_until_timestamp
         $html .= "<div class='admin_element_label'>until</div>\n";
         $html .= "<div class='admin_element_data'>\n";
         $name = "content_group_element_" . $this->id . "_valid_until";
-        $html .= DateTime :: getSelectDateTimeUI(new DateTime($this->getValidUntilDate()), $name, DateTime :: INTERFACE_DATETIME_FIELD, null);
+        $html .= DateTimeWD :: getSelectDateTimeUI(new DateTimeWD($this->getValidUntilDate()), $name, DateTimeWD :: INTERFACE_DATETIME_FIELD, null);
         $html .= "</div>\n";
 
         $html .= _("(Content can be displayed at any date if no start or end date is specified.  Warning:  If you do not specify a specifig time of day, midnight is assumed.)") . "\n";
@@ -423,12 +423,12 @@ class ContentGroupElement extends Content {
 
         // valid_from_timestamp
         $name = "content_group_element_" . $this->id . "_valid_from";
-        $this->setValidFromDate(DateTime :: processSelectDateTimeUI($name, DateTime :: INTERFACE_DATETIME_FIELD)->getIso8601FormattedString());
+        $this->setValidFromDate(DateTimeWD :: processSelectDateTimeUI($name, DateTimeWD :: INTERFACE_DATETIME_FIELD)->getIso8601FormattedString());
 
         // valid_until_timestamp
 
         $name = "content_group_element_" . $this->id . "_valid_until";
-        $this->setValidUntilDate(DateTime :: processSelectDateTimeUI($name, DateTime :: INTERFACE_DATETIME_FIELD)->getIso8601FormattedString());
+        $this->setValidUntilDate(DateTimeWD :: processSelectDateTimeUI($name, DateTimeWD :: INTERFACE_DATETIME_FIELD)->getIso8601FormattedString());
 
         /* content_group_element_has_allowed_nodes */
         $sql = "SELECT * FROM content_group_element_has_allowed_nodes WHERE content_group_element_id='$this->id'";

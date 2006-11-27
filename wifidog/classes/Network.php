@@ -1524,7 +1524,7 @@ class Network implements GenericObject
 
         // creation_date
 		$title = _("Network creation date");
-        $data = DateTime::getSelectDateTimeUI(new DateTime($this->getCreationDate()), "network_" . $this->getId() . "_creation_date", DateTime::INTERFACE_DATETIME_FIELD, "network_creation_date_input");
+        $data = DateTimeWD::getSelectDateTimeUI(new DateTimeWD($this->getCreationDate()), "network_" . $this->getId() . "_creation_date", DateTimeWD::INTERFACE_DATETIME_FIELD, "network_creation_date_input");
 		$html_network_information[] = InterfaceElements::generateAdminSectionContainer("network_creation_date", $title, $data);
 
         // homepage_url

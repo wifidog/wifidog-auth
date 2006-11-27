@@ -66,7 +66,7 @@ class Langstring extends Content {
      *
      * @param string $content_id Content id
      */
-    public function __construct($content_id)
+    protected function __construct($content_id)
     {
         parent::__construct($content_id);
         
