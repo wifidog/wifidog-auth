@@ -71,7 +71,7 @@ else
 // The Pattern Language toolbar
 $tool_html = "<h1>{$pattern_language->getTitle()->__toString()}</h1>";
 $tool_html .= '<ul class="pattern_language_menu">'."\n";
-$node_id = $session->get(SESS_GW_ID_VAR);
+$node_id = $session->get(SESS_NODE_ID_VAR);
 if(!empty($node_id))
     $tool_html .= "<li><a href='/portal/?node_id=$node_id'>"._("Go back to this hotspot portal page")."</a></li>";
 $tool_html .= '<li><a href="'.BASE_SSL_PATH.'content/PatternLanguage/index.php?content_id='.$content_id.'">'._("About Pattern Language").'</a><br>'."\n";

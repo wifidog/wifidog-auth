@@ -12,7 +12,7 @@ fi
 echo "Do I need to delete the current $DATABASE_NAME database before restoring from $FILENAME? (y/n)"
 read delete_confirm
 if [ $delete_confirm = "y" -o $delete_confirm = "Y" ] ; then
-cmd="dropdb -U $SUPERUSER $DATABASE_NAME" 
+cmd="dropdb -U $USERNAME $DATABASE_NAME" 
 echo $cmd
 $cmd
 retval=$?

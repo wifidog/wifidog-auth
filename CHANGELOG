@@ -1,3 +1,7 @@
+2006-11-29 Benoit Grégoire  <bock@step.polymtl.ca>
+	* common.php:  Fix the value of SESS_NODE_ID_VAR, it got overwrittent by SESS_GW_ID_VAR.
+	Caused problems with logout.
+	
 2006-11-27 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Try to fix #270: 
 	* DateTime.php:  Rename class to DateTimeWD because of the stunt they pulled in PHP 5.2

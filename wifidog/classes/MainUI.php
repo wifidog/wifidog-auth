@@ -538,7 +538,7 @@ class MainUI
 			$_gwAddress = $session->get(SESS_GW_ADDRESS_VAR);
 			$_gwPort = $session->get(SESS_GW_PORT_VAR);
 
-			// If gateway information could be detected tell them Smarty
+			// If gateway information could be detected tell them to Smarty
 			if ($_gwId && $_gwAddress && $_gwPort)
 			{
 				$this->smarty->assign('logoutParameters', "&amp;gw_id=" . $_gwId . "&amp;gw_address=" . $_gwAddress . "&amp;gw_port=" . $_gwPort);
