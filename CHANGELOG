@@ -1,3 +1,8 @@
+2006-11-30 Benoit Grégoire  <bock@step.polymtl.ca>
+	* schema_validate.php:  Mute annoying ob_flush() notices.
+	* Node.php:  Add missing default parameter to getSelectNodeUI()
+	* get_stylesheet:  Fix date calculations that broke download. 
+	
 2006-11-29 Benoit Grégoire  <bock@step.polymtl.ca>
 	Sync with my main developpement environement:
 	* Performance optimization pass:  Collect a few low hagning fruits
@@ -8,6 +13,7 @@
 	* File.php:  Update to use unified content modification date.
 	* get_stylesheet.php:  Implement browser caching
 	* ContentGroup.php:  Get rid of is_locative and is_artistic metadata.  Will eventually be replaced by something better.
+	Allow editing of expired content elements
 	* Node.php, Utils.php:  Sort by case insensitive name, and show gateway id in node selectors
 	* BannerAdGroup.php:  Support group constraint of image size for all images in the group.
 	* ContentReport.php:  Finish basic content reporting.  
@@ -18,7 +24,7 @@
 	* Fix various small UI issues.
 	
 2006-11-29 Benoit Grégoire  <bock@step.polymtl.ca>
-	* common.php:  Fix the value of SESS_NODE_ID_VAR, it got overwrittent by SESS_GW_ID_VAR.
+	* common.php:  Fix the value of SESS_NODE_ID_VAR, it got overwritten by SESS_GW_ID_VAR.
 	Caused problems with logout.
 	
 2006-11-27 Benoit Grégoire  <bock@step.polymtl.ca>

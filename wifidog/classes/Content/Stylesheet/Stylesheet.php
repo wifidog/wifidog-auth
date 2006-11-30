@@ -38,7 +38,7 @@
  * @subpackage ContentClasses
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
- * @version    Subversion $Id: TrivialLangstring.php 1094 2006-09-07 12:23:08Z benoitg $
+ * @version    Subversion $Id: $
  * @link       http://www.wifidog.org/
  */
 

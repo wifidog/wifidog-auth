@@ -279,7 +279,7 @@ catch (Exception $e)
 	* supported by type_interface=table)
 	* * @return html markup
 	*/
-	public static function getSelectNodeUI($user_prefix, $sql_additional_join, $sql_additional_where = null,$selectedNodes = null, $type_interface = "select")
+	public static function getSelectNodeUI($user_prefix, $sql_additional_join = null, $sql_additional_where = null,$selectedNodes = null, $type_interface = "select")
 	{
 		$db = AbstractDb::getObject();
 		$html = '';

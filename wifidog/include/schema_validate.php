@@ -127,7 +127,7 @@ function check_users_not_empty() {
 function printUpdateVersion($version) {
     if (isset ($version)) {
         echo "<h2>Preparing SQL statements to update schema to version <i>$version</i></h2>";
-        ob_flush();
+        @ob_flush();
         flush();
     }
 }
@@ -160,16 +160,16 @@ function update_schema() {
             } else {
                 echo "<h2>Update to schema $i successfull</h2>";
             }
-            ob_flush();
+            @ob_flush();
             flush();
         }
         if (SCHEMA_UPDATE_TEST_MODE == false) {
             echo "<h2>Vacuuming database (this might take a little while)</h2>";
-            ob_flush();
+            @ob_flush();
             flush();
-            $db->execSqlUniqueRes("VACUUM ANALYZE;\n", $row, false);
+            $db->execSqlUniqueRes("VACUUM ANALYZE;\n", $row, true);
             echo "<h2>Vacuuming complete</h2>";
-            ob_flush();
+            @ob_flush();
             flush();
         }
 
@@ -1089,7 +1089,7 @@ function real_update_schema($targetSchema) {
     } else {
         $retval = $db->execSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);
     }
-    ob_flush();
+    @ob_flush();
     flush();
     return $retval;
 
