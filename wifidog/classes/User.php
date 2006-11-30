@@ -59,15 +59,19 @@ require_once ('classes/InterfaceElements.php');
 class User implements GenericObject {
     private $mRow;
     private $id;
+    /** Object cache for the object factory (getObject())*/
+    private static $instanceArray = array();
 
     /** Instantiate a user object
      * @param $id The user id of the requested user
      * @return a User object, or null if there was an error
      */
     public static function getObject($id) {
-        $object = null;
-        $object = new self($id);
-        return $object;
+        if(!isset(self::$instanceArray[$id]))
+        {
+        	self::$instanceArray[$id] = new self($id);
+        }
+        return self::$instanceArray[$id];
     }
 
     static function createNewObject() {
@@ -154,7 +158,7 @@ class User implements GenericObject {
         $db->execSqlUniqueRes("SELECT user_id FROM users WHERE username = '$username_str' AND account_origin = '$account_origin_str'", $user_info, false);
 
         if ($user_info != null)
-            $object = new self($user_info['user_id']);
+            $object = self::getObject($user_info['user_id']);
         return $object;
     }
 
@@ -172,7 +176,7 @@ class User implements GenericObject {
         $db->execSqlUniqueRes("SELECT user_id FROM users WHERE email = '$email_str' AND account_origin = '$account_origin_str'", $user_info, false);
 
         if ($user_info != null)
-            $object = new self($user_info['user_id']);
+            $object = self::getObject($user_info['user_id']);
         return $object;
     }
 
@@ -207,7 +211,7 @@ class User implements GenericObject {
 
         $db->execSqlUpdate("INSERT INTO users (user_id,username, account_origin,email,pass,account_status,validation_token,reg_date) VALUES ('$id_str','$username_str','$account_origin_str','$email_str','$password_hash','$status','$token',CURRENT_TIMESTAMP)");
 
-        $object = new self($id);
+        $object = self::getObject($id);
         return $object;
     }
 
@@ -528,14 +532,6 @@ class User implements GenericObject {
         $mail->setMessageSubject($network->getName() . _(" new password request"));
         $mail->setMessageBody(_("Hello,\nYou have requested that the authentication server send you a new password:\nUsername: ") . $this->getUsername() . _("\nPassword: ") . $new_password . _("\n\nHave a nice day,\nThe Team"));
         $mail->send();
-    }
-
-    static function userExists($id) {
-        $db = AbstractDb::getObject();
-        $id_str = $db->escapeString($id);
-        $sql = "SELECT * FROM users WHERE user_id='{$id_str}'";
-        $db->execSqlUniqueRes($sql, $row, false);
-        return $row;
     }
 
     public static function emailExists($id) {

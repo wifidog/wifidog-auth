@@ -1,5 +1,6 @@
 <?php
 
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -45,10 +46,9 @@
 /**
  * Load required classes
  */
-require_once('classes/Cache.php');
-require_once('classes/HtmlSafe.php');
-require_once('classes/LocaleList.php');
-
+require_once ('classes/Cache.php');
+require_once ('classes/HtmlSafe.php');
+require_once ('classes/LocaleList.php');
 
 /**
  * Représente un Langstring en particulier, ne créez pas un objet langstrings
@@ -69,7 +69,6 @@ class Langstring extends Content {
     protected function __construct($content_id)
     {
         parent::__construct($content_id);
-        
         $db = AbstractDb::getObject();
 	    /**
     	 * HTML allowed to be used
@@ -85,8 +84,7 @@ class Langstring extends Content {
      *
      * @return string Chaîne UTF-8 retournée
      */
-    public function getString()
-    {
+    public function getString() {
         // Init values
         $retval = null;
         $row = null;
@@ -151,8 +149,7 @@ class Langstring extends Content {
      * @return bool True si une chaîne a été ajoutée à la base de donnée,
      * false autrement.
      */
-    public function addString($string, $locale, $allow_empty_string = false)
-    {
+    public function addString($string, $locale, $allow_empty_string = false) {
         // Init values
         $retval = false;
         $id = 'NULL';
@@ -161,15 +158,15 @@ class Langstring extends Content {
         if ($locale) {
             $language = new Locale($locale);
             $id = $language->GetId();
-            $idSQL = "'".$id."'";
+            $idSQL = "'" . $id . "'";
         }
 
         if ($allow_empty_string || ($string != null && $string != '')) {
             $string = $this->mBd->escapeString($string);
-            $this->mBd->execSqlUpdate("INSERT INTO content_langstring_entries (langstring_entries_id, langstrings_id, locales_id, value) VALUES ('".get_guid()."', '$this->id', $idSQL , '$string')", FALSE);
+            $this->mBd->execSqlUpdate("INSERT INTO content_langstring_entries (langstring_entries_id, langstrings_id, locales_id, value) VALUES ('" . get_guid() . "', '$this->id', $idSQL , '$string')", FALSE);
 
             // Create new cache object.
-            $_cache = new Cache('langstrings_' . $this->id . '_substring_' .  $id . '_string', $this->id);
+            $_cache = new Cache('langstrings_' . $this->id . '_substring_' . $id . '_string', $this->id);
 
             // Check if caching has been enabled.
             if ($_cache->isCachingEnabled) {
@@ -178,59 +175,6 @@ class Langstring extends Content {
 
                 // Save data into cache.
                 $_cache->saveCachedData($string);
-            }
-
-            $retval = true;
-        }
-
-        return $retval;
-    }
-
-    /**
-     * Updates the string associated with the locale
-     *
-     * @param string $string La chaîne de caractère à ajouter. Si la chaîne
-     *                       est vide ('') ou null, la fonction retourne
-     *                       sans toucher à la base de donnée
-     * @param string $locale La langue régionale de la chaîne ajoutée,
-     *                       exemple: 'fr_CA', peut être NULL
-     *
-     * @return bool True si une chaîne a été ajoutée à la base de donnée, false autrement.
-     */
-    public function UpdateString($string, $locale)
-    {
-        // Init values
-        $retval = false;
-        $id = 'NULL';
-        $row = null;
-
-        if ($locale) {
-            $language = new Locale($locale);
-            $id = $language->GetId();
-            $idSQL = "'" . $id . "'";
-        }
-
-        if ($string != null && $string != '') {
-            $string = $this->mBd->escapeString($string);
-            // If the update returns 0 ( no update ), try inserting the record
-            $this->mBd->execSqlUniqueRes("SELECT * FROM content_langstring_entries WHERE locales_id = $idSQL AND langstrings_id = '$this->id'", $row, false);
-
-            if ($row != null) {
-                $this->mBd->execSqlUpdate("UPDATE content_langstring_entries SET value = '$string' WHERE langstrings_id = '$this->id' AND locales_id = $idSQL", false);
-
-                // Create new cache object.
-                $_cache = new Cache('langstrings_' . $this->id . '_substring_' .  $id . '_string', $this->id);
-
-                // Check if caching has been enabled.
-                if ($_cache->isCachingEnabled) {
-                    // Remove old cached data.
-                    $_cache->eraseCachedData();
-
-                    // Save data into cache.
-                    $_cache->saveCachedData($string);
-                }
-            } else {
-                $this->addString($string, $locale);
             }
 
             $retval = true;
@@ -250,133 +194,131 @@ class Langstring extends Content {
      *                               avoir un textarea.
      * @return string The HTML fragment for this interface.
      */
-    public function getAdminUI($subclass_admin_interface = null, $title = null, $type_interface = "LARGE")
-    {
+    public function getAdminUI($subclass_admin_interface = null, $title = null, $type_interface = "LARGE") {
         // Init values.
         $html = '';
         $html .= $subclass_admin_interface;
         $result = "";
         //$variantsCounter = 0;
         //$_hideNewContent = false;
-        if(!empty($this->allowed_html_tags)) {
-        	$html .= "<div class='admin_section_hint'>" . _("Only these HTML tags are allowed : ") . htmlentities($this->allowed_html_tags) . "</div>";
+        if (!empty ($this->allowed_html_tags)) {
+            $html .= "<div class='admin_section_hint'>" . _("Only these HTML tags are allowed : ") . htmlentities($this->allowed_html_tags) . "</div>";
         }
- 		$html .= "<ul class='admin_element_list'>\n";
+        $html .= "<ul class='admin_element_list'>\n";
         $liste_languages = new LocaleList();
         $sql = "SELECT * FROM content_langstring_entries WHERE content_langstring_entries.langstrings_id = '$this->id' ORDER BY locales_id";
         $this->mBd->execSql($sql, $result, false); //echo "type_interface: $type_interface\n";
 
-
-		$exclude_array = array();
+        $exclude_array = array ();
         if ($result != null) {
             while (list ($key, $value) = each($result)) {
                 $exclude_array[$value['locales_id']] = $value['locales_id'];
-//                The next lines are a preview of a new suggested input mode
-//                ==========================================================
-//
-//                // Increase variants counter
-//                $variantsCounter++;
-//
-//                // Hide new content input
-//                $_hideNewContent = true;
-//
-//                $html .= "<li class='admin_element_item_container'>\n";
-//                $html .= "<div class='admin_element_data'>\n";
-//
-//                if ($type_interface == 'LARGE') {
-//                    $html .= "<textarea name='langstrings_".$this->id."_substring_$value[langstring_entries_id]_string' cols='60' rows='3'>".htmlspecialchars($value['value'], ENT_QUOTES, 'UTF-8')."</textarea>\n";
-//                } else {
-//                    $html .= "<input type='text' name='langstrings_".$this->id."_substring_$value[langstring_entries_id]_string' size='44' value='".htmlspecialchars($value['value'], ENT_QUOTES, 'UTF-8')."'>\n";
-//                }
-//
-//                $html .= "<div class='admin_element_data' id='langstrings_".$this->id."_substring_$value[langstring_entries_id]_language_section' style='display: none;'>\n";
-//                $html .= $liste_languages->GenererFormSelect("$value[locales_id]", "langstrings_".$this->id."_substring_$value[langstring_entries_id]_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
-//                $html .= "</div>\n";
-//
-//                $html .= "</div>\n";
-//                $html .= "<div class='admin_element_tools'>\n";
-//                $name = "langstrings_".$this->id."_substring_$value[langstring_entries_id]_erase";
-//
-//                // Choose language button
-//                $html .= "<a href='javascript:showHideView(\"langstrings_".$this->id."_substring_$value[langstring_entries_id]_language_section\", \"langstrings_".$this->id."_substring_$value[langstring_entries_id]_language_section_image\");'><img src='" . BASE_SSL_PATH . "images/icons/language.gif' id='langstrings_".$this->id."_substring_$value[langstring_entries_id]_language_section_image' class='admin_section_button' alt='"._("Choose language")."' title='"._("Choose language")."'></a>";
-//
-//                // Add string button
-//                if (count($result) == $variantsCounter) {
-//                    // This is the last string variant - show "add string" button.
-//                    $html .= "<a href='javascript:showHideView(\"langstrings_".$this->id."_add_new_entry_view\", \"langstrings_".$this->id."_add_new_entry_image\");'><img src='" . BASE_SSL_PATH . "images/icons/add.gif' id='langstrings_".$this->id."_add_new_entry_image' class='admin_section_button' alt='"._("Add new string")."' title='"._("Add new string")."'></a>";
-//                } else {
-//                    $html .= "<img src='" . BASE_SSL_PATH . "images/icons/add.gif' id='langstrings_".$this->id."_add_new_entry_image' class='admin_section_button_disabled' alt='"._("Add new string")."' title='"._("Add new string")."'>";
-//                }
-//
-//                // Delete string button
-//                $html .= "<input type='image' name='$name' class='admin_section_button' src='" . BASE_SSL_PATH . "images/icons/delete.gif' alt='"._("Delete string")."' title='"._("Delete string")."'>";
-//
-//                $html .= "</div>\n";
-//                $html .= "</li>\n";
+                //                The next lines are a preview of a new suggested input mode
+                //                ==========================================================
+                //
+                //                // Increase variants counter
+                //                $variantsCounter++;
+                //
+                //                // Hide new content input
+                //                $_hideNewContent = true;
+                //
+                //                $html .= "<li class='admin_element_item_container'>\n";
+                //                $html .= "<div class='admin_element_data'>\n";
+                //
+                //                if ($type_interface == 'LARGE') {
+                //                    $html .= "<textarea name='langstrings_".$this->id."_substring_$value[langstring_entries_id]_string' cols='60' rows='3'>".htmlspecialchars($value['value'], ENT_QUOTES, 'UTF-8')."</textarea>\n";
+                //                } else {
+                //                    $html .= "<input type='text' name='langstrings_".$this->id."_substring_$value[langstring_entries_id]_string' size='44' value='".htmlspecialchars($value['value'], ENT_QUOTES, 'UTF-8')."'>\n";
+                //                }
+                //
+                //                $html .= "<div class='admin_element_data' id='langstrings_".$this->id."_substring_$value[langstring_entries_id]_language_section' style='display: none;'>\n";
+                //                $html .= $liste_languages->GenererFormSelect("$value[locales_id]", "langstrings_".$this->id."_substring_$value[langstring_entries_id]_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
+                //                $html .= "</div>\n";
+                //
+                //                $html .= "</div>\n";
+                //                $html .= "<div class='admin_element_tools'>\n";
+                //                $name = "langstrings_".$this->id."_substring_$value[langstring_entries_id]_erase";
+                //
+                //                // Choose language button
+                //                $html .= "<a href='javascript:showHideView(\"langstrings_".$this->id."_substring_$value[langstring_entries_id]_language_section\", \"langstrings_".$this->id."_substring_$value[langstring_entries_id]_language_section_image\");'><img src='" . BASE_SSL_PATH . "images/icons/language.gif' id='langstrings_".$this->id."_substring_$value[langstring_entries_id]_language_section_image' class='admin_section_button' alt='"._("Choose language")."' title='"._("Choose language")."'></a>";
+                //
+                //                // Add string button
+                //                if (count($result) == $variantsCounter) {
+                //                    // This is the last string variant - show "add string" button.
+                //                    $html .= "<a href='javascript:showHideView(\"langstrings_".$this->id."_add_new_entry_view\", \"langstrings_".$this->id."_add_new_entry_image\");'><img src='" . BASE_SSL_PATH . "images/icons/add.gif' id='langstrings_".$this->id."_add_new_entry_image' class='admin_section_button' alt='"._("Add new string")."' title='"._("Add new string")."'></a>";
+                //                } else {
+                //                    $html .= "<img src='" . BASE_SSL_PATH . "images/icons/add.gif' id='langstrings_".$this->id."_add_new_entry_image' class='admin_section_button_disabled' alt='"._("Add new string")."' title='"._("Add new string")."'>";
+                //                }
+                //
+                //                // Delete string button
+                //                $html .= "<input type='image' name='$name' class='admin_section_button' src='" . BASE_SSL_PATH . "images/icons/delete.gif' alt='"._("Delete string")."' title='"._("Delete string")."'>";
+                //
+                //                $html .= "</div>\n";
+                //                $html .= "</li>\n";
 
                 $html .= "<li class='admin_element_item_container'>\n";
                 $html .= "<div class='admin_element_data'>\n";
 
-                $html .= _("Language") . ": " . $liste_languages->GenererFormSelect("$value[locales_id]", "langstrings_".$this->id."_substring_$value[langstring_entries_id]_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
+                $html .= _("Language") . ": " . $liste_languages->GenererFormSelect("$value[locales_id]", "langstrings_" . $this->id . "_substring_$value[langstring_entries_id]_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
 
                 if ($type_interface == 'LARGE') {
-                    $html .= "<textarea name='langstrings_".$this->id."_substring_$value[langstring_entries_id]_string' class='textarea' cols='60' rows='3'>".htmlspecialchars($value['value'], ENT_QUOTES, 'UTF-8')."</textarea>\n";
+                    $html .= "<textarea name='langstrings_" . $this->id . "_substring_$value[langstring_entries_id]_string' class='textarea' cols='60' rows='3'>" . htmlspecialchars($value['value'], ENT_QUOTES, 'UTF-8') . "</textarea>\n";
                 } else {
-                    $html .= "<input type='text' class='input_text' name='langstrings_".$this->id."_substring_$value[langstring_entries_id]_string' size='44' value='".htmlspecialchars($value['value'], ENT_QUOTES, 'UTF-8')."'>\n";
+                    $html .= "<input type='text' class='input_text' name='langstrings_" . $this->id . "_substring_$value[langstring_entries_id]_string' size='44' value='" . htmlspecialchars($value['value'], ENT_QUOTES, 'UTF-8') . "'>\n";
                 }
 
                 $html .= "</div>\n";
                 $html .= "<div class='admin_element_tools'>\n";
-                $name = "langstrings_".$this->id."_substring_$value[langstring_entries_id]_erase";
-                $html .= "<input type='submit' class='submit' name='$name' value='"._("Delete string")."'>";
+                $name = "langstrings_" . $this->id . "_substring_$value[langstring_entries_id]_erase";
+                $html .= "<input type='submit' class='submit' name='$name' value='" . _("Delete string") . "'>";
                 $html .= "</div>\n";
                 $html .= "</li>\n";
             }
         }
 
-//        The next lines are a preview of a new suggested input mode
-//        ==========================================================
-//
-//        //Nouvelles chaîne
-//        $locale = LocaleList :: GetDefault();
-//
-//        $html .= "<li class='admin_element_item_container' id='langstrings_".$this->id."_add_new_entry_view'" . ($_hideNewContent ? " style='display: none;'" : "") . ">\n";
-//        $html .= "<div class='admin_element_data'>\n";
-//
-//        $new_substring_name = "langstrings_".$this->id."_substring_new_string";
-//
-//        if ($type_interface == 'LARGE') {
-//            $html .= "<textarea name='$new_substring_name' cols='60' rows='3'></textarea>\n";
-//        } else {
-//            $html .= "<input type='text' name='$new_substring_name' size='44' value=''>\n";
-//        }
-//
-//        $html .= "<div class='admin_element_data' id='langstrings_".$this->id."_substring_new_language_section'>\n";
-//        $html .= "<img src='" . BASE_SSL_PATH . "images/icons/language.gif' id='langstrings_".$this->id."_substring_new_language_section_image' class='admin_section_button' alt='"._("Choose language")."' title='"._("Choose language")."'>";
-//        $html .= $liste_languages->GenererFormSelect($locale, "langstrings_".$this->id."_substring_new_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
-//        $html .= "</div>\n";
-//
-//        $html .= "</div>\n";
-//        $html .= "<div class='admin_element_tools'>\n";
-//
-//        $new_substring_submit_name = "langstrings_".$this->id."_add_new_entry";
-//
-//        // Add string button
-//        $html .= "<input type='image' name='$new_substring_submit_name' class='admin_section_button' src='" . BASE_SSL_PATH . "images/icons/add.gif' alt='"._("Add new string")."' title='"._("Add new string")."'>";
-//
-//        $html .= "</div>\n";
-//        $html .= "</li>\n";
-//
-//        $html .= "</ul>\n";
-//        $html .= "</div>\n";
+        //        The next lines are a preview of a new suggested input mode
+        //        ==========================================================
+        //
+        //        //Nouvelles chaîne
+        //        $locale = LocaleList :: GetDefault();
+        //
+        //        $html .= "<li class='admin_element_item_container' id='langstrings_".$this->id."_add_new_entry_view'" . ($_hideNewContent ? " style='display: none;'" : "") . ">\n";
+        //        $html .= "<div class='admin_element_data'>\n";
+        //
+        //        $new_substring_name = "langstrings_".$this->id."_substring_new_string";
+        //
+        //        if ($type_interface == 'LARGE') {
+        //            $html .= "<textarea name='$new_substring_name' cols='60' rows='3'></textarea>\n";
+        //        } else {
+        //            $html .= "<input type='text' name='$new_substring_name' size='44' value=''>\n";
+        //        }
+        //
+        //        $html .= "<div class='admin_element_data' id='langstrings_".$this->id."_substring_new_language_section'>\n";
+        //        $html .= "<img src='" . BASE_SSL_PATH . "images/icons/language.gif' id='langstrings_".$this->id."_substring_new_language_section_image' class='admin_section_button' alt='"._("Choose language")."' title='"._("Choose language")."'>";
+        //        $html .= $liste_languages->GenererFormSelect($locale, "langstrings_".$this->id."_substring_new_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
+        //        $html .= "</div>\n";
+        //
+        //        $html .= "</div>\n";
+        //        $html .= "<div class='admin_element_tools'>\n";
+        //
+        //        $new_substring_submit_name = "langstrings_".$this->id."_add_new_entry";
+        //
+        //        // Add string button
+        //        $html .= "<input type='image' name='$new_substring_submit_name' class='admin_section_button' src='" . BASE_SSL_PATH . "images/icons/add.gif' alt='"._("Add new string")."' title='"._("Add new string")."'>";
+        //
+        //        $html .= "</div>\n";
+        //        $html .= "</li>\n";
+        //
+        //        $html .= "</ul>\n";
+        //        $html .= "</div>\n";
 
         //Nouvelles chaîne
         $locale = LocaleList :: GetDefault();
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<div class='admin_element_data'>\n";
 
-        $html .= _("Language") . ": " . $liste_languages->GenererFormSelect($locale, "langstrings_".$this->id."_substring_new_language", 'Langstring::AfficherInterfaceAdmin', TRUE, $exclude_array);
-        $new_substring_name = "langstrings_".$this->id."_substring_new_string";
+        $html .= _("Language") . ": " . $liste_languages->GenererFormSelect($locale, "langstrings_" . $this->id . "_substring_new_language", 'Langstring::AfficherInterfaceAdmin', TRUE, $exclude_array);
+        $new_substring_name = "langstrings_" . $this->id . "_substring_new_string";
 
         if ($type_interface == 'LARGE') {
             $html .= "<textarea name='$new_substring_name' class='textarea' cols='60' rows='3'></textarea>\n";
@@ -387,12 +329,12 @@ class Langstring extends Content {
         $html .= "</div>\n";
 
         $html .= "<div class='admin_element_tools'>\n";
-        $new_substring_submit_name = "langstrings_".$this->id."_add_new_entry";
-        $html .= "<input type='submit' class='submit' name='$new_substring_submit_name' value='"._("Add new string")."'>";
+        $new_substring_submit_name = "langstrings_" . $this->id . "_add_new_entry";
+        $html .= "<input type='submit' class='submit' name='$new_substring_submit_name' value='" . _("Add new string") . "'>";
         $html .= "</div>\n";
         $html .= "</li>\n";
         $html .= "</ul>\n";
-        
+
         return parent :: getAdminUI($html, $title);
     }
 
@@ -401,8 +343,7 @@ class Langstring extends Content {
      *
      * @return void
      */
-    public function processAdminUI()
-    {
+    public function processAdminUI() {
         // Init values.
         $result = null;
 
@@ -414,20 +355,20 @@ class Langstring extends Content {
 
             if ($result != null) {
                 while (list ($key, $value) = each($result)) {
-                    $language = $generateur_form_select->getResult("langstrings_".$this->id."_substring_$value[langstring_entries_id]_language", 'Langstring::AfficherInterfaceAdmin');
+                    $language = $generateur_form_select->getResult("langstrings_" . $this->id . "_substring_$value[langstring_entries_id]_language", 'Langstring::AfficherInterfaceAdmin');
 
                     if (empty ($language)) {
                         $language = '';
                         $languageSQL = 'NULL';
                     } else {
-                        $languageSQL = "'".$language."'";
+                        $languageSQL = "'" . $language . "'";
                     }
 
-                    if (!empty ($_REQUEST["langstrings_".$this->id."_substring_$value[langstring_entries_id]_erase"]) && $_REQUEST["langstrings_".$this->id."_substring_$value[langstring_entries_id]_erase"] == true) {
+                    if (!empty ($_REQUEST["langstrings_" . $this->id . "_substring_$value[langstring_entries_id]_erase"]) && $_REQUEST["langstrings_" . $this->id . "_substring_$value[langstring_entries_id]_erase"] == true) {
                         $this->mBd->execSqlUpdate("DELETE FROM content_langstring_entries WHERE langstrings_id = '$this->id' AND langstring_entries_id='$value[langstring_entries_id]'", FALSE);
 
                         // Create new cache object.
-                        $_cache = new Cache('langstrings_' . $this->id . '_substring_' .  $language . '_string', $this->id);
+                        $_cache = new Cache('langstrings_' . $this->id . '_substring_' . $language . '_string', $this->id);
 
                         // Check if caching has been enabled.
                         if ($_cache->isCachingEnabled) {
@@ -436,7 +377,7 @@ class Langstring extends Content {
                         }
                     } else {
                         // Strip HTML tags !
-                        $string = $_REQUEST["langstrings_".$this->id."_substring_$value[langstring_entries_id]_string"];
+                        $string = $_REQUEST["langstrings_" . $this->id . "_substring_$value[langstring_entries_id]_string"];
                         $string = $this->mBd->escapeString(strip_tags($string, $this->allowed_html_tags));
 
                         // If PEAR::HTML_Safe is available strips down all potentially dangerous content
@@ -444,35 +385,39 @@ class Langstring extends Content {
 
                         if ($_HtmlSafe->isHtmlSafeEnabled) {
                             // Add "embed" and "object" to the default set of dangerous tags
-                            $_HtmlSafe->setDeleteTags(array("embed", "object"), true);
+                            $_HtmlSafe->setDeleteTags(array (
+                                "embed",
+                                "object"
+                            ), true);
 
                             // Strip HTML
                             $string = $_HtmlSafe->parseHtml($string);
                         }
+                        if ($value['value'] != $string) {
+                            $this->mBd->execSqlUpdate("UPDATE content_langstring_entries SET locales_id = $languageSQL , value = '$string' WHERE langstrings_id = '$this->id' AND langstring_entries_id='$value[langstring_entries_id]'", FALSE);
+                            $this->touch();
+                            // Create new cache object.
+                            $_cache = new Cache('langstrings_' . $this->id . '_substring_' . $language . '_string', $this->id);
 
-                        $this->mBd->execSqlUpdate("UPDATE content_langstring_entries SET locales_id = $languageSQL , value = '$string' WHERE langstrings_id = '$this->id' AND langstring_entries_id='$value[langstring_entries_id]'", FALSE);
+                            // Check if caching has been enabled.
+                            if ($_cache->isCachingEnabled) {
+                                // Remove old cached data.
+                                $_cache->eraseCachedData();
 
-                        // Create new cache object.
-                        $_cache = new Cache('langstrings_' . $this->id . '_substring_' .  $language . '_string', $this->id);
-
-                        // Check if caching has been enabled.
-                        if ($_cache->isCachingEnabled) {
-                            // Remove old cached data.
-                            $_cache->eraseCachedData();
-
-                            // Save data into cache.
-                            $_cache->saveCachedData($string);
+                                // Save data into cache.
+                                $_cache->saveCachedData($string);
+                            }
                         }
                     }
                 }
             }
 
             //Ajouter nouvelles chaîne(s) si champ non vide ou si l'usager a appuyé sur le bouton ajouter
-            $new_substring_name = "langstrings_".$this->id."_substring_new_string";
-            $new_substring_submit_name = "langstrings_".$this->id."_add_new_entry";
+            $new_substring_name = "langstrings_" . $this->id . "_substring_new_string";
+            $new_substring_submit_name = "langstrings_" . $this->id . "_add_new_entry";
 
             if ((isset ($_REQUEST[$new_substring_submit_name]) && $_REQUEST[$new_substring_submit_name] == true) || !empty ($_REQUEST[$new_substring_name])) {
-                $language = $generateur_form_select->getResult("langstrings_".$this->id."_substring_new_language", 'Langstring::AfficherInterfaceAdmin');
+                $language = $generateur_form_select->getResult("langstrings_" . $this->id . "_substring_new_language", 'Langstring::AfficherInterfaceAdmin');
 
                 if (empty ($language)) {
                     $language = null;
@@ -494,8 +439,7 @@ class Langstring extends Content {
      *
      * @return string The HTML fragment for this interface
      */
-    public function getUserUI($subclass_user_interface = null)
-    {
+    public function getUserUI($subclass_user_interface = null) {
         // Init values
         $html = '';
 
@@ -505,7 +449,7 @@ class Langstring extends Content {
         $html .= "</div>\n";
         /* Handle hyperlink clicktrough logging */
         $html = $this->replaceHyperLinks($html);
-        return parent::getUserUI($html);
+        return parent :: getUserUI($html);
     }
 
     /**
@@ -517,10 +461,9 @@ class Langstring extends Content {
      * the constructor from the wrong scope
      *
      * @return void
-
+    
      */
-    private function refresh()
-    {
+    private function refresh() {
         $this->__construct($this->id);
     }
 
@@ -532,15 +475,14 @@ class Langstring extends Content {
      * @return bool True if deletion was successful
      * @internal Persistent content will not be deleted
      */
-    public function delete(&$errmsg)
-    {
+    public function delete(& $errmsg) {
         // Init values.
         $_retval = false;
 
         if ($this->isPersistent()) {
             $errmsg = _("Content is persistent (you must make it non persistent before you can delete it)");
         } else {
-            $db = AbstractDb::getObject();
+            $db = AbstractDb :: getObject();
 
             if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
                 $_sql = "DELETE FROM content WHERE content_id='$this->id'";
@@ -572,5 +514,3 @@ class Langstring extends Content {
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
-

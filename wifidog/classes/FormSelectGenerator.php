@@ -184,6 +184,8 @@ class FormSelectGenerator
 	 *
 	 * @param $array : T The array used to generate the values
 	 * @param $selectedPrimaryKey : Optional.  Which element should be selected by default, use null to select the first one
+	 * An array of keys is also supported when you add "MULTIPLE" to $additionalSelectAttribute.
+	 * $userPrefix:  The name of the form element.  Make sure you add [] at the end if you ass "MULTIPLE" to $additionalSelectAttribute 
 	 * @param $objectPrefix : An arbitrary prefix, chosen by the calling object, to guarantee unicity
 	 * @param $allowNullValues, TRUE or FALSE
 	 * @param $nullCaptionString, string displayed in place of null values
@@ -198,14 +200,16 @@ class FormSelectGenerator
 		{
 			$retval .= "<option value=''>{$nullCaptionString}</option>\n";
 		}
-
+//pretty_print_r($selectedPrimaryKey);
 		foreach ($array as $value)
 		{
 			$retval .= "<option ";
-			if ($value[0] == $selectedPrimaryKey)
-			{
-				$retval .= 'selected="selected" ';
-			}
+							if(is_array($selectedPrimaryKey) && in_array($value[0],$selectedPrimaryKey)){
+										$retval .= 'selected="selected" ';
+										}
+				else if ($value[0] == $selectedPrimaryKey){
+					$retval .= 'selected="selected" ';
+				}
 
 			$name = $value[1];
 			// Restrict to max length and append "..."
@@ -273,7 +277,7 @@ class FormSelectGenerator
 	 * @param $objectPrefix : An arbitrary prefix, chosen by the calling object, to guarantee unicity
 	 * @return true or false
 	 */
-	function isPresent($userPrefix, $objectPrefix)
+	public static function isPresent($userPrefix, $objectPrefix)
 	{
 		return isset ($_REQUEST[$this->getRequestIndex($userPrefix, $objectPrefix)]);
 	}

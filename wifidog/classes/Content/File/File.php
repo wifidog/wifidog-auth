@@ -81,6 +81,11 @@ class File extends Content
      */
     const UNIT_GIGABYTES = 1073741824;
 
+        /** Can the user edit the filename */
+		private $configEnableEditFilename = true;
+		
+		        /** Can the user edit the mime type */
+		private $configEnableEditMimeType = true;
     /**
      * Constructor
      *
@@ -93,7 +98,6 @@ class File extends Content
 
         // Init values
         $row = null;
-
         parent :: __construct($content_id);
 
         $content_id = $db->escapeString($content_id);
@@ -198,44 +202,28 @@ class File extends Content
     private function setBinaryDataOid($oid)
     {
         if (is_null($oid)) {
-            $oid = "NULL";
+            $oid_sql = "NULL";
         }
-
+        else
+        {
+        	$oid_sql = $this->mBd->escapeString($oid);
+        }
+    	if($this->files_row['data_blob']!=$oid){
         $this->mBd->execSqlUpdate("UPDATE content_file SET data_blob = $oid WHERE files_id='".$this->getId()."'", false);
         // Touch and refresh this object
         $this->touch();
-    }
-
-	/**
-	 * Return creation date (read-only)
-	 *
-	 * @return string ISO-8601-2000 timestamp
-	 */
-    public function getCreationDate()
-    {
-    		return $this->files_row['creation_date'];
-    }
-
-	/**
-	 * Return update date
-	 *
-	 * @return string ISO-8601-2000 timestamp
-	 */
-    public function getLastUpdateDate()
-    {
-    		return $this->files_row['last_update_date'];
+    	}
     }
 
     /**
-	 * Touch file, update timestamp
-	 *
-	 */
-    public function touch()
+     * Is the MimeType editable
+     * @param $enabled Default is true
+     */
+    protected function configEnableEditMimeType($enabled=true)
     {
-    		$this->mBd->execSqlUpdate("UPDATE content_file SET last_update_date = CURRENT_TIMESTAMP WHERE files_id='".$this->getId()."'", false);
-        $this->refresh();
+        return $this->configEnableEditMimeType=$enabled;
     }
-
+    
     /**
      * Returns the MIME type of the file
      *
@@ -261,6 +249,15 @@ class File extends Content
         $this->touch();
     }
 
+    /**
+     * Is the filename editable
+     * @param $enabled Default is true
+     */
+    protected function configEnableEditFilename($enabled=true)
+    {
+        return $this->configEnableEditFilename=$enabled;
+    }
+    
     /**
      * Returns the filename of the file
      *
@@ -400,13 +397,15 @@ class File extends Content
     private function setURL($url)
     {
         if ($url == null) {
-            $url = "NULL";
+            $url_sql = "NULL";
         } else {
-            $url = "'".$this->mBd->escapeString($url)."'";
+            $url_sql = "'".$this->mBd->escapeString($url)."'";
         }
-
-        $this->mBd->execSqlUpdate("UPDATE content_file SET url = $url WHERE files_id='".$this->getId()."'", false);
+            	if($this->files_row['url']!=$url){
+        
+        $this->mBd->execSqlUpdate("UPDATE content_file SET url = $url_sql WHERE files_id='".$this->getId()."'", false);
         $this->refresh();
+            	}
     }
 
     /**
@@ -431,20 +430,6 @@ class File extends Content
     {
         // Init values
         $html = '';
-
-        $html .= "<div class='admin_element_item_container'>\n";
-        $html .= "<div class='admin_element_label'>"._("Creation date")." : </div>\n";
-        $html .= "<div class='admin_element_data'>\n";
-        $html .= $this->getCreationDate();
-        $html .= "</div>\n";
-        $html .= "</li>\n";
-
-        $html .= "<div class='admin_element_item_container'>\n";
-        $html .= "<div class='admin_element_label'>"._("Last update date")." : </div>\n";
-        $html .= "<div class='admin_element_data'>\n";
-        $html .= $this->getLastUpdateDate();
-        $html .= "</div>\n";
-        $html .= "</li>\n";
 
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<div class='admin_element_label'>";
@@ -479,28 +464,30 @@ class File extends Content
             $html .= "</div>\n";
             $html .= "</li>\n";
         }
-
+        
+if($this->configEnableEditFilename) {
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<div class='admin_element_label'>"._("Filename to display")." : </div>\n";
         $html .= "<div class='admin_element_data'>\n";
         $html .= '<input type="text" name="file_file_name'.$this->getId().'" value="'.$this->getFilename().'" />';
         $html .= "</div>\n";
         $html .= "</li>\n";
+}
 
         if ($this->isLocalFile()) {
+        	if($this->configEnableEditMimeType){
             $html .= "<li class='admin_element_item_container'>\n";
             $html .= "<div class='admin_element_label'>"._("MIME type")." : </div>\n";
             $html .= "<div class='admin_element_data'>\n";
             $html .= '<input type="text" name="file_mime_type'.$this->getId().'" value="'.$this->getMimeType().'" />';
             $html .= "</div>\n";
             $html .= "</li>\n";
+        	}
 
             $html .= "<li class='admin_element_item_container'>\n";
             $html .= "<div class='admin_element_label'>"._("Locally stored file size")." : </div>\n";
             $html .= "<div class='admin_element_data'>\n";
             $html .= $this->getFileSize(self :: UNIT_KILOBYTES)." "._("KB");
-            $html .= "</div>\n";
-            $html .= "</li>\n";
         } else {
             $html .= "<div class='admin_element_item_container'>\n";
             $html .= "<div class='admin_element_label'>"._("Remote file size (Automatically converted from KB to Bytes)")." : </div>\n";
@@ -508,15 +495,13 @@ class File extends Content
             // The hidden field contains old value to determine if we have to update ( this prevents unwanted successive floating point evaluation )
             $html .= '<input type="hidden" name="file_old_remote_size'.$this->getId().'" value="'.$this->getFileSize().'" />';
             $html .= '<input type="text" name="file_remote_size'.$this->getId().'" value="'.$this->getFileSize().'" />';
-            $html .= "</div>\n";
-            $html .= "</li>\n";
-        }
 
-        $html .= "<li class='admin_element_item_container'>\n";
-        $html .= "<div class='admin_element_data'>\n";
-        $html .= "<a href='".$this->getFileUrl()."'>"._("Download")." ".$this->getFilename()." (".$this->getFileSize(self :: UNIT_KILOBYTES)." "._("KB").")</a>";
-        $html .= "</div>\n";
-        $html .= "</li>\n";
+        }
+                $html .= " <a href='".$this->getFileUrl()."'>"._("Download")."</a>\n";
+        $html .= " "._("Last update")." : \n";
+                    $html .= $this->getLastUpdateTimestamp();
+                $html .= "</div>\n";
+            $html .= "</li>\n";
 
         $html .= $subclass_admin_interface;
 
@@ -535,14 +520,14 @@ class File extends Content
 
             // If no file was uploaded, update filename and mime type
             if (!empty ($_REQUEST["file_mode".$this->getId()])) {
-                if (!empty($_REQUEST["file_file_name".$this->getId()])) {
+                if ($this->configEnableEditFilename && !empty($_REQUEST["file_file_name".$this->getId()])) {
                     $this->setFilename($_REQUEST["file_file_name".$this->getId()]);
                 }
 
                 $file_mode = $_REQUEST["file_mode".$this->getId()];
 
                 if ($file_mode == "by_upload") {
-                    if(isset($_REQUEST["file_mime_type".$this->getId()])) {
+                    if($this->configEnableEditMimeType &&isset($_REQUEST["file_mime_type".$this->getId()])) {
                         $this->setMimeType($_REQUEST["file_mime_type".$this->getId()]);
                     }
 

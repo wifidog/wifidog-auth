@@ -55,6 +55,8 @@ require_once('classes/GenericObject.php');
  */
 class Server implements GenericObject
 {
+    /** Object cache for the object factory (getObject())*/
+    private static $instanceArray = array();
     /**
      * The server Id
      *
@@ -122,7 +124,11 @@ class Server implements GenericObject
      */
 	public static function getObject($id)
 	{
-		return new self($id);
+        if(!isset(self::$instanceArray[$id]))
+        {
+        	self::$instanceArray[$id] = new self($id);
+        }
+        return self::$instanceArray[$id];
 	}
 
 	/**
@@ -152,7 +158,7 @@ class Server implements GenericObject
 		}
 
 		foreach ($_server_rows as $_server_row) {
-			$_retVal[] = new self($_server_row['server_id']);
+			$_retVal[] = self::getObject($_server_row['server_id']);
 		}
 
 		return $_retVal;
@@ -187,7 +193,7 @@ class Server implements GenericObject
 		    }
 		}
 
-		$_retVal = new self($_server_row['server_id']);
+		$_retVal = self::getObject($_server_row['server_id']);
 
 		return $_retVal;
 	}
@@ -223,7 +229,7 @@ class Server implements GenericObject
 		if ($_server_row == null && !$silent) {
 			throw new Exception(sprintf(_("Server::getCurrentServer: Fatal error: Unable to find a server matching hostname %s in the database!"), $_SERVER['SERVER_NAME']));
 		} else if ($_server_row != null) {
-    		$_retVal = new self($_server_row['server_id']);
+    		$_retVal = self::getObject($_server_row['server_id']);
 		}
 
 		return $_retVal;
@@ -259,7 +265,7 @@ class Server implements GenericObject
 			throw new Exception(_('Unable to insert the new server in the database!'));
 		}
 
-		$_object = new self($server_id);
+		$_object = self::getObject($server_id);
 
 		return $_object;
 
@@ -350,7 +356,7 @@ class Server implements GenericObject
 		$_name = "{$user_prefix}";
 
 		if (!empty($_REQUEST[$_name])) {
-			$_retVal = new self($_REQUEST[$_name]);
+			$_retVal = self::getObject($_REQUEST[$_name]);
 		}
 
 		return $_retVal;

@@ -118,7 +118,8 @@ define('CONF_DATABASE_NAME', 'wifidog');
 define('CONF_USE_CRON_FOR_DB_CLEANUP', false);
 
 /**
- * SQL queries profiling
+ * SQL queries profiling.  This will output all SQL queries performed to 
+ * generate the page, as well as the relative time used by each.
  */
 
 define('LOG_SQL_QUERIES', false);

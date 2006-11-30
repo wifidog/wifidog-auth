@@ -120,7 +120,7 @@ class Utils
             reset($value);
             $arrTemp[$key] = is_null($index) ? current($value) : $value[$index];
         }
-        natsort($arrTemp);
+        natcasesort($arrTemp);
         foreach ($arrTemp as $key => $value)
             $arrOut[] = $arrIn[$key];
         $arrIn = $arrOut;

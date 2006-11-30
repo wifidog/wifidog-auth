@@ -68,6 +68,8 @@ require_once('classes/ThemePack.php');
  */
 class Network implements GenericObject
 {
+	    /** Object cache for the object factory (getObject())*/
+    private static $instanceArray = array();
     /**
      * The network Id
      *
@@ -93,7 +95,11 @@ class Network implements GenericObject
      */
     public static function getObject($id)
     {
-        return new self($id);
+    	if(!isset(self::$instanceArray[$id]))
+        {
+        	self::$instanceArray[$id] = new self($id);
+        }
+        return self::$instanceArray[$id];
     }
 
     /**
@@ -116,7 +122,7 @@ class Network implements GenericObject
             throw new Exception(_("Network::getAllNetworks:  Fatal error: No networks in the database!"));
         }
         foreach ($network_rows as $network_row) {
-            $retval[] = new self($network_row['network_id']);
+            $retval[] = self::getObject($network_row['network_id']);
         }
         return $retval;
     }
@@ -141,7 +147,7 @@ class Network implements GenericObject
         if ($network_row == null) {
             throw new Exception(_("Network::getDefaultNetwork:  Fatal error: Unable to find the default network!"));
         }
-        $retval = new self($network_row['network_id']);
+        $retval = self::getObject($network_row['network_id']);
         return $retval;
     }
 
@@ -174,7 +180,7 @@ class Network implements GenericObject
     }
 
     /**
-     * Create a new Content object in the database
+     * Create a new Network object in the database
      *
      * @param string $network_id The network id of the new network.  If absent,
      *                           will be assigned a guid.
@@ -198,7 +204,7 @@ class Network implements GenericObject
         if (!$db->execSqlUpdate($sql, false)) {
             throw new Exception(_('Unable to insert the new network in the database!'));
         }
-        $object = new self($network_id);
+        $object = self::getObject($network_id);
         return $object;
 
     }
@@ -276,7 +282,7 @@ class Network implements GenericObject
         $name = "{$user_prefix}";
 
         if (!empty ($_REQUEST[$name])) {
-            return new self($_REQUEST[$name]);
+            return self::getObject($_REQUEST[$name]);
         } else {
             return null;
         }
@@ -352,9 +358,7 @@ class Network implements GenericObject
      */
     private function __construct($p_network_id)
     {
-        
         $db = AbstractDb::getObject();
-
         $network_id_str = $db->escapeString($p_network_id);
         $sql = "SELECT *, EXTRACT(EPOCH FROM validation_grace_time) as validation_grace_time_seconds FROM networks WHERE network_id='$network_id_str'";
         $row = null;
@@ -1886,7 +1890,6 @@ class Network implements GenericObject
         $smarty->assign('networkHomepageURL', $net ? $net->getHomepageURL() : '');
 
         // Set networks usage information
-        $smarty->assign('networkNumValidUsers', $net ? $net->getNumValidUsers() : 0);
         $smarty->assign('networkNumOnlineUsers', $net ? $net->getNumOnlineUsers() : 0);
 
         // Set networks node information

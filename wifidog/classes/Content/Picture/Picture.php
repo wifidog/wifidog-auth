@@ -1,5 +1,6 @@
 <?php
 
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -47,7 +48,7 @@
 /**
  * Load File content class
  */
-require_once('classes/Content/File/File.php');
+require_once ('classes/Content/File/File.php');
 
 /**
  * Represents an Image
@@ -59,21 +60,26 @@ require_once('classes/Content/File/File.php');
  * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
  * @copyright  2005-2006 Max Horvath, maxspot GmbH
  */
-class Picture extends File
-{
+class Picture extends File {
+    private $configEnableEditWidthHeight = true;
+    /** The maximum width an image can take in the page    */
+    private $maxDisplayWidth = null;
+
+    /** The maximum height an image can take in the page     */
+    private $maxDisplayHeight = null;
+
     /**
      * Constructor
      *
      * @param string $content_id Content id     */
-    protected function __construct($content_id)
-    {
-        
-        $db = AbstractDb::getObject();
+    protected function __construct($content_id) {
+
+        $db = AbstractDb :: getObject();
 
         // Init values
         $row = null;
 
-        parent::__construct($content_id);
+        parent :: __construct($content_id);
 
         $content_id = $db->escapeString($content_id);
         $sql = "SELECT * FROM content_file_image WHERE pictures_id='$content_id'";
@@ -91,22 +97,45 @@ class Picture extends File
             $db->execSqlUniqueRes($sql, $row, false);
 
             if ($row == null) {
-                throw new Exception(_("The content with the following id could not be found in the database: ").$content_id);
+                throw new Exception(_("The content with the following id could not be found in the database: ") . $content_id);
             }
         }
 
-        $this->mBd = &$db;
+        $this->mBd = & $db;
         $this->pictures_row = $row;
+        $this->configEnableEditFilename(false);
+        $this->configEnableEditMimeType(false);
+    }
+
+    /**
+     * Is the Width and height editable by the user?
+     * @param $enabled Default is true
+     */
+    public function configEnableEditWidthHeight($enabled = true) {
+        return $this->configEnableEditWidthHeight = $enabled;
+    }
+    /**
+      * Set the maximum width an image can take in the page
+      * @param $width A CSS-acceptable width specification
+      */
+    public function setMaxDisplayWidth($width) {
+        $this->maxDisplayWidth = $width;
+    }
+    /**
+      * Set the maximum height an image can take in the page
+      * @param $height A CSS-acceptable width specification
+      */
+    public function setMaxDisplayHeight($height) {
+        $this->maxDisplayHeight = $height;
     }
 
     /**
      * Gets the width of an image
      *
      * @return mixed (int or null) Width of image
-
+    
      */
-    private function getWidth()
-    {
+    private function getWidth() {
         return $this->pictures_row['width'];
     }
 
@@ -116,19 +145,18 @@ class Picture extends File
      * @param int $width Width to be set
      *
      * @return bool True if width was a valid value and could be set
-
+    
      */
-    private function setWidth($width)
-    {
+    private function setWidth($width) {
         // Init values
         $_retval = false;
 
-        if (empty($width) || is_numeric($width)) {
-            empty($width) ? $width = "NULL" : $width = $this->mBd->escapeString($width);
-
-            $this->mBd->execSqlUpdate("UPDATE content_file_image SET width=" . $width . " WHERE pictures_id='" . $this->getId() . "'", false);
-            $this->refresh();
-
+        if (empty ($width) || is_numeric($width)) {
+            empty ($width) ? $width_sql = "NULL" : $width_sql = $this->mBd->escapeString($width);
+            if ($this->pictures_row['width'] != $width) {
+                $this->mBd->execSqlUpdate("UPDATE content_file_image SET width=" . $width_sql . " WHERE pictures_id='" . $this->getId() . "'", false);
+                $this->refresh();
+            }
             $_retval = true;
         }
 
@@ -139,10 +167,9 @@ class Picture extends File
      * Gets the height of an image
      *
      * @return mixed (int or null) Height of image
-
+    
      */
-    private function getHeight()
-    {
+    private function getHeight() {
         return $this->pictures_row['height'];
     }
 
@@ -152,19 +179,18 @@ class Picture extends File
      * @param int $height Height to be set
      *
      * @return bool True if height was a valid value and could be set
-
+    
      */
-    function setHeight($height)
-    {
+    private function setHeight($height) {
         // Init values
         $_retval = false;
 
-        if(empty($height) || is_numeric($height)) {
-            empty($height) ? $height = "NULL" : $height = $this->mBd->escapeString($height) ;
-
-            $this->mBd->execSqlUpdate("UPDATE content_file_image SET height=" . $height . " WHERE pictures_id='" . $this->getId() . "'", false);
-            $this->refresh();
-
+        if (empty ($height) || is_numeric($height)) {
+            empty ($height) ? $height_sql = "NULL" : $height_sql = $this->mBd->escapeString($height);
+            if ($this->pictures_row['height'] != $height) {
+                $this->mBd->execSqlUpdate("UPDATE content_file_image SET height=" . $height_sql . " WHERE pictures_id='" . $this->getId() . "'", false);
+                $this->refresh();
+            }
             $_retval = true;
         }
 
@@ -176,8 +202,7 @@ class Picture extends File
      *
      * @return string URL of file
      */
-    public function getHyperlinkUrl()
-    {
+    public function getHyperlinkUrl() {
         return $this->pictures_row['hyperlink_url'];
     }
 
@@ -187,18 +212,22 @@ class Picture extends File
      * @param string $url
      *
      * @return void
-
+    
      */
-    private function setHyperlinkUrl($url)
-    {
-        if ($url == null) {
-            $url = "NULL";
-        } else {
-            $url = "'".$this->mBd->escapeString($url)."'";
-        }
+    private function setHyperlinkUrl($url) {
+        if ($this->pictures_row['hyperlink_url'] != $url) {
+            if ($url == null) {
+                $url_sql = "NULL";
+            } else {
+                $url_sql = "'" . $this->mBd->escapeString($url) . "'";
+            }
+            if ($this->pictures_row['hyperlink_url'] != $url) {
 
-        $this->mBd->execSqlUpdate("UPDATE content_file_image SET hyperlink_url = $url WHERE pictures_id='".$this->getId()."'", false);
-        $this->refresh();
+                $this->mBd->execSqlUpdate("UPDATE content_file_image SET hyperlink_url = $url_sql WHERE pictures_id='" . $this->getId() . "'", false);
+                $this->touch();
+                $this->refresh();
+            }
+        }
     }
 
     /**
@@ -209,70 +238,47 @@ class Picture extends File
      *
      * @return string HTML code for the administration interface
      */
-    public function getAdminUI($subclass_admin_interface = null, $title=null)
-    {
+    public function getAdminUI($subclass_admin_interface = null, $title = null) {
         // Init values
         $html = '';
         $width = $this->getWidth();
         $height = $this->getHeight();
         $hyperlink_url = htmlspecialchars($this->getHyperlinkUrl(), ENT_QUOTES);
 
-
         $html .= "<ul class='admin_element_list'>\n";
 
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<div class='admin_element_data'>\n";
-        $html .= "<div class='admin_element_label'>"._("Hyperlink URL (leave empty if you don't need it)")." : </div>\n";
+        $html .= "<div class='admin_element_label'>" . _("Hyperlink URL (leave empty if you don't need it)") . " : </div>\n";
         $html .= "<input type='text' name='pictures_{$this->getId()}_hyperlink_url' value='{$hyperlink_url}'>";
         $html .= "</div>\n";
         $html .= "</li>\n";
+        if ($this->configEnableEditWidthHeight) {
+            $html .= "<li class='admin_element_item_container'>\n";
+            $html .= "<div class='admin_element_data'>\n";
+            $html .= "<div class='admin_element_label'>" . _("Width (leave empty if you want to keep original width)") . " : </div>\n";
+            $html .= "<input type='text' name='pictures_{$this->getId()}_width' value='{$width}'>";
+            $html .= "</div>\n";
+            $html .= "</li>\n";
 
-        $html .= "<li class='admin_element_item_container'>\n";
-        $html .= "<div class='admin_element_data'>\n";
-        $html .= "<div class='admin_element_label'>"._("Width (leave empty if you want to keep original width)")." : </div>\n";
-        $html .= "<input type='text' name='pictures_{$this->getId()}_width' value='{$width}'>";
-        $html .= "</div>\n";
-        $html .= "</li>\n";
-
-        $html .= "<li class='admin_element_item_container'>\n";
-        $html .= "<div class='admin_element_data'>\n";
-        $html .= "<div class='admin_element_label'>"._("Height (leave empty if you want to keep original height)")." : </div>\n";
-        $html .= "<input type='text' name='pictures_{$this->getId()}_height' value='{$height}'>";
-        $html .= "</div>\n";
-        $html .= "</li>\n";
-
+            $html .= "<li class='admin_element_item_container'>\n";
+            $html .= "<div class='admin_element_data'>\n";
+            $html .= "<div class='admin_element_label'>" . _("Height (leave empty if you want to keep original height)") . " : </div>\n";
+            $html .= "<input type='text' name='pictures_{$this->getId()}_height' value='{$height}'>";
+            $html .= "</div>\n";
+            $html .= "</li>\n";
+        }
         // Show File admin UI + display the picture
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<div class='admin_element_data'>\n";
-        $html .= "<div class='admin_element_label'>"._("Picture preview")." : </div>\n";
-
-        if (empty($width)) {
-            $width = "";
-        } else {
-            $width = "width='$width'";
-        }
-
-        if (empty($height)) {
-            $height = "";
-        } else {
-            $height = "height='$height'";
-        }
-
-        $hyperlink_url = $this->getHyperlinkUrl();
-
-        // Wrap around a hyperlink tag if a URL exists.
-        if(!empty($hyperlink_url))
-        		$html .= "<a href=\"".htmlspecialchars($hyperlink_url ,ENT_QUOTES)."\"><img src='".htmlspecialchars($this->getFileUrl())."' $width $height alt='".$this->getFileName()."''></a>";
-        	else
-        		$html .= "<img src='".htmlspecialchars($this->getFileUrl())."' $width $height alt='".$this->getFileName()."''>";
-
+        $html .= $this->getUserUI();
         $html .= "</div>\n";
         $html .= "</li>\n";
         $html .= "</ul>\n";
 
         $html .= $subclass_admin_interface;
 
-        return parent::getAdminUI($html, $title);
+        return parent :: getAdminUI($html, $title);
     }
 
     /**
@@ -280,14 +286,15 @@ class Picture extends File
      *
      * @return void
      */
-    public function processAdminUI()
-    {
+    public function processAdminUI() {
         if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
             parent :: processAdminUI();
 
             $this->setHyperlinkUrl($_REQUEST["pictures_{$this->getId()}_hyperlink_url"]);
-            $this->setWidth(intval($_REQUEST["pictures_{$this->getId()}_width"]));
-            $this->setHeight(intval($_REQUEST["pictures_{$this->getId()}_height"]));
+            if ($this->configEnableEditWidthHeight) {
+                $this->setWidth(intval($_REQUEST["pictures_{$this->getId()}_width"]));
+                $this->setHeight(intval($_REQUEST["pictures_{$this->getId()}_height"]));
+            }
         }
     }
 
@@ -299,38 +306,50 @@ class Picture extends File
      *
      * @return string The HTML fragment for this interface
      */
-    public function getUserUI()
-    {
+    public function getUserUI() {
         // Init values
         $html = '';
         $width = $this->getWidth();
         $height = $this->getHeight();
         $hyperlink_url = $this->getHyperlinkUrl();
 
-        $html .= "<div class='user_ui_container ".get_class($this)."'>\n";
+        $html .= "<div class='user_ui_container " . get_class($this) . "'>\n";
 
-        if (empty($width)) {
+        if (empty ($width)) {
             $width = "";
         } else {
             $width = "width='$width'";
         }
 
-        if (empty($height)) {
+        if (empty ($height)) {
             $height = "";
         } else {
             $height = "height='$height'";
         }
+        $inlineCssContent = null;
+        if (!empty ($this->maxDisplayWidth)) {
+            $inlineCssContent .= " max-width: {$this->maxDisplayWidth}; ";
+        }
+        if (!empty ($this->maxDisplayHeight)) {
+            $inlineCssContent .= " max-height: {$this->maxDisplayHeight}; ";
+        }
+
+        if (!empty ($inlineCssContent)) {
+            $inlineCss = " style='$inlineCssContent' ";
+        } else {
+            $inlineCss = null;
+        }
 
         // Wrap around a hyperlink tag if a URL exists.
-        if(!empty($hyperlink_url))
-        		$html .= "<a href=\"".htmlspecialchars($hyperlink_url ,ENT_QUOTES)."\"><img src='".htmlspecialchars($this->getFileUrl())."' $width $height alt='".$this->getFileName()."''></a>";
-        	else
-        		$html .= "<img src='".htmlspecialchars($this->getFileUrl())."' $width $height alt='".$this->getFileName()."''>";
+        if (!empty ($hyperlink_url))
+            $html .= "<a href=\"" . htmlspecialchars($hyperlink_url, ENT_QUOTES) . "\"><img src='" . htmlspecialchars($this->getFileUrl()) . "' $width $height alt='" . $this->getFileName() . "' $inlineCss></a>";
+        else
+            $html .= "<img src='" . htmlspecialchars($this->getFileUrl()) . "' $width $height alt='" . $this->getFileName() . "' $inlineCss>";
 
         $html .= "</div>\n";
         /* Handle hyperlink clicktrough logging */
         $html = $this->replaceHyperLinks($html);
-        return Content::getUserUI($html);
+        return Content :: getUserUI($html);
     }
 
     /**
@@ -342,10 +361,9 @@ class Picture extends File
      * the constructor from the wrong scope
      *
      * @return void
-
+    
      */
-    private function refresh()
-    {
+    private function refresh() {
         $this->__construct($this->id);
     }
 }
@@ -357,5 +375,3 @@ class Picture extends File
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
-

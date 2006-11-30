@@ -266,16 +266,6 @@ if ($content_rows) {
         if ($content->isDisplayableAt($node)) {
             $ui->addContent($content_row['display_area'], $content, $content_row['display_order']);
         }
-        // Check for content requirements to show the "Show all contents" link
-        if (!$showMoreLink) {
-            if ($content->getObjectType() == "ContentGroup") {
-                if (method_exists($content, "isArtisticContent") && method_exists($content, "isLocativeContent")) {
-                    if ($content->isArtisticContent() && $content->isLocativeContent()) {
-                        $showMoreLink = true;
-                    }
-                }
-            }
-        }
     }
 }
 

@@ -1,4 +1,23 @@
 2006-11-29 Benoit Grégoire  <bock@step.polymtl.ca>
+	Sync with my main developpement environement:
+	* Performance optimization pass:  Collect a few low hagning fruits
+	by implementing basic instance caching for classes Server, Network, Nodes, Content and User. 
+	 It's no replacement for a real ORM, but is cuts way down on duplicate SQL queries and 
+	 object instanciation for a single request.
+	* Langstring.php:  Slight performance optimization for admin interface, support for proper modification date.
+	* File.php:  Update to use unified content modification date.
+	* get_stylesheet.php:  Implement browser caching
+	* ContentGroup.php:  Get rid of is_locative and is_artistic metadata.  Will eventually be replaced by something better.
+	* Node.php, Utils.php:  Sort by case insensitive name, and show gateway id in node selectors
+	* BannerAdGroup.php:  Support group constraint of image size for all images in the group.
+	* ContentReport.php:  Finish basic content reporting.  
+	Note that for content that displayed before the logging fixes commited 2006-11-14, the display count will be underestimated:  
+	Display before then was only counted once per user per node.  Also File clickthrough wasn't logged (includes hyperlinked pictures).
+	* Content.php:  Implement a Key-Value Pair infrastructure.  In the future, this will often allow adding new content types without
+	having to modify the schema.  See the Content class documentation.
+	* Fix various small UI issues.
+	
+2006-11-29 Benoit Grégoire  <bock@step.polymtl.ca>
 	* common.php:  Fix the value of SESS_NODE_ID_VAR, it got overwrittent by SESS_GW_ID_VAR.
 	Caused problems with logout.
 	
@@ -15,7 +34,7 @@
 	 
 2006-11-23 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix bug in node creation
-	* Add error message for geooder wwhen you didn't set the country
+	* Add error message for geocoder when you didn't set the country
 	* Clarify error messages and description for the geocoder.
 	* Make the google-map locator for nodes use the network center coordinates.
 	  This change makes it usable when you didn't use the geocoder first. 

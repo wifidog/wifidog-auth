@@ -104,7 +104,9 @@ class DateTimeWD
 
         return $object;
     }
-
+    
+    /** PHP timestamp of the datetime */
+	private $timestamp;
     // Domain-related attributes
     private $day = 0;
     private $month = 0;
@@ -119,7 +121,8 @@ class DateTimeWD
     public function __construct($datetime_str)
     {
         if ($datetime_str != null) {
-            $date_attributes = getdate(strtotime($datetime_str));
+        	$this->timestamp = strtotime($datetime_str);
+            $date_attributes = getdate($this->timestamp);
             $this->day = $date_attributes["mday"];
             $this->month = $date_attributes["mon"];
             $this->year = $date_attributes["year"];
@@ -137,6 +140,12 @@ class DateTimeWD
     public function isEmpty()
     {
             return $this->is_empty_date;
+    }
+    
+    /** Get the PHP timestamp (seconds since UNIX epoch) */
+    public function getTimestamp()
+    {
+        return $this->timestamp;
     }
 
     public function getIso8601FormattedString()

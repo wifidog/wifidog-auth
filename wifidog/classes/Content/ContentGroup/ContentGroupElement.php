@@ -88,12 +88,6 @@ class ContentGroupElement extends Content {
         $sql_select = "SELECT * FROM content_group_element WHERE content_group_element_id='$content_id'";
         $db->execSqlUniqueRes($sql_select, $row, false);
 
-        if ($row == null) {
-            // The database was corrupted, let's fix it ...
-            $sql = "DELETE FROM content WHERE content_id='$content_id'";
-            $db->execSqlUpdate($sql, true);
-        }
-
         $this->content_group_element_row = $row;
 
         /* A content group element is NEVER persistent */
@@ -133,11 +127,12 @@ class ContentGroupElement extends Content {
             $new_displayed_content_id_sql = "NULL";
         }
 
-        $db->execSqlUpdate("UPDATE content_group_element SET displayed_content_id = $new_displayed_content_id_sql WHERE content_group_element_id = '$this->id'", FALSE);
+        $db->execSqlUpdate("UPDATE content_group_element SET displayed_content_id = $new_displayed_content_id_sql WHERE content_group_element_id = '$this->id'", false);
 
         if ($old_displayed_content != null) {
-            $old_displayed_conten->delete($errmsg);
+            $old_displayed_content->delete($errmsg);
         }
+        $this->refresh();
     }
 
     /**
@@ -240,10 +235,19 @@ class ContentGroupElement extends Content {
 
             $content_ui_result = FormSelectGenerator :: getResult($name, null);
 
+if(empty($content_ui_result))
+{
+	throw new exception("Unable to retrieve the content type or the existing content to add");
+}
             if ($associate_existing_content == true) {
                 $displayed_content_object = self :: getObject($content_ui_result);
             } else {
                 $displayed_content_object = self :: createNewObject($content_ui_result);
+            if(empty($displayed_content_object)){
+            		throw new exception("Unable to create the new object");
+            	
+            }
+            //pretty_print_r($displayed_content_object);
             }
 
             $content_group_element_object->replaceDisplayedContent($displayed_content_object);
@@ -324,20 +328,29 @@ class ContentGroupElement extends Content {
 
         $html .= "<li class='admin_element_item_container'>\n";
         // valid_from_timestamp
-        $html .= "<div class='admin_element_label'>" . _("Only display from") . "</div>\n";
+        $title_str = _("Content can be displayed at any date if no start or end date is specified.  Warning:  If you do not specify a specific time of day, midnight is assumed.");
+        $html .= "<a href=\"#\" title=\"$title_str\">"._("Only display from")."</a>\n";                                    
+        
         $html .= "<div class='admin_element_data'>\n";
         $name = "content_group_element_" . $this->id . "_valid_from";
-        $html .= DateTimeWD :: getSelectDateTimeUI(new DateTimeWD($this->getValidFromDate()), $name, DateTimeWD :: INTERFACE_DATETIME_FIELD, null);
+        $datetime_from = new DateTimeWD($this->getValidFromDate());
+        $html .= DateTimeWD :: getSelectDateTimeUI($datetime_from, $name, DateTimeWD :: INTERFACE_DATETIME_FIELD, null);
+
         $html .= "</div>\n";
 
         // valid_until_timestamp
         $html .= "<div class='admin_element_label'>until</div>\n";
         $html .= "<div class='admin_element_data'>\n";
         $name = "content_group_element_" . $this->id . "_valid_until";
-        $html .= DateTimeWD :: getSelectDateTimeUI(new DateTimeWD($this->getValidUntilDate()), $name, DateTimeWD :: INTERFACE_DATETIME_FIELD, null);
+        $datetime_untill = new DateTimeWD($this->getValidUntilDate());
+        $html .= DateTimeWD :: getSelectDateTimeUI($datetime_untill, $name, DateTimeWD :: INTERFACE_DATETIME_FIELD, null);
         $html .= "</div>\n";
-
-        $html .= _("(Content can be displayed at any date if no start or end date is specified.  Warning:  If you do not specify a specifig time of day, midnight is assumed.)") . "\n";
+        if(!$datetime_from->isEmpty() && $datetime_from->getTimestamp()>time()){
+        $html .= "<div class=warningmsg>Element not yet displayed</div>\n";
+                }
+                  if(!$datetime_untill->isEmpty() && $datetime_untill->getTimestamp()<time()){
+        $html .= "<div class=warningmsg>Element has expired</div>\n";
+                }              
         $html .= "</li>\n";
 
         /* content_group_element_has_allowed_nodes */
@@ -367,7 +380,7 @@ class ContentGroupElement extends Content {
 
         $sql_additional_where = "AND node_id NOT IN (SELECT node_id FROM content_group_element_has_allowed_nodes WHERE content_group_element_id='$this->id')";
         $name = "content_group_element_{$this->id}_new_allowed_node";
-        $html .= Node :: getSelectNodeUI($name, $sql_additional_where);
+        $html .= Node :: getSelectNodeUI($name, null, $sql_additional_where);
         $name = "content_group_element_{$this->id}_new_allowed_node_submit";
         $html .= "<input type='submit' name='$name' value='" . _("Add new allowed node") . "'>";
         $html .= "</li'>\n";

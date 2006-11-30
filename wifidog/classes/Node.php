@@ -62,6 +62,8 @@ require_once('classes/DateTimeWD.php');
  */
 class Node implements GenericObject
 {
+	/** Object cache for the object factory (getObject())*/
+    private static $instanceArray = array();
 	private $mRow;
 	private $mdB; /**< An AbstractDb instance */
 	private $id;
@@ -90,9 +92,11 @@ class Node implements GenericObject
 	 */
 	static function getObject($id)
 	{
-		$object = null;
-		$object = new self($id);
-		return $object;
+		if(!isset(self::$instanceArray[$id]))
+        {
+        	self::$instanceArray[$id] = new self($id);
+        }
+        return self::$instanceArray[$id];
 	}
 
 	/** Instantiate a node object using it's gateway id
@@ -114,7 +118,7 @@ class Node implements GenericObject
 		$object = null;
 		if (self :: $current_node_id != null && $real_node_only == false)
 		{
-			$object = new self(self :: $current_node_id);
+			$object = self::getObject(self :: $current_node_id);
 		}
 		else
 		{
@@ -137,8 +141,12 @@ class Node implements GenericObject
 	 */
 	public static function getCurrentRealNode()
 	{
-		$db = AbstractDb::getObject();
-		$retval = null;
+		static $currentRealNode;
+		static $currentRealNodeComputed;
+		if(!isset($currentRealNodeComputed))
+        {
+        	$currentRealNodeComputed=true;
+        $db = AbstractDb::getObject();
 		$sql = "SELECT node_id, last_heartbeat_ip from nodes WHERE last_heartbeat_ip='$_SERVER[REMOTE_ADDR]' ORDER BY last_heartbeat_timestamp DESC";
 		$node_rows = null;
 		$db->execSql($sql, $node_rows, false);
@@ -147,13 +155,13 @@ class Node implements GenericObject
 		{
 
 			// User is not physically connected to a node
-			$retval = null;
+			$currentRealNode = null;
 		}
 		else
 			if ($num_match = 1)
 			{
 				// Only a single node matches, the user is presumed to be there
-				$retval = new self($node_rows[0]['node_id']);
+				$currentRealNode = self::getObject($node_rows[0]['node_id']);
 			}
 			else
 			{
@@ -161,7 +169,7 @@ class Node implements GenericObject
 				 * We will try to discriminate by finding which node the user last authenticated against.
 				 * If the IP matches, we can be pretty certain the user is there.
 				 */
-				$retval = null;
+				$currentRealNode = null;
 				$current_user = User :: getCurrentUser();
 				if ($current_user != null)
 				{
@@ -172,11 +180,13 @@ class Node implements GenericObject
 					$node_row = $node_rows[0];
 					if ($node_row != null && $node_row['last_heartbeat_ip'] == $_SERVER['REMOTE_ADDR'])
 					{
-						$retval = new self($node_row['node_id']);
+						$currentRealNode = self::getObject($node_row['node_id']);
 					}
 				}
 			}
-		return $retval;
+        }
+
+		return $currentRealNode;
 	}
 
 	public function delete(& $errmsg)
@@ -255,17 +265,21 @@ catch (Exception $e)
                 throw new Exception(_('Unable to insert new node into database!'));
             }
 
-            $object = new self($node_id);
+            $object = self::getObject($node_id);
 
             return $object;
 	}
 
 	/** Get an interface to pick a node.
 	* @param $user_prefix A identifier provided by the programmer to recognise it's generated html form
+	* 
 	* @param $sql_additional_where Addidional where conditions to restrict the candidate objects
-	* @return html markup
+	* @param $type_interface:  select, select_multiple or table
+	* @param $selectedNodes; Node object or array of node objects to be pre-selected (not
+	* supported by type_interface=table)
+	* * @return html markup
 	*/
-	public static function getSelectNodeUI($user_prefix, $sql_additional_where = null,$type_interface = "select")
+	public static function getSelectNodeUI($user_prefix, $sql_additional_join, $sql_additional_where = null,$selectedNodes = null, $type_interface = "select")
 	{
 		$db = AbstractDb::getObject();
 		$html = '';
@@ -280,43 +294,73 @@ catch (Exception $e)
     	    "TEMPORARILY_CLOSED" => _("Temporarily closed")
     	    );
 
-		$sql = "SELECT node_id, name, node_deployment_status, is_splash_only_node from nodes WHERE 1=1 $sql_additional_where ORDER BY lower(node_id)";
+		$sql = "SELECT node_id, name, gw_id, node_deployment_status, is_splash_only_node from nodes $sql_additional_join WHERE 1=1 $sql_additional_where ORDER BY lower(node_id)";
 		$node_rows = null;
 		$db->execSql($sql, $node_rows, false);
 
 		if ($node_rows != null) {
-			Utils :: natsort2d($node_rows, "node_id");
+			Utils :: natsort2d($node_rows, "name");
 			if ($type_interface != "table") {
-				$html .= _("Node");
-				$html .=  ": ";
-				// Naturally-sorting by node_id
 				$i = 0;
 				foreach ($node_rows as $node_row)
 				{
 					$tab[$i][0] = $node_row['node_id'];
-					$tab[$i][1] = $node_row['node_id'].": ".$node_row['name'];
+					//$tab[$i][1] = sprintf(_("%s (gw: %s)"),$node_row['name'],$node_row['gw_id']);
+					$tab[$i][1] = $node_row['name'];
 					$i ++;
 				}
-				$html .= FormSelectGenerator :: generateFromArray($tab, null, $name, null, false);
+				if($type_interface == "select_multiple"){
+					$select_options="MULTIPLE SIZE=6";
+				}
+				else
+				{
+					$select_options=null;
+				}
+				//pretty_print_r($selectedNodes);
+				if(is_array($selectedNodes)){
+					$selectedPrimaryKey=array();
+					foreach($selectedNodes as $node){
+						$selectedPrimaryKey[]=$node->getId();
+						}
+						
+				}
+				else if($selectedNodes instanceof Node){
+					$selectedPrimaryKey=$selectedNodes->getId();
+				}
+				else{
+					$selectedPrimaryKey=null;
+				}
+				$html .= FormSelectGenerator :: generateFromArray($tab, $selectedPrimaryKey, $name, null, false, null, $select_options);
 			} else {
-				$html .= "<fieldset>\n\t<legend>Node List</legend>\n";
-				$html .= "\t<span class='node_admin'>"._("Filter:")."<input type=\"text\" tabindex=\"1\" maxlength=\"40\" size=\"40\" id=\"nodes_list_filter\" name=\"nodes_list_filter\" /></span>\n\t<br/>\n";
-				$html .= "\t<!--[if IE]><style type='text/css'>#node_list_div table.scrollable>tbody { height: 15px; }</style><![endif]-->\n";
-				$html .= "\t<script src='" . BASE_URL_PATH . "js/filtertable.js' type='text/javascript' language='javascript' charset='utf-8'></script>\n";
-				$html .= "\t<script src='" . BASE_URL_PATH . "js/sorttable.js' type='text/javascript' language='javascript' charset='utf-8'></script>\n";
-				$html .= "\t<div id='node_list_div' class='node_admin tableContainer'>\n";
-				$html .= "\t\t<table id='nodes_list' class='node_admin filterable scrollable sortable'>\n\n";
-				$html .= "\t\t\t<thead class='fixedHeader'>\n\t\t\t\t<tr class='nofilter'>\n\t\t\t\t\t<th>Node Name</th>\n\t\t\t\t\t<th>Node ID</th>\n\t\t\t\t\t<th>Deployment Status</th>\n\t\t\t\t</tr>\n\t\t\t</thead>\n\t\t\t<tbody>";
+				$html .= "<fieldset>\n    <legend>Node List</legend>\n";
+				$html .= "    <span class='node_admin'>"._("Filter:")."<input type=\"text\" tabindex=\"1\" maxlength=\"40\" size=\"40\" id=\"nodes_list_filter\" name=\"nodes_list_filter\" /></span>\n    <br/>\n";
+				$html .= "    <!--[if IE]><style type='text/css'>#node_list_div table.scrollable>tbody { height: 15px; }</style><![endif]-->\n";
+				$html .= "    <script src='" . BASE_URL_PATH . "js/filtertable.js' type='text/javascript' language='javascript' charset='utf-8'></script>\n";
+				$html .= "    <script src='" . BASE_URL_PATH . "js/sorttable.js' type='text/javascript' language='javascript' charset='utf-8'></script>\n";
+				$html .= "    <div id='node_list_div' class='node_admin tableContainer'>\n";
+				$html .= "        <table id='nodes_list' class='node_admin filterable scrollable sortable'>\n\n";
+				$html .= "            <thead class='fixedHeader'>\n";
+				$html .= "<tr class='nofilter'>\n";
+				$html .= "<th>"._("Node Name")."</th>\n";
+				$html .= "<th>"._("Gateway ID")."</th>\n";
+				$html .= "<th>"._("Deployment Status")."</th>\n";
+				$html .= "</tr>\n";
+				$html .= "</thead>\n";
+				$html .= "<tbody>";
 
 				$i = 0;
 				foreach ($node_rows as $node_row)
 				{
 					$href = GENERIC_OBJECT_ADMIN_ABS_HREF."?object_id={$node_row['node_id']}&object_class=Node&action=edit";
 					$_deployStatusNode = $node_row['node_deployment_status'];
-					$html .= "\t\t\t\t<tr class='row' onclick=\"javascript:location.href='{$href}'\">\n\t\t\t\t\t<td>{$node_row['name']}<noscript>(<a href='{$href}'>edit</a>)</noscript></td>\n\t\t\t\t\t<td>{$node_row['node_id']}</td>\n\t\t\t\t\t<td>{$_deploymentStatuses[$_deployStatusNode]}</td>\n\t\t\t\t</tr>\n";
+					$html .= "<tr class='row' onclick=\"javascript:location.href='{$href}'\">\n";
+					$html .= "<td>{$node_row['name']}<noscript>(<a href='{$href}'>edit</a>)</noscript></td>\n";
+					$html .= "<td>{$node_row['gw_id']}</td>\n";
+					$html .= "<td>{$_deploymentStatuses[$_deployStatusNode]}</td>\n";
+					$html .= "</tr>\n";
 				}
-				$html .= "\t\t\t</tbody>\n\t\t</table>\n";
-				$html .= "\t</div>\n";
+				$html .= "            </tbody>\n        </table>\n";
+				$html .= "    </div>\n";
 				$html .= "</fieldset>\n";
 
 			}
@@ -335,7 +379,7 @@ catch (Exception $e)
 	{
 		$object = null;
 		$name = "{$user_prefix}";
-		return new self($_REQUEST[$name]);
+		return self::getObject($_REQUEST[$name]);
 	}
 
 	/** Get an interface to create a new node.
@@ -1317,64 +1361,6 @@ catch (Exception $e)
 		$content_id = $db->escapeString($content->getId());
 		$sql = "DELETE FROM node_has_content WHERE node_id='$this->id' AND content_id='$content_id'";
 		$db->execSqlUpdate($sql, false);
-	}
-
-	/**Get an array of all Content linked to this node
-	 * @param boolean $exclude_subscribed_content
-	* @param User $subscriber The User object used to discriminate the content
-	* @param $display_page Only select the content to be displayed in thios
-	* area.  Defaults to 'portal_page'
-	* @return an array of Content or an empty arrray */
-	/*function getAllContent($exclude_subscribed_content = false, $subscriber = null, $display_page = 'portal')
-	{
-		$db = AbstractDb::getObject();
-		$retval = array ();
-		$content_rows = null;
-		// Get all network, but exclude user subscribed content if asked
-		if ($exclude_subscribed_content == true && $subscriber)
-			$sql = "SELECT content_id FROM node_has_content WHERE node_id='{$this->id}' AND display_page='$display_page' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$subscriber->getId()}') ORDER BY subscribe_timestamp DESC";
-		else
-			$sql = "SELECT content_id FROM node_has_content WHERE node_id='{$this->id}' AND display_page='$display_page' ORDER BY subscribe_timestamp DESC";
-		$db->execSql($sql, $content_rows, false);
-
-		if ($content_rows != null)
-		{
-			foreach ($content_rows as $content_row)
-			{
-				$retval[] = Content::getObject($content_row['content_id']);
-			}
-		}
-		return $retval;
-	}*/
-
-	/** Get an array of all artistic and locative Content for this hotspot
-	* @return an array of Content or an empty arrray */
-	function getAllLocativeArtisticContent()
-	{
-		$db = AbstractDb::getObject();
-		$retval = array ();
-		$sql = "SELECT * FROM content_group JOIN content ON (content.content_id = content_group.content_group_id) JOIN node_has_content ON (node_has_content.content_id = content_group.content_group_id AND node_has_content.node_id = '{$this->getId()}') WHERE is_persistent = true AND is_artistic_content = true AND is_locative_content = true ORDER BY subscribe_timestamp DESC";
-		$content_rows = null;
-		$db->execSql($sql, $content_rows, false);
-		if ($content_rows != null)
-		{
-			foreach ($content_rows as $content_row)
-			{
-				// Create a content group object and grab only those that have content for the current Node
-				$content_group = Content :: getObject($content_row['content_group_id']);
-				if ($content_group->getDisplayNumElements() >= 1)
-				{
-					if ($content_group->isDisplayableAt($this))
-					{
-						// Disable logging and allow content to expand ( if possible )
-						$content_group->setExpandStatus(true);
-						$content_group->setLoggingStatus(false);
-						$retval[] = $content_group;
-					}
-				}
-			}
-		}
-		return $retval;
 	}
 
 	/**

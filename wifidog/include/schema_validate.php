@@ -47,8 +47,9 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 50);
-
+define('REQUIRED_SCHEMA_VERSION', 51);
+/** Used to test a new shecma version before modyfying the database */
+define('SCHEMA_UPDATE_TEST_MODE', false);
 /**
  * Check that the database schema is up to date.  If it isn't, offer to update it.
  *
@@ -126,6 +127,8 @@ function check_users_not_empty() {
 function printUpdateVersion($version) {
     if (isset ($version)) {
         echo "<h2>Preparing SQL statements to update schema to version <i>$version</i></h2>";
+        ob_flush();
+        flush();
     }
 }
 
@@ -157,10 +160,18 @@ function update_schema() {
             } else {
                 echo "<h2>Update to schema $i successfull</h2>";
             }
+            ob_flush();
+            flush();
         }
-        echo "<h2>Vacuuming database (this might take a little while)</h2>";
-        echo "<h2>Vacuuming complete</h2>";
-        $db->execSqlUniqueRes("VACUUM ANALYZE;\n", $row, false);
+        if (SCHEMA_UPDATE_TEST_MODE == false) {
+            echo "<h2>Vacuuming database (this might take a little while)</h2>";
+            ob_flush();
+            flush();
+            $db->execSqlUniqueRes("VACUUM ANALYZE;\n", $row, false);
+            echo "<h2>Vacuuming complete</h2>";
+            ob_flush();
+            flush();
+        }
 
     }
 }
@@ -172,7 +183,7 @@ function update_schema() {
 function real_update_schema($targetSchema) {
     $sql = '';
     $db = AbstractDb :: getObject();
-    $db->execSqlUniqueRes("SELECT * FROM schema_info WHERE tag='schema_version'", $row, false);//Re-check the schema version, it could have been updated by another thread
+    $db->execSqlUniqueRes("SELECT * FROM schema_info WHERE tag='schema_version'", $row, false); //Re-check the schema version, it could have been updated by another thread
     $schema_version = $row['value'];
 
     $new_schema_version = 2;
@@ -246,85 +257,85 @@ function real_update_schema($targetSchema) {
         $sql .= "ALTER TABLE users ADD COLUMN prefered_locale text REFERENCES locales ON DELETE SET NULL ON UPDATE CASCADE;\n";
 
         $sql .= "
-                                CREATE TABLE content
-                                (
-                                content_id text NOT NULL PRIMARY KEY,
-                                content_type text NOT NULL  CONSTRAINT content_type_not_empty_string CHECK (content_type != ''),
-                                title text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
-                                description text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
-                                project_info text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
-                                sponsor_info text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
-                                creation_timestamp timestamp DEFAULT now()
-                                );
-                
-                                CREATE TABLE content_has_owners
-                                (
-                                content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-                                user_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,
-                                is_author bool NOT NULL,
-                                owner_since timestamp DEFAULT now(),
-                                PRIMARY KEY  (content_id, user_id)
-                                );
-                
-                                CREATE TABLE langstring_entries (
-                                  langstring_entries_id text NOT NULL PRIMARY KEY,
-                                  langstrings_id text REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-                                  locales_id text REFERENCES locales ON DELETE RESTRICT ON UPDATE CASCADE,
-                                  value text  DEFAULT ''
-                                );
-                
-                                CREATE TABLE content_group (
-                                  content_group_id text NOT NULL PRIMARY KEY REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-                                  is_artistic_content bool NOT NULL DEFAULT FALSE,
-                                  is_locative_content bool NOT NULL DEFAULT FALSE,
-                                  content_selection_mode text
-                                );
-                
-                                CREATE TABLE content_group_element (
-                                  content_group_element_id text NOT NULL PRIMARY KEY REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-                                  content_group_id text NOT NULL REFERENCES content_group ON DELETE CASCADE ON UPDATE CASCADE,
-                                  display_order integer DEFAULT '1',
-                                  displayed_content_id text REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-                                  force_only_allowed_node bool
-                                );
-                                CREATE INDEX idx_content_group_element_content_group_id ON content_group_element (content_group_id);
-                
-                                CREATE TABLE content_group_element_has_allowed_nodes
-                                (
-                                content_group_element_id text NOT NULL REFERENCES content_group_element ON DELETE CASCADE ON UPDATE CASCADE,
-                                node_id text NOT NULL REFERENCES nodes ON DELETE CASCADE ON UPDATE CASCADE,
-                                allowed_since timestamp DEFAULT now(),
-                                PRIMARY KEY  (content_group_element_id, node_id)
-                                );
-                
-                                CREATE TABLE content_group_element_portal_display_log (
-                                  user_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,
-                                  content_group_element_id text NOT NULL REFERENCES content_group_element ON DELETE CASCADE ON UPDATE CASCADE,
-                                  display_timestamp timestamp NOT NULL DEFAULT now(),
-                                  node_id text REFERENCES nodes ON DELETE CASCADE ON UPDATE CASCADE,
-                                  PRIMARY KEY  (user_id,content_group_element_id, display_timestamp)
-                                );
-                
-                                CREATE TABLE user_has_content (
-                                  user_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,
-                                  content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-                                  subscribe_timestamp timestamp NOT NULL DEFAULT now(),
-                                  PRIMARY KEY  (user_id,content_id)
-                                );
-                
-                                CREATE TABLE node_has_content (
-                                  node_id text NOT NULL REFERENCES nodes ON DELETE CASCADE ON UPDATE CASCADE,
-                                  content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-                                  subscribe_timestamp timestamp NOT NULL DEFAULT now(),
-                                  PRIMARY KEY  (node_id,content_id)
-                                );
-                
-                                CREATE TABLE network_has_content (
-                                  network_id text NOT NULL,
-                                  content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
-                                  subscribe_timestamp timestamp NOT NULL DEFAULT now(),
-                                  PRIMARY KEY  (network_id,content_id)
-                                );";
+                                        CREATE TABLE content
+                                        (
+                                        content_id text NOT NULL PRIMARY KEY,
+                                        content_type text NOT NULL  CONSTRAINT content_type_not_empty_string CHECK (content_type != ''),
+                                        title text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
+                                        description text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
+                                        project_info text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
+                                        sponsor_info text REFERENCES content ON DELETE RESTRICT ON UPDATE CASCADE,
+                                        creation_timestamp timestamp DEFAULT now()
+                                        );
+                        
+                                        CREATE TABLE content_has_owners
+                                        (
+                                        content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+                                        user_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,
+                                        is_author bool NOT NULL,
+                                        owner_since timestamp DEFAULT now(),
+                                        PRIMARY KEY  (content_id, user_id)
+                                        );
+                        
+                                        CREATE TABLE langstring_entries (
+                                          langstring_entries_id text NOT NULL PRIMARY KEY,
+                                          langstrings_id text REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+                                          locales_id text REFERENCES locales ON DELETE RESTRICT ON UPDATE CASCADE,
+                                          value text  DEFAULT ''
+                                        );
+                        
+                                        CREATE TABLE content_group (
+                                          content_group_id text NOT NULL PRIMARY KEY REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+                                          is_artistic_content bool NOT NULL DEFAULT FALSE,
+                                          is_locative_content bool NOT NULL DEFAULT FALSE,
+                                          content_selection_mode text
+                                        );
+                        
+                                        CREATE TABLE content_group_element (
+                                          content_group_element_id text NOT NULL PRIMARY KEY REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+                                          content_group_id text NOT NULL REFERENCES content_group ON DELETE CASCADE ON UPDATE CASCADE,
+                                          display_order integer DEFAULT '1',
+                                          displayed_content_id text REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+                                          force_only_allowed_node bool
+                                        );
+                                        CREATE INDEX idx_content_group_element_content_group_id ON content_group_element (content_group_id);
+                        
+                                        CREATE TABLE content_group_element_has_allowed_nodes
+                                        (
+                                        content_group_element_id text NOT NULL REFERENCES content_group_element ON DELETE CASCADE ON UPDATE CASCADE,
+                                        node_id text NOT NULL REFERENCES nodes ON DELETE CASCADE ON UPDATE CASCADE,
+                                        allowed_since timestamp DEFAULT now(),
+                                        PRIMARY KEY  (content_group_element_id, node_id)
+                                        );
+                        
+                                        CREATE TABLE content_group_element_portal_display_log (
+                                          user_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,
+                                          content_group_element_id text NOT NULL REFERENCES content_group_element ON DELETE CASCADE ON UPDATE CASCADE,
+                                          display_timestamp timestamp NOT NULL DEFAULT now(),
+                                          node_id text REFERENCES nodes ON DELETE CASCADE ON UPDATE CASCADE,
+                                          PRIMARY KEY  (user_id,content_group_element_id, display_timestamp)
+                                        );
+                        
+                                        CREATE TABLE user_has_content (
+                                          user_id text NOT NULL REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,
+                                          content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+                                          subscribe_timestamp timestamp NOT NULL DEFAULT now(),
+                                          PRIMARY KEY  (user_id,content_id)
+                                        );
+                        
+                                        CREATE TABLE node_has_content (
+                                          node_id text NOT NULL REFERENCES nodes ON DELETE CASCADE ON UPDATE CASCADE,
+                                          content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+                                          subscribe_timestamp timestamp NOT NULL DEFAULT now(),
+                                          PRIMARY KEY  (node_id,content_id)
+                                        );
+                        
+                                        CREATE TABLE network_has_content (
+                                          network_id text NOT NULL,
+                                          content_id text NOT NULL REFERENCES content ON DELETE CASCADE ON UPDATE CASCADE,
+                                          subscribe_timestamp timestamp NOT NULL DEFAULT now(),
+                                          PRIMARY KEY  (network_id,content_id)
+                                        );";
     }
 
     $new_schema_version = 7;
@@ -342,26 +353,26 @@ function real_update_schema($targetSchema) {
 
         $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
         $sql .= "CREATE TABLE flickr_photostream
-                                        (
-                                          flickr_photostream_id text NOT NULL,
-                                          api_key text,
-                                          photo_selection_mode text NOT NULL DEFAULT 'PSM_GROUP'::text,
-                                          user_id text,
-                                          user_name text,
-                                          tags text,
-                                          tag_mode varchar(10) DEFAULT 'any'::character varying,
-                                          group_id text,
-                                          random bool NOT NULL DEFAULT true,
-                                          min_taken_date timestamp,
-                                          max_taken_date timestamp,
-                                          photo_batch_size int4 DEFAULT 10,
-                                          photo_count int4 DEFAULT 1,
-                                          display_title bool NOT NULL DEFAULT true,
-                                          display_description bool NOT NULL DEFAULT false,
-                                          display_tags bool NOT NULL DEFAULT false,
-                                          CONSTRAINT flickr_photostream_pkey PRIMARY KEY (flickr_photostream_id),
-                                          CONSTRAINT flickr_photostream_content_group_fkey FOREIGN KEY (flickr_photostream_id) REFERENCES content_group (content_group_id) ON UPDATE CASCADE ON DELETE CASCADE
-                                        );";
+                                                (
+                                                  flickr_photostream_id text NOT NULL,
+                                                  api_key text,
+                                                  photo_selection_mode text NOT NULL DEFAULT 'PSM_GROUP'::text,
+                                                  user_id text,
+                                                  user_name text,
+                                                  tags text,
+                                                  tag_mode varchar(10) DEFAULT 'any'::character varying,
+                                                  group_id text,
+                                                  random bool NOT NULL DEFAULT true,
+                                                  min_taken_date timestamp,
+                                                  max_taken_date timestamp,
+                                                  photo_batch_size int4 DEFAULT 10,
+                                                  photo_count int4 DEFAULT 1,
+                                                  display_title bool NOT NULL DEFAULT true,
+                                                  display_description bool NOT NULL DEFAULT false,
+                                                  display_tags bool NOT NULL DEFAULT false,
+                                                  CONSTRAINT flickr_photostream_pkey PRIMARY KEY (flickr_photostream_id),
+                                                  CONSTRAINT flickr_photostream_content_group_fkey FOREIGN KEY (flickr_photostream_id) REFERENCES content_group (content_group_id) ON UPDATE CASCADE ON DELETE CASCADE
+                                                );";
     }
 
     $new_schema_version = 9;
@@ -370,14 +381,14 @@ function real_update_schema($targetSchema) {
 
         $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
         $sql .= "CREATE TABLE files
-                                        (
-                                          files_id text NOT NULL,
-                                          filename text,
-                                          mime_type text,
-                                          binary_data bytea,
-                                          remote_size bigint,
-                                          CONSTRAINT files_pkey PRIMARY KEY (files_id)
-                                        );";
+                                                (
+                                                  files_id text NOT NULL,
+                                                  filename text,
+                                                  mime_type text,
+                                                  binary_data bytea,
+                                                  remote_size bigint,
+                                                  CONSTRAINT files_pkey PRIMARY KEY (files_id)
+                                                );";
     }
 
     $new_schema_version = 10;
@@ -388,12 +399,12 @@ function real_update_schema($targetSchema) {
         $sql .= "ALTER TABLE files ADD COLUMN url text;";
         $sql .= "ALTER TABLE flickr_photostream ADD COLUMN preferred_size text;";
         $sql .= "CREATE TABLE embedded_content (
-                                            embedded_content_id text NOT NULL,
-                                            embedded_file_id text,
-                                            fallback_content_id text,
-                                            parameters text,
-                                            attributes text
-                                        );";
+                                                    embedded_content_id text NOT NULL,
+                                                    embedded_file_id text,
+                                                    fallback_content_id text,
+                                                    parameters text,
+                                                    attributes text
+                                                );";
     }
 
     $new_schema_version = 11;
@@ -403,14 +414,14 @@ function real_update_schema($targetSchema) {
         $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
         $sql .= "DROP TABLE content_group_element_portal_display_log;\n";
         $sql .= "CREATE TABLE content_display_log
-                            (
-                              user_id text NOT NULL REFERENCES users ON UPDATE CASCADE ON DELETE CASCADE,
-                              content_id text NOT NULL REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE,
-                              first_display_timestamp timestamp NOT NULL DEFAULT now(),
-                              node_id text NOT NULL REFERENCES nodes ON UPDATE CASCADE ON DELETE CASCADE,
-                              last_display_timestamp timestamp NOT NULL DEFAULT now(),
-                              CONSTRAINT content_group_element_portal_display_log_pkey PRIMARY KEY (user_id, content_id, node_id)
-                            ); \n";
+                                    (
+                                      user_id text NOT NULL REFERENCES users ON UPDATE CASCADE ON DELETE CASCADE,
+                                      content_id text NOT NULL REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE,
+                                      first_display_timestamp timestamp NOT NULL DEFAULT now(),
+                                      node_id text NOT NULL REFERENCES nodes ON UPDATE CASCADE ON DELETE CASCADE,
+                                      last_display_timestamp timestamp NOT NULL DEFAULT now(),
+                                      CONSTRAINT content_group_element_portal_display_log_pkey PRIMARY KEY (user_id, content_id, node_id)
+                                    ); \n";
 
     }
 
@@ -464,8 +475,8 @@ function real_update_schema($targetSchema) {
 
         $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
         $sql .= "ALTER TABLE files ADD COLUMN data_blob oid;
-                                                ALTER TABLE files ADD COLUMN local_binary_size int8;
-                                                ALTER TABLE files DROP COLUMN binary_data;\n";
+                                                        ALTER TABLE files ADD COLUMN local_binary_size int8;
+                                                        ALTER TABLE files DROP COLUMN binary_data;\n";
     }
 
     $new_schema_version = 16;
@@ -1033,6 +1044,27 @@ function real_update_schema($targetSchema) {
         $sql .= "CREATE UNIQUE INDEX idx_gw_id ON nodes (gw_id);\n";
 
     }
+    $new_schema_version = 51;
+    if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
+        printUpdateVersion($new_schema_version);
+        $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+        $sql .= "CREATE TABLE content_key_value_pairs \n";
+        $sql .= "( ";
+        $sql .= "content_id text NOT NULL REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE, \n";
+        $sql .= "key text NOT NULL, \n";
+        $sql .= "value text, \n";
+        $sql .= "PRIMARY KEY(content_id, key) \n";
+        $sql .= "); \n";
+        $sql .= "ALTER TABLE content ADD COLUMN last_update_timestamp timestamp;\n";
+        $sql .= "ALTER TABLE content ALTER COLUMN last_update_timestamp SET DEFAULT now();\n";
+        $sql .= "UPDATE content SET last_update_timestamp=CURRENT_TIMESTAMP;\n";
+        $sql .= "UPDATE content SET last_update_timestamp=last_update_date FROM content_file WHERE content_id=files_id;\n";
+        $sql .= "ALTER TABLE content ALTER COLUMN last_update_timestamp SET NOT NULL;\n";
+        $sql .= "ALTER TABLE content_file DROP COLUMN last_update_date;\n";
+        $sql .= "ALTER TABLE content_file DROP COLUMN creation_date;\n";
+        $sql .= "ALTER TABLE content_group DROP COLUMN is_artistic_content;\n";
+        $sql .= "ALTER TABLE content_group DROP COLUMN is_locative_content;\n";
+    }
     /*
     $new_schema_version = ;
     if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
@@ -1051,9 +1083,14 @@ function real_update_schema($targetSchema) {
         $sql .= "\n";
     }
      */
+    if (SCHEMA_UPDATE_TEST_MODE) {
+        $retval = $db->execSqlUpdate("BEGIN;\n$sql\nROLLBACK;\n", true);
 
-    $retval = $db->execSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);
-    //$retval = $db->execSqlUpdate("BEGIN;\n$sql\nROLLBACK;\n", true);
+    } else {
+        $retval = $db->execSqlUpdate("BEGIN;\n$sql\nCOMMIT;\n", true);
+    }
+    ob_flush();
+    flush();
     return $retval;
 
 }

@@ -1,5 +1,6 @@
 <?php
 
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -45,7 +46,7 @@
 /**
  * Load required files
  */
-require_once('include/common.php');
+require_once ('include/common.php');
 
 /**
  * Gives various statistics about the status of the network or of a specific node
@@ -55,8 +56,7 @@ require_once('include/common.php');
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  */
-class Statistics
-{
+class Statistics {
     /** An array of the of the selected networks.
      * The key is the network_id, the value is the Network object. */
     private $report_selected_networks = array ();
@@ -80,9 +80,10 @@ class Statistics
      *  The  key is the user_id or user_mac, the value is the User object,
      *  or null if the key is a MAC address */
     private $report_selected_users = array ();
-    function __construct()
-    {
-        $this->user_distinguish_by_options = array ('user_id' => _("Usernames"), 'user_mac' => _("MAC addresses"));
+    function __construct() {
+        $this->user_distinguish_by_options = array (
+            'user_id' => _("Usernames"
+        ), 'user_mac' => _("MAC addresses"));
 
     }
 
@@ -91,27 +92,27 @@ class Statistics
      *
      * @return array An array of class names
      */
-    public function getAvailableReports()
-    {
+    public function getAvailableReports() {
         $dir = WIFIDOG_ABS_FILE_PATH . 'classes/StatisticReport';
-        if ($handle = opendir($dir))
-        {
+        if ($handle = opendir($dir)) {
             $tab = Array ();
             /* This is the correct way to loop over the directory. */
-            while (false !== ($file = readdir($handle)))
-            {
-                if ($file != '.' && $file != '..')
-                {
+            while (false !== ($file = readdir($handle))) {
+                if ($file != '.' && $file != '..') {
                     $matches = null;
-                    if (preg_match("/^(.*)\.php$/", $file, $matches) > 0)
-                    {
+                    if (preg_match("/^(.*)\.php$/", $file, $matches) > 0) {
                         //pretty_print_r($matches);
-                        $filename = $dir.'/'.$matches[0];
+                        $filename = $dir . '/' . $matches[0];
                         require_once ($filename);
                         $classname = $matches[1];
-                        if (call_user_func(array ($classname, 'isAvailable'), $this))
-                        {
-                            $name = call_user_func(array ($classname, 'getReportName'), $this);
+                        if (call_user_func(array (
+                                $classname,
+                                'isAvailable'
+                            ), $this)) {
+                            $name = call_user_func(array (
+                                $classname,
+                                'getReportName'
+                            ), $this);
 
                             $tab[$classname] = $name;
                         }
@@ -119,10 +120,8 @@ class Statistics
                 }
             }
             closedir($handle);
-        }
-        else
-        {
-            throw new Exception(_('Unable to open directory ').$dir);
+        } else {
+            throw new Exception(_('Unable to open directory ') . $dir);
         }
         $tab = str_ireplace('.php', '', $tab);
         asort($tab);
@@ -134,8 +133,7 @@ class Statistics
      *
      * @return string HTML markup
      */
-    private function getDateRangeUI()
-    {
+    private function getDateRangeUI() {
         $html = '';
         $html .=<<<EOF
 <script language="javascript">
@@ -150,19 +148,22 @@ class Statistics
     }
 </script>
 EOF;
-        $from_presets = array (_("No restriction...") => "", _("yesterday") => strftime("%Y-%m-%d 00:00", strtotime("-1 day")), _("today") => strftime("%Y-%m-%d 00:00", time()), _("2 days ago") => strftime("%Y-%m-%d 00:00", strtotime("-2 days")), _("3 days ago") => strftime("%Y-%m-%d 00:00", strtotime("-3 days")), _("1 week ago") => strftime("%Y-%m-%d 00:00", strtotime("-1 week")), _("2 weeks ago") => strftime("%Y-%m-%d 00:00", strtotime("-2 weeks")), _("3 weeks ago") => strftime("%Y-%m-%d 00:00", strtotime("-3 weeks")), _("1 month ago") => strftime("%Y-%m-%d 00:00", strtotime("-1 month")), _("2 months ago") => strftime("%Y-%m-%d 00:00", strtotime("-2 months")), _("6 months ago") => strftime("%Y-%m-%d 00:00", strtotime("-6 months")), _("1 year ago") => strftime("%Y-%m-%d 00:00", strtotime("-1 year")), _("-") => "", _("Select from and to...") => "", _("yesterday (whole day)") => strftime("%Y-%m-%d 00:00", strtotime("-1 day")).",".strftime("%Y-%m-%d 11:59", strtotime("-1 day")), _("today (whole day)") => strftime("%Y-%m-%d 00:00", time()).",".strftime("%Y-%m-%d %H:%M", time()), _("this month") => strftime("%Y-%m-01 00:00", time()).",".strftime("%Y-%m-%d %H:%M", time()), _("last month") => strftime("%Y-%m-01 00:00", strtotime("-1 month")).",".strftime("%Y-%m-01 00:00", time()), _("this year") => strftime("%Y-01-01 00:00", time()).",".strftime("%Y-%m-%d %H:%M", time()), _("forever") => "1970-01-01 00:00,".strftime("%Y-%m-%d %H:%M", time()));
+        $from_presets = array (
+            _("No restriction..."
+        ) => "", _("yesterday") => strftime("%Y-%m-%d 00:00", strtotime("-1 day")), _("today") => strftime("%Y-%m-%d 00:00", time()), _("2 days ago") => strftime("%Y-%m-%d 00:00", strtotime("-2 days")), _("3 days ago") => strftime("%Y-%m-%d 00:00", strtotime("-3 days")), _("1 week ago") => strftime("%Y-%m-%d 00:00", strtotime("-1 week")), _("2 weeks ago") => strftime("%Y-%m-%d 00:00", strtotime("-2 weeks")), _("3 weeks ago") => strftime("%Y-%m-%d 00:00", strtotime("-3 weeks")), _("1 month ago") => strftime("%Y-%m-%d 00:00", strtotime("-1 month")), _("2 months ago") => strftime("%Y-%m-%d 00:00", strtotime("-2 months")), _("6 months ago") => strftime("%Y-%m-%d 00:00", strtotime("-6 months")), _("1 year ago") => strftime("%Y-%m-%d 00:00", strtotime("-1 year")), _("-") => "", _("Select from and to...") => "", _("yesterday (whole day)") => strftime("%Y-%m-%d 00:00", strtotime("-1 day")) . "," . strftime("%Y-%m-%d 11:59", strtotime("-1 day")), _("today (whole day)") => strftime("%Y-%m-%d 00:00", time()) . "," . strftime("%Y-%m-%d %H:%M", time()), _("this month") => strftime("%Y-%m-01 00:00", time()) . "," . strftime("%Y-%m-%d %H:%M", time()), _("last month") => strftime("%Y-%m-01 00:00", strtotime("-1 month")) . "," . strftime("%Y-%m-01 00:00", time()), _("this year") => strftime("%Y-01-01 00:00", time()) . "," . strftime("%Y-%m-%d %H:%M", time()), _("forever") => "1970-01-01 00:00," . strftime("%Y-%m-%d %H:%M", time()));
 
-        $to_presets = array (_("No restriction...") => "", _("yesterday") => strftime("%Y-%m-%d 11:59", strtotime("-1 day")), _("today") => strftime("%Y-%m-%d 11:59", time()), _("2 days ago") => strftime("%Y-%m-%d 11:59", strtotime("-2 days")), _("3 days ago") => strftime("%Y-%m-%d 11:59", strtotime("-3 days")), _("1 week ago") => strftime("%Y-%m-%d 11:59", strtotime("-1 week")), _("2 weeks ago") => strftime("%Y-%m-%d 11:59", strtotime("-2 weeks")), _("3 weeks ago") => strftime("%Y-%m-%d 11:59", strtotime("-3 weeks")), _("1 month ago") => strftime("%Y-%m-%d 11:59", strtotime("-1 month")), _("2 months ago") => strftime("%Y-%m-%d 11:59", strtotime("-2 months")), _("6 months ago") => strftime("%Y-%m-%d 11:59", strtotime("-6 months")), _("1 year ago") => strftime("%Y-%m-%d 11:59", strtotime("-1 year")), _("-") => "", _("Select from and to...") => "", _("yesterday (whole day)") => strftime("%Y-%m-%d 11:59", strtotime("-1 day")).",".strftime("%Y-%m-%d 00:00", strtotime("-1 day")), _("today (whole day)") => strftime("%Y-%m-%d %H:%M", time()).",".strftime("%Y-%m-%d 00:00", time()), _("this month") => strftime("%Y-%m-%d %H:%M", time()).",".strftime("%Y-%m-01 00:00", time()), _("last month") => strftime("%Y-%m-01 00:00", time()).",".strftime("%Y-%m-01 00:00", strtotime("-1 month")), _("this year") => strftime("%Y-%m-%d %H:%M", time()).",".strftime("%Y-01-01 00:00", time()), _("forever") => strftime("%Y-%m-%d %H:%M", time()).",1970-01-01 00:00");
+        $to_presets = array (
+            _("No restriction..."
+        ) => "", _("yesterday") => strftime("%Y-%m-%d 11:59", strtotime("-1 day")), _("today") => strftime("%Y-%m-%d 11:59", time()), _("2 days ago") => strftime("%Y-%m-%d 11:59", strtotime("-2 days")), _("3 days ago") => strftime("%Y-%m-%d 11:59", strtotime("-3 days")), _("1 week ago") => strftime("%Y-%m-%d 11:59", strtotime("-1 week")), _("2 weeks ago") => strftime("%Y-%m-%d 11:59", strtotime("-2 weeks")), _("3 weeks ago") => strftime("%Y-%m-%d 11:59", strtotime("-3 weeks")), _("1 month ago") => strftime("%Y-%m-%d 11:59", strtotime("-1 month")), _("2 months ago") => strftime("%Y-%m-%d 11:59", strtotime("-2 months")), _("6 months ago") => strftime("%Y-%m-%d 11:59", strtotime("-6 months")), _("1 year ago") => strftime("%Y-%m-%d 11:59", strtotime("-1 year")), _("-") => "", _("Select from and to...") => "", _("yesterday (whole day)") => strftime("%Y-%m-%d 11:59", strtotime("-1 day")) . "," . strftime("%Y-%m-%d 00:00", strtotime("-1 day")), _("today (whole day)") => strftime("%Y-%m-%d %H:%M", time()) . "," . strftime("%Y-%m-%d 00:00", time()), _("this month") => strftime("%Y-%m-%d %H:%M", time()) . "," . strftime("%Y-%m-01 00:00", time()), _("last month") => strftime("%Y-%m-01 00:00", time()) . "," . strftime("%Y-%m-01 00:00", strtotime("-1 month")), _("this year") => strftime("%Y-%m-%d %H:%M", time()) . "," . strftime("%Y-01-01 00:00", time()), _("forever") => strftime("%Y-%m-%d %H:%M", time()) . ",1970-01-01 00:00");
 
         $html .= "<table class='admin_element_list'>";
         $html .= "<tr class='admin_element_item_container'>";
-        $html .= "    <th class='admin_element_label'>"._("From").":</th>";
+        $html .= "    <th class='admin_element_label'>" . _("From") . ":</th>";
         $html .= "    <td class='admin_element_data'><input type='text' name='date_from' value='{$this->report_date_min}'></td>";
         $html .= "    <td class='admin_element_tools'>";
         $html .= "    <select onChange=\"javascript:change_value(this.value,this.form.date_from,this.form.date_to);\">";
 
-        foreach ($from_presets as $label => $value)
-        {
+        foreach ($from_presets as $label => $value) {
             //echo "<p>$value, $this->report_date_min </p>";
             $value == $this->report_date_min ? $selected = 'SELECTED' : $selected = '';
             $html .= "<option value=\"{$value}\" $selected>{$label}";
@@ -172,13 +173,12 @@ EOF;
         $html .= "    </td>\n";
         $html .= "</tr>\n";
         $html .= "<tr class='admin_element_item_container'>\n";
-        $html .= "    <th class='admin_element_label'>"._("To").":</th>\n";
+        $html .= "    <th class='admin_element_label'>" . _("To") . ":</th>\n";
         $html .= "    <td class='admin_element_data'><input type=\"text\" name=\"date_to\" value=\"{$this->report_date_max}\"></td>\n";
         $html .= "    <td class='admin_element_data'>\n";
         $html .= "    <select onChange=\"javascript:change_value(this.value,this.form.date_to,this.form.date_from);\">\n";
 
-        foreach ($to_presets as $label => $value)
-        {
+        foreach ($to_presets as $label => $value) {
             $value == $this->report_date_max ? $selected = 'SELECTED' : $selected = '';
             $html .= "<option value=\"{$value}\" $selected>{$label}";
         }
@@ -195,13 +195,12 @@ EOF;
      *
      * @return void
      */
-    private function processDateRangeUI()
-    {
-        if (isset($_REQUEST['date_from'])) {
+    private function processDateRangeUI() {
+        if (isset ($_REQUEST['date_from'])) {
             $this->report_date_min = $_REQUEST['date_from'];
         }
 
-        if (isset($_REQUEST['date_to'])) {
+        if (isset ($_REQUEST['date_to'])) {
             $this->report_date_max = $_REQUEST['date_to'];
         }
     }
@@ -213,17 +212,14 @@ EOF;
      * the min date and lower or equal to the max date
      * @return string SQL AND clauses
      */
-    public function getSqlDateConstraint($column = 'timestamp_in')
-    {
-        $db = AbstractDb::getObject();
+    public function getSqlDateConstraint($column = 'timestamp_in') {
+        $db = AbstractDb :: getObject();
         $column = $db->escapeString($column);
         $sql = '';
-        if ($date_min = $db->escapeString($this->report_date_min))
-        {
+        if ($date_min = $db->escapeString($this->report_date_min)) {
             $sql .= " AND $column >= '$date_min' ";
         }
-        if ($date_max = $db->escapeString($this->report_date_max))
-        {
+        if ($date_max = $db->escapeString($this->report_date_max)) {
             $sql .= " AND $column <= '$date_max' ";
         }
         return $sql;
@@ -236,17 +232,14 @@ EOF;
      * @param string $column The column in the database that must match the node_id
      * @return string SQL AND clauses
      */
-    public function getSqlNodeConstraint($column)
-    {
-        $db = AbstractDb::getObject();
+    public function getSqlNodeConstraint($column) {
+        $db = AbstractDb :: getObject();
         $column = $db->escapeString($column);
         $sql = '';
-        if (count($this->report_selected_nodes) > 0)
-        {
+        if (count($this->report_selected_nodes) > 0) {
             $sql .= " AND (";
             $first = true;
-            foreach ($this->report_selected_nodes as $node_id => $node)
-            {
+            foreach ($this->report_selected_nodes as $node_id => $node) {
                 $node_id = $db->escapeString($node_id);
                 $first ? $sql .= "" : $sql .= " OR ";
                 $sql .= "$column = '$node_id'";
@@ -262,17 +255,14 @@ EOF;
      * @param string $column The column in the database that must match the network_id
      * @return string SQL AND clauses
      */
-    public function getSqlNetworkConstraint($column)
-    {
-        $db = AbstractDb::getObject();
+    public function getSqlNetworkConstraint($column) {
+        $db = AbstractDb :: getObject();
         $column = $db->escapeString($column);
         $sql = '';
-        if (count($this->report_selected_networks) > 0)
-        {
+        if (count($this->report_selected_networks) > 0) {
             $sql .= " AND (";
             $first = true;
-            foreach ($this->report_selected_networks as $network_id => $network)
-            {
+            foreach ($this->report_selected_networks as $network_id => $network) {
                 $network_id = $db->escapeString($network_id);
                 $first ? $sql .= "" : $sql .= " OR ";
                 $sql .= "$column = '$network_id'";
@@ -288,17 +278,14 @@ EOF;
      *
      * @return string SQL AND clauses
      */
-    public function getSqlUserConstraint()
-    {
-        $db = AbstractDb::getObject();
+    public function getSqlUserConstraint() {
+        $db = AbstractDb :: getObject();
         $column = $db->escapeString($this->report_distinguish_users_by);
         $sql = '';
-        if (count($this->report_selected_users) > 0)
-        {
+        if (count($this->report_selected_users) > 0) {
             $sql .= " AND (";
             $first = true;
-            foreach ($this->report_selected_users as $id => $user)
-            {
+            foreach ($this->report_selected_users as $id => $user) {
                 $id = $db->escapeString($id);
                 $first ? $sql .= "" : $sql .= " OR ";
                 $sql .= "connections.$column = '$id'";
@@ -321,16 +308,14 @@ EOF;
      * @return string SQL select statemnt.  You can append additional AND and GROUP BY
      * clauses
      */
-    public function getSqlCandidateConnectionsQuery($select_columns = '*', $join_users = false)
-    {
+    public function getSqlCandidateConnectionsQuery($select_columns = '*', $join_users = false) {
         $sql = '';
         $date_constraint = $this->getSqlDateConstraint('timestamp_in');
         $node_constraint = $this->getSqlNodeConstraint('connections.node_id');
         $network_constraint = $this->getSqlNetworkConstraint('nodes.network_id');
         $user_constraint = $this->getSqlUserConstraint();
         $join_users_sql = '';
-        if ($join_users || !empty($user_constraint))
-        {
+        if ($join_users || !empty ($user_constraint)) {
             $join_users_sql = "JOIN users ON (connections.user_id = users.user_id)";
         }
         $sql .= "SELECT $select_columns \n";
@@ -351,14 +336,12 @@ EOF;
      *
      * @return string SQL query
      */
-    public function getSqlRealFirstConnectionsQuery($select_columns = '*', $join_users = false)
-    {
+    public function getSqlRealFirstConnectionsQuery($select_columns = '*', $join_users = false) {
         $sql = '';
         $distinguish_users_by = $this->getDistinguishUsersBy();
         $user_constraint = $this->getSqlUserConstraint();
         $join_users_sql = '';
-        if ($join_users || !empty($user_constraint))
-        {
+        if ($join_users || !empty ($user_constraint)) {
             $join_users_sql = "JOIN users ON (connections.user_id = users.user_id)";
         }
         $sql .= "SELECT DISTINCT ON(connections.$distinguish_users_by) $select_columns  \n";
@@ -378,68 +361,44 @@ EOF;
      *
      * @access private
      */
-    private function getSelectedNodesUI()
-    {
-        
-        $db = AbstractDb::getObject();
+    private function getSelectedNodesUI() {
+
+        $db = AbstractDb :: getObject();
 
         // Init values
         $html = '';
 
         $name = "statistics_selected_nodes[]";
-        $user = User::getCurrentUser();
+        $user = User :: getCurrentUser();
 
-            if (!isset($user)) {
+        if (!isset ($user)) {
+            throw new Exception(_('Access denied!'));
+        } else
+            if ((!$user->isSuperAdmin() && !$user->isOwner()) || $user->isNobody()) {
                 throw new Exception(_('Access denied!'));
-            } else if ((!$user->isSuperAdmin() && !$user->isOwner()) || $user->isNobody()) {
-                throw new Exception(_('Access denied!'));
             }
 
-            if ($user->isSuperAdmin()) {
-                $sql_join = '';
-            } else {
-                $user_id = $db->escapeString($user->getId());
-                $sql_join = " JOIN node_stakeholders ON (nodes.node_id=node_stakeholders.node_id AND user_id='$user_id') ";
-            }
-
-            $sql = "SELECT nodes.node_id, nodes.name from nodes $sql_join WHERE 1=1 ORDER BY lower(nodes.node_id)";
-            $node_rows = null;
-            $db->execSql($sql, $node_rows, false);
-            $html .= "<select multiple size = 6 name='$name'>\n";
-
-            if ($node_rows != null) {
-                foreach ($node_rows as $node_row) {
-                    $html .= "<option ";
-
-                    if (array_key_exists($node_row['node_id'], $this->report_selected_nodes)) {
-                        $html .= " SELECTED ";
-                    }
-
-                    $nom = $node_row['node_id'].": ".$node_row['name'];
-                    $nom = htmlspecialchars($nom, ENT_QUOTES, 'UTF-8');
-                    $primary_key = htmlentities($node_row['node_id'], ENT_QUOTES, 'UTF-8');
-                    $html .= "value='$primary_key'>$nom</option>\n";
-                }
-            }
-
-            $html .= "</select>\n";
-
-
+        if ($user->isSuperAdmin()) {
+            $sql_join = '';
+        } else {
+            $user_id = $db->escapeString($user->getId());
+            $sql_join = " JOIN node_stakeholders ON (nodes.node_id=node_stakeholders.node_id AND user_id='$user_id') ";
+        }
+        $selectedNodes = $this->getSelectedNodes();
+        $sql = "SELECT nodes.node_id, nodes.name from nodes $sql_join WHERE 1=1 ORDER BY lower(nodes.node_id)";
+        $html .= Node :: getSelectNodeUI($name, $sql_join, null, $selectedNodes, "select_multiple");
         return $html;
     }
 
     /**
      * Get the select node interface.
      */
-    private function processSelectedNodesUI()
-    {
+    private function processSelectedNodesUI() {
         $name = "statistics_selected_nodes";
         //pretty_print_r($_REQUEST[$name]);
         $this->report_selected_nodes = array ();
-        if (!empty ($_REQUEST[$name]))
-        {
-            foreach ($_REQUEST[$name] as $value)
-            {
+        if (!empty ($_REQUEST[$name])) {
+            foreach ($_REQUEST[$name] as $value) {
                 if (!empty ($value))
                     $this->report_selected_nodes[$value] = Node :: getObject($value);
             }
@@ -451,8 +410,7 @@ EOF;
      * @return array An array of Node objects, with the node_id as the key, or
      * an empty array
      */
-    public function getSelectedNodes()
-    {
+    public function getSelectedNodes() {
         return $this->report_selected_nodes;
     }
 
@@ -461,8 +419,7 @@ EOF;
      *
      * @return string HTML markup
      */
-    private function getDistinguishUsersByUI()
-    {
+    private function getDistinguishUsersByUI() {
         $html = '';
 
         /*      $html .= " < input type = \ "radio\" name=\"group_connections\" value=\"\"";
@@ -471,8 +428,7 @@ EOF;
         */
         $html .= "    <select name=\"distinguish_users_by\">";
 
-        foreach ($this->user_distinguish_by_options as $value => $label)
-        {
+        foreach ($this->user_distinguish_by_options as $value => $label) {
             //echo "<p>$value, $this->report_date_min </p>";
             $value == $this->report_distinguish_users_by ? $selected = 'SELECTED' : $selected = '';
             $html .= "<option value=\"{$value}\" $selected>{$label}";
@@ -486,8 +442,7 @@ EOF;
     /**
      * Process the date range selection UI
      */
-    private function processDistinguishUsersByUI()
-    {
+    private function processDistinguishUsersByUI() {
         if (!isset ($this->user_distinguish_by_options[$_REQUEST['distinguish_users_by']]))
             throw new exception(_("Invalid parameter"));
         $this->report_distinguish_users_by = $_REQUEST['distinguish_users_by'];
@@ -498,8 +453,7 @@ EOF;
      *
      * @return string Either 'user_id' our 'user_mac'
      */
-    public function getDistinguishUsersBy()
-    {
+    public function getDistinguishUsersBy() {
         return $this->report_distinguish_users_by;
     }
 
@@ -510,18 +464,13 @@ EOF;
      *
      * @todo Allow to select more than one user
      */
-    private function getSelectedUsersUI()
-    {
+    private function getSelectedUsersUI() {
         $html = '';
         $value = '';
-        foreach ($this->report_selected_users as $id => $user)
-        {
-            if ($this->report_distinguish_users_by == 'user_id')
-            {
+        foreach ($this->report_selected_users as $id => $user) {
+            if ($this->report_distinguish_users_by == 'user_id') {
                 $value .= $user->getUsername();
-            }
-            else
-            {
+            } else {
                 $value .= $id;
             }
         }
@@ -538,27 +487,21 @@ EOF;
      *
      * @todo Allow to select more than one user
      */
-    private function processSelectedUsersUI()
-    {
+    private function processSelectedUsersUI() {
         $this->report_selected_users = array ();
         $user_obj = null;
-        if(!empty($_REQUEST['stats_selected_users']))
-        {
-            if ($this->report_distinguish_users_by == 'user_id')
-            {
-                    $db = AbstractDb::getObject();
+        if (!empty ($_REQUEST['stats_selected_users'])) {
+            if ($this->report_distinguish_users_by == 'user_id') {
+                $db = AbstractDb :: getObject();
                 $username = $db->escapeString($_REQUEST['stats_selected_users']);
                 $row = null;
                 $db->execSqlUniqueRes("SELECT user_id FROM users WHERE username='$username'", $row, false);
-                if ($row)
-                {
+                if ($row) {
                     $user_id = $row['user_id'];
                     $user_obj = User :: getObject($user_id);
                     $this->report_selected_users[$user_id] = $user_obj;
                 }
-            }
-            else
-            {
+            } else {
                 //We have a MAC address
                 if (!empty ($_REQUEST['stats_selected_users']))
                     $this->report_selected_users[$_REQUEST['stats_selected_users']] = null;
@@ -573,8 +516,7 @@ EOF;
      * key and a User object as the value, unless it's a MAC in which case the
      * value is null
      */
-    public function getSelectedUsers()
-    {
+    public function getSelectedUsers() {
         return $this->report_selected_users;
     }
 
@@ -584,8 +526,7 @@ EOF;
      * @return array An array of Network objects, with the network_id as the
      * key, or an empty array
      */
-    public function getSelectedNetworks()
-    {
+    public function getSelectedNetworks() {
         return $this->report_selected_networks;
     }
 
@@ -594,20 +535,18 @@ EOF;
      *
      * @return string HTML markup
      */
-    private function getSelectedReportsUI()
-    {
+    private function getSelectedReportsUI() {
         $html = '';
-		$html .= "<ul class='admin_element_list'>\n";
+        $html .= "<ul class='admin_element_list'>\n";
 
-        foreach (self :: getAvailableReports() as $key => $name)
-        {
+        foreach (self :: getAvailableReports() as $key => $name) {
             array_key_exists($key, $this->report_selected_reports) ? $checked = ' CHECKED ' : $checked = '';
-        	$html .= "<li class='admin_element_item_container'>\n";
+            $html .= "<li class='admin_element_item_container'>\n";
             $html .= "<div class='admin_element_tools'><input type='checkbox' name='$key' $checked /></div>\n";
             $html .= "<div class='admin_element_label'>$name</div>\n";
 
-        	$html .= "</li>\n";
-        	}
+            $html .= "</li>\n";
+        }
         $html .= "</ul>\n";
 
         return $html;
@@ -616,36 +555,35 @@ EOF;
     /**
      * Process the date range selection UI
      */
-    private function processSelectedReportsUI()
-    {
+    private function processSelectedReportsUI() {
         $this->report_selected_reports = array ();
-        foreach (self :: getAvailableReports() as $key => $name)
-        {
-            if (array_key_exists($key, $_REQUEST))
-            {
-                $this->report_selected_reports[$key] = call_user_func(array ($key, 'getObject'), $key, $this);
+        foreach (self :: getAvailableReports() as $key => $name) {
+            if (array_key_exists($key, $_REQUEST)) {
+                $this->report_selected_reports[$key] = call_user_func(array (
+                    $key,
+                    'getObject'
+                ), $key, $this);
             }
         }
         //pretty_print_r($this->report_selected_reports);
     }
 
-    public function getAdminUI()
-    {
+    public function getAdminUI() {
         $html = '';
         $html .= "<fieldset class='admin_container'>\n";
-        $html .= "<legend>"._("Report configuration")."</legend>\n";
-		$html .= "<ul class='admin_element_list'>\n";
+        $html .= "<legend>" . _("Report configuration") . "</legend>\n";
+        $html .= "<ul class='admin_element_list'>\n";
         // Network
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<div class='admin_element_data'>\n";
-        $html .= Network :: getSelectNetworkUI('Statistics', reset($this->report_selected_networks), null, User::getCurrentUser()->isSuperAdmin());
+        $html .= Network :: getSelectNetworkUI('Statistics', reset($this->report_selected_networks), null, User :: getCurrentUser()->isSuperAdmin());
         $html .= "</div>\n";
         $html .= "</li>\n";
 
         // Date range
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<fieldset class='admin_element_group'>\n";
-        $html .= "<legend>"._("Restrict the time range for which statistics will be computed")." : </legend>\n";
+        $html .= "<legend>" . _("Restrict the time range for which statistics will be computed") . " : </legend>\n";
         $html .= $this->getDateRangeUI();
         $html .= "</fieldset>\n";
         $html .= "</li>\n";
@@ -653,18 +591,17 @@ EOF;
         // Selected nodes
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<fieldset class='admin_element_group'>\n";
-        $html .= "<legend>"._("Restrict stats to the following nodes")." : </legend>\n";
+        $html .= "<legend>" . _("Restrict stats to the following nodes") . " : </legend>\n";
         $html .= "<div class='admin_element_data'>\n";
         $html .= $this->getSelectedNodesUI();
         $html .= "</div>\n";
         $html .= "</fieldset>\n";
         $html .= "</li>\n";
 
-
         // Unique user criteria
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<fieldset class='admin_element_group'>\n";
-        $html .= "<legend>"._("Distinguish users by")." : </legend>\n";
+        $html .= "<legend>" . _("Distinguish users by") . " : </legend>\n";
         $html .= "<div class='admin_element_data'>\n";
         $html .= $this->getDistinguishUsersByUI();
         $html .= "</div>\n";
@@ -673,7 +610,7 @@ EOF;
         // Selected users
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<fieldset class='admin_element_group'>\n";
-        $html .= "<legend>"._("Restrict stats to the selected users")." : </legend>\n";
+        $html .= "<legend>" . _("Restrict stats to the selected users") . " : </legend>\n";
         $html .= "<div class='admin_element_data'>\n";
         $html .= $this->getSelectedUsersUI();
         $html .= "</div>\n";
@@ -682,7 +619,7 @@ EOF;
         // Reports
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<fieldset>\n";
-        $html .= "<legend>"._("Selected reports")." : </legend>\n";
+        $html .= "<legend>" . _("Selected reports") . " : </legend>\n";
         $html .= "<div class='admin_element_data'>\n";
         $html .= $this->getSelectedReportsUI();
         $html .= "</div>\n";
@@ -693,16 +630,12 @@ EOF;
         return $html;
     }
 
-    public function processAdminUI()
-    {
+    public function processAdminUI() {
         $network = Network :: processSelectNetworkUI('Statistics');
-        if($network)
-        {
-        	 $this->report_selected_networks[$network->getId()] = $network;
-        }
-        else
-        {
-        Security::requireAdmin();
+        if ($network) {
+            $this->report_selected_networks[$network->getId()] = $network;
+        } else {
+            Security :: requireAdmin();
         }
         $this->processDateRangeUI();
         $this->processSelectedNodesUI();
@@ -716,11 +649,9 @@ EOF;
      *
      * @return string HTML markup
      */
-    public function getReportUI()
-    {
+    public function getReportUI() {
         $html = '';
-        foreach ($this->report_selected_reports as $classname => $report)
-        {
+        foreach ($this->report_selected_reports as $classname => $report) {
             $html .= $report->getReportUI();
             //$html.='<hr />';
         }
@@ -737,5 +668,3 @@ EOF;
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
-

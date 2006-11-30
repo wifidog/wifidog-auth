@@ -51,21 +51,21 @@ if (!empty ($_REQUEST['file_id']))
 {
 	$db = AbstractDb::getObject();
 	$file_id = $db->escapeString($_REQUEST['file_id']);
-	$sql = "SELECT * FROM content_file WHERE files_id = '$file_id'";
+	$sql = "SELECT * FROM content_file JOIN content ON (content_id=files_id) WHERE files_id = '$file_id'";
 	$db->execSqlUniqueRes($sql, $file_row, false);
 
 	if ($file_row && $file_row['data_blob'])
 	{
 		// Check if the HTTP request is asking if the file has been modified since a certain date.
 		$last_modified_date = isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])? $_SERVER['HTTP_IF_MODIFIED_SINCE'] : 0;
-		if($last_modified_date && $_SERVER['REQUEST_METHOD'] == "GET" && strtotime($last_modified_date) >= strtotime($file_row['last_update_date']))
+		if($last_modified_date && $_SERVER['REQUEST_METHOD'] == "GET" && strtotime($last_modified_date) >= strtotime($file_row['last_update_timestamp']))
 		   header("HTTP/1.1 304 Not Modified");
 		else
 		{
 			//headers to send to the browser before beginning the binary download
 			header("Pragma: public");
 			// Send last update date to proxy / cache the binary
-			header("Last-Modified: " . gmdate("D, d M Y H:i:s", strtotime($file_row['last_update_date'])) . " GMT");
+			header("Last-Modified: " . gmdate("D, d M Y H:i:s", strtotime($file_row['last_update_timestamp'])) . " GMT");
 			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 			header("Cache-Control: public");
 			header("Content-Description: File Transfer");

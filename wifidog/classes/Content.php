@@ -60,10 +60,12 @@ require_once ('classes/HyperLink.php');
  * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class Content implements GenericObject {
+    /** Object cache for the object factory (getObject())*/
+    private static $instanceArray = array ();
     /**
-     * Id of content
-     *
-     * @var string     */
+    * Id of content
+    *
+    * @var string     */
     protected $id;
 
     /**
@@ -72,6 +74,11 @@ class Content implements GenericObject {
      * @var array     */
     protected $content_row;
 
+    /**
+     * Array containg the key-value pairs (KVP) for this content instance
+     *
+     * @var array     */
+    protected $kvps;
     /**
      * Type of content
      *
@@ -97,8 +104,8 @@ class Content implements GenericObject {
      * @return void
      */
     protected function __construct($content_id) {
-        
-        $db = AbstractDb::getObject();
+
+        $db = AbstractDb :: getObject();
 
         // Init values
         $row = null;
@@ -115,7 +122,14 @@ class Content implements GenericObject {
         $this->content_row = $row;
         $this->id = $row['content_id'];
         $this->content_type = $row['content_type'];
-
+        $kvp_rows = null;
+        $sql = "SELECT key, value FROM content_key_value_pairs WHERE content_id='$content_id'";
+        $db->execSql($sql, $kvp_rows, false);
+        if ($kvp_rows) {
+            foreach ($kvp_rows as $kvp_row) {
+                $this->kvps[$kvp_row['key']] = $kvp_row['value'];
+            }
+        }
         // By default content display logging is enabled
         $this->setLoggingStatus(true);
         $this->log_as_content = & $this;
@@ -146,11 +160,11 @@ class Content implements GenericObject {
      *
      * @return object The newly created Content object, or null if there was an
      *                error (an exception is also trown)
-
+    
      */
     public static function createNewObject($content_type = "Content", $id = null) {
-        
-        $db = AbstractDb::getObject();
+
+        $db = AbstractDb :: getObject();
 
         if (empty ($id)) {
             $contentId = get_guid();
@@ -237,29 +251,35 @@ class Content implements GenericObject {
      *
      * @return object The Content object, or null if there was an error
      *                (an exception is also thrown)
-
+    
      */
     public static function getObject($content_id) {
-        
-        $db = AbstractDb::getObject();
 
-        // Init values
-        $row = null;
+        if (!isset (self :: $instanceArray[$content_id])) {
+            $db = AbstractDb :: getObject();
 
-        $content_id = $db->escapeString($content_id);
-        $sql = "SELECT content_type FROM content WHERE content_id='$content_id'";
-        $db->execSqlUniqueRes($sql, $row, false);
+            // Init values
+            $row = null;
 
-        if ($row == null) {
-            throw new Exception(_("The content with the following id could not be found in the database: ") . $content_id);
-        }
-        if (!class_exists($row['content_type'])) {
-            //throw new Exception(_("The following content type isn't valid: ").$row['content_type']);
-            return null;
+            $content_id = $db->escapeString($content_id);
+            $sql = "SELECT content_type FROM content WHERE content_id='$content_id'";
+            $db->execSqlUniqueRes($sql, $row, false);
+
+            if ($row == null) {
+                throw new Exception(_("The content with the following id could not be found in the database: ") . $content_id);
+            }
+            if (!class_exists($row['content_type'])) {
+                //throw new Exception(_("The following content type isn't valid: ").$row['content_type']);
+                $object = null;
+            } else {
+                self :: $instanceArray[$content_id] = new $row['content_type'] ($content_id);
+                $object = self :: $instanceArray[$content_id];
+            }
         } else {
-            $object = new $row['content_type'] ($content_id);
-            return $object;
+            $object = self :: $instanceArray[$content_id];
         }
+        return $object;
+
     }
 
     /**
@@ -321,16 +341,16 @@ class Content implements GenericObject {
 
         return $contentTypes;
     }
-     /**
-     * Check if this specific ContentType is usable (all dependencies
-     * met,etc.
-     * This method is meant to be overloaded by the different content classes
-     * @return true or flase
-     */
+    /**
+    * Check if this specific ContentType is usable (all dependencies
+    * met,etc.
+    * This method is meant to be overloaded by the different content classes
+    * @return true or flase
+    */
     public static function isContentTypeFunctional() {
-            return true;
-    } 
-    
+        return true;
+    }
+
     /**
      * Check if the ContentType is available on the system     *
      * @param string $classname The classname to check
@@ -341,7 +361,7 @@ class Content implements GenericObject {
             //throw new Exception(_("The following content type isn't valid: ").$contentType);
             return false;
         } else {
-            return $classname.isContentTypeFunctional();
+            return $classname . isContentTypeFunctional();
         }
     }
 
@@ -370,16 +390,16 @@ class Content implements GenericObject {
         }
         return $retval;
     }
-    
-     /**
-     * Check if this class is NOT any of the class or subclass of one of the content types given as parameter
-     * It's the opposite of isContentType()
-     * 
-     * @param array $candidates The classnames to check
-     * @return true or flase
-     */
+
+    /**
+    * Check if this class is NOT any of the class or subclass of one of the content types given as parameter
+    * It's the opposite of isContentType()
+    * 
+    * @param array $candidates The classnames to check
+    * @return true or flase
+    */
     public static function isNotContentType($candidates, $classname) {
-        return !self::isContentType($candidates, $classname);
+        return !self :: isContentType($candidates, $classname);
     }
     /**
      * Get all content
@@ -391,8 +411,8 @@ class Content implements GenericObject {
      * @return mixed Requested content
      */
     public static function getAllContent($content_type = "") {
-        
-        $db = AbstractDb::getObject();
+
+        $db = AbstractDb :: getObject();
 
         // Init values
         $whereClause = "";
@@ -427,8 +447,8 @@ class Content implements GenericObject {
      * @return string HTML markup
      */
     public static function getNewContentUI($user_prefix, $content_type_filter = null, $title = null) {
-        
-        $db = AbstractDb::getObject();
+
+        $db = AbstractDb :: getObject();
 
         // Init values
         $html = "";
@@ -494,7 +514,7 @@ class Content implements GenericObject {
      *                                           existing object
      *
      * @return object The Content object, or null if the user didn't create one
-
+    
      */
     public static function processNewContentUI($user_prefix, $associate_existing_content = false) {
         // Init values
@@ -542,11 +562,11 @@ class Content implements GenericObject {
      * @param string $default_display_page
      * @param string $default_display_area
      * @return string HTML markup
-
+    
      */
     public static function getLinkedContentUI($user_prefix, $link_table, $link_table_obj_key_col, $link_table_obj_key, $default_display_page = 'portal', $default_display_area = 'main_area_middle') {
-        
-        $db = AbstractDb::getObject();
+
+        $db = AbstractDb :: getObject();
 
         // Init values
         $html = "";
@@ -624,7 +644,7 @@ class Content implements GenericObject {
      * @return the Content object, or null if the user didn't greate one
      */
     static function processLinkedContentUI($user_prefix, $link_table, $link_table_obj_key_col, $link_table_obj_key) {
-        $db = AbstractDb::getObject();
+        $db = AbstractDb :: getObject();
         $link_table = $db->escapeString($link_table);
         $link_table_obj_key_col = $db->escapeString($link_table_obj_key_col);
         $link_table_obj_key = $db->escapeString($link_table_obj_key);
@@ -727,11 +747,11 @@ class Content implements GenericObject {
      *                                            extended information
      *
      * @return string HTML markup
-
+    
      */
     public static function getSelectExistingContentUI($user_prefix, $sql_additional_where = null, $content_type_filter = null, $order = "creation_timestamp", $type_interface = "select") {
-        
-        $db = AbstractDb::getObject();
+
+        $db = AbstractDb :: getObject();
 
         // Init values
         $html = '';
@@ -742,9 +762,9 @@ class Content implements GenericObject {
             $content_type_filter = ContentTypeFilter :: getObject(array ());
         }
 
-            if (!User :: getCurrentUser()) {
-                throw new Exception(_('Access denied!'));
-            }
+        if (!User :: getCurrentUser()) {
+            throw new Exception(_('Access denied!'));
+        }
 
         if ($type_interface != "table") {
             $html .= "<fieldset class='admin_container Content'>\n";
@@ -753,7 +773,7 @@ class Content implements GenericObject {
                 $html .= "<legend>$title</legend>\n";
             }
 
-            $html .= _("Add reusable content from library") . ": ";
+            $html .= _("Select from reusable content library") . ": ";
         }
 
         $name = "{$user_prefix}";
@@ -774,33 +794,33 @@ class Content implements GenericObject {
                 $content = Content :: getObject($contentRow['content_id']);
                 //echo get_class($content)." ".$contentRow['content_id']."<br>";
                 if ($content && $content_type_filter->isAcceptableContentClass(get_class($content))) {
-                        if ($type_interface != "table") {
-                            $tab[$i][0] = $content->getId();
-                            $tab[$i][1] = $content->__toString() . " (" . get_class($content) . ")";
-                            $i++;
+                    if ($type_interface != "table") {
+                        $tab[$i][0] = $content->getId();
+                        $tab[$i][1] = $content->__toString() . " (" . get_class($content) . ")";
+                        $i++;
+                    } else {
+                        if (!empty ($contentRow['title'])) {
+                            $title = Content :: getObject($contentRow['title']);
+                            $titleUI = $title->__toString();
                         } else {
-                            if (!empty ($contentRow['title'])) {
-                                $title = Content :: getObject($contentRow['title']);
-                                $titleUI = $title->__toString();
-                            } else {
-                                $titleUI = "";
-                            }
-
-                            if (!empty ($contentRow['description'])) {
-                                $description = Content :: getObject($contentRow['description']);
-                                $descriptionUI = $description->__toString();
-                            } else {
-                                $descriptionUI = "";
-                            }
-
-                            $href = GENERIC_OBJECT_ADMIN_ABS_HREF . "?object_id={$contentRow['content_id']}&object_class=Content&action=edit";
-                            $html .= "<tr><td>$titleUI</td><td><a href='$href'>{$contentRow['content_type']}</a></td><td>$descriptionUI</td>\n";
-
-                            $href = GENERIC_OBJECT_ADMIN_ABS_HREF . "?object_id={$contentRow['content_id']}&object_class=Content&action=delete";
-                            $html .= "<td><a href='$href'>" . _("Delete") . "</a></td>";
-
-                            $html .= "</tr>\n";
+                            $titleUI = "";
                         }
+
+                        if (!empty ($contentRow['description'])) {
+                            $description = Content :: getObject($contentRow['description']);
+                            $descriptionUI = $description->__toString();
+                        } else {
+                            $descriptionUI = "";
+                        }
+
+                        $href = GENERIC_OBJECT_ADMIN_ABS_HREF . "?object_id={$contentRow['content_id']}&object_class=Content&action=edit";
+                        $html .= "<tr><td>$titleUI</td><td><a href='$href'>{$contentRow['content_type']}</a></td><td>$descriptionUI</td>\n";
+
+                        $href = GENERIC_OBJECT_ADMIN_ABS_HREF . "?object_id={$contentRow['content_id']}&object_class=Content&action=delete";
+                        $html .= "<td><a href='$href'>" . _("Delete") . "</a></td>";
+
+                        $html .= "</tr>\n";
+                    }
                 }
             }
 
@@ -843,6 +863,59 @@ class Content implements GenericObject {
      * @return an array of class names */
     public function getObjectType() {
         return $this->content_type;
+    }
+
+    /**
+     * Key-value pairs are an easy way to extend Content types 
+     * without having to needlessly modify the wifidog schema.
+     * They are appropriate when  you content subtype needs to 
+     * store simple type that fit the key-value model.  (that is
+     * onke key->single value for a given Content instance.  
+     * @throws exception if key cannot be found
+     * @param $key The key whose value is to be retrieved.Keys 
+     * must also be unique fo the entire object inheritance tree.
+     * Because of this, key naming convention is as follows:
+     * ClassName_key_name
+     * @return The value of the pair.  To check if a key exists, 
+     * check === null (and not == null)
+    
+     */
+    protected function getKVP($key) {
+        if (isset ($this->kvps[$key])) {
+            return $this->kvps[$key];
+        } else {
+            //throw new exception (sprintf(_("Key %s does not exist"), $key));
+            return null;
+        }
+    }
+
+    /**
+     * Key-value pairs are an easy way to extend Content types 
+     * without having to needlessly modify the wifidog schema.
+     * They are appropriate when  you content subtype needs to 
+     * store simple type that fit the key-value model.  (that is
+     * onke key->single value for a given Content instance.
+     * @throws exception if key cannot be found
+     * @param $key The key whose value is to be retrieved.  Keys 
+     * must also be unique fo the entire object inheritance tree.
+     * Because of this, key naming convention is as follows:
+     * ClassName_key_name
+     * @return The value of the pair
+     */
+    protected function setKVP($key, $value) {
+        $retval = true;
+        $db = AbstractDb :: getObject();
+        $value_sql = $db->escapeString($value);
+        $key_sql = $db->escapeString($key);
+        //pretty_print_r($this->kvps);
+        if (!isset ($this->kvps[$key])) {
+            $retval = $db->execSqlUpdate("INSERT INTO content_key_value_pairs (content_id, key, value) VALUES ('" . $this->getId() . "', '$key_sql', '$value_sql')", false);
+        } else
+            if ($this->kvps[$key] != $value) {
+                $retval = $db->execSqlUpdate("UPDATE content_key_value_pairs SET value ='" . $value_sql . "' WHERE content_id='" . $this->getId() . "' AND key='$key_sql'", false);
+            }
+        $this->refresh();
+        return $retval;
     }
 
     /**
@@ -897,7 +970,7 @@ class Content implements GenericObject {
      * Note that after using this, the object must be re-instanciated to have the right type
      * */
     private function setContentType($content_type) {
-        $db = AbstractDb::getObject();
+        $db = AbstractDb :: getObject();
         $content_type = $db->escapeString($content_type);
         if (!self :: isContentTypeAvailable($content_type)) {
             throw new Exception(_("The following content type isn't valid: ") . $content_type);
@@ -915,7 +988,7 @@ class Content implements GenericObject {
      * @param $is_author Optionnal, true or false.  Set to true if the user is one of the actual authors of the Content
      * @return true on success, false on failure */
     public function addOwner(User $user, $is_author = false) {
-        $db = AbstractDb::getObject();
+        $db = AbstractDb :: getObject();
         $content_id = "'" . $this->id . "'";
         $user_id = "'" . $db->escapeString($user->getId()) . "'";
         $is_author ? $is_author = 'TRUE' : $is_author = 'FALSE';
@@ -932,7 +1005,7 @@ class Content implements GenericObject {
      * @param $user The user to be removed from the owners list
      */
     public function deleteOwner(User $user, $is_author = false) {
-        $db = AbstractDb::getObject();
+        $db = AbstractDb :: getObject();
         $content_id = "'" . $this->id . "'";
         $user_id = "'" . $db->escapeString($user->getId()) . "'";
 
@@ -967,7 +1040,7 @@ class Content implements GenericObject {
      * displayed before, an empty string otherwise.
      */
     public function getLastDisplayTimestamp($user = null, $node = null) {
-        $db = AbstractDb::getObject();
+        $db = AbstractDb :: getObject();
         $retval = '';
         $sql = "SELECT EXTRACT(EPOCH FROM last_display_timestamp) as last_display_unix_timestamp FROM content_display_log WHERE content_id='{$this->id}' \n";
 
@@ -999,7 +1072,7 @@ class Content implements GenericObject {
      * @param $user User object:  the user to be tested.
      * @return true if the user is a owner, false if he isn't of the user is null */
     public function isOwner($user) {
-        $db = AbstractDb::getObject();
+        $db = AbstractDb :: getObject();
         $retval = false;
         if ($user != null) {
             $user_id = $db->escapeString($user->GetId());
@@ -1015,7 +1088,7 @@ class Content implements GenericObject {
     /** Get the authors of the Content
      * @return null or array of User objects */
     public function getAuthors() {
-        $db = AbstractDb::getObject();
+        $db = AbstractDb :: getObject();
         $retval = array ();
         $sql = "SELECT user_id FROM content_has_owners WHERE content_id='$this->id' AND is_author=TRUE";
         $db->execSqlUniqueRes($sql, $content_owner_row, false);
@@ -1037,14 +1110,14 @@ class Content implements GenericObject {
     public function isSimpleContent() {
         return false;
     }
-    
+
     /** This function will be called by MainUI for each Content BEFORE any getUserUI function is called to allow two pass Content display.
      * Two pass Content display allows such things as modyfying headers, title, creating content type that accumulate content from other pieces (like RSS feeds)
      * @return null
-     */    
-     public function prepareGetUserUI() {
+     */
+    public function prepareGetUserUI() {
         return null;
-    }  
+    }
     /** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
      * @param $subclass_admin_interface Html content of the interface element of a children
      * @return The HTML fragment for this interface */
@@ -1065,15 +1138,13 @@ class Content implements GenericObject {
             $html .= "</div>\n";
         }
 
-if($this->isSimpleContent())
-{
-    $html .= "\n$subclass_user_interface\n";
-}
-else{
-$html .= "<table><tr>\n";
-        $html .= "<td>\n$subclass_user_interface</td>\n";
-        $html .= "<td>\n";
-}
+        if ($this->isSimpleContent()) {
+            $html .= "\n$subclass_user_interface\n";
+        } else {
+            $html .= "<table><tr>\n";
+            $html .= "<td>\n$subclass_user_interface</td>\n";
+            $html .= "<td>\n";
+        }
         $authors = $this->getAuthors();
         if (count($authors) > 0) {
             $html .= "<div class='user_ui_authors'>\n";
@@ -1108,11 +1179,10 @@ $html .= "<table><tr>\n";
                 $html .= "</div>\n";
             }
         }
-if(!$this->isSimpleContent())
-{
-        $html .= "</td>\n";
-        $html .= "</tr></table>\n";
-}
+        if (!$this->isSimpleContent()) {
+            $html .= "</td>\n";
+            $html .= "</tr></table>\n";
+        }
         $html .= "</div>\n";
         $html .= "</div>\n";
         $this->logContentDisplay();
@@ -1131,22 +1201,22 @@ if(!$this->isSimpleContent())
      * content was displayed for this user
      * @param $node Node, optionnal.  If present, the date is the last time the
      * content was displayed at this node 
-	 @return PHP timestamp or null */
+     @return PHP timestamp or null */
     public function getLastDisplayedTimestamp($user = null, $node = null) {
-            $retval = null;
-            $log_row = null;
-            $user?$user_sql=" AND user_id='{$user->getId()}' ":$user_sql='';
-            $node?$node_sql=" AND node_id='{$node->getId()}' ":$node_sql='';
-               $db = AbstractDb::getObject();
+        $retval = null;
+        $log_row = null;
+        $user ? $user_sql = " AND user_id='{$user->getId()}' " : $user_sql = '';
+        $node ? $node_sql = " AND node_id='{$node->getId()}' " : $node_sql = '';
+        $db = AbstractDb :: getObject();
 
-                $sql = "SELECT EXTRACT('epoch' FROM last_display_timestamp) as last_display_timestamp FROM content_display_log WHERE content_id='$this->id' $user_sql $node_sql ORDER BY last_display_timestamp DESC limit 1";
-                $db->execSqlUniqueRes($sql, $log_row, false);
-                if ($log_row != null) {
-                $retval = $log_row['last_display_timestamp'];
-            }
-            return $retval;
+        $sql = "SELECT EXTRACT('epoch' FROM last_display_timestamp) as last_display_timestamp FROM content_display_log WHERE content_id='$this->id' $user_sql $node_sql ORDER BY last_display_timestamp DESC limit 1";
+        $db->execSqlUniqueRes($sql, $log_row, false);
+        if ($log_row != null) {
+            $retval = $log_row['last_display_timestamp'];
+        }
+        return $retval;
     }
-    
+
     /** Log that this content has just been displayed to the user.  Will only log if the user is logged in */
     private function logContentDisplay() {
         if ($this->getLoggingStatus() == true && $this->log_as_content->getId() == $this->getId()) {
@@ -1157,7 +1227,7 @@ if(!$this->isSimpleContent())
             if ($user != null && $node != null) {
                 $user_id = $user->getId();
                 $node_id = $node->getId();
-                $db = AbstractDb::getObject();
+                $db = AbstractDb :: getObject();
 
                 $sql = "SELECT * FROM content_display_log WHERE content_id='$this->id' AND user_id='$user_id' AND node_id='$node_id'";
                 $db->execSql($sql, $log_rows, false);
@@ -1200,198 +1270,195 @@ if(!$this->isSimpleContent())
      * @return string The HTML fragment for this interface.
      */
     public function getAdminUI($subclass_admin_interface = null, $title = null) {
-        $db = AbstractDb::getObject();
+        $db = AbstractDb :: getObject();
 
         $html = '';
-        if(!(User :: getCurrentUser()->isSuperAdmin() || $this->isOwner(User :: getCurrentUser())))
-        {
-                    $html .= $this->getListUI();
-                    $html .= ' '._("(You do not have access to edit this piece of content)");
-        }
-        else
-        {
-        $html .= "<fieldset class='admin_container " . get_class($this) . "'>\n";
-        if (!empty ($title)) {
-            $html .= "<legend>$title</legend>\n";
-        }
-        $html .= "<ul class='admin_element_list'>\n";
-        if ($this->getObjectType() == 'Content') {
-            // The object hasn't yet been typed.
-            $html .= _("You must select a content type: ");
-            $i = 0;
-
-            foreach (self :: getAvailableContentTypes() as $classname) {
-                $tab[$i][0] = $classname;
-                $tab[$i][1] = $classname;
-                $i++;
-            }
-
-            $html .= FormSelectGenerator :: generateFromArray($tab, null, "content_" . $this->id . "_content_type", "Content", false);
+        if (!(User :: getCurrentUser()->isSuperAdmin() || $this->isOwner(User :: getCurrentUser()))) {
+            $html .= $this->getListUI();
+            $html .= ' ' . _("(You do not have access to edit this piece of content)");
         } else {
-            $criteria_array = array (
-                array (
-                    'isSimpleContent'
-                )
-            );
-            $metadada_allowed_content_types = ContentTypeFilter :: getObject($criteria_array);
-
-            // Content metadata
-            if ($this->isSimpleContent() == false || $this->isPersistent()) {
-                $html .= "<fieldset class='admin_element_group'>\n";
-                $html .= "<legend>" . sprintf(_("%s MetaData"), get_class($this)) . "</legend>\n";
-
-                /* title_is_displayed */
-                $html_title_is_displayed = _("Display the title?") . ": \n";
-                $name = "content_" . $this->id . "_title_is_displayed";
-                $this->titleShouldDisplay() ? $checked = 'CHECKED' : $checked = '';
-                $html_title_is_displayed .= "<input type='checkbox' name='$name' $checked>\n";
-
-                /* title */
-                $html .= "<li class='admin_element_item_container admin_section_edit_title'>\n";
-                $html .= "<div class='admin_element_data'>\n";
-                if (empty ($this->content_row['title'])) {
-                    $html .= self :: getNewContentUI("title_{$this->id}_new", $metadada_allowed_content_types, _("Title:"));
-                    $html .= "</div>\n";
-                } else {
-                    $html .= $html_title_is_displayed;
-                    $title = self :: getObject($this->content_row['title']);
-                    $html .= $title->getAdminUI(null, _("Title:"));
-                    $html .= "</div>\n";
-                    $html .= "<div class='admin_element_tools admin_section_delete_title'>\n";
-                    $name = "content_" . $this->id . "_title_erase";
-                    $html .= "<input type='submit' class='submit' name='$name' value='" . sprintf(_("Delete %s (%s)"), _("title"), get_class($title)) . "'>";
-                    $html .= "</div>\n";
-                }
-                $html .= "</li>\n";
+            $html .= "<fieldset class='admin_container " . get_class($this) . "'>\n";
+            if (!empty ($title)) {
+                $html .= "<legend>$title</legend>\n";
             }
+            $html .= "<ul class='admin_element_list'>\n";
+            if ($this->getObjectType() == 'Content') {
+                // The object hasn't yet been typed.
+                $html .= _("You must select a content type: ");
+                $i = 0;
 
-            if ($this->isSimpleContent() == false) {
-                /* description */
-                $html .= "<li class='admin_element_item_container admin_section_edit_description'>\n";
-                $html .= "<div class='admin_element_data'>\n";
-                if (empty ($this->content_row['description'])) {
-                    $html .= self :: getNewContentUI("description_{$this->id}_new", $metadada_allowed_content_types, _("Description:"));
-                    $html .= "</div>\n";
-                } else {
-                    $description = self :: getObject($this->content_row['description']);
-                    $html .= $description->getAdminUI(null, _("Description:"));
-                    $html .= "</div>\n";
-                    $html .= "<div class='admin_element_tools'>\n";
-                    $name = "content_" . $this->id . "_description_erase";
-                    $html .= "<input type='submit' class='submit' name='$name' value='" . sprintf(_("Delete %s (%s)"), _("description"), get_class($description)) . "'>";
-                    $html .= "</div>\n";
+                foreach (self :: getAvailableContentTypes() as $classname) {
+                    $tab[$i][0] = $classname;
+                    $tab[$i][1] = $classname;
+                    $i++;
                 }
-                $html .= "</li>\n";
 
-                /* long description */
-                $html .= "<li class='admin_element_item_container admin_section_edit_long_description'>\n";
-                $html .= "<div class='admin_element_data'>\n";
-                if (empty ($this->content_row['long_description'])) {
-                    $html .= self :: getNewContentUI("long_description_{$this->id}_new", $metadada_allowed_content_types, _("Long description:"));
-                    $html .= "</div>\n";
-                } else {
-                    $description = self :: getObject($this->content_row['long_description']);
-                    $html .= $description->getAdminUI(null, _("Long description:"));
-                    $html .= "</div>\n";
-                    $html .= "<div class='admin_element_tools'>\n";
-                    $name = "content_" . $this->id . "_long_description_erase";
-                    $html .= "<input type='submit' class='submit' name='$name' value='" . sprintf(_("Delete %s (%s)"), _("long description"), get_class($description)) . "'>";
-                    $html .= "</div>\n";
+                $html .= FormSelectGenerator :: generateFromArray($tab, null, "content_" . $this->id . "_content_type", "Content", false);
+            } else {
+                $criteria_array = array (
+                    array (
+                        'isSimpleContent'
+                    )
+                );
+                $metadada_allowed_content_types = ContentTypeFilter :: getObject($criteria_array);
+
+                // Content metadata
+                if ($this->isSimpleContent() == false || $this->isPersistent()) {
+                    $html .= "<fieldset class='admin_element_group'>\n";
+                    $html .= "<legend>" . sprintf(_("%s MetaData"), get_class($this)) . "</legend>\n";
+
+                    /* title_is_displayed */
+                    $html_title_is_displayed = _("Display the title?") . ": \n";
+                    $name = "content_" . $this->id . "_title_is_displayed";
+                    $this->titleShouldDisplay() ? $checked = 'CHECKED' : $checked = '';
+                    $html_title_is_displayed .= "<input type='checkbox' name='$name' $checked>\n";
+
+                    /* title */
+                    $html .= "<li class='admin_element_item_container admin_section_edit_title'>\n";
+                    $html .= "<div class='admin_element_data'>\n";
+                    if (empty ($this->content_row['title'])) {
+                        $html .= self :: getNewContentUI("title_{$this->id}_new", $metadada_allowed_content_types, _("Title:"));
+                        $html .= "</div>\n";
+                    } else {
+                        $html .= $html_title_is_displayed;
+                        $title = self :: getObject($this->content_row['title']);
+                        $html .= $title->getAdminUI(null, _("Title:"));
+                        $html .= "</div>\n";
+                        $html .= "<div class='admin_element_tools admin_section_delete_title'>\n";
+                        $name = "content_" . $this->id . "_title_erase";
+                        $html .= "<input type='submit' class='submit' name='$name' value='" . sprintf(_("Delete %s (%s)"), _("title"), get_class($title)) . "'>";
+                        $html .= "</div>\n";
+                    }
+                    $html .= "</li>\n";
                 }
-                $html .= "</li>\n";
 
-                /* project_info */
-                $html .= "<li class='admin_element_item_container admin_section_edit_project'>\n";
-                $html .= "<div class='admin_element_data'>\n";
-                if (empty ($this->content_row['project_info'])) {
-                    $html .= self :: getNewContentUI("project_info_{$this->id}_new", $metadada_allowed_content_types, _("Information on this project:"));
-                    $html .= "</div>\n";
-                } else {
-                    $project_info = self :: getObject($this->content_row['project_info']);
-                    $html .= $project_info->getAdminUI(null, _("Information on this project:"));
-                    $html .= "</div>\n";
-                    $html .= "<div class='admin_element_tools'>\n";
-                    $name = "content_" . $this->id . "_project_info_erase";
-                    $html .= "<input type='submit' class='submit' name='$name' value='" . sprintf(_("Delete %s (%s)"), _("project information"), get_class($project_info)) . "'>";
-                    $html .= "</div>\n";
-                }
-                $html .= "</li>\n";
-            }
-
-            //End content medatada
-            if ($this->isSimpleContent() == false || $this->isPersistent()) {
-                $html .= "</fieldset>\n";
-            }
-
-            if ($this->isSimpleContent() == false || $this->isPersistent()) {
-
-                $html .= "<fieldset class='admin_element_group'>\n";
-                $html .= "<legend>" . sprintf(_("%s access control"), get_class($this)) . "</legend>\n";
-
-                /* is_persistent */
-                $html .= "<li class='admin_element_item_container admin_section_edit_persistant'>\n";
-                $html .= "<div class='admin_element_label'>" . _("Is part of reusable content library (protected from deletion)?") . ": </div>\n";
-                $html .= "<div class='admin_element_data'>\n";
-                $name = "content_" . $this->id . "_is_persistent";
-                $this->isPersistent() ? $checked = 'CHECKED' : $checked = '';
-                $html .= "<input type='checkbox' name='$name' $checked onChange='submit();'>\n";
-                $html .= "</div>\n";
-                $html .= "</li>\n";
-
-                /* content_has_owners */
-                $html .= "<li class='admin_element_item_container content_has_owners'>\n";
-                $html .= "<div class='admin_element_label'>" . _("Content owner list") . "</div>\n";
-                $html .= "<ul class='admin_element_list'>\n";
-
-                $db = AbstractDb::getObject();
-                $sql = "SELECT * FROM content_has_owners WHERE content_id='$this->id'";
-                $db->execSql($sql, $content_owner_rows, false);
-                if ($content_owner_rows != null) {
-                    foreach ($content_owner_rows as $content_owner_row) {
-                        $html .= "<li class='admin_element_item_container'>\n";
-                        $html .= "<div class='admin_element_data'>\n";
-                        $user = User :: getObject($content_owner_row['user_id']);
-
-                        $html .= $user->getListUI();
-                        $name = "content_" . $this->id . "_owner_" . $user->GetId() . "_is_author";
-                        $html .= " Is content author? ";
-
-                        $content_owner_row['is_author'] == 't' ? $checked = 'CHECKED' : $checked = '';
-                        $html .= "<input type='checkbox' name='$name' $checked>\n";
+                if ($this->isSimpleContent() == false) {
+                    /* description */
+                    $html .= "<li class='admin_element_item_container admin_section_edit_description'>\n";
+                    $html .= "<div class='admin_element_data'>\n";
+                    if (empty ($this->content_row['description'])) {
+                        $html .= self :: getNewContentUI("description_{$this->id}_new", $metadada_allowed_content_types, _("Description:"));
+                        $html .= "</div>\n";
+                    } else {
+                        $description = self :: getObject($this->content_row['description']);
+                        $html .= $description->getAdminUI(null, _("Description:"));
                         $html .= "</div>\n";
                         $html .= "<div class='admin_element_tools'>\n";
-                        $name = "content_" . $this->id . "_owner_" . $user->GetId() . "_remove";
-                        $html .= "<input type='submit' class='submit' name='$name' value='" . _("Remove owner") . "'>";
+                        $name = "content_" . $this->id . "_description_erase";
+                        $html .= "<input type='submit' class='submit' name='$name' value='" . sprintf(_("Delete %s (%s)"), _("description"), get_class($description)) . "'>";
                         $html .= "</div>\n";
-                        $html .= "</li>\n";
                     }
+                    $html .= "</li>\n";
+
+                    /* long description */
+                    $html .= "<li class='admin_element_item_container admin_section_edit_long_description'>\n";
+                    $html .= "<div class='admin_element_data'>\n";
+                    if (empty ($this->content_row['long_description'])) {
+                        $html .= self :: getNewContentUI("long_description_{$this->id}_new", $metadada_allowed_content_types, _("Long description:"));
+                        $html .= "</div>\n";
+                    } else {
+                        $description = self :: getObject($this->content_row['long_description']);
+                        $html .= $description->getAdminUI(null, _("Long description:"));
+                        $html .= "</div>\n";
+                        $html .= "<div class='admin_element_tools'>\n";
+                        $name = "content_" . $this->id . "_long_description_erase";
+                        $html .= "<input type='submit' class='submit' name='$name' value='" . sprintf(_("Delete %s (%s)"), _("long description"), get_class($description)) . "'>";
+                        $html .= "</div>\n";
+                    }
+                    $html .= "</li>\n";
+
+                    /* project_info */
+                    $html .= "<li class='admin_element_item_container admin_section_edit_project'>\n";
+                    $html .= "<div class='admin_element_data'>\n";
+                    if (empty ($this->content_row['project_info'])) {
+                        $html .= self :: getNewContentUI("project_info_{$this->id}_new", $metadada_allowed_content_types, _("Information on this project:"));
+                        $html .= "</div>\n";
+                    } else {
+                        $project_info = self :: getObject($this->content_row['project_info']);
+                        $html .= $project_info->getAdminUI(null, _("Information on this project:"));
+                        $html .= "</div>\n";
+                        $html .= "<div class='admin_element_tools'>\n";
+                        $name = "content_" . $this->id . "_project_info_erase";
+                        $html .= "<input type='submit' class='submit' name='$name' value='" . sprintf(_("Delete %s (%s)"), _("project information"), get_class($project_info)) . "'>";
+                        $html .= "</div>\n";
+                    }
+                    $html .= "</li>\n";
                 }
 
-                $html .= "<li class='admin_element_item_container'>\n";
-                $html .= "<div class='admin_element_data'>\n";
-                $add_button_name = "content_{$this->id}_add_owner_submit";
-                $add_button_value = _("Add owner");
-                $html .= User :: getSelectUserUI("content_{$this->id}_new_owner", $add_button_name, $add_button_value);
-                $html .= "</div>\n";
-                $html .= "</li>\n";
-                $html .= "</ul>\n";
-                $html .= "</li>\n";
-                $html .= "</fieldset>\n";
+                //End content medatada
+                if ($this->isSimpleContent() == false || $this->isPersistent()) {
+                    $html .= "</fieldset>\n";
+                }
 
+                if ($this->isSimpleContent() == false || $this->isPersistent()) {
+
+                    $html .= "<fieldset class='admin_element_group'>\n";
+                    $html .= "<legend>" . sprintf(_("%s access control"), get_class($this)) . "</legend>\n";
+
+                    /* is_persistent */
+                    $html .= "<li class='admin_element_item_container admin_section_edit_persistant'>\n";
+                    $html .= "<div class='admin_element_label'>" . _("Is part of reusable content library (protected from deletion)?") . ": </div>\n";
+                    $html .= "<div class='admin_element_data'>\n";
+                    $name = "content_" . $this->id . "_is_persistent";
+                    $this->isPersistent() ? $checked = 'CHECKED' : $checked = '';
+                    $html .= "<input type='checkbox' name='$name' $checked onChange='submit();'>\n";
+                    $html .= "</div>\n";
+                    $html .= "</li>\n";
+
+                    /* content_has_owners */
+                    $html .= "<li class='admin_element_item_container content_has_owners'>\n";
+                    $html .= "<div class='admin_element_label'>" . _("Content owner list") . "</div>\n";
+                    $html .= "<ul class='admin_element_list'>\n";
+
+                    $db = AbstractDb :: getObject();
+                    $sql = "SELECT * FROM content_has_owners WHERE content_id='$this->id'";
+                    $db->execSql($sql, $content_owner_rows, false);
+                    if ($content_owner_rows != null) {
+                        foreach ($content_owner_rows as $content_owner_row) {
+                            $html .= "<li class='admin_element_item_container'>\n";
+                            $html .= "<div class='admin_element_data'>\n";
+                            $user = User :: getObject($content_owner_row['user_id']);
+
+                            $html .= $user->getListUI();
+                            $name = "content_" . $this->id . "_owner_" . $user->GetId() . "_is_author";
+                            $html .= " Is content author? ";
+
+                            $content_owner_row['is_author'] == 't' ? $checked = 'CHECKED' : $checked = '';
+                            $html .= "<input type='checkbox' name='$name' $checked>\n";
+                            $html .= "</div>\n";
+                            $html .= "<div class='admin_element_tools'>\n";
+                            $name = "content_" . $this->id . "_owner_" . $user->GetId() . "_remove";
+                            $html .= "<input type='submit' class='submit' name='$name' value='" . _("Remove owner") . "'>";
+                            $html .= "</div>\n";
+                            $html .= "</li>\n";
+                        }
+                    }
+
+                    $html .= "<li class='admin_element_item_container'>\n";
+                    $html .= "<div class='admin_element_data'>\n";
+                    $add_button_name = "content_{$this->id}_add_owner_submit";
+                    $add_button_value = _("Add owner");
+                    $html .= User :: getSelectUserUI("content_{$this->id}_new_owner", $add_button_name, $add_button_value);
+                    $html .= "</div>\n";
+                    $html .= "</li>\n";
+                    $html .= "</ul>\n";
+                    $html .= "</li>\n";
+                    $html .= "</fieldset>\n";
+
+                }
             }
-        }
-        $html .= $subclass_admin_interface;
-        $html .= "</ul>\n";
-        $html .= "</fieldset>\n";
+            $html .= $subclass_admin_interface;
+            $html .= "</ul>\n";
+            $html .= "</fieldset>\n";
         }
         return $html;
     }
     /** Process admin interface of this object.  When an object overrides this method, they should call the parent processAdminUI at the BEGINING of processing.
-
+    
     */
     public function processAdminUI() {
         if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
-            $db = AbstractDb::getObject();
+            $db = AbstractDb :: getObject();
             if ($this->getObjectType() == 'Content') /* The object hasn't yet been typed */ {
                 $content_type = FormSelectGenerator :: getResult("content_" . $this->id . "_content_type", "Content");
                 $this->setContentType($content_type);
@@ -1527,7 +1594,7 @@ if(!$this->isSimpleContent())
      * @return boolean
      */
     public function isUserSubscribed(User $user) {
-        $db = AbstractDb::getObject();
+        $db = AbstractDb :: getObject();
         $sql = "SELECT content_id FROM user_has_content WHERE user_id = '{$user->getId()}' AND content_id = '{$this->getId()}';";
         $db->execSqlUniqueRes($sql, $row, false);
 
@@ -1565,7 +1632,7 @@ if(!$this->isSimpleContent())
     public function setTitleIsDisplayed($should_display) {
         if ($should_display != $this->titleShouldDisplay()) /* Only update database if there is an actual change */ {
             $should_display ? $should_display_sql = 'TRUE' : $should_display_sql = 'FALSE';
-            $db = AbstractDb::getObject();
+            $db = AbstractDb :: getObject();
             $db->execSqlUpdate("UPDATE content SET title_is_displayed = $should_display_sql WHERE content_id = '$this->id'", false);
             $this->refresh();
         }
@@ -1584,19 +1651,37 @@ if(!$this->isSimpleContent())
     }
 
     /** Set if the content group is persistent
-     * @param $is_locative_content true or false
+     * @param $is_persistent true or false
      * */
     public function setIsPersistent($is_persistent) {
         if ($is_persistent != $this->isPersistent()) /* Only update database if there is an actual change */ {
             $is_persistent ? $is_persistent_sql = 'TRUE' : $is_persistent_sql = 'FALSE';
 
-            $db = AbstractDb::getObject();
+            $db = AbstractDb :: getObject();
             $db->execSqlUpdate("UPDATE content SET is_persistent = $is_persistent_sql WHERE content_id = '$this->id'", false);
             $this->refresh();
         }
 
     }
 
+    /**
+    * Return update date
+    *
+    * @return string ISO-8601-2000 timestamp
+    */
+    public function getLastUpdateTimestamp() {
+        return $this->content_row['last_update_timestamp'];
+    }
+    /**
+     * Touch countent:  set last_update_timestamp to now
+     * Note that this is meant to be called when there is substantial
+     *  change to the actual content (the file changed, the main text changed, 
+     * etc.)
+     */
+    public function touch() {
+        $this->mBd->execSqlUpdate("UPDATE content SET last_update_timestamp = CURRENT_TIMESTAMP WHERE content_id='" . $this->getId() . "'", false);
+        $this->refresh();
+    }
     /** Reloads the object from the database.  Should normally be called after a set operation.
      * This function is private because calling it from a subclass will call the
      * constructor from the wrong scope */
@@ -1613,7 +1698,7 @@ if(!$this->isSimpleContent())
         if ($this->isPersistent()) {
             $errmsg = _("Content is persistent (you must make it non persistent before you can delete it)");
         } else {
-            $db = AbstractDb::getObject();
+            $db = AbstractDb :: getObject();
             if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
                 $sql = "DELETE FROM content WHERE content_id='$this->id'";
                 $db->execSqlUpdate($sql, false);

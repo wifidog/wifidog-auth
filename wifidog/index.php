@@ -95,6 +95,9 @@ $smarty->assign('sectionMAINCONTENT', true);
 // Set Google maps information
 $smarty->assign('googleMapsEnabled', defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED);
 
+$net = Network::getCurrentNetwork();
+$smarty->assign('networkNumValidUsers', $net ? $net->getNumValidUsers() : 0);
+
 // Compile HTML code
 $html_body = $smarty->fetch("templates/sites/index.tpl");
 

@@ -132,7 +132,7 @@ class ThemePack {
 
             while (false !== ($directory = readdir($handle))) {
                 if ($directory != '.' && $directory != '..' && $directory != '.svn' && is_dir(WIFIDOG_ABS_FILE_PATH.NETWORK_THEME_PACKS_DIR.$directory.'/')) {
-                    $theme_pack = new self($directory);
+                    $theme_pack = self::getObject($directory);
                     $tab[$i][0] = $theme_pack->getId();
                     $tab[$i][1] = $theme_pack->getName();
                     $tab[$i][2] = $theme_pack->getDescription();

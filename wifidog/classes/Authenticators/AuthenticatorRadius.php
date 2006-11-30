@@ -256,7 +256,7 @@ class AuthenticatorRadius extends Authenticator
                     $db->execSqlUniqueRes($sql, $user_info, false);
 
                     if ($user_info != null) {
-                        $user = new User($user_info['user_id']);
+                        $user = User::getObject($user_info['user_id']);
 
                         if ($user->isUserValid($errmsg)) {
                             $retval = & $user;

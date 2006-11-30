@@ -56,7 +56,7 @@ if (!empty ($_REQUEST['content_id']))
 	{
 		// Check if the HTTP request is asking if the file has been modified since a certain date.
 		$last_modified_date = isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])? $_SERVER['HTTP_IF_MODIFIED_SINCE'] : 0;
-		if($last_modified_date && $_SERVER['REQUEST_METHOD'] == "GET" && strtotime($last_modified_date) >= time()){//TODO:  IMPLEMENT MODIFICATION TIME CHECK, but WATCH out for mutable content due to multiple language;strtotime($file_row['last_update_date']))
+		if($last_modified_date && $_SERVER['REQUEST_METHOD'] == "GET" && strtotime($last_modified_date) >= strtotime($file_row['last_update_timestamp']))
 		   header("HTTP/1.1 304 Not Modified");
 	    }
 		else
@@ -64,7 +64,7 @@ if (!empty ($_REQUEST['content_id']))
 			//headers to send to the browser before beginning the binary download
 			header("Pragma: public");
 			// Send last update date to proxy / cache the binary
-			header("Last-Modified: " . gmdate("D, d M Y H:i:s", time()) . " GMT");//TODO:  IMPLEMENT MODIFICATION TIME CHECK;strtotime($file_row['last_update_date']))
+			header("Last-Modified: " . gmdate("D, d M Y H:i:s", strtotime($file_row['last_update_timestamp'])) . " GMT");
 			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 			header("Cache-Control: public");
 			header('Content-Type: text/css');
