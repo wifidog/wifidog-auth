@@ -1,3 +1,6 @@
+2006-12-11 Benoit Grégoire  <bock@step.polymtl.ca>
+	* install.php:  Fix a few problems caused by obsolete magpierss detection code.
+	
 2006-11-30 Benoit Grégoire  <bock@step.polymtl.ca>
 	* schema_validate.php:  Mute annoying ob_flush() notices.
 	* Node.php:  Add missing default parameter to getSelectNodeUI()

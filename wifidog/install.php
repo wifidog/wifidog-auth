@@ -175,7 +175,6 @@ $dir_array = array (
 );
 
 $smarty_full_url = 'http://smarty.php.net/do_download.php?download_file=Smarty-2.6.14.tar.gz';
-$magpierss_full_url = 'http://easynews.dl.sourceforge.net/sourceforge/magpierss/magpierss-0.72.tar.gz';
 $phlickr_full_url = 'http://easynews.dl.sourceforge.net/sourceforge/phlickr/Phlickr-0.2.4.tgz';
 
 $neededPackages = array (
@@ -295,11 +294,6 @@ $optionsInfo = array (
         'message' => '&nbsp;'
     ),
     */
-    'RSS_SUPPORT' => array (
-        'title' => 'RSS Support',
-        'depend' => 'return ($neededExtentions[\'xml\'][\'available\'] && $neededPackages[\'magpierss\'][\'available\']);',
-        'message' => 'Missing <B>xml</B> extentions or <B>MagpieRSS</B>'
-    ),
     'PHLICKR_SUPPORT' => array (
         'title' => 'Flickr Photostream content support',
         'depend' => 'return $neededPackages[\'phlickr\'][\'available\'];',
@@ -925,7 +919,7 @@ EndHTML;
             navigation(array (
                 array (
                     "title" => "Back",
-                    "page" => "magpierss"
+                    "page" => "simplepie"
                 ),
                 array (
                     "title" => "Next",
@@ -942,7 +936,7 @@ EndHTML;
             navigation(array (
                 array (
                     "title" => "Back",
-                    "page" => "magpierss"
+                    "page" => "simplepie"
                 ),
                 array (
                     "title" => "Install",
@@ -1089,7 +1083,7 @@ EndHTML;
         navigation(array (
             array (
                 "title" => "Back",
-                "page" => "magpierss"
+                "page" => "simplepie"
             )
         )); #, array("title" => "Next", "page" => "testdatabase")));
         print<<< EndHTML
@@ -1299,7 +1293,7 @@ EndHTML;
         ###################################
     case 'options' :
         # TODO : Tester que la connection SSL est fonctionnelle
-        #        Options avancees : Supporter les define de [SMARTY|MAGPIE|PHLICKR|JPGRAPH]_REL_PATH
+        #        Options avancees : Supporter les define de [SMARTY|PHLICKR|JPGRAPH]_REL_PATH
         print<<< EndHTML
 <H1>Available options</H1>
   <TABLE border="1">

@@ -236,7 +236,7 @@ class Locale {
             $lang_only_locale_id = substr ($locale_id, 0 , 2);
                    if(!isset($AVAIL_LOCALE_ARRAY[$locale_id]) && !isset($AVAIL_LOCALE_ARRAY[$lang_only_locale_id]))
                    {
-                     echo srintf("Warning in /classes/Locale.php setCurentLocale: Neither %s or %s are available in AVAIL_LOCALE_ARRAY", $locale_id, $lang_only_locale_id)."<br/>";
+                     echo sprintf("Warning in /classes/Locale.php setCurentLocale: Neither %s or %s are available in AVAIL_LOCALE_ARRAY", $locale_id, $lang_only_locale_id)."<br/>";
                    }
             // Try to set locale
             $candidate_locale_array[] = str_ireplace('.UTF8', '', $locale_id).'.UTF-8';

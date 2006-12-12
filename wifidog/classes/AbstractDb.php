@@ -66,7 +66,7 @@ class AbstractDb
         
     private static $object;
     
-    /** Nothe that you should call the first instance of AbstractDb as soon as possible to get reliabel SQL vs PHP statistics.*/
+    /** Note that you should call the first instance of AbstractDb as soon as possible to get reliable SQL vs PHP statistics.*/
     public static function getObject() {
     	if (self::$object==null)
     	{
