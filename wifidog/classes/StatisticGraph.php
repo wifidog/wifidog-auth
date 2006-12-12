@@ -79,7 +79,7 @@ abstract class StatisticGraph
     public function isAvailable(& $errormsg = null)
     {
         $retval = false;
-        if (Dependencies :: check("ImageGraph", $errormsg))
+        if (Dependencies :: check("Image_Graph", $errormsg))
         {
             require_once ("Image/Graph.php");
             $retval = true;

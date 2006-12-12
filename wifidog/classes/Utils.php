@@ -125,8 +125,28 @@ class Utils
             $arrOut[] = $arrIn[$key];
         $arrIn = $arrOut;
     }
-}
 
+/** Use PHP internal functions to execute a command 
+ @return: Return value of the command*/
+        public static function execCommand($command, & $output, $debug = false) {
+            if($debug)
+            print "$command";
+            exec($command.'  2>&1', & $output, & $retval);
+            if($debug){
+                if ($retval != 0)
+            print "<p style='color:red'><em>Error:</em>  Command did not complete successfully  (returned $retval): <br/>\n";
+            else
+            print "<p style='color:green'>Command completed successfully  (returned $retval): <br/>\n";
+            }
+            if ($debug && $output) {
+                foreach ($output as $output_line)
+                print " $output_line <br/>\n";
+            }
+            if($debug)
+                print "</p>\n";
+            return $retval;
+        }
+}//End class
 /*
  * Local variables:
  * tab-width: 4

@@ -66,31 +66,6 @@ if (file_exists(dirname(__FILE__) . "/local.config.php")) {
 \********************************************************************/
 
 /**
- * Database abstraction classes
- * ============================
- *
- * The next two items are constants, do not edit!
- */
-
-// Database abstraction class for MySQL access.
-define('DBMS_MYSQL','AbstractDbMySql.php');
-
-// Database abstraction class for PostgreSQL access.
-define('DBMS_POSTGRES','AbstractDbPostgres.php');
-
-/**
- * Which database management software do you want to use?
- * ======================================================
- *
- * Possible values:
- * - DBMS_POSTGRES (Use PostgreSQL server)
- * - DBMS_MYSQL (Use MySQL server)
- *
- * Please note that MySQL support is currently broken!
- */
-define('CONF_DBMS', DBMS_POSTGRES);
-
-/**
  * Configuration values needed to access the database.
  * ===================================================
  */
@@ -132,7 +107,7 @@ define('LOG_SQL_QUERIES', false);
  * Caching
  * =======
  *
- * If you installed PEAR::Cache_Lite and set this value to true, caching
+ * Experimental:  If you installed PEAR::Cache_Lite and set this value to true, caching
  * will be enabled.
  *
  * If you haven't installed PEAR::Cache_Lite, caching won't be enabled at all.
@@ -261,19 +236,6 @@ define('XSLT_SUPPORT', true);
  */
 define('WIFIDOG_NAME', 'WiFiDog Authentication server');
 define('WIFIDOG_VERSION', '(Development)');
-
-/**
- * WiFiDOG features configuration
- * ==============================
- *
- * Paths to libraries used by the WiFiDOG auth server.
- */
-
-// Path to Smarty Template engine.
-define('SMARTY_REL_PATH',  'lib/smarty/');
-
-// Path to Phlickr API.
-define('PHLICKR_REL_PATH',  'lib/');
 
 /**
  * WiFiDOG internals configuration
