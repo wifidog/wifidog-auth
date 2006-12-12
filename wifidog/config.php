@@ -212,17 +212,6 @@ define('DEFAULT_LANG', 'fr_CA');
 \********************************************************************/
 
 /**
- * Flickr Photostream content support
- * ==================================
- *
- * If set to true, Phlickr must be installed in PHLICKR_REL_PATH.
- *
- * Normally PHLICKR_REL_PATH is "lib/", Phlickr being installed in directory
- * "Phlickr".
- */
-define('PHLICKR_SUPPORT', true);
-
-/**
  * Google Maps support
  * ===================
  *

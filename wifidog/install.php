@@ -294,11 +294,6 @@ $optionsInfo = array (
         'message' => '&nbsp;'
     ),
     */
-    'PHLICKR_SUPPORT' => array (
-        'title' => 'Flickr Photostream content support',
-        'depend' => 'return $neededPackages[\'phlickr\'][\'available\'];',
-        'message' => '<B>Phlickr</B> library not installed'
-    ),
     'CONF_USE_CRON_FOR_DB_CLEANUP' => array (
         'title' => 'Use cron for DB cleanup',
         'depend' => 'return 1;',
