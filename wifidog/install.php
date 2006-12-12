@@ -1546,7 +1546,7 @@ EndHTML;
         navigation(array (
             array (
                 "title" => "Next",
-                "page" => "version"
+                "page" => "permission"
             )
         ));
 }
