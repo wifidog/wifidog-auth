@@ -169,12 +169,10 @@ $dir_array = array (
     'tmp/smarty/cache',
     'lib/simplepie',
     'lib/feedpressreview',
-    'lib/Phlickr',
     'config.php'
     );
 
     $smarty_full_url = 'http://smarty.php.net/do_download.php?download_file=Smarty-2.6.14.tar.gz';
-    $phlickr_full_url = 'http://easynews.dl.sourceforge.net/sourceforge/phlickr/Phlickr-0.2.4.tgz';
 
     $neededPackages = array (
     'smarty' => array (
@@ -196,12 +194,6 @@ $dir_array = array (
         'message' => '',
         'file' => 'lib/feedpressreview/FeedPressReview.inc',
         'svn_source' => 'http://projects.coeus.ca/svn/feedpressreview/trunk/'
-        ),
-        'phlickr' => array (
-        'needed' => 0,
-        'available' => 0,
-        'message' => '',
-        'file' => 'lib/Phlickr/Photo.php'
         )
         );
 
@@ -702,7 +694,7 @@ EndHTML;
                 ),
                 array (
                     "title" => "Next",
-                    "page" => "phlickr"
+                    "page" => "database"
                 )
             ));
         }
@@ -720,7 +712,7 @@ EndHTML;
                 ),
                 array (
                     "title" => "Next",
-                    "page" => "phlickr"
+                    "page" => "database"
                 )
             ));
         }
@@ -742,91 +734,6 @@ EndHTML;
                 ),
                 array (
                     "title" => "Next",
-                    "page" => "phlickr"
-                )
-            ));
-        }
-        break;
-        ###################################
-    case 'phlickr' : // Download, uncompress and install phlickr library
-        print "<h1>Phlickr installation</h1>\n";
-
-        if ($neededPackages['phlickr']['available']) {
-            print "Already installed !<BR>";
-            navigation(array (
-                array (
-                    "title" => "Back",
-                    "page" => "simplepie"
-                ),
-                array (
-                    "title" => "Next",
-                    "page" => "database"
-                )
-            ));
-        }
-        elseif ($action == 'install') {
-            chdir(WIFIDOG_ABS_FILE_PATH . "tmp");
-            $filename_array = preg_split("/\//", $phlickr_full_url);
-            $filename = array_pop($filename_array);
-
-            print "Download source code ($filename) : ";
-            if (!file_exists(WIFIDOG_ABS_FILE_PATH."tmp/" . $filename))
-                //execVerbose("wget \"$phlickr_full_url\" 2>&1", $output, $return);
-                downloadFile($phlickr_full_url, WIFIDOG_ABS_FILE_PATH."tmp/" . $filename);
-
-            if (!file_exists(WIFIDOG_ABS_FILE_PATH."tmp/" . $filename)) { # Error occured, print output of wget
-                print "<B STYLE=\"color:red\">Error</b><p>Current working directory : <em>$basepath/tmp/smarty</em>";
-                $output = implode("\n", $output);
-                print "<pre><em>wget \"$phlickr_full_url\"</em>\n$output</pre>";
-                exit ();
-            }
-            else {
-                print "OK<BR>";
-            }
-
-            print "Uncompressing : ";
-            $dirname_array = split(".tgz", WIFIDOG_ABS_FILE_PATH."tmp/" . $filename);
-            $dirname = array_shift($dirname_array);
-            if (!file_exists($dirname))
-                execVerbose("tar -xzf $dirname.tgz", $output, $return);
-            print "OK<BR>";
-
-            print "Copying : ";
-            if (!file_exists(WIFIDOG_ABS_FILE_PATH.'/Phlickr/Photo.php'))
-                execVerbose("cp -r $dirname/* ".WIFIDOG_ABS_FILE_PATH."lib/Phlickr", $output, $return);
-            print "OK<BR>";
-
-            refreshButton();
-            // Skipping jpgraph install
-            navigation(array (
-                array (
-                    "title" => "Back",
-                    "page" => "simplepie"
-                ),
-                array (
-                    "title" => "Next",
-                    "page" => "database"
-                )
-            ));
-        }
-        else {
-            print<<< EndHTML
-<p><A HREF="http://phlickr.sourceforge.net/">Phlickr</A> is an Open Source PHP 5 interface to the Flickr API. <A HREF="http://flickr.com/">Flickr</A> is a digital photo sharing website. Phlickr allows WifiDog to display pictures from Flickr on its portal pages. Phlickr is thus an optional package..
-
-<p>Do you want to install Phlickr ?
-EndHTML;
-            navigation(array (
-                array (
-                    "title" => "Back",
-                    "page" => "simplepie"
-                ),
-                array (
-                    "title" => "Install",
-                    "page" => "phlickr",
-                    "action" => "install"
-                ),
-                array (
-                    "title" => "Next",
                     "page" => "database"
                 )
             ));
@@ -841,7 +748,7 @@ EndHTML;
             navigation(array (
                 array (
                     "title" => "Back",
-                    "page" => "phlickr"
+                    "page" => "feedpressreview"
                 ),
                 array (
                     "title" => "Next",
@@ -882,7 +789,7 @@ EndHTML;
             navigation(array (
                 array (
                     "title" => "Back",
-                    "page" => "phlickr"
+                    "page" => "feedpressreview"
                 ),
                 array (
                     "title" => "Next",
@@ -900,7 +807,7 @@ EndHTML;
             navigation(array (
                 array (
                     "title" => "Back",
-                    "page" => "phlickr"
+                    "page" => "feedpressreview"
                 ),
                 array (
                     "title" => "Install",
