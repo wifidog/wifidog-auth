@@ -72,36 +72,38 @@ class Dependencies
 	private static $_components = array(
 	'mbstring' => array (
 	    'mandatory' => 1,
-	    "type" => "PhpExtension", 
+	    "type" => "phpExtension", 
 	    'description' => 'Required for core auth-server and RSS support'
 	    ),
 	'session' => array (
 	    'mandatory' => 1,
-	    "type" => "PhpExtension", 
+	    "type" => "phpExtension", 
 	    'description' => 'Required for core auth-server'
 	    ),
 	'pgsql' => array (
 	    'mandatory' => 1,
-	    "type" => "PhpExtension", 
+	    "type" => "phpExtension", 
 	    'description' => 'Required for auth-server to connect to Postgresql database'
 	    ),
 	"Smarty" => array (
 	    "type" => "localLib", 
 	    "detectFiles" => "lib/smarty/Smarty.class.php", 
-	    'description' => "Required for all parts of wifidog"
+	    'description' => "Required for all parts of wifidog",
+	    'website' => "http://smarty.php.net/"
 	    ),
 	'gettext' => array (
-	    "type" => "PhpExtension", 
+	    "type" => "phpExtension", 
 	    'description' => 'Almost essential: Without gettext, the auth-server will still work, but you will loose internationalization'
 	    ),
 	'dom' => array (
-	    "type" => "PhpExtension", 
+	    "type" => "phpExtension", 
 	    'description' => 'Required to export the list of HotSpots as a RSS feed and for the geocoders'
 	    ),
 	"FPDF" => array (
 	    "type" => "localLib", 
 	    "detectFiles" => "lib/fpdf/fpdf.php", 
-	    'description' => "Required if you want to be able to export the node list as a PDF file"
+	    'description' => "Required if you want to be able to export the node list as a PDF file",
+	    'website' => "http://www.fpdf.org/"
 	    ),
 	"Image_Graph" => array (
 	    "type" => "pearStandard", 
@@ -111,12 +113,14 @@ class Dependencies
 	"Phlickr" => array (
 	    "type" => "pearCustom", 
 	    "detectFiles" => "Phlickr/Api.php", 
-	    'description' => "Required by content type FlickrPhotostream"
+	    'description' => "Required by content type FlickrPhotostream",
+	    'website' => "http://drewish.com/projects/phlickr/"
 	    ),
 	"FCKeditor" => array (
 	    "type" => "localLib", 
 	    "detectFiles" => "lib/FCKeditor/fckeditor.php", 
-	    'description' => "Required by content type FCKEditor (WYSIWYG HTML)"
+	    'description' => "Required by content type FCKEditor (WYSIWYG HTML)",
+	    'website' => "http://www.fckeditor.net/"
 	    ),
 	"HtmlSafe" => array (
 	    "type" => "pearStandard", 
@@ -136,23 +140,23 @@ class Dependencies
 	    'description' => "Required by the optional Radius Authenticator"
 	    ),
 	'mcrypt' => array (
-	    "type" => "PhpExtension", 
+	    "type" => "phpExtension", 
 	    'description' => 'Required by the optional Radius Authenticator'
 	    ),
 	'mhash' => array (
-	    "type" => "PhpExtension", 
+	    "type" => "phpExtension", 
 	    'description' => 'Required by the optional Radius Authenticator'
 	    ),
 	'xmlrpc' => array (
-	    "type" => "PhpExtension", 
+	    "type" => "phpExtension", 
 	    'description' => 'Required by the optional Radius Authenticator'
 	    ),
 	"ldap" => array (
-	    "type" => "PhpExtension", 
+	    "type" => "phpExtension", 
 	    'description' => "Required by the optional LDAP Authenticator"
 	    ),
 	'xml' => array (
-	    "type" => "PhpExtension", 
+	    "type" => "phpExtension", 
 	    'description' => 'Required for RSS support'
 	    ),
 	 "Cache" => array (
@@ -236,7 +240,7 @@ class Dependencies
 	    // Check, if the requested component can be found.
 	    if (isset(self::$_components[$component])) {
 	        // Are we checking for a PHP extension or a PHP library?
-	        if (self::$_components[$component]["type"] == "PhpExtension") {
+	        if (self::$_components[$component]["type"] == "phpExtension") {
 	            $_returnValue = extension_loaded($component);
 	        }
 	        else if (self::$_components[$component]["type"] == "localLib") {
@@ -358,7 +362,7 @@ class Dependencies
 	    {
 	        $retval = "http://pear.php.net/package/".$this->id."/";
 	    }
-	    if(self::$_components[$this->id]["type"] == "phpExtension")
+	    else if(self::$_components[$this->id]["type"] == "phpExtension")
 	    {
 	        $retval = "http://www.php.net/".$this->id."/";
 	    }
