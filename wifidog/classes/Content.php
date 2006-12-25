@@ -381,7 +381,8 @@ class Content implements GenericObject {
         foreach ($candidates as $candidate) {
             $candidate_reflector = new ReflectionClass($candidate);
             //echo"classname: $classname, candidate: $candidate<br>";
-            if ($classname_reflector->isSubclassOf($candidate_reflector)) {
+            if ($candidate == $classname || $classname_reflector->isSubclassOf($candidate_reflector)) {
+                //As of PHP5.2, it would apear that isSubclass means a strict sublclass, so the first check was added.
                 //The content meets the criteria
                 //echo "TRUE<br>";
                 $retval = true;
@@ -465,7 +466,7 @@ class Content implements GenericObject {
             //Get an empty filter
             $content_type_filter = ContentTypeFilter :: getObject(array ());
         }
-
+//pretty_print_r($content_type_filter);
         $i = 0;
         $tab = array ();
         foreach ($availableContentTypes as $className) {

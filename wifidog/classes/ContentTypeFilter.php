@@ -103,7 +103,7 @@ class ContentTypeFilter {
         if(is_array($this->criteria_array))
         {
             foreach ($this->criteria_array as $criteria) {
-                //echo "call_user_func_array called with: ";
+                //echo "call_user_func_array called on $classname with: ";
                 //pretty_print_r($criteria);
 
                 if(is_callable(array($classname,$criteria[0])) === false)

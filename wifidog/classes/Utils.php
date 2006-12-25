@@ -131,7 +131,8 @@ class Utils
         public static function execCommand($command, & $output, $debug = false) {
             if($debug)
             print "$command";
-            exec($command.'  2>&1', & $output, & $retval);
+            $retval = null;
+            exec($command.'  2>&1', $output, $retval);
             if($debug){
                 if ($retval != 0)
             print "<p style='color:red'><em>Error:</em>  Command did not complete successfully  (returned $retval): <br/>\n";
