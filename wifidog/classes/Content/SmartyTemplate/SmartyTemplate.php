@@ -34,76 +34,80 @@
 // +-------------------------------------------------------------------+
 
 /**
- * WiFiDog Authentication Server home page
- *
  * @package    WiFiDogAuthServer
+ * @subpackage ContentClasses
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
- * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
- * @copyright  2006 Max Horvath, maxspot GmbH
- * @version    Subversion $Id$
+ * @copyright  2007 Benoit Grégoire, Technologies Coeus inc.
+ * @version    Subversion $Id: TrivialLangstring.php 1094 2006-09-07 12:23:08Z benoitg $
  * @link       http://www.wifidog.org/
  */
 
 /**
- * Don't change the first require_once() as we didn't add WiFiDogs installation
- * path to the global include_path variable of PHP, yet!
+ * Represents a simple Langstring (no title, description, etc.)
+ *
+ * @package    WiFiDogAuthServer
+ * @subpackage ContentClasses
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  */
-require_once(dirname(__FILE__) . '/include/common.php');
+class SmartyTemplate extends Langstring
+{
+    /**
+     * Constructor
+     *
+     * @param string $content_id Content id
+     *
+     * @return void     */
+    protected function __construct($content_id)
+    {
+        parent::__construct($content_id);
+    }
+    /** When a content object is set as Simple, it means that is is used merely to contain it's own data.  No title, description or other metadata will be set or displayed, during display or administration
+     * @return true or false */
+    public function isSimpleContent() {
+        return false;
+    }
+    
+        /**
+     * Retreives the user interface of this object.
+     *
+     * Anything that overrides this method should call the parent method with
+     * it's output at the END of processing.
+     *
+     * @param string $subclass_admin_interface HTML content of the interface
+     *                                         element of a children
+     *
+     * @return string The HTML fragment for this interface
+     */
+    public function getUserUI($subclass_user_interface = null) {
+        // Init values
+        $html = '';
+        $smarty = SmartyWifidog::getObject();
+        
+        $html .= $smarty->fetch('string:'.$this->getString());
 
-require_once('include/common_interface.php');
-require_once('classes/MainUI.php');
-require_once('classes/Network.php');
-require_once('classes/Node.php');
-require_once('classes/User.php');
-$smarty = SmartyWifidog::getObject();
-// Init ALL smarty SWITCH values
-$smarty->assign('sectionTOOLCONTENT', false);
-$smarty->assign('sectionMAINCONTENT', false);
+        $html .= $subclass_user_interface;
+        /* Handle hyperlink clicktrough logging */
+        $html = $this->replaceHyperLinks($html);
+        return Content :: getUserUI($html);
+    }
 
-// Init ALL smarty values
-$smarty->assign('googleMapsEnabled', false);
+    /**
+     * Reloads the object from the database.
+     *
+     * Should normally be called after a set operation.
+     *
+     * This function is private because calling it from a subclass will call the
+     * constructor from the wrong scope
+     *
+     * @return void
+     */
+    private function refresh()
+    {
+        $this->__construct($this->id);
+    }
 
-// Get information about network
-$network = Network::getCurrentNetwork();
-
-/*
- * Tool content
- */
-
-// Set section of Smarty template
-$smarty->assign('sectionTOOLCONTENT', true);
-
-// Compile HTML code
-$html = $smarty->fetch("templates/sites/index.tpl");
-
-/*
- * Main content
- */
-
-// Reset ALL smarty SWITCH values
-$smarty->assign('sectionTOOLCONTENT', false);
-$smarty->assign('sectionMAINCONTENT', false);
-
-// Set section of Smarty template
-$smarty->assign('sectionMAINCONTENT', true);
-
-// Set Google maps information
-$smarty->assign('googleMapsEnabled', defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED);
-
-$net = Network::getCurrentNetwork();
-$smarty->assign('networkNumValidUsers', $net ? $net->getNumValidUsers() : 0);
-
-// Compile HTML code
-$html_body = $smarty->fetch("templates/sites/index.tpl");
-
-/*
- * Render output
- */
-$ui = MainUI::getObject();
-$ui->addContent('left_area_middle', $html);
-$ui->addContent('main_area_top', $html_body);
-$ui->display();
+}
 
 /*
  * Local variables:
@@ -113,4 +117,4 @@ $ui->display();
  * End:
  */
 
-?>
+

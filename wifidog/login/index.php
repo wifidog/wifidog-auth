@@ -241,7 +241,6 @@ if ((!empty($logout) && $logout) && ($user = User::getCurrentUser()) != null  &&
  */
 
 // Set details about node
-$smarty->assign('node', $node);
 $smarty->assign('gw_address', $gw_address);
 $smarty->assign('gw_port', $gw_port);
 $smarty->assign('gw_id', $gw_id);

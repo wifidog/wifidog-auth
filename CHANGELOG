@@ -1,3 +1,13 @@
+2006-12-30 Benoit Grégoire  <bock@step.polymtl.ca>
+	* install.php:  Move path verification to the first page, and make it clearer.  Fix PHP warnings.
+	* wifidog/include/smarty.resource.string.php:  A smarty resource plugin to parse a smarty template from a string
+	* SmartyTemplate:  Very basic but functionnal commit of the new Smarty content type.  
+	IMPORTANT NOTE:  This will eventually obsolete IFrameRest, which will be removed.
+	* Continue cleaning-up/standardizing Smarty variable usage.
+	
+2006-12-12 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Fix all PHP 5.2 compatibility issues I could find.  This needs further testing
+
 2006-12-12 Pascal Charest <pascal.charest@gmail.com>
 	* install.php: Remove obsolete Phlickr installation references
 

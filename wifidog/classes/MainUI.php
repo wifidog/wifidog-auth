@@ -401,7 +401,6 @@ class MainUI {
                 $_sqlAdditionalWhere = "";
 
                 // Init ALL smarty values
-                User :: assignSmartyValues($this->smarty, $_currentUser);
                 $this->smarty->assign('formAction', "");
                 $this->smarty->assign('nodeUI', "");
                 $this->smarty->assign('networkUI', "");
@@ -474,8 +473,6 @@ class MainUI {
         // Get information about user
         $_currentUser = User :: getCurrentUser();
 
-        User :: assignSmartyValues($this->smarty, $_currentUser);
-
         $this->smarty->assign('logoutParameters', "");
         $this->smarty->assign('loginParameters', "");
         $this->smarty->assign('formAction', "");
@@ -483,9 +480,6 @@ class MainUI {
         $this->smarty->assign('accountInformation', "");
         $this->smarty->assign('techSupportInformation', "");
         $this->smarty->assign('shrinkLeftArea', $this->_shrinkLeftArea);
-
-        // Provide Smarty with information about the network
-        Network :: assignSmartyValues($this->smarty);
 
         /*
          * Provide Smarty information about the user's login/logout status
@@ -594,9 +588,6 @@ class MainUI {
          * Allow super admin to display debug output if requested by using
          * $_REQUEST['debug_request']
          */
-
-        // Get information about user
-        User :: assignSmartyValues($this->smarty);
 
         // Provide footer scripts to Smarty
         $this->smarty->assign('footerScripts', $this->_footerScripts);

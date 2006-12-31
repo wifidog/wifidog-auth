@@ -1554,6 +1554,27 @@ catch (Exception $e)
 		$this->__construct($this->id);
 	}
 
+    /**
+     * Assigns values about node to be processed by the Smarty engine.
+     *
+     * @param object $smarty Smarty object
+     * @param object $net    Node object
+     *
+     * @return void
+     *
+     * @static
+     * @access public
+     */
+    public static function assignSmartyValues($smarty, $node = null)
+    {
+        if (!$node) {
+            $node = self::getCurrentNode();
+        }
+
+        // Set network details
+        $smarty->assign('nodeId', $node ? $node->getId() : '');
+        $smarty->assign('nodeName', $node ? $node->getName() : '');
+    }
 }
 
 /*

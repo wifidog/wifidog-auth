@@ -109,7 +109,7 @@ class IFrameRest extends IFrame
      *
      * @return string HTML code for the administration interface
      */
-    public function getAdminUI()
+    public function getAdminUI($subclass_admin_interface = null, $title=null)
     {
         // Init values
         $html = '';

@@ -52,7 +52,6 @@ require_once('include/common_interface.php');
 require_once('classes/MainUI.php');
 require_once('classes/Network.php');
 $smarty = SmartyWifidog::getObject();
-Network::assignSmartyValues($smarty);
 $smarty->assign('read_the_faq',
 	sprintf('Read the <a href="%sfaq.php">faq</a> document for more information.', BASE_URL_PATH));
 

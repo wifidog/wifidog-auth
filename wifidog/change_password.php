@@ -64,7 +64,6 @@ $smarty->assign('newpassword_again', '');
 
 $user = User::getCurrentUser();
 if ($user) {
-	User::assignSmartyValues($smarty, $user);
 
 	if ($user->isSuperAdmin() && isset($_REQUEST['username'])) {
 		$smarty->assign('username', $_REQUEST['username']);

@@ -313,7 +313,7 @@ EndHTML;
  @return: Return value of the command*/
         function execVerbose($command, & $output, & $return_var, $always_show_output = true) {
             print "$command";
-            $retval = exec($command.'  2>&1', & $output, & $return_var);
+            $retval = exec($command.'  2>&1', $output, $return_var);
             if ($return_var != 0)
             print "<p style='color:red'><em>Error:</em>  Command did not complete successfully  (returned $return_var): <br/>\n";
             else
@@ -443,8 +443,6 @@ EndHTML;
                 $cmd_chown = '';
                 $error = 0;
 
-                print "<p><em>Installation directory (WIFIDOG_ABS_FILE_PATH)</em>: " . WIFIDOG_ABS_FILE_PATH . "</p>";
-                print "<p><em>Note:</em> Please validate that 'Installation directory' value is the right one. If this value is wrong, the PATH automatic detection will not work as properly";
                 print "<p><em>HTTP daemon UNIX username/group</em>: $process_username/$process_group</p>";
                 #    print "<p><em>HTTPD group</em>: $process_group<BR</p>";
                 print "<p><table BORDER=\"1\"><tr><td><em>Directory</em></td></td><td><em>Owner</em></td><td><em>Writable</em></td></tr>\n";
@@ -1421,14 +1419,14 @@ EndHTML;
     default :
         $WIFIDOG_VERSION = $configArray['WIFIDOG_VERSION'];
         # TODO : Add links to auth-server web documents
-        print<<<EndHTML
+print<<<EndHTML
 <h1>Welcome to WifiDog Auth-Server installation and configuration script.</h1>
 <p>This installation still needs improvement, so please any report bug to the mailing list for better support.<BR/>
 The current auth-server version is <em>$WIFIDOG_VERSION</em>.</p>
 
-<p><strong>Before going any further</strong> with this installation you need to have/create a valid user and database.
-<p>Here is a command line example for PostgreSQL (or use the way you like) :</p>
-
+<p><strong>Before going any further</strong> with this installation you need to do the following:\n
+<h2>1-Make sure you created a valid user and database.</h2>
+<p>If you haven't, here is a command line example for PostgreSQL (or use the way you like) :</p>
 <em>Create the PostgreSQL databaser user for WifiDog</em> (createuser and createdb need to be in you PATH) :
 <pre>  <I>postgres@yourserver $></I> createuser wifidog --pwprompt
   Enter password for new user:
@@ -1437,13 +1435,19 @@ The current auth-server version is <em>$WIFIDOG_VERSION</em>.</p>
   Shall the new user be allowed to create more new users? (y/n) n
   CREATE USER
 </pre>
-
 <em>Create the WifiDog database</em>
 <pre>  <I>postgres@yourserver $></I> createdb wifidog --encoding=UTF-8 --owner=wifidog
   CREATE DATABASE
 </pre>
-
-<em>Security</em> : A password is needed to continue with the installation. You need to read the random password in <em>$password_file</em> file. No username needed, only the password. This password is only usefull for the installation, you will never use it in Auth-Server administration pages.
+<h2>2-Check that the paths were autodected properly</h2>
+EndHTML;
+                echo "<table>\n";
+                echo "<tr><td>Absolute path to the /wifidog directory (WIFIDOG_ABS_FILE_PATH):</td><td>" . WIFIDOG_ABS_FILE_PATH . "</td></tr>\n";
+				echo "<tr><td>URL path to reach the /wifidog directory with a web browser (SYSTEM_PATH): </td><td>" . SYSTEM_PATH . "</td></tr>\n";
+                echo "<tr><td colspan=2><em>Please verify the two values above.</em> They should be autodectected correctly by wifidog in path_defines_base.php.  If there is a bug and they are not, you need to override them in config.php (or find the bug), or your auth server will not work properly.  </td></tr></table>\n";
+print<<<EndHTML
+<h2>3-Retrieve the install password</h2>
+A password is needed to continue with the installation. You need to read the random password in <em>$password_file</em> file. No username needed, only the password. This password is only usefull for the installation, you will never use it in Auth-Server administration pages.
 </pre>
 
 <p>When you are ready click next</p>

@@ -134,38 +134,6 @@ $current_node_id = $current_node->getId();
 $smarty->assign('sectionTOOLCONTENT', false);
 $smarty->assign('sectionMAINCONTENT', false);
 
-// Init ALL smarty values
-$smarty->assign('currentNode', null);
-$smarty->assign('numOnlineUsers', 0);
-$smarty->assign('onlineUsers', array ());
-$smarty->assign('userIsAtHotspot', false);
-$smarty->assign('noUrl', true);
-$smarty->assign('url', "");
-$smarty->assign('currentUrl', "");
-$smarty->assign('accountValidation', false);
-$smarty->assign('validationTime', 20);
-$smarty->assign('hotspotNetworkUrl', "");
-$smarty->assign('hotspotNetworkName', "");
-$smarty->assign('networkLogoBannerUrl', "");
-$smarty->assign('networkContents', false);
-$smarty->assign('networkContentArray', array ());
-$smarty->assign('nodeHomepage', false);
-$smarty->assign('nodeURL', "");
-$smarty->assign('nodeName', "");
-$smarty->assign('nodeContents', false);
-$smarty->assign('nodeContentArray', array ());
-$smarty->assign('userContents', false);
-$smarty->assign('userContentArray', array ());
-
-/*
- * Tool content
- */
-
-// Set section of Smarty template
-$smarty->assign('sectionTOOLCONTENT', true);
-
-// Set details about node
-$smarty->assign('currentNode', $current_node);
 
 // Set details about onlineusers
 $online_users = $current_node->getOnlineUsers();
@@ -183,8 +151,7 @@ foreach ($online_users as $online_user) {
 		    }
 
  */
-$smarty->assign('numOnlineUsers', $num_online_users);
-
+$smarty->assign('onlineUsers', array ());
 if ($num_online_users > 0) {
     $smarty->assign('onlineUsers', $online_user_array);
 }
@@ -192,18 +159,13 @@ if ($num_online_users > 0) {
 // Check for requested URL and if user is at a hotspot
 $original_url_requested = $session->get(SESS_ORIGINAL_URL_VAR);
 
-$smarty->assign('userIsAtHotspot', Node :: getCurrentRealNode() != null ? true : false);
-
 if (empty ($original_url_requested)) {
     $smarty->assign('noUrl', true);
     $smarty->assign('url', "?missing=url");
 } else {
-    $smarty->assign('noUrl', true);
+    $smarty->assign('noUrl', false);
     $smarty->assign('url', $original_url_requested);
 }
-
-// Assign current request url
-$smarty->assign('currentUrl', CURRENT_REQUEST_URL);
 
 // Compile HTML code
 $tool_html = $smarty->fetch("templates/sites/portal.tpl");

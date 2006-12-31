@@ -45,6 +45,7 @@
  * Load required classes
  */
 require_once("classes/Locale.php");
+require_once("include/smarty.resource.string.php");
 
 // Check if Smarty installed, if not redirect user to web-base installation
 if (Dependencies::check("Smarty", $errmsg)) {
@@ -122,13 +123,8 @@ function smarty_modifier_fsize_format($size,$format = '',$precision = 2, $dec_po
  * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class SmartyWifidog extends Smarty {
-    private static $object;
     public static function getObject() {
-    	if (self::$object==null)
-    	{
-    		self::$object=new self();
-    	}
-    	return self::$object;
+    	return new self();
     }
    private function __construct()
    {
@@ -151,12 +147,13 @@ class SmartyWifidog extends Smarty {
         $this->register_modifier("_","_");
         $this->register_modifier("fsize_format", "smarty_modifier_fsize_format");
 
+		// register the resource name "string"
+		$this->register_resource("string", array("smarty_resource_string_source",
+                                       "smarty_resource_string_timestamp",
+                                       "smarty_resource_string_secure",
+                                       "smarty_resource_string_trusted"));
         $this->caching = false;
         //$this->compile_check = true;
-        $this->assign('app_name','Wifidog auth server');
-
-    /* We need this for various forms to redirect properly (language form) */
-    $this->assign('request_uri', $_SERVER["REQUEST_URI"]);
 
 /* Common content */
     $network = Network::GetCurrentNetwork();
@@ -171,9 +168,10 @@ class SmartyWifidog extends Smarty {
     $this->assign('hotspot_network_url',$network->getHomepageURL());
 
      /* Other useful stuff */
-     $this->assign('userIsAtHotspot', Node::getCurrentRealNode() != null ? true : false);
-
-     $this->assign('currentLocale', Locale::getCurrentLocale());
+$this->assign('userIsAtHotspot', Node :: getCurrentRealNode() != null ? true : false);
+Network::assignSmartyValues($this);
+Node::assignSmartyValues($this);
+User::assignSmartyValues($this);
    }
 
    function SetTemplateDir( $template_dir)

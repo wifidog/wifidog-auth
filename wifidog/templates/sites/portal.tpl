@@ -48,12 +48,12 @@
     <h1>{"Online users"|_}</h1>
 
     <p class="indent">
-        {if $currentNode != null}
-            {if ($numOnlineUsers > 0)}
-                {if ($numOnlineUsers == 1)}
+        {if $nodeId != null}
+            {if ($networkNumOnlineUsers > 0)}
+                {if ($networkNumOnlineUsers == 1)}
                     1 {"user is online at this hotspot"|_}
                 {else}
-                    {$numOnlineUsers} {"users are online at this hotspot"|_}
+                    {$networkNumOnlineUsers} {"users are online at this hotspot"|_}
                 {/if}
 
                 <ul class="users_list">

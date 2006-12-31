@@ -49,9 +49,13 @@
         <h1>{"Login or Signup here"|_}:</h1>
         <form name="login_form" action="{$base_ssl_path}login/index.php" method="post" onsubmit="return validateForm(this);">
         		<input type="hidden" name="form_request" value="login">
-            {if $node != null}
+            {if $gw_address != null}
                 <input type="hidden" name="gw_address" value="{$gw_address}">
+            {/if}
+            {if $gw_port != null}
                 <input type="hidden" name="gw_port" value="{$gw_port}">
+            {/if}
+            {if $gw_id != null}
                 <input type="hidden" name="gw_id" value="{$gw_id}">
             {/if}
             {if $origin != null}
