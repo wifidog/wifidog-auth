@@ -1701,6 +1701,22 @@ class Content implements GenericObject {
         } else {
             $db = AbstractDb :: getObject();
             if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
+            	$metadata = $this->getTitle();
+            	if ($metadata){
+            		$metadata->delete();
+            	}
+            	$metadata = $this->getDescription();
+            	if ($metadata){
+            		$metadata->delete();
+            	}
+            	$metadata = $this->getLongDescription();
+            	if ($metadata){
+            		$metadata->delete();
+            	}
+            	$metadata = $this->getProjectInfo();
+            	if ($metadata){
+            		$metadata->delete();
+            	}
                 $sql = "DELETE FROM content WHERE content_id='$this->id'";
                 $db->execSqlUpdate($sql, false);
                 $retval = true;

@@ -52,7 +52,7 @@
 *}
     <div id="login_form">
         <ul>
-			{if $isValidUser}
+			{if $userIsValid}
             <li><a href="{$base_ssl_path}change_password.php">{"Change password"|_}</a></li>
 			{else}
             <li><a href="{$base_url_path}faq.php">{"I have trouble connecting and I would like some help"|_}</a></li>

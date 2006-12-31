@@ -164,8 +164,6 @@ class SmartyWifidog extends Smarty {
 	$this->assign('base_ssl_path', BASE_SSL_PATH);
     $this->assign('base_non_ssl_path', BASE_NON_SSL_PATH);
     $this->assign('common_images_url', COMMON_IMAGES_URL);
-    $this->assign('hotspot_network_name',$network->getName());
-    $this->assign('hotspot_network_url',$network->getHomepageURL());
 
      /* Other useful stuff */
 $this->assign('userIsAtHotspot', Node :: getCurrentRealNode() != null ? true : false);

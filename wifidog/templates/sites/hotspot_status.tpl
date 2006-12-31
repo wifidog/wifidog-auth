@@ -76,7 +76,7 @@
         <table>
             <thead>
                 <tr>
-                    <th colspan="6">{"Status of the %d open %s Hotspots"|_|sprintf:$num_deployed_nodes:$hotspot_network_name}</th>
+                    <th colspan="6">{"Status of the %d open %s Hotspots"|_|sprintf:$num_deployed_nodes:$networkName}</th>
                 </tr>
                 <tr>
                     <th>{"Hotspot / Status"|_}</th>

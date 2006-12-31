@@ -1558,12 +1558,9 @@ catch (Exception $e)
      * Assigns values about node to be processed by the Smarty engine.
      *
      * @param object $smarty Smarty object
-     * @param object $net    Node object
+     * @param object $node    Node object, if unset, the current node will be used
      *
      * @return void
-     *
-     * @static
-     * @access public
      */
     public static function assignSmartyValues($smarty, $node = null)
     {
@@ -1571,9 +1568,10 @@ catch (Exception $e)
             $node = self::getCurrentNode();
         }
 
-        // Set network details
+        // Set node details
         $smarty->assign('nodeId', $node ? $node->getId() : '');
         $smarty->assign('nodeName', $node ? $node->getName() : '');
+        $smarty->assign('nodeLastHeartbeatIP', $node ? $node->getLastHeartbeatIP() : '');
     }
 }
 

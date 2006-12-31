@@ -1875,9 +1875,6 @@ class Network implements GenericObject
      * @param object $net    Network object
      *
      * @return void
-     *
-     * @static
-     * @access public
      */
     public static function assignSmartyValues($smarty, $net = null)
     {
@@ -1888,7 +1885,6 @@ class Network implements GenericObject
         // Set network details
         $smarty->assign('networkName', $net ? $net->getName() : '');
         $smarty->assign('networkHomepageURL', $net ? $net->getHomepageURL() : '');
-
         // Set networks usage information
         $smarty->assign('networkNumOnlineUsers', $net ? $net->getNumOnlineUsers() : 0);
 

@@ -74,7 +74,7 @@ END section TOOLCONTENT
 BEGIN section MAINCONTENT
 *}
 <fieldset class="pretty_fieldset">
-	<legend>{"Register a free account with"|_} {$hotspot_network_name}</legend>
+	<legend>{"Register a free account with"|_} {$networkName}</legend>
 
 	<form name="signup_form" method="post" onsubmit="return false" action="{$base_ssl_path}signup.php">
 	<input type="hidden" name="form_request" value="signup">

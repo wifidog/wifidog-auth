@@ -50,7 +50,7 @@
 {*
     BEGIN section ADMIN
 *}
-    {if $isSuperAdmin}
+    {if $userIsSuperAdmin}
             <fieldset>
                 <legend>{"User administration"|_}:</legend>
                     <ul>
@@ -64,10 +64,10 @@
 
 
 
-            {if $isSuperAdmin || $isOwner}
+            {if $userIsSuperAdmin || $userIsANodeOwner}
             <fieldset>
         	<legend>{"Node administration"|_}:</legend>
-            {if !$isSuperAdmin}
+            {if !$userIsSuperAdmin}
                 <form action="{$formAction}" method="post">
                         <div id="NodeSelector">{$nodeUI}</div>
 
@@ -84,7 +84,7 @@
             {/if}
 
 
-			{if $isSuperAdmin}
+			{if $userIsSuperAdmin}
             <fieldset>
                 <legend>{"Network administration"|_}:</legend>
                     <ul>
@@ -95,7 +95,7 @@
             <fieldset>
                 <legend>{"Server administration"|_}:</legend>
                     <ul>
-                        {if $isSuperAdmin}
+                        {if $userIsSuperAdmin}
                         <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Server&action=list">{"Servers"|_}</a></li>
         				{/if}
                         <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Content&action=list">{"Reusable content library"|_}</a></li>
