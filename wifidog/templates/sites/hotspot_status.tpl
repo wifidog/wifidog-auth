@@ -52,7 +52,7 @@
 *}
     <div id="login_form">
         <ul>
-            {if $GMapsEnabled && !$userIsAtHotspot}
+            {if $GMapsEnabled && !$realNodeId}
                 <li><a href="{$base_non_ssl_path}hotspots_map.php">{"Deployed HotSpots map"|_}</a></li>
             {/if}
             {if $PdfSupported}

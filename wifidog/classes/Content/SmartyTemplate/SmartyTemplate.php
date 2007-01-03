@@ -60,15 +60,33 @@ class SmartyTemplate extends Langstring
      * @return void     */
     protected function __construct($content_id)
     {
-        parent::__construct($content_id);
+    	parent::__construct($content_id);
     }
     /** When a content object is set as Simple, it means that is is used merely to contain it's own data.  No title, description or other metadata will be set or displayed, during display or administration
      * @return true or false */
     public function isSimpleContent() {
-        return false;
+    	return false;
     }
-    
-        /**
+    /**
+     * Retreives the admin interface of this object. Anything that overrides
+     * this method should call the parent method with it's output at the END of
+     * processing.
+     * @param string $subclass_admin_interface HTML content of the interface
+     * element of a children.
+     * @param string $type_interface SIMPLE pour éditer un seul champ, COMPLETE
+     *                               pour voir toutes les chaînes, LARGE pour
+     *                               avoir un textarea.
+     * @return string The HTML fragment for this interface.
+     */
+    public function getAdminUI($subclass_admin_interface = null, $title = null, $type_interface = "LARGE") {
+        // Init values.
+        $html = '';
+        $html .= $subclass_admin_interface;
+        $html .= "<div class='admin_section_hint'>" . sprintf(_("To list the available Smarty variables, put %s in the input field, save and then click preview"), "{debug output='html'}") . "</div>";
+        $html .= "<div class='admin_section_hint'>" . sprintf(_("Therre are also a few custom Smarty modifiers available: %s"), "urlencode, remove_accents, fsize_format") . "</div>";        
+        return parent :: getAdminUI($html, $title, $type_interface);
+    }
+     /**
      * Retreives the user interface of this object.
      *
      * Anything that overrides this method should call the parent method with
@@ -79,18 +97,18 @@ class SmartyTemplate extends Langstring
      *
      * @return string The HTML fragment for this interface
      */
-    public function getUserUI($subclass_user_interface = null) {
-        // Init values
-        $html = '';
-        $smarty = SmartyWifidog::getObject();
-        
-        $html .= $smarty->fetch('string:'.$this->getString());
+        public function getUserUI($subclass_user_interface = null) {
+        	// Init values
+        	$html = '';
+        	$smarty = SmartyWifidog::getObject();
 
-        $html .= $subclass_user_interface;
-        /* Handle hyperlink clicktrough logging */
-        $html = $this->replaceHyperLinks($html);
-        return Content :: getUserUI($html);
-    }
+        	$html .= $smarty->fetch('string:'.$this->getString());
+
+        	$html .= $subclass_user_interface;
+        	/* Handle hyperlink clicktrough logging */
+        	$html = $this->replaceHyperLinks($html);
+        	return Content :: getUserUI($html);
+        }
 
     /**
      * Reloads the object from the database.
@@ -104,7 +122,7 @@ class SmartyTemplate extends Langstring
      */
     private function refresh()
     {
-        $this->__construct($this->id);
+    	$this->__construct($this->id);
     }
 
 }

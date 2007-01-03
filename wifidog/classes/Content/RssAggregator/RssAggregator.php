@@ -404,9 +404,12 @@ private function initFeedPressReview()
             if ($max_item_age == null) {
                 $max_item_age = 'NULL';
             }
+            else {
+                $max_item_age = '$max_item_age seconds';
+            }
 
             $max_item_age = $db->escapeString($max_item_age);
-            $db->execSqlUpdate("UPDATE content_rss_aggregator SET max_item_age = '$max_item_age seconds' WHERE content_id = '$this->id'", false);
+            $db->execSqlUpdate("UPDATE content_rss_aggregator SET max_item_age = $max_item_age WHERE content_id = '$this->id'", false);
             $this->refresh();
 
             $retval = true;

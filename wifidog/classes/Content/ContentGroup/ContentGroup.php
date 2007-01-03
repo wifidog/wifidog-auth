@@ -651,7 +651,7 @@ class ContentGroup extends Content {
                     $html .= $display_element->getUserUI();
                 }
             } else {
-                $html .= '<p class="warningmsg">' . _("Sorry, no elements available at this hotspot or all elements of the content group have already been shown") . "</p>\n";
+                $html .= '<p class="warningmsg">' . _("Sorry, this content-group is empty") . "</p>\n";
             }
         }
 

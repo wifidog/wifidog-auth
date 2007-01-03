@@ -45,6 +45,7 @@
  * Load required classes
  */
 require_once("classes/Locale.php");
+require_once("classes/Utils.php");
 require_once("include/smarty.resource.string.php");
 
 // Check if Smarty installed, if not redirect user to web-base installation
@@ -58,34 +59,34 @@ if (Dependencies::check("Smarty", $errmsg)) {
 }
 
 /*
-* Smarty plugin
-* -------------------------------------------------------------
-* Type:    modifier
-* Name:    fsize_format
-* Version:    0.2
-* Date:    2003-05-15
-* Author:    Joscha Feth, joscha@feth.com
-* Purpose: formats a filesize (in bytes) to human-readable format
-* Usage:    In the template, use
-            {$filesize|fsize_format}    =>    123.45 B|KB|MB|GB|TB
-            or
-            {$filesize|fsize_format:"MB"}    =>    123.45 MB
-            or
-            {$filesize|fsize_format:"TB":4}    =>    0.0012 TB
-* Params:
-            int        size            the filesize in bytes
-            string    format            the format, the output shall be: B, KB, MB, GB or TB
-            int        precision        the rounding precision
-            string    dec_point        the decimal separator
-            string    thousands_sep    the thousands separator
-* Install: Drop into the plugin directory
-* Version:
-*            2003-05-15    Version 0.2    - added dec_point and thousands_sep thanks to Thomas Brandl, tbrandl@barff.de
-*                                    - made format always uppercase
-*                                    - count sizes "on-the-fly"
-*            2003-02-21    Version 0.1    - initial release
-* -------------------------------------------------------------
-*/
+ * Smarty plugin
+ * -------------------------------------------------------------
+ * Type:    modifier
+ * Name:    fsize_format
+ * Version:    0.2
+ * Date:    2003-05-15
+ * Author:    Joscha Feth, joscha@feth.com
+ * Purpose: formats a filesize (in bytes) to human-readable format
+ * Usage:    In the template, use
+ {$filesize|fsize_format}    =>    123.45 B|KB|MB|GB|TB
+ or
+ {$filesize|fsize_format:"MB"}    =>    123.45 MB
+ or
+ {$filesize|fsize_format:"TB":4}    =>    0.0012 TB
+ * Params:
+ int        size            the filesize in bytes
+ string    format            the format, the output shall be: B, KB, MB, GB or TB
+ int        precision        the rounding precision
+ string    dec_point        the decimal separator
+ string    thousands_sep    the thousands separator
+ * Install: Drop into the plugin directory
+ * Version:
+ *            2003-05-15    Version 0.2    - added dec_point and thousands_sep thanks to Thomas Brandl, tbrandl@barff.de
+ *                                    - made format always uppercase
+ *                                    - count sizes "on-the-fly"
+ *            2003-02-21    Version 0.1    - initial release
+ * -------------------------------------------------------------
+ */
 function smarty_modifier_fsize_format($size,$format = '',$precision = 2, $dec_point = ".", $thousands_sep = ",")
 {
     $format = strtoupper($format);
@@ -124,19 +125,19 @@ function smarty_modifier_fsize_format($size,$format = '',$precision = 2, $dec_po
  */
 class SmartyWifidog extends Smarty {
     public static function getObject() {
-    	return new self();
+        return new self();
     }
-   private function __construct()
-   {
+    private function __construct()
+    {
 
         // Class Constructor. These automatically get set with each new instance.
 
         $this->Smarty();
-		//Now that we have user-definable templates, we must turn on security
-		$this->security = true;
-		//pretty_print_r($this->security_settings);
-		$this->security_settings['MODIFIER_FUNCS'][] = 'sprintf';
-		$this->template_dir = WIFIDOG_ABS_FILE_PATH;
+        //Now that we have user-definable templates, we must turn on security
+        $this->security = true;
+        //pretty_print_r($this->security_settings);
+        $this->security_settings['MODIFIER_FUNCS'][] = 'sprintf';
+        $this->template_dir = WIFIDOG_ABS_FILE_PATH;
         $this->compile_dir = $this->template_dir . 'tmp/smarty/templates_c/';
         $this->config_dir = $this->template_dir . 'tmp/smarty/configs/';
         $this->cache_dir = $this->template_dir . 'tmp/smarty/cache/';
@@ -145,6 +146,8 @@ class SmartyWifidog extends Smarty {
          * PHP function which is the gettext() function
          */
         $this->register_modifier("_","_");
+        $this->register_modifier("urlencode","urlencode");
+        $this->register_modifier("remove_accents",array('Utils', "remove_accents"));
         $this->register_modifier("fsize_format", "smarty_modifier_fsize_format");
 
 		// register the resource name "string"
@@ -155,10 +158,10 @@ class SmartyWifidog extends Smarty {
         $this->caching = false;
         //$this->compile_check = true;
 
-/* Common content */
+	/* Common content */
     $network = Network::GetCurrentNetwork();
 
-/* Useful stuff from config.php */
+	/* Useful stuff from config.php */
 
 	$this->assign('base_url_path', BASE_URL_PATH);
 	$this->assign('base_ssl_path', BASE_SSL_PATH);
@@ -166,10 +169,9 @@ class SmartyWifidog extends Smarty {
     $this->assign('common_images_url', COMMON_IMAGES_URL);
 
      /* Other useful stuff */
-$this->assign('userIsAtHotspot', Node :: getCurrentRealNode() != null ? true : false);
-Network::assignSmartyValues($this);
-Node::assignSmartyValues($this);
-User::assignSmartyValues($this);
+     Network::assignSmartyValues($this);
+     Node::assignSmartyValues($this);
+     User::assignSmartyValues($this);
    }
 
    function SetTemplateDir( $template_dir)

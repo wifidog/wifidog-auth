@@ -1572,6 +1572,13 @@ catch (Exception $e)
         $smarty->assign('nodeId', $node ? $node->getId() : '');
         $smarty->assign('nodeName', $node ? $node->getName() : '');
         $smarty->assign('nodeLastHeartbeatIP', $node ? $node->getLastHeartbeatIP() : '');
+        
+        $node = self::getCurrentRealNode();
+        // Set node details
+        $smarty->assign('realNodeId', $node ? $node->getId() : '');
+        $smarty->assign('realNodeName', $node ? $node->getName() : '');
+        
+        
     }
 }
 
