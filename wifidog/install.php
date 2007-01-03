@@ -304,11 +304,9 @@ EndHTML;
 /** Use PHP internal functions to download a file */
         function downloadFile($remoteURL, $localPath) {
             set_time_limit(1500); // 25 minutes timeout
-            if (copy($remoteURL, $localPath))
-            return true;
-            else
-            return false;
+            return copy($remoteURL, $localPath);
         }
+        
 /** Use PHP internal functions to execute a command 
  @return: Return value of the command*/
         function execVerbose($command, & $output, & $return_var, $always_show_output = true) {
@@ -578,17 +576,16 @@ EndHTML;
             print "Already installed !<br/>";
         }
         else {
-            chdir(WIFIDOG_ABS_FILE_PATH . "tmp");
+            $output = WIFIDOG_ABS_FILE_PATH."tmp/";
+            //chdir($output);
             list ($url, $filename) = split("=", $smarty_full_url);
 
             print "Download source code ($filename) : ";
-            if (!file_exists(WIFIDOG_ABS_FILE_PATH."tmp/" . $filename))
-                //execVerbose("wget \"$smarty_full_url\" 2>&1", $output, $return);
-                downloadFile($smarty_full_url, WIFIDOG_ABS_FILE_PATH."tmp/" . $filename);
+            if (!file_exists($output.$filename))
+                downloadFile($smarty_full_url, $output.$filename);
 
-            if (!file_exists(WIFIDOG_ABS_FILE_PATH."tmp/" . $filename)) {
-                print "<B STYLE=\"color:red\">Error</b><p>Current working directory : <em>$basepath/tmp/smarty</em>";
-                $output = implode("\n", $output);
+            if (!file_exists($output.$filename)) {
+                print "<B STYLE=\"color:red\">Error</b><p>Current working directory : <em>$output</em>";
                 print "<pre><em>wget \"$smarty_full_url\"</em>\n$output</pre>";
                 exit ();
             }
@@ -597,7 +594,7 @@ EndHTML;
             }
 
             print "Uncompressing : ";
-            $dir_array = split(".tar.gz", WIFIDOG_ABS_FILE_PATH."tmp/" . $filename);
+            $dir_array = split(".tar.gz", $output.$filename);
             $dirname = array_shift($dir_array);
 
             if (!file_exists($dirname))

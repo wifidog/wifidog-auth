@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UTF8';
+SET client_encoding = 'UNICODE';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -10,12 +10,12 @@ SET client_min_messages = warning;
 -- Name: wifidog; Type: DATABASE; Schema: -; Owner: wifidog
 --
 
-CREATE DATABASE wifidog WITH TEMPLATE = template0 ENCODING = 'UTF8';
+CREATE DATABASE wifidog WITH TEMPLATE = template0 ENCODING = 'UNICODE';
 
 
 \connect wifidog
 
-SET client_encoding = 'UTF8';
+SET client_encoding = 'UNICODE';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -98,8 +98,6 @@ CREATE TABLE content_available_display_pages (
 );
 
 
-SET default_with_oids = false;
-
 --
 -- Name: content_clickthrough_log; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
@@ -107,14 +105,14 @@ SET default_with_oids = false;
 CREATE TABLE content_clickthrough_log (
     user_id text,
     content_id text NOT NULL,
-    clickthrough_timestamp timestamp without time zone DEFAULT now() NOT NULL,
+    first_clickthrough_timestamp timestamp without time zone DEFAULT now() NOT NULL,
     node_id text NOT NULL,
     destination_url text NOT NULL,
+    num_clickthrough integer DEFAULT 1 NOT NULL,
+    last_clickthrough_timestamp timestamp without time zone DEFAULT now() NOT NULL,
     CONSTRAINT content_clickthrough_log_destination_url_check CHECK ((destination_url <> ''::text))
 );
 
-
-SET default_with_oids = true;
 
 --
 -- Name: content_display_log; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
@@ -125,7 +123,8 @@ CREATE TABLE content_display_log (
     content_id text NOT NULL,
     first_display_timestamp timestamp without time zone DEFAULT now() NOT NULL,
     node_id text NOT NULL,
-    last_display_timestamp timestamp without time zone DEFAULT now() NOT NULL
+    last_display_timestamp timestamp without time zone DEFAULT now() NOT NULL,
+    num_display integer DEFAULT 1 NOT NULL
 );
 
 
@@ -505,8 +504,6 @@ CREATE TABLE users (
     username text,
     account_origin text NOT NULL,
     never_show_username boolean DEFAULT false,
-    real_name text,
-    website text,
     prefered_locale text,
     CONSTRAINT check_user_not_empty CHECK (((user_id)::text <> ''::text))
 );

@@ -1,3 +1,6 @@
+2007-01-02 François Proulx <francois.proulx@gmail.com>
+	* Updated the SQL schema initial schema
+	
 2006-12-31 Benoit Grégoire  <bock@step.polymtl.ca>
 	* More Smarty cleanup
 	* Content.php:  Bugfix:  metadata wasn't deleted along with the rest of the 
