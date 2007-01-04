@@ -1,6 +1,7 @@
 2007-01-03 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Yet more Smarty cleanup, add some docs, add Smarty variables to access the physical node a user is connected to.
 	* RssAggregator.php:  Fix bug in setMaxItemAge() method when setting a null value
+	* Cache.php:  Performance optimization when caching is disabled.
 	
 2007-01-02 François Proulx <francois.proulx@gmail.com>
 	* Updated the SQL schema initial schema
