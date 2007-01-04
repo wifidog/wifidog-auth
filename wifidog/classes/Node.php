@@ -1572,7 +1572,7 @@ catch (Exception $e)
         $smarty->assign('nodeId', $node ? $node->getId() : '');
         $smarty->assign('nodeName', $node ? $node->getName() : '');
         $smarty->assign('nodeLastHeartbeatIP', $node ? $node->getLastHeartbeatIP() : '');
-        
+        $smarty->assign('nodeNumOnlineUsers', $node ? $node->getNumOnlineUsers() : '');
         $node = self::getCurrentRealNode();
         // Set node details
         $smarty->assign('realNodeId', $node ? $node->getId() : '');
