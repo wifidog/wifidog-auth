@@ -279,7 +279,7 @@ class FormSelectGenerator
 	 */
 	public static function isPresent($userPrefix, $objectPrefix)
 	{
-		return isset ($_REQUEST[$this->getRequestIndex($userPrefix, $objectPrefix)]);
+		return isset ($_REQUEST[self :: getRequestIndex($userPrefix, $objectPrefix)]);
 	}
 }
 
