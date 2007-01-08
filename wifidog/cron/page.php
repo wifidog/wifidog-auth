@@ -84,6 +84,7 @@ function page_if_down_since($nodeObject, $minutes) {
 try {
 	$sql = "SELECT node_id FROM nodes WHERE node_deployment_status = 'DEPLOYED'";
     $nodes_results = null;
+    $db = AbstractDb::getObject();
     $db->execSql($sql, $nodes_results, false);
 
     if ($nodes_results == null)

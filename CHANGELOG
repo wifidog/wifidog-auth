@@ -1,6 +1,7 @@
 2007-01-03 Benoit Grégoire  <bock@step.polymtl.ca>
 	* FormSelectGenerator.php: Fix incorrect $this reference in isPresent().  The bug would only manifest
 	 itself from the FlickrPhotostream's admin interface.
+	* page.php:  Fix missing retrieval of DB instance.
 
 2007-01-03 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Yet more Smarty cleanup, add some docs, add Smarty variables to access the physical node a user is connected to.
