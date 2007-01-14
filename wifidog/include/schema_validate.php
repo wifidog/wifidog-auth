@@ -47,7 +47,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 51);
+define('REQUIRED_SCHEMA_VERSION', 52);
 /** Used to test a new shecma version before modyfying the database */
 define('SCHEMA_UPDATE_TEST_MODE', false);
 /**
@@ -1072,6 +1072,21 @@ function real_update_schema($targetSchema) {
         $sql .= "ALTER TABLE content_group DROP COLUMN is_artistic_content;\n";
         $sql .= "ALTER TABLE content_group DROP COLUMN is_locative_content;\n";
     }
+
+    $new_schema_version = 52;
+    if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
+        printUpdateVersion($new_schema_version);
+        $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+       $sql .= "CREATE TABLE content_shoutbox_messages \n";
+        $sql .= "( \n";
+        $sql .= "message_content_id text  PRIMARY KEY REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE, \n";
+        $sql .= "shoutbox_id text NOT NULL REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE, \n";
+        $sql .= "origin_node_id text NOT NULL REFERENCES nodes ON UPDATE CASCADE ON DELETE CASCADE, \n";
+        $sql .= "author_user_id text NOT NULL REFERENCES users ON UPDATE CASCADE ON DELETE CASCADE, \n";
+        $sql .= "creation_date timestamp DEFAULT now() \n";
+        $sql .= "); \n";
+    }
+    
     /*
     $new_schema_version = ;
     if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {

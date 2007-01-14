@@ -70,6 +70,13 @@ class Stylesheet extends Langstring
      	*/
    		$this->allowed_html_tags = "";
     }
+    
+    /** Indicate that the content is suitable to output plain text.
+     * @return true or false */
+    public function isTextualContent() {
+    	return false;
+    }
+    
     /** When a content object is set as Simple, it means that is is used merely to contain it's own data.  No title, description or other metadata will be set or displayed, during display or administration
      * @return true or false */
     public function isSimpleContent() {

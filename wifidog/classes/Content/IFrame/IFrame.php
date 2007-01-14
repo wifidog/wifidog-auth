@@ -287,22 +287,15 @@ class IFrame extends Content
      *
      * Anything that overrides this method should call the parent method with
      * it's output at the END of processing.
-     *
-     * @param string $subclass_admin_interface HTML content of the interface
-     *                                         element of a children
      * @return string The HTML fragment for this interface
      */
-    public function getUserUI($subclass_user_interface = null)
+    public function getUserUI()
     {
         // Init values
         $html = '';
-
-        $html .= "<div class='user_ui_container ".get_class($this)."'>\n";
         $html .= "<iframe width='{$this->getWidth()}' height='{$this->getHeight()}' frameborder='1' src='{$this->getGeneratedUrl()}'>"._("Your browser does not support IFrames.")."</iframe>\n";
-        $html .= $subclass_user_interface;
-        $html .= "</div>\n";
-
-        return parent::getUserUI($html);
+        $this->setUserUIMainDisplayContent($html);
+        return parent::getUserUI();
     }
 
     /**

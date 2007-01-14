@@ -79,37 +79,28 @@ class SmartyTemplate extends Langstring
      * @return string The HTML fragment for this interface.
      */
     public function getAdminUI($subclass_admin_interface = null, $title = null, $type_interface = "LARGE") {
-        // Init values.
-        $html = '';
-        $html .= $subclass_admin_interface;
-        $html .= "<div class='admin_section_hint'>" . sprintf(_("To list the available Smarty variables, put %s in the input field, save and then click preview"), "{debug output='html'}") . "</div>";
-        $html .= "<div class='admin_section_hint'>" . sprintf(_("Therre are also a few custom Smarty modifiers available: %s"), "urlencode, remove_accents, fsize_format") . "</div>";        
-        return parent :: getAdminUI($html, $title, $type_interface);
+    	// Init values.
+    	$html = '';
+    	$html .= $subclass_admin_interface;
+    	$html .= "<div class='admin_section_hint'>" . sprintf(_("To list the available Smarty variables, put %s in the input field, save and then click preview"), "{debug output='html'}") . "</div>\n";
+    	$html .= "<div class='admin_section_hint'>" . sprintf(_("There are also a few custom Smarty modifiers available: %s"), "urlencode, remove_accents, fsize_format") . "</div>\n";
+    	return parent :: getAdminUI($html, $title, $type_interface);
     }
-     /**
-     * Retreives the user interface of this object.
+
+    /**
+     * Returns the first available string in the user's language, faling that in the 
+     * same major language (first part of the locale), failing that the first available 
+     * string
      *
-     * Anything that overrides this method should call the parent method with
-     * it's output at the END of processing.
-     *
-     * @param string $subclass_admin_interface HTML content of the interface
-     *                                         element of a children
-     *
-     * @return string The HTML fragment for this interface
+     * @return UTF-8 string 
      */
-        public function getUserUI($subclass_user_interface = null) {
-        	// Init values
-        	$html = '';
-        	$smarty = SmartyWifidog::getObject();
-
-        	$html .= $smarty->fetch('string:'.$this->getString());
-
-        	$html .= $subclass_user_interface;
-        	/* Handle hyperlink clicktrough logging */
-        	$html = $this->replaceHyperLinks($html);
-        	return Content :: getUserUI($html);
-        }
-
+    public function getString() {
+    	$smarty = SmartyWifidog::getObject();
+    	$name = 'string_'.$this->getId();
+    	smarty_resource_string_add_string($name, parent::getString());
+    	//echo $smarty->fetch("string:$name");
+    	return $smarty->fetch("string:$name");
+    }
     /**
      * Reloads the object from the database.
      *

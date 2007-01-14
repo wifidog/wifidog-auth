@@ -83,6 +83,13 @@ class HTMLeditor extends Langstring
             $this->_FCKeditorAvailable = true;
         }
     }
+    
+    /** Indicate that the content is suitable to store plain text.
+     * @return true or false */
+    public function isTextualContent() {
+    	return false;
+    }
+    
     /**
      * Retreives the admin interface of this object. Anything that overrides
      * this method should call the parent method with it's output at the END of

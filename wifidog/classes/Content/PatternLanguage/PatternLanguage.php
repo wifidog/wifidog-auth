@@ -86,21 +86,12 @@ class PatternLanguage extends ContentGroup
 
     /**
      * Retreives the user interface of this object.
-     *
-     * Anything that overrides this method should call the parent method with
-     * it's output at the END of processing.
-     *
-     * @param string $subclass_admin_interface HTML content of the interface
-     *                                         element of a children
-     *
      * @return The HTML fragment for this interface
      */
-    public function getUserUI($subclass_user_interface = null)
+    public function getUserUI()
     {
         // Init values
         $html = '';
-
-        $html .= "<div class='user_ui_container ".get_class($this)."'>\n";
 
         // Check if the user has already subscribed to Pattern language
         $current_user = User::getCurrentUser();
@@ -114,9 +105,9 @@ class PatternLanguage extends ContentGroup
 
             // Until subscription is done DO NOT log this !
             $this->setLoggingStatus(false);
-
+			$this->setUserUIMainDisplayContent($html);
             // Tell the content group not to display elements until subscription is done
-            $parent_output = parent :: getUserUI($html, true);
+            $parent_output = parent :: getUserUI(true);
         } else {
             /*
              * The user is subscribed to the pattern language show an element!
@@ -127,14 +118,10 @@ class PatternLanguage extends ContentGroup
             $html .= "<li><a href='/content/PatternLanguage/archives.php'>"._("Read narratives archives")."</a></li>";
             $html .= "<li><a href='/content/PatternLanguage/subscription.php'>"._("Unsubscribe")."</a></li>";
             $html .= "</ul>";
-
+			$this->setUserUIMainDisplayContent($html);
             // Display the random pattern
-            $parent_output = parent :: getUserUI($html);
+            $parent_output = parent :: getUserUI();
         }
-
-        $html .= $subclass_user_interface;
-        $html .= "</div>\n";
-
         return $parent_output;
     }
 

@@ -77,12 +77,18 @@ class Langstring extends Content {
         $this->mBd = &$db;
     }
 
+    /** Indicate that the content is suitable to store plain text.
+     * @return true or false */
+    public function isTextualContent() {
+    	return true;
+    }
+    
     /**
-     * Retourne la première chaîne disponible dans la langue par défaut de
-     * l'usager (si disponible), sinon dans la même langue majeure, sinon
-     * la première chaîne disponible
+     * Returns the first available string in the user's language, faling that in the 
+     * same major language (first part of the locale), failing that the first available 
+     * string
      *
-     * @return string Chaîne UTF-8 retournée
+     * @return UTF-8 string 
      */
     public function getString() {
         // Init values
@@ -149,7 +155,7 @@ class Langstring extends Content {
      * @return bool True si une chaîne a été ajoutée à la base de donnée,
      * false autrement.
      */
-    public function addString($string, $locale, $allow_empty_string = false) {
+    public function addString($string, $locale=null, $allow_empty_string = false) {
         // Init values
         $retval = false;
         $id = 'NULL';
@@ -433,23 +439,16 @@ class Langstring extends Content {
      *
      * Anything that overrides this method should call the parent method with
      * it's output at the END of processing.
-     *
-     * @param string $subclass_admin_interface HTML content of the interface
-     *                                         element of a children
-     *
      * @return string The HTML fragment for this interface
      */
-    public function getUserUI($subclass_user_interface = null) {
+    public function getUserUI() {
         // Init values
         $html = '';
-
-        $html .= "<div class='langstring'>\n";
         $html .= $this->getString();
-        $html .= $subclass_user_interface;
-        $html .= "</div>\n";
         /* Handle hyperlink clicktrough logging */
         $html = $this->replaceHyperLinks($html);
-        return parent :: getUserUI($html);
+        $this->setUserUIMainDisplayContent($html);
+        return parent :: getUserUI();
     }
 
     /**

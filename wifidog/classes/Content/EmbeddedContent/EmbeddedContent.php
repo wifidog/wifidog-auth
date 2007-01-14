@@ -313,9 +313,6 @@ class EmbeddedContent extends Content
         $html = '';
         $embedded_content_file = null;
         $fallback_content = null;
-
-        $html .= "<div class='user_ui_container ".get_class($this)."'>\n";
-
         /* Get both objects if they exist */
         if (!empty ($this->embedded_content_row['embedded_file_id'])) {
             $embedded_content_file = self :: getObject($this->embedded_content_row['embedded_file_id']);
@@ -359,9 +356,8 @@ class EmbeddedContent extends Content
             $html .= "</object>\n";
         }
 
-        $html .= "</div>\n";
-
-        return parent::getUserUI($html);
+        $this->setUserUIMainDisplayContent($html);
+        return parent::getUserUI();
     }
 
     /**

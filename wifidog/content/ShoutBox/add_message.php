@@ -1,6 +1,4 @@
 <?php
-
-
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -34,40 +32,51 @@
 // |                                                                   |
 // +-------------------------------------------------------------------+
 
-/** A Smarty resource plugin to process a template from a php string
+/**
+ * @package    WiFiDogAuthServer
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
- * @copyright  2007 Benoit Grégoire, Technologies Coeus inc.
- * @version    Subversion $Id: $
+ * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
+ * @version    Subversion $Id: validate.php 1031 2006-05-10 18:56:02Z benoitg $
  * @link       http://www.wifidog.org/
  */
 
-/* This function must be called to set the resource before calling it from smarty */
-function smarty_resource_string_add_string($string_name, $string) {
-	global $smarty_resource_string_strings;
-	$smarty_resource_string_strings[$string_name]=$string;
-    return true;
-}
+/**
+ * Load required files
+ */
+require_once (dirname(__FILE__) . '/../../include/common.php');
+require_once('classes/User.php');
+$db = AbstractDb::getObject();
+$user=User::getCurrentUser();
 
-function smarty_resource_string_source($tpl_name, & $tpl_source, & $smarty) {
-	global $smarty_resource_string_strings;
-	$retval = false;
-	if(isset($smarty_resource_string_strings[$tpl_name])){
-    $tpl_source = $smarty_resource_string_strings[$tpl_name];
-    $retval = true;
+//$node=Node::getObject('cdead28e2b5a75ddbd67f4f11c12ad9e');//For testing
+//For production.  If someone is going to spam, at least force him to physically be at a hotspot.
+$node=Node::getCurrentRealNode();
+//pretty_print_r($node);
+if($user) {
+	if (!empty ($_REQUEST['shoutbox_id']) && !empty ($_REQUEST['shout_text']) && $node) {
+		$shoutbox_id = $db->escapeString($_REQUEST['shoutbox_id']);
+		$message_content = Content::createNewObject($content_type = "TrivialLangstring");
+		$message_content->addString($_REQUEST['shout_text']);
+		$message_content_id = $db->escapeString($message_content->getId());
+		$node_id = $db->escapeString($node->getId());
+		$user_id = $db->escapeString($user->getId());
+		$sql = "INSERT INTO content_shoutbox_messages (author_user_id, shoutbox_id, origin_node_id, message_content_id) VALUES('$user_id', '$shoutbox_id', '$node_id', '$message_content_id')\n";
+		$db->execSqlUpdate($sql, false);
+		//pretty_print_r($_SERVER['HTTP_REFERER']);
+		header("Location: " . $_SERVER['HTTP_REFERER']);
 	}
-    return $retval;
+	else {
+		echo "<h1>"._("Sorry, some parameters are missing")."</h1>";
+	}
 }
-
-function smarty_resource_string_timestamp($tpl_name, & $tpl_timestamp, & $smarty) {
-    $tpl_timestamp = time();
-    return true;
+else
+{
+	echo "<h1>You must be logged-in</h1>";
 }
-
-function smarty_resource_string_secure($tpl_name, & $smarty) {
-    //No choice but to set it true
-    return true;
-}
-
-function smarty_resource_string_trusted($tpl_name, & $smarty) {
-    // not used for templates
-}
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * c-hanging-comment-ender-p: nil
+ * End:
+ */

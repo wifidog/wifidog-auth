@@ -565,8 +565,6 @@ if($this->configEnableEditFilename) {
         // Init values
         $html = '';
 
-        $html .= "<div class='user_ui_container ".get_class($this)."'>\n";
-
         if($this->getFileSize() > 0) {
             $append_size = " (".$this->getFileSize(self :: UNIT_KILOBYTES)." "._("KB").")";
         } else {
@@ -574,9 +572,9 @@ if($this->configEnableEditFilename) {
         }
 
         $html .= "<div class='download_button'><a href='".htmlentities($this->getFileUrl())."'>"._("Download")." ".$this->getFilename()."$append_size</a></div>";
-        $html .= "</div>\n";
         $html = $this->replaceHyperLinks($html);
-        return parent::getUserUI($html);
+        $this->setUserUIMainDisplayContent($html);
+        return parent::getUserUI();
     }
 
     /**

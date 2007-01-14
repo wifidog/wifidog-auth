@@ -312,9 +312,6 @@ class Picture extends File {
         $width = $this->getWidth();
         $height = $this->getHeight();
         $hyperlink_url = $this->getHyperlinkUrl();
-
-        $html .= "<div class='user_ui_container " . get_class($this) . "'>\n";
-
         if (empty ($width)) {
             $width = "";
         } else {
@@ -346,10 +343,10 @@ class Picture extends File {
         else
             $html .= "<img src='" . htmlspecialchars($this->getFileUrl()) . "' $width $height alt='" . $this->getFileName() . "' $inlineCss>";
 
-        $html .= "</div>\n";
         /* Handle hyperlink clicktrough logging */
         $html = $this->replaceHyperLinks($html);
-        return Content :: getUserUI($html);
+        $this->setUserUIMainDisplayContent($html);
+        return Content :: getUserUI();
     }
 
     /**

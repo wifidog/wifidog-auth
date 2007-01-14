@@ -155,14 +155,14 @@ select {
 #main_area_middle {
 	position: relative;
 	width: 90%;
-	margin: 0.5em;
+	margin: 1em;
 	padding: 0;
 	float: left;
 }
 
 #main_area_bottom {
 	margin: 1em;
-	padding: 1em;
+	padding: 0;
 	float: left;
 }
 
@@ -490,18 +490,26 @@ td.admin_element_tools, th.admin_element_tools {
 .user_ui_main_outer {
 /*	display: inline;*/
     display: block;
-    background: #E9F6FF;
 	color: #3D586B;
-	border: 1px solid #B4DFFF;
-	margin: 1em;
-    padding: 0.1em;
-}
-
-.isSimpleContent{
     background: none;
 	border: none;
+	margin: 1em;
+    padding: 0em;
+    width: 100%;/* Will this fuck up in explorer? */
+}
+
+.user_ui_main_outer .user_ui_main_outer {
+/*	display: inline;*/
 	margin: 0em;
-    padding: 0.1em;
+    padding: 0em;
+
+}
+
+.hasDisplayableMetadata{/*Defined at same level as user_ui_main_outer*/
+	background: #E9F6FF;
+	border: 1px solid #B4DFFF;
+	margin: 1em;
+    padding: 0.2em;
 }
 
 .user_ui_title .user_ui_main_outer,
@@ -548,10 +556,8 @@ td.admin_element_tools, th.admin_element_tools {
 .user_ui_description {
     text-align: justify;
     font-weight: bold;
-    border: 1px solid #B4DFFF;
     margin: 0em;
     padding: 0.5em;
-
 }
 
 .user_ui_footer {

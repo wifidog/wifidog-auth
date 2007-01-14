@@ -704,7 +704,6 @@ $api = $this->getFlickrApi();
     }
 
     /**Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
-    * @param $subclass_admin_interface Html content of the interface element of a children
     * @return The HTML fragment for this interface */
     public function getUserUI($subclass_user_interface = null, $force_data_refresh = false)
     {
@@ -712,8 +711,6 @@ $api = $this->getFlickrApi();
         $html = '';
 
         if ($this->_PhlickrAvailable) {
-            $html .= "<div class='user_ui_container ".get_class($this)."'>\n";
-
             $api = $this->getFlickrApi();
             if (!is_null($api))
             {
@@ -876,11 +873,10 @@ $api = $this->getFlickrApi();
             $html .= _("PEAR::Phlickr is not installed");
         }
 
-        $html .= $subclass_user_interface;
-        $html .= "</div>\n";
         /* Handle hyperlink clicktrough logging */
         $html = $this->replaceHyperLinks($html);
-        return parent::getUserUI($html);
+        $this->setUserUIMainDisplayContent($html);
+        return parent::getUserUI();
     }
 
     /** Reloads the object from the database.  Should normally be called after a set operation.

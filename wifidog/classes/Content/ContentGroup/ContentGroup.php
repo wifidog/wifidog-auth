@@ -637,10 +637,8 @@ class ContentGroup extends Content {
      * Pattern Language) to tell the content group not to display elements ) for
      * elements that need to be hidden before subscription
      * @return The HTML fragment for this interface */
-    public function getUserUI($subclass_user_interface = null, $hide_elements = false) {
+    public function getUserUI($hide_elements = false) {
         $html = '';
-        $html .= "<div class='user_ui_container  " . get_class($this) . "'>\n";
-
         if ($hide_elements == false) {
             $display_elements = $this->getDisplayElements();
             if (count($display_elements) > 0) {
@@ -651,14 +649,11 @@ class ContentGroup extends Content {
                     $html .= $display_element->getUserUI();
                 }
             } else {
-                $html .= '<p class="warningmsg">' . _("Sorry, this content-group is empty") . "</p>\n";
+                //$html .= '<p class="warningmsg">' . _("Sorry, this content-group is empty") . "</p>\n";
             }
         }
-
-        $html .= $subclass_user_interface;
-        $html .= "</div>\n";
-
-        return parent :: getUserUI($html);
+		$this->setUserUIMainDisplayContent($html);
+        return parent :: getUserUI();
     }
 
     /**Get all elements

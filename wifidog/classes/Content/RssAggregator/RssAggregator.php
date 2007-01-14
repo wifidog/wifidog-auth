@@ -935,8 +935,6 @@ private function initFeedPressReview()
     public function getUserUI() {
         // Init values
         $html = '';
-        $html .= "<div class='user_ui_data  " . get_class($this) . "'>\n";
-
         if (self::isContentTypeFunctional()) {
             $this->initFeedPressReview();
             try {
@@ -950,10 +948,8 @@ private function initFeedPressReview()
         } else {
             $html = _("RSS support is disabled");
         }
-
-        $html .= "</div>\n";
-
-        return parent :: getUserUI($html);
+        $this->setUserUIMainDisplayContent($html);
+        return parent :: getUserUI();
     }
 
     /**

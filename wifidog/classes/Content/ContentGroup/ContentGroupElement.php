@@ -512,7 +512,7 @@ if(empty($content_ui_result))
      *
      * @return string The HTML fragment for this interface
      */
-    public function getUserUI($subclass_user_interface = null) {
+    public function getUserUI() {
         // Init values
         $html = '';
 
@@ -524,14 +524,9 @@ if(empty($content_ui_result))
                 $displayed_content->setLoggingStatus(false);
             }
 
-            $displayed_content_html = $displayed_content->getUserUI();
+            $html .= $displayed_content->getUserUI();
         }
-
-        $html .= "<div class='user_ui_container " . get_class($this) . "'>\n";
-        $html .= $displayed_content_html;
-        $html .= $subclass_user_interface;
-        $html .= "</div>\n";
-
+        $this->setUserUIMainDisplayContent($html);
         return parent :: getUserUI($html);
     }
 

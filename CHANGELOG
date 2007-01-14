@@ -1,3 +1,25 @@
+2007-01-13 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Content.php:  Add setUserUIMainDisplayContent() and setUserUIMainInteractionArea()
+	to simplify writing subclasses and port all content subclasses to the new API.
+	* Content.php:  Add a new callcack method, isTextualContent(), to be used by 
+	ContentFilters.  Indicates that the content is suitable to store plain text.
+	* ContentGroup.php:  No longer warn about empty ContentGroup in getUserUI(), 
+	as this may now be perfectly normal if all content has expired.
+	* Rework the classes and css for user_ui_main_outer, isSimpleContent has been
+	eliminated and hasDisplayableMetadata is now defined is metadata is available.
+	This should allow better HTML consistency and simpler CSS, and be closer to what 
+	people expect by default.  Content without metadata will display without
+	borders or background, and without margins when inside another content.
+	* smarty.resource.string.php:  Add a setter function, 
+	smarty_resource_string_add_string() that must be used before calling the smarty
+	 function.  Using the name as the the template was far to brittle.  This makes
+	 the SmartyTemplate content much more reliable, and quite possibly faster.
+	* ShoutBox: A very basic but already extensible implementation of the 
+	shoutbox use case.  Shows the last five shouts.  Can connect to another web 
+	site through a javascript extension.
+	* SimpleSmartyTemplate:  Add a simple version of the SmartyTemplate content 
+	type
+	
 2007-01-03 Benoit Grégoire  <bock@step.polymtl.ca>
 	* FormSelectGenerator.php: Fix incorrect $this reference in isPresent().  The bug would only manifest
 	 itself from the FlickrPhotostream's admin interface.

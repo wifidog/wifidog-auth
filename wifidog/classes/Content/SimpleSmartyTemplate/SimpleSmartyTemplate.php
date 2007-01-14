@@ -1,6 +1,5 @@
 <?php
 
-
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -34,40 +33,76 @@
 // |                                                                   |
 // +-------------------------------------------------------------------+
 
-/** A Smarty resource plugin to process a template from a php string
+/**
+ * @package    WiFiDogAuthServer
+ * @subpackage ContentClasses
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @copyright  2007 Benoit Grégoire, Technologies Coeus inc.
- * @version    Subversion $Id: $
+ * @version    Subversion $Id: TrivialLangstring.php 1094 2006-09-07 12:23:08Z benoitg $
  * @link       http://www.wifidog.org/
  */
 
-/* This function must be called to set the resource before calling it from smarty */
-function smarty_resource_string_add_string($string_name, $string) {
-	global $smarty_resource_string_strings;
-	$smarty_resource_string_strings[$string_name]=$string;
-    return true;
+/**
+ * Load required classes
+ */
+require_once('classes/Content/SmartyTemplate/SmartyTemplate.php');
+
+/**
+ * Represents a simple SmartyTemplate (no title, description, etc.)
+ *
+ * @package    WiFiDogAuthServer
+ * @subpackage ContentClasses
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
+ */
+class SimpleSmartyTemplate extends SmartyTemplate
+{
+	
+    /**
+     * Constructor
+     *
+     * @param string $content_id Content id
+     *
+     * @return void     */
+    protected function __construct($content_id)
+    {
+        parent::__construct($content_id);
+
+        /*
+         * A SimpleSmartyTemplate is NEVER persistent
+         */
+        parent::setIsPersistent(false);
+    }
+    
+    /** When a content object is set as Simple, it means that is is used merely to contain it's own data.  No title, description or other metadata will be set or displayed, during display or administration
+     * @return true or false */
+    public function isSimpleContent() {
+        return true;
+    }
+
+    /**
+     * Reloads the object from the database.
+     *
+     * Should normally be called after a set operation.
+     *
+     * This function is private because calling it from a subclass will call the
+     * constructor from the wrong scope
+     *
+     * @return void
+     */
+    private function refresh()
+    {
+        $this->__construct($this->id);
+    }
+
 }
 
-function smarty_resource_string_source($tpl_name, & $tpl_source, & $smarty) {
-	global $smarty_resource_string_strings;
-	$retval = false;
-	if(isset($smarty_resource_string_strings[$tpl_name])){
-    $tpl_source = $smarty_resource_string_strings[$tpl_name];
-    $retval = true;
-	}
-    return $retval;
-}
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * c-hanging-comment-ender-p: nil
+ * End:
+ */
 
-function smarty_resource_string_timestamp($tpl_name, & $tpl_timestamp, & $smarty) {
-    $tpl_timestamp = time();
-    return true;
-}
 
-function smarty_resource_string_secure($tpl_name, & $smarty) {
-    //No choice but to set it true
-    return true;
-}
-
-function smarty_resource_string_trusted($tpl_name, & $smarty) {
-    // not used for templates
-}

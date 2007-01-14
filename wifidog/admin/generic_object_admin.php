@@ -258,7 +258,7 @@ switch ($_REQUEST['action']) {
             case "Content" :
                 $displayShowAllButton = true;
                 ((isset ($_REQUEST['display_content']) && $_REQUEST['display_content'] == "all_content") ? $sql_additional_where = null : $sql_additional_where = " AND is_persistent=TRUE ");
-                $objectSelector = Content :: getSelectExistingContentUI('object_id', $sql_additional_where, null, "content_type", "table");
+                $objectSelector = Content :: getSelectExistingContentUI('object_id', $sql_additional_where, null, "creation_timestamp DESC, content_type", "table");
                 $displayEditButton = false;
                 break;
 
