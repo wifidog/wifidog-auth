@@ -1,3 +1,6 @@
+2007-01-14 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Dependencies.php, AuthenticatorRadius.php:  Fix bug #287 (Dependencies not being detected properly)
+
 2007-01-13 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Content.php:  Add setUserUIMainDisplayContent() and setUserUIMainInteractionArea()
 	to simplify writing subclasses and port all content subclasses to the new API.

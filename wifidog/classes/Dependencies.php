@@ -127,7 +127,7 @@ class Dependencies
 	    "detectFiles" => "HTML/Safe.php", 
 	    'description' => "Optional for content type Langstring (and subtypes) to better strip out dangerous HTML"
 	    ),
-	"Radius" => array (
+	"RADIUS" => array (
 	    "type" => "pearStandard", 
 	    'description' => "Required by the optional Radius Authenticator"
 	    ),

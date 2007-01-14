@@ -133,7 +133,7 @@ class AuthenticatorRadius extends Authenticator
         // Call parent constructor
         parent :: __construct($account_orgin);
 
-        if (Dependencies::check("Radius")) {
+        if (Dependencies::check("RADIUS")) {
             /**
              * Including PEAR RADIUS and CHAP MD5 interface classes
              */
@@ -180,7 +180,7 @@ class AuthenticatorRadius extends Authenticator
         $username = $db->escapeString($username);
         $password = $db->escapeString($password);
 
-        if (Dependencies::check("Radius", $errmsg)) {
+        if (Dependencies::check("RADIUS", $errmsg)) {
             /*
              * Supported encryption methods are :
              *
@@ -313,7 +313,7 @@ class AuthenticatorRadius extends Authenticator
         // Init values
         $info = null;
 
-        if (Dependencies::check("Radius", $errmsg)) {
+        if (Dependencies::check("RADIUS", $errmsg)) {
             $conn_id = $db->escapeString($conn_id);
             $db->execSqlUniqueRes("SELECT CURRENT_TIMESTAMP, *, CASE WHEN ((CURRENT_TIMESTAMP - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id=$conn_id", $info, false);
 
@@ -382,7 +382,7 @@ class AuthenticatorRadius extends Authenticator
         $info = null;
         $conn_id = $db->escapeString($conn_id);
 
-        if (Dependencies::check("Radius", $errmsg)) {
+        if (Dependencies::check("RADIUS", $errmsg)) {
             $db->execSqlUniqueRes("SELECT CURRENT_TIMESTAMP, *, CASE WHEN ((CURRENT_TIMESTAMP - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id=$conn_id", $info, false);
 
             // RADIUS accounting ping
@@ -452,7 +452,7 @@ class AuthenticatorRadius extends Authenticator
         $info = null;
         $conn_id = $db->escapeString($conn_id);
 
-        if (Dependencies::check("Radius", $errmsg)) {
+        if (Dependencies::check("RADIUS", $errmsg)) {
             $db->execSqlUniqueRes("SELECT CURRENT_TIMESTAMP, *, CASE WHEN ((CURRENT_TIMESTAMP - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.conn_id=$conn_id", $info, false);
 
             // RADIUS accounting stop
