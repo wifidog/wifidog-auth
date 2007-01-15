@@ -45,7 +45,7 @@
 /**
  * Load required classes
  */
-
+require_once('classes/Content/Picture/Picture.php');
 /**
  * Represents a simple picture (no title, description, etc.)
  *

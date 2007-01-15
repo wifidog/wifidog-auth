@@ -920,9 +920,9 @@ class Content implements GenericObject {
     	} else if($value===null) {
     		//Delete the KVP
     		$retval = $db->execSqlUpdate("DELETE FROM content_key_value_pairs WHERE content_id='" . $this->getId() . "' AND key='$key_sql'", false);
-			if(isset ($this->kvps[$key])) {
-				unset ($this->kvps[$key]);
-			}
+    		if(isset ($this->kvps[$key])) {
+    			unset ($this->kvps[$key]);
+    		}
     	} else if (!isset ($this->kvps[$key])) {
     		//This is a new key
     		$retval = $db->execSqlUpdate("INSERT INTO content_key_value_pairs (content_id, key, value) VALUES ('" . $this->getId() . "', '$key_sql', '$value_sql')", false);
@@ -1133,7 +1133,7 @@ class Content implements GenericObject {
     public function isTextualContent() {
     	return false;
     }
-    
+
     /** This function will be called by MainUI for each Content BEFORE any getUserUI function is called to allow two pass Content display.
      * Two pass Content display allows such things as modyfying headers, title, creating content type that accumulate content from other pieces (like RSS feeds)
      * @return null
@@ -1147,19 +1147,19 @@ class Content implements GenericObject {
     protected function hasDisplayableMetadata() {
     	$retval = false;
     	$metadata = $this->getTitle();
-    	if ($metadata  && $this->titleShouldDisplay()){
+    	if ($metadata && $this->titleShouldDisplay()){
     		$retval = true;
     	}
-    	$metadata = $this->getDescription();
-    	if ($metadata){
+    	elseif ($this->getDescription()){
     		$retval = true;
     	}
-    	$metadata = $this->getLongDescription();
-    	if ($metadata){
+    	elseif ($this->getLongDescription()){
     		$retval = true;
     	}
-    	$metadata = $this->getProjectInfo();
-    	if ($metadata){
+    	elseif ($this->getProjectInfo()){
+    		$retval = true;
+    	}
+    	elseif($this->getAuthors()) {
     		$retval = true;
     	}
     	return $retval;
