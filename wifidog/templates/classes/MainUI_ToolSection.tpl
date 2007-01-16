@@ -40,7 +40,7 @@
  * @subpackage Templates
  * @author     Max Horvath <max.horvath@maxspot.de>
  * @copyright  2006 Max Horvath, maxspot GmbH
- * @version    Subversion $Id: change_password.php 914 2006-01-23 05:25:43Z max-horvath $
+ * @version    Subversion $Id: $
  * @link       http://www.wifidog.org/
  */
 
@@ -54,7 +54,7 @@
             <fieldset>
                 <legend>{"User administration"|_}:</legend>
                     <ul>
-                        <li><a href="{$base_url_path}admin/user_log.php">{"User logs"|_}</a></li>
+                        <li><a href="{$base_url_path}admin/user_log.php">{"User manager"|_}</a></li>
                         <li><a href="{$base_url_path}admin/online_users.php">{"Online Users"|_}</a></li>
                         <li><a href="{$base_url_path}admin/stats.php">{"Statistics"|_}</a></li>
                         <li><a href="{$base_url_path}admin/import_user_database.php">{"Import NoCat user database"|_}</a></li>

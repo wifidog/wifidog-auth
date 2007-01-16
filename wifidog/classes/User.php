@@ -69,7 +69,7 @@ class User implements GenericObject {
     public static function getObject($id) {
         if(!isset(self::$instanceArray[$id]))
         {
-        	self::$instanceArray[$id] = new self($id);
+            self::$instanceArray[$id] = new self($id);
         }
         return self::$instanceArray[$id];
     }
@@ -158,7 +158,7 @@ class User implements GenericObject {
         $db->execSqlUniqueRes("SELECT user_id FROM users WHERE username = '$username_str' AND account_origin = '$account_origin_str'", $user_info, false);
 
         if ($user_info != null)
-            $object = self::getObject($user_info['user_id']);
+        $object = self::getObject($user_info['user_id']);
         return $object;
     }
 
@@ -176,7 +176,7 @@ class User implements GenericObject {
         $db->execSqlUniqueRes("SELECT user_id FROM users WHERE email = '$email_str' AND account_origin = '$account_origin_str'", $user_info, false);
 
         if ($user_info != null)
-            $object = self::getObject($user_info['user_id']);
+        $object = self::getObject($user_info['user_id']);
         return $object;
     }
 
@@ -216,12 +216,12 @@ class User implements GenericObject {
     }
 
     /*    public static function purgeUnvalidatedUsers($days_since_creation)
-        {
-            $db = AbstractDb::getObject();
-            $days_since_creation = $db->escapeString($days_since_creation);
-    
-            //$db->execSqlUpdate("INSERT INTO users (user_id,username, account_origin,email,pass,account_status,validation_token,reg_date) VALUES ('$id_str','$username_str','$account_origin_str','$email_str','$password_hash','$status','$token',CURRENT_TIMESTAMP)");
-        }*/
+     {
+     $db = AbstractDb::getObject();
+     $days_since_creation = $db->escapeString($days_since_creation);
+
+     //$db->execSqlUpdate("INSERT INTO users (user_id,username, account_origin,email,pass,account_status,validation_token,reg_date) VALUES ('$id_str','$username_str','$account_origin_str','$email_str','$password_hash','$status','$token',CURRENT_TIMESTAMP)");
+     }*/
 
     /** @param $object_id The id of the user */
     function __construct($object_id) {
@@ -251,15 +251,15 @@ class User implements GenericObject {
     /** Get a user display suitable for a user list.  Will include link to the user profile. */
     function getListUI() {
         /*    $roles = array ();
-        
+
         if ($current_node->isOwner($online_user)) {
         $roles[] = _("owner");
         }
-        
+
         if ($current_node->isTechnicalOfficer($online_user)) {
         $roles[] = _("technical officer");
         }
-        
+
         if ($roles) {
         $rolenames = join($roles, ",");
         }*/
@@ -268,7 +268,7 @@ class User implements GenericObject {
             $html .= _("Guest");
         }
         else {
-        	$html .= $this->getUserName();
+            $html .= $this->getUserName();
         }
         return $html;
     }
@@ -328,9 +328,9 @@ class User implements GenericObject {
         $session = Session::getObject();
         $locale = $this->mRow['prefered_locale'];
         if (empty ($locale) && !empty ($session))
-            $locale = $session->get(SESS_LANGUAGE_VAR);
+        $locale = $session->get(SESS_LANGUAGE_VAR);
         if (empty ($locale))
-            $locale = DEFAULT_LANG;
+        $locale = DEFAULT_LANG;
         return $locale;
     }
 
@@ -373,21 +373,21 @@ class User implements GenericObject {
         if ($account_status == ACCOUNT_STATUS_ALLOWED) {
             $retval = true;
         } else
-            if ($account_status == ACCOUNT_STATUS_VALIDATION) {
-                $sql = "SELECT CASE WHEN ((CURRENT_TIMESTAMP - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired, EXTRACT(EPOCH FROM networks.validation_grace_time) as validation_grace_time FROM users  JOIN networks ON (users.account_origin = networks.network_id) WHERE (user_id='{$this->id}')";
-                $db->execSqlUniqueRes($sql, $user_info, false);
+        if ($account_status == ACCOUNT_STATUS_VALIDATION) {
+            $sql = "SELECT CASE WHEN ((CURRENT_TIMESTAMP - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired, EXTRACT(EPOCH FROM networks.validation_grace_time) as validation_grace_time FROM users  JOIN networks ON (users.account_origin = networks.network_id) WHERE (user_id='{$this->id}')";
+            $db->execSqlUniqueRes($sql, $user_info, false);
 
-                if ($user_info['validation_grace_time_expired'] == 't') {
-                    $errmsg = sprintf(_("Sorry, your %.0f minutes grace period to retrieve your email and validate your account has now expired. You will have to connect to the internet and validate your account from another location. For more help, please %s click here %s."), $user_info['validation_grace_time']/60, '<a href="' . BASE_URL_PATH . 'faq.php' . '">', '</a>');
-                    $retval = false;
-                } else {
-                    $errmsg = _("Your account is currently valid.");
-                    $retval = true;
-                }
-            } else {
-                $errmsg = _("Sorry, your account is not valid: ") . $account_status_to_text[$account_status];
+            if ($user_info['validation_grace_time_expired'] == 't') {
+                $errmsg = sprintf(_("Sorry, your %.0f minutes grace period to retrieve your email and validate your account has now expired. You will have to connect to the internet and validate your account from another location. For more help, please %s click here %s."), $user_info['validation_grace_time']/60, '<a href="' . BASE_URL_PATH . 'faq.php' . '">', '</a>');
                 $retval = false;
+            } else {
+                $errmsg = _("Your account is currently valid.");
+                $retval = true;
             }
+        } else {
+            $errmsg = _("Sorry, your account is not valid: ") . $account_status_to_text[$account_status];
+            $retval = false;
+        }
         return $retval;
     }
 
@@ -411,7 +411,7 @@ class User implements GenericObject {
         $db = AbstractDb::getObject();
         $db->execSql("SELECT * FROM node_stakeholders WHERE is_owner = true AND user_id='{$this->getId()}'", $row, false);
         if ($row != null)
-            return true;
+        return true;
         return false;
 
     }
@@ -420,7 +420,7 @@ class User implements GenericObject {
         $db = AbstractDb::getObject();
         $db->execSqlUniqueRes("SELECT DISTINCT user_id FROM (SELECT user_id FROM network_stakeholders WHERE user_id='{$this->getId()}' UNION SELECT user_id FROM node_stakeholders WHERE user_id='{$this->getId()}' UNION SELECT user_id FROM administrators WHERE user_id='{$this->getId()}') as tmp", $row, false);
         if ($row == null)
-            return true;
+        return true;
         return false;
     }
 
@@ -455,7 +455,7 @@ class User implements GenericObject {
                 $db->execSqlUpdate("INSERT INTO connections (user_id, token, token_status, timestamp_in, node_id, node_ip, last_updated) VALUES ('" . $this->getId() . "', '$token', '" . TOKEN_UNUSED . "', CURRENT_TIMESTAMP, '$node_id', '$node_ip', CURRENT_TIMESTAMP)", false);
                 $retval = $token;
             } else
-                $retval = false;
+            $retval = false;
         } else {
             $retval = false;
         }
@@ -466,6 +466,10 @@ class User implements GenericObject {
         $db = AbstractDb::getObject();
 
         $new_password_hash = User :: passwordHash($password);
+        if (empty($password)) {
+            throw new Exception(_("Password cannot be empty."));
+        }
+
         if (!($update = $db->execSqlUpdate("UPDATE users SET pass='$new_password_hash' WHERE user_id='{$this->id}'"))) {
             throw new Exception(_("Could not change user's password."));
         }
@@ -567,27 +571,27 @@ class User implements GenericObject {
                 'x',
                 'y',
                 'z',
-                
-            );
-            $id = array (
+
+                );
+                $id = array (
                 'a',
                 'e',
                 'i',
                 'o',
                 'u',
                 'y',
-                
-            );
-            $count1 = count($startnend) - 1;
-            $count2 = count($id) - 1;
 
-            for ($i = 0; $i < 3; $i++) {
-                if ($i != 1) {
-                    $rand_pass .= $startnend[rand(0, $count1)];
-                } else {
-                    $rand_pass .= $id[rand(0, $count2)];
+                );
+                $count1 = count($startnend) - 1;
+                $count2 = count($id) - 1;
+
+                for ($i = 0; $i < 3; $i++) {
+                    if ($i != 1) {
+                        $rand_pass .= $startnend[rand(0, $count1)];
+                    } else {
+                        $rand_pass .= $id[rand(0, $count2)];
+                    }
                 }
-            }
         }
         return $rand_pass;
     }
@@ -608,23 +612,22 @@ class User implements GenericObject {
     
      */
     public static function getSelectUserUI($user_prefix, $add_button_name = null, $add_button_value = null) {
-        
+
         $db = AbstractDb::getObject();
 
-        $_networkSelector = InterfaceElements :: generateDiv(Network :: getSelectNetworkUI($user_prefix), "admin_section_network_selector", "admin_section_network_selector_" . $user_prefix);
+        $networkSelector = Network :: getSelectNetworkUI($user_prefix);
 
         // Check if we need to add an "add" button
         if ($add_button_name && $add_button_value) {
-            $_userSelector = _("Username") . ": " . InterfaceElements :: generateInputText("select_user_" . $user_prefix . "_username", "", "", "input_text", array (
+            $userSelector = _("Username") . ": " . InterfaceElements :: generateInputText("select_user_" . $user_prefix . "_username", "", "", "input_text", array (
                 "onkeypress" => "if ((event.which ? event.which : event.keyCode) == 13) {form.$add_button_name.click() }"
-            ));
-            $_userSelector .= InterfaceElements :: generateInputSubmit($add_button_name, $add_button_value);
+                ));
+                $userSelector .= InterfaceElements :: generateInputSubmit($add_button_name, $add_button_value);
         } else {
-            $_userSelector = _("Username") . ": " . InterfaceElements :: generateInputText("select_user_" . $user_prefix . "_username");
+            $userSelector = _("Username") . ": " . InterfaceElements :: generateInputText("select_user_" . $user_prefix . "_username");
         }
-        $_html = InterfaceElements :: generateDiv($_networkSelector . $_userSelector, 'user_select_user_ui_container');
-
-        return $_html;
+        $html = "<div class='user_select_user_ui_container'>".$networkSelector . $userSelector . "</div>\n";
+        return $html;
     }
 
     /** Get the selected user, IF one was selected and is valid
@@ -640,7 +643,7 @@ class User implements GenericObject {
                 $username = $_REQUEST[$name];
                 return self :: getUserByUsernameAndOrigin($username, $network);
             } else
-                return null;
+            return null;
         } catch (Exception $e) {
             return null;
         }
@@ -649,39 +652,45 @@ class User implements GenericObject {
     public function getAdminUI() {
         $db = AbstractDb::getObject();
         $currentUser = self :: getCurrentUser();
+        $userPreferencesItems = array();
+        if($this->getNetwork()->hasAdminAccess($currentUser)) {
+            $content = "<a href='".BASE_SSL_PATH."admin/stats.php?Statistics=".$this->getNetwork()->getId()."&distinguish_users_by=user_id&stats_selected_users=".$this->getUsername()."&UserReport=on&user_id=".$this->getId()."&action=generate'>"._("Get user statistics")."</a>\n";
+        $userPreferencesItems[] = InterfaceElements::genSectionItem($content);
+        }
         $html = '';
-        $html .= "<fieldset class='admin_container " . get_class($this) . "'>\n";
-        $html .= "<ul class='admin_element_list'>\n";
         if (($this == $currentUser && !$this->isSplashOnlyUser() )|| $this->getNetwork()->hasAdminAccess($currentUser)) {
             //username
-            $html .= "<li class='admin_element_item_container'>\n";
-            $html .= "<div class='admin_element_label'>" . _("Username") . " : </div>\n";
-            $html .= "<div class='admin_element_data'>\n";
+            $title = _("Username");
             $name = "user_" . $this->getId() . "_username";
-            $html .= "<input type='text' name='$name' value='" . htmlentities($this->getUsername()) . "' size=30>\n";
-            $html .= _("Be carefull when changing this: it's the username you use to log in!");
-            $html .= "</div>\n";
-            $html .= "</li>\n";
+            $content = "<input type='text' name='$name' value='" . htmlentities($this->getUsername()) . "' size=30>\n";
+            $content .= _("Be carefull when changing this: it's the username you use to log in!");
+            $userPreferencesItems[] = InterfaceElements::genSectionItem($content, $title);
+
         }
-        /*
-                $html .= "<li class='admin_element_item_container'>\n";
-                $html .= "<div class='admin_element_label'>"._("Real name")." : </div>\n";
-                $html .= "<div class='admin_element_data'>\n";
-                $name = "user_".$this->getId()."_real_name";
-                $html .= "<input type='text' name='$name' value='".htmlentities($this->getRealName())."' size=30 readonly>\n";
-                $html .= "</div>\n";
-                $html .= "</li>\n";
+        /* Change password */
+        $changePasswordItems=array();
+        if($this == $currentUser) {//Don't enter the old password if changing password for another user
+            $title = _("Your current password");
+            $name = "user_" . $this->getId() . "_oldpassword";
+            $content = "<input type='password' name='$name' size='20'>\n";
+            $changePasswordItems[] = InterfaceElements::genSectionItem($content, $title);
+        }
         
-                $html .= "<li class='admin_element_item_container'>\n";
-                $html .= "<div class='admin_element_label'>"._("Website URL")." : </div>\n";
-                $html .= "<div class='admin_element_data'>\n";
-                $name = "user_".$this->getId()."_website";
-                $html .= "<input type='text' name='$name' value='".htmlentities($this->getWebsiteURL())."' size=30 readonly>\n";
-                $html .= "</div>\n";
-                $html .= "</li>\n";
-        */
-        $html .= "</fieldset>\n";
-        return $html;
+        $title = _("Your new password");
+        $name = "user_" . $this->getId() . "_newpassword";
+        $content = "<input type='password' name='$name' size='20'>\n";
+        $changePasswordItems[] = InterfaceElements::genSectionItem($content, $title);
+
+        $title = _("Your new password (again)");
+        $name = "user_" . $this->getId() . "_newpassword_again";
+        $content = "<input type='password' name='$name' size='20'>\n";
+        $changePasswordItems[] = InterfaceElements::genSectionItem($content, $title);
+
+        $userPreferencesItems[] = InterfaceElements::genSection($changePasswordItems, _("Change my password"));
+
+
+        $finalHtml = InterfaceElements::genSection($userPreferencesItems, _("User preferences"), false, false, get_class($this));
+        return $finalHtml;
     }
 
     public function processAdminUI() {
@@ -691,7 +700,21 @@ class User implements GenericObject {
             //username
             $name = "user_" . $this->getId() . "_username";
             $this->setUsername($_REQUEST[$name]);
+
+            /* Change password form */
+
+            $nameOldpassword = "user_" . $this->getId() . "_oldpassword";
+            $nameNewpassword = "user_" . $this->getId() . "_newpassword";
+            $nameNewpasswordAgain = "user_" . $this->getId() . "_newpassword_again";
+
+            if ($this == $currentUser && $this->getPasswordHash() != User::passwordHash($_REQUEST[$nameOldpassword]))
+            throw new Exception(_("Wrong password."));
         }
+
+        if ($_REQUEST[$nameNewpassword] != $_REQUEST[$nameNewpasswordAgain]){
+            throw new Exception(_("Passwords do not match."));
+        }
+        $this->setPassword($_REQUEST[$nameNewpassword]);
     }
 
     public function delete(& $errmsg) {
@@ -723,7 +746,7 @@ class User implements GenericObject {
     }
 
     /**Get an array of all Content linked to this node
-    * @return an array of Content or an empty arrray */
+     * @return an array of Content or an empty arrray */
     function getAllContent() {
         $db = AbstractDb::getObject();
         $retval = array ();
@@ -745,7 +768,7 @@ class User implements GenericObject {
     /** Set Smarty template values.  Standardization routine. */
     public static function assignSmartyValues($smarty, $user = null) {
         if (!$user)
-            $user = User :: getCurrentUser();
+        $user = User :: getCurrentUser();
         $smarty->assign('userId', $user ? $user->getId() : '');
         $smarty->assign('userName', $user ? $user->getListUI() : '');
         /**

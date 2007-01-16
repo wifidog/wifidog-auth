@@ -1,3 +1,8 @@
+2007-01-16 Benoit Grégoire  <bock@step.polymtl.ca>
+	* A few more steps towards a real user manager
+	* Move password change to preferences.
+	* InterfaceElements:  Begin moving away from a raw HTML generator and towards a more semantic one as discussed with Max Horvath.
+
 2007-01-15 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Sync initial schema and translations
 	* Minor spelling fixes

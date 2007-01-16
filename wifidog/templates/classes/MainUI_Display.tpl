@@ -40,7 +40,7 @@
  * @subpackage Templates
  * @author     Max Horvath <max.horvath@maxspot.de>
  * @copyright  2006 Max Horvath, maxspot GmbH, Benoit Grégoire, Technologies Coeus inc.
- * @version    Subversion $Id: change_password.php 914 2006-01-23 05:25:43Z max-horvath $
+ * @version    Subversion $Id: $
  * @link       http://www.wifidog.org/
  */
 

@@ -123,11 +123,6 @@ class UserReport extends StatisticReport
                     $html .= "  <td>".$userinfo['username']."</td>\n";
                     $html .= "</tr>\n";
 
-                    $html .= "<tr>\n";
-                    $html .= "  <th>"._("Real Name").":</th>\n";
-                    $html .= "  <td>".$userinfo['real_name']."</td>\n";
-                    $html .= "</tr>\n";
-
                     $html .= "<tr class='odd'>\n";
                     $html .= "  <th>"._("Email").":</th>\n";
                     $html .= "  <td>".$userinfo['email']."</td>\n";
@@ -151,11 +146,6 @@ class UserReport extends StatisticReport
                     $html .= "<tr class='odd'>\n";
                     $html .= "  <th>"._("Account Status").":</th>\n";
                     $html .= "  <td>".$userinfo['account_status_description']."</td>\n";
-                    $html .= "</tr>\n";
-
-                    $html .= "<tr>\n";
-                    $html .= "  <th>"._("Website").":</th>\n";
-                    $html .= "  <td>".$userinfo['website']."</td>\n";
                     $html .= "</tr>\n";
 
                     $html .= "<tr class='odd'>\n";

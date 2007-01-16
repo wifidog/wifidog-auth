@@ -40,7 +40,7 @@
  * @subpackage Templates
  * @author     Max Horvath <max.horvath@maxspot.de>
  * @copyright  2006 Max Horvath, maxspot GmbH
- * @version    Subversion $Id: change_password.php 914 2006-01-23 05:25:43Z max-horvath $
+ * @version    Subversion $Id: $
  * @link       http://www.wifidog.org/
  */
 
@@ -53,7 +53,6 @@
     <div id="login_form">
         <ul>
 			{if $userIsValid}
-            <li><a href="{$base_ssl_path}change_password.php">{"Change password"|_}</a></li>
 			{else}
             <li><a href="{$base_url_path}faq.php">{"I have trouble connecting and I would like some help"|_}</a></li>
 			{/if}

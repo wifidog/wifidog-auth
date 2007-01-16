@@ -902,7 +902,7 @@ catch (Exception $e)
 		 * Check for a warning message
 		 */
 		if ($this->_warningMessage != "") {
-		    $html .= InterfaceElements::generateDiv($this->_warningMessage, "errormsg", "node_error");
+		    $html .= "<div class='errormsg'>".$this->_warningMessage."</div>\n";
 		}
 
 		/*
@@ -957,7 +957,8 @@ catch (Exception $e)
 
 		// Description
 		$_title = _("Description");
-		$_data = InterfaceElements::generateTextarea("node_" . $node_id . "_description", $this->getDescription(), 50, 5, "node_description_textarea");
+		$name = "node_" . $node_id . "_description";
+		$_data = "<textarea name='$name' cols=80 rows=5 id='node_description_textarea'>\n".$this->getDescription()."\n</textarea>\n";
 		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_description", $_title, $_data);
 
 		// Civic number
@@ -1033,10 +1034,10 @@ catch (Exception $e)
 		if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED === true) {
 		    $_data  = InterfaceElements::generateInputSubmit("geocode_only", _("Geocode the address or postal code above"), "geocode_only_submit");
 		    $_data .= InterfaceElements::generateInputButton("google_maps_geocode", _("Check using Google Maps"), "google_maps_geocode_button", "submit", array("onclick" => "window.open('hotspot_location_map.php?node_id={$this->getId()}', 'hotspot_location', 'toolbar = 0, scrollbars = 1, resizable = 1, location = 0, statusbar = 0, menubar = 0, width = 600, height = 600');"));
-		    $_data .= InterfaceElements::generateDiv("(" . _("Use a geocoding service, then use Google Maps to pinpoint the exact location.") . ")", "admin_section_hint", "node_gis_geocode_hint");
+		    $_data .= "<div class='admin_section_hint' id='node_gis_geocode_hint'>". "(" . _("Use a geocoding service, then use Google Maps to pinpoint the exact location.") . ")" ."</div>\n";
 		} else {
 		    $_data  = InterfaceElements::generateInputSubmit("geocode_only", _("Geocode the address or postal code above"), "geocode_only_submit");
-		    $_data .= InterfaceElements::generateDiv("(" . _("Use a geocoding service") . ")", "admin_section_hint", "node_gis_geocode_hint");
+		    $_data .= "<div class='admin_section_hint' id='node_gis_geocode_hint'>". "(" . _("Use a geocoding service") . ")" ."</div>\n";
 		}
 
 		$_html_node_gis_data[] = InterfaceElements::generateAdminSectionContainer("node_gis_geocode", "", $_data);
@@ -1088,13 +1089,13 @@ catch (Exception $e)
 
     		foreach ($this->getOwners() as $owner) {
     		    $_listDataContents = InterfaceElements::generateAdminSection("", $owner->getUsername(), InterfaceElements::generateInputSubmit("node_" . $this->getId() . "_owner_" . $owner->GetId() . "_remove", _("Remove owner")));
-    		    $_listData .= InterfaceElements::generateLi($_listDataContents, "", "admin_element_item_container node_owner_list");
+    		    $_listData .= "<li class='admin_element_item_container node_owner_list'>".$_listDataContents."</li>\n";
     		}
 
-    	    $_listData .= InterfaceElements::generateLi(User::getSelectUserUI("node_" . $this->getId() . "_new_owner", "node_" . $this->getId() . "_new_owner_submit", _("Add owner")) . InterfaceElements::generateDiv("", "clearbr"), "", "admin_element_item_container");
+    	    $_listData .= "<li class='admin_element_item_container'>".User::getSelectUserUI("node_" . $this->getId() . "_new_owner", "node_" . $this->getId() . "_new_owner_submit", _("Add owner")) . "<div class='clearbr' /></li>\n";
 
     		$_title = _("Node owners");
-    		$_data = InterfaceElements::generateUl($_listData, "node_owner_ul", "admin_element_list");
+    		$_data = "<ul id='node_owner_ul' class='admin_element_list'>\n".$_listData."</ul>\n";
     	    $_html_access_rights[] .= InterfaceElements::generateAdminSectionContainer("node_owner", $_title, $_data);
 		}
 
@@ -1103,13 +1104,13 @@ catch (Exception $e)
 
 		foreach ($this->getTechnicalOfficers() as $tech_officer) {
 		    $_listDataContents = InterfaceElements::generateAdminSection("", $tech_officer->getUsername(), InterfaceElements::generateInputSubmit("node_" . $this->getId() . "_tech_officer_" . $tech_officer->GetId() . "_remove", _("Remove technical officer")));
-		    $_listData .= InterfaceElements::generateLi($_listDataContents, "", "admin_element_item_container node_tech_officer_list");
+		    $_listData .= "<li class='admin_element_item_container node_tech_officer_list'>".$_listDataContents."</li>\n";
 		}
 
-	    $_listData .= InterfaceElements::generateLi(User::getSelectUserUI("node_" . $this->getId() . "_new_tech_officer", "node_" . $this->getId() . "_new_tech_officer_submit", _("Add technical officer")) . InterfaceElements::generateDiv("", "clearbr"), "", "admin_element_item_container");
+	    $_listData .= "<li class='admin_element_item_container'>".User::getSelectUserUI("node_" . $this->getId() . "_new_tech_officer", "node_" . $this->getId() . "_new_tech_officer_submit", _("Add technical officer")) . "<div class='clearbr' /></li>\n";
 
 		$_title = _("Technical officers");
-		$_data = InterfaceElements::generateUl($_listData, "node_tech_officer_ul", "admin_element_list");
+		$_data = "<ul id='node_tech_officer_ul' class='admin_element_list'>\n".$_listData."</ul>\n";
 	    $_html_access_rights[] .= InterfaceElements::generateAdminSectionContainer("node_tech_officer", $_title, $_data);
 
 		// Build section
