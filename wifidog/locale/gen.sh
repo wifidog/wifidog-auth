@@ -12,7 +12,7 @@ for i in `find . -maxdepth 1 -mindepth 1 -type d -and -not -name ".svn"`; do
     touch $FILE
     echo "Beginning to update $i locale .PO file"
     find .. -maxdepth 1 -name "*.php" -exec xgettext --language=PHP --from-code=utf-8 -j -o $FILE --keyword=_ {} \;
-    for dir in admin auth content cron include lib/RssPressReview login portal; do
+    for dir in admin auth content cron include lib/feedpressreview login portal; do
         find ../$dir -maxdepth 1 -name "*.php" -exec xgettext --language=PHP --from-code=utf-8 -j -o $FILE --keyword=_ {} \;
     done
     find ../classes -maxdepth 3 -name "*.php" -exec xgettext --language=PHP --from-code=utf-8 -j -o $FILE --keyword=_ {} \;

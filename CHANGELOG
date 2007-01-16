@@ -1,3 +1,7 @@
+2007-01-15 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Sync initial schema and translations
+	* Minor spelling fixes
+
 2007-01-14 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Dependencies.php, AuthenticatorRadius.php:  Fix bug #287 (Dependencies not being detected properly)
 	* Content.php: Make hasDisplayableMetadata() consider Authors, and make it a bit faster.

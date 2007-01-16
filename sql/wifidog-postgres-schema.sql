@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UNICODE';
+SET client_encoding = 'UTF8';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -10,12 +10,12 @@ SET client_min_messages = warning;
 -- Name: wifidog; Type: DATABASE; Schema: -; Owner: wifidog
 --
 
-CREATE DATABASE wifidog WITH TEMPLATE = template0 ENCODING = 'UNICODE';
+CREATE DATABASE wifidog WITH TEMPLATE = template0 ENCODING = 'UTF8';
 
 
 \connect wifidog
 
-SET client_encoding = 'UNICODE';
+SET client_encoding = 'UTF8';
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
@@ -76,6 +76,7 @@ CREATE TABLE content (
     is_persistent boolean DEFAULT false,
     long_description text,
     title_is_displayed boolean DEFAULT true NOT NULL,
+    last_update_timestamp timestamp without time zone DEFAULT now() NOT NULL,
     CONSTRAINT content_type_not_empty_string CHECK ((content_type <> ''::text))
 );
 
@@ -98,12 +99,14 @@ CREATE TABLE content_available_display_pages (
 );
 
 
+SET default_with_oids = false;
+
 --
 -- Name: content_clickthrough_log; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
 
 CREATE TABLE content_clickthrough_log (
-    user_id text,
+    user_id text NOT NULL,
     content_id text NOT NULL,
     first_clickthrough_timestamp timestamp without time zone DEFAULT now() NOT NULL,
     node_id text NOT NULL,
@@ -113,6 +116,8 @@ CREATE TABLE content_clickthrough_log (
     CONSTRAINT content_clickthrough_log_destination_url_check CHECK ((destination_url <> ''::text))
 );
 
+
+SET default_with_oids = true;
 
 --
 -- Name: content_display_log; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
@@ -152,9 +157,7 @@ CREATE TABLE content_file (
     remote_size bigint,
     url text,
     data_blob oid,
-    local_binary_size bigint,
-    creation_date timestamp without time zone DEFAULT now(),
-    last_update_date timestamp without time zone DEFAULT now()
+    local_binary_size bigint
 );
 
 
@@ -205,8 +208,6 @@ CREATE TABLE content_flickr_photostream (
 
 CREATE TABLE content_group (
     content_group_id text NOT NULL,
-    is_artistic_content boolean DEFAULT false NOT NULL,
-    is_locative_content boolean DEFAULT false NOT NULL,
     content_changes_on_mode text DEFAULT 'ALWAYS'::text NOT NULL,
     content_ordering_mode text DEFAULT 'RANDOM'::text NOT NULL,
     display_num_elements integer DEFAULT 1 NOT NULL,
@@ -265,6 +266,21 @@ CREATE TABLE content_iframe (
 );
 
 
+SET default_with_oids = false;
+
+--
+-- Name: content_key_value_pairs; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE content_key_value_pairs (
+    content_id text NOT NULL,
+    "key" text NOT NULL,
+    value text
+);
+
+
+SET default_with_oids = true;
+
 --
 -- Name: content_langstring_entries; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
@@ -285,7 +301,10 @@ CREATE TABLE content_rss_aggregator (
     content_id text NOT NULL,
     number_of_display_items integer DEFAULT 10 NOT NULL,
     algorithm_strength real DEFAULT 0.75 NOT NULL,
-    max_item_age interval
+    max_item_age interval,
+    feed_expansion text DEFAULT 'FIRST'::text NOT NULL,
+    feed_ordering text DEFAULT 'REVERSE_DATE'::text NOT NULL,
+    display_empty_feeds boolean DEFAULT true NOT NULL
 );
 
 
@@ -301,6 +320,23 @@ CREATE TABLE content_rss_aggregator_feeds (
     title text
 );
 
+
+SET default_with_oids = false;
+
+--
+-- Name: content_shoutbox_messages; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE content_shoutbox_messages (
+    message_content_id text NOT NULL,
+    shoutbox_id text NOT NULL,
+    origin_node_id text NOT NULL,
+    author_user_id text NOT NULL,
+    creation_date timestamp without time zone DEFAULT now()
+);
+
+
+SET default_with_oids = true;
 
 --
 -- Name: locales; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
@@ -439,7 +475,8 @@ CREATE TABLE nodes (
     network_id text NOT NULL,
     last_paged timestamp without time zone,
     is_splash_only_node boolean DEFAULT false,
-    custom_portal_redirect_url text
+    custom_portal_redirect_url text,
+    gw_id text NOT NULL
 );
 
 
@@ -555,11 +592,27 @@ ALTER TABLE ONLY content_available_display_areas
 
 
 --
+-- Name: content_clickthrough_log_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY content_clickthrough_log
+    ADD CONSTRAINT content_clickthrough_log_pkey PRIMARY KEY (content_id, user_id, node_id, destination_url);
+
+
+--
 -- Name: content_display_location_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
 --
 
 ALTER TABLE ONLY content_available_display_pages
     ADD CONSTRAINT content_display_location_pkey PRIMARY KEY (display_page);
+
+
+--
+-- Name: content_display_log_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY content_display_log
+    ADD CONSTRAINT content_display_log_pkey PRIMARY KEY (content_id, user_id, node_id);
 
 
 --
@@ -579,14 +632,6 @@ ALTER TABLE ONLY content_group_element
 
 
 --
--- Name: content_group_element_portal_display_log_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
---
-
-ALTER TABLE ONLY content_display_log
-    ADD CONSTRAINT content_group_element_portal_display_log_pkey PRIMARY KEY (user_id, content_id, node_id);
-
-
---
 -- Name: content_group_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
 --
 
@@ -600,6 +645,14 @@ ALTER TABLE ONLY content_group
 
 ALTER TABLE ONLY content_has_owners
     ADD CONSTRAINT content_has_owners_pkey PRIMARY KEY (content_id, user_id);
+
+
+--
+-- Name: content_key_value_pairs_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY content_key_value_pairs
+    ADD CONSTRAINT content_key_value_pairs_pkey PRIMARY KEY (content_id, "key");
 
 
 --
@@ -624,6 +677,14 @@ ALTER TABLE ONLY content_rss_aggregator_feeds
 
 ALTER TABLE ONLY content_rss_aggregator
     ADD CONSTRAINT content_rss_aggregator_pkey PRIMARY KEY (content_id);
+
+
+--
+-- Name: content_shoutbox_messages_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY content_shoutbox_messages
+    ADD CONSTRAINT content_shoutbox_messages_pkey PRIMARY KEY (message_content_id);
 
 
 --
@@ -818,6 +879,13 @@ CREATE INDEX idx_content_group_element_valid_from_timestamp ON content_group_ele
 --
 
 CREATE INDEX idx_content_group_element_valid_until_timestamp ON content_group_element USING btree (valid_until_timestamp);
+
+
+--
+-- Name: idx_gw_id; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE UNIQUE INDEX idx_gw_id ON nodes USING btree (gw_id);
 
 
 --
@@ -1119,6 +1187,46 @@ ALTER TABLE ONLY content_clickthrough_log
 
 ALTER TABLE ONLY content_clickthrough_log
     ADD CONSTRAINT content_clickthrough_log_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: content_key_value_pairs_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY content_key_value_pairs
+    ADD CONSTRAINT content_key_value_pairs_content_id_fkey FOREIGN KEY (content_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: content_shoutbox_messages_author_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY content_shoutbox_messages
+    ADD CONSTRAINT content_shoutbox_messages_author_user_id_fkey FOREIGN KEY (author_user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: content_shoutbox_messages_message_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY content_shoutbox_messages
+    ADD CONSTRAINT content_shoutbox_messages_message_content_id_fkey FOREIGN KEY (message_content_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: content_shoutbox_messages_origin_node_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY content_shoutbox_messages
+    ADD CONSTRAINT content_shoutbox_messages_origin_node_id_fkey FOREIGN KEY (origin_node_id) REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: content_shoutbox_messages_shoutbox_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY content_shoutbox_messages
+    ADD CONSTRAINT content_shoutbox_messages_shoutbox_id_fkey FOREIGN KEY (shoutbox_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
