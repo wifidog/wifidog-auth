@@ -47,7 +47,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 52);
+define('REQUIRED_SCHEMA_VERSION', 53);
 /** Used to test a new shecma version before modyfying the database */
 define('SCHEMA_UPDATE_TEST_MODE', false);
 /**
@@ -1085,6 +1085,69 @@ function real_update_schema($targetSchema) {
         $sql .= "author_user_id text NOT NULL REFERENCES users ON UPDATE CASCADE ON DELETE CASCADE, \n";
         $sql .= "creation_date timestamp DEFAULT now() \n";
         $sql .= "); \n";
+    }
+    
+    $new_schema_version = 53;
+    if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
+        printUpdateVersion($new_schema_version);
+        $sql .= "\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+        
+        $sql .= "CREATE TABLE content_type_filters \n";
+        $sql .= "( \n";
+        $sql .= "content_type_filter_id text NOT NULL PRIMARY KEY,\n";
+        $sql .= "content_type_filter_label text,\n";
+        $sql .= "content_type_filter_rules text NOT NULL CONSTRAINT content_type_filter_rules_not_empty_string CHECK (content_type_filter_rules != '')\n";
+        $sql .= ");\n\n";
+        
+        $sql .= "CREATE TABLE profile_templates \n";
+        $sql .= "( \n";
+        $sql .= "profile_template_id text NOT NULL PRIMARY KEY, \n";
+        $sql .= "profile_template_label text,\n";
+        $sql .= "creation_date timestamp DEFAULT now()\n";
+        $sql .= ");\n\n";
+        
+        $sql .= "CREATE TABLE profile_template_fields \n";
+        $sql .= "( \n";
+        $sql .= "profile_template_field_id text NOT NULL PRIMARY KEY,\n";
+        $sql .= "profile_template_id text NOT NULL REFERENCES profile_templates ON UPDATE CASCADE ON DELETE CASCADE,\n";
+        $sql .= "display_label_content_id text REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE,\n";
+        $sql .= "admin_label_content_id text REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE,\n";
+        $sql .= "content_type_filter_id text REFERENCES content_type_filters ON UPDATE CASCADE ON DELETE CASCADE, \n";
+        $sql .= "display_order integer DEFAULT '1',\n";
+        $sql .= "semantic_id text\n";
+        $sql .= ");\n";
+        $sql .= "CREATE INDEX profile_template_fields_semantic_id ON profile_template_fields(semantic_id);\n\n";
+        
+        $sql .= "CREATE TABLE network_has_profile_templates \n";
+        $sql .= "( \n";
+        $sql .= "network_id text REFERENCES networks ON UPDATE CASCADE ON DELETE CASCADE,\n";
+        $sql .= "profile_template_id text REFERENCES profile_templates ON UPDATE CASCADE ON DELETE CASCADE,\n";
+        $sql .= "PRIMARY KEY(network_id, profile_template_id) \n";
+        $sql .= ");\n\n";
+        
+        $sql .= "CREATE TABLE profiles \n";
+        $sql .= "( \n";
+        $sql .= "profile_id text NOT NULL PRIMARY KEY, \n";
+        $sql .= "profile_template_id text REFERENCES profile_templates ON UPDATE CASCADE ON DELETE CASCADE,\n";
+        $sql .= "creation_date timestamp DEFAULT now(),\n";
+        $sql .= "is_visible boolean DEFAULT TRUE\n";
+        $sql .= ");\n\n";
+        
+        $sql .= "CREATE TABLE user_has_profiles \n";
+        $sql .= "( \n";
+        $sql .= "user_id text REFERENCES users ON UPDATE CASCADE ON DELETE CASCADE,\n";
+        $sql .= "profile_id text REFERENCES profiles ON UPDATE CASCADE ON DELETE CASCADE,\n";
+        $sql .= "PRIMARY KEY(user_id, profile_id) \n";
+        $sql .= ");\n\n";
+        
+        $sql .= "CREATE TABLE profile_fields \n";
+        $sql .= "( \n";
+        $sql .= "profile_field_id text NOT NULL PRIMARY KEY,\n"; 
+        $sql .= "profile_id text REFERENCES profiles ON UPDATE CASCADE ON DELETE CASCADE,\n";
+        $sql .= "profile_template_field_id text REFERENCES profile_template_fields ON UPDATE CASCADE ON DELETE CASCADE, \n";
+        $sql .= "content_id text REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE, \n";
+        $sql .= "last_modified timestamp DEFAULT now()\n";
+        $sql .= ");\n";
     }
     
     /*

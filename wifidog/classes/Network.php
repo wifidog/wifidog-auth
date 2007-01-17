@@ -1679,6 +1679,12 @@ class Network implements GenericObject
     		// Build section
     		$html .= InterfaceElements::generateAdminSectionContainer("network_gis_data", _("GIS data"), implode(null, $html_network_gis_data));
         }
+        
+        // Profile templates
+        $title = _("Network profile templates");
+        $name = "network_".$this->id."_profile_templates";
+        $data = ProfileTemplate::getLinkedProfileTemplateUI($name, "network_has_profile_templates", "network_id", $this->id);
+        $html .= InterfaceElements::generateAdminSectionContainer("network_profile_templates", $title, $data);
 
         $html .= "</ul>\n";
         $html .= "</fieldset>";
@@ -1704,7 +1710,7 @@ class Network implements GenericObject
         // Content management
         $name = "network_".$this->id."_content";
         Content :: processLinkedContentUI($name, 'network_has_content', 'network_id', $this->id);
-
+		
         // name
         $name = "network_".$this->getId()."_name";
         $this->setName($_REQUEST[$name]);
@@ -1774,6 +1780,10 @@ class Network implements GenericObject
             $name = "network_".$this->getId()."_gmaps_map_type";
             $this->setGisMapType($_REQUEST[$name]);
         }
+        
+        // Profile templates
+        $name = "network_".$this->id."_profile_templates";
+		ProfileTemplate :: processLinkedProfileTemplateUI($name, 'network_has_profile_templates', 'network_id', $this->id);
 
         // Node creation
         $new_node = Node :: processCreateNewObjectUI();
@@ -1794,7 +1804,6 @@ class Network implements GenericObject
      */
     public function addContent(Content $content)
     {
-        
         $db = AbstractDb::getObject();
 
         $content_id = $db->escapeString($content->getId());
@@ -1813,7 +1822,6 @@ class Network implements GenericObject
      */
     public function removeContent(Content $content)
     {
-        
         $db = AbstractDb::getObject();
 
         $content_id = $db->escapeString($content->getId());
@@ -1821,6 +1829,59 @@ class Network implements GenericObject
         $db->execSqlUpdate($sql, false);
     }
 
+	
+    /**
+     * Add a profile template to this network
+     *
+     * @param object ProfileTemplate object
+     *
+     * @return void
+     *
+     * @access public
+     */
+    public function addProfileTemplate(ProfileTemplate $profile_template)
+    {
+        $db = AbstractDb::getObject();
+
+        $profile_template_id = $db->escapeString($profile_template->getId());
+        $sql = "INSERT INTO network_has_profile_templates (network_id, profile_template_id) VALUES ('$this->id','$profile_template_id')";
+        $db->execSqlUpdate($sql, false);
+    }
+
+    /**
+     * Remove a profile template to this network
+     *
+     * @param object ProfileTemplate object
+     *
+     * @return void
+     *
+     * @access public
+     */
+    public function removeProfileTemplate(ProfileTemplate $profile_template)
+    {   
+        $db = AbstractDb::getObject();
+
+        $profile_template_id = $db->escapeString($profile_template->getId());
+        $sql = "DELETE FROM network_has_profile_templates WHERE network_id='$this->id' AND profile_template_id='$profile_template_id'";
+        $db->execSqlUpdate($sql, false);
+    }
+    
+    /**Get an array of all ProfileTemplates linked to this network
+    * @return an array of ProfileTemplates or an empty arrray */
+    function getAllProfileTemplates() {
+        $db = AbstractDb::getObject();
+        $retval = array ();
+        $profile_template_rows = null;
+        $sql = "SELECT profile_template_id FROM network_has_profile_templates WHERE network_id='$this->id'";
+        $db->execSql($sql, $profile_template_rows, false);
+        if ($profile_template_rows != null) {
+            foreach ($profile_template_rows as $profile_template_row) {
+                $retval[] = ProfileTemplate :: getObject($profile_template_row['profile_template_id']);
+            }
+        }
+        return $retval;
+    }
+    
     /**
      * Delete this Object form the it's storage mechanism
      *

@@ -79,25 +79,25 @@ class BannerAdGroup extends ContentGroup {
         $this->setAllowedContentTypes($allowed_content_types);
         $this->predefinedSizes = array (
             /* Rectangles and Pop-Ups */
-'300px/250px' => _('300x250 - IAB Medium Rectangle'), 
-'250px/250px' => _('250x250 - IAB Square Pop-Up'), 
-'240px/400px' => _('240x400 - IAB Vertical Rectangle'), 
-'336px/280px' => _('336x280 - IAB Large Rectangle'), 
-'180px/150px' => _('180x150 - IAB Rectangle'),
-        /* Banners and Buttons */
-'468px/60px' => _('468x60  - IAB Full Banner'), 
-'234px/60px' => _('234x60  - IAB Half Banner'), 
-'88px/31px' => _('88x31   - IAB Micro Bar'), 
-'120px/90px' => _('120x90  - IAB Button 1'), 
-'120px/60px' => _('120x60  - IAB Button 2'), 
-'120px/240px' => _('120x240 - IAB Vertical Banner'), 
-'125px/125px' => _('125x125 - IAB Square Button'), 
-'728px/90px' => _('728x90  - IAB Leaderboard'),
-        /* Skyscrapers */
-'160px/600px' => _('160x600 - IAB Wide Skyscraper'), 
-'120px/600px' => _('120x600 - IAB Skyscraper'), 
-'300px/600px' => _('300x600 - IAB Half Page Ad'));
-    }
+			'300px/250px' => _('300x250 - IAB Medium Rectangle'), 
+			'250px/250px' => _('250x250 - IAB Square Pop-Up'), 
+			'240px/400px' => _('240x400 - IAB Vertical Rectangle'), 
+			'336px/280px' => _('336x280 - IAB Large Rectangle'), 
+			'180px/150px' => _('180x150 - IAB Rectangle'),
+			        /* Banners and Buttons */
+			'468px/60px' => _('468x60  - IAB Full Banner'), 
+			'234px/60px' => _('234x60  - IAB Half Banner'), 
+			'88px/31px' => _('88x31   - IAB Micro Bar'), 
+			'120px/90px' => _('120x90  - IAB Button 1'), 
+			'120px/60px' => _('120x60  - IAB Button 2'), 
+			'120px/240px' => _('120x240 - IAB Vertical Banner'), 
+			'125px/125px' => _('125x125 - IAB Square Button'), 
+			'728px/90px' => _('728x90  - IAB Leaderboard'),
+			        /* Skyscrapers */
+			'160px/600px' => _('160x600 - IAB Wide Skyscraper'), 
+			'120px/600px' => _('120x600 - IAB Skyscraper'), 
+			'300px/600px' => _('300x600 - IAB Half Page Ad'));
+	    }
 
     /** When a content object is set as Simple, it means that is is used merely to contain it's own data.  No title, description or other metadata will be set or displayed, during display or administration
      * @return true or false */

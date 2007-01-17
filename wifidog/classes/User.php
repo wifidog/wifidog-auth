@@ -48,6 +48,8 @@
 require_once ('classes/Network.php');
 require_once ('classes/Mail.php');
 require_once ('classes/InterfaceElements.php');
+require_once ('classes/ProfileTemplate.php');
+require_once ('classes/Profile.php');
 
 /**
  * Abstract a User
@@ -292,6 +294,38 @@ class User implements GenericObject {
                 throw new exception(sprintf(_("Sorry, the username %s is not available"), $value));
             }
             $this->refresh();
+        }
+        return $retval;
+    }
+    
+    /** Add profile template to this user */
+    public function addProfile(Profile $profile) {
+        $db = AbstractDb::getObject();
+        $profile_id = $db->escapeString($profile->getId());
+        $sql = "INSERT INTO user_has_profiles (user_id, profile_id) VALUES ('$this->id','$profile_id')";
+        return $db->execSqlUpdate($sql, false);
+    }
+
+    /** Remove profile template from this user */
+    public function removeProfile(Profile $profile) {
+        $db = AbstractDb::getObject();
+        $profile_id = $db->escapeString($profile->getId());
+        $sql = "DELETE FROM user_has_profiles WHERE user_id='$this->id' AND profile_id='$profile_id'";
+        return $db->execSqlUpdate($sql, false);
+    }
+    
+    /**Get an array of all Profiles linked to this user
+    * @return an array of Profile or an empty arrray */
+    public function getAllProfiles() {
+        $db = AbstractDb::getObject();
+        $retval = array ();
+        $profile_rows = null;
+        $sql = "SELECT profile_id FROM user_has_profiles NATURAL JOIN profiles WHERE user_id='$this->id' ORDER BY creation_date";
+        $db->execSql($sql, $profile_rows, false);
+        if ($profile_rows != null) {
+            foreach ($profile_rows as $profile_row) {
+                $retval[] = Profile :: getObject($profile_row['profile_id']);
+            }
         }
         return $retval;
     }
@@ -670,6 +704,7 @@ class User implements GenericObject {
 
             $finalHtml .= InterfaceElements::genSection($administrationItems, _("Administrative options"));
         }
+
         if (($this == $currentUser && !$this->isSplashOnlyUser() )|| $this->getNetwork()->hasAdminAccess($currentUser)) {
             /* Username */
             $title = _("Username");
@@ -677,30 +712,50 @@ class User implements GenericObject {
             $content = "<input type='text' name='$name' value='" . htmlentities($this->getUsername()) . "' size=30>\n";
             $content .= _("Be carefull when changing this: it's the username you use to log in!");
             $userPreferencesItems[] = InterfaceElements::genSectionItem($content, $title);
+            
+            /* Change password */
+	        $changePasswordItems=array();
+	        if($this == $currentUser) {//Don't enter the old password if changing password for another user
+	            $title = _("Your current password");
+	            $name = "user_" . $this->getId() . "_oldpassword";
+	            $content = "<input type='password' name='$name' size='20'>\n";
+	            $changePasswordItems[] = InterfaceElements::genSectionItem($content, $title);
+	        }
+	
+	        $title = _("Your new password");
+	        $name = "user_" . $this->getId() . "_newpassword";
+	        $content = "<input type='password' name='$name' size='20'>\n";
+	        $changePasswordItems[] = InterfaceElements::genSectionItem($content, $title);
+	
+	        $title = _("Your new password (again)");
+	        $name = "user_" . $this->getId() . "_newpassword_again";
+	        $content = "<input type='password' name='$name' size='20'>\n";
+	        $changePasswordItems[] = InterfaceElements::genSectionItem($content, $title);
+	
+	        $userPreferencesItems[] = InterfaceElements::genSection($changePasswordItems, _("Change my password"));
+	
+	        $finalHtml .= InterfaceElements::genSection($userPreferencesItems, _("User preferences"), false, false, get_class($this));
+            
+            //N.B: For now, let pretend we have only one profile per use...
+            $profiles = $this->getAllProfiles();
+            $current_profile = null;
+            if(empty($profiles)) {
+            	// Get the list of profile templates for the users' network
+            	$profile_templates = ProfileTemplate::getAllProfileTemplates($this->getNetwork());
+            	if(!empty($profile_templates)) {
+            		// Create a blank profile and link it to the user
+            		$current_profile = Profile::createNewObject(null, $profile_templates[0]);
+            		$this->addProfile($current_profile);
+            	}
+            } else {
+            	$current_profile = $profiles[0];
+            }
+            
+            if($current_profile != null) {
+	            $finalHtml .= $current_profile->getAdminUI();
+            }
         }
 
-        /* Change password */
-        $changePasswordItems=array();
-        if($this == $currentUser) {//Don't enter the old password if changing password for another user
-            $title = _("Your current password");
-            $name = "user_" . $this->getId() . "_oldpassword";
-            $content = "<input type='password' name='$name' size='20'>\n";
-            $changePasswordItems[] = InterfaceElements::genSectionItem($content, $title);
-        }
-
-        $title = _("Your new password");
-        $name = "user_" . $this->getId() . "_newpassword";
-        $content = "<input type='password' name='$name' size='20'>\n";
-        $changePasswordItems[] = InterfaceElements::genSectionItem($content, $title);
-
-        $title = _("Your new password (again)");
-        $name = "user_" . $this->getId() . "_newpassword_again";
-        $content = "<input type='password' name='$name' size='20'>\n";
-        $changePasswordItems[] = InterfaceElements::genSectionItem($content, $title);
-
-        $userPreferencesItems[] = InterfaceElements::genSection($changePasswordItems, _("Change my password"));
-
-        $finalHtml .= InterfaceElements::genSection($userPreferencesItems, _("User preferences"), false, false, get_class($this));
         return $finalHtml;
     }
 
@@ -718,7 +773,7 @@ class User implements GenericObject {
             /* Username */
             $name = "user_" . $this->getId() . "_username";
             $this->setUsername($_REQUEST[$name]);
-
+            
             /* Change password */
             $nameOldpassword = "user_" . $this->getId() . "_oldpassword";
             $nameNewpassword = "user_" . $this->getId() . "_newpassword";
@@ -732,6 +787,11 @@ class User implements GenericObject {
                 }
                 $this->setPassword($_REQUEST[$nameNewpassword]);
             }
+
+            // Pretend there is only one
+            $profiles = $this->getAllProfiles();
+            if(!empty($profiles))
+            	$profiles[0]->processAdminUI();
 
         }
     }
@@ -769,6 +829,7 @@ class User implements GenericObject {
     function getAllContent() {
         $db = AbstractDb::getObject();
         $retval = array ();
+        $content_rows = null;
         $sql = "SELECT * FROM user_has_content WHERE user_id='$this->id' ORDER BY subscribe_timestamp";
         $db->execSql($sql, $content_rows, false);
         if ($content_rows != null) {

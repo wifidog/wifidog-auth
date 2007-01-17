@@ -97,6 +97,8 @@
                     <ul>
                         {if $userIsSuperAdmin}
                         <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Server&action=list">{"Servers"|_}</a></li>
+                        <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=ContentTypeFilter&action=list">{"Content type filters"|_}</a></li>
+                        <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=ProfileTemplate&action=list">{"Profile templates"|_}</a></li>
         				{/if}
                         <li><a href="{$base_url_path}admin/generic_object_admin.php?object_class=Content&action=list">{"Reusable content library"|_}</a></li>
                     </ul>

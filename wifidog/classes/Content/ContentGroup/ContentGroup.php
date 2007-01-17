@@ -668,7 +668,6 @@ class ContentGroup extends Content {
         $db->execSql($sql, $element_rows, false);
         if ($element_rows != null) {
             foreach ($element_rows as $element_row) {
-                $element = self :: getObject($element_row['content_group_element_id']);
                 $retval[] = self :: getObject($element_row['content_group_element_id']);
             }
         }

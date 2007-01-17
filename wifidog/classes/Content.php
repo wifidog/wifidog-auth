@@ -860,9 +860,9 @@ class Content implements GenericObject {
     static function processSelectContentUI($user_prefix) {
     	$name = "{$user_prefix}";
     	if (!empty ($_REQUEST[$name]))
-    	return Content :: getObject($_REQUEST[$name]);
+    		return Content :: getObject($_REQUEST[$name]);
     	else
-    	return null;
+    		return null;
     }
 
     /** Get the true object type represented by this isntance

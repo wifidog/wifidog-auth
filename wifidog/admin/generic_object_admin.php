@@ -66,6 +66,8 @@ require_once ('classes/User.php');
 require_once ('classes/Node.php');
 require_once ('classes/Network.php');
 require_once ('classes/Server.php');
+require_once ('classes/ContentTypeFilter.php');
+require_once ('classes/ProfileTemplate.php');
 require_once ('classes/InterfaceElements.php');
 
 // Init values
@@ -252,7 +254,7 @@ switch ($_REQUEST['action_delete']) {
  */
 switch ($_REQUEST['action']) {
     case "list" :
-        $createAllowed = false;
+        $hasCreateNewObjectUI = true;
 
         switch ($_REQUEST['object_class']) {
             case "Content" :
@@ -276,17 +278,34 @@ switch ($_REQUEST['action']) {
                 $newLongText = $addLongText;
                 $objectSelector = Server :: getSelectServerUI('object_id');
                 break;
+                
+            case "ContentTypeFilter" :
+                $objectSelector = ContentTypeFilter :: getSelectContentTypeFilterUI('object_id');
+                break;
 
+			case "ProfileTemplate" :
+                $objectSelector = ProfileTemplate :: getSelectProfileTemplateUI('object_id');
+                $hasCreateNewObjectUI = false;
+                break;
+                
             default :
                 $objectSelector = "";
                 break;
         }
 
-        $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
-        $html .= "<input type='hidden' name='object_class' value='$class'>";
-        $html .= "<input type='hidden' name='action' value='new_ui'>";
-        $html .= "<input type='submit' name='new_submit' value='$newLongText'>\n";
-        $html .= '</form>';
+		if($hasCreateNewObjectUI == true) {
+		    $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
+		    $html .= "<input type='hidden' name='object_class' value='$class'>";
+		    $html .= "<input type='hidden' name='action' value='new_ui'>";
+		    $html .= "<input type='submit' name='new_submit' value='$newLongText'>\n";
+		    $html .= '</form>';
+		} else {
+			$html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
+		    $html .= "<input type='hidden' name='object_class' value='$class'>";
+		    $html .= "<input type='hidden' name='action' value='new'>";
+		    $html .= "<input type='submit' name='new_submit' value='$newLongText'>\n";
+		    $html .= '</form>';
+		}
 
         if ($displayShowAllButton) {
             $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
@@ -322,6 +341,8 @@ switch ($_REQUEST['action']) {
             case "Node" :
             case "Server" :
             case "Content" :
+            case "ContentTypeFilter" :
+            case "ProfileTemplate" :
                 $newText = $addText;
                 break;
 
@@ -346,6 +367,8 @@ switch ($_REQUEST['action']) {
             case "Network" :
             case "Server" :
             case "User" :
+            case "ContentTypeFilter" :
+            case "ProfileTemplate" :
                 $supportsPreview = false;
                 break;
 
@@ -361,6 +384,8 @@ switch ($_REQUEST['action']) {
             case "Network" :
             case "Node" :
             case "Server" :
+            case "ProfileTemplate" :
+            case "ContentTypeFilter" :
                 if (!User :: getCurrentUser()->isSuperAdmin()) {
                     $supportsDeletion = false;
                 }
