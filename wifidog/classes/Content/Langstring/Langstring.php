@@ -238,7 +238,7 @@ class Langstring extends Content {
                 //                }
                 //
                 //                $html .= "<div class='admin_element_data' id='langstrings_".$this->id."_substring_$value[langstring_entries_id]_language_section' style='display: none;'>\n";
-                //                $html .= $liste_languages->GenererFormSelect("$value[locales_id]", "langstrings_".$this->id."_substring_$value[langstring_entries_id]_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
+                //                $html .= $liste_languages->GenererFormSelect("$value[locales_id]", "langstrings_".$this->id."_substring_$value[langstring_entries_id]_language", null, TRUE);
                 //                $html .= "</div>\n";
                 //
                 //                $html .= "</div>\n";
@@ -265,7 +265,7 @@ class Langstring extends Content {
                 $html .= "<li class='admin_element_item_container'>\n";
                 $html .= "<div class='admin_element_data'>\n";
 
-                $html .= _("Language") . ": " . $liste_languages->GenererFormSelect("$value[locales_id]", "langstrings_" . $this->id . "_substring_$value[langstring_entries_id]_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
+                $html .= _("Language") . ": " . $liste_languages->GenererFormSelect("$value[locales_id]", "langstrings_" . $this->id . "_substring_$value[langstring_entries_id]_language", null, TRUE);
 
                 if ($type_interface == 'LARGE') {
                     $html .= "<textarea name='langstrings_" . $this->id . "_substring_$value[langstring_entries_id]_string' class='textarea' cols='60' rows='3'>" . htmlspecialchars($value['value'], ENT_QUOTES, 'UTF-8') . "</textarea>\n";
@@ -301,7 +301,7 @@ class Langstring extends Content {
         //
         //        $html .= "<div class='admin_element_data' id='langstrings_".$this->id."_substring_new_language_section'>\n";
         //        $html .= "<img src='" . BASE_SSL_PATH . "images/icons/language.gif' id='langstrings_".$this->id."_substring_new_language_section_image' class='admin_section_button' alt='"._("Choose language")."' title='"._("Choose language")."'>";
-        //        $html .= $liste_languages->GenererFormSelect($locale, "langstrings_".$this->id."_substring_new_language", 'Langstring::AfficherInterfaceAdmin', TRUE);
+        //        $html .= $liste_languages->GenererFormSelect($locale, "langstrings_".$this->id."_substring_new_language", null, TRUE);
         //        $html .= "</div>\n";
         //
         //        $html .= "</div>\n";
@@ -323,7 +323,7 @@ class Langstring extends Content {
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<div class='admin_element_data'>\n";
 
-        $html .= _("Language") . ": " . $liste_languages->GenererFormSelect($locale, "langstrings_" . $this->id . "_substring_new_language", 'Langstring::AfficherInterfaceAdmin', TRUE, $exclude_array);
+        $html .= _("Language") . ": " . $liste_languages->GenererFormSelect($locale, "langstrings_" . $this->id . "_substring_new_language", null, TRUE, $exclude_array);
         $new_substring_name = "langstrings_" . $this->id . "_substring_new_string";
 
         if ($type_interface == 'LARGE') {
@@ -361,7 +361,7 @@ class Langstring extends Content {
 
             if ($result != null) {
                 while (list ($key, $value) = each($result)) {
-                    $language = $generateur_form_select->getResult("langstrings_" . $this->id . "_substring_$value[langstring_entries_id]_language", 'Langstring::AfficherInterfaceAdmin');
+                    $language = $generateur_form_select->getResult("langstrings_" . $this->id . "_substring_$value[langstring_entries_id]_language", null);
 
                     if (empty ($language)) {
                         $language = '';
@@ -423,7 +423,7 @@ class Langstring extends Content {
             $new_substring_submit_name = "langstrings_" . $this->id . "_add_new_entry";
 
             if ((isset ($_REQUEST[$new_substring_submit_name]) && $_REQUEST[$new_substring_submit_name] == true) || !empty ($_REQUEST[$new_substring_name])) {
-                $language = $generateur_form_select->getResult("langstrings_" . $this->id . "_substring_new_language", 'Langstring::AfficherInterfaceAdmin');
+                $language = $generateur_form_select->getResult("langstrings_" . $this->id . "_substring_new_language", null);
 
                 if (empty ($language)) {
                     $language = null;

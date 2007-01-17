@@ -3,6 +3,7 @@
 	* Move password change to preferences.
 	* InterfaceElements:  Begin moving away from a raw HTML generator and towards a more semantic one as discussed with Max Horvath.
 	* It is now possible for an administrator to manually validate or lock-out a user
+	* Add new SimpleString content type
 	
 2007-01-15 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Sync initial schema and translations
