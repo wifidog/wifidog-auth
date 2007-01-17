@@ -63,7 +63,7 @@ require_once('classes/DateTimeWD.php');
 class Node implements GenericObject
 {
 	/** Object cache for the object factory (getObject())*/
-    private static $instanceArray = array();
+	private static $instanceArray = array();
 	private $mRow;
 	private $mdB; /**< An AbstractDb instance */
 	private $id;
@@ -92,11 +92,11 @@ class Node implements GenericObject
 	 */
 	static function getObject($id)
 	{
-		if(!isset(self::$instanceArray[$id]))
-        {
+	    if(!isset(self::$instanceArray[$id]))
+	    {
         	self::$instanceArray[$id] = new self($id);
-        }
-        return self::$instanceArray[$id];
+	    }
+	    return self::$instanceArray[$id];
 	}
 
 	/** Instantiate a node object using it's gateway id
@@ -105,9 +105,9 @@ class Node implements GenericObject
 	 */
 	static function getObjectByGatewayId($gwId)
 	{
-		$object = null;
-		$object = new self($gwId, 'GATEWAY_ID');
-		return $object;
+	    $object = null;
+	    $object = new self($gwId, 'GATEWAY_ID');
+	    return $object;
 	}
 	/** Get the current node for which the portal is displayed or to which a user is physically connected.
 	 * @param $real_node_only true or false.  If true, the real physical node where the user is connected is returned, and the node set by setCurrentNode is ignored.
@@ -115,16 +115,16 @@ class Node implements GenericObject
 	 */
 	static function getCurrentNode($real_node_only = false)
 	{
-		$object = null;
-		if (self :: $current_node_id != null && $real_node_only == false)
-		{
-			$object = self::getObject(self :: $current_node_id);
-		}
-		else
-		{
-			$object = self :: getCurrentRealNode();
-		}
-		return $object;
+	    $object = null;
+	    if (self :: $current_node_id != null && $real_node_only == false)
+	    {
+	        $object = self::getObject(self :: $current_node_id);
+	    }
+	    else
+	    {
+	        $object = self :: getCurrentRealNode();
+	    }
+	    return $object;
 	}
 
 	/** Set the current node where the user is to be considered connected to.  (For portal and content display purpuses, among other.
@@ -132,8 +132,8 @@ class Node implements GenericObject
 	 * @return true	 */
 	static function setCurrentNode(Node $node)
 	{
-		self :: $current_node_id = $node->GetId();
-		return true;
+	    self :: $current_node_id = $node->GetId();
+	    return true;
 	}
 
 	/** Get the current node to which a user is physically connected, if any.  This is done by an IP address lookup against the last reported IP address of the node
@@ -141,76 +141,76 @@ class Node implements GenericObject
 	 */
 	public static function getCurrentRealNode()
 	{
-		static $currentRealNode;
-		static $currentRealNodeComputed;
-		if(!isset($currentRealNodeComputed))
-        {
+	    static $currentRealNode;
+	    static $currentRealNodeComputed;
+	    if(!isset($currentRealNodeComputed))
+	    {
         	$currentRealNodeComputed=true;
-        $db = AbstractDb::getObject();
-		$sql = "SELECT node_id, last_heartbeat_ip from nodes WHERE last_heartbeat_ip='$_SERVER[REMOTE_ADDR]' ORDER BY last_heartbeat_timestamp DESC";
-		$node_rows = null;
-		$db->execSql($sql, $node_rows, false);
-		$num_match = count($node_rows);
-		if ($num_match == 0)
-		{
+        	$db = AbstractDb::getObject();
+        	$sql = "SELECT node_id, last_heartbeat_ip from nodes WHERE last_heartbeat_ip='$_SERVER[REMOTE_ADDR]' ORDER BY last_heartbeat_timestamp DESC";
+        	$node_rows = null;
+        	$db->execSql($sql, $node_rows, false);
+        	$num_match = count($node_rows);
+        	if ($num_match == 0)
+        	{
 
-			// User is not physically connected to a node
-			$currentRealNode = null;
-		}
-		else
-			if ($num_match = 1)
-			{
-				// Only a single node matches, the user is presumed to be there
-				$currentRealNode = self::getObject($node_rows[0]['node_id']);
-			}
-			else
-			{
-				/* We have more than one node matching the IP (the nodes are behind the same NAT).
-				 * We will try to discriminate by finding which node the user last authenticated against.
-				 * If the IP matches, we can be pretty certain the user is there.
-				 */
-				$currentRealNode = null;
-				$current_user = User :: getCurrentUser();
-				if ($current_user != null)
-				{
-					$current_user_id = $current_user->getId();
-					$_SERVER['REMOTE_ADDR'];
-					$sql = "SELECT node_id, last_heartbeat_ip from connections NATURAL JOIN nodes WHERE user_id='$current_user_id' ORDER BY last_updated DESC ";
-					$db->execSql($sql, $node_rows, false);
-					$node_row = $node_rows[0];
-					if ($node_row != null && $node_row['last_heartbeat_ip'] == $_SERVER['REMOTE_ADDR'])
-					{
-						$currentRealNode = self::getObject($node_row['node_id']);
-					}
-				}
-			}
-        }
+        	    // User is not physically connected to a node
+        	    $currentRealNode = null;
+        	}
+        	else
+        	if ($num_match = 1)
+        	{
+        	    // Only a single node matches, the user is presumed to be there
+        	    $currentRealNode = self::getObject($node_rows[0]['node_id']);
+        	}
+        	else
+        	{
+        	    /* We have more than one node matching the IP (the nodes are behind the same NAT).
+        	     * We will try to discriminate by finding which node the user last authenticated against.
+        	     * If the IP matches, we can be pretty certain the user is there.
+        	     */
+        	    $currentRealNode = null;
+        	    $current_user = User :: getCurrentUser();
+        	    if ($current_user != null)
+        	    {
+        	        $current_user_id = $current_user->getId();
+        	        $_SERVER['REMOTE_ADDR'];
+        	        $sql = "SELECT node_id, last_heartbeat_ip from connections NATURAL JOIN nodes WHERE user_id='$current_user_id' ORDER BY last_updated DESC ";
+        	        $db->execSql($sql, $node_rows, false);
+        	        $node_row = $node_rows[0];
+        	        if ($node_row != null && $node_row['last_heartbeat_ip'] == $_SERVER['REMOTE_ADDR'])
+        	        {
+        	            $currentRealNode = self::getObject($node_row['node_id']);
+        	        }
+        	    }
+        	}
+	    }
 
-		return $currentRealNode;
+	    return $currentRealNode;
 	}
 
 	public function delete(& $errmsg)
 	{
-		$retval = false;
-		$user = User :: getCurrentUser();
-		if ($user->isSuperAdmin()) {
-			$db = AbstractDb::getObject();
-			$id = $db->escapeString($this->getId());
-			if (!$db->execSqlUpdate("DELETE FROM nodes WHERE node_id='{$id}'", false))
-			{
-				$errmsg = _('Could not delete node!');
-			}
-			else
-			{
-				$retval = true;
-			}
-		}
-		else
-		{
-			$errmsg = _('Access denied!');
-		}
+	    $retval = false;
+	    $user = User :: getCurrentUser();
+	    if ($user->isSuperAdmin()) {
+	        $db = AbstractDb::getObject();
+	        $id = $db->escapeString($this->getId());
+	        if (!$db->execSqlUpdate("DELETE FROM nodes WHERE node_id='{$id}'", false))
+	        {
+	            $errmsg = _('Could not delete node!');
+	        }
+	        else
+	        {
+	            $retval = true;
+	        }
+	    }
+	    else
+	    {
+	        $errmsg = _('Access denied!');
+	    }
 
-		return $retval;
+	    return $retval;
 	}
 
 	/**
@@ -229,45 +229,45 @@ class Node implements GenericObject
 	 */
 	public static function createNewObject($gw_id = null, $network = null)
 	{
-		$db = AbstractDb::getObject();
-        if (empty ($gw_id)) {
-            $gw_id = $db->escapeString(_('PUT_GATEWAY_ID_HERE'));
-        }
-        else
-        {
-                    $gw_id = $db->escapeString($gw_id);
-        }
-			$node_id = get_guid();
+	    $db = AbstractDb::getObject();
+	    if (empty ($gw_id)) {
+	        $gw_id = $db->escapeString(_('PUT_GATEWAY_ID_HERE'));
+	    }
+	    else
+	    {
+	        $gw_id = $db->escapeString($gw_id);
+	    }
+	    $node_id = get_guid();
 
 
-		if (empty ($network)) {
-			$network = Network::getCurrentNetwork();
-		}
+	    if (empty ($network)) {
+	        $network = Network::getCurrentNetwork();
+	    }
 
-		$network_id = $db->escapeString($network->getId());
+	    $network_id = $db->escapeString($network->getId());
 
-		$node_deployment_status = $db->escapeString("IN_PLANNING");
-		$node_name = _("New node");
-$duplicate = null;
-try{
-  $duplicate = Node::getObjectByGatewayId($gw_id);
-}
-catch (Exception $e)
-{
-}
-            if ($duplicate) {
-                throw new Exception(sprintf(_('Sorry, a node for the gateway %s already exists.'),$gw_id));
-            }
+	    $node_deployment_status = $db->escapeString("IN_PLANNING");
+	    $node_name = _("New node");
+	    $duplicate = null;
+	    try{
+	        $duplicate = Node::getObjectByGatewayId($gw_id);
+	    }
+	    catch (Exception $e)
+	    {
+	    }
+	    if ($duplicate) {
+	        throw new Exception(sprintf(_('Sorry, a node for the gateway %s already exists.'),$gw_id));
+	    }
 
-            $sql = "INSERT INTO nodes (node_id, gw_id, network_id, creation_date, node_deployment_status, name) VALUES ('$node_id', '$gw_id', '$network_id', CURRENT_TIMESTAMP,'$node_deployment_status', '$node_name')";
+	    $sql = "INSERT INTO nodes (node_id, gw_id, network_id, creation_date, node_deployment_status, name) VALUES ('$node_id', '$gw_id', '$network_id', CURRENT_TIMESTAMP,'$node_deployment_status', '$node_name')";
 
-            if (!$db->execSqlUpdate($sql, false)) {
-                throw new Exception(_('Unable to insert new node into database!'));
-            }
+	    if (!$db->execSqlUpdate($sql, false)) {
+	        throw new Exception(_('Unable to insert new node into database!'));
+	    }
 
-            $object = self::getObject($node_id);
+	    $object = self::getObject($node_id);
 
-            return $object;
+	    return $object;
 	}
 
 	/** Get an interface to pick a node.
@@ -281,9 +281,9 @@ catch (Exception $e)
 	*/
 	public static function getSelectNodeUI($user_prefix, $sql_additional_join = null, $sql_additional_where = null,$selectedNodes = null, $type_interface = "select")
 	{
-		$db = AbstractDb::getObject();
-		$html = '';
-		$name = "{$user_prefix}";
+	    $db = AbstractDb::getObject();
+	    $html = '';
+	    $name = "{$user_prefix}";
 
     	$_deploymentStatuses = array(
     	    "DEPLOYED" => _("Deployed"),
@@ -294,80 +294,80 @@ catch (Exception $e)
     	    "TEMPORARILY_CLOSED" => _("Temporarily closed")
     	    );
 
-		$sql = "SELECT node_id, name, gw_id, node_deployment_status, is_splash_only_node from nodes $sql_additional_join WHERE 1=1 $sql_additional_where ORDER BY lower(node_id)";
-		$node_rows = null;
-		$db->execSql($sql, $node_rows, false);
+    	    $sql = "SELECT node_id, name, gw_id, node_deployment_status, is_splash_only_node from nodes $sql_additional_join WHERE 1=1 $sql_additional_where ORDER BY lower(node_id)";
+    	    $node_rows = null;
+    	    $db->execSql($sql, $node_rows, false);
 
-		if ($node_rows != null) {
-			Utils :: natsort2d($node_rows, "name");
-			if ($type_interface != "table") {
-				$i = 0;
-				foreach ($node_rows as $node_row)
-				{
-					$tab[$i][0] = $node_row['node_id'];
-					//$tab[$i][1] = sprintf(_("%s (gw: %s)"),$node_row['name'],$node_row['gw_id']);
-					$tab[$i][1] = $node_row['name'];
-					$i ++;
-				}
-				if($type_interface == "select_multiple"){
-					$select_options="MULTIPLE SIZE=6";
-				}
-				else
-				{
-					$select_options=null;
-				}
-				//pretty_print_r($selectedNodes);
-				if(is_array($selectedNodes)){
-					$selectedPrimaryKey=array();
-					foreach($selectedNodes as $node){
-						$selectedPrimaryKey[]=$node->getId();
-						}
-						
-				}
-				else if($selectedNodes instanceof Node){
-					$selectedPrimaryKey=$selectedNodes->getId();
-				}
-				else{
-					$selectedPrimaryKey=null;
-				}
-				$html .= FormSelectGenerator :: generateFromArray($tab, $selectedPrimaryKey, $name, null, false, null, $select_options);
-			} else {
-				$html .= "<fieldset>\n    <legend>Node List</legend>\n";
-				$html .= "    <span class='node_admin'>"._("Filter:")."<input type=\"text\" tabindex=\"1\" maxlength=\"40\" size=\"40\" id=\"nodes_list_filter\" name=\"nodes_list_filter\" /></span>\n    <br/>\n";
-				$html .= "    <!--[if IE]><style type='text/css'>#node_list_div table.scrollable>tbody { height: 15px; }</style><![endif]-->\n";
-				$html .= "    <script src='" . BASE_URL_PATH . "js/filtertable.js' type='text/javascript' language='javascript' charset='utf-8'></script>\n";
-				$html .= "    <script src='" . BASE_URL_PATH . "js/sorttable.js' type='text/javascript' language='javascript' charset='utf-8'></script>\n";
-				$html .= "    <div id='node_list_div' class='node_admin tableContainer'>\n";
-				$html .= "        <table id='nodes_list' class='node_admin filterable scrollable sortable'>\n\n";
-				$html .= "            <thead class='fixedHeader'>\n";
-				$html .= "<tr class='nofilter'>\n";
-				$html .= "<th>"._("Node Name")."</th>\n";
-				$html .= "<th>"._("Gateway ID")."</th>\n";
-				$html .= "<th>"._("Deployment Status")."</th>\n";
-				$html .= "</tr>\n";
-				$html .= "</thead>\n";
-				$html .= "<tbody>";
+    	    if ($node_rows != null) {
+    	        Utils :: natsort2d($node_rows, "name");
+    	        if ($type_interface != "table") {
+    	            $i = 0;
+    	            foreach ($node_rows as $node_row)
+    	            {
+    	                $tab[$i][0] = $node_row['node_id'];
+    	                //$tab[$i][1] = sprintf(_("%s (gw: %s)"),$node_row['name'],$node_row['gw_id']);
+    	                $tab[$i][1] = $node_row['name'];
+    	                $i ++;
+    	            }
+    	            if($type_interface == "select_multiple"){
+    	                $select_options="MULTIPLE SIZE=6";
+    	            }
+    	            else
+    	            {
+    	                $select_options=null;
+    	            }
+    	            //pretty_print_r($selectedNodes);
+    	            if(is_array($selectedNodes)){
+    	                $selectedPrimaryKey=array();
+    	                foreach($selectedNodes as $node){
+    	                    $selectedPrimaryKey[]=$node->getId();
+    	                }
 
-				$i = 0;
-				foreach ($node_rows as $node_row)
-				{
-					$href = GENERIC_OBJECT_ADMIN_ABS_HREF."?object_id={$node_row['node_id']}&object_class=Node&action=edit";
-					$_deployStatusNode = $node_row['node_deployment_status'];
-					$html .= "<tr class='row' onclick=\"javascript:location.href='{$href}'\">\n";
-					$html .= "<td>{$node_row['name']}<noscript>(<a href='{$href}'>edit</a>)</noscript></td>\n";
-					$html .= "<td>{$node_row['gw_id']}</td>\n";
-					$html .= "<td>{$_deploymentStatuses[$_deployStatusNode]}</td>\n";
-					$html .= "</tr>\n";
-				}
-				$html .= "            </tbody>\n        </table>\n";
-				$html .= "    </div>\n";
-				$html .= "</fieldset>\n";
+    	            }
+    	            else if($selectedNodes instanceof Node){
+    	                $selectedPrimaryKey=$selectedNodes->getId();
+    	            }
+    	            else{
+    	                $selectedPrimaryKey=null;
+    	            }
+    	            $html .= FormSelectGenerator :: generateFromArray($tab, $selectedPrimaryKey, $name, null, false, null, $select_options);
+    	        } else {
+    	            $html .= "<fieldset>\n    <legend>Node List</legend>\n";
+    	            $html .= "    <span class='node_admin'>"._("Filter:")."<input type=\"text\" tabindex=\"1\" maxlength=\"40\" size=\"40\" id=\"nodes_list_filter\" name=\"nodes_list_filter\" /></span>\n    <br/>\n";
+    	            $html .= "    <!--[if IE]><style type='text/css'>#node_list_div table.scrollable>tbody { height: 15px; }</style><![endif]-->\n";
+    	            $html .= "    <script src='" . BASE_URL_PATH . "js/filtertable.js' type='text/javascript' language='javascript' charset='utf-8'></script>\n";
+    	            $html .= "    <script src='" . BASE_URL_PATH . "js/sorttable.js' type='text/javascript' language='javascript' charset='utf-8'></script>\n";
+    	            $html .= "    <div id='node_list_div' class='node_admin tableContainer'>\n";
+    	            $html .= "        <table id='nodes_list' class='node_admin filterable scrollable sortable'>\n\n";
+    	            $html .= "            <thead class='fixedHeader'>\n";
+    	            $html .= "<tr class='nofilter'>\n";
+    	            $html .= "<th>"._("Node Name")."</th>\n";
+    	            $html .= "<th>"._("Gateway ID")."</th>\n";
+    	            $html .= "<th>"._("Deployment Status")."</th>\n";
+    	            $html .= "</tr>\n";
+    	            $html .= "</thead>\n";
+    	            $html .= "<tbody>";
 
-			}
-		} else {
-			$html .= "<div class='warningmsg'>"._("Sorry, no nodes available in the database")."</div>\n";
-		}
-		return $html;
+    	            $i = 0;
+    	            foreach ($node_rows as $node_row)
+    	            {
+    	                $href = GENERIC_OBJECT_ADMIN_ABS_HREF."?object_id={$node_row['node_id']}&object_class=Node&action=edit";
+    	                $_deployStatusNode = $node_row['node_deployment_status'];
+    	                $html .= "<tr class='row' onclick=\"javascript:location.href='{$href}'\">\n";
+    	                $html .= "<td>{$node_row['name']}<noscript>(<a href='{$href}'>edit</a>)</noscript></td>\n";
+    	                $html .= "<td>{$node_row['gw_id']}</td>\n";
+    	                $html .= "<td>{$_deploymentStatuses[$_deployStatusNode]}</td>\n";
+    	                $html .= "</tr>\n";
+    	            }
+    	            $html .= "            </tbody>\n        </table>\n";
+    	            $html .= "    </div>\n";
+    	            $html .= "</fieldset>\n";
+
+    	        }
+    	    } else {
+    	        $html .= "<div class='warningmsg'>"._("Sorry, no nodes available in the database")."</div>\n";
+    	    }
+    	    return $html;
 	}
 
 
@@ -377,9 +377,9 @@ catch (Exception $e)
 	 */
 	static function processSelectNodeUI($user_prefix)
 	{
-		$object = null;
-		$name = "{$user_prefix}";
-		return self::getObject($_REQUEST[$name]);
+	    $object = null;
+	    $name = "{$user_prefix}";
+	    return self::getObject($_REQUEST[$name]);
 	}
 
 	/** Get an interface to create a new node.
@@ -389,21 +389,21 @@ catch (Exception $e)
 	*/
 	public static function getCreateNewObjectUI($network = null)
 	{
-		$html = '';
-		$html .= _("Add a new node for the gateway ID")." \n";
-		$name = "new_node_gw_id";
-		$html .= "<input type='text' size='10' name='{$name}'>\n";
-		if ($network)
-		{
-			$name = "new_node_network_id";
-			$html .= "<input type='hidden' name='{$name}' value='{$network->getId()}'>\n";
-		}
-		else
-		{
-			$html .= " "._("in ")." \n";
-			$html .= Network :: getSelectNetworkUI('new_node');
-		}
-		return $html;
+	    $html = '';
+	    $html .= _("Add a new node for the gateway ID")." \n";
+	    $name = "new_node_gw_id";
+	    $html .= "<input type='text' size='10' name='{$name}'>\n";
+	    if ($network)
+	    {
+	        $name = "new_node_network_id";
+	        $html .= "<input type='hidden' name='{$name}' value='{$network->getId()}'>\n";
+	    }
+	    else
+	    {
+	        $html .= " "._("in ")." \n";
+	        $html .= Network :: getSelectNetworkUI('new_node');
+	    }
+	    return $html;
 
 	}
 
@@ -416,40 +416,40 @@ catch (Exception $e)
 	public static function processCreateNewObjectUI()
 	{
 	    // Init values
-		$retval = null;
-		$name = "new_node_gw_id";
+	    $retval = null;
+	    $name = "new_node_gw_id";
 
-		if (!empty ($_REQUEST[$name])) {
-			$gw_id = $_REQUEST[$name];
-        }
-        else
-        {
-            $gw_id = null;
-        }
-			$name = "new_node_network_id";
+	    if (!empty ($_REQUEST[$name])) {
+	        $gw_id = $_REQUEST[$name];
+	    }
+	    else
+	    {
+	        $gw_id = null;
+	    }
+	    $name = "new_node_network_id";
 
-			if (!empty ($_REQUEST[$name])) {
-				$network = Network::getObject($_REQUEST[$name]);
-			} else {
-				$network = Network::processSelectNetworkUI('new_node');
-			}
+	    if (!empty ($_REQUEST[$name])) {
+	        $network = Network::getObject($_REQUEST[$name]);
+	    } else {
+	        $network = Network::processSelectNetworkUI('new_node');
+	    }
 
-			if ($network) {
-			    try {
-    				if (!$network->hasAdminAccess(User :: getCurrentUser())) {
-    					throw new Exception(_("Access denied"));
-    				}
-                } catch (Exception $e) {
-                    $ui = MainUI::getObject();
-                    $ui->setToolSection('ADMIN');
-                    $ui->displayError($e->getMessage(), false);
-                    exit;
-                }
+	    if ($network) {
+	        try {
+	            if (!$network->hasAdminAccess(User :: getCurrentUser())) {
+	                throw new Exception(_("Access denied"));
+	            }
+	        } catch (Exception $e) {
+	            $ui = MainUI::getObject();
+	            $ui->setToolSection('ADMIN');
+	            $ui->displayError($e->getMessage(), false);
+	            exit;
+	        }
 
-				$retval = self::createNewObject($gw_id, $network);
-			}
+	        $retval = self::createNewObject($gw_id, $network);
+	    }
 
-		return $retval;
+	    return $retval;
 	}
 
     /**
@@ -460,32 +460,32 @@ catch (Exception $e)
      *
      * @return string HTML markup
      */
-	public function getSelectDeploymentStatus($user_prefix)
-	{
-	    
-		$db = AbstractDb::getObject();
+    public function getSelectDeploymentStatus($user_prefix)
+    {
+         
+        $db = AbstractDb::getObject();
 
-		// Init values
-		$html = "";
-		$status_list = null;
-		$tab = array();
+        // Init values
+        $html = "";
+        $status_list = null;
+        $tab = array();
 
-		$name = "{$user_prefix}";
-		$db->execSql("SELECT node_deployment_status FROM node_deployment_status", $status_list, false);
+        $name = "{$user_prefix}";
+        $db->execSql("SELECT node_deployment_status FROM node_deployment_status", $status_list, false);
 
-		if ($status_list == null) {
-			throw new Exception(_("No deployment statuses could be found in the database"));
-		}
+        if ($status_list == null) {
+            throw new Exception(_("No deployment statuses could be found in the database"));
+        }
 
-		foreach ($status_list as $status) {
-		    $_statusvalue = $status['node_deployment_status'];
-			$tab[] = array($_statusvalue, $this->_deploymentStatuses["$_statusvalue"]);
-		}
+        foreach ($status_list as $status) {
+            $_statusvalue = $status['node_deployment_status'];
+            $tab[] = array($_statusvalue, $this->_deploymentStatuses["$_statusvalue"]);
+        }
 
-		$html .= FormSelectGenerator::generateFromArray($tab, $this->getDeploymentStatus(), $name, null, false);
+        $html .= FormSelectGenerator::generateFromArray($tab, $this->getDeploymentStatus(), $name, null, false);
 
-		return $html;
-	}
+        return $html;
+    }
 
 	/**
 	 * Get the selected deployment status
@@ -499,35 +499,35 @@ catch (Exception $e)
 	 */
 	public function processSelectDeploymentStatus($user_prefix)
 	{
-		$object = null;
-		$name = "{$user_prefix}";
-		return $_REQUEST[$name];
+	    $object = null;
+	    $name = "{$user_prefix}";
+	    return $_REQUEST[$name];
 	}
 
 	/** @param $id The id of the node 
 	 * @param $idType 'NODE_ID' or 'GATEWAY_ID'*/
 	private function __construct($id, $idType='NODE_ID')
 	{
-		$db = AbstractDb::getObject();
-		$this->mDb = & $db;
+	    $db = AbstractDb::getObject();
+	    $this->mDb = & $db;
 
-		$id_str = $db->escapeString($id);
-		switch ($idType) {
-		    case 'NODE_ID': $sqlWhere = "node_id='$id_str'";
-		    break;
-		    case 'GATEWAY_ID': $sqlWhere = "gw_id='$id_str'";
-		    break;
-		    default:
-		    throw new exception('Unknown idType parameter');
-		}
-		$sqlWhere = 
-		$sql = "SELECT * FROM nodes WHERE $sqlWhere";
-		$row = null;
-		$db->execSqlUniqueRes($sql, $row, false);
-		if ($row == null)
-		{
-			throw new Exception(sprintf(_("The node with %s: %s could not be found in the database!"), $idType, $id_str));
-		}
+	    $id_str = $db->escapeString($id);
+	    switch ($idType) {
+	        case 'NODE_ID': $sqlWhere = "node_id='$id_str'";
+	        break;
+	        case 'GATEWAY_ID': $sqlWhere = "gw_id='$id_str'";
+	        break;
+	        default:
+	            throw new exception('Unknown idType parameter');
+	    }
+	    $sqlWhere =
+	    $sql = "SELECT * FROM nodes WHERE $sqlWhere";
+	    $row = null;
+	    $db->execSqlUniqueRes($sql, $row, false);
+	    if ($row == null)
+	    {
+	        throw new Exception(sprintf(_("The node with %s: %s could not be found in the database!"), $idType, $id_str));
+	    }
 
     	$this->_deploymentStatuses = array(
     	    "DEPLOYED" => _("Deployed"),
@@ -538,19 +538,19 @@ catch (Exception $e)
     	    "TEMPORARILY_CLOSED" => _("Temporarily closed")
     	    );
 
-		$this->mRow = $row;
-		$this->id = $row['node_id'];
+    	    $this->mRow = $row;
+    	    $this->id = $row['node_id'];
 	}
 
 	function getId()
 	{
-		return $this->id;
+	    return $this->id;
 	}
 
 /** Get the id of the gateway associated with this node */
 	function getGatewayId()
 	{
-		return $this->mRow['gw_id'];
+	    return $this->mRow['gw_id'];
 	}
 	/** Change the gateway ID of the gateway asociated with this node.
 	 * @param $id, string, the new node id.
@@ -560,13 +560,13 @@ catch (Exception $e)
 	 */
 	function setGatewayId($id)
 	{
-		$id = $this->mDb->escapeString($id);
-		$retval = $this->mDb->execSqlUpdate("UPDATE nodes SET gw_id = '{$id}' WHERE node_id = '{$this->getId()}'");
-		if ($retval)
-		{
-			$this->refresh();
-		}
-		return $retval;
+	    $id = $this->mDb->escapeString($id);
+	    $retval = $this->mDb->execSqlUpdate("UPDATE nodes SET gw_id = '{$id}' WHERE node_id = '{$this->getId()}'");
+	    if ($retval)
+	    {
+	        $this->refresh();
+	    }
+	    return $retval;
 	}
 
 	/** Gets the Network to which the node belongs
@@ -574,251 +574,251 @@ catch (Exception $e)
 	 */
 	public function getNetwork()
 	{
-		return Network :: getObject($this->mRow['network_id']);
+	    return Network :: getObject($this->mRow['network_id']);
 	}
 
 	/** Get a GisPoint object ; altide is not supported yet
 	 */
 	function getGisLocation()
 	{
-		// Altitude is not supported yet
-		return new GisPoint($this->mRow['latitude'], $this->mRow['longitude'], 0);
+	    // Altitude is not supported yet
+	    return new GisPoint($this->mRow['latitude'], $this->mRow['longitude'], 0);
 	}
 
 	function setGisLocation($pt)
 	{
-		if (!empty ($pt))
-		{
-			$lat = $this->mDb->escapeString($pt->getLatitude());
-			$long = $this->mDb->escapeString($pt->getLongitude());
+	    if (!empty ($pt))
+	    {
+	        $lat = $this->mDb->escapeString($pt->getLatitude());
+	        $long = $this->mDb->escapeString($pt->getLongitude());
 
-			if (!empty ($lat) && !empty ($long))
-				$this->mDb->execSqlUpdate("UPDATE nodes SET latitude = $lat, longitude = $long WHERE node_id = '{$this->getId()}'");
-			else
-				$this->mDb->execSqlUpdate("UPDATE nodes SET latitude = NULL, longitude = NULL WHERE node_id = '{$this->getId()}'");
-			$this->refresh();
-		}
+	        if (!empty ($lat) && !empty ($long))
+	        $this->mDb->execSqlUpdate("UPDATE nodes SET latitude = $lat, longitude = $long WHERE node_id = '{$this->getId()}'");
+	        else
+	        $this->mDb->execSqlUpdate("UPDATE nodes SET latitude = NULL, longitude = NULL WHERE node_id = '{$this->getId()}'");
+	        $this->refresh();
+	    }
 	}
 
 	/** Return the name of the node
 	 */
 	function getName()
 	{
-		return $this->mRow['name'];
+	    return $this->mRow['name'];
 	}
 
 	function setName($name)
 	{
-		$name = $this->mDb->escapeString($name);
-		$this->mDb->execSqlUpdate("UPDATE nodes SET name = '{$name}' WHERE node_id = '{$this->getId()}'");
-		$this->refresh();
+	    $name = $this->mDb->escapeString($name);
+	    $this->mDb->execSqlUpdate("UPDATE nodes SET name = '{$name}' WHERE node_id = '{$this->getId()}'");
+	    $this->refresh();
 	}
 
 	function getCreationDate()
 	{
-		return $this->mRow['creation_date'];
+	    return $this->mRow['creation_date'];
 	}
 
 	function setCreationDate($creation_date)
 	{
-		$creation_date = $this->mDb->escapeString($creation_date);
-		$this->mDb->execSqlUpdate("UPDATE nodes SET creation_date = '{$creation_date}' WHERE node_id = '{$this->getId()}'");
-		$this->refresh();
+	    $creation_date = $this->mDb->escapeString($creation_date);
+	    $this->mDb->execSqlUpdate("UPDATE nodes SET creation_date = '{$creation_date}' WHERE node_id = '{$this->getId()}'");
+	    $this->refresh();
 	}
 
 	function getHomePageURL()
 	{
-		return $this->mRow['home_page_url'];
+	    return $this->mRow['home_page_url'];
 	}
 
 	function setHomePageUrl($url)
 	{
-		$url = $this->mDb->escapeString($url);
-		$this->mDb->execSqlUpdate("UPDATE nodes SET home_page_url = '{$url}' WHERE node_id = '{$this->getId()}'");
-		$this->refresh();
+	    $url = $this->mDb->escapeString($url);
+	    $this->mDb->execSqlUpdate("UPDATE nodes SET home_page_url = '{$url}' WHERE node_id = '{$this->getId()}'");
+	    $this->refresh();
 	}
 
 	function getDescription()
 	{
-		return $this->mRow['description'];
+	    return $this->mRow['description'];
 	}
 
 	function setDescription($description)
 	{
-		$description = $this->mDb->escapeString($description);
-		$this->mDb->execSqlUpdate("UPDATE nodes SET description = '{$description}' WHERE node_id = '{$this->getId()}'");
-		$this->refresh();
+	    $description = $this->mDb->escapeString($description);
+	    $this->mDb->execSqlUpdate("UPDATE nodes SET description = '{$description}' WHERE node_id = '{$this->getId()}'");
+	    $this->refresh();
 	}
 
 	function getMapURL()
 	{
-		return $this->mRow['map_url'];
+	    return $this->mRow['map_url'];
 	}
 
 	function setMapURL($url)
 	{
-		$url = $this->mDb->escapeString($url);
-		$this->mDb->execSqlUpdate("UPDATE nodes SET map_url = '{$url}' WHERE node_id = '{$this->getId()}'");
-		$this->refresh();
+	    $url = $this->mDb->escapeString($url);
+	    $this->mDb->execSqlUpdate("UPDATE nodes SET map_url = '{$url}' WHERE node_id = '{$this->getId()}'");
+	    $this->refresh();
 	}
 
 	public function getCivicNumber()
 	{
-		return $this->mRow['civic_number'];
+	    return $this->mRow['civic_number'];
 	}
 
 	public function setCivicNumber($civic_number)
 	{
-		$civic_number = $this->mDb->escapeString($civic_number);
-		$this->mDb->execSqlUpdate("UPDATE nodes SET civic_number = '{$civic_number}' WHERE node_id = '{$this->getId()}'");
-		$this->refresh();
+	    $civic_number = $this->mDb->escapeString($civic_number);
+	    $this->mDb->execSqlUpdate("UPDATE nodes SET civic_number = '{$civic_number}' WHERE node_id = '{$this->getId()}'");
+	    $this->refresh();
 	}
 
 	public function getStreetName()
 	{
-		return $this->mRow['street_name'];
+	    return $this->mRow['street_name'];
 	}
 
 	public function setStreetName($street_name)
 	{
-		$street_name = $this->mDb->escapeString($street_name);
-		$this->mDb->execSqlUpdate("UPDATE nodes SET street_name = '{$street_name}' WHERE node_id = '{$this->getId()}'");
-		$this->refresh();
+	    $street_name = $this->mDb->escapeString($street_name);
+	    $this->mDb->execSqlUpdate("UPDATE nodes SET street_name = '{$street_name}' WHERE node_id = '{$this->getId()}'");
+	    $this->refresh();
 	}
 
 	public function getCity()
 	{
-		return $this->mRow['city'];
+	    return $this->mRow['city'];
 	}
 
 	public function setCity($city)
 	{
-		$city = $this->mDb->escapeString($city);
-		$this->mDb->execSqlUpdate("UPDATE nodes SET city = '{$city}' WHERE node_id = '{$this->getId()}'");
-		$this->refresh();
+	    $city = $this->mDb->escapeString($city);
+	    $this->mDb->execSqlUpdate("UPDATE nodes SET city = '{$city}' WHERE node_id = '{$this->getId()}'");
+	    $this->refresh();
 	}
 
 	public function getProvince()
 	{
-		return $this->mRow['province'];
+	    return $this->mRow['province'];
 	}
 
 	public function setProvince($province)
 	{
-		$province = $this->mDb->escapeString($province);
-		$this->mDb->execSqlUpdate("UPDATE nodes SET province = '{$province}' WHERE node_id = '{$this->getId()}'");
-		$this->refresh();
+	    $province = $this->mDb->escapeString($province);
+	    $this->mDb->execSqlUpdate("UPDATE nodes SET province = '{$province}' WHERE node_id = '{$this->getId()}'");
+	    $this->refresh();
 	}
 
 	public function getCountry()
 	{
-		return $this->mRow['country'];
+	    return $this->mRow['country'];
 	}
 
 	protected function setCountry($country)
 	{
-		$country = $this->mDb->escapeString($country);
-		$this->mDb->execSqlUpdate("UPDATE nodes SET country = '{$country}' WHERE node_id = '{$this->getId()}'");
-		$this->refresh();
+	    $country = $this->mDb->escapeString($country);
+	    $this->mDb->execSqlUpdate("UPDATE nodes SET country = '{$country}' WHERE node_id = '{$this->getId()}'");
+	    $this->refresh();
 	}
 
 	public function getPostalCode()
 	{
-		return $this->mRow['postal_code'];
+	    return $this->mRow['postal_code'];
 	}
 
 	public function setPostalCode($postal_code)
 	{
-		$postal_code = $this->mDb->escapeString($postal_code);
-		$this->mDb->execSqlUpdate("UPDATE nodes SET postal_code = '{$postal_code}' WHERE node_id = '{$this->getId()}'");
-		$this->refresh();
+	    $postal_code = $this->mDb->escapeString($postal_code);
+	    $this->mDb->execSqlUpdate("UPDATE nodes SET postal_code = '{$postal_code}' WHERE node_id = '{$this->getId()}'");
+	    $this->refresh();
 	}
 
 	function getTelephone()
 	{
-		return $this->mRow['public_phone_number'];
+	    return $this->mRow['public_phone_number'];
 	}
 
 	function setTelephone($phone)
 	{
-		$phone = $this->mDb->escapeString($phone);
-		$this->mDb->execSqlUpdate("UPDATE nodes SET public_phone_number = '{$phone}' WHERE node_id = '{$this->getId()}'");
-		$this->refresh();
+	    $phone = $this->mDb->escapeString($phone);
+	    $this->mDb->execSqlUpdate("UPDATE nodes SET public_phone_number = '{$phone}' WHERE node_id = '{$this->getId()}'");
+	    $this->refresh();
 	}
 
 	function getTransitInfo()
 	{
-		return $this->mRow['mass_transit_info'];
+	    return $this->mRow['mass_transit_info'];
 	}
 
 	function setTransitInfo($transit_info)
 	{
-		$transit_info = $this->mDb->escapeString($transit_info);
-		$this->mDb->execSqlUpdate("UPDATE nodes SET mass_transit_info = '{$transit_info}' WHERE node_id = '{$this->getId()}'");
-		$this->refresh();
+	    $transit_info = $this->mDb->escapeString($transit_info);
+	    $this->mDb->execSqlUpdate("UPDATE nodes SET mass_transit_info = '{$transit_info}' WHERE node_id = '{$this->getId()}'");
+	    $this->refresh();
 	}
 
 	function getEmail()
 	{
-		return $this->mRow['public_email'];
+	    return $this->mRow['public_email'];
 	}
 
 	function setEmail($email)
 	{
-		$email = $this->mDb->escapeString($email);
-		$this->mDb->execSqlUpdate("UPDATE nodes SET public_email = '{$email}' WHERE node_id = '{$this->getId()}'");
-		$this->refresh();
+	    $email = $this->mDb->escapeString($email);
+	    $this->mDb->execSqlUpdate("UPDATE nodes SET public_email = '{$email}' WHERE node_id = '{$this->getId()}'");
+	    $this->refresh();
 	}
 
 	function getDeploymentStatus()
 	{
-		return $this->mRow['node_deployment_status'];
+	    return $this->mRow['node_deployment_status'];
 	}
 
 	function setDeploymentStatus($status)
 	{
-		$status = $this->mDb->escapeString($status);
-		$this->mDb->execSqlUpdate("UPDATE nodes SET node_deployment_status = '{$status}' WHERE node_id = '{$this->getId()}'");
-		$this->refresh();
+	    $status = $this->mDb->escapeString($status);
+	    $this->mDb->execSqlUpdate("UPDATE nodes SET node_deployment_status = '{$status}' WHERE node_id = '{$this->getId()}'");
+	    $this->refresh();
 	}
 
 	function getLastPaged()
 	{
-		return $this->mRow['last_paged'];
+	    return $this->mRow['last_paged'];
 	}
 
 	function setLastPaged($last_paged)
 	{
-		$this->mDb->execSqlUpdate("UPDATE nodes SET last_paged = {$last_paged}::abstime WHERE node_id = '{$this->getId()}'");
-		$this->refresh();
+	    $this->mDb->execSqlUpdate("UPDATE nodes SET last_paged = {$last_paged}::abstime WHERE node_id = '{$this->getId()}'");
+	    $this->refresh();
 	}
 
 	function getLastHeartbeatIP()
 	{
-		return $this->mRow['last_heartbeat_ip'];
+	    return $this->mRow['last_heartbeat_ip'];
 	}
 
 	function getLastHeartbeatUserAgent()
 	{
-		return $this->mRow['last_heartbeat_user_agent'];
+	    return $this->mRow['last_heartbeat_user_agent'];
 	}
 
 	function getLastHeartbeatTimestamp()
 	{
-		return $this->mRow['last_heartbeat_timestamp'];
+	    return $this->mRow['last_heartbeat_timestamp'];
 	}
 
 	function setLastHeartbeatTimestamp($timestamp)
 	{
-		$this->mDb->execSqlUpdate("UPDATE nodes SET last_heartbeat_timestamp = '{$timestamp}' WHERE node_id = '{$this->getId()}'");
-		$this->refresh();
+	    $this->mDb->execSqlUpdate("UPDATE nodes SET last_heartbeat_timestamp = '{$timestamp}' WHERE node_id = '{$this->getId()}'");
+	    $this->refresh();
 	}
 
 	/** Is the node a Splash Only node?  Will only return true if the Network configuration allows it.
 	 * @return true or false */
 	public function isSplashOnly()
 	{
-		return $this->getNetwork()->getSplashOnlyNodesAllowed() && $this->isConfiguredSplashOnly();
+	    return $this->getNetwork()->getSplashOnlyNodesAllowed() && $this->isConfiguredSplashOnly();
 	}
 
 	/** Is the node configured as a Splash Only node?  This is NOT the same as isSplashOnly().
@@ -828,7 +828,7 @@ catch (Exception $e)
 	 * @return true or false */
 	public function isConfiguredSplashOnly()
 	{
-		return (($this->mRow['is_splash_only_node'] == 't') ? true : false);
+	    return (($this->mRow['is_splash_only_node'] == 't') ? true : false);
 	}
 
 	/** Set if this node should be a splash-only (no login) node (if enabled in Network configuration)
@@ -836,15 +836,15 @@ catch (Exception $e)
 	 * @return true on success, false on failure */
 	function setIsConfiguredSplashOnly($value)
 	{
-		$retval = true;
-		if ($value != $this->isConfiguredSplashOnly())
-		{
-			$db = AbstractDb::getObject();
-			$value ? $value = 'TRUE' : $value = 'FALSE';
-			$retval = $db->execSqlUpdate("UPDATE nodes SET is_splash_only_node = {$value} WHERE node_id = '{$this->getId()}'", false);
-			$this->refresh();
-		}
-		return $retval;
+	    $retval = true;
+	    if ($value != $this->isConfiguredSplashOnly())
+	    {
+	        $db = AbstractDb::getObject();
+	        $value ? $value = 'TRUE' : $value = 'FALSE';
+	        $retval = $db->execSqlUpdate("UPDATE nodes SET is_splash_only_node = {$value} WHERE node_id = '{$this->getId()}'", false);
+	        $this->refresh();
+	    }
+	    return $retval;
 	}
 
 	/** The url to show instead of the portal.  If empty, the portal is shown
@@ -852,7 +852,7 @@ catch (Exception $e)
 	 @return a string */
 	function getCustomPortalRedirectUrl()
 	{
-		return $this->mRow['custom_portal_redirect_url'];
+	    return $this->mRow['custom_portal_redirect_url'];
 	}
 
 	/** The url to show instead of the portal.  If empty, the portal is shown
@@ -860,15 +860,15 @@ catch (Exception $e)
 	 @return true on success, false on failure */
 	function setCustomPortalRedirectUrl($value)
 	{
-		$retval = true;
-		if ($value != $this->getCustomPortalRedirectUrl())
-		{
-			$db = AbstractDb::getObject();
-			$value = $db->escapeString($value);
-			$retval = $db->execSqlUpdate("UPDATE nodes SET custom_portal_redirect_url = '{$value}' WHERE node_id = '{$this->getId()}'", false);
-			$this->refresh();
-		}
-		return $retval;
+	    $retval = true;
+	    if ($value != $this->getCustomPortalRedirectUrl())
+	    {
+	        $db = AbstractDb::getObject();
+	        $value = $db->escapeString($value);
+	        $retval = $db->execSqlUpdate("UPDATE nodes SET custom_portal_redirect_url = '{$value}' WHERE node_id = '{$this->getId()}'", false);
+	        $this->refresh();
+	    }
+	    return $retval;
 	}
 
 	/**
@@ -885,20 +885,20 @@ catch (Exception $e)
 	{
 	    require_once('classes/InterfaceElements.php');
 	    // Init values
-		$html = '';
-    		if (!User::getCurrentUser()) {
-    			throw new Exception(_('Access denied!'));
-    		}
+	    $html = '';
+	    if (!User::getCurrentUser()) {
+	        throw new Exception(_('Access denied!'));
+	    }
 
-		// Get information about the network
-		$network = $this->getNetwork();
+	    // Get information about the network
+	    $network = $this->getNetwork();
 
-		// Check if user is a admin
-		$_userIsAdmin = User::getCurrentUser()->isSuperAdmin();
+	    // Check if user is a admin
+	    $_userIsAdmin = User::getCurrentUser()->isSuperAdmin();
 
-		$node_id = $this->getId();
+	    $node_id = $this->getId();
 
-		/*
+	    /*
 		 * Check for a warning message
 		 */
 		if ($this->_warningMessage != "") {

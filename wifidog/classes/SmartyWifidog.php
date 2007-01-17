@@ -167,18 +167,28 @@ class SmartyWifidog extends Smarty {
 	$this->assign('base_ssl_path', BASE_SSL_PATH);
     $this->assign('base_non_ssl_path', BASE_NON_SSL_PATH);
     $this->assign('common_images_url', COMMON_IMAGES_URL);
-
-     /* Other useful stuff */
-     Network::assignSmartyValues($this);
-     Node::assignSmartyValues($this);
-     User::assignSmartyValues($this);
    }
 
    function SetTemplateDir( $template_dir)
    {
      $this->template_dir= $template_dir;
    }
-
+     /**
+     * executes & returns or displays the template results
+     * This is extended by wifidog to make sure that the variables influenced by state (such as the current node) are as up to date as humanly possible.
+     * @param string $resource_name
+     * @param string $cache_id
+     * @param string $compile_id
+     * @param boolean $display
+     */
+    public function fetch($resource_name, $cache_id = null, $compile_id = null, $display = false)
+    {
+     /* Other useful variables */
+     Network::assignSmartyValues($this);
+     Node::assignSmartyValues($this);
+     User::assignSmartyValues($this);
+     return parent::fetch($resource_name, $cache_id, $compile_id, $display);
+    }
 }
 
 /*

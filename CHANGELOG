@@ -4,7 +4,9 @@
 	* InterfaceElements:  Begin moving away from a raw HTML generator and towards a more semantic one as discussed with Max Horvath.
 	* It is now possible for an administrator to manually validate or lock-out a user
 	* Add new SimpleString content type
-	
+	* SmartyWifidog.php:  Fix #282 with a slightly dirty workround to the chicken and the egg smarty variables assignment problem.  
+		We now extend the fetch method and do our assignment there instead of in the constructor.
+			
 2007-01-15 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Sync initial schema and translations
 	* Minor spelling fixes
