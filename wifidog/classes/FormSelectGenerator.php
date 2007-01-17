@@ -48,16 +48,16 @@
  */
 class FormSelectGenerator
 {
-	// Private class attributes
-	private $mAbstractBd;
+    // Private class attributes
+    private $mAbstractBd;
 
 	/**
 	 * Constructor
 	 */
 	function __construct()
 	{
-		$db = AbstractDb::getObject();
-		$this->mAbstractBd = $db;
+	    $db = AbstractDb::getObject();
+	    $this->mAbstractBd = $db;
 	}
 
 	/**
@@ -77,57 +77,57 @@ class FormSelectGenerator
 	 */
 	static function generateFromResultSet($resultSet, $primaryKeyField, $displayField, $selectedPrimaryKey, $userPrefix, $objectPrefix, $displayFieldIsLangstring, $allowNullValues, $nullCaptionString = ' - - - ', $additionalSelectAttribute)
 	{
-		$retval = "";
-		$retval .= "<select id='{$userPrefix}{$objectPrefix}' name='{$userPrefix}{$objectPrefix}' {$additionalSelectAttribute}>\n";
-		if ($allowNullValues === true)
-		{
-			$retval .= "<option value=''>{$nullCaptionString}</option>\n";
-		}
+	    $retval = "";
+	    $retval .= "<select id='{$userPrefix}{$objectPrefix}' name='{$userPrefix}{$objectPrefix}' {$additionalSelectAttribute}>\n";
+	    if ($allowNullValues === true)
+	    {
+	        $retval .= "<option value=''>{$nullCaptionString}</option>\n";
+	    }
 
-		if (!empty ($resultSet))
-		{
-			foreach ($resultSet as $key => $value)
-			{
-				$retval .= "<option ";
-				if ($value[$primaryKeyField] == $selectedPrimaryKey)
-				{
-					$retval .= 'selected="selected" ';
-				}
-				if ($displayFieldIsLangstring === true)
-				{
-					if (!empty ($value[$displayField]))
-					{
-						$langstring = Content::getObject($value[$displayField]);
-						if ($langstring->IsEmpty())
-						{
-							$nom = $value[$primaryKeyField]._(" (Empty langstring, ID is displayed)");
-						}
-						else
-						{
-							$nom = $langstring->GetString();
-						}
-					}
-					else
-					{
-						$nom = $value[$primaryKeyField]._(" (Empty langstring, ID is displayed)");
-					}
-				}
-				else
-				{
-					$nom = $value[$displayField];
-				}
-				$nom = htmlentities($nom, ENT_QUOTES, 'UTF-8');
-				$primary_key = htmlentities($value[$primaryKeyField], ENT_QUOTES, 'UTF-8');
-				$retval .= "value='$primary_key'>$nom</option>\n";
-			}
-		}
-		else
-			if ($allowNullValues === false)
-			{
-				echo "<h1>FormSelectGenerator::generateFromResultSet(): Error: No results found, NULL value not allowed</h1>\n";
-			}
-		$retval .= "</select>\n";
-		return $retval;
+	    if (!empty ($resultSet))
+	    {
+	        foreach ($resultSet as $key => $value)
+	        {
+	            $retval .= "<option ";
+	            if ($value[$primaryKeyField] == $selectedPrimaryKey)
+	            {
+	                $retval .= 'selected="selected" ';
+	            }
+	            if ($displayFieldIsLangstring === true)
+	            {
+	                if (!empty ($value[$displayField]))
+	                {
+	                    $langstring = Content::getObject($value[$displayField]);
+	                    if ($langstring->IsEmpty())
+	                    {
+	                        $nom = $value[$primaryKeyField]._(" (Empty langstring, ID is displayed)");
+	                    }
+	                    else
+	                    {
+	                        $nom = $langstring->GetString();
+	                    }
+	                }
+	                else
+	                {
+	                    $nom = $value[$primaryKeyField]._(" (Empty langstring, ID is displayed)");
+	                }
+	            }
+	            else
+	            {
+	                $nom = $value[$displayField];
+	            }
+	            $nom = htmlentities($nom, ENT_QUOTES, 'UTF-8');
+	            $primary_key = htmlentities($value[$primaryKeyField], ENT_QUOTES, 'UTF-8');
+	            $retval .= "value='$primary_key'>$nom</option>\n";
+	        }
+	    }
+	    else
+	    if ($allowNullValues === false)
+	    {
+	        echo "<h1>FormSelectGenerator::generateFromResultSet(): Error: No results found, NULL value not allowed</h1>\n";
+	    }
+	    $retval .= "</select>\n";
+	    return $retval;
 	}
 
 	/**
@@ -147,10 +147,10 @@ class FormSelectGenerator
 	 */
 	static function generateFromTable($table, $primaryKeyField, $displayField, $selectedPrimaryKey, $userPrefix, $objectPrefix, $displayFieldIsLangstring=false, $allowNullValues=false, $nullCaptionString = ' - - - ', $additionalSelectAttribute = null)
 	{
-		$db = AbstractDb::getObject();
-		$results = null;
-		$db->execSql("SELECT $primaryKeyField,  $displayField FROM $table", $results, false);
-		return self :: generateFromResultSet($results, $primaryKeyField, $displayField, $selectedPrimaryKey, $userPrefix, $objectPrefix, $displayFieldIsLangstring, $allowNullValues, $nullCaptionString, $additionalSelectAttribute);
+	    $db = AbstractDb::getObject();
+	    $results = null;
+	    $db->execSql("SELECT $primaryKeyField,  $displayField FROM $table", $results, false);
+	    return self :: generateFromResultSet($results, $primaryKeyField, $displayField, $selectedPrimaryKey, $userPrefix, $objectPrefix, $displayFieldIsLangstring, $allowNullValues, $nullCaptionString, $additionalSelectAttribute);
 	}
 
 	/**
@@ -170,9 +170,9 @@ class FormSelectGenerator
 	 */
 	function genererDeSelect($sql, $primaryKeyField, $displayField, $selectedPrimaryKey, $userPrefix, $objectPrefix, $displayFieldIsLangstring, $allowNullValues, $nullCaptionString = ' - - - ', $additionalSelectAttribute = null)
 	{
-		$results = null;
-		$this->mAbstractBd->ExecuterSql($sql, $results, false);
-		return $this->generateFromResultSet($results, $primaryKeyField, $displayField, $selectedPrimaryKey, $userPrefix, $objectPrefix, $displayFieldIsLangstring, $allowNullValues, $nullCaptionString, $additionalSelectAttribute);
+	    $results = null;
+	    $this->mAbstractBd->ExecuterSql($sql, $results, false);
+	    return $this->generateFromResultSet($results, $primaryKeyField, $displayField, $selectedPrimaryKey, $userPrefix, $objectPrefix, $displayFieldIsLangstring, $allowNullValues, $nullCaptionString, $additionalSelectAttribute);
 	}
 
 	/**
@@ -194,34 +194,34 @@ class FormSelectGenerator
 	 */
 	public static function generateFromArray($array, $selectedPrimaryKey, $userPrefix, $objectPrefix, $allowNullValues, $nullCaptionString = ' - - - ', $additionalSelectAttribute = "", $max_length = -1)
 	{
-		$retval = "";
-		$retval .= "<select id='{$userPrefix}{$objectPrefix}' name='{$userPrefix}{$objectPrefix}' {$additionalSelectAttribute}>\n";
-		if ($allowNullValues == true)
-		{
-			$retval .= "<option value=''>{$nullCaptionString}</option>\n";
-		}
-//pretty_print_r($selectedPrimaryKey);
-		foreach ($array as $value)
-		{
-			$retval .= "<option ";
-							if(is_array($selectedPrimaryKey) && in_array($value[0],$selectedPrimaryKey)){
-										$retval .= 'selected="selected" ';
-										}
-				else if ($value[0] == $selectedPrimaryKey){
-					$retval .= 'selected="selected" ';
-				}
+	    $retval = "";
+	    $retval .= "<select id='{$userPrefix}{$objectPrefix}' name='{$userPrefix}{$objectPrefix}' {$additionalSelectAttribute}>\n";
+	    if ($allowNullValues == true)
+	    {
+	        $retval .= "<option value=''>{$nullCaptionString}</option>\n";
+	    }
+	    //pretty_print_r($selectedPrimaryKey);
+	    foreach ($array as $value)
+	    {
+	        $retval .= "<option ";
+	        if(is_array($selectedPrimaryKey) && in_array($value[0],$selectedPrimaryKey)){
+	            $retval .= 'selected="selected" ';
+	        }
+	        else if ($value[0] == $selectedPrimaryKey){
+	            $retval .= 'selected="selected" ';
+	        }
 
-			$name = $value[1];
-			// Restrict to max length and append "..."
-			if($max_length != -1 && strlen($name) > $max_length)
-				$name = substr($name, 0, $max_length)."...";
+	        $name = $value[1];
+	        // Restrict to max length and append "..."
+	        if($max_length != -1 && strlen($name) > $max_length)
+	        $name = substr($name, 0, $max_length)."...";
 
-			$name = htmlentities($name, ENT_QUOTES, "UTF-8");
-			$primary_key = htmlentities($value[0], ENT_QUOTES, 'UTF-8');
-			$retval .= "value='{$primary_key}'>{$name}</option>\n";
-		}
-		$retval .= "</select>\n";
-		return $retval;
+	        $name = htmlentities($name, ENT_QUOTES, "UTF-8");
+	        $primary_key = htmlentities($value[0], ENT_QUOTES, 'UTF-8');
+	        $retval .= "value='{$primary_key}'>{$name}</option>\n";
+	    }
+	    $retval .= "</select>\n";
+	    return $retval;
 	}
 
     /**
@@ -247,7 +247,7 @@ class FormSelectGenerator
         {
             $converted_array[] = array($key, $value);
         }
-        return self::generateFromArray($converted_array, $selectedPrimaryKey, $userPrefix, $objectPrefix, $allowNullValues, $nullCaptionString, $additionalSelectAttribute, $max_length);    
+        return self::generateFromArray($converted_array, $selectedPrimaryKey, $userPrefix, $objectPrefix, $allowNullValues, $nullCaptionString, $additionalSelectAttribute, $max_length);
     }
 	/**
 	 * Returns the element selected
@@ -257,7 +257,7 @@ class FormSelectGenerator
 	 */
 	public static function getResult($userPrefix, $objectPrefix)
 	{
-		return $_REQUEST[self :: getRequestIndex($userPrefix, $objectPrefix)];
+	    return $_REQUEST[self :: getRequestIndex($userPrefix, $objectPrefix)];
 	}
 
 	/**
@@ -268,7 +268,7 @@ class FormSelectGenerator
 	 */
 	public static function getRequestIndex($userPrefix, $objectPrefix)
 	{
-		return $userPrefix.$objectPrefix;
+	    return $userPrefix.$objectPrefix;
 	}
 
 	/**
@@ -279,7 +279,7 @@ class FormSelectGenerator
 	 */
 	public static function isPresent($userPrefix, $objectPrefix)
 	{
-		return isset ($_REQUEST[self :: getRequestIndex($userPrefix, $objectPrefix)]);
+	    return isset ($_REQUEST[self :: getRequestIndex($userPrefix, $objectPrefix)]);
 	}
 }
 

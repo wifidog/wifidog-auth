@@ -61,7 +61,7 @@ $user = User::processSelectUserUI("user_id_searchbox");
 
 if (!empty ($_REQUEST['user_id']) || !empty($user))
 {
-    header("Location: stats.php?user_id=" . $user->getId());
+    header("Location: ".BASE_SSL_PATH."admin/generic_object_admin.php?object_id={$user->getId()}&object_class=User&action=edit");
     exit;
 }
 else

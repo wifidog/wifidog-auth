@@ -502,7 +502,7 @@ class InterfaceElements
         }
 
         // Generate final HTML markup
-        $_retVal = $_title . " " . $_data . $_tools;
+        $_retVal = $_title . " " . $_data . $_tools . $help;
 
         return $_retVal;
     }

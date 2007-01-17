@@ -356,12 +356,13 @@ class User implements GenericObject {
 
     function setAccountStatus($status) {
         $db = AbstractDb::getObject();
-
-        $status_str = $db->escapeString($status);
-        if (!($update = $db->execSqlUpdate("UPDATE users SET account_status='{$status_str}' WHERE user_id='{$this->id}'"))) {
-            throw new Exception(_("Could not update status."));
+        if($status != $this->getAccountStatus()) {
+            $status_str = $db->escapeString($status);
+            if (!($update = $db->execSqlUpdate("UPDATE users SET account_status='{$status_str}' WHERE user_id='{$this->id}'"))) {
+                throw new Exception(_("Could not update status."));
+            }
+            $this->mRow['account_status'] = $status;
         }
-        $this->mRow['account_status'] = $status;
     }
 
     /** Is the user valid?  Valid means that the account is validated or hasn't exhausted it's validation period.
@@ -653,20 +654,31 @@ class User implements GenericObject {
         $db = AbstractDb::getObject();
         $currentUser = self :: getCurrentUser();
         $userPreferencesItems = array();
+        $finalHtml = '';
         if($this->getNetwork()->hasAdminAccess($currentUser)) {
+            /* Statistics */
             $content = "<a href='".BASE_SSL_PATH."admin/stats.php?Statistics=".$this->getNetwork()->getId()."&distinguish_users_by=user_id&stats_selected_users=".$this->getUsername()."&UserReport=on&user_id=".$this->getId()."&action=generate'>"._("Get user statistics")."</a>\n";
-        $userPreferencesItems[] = InterfaceElements::genSectionItem($content);
+            $administrationItems[] = InterfaceElements::genSectionItem($content);
+
+            /* Account status */
+            $title = _("Account Status");
+            $help = _("Note that Error is for internal use only");
+            $name = "user_" . $this->getId() . "_accountstatus";
+            global $account_status_to_text;
+            $content = FormSelectGenerator::generateFromKeyLabelArray($account_status_to_text, $this->getAccountStatus(), $name, null, false);
+            $administrationItems[] = InterfaceElements::genSectionItem($content, $title, $help);
+
+            $finalHtml .= InterfaceElements::genSection($administrationItems, _("Administrative options"));
         }
-        $html = '';
         if (($this == $currentUser && !$this->isSplashOnlyUser() )|| $this->getNetwork()->hasAdminAccess($currentUser)) {
-            //username
+            /* Username */
             $title = _("Username");
             $name = "user_" . $this->getId() . "_username";
             $content = "<input type='text' name='$name' value='" . htmlentities($this->getUsername()) . "' size=30>\n";
             $content .= _("Be carefull when changing this: it's the username you use to log in!");
             $userPreferencesItems[] = InterfaceElements::genSectionItem($content, $title);
-
         }
+
         /* Change password */
         $changePasswordItems=array();
         if($this == $currentUser) {//Don't enter the old password if changing password for another user
@@ -675,7 +687,7 @@ class User implements GenericObject {
             $content = "<input type='password' name='$name' size='20'>\n";
             $changePasswordItems[] = InterfaceElements::genSectionItem($content, $title);
         }
-        
+
         $title = _("Your new password");
         $name = "user_" . $this->getId() . "_newpassword";
         $content = "<input type='password' name='$name' size='20'>\n";
@@ -688,8 +700,7 @@ class User implements GenericObject {
 
         $userPreferencesItems[] = InterfaceElements::genSection($changePasswordItems, _("Change my password"));
 
-
-        $finalHtml = InterfaceElements::genSection($userPreferencesItems, _("User preferences"), false, false, get_class($this));
+        $finalHtml .= InterfaceElements::genSection($userPreferencesItems, _("User preferences"), false, false, get_class($this));
         return $finalHtml;
     }
 
@@ -697,24 +708,32 @@ class User implements GenericObject {
         $db = AbstractDb::getObject();
         $currentUser = self :: getCurrentUser();
         if ($this == $currentUser || $this->getNetwork()->hasAdminAccess($currentUser)) {
-            //username
+            /* Account status */
+            $name = "user_" . $this->getId() . "_accountstatus";
+            $status = FormSelectGenerator::getResult($name, null);
+            $this->setAccountStatus($status);
+        }
+
+        if ($this == $currentUser || $this->getNetwork()->hasAdminAccess($currentUser)) {
+            /* Username */
             $name = "user_" . $this->getId() . "_username";
             $this->setUsername($_REQUEST[$name]);
 
-            /* Change password form */
-
+            /* Change password */
             $nameOldpassword = "user_" . $this->getId() . "_oldpassword";
             $nameNewpassword = "user_" . $this->getId() . "_newpassword";
             $nameNewpasswordAgain = "user_" . $this->getId() . "_newpassword_again";
+            if($_REQUEST[$nameNewpassword]!=null){
+                if ($this == $currentUser && $this->getPasswordHash() != User::passwordHash($_REQUEST[$nameOldpassword])) {
+                    throw new Exception(_("Wrong password."));
+                }
+                if ($_REQUEST[$nameNewpassword] != $_REQUEST[$nameNewpasswordAgain]){
+                    throw new Exception(_("Passwords do not match."));
+                }
+                $this->setPassword($_REQUEST[$nameNewpassword]);
+            }
 
-            if ($this == $currentUser && $this->getPasswordHash() != User::passwordHash($_REQUEST[$nameOldpassword]))
-            throw new Exception(_("Wrong password."));
         }
-
-        if ($_REQUEST[$nameNewpassword] != $_REQUEST[$nameNewpasswordAgain]){
-            throw new Exception(_("Passwords do not match."));
-        }
-        $this->setPassword($_REQUEST[$nameNewpassword]);
     }
 
     public function delete(& $errmsg) {
