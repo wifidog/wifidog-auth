@@ -707,7 +707,7 @@ class User implements GenericObject {
     public function processAdminUI() {
         $db = AbstractDb::getObject();
         $currentUser = self :: getCurrentUser();
-        if ($this == $currentUser || $this->getNetwork()->hasAdminAccess($currentUser)) {
+        if ($this->getNetwork()->hasAdminAccess($currentUser)) {
             /* Account status */
             $name = "user_" . $this->getId() . "_accountstatus";
             $status = FormSelectGenerator::getResult($name, null);
