@@ -1,3 +1,6 @@
+2007-01-18 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Updated french translation curtesy of http://zapquebec.org
+	
 2007-01-16 François Proulx <francois.proulx@gmail.com>
 	* ContentTypeFilter : Now supports filters stored in the DB, backward compatible
 	* ProfileTemplate, ProfileTemplateField, Profile : profiles support

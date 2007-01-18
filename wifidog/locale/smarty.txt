@@ -1,10 +1,4 @@
 <?php
-_("Change my password")
-_("Your username")
-_("Your current password")
-_("Your new password")
-_("Your new password")
-_("Please enter your current username, your current password, and your new password (with confirmation)")
 _("Status of all nodes of the")
 _("Local content demo")
 _("days")

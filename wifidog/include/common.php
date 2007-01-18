@@ -80,7 +80,7 @@ cmnRequireConfig();
  * Load required classes
  */
 require_once ('classes/AbstractDb.php');
-AbstractDb::getObject();//This is here so we gett reliable SQL vs PHP profiling
+AbstractDb::getObject();//This is here so we get reliable SQL vs PHP profiling
  
 require_once ('classes/Locale.php');
 require_once ('classes/Dependencies.php');
