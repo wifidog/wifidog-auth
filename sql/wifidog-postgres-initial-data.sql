@@ -157,7 +157,7 @@ INSERT INTO content_available_display_pages (display_page) VALUES ('everywhere')
 --
 
 INSERT INTO networks (network_id, is_default_network, network_authenticator_class, network_authenticator_params) VALUES ('default-network', true, 'AuthenticatorLocalUser', '\'default-network\'');
-INSERT INTO nodes (network_id, node_id, name) VALUES ('default-network', 'default', 'Unknown node');
+INSERT INTO nodes (network_id, node_id, gw_id, name) VALUES ('default-network', 'default', 'default', 'My first node');
 INSERT INTO servers (server_id, is_default_server, name) VALUES ('localhost', true, default);
 --
 -- PostgreSQL database dump
@@ -173,7 +173,7 @@ SET search_path = public, pg_catalog;
 -- Data for Name: schema_info; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
-INSERT INTO schema_info (tag, value) VALUES ('schema_version', '52');
+INSERT INTO schema_info (tag, value) VALUES ('schema_version', '53');
 
 
 --

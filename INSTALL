@@ -94,11 +94,9 @@ BACKUP AND RESTORE
 ==================
 
 To backup:
-	pg_dump wifidog --blobs --file=wifidog_backup.sql --format=c --ignore-version --no-owner -v --compress=3 -U wifidog
+	/sql/backup_database.sh wifidog_backup.sql
 
 To restore from a backup:
-	dropdb wifidog
-	createdb wifidog --encoding=UTF-8 --owner=wifidog
-	pg_restore -U wifidog -d wifidog -v wifidog_backup.sql
+	/sql/restore_database.sh wifidog_backup.sql
 
 Enjoy!

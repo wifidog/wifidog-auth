@@ -336,6 +336,18 @@ CREATE TABLE content_shoutbox_messages (
 );
 
 
+--
+-- Name: content_type_filters; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE content_type_filters (
+    content_type_filter_id text NOT NULL,
+    content_type_filter_label text,
+    content_type_filter_rules text NOT NULL,
+    CONSTRAINT content_type_filter_rules_not_empty_string CHECK ((content_type_filter_rules <> ''::text))
+);
+
+
 SET default_with_oids = true;
 
 --
@@ -360,6 +372,20 @@ CREATE TABLE network_has_content (
     display_order integer DEFAULT 1 NOT NULL
 );
 
+
+SET default_with_oids = false;
+
+--
+-- Name: network_has_profile_templates; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE network_has_profile_templates (
+    network_id text NOT NULL,
+    profile_template_id text NOT NULL
+);
+
+
+SET default_with_oids = true;
 
 --
 -- Name: network_stakeholders; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
@@ -480,6 +506,61 @@ CREATE TABLE nodes (
 );
 
 
+SET default_with_oids = false;
+
+--
+-- Name: profile_fields; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE profile_fields (
+    profile_field_id text NOT NULL,
+    profile_id text,
+    profile_template_field_id text,
+    content_id text,
+    last_modified timestamp without time zone DEFAULT now()
+);
+
+
+--
+-- Name: profile_template_fields; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE profile_template_fields (
+    profile_template_field_id text NOT NULL,
+    profile_template_id text NOT NULL,
+    display_label_content_id text,
+    admin_label_content_id text,
+    content_type_filter_id text,
+    display_order integer DEFAULT 1,
+    semantic_id text
+);
+
+
+--
+-- Name: profile_templates; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE profile_templates (
+    profile_template_id text NOT NULL,
+    profile_template_label text,
+    creation_date timestamp without time zone DEFAULT now()
+);
+
+
+--
+-- Name: profiles; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE profiles (
+    profile_id text NOT NULL,
+    profile_template_id text,
+    creation_date timestamp without time zone DEFAULT now(),
+    is_visible boolean DEFAULT true
+);
+
+
+SET default_with_oids = true;
+
 --
 -- Name: schema_info; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
 --
@@ -526,6 +607,20 @@ CREATE TABLE user_has_content (
     subscribe_timestamp timestamp without time zone DEFAULT now() NOT NULL
 );
 
+
+SET default_with_oids = false;
+
+--
+-- Name: user_has_profiles; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE TABLE user_has_profiles (
+    user_id text NOT NULL,
+    profile_id text NOT NULL
+);
+
+
+SET default_with_oids = true;
 
 --
 -- Name: users; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
@@ -688,6 +783,14 @@ ALTER TABLE ONLY content_shoutbox_messages
 
 
 --
+-- Name: content_type_filters_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY content_type_filters
+    ADD CONSTRAINT content_type_filters_pkey PRIMARY KEY (content_type_filter_id);
+
+
+--
 -- Name: files_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
 --
 
@@ -733,6 +836,14 @@ ALTER TABLE ONLY locales
 
 ALTER TABLE ONLY network_has_content
     ADD CONSTRAINT network_has_content_pkey PRIMARY KEY (network_id, content_id);
+
+
+--
+-- Name: network_has_profile_templates_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY network_has_profile_templates
+    ADD CONSTRAINT network_has_profile_templates_pkey PRIMARY KEY (network_id, profile_template_id);
 
 
 --
@@ -792,6 +903,38 @@ ALTER TABLE ONLY content_file_image
 
 
 --
+-- Name: profile_fields_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY profile_fields
+    ADD CONSTRAINT profile_fields_pkey PRIMARY KEY (profile_field_id);
+
+
+--
+-- Name: profile_template_fields_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY profile_template_fields
+    ADD CONSTRAINT profile_template_fields_pkey PRIMARY KEY (profile_template_field_id);
+
+
+--
+-- Name: profile_templates_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY profile_templates
+    ADD CONSTRAINT profile_templates_pkey PRIMARY KEY (profile_template_id);
+
+
+--
+-- Name: profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY profiles
+    ADD CONSTRAINT profiles_pkey PRIMARY KEY (profile_id);
+
+
+--
 -- Name: schema_info_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
 --
 
@@ -821,6 +964,14 @@ ALTER TABLE ONLY token_status
 
 ALTER TABLE ONLY user_has_content
     ADD CONSTRAINT user_has_content_pkey PRIMARY KEY (user_id, content_id);
+
+
+--
+-- Name: user_has_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+ALTER TABLE ONLY user_has_profiles
+    ADD CONSTRAINT user_has_profiles_pkey PRIMARY KEY (user_id, profile_id);
 
 
 --
@@ -907,6 +1058,13 @@ CREATE INDEX idx_token_status_and_user_id ON connections USING btree (token_stat
 --
 
 CREATE UNIQUE INDEX idx_unique_username_and_account_origin ON users USING btree (username, account_origin);
+
+
+--
+-- Name: profile_template_fields_semantic_id; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+--
+
+CREATE INDEX profile_template_fields_semantic_id ON profile_template_fields USING btree (semantic_id);
 
 
 --
@@ -1310,6 +1468,22 @@ ALTER TABLE ONLY content_flickr_photostream
 
 
 --
+-- Name: network_has_profile_templates_network_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY network_has_profile_templates
+    ADD CONSTRAINT network_has_profile_templates_network_id_fkey FOREIGN KEY (network_id) REFERENCES networks(network_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: network_has_profile_templates_profile_template_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY network_has_profile_templates
+    ADD CONSTRAINT network_has_profile_templates_profile_template_id_fkey FOREIGN KEY (profile_template_id) REFERENCES profile_templates(profile_template_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: network_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
 --
 
@@ -1331,6 +1505,86 @@ ALTER TABLE ONLY nodes
 
 ALTER TABLE ONLY node_stakeholders
     ADD CONSTRAINT nodes_fkey FOREIGN KEY (node_id) REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: profile_fields_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY profile_fields
+    ADD CONSTRAINT profile_fields_content_id_fkey FOREIGN KEY (content_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: profile_fields_profile_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY profile_fields
+    ADD CONSTRAINT profile_fields_profile_id_fkey FOREIGN KEY (profile_id) REFERENCES profiles(profile_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: profile_fields_profile_template_field_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY profile_fields
+    ADD CONSTRAINT profile_fields_profile_template_field_id_fkey FOREIGN KEY (profile_template_field_id) REFERENCES profile_template_fields(profile_template_field_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: profile_template_fields_admin_label_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY profile_template_fields
+    ADD CONSTRAINT profile_template_fields_admin_label_content_id_fkey FOREIGN KEY (admin_label_content_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: profile_template_fields_content_type_filter_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY profile_template_fields
+    ADD CONSTRAINT profile_template_fields_content_type_filter_id_fkey FOREIGN KEY (content_type_filter_id) REFERENCES content_type_filters(content_type_filter_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: profile_template_fields_display_label_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY profile_template_fields
+    ADD CONSTRAINT profile_template_fields_display_label_content_id_fkey FOREIGN KEY (display_label_content_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: profile_template_fields_profile_template_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY profile_template_fields
+    ADD CONSTRAINT profile_template_fields_profile_template_id_fkey FOREIGN KEY (profile_template_id) REFERENCES profile_templates(profile_template_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: profiles_profile_template_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY profiles
+    ADD CONSTRAINT profiles_profile_template_id_fkey FOREIGN KEY (profile_template_id) REFERENCES profile_templates(profile_template_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: user_has_profiles_profile_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY user_has_profiles
+    ADD CONSTRAINT user_has_profiles_profile_id_fkey FOREIGN KEY (profile_id) REFERENCES profiles(profile_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: user_has_profiles_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+--
+
+ALTER TABLE ONLY user_has_profiles
+    ADD CONSTRAINT user_has_profiles_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

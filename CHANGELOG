@@ -1,3 +1,7 @@
+2007-01-19 Benoit Grégoire  <bock@step.polymtl.ca>
+	* dump_initial_data_postgres.sh:  Initial node wasn't setup correctly.
+	* INSTALL:  Fix some obsolete instructions for database backup and restore
+	
 2007-01-18 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Updated french translation curtesy of http://zapquebec.org
 	
