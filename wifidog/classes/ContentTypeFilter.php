@@ -1,6 +1,5 @@
 <?php
 
-
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -218,7 +217,8 @@ class ContentTypeFilter implements GenericObject {
 
 		$_name = "new_content_type_filter_rules";
 
-		$_html .= _("Add a new content type filter with these rules") . ": <br/>";
+		$_html .= "<b>"._("Add a new content type filter with these rules") . ": </b><br/>";
+		$_html .= "<pre>array (\r\n\tarray('isContentType',\r\n\t\tarray (\r\n\t\t\tarray (\r\n\t\t\t\t'SimplePicture'\r\n\t)\r\n\t\t)\r\n\t)\r\n)</pre><br/>";
 		$_html .= "<textarea cols='50' rows='10' name='{$_name}'></textarea><br/>";
 
 		return $_html;
@@ -245,7 +245,7 @@ class ContentTypeFilter implements GenericObject {
 
 		if (!empty($_REQUEST[$_name])) {
 			// Prepend return so that the eval call actually builds the array
-			$new_content_type_filter_rules = @eval("return ".$_REQUEST[$_name].";");
+			$new_content_type_filter_rules =  self::parseScalarArray($_REQUEST[$_name]);
 
 			// Make sure the string eval'd to an array
 			if (!empty($new_content_type_filter_rules) && is_array($new_content_type_filter_rules)) {
@@ -278,7 +278,6 @@ class ContentTypeFilter implements GenericObject {
      */
     public static function getSelectContentTypeFilterUI($user_prefix, $pre_selected_content_type_filter = null, $additional_where = null)
     {
-        
 		$db = AbstractDb::getObject();
 
         // Init values
@@ -301,9 +300,7 @@ class ContentTypeFilter implements GenericObject {
 		}
 
 		$_name = $user_prefix;
-
 		$_html .= _("Content type filter").": \n";
-
 		$_numberOfContentTypeFilters = count($_content_type_filter_rows);
 
 		if ($_numberOfContentTypeFilters > 1) {
@@ -388,7 +385,8 @@ class ContentTypeFilter implements GenericObject {
 		$_html .= "<li class='admin_element_item_container'>\n";
 		$_html .= "<div class='admin_element_label'>" . _("Rules (must be a valid array definition)") . ":</div>\n";
 		$_html .= "<div class='admin_element_data'>\n";
-		$_html .= "<br/><textarea cols='50' rows='10' name='{$_name}'>{$_value}</textarea><br/>\n";
+		$_html .= "<pre>array (\r\n\tarray('isContentType',\r\n\t\tarray (\r\n\t\t\tarray (\r\n\t\t\t\t'SimplePicture'\r\n\t\t\t)\r\n\t\t)\r\n\t)\r\n)</pre>";
+		$_html .= "<textarea cols='50' rows='10' name='{$_name}'>{$_value}</textarea><br/>\n";
 		$_html .= "</div>\n";
 		$_html .= "</li>\n";
 
@@ -423,7 +421,7 @@ class ContentTypeFilter implements GenericObject {
 
 		// rules
 		$_name = "content_type_filter_" . $this->getId() . "_rules";
-		$new_rules_array = @eval("return ".$_REQUEST[$_name].";");
+		$new_rules_array = self::parseScalarArray($_REQUEST[$_name]);
 		if(is_array($new_rules_array))
 			$this->setRules($new_rules_array);
 		else {
@@ -507,6 +505,67 @@ class ContentTypeFilter implements GenericObject {
         return $retval;
     }
     
+    /** 
+     * Parses a string containing an complex array in PHP array() syntax 
+     * All leaves must be strings Indexes aren't supported
+     * @param $string The string to be parsed
+     * @return array
+     */ 
+	public static function parseScalarArray($string, $debug = false){
+	    if($debug)
+	        echo "Original string: <br/>$string";
+	
+	    $chunks = preg_split ( "/(array|,|\(|\))+?/",$string, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY );
+	    foreach ($chunks as $index=>$chunk) {
+	        $chunks[$index] = trim($chunk);
+	        if(empty($chunks[$index])) {
+	            unset($chunks[$index]);
+	        }
+	    }
+	    
+	    if($debug)
+	        pretty_print_r($chunks);
+	        
+	    $retval = null;
+	    $current=null;
+	    $numParen=0;
+	    foreach ($chunks as $index=>$chunk) {
+	        switch ($chunk) {
+	            case 'array': ;
+	            	break;
+	            case ',': ;
+	            	break;
+	            case '(': ;
+		            $numParen++;
+		            $parent=$current;
+		            $current['array']=array();
+		            $current['parent']=$parent;
+		            break;
+	            case ')':
+	                $numParen--;
+	                if($current['parent']==null)
+	                break;
+	                $current['parent']['array'][] = $current['array'];
+	                //pretty_print_r($current);
+	                $current = $current['parent'];
+	                break;
+	            default:
+	                $current['array'][] = trim($chunk,"\"'");
+	        }
+	        
+	        if($debug && $chunk!='array' && $chunk!=','){
+	            echo "Chunk: $chunk  numParen: $numParen, current:";
+	            pretty_print_r($current);
+	            echo "<hr/>";
+	        }
+	    }
+	    
+	    if ($numParen != 0)
+	        throw new exception ("Unparseable string");
+	        
+	    $retval = $current['array'];
+	    return $retval;
+	}	
     
 } //end class
 /*

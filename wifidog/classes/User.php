@@ -50,6 +50,7 @@ require_once ('classes/Mail.php');
 require_once ('classes/InterfaceElements.php');
 require_once ('classes/ProfileTemplate.php');
 require_once ('classes/Profile.php');
+require_once ('classes/Content/Avatar/Avatar.php');
 
 /**
  * Abstract a User
@@ -252,7 +253,8 @@ class User implements GenericObject {
 
     /** Get a user display suitable for a user list.  Will include link to the user profile. */
     function getListUI() {
-        /*    $roles = array ();
+        /*    
+        $roles = array ();
 
         if ($current_node->isOwner($online_user)) {
         $roles[] = _("owner");
@@ -270,7 +272,53 @@ class User implements GenericObject {
             $html .= _("Guest");
         }
         else {
-            $html .= $this->getUserName();
+        	$nickname = null;
+        	$avatar = null;
+        	$profile = $this->getAllProfiles();
+        	if(!empty($profile)) {
+        		// Use the first profile for now
+        		$profile = $profile[0];
+        		
+        		$nickname_fields = $profile->getFieldsBySemanticId("foaf:nick");
+        		// Try using the first nickname available
+        		if(!empty($nickname_fields)) {
+        			$nickname_content = $nickname_fields[0]->getContentField();
+        			if(!empty($nickname_content)) {
+        				// Force non-verbose output
+        				$str = $nickname_content->__toString(false);
+        				if(!empty($str))
+        					$nickname = $str;
+        			}
+        		}
+        		
+        		$avatar_fields = $profile->getFieldsBySemanticId("foaf:img");
+        		// Try using the first avatar available
+        		if(!empty($avatar_fields)) {
+        			$avatar_content = $avatar_fields[0]->getContentField();
+        			if(!empty($avatar_content)) {
+        				$avatar = $avatar_content->getUserUI();
+        			}
+        		}
+        	}
+        	
+        	
+        	
+        	// Display the avatar
+        	$html .= "<a href='".BASE_URL_PATH."profile/?profile_user_id=".$this->getId()."' title='".htmlentities(_("View this user's profile."), ENT_QUOTES)."'>\n";
+        	if(empty($avatar))
+        		$html .= Avatar::getDefaultUserUI();
+        	else
+        		$html .= $avatar;
+        	$html .= "</a>\n";
+        	
+        	// Display the nickname or the username
+        	$html .= "<a href='".BASE_URL_PATH."profile/?profile_user_id=".$this->getId()."' title='".htmlentities(_("View this user's profile."), ENT_QUOTES)."' class='user_nickname'>\n";
+        	if(empty($nickname))
+            	$html .= $this->getUserName();
+            else
+            	$html .= $nickname;
+            $html .= "</a>\n";
+            
         }
         return $html;
     }
@@ -709,7 +757,7 @@ class User implements GenericObject {
             /* Username */
             $title = _("Username");
             $name = "user_" . $this->getId() . "_username";
-            $content = "<input type='text' name='$name' value='" . htmlentities($this->getUsername()) . "' size=30>\n";
+            $content = "<input type='text' name='$name' value='" . htmlentities($this->getUsername()) . "' size=30><br/>\n";
             $content .= _("Be carefull when changing this: it's the username you use to log in!");
             $userPreferencesItems[] = InterfaceElements::genSectionItem($content, $title);
             

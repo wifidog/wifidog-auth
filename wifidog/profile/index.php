@@ -1,5 +1,6 @@
 <?php
 
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -34,77 +35,87 @@
 // +-------------------------------------------------------------------+
 
 /**
+ * Displays a user's profile
+ *
  * @package    WiFiDogAuthServer
- * @subpackage ContentClasses
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
- * @version    Subversion $Id$
+ * @author     François Proulx <francois.proulx@gmail.com>
+ * @copyright  2007 François Proulx
  * @link       http://www.wifidog.org/
  */
 
 /**
- * Load required classes
+ * Load required files
  */
-require_once('classes/LocaleList.php');
-require_once('classes/Locale.php');
+require_once ('../include/common.php');
 
-/**
- * Represents a simple Langstring (no title, description, etc.)
- *
- * @package    WiFiDogAuthServer
- * @subpackage ContentClasses
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
+require_once ('include/common_interface.php');
+require_once ('classes/Node.php');
+require_once ('classes/MainUI.php');
+require_once ('classes/Session.php');
+$smarty = SmartyWifidog::getObject();
+$db = AbstractDb::getObject(); 
+
+// Init vars
+$profile_user = null;
+$profile = null;
+
+// Init session
+$session = Session::getObject();
+
+// Get the current user
+$current_user = User :: getCurrentUser();
+
+/*
+ * Start general request parameter processing section
  */
-class TrivialLangstring extends Langstring
-{
-    /**
-     * Constructor
-     *
-     * @param string $content_id Content id
-     *
-     * @return void     */
-    protected function __construct($content_id)
-    {
-        parent::__construct($content_id);
-
-        /*
-         * A TrivialLangstring is NEVER persistent
-         */
-        parent::setIsPersistent(false);
+if (!empty ($_REQUEST['profile_user_id'])) {
+    try {
+        $profile_user = User :: getObject($_REQUEST['profile_user_id']);
+        if(!empty($profile_user)) {
+        	$profiles = $profile_user->getAllProfiles();
+        	if(!empty($profiles)) {
+        		$profile = $profiles[0];        		
+        	}
+        }
+    } catch (Exception $e) {
+        $ui = MainUI::getObject();
+        $ui->displayError($e->getMessage());
+        exit;
     }
-    /** When a content object is set as Simple, it means that is is used merely to contain it's own data.  No title, description or other metadata will be set or displayed, during display or administration
-     * @return true or false */
-    public function isSimpleContent() {
-        return true;
-    }
-    /**
-     * A short string representation of the content
-     *
-     * @return string Returns the content
-     */
-    public function __toString($verbose = true)
-    {
-        return strip_tags($this->getString($verbose));
-    }
-
-    /**
-     * Reloads the object from the database.
-     *
-     * Should normally be called after a set operation.
-     *
-     * This function is private because calling it from a subclass will call the
-     * constructor from the wrong scope
-     *
-     * @return void
-
-     */
-    private function refresh()
-    {
-        $this->__construct($this->id);
-    }
-
+} else {
+    $ui = MainUI::getObject();
+    $ui->displayError(_("No user id specified!"));
+    exit;
 }
+
+// Init ALL smarty SWITCH values
+$smarty->assign('sectionTOOLCONTENT', false);
+$smarty->assign('sectionMAINCONTENT', false);
+
+/*
+ * Render output
+ */
+
+$ui = MainUI::getObject();
+$ui->setTitle(_("User profile"));
+$ui->setPageName('profile');
+//$ui->addContent('left_area_middle', $tool_html);
+
+/*
+ * Main content
+ */
+$welcome_msg = sprintf("<span>%s</span><em>%s</em>",_("User profile for"), $profile_user->getUsername());
+$ui->addContent('page_header', "<h1>$welcome_msg</h1>");
+
+
+if (!empty($profile)) {
+	$main_area_middle_html = "";
+	$main_area_middle_html .= "<h1>".sprintf(_("Viewing %s's user profile"), $profile_user->getUsername())."</h1>";
+	$main_area_middle_html .= $profile->getUserUI();
+	
+    $ui->addContent('main_area_middle', $main_area_middle_html);
+}
+$ui->display();
 
 /*
  * Local variables:
@@ -113,5 +124,4 @@ class TrivialLangstring extends Langstring
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
-
+?>

@@ -822,6 +822,28 @@ table.content_admin td {
     border: 1px solid grey;
 }
 
+.user_avatar {
+	max-width: 40px;
+	height: 40px;
+	vertical-align: middle;
+	margin: 0 3px 0 0;
+	padding: 0 0 0 0;
+}
+
+.user_nickname {
+	font-size: 1.25em;
+	font-weight: bold;
+}
+
+.user_ui_profile_field {
+}
+
+.user_ui_profile_field_label {
+	font-size: 1.25em;}
+
+.user_ui_profile_field_content {
+}
+
 /********** End Content type section **********/
 
 

@@ -34,76 +34,28 @@
 // +-------------------------------------------------------------------+
 
 /**
- * @package    WiFiDogAuthServer
- * @subpackage ContentClasses
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
- * @version    Subversion $Id$
- * @link       http://www.wifidog.org/
- */
-
-/**
  * Load required classes
  */
-require_once('classes/LocaleList.php');
-require_once('classes/Locale.php');
-
+require_once('classes/Content/SimplePicture/SimplePicture.php');
 /**
- * Represents a simple Langstring (no title, description, etc.)
+ * Represents an avatar
  *
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
+ * @author François Proulx <francois.proulx@gmail.com>
+ * @copyright Copyright (c) 2007 François Proulx
  */
-class TrivialLangstring extends Langstring
+class Avatar extends SimplePicture
 {
-    /**
-     * Constructor
-     *
-     * @param string $content_id Content id
-     *
-     * @return void     */
-    protected function __construct($content_id)
-    {
-        parent::__construct($content_id);
-
-        /*
-         * A TrivialLangstring is NEVER persistent
-         */
-        parent::setIsPersistent(false);
-    }
-    /** When a content object is set as Simple, it means that is is used merely to contain it's own data.  No title, description or other metadata will be set or displayed, during display or administration
-     * @return true or false */
-    public function isSimpleContent() {
-        return true;
-    }
-    /**
-     * A short string representation of the content
-     *
-     * @return string Returns the content
-     */
-    public function __toString($verbose = true)
-    {
-        return strip_tags($this->getString($verbose));
-    }
-
-    /**
-     * Reloads the object from the database.
-     *
-     * Should normally be called after a set operation.
-     *
-     * This function is private because calling it from a subclass will call the
-     * constructor from the wrong scope
-     *
-     * @return void
-
-     */
-    private function refresh()
-    {
-        $this->__construct($this->id);
-    }
-
+	public static function getDefaultUserUI() {
+		$html = "<img src='" . COMMON_IMAGES_URL . "default_avatar.png' class='user_avatar' />";
+		return $html;
+	}
+	
+	public function getUserUI() {
+		$html = "<img src='" . htmlspecialchars($this->getFileUrl()) . "' class='user_avatar' />";
+		return $html;
+	}
 }
 
 /*
@@ -113,5 +65,3 @@ class TrivialLangstring extends Langstring
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
-

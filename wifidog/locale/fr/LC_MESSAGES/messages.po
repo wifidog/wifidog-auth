@@ -7137,7 +7137,7 @@ msgstr ""
 
 #: ../classes/Network.php:1669
 msgid "Zoomlevel"
-msgstr ""
+msgstr "Niveau du zoom"
 
 #: ../classes/Network.php:1674
 msgid "Map type"
@@ -7193,15 +7193,15 @@ msgstr ""
 
 #: ../classes/Node.php:344
 msgid "Node Name"
-msgstr ""
+msgstr "Nom du noeud"
 
 #: ../classes/Node.php:345 ../classes/Node.php:928
 msgid "Gateway ID"
-msgstr ""
+msgstr "Identifiant de la passerelle"
 
 #: ../classes/Node.php:393
 msgid "Add a new node for the gateway ID"
-msgstr ""
+msgstr "Ajouter un nouveau noeud pour l'identifiant de passerelle"
 
 #: ../classes/Node.php:529
 #, php-format
@@ -7225,20 +7225,20 @@ msgstr ""
 
 #: ../classes/Node.php:1242 ../classes/Node.php:1243
 msgid "Unable to create geocoder.  Are you sure you set the country?"
-msgstr ""
+msgstr "Impossible de créer un géocodeur. Assurez-vous de sélectionner un pays."
 
 #: smarty.txt:77
 msgid ""
 "Because of one hotspot not being monitored we don't know if it is currently "
 "operationnal."
-msgstr ""
+msgstr "Un point d'accès n'est pas surveillé en temps réel; son état est donc inconnu."
 
 #: smarty.txt:78
 #, php-format
 msgid ""
 "Because of %d hotspots not being monitored we don't know if they are "
 "currently operationnal."
-msgstr ""
+msgstr "%d points d'accès ne sont pas surveillés en temps réel; leur état est donc inconnu."
 
 #: smarty.txt:75 smarty.txt:69
 msgid "One hotspot is currently operational."
@@ -7267,210 +7267,210 @@ msgstr ""
 
 #: ../classes/User.php:505
 msgid "Password cannot be empty."
-msgstr ""
+msgstr "Le mot de passe ne peut être vide."
 
 #: ../classes/User.php:694
 msgid "Get user statistics"
-msgstr ""
+msgstr "Afficher les statistiques pour l'usager"
 
 #: ../classes/User.php:699
 msgid "Note that Error is for internal use only"
-msgstr ""
+msgstr "Erreur pour usage interne seulement"
 
 #: ../classes/User.php:705
 msgid "Administrative options"
-msgstr ""
+msgstr "Options administratives"
 
 #: ../classes/User.php:730
 msgid "Your new password (again)"
-msgstr ""
+msgstr "Votre nouveau mot de passe (bis)"
 
 #: ../classes/User.php:737
 msgid "User preferences"
-msgstr ""
+msgstr "Préférences usager"
 
 #: ../classes/ContentTypeFilter.php:200
 msgid "Unable to insert the new ContentTypeFilter in the database!"
-msgstr ""
+msgstr "Impossible d'insérer le nouveau filtre de type de contenu dans la base de données!"
 
 #: ../classes/ContentTypeFilter.php:221
 msgid "Add a new content type filter with these rules"
-msgstr ""
+msgstr "Ajouter un nouveau filtre de type de contenu avec ces règles"
 
 #: ../classes/ContentTypeFilter.php:305
 #: ../classes/ProfileTemplateField.php:430
 msgid "Content type filter"
-msgstr ""
+msgstr "Filtre de type de contenu"
 
 #: ../classes/ContentTypeFilter.php:314 ../classes/ProfileTemplate.php:293
 #: ../classes/ProfileTemplateField.php:129
 #: ../classes/ProfileTemplateField.php:433
 msgid "No label"
-msgstr ""
+msgstr "Aucune étiquette"
 
 #: ../classes/ContentTypeFilter.php:360
 msgid "ContentTypeFilter management"
-msgstr ""
+msgstr "Gestion du filtre de type de contenu"
 
 #: ../classes/ContentTypeFilter.php:367
 msgid "ContentTypeFilter ID"
-msgstr ""
+msgstr "Identifiant du filtre de type de contenu"
 
 #: ../classes/ContentTypeFilter.php:378 ../classes/ProfileTemplate.php:472
 msgid "Label"
-msgstr ""
+msgstr "Étiquette"
 
 #: ../classes/ContentTypeFilter.php:389
 msgid "Rules (must be a valid array definition)"
-msgstr ""
+msgstr "Règles (doit être une déclaration de vecteur valide)"
 
 #: ../classes/ContentTypeFilter.php:430
 msgid "The rules must be given as a PHP array declaration."
-msgstr ""
+msgstr "Les règles doivent être entrées sous forme d'une déclaration d'un vecteur PHP."
 
 #: ../classes/ContentTypeFilter.php:456
 msgid "Could not delete ContentTypeFilter!"
-msgstr ""
+msgstr "Impossible de supprimer le filtre de type de contenu!"
 
 #: ../classes/Network.php:1684
 msgid "Network profile templates"
-msgstr ""
+msgstr "Patrons de profil réseau"
 
 #: ../classes/Profile.php:206
 msgid "Unable to insert the new profile in the database!"
-msgstr ""
+msgstr "Impossible d'insérer le nouveau profil dans la base de données!"
 
 #: ../classes/Profile.php:259
 msgid "Unable to insert the new profile fields in the database!"
-msgstr ""
+msgstr "Impossible d'insérer le nouveau champ de profil dans la base de données!"
 
 #: ../classes/Profile.php:292
 msgid "Should this profile be publicly visible?"
-msgstr ""
+msgstr "Doit-on afficher ce profil aux autres usagers?"
 
 #: ../classes/Profile.php:297
 msgid "Profile preferences"
-msgstr ""
+msgstr "Préférences du profil"
 
 #: ../classes/Profile.php:307
 msgid "Profile fields"
-msgstr ""
+msgstr "Champs du profil"
 
 #: ../classes/Profile.php:356
 msgid "Could not delete Profile!"
-msgstr ""
+msgstr "Impossible de supprimer le profil!"
 
 #: ../classes/ProfileTemplate.php:229
 msgid "Unable to insert the new profile template in the database!"
-msgstr ""
+msgstr "Impossible d'insérer le nouveau patron de profil dans la base de données!"
 
 #: ../classes/ProfileTemplate.php:288
 msgid "Profile template"
-msgstr ""
+msgstr "Patron de profil"
 
 #: ../classes/ProfileTemplate.php:358
 msgid "Profile template label"
-msgstr ""
+msgstr "Étiquette du patron de profil"
 
 #: ../classes/ProfileTemplate.php:454
 msgid "Profile template management"
-msgstr ""
+msgstr "Gestion du patron de profil"
 
 #: ../classes/ProfileTemplate.php:461
 msgid "ProfileTemplate ID"
-msgstr ""
+msgstr "Identifiant du patron de profil"
 
 #: ../classes/ProfileTemplate.php:491
 msgid "Profile template fields"
-msgstr ""
+msgstr "Champs du patron de profil"
 
 #: ../classes/ProfileTemplate.php:575
 msgid "Could not delete ProfileTemplate!"
-msgstr ""
+msgstr "Impossible de supprimer le patron de profil!"
 
 #: ../classes/ProfileTemplateField.php:133
 msgid "Add new profile template field filtered by"
-msgstr ""
+msgstr "Ajouter un nouveau patron de champ de profil filtré par"
 
 #: ../classes/ProfileTemplateField.php:142
 msgid "Sorry, no content type filter exists."
-msgstr ""
+msgstr "Désolé, aucun filtre de type de contenu n'existe."
 
 #: ../classes/ProfileTemplateField.php:418
 msgid "Display order"
-msgstr ""
+msgstr "Ordre d'affichage"
 
 #: ../classes/ProfileTemplateField.php:428
 msgid "Sorry, content type filter is missing."
-msgstr ""
+msgstr "Désolé, filtre de type de contenu manquant."
 
 #: ../classes/ProfileTemplateField.php:440
 msgid "Display label"
-msgstr ""
+msgstr "Étiquette pour l'affichage"
 
 #: ../classes/ProfileTemplateField.php:446
 #, php-format
 msgid "%s display label (%s)"
-msgstr ""
+msgstr "%s étiquette pour l'affichage (%s)"
 
 #: ../classes/ProfileTemplateField.php:450
 msgid "display label"
-msgstr ""
+msgstr "Étiquette pour l'affichage"
 
 #: ../classes/ProfileTemplateField.php:457
 msgid "Admin label"
-msgstr ""
+msgstr "Étiquette pour l'admin."
 
 #: ../classes/ProfileTemplateField.php:464
 #, php-format
 msgid "%s admin label (%s)"
-msgstr ""
+msgstr "%s étiquette pour l'admin. (%s)"
 
 #: ../classes/ProfileTemplateField.php:468
 msgid "admin label"
-msgstr ""
+msgstr "étiquette pour l'admin."
 
 #: ../classes/ProfileTemplateField.php:475
 msgid "Semantic ID"
-msgstr ""
+msgstr "Identifiant sémantique"
 
 #: ../classes/ProfileTemplateField.php:483
 msgid "Full name"
-msgstr ""
+msgstr "Nom complet"
 
 #: ../classes/ProfileTemplateField.php:484
 msgid "Nickname"
-msgstr ""
+msgstr "Pseudonyme"
 
 #: ../classes/ProfileTemplateField.php:485
 msgid "E-mail"
-msgstr ""
+msgstr "Courriel"
 
 #: ../classes/ProfileTemplateField.php:486
 msgid "Hashed e-mail"
-msgstr ""
+msgstr "Courriel hachée"
 
 #: ../classes/ProfileTemplateField.php:487
 msgid "Picture"
-msgstr ""
+msgstr "Image"
 
 #: ../classes/ProfileTemplateField.php:488
 msgid "URL of a blog"
-msgstr ""
+msgstr "URL d'un blogue"
 
 #: ../classes/ProfileTemplateField.php:489
 msgid "URL of a homepage"
-msgstr ""
+msgstr "URL d'une page web"
 
 #: ../classes/ProfileTemplateField.php:628
 msgid "Could not delete ProfileTemplateField!"
-msgstr ""
+msgstr "Impossible de supprimer le champ du patron de profil!"
 
 #: ../classes/ProfileField.php:207
 #, php-format
 msgid "Delete %s"
-msgstr ""
+msgstr "Supprimer %s"
 
 #: ../classes/ProfileField.php:293
 msgid "Could not delete ProfileField!"
-msgstr ""
+msgstr "Impossible de supprimer le champ du profil!"

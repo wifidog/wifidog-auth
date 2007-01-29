@@ -250,20 +250,25 @@ class ProfileField implements GenericObject {
      */
     public function getUserUI() {
         // Init values
-        $html = '';
-
-        if (!empty ($this->content_group_element_row['displayed_content_id'])) {
-            $displayed_content = $this->getDisplayedContent();
-
-            // If the content group logging is disabled, all the children will inherit this property temporarly
-            if ($this->getLoggingStatus() == false) {
-                $displayed_content->setLoggingStatus(false);
-            }
-
-            $html .= $displayed_content->getUserUI();
+        $html = "";
+        $html .= "<table class='user_ui_profile_field'><tr>\n";
+        
+        $content_field = $this->getContentField();
+        if(!empty($content_field)) {
+        	$template_field = $this->getProfileTemplateField();
+	        if(!empty($template_field)) {
+	        	$content_label = $template_field->getDisplayLabelContent();
+	        	if(!empty($content_label))
+	        		$html .=  "<td class='user_ui_profile_field_label'>".$content_label->getUserUI()."</td>\n";
+	        }
+	        
+	        // Display the actual value from the profile field
+        	$html .=  "<td class=''>".$content_field->getUserUI()."</td>\n";
         }
-        $this->setUserUIMainDisplayContent($html);
-        return parent :: getUserUI($html);
+        
+        $html .= "</tr></table>";
+        
+        return $html;
     }
 
     /**

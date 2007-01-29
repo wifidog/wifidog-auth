@@ -87,10 +87,10 @@ class Langstring extends Content {
      * Returns the first available string in the user's language, faling that in the 
      * same major language (first part of the locale), failing that the first available 
      * string
-     *
+     * @param bool verbose : Should the function verbose when a string is empty ? 
      * @return UTF-8 string 
      */
-    public function getString() {
+    public function getString($verbose = true) {
         // Init values
         $retval = null;
         $row = null;
@@ -127,7 +127,10 @@ class Langstring extends Content {
             $this->mBd->execSqlUniqueRes($sql, $row, false);
 
             if ($row == null) {
-                $retval = sprintf(_("(Empty %s)"), get_class($this));
+            	if($verbose == true)
+                	$retval = sprintf(_("(Empty %s)"), get_class($this));
+                else
+                	$retval = "";
             } else {
                 $retval = $row['value'];
 

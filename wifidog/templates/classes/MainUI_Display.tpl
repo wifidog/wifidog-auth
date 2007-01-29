@@ -58,7 +58,6 @@
         {/foreach}
 		<script src="{$base_url_path}js/formutils.js" type="text/javascript"></script>
 		<script src="{$base_url_path}js/addEvent.js"  type="text/javascript"></script>
-		<script src="{$base_url_path}js/sweetTitles.js" type="text/javascript"></script>
     </head>
     <body id='page' class='{$page_name}'>
     	{if !empty($contentDisplayArray.page_header) || $debugRequested}

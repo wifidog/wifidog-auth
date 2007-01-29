@@ -53,7 +53,7 @@
         <div class="tool_user_info">
                 {if $userIsValid}
                     <p>{"Logged in as"|_}: {$userName}</p>
-                    <a class="administration" href="{$base_ssl_path}admin/generic_object_admin.php?object_id={$userId}&object_class=User&action=edit"><img class="administration" src="{$common_images_url}profile.gif">&nbsp;{"Preferences"|_}</a>
+                    <a class="administration" href="{$base_ssl_path}admin/generic_object_admin.php?object_id={$userId}&object_class=User&action=edit"><img class="administration" src="{$common_images_url}profile.gif">&nbsp;{"My profile"|_}</a>
                     <a class="administration" href="{$base_ssl_path}login/?logout=true{$logoutParameters}"><img class="administration" src="{$common_images_url}logout.gif">&nbsp;{"Logout"|_}</a>
                 {else}
 					{if !$shrinkLeftArea}

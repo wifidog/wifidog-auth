@@ -310,6 +310,19 @@ class Profile implements GenericObject {
 		
 		return $html;
 	}
+	
+	public function getUserUI() 
+	{
+		$html = "";
+		
+		if($this->isVisible()) {
+			foreach ($this->getFields() as $field) {
+            	$html .= $field->getUserUI();
+        	}
+		}
+		
+		return $html;
+	}
 
     /**
      * Process admin interface of this object

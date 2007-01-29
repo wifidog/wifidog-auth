@@ -151,6 +151,7 @@ foreach ($online_users as $online_user) {
 		    }
 
  */
+ 
 $smarty->assign('onlineUsers', array ());
 if ($num_online_users > 0) {
     $smarty->assign('onlineUsers', $online_user_array);

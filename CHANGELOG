@@ -1,3 +1,7 @@
+2007-01-28 François Proulx <francois.proulx@gmail.com>
+	* First iteration of user profiles completed.
+	* Need to improve Avatar admin UI
+	
 2007-01-19 Benoit Grégoire  <bock@step.polymtl.ca>
 	* dump_initial_data_postgres.sh:  Initial node wasn't setup correctly.
 	* INSTALL:  Fix some obsolete instructions for database backup and restore
