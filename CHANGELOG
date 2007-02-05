@@ -1,5 +1,6 @@
 2007-02-05 Damien Raude-Morvan <drazzib@drazzib.com>
 	* Try to fix ticket #295 and #297 by including parent class (Content.php) in File.php.
+	* ... and remove unnecessary include of Avatar content type in User.php : All contents types are included by Content.php getAvailableContentTypes() call.
 
 2007-01-28 François Proulx <francois.proulx@gmail.com>
 	* First iteration of user profiles completed.

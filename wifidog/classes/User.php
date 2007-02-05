@@ -50,7 +50,6 @@ require_once ('classes/Mail.php');
 require_once ('classes/InterfaceElements.php');
 require_once ('classes/ProfileTemplate.php');
 require_once ('classes/Profile.php');
-require_once ('classes/Content/Avatar/Avatar.php');
 
 /**
  * Abstract a User
