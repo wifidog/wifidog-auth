@@ -45,6 +45,11 @@
  */
 
 /**
+ * Load required classes
+ */
+require_once ('classes/Content.php');
+
+/**
  * Binary or ASCII file
  *
  * @package    WiFiDogAuthServer
