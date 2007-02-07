@@ -241,6 +241,7 @@ class Dependencies
 	    if (isset(self::$_components[$component])) {
 	        // Are we checking for a PHP extension or a PHP library?
 	        if (self::$_components[$component]["type"] == "phpExtension") {
+	            // Warning : extension_loaded(string) is case sensitive
 	            $_returnValue = extension_loaded($component);
 	        }
 	        else if (self::$_components[$component]["type"] == "localLib") {

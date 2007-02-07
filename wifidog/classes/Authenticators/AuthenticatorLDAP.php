@@ -155,7 +155,8 @@ class AuthenticatorLDAP extends Authenticator
 	    // Init values
 		$rtval = true;
 
-		if (Dependencies::check("LDAP", $errmsg)) {
+		// Check if php-ldap extension is loaded
+		if (Dependencies::check("ldap", $errmsg)) {
     		if ($connect = @ldap_connect($ldap_server)) {
     		    // if connected to ldap server
     			ldap_set_option($connect, LDAP_OPT_PROTOCOL_VERSION, 3);
@@ -240,7 +241,8 @@ class AuthenticatorLDAP extends Authenticator
 		$username = $db->EscapeString($username);
 		$password = $db->EscapeString($password);
 
-		if (Dependencies::check("LDAP", $errmsg)) {
+		// Check if php-ldap extension is loaded
+		if (Dependencies::check("ldap", $errmsg)) {
     		if ($this->checkLdapUser($username, $password, $this->mldap_hostname, $this->mldap_o, $this->mldap_filter, $errmsg)) {
     			//LDAP Authentication Successful
     			$sql = "SELECT user_id, pass FROM users WHERE (username='$username') AND account_origin='".$this->getNetwork()->getId()."'";
