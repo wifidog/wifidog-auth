@@ -1,21 +1,27 @@
+2007-02-24 Max Horvath <max.horvath@freenet.de>
+	* Fix ticket #300: SYSTEM_PATH not being respected in config.php.
+
 2007-02-07 Damien Raude-Morvan <drazzib@drazzib.com>
-	* Fix ticket #298 : php-ldap module is lowercase in Dependencies array, update Dependencies::check() calls.
+	* Fix ticket #298 : php-ldap module is lowercase in Dependencies array,
+	  update Dependencies::check() calls.
 
 2007-02-05 Damien Raude-Morvan <drazzib@drazzib.com>
-	* Try to fix ticket #295 and #297 by including parent class (Content.php) in File.php.
-	* ... and remove unnecessary include of Avatar content type in User.php : All contents types are included by Content.php getAvailableContentTypes() call.
+	* Try to fix ticket #295 and #297 by including parent class (Content.php) in
+	  File.php.
+	* ... and remove unnecessary include of Avatar content type in User.php: All
+	  contents types are included by Content.php getAvailableContentTypes() call.
 
 2007-01-28 François Proulx <francois.proulx@gmail.com>
 	* First iteration of user profiles completed.
 	* Need to improve Avatar admin UI
-	
+
 2007-01-19 Benoit Grégoire  <bock@step.polymtl.ca>
 	* dump_initial_data_postgres.sh:  Initial node wasn't setup correctly.
 	* INSTALL:  Fix some obsolete instructions for database backup and restore
-	
+
 2007-01-18 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Updated french translation curtesy of http://zapquebec.org
-	
+
 2007-01-16 François Proulx <francois.proulx@gmail.com>
 	* ContentTypeFilter : Now supports filters stored in the DB, backward compatible
 	* ProfileTemplate, ProfileTemplateField, Profile : profiles support
@@ -29,9 +35,9 @@
 	* InterfaceElements:  Begin moving away from a raw HTML generator and towards a more semantic one as discussed with Max Horvath.
 	* It is now possible for an administrator to manually validate or lock-out a user
 	* Add new SimpleString content type
-	* SmartyWifidog.php:  Fix #282 with a slightly dirty workround to the chicken and the egg smarty variables assignment problem.  
+	* SmartyWifidog.php:  Fix #282 with a slightly dirty workround to the chicken and the egg smarty variables assignment problem.
 		We now extend the fetch method and do our assignment there instead of in the constructor.
-			
+
 2007-01-15 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Sync initial schema and translations
 	* Minor spelling fixes
@@ -39,29 +45,29 @@
 2007-01-14 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Dependencies.php, AuthenticatorRadius.php:  Fix bug #287 (Dependencies not being detected properly)
 	* Content.php: Make hasDisplayableMetadata() consider Authors, and make it a bit faster.
-	
+
 2007-01-13 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Content.php:  Add setUserUIMainDisplayContent() and setUserUIMainInteractionArea()
 	to simplify writing subclasses and port all content subclasses to the new API.
-	* Content.php:  Add a new callcack method, isTextualContent(), to be used by 
+	* Content.php:  Add a new callcack method, isTextualContent(), to be used by
 	ContentFilters.  Indicates that the content is suitable to store plain text.
-	* ContentGroup.php:  No longer warn about empty ContentGroup in getUserUI(), 
+	* ContentGroup.php:  No longer warn about empty ContentGroup in getUserUI(),
 	as this may now be perfectly normal if all content has expired.
 	* Rework the classes and css for user_ui_main_outer, isSimpleContent has been
 	eliminated and hasDisplayableMetadata is now defined is metadata is available.
-	This should allow better HTML consistency and simpler CSS, and be closer to what 
+	This should allow better HTML consistency and simpler CSS, and be closer to what
 	people expect by default.  Content without metadata will display without
 	borders or background, and without margins when inside another content.
-	* smarty.resource.string.php:  Add a setter function, 
+	* smarty.resource.string.php:  Add a setter function,
 	smarty_resource_string_add_string() that must be used before calling the smarty
 	 function.  Using the name as the the template was far to brittle.  This makes
 	 the SmartyTemplate content much more reliable, and quite possibly faster.
-	* ShoutBox: A very basic but already extensible implementation of the 
-	shoutbox use case.  Shows the last five shouts.  Can connect to another web 
+	* ShoutBox: A very basic but already extensible implementation of the
+	shoutbox use case.  Shows the last five shouts.  Can connect to another web
 	site through a javascript extension.
-	* SimpleSmartyTemplate:  Add a simple version of the SmartyTemplate content 
+	* SimpleSmartyTemplate:  Add a simple version of the SmartyTemplate content
 	type
-	
+
 2007-01-03 Benoit Grégoire  <bock@step.polymtl.ca>
 	* FormSelectGenerator.php: Fix incorrect $this reference in isPresent().  The bug would only manifest
 	 itself from the FlickrPhotostream's admin interface.
@@ -72,22 +78,22 @@
 	* RssAggregator.php:  Fix bug in setMaxItemAge() method when setting a null value
 	* Cache.php:  Performance optimization when caching is disabled.
 	* Fix bug where num online users in the portal was broken.
-	
+
 2007-01-02 François Proulx <francois.proulx@gmail.com>
 	* Updated the SQL schema initial schema
-	
+
 2006-12-31 Benoit Grégoire  <bock@step.polymtl.ca>
 	* More Smarty cleanup
-	* Content.php:  Bugfix:  metadata wasn't deleted along with the rest of the 
+	* Content.php:  Bugfix:  metadata wasn't deleted along with the rest of the
 	content upon deletion.
-	
+
 2006-12-30 Benoit Grégoire  <bock@step.polymtl.ca>
 	* install.php:  Move path verification to the first page, and make it clearer.  Fix PHP warnings.
 	* wifidog/include/smarty.resource.string.php:  A smarty resource plugin to parse a smarty template from a string
-	* SmartyTemplate:  Very basic but functionnal commit of the new Smarty content type.  
+	* SmartyTemplate:  Very basic but functionnal commit of the new Smarty content type.
 	IMPORTANT NOTE:  This will eventually obsolete IFrameRest, which will be removed.
 	* Continue cleaning-up/standardizing Smarty variable usage.
-	
+
 2006-12-12 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix all PHP 5.2 compatibility issues I could find.  This needs further testing
 
@@ -95,24 +101,24 @@
 	* install.php: Remove obsolete Phlickr installation references
 
 2006-12-12 Benoit Grégoire  <bock@step.polymtl.ca>
-	* install.php, Dependencies.php:  Centralize Dependency detection (next is to centralize 
+	* install.php, Dependencies.php:  Centralize Dependency detection (next is to centralize
 	dependency installation code).
 	* config.php: Remove more obsolete config directives.
 
 2006-12-11 Benoit Grégoire  <bock@step.polymtl.ca>
 	* install.php:  Fix a few problems caused by obsolete magpierss detection code.
 	* install.php, config.php:  Remove the obsolete PHLICKR_SUPPORT option.
-	
+
 2006-11-30 Benoit Grégoire  <bock@step.polymtl.ca>
 	* schema_validate.php:  Mute annoying ob_flush() notices.
 	* Node.php:  Add missing default parameter to getSelectNodeUI()
-	* get_stylesheet:  Fix date calculations that broke download. 
-	
+	* get_stylesheet:  Fix date calculations that broke download.
+
 2006-11-29 Benoit Grégoire  <bock@step.polymtl.ca>
 	Sync with my main developpement environement:
 	* Performance optimization pass:  Collect a few low hagning fruits
-	by implementing basic instance caching for classes Server, Network, Nodes, Content and User. 
-	 It's no replacement for a real ORM, but is cuts way down on duplicate SQL queries and 
+	by implementing basic instance caching for classes Server, Network, Nodes, Content and User.
+	 It's no replacement for a real ORM, but is cuts way down on duplicate SQL queries and
 	 object instanciation for a single request.
 	* Langstring.php:  Slight performance optimization for admin interface, support for proper modification date.
 	* File.php:  Update to use unified content modification date.
@@ -121,65 +127,65 @@
 	Allow editing of expired content elements
 	* Node.php, Utils.php:  Sort by case insensitive name, and show gateway id in node selectors
 	* BannerAdGroup.php:  Support group constraint of image size for all images in the group.
-	* ContentReport.php:  Finish basic content reporting.  
-	Note that for content that displayed before the logging fixes commited 2006-11-14, the display count will be underestimated:  
+	* ContentReport.php:  Finish basic content reporting.
+	Note that for content that displayed before the logging fixes commited 2006-11-14, the display count will be underestimated:
 	Display before then was only counted once per user per node.  Also File clickthrough wasn't logged (includes hyperlinked pictures).
 	* Content.php:  Implement a Key-Value Pair infrastructure.  In the future, this will often allow adding new content types without
 	having to modify the schema.  See the Content class documentation.
 	* Fix various small UI issues.
-	
+
 2006-11-29 Benoit Grégoire  <bock@step.polymtl.ca>
 	* common.php:  Fix the value of SESS_NODE_ID_VAR, it got overwritten by SESS_GW_ID_VAR.
 	Caused problems with logout.
-	
+
 2006-11-27 Benoit Grégoire  <bock@step.polymtl.ca>
-	* Try to fix #270: 
+	* Try to fix #270:
 	* DateTime.php:  Rename class to DateTimeWD because of the stunt they pulled in PHP 5.2
 	* Content and derived classes:  Make all constructors protected.
 
 2006-11-26 Benoit Grégoire  <bock@step.polymtl.ca>
 	* lost_username.tpl, lost_password.tpl, resend_validation.tpl:  Fix #259 by commenting out
-	all Javascript. I hate removing outside contributions, but the lost_username, 
-	lost password and re-send validation email have been broken for months and no one 
+	all Javascript. I hate removing outside contributions, but the lost_username,
+	lost password and re-send validation email have been broken for months and no one
 	stepped-in to fix it.
-	 
+
 2006-11-23 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix bug in node creation
 	* Add error message for geocoder when you didn't set the country
 	* Clarify error messages and description for the geocoder.
 	* Make the google-map locator for nodes use the network center coordinates.
-	  This change makes it usable when you didn't use the geocoder first. 
+	  This change makes it usable when you didn't use the geocoder first.
 	* Show the gateway id in the technical nodelist.
-	
+
 2006-11-22 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix minor problems with template using obsolete constants
 	* Delete a bunch of unused templates
-	
+
 2006-11-22 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix broken auth
 	* Fix broken portal when called from gateway
-	
+
 2006-11-22 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Major schema update (this one is going to make your database grind for a while, sorry
 	about that...)
-	Fix a long standing design problem with the node table, where the ID could be changed.  
+	Fix a long standing design problem with the node table, where the ID could be changed.
 	This caused performance problems when replacing gateways, and caused problems when
 	exporting data to other systems.  Among other things, it will allow us to finally
 	 finish the JiWire output.
 	* Stylesheet.php:  New content type.  Takes advantage of two pass content display to create stylesheets to be used only at a specific node, or with a specific content.
-	
+
 2006-11-21 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Change schema update method.  Will now do one transaction
 	 per schema version, allowing each schema to assume that
 	  the current schema is the previous one.  Also allows not
 	  starting over when there is a problem.
 	  Fixes schema update problems with the last commit
-	
+
 2006-11-21 Benoit Grégoire  <bock@step.polymtl.ca>
 	* RssAggregator.php:  At long last, sync with FeedPressReview 2.0
 	 http://projects.coeus.ca/feedpressreview/ (formerly rsspressreview)  and
 	  make most of it's features directly available from the web interface.
-	This gives us:  	
+	This gives us:
 	-Now based on SimplePie http://simplepie.org/ (magpie was no longuer maintained)
 	-Now unobtrusively displays almost all item and feed metadata
 	-Supports images
@@ -188,7 +194,7 @@
 	-Criteria based default feed expansion
 	-More real-estate efficient, and improved UI
 	The admin interface is now also more real-estate efficient (uses the hover help code commited by François that no one used yet).
-	
+
 	Warning: This changes the dependencies of the auth server.  Your RSS feeds will be disabled untill you re-run the install script.
 	* gw_message.php:  Fix validation period not being displayed.
 
@@ -201,41 +207,41 @@
 2006-11-14 Benoit Grégoire  <bock@step.polymtl.ca>
 	* File.php:  Clickthrough weren't logged, DOH!
 	* User.php:  Error message on validation expired didn't properly output the validation grace time.
-	* Statistics.php:  Fix #271: Getting statistics for a single MAC address was broken.  
+	* Statistics.php:  Fix #271: Getting statistics for a single MAC address was broken.
 	* NodeListXML.php:  Small patch by Josephus to add the number of online users
 	* Improve CPU usage of the content manager
 	* AbstractDb:  Fix query time not being displayed in debug mode if profiling was turned off.
 					Add total execution time statistics.
-	* Fix logging of content clickthrough and display.  Unique users and node data is reliable for existing data.  
+	* Fix logging of content clickthrough and display.  Unique users and node data is reliable for existing data.
 		Number of prints is underestimated (repeat prints for the same user, same content at same node didn't get counted)
-		 for data before this patch.  
+		 for data before this patch.
 		Same with number of clickthrough for File content types and derivatives (picture, etc.).
 	* ContentReport.php:  Add content report (does not support most options yet, but still very usefull).
-	
+
 2006-11-13 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Make the MainUI, SmartyWifidog and Session and AbstractDb classes singletons
-	* Implement two pass content display.  All Content can now implement a prepareGetUserUI(), allowing them to interact with MainUI and other Content before display.  
-	  Allow creating content such as stylesheets, feed accumulators, etc. 
+	* Implement two pass content display.  All Content can now implement a prepareGetUserUI(), allowing them to interact with MainUI and other Content before display.
+	  Allow creating content such as stylesheets, feed accumulators, etc.
 	* SmartyWifidog.php Turn on security, begin preparing for standardisation of Smarty variables
 	* New Content type:  Stylesheet.  Allows specific nodes, or even specific content groups to have custom stylesheets.
 	* Langstring.php:  Make getAdminUI calling conventions coherent with other content types.
 
 2006-11-11 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Authenticator.php:  Critical: Fix SQL query syntax in acctStart()
-	
+
 2006-11-07 Benoit Grégoire  <bock@step.polymtl.ca>
 	* install.php:  Fix password generation I inadvertently broke.  Remove misleading info about SSL
 
 2006-11-07 Benoit Grégoire  <bock@step.polymtl.ca>
-	* install.php:  Put an end of line after the password, make it easier to read.  
+	* install.php:  Put an end of line after the password, make it easier to read.
 	Make the install script check the permissions of lib/smarty/plugins directory to avoid smarty errors
 	* Statistics.php:  A little gift for France wireless:  Make aggregate statistics available across networks
-	
+
 2006-11-07 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix # 268, #269 as well as greg's problems by moving all token and registration date arithmetics
-	 to the database, and standardize on SQL-standard CURRENT_TIMESTAMP.  
-	Fixes operational problems when PHP and PostGres don't have the same timezone 
-	(which appears to be the case on Fedora by default). 
+	 to the database, and standardize on SQL-standard CURRENT_TIMESTAMP.
+	Fixes operational problems when PHP and PostGres don't have the same timezone
+	(which appears to be the case on Fedora by default).
 	Note that the page.php script still has PHP date arithmetics, but at least should be self-consistent.
 
 2006-10-24 Benoit Grégoire  <bock@step.polymtl.ca>
@@ -250,7 +256,7 @@
 	* Full spanish translation curtesy of jguevara @@ unitec.edu (closes #254)
 	* Some documentation updates for content filters
 	* Content.php:  Add isNotContentType() method.
-	
+
 2006-09-07 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Access to the Content manager was broken for normal users, again.
 
@@ -318,7 +324,7 @@ Usability and UI fixes:
 	* Cleanup coments.
 	* Sync schemas
 
-2006-09-03 Max Horváth <max.horvath@maxspot.de>
+2006-09-03 Max Horváth <max.horvath@freenet.de>
 	* The term SPLASH_ONLY_USER displayed to people visiting the portal has been
 	  replaced by the more meaningful term "anonymous user" (fixes #106)
 	* When creating a new node and choosing an existing node_id there will be
@@ -332,7 +338,7 @@ Usability and UI fixes:
 	  Node->getAdminUI (fixes #140)
 	* Show descriptive status of node (fixes #241)
 
-2006-09-02 Max Horváth <max.horvath@maxspot.de>
+2006-09-02 Max Horváth <max.horvath@freenet.de>
 	* Installation script checks for PHP session extension (fixes #139)
 	* Removed "Call-time pass-by-reference has been deprecated" warnings
 	  (fixes #239)
@@ -368,7 +374,7 @@ Usability and UI fixes:
 	* Allow setting a title but not displaying it (very usefull for reusable
 	  content)
 
-2006-08-29 Max Horváth <max.horvath@maxspot.de>
+2006-08-29 Max Horváth <max.horvath@freenet.de>
 	* Cleaned up PHPdoc tags
 	* Updated german translation
 	* Updated portuguese translation, thanks to Gabriel Hahmann
@@ -378,7 +384,7 @@ Usability and UI fixes:
 	* Add SimplePicture content type
 	* Fix #225 (For both nodes and networks)
 
-2006-08-28 Max Horváth <max.horvath@maxspot.de>
+2006-08-28 Max Horváth <max.horvath@freenet.de>
 	* Integrated KML node list export
 	* Integrated PDF node list export
 	* Updated Sprintf formatted strings in some Smarty templates
@@ -693,7 +699,7 @@ Usability and UI fixes:
 	* Removed stale owner_sendfiles.php (now integrated in the Content Manager)
 	* Cleaned up a bunch of stale TODOs
 
-2006-03-16 Max Horváth <max.horvath@maxspot.de>
+2006-03-16 Max Horváth <max.horvath@freenet.de>
 	* updated language files (new german strings have already been translated)
 	* added LDAP authentication
 	* Dependencies class can check for an PHP extension now
@@ -715,7 +721,7 @@ Usability and UI fixes:
 	  into AbstractDb.php to prepare for eventual switch to PDO file.
 	* incoming_outgoing_swap.php:  Delete file, closes #85
 
-2006-03-09 Max Horváth <max.horvath@maxspot.de>
+2006-03-09 Max Horváth <max.horvath@freenet.de>
 	* fixed small bug in the InterfaceElements class
 	* fixed PHP notices in portal/index.php and Locale class
 	* fixed small bug in Authenticator class which in resulted in a fatal PHP
@@ -723,13 +729,13 @@ Usability and UI fixes:
     * using the {$isUserAtHotspot} smarty variable you can check now in every
       template if a user calls the portal from a hotspot or not
 
-2006-03-08 Max Horváth <max.horvath@maxspot.de>
+2006-03-08 Max Horváth <max.horvath@freenet.de>
 	* fixed small bug where clicking on the start button at the portal page
 	  didn't open the wifidog portal, but the requested page
 	* updated source to generate a clean PHPdoc output
 	* updated PHPdoc generating script
 
-2006-03-07 Max Horváth <max.horvath@maxspot.de>
+2006-03-07 Max Horváth <max.horvath@freenet.de>
 	* init_php.php now does a 100% strict check for variable types of
 	  elements to be processed when magic_quotes are turned on
 	* fixed duplicate use of SSL_AVIABLE define in common.php
@@ -753,11 +759,11 @@ Usability and UI fixes:
 	  This fixes ticket #98.
 	* on node administration page owners have less rights than admins
 
-2006-03-02 Max Horváth <max.horvath@maxspot.de>
+2006-03-02 Max Horváth <max.horvath@freenet.de>
 	* converted PNGs to GIFs because Internet Explorer cannot handle alpha
 	  transparency of PNGs
 
-2006-02-28 Max Horváth <max.horvath@maxspot.de>
+2006-02-28 Max Horváth <max.horvath@freenet.de>
 	* the content selector for an owner could produce notices
 	* the button add existing content in the content manager will only be shown
 	  if content is actually available
@@ -792,7 +798,7 @@ Usability and UI fixes:
 	* Login site now uses a Smarty template to render HTML page
 	* class MainUI now also delivers $isOwner variable for Smarty
 
-2006-02-26 Max Horváth <max.horvath@maxspot.de>
+2006-02-26 Max Horváth <max.horvath@freenet.de>
 	* Hotspots map page now uses a direct Javascript call for the link
 	  "Show me on the map" (resulting in the browser not jumping to the top of
 	  the page if a user clicks on such a link)
@@ -806,7 +812,7 @@ Usability and UI fixes:
 	  actually switched back to the current network)
 	* RSS feed of hotspot status page now gets announced in browser
 
-2006-02-25 Max Horváth <max.horvath@maxspot.de>
+2006-02-25 Max Horváth <max.horvath@freenet.de>
 	* fixed undefined variable bugs in statistic classes (use of date_from and
 	  date_to), variables were processed directly from request, without any
 	  check
@@ -866,7 +872,7 @@ Usability and UI fixes:
 	  JavaScript file was english only)
 	* Hotspots map page now uses a Smarty template to render HTML page
 
-2006-02-21 Max Horváth <max.horvath@maxspot.de>
+2006-02-21 Max Horváth <max.horvath@freenet.de>
 	* fixed access restriction for HTMLeditor in templates folder
 	* fixed XML error in HTMLeditors CSS and HTML templates
 	* fixed undefined variable bug in content class ContenGroup
@@ -876,7 +882,7 @@ Usability and UI fixes:
 	  cached if caching has been enabled (valid/online users for 1 minute,
 	  deployed/operational nodes for 5 minutes)
 
-2006-02-17 Max Horváth <max.horvath@maxspot.de>
+2006-02-17 Max Horváth <max.horvath@freenet.de>
 	* refactored lost username site - now it also includes the help toolbox
 	* lost username page now focuses input field automaticly (like on login or
 	  signup page)
@@ -888,7 +894,7 @@ Usability and UI fixes:
 	* refactored resend validation email page now focuses input field
 	  automaticly (like on login or signup page)
 
-2006-02-16 Max Horváth <max.horvath@maxspot.de>
+2006-02-16 Max Horváth <max.horvath@freenet.de>
     * added full PHPdoc documentation to Mail class
     * added more temporary-email-address-providers to the black-list
 	* Login site now uses a Smarty template to render HTML page
@@ -898,10 +904,10 @@ Usability and UI fixes:
 	* modified gen.sh to include new template folders for the
 	  translation file generation
 
-2006-02-15 Max Horváth <max.horvath@maxspot.de>
+2006-02-15 Max Horváth <max.horvath@freenet.de>
 	* Login site now uses a Smarty template to render HTML page
 
-2006-02-14 Max Horváth <max.horvath@maxspot.de>
+2006-02-14 Max Horváth <max.horvath@freenet.de>
 	* converted Session class to PHP5 style
 	* moved code used used to init PHP into wifidog/include/init_php.php
 	* fixed bug regarding APC (super globals weren't initialized before their
@@ -931,7 +937,7 @@ Usability and UI fixes:
 	* wifidog/local_content/default/hotspot_logo_banner.jpg: Delete deprecated
 	  file
 
-2006-02-04 Max Horváth <max.horvath@maxspot.de>
+2006-02-04 Max Horváth <max.horvath@freenet.de>
 	* MainUI class now uses Smarty templates to render HTML pages
 	* display of debug messages by using $_REQUEST['debug_request'] on any
 	  page is now only possible for a super admin
@@ -962,7 +968,7 @@ Usability and UI fixes:
 	* path_defines_base.php:  Fix syntax errors in the exception thrown. Add
 	  more meaningfull output
 
-2006-01-29 Max Horváth <max.horvath@maxspot.de>
+2006-01-29 Max Horváth <max.horvath@freenet.de>
 	* WiFiDog now detects APC PHP cache and eAccelerator PHP cache and disables
 	  both PHP caches, because WiFiDog currently doesn't run with either of
 	  those PHP caches (I'm still investigating why)
@@ -977,7 +983,7 @@ Usability and UI fixes:
 	* updated HTMLeditor content class to use the new, moved stylesheet.css
 	* fixed error messages not displaying technical support e-mail address
 
-2006-01-25 Max Horváth <max.horvath@maxspot.de>
+2006-01-25 Max Horváth <max.horvath@freenet.de>
 	* a notice message regarding timezones was being displayed when running PHP
 	  5.1.0+ due to rewritten date functions of PHP. There is a new config flag
 	  in config.php named DATE_TIMEZONE. Set it to your local timezone.
@@ -991,7 +997,7 @@ Usability and UI fixes:
 	* SmartyWifidog.php: Output the error returned by Dependencies if Smarty
       cannot be found for some reason.
 
-2006-01-23 Max Horváth <max.horvath@maxspot.de>
+2006-01-23 Max Horváth <max.horvath@freenet.de>
 	* Removed compiled PHPdoc documentation
 	* moved createDoc.sh to "doc" directory, documentation can be generated on
 	  the fly now, in the future we'll be generating a nightly PHPdoc on
@@ -1018,7 +1024,7 @@ Usability and UI fixes:
     * classes/User.php: added setters, getters, throw exceptions, added
       refresh() subr, tweaked language
 
-2006-01-09 Max Horváth <max.horvath@maxspot.de>
+2006-01-09 Max Horváth <max.horvath@freenet.de>
 	* createDoc.sh: added description of how to install requirements
 
 2006-01-08 Benoit Grégoire  <bock@step.polymtl.ca>
@@ -1068,7 +1074,7 @@ Usability and UI fixes:
 	* Removed blank lines at end of many files
 	* Tested the new Phlickr package, which fixes URL on Flickr
 
-2005-12-28 Max Horváth <max.horvath@maxspot.de>
+2005-12-28 Max Horváth <max.horvath@freenet.de>
 	* Removed BASEPATH define from source - resulting in a better
 	  require-overview
 	* speed improvement of 7% by optimizing Dependencies class
@@ -1089,7 +1095,7 @@ Usability and UI fixes:
 	* Improved installation script a bit
 	* Synched SQL for CVS schema 29 --> 33
 
-2005-12-26 Max Horváth <max.horvath@maxspot.de>
+2005-12-26 Max Horváth <max.horvath@freenet.de>
 	* added new headers to every source file
 	* converted file to represent a tab as four (4) spaces
 	* added PhpDocumentor documentation
@@ -1098,14 +1104,14 @@ Usability and UI fixes:
 	  of the language code
 	* added caching support to content classes Langstring and TrivialLangstring
 
-2005-12-15 Max Horváth <max.horvath@maxspot.de>
+2005-12-15 Max Horváth <max.horvath@freenet.de>
 	* fixed bug in dependencies class when gettext support for PHP is not
 	  available
 
-2005-12-14 Max Horváth <max.horvath@maxspot.de>
+2005-12-14 Max Horváth <max.horvath@freenet.de>
 	* fixed bug in config.php:59 ... was unable to select DB server
 
-2005-12-08 Max Horváth <max.horvath@maxspot.de>
+2005-12-08 Max Horváth <max.horvath@freenet.de>
 	* added FCKeditor to the supported libraries
 	* added new content type: HTMLeditor
 	* added new caching class which uses PEAR::Cache_Lite - must be enabled in
@@ -1115,13 +1121,13 @@ Usability and UI fixes:
 	* beautified and reorganized config.php and added a new switch for the
 	  caching class
 
-2005-12-06 Max Horváth <max.horvath@maxspot.de>
+2005-12-06 Max Horváth <max.horvath@freenet.de>
 	* fixed SQL bug when calling the "report configuration" page as a node owner
 
 2005-12-05 François Proulx <francois.proulx@gmail.com>
 	* Crunched the Google Maps Div block for better display on small screens
 
-2005-12-05 Max Horváth <max.horvath@maxspot.de>
+2005-12-05 Max Horváth <max.horvath@freenet.de>
 	* fixed bug when calling the preview version of a login page
 
 2005-11-30 Benoit Grégoire  <bock@step.polymtl.ca>
@@ -1137,7 +1143,7 @@ Usability and UI fixes:
 2005-11-25 Rob Janes <janes.rob@gmail.com>
 	* EventLogging class initial checkin
 
-2005-11-14 Max Horváth <max.horvath@maxspot.de>
+2005-11-14 Max Horváth <max.horvath@freenet.de>
 	* fixed path to included classes
 	  Guys, please check the paths to included files twice next time you're
 	  moving files
@@ -1165,7 +1171,7 @@ Usability and UI fixes:
 	* Put a note to mention the roles of users in the logged in users list
 	* Fixed online users link to statistics
 
-2005-11-01 Max Horváth <max.horvath@maxspot.de>
+2005-11-01 Max Horváth <max.horvath@freenet.de>
 	* added german translation
 	* modified gen.sh to include geocoder and statistics classes for the
 	  translation file generation
