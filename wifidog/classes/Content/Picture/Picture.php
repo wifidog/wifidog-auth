@@ -38,9 +38,9 @@
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Francois Proulx <francois.proulx@gmail.com>
- * @author     Max Horvath <max.horvath@maxspot.de>
+ * @author     Max Horváth <max.horvath@freenet.de>
  * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
- * @copyright  2005-2006 Max Horvath, maxspot GmbH
+ * @copyright  2005-2006 Max Horváth, Horvath Web Consulting
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
@@ -56,9 +56,9 @@ require_once ('classes/Content/File/File.php');
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     Francois Proulx <francois.proulx@gmail.com>
- * @author     Max Horvath <max.horvath@maxspot.de>
+ * @author     Max Horváth <max.horvath@freenet.de>
  * @copyright  2005-2006 Francois Proulx, Technologies Coeus inc.
- * @copyright  2005-2006 Max Horvath, maxspot GmbH
+ * @copyright  2005-2006 Max Horváth, Horvath Web Consulting
  */
 class Picture extends File {
     private $configEnableEditWidthHeight = true;

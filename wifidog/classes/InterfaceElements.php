@@ -35,16 +35,16 @@
 
 /**
  * @package    WiFiDogAuthServer
- * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2006 Max Horvath, maxspot GmbH
+ * @author     Max Horváth <max.horvath@freenet.de>
+ * @copyright  2006 Max Horváth, Horvath Web Consulting
  * @version    Subversion $Id: FormSelectGenerator.php 915 2006-01-23 05:26:20Z max-horvath $
  * @link       http://www.wifidog.org/
  */
 
 /**
  * @package    WiFiDogAuthServer
- * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2006 Max Horvath, maxspot GmbH
+ * @author     Max Horváth <max.horvath@freenet.de>
+ * @copyright  2006 Max Horváth, Horvath Web Consulting
  */
 class InterfaceElements
 {

@@ -38,8 +38,8 @@
  * before any code gets executed by the WiFiDog Authentication Server.
  *
  * @package    WiFiDogAuthServer
- * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2006 Max Horvath, maxspot GmbH
+ * @author     Max Horváth <max.horvath@freenet.de>
+ * @copyright  2006 Max Horváth, Horvath Web Consulting
  * @version    Subversion $Id: common.php 927 2006-01-29 22:24:06Z max-horvath $
  * @link       http://www.wifidog.org/
  */

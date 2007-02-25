@@ -36,8 +36,8 @@
 /**
  * @package    WiFiDogAuthServer
  * @subpackage NodeLists
- * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2006 Max Horvath, maxspot GmbH
+ * @author     Max Horváth <max.horvath@freenet.de>
+ * @copyright  2006 Max Horváth, Horvath Web Consulting
  * @version    Subversion $Id: Content.php 974 2006-02-25 15:08:12Z max-horvath $
  * @link       http://www.wifidog.org/
  */
@@ -77,8 +77,8 @@ if (Dependencies::check("FPDF")) {
          * visibility of a parents function.
          *
          * @package    WiFiDogAuthServer
-         * @author     Max Horvath <max.horvath@maxspot.de>
-         * @copyright  2006 Max Horvath, maxspot GmbH
+         * @author     Max Horváth <max.horvath@freenet.de>
+         * @copyright  2006 Max Horváth, Horvath Web Consulting
          */
         class PdfWiFiDog extends FPDF
         {
@@ -807,8 +807,8 @@ if (Dependencies::check("FPDF")) {
  *
  * @package    WiFiDogAuthServer
  * @subpackage NodeLists
- * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2006 Max Horvath, maxspot GmbH
+ * @author     Max Horváth <max.horvath@freenet.de>
+ * @copyright  2006 Max Horváth, Horvath Web Consulting
  */
 class NodeListPDF
 {

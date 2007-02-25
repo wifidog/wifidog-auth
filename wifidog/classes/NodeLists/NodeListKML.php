@@ -37,9 +37,9 @@
  * @package    WiFiDogAuthServer
  * @subpackage NodeLists
  * @author     Joe Bowser <bowserj@resist.ca>
- * @author     Max Horvath <max.horvath@maxspot.de>
+ * @author     Max Horváth <max.horvath@freenet.de>
  * @copyright  2006 Joe Bowser
- * @copyright  2006 Max Horvath, maxspot GmbH
+ * @copyright  2006 Max Horváth, Horvath Web Consulting
  * @version    Subversion $Id: Content.php 974 2006-02-25 15:08:12Z max-horvath $
  * @link       http://www.wifidog.org/
  */
@@ -129,11 +129,11 @@ class NodeListKML {
      *
      * @author     Benoit Gregoire <bock@step.polymtl.ca>
      * @author     Francois Proulx <francois.proulx@gmail.com>
-     * @author     Max Horvath <max.horvath@maxspot.de>
+     * @author     Max Horváth <max.horvath@freenet.de>
 	 * @author     Joe Bowser <bowserj@resist.ca>
      * @copyright  2004-2006 Benoit Gregoire, Technologies Coeus inc.
      * @copyright  2004-2006 Francois Proulx, Technologies Coeus inc.
-     * @copyright  2006 Max Horvath, maxspot GmbH
+     * @copyright  2006 Max Horváth, Horvath Web Consulting
 	 * @copyright  2006 Joe Bowser
      */
     public function getOutput($return_object = false)

@@ -36,8 +36,8 @@
 /**
  * @package    WiFiDogAuthServer
  * @subpackage NodeLists
- * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2006 Max Horvath, maxspot GmbH
+ * @author     Max Horváth <max.horvath@freenet.de>
+ * @copyright  2006 Max Horváth, Horvath Web Consulting
  * @version    Subversion $Id: Content.php 974 2006-02-25 15:08:12Z max-horvath $
  * @link       http://www.wifidog.org/
  */
@@ -52,8 +52,8 @@ require_once('classes/Cache.php');
  *
  * @package    WiFiDogAuthServer
  * @subpackage NodeLists
- * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2006 Max Horvath, maxspot GmbH
+ * @author     Max Horváth <max.horvath@freenet.de>
+ * @copyright  2006 Max Horváth, Horvath Web Consulting
  */
 class NodeList {
     /**

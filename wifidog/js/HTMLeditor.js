@@ -34,8 +34,8 @@
 /**
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
- * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2005-2006 Max Horvath, maxspot GmbH
+ * @author     Max Horváth <max.horvath@freenet.de>
+ * @copyright  2005-2006 Max Horváth, Horvath Web Consulting
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */

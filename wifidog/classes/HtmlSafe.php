@@ -36,8 +36,8 @@
 /**
  * @package    WiFiDogAuthServer
  * @subpackage Security
- * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2006 Max Horvath, maxspot GmbH
+ * @author     Max Horváth <max.horvath@freenet.de>
+ * @copyright  2006 Max Horváth, Horvath Web Consulting
  * @version    Subversion $Id: Cache.php 930 2006-01-29 23:15:52Z max-horvath $
  * @link       http://www.wifidog.org/
  */
@@ -47,8 +47,8 @@
  *
  * @package    WiFiDogAuthServer
  * @subpackage Security
- * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2006 Max Horvath, maxspot GmbH
+ * @author     Max Horváth <max.horvath@freenet.de>
+ * @copyright  2006 Max Horváth, Horvath Web Consulting
  */
 class HtmlSafe
 {

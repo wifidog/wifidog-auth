@@ -36,8 +36,8 @@
 /**
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
- * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2005-2006 Max Horvath, maxspot GmbH
+ * @author     Max Horváth <max.horvath@freenet.de>
+ * @copyright  2005-2006 Max Horváth, Horvath Web Consulting
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  * @todo       Add CSS styles for editors.
@@ -53,8 +53,8 @@ require_once('classes/Content/Langstring/Langstring.php');
  *
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
- * @author     Max Horvath <max.horvath@maxspot.de>
- * @copyright  2005-2006 Max Horvath, maxspot GmbH
+ * @author     Max Horváth <max.horvath@freenet.de>
+ * @copyright  2005-2006 Max Horváth, Horvath Web Consulting
  */
 class HTMLeditor extends Langstring
 {

@@ -37,9 +37,9 @@
  * @package    WiFiDogAuthServer
  * @subpackage Authenticators
  * @author     Ricardo Jose Guevara Ochoa <rjguevara@gmail.com>
- * @author     Max Horvath <max.horvath@maxspot.de>
+ * @author     Max Horváth <max.horvath@freenet.de>
  * @copyright  2006 Ricardo Jose Guevara Ochoa
- * @copyright  2006 Max Horvath, maxspot GmbH
+ * @copyright  2006 Max Horváth, Horvath Web Consulting
  * @version    Subversion $Id: AuthenticatorLocalUser.php 915 2006-01-23 05:26:20Z max-horvath $
  * @link       http://www.wifidog.org/
  */
@@ -58,9 +58,9 @@ require_once('classes/User.php');
  * @package    WiFiDogAuthServer
  * @subpackage Authenticators
  * @author     Ricardo Jose Guevara Ochoa <rjguevara@gmail.com>
- * @author     Max Horvath <max.horvath@maxspot.de>
+ * @author     Max Horváth <max.horvath@freenet.de>
  * @copyright  2006 Ricardo Jose Guevara Ochoa
- * @copyright  2006 Max Horvath, maxspot GmbH
+ * @copyright  2006 Max Horváth, Horvath Web Consulting
  */
 class AuthenticatorLDAP extends Authenticator
 {

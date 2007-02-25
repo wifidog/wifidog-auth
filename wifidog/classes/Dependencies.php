@@ -36,7 +36,7 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Philippe April
- * @author     Max Horvath <max.horvath@freenet.de>
+ * @author     Max Horváth <max.horvath@freenet.de>
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @copyright  2005-2007 Philippe April
  * @copyright  2005-2007 Max Horváth, Horvath Web Consulting
@@ -61,10 +61,10 @@ require_once ('classes/Utils.php');
  *
  * @package    WiFiDogAuthServer
  * @author     Philippe April
- * @author     Max Horvath <max.horvath@freenet.de>
+ * @author     Max Horváth <max.horvath@freenet.de>
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @copyright  2005-2007 Philippe April
- * @copyright  2005-2007 Max Horvath, Horvath Web Consulting
+ * @copyright  2005-2007 Max Horváth, Horvath Web Consulting
  * @copyright  2006-2007 Benoit Grégoire, Technologies Coeus inc.
  */
 class Dependencies
