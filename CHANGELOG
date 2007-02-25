@@ -1,5 +1,9 @@
-2007-01-19 Benoit Grégoire  <bock@step.polymtl.ca>
-	* rev [1182], [1183], [1184]  are repository fix commits.  If anyone have problem with their lib directory when upgrading, contact me.
+ 2007-02-24 Max Horvath <max.horvath@freenet.de>
+        * Updated dependencies list (completion of all required components)
+        * Dramatic speedup of PEAR and PECL modules detection by dependencies class
+
+2007-02-25 Benoit Grégoire  <bock@step.polymtl.ca>
+	-* rev [1182], [1183], [1184]  are repositcaory fix commits.  If anyone have problem with their lib directory when upgrading, contact me.
 
 2007-02-24 Max Horvath <max.horvath@freenet.de>
 	* Fix ticket #300: SYSTEM_PATH not being respected in config.php.
