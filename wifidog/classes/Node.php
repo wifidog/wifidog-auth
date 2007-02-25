@@ -294,7 +294,7 @@ class Node implements GenericObject
     	    "TEMPORARILY_CLOSED" => _("Temporarily closed")
     	    );
 
-    	    $sql = "SELECT node_id, name, gw_id, node_deployment_status, is_splash_only_node from nodes $sql_additional_join WHERE 1=1 $sql_additional_where ORDER BY lower(node_id)";
+    	    $sql = "SELECT nodes.node_id, nodes.name, nodes.gw_id, nodes.node_deployment_status, nodes.is_splash_only_node from nodes $sql_additional_join WHERE 1=1 $sql_additional_where ORDER BY lower(nodes.node_id)";
     	    $node_rows = null;
     	    $db->execSql($sql, $node_rows, false);
 
