@@ -1,3 +1,6 @@
+2007-01-19 Benoit Grégoire  <bock@step.polymtl.ca>
+	* rev [1182] are repository fix commits.  If anyone have problem with their lib directory when upgrading, contact me.
+
 2007-02-24 Max Horvath <max.horvath@freenet.de>
 	* Fix ticket #300: SYSTEM_PATH not being respected in config.php.
 
