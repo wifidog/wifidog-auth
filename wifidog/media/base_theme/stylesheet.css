@@ -632,13 +632,14 @@ td.admin_element_tools, th.admin_element_tools {
 	}
 .fpr_title_str  { 
 	display: inline;
+	font-size: 1.3em;
+	color: #000000;
 	} 
 .fpr_item_title .fpr_title_str  {
-	 font-weight: bold;
 	 }          
 .fpr_list {
 	padding: 0em 0em 0em 0em;
-	margin: 0em 0em 0em 1em;
+	margin: 0em 0em 0em 0em;
 	}
 .fpr_item { 
 	list-style-type: none;
@@ -650,6 +651,8 @@ fpr_empty_feeds {
 	display: inline
 	}
 .fpr_item_link {
+	/*font-size: 1.0em;*/
+	color: #003399;
 	}
 .fpr_expand_switch { 
 	text-decoration: none;
@@ -658,8 +661,8 @@ fpr_empty_feeds {
 	padding: 0.5em;
 	visibility: hidden;
 	position: absolute;
-	left: 4em;
-	top: 1.5em;
+	left: 0em;
+	top: 0em;
 	width: 100%;
 	z-index: 100;
 	opacity: 0.90; filter: alpha(opacity=90);
@@ -671,13 +674,15 @@ fpr_empty_feeds {
 	border: 1px solid #C2FFC2;
 	}
 .fpr_popup_inner_div_expanded {
-	margin:  0em 0em 0em 0.5em;
+	margin:  0em 0em 0.5em 0.5em;
 	padding: 0.5em;
-	border-top: 1px solid #FFFFFF;
+	/* Color of background around the text: #E9F6FF */
+	border-top: 1px solid #F4FAFF;
 	border-right: 1px solid #B4DFFF;
 	border-bottom: 1px solid #B4DFFF;
-	border-left: 1px solid #FFFFFF;
+	border-left: 1px solid #F4FAFF;
 	color: #000000;
+	background-color: #FFFFFF;
 	}
 .fpr_popup_outer_div {
 	position: relative;
@@ -689,6 +694,9 @@ fpr_empty_feeds {
 	display: block;
 	}
 .fpr_text P {
+	}
+.fpr_text img {
+	float:right;
 	}
 .fpr_enclosure {
 	max-width: 320px;

@@ -1,3 +1,7 @@
+2007-03-03 Benoit Grégoire  <bock@step.polymtl.ca>
+	* CSS tweaks for RSS feeds.
+	* Fix detection of HTML Safe.
+	
 2007-02-24 Damien Raude-Morvan <drazzib@drazzib.com>
 	* Fix main SQL request in Node::getSelectNodeUI() to use
 	  table alias in ORDER BY and SELECT. This disambiguation

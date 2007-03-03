@@ -100,7 +100,7 @@ class HtmlSafe
     public function __construct()
     {
         // Check if PEAR::HTML_Safe is available
-        if (Dependencies::check("HtmlSafe")) {
+        if (Dependencies::check("HTML_Safe")) {
             // Load PEAR::HTML_Safe
             require_once('HTML/Safe.php');
 
