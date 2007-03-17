@@ -447,6 +447,10 @@ class ProfileTemplate implements GenericObject {
      */
 	public function getAdminUI()
 	{
+	    $db = AbstractDb::getObject();
+	    $sql = "SELECT COUNT(*) as num_used_profiles FROM profile_templates JOIN profiles USING (profile_template_id) WHERE profile_template_id = '" . $this->getId() . "'";
+	    $db->execSqlUniqueRes($sql, $num_used_profiles, false);
+	     
 	    // Init values
 		$_html = '';
 
@@ -495,8 +499,10 @@ class ProfileTemplate implements GenericObject {
             $_html .= "<li class='admin_element_item_container'>\n";
             $_html .= $field->getAdminUI(null, sprintf(_("%s %d"), get_class($field), $field->getDisplayOrder()));
             $_html .= "<div class='admin_element_tools'>\n";
+            $sql = "SELECT COUNT(*) as num_used_fields FROM profile_template_fields JOIN profile_fields USING (profile_template_field_id) WHERE profile_template_field_id = '" . $field->getId() . "'";
+            $db->execSqlUniqueRes($sql, $num_used_fields_row, false);
             $name = "profile_template_" . $this->id . "_field_" . $field->GetId() . "_erase";
-            $_html .= "<input type='submit' class='submit' name='$name' value='" . sprintf(_("Delete %s %d"), get_class($field), $field->getDisplayOrder()) . "'>";
+            $_html .= "<input type='submit' class='submit' name='$name' value='" . sprintf(_("Delete %s %d, used in %d/%d profiles"), get_class($field), $field->getDisplayOrder(), $num_used_fields_row['num_used_fields'], $num_used_profiles['num_used_profiles']) . "'>";
             $_html .= "</div>\n";
             $_html .= "</li>\n";
         }

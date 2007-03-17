@@ -401,9 +401,6 @@ class ProfileTemplateField implements GenericObject {
      * @return string HTML code for the administration interface
      */
     public function getAdminUI($subclass_admin_interface = null, $title = null) {
-        
-        $db = AbstractDb::getObject();
-
         // Init values
         $html = '';
         $html .= "<li class='admin_element_item_container'>\n";
@@ -516,7 +513,6 @@ class ProfileTemplateField implements GenericObject {
      */
     public function processAdminUI() {
         $errmsg = "";
-        $db = AbstractDb::getObject();
 
         // display_order 
         $name = "profile_template_field_{$this->id}_display_order";

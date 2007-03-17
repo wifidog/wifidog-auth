@@ -309,12 +309,17 @@ class User implements GenericObject {
             $html .= $avatar;
              
             // Display the nickname or the username
-            $html .= "<a href='".BASE_URL_PATH."profile/?profile_user_id=".$this->getId()."' title='".htmlentities(_("View this user's profile."), ENT_QUOTES)."' class='user_nickname'>\n";
+            $profiles=$this->getAllProfiles();
+            if($profiles){
+                $html .= "<a href='".BASE_URL_PATH."profile/?profile_user_id=".$this->getId()."' title='".htmlentities(_("View this user's profile."), ENT_QUOTES)."' class='user_nickname'>\n";
+            }
             if(empty($nickname))
             $html .= $this->getUserName();
             else
             $html .= $nickname;
-            $html .= "</a>\n";
+            if($profiles){
+                $html .= "</a>\n";
+            }
 
         }
         return $html;
@@ -796,12 +801,15 @@ class User implements GenericObject {
                 $finalHtml .= '<input type="submit" class="submit" name="' . $name . '" value="' . $value . '">';
                 $finalHtml .= "</div>";
             }
-            else {
-                $name = "user_" . $this->getId() . "_add_profile";
-                $value = _("Create my public profile");
-                $finalHtml .= "<div class='admin_element_tools'>";
-                $finalHtml .= '<input type="submit" class="submit" name="' . $name . '" value="' . $value . '">';
-                $finalHtml .= "</div>";
+            else {                    // Get the list of profile templates for the users' network
+                $profile_templates = ProfileTemplate::getAllProfileTemplates($this->getNetwork());
+                if(!empty($profile_templates)) {
+                    $name = "user_" . $this->getId() . "_add_profile";
+                    $value = _("Create my public profile");
+                    $finalHtml .= "<div class='admin_element_tools'>";
+                    $finalHtml .= '<input type="submit" class="submit" name="' . $name . '" value="' . $value . '">';
+                    $finalHtml .= "</div>";
+                }
             }
         }
 
@@ -850,18 +858,18 @@ class User implements GenericObject {
                     }
                 }
             }
-                else {
-                    $name = "user_" . $this->getId() . "_add_profile";
-                    if(!empty($_REQUEST[$name])) {
-                        // Get the list of profile templates for the users' network
-                        $profile_templates = ProfileTemplate::getAllProfileTemplates($this->getNetwork());
-                        if(!empty($profile_templates)) {
-                            // Create a blank profile and link it to the user
-                            $current_profile = Profile::createNewObject(null, $profile_templates[0]);
-                            $this->addProfile($current_profile);
-                        }
+            else {
+                $name = "user_" . $this->getId() . "_add_profile";
+                if(!empty($_REQUEST[$name])) {
+                    // Get the list of profile templates for the users' network
+                    $profile_templates = ProfileTemplate::getAllProfileTemplates($this->getNetwork());
+                    if(!empty($profile_templates)) {
+                        // Create a blank profile and link it to the user
+                        $current_profile = Profile::createNewObject(null, $profile_templates[0]);
+                        $this->addProfile($current_profile);
                     }
-                
+                }
+
             }
 
         }

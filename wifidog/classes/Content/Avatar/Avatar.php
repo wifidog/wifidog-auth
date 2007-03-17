@@ -54,6 +54,7 @@ class Avatar extends SimplePicture
     protected function __construct($content_id) {
         parent :: __construct($content_id);
         $this -> configEnableEditWidthHeight(false);
+        $this -> configEnableHyperlink(false);
     }
 
     public static function getDefaultUserUI() {

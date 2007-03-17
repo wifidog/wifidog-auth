@@ -61,6 +61,9 @@ require_once ('classes/Content/File/File.php');
  * @copyright  2005-2006 Max Horváth, Horvath Web Consulting
  */
 class Picture extends File {
+    /** Can a hyperlink be added by the user? */
+    private $configEnableHyperlink = true;
+    /**  Is the Width and height editable by the user? */
     private $configEnableEditWidthHeight = true;
     /** The maximum width an image can take in the page    */
     private $maxDisplayWidth = null;
@@ -114,17 +117,25 @@ class Picture extends File {
     public function configEnableEditWidthHeight($enabled = true) {
         return $this->configEnableEditWidthHeight = $enabled;
     }
+
     /**
-      * Set the maximum width an image can take in the page
-      * @param $width A CSS-acceptable width specification
-      */
+     * Can a hyperlink be added by the user?
+     * @param $enabled Default is true
+     */
+    public function configEnableHyperlink($enabled = true) {
+        return $this->configEnableHyperlink = $enabled;
+    }
+    /**
+     * Set the maximum width an image can take in the page
+     * @param $width A CSS-acceptable width specification
+     */
     public function setMaxDisplayWidth($width) {
         $this->maxDisplayWidth = $width;
     }
     /**
-      * Set the maximum height an image can take in the page
-      * @param $height A CSS-acceptable width specification
-      */
+     * Set the maximum height an image can take in the page
+     * @param $height A CSS-acceptable width specification
+     */
     public function setMaxDisplayHeight($height) {
         $this->maxDisplayHeight = $height;
     }
@@ -133,7 +144,7 @@ class Picture extends File {
      * Gets the width of an image
      *
      * @return mixed (int or null) Width of image
-    
+
      */
     private function getWidth() {
         return $this->pictures_row['width'];
@@ -145,7 +156,7 @@ class Picture extends File {
      * @param int $width Width to be set
      *
      * @return bool True if width was a valid value and could be set
-    
+
      */
     private function setWidth($width) {
         // Init values
@@ -167,7 +178,7 @@ class Picture extends File {
      * Gets the height of an image
      *
      * @return mixed (int or null) Height of image
-    
+
      */
     private function getHeight() {
         return $this->pictures_row['height'];
@@ -179,7 +190,7 @@ class Picture extends File {
      * @param int $height Height to be set
      *
      * @return bool True if height was a valid value and could be set
-    
+
      */
     private function setHeight($height) {
         // Init values
@@ -212,7 +223,7 @@ class Picture extends File {
      * @param string $url
      *
      * @return void
-    
+
      */
     private function setHyperlinkUrl($url) {
         if ($this->pictures_row['hyperlink_url'] != $url) {
@@ -246,13 +257,14 @@ class Picture extends File {
         $hyperlink_url = htmlspecialchars($this->getHyperlinkUrl(), ENT_QUOTES);
 
         $html .= "<ul class='admin_element_list'>\n";
-
-        $html .= "<li class='admin_element_item_container'>\n";
-        $html .= "<div class='admin_element_data'>\n";
-        $html .= "<div class='admin_element_label'>" . _("Hyperlink URL (leave empty if you don't need it)") . " : </div>\n";
-        $html .= "<input type='text' name='pictures_{$this->getId()}_hyperlink_url' value='{$hyperlink_url}'>";
-        $html .= "</div>\n";
-        $html .= "</li>\n";
+        if ($this->configEnableHyperlink){
+            $html .= "<li class='admin_element_item_container'>\n";
+            $html .= "<div class='admin_element_data'>\n";
+            $html .= "<div class='admin_element_label'>" . _("Hyperlink URL (leave empty if you don't need it)") . " : </div>\n";
+            $html .= "<input type='text' name='pictures_{$this->getId()}_hyperlink_url' value='{$hyperlink_url}'>";
+            $html .= "</div>\n";
+            $html .= "</li>\n";
+        }
         if ($this->configEnableEditWidthHeight) {
             $html .= "<li class='admin_element_item_container'>\n";
             $html .= "<div class='admin_element_data'>\n";
@@ -270,9 +282,7 @@ class Picture extends File {
         }
         // Show File admin UI + display the picture
         $html .= "<li class='admin_element_item_container'>\n";
-        $html .= "<div class='admin_element_data'>\n";
         $html .= $this->getUserUI();
-        $html .= "</div>\n";
         $html .= "</li>\n";
         $html .= "</ul>\n";
 
@@ -290,7 +300,9 @@ class Picture extends File {
         if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
             parent :: processAdminUI();
 
-            $this->setHyperlinkUrl($_REQUEST["pictures_{$this->getId()}_hyperlink_url"]);
+            if ($this->configEnableHyperlink){
+                $this->setHyperlinkUrl($_REQUEST["pictures_{$this->getId()}_hyperlink_url"]);
+            }
             if ($this->configEnableEditWidthHeight) {
                 $this->setWidth(intval($_REQUEST["pictures_{$this->getId()}_width"]));
                 $this->setHeight(intval($_REQUEST["pictures_{$this->getId()}_height"]));
@@ -339,9 +351,9 @@ class Picture extends File {
 
         // Wrap around a hyperlink tag if a URL exists.
         if (!empty ($hyperlink_url))
-            $html .= "<a href=\"" . htmlspecialchars($hyperlink_url, ENT_QUOTES) . "\"><img src='" . htmlspecialchars($this->getFileUrl()) . "' $width $height alt='" . $this->getFileName() . "' $inlineCss></a>";
+        $html .= "<a href=\"" . htmlspecialchars($hyperlink_url, ENT_QUOTES) . "\"><img src='" . htmlspecialchars($this->getFileUrl()) . "' $width $height alt='" . $this->getFileName() . "' $inlineCss></a>";
         else
-            $html .= "<img src='" . htmlspecialchars($this->getFileUrl()) . "' $width $height alt='" . $this->getFileName() . "' $inlineCss>";
+        $html .= "<img src='" . htmlspecialchars($this->getFileUrl()) . "' $width $height alt='" . $this->getFileName() . "' $inlineCss>";
 
         /* Handle hyperlink clicktrough logging */
         $html = $this->replaceHyperLinks($html);
@@ -358,7 +370,7 @@ class Picture extends File {
      * the constructor from the wrong scope
      *
      * @return void
-    
+
      */
     private function refresh() {
         $this->__construct($this->id);
