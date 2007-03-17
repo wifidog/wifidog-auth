@@ -477,10 +477,10 @@ class ContentTypeFilter implements GenericObject {
      * @return true or false.  Will also silently return false if the class does not exist */
     public function isAcceptableContentClass($classname) {
         $retval = true;
-                /*pretty_print_r($this->criteria_array);
-                $reflector = new ReflectionClass($classname);
-                $methods = $reflector->getMethods();
-                pretty_print_r($methods);*/
+                //pretty_print_r($this->getRules());
+                //$reflector = new ReflectionClass($classname);
+                //$methods = $reflector->getMethods();
+                //pretty_print_r($methods);
         if(is_array($this->getRules()))
         {
             foreach ($this->getRules() as $criteria) {
@@ -529,7 +529,12 @@ class ContentTypeFilter implements GenericObject {
 	    $retval = null;
 	    $current=null;
 	    $numParen=0;
-	    foreach ($chunks as $index=>$chunk) {
+	    foreach ($chunks as $index=>$chunk) { 
+	        //Strip the bloody array indexes!
+	        preg_match ( "/(?:\s*\d*\s=>\s*)?(.*)/", $chunk , $matches );
+	        //pretty_print_r($matches);
+	        $chunk = $matches[1];
+	        
 	        switch ($chunk) {
 	            case 'array': ;
 	            	break;
@@ -550,7 +555,10 @@ class ContentTypeFilter implements GenericObject {
 	                $current = $current['parent'];
 	                break;
 	            default:
+	                $chunk = trim($chunk,"\"'");
+	                if(!empty($chunk)) {
 	                $current['array'][] = trim($chunk,"\"'");
+	                }
 	        }
 	        
 	        if($debug && $chunk!='array' && $chunk!=','){

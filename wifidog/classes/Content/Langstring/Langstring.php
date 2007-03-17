@@ -70,25 +70,25 @@ class Langstring extends Content {
     {
         parent::__construct($content_id);
         $db = AbstractDb::getObject();
-	    /**
-    	 * HTML allowed to be used
-     	*/
-   		$this->allowed_html_tags = "<a><br><b><h1><h2><h3><h4><i><img><li><ol><p><strong><u><ul><li>";
+        /**
+         * HTML allowed to be used
+         */
+        $this->allowed_html_tags = "<a><br><b><h1><h2><h3><h4><i><img><li><ol><p><strong><u><ul><li>";
         $this->mBd = &$db;
     }
 
     /** Indicate that the content is suitable to store plain text.
      * @return true or false */
     public function isTextualContent() {
-    	return true;
+        return true;
     }
-    
+
     /**
-     * Returns the first available string in the user's language, faling that in the 
-     * same major language (first part of the locale), failing that the first available 
+     * Returns the first available string in the user's language, faling that in the
+     * same major language (first part of the locale), failing that the first available
      * string
-     * @param bool verbose : Should the function verbose when a string is empty ? 
-     * @return UTF-8 string 
+     * @param bool verbose : Should the function verbose when a string is empty ?
+     * @return UTF-8 string
      */
     public function getString($verbose = true) {
         // Init values
@@ -127,10 +127,10 @@ class Langstring extends Content {
             $this->mBd->execSqlUniqueRes($sql, $row, false);
 
             if ($row == null) {
-            	if($verbose == true)
-                	$retval = sprintf(_("(Empty %s)"), get_class($this));
+                if($verbose == true)
+                $retval = sprintf(_("(Empty %s)"), get_class($this));
                 else
-                	$retval = "";
+                $retval = "";
             } else {
                 $retval = $row['value'];
 
@@ -189,6 +189,78 @@ class Langstring extends Content {
             $retval = true;
         }
 
+        return $retval;
+    }
+
+    /**
+     * This method contains the interface to add an additional element to a
+     * content object.  (For example, a new string in a Langstring)
+     * It is called when getNewContentUI has only a single possible object type.
+     * It may also be called by the object getAdminUI to avoid code duplication.
+     *
+     * @param string $contentId      The id of the (possibly not yet created) content object.
+     *
+     * @param string $userData=null Array of contextual data optionally sent by displayAdminUI(),
+     *  and only understood by the class (or subclasses) where getNewUI() is defined.
+     *  The function must still function if none of it is present.
+     *
+     * @return HTML markup or false.  False means that this object does not support this interface.
+     */
+    public static function getNewUI($contentId, $userData=null) {
+        $html = '';
+        !empty($userData['excludeArray'])?$excludeArray=$userData['excludeArray']:$excludeArray=null;
+        !empty($userData['typeInterface'])?$typeInterface=$userData['typeInterface']:$typeInterface=null;
+        $html .= "<div class='admin_element_data'>\n";
+        $liste_languages = new LocaleList();
+        $locale = LocaleList :: GetDefault();
+        $html .= _("Language") . ": " . $liste_languages->GenererFormSelect($locale, "langstrings_" . $contentId . "_substring_new_language", null, TRUE, $excludeArray);
+        $new_substring_name = "langstrings_" . $contentId . "_substring_new_string";
+
+        if ($typeInterface == 'LARGE') {
+            $html .= "<textarea name='$new_substring_name' class='textarea' cols='60' rows='3'></textarea>\n";
+        } else {
+            $html .= "<input type='text' name='$new_substring_name' class='input_text' size='44' value=''>\n";
+        }
+
+        $html .= "</div>\n";
+
+        $html .= "<div class='admin_element_tools'>\n";
+        $new_substring_submit_name = "langstrings_" . $contentId . "_add_new_entry";
+        $html .= "<input type='submit' class='submit' name='$new_substring_submit_name' value='" . _("Add new string") . "'>";
+        $html .= "</div>\n";
+        return $html;
+    }
+
+    /**
+     *
+     *
+     * @param string $contentId  The id of the (possibly not yet created) content object.
+     *
+     * @param string $checkOnly  If true, only check if there is data to be processed.
+     * 	Will be used to decide if an object is to be created.  If there is
+     * processNewUI will typically be called again with $chechOnly=false
+     *
+     * @return true if there was data to be processed, false otherwise
+
+     */
+    public static function processNewUI($contentId, $checkOnly=false) {
+        $retval = false;
+        //Ajouter nouvelles chaîne(s) si champ non vide ou si l'usager a appuyé sur le bouton ajouter
+        $new_substring_name = "langstrings_" . $contentId . "_substring_new_string";
+        $new_substring_submit_name = "langstrings_" . $contentId . "_add_new_entry";
+
+        if ((isset ($_REQUEST[$new_substring_submit_name]) && $_REQUEST[$new_substring_submit_name] == true) || !empty ($_REQUEST[$new_substring_name])) {
+            $retval = true;
+            $generateur_form_select = new FormSelectGenerator();
+            $language = $generateur_form_select->getResult("langstrings_" . $contentId . "_substring_new_language", null);
+            if (empty ($language)) {
+                $language = null;
+            }
+            if(!$checkOnly) {
+                $langstring = self::getObject($contentId);
+                $langstring->addString($_REQUEST[$new_substring_name], $language, true);
+            }
+        }
         return $retval;
     }
 
@@ -322,25 +394,10 @@ class Langstring extends Content {
         //        $html .= "</div>\n";
 
         //Nouvelles chaîne
-        $locale = LocaleList :: GetDefault();
         $html .= "<li class='admin_element_item_container'>\n";
-        $html .= "<div class='admin_element_data'>\n";
-
-        $html .= _("Language") . ": " . $liste_languages->GenererFormSelect($locale, "langstrings_" . $this->id . "_substring_new_language", null, TRUE, $exclude_array);
-        $new_substring_name = "langstrings_" . $this->id . "_substring_new_string";
-
-        if ($type_interface == 'LARGE') {
-            $html .= "<textarea name='$new_substring_name' class='textarea' cols='60' rows='3'></textarea>\n";
-        } else {
-            $html .= "<input type='text' name='$new_substring_name' class='input_text' size='44' value=''>\n";
-        }
-
-        $html .= "</div>\n";
-
-        $html .= "<div class='admin_element_tools'>\n";
-        $new_substring_submit_name = "langstrings_" . $this->id . "_add_new_entry";
-        $html .= "<input type='submit' class='submit' name='$new_substring_submit_name' value='" . _("Add new string") . "'>";
-        $html .= "</div>\n";
+        $userData['excludeArray'] = $exclude_array;
+        $userData['typeInterface'] = $type_interface;
+        $html .= self::getNewUI($this->id, $userData);
         $html .= "</li>\n";
         $html .= "</ul>\n";
 
@@ -395,8 +452,8 @@ class Langstring extends Content {
                         if ($_HtmlSafe->isHtmlSafeEnabled) {
                             // Add "embed" and "object" to the default set of dangerous tags
                             $_HtmlSafe->setDeleteTags(array (
-                                "embed",
-                                "object"
+                            "embed",
+                            "object"
                             ), true);
 
                             // Strip HTML
@@ -421,19 +478,10 @@ class Langstring extends Content {
                 }
             }
 
-            //Ajouter nouvelles chaîne(s) si champ non vide ou si l'usager a appuyé sur le bouton ajouter
-            $new_substring_name = "langstrings_" . $this->id . "_substring_new_string";
-            $new_substring_submit_name = "langstrings_" . $this->id . "_add_new_entry";
+            //Nouvelles chaîne(s)
+            self::processNewUI($this->id, false);
 
-            if ((isset ($_REQUEST[$new_substring_submit_name]) && $_REQUEST[$new_substring_submit_name] == true) || !empty ($_REQUEST[$new_substring_name])) {
-                $language = $generateur_form_select->getResult("langstrings_" . $this->id . "_substring_new_language", null);
 
-                if (empty ($language)) {
-                    $language = null;
-                }
-
-                $this->addString($_REQUEST[$new_substring_name], $language, true);
-            }
         }
     }
 
@@ -463,7 +511,7 @@ class Langstring extends Content {
      * the constructor from the wrong scope
      *
      * @return void
-    
+
      */
     private function refresh() {
         $this->__construct($this->id);

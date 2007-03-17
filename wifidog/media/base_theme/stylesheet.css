@@ -830,14 +830,24 @@ table.content_admin td {
     border: 1px solid grey;
 }
 
-.user_avatar {
+.Avatar {
+	display: inline;
+}
+.Avatar div{
+	display: inline;
+}
+
+.Avatar img{
 	max-width: 40px;
-	height: 40px;
+	max-height: 40px;
 	vertical-align: middle;
 	margin: 0 3px 0 0;
 	padding: 0 0 0 0;
 }
 
+.Profile .Avatar img{
+	float: left;
+}
 .user_nickname {
 	font-size: 1.25em;
 	font-weight: bold;
@@ -846,12 +856,44 @@ table.content_admin td {
 .user_ui_profile_field {
 }
 
-.user_ui_profile_field_label {
-	font-size: 1.25em;}
-
-.user_ui_profile_field_content {
+.profile_field_label {
+	font-size: 1.25em;
+	font-weight: bold;
+	display:inline;
+	margin: 0em;
+	padding: 0em;
+	}
+.foaf\:nick .profile_field_label{
+	display: none;
 }
-
+.foaf\:name .profile_field_label{
+	display: none;
+}
+.foaf\:img .profile_field_label{
+	display: none;
+}
+.profile_field_label div{
+	margin: 0em;
+	padding: 0em;
+	}
+	
+.profile_field_label div{
+	display: inline;
+	}
+.profile_field_content {
+	display: inline;
+}
+.foaf\:nick .profile_field_content{
+	font-size: 1.25em;
+	font-weight: bold;
+}
+.foaf\:name .profile_field_content{
+	font-size: 1.25em;
+	font-weight: bold;
+}
+.profile_field_content div{
+		display:inline;
+}
 /********** End Content type section **********/
 
 

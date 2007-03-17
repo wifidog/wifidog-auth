@@ -36,8 +36,8 @@
  * Field of a profile
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
- * @author     François Proulx <francois.proulx@gmail.com>
- * @copyright  2007 François Proulx
+ * @author     François Proulx <francois.proulx@gmail.com>, Benoit Grégoire
+ * @copyright  2007 François Proulx, 2007 Technologies Coeus inc.
  * @link       http://www.wifidog.org/
  */
 
@@ -48,12 +48,11 @@ require_once ('classes/ProfileTemplate.php');
 require_once ('classes/Content.php');
 
 class ProfileField implements GenericObject {
-	private static $instanceArray = array();
-	
+    private static $instanceArray = array();
+
     private $profile_field_row;
     private $profile_template_field = null;
-    private $content_field = null;
-    
+
     private $id = null;
 
     /**
@@ -72,30 +71,81 @@ class ProfileField implements GenericObject {
         $sql = "SELECT * FROM profile_fields WHERE profile_field_id = '{$profile_field_id}'";
         $db->execSqlUniqueRes($sql, $row, false);
 
-		$this->id = $row['profile_field_id'];
+        $this->id = $row['profile_field_id'];
         $this->profile_field_row = $row;
     }
-    
+
     public static function getObject($id)
     {
-    	if(!isset(self::$instanceArray[$id]))
+        if(!isset(self::$instanceArray[$id]))
         {
-        	self::$instanceArray[$id] = new self($id);
+            self::$instanceArray[$id] = new self($id);
         }
         return self::$instanceArray[$id];
     }
-    
+
     /**
      * Retreives the Id of the object
      *
      * @return string The Id
      */
-	public function getId()
-	{
-		return $this->id;
-	}
-	
-	
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * This method contains the interface to add an additional element to a
+     * content object.  (For example, a new string in a Langstring)
+     * It is called when getNewContentUI has only a single possible object type.
+     * It may also be called by the object getAdminUI to avoid code duplication.
+     *
+     * @param string $contentId      The id of the (possibly not yet created) content object.
+     *
+     * @param string $userData=null Understood values are:
+     * contentTypeFilter
+     *
+     *
+     * @return HTML markup or false.  False means that this object does not support this interface.
+     */
+    public static function getNewUI($contentId, $userData=null) {
+        $html = '';
+        $futureContentId = get_guid();
+        $name = "profile_field_{$contentId}_content_future_id";
+        $html .= '<input type="hidden" name="' . $name . '" value="' . $futureContentId . '">';
+        //echo "Profile::getNewUI: userData";pretty_print_r($userData);
+        $html .= Content::getNewUI($futureContentId, $userData);
+        return $html;
+    }
+
+    /**
+     *
+     *
+     * @param string $contentId  The id of the (possibly not yet created) content object.
+     *
+     * @param string $checkOnly  If true, only check if there is data to be processed.
+     * 	Will be used to decide if an object is to be created.  If there is
+     * processNewUI will typically be called again with $checkOnly=false
+     *
+     * @return true if there was data to be processed, false otherwise
+
+     */
+    public static function processNewUI($contentId, $checkOnly=false) {
+        $name = "profile_field_{$contentId}_content_future_id";
+        $futureContentId = $_REQUEST[$name];
+
+        $contentNewUIRetval = Content::processNewUI($futureContentId, true);
+        if($contentNewUIRetval && $checkOnly==false) {
+            $object = Content :: createNewObject('Content', $futureContentId);//The true content type will be set by processNewUI()
+            //If there was data to processs, process it for real
+            Content::processNewUI($futureContentId, false);
+            $field = self::getObject($contentId);
+            $field->setContentField(Content::getObject($futureContentId));
+        }
+        return $contentNewUIRetval;
+    }
+
+
     /**
      * Retrieves the profile field's modification date
      *
@@ -117,13 +167,13 @@ class ProfileField implements GenericObject {
 
         // Init values
         $_retVal = true;
-        
+
         $_retVal = $db->execSqlUpdate("UPDATE profile_fields SET last_modified = NOW() WHERE profile_field = '{$this->getId()}'", false);
         $this->refresh();
-        
+
         return $_retVal;
     }
-    
+
     /**
      * Retrieves the associated profile template field
      *
@@ -131,13 +181,13 @@ class ProfileField implements GenericObject {
      *
      * @access public
      */
-    public function getProfileTemplateField() 
+    public function getProfileTemplateField()
     {
-    	if($this->profile_template_field == null && $this->profile_field_row['profile_template_field_id'] != null)
-    		$this->profile_template_field = ProfileTemplateField :: getObject($this->profile_field_row['profile_template_field_id']);
-    	return $this->profile_template_field;
+        $retval = null;
+        $retval = ProfileTemplateField :: getObject($this->profile_field_row['profile_template_field_id']);
+        return $retval;
     }
-    
+
     /**
      * Retrieves the associated content field
      *
@@ -145,13 +195,14 @@ class ProfileField implements GenericObject {
      *
      * @access public
      */
-    public function getContentField() 
+    public function getContentField()
     {
-    	if($this->content_field == null && $this->profile_field_row['content_id'] != null)
-    		$this->content_field = Content :: getObject($this->profile_field_row['content_id']);
-    	return $this->content_field;
+        $retval = null;
+        if($this->profile_field_row['content_id'] != null)
+        $retval = Content :: getObject($this->profile_field_row['content_id']);
+        return $retval;
     }
-    
+
     /**
      * Set the content field
      * @param a content object to associate with the field
@@ -162,58 +213,79 @@ class ProfileField implements GenericObject {
 
         // Init values
         $_retVal = true;
-        
+
         if($content == null)
-        	$content_id = "NULL";
+        $content_id = "NULL";
         else
-        	$content_id = "'".$db->escapeString($content->getId())."'";
-        	
+        $content_id = "'".$db->escapeString($content->getId())."'";
+         
         $_retVal = $db->execSqlUpdate("UPDATE profile_fields SET content_id = $content_id WHERE profile_field_id = '{$this->getId()}'", false);
         $this->refresh();
-        
+
         return $_retVal;
     }
-    
-    public static function createNewObject() {}
+
+    /**
+     * Create a new ProfileField in the database
+     *
+     * @param string $profile MANDATORY The profile this field belongs to
+     * @param string $templateField MANDATORY The template this field is based on
+     * @param string $id Optionnal The id to be given to the new Object. If
+     *                             null, a new id will be assigned
+     *
+     * @return object The newly created object, or null if there was an
+     *                error (an exception is also trown)
+
+     */
+    public static function createNewObject(Profile $profile = null, ProfileTemplateField $templateField = null, $id = null) {
+        $db = AbstractDb :: getObject();
+        $profileId = $db->escapeString($profile->getId());
+        $templateFieldId = $db->escapeString($templateField->getId());
+        if (empty ($id)) {
+            $fieldId = get_guid();
+        } else {
+            $fieldId = $db->escapeString($id);
+        }
+        $sql = "INSERT INTO profile_fields (profile_id, profile_field_id, profile_template_field_id) VALUES ('$profileId', '$fieldId', '$templateFieldId');\n";
+        if (!$db->execSqlUpdate($sql, false)) {
+            throw new Exception(_('Unable to insert the new profile fields in the database!'));
+        }
+        return self::getObject($fieldId);
+    }
     public static function getCreateNewObjectUI() {}
     public static function processCreateNewObjectUI() {}
-    
+
     /**
      * Shows the administration interface for ProfileField
      * @return string HTML code for the administration interface
      */
     public function getAdminUI() {
-    	$html = "";
-    	
-    	if($this->getProfileTemplateField() != null) {
-	    	$admin_label = $this->getProfileTemplateField()->getAdminLabelContent();
-	    	if($admin_label != null) {
-	    		$html .= "<div class='admin_element_label'>\n";
-	    		$html .= $admin_label->getUserUI();
-	    		$html .= "</div>\n";
-	    	}
-	    	
-	    	if($this->getProfileTemplateField()->getContentTypeFilter() != null) {
-	    		if($this->getContentField() == null) {
-		    		$html .= Content :: getNewContentUI("profile_field_{$this->id}_new_content", $this->getProfileTemplateField()->getContentTypeFilter());
-	    		}
-	    		else {
-	    			$content = $this->getContentField();
-	    			$html .= "<div class='admin_element_data'>\n";
-	    			$html .= $content->getAdminUI();
-	    			$html .= "</div>\n";
-		            $html .= "<div class='admin_element_tools'>\n";
-		            $name = "profile_field_" . $this->id . "_content_" . $content->getId() . "_erase";
-		            $html .= "<input type='submit' class='submit' name='$name' value='" . sprintf(_("Delete %s"), get_class($content)) . "'>";
-		            $html .= "</div>\n";
-	    		}
-	    	}
-	    	else
-	    		throw new Exception("Could not retrieve the associated content type filter.");
-    	}
-    	else
-    		throw new Exception("Could not retrieve the associated profile template.");
-    	
+        $html = "";
+        $title = null;
+        $admin_label = $this->getProfileTemplateField()->getAdminLabelContent();
+        if($admin_label != null) {
+            $title =  $admin_label->__toString();
+        }
+
+        if($this->getProfileTemplateField()->getContentTypeFilter() != null) {
+            $content = $this->getContentField();
+            if($content == null) {
+                $html .= Content :: getNewContentUI("profile_field_{$this->id}_new_content", $this->getProfileTemplateField()->getContentTypeFilter());
+            }
+            else {
+                $html .= "<div class='admin_element_data'>\n";
+                $html .= $content->getAdminUI(null, $title);
+                $html .= "</div>\n";
+                $html .= "<div class='admin_element_tools'>\n";
+                $name = "profile_field_" . $this->id . "_erase";
+                $html .= "<input type='submit' class='submit' name='$name' value='" . sprintf(_("Delete %s"), get_class($content)) . "'>";
+                $html .= "</div>\n";
+            }
+        }
+        else
+        throw new Exception("Could not retrieve the associated content type filter.");
+
+         
         return $html;
     }
 
@@ -223,24 +295,23 @@ class ProfileField implements GenericObject {
      * @return void
      */
     public function processAdminUI() {
-    	if ($this->getContentField() == null) {
-			$new_content = Content :: processNewContentUI("profile_field_{$this->id}_new_content");
-			if ($new_content != null) {
-				$this->setContentField($new_content);
-			}
-		} else {
-			$content = $this->getContentField();
-			$name = "profile_field_" . $this->id . "_content_" . $content->getId() . "_erase";
-			if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true) {
-				$this->setContentField(null);
-				$errmsg = null;
-				$content->delete($errmsg);
-			} else {
-				$content->processAdminUI();
-			}
-		}
-		
-		$this->refresh();
+        //echo "ProfileField::processAdminUI()<br/>\n";
+        $content = $this->getContentField();
+        if ($content == null) {
+            $new_content = Content :: processNewContentUI("profile_field_{$this->id}_new_content");
+            if ($new_content != null) {
+                $this->setContentField($new_content);
+            }
+        } else {
+            $content->processAdminUI();
+            $name = "profile_field_" . $this->id . "_erase";
+            if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true) {
+                $errmsg = null;
+                $content->delete($errmsg);
+            }
+        }
+
+        $this->refresh();
     }
 
     /**
@@ -250,24 +321,21 @@ class ProfileField implements GenericObject {
      */
     public function getUserUI() {
         // Init values
+        //echo "ProfileField::getUserUI()";
         $html = "";
-        $html .= "<table class='user_ui_profile_field'><tr>\n";
-        
         $content_field = $this->getContentField();
         if(!empty($content_field)) {
-        	$template_field = $this->getProfileTemplateField();
-	        if(!empty($template_field)) {
-	        	$content_label = $template_field->getDisplayLabelContent();
-	        	if(!empty($content_label))
-	        		$html .=  "<td class='user_ui_profile_field_label'>".$content_label->getUserUI()."</td>\n";
-	        }
-	        
-	        // Display the actual value from the profile field
-        	$html .=  "<td class=''>".$content_field->getUserUI()."</td>\n";
+            $template_field = $this->getProfileTemplateField();
+            $html .=  "<div class='user_ui_profile_field ".$template_field->getSemanticId()."'>\n";
+            $content_label = $template_field->getDisplayLabelContent();
+            if(!empty($content_label)){
+                $html .=  "<div class='profile_field_label'>".$content_label->getUserUI()."</div>\n";
+            }
+            // Display the actual value from the profile field
+            $html .=  "<div class='profile_field_content'>".$content_field->getUserUI()."</div>\n";
+            $html .=  "</div>\n";
         }
-        
-        $html .= "</tr></table>";
-        
+
         return $html;
     }
 
@@ -282,26 +350,26 @@ class ProfileField implements GenericObject {
      * @todo Implement proper access control
      */
     public function delete(& $errmsg) {
-    	require_once('classes/User.php');
-        
-		$db = AbstractDb::getObject();
+        require_once('classes/User.php');
 
-	    // Init values
-		$_retVal = false;
+        $db = AbstractDb::getObject();
 
-		if (!User::getCurrentUser()->isSuperAdmin()) {
-			$errmsg = _('Access denied (must have super admin access)');
-		} else {
-			$_id = $db->escapeString($this->getId());
+        // Init values
+        $_retVal = false;
 
-			if (!$db->execSqlUpdate("DELETE FROM profile_fields WHERE profile_field_id = '{$_id}'", false)) {
-				$errmsg = _('Could not delete ProfileField!');
-			} else {
-				$_retVal = true;
-			}
-		}
+        if (!User::getCurrentUser()->isSuperAdmin()) {
+            $errmsg = _('Access denied (must have super admin access)');
+        } else {
+            $_id = $db->escapeString($this->getId());
 
-		return $_retVal;
+            if (!$db->execSqlUpdate("DELETE FROM profile_fields WHERE profile_field_id = '{$_id}'", false)) {
+                $errmsg = _('Could not delete ProfileField!');
+            } else {
+                $_retVal = true;
+            }
+        }
+
+        return $_retVal;
     }
     /** Reloads the object from the database.  Should normally be called after a set operation */
     protected function refresh() {

@@ -68,7 +68,8 @@ class ContentGroup extends Content {
         'ALWAYS' => "Content always rotates",
         'NEXT_DAY' => "Content rotates once per day",
         'NEXT_LOGIN' => "Content rotates once per session",
-        'NEXT_NODE' => "Content rotates each time you change node"
+        'NEXT_NODE' => "Content rotates each time you change node",
+        'NEVER' => "Content never rotates.  Usefull when showing all elements simultaneously in a specific order."
     );
     private $ALLOW_REPEAT_MODES = array (
         'YES' => "Content can be shown more than once",
@@ -442,32 +443,34 @@ class ContentGroup extends Content {
             /*  'ALWAYS' => "Content always rotates"
              *  'NEXT_DAY' => "Content rotates once per day"
              *  'NEXT_LOGIN' => "Content rotates once per session"
-             *  'NEXT_NODE' => "Content rotates each time you change node"*/
+             *  'NEXT_NODE' => "Content rotates each time you change node"
+             *  'NEVER' => "Content never rotates" */
             $content_changes_on_mode = $this->getContentChangesOnMode();
 
             $sql_time_restrictions = " AND (valid_from_timestamp IS NULL OR valid_from_timestamp <= CURRENT_TIMESTAMP) AND (valid_until_timestamp IS NULL OR valid_until_timestamp >= CURRENT_TIMESTAMP) \n";
             /** First, find if we have content to display again because we haven't passed the rotation period */
             $redisplay_objects = array ();
-            if ($content_changes_on_mode != 'ALWAYS') {
-                $sql = "SELECT content_group_element_id FROM content_group_element \n";
-                $sql .= "JOIN content_display_log ON (content_group_element_id=content_id) \n";
-                $sql .= " WHERE content_group_id='$this->id' \n";
-                $sql .= $sql_time_restrictions;
+            $sql_redisplay = null;
+            if ($content_changes_on_mode != 'ALWAYS' && $content_changes_on_mode != 'NEVER') {
+                $sql_redisplay .= "SELECT content_group_element_id FROM content_group_element \n";
+                $sql_redisplay .= "JOIN content_display_log ON (content_group_element_id=content_id) \n";
+                $sql_redisplay .= " WHERE content_group_id='$this->id' \n";
+                $sql_redisplay .= $sql_time_restrictions;
 
                 if ($content_changes_on_mode == 'NEXT_DAY') {
-                    $sql .= "AND date_trunc('day', last_display_timestamp) = date_trunc('day', CURRENT_DATE) \n";
+                    $sql_redisplay .= "AND date_trunc('day', last_display_timestamp) = date_trunc('day', CURRENT_DATE) \n";
                 }
                 if ($content_changes_on_mode == 'NEXT_LOGIN') {
                     /**@todo Must fix, this will fail if the user never really connected from a hotspot... */
-                    $sql .= "AND last_display_timestamp > (SELECT timestamp_in FROM connections WHERE user_id='$user_id' ORDER BY timestamp_in DESC LIMIT 1) \n";
+                    $sql_redisplay .= "AND last_display_timestamp > (SELECT timestamp_in FROM connections WHERE user_id='$user_id' ORDER BY timestamp_in DESC LIMIT 1) \n";
                 }
                 if ($content_changes_on_mode == 'NEXT_NODE') {
                     /** We find the close time of the last connection from another node */
-                    $sql .= "AND last_display_timestamp > (SELECT timestamp_out FROM connections WHERE user_id='$user_id' AND node_id != '$node_id' ORDER BY timestamp_in DESC LIMIT 1) \n";
+                    $sql_redisplay .= "AND last_display_timestamp > (SELECT timestamp_out FROM connections WHERE user_id='$user_id' AND node_id != '$node_id' ORDER BY timestamp_in DESC LIMIT 1) \n";
                 }
                 /* There usually won't be more than one, but if there is, we want the most recents */
-                $sql .= " ORDER BY last_display_timestamp DESC ";
-                $db->execSql($sql, $redisplay_rows, false);
+                $sql_redisplay .= " ORDER BY last_display_timestamp DESC ";
+                $db->execSql($sql_redisplay, $redisplay_rows, false);
                 $redisplay_objects = array ();
                 if ($redisplay_rows != null) {
                     foreach ($redisplay_rows as $redisplay_row) {
@@ -502,6 +505,11 @@ class ContentGroup extends Content {
                     $sql_repeat = null;
                 }
                 $sql .= $sql_repeat;
+                if ($sql_redisplay) {
+                    //We don't want the same content twice...
+                    $sql_repeat_redisplay = " AND content_group_element_id NOT IN ($sql_redisplay) \n";
+                    $sql .= $sql_repeat_redisplay;
+                }
 
                 $content_ordering_mode = $this->getContentOrderingMode();
                 if ($content_ordering_mode == 'SEQUENTIAL') {
@@ -521,6 +529,7 @@ class ContentGroup extends Content {
                     }
                 } else {
                     $order_by = ' ';
+                    $last_order = 0;
                 }
                 $sql .= $order_by;
 
@@ -561,13 +570,13 @@ class ContentGroup extends Content {
                 $num_to_pick = $display_num_elements -count($redisplay_objects);
                 $new_objects = array_slice($new_objects, 0, $num_to_pick);
             }
-            /*
-            echo "<pre>Redisplay: ";
+            
+            /*echo "<pre>Redisplay: ";
             print_r($redisplay_objects);
             echo "New objects: ";
             print_r($new_objects);
-            echo "</pre>";
-            */
+            echo "</pre>";*/
+            
             $retval = array_merge($new_objects, $redisplay_objects);
             //echo count($retval).' returned <br>';
             $this->display_elements = $retval;

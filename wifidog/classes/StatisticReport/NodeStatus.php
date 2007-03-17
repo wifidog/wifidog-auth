@@ -172,7 +172,7 @@ class NodeStatus extends StatisticReport
                 $html .= "</tr>";
                 $html .= "<tr class='even'>";
                 $html .= "  <th>"._("Homepage")."</th>";
-                $html .= "  <td><a href='".$nodeObject->getHomePageURL()."'>".$nodeObject->getHomePageURL()."</a></td>";
+                $html .= "  <td><a href='".$nodeObject->getWebSiteURL()."'>".$nodeObject->getWebSiteURL()."</a></td>";
                 $html .= "</tr>";
                 $html .= "<tr class='odd'>";
                 $html .= "  <th>"._("Address")."</th>";

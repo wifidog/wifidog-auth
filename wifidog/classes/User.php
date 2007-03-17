@@ -80,8 +80,8 @@ class User implements GenericObject {
         echo "<h1>Use User::createUser() instead</h1>";
     }
     /** Get an interface to create a new object.
-    * @return html markup
-    */
+     * @return html markup
+     */
     public static function getCreateNewObjectUI() {
         return null;
     }
@@ -99,7 +99,7 @@ class User implements GenericObject {
      * Instantiate the current user
      *
      * @return mixed A User object, or null if there was an error
-    
+
      */
     public static function getCurrentUser() {
         require_once ('classes/Session.php');
@@ -123,7 +123,7 @@ class User implements GenericObject {
      * @param object $user User a user object
      *
      * @return bool True if everything went well setting the session
-    
+
      */
     public static function setCurrentUser(User $user) {
         try {
@@ -140,7 +140,7 @@ class User implements GenericObject {
      * Returns the server the user is connected to
      *
      * @return string Hostname of server
-    
+
      */
     public static function getCurrentServer() {
         return $_SERVER['SERVER_NAME'];
@@ -252,72 +252,70 @@ class User implements GenericObject {
 
     /** Get a user display suitable for a user list.  Will include link to the user profile. */
     function getListUI() {
-        /*    
-        $roles = array ();
+        /*
+         $roles = array ();
 
-        if ($current_node->isOwner($online_user)) {
-        $roles[] = _("owner");
-        }
+         if ($current_node->isOwner($online_user)) {
+         $roles[] = _("owner");
+         }
 
-        if ($current_node->isTechnicalOfficer($online_user)) {
-        $roles[] = _("technical officer");
-        }
+         if ($current_node->isTechnicalOfficer($online_user)) {
+         $roles[] = _("technical officer");
+         }
 
-        if ($roles) {
-        $rolenames = join($roles, ",");
-        }*/
+         if ($roles) {
+         $rolenames = join($roles, ",");
+         }*/
         $html = '';
         if ($this->isSplashOnlyUser()) {
             $html .= _("Guest");
         }
         else {
-        	$nickname = null;
-        	$avatar = null;
-        	$profile = $this->getAllProfiles();
-        	if(!empty($profile)) {
-        		// Use the first profile for now
-        		$profile = $profile[0];
-        		
-        		$nickname_fields = $profile->getFieldsBySemanticId("foaf:nick");
-        		// Try using the first nickname available
-        		if(!empty($nickname_fields)) {
-        			$nickname_content = $nickname_fields[0]->getContentField();
-        			if(!empty($nickname_content)) {
-        				// Force non-verbose output
-        				$str = $nickname_content->__toString(false);
-        				if(!empty($str))
-        					$nickname = $str;
-        			}
-        		}
-        		
-        		$avatar_fields = $profile->getFieldsBySemanticId("foaf:img");
-        		// Try using the first avatar available
-        		if(!empty($avatar_fields)) {
-        			$avatar_content = $avatar_fields[0]->getContentField();
-        			if(!empty($avatar_content)) {
-        				$avatar = $avatar_content->getUserUI();
-        			}
-        		}
-        	}
-        	
-        	
-        	
-        	// Display the avatar
-        	$html .= "<a href='".BASE_URL_PATH."profile/?profile_user_id=".$this->getId()."' title='".htmlentities(_("View this user's profile."), ENT_QUOTES)."'>\n";
-        	if(empty($avatar))
-        		$html .= Avatar::getDefaultUserUI();
-        	else
-        		$html .= $avatar;
-        	$html .= "</a>\n";
-        	
-        	// Display the nickname or the username
-        	$html .= "<a href='".BASE_URL_PATH."profile/?profile_user_id=".$this->getId()."' title='".htmlentities(_("View this user's profile."), ENT_QUOTES)."' class='user_nickname'>\n";
-        	if(empty($nickname))
-            	$html .= $this->getUserName();
+            $nickname = null;
+            $avatar = null;
+            $profile = $this->getAllProfiles();
+            if(!empty($profile)) {
+                // Use the first profile for now
+                $profile = $profile[0];
+
+                $nickname_fields = $profile->getFieldsBySemanticId("foaf:nick");
+                // Try using the first nickname available
+                if(!empty($nickname_fields)) {
+                    $nickname_content = $nickname_fields[0]->getContentField();
+                    if(!empty($nickname_content)) {
+                        // Force non-verbose output
+                        $str = $nickname_content->__toString(false);
+                        if(!empty($str))
+                        $nickname = $str;
+                    }
+                }
+
+                $avatar_fields = $profile->getFieldsBySemanticId("foaf:img");
+                // Try using the first avatar available
+                if(!empty($avatar_fields)) {
+                    $avatar_content = $avatar_fields[0]->getContentField();
+                    if(!empty($avatar_content)) {
+                        $avatar = $avatar_content->getUserUI();
+                    }
+                }
+            }
+             
+             
+             
+            // Display the avatar
+            if(empty($avatar))
+            $html .= Avatar::getDefaultUserUI();
             else
-            	$html .= $nickname;
+            $html .= $avatar;
+             
+            // Display the nickname or the username
+            $html .= "<a href='".BASE_URL_PATH."profile/?profile_user_id=".$this->getId()."' title='".htmlentities(_("View this user's profile."), ENT_QUOTES)."' class='user_nickname'>\n";
+            if(empty($nickname))
+            $html .= $this->getUserName();
+            else
+            $html .= $nickname;
             $html .= "</a>\n";
-            
+
         }
         return $html;
     }
@@ -327,10 +325,10 @@ class User implements GenericObject {
     }
 
     /** Set the user's username
-    * @param $value The new value
-    * @return true on success, false on failure
-    * @throws exception if the user tries to set a duplicate username
-    */
+     * @param $value The new value
+     * @return true on success, false on failure
+     * @throws exception if the user tries to set a duplicate username
+     */
     function setUsername($value) {
         $retval = true;
         if ($value != $this->getUsername()) {
@@ -344,7 +342,7 @@ class User implements GenericObject {
         }
         return $retval;
     }
-    
+
     /** Add profile template to this user */
     public function addProfile(Profile $profile) {
         $db = AbstractDb::getObject();
@@ -360,9 +358,9 @@ class User implements GenericObject {
         $sql = "DELETE FROM user_has_profiles WHERE user_id='$this->id' AND profile_id='$profile_id'";
         return $db->execSqlUpdate($sql, false);
     }
-    
+
     /**Get an array of all Profiles linked to this user
-    * @return an array of Profile or an empty arrray */
+     * @return an array of Profile or an empty arrray */
     public function getAllProfiles() {
         $db = AbstractDb::getObject();
         $retval = array ();
@@ -430,7 +428,7 @@ class User implements GenericObject {
 
     /** Get the account status.
      * @return Possible values are listed in common.php
-    */
+     */
     function getAccountStatus() {
         return $this->mRow['account_status'];
     }
@@ -632,48 +630,48 @@ class User implements GenericObject {
         $rand_pass = ''; // makes sure the $pass var is empty.
         for ($j = 0; $j < 3; $j++) {
             $startnend = array (
-                'b',
-                'c',
-                'd',
-                'f',
-                'g',
-                'h',
-                'j',
-                'k',
-                'l',
-                'm',
-                'n',
-                'p',
-                'q',
-                'r',
-                's',
-                't',
-                'v',
-                'w',
-                'x',
-                'y',
-                'z',
+            'b',
+            'c',
+            'd',
+            'f',
+            'g',
+            'h',
+            'j',
+            'k',
+            'l',
+            'm',
+            'n',
+            'p',
+            'q',
+            'r',
+            's',
+            't',
+            'v',
+            'w',
+            'x',
+            'y',
+            'z',
 
-                );
-                $id = array (
-                'a',
-                'e',
-                'i',
-                'o',
-                'u',
-                'y',
+            );
+            $id = array (
+            'a',
+            'e',
+            'i',
+            'o',
+            'u',
+            'y',
 
-                );
-                $count1 = count($startnend) - 1;
-                $count2 = count($id) - 1;
+            );
+            $count1 = count($startnend) - 1;
+            $count2 = count($id) - 1;
 
-                for ($i = 0; $i < 3; $i++) {
-                    if ($i != 1) {
-                        $rand_pass .= $startnend[rand(0, $count1)];
-                    } else {
-                        $rand_pass .= $id[rand(0, $count2)];
-                    }
+            for ($i = 0; $i < 3; $i++) {
+                if ($i != 1) {
+                    $rand_pass .= $startnend[rand(0, $count1)];
+                } else {
+                    $rand_pass .= $id[rand(0, $count2)];
                 }
+            }
         }
         return $rand_pass;
     }
@@ -691,7 +689,7 @@ class User implements GenericObject {
      * @param string $add_button_value Value of optional "add" button
      *
      * @return string HTML markup
-    
+
      */
     public static function getSelectUserUI($user_prefix, $add_button_name = null, $add_button_value = null) {
 
@@ -702,9 +700,9 @@ class User implements GenericObject {
         // Check if we need to add an "add" button
         if ($add_button_name && $add_button_value) {
             $userSelector = _("Username") . ": " . InterfaceElements :: generateInputText("select_user_" . $user_prefix . "_username", "", "", "input_text", array (
-                "onkeypress" => "if ((event.which ? event.which : event.keyCode) == 13) {form.$add_button_name.click() }"
-                ));
-                $userSelector .= InterfaceElements :: generateInputSubmit($add_button_name, $add_button_value);
+            "onkeypress" => "if ((event.which ? event.which : event.keyCode) == 13) {form.$add_button_name.click() }"
+            ));
+            $userSelector .= InterfaceElements :: generateInputSubmit($add_button_name, $add_button_value);
         } else {
             $userSelector = _("Username") . ": " . InterfaceElements :: generateInputText("select_user_" . $user_prefix . "_username");
         }
@@ -759,47 +757,51 @@ class User implements GenericObject {
             $content = "<input type='text' name='$name' value='" . htmlentities($this->getUsername()) . "' size=30><br/>\n";
             $content .= _("Be carefull when changing this: it's the username you use to log in!");
             $userPreferencesItems[] = InterfaceElements::genSectionItem($content, $title);
-            
+
             /* Change password */
-	        $changePasswordItems=array();
-	        if($this == $currentUser) {//Don't enter the old password if changing password for another user
-	            $title = _("Your current password");
-	            $name = "user_" . $this->getId() . "_oldpassword";
-	            $content = "<input type='password' name='$name' size='20'>\n";
-	            $changePasswordItems[] = InterfaceElements::genSectionItem($content, $title);
-	        }
-	
-	        $title = _("Your new password");
-	        $name = "user_" . $this->getId() . "_newpassword";
-	        $content = "<input type='password' name='$name' size='20'>\n";
-	        $changePasswordItems[] = InterfaceElements::genSectionItem($content, $title);
-	
-	        $title = _("Your new password (again)");
-	        $name = "user_" . $this->getId() . "_newpassword_again";
-	        $content = "<input type='password' name='$name' size='20'>\n";
-	        $changePasswordItems[] = InterfaceElements::genSectionItem($content, $title);
-	
-	        $userPreferencesItems[] = InterfaceElements::genSection($changePasswordItems, _("Change my password"));
-	
-	        $finalHtml .= InterfaceElements::genSection($userPreferencesItems, _("User preferences"), false, false, get_class($this));
-            
+            $changePasswordItems=array();
+            if($this == $currentUser) {//Don't enter the old password if changing password for another user
+                $title = _("Your current password");
+                $name = "user_" . $this->getId() . "_oldpassword";
+                $content = "<input type='password' name='$name' size='20'>\n";
+                $changePasswordItems[] = InterfaceElements::genSectionItem($content, $title);
+            }
+
+            $title = _("Your new password");
+            $name = "user_" . $this->getId() . "_newpassword";
+            $content = "<input type='password' name='$name' size='20'>\n";
+            $changePasswordItems[] = InterfaceElements::genSectionItem($content, $title);
+
+            $title = _("Your new password (again)");
+            $name = "user_" . $this->getId() . "_newpassword_again";
+            $content = "<input type='password' name='$name' size='20'>\n";
+            $changePasswordItems[] = InterfaceElements::genSectionItem($content, $title);
+
+            $userPreferencesItems[] = InterfaceElements::genSection($changePasswordItems, _("Change my password"));
+
+            $finalHtml .= InterfaceElements::genSection($userPreferencesItems, _("User preferences"), false, false, get_class($this));
+
             //N.B: For now, let pretend we have only one profile per use...
             $profiles = $this->getAllProfiles();
             $current_profile = null;
-            if(empty($profiles)) {
-            	// Get the list of profile templates for the users' network
-            	$profile_templates = ProfileTemplate::getAllProfileTemplates($this->getNetwork());
-            	if(!empty($profile_templates)) {
-            		// Create a blank profile and link it to the user
-            		$current_profile = Profile::createNewObject(null, $profile_templates[0]);
-            		$this->addProfile($current_profile);
-            	}
-            } else {
-            	$current_profile = $profiles[0];
+            if(!empty($profiles)) {
+                $current_profile = $profiles[0];
             }
-            
+
             if($current_profile != null) {
-	            $finalHtml .= $current_profile->getAdminUI();
+                $finalHtml .= $current_profile->getAdminUI();
+                $name = "user_" . $this->getId() . "_delete_profile_".$current_profile->getId();
+                $value = _("Completely delete my public profile");
+                $finalHtml .= "<div class='admin_element_tools'>";
+                $finalHtml .= '<input type="submit" class="submit" name="' . $name . '" value="' . $value . '">';
+                $finalHtml .= "</div>";
+            }
+            else {
+                $name = "user_" . $this->getId() . "_add_profile";
+                $value = _("Create my public profile");
+                $finalHtml .= "<div class='admin_element_tools'>";
+                $finalHtml .= '<input type="submit" class="submit" name="' . $name . '" value="' . $value . '">';
+                $finalHtml .= "</div>";
             }
         }
 
@@ -820,7 +822,7 @@ class User implements GenericObject {
             /* Username */
             $name = "user_" . $this->getId() . "_username";
             $this->setUsername($_REQUEST[$name]);
-            
+
             /* Change password */
             $nameOldpassword = "user_" . $this->getId() . "_oldpassword";
             $nameNewpassword = "user_" . $this->getId() . "_newpassword";
@@ -837,8 +839,30 @@ class User implements GenericObject {
 
             // Pretend there is only one
             $profiles = $this->getAllProfiles();
-            if(!empty($profiles))
-            	$profiles[0]->processAdminUI();
+            if(!empty($profiles)) {
+                $current_profile = $profiles[0];
+                if($current_profile != null) {
+                    $current_profile->processAdminUI();
+                    $name = "user_" . $this->getId() . "_delete_profile_".$current_profile->getId();
+                    if(!empty($_REQUEST[$name])) {
+                        $errmsg=null;
+                        $current_profile->delete($errmsg);
+                    }
+                }
+            }
+                else {
+                    $name = "user_" . $this->getId() . "_add_profile";
+                    if(!empty($_REQUEST[$name])) {
+                        // Get the list of profile templates for the users' network
+                        $profile_templates = ProfileTemplate::getAllProfileTemplates($this->getNetwork());
+                        if(!empty($profile_templates)) {
+                            // Create a blank profile and link it to the user
+                            $current_profile = Profile::createNewObject(null, $profile_templates[0]);
+                            $this->addProfile($current_profile);
+                        }
+                    }
+                
+            }
 
         }
     }
@@ -896,6 +920,8 @@ class User implements GenericObject {
     public static function assignSmartyValues($smarty, $user = null) {
         if (!$user)
         $user = User :: getCurrentUser();
+        $session = Session :: getObject();
+        $smarty->assign('userOriginallyRequestedURL', $session ? $session->get(SESS_ORIGINAL_URL_VAR) : '');
         $smarty->assign('userId', $user ? $user->getId() : '');
         $smarty->assign('userName', $user ? $user->getListUI() : '');
         /**
@@ -903,7 +929,8 @@ class User implements GenericObject {
          *
          * These values are used in the default template of WiFoDog but could be
          * used in a customized template to restrict certain links to specific
-         * user access levels.
+         * user access levels.  Note however that they will all be deprecateb by the
+         * new roles system.
          */
         $smarty->assign('userIsValid', $user && !$user->isSplashOnlyUser() ? true : false);
         $smarty->assign('userIsSuperAdmin', $user && $user->isSuperAdmin());

@@ -47,15 +47,19 @@ require_once('classes/Content/SimplePicture/SimplePicture.php');
  */
 class Avatar extends SimplePicture
 {
-	public static function getDefaultUserUI() {
-		$html = "<img src='" . COMMON_IMAGES_URL . "default_avatar.png' class='user_avatar' />";
-		return $html;
-	}
-	
-	public function getUserUI() {
-		$html = "<img src='" . htmlspecialchars($this->getFileUrl()) . "' class='user_avatar' />";
-		return $html;
-	}
+    /**
+     * Constructor
+     *
+     * @param string $content_id Content id     */
+    protected function __construct($content_id) {
+        parent :: __construct($content_id);
+        $this -> configEnableEditWidthHeight(false);
+    }
+
+    public static function getDefaultUserUI() {
+        $html = "<img src='" . COMMON_IMAGES_URL . "default_avatar.png' class='Avatar' />";
+        return $html;
+    }
 }
 
 /*

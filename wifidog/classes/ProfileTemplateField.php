@@ -36,8 +36,8 @@
  * Fields of a profile template
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
- * @author     François Proulx <francois.proulx@gmail.com>
- * @copyright  2007 François Proulx
+ * @author     François Proulx <francois.proulx@gmail.com>, Benoit Grégoire
+ * @copyright  2007 François Proulx, 2007 Technologies Coeus inc.
  * @link       http://www.wifidog.org/
  */
 
@@ -51,7 +51,6 @@ class ProfileTemplateField implements GenericObject {
 	private static $instanceArray = array();
 	
     private $profile_template_field_row;
-    private $admin_label_content = null;
     private $display_label_content = null;
     private $content_type_filter = null;
     
@@ -260,10 +259,8 @@ class ProfileTemplateField implements GenericObject {
 
         if ($new_admin_label_content != null) {
             $new_admin_label_content_id_sql = "'" . $new_admin_label_content->getId() . "'";
-            $this->admin_label_content = $new_admin_label_content;
         } else {
             $new_admin_label_content_id_sql = "NULL";
-            $this->admin_label_content = null;
         }
 
         $db->execSqlUpdate("UPDATE profile_template_fields SET admin_label_content_id = $new_admin_label_content_id_sql WHERE profile_template_field_id = '$this->id'", false);
@@ -275,15 +272,16 @@ class ProfileTemplateField implements GenericObject {
     }
     
     /**
-     * Get the admin label content object for this field
+     * Get the admin label content object for this field (if there is one)
      *
-     * @return Content object
+     * @return Content object or null
      */
     public function getAdminLabelContent() {
-        if ($this->admin_label_content == null) {
-            $this->admin_label_content = Content :: getObject($this->profile_template_field_row['admin_label_content_id']);
+        $retval=null;
+        if($this->profile_template_field_row['admin_label_content_id']!=null) {
+            $retval = Content :: getObject($this->profile_template_field_row['admin_label_content_id']);
         }
-        return $this->admin_label_content;
+        return $retval;
     }
     
     /**
@@ -327,10 +325,11 @@ class ProfileTemplateField implements GenericObject {
      * @return Content object
      */
     public function getDisplayLabelContent() {
-        if ($this->display_label_content == null) {
-            $this->display_label_content = Content :: getObject($this->profile_template_field_row['display_label_content_id']);
+        $retval=null;
+        if($this->profile_template_field_row['display_label_content_id']!=null) {
+            $retval = Content :: getObject($this->profile_template_field_row['display_label_content_id']);
         }
-        return $this->display_label_content;
+        return $retval;
     }
     
     /**
@@ -577,30 +576,7 @@ class ProfileTemplateField implements GenericObject {
         $displayed_content->prepareGetUserUI();
         return parent :: prepareGetUserUI();
     }
-
-    /**
-     * Retreives the user interface of this object.
-     *
-     * @return string The HTML fragment for this interface
-     */
-    public function getUserUI() {
-        // Init values
-        $html = '';
-
-        if (!empty ($this->content_group_element_row['displayed_content_id'])) {
-            $displayed_content = $this->getDisplayedContent();
-
-            // If the content group logging is disabled, all the children will inherit this property temporarly
-            if ($this->getLoggingStatus() == false) {
-                $displayed_content->setLoggingStatus(false);
-            }
-
-            $html .= $displayed_content->getUserUI();
-        }
-        $this->setUserUIMainDisplayContent($html);
-        return parent :: getUserUI($html);
-    }
-
+    
     /**
      * Deletes a ProfileTemplateField object
      *

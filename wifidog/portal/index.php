@@ -160,14 +160,6 @@ if ($num_online_users > 0) {
 // Check for requested URL and if user is at a hotspot
 $original_url_requested = $session->get(SESS_ORIGINAL_URL_VAR);
 
-if (empty ($original_url_requested)) {
-    $smarty->assign('noUrl', true);
-    $smarty->assign('url', "?missing=url");
-} else {
-    $smarty->assign('noUrl', false);
-    $smarty->assign('url', $original_url_requested);
-}
-
 // Compile HTML code
 $tool_html = $smarty->fetch("templates/sites/portal.tpl");
 

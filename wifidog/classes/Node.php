@@ -626,12 +626,12 @@ class Node implements GenericObject
 	    $this->refresh();
 	}
 
-	function getHomePageURL()
+	function getWebSiteURL()
 	{
 	    return $this->mRow['home_page_url'];
 	}
 
-	function setHomePageUrl($url)
+	function setWebSiteUrl($url)
 	{
 	    $url = $this->mDb->escapeString($url);
 	    $this->mDb->execSqlUpdate("UPDATE nodes SET home_page_url = '{$url}' WHERE node_id = '{$this->getId()}'");
@@ -1003,7 +1003,7 @@ class Node implements GenericObject
 
 		// Homepage URL
 		$_title = _("Homepage URL");
-		$_data = InterfaceElements::generateInputText("node_" . $node_id . "_homepage_url", $this->getHomePageURL(), "node_homepage_url_input");
+		$_data = InterfaceElements::generateInputText("node_" . $node_id . "_homepage_url", $this->getWebSiteURL(), "node_homepage_url_input");
 		$_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_homepage_url", $_title, $_data);
 
 		// Mass transit info
@@ -1170,7 +1170,7 @@ class Node implements GenericObject
 
 		// Homepage URL
 		$name = "node_".$node_id."_homepage_url";
-		$this->setHomePageUrl($_REQUEST[$name]);
+		$this->setWebSiteUrl($_REQUEST[$name]);
 
 		// Description
 		$name = "node_".$node_id."_description";
@@ -1574,6 +1574,7 @@ class Node implements GenericObject
         $smarty->assign('nodeName', $node ? $node->getName() : '');
         $smarty->assign('nodeLastHeartbeatIP', $node ? $node->getLastHeartbeatIP() : '');
         $smarty->assign('nodeNumOnlineUsers', $node ? $node->getNumOnlineUsers() : '');
+        $smarty->assign('nodeWebSiteURL', $node ? $node->getWebSiteURL() : '');
         $node = self::getCurrentRealNode();
         // Set node details
         $smarty->assign('realNodeId', $node ? $node->getId() : '');

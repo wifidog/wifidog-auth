@@ -166,7 +166,7 @@ class NodeListJiWireCSV {
     				$this->_csv_document .= $this->quoteForCsv($_node->getPostalCode()).",";
 
     				// Web Site URL
-    				$this->_csv_document .= $this->quoteForCsv($_node->getHomePageURL()).",";
+    				$this->_csv_document .= $this->quoteForCsv($_node->getWebSiteURL()).",";
 
     				// Email
     				$this->_csv_document .= $this->quoteForCsv($_node->getEmail()).",";

@@ -520,6 +520,7 @@ if($this->configEnableEditFilename) {
      */
     public function processAdminUI()
     {
+        //echo "File::processAdminUI()<br/>\n";
         if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
             parent :: processAdminUI();
 

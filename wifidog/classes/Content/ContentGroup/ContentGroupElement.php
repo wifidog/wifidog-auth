@@ -63,8 +63,8 @@ require_once ('classes/Node.php');
 class ContentGroupElement extends Content {
 
     /**
-    
-     */
+
+    */
     private $content_group_element_row;
     /** The content object to be displayed by this element */
     private $displayed_content;
@@ -76,7 +76,7 @@ class ContentGroupElement extends Content {
      *
      * @return void     */
     protected function __construct($content_id) {
-        
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -107,10 +107,10 @@ class ContentGroupElement extends Content {
      *                                      deleted.
      *
      * @return void
-    
+
      */
     private function replaceDisplayedContent($new_displayed_content) {
-        
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -164,7 +164,7 @@ class ContentGroupElement extends Content {
      * @return void
      */
     public function setDisplayOrder($order) {
-        
+
         $db = AbstractDb::getObject();
 
         if ($order != $this->getDisplayOrder()) {
@@ -192,7 +192,7 @@ class ContentGroupElement extends Content {
      * @static
      */
     public static function processNewContentUI($user_prefix, ContentGroup $content_group, $associate_existing_content = false) {
-        
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -200,56 +200,32 @@ class ContentGroupElement extends Content {
         $max_display_order_row = null;
 
         if ($associate_existing_content == true) {
-            $name = "{$user_prefix}_add";
+            $displayed_content_object = Content::processSelectExistingContentUI($user_prefix);
         } else {
-            $name = "get_new_content_{$user_prefix}_add";
+            $displayed_content_object = Content::processNewContentUI($user_prefix);
         }
 
-        if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true) {
+        if ($displayed_content_object) {
             /* Get the display order to add the GontentGroupElement at the end */
             $sql = "SELECT MAX(display_order) as max_display_order FROM content_group_element WHERE content_group_id='" . $content_group->getId() . "'";
             $db->execSqlUniqueRes($sql, $max_display_order_row, false);
             $display_order = $max_display_order_row['max_display_order'] + 1;
-
-            if ($associate_existing_content == true) {
-                $name = "{$user_prefix}";
-            } else {
-                $name = "get_new_content_{$user_prefix}_content_type";
-            }
 
             $content_id = get_guid();
             $content_type = 'ContentGroupElement';
             $sql = "INSERT INTO content (content_id, content_type) VALUES ('$content_id', '$content_type');";
 
             if (!$db->execSqlUpdate($sql, false)) {
-                throw new Exception(_('Unable to insert new content into database!'));
+                throw new Exception(_('Unable to insert new content group element into database!'));
             }
 
             $sql = "INSERT INTO content_group_element (content_group_element_id, content_group_id, display_order) VALUES ('$content_id', '" . $content_group->GetId() . "', $display_order);";
 
             if (!$db->execSqlUpdate($sql, false)) {
-                throw new Exception(_('Unable to insert new content into database!'));
+                throw new Exception(_('Unable to insert new content group element into database!'));
             }
 
             $content_group_element_object = self :: getObject($content_id);
-
-            $content_ui_result = FormSelectGenerator :: getResult($name, null);
-
-if(empty($content_ui_result))
-{
-	throw new exception("Unable to retrieve the content type or the existing content to add");
-}
-            if ($associate_existing_content == true) {
-                $displayed_content_object = self :: getObject($content_ui_result);
-            } else {
-                $displayed_content_object = self :: createNewObject($content_ui_result);
-            if(empty($displayed_content_object)){
-            		throw new exception("Unable to create the new object");
-            	
-            }
-            //pretty_print_r($displayed_content_object);
-            }
-
             $content_group_element_object->replaceDisplayedContent($displayed_content_object);
         }
 
@@ -260,10 +236,10 @@ if(empty($content_ui_result))
         return $this->content_group_element_row['valid_from_timestamp'];
     }
 
-    /** If set, content will only be displayed from this date on. 
+    /** If set, content will only be displayed from this date on.
      * @param string @date Start date.  To always display, set to null or an empty string */
     function setValidFromDate($date) {
-        
+
         $db = AbstractDb::getObject();
         if ($date != $this->getValidFromDate()) {
             if (!empty ($date)) {
@@ -280,10 +256,10 @@ if(empty($content_ui_result))
         return $this->content_group_element_row['valid_until_timestamp'];
     }
 
-    /** If set, content will only be displayed untill this date (and will then be archived). 
+    /** If set, content will only be displayed untill this date (and will then be archived).
      * @param string @date End date.  To always display, set to null or an empty string */
     function setValidUntilDate($date) {
-        
+
         $db = AbstractDb::getObject();
         if ($date != $this->getValidUntilDate()) {
             if (!empty ($date)) {
@@ -305,7 +281,7 @@ if(empty($content_ui_result))
      * @return string HTML code for the administration interface
      */
     public function getAdminUI($subclass_admin_interface = null, $title = null) {
-        
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -329,8 +305,8 @@ if(empty($content_ui_result))
         $html .= "<li class='admin_element_item_container'>\n";
         // valid_from_timestamp
         $title_str = _("Content can be displayed at any date if no start or end date is specified.  Warning:  If you do not specify a specific time of day, midnight is assumed.");
-        $html .= "<a href=\"#\" title=\"$title_str\">"._("Only display from")."</a>\n";                                    
-        
+        $html .= "<a href=\"#\" title=\"$title_str\">"._("Only display from")."</a>\n";
+
         $html .= "<div class='admin_element_data'>\n";
         $name = "content_group_element_" . $this->id . "_valid_from";
         $datetime_from = new DateTimeWD($this->getValidFromDate());
@@ -346,11 +322,11 @@ if(empty($content_ui_result))
         $html .= DateTimeWD :: getSelectDateTimeUI($datetime_untill, $name, DateTimeWD :: INTERFACE_DATETIME_FIELD, null);
         $html .= "</div>\n";
         if(!$datetime_from->isEmpty() && $datetime_from->getTimestamp()>time()){
-        $html .= "<div class=warningmsg>Element not yet displayed</div>\n";
-                }
-                  if(!$datetime_untill->isEmpty() && $datetime_untill->getTimestamp()<time()){
-        $html .= "<div class=warningmsg>Element has expired</div>\n";
-                }              
+            $html .= "<div class=warningmsg>Element not yet displayed</div>\n";
+        }
+        if(!$datetime_untill->isEmpty() && $datetime_untill->getTimestamp()<time()){
+            $html .= "<div class=warningmsg>Element has expired</div>\n";
+        }
         $html .= "</li>\n";
 
         /* content_group_element_has_allowed_nodes */
@@ -396,17 +372,17 @@ if(empty($content_ui_result))
         if (empty ($this->content_group_element_row['displayed_content_id'])) {
             $html .= "<div class='errormsg'>Sorry, display element is missing.</div>\n";
             /*        	$html .= "<fieldset class='admin_element_group'>\n";
-            			$html .= "<legend>"._("Add a new displayed content OR select an existing one")."</legend>\n";
-                        $html .= self :: getNewContentUI("content_group_element_{$this->id}_new_displayed_content")."<br>";
-                        $html .= self :: getSelectExistingContentUI("content_group_element_{$this->id}_new_displayed_existing_element", "AND content_id != '$this->id'");
-            			$html .= "</fieldset>\n";*/
+             $html .= "<legend>"._("Add a new displayed content OR select an existing one")."</legend>\n";
+             $html .= self :: getNewContentUI("content_group_element_{$this->id}_new_displayed_content")."<br>";
+             $html .= self :: getSelectExistingContentUI("content_group_element_{$this->id}_new_displayed_existing_element", "AND content_id != '$this->id'");
+             $html .= "</fieldset>\n";*/
         } else {
             $displayed_content = self :: getObject($this->content_group_element_row['displayed_content_id']);
             $html .= $displayed_content->getAdminUI(null, sprintf(_("%s %d displayed content (%s)"), get_class($this), $this->getDisplayOrder(), get_class($displayed_content)));
             /*$html .= "<div class='admin_element_tools'>\n";
-            $name = "content_group_element_{$this->id}_erase_displayed_content";
-            $html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
-            $html .= "</div>\n";*/
+             $name = "content_group_element_{$this->id}_erase_displayed_content";
+             $html .= "<input type='submit' name='$name' value='"._("Delete")."'>";
+             $html .= "</div>\n";*/
         }
         $html .= "</li>\n";
 
@@ -421,7 +397,7 @@ if(empty($content_ui_result))
      * @return void
      */
     public function processAdminUI() {
-        
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -474,7 +450,7 @@ if(empty($content_ui_result))
             $displayed_content = Content :: processNewContentUI("content_group_element_{$this->id}_new_displayed_content");
 
             if ($displayed_content == null) {
-                $displayed_content = Content :: processNewContentUI("content_group_element_{$this->id}_new_displayed_existing_element", true);
+                $displayed_content = Content :: processSelectExistingContentUI("content_group_element_{$this->id}_new_displayed_existing_element");
             }
 
             if ($displayed_content != null) {
@@ -538,7 +514,7 @@ if(empty($content_ui_result))
      * @return bool True if it is displayable
      */
     public function isDisplayableAt($node) {
-        
+
         $db = AbstractDb::getObject();
 
         // Init values

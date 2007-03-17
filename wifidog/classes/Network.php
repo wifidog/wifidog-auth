@@ -537,7 +537,7 @@ class Network implements GenericObject
      *
      * @access public
      */
-    public function getHomepageURL()
+    public function getWebSiteURL()
     {
         return $this->mRow['homepage_url'];
     }
@@ -551,7 +551,7 @@ class Network implements GenericObject
      *
      * @access public
      */
-    public function setHomepageURL($value)
+    public function setWebSiteUrl($value)
     {
         // Init values
         $retval = true;
@@ -1533,7 +1533,7 @@ class Network implements GenericObject
 
         // homepage_url
 		$title = _("Network's web site");
-		$data = InterfaceElements::generateInputText("network_" . $this->getId() . "_homepage_url", $this->getHomepageURL(), "network_homepage_url_input");
+		$data = InterfaceElements::generateInputText("network_" . $this->getId() . "_homepage_url", $this->getWebSiteURL(), "network_homepage_url_input");
 		$html_network_information[] = InterfaceElements::generateAdminSectionContainer("network_homepage_url", $title, $data);
 
         // tech_support_email
@@ -1721,7 +1721,7 @@ class Network implements GenericObject
 
         // homepage_url
         $name = "network_".$this->getId()."_homepage_url";
-        $this->setHomepageURL($_REQUEST[$name]);
+        $this->setWebSiteUrl($_REQUEST[$name]);
 
         // tech_support_email
         $name = "network_".$this->getId()."_tech_support_email";
@@ -1945,7 +1945,7 @@ class Network implements GenericObject
 
         // Set network details
         $smarty->assign('networkName', $net ? $net->getName() : '');
-        $smarty->assign('networkHomepageURL', $net ? $net->getHomepageURL() : '');
+        $smarty->assign('networkWebSiteURL', $net ? $net->getWebSiteURL() : '');
         // Set networks usage information
         $smarty->assign('networkNumOnlineUsers', $net ? $net->getNumOnlineUsers() : 0);
 

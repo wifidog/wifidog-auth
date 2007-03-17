@@ -52,7 +52,7 @@
 *}
         <div class="tool_user_info">
                 {if $userIsValid}
-                    <p>{"Logged in as"|_}: {$userName}</p>
+                    <div>{"Logged in as"|_}: {$userName}</div>
                     <a class="administration" href="{$base_ssl_path}admin/generic_object_admin.php?object_id={$userId}&object_class=User&action=edit"><img class="administration" src="{$common_images_url}profile.gif">&nbsp;{"My profile"|_}</a>
                     <a class="administration" href="{$base_ssl_path}login/?logout=true{$logoutParameters}"><img class="administration" src="{$common_images_url}logout.gif">&nbsp;{"Logout"|_}</a>
                 {else}
@@ -62,9 +62,6 @@
                         <a href="{$base_ssl_path}login/{$loginParameters}">{"Login"|_}</a>
                     </p>
 					{/if}
-
-                    <a class="administration" href="{$networkHomepageURL}"><img class="administration" src="{$common_images_url}lien_ext.gif">&nbsp;{$networkName}</a>
-                    <a class="administration" href="{$base_url_path}faq.php"><img class="administration" src="{$common_images_url}where.gif">&nbsp;{"Where am I?"|_}</a>
                 {/if}
         </div>
 

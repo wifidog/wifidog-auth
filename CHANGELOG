@@ -1,7 +1,35 @@
+2007-03-16 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Lots of work on profiles.  The HTML and CSS are not final, but #18 can be considered closed.
+	* ProfileField::getContentField():  Fix bug where the object wouldn't refresh properly.
+	* Content:  Delicate refactoring of the UI to create new content.
+	The content object now supports directly adding the actual values of a new 
+ 	Content in getNewContentUI(), if the content filter only allows a single content type.  
+ 	For this to work, the Content type must overload the getNewUI() method.  
+ 	This saves many mouse clicks for form style interface, like profiles.
+ 	* User:  Don't create profile automatically.
+ 	* Don't show profiles when user is invisible.
+	* Langstring, SimpleString, HTMLEditor: Support getNewUI().  As a result of these changes, SmartyTemplate, SimpleSmartyTemplate, Stylesheet also get it for free.
+	* Add new standard Smarty value userOriginallyRequestedURL.  
+ Note that this does NOT fix #266
+	* Add new standard Smarty value nodeWebSiteURL
+	* Some work towards #158
+	 1- The "Use the Internet" link pointing to the originally requested URL is no longuer a part of every portal.  To restore that functionnality, paste the following code in a SmartyTemplate in the Content manager.
+	{if $userOriginallyRequestedURL}
+		<a href='{$userOriginallyRequestedURL}'>Take me where I originally wanted to go</a>
+	{/if}
+	2- The "Where am I" link is gone.  It made little sense to have that content common to all groups.  To restore it, pu it inline in your login page, link a html page on your auth server, or link a Content display page.
+	3- Same with the link to the Network.  To restore the unctionnality, paste the following code in a SmartyTemplate:
+	<a class="administration" href="{$networkWebSiteURL}"><img class="administration" src="{$common_images_url}lien_ext.gif">&nbsp;{$networkName}</a>
+	* ContentTypeFilter:  Saving still wasn't neutral.  Strip the array indexes to fix it.
+
 2007-03-03 Benoit Grégoire  <bock@step.polymtl.ca>
 	* CSS tweaks for RSS feeds.
 	* Fix detection of HTML Safe.
-	
+	* Avatar.php:  Don't allow editing the picture size.
+	* ContentGroup:  In some cases, the same element could be picked twice in the same display.  
+	Make sure that doesn't happen.  Also, implement the option to not rotate content at all, 
+	usefull when showing all elements simultaneously in a specific order. Closes #294
+
 2007-02-24 Damien Raude-Morvan <drazzib@drazzib.com>
 	* Fix main SQL request in Node::getSelectNodeUI() to use
 	  table alias in ORDER BY and SELECT. This disambiguation

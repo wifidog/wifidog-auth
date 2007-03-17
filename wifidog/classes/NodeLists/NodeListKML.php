@@ -238,8 +238,8 @@ class NodeListKML {
                 $_placemark->appendChild($_hotspotName);
 				$_html_data = "<b>" . _("Address") . ":</b><br />" . $_node->getCivicNumber() . " " . $_node->getStreetName() . "<br />" .
 					$_node->getCity() . "," . $_node->getProvince() . "<br />" . $_node->getCountry() . "<br />" .
-					$_node->getPostalCode() . "<br /><br /> <b>" . _("URL") . ":</b> <a href='" . $_node->getHomePageURL() . "'>" .
-					$_node->getHomePageURL() . "</a> <br /> <b> " . _("Email") . ":</b> <a href='mailto:" . $_node->getEmail() . "'>" .
+					$_node->getPostalCode() . "<br /><br /> <b>" . _("URL") . ":</b> <a href='" . $_node->getWebSiteURL() . "'>" .
+					$_node->getWebSiteURL() . "</a> <br /> <b> " . _("Email") . ":</b> <a href='mailto:" . $_node->getEmail() . "'>" .
 					$_node->getEmail() . "</a>";
 				// Creating the description node with the data from it
 				$_description = $this->_xmldoc->createElement("description");

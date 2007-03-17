@@ -89,7 +89,57 @@ class HTMLeditor extends Langstring
     public function isTextualContent() {
     	return false;
     }
-    
+        /**
+     * This method contains the interface to add an additional element to a
+     * content object.  (For example, a new string in a Langstring)
+     * It is called when getNewContentUI has only a single possible object type.
+     * It may also be called by the object getAdminUI to avoid code duplication.
+     *
+     * @param string $contentId      The id of the (possibly not yet created) content object.
+     *
+     * @param string $userData=null Array of contextual data optionally sent by displayAdminUI(),
+     *  and only understood by the class (or subclasses) where getNewUI() is defined.
+     *  The function must still function if none of it is present.
+     *
+     * @return HTML markup or false.  False means that this object does not support this interface.
+     */
+    public static function getNewUI($contentId, $userData=null) {
+        $html = '';
+        $languages = new LocaleList();
+        $locale = LocaleList::GetDefault();
+        !empty($userData['typeInterface'])?$typeInterface=$userData['typeInterface']:$typeInterface=null;
+            $html .= "<div class='admin_element_data'>\n";
+
+            $html .= _("Language") . ": " . $languages->GenererFormSelect($locale, "langstrings_" . $contentId . "_substring_new_language", null, TRUE);
+
+            $_FCKeditor = new FCKeditor('langstrings_' . $contentId . '_substring_new_string');
+            $_FCKeditor->BasePath = SYSTEM_PATH . "lib/FCKeditor/";
+            $_FCKeditor->Config["CustomConfigurationsPath"] = BASE_URL_PATH . "js/HTMLeditor.js";
+            $_FCKeditor->Config["AutoDetectLanguage"] = false;
+            $_FCKeditor->Config["DefaultLanguage"] = substr(Locale::getCurrentLocale()->getId(), 0, 2);
+            $_FCKeditor->Config["StylesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/css/" . substr(Locale::getCurrentLocale()->getId(), 0, 2) . ".xml";
+            $_FCKeditor->Config["TemplatesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/templates/" . substr(Locale::getCurrentLocale()->getId(), 0, 2) . ".xml";
+            $_FCKeditor->ToolbarSet = "WiFiDOG";
+
+            $_FCKeditor->Value = "";
+
+            if ($typeInterface == 'LARGE') {
+                $_FCKeditor->Height = 400;
+            } else {
+                $_FCKeditor->Height = 200;
+            }
+            $_FCKeditor->Width = 386;
+
+            $html .= $_FCKeditor->CreateHtml();
+
+            $html .= "</div>\n";
+            $html .= "<div class='admin_element_tools'>\n";
+
+            $html .= "<input type='submit' class='submit' name='langstrings_" . $contentId . "_add_new_entry' value='" . _("Add new string") . "'>";
+            $html .= "</div>\n";
+        return $html;
+    }
+
     /**
      * Retreives the admin interface of this object. Anything that overrides
      * this method should call the parent method with it's output at the END of
@@ -106,14 +156,14 @@ class HTMLeditor extends Langstring
         if ($this->_FCKeditorAvailable) {
             // Init values
             $_result = null;
-            $_html = '';
-            $_html .= $subclass_admin_interface;
-            $_languages = new LocaleList();
-	 		$_html .= "<ul class='admin_element_list'>\n";
+            $html = '';
+            $html .= $subclass_admin_interface;
+            $languages = new LocaleList();
+	 		$html .= "<ul class='admin_element_list'>\n";
 
-            $_html .= "<li class='admin_element_item_container content_html_editor'>\n";
+            $html .= "<li class='admin_element_item_container content_html_editor'>\n";
 
-            $_html .= "<ul class='admin_element_list'>\n";
+            $html .= "<ul class='admin_element_list'>\n";
 
             $_sql = "SELECT * FROM content_langstring_entries WHERE content_langstring_entries.langstrings_id = '$this->id' ORDER BY locales_id";
             $this->mBd->execSql($_sql, $_result, FALSE);
@@ -121,9 +171,9 @@ class HTMLeditor extends Langstring
             // Show existing content
             if ($_result != null) {
                 while (list($_key, $_value) = each($_result)) {
-                    $_html .= "<li class='admin_element_item_container'>\n";
-                    $_html .= "<div class='admin_element_data'>\n";
-                    $_html .= _("Language") . ": " . $_languages->GenererFormSelect($_value["locales_id"], "langstrings_" . $this->id . "_substring_" . $_value["langstring_entries_id"] . "_language", null, TRUE);
+                    $html .= "<li class='admin_element_item_container'>\n";
+                    $html .= "<div class='admin_element_data'>\n";
+                    $html .= _("Language") . ": " . $languages->GenererFormSelect($_value["locales_id"], "langstrings_" . $this->id . "_substring_" . $_value["langstring_entries_id"] . "_language", null, TRUE);
 
                     $_FCKeditor = new FCKeditor('langstrings_' . $this->id . '_substring_' . $_value["langstring_entries_id"] . '_string');
                     $_FCKeditor->BasePath = SYSTEM_PATH . "lib/FCKeditor/";
@@ -144,63 +194,34 @@ class HTMLeditor extends Langstring
                     }
                     $_FCKeditor->Width = 386;
 
-                    $_html .= $_FCKeditor->CreateHtml();
+                    $html .= $_FCKeditor->CreateHtml();
 
-                    $_html .= "</div>\n";
-                    $_html .= "<div class='admin_element_tools'>\n";
+                    $html .= "</div>\n";
+                    $html .= "<div class='admin_element_tools'>\n";
 
                     $_name = "langstrings_" . $this->id . "_substring_" . $_value["langstring_entries_id"] . "_erase";
-                    $_html .= "<input type='submit' class='submit' name='$_name' value='" . _("Delete string") . "'>";
+                    $html .= "<input type='submit' class='submit' name='$_name' value='" . _("Delete string") . "'>";
 
-                    $_html .= "</div>\n";
-                    $_html .= "</li>\n";
+                    $html .= "</div>\n";
+                    $html .= "</li>\n";
                 }
             }
 
             // Editor for new content
-            $_locale = LocaleList::GetDefault();
+            $html .= "<li class='admin_element_item_container'>\n";
+        $userData['typeInterface'] = $type_interface;
+        $html .= self::getNewUI($this->id, $userData);
+            $html .= "</li>\n";
 
-            $_html .= "<li class='admin_element_item_container'>\n";
-            $_html .= "<div class='admin_element_data'>\n";
-
-            $_html .= _("Language") . ": " . $_languages->GenererFormSelect($_locale, "langstrings_" . $this->id . "_substring_new_language", null, TRUE);
-
-            $_FCKeditor = new FCKeditor('langstrings_' . $this->id . '_substring_new_string');
-            $_FCKeditor->BasePath = SYSTEM_PATH . "lib/FCKeditor/";
-            $_FCKeditor->Config["CustomConfigurationsPath"] = BASE_URL_PATH . "js/HTMLeditor.js";
-            $_FCKeditor->Config["AutoDetectLanguage"] = false;
-            $_FCKeditor->Config["DefaultLanguage"] = substr(Locale::getCurrentLocale()->getId(), 0, 2);
-            $_FCKeditor->Config["StylesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/css/" . substr(Locale::getCurrentLocale()->getId(), 0, 2) . ".xml";
-            $_FCKeditor->Config["TemplatesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/templates/" . substr(Locale::getCurrentLocale()->getId(), 0, 2) . ".xml";
-            $_FCKeditor->ToolbarSet = "WiFiDOG";
-
-            $_FCKeditor->Value = "";
-
-            if ($type_interface == 'LARGE') {
-                $_FCKeditor->Height = 400;
-            } else {
-                $_FCKeditor->Height = 200;
-            }
-            $_FCKeditor->Width = 386;
-
-            $_html .= $_FCKeditor->CreateHtml();
-
-            $_html .= "</div>\n";
-            $_html .= "<div class='admin_element_tools'>\n";
-
-            $_html .= "<input type='submit' class='submit' name='langstrings_" . $this->id . "_add_new_entry' value='" . _("Add new string") . "'>";
-            $_html .= "</div>\n";
-            $_html .= "</li>\n";
-
-            $_html .= "</ul>\n";
-            $_html .= "</li>\n";
-            $_html .= "</ul>\n";
+            $html .= "</ul>\n";
+            $html .= "</li>\n";
+            $html .= "</ul>\n";
         } else {
-            $_html = '';
-            $_html .= _("FCKeditor is not installed");
+            $html = '';
+            $html .= _("FCKeditor is not installed");
         }
 
-        return Content :: getAdminUI($_html, $title);
+        return Content :: getAdminUI($html, $title);
     }
 
  

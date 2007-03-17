@@ -8,7 +8,8 @@
 </p>
 
 <p>
-{"For a complete and up-to-date listing of our nodes, visit"|_} <a href="{$networkHomepageURL}" target="_blank">{$networkHomepageURL}</a>.
+{"For a complete and up-to-date listing of our nodes, visit"|_} <a
+	href="{$networkWebSiteURL}" target="_blank">{$networkWebSiteURL}</a>.
 </p>
 
 <p>

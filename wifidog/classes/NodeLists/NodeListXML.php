@@ -145,13 +145,13 @@ class NodeListXML {
         $_networkMetadataNode = $this->_xmldoc->createElement("networkMetadata");
         $_networkMetadataNode = $_hotspotStatusRootNode->appendChild($_networkMetadataNode);
 
-        $_networkUriNode = $this->_xmldoc->createElement("networkUri", htmlspecialchars($this->_network->getHomepageURL(), ENT_QUOTES));
+        $_networkUriNode = $this->_xmldoc->createElement("networkUri", htmlspecialchars($this->_network->getWebSiteURL(), ENT_QUOTES));
         $_networkMetadataNode->appendChild($_networkUriNode);
 
         $_networkNameNode = $this->_xmldoc->createElement("name", htmlspecialchars($this->_network->getName(), ENT_QUOTES));
         $_networkMetadataNode->appendChild($_networkNameNode);
 
-        $_networkUrlNode = $this->_xmldoc->createElement("websiteUrl", htmlspecialchars($this->_network->getHomepageURL(), ENT_QUOTES));
+        $_networkUrlNode = $this->_xmldoc->createElement("websiteUrl", htmlspecialchars($this->_network->getWebSiteURL(), ENT_QUOTES));
         $_networkMetadataNode->appendChild($_networkUrlNode);
 
         $_email = $this->_network->getTechSupportEmail();
@@ -236,8 +236,8 @@ class NodeListXML {
                 $_hotspot->appendChild($_hotspotOpeningDate);
 
                 // Hotspot Website URL
-                if ($_node->getHomePageURL() != "") {
-                    $_hotspotUrl = $this->_xmldoc->createElement("webSiteUrl", htmlspecialchars($_node->getHomePageURL(), ENT_QUOTES));
+                if ($_node->getWebSiteURL() != "") {
+                    $_hotspotUrl = $this->_xmldoc->createElement("webSiteUrl", htmlspecialchars($_node->getWebSiteURL(), ENT_QUOTES));
                     $_hotspot->appendChild($_hotspotUrl);
                 }
 

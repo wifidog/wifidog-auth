@@ -103,6 +103,7 @@ $newLongText = $createLongText;
 /*
  * Check for debugging requests
  */
+//$_REQUEST['debug']=true;
 if (!empty ($_REQUEST['debug'])) {
     echo "<pre>";
     print_r($_REQUEST);

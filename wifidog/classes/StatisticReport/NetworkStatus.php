@@ -107,7 +107,7 @@ class NetworkStatus extends StatisticReport
 
                 $html .= "<tr>";
                 $html .= "  <th>"._("Homepage")."</th>";
-                $html .= "  <td>".$networkObject->getHomepageURL()."</td>";
+                $html .= "  <td>".$networkObject->getWebSiteURL()."</td>";
                 $html .= "</tr>";
 
                 $html .= "<tr class='odd'>";

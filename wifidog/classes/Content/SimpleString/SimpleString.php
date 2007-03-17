@@ -67,7 +67,7 @@ class SimpleString extends Langstring
     protected function __construct($content_id)
     {
         parent::__construct($content_id);
-   		$this->allowed_html_tags = "";
+        $this->allowed_html_tags = "";
         /*
          * A SimpleString is NEVER persistent
          */
@@ -78,8 +78,37 @@ class SimpleString extends Langstring
     public function isSimpleContent() {
         return true;
     }
-    
-      /**
+
+    /**
+     * This method contains the interface to add an additional element to a
+     * content object.  (For example, a new string in a Langstring)
+     * It is called when getNewContentUI has only a single possible object type.
+     * It may also be called by the object getAdminUI to avoid code duplication.
+     *
+     * @param string $contentId      The id of the (possibly not yet created) content object.
+     *
+     * @param string $userData=null Array of contextual data optionally sent by displayAdminUI(),
+     *  and only understood by the class (or subclasses) where getNewUI() is defined.
+     *  The function must still function if none of it is present.
+     *
+     * @return HTML markup or false.  False means that this object does not support this interface.
+     */
+    public static function getNewUI($contentId, $userData=null) {
+        $html = '';
+        !empty($userData['typeInterface'])?$typeInterface=$userData['typeInterface']:$typeInterface=null;
+        $name = "langstrings_" . $contentId . "_substring_new_language";
+        $html .= "<input type='hidden' name='$name' value=''>\n";
+        $new_substring_name = "langstrings_" . $contentId . "_substring_new_string";
+
+        if ($typeInterface == 'LARGE') {
+            $html .= "<textarea name='$new_substring_name' class='textarea' cols='60' rows='3'></textarea>\n";
+        } else {
+            $html .= "<input type='text' name='$new_substring_name' class='input_text' size='44' value=''>\n";
+        }
+        return $html;
+    }
+
+    /**
      * Retreives the admin interface of this object. Anything that overrides
      * this method should call the parent method with it's output at the END of
      * processing.
@@ -109,7 +138,7 @@ class SimpleString extends Langstring
         if ($result != null) {
             while (list ($key, $value) = each($result)) {
                 $exclude_array[$value['locales_id']] = $value['locales_id'];
- 
+
                 $html .= "<li class='admin_element_item_container'>\n";
                 $html .= "<div class='admin_element_data'>\n";
                 $name = "langstrings_" . $this->id . "_substring_$value[langstring_entries_id]_language";
@@ -129,16 +158,8 @@ class SimpleString extends Langstring
         if($result == null) {
             $html .= "<li class='admin_element_item_container'>\n";
             $html .= "<div class='admin_element_data'>\n";
-            $name = "langstrings_" . $this->id . "_substring_new_language";
-            $html .= "<input type='hidden' name='$name' value=''>\n";
-            $new_substring_name = "langstrings_" . $this->id . "_substring_new_string";
-
-            if ($type_interface == 'LARGE') {
-                $html .= "<textarea name='$new_substring_name' class='textarea' cols='60' rows='3'></textarea>\n";
-            } else {
-                $html .= "<input type='text' name='$new_substring_name' class='input_text' size='44' value=''>\n";
-            }
-
+            $userData['typeInterface'] = $type_interface;
+            $html .= self::getNewUI($this->id, $userData);
             $html .= "</div>\n";
             $html .= "</li>\n";
         }
@@ -146,7 +167,7 @@ class SimpleString extends Langstring
 
         return Content :: getAdminUI($html, $title);
     }
-    
+
     /**
      * A short string representation of the content
      *

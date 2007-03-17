@@ -161,7 +161,7 @@ class NodeListRSS {
         // link
         $_link = $this->_xmldoc->createElement("link");
         $_channel->appendChild($_link);
-        $_textNode = $this->_xmldoc->createTextNode($this->_network->getHomepageURL());
+        $_textNode = $this->_xmldoc->createTextNode($this->_network->getWebSiteURL());
         $_link->appendChild($_textNode);
 
         // description
@@ -256,7 +256,7 @@ class NodeListRSS {
             // link
             $_link = $this->_xmldoc->createElement("link");
             $_image->appendChild($_link);
-            $_textNode = $this->_xmldoc->createTextNode($this->_network->getHomepageURL());
+            $_textNode = $this->_xmldoc->createTextNode($this->_network->getWebSiteURL());
             $_link->appendChild($_textNode);
 
             $_imageSize = @getimagesize(WIFIDOG_ABS_FILE_PATH . "local_content/common/" . NETWORK_LOGO_NAME);
@@ -296,8 +296,8 @@ class NodeListRSS {
                 $_hotspot->appendChild($_hotspotName);
 
                 // Hotspot Website URL
-                if ($_node->getHomePageURL() != "") {
-                    $_hotspotUrl = $this->_xmldoc->createElement("link", htmlspecialchars($_node->getHomePageURL(), ENT_QUOTES));
+                if ($_node->getWebSiteURL() != "") {
+                    $_hotspotUrl = $this->_xmldoc->createElement("link", htmlspecialchars($_node->getWebSiteURL(), ENT_QUOTES));
                     $_hotspot->appendChild($_hotspotUrl);
                 }
 
@@ -387,11 +387,11 @@ class NodeListRSS {
                 $_hotspotDesc->appendChild($this->_xmldoc->createTextNode($_descriptionText));
 
                 // guid
-                if ($_node->getHomePageURL() != "") {
+                if ($_node->getWebSiteURL() != "") {
                     $_guid = $this->_xmldoc->createElement("guid");
                     $_guid->setAttribute('isPermaLink', 'false');
                     $_hotspot->appendChild($_guid);
-                    $_textNode = $this->_xmldoc->createTextNode(htmlspecialchars($_node->getHomePageURL(), ENT_QUOTES));
+                    $_textNode = $this->_xmldoc->createTextNode(htmlspecialchars($_node->getWebSiteURL(), ENT_QUOTES));
                     $_guid->appendChild($_textNode);
                 }
 

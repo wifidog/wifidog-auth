@@ -66,9 +66,3 @@
              {/if}
          {/if}
     </p>
-
-    {if $realNodeId}
-        <p class="indent">
-            <a id="wifidog_use_internet" href="{$url}">{"Use the Internet"|_}</a>
-        </p>
-    {/if}

@@ -110,7 +110,6 @@ $ui->addContent('page_header', "<h1>$welcome_msg</h1>");
 
 if (!empty($profile)) {
 	$main_area_middle_html = "";
-	$main_area_middle_html .= "<h1>".sprintf(_("Viewing %s's user profile"), $profile_user->getUsername())."</h1>";
 	$main_area_middle_html .= $profile->getUserUI();
 	
     $ui->addContent('main_area_middle', $main_area_middle_html);

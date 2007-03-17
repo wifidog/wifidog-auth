@@ -172,18 +172,6 @@ define('ONLINE_STATUS_ONLINE', 1);
 define('ONLINE_STATUS_OFFLINE', 2);
 /* End Constant shared with the gateway*/
 
-/* session constants, perhaps this coulb be moved to Session.php?  benoitg, 2005-08-01 */
-define('SESS_USERNAME_VAR', 'SESS_USERNAME');
-define('SESS_USER_ID_VAR', 'SESS_USER_ID');
-define('SESS_PASSWORD_HASH_VAR', 'SESS_PASSWORD_HASH');
-define('SESS_ORIGINAL_URL_VAR', 'SESS_ORIGINAL_URL');
-define('SESS_LANGUAGE_VAR', 'SESS_LANGUAGE');
-define('SESS_GW_ADDRESS_VAR', 'SESS_GW_ADDRESS');
-define('SESS_GW_PORT_VAR', 'SESS_GW_PORT');
-define('SESS_GW_ID_VAR', 'SESS_GW_ID');
-define('SESS_NODE_ID_VAR', 'SESS_NODE_ID');/**<Deprecated benoitg 22/11/2006*/
-/* End session constants */
-
 /** Convert a password hash form a NoCat passwd file into the same format as get_password_hash().
 * @return The 32 character hash.
 */
