@@ -1,3 +1,6 @@
+2007-03-17 Benoit Grégoire  <bock@step.polymtl.ca>
+	* install.php: Make sure we are in the right directory when uncompressing Smarty
+
 2007-03-16 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Lots of work on profiles.  The HTML and CSS are not final, but #18 can be considered closed.
 	* ProfileField::getContentField():  Fix bug where the object wouldn't refresh properly.

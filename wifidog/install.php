@@ -598,7 +598,7 @@ EndHTML;
             $dirname = array_shift($dir_array);
 
             if (!file_exists($dirname))
-                execVerbose("tar -xzf $dirname.tar.gz", $output, $return);
+            execVerbose("cd $output; tar -xzf $dirname.tar.gz", $output, $return);
             print "OK<BR>";
             print "Copying : ";
             if (!file_exists(WIFIDOG_ABS_FILE_PATH . "lib/smarty"));
