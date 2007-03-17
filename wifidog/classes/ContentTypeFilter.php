@@ -151,7 +151,7 @@ class ContentTypeFilter implements GenericObject {
     	return $this->_content_type_filter_rules_array;
     }
     
-    public function setRules(array $value) {
+    public function setRules($value) {
     	$db = AbstractDb::getObject();
 
 	    // Init values
