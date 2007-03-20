@@ -601,7 +601,7 @@ td.admin_element_tools, th.admin_element_tools {
 /********** Content type section **********/
 
 /* UIUserList */
-.UIUserList .users_list {
+.UIUserList ul {
     list-style-type: none;
 }
 
