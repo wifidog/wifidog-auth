@@ -219,7 +219,7 @@ class Langstring extends Content {
         if ($typeInterface == 'LARGE') {
             $html .= "<textarea name='$new_substring_name' class='textarea' cols='60' rows='3'></textarea>\n";
         } else {
-            $html .= "<input type='text' name='$new_substring_name' class='input_text' size='44' value=''>\n";
+            $html .= "<input type='text' name='$new_substring_name' class='input_text' size='80' value=''>\n";
         }
 
         $html .= "</div>\n";
@@ -345,7 +345,7 @@ class Langstring extends Content {
                 if ($type_interface == 'LARGE') {
                     $html .= "<textarea name='langstrings_" . $this->id . "_substring_$value[langstring_entries_id]_string' class='textarea' cols='60' rows='3'>" . htmlspecialchars($value['value'], ENT_QUOTES, 'UTF-8') . "</textarea>\n";
                 } else {
-                    $html .= "<input type='text' class='input_text' name='langstrings_" . $this->id . "_substring_$value[langstring_entries_id]_string' size='44' value='" . htmlspecialchars($value['value'], ENT_QUOTES, 'UTF-8') . "'>\n";
+                    $html .= "<input type='text' size='80' class='input_text' name='langstrings_" . $this->id . "_substring_$value[langstring_entries_id]_string' value='" . htmlspecialchars($value['value'], ENT_QUOTES, 'UTF-8') . "'>\n";
                 }
 
                 $html .= "</div>\n";

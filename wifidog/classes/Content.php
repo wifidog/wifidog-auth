@@ -49,7 +49,7 @@
 require_once ('classes/FormSelectGenerator.php');
 require_once ('classes/GenericObject.php');
 require_once ('classes/Cache.php');
-require_once ('classes/HyperLink.php');
+require_once ('classes/HyperLinkUtils.php');
 
 /**
  * Defines any type of content
@@ -1425,7 +1425,7 @@ class Content implements GenericObject {
     protected function replaceHyperLinks(& $html) {
         /* Handle hyperlink clicktrough logging */
         if ($this->getLoggingStatus() == true) {
-            $html = HyperLink :: replaceHyperLinks($html, $this->log_as_content);
+            $html = HyperLinkUtils :: replaceHyperLinks($html, $this->log_as_content);
         }
         return $html;
     }

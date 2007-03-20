@@ -1,3 +1,9 @@
+2007-03-20 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Fix #304:  For some reason the Smarty assignement to userName used getListUI() instead of getUsername()???
+	* Add HyperLink content type
+	* Add UIUserList content type (work towards #158)
+	* portal/index.php:  Finish refactoring Smarty usage.
+	
 2007-03-17 Benoit Grégoire  <bock@step.polymtl.ca>
 	* install.php: Make sure we are in the right directory when uncompressing Smarty
 	* Avatar.php:  Don't allow user to hyperlink the image.

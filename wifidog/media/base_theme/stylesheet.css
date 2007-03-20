@@ -212,18 +212,6 @@ form.language{
     padding: 0px 5px 0px 5px;
 }
 
-.tool_content .admin_menu_list {
-    list-style-type: square;
-    padding: 20px;
-    margin: 0px;
-}
-.tool_content .users_list {
-    list-style-type: square;
-}
-.tool_content .users_list .roles {
-    font-size: 8pt;
-    font-style: italic;
-}
 div.avis {
     padding: 20px 10px 10px 10px;
     background-image: url(images/03_avis.gif);
@@ -286,10 +274,6 @@ a.navigation {
     font-size: 11px;
     text-decoration: none;
 }
-.indent {
-    padding-left: 25px;
-}
-
 
 
 /*********************************************************************/
@@ -615,6 +599,11 @@ td.admin_element_tools, th.admin_element_tools {
 }
 
 /********** Content type section **********/
+
+/* UIUserList */
+.UIUserList .users_list {
+    list-style-type: none;
+}
 
 .langstring {
     text-align: justify;

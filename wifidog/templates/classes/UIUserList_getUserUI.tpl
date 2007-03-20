@@ -39,15 +39,12 @@
  * @package    WiFiDogAuthServer
  * @subpackage Templates
  * @author     Max Horváth <max.horvath@freenet.de>
- * @copyright  2006 Max Horváth, Horvath Web Consulting
- * @version    Subversion $Id: $
- * @link       http://www.wifidog.org/
- */
-
-*}
-    <h1>{"Online users"|_}</h1>
-
-    <p class="indent">
+ * @copyright 2006 Max Horváth, Horvath Web Consulting 
+ * @author Benoit Grégoire <bock @step.polymtl.ca>
+ * @copyright 2007 Benoit Grégoire, Technologies Coeus inc. 
+ * @version Subversion $Id: $ 
+ * @link http://www.wifidog.org/ */
+  *}
         {if $nodeId != null}
             {if ($nodeNumOnlineUsers > 0)}
                 {if ($nodeNumOnlineUsers == 1)}
@@ -56,7 +53,7 @@
                     {$nodeNumOnlineUsers} {"users are online at this hotspot"|_}
                 {/if}
 
-                <ul class="users_list">
+                <ul>
                     {section name=onlineUser loop=$onlineUsers}
                         <li>{$onlineUsers[onlineUser]}</li>
                     {/section}
@@ -65,4 +62,3 @@
                  {"Nobody is online at this hotspot"|_} ...
              {/if}
          {/if}
-    </p>

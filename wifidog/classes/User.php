@@ -931,7 +931,7 @@ class User implements GenericObject {
         $session = Session :: getObject();
         $smarty->assign('userOriginallyRequestedURL', $session ? $session->get(SESS_ORIGINAL_URL_VAR) : '');
         $smarty->assign('userId', $user ? $user->getId() : '');
-        $smarty->assign('userName', $user ? $user->getListUI() : '');
+        $smarty->assign('userName', $user ? $user->getUsername() : '');
         /**
          * Define user security levels for the template
          *

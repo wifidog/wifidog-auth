@@ -55,7 +55,7 @@ require_once ('classes/User.php');
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @copyright  2006 Benoit Grégoire, Technologies Coeus inc.
  */
-class HyperLink {
+class HyperLinkUtils {
     const pattern = '/(<a\s.*?HREF=[\'"]?)((?:http|https|ftp).*?)([\'"\s].*?>)/mi';
 
     /**
@@ -100,6 +100,22 @@ class HyperLink {
             return $string;
         }
     }
+    
+    /** Is the entered URL a valid URL?
+     * @param $url
+     * @return true or false
+     */
+    static public function validateURL($url) {
+        $retval = false;
+        if (!preg_match('/^(http|https|ftp):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(:(\d+))?\//i', $url, $m)) {
+            //URL isn't valid
+        } else {
+            //URL is valid
+            $retval = true;
+        }
+        return $retval;
+    }
+
 } // End class
 
 /*

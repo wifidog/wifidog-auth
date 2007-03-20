@@ -58,7 +58,7 @@ require_once ('classes/Node.php');
 require_once ('classes/MainUI.php');
 require_once ('classes/Session.php');
 $smarty = SmartyWifidog::getObject();
-$db = AbstractDb::getObject(); 
+$db = AbstractDb::getObject();
 /*
  * Check for missing URL switch
  */
@@ -127,41 +127,8 @@ if (isset ($session)) {
     }
 }
 
-$current_node = Node :: getCurrentNode();
-$current_node_id = $current_node->getId();
-
-// Init ALL smarty SWITCH values
 $smarty->assign('sectionTOOLCONTENT', false);
 $smarty->assign('sectionMAINCONTENT', false);
-
-
-// Set details about onlineusers
-$online_users = $current_node->getOnlineUsers();
-$num_online_users = count($online_users);
-
-foreach ($online_users as $online_user) {
-
-    $online_user_array[] = $online_user->getListUI();
-}
-/* 
-			    		    if ($this->isConfiguredSplashOnly() && $anonUsers == 1) {
-			    $retval[] = "One anonymous user";
-		    } else if ($this->isConfiguredSplashOnly() && $anonUsers > 1) {
-			    $retval[] = sprintf("%d anonymous users", $anonUsers);
-		    }
-
- */
- 
-$smarty->assign('onlineUsers', array ());
-if ($num_online_users > 0) {
-    $smarty->assign('onlineUsers', $online_user_array);
-}
-
-// Check for requested URL and if user is at a hotspot
-$original_url_requested = $session->get(SESS_ORIGINAL_URL_VAR);
-
-// Compile HTML code
-$tool_html = $smarty->fetch("templates/sites/portal.tpl");
 
 /*
  * Render output
@@ -174,8 +141,8 @@ $ui->addContent('left_area_middle', $tool_html);
 /*
  * Main content
  */
- $welcome_msg = sprintf("<span>%s</span><em>%s</em>",_("Welcome to"), $node->getName());
- $ui->addContent('page_header', "<h1>$welcome_msg</h1>");
+$welcome_msg = sprintf("<span>%s</span><em>%s</em>",_("Welcome to"), $node->getName());
+$ui->addContent('page_header', "<h1>$welcome_msg</h1>");
 // While in validation period, alert user that he should validate his account ASAP
 if ($current_user && $current_user->getAccountStatus() == ACCOUNT_STATUS_VALIDATION) {
     $validationMsgHtml = "<div id='warning_message_area'>\n";
