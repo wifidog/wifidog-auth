@@ -56,18 +56,22 @@ select {
 	border-bottom: 1px solid #d7d5d5;
 	min-height: 60px;
 }
+#page_header .welcome_msg {
+	float: left;
+}
 
-#page_header h1 {
+#page_header .welcome_msg_inner {
 	margin-top: 5px;
 	font-size: 2em;
 	color: #999;
+	font-weight: bold;
 }
-#page_header h1 em {
+#page_header .welcome_msg_inner em {
 	font-size: 1em;
 	color: #666;
 }
 
-#page_header h1 span {
+#page_header .welcome_msg_inner span {
 	display: block;
 	font-size: 0.6em;
 }

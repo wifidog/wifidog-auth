@@ -137,12 +137,11 @@ $smarty->assign('sectionMAINCONTENT', false);
 $ui = MainUI::getObject();
 $ui->setTitle(sprintf(_("%s portal for %s"), $network->getName(), $node->getName()));
 $ui->setPageName('portal');
-$ui->addContent('left_area_middle', $tool_html);
 /*
  * Main content
  */
-$welcome_msg = sprintf("<span>%s</span><em>%s</em>",_("Welcome to"), $node->getName());
-$ui->addContent('page_header', "<h1>$welcome_msg</h1>");
+$welcome_msg = sprintf("<span>%s</span> <em>%s</em>",_("Welcome to"), $node->getName());
+$ui->addContent('page_header', "<div class='welcome_msg'><div class='welcome_msg_inner'>$welcome_msg</div></div>");
 // While in validation period, alert user that he should validate his account ASAP
 if ($current_user && $current_user->getAccountStatus() == ACCOUNT_STATUS_VALIDATION) {
     $validationMsgHtml = "<div id='warning_message_area'>\n";

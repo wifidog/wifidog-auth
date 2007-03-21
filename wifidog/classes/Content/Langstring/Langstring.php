@@ -209,14 +209,14 @@ class Langstring extends Content {
     public static function getNewUI($contentId, $userData=null) {
         $html = '';
         !empty($userData['excludeArray'])?$excludeArray=$userData['excludeArray']:$excludeArray=null;
-        !empty($userData['typeInterface'])?$typeInterface=$userData['typeInterface']:$typeInterface=null;
+        !empty($userData['typeInterface'])?$typeInterface=$userData['typeInterface']:$typeInterface='LARGE';
         $html .= "<div class='admin_element_data'>\n";
         $liste_languages = new LocaleList();
         $locale = LocaleList :: GetDefault();
         $html .= _("Language") . ": " . $liste_languages->GenererFormSelect($locale, "langstrings_" . $contentId . "_substring_new_language", null, TRUE, $excludeArray);
         $new_substring_name = "langstrings_" . $contentId . "_substring_new_string";
 
-        if ($typeInterface != 'LARGE') {
+        if ($typeInterface == 'LARGE') {
             $html .= "<textarea name='$new_substring_name' class='textarea' cols='60' rows='3'></textarea>\n";
         } else {
             $html .= "<input type='text' name='$new_substring_name' class='input_text' size='80' value=''>\n";
@@ -276,7 +276,6 @@ class Langstring extends Content {
      * @return string The HTML fragment for this interface.
      */
     public function getAdminUI($subclass_admin_interface = null, $title = null, $type_interface = "LARGE") {
-        pretty_print_r($type_interface);
         // Init values.
         $html = '';
         $html .= $subclass_admin_interface;
