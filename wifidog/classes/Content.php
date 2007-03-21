@@ -400,6 +400,30 @@ class Content implements GenericObject {
     }
 
     /**
+     * Check if this class is a class or subclass of one of the content types given as parameter
+     * *
+     * @param array $candidates The classnames to check
+     * @return true or flase
+     */
+    public static function isExactContentType($candidates, $classname) {
+        $retval = false;
+        if (false === is_array($candidates)) {
+            throw new exception("classnames must be an array");
+        }
+        $classname_reflector = new ReflectionClass($classname);
+
+        foreach ($candidates as $candidate) {
+            $candidate_reflector = new ReflectionClass($candidate);
+            //echo"classname: $classname, candidate: $candidate<br>";
+            if ($candidate == $classname) {
+                $retval = true;
+                break;
+            }
+        }
+        return $retval;
+    }
+    
+    /**
      * Check if this class is NOT any of the class or subclass of one of the content types given as parameter
      * It's the opposite of isContentType()
      *
