@@ -274,8 +274,8 @@ if($node){
 }
 else {
 $name = $network->getName();}
- $welcome_msg = sprintf("<span>%s</span><em>%s</em>",_("Welcome to"), $name);
- $ui->addContent('page_header', "<h1>$welcome_msg</h1>");
+ $welcome_msg = sprintf("<span>%s</span> <em>%s</em>",_("Welcome to"), $name);
+ $ui->addContent('page_header', "<div class='welcome_msg'><div class='welcome_msg_inner'>$welcome_msg</div></div>");
 $ui->addContent('main_area_top', $html);
 
 /*
