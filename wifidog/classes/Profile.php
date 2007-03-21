@@ -413,6 +413,7 @@ class Profile implements GenericObject {
             if($field){
                 $html .= $field->getUserUI();
             }
+            $html .= "<br class='clearbr' />";
             //Print all the other fields
             foreach ($fields as $field) {
                 $html .= $field->getUserUI();
