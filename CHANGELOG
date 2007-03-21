@@ -2,6 +2,7 @@
 	* ProfileTemplateField.php:  Only allow simple content types as metadata.
 	* Langstring.php:  Fix bug:  one couldn't change the language of a string without changing the actual text.
 	* Content.php:  Add isExactContentType() method.
+	* Profile-related visual and UI tweaks
 
 2007-03-20 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix #304:  For some reason the Smarty assignement to userName used getListUI() instead of getUsername()???

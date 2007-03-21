@@ -320,6 +320,10 @@ class User implements GenericObject {
             if($profiles){
                 $html .= "</a>\n";
             }
+            $profileTemplates = $this->getNetwork()->getAllProfileTemplates();
+            if($this==User::getCurrentUser() && $profileTemplates) {
+                $html .= "(<a class='edit-profile-link' href='".BASE_SSL_PATH."admin/generic_object_admin.php?object_id=".$this->getId()."&object_class=User&action=edit'>".("edit profile")."</a>)";
+            }
 
         }
         return $html;

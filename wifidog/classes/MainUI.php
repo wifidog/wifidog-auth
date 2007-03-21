@@ -472,7 +472,7 @@ class MainUI {
 
         // Get information about user
         $_currentUser = User :: getCurrentUser();
-
+        $_currentUser?$this->smarty->assign('userListUI', $_currentUser->getListUI()):$this->smarty->assign('userListUI', "");
         $this->smarty->assign('logoutParameters', "");
         $this->smarty->assign('loginParameters', "");
         $this->smarty->assign('formAction', "");

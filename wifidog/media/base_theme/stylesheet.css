@@ -821,6 +821,7 @@ table.content_admin td {
 
 .Avatar {
 	display: inline;
+		vertical-align: middle;
 }
 .Avatar div{
 	display: inline;
@@ -829,7 +830,6 @@ table.content_admin td {
 .Avatar img{
 	max-width: 40px;
 	max-height: 40px;
-	vertical-align: middle;
 	margin: 0 3px 0 0;
 	padding: 0 0 0 0;
 }
