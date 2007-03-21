@@ -437,20 +437,19 @@ class File extends Content
         $html = '';
 
         $html .= "<li class='admin_element_item_container'>\n";
-        $html .= "<div class='admin_element_label'>";
-        $html .= "<input type='radio' name='file_mode".$this->getId()."' value='by_upload' ". ($this->isLocalFile() ? "CHECKED" : "").">";
-        $html .= _("Upload a new file (Uploading a new one will replace any existing file)")." : </div>\n";
         $html .= "<div class='admin_element_data'>\n";
+        $html .= "<input type='radio' name='file_mode".$this->getId()."' value='by_upload' ". ($this->isLocalFile() ? "CHECKED" : "")." />";
+        $html .= _("Upload a new file (Uploading a new one will replace any existing file)")." : \n";
         $html .= '<input type="hidden" name="MAX_FILE_SIZE" value="1073741824" />';
         $html .= '<input name="file_file_upload'.$this->getId().'" type="file" />';
         $html .= "</div>\n";
         $html .= "</li>\n";
 
         $html .= "<li class='admin_element_item_container'>\n";
-        $html .= "<div class='admin_element_label'>";
-        $html .= "<input type='radio' name='file_mode".$this->getId()."' value='remote' ". (!$this->isLocalFile() ? "CHECKED" : "").">";
-        $html .= _("Remote file via URL")." : </div>\n";
         $html .= "<div class='admin_element_data'>\n";
+        $html .= "<input type='radio' name='file_mode".$this->getId()."' value='remote' ". (!$this->isLocalFile() ? "CHECKED" : "").">";
+        $html .= _("Remote file via URL")." : \n";
+
 
         if ($this->isLocalFile()) {
             $html .= "<input name='file_url".$this->getId()."' type='text' size='50'/>";
@@ -490,8 +489,7 @@ if($this->configEnableEditFilename) {
         	}
 
             $html .= "<li class='admin_element_item_container'>\n";
-            $html .= "<div class='admin_element_label'>"._("Locally stored file size")." : </div>\n";
-            $html .= "<div class='admin_element_data'>\n";
+            $html .= "<div class='admin_element_data'>"._("Locally stored file size")." : \n";
             $html .= $this->getFileSize(self :: UNIT_KILOBYTES)." "._("KB");
         } else {
             $html .= "<div class='admin_element_item_container'>\n";

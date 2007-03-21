@@ -104,7 +104,7 @@ $ui->setPageName('profile');
 /*
  * Main content
  */
-$welcome_msg = sprintf("<span>%s</span><em>%s</em>",_("User profile for"), $profile_user->getUsername());
+$welcome_msg = sprintf("<span>%s</span> <em>%s</em>",_("User profile for"), $profile_user->getUsername());
 $ui->addContent('page_header', "<h1>$welcome_msg</h1>");
 
 
