@@ -417,7 +417,7 @@ class Langstring extends Content {
             parent :: processAdminUI();
             $generateur_form_select = new FormSelectGenerator();
             $sql = "SELECT * FROM content_langstring_entries WHERE content_langstring_entries.langstrings_id = '$this->id'";
-            $this->mBd->execSql($sql, $result, FALSE);
+            $this->mBd->execSql($sql, $result, false);
 
             if ($result != null) {
                 while (list ($key, $value) = each($result)) {
@@ -459,7 +459,7 @@ class Langstring extends Content {
                             // Strip HTML
                             $string = $_HtmlSafe->parseHtml($string);
                         }
-                        if ($value['value'] != $string) {
+                        if ($value['value'] != $string || $language!=$value['locales_id']) {
                             $this->mBd->execSqlUpdate("UPDATE content_langstring_entries SET locales_id = $languageSQL , value = '$string' WHERE langstrings_id = '$this->id' AND langstring_entries_id='$value[langstring_entries_id]'", FALSE);
                             $this->touch();
                             // Create new cache object.
