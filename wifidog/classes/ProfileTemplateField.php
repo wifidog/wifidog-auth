@@ -417,6 +417,14 @@ class ProfileTemplateField implements GenericObject {
         $html .= "<input type='text' name='$name' value='" . $this->getDisplayOrder() . "' size='2'>\n";
         $html .= "</div>\n";
         $html .= "</li>\n";
+
+        $metadata_criteria_array = array (
+        array (
+        'isSimpleContent'
+                        )
+        );
+        $metadada_allowed_content_types = ContentTypeFilter :: getObject($metadata_criteria_array);
+
         
         // content_type_filter_id 
         $html .= "<li class='admin_element_item_container'>\n";
@@ -435,7 +443,7 @@ class ProfileTemplateField implements GenericObject {
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<div class='admin_element_label'>" . _("Display label") . ":</div>\n";
         if (empty ($this->profile_template_field_row['display_label_content_id'])) {
-	        $html .= Content :: getNewContentUI("profile_template_field_{$this->id}_new_display_label_content");
+            $html .= Content :: getNewContentUI("profile_template_field_{$this->id}_new_display_label_content", $metadada_allowed_content_types);
 	        $html .= "</li>\n";
         } else {
             $display_label_content = Content :: getObject($this->profile_template_field_row['display_label_content_id']);
@@ -453,7 +461,7 @@ class ProfileTemplateField implements GenericObject {
         $html .= "<div class='admin_element_label'>" . _("Admin label") . ":</div>\n";
         if (empty ($this->profile_template_field_row['admin_label_content_id'])) {
             $html .= "<li class='admin_element_item_container'>\n";
-	        $html .= Content :: getNewContentUI("profile_template_field_{$this->id}_new_admin_label_content");
+            $html .= Content :: getNewContentUI("profile_template_field_{$this->id}_new_admin_label_content", $metadada_allowed_content_types);
 	        $html .= "</li>\n";
         } else {
             $admin_label_content = Content :: getObject($this->profile_template_field_row['admin_label_content_id']);

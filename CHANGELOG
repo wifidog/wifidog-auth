@@ -1,4 +1,7 @@
 2007-03-20 Benoit Grégoire  <bock@step.polymtl.ca>
+	* ProfileTemplateField.php:  Only allow simple content types as metadata.
+
+2007-03-20 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix #304:  For some reason the Smarty assignement to userName used getListUI() instead of getUsername()???
 	* Add HyperLink content type
 	* Add UIUserList content type (work towards #158)
