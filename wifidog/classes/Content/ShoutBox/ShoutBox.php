@@ -59,25 +59,25 @@ class ShoutBox extends Content {
      *
      * @return void     */
     protected function __construct($content_id) {
-    	parent :: __construct($content_id);
+        parent :: __construct($content_id);
     }
 
     /**
      * Gets the content that is to be added as onclick value in the form
      *
      * @return Content or null
-    
+
      */
     private function getOnClickContent() {
-    	$content_id = $this->getKVP('ShoutBox_onclick_content_id');
-    	if($content_id)
-    	{
-    		return Content::getObject($content_id);
-    	}
-    	else
-    	{
-    		return null;
-    	}
+        $content_id = $this->getKVP('ShoutBox_onclick_content_id');
+        if($content_id)
+        {
+            return Content::getObject($content_id);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     /**
@@ -88,15 +88,15 @@ class ShoutBox extends Content {
      * @return true
      */
     private function setOnClickContent($content) {
-    	if($content)
-    	{
-    		$this->setKVP('ShoutBox_onclick_content_id', $content->getId());
-    	}
-    	else
-    	{
-    		$this->setKVP('ShoutBox_onclick_content_id', null);
-    	}
-    	return true;
+        if($content)
+        {
+            $this->setKVP('ShoutBox_onclick_content_id', $content->getId());
+        }
+        else
+        {
+            $this->setKVP('ShoutBox_onclick_content_id', null);
+        }
+        return true;
     }
 
     /**
@@ -148,7 +148,7 @@ class ShoutBox extends Content {
         }
         return $retval;
     }
-    
+
     /**
      * Returns the maximum number of character one can shout.  0 means no limit.
      *
@@ -191,144 +191,144 @@ class ShoutBox extends Content {
         }
         return $displayNumItems;
     }
-    
+
     public function getAdminUI($subclass_admin_interface = null, $title = null) {
-    	$html = null;
+        $html = null;
 
-    	/*display_num_items*/
-    	$displayNumItems = $this->getDisplayNumItems();
-    	$html .= "<li class='admin_element_item_container'>\n";
-    	$html .= "<div class='admin_element_label'>" . ("Number of shouts to display in the list (0 means no limit)") . ": </div>\n";
-    	$html .= "<div class='admin_element_data'>\n";
-    	$name = "shoutbox_{this->getId()}_display_num_items";
-    	$html .= "<input type='text' size='6' value='$displayNumItems' name='$name'>\n";
-    	$html .= "</div>\n";
-    	$html .= "</li>\n";
+        /*display_num_items*/
+        $displayNumItems = $this->getDisplayNumItems();
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>" . ("Number of shouts to display in the list (0 means no limit)") . ": </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
+        $name = "shoutbox_{this->getId()}_display_num_items";
+        $html .= "<input type='text' size='6' value='$displayNumItems' name='$name'>\n";
+        $html .= "</div>\n";
+        $html .= "</li>\n";
 
-    	/*max_shout_chars*/
-    	$maxShoutChars = $this->getMaxShoutChars();
-    	$html .= "<li class='admin_element_item_container'>\n";
-    	$html .= "<div class='admin_element_label'>" . ("Maximum number of characters for each shouts (0 means no limit)") . ": </div>\n";
-    	$html .= "<div class='admin_element_data'>\n";
-    	$name = "shoutbox_{this->getId()}_max_num_chars";
-    	$html .= "<input type='text' size='6' value='$maxShoutChars' name='$name'>\n";
-    	$html .= "</div>\n";
-    	$html .= "</li>\n";
-    	 
-    	/*shout_field_size*/
-    	$shoutFieldSize = $this->getShoutFieldSize();
-    	$html .= "<li class='admin_element_item_container'>\n";
-    	$html .= "<div class='admin_element_label'>" . ("Size (num characters) of the shout field") . ": </div>\n";
-    	$html .= "<div class='admin_element_data'>\n";
-    	$name = "shoutbox_{this->getId()}_shout_field_size";
-    	$html .= "<input type='text' size='6' value='$shoutFieldSize' name='$name'>\n";
-    	$html .= "</div>\n";
-    	$html .= "</li>\n";
-    	
-    	/* OnclickContent */
-    	$criteria_array = array (
-    	array ('isTextualContent'),
-    	array ('isSimpleContent')
-    	);
+        /*max_shout_chars*/
+        $maxShoutChars = $this->getMaxShoutChars();
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>" . ("Maximum number of characters for each shouts (0 means no limit)") . ": </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
+        $name = "shoutbox_{this->getId()}_max_num_chars";
+        $html .= "<input type='text' size='6' value='$maxShoutChars' name='$name'>\n";
+        $html .= "</div>\n";
+        $html .= "</li>\n";
 
-    	$onclick_allowed_content_types = ContentTypeFilter :: getObject($criteria_array);
+        /*shout_field_size*/
+        $shoutFieldSize = $this->getShoutFieldSize();
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>" . ("Size (num characters) of the shout field") . ": </div>\n";
+        $html .= "<div class='admin_element_data'>\n";
+        $name = "shoutbox_{this->getId()}_shout_field_size";
+        $html .= "<input type='text' size='6' value='$shoutFieldSize' name='$name'>\n";
+        $html .= "</div>\n";
+        $html .= "</li>\n";
+         
+        /* OnclickContent */
+        $criteria_array = array (
+        array ('isTextualContent'),
+        array ('isSimpleContent')
+        );
+
+        $onclick_allowed_content_types = ContentTypeFilter :: getObject($criteria_array);
 
 
-    	$content = $this->getOnClickContent();
-    	$html .= "<li class='admin_element_item_container admin_section_edit_description'>\n";
-    	$html .= "<div class='admin_element_data'>\n";
-    	$onclick_title = _("Shout button 'onclick=' value (optionnal):");
-    	if (!$content) {
-    		$name = "shoutbox_" . $this->id . "_onclick_content_new";
-    		$html .= self :: getNewContentUI($name, $onclick_allowed_content_types, $onclick_title);
-    		$html .= $hint;
-    	} else {
-    		$html .= $content->getAdminUI(null, $onclick_title);
-    		$html .= "<div class='admin_section_hint'>" . sprintf(_("Note that the onclick parameter will appear inside double quotes in html.  They must be properly encoded fot that context.  You can access the shout text in Javascript with: %s"), "document.getElementById('shout_text').value") . "</div>\n";
-    		$html .= "</div>\n";
-    		$html .= "<div class='admin_element_tools'>\n";
-    		$name = "shoutbox_" . $this->id . "_onclick_content_erase";
-    		$html .= "<input type='submit' class='submit' name='$name' value='" . sprintf(_("Delete %s (%s)"), _("onclick parameter"), get_class($content)) . "'>";
+        $content = $this->getOnClickContent();
+        $html .= "<li class='admin_element_item_container admin_section_edit_description'>\n";
+        $html .= "<div class='admin_element_data'>\n";
+        $onclick_title = _("Shout button 'onclick=' value (optionnal):");
+        if (!$content) {
+            $name = "shoutbox_" . $this->id . "_onclick_content_new";
+            $html .= self :: getNewContentUI($name, $onclick_allowed_content_types, $onclick_title);
+            $html .= $hint;
+        } else {
+            $html .= $content->getAdminUI(null, $onclick_title);
+            $html .= "<div class='admin_section_hint'>" . sprintf(_("Note that the onclick parameter will appear inside double quotes in html.  They must be properly encoded fot that context.  You can access the shout text in Javascript with: %s"), "document.getElementById('shout_text').value") . "</div>\n";
+            $html .= "</div>\n";
+            $html .= "<div class='admin_element_tools'>\n";
+            $name = "shoutbox_" . $this->id . "_onclick_content_erase";
+            $html .= "<input type='submit' class='submit' name='$name' value='" . sprintf(_("Delete %s (%s)"), _("onclick parameter"), get_class($content)) . "'>";
 
-    	}    	    		
-    	$html .= "</div>\n";
-    	$html .= "</li>\n";
-    	return parent :: getAdminUI($html, $title);
+        }
+        $html .= "</div>\n";
+        $html .= "</li>\n";
+        return parent :: getAdminUI($html, $title);
     }
 
     /**
-    * Processes the input of the administration interface for Picture
-    *
-    * @return void
-    */
+     * Processes the input of the administration interface for Picture
+     *
+     * @return void
+     */
     public function processAdminUI() {
-    	$db=AbstractDb::getObject();
-    	if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
-    		parent :: processAdminUI();
-    		
-    		/*display_num_items*/
-    		$name = "shoutbox_{this->getId()}_display_num_items";
-    		$this->setDisplayNumItems($_REQUEST[$name]);
+        $db=AbstractDb::getObject();
+        if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
+            parent :: processAdminUI();
 
-    		/*max_shout_chars*/
-    		$name = "shoutbox_{this->getId()}_max_num_chars";
-    		$this->setMaxShoutChars($_REQUEST[$name]);
-    		
-    		/*shout_field_size*/
-    		$name = "shoutbox_{this->getId()}_shout_field_size";
-    		$this->setShoutFieldSize($_REQUEST[$name]);
-    		
-    		/* OnclickContent */
-    		$content = $this->getOnClickContent();
-    		if (!$content) {
-    			$name = "shoutbox_" . $this->id . "_onclick_content_new";
-    			$content = self :: processNewContentUI($name);
-    			$this->setOnClickContent($content);
-    		} else {
-    			$name = "shoutbox_" . $this->id . "_onclick_content_erase";
-    
-    			if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true) {
-    				$this->setOnClickContent(null);
-    				$content->delete($errmsg);
-    			} else {
-    				$content->processAdminUI();
-    			}
-    		}
-    	}
+            /*display_num_items*/
+            $name = "shoutbox_{this->getId()}_display_num_items";
+            $this->setDisplayNumItems($_REQUEST[$name]);
+
+            /*max_shout_chars*/
+            $name = "shoutbox_{this->getId()}_max_num_chars";
+            $this->setMaxShoutChars($_REQUEST[$name]);
+
+            /*shout_field_size*/
+            $name = "shoutbox_{this->getId()}_shout_field_size";
+            $this->setShoutFieldSize($_REQUEST[$name]);
+
+            /* OnclickContent */
+            $content = $this->getOnClickContent();
+            if (!$content) {
+                $name = "shoutbox_" . $this->id . "_onclick_content_new";
+                $content = self :: processNewContentUI($name);
+                $this->setOnClickContent($content);
+            } else {
+                $name = "shoutbox_" . $this->id . "_onclick_content_erase";
+
+                if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true) {
+                    $this->setOnClickContent(null);
+                    $content->delete($errmsg);
+                } else {
+                    $content->processAdminUI();
+                }
+            }
+        }
     }
 
-       /** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
-      * @return The HTML fragment for this interface */
-       public function getUserUI() {
+    /** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
+     * @return The HTML fragment for this interface */
+    public function getUserUI() {
         $real_node = Node::getCurrentRealNode();//For production
         //$real_node = Node::getCurrentNode();//For testing
         $node = Node::getCurrentNode();
         $formHtml = null;
         if($real_node) {
-        	$formHtml .= "<form action='".BASE_URL_PATH."content/ShoutBox/add_message.php'>\n";
-        	$formHtml .= "<input type='hidden' name='shoutbox_id' value='".$this->getId()."'/>\n";
-        	//$html .= "destination_url: ";pretty_print_r($_SERVER);
-        	$maxShoutChars = $this->getMaxShoutChars();
-        	$shoutFieldSize = $this->getShoutFieldSize();
-        	if($maxShoutChars>0) {
-        	    $max_size = "maxlength='$maxShoutChars'";
-        	    $maxShoutChars<=$shoutFieldSize?$size="size='$maxShoutChars'":$size="size='$shoutFieldSize'";
-        	}
-        	else {
-        	    $max_size = null;
-        	    $size = "size='$shoutFieldSize'";
-        	}
-        	$formHtml .= "<input type='hidden' name='node_id' value='".$node->getId()."'/>\n";
-        	$formHtml .= "<input type='text' name='shout_text' id='shout_text' $size $max_size value=''/>\n";
-        	$onclick_content = $this->getOnClickContent();
-        	if($onclick_content){
-        		$onclick="onclick=\"".$onclick_content->getString()."\"";
-        	} else
-        	{
-        		$onclick = null;
-        	}
-        	$formHtml .= "<input type='submit' name='shout_submit' $onclick value='"._("Shout!")."'>\n";
-        	$formHtml .= "</form>\n";
+            $formHtml .= "<form action='".BASE_URL_PATH."content/ShoutBox/add_message.php'>\n";
+            $formHtml .= "<input type='hidden' name='shoutbox_id' value='".$this->getId()."'/>\n";
+            //$html .= "destination_url: ";pretty_print_r($_SERVER);
+            $maxShoutChars = $this->getMaxShoutChars();
+            $shoutFieldSize = $this->getShoutFieldSize();
+            if($maxShoutChars>0) {
+                $max_size = "maxlength='$maxShoutChars'";
+                $maxShoutChars<=$shoutFieldSize?$size="size='$maxShoutChars'":$size="size='$shoutFieldSize'";
+            }
+            else {
+                $max_size = null;
+                $size = "size='$shoutFieldSize'";
+            }
+            $formHtml .= "<input type='hidden' name='node_id' value='".$node->getId()."'/>\n";
+            $formHtml .= "<input type='text' name='shout_text' id='shout_text' $size $max_size value=''/>\n";
+            $onclick_content = $this->getOnClickContent();
+            if($onclick_content){
+                $onclick="onclick=\"".$onclick_content->getString()."\"";
+            } else
+            {
+                $onclick = null;
+            }
+            $formHtml .= "<input type='submit' name='shout_submit' $onclick value='"._("Shout!")."'>\n";
+            $formHtml .= "</form>\n";
         }
         else
         {
@@ -359,8 +359,8 @@ class ShoutBox extends Content {
                     $user = User::getObject($row['author_user_id']);
                     $content = Content::getObject($row['message_content_id']);
                     $html_main .= "<li>";
-                    $html_main .= $user->getListUI().": \n";
                     $dateStr = "<span class='date'>".strftime('%x', $row['creation_date_php'])."</span>\n";
+                    $html_main .= $dateStr.' '. $user->getListUI().": \n";
                     $html_main .= "<div class='message'>".$content->getListUI()."$dateStr</div>\n";
                     $html_main .= "</li>";
                 }
@@ -371,11 +371,11 @@ class ShoutBox extends Content {
         {
             $html_main .= "<p>"._("Sorry, I am unable to determine your current node")."</p>\n";
         }
-        
+
         $this->setUserUIMainDisplayContent($html_main);
         //$this->setUserUIMainInteractionArea($formHtml);
         return Content :: getUserUI();
-       }
+    }
 
     /**
      * Reloads the object from the database.
@@ -386,10 +386,10 @@ class ShoutBox extends Content {
      * constructor from the wrong scope
      *
      * @return void
-    
+
      */
     private function refresh() {
-    	$this->__construct($this->id);
+        $this->__construct($this->id);
     }
 }
 
