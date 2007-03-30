@@ -50,7 +50,8 @@
  * @copyright  2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class ShoutBox extends Content {
-    const DEFAULT_MAX_SHOUT_CHARS=80;
+    const DEFAULT_SHOUT_FIELD_SIZE=40;
+    const DEFAULT_DISPLAY_NUM_ITEMS=5;
     /**
      * Constructor
      *
@@ -99,8 +100,40 @@ class ShoutBox extends Content {
     }
 
     /**
+     * Set the size of the shout field (in characters)
+     * @param $$numChars integer >= 1 The number of characters.
+     * @return the value, AFTER it was set (so the previous value if the value was invalid)
+     */
+    protected function setShoutFieldSize($numChars)
+    {
+        $numChars = (int)$numChars;
+        if($numChars >= 1) {
+            $retval = $this->setKVP(get_class($this) . '_shout_field_size', $numChars);
+        }
+        else {
+            //We gave an invalide value
+            $retval = $this->getMaxShoutChars();
+        }
+        return $retval;
+    }
+
+    /**
+     * Returns the maximum number of character one can shout.  0 means no limit.
+     *
+     * @return integer number of items to display
+     */
+    protected function getShoutFieldSize()
+    {
+        $numChars = $this->getKVP(get_class($this) . '_shout_field_size');
+        if(empty($numChars)) {
+            $numChars = self::DEFAULT_SHOUT_FIELD_SIZE;
+        }
+        return $numChars;
+    }
+
+    /**
      * Set the number of items to be displayed by the shoutbox
-     * @param $numItems integer >= 0 The maximum number characters.  0 means no limit
+     * @param $numChars integer >= 0 The maximum number of characters.  0 means no limit
      * @return the value, AFTER it was set (so the previous value if the value was invalid)
      */
     protected function setMaxShoutChars($numChars)
@@ -139,7 +172,7 @@ class ShoutBox extends Content {
             $retval = $this->setKVP(get_class($this) . '_display_num_items', $numItems);
         }
         else {
-            //We gave an invalide value
+            //We gave an invalid value
             $retval = $this->getDisplayNumItems();
         }
         return $retval;
@@ -154,7 +187,7 @@ class ShoutBox extends Content {
     {
         $displayNumItems = $this->getKVP(get_class($this) . '_display_num_items');
         if(empty($displayNumItems)) {
-            $displayNumItems = 5;
+            $displayNumItems = self::DEFAULT_DISPLAY_NUM_ITEMS;
         }
         return $displayNumItems;
     }
@@ -167,7 +200,7 @@ class ShoutBox extends Content {
     	$html .= "<li class='admin_element_item_container'>\n";
     	$html .= "<div class='admin_element_label'>" . ("Number of shouts to display in the list (0 means no limit)") . ": </div>\n";
     	$html .= "<div class='admin_element_data'>\n";
-    	$name = "banner_add_group_{this->getId()}_display_num_items";
+    	$name = "shoutbox_{this->getId()}_display_num_items";
     	$html .= "<input type='text' size='6' value='$displayNumItems' name='$name'>\n";
     	$html .= "</div>\n";
     	$html .= "</li>\n";
@@ -177,11 +210,21 @@ class ShoutBox extends Content {
     	$html .= "<li class='admin_element_item_container'>\n";
     	$html .= "<div class='admin_element_label'>" . ("Maximum number of characters for each shouts (0 means no limit)") . ": </div>\n";
     	$html .= "<div class='admin_element_data'>\n";
-    	$name = "banner_add_group_{this->getId()}_max_num_chars";
+    	$name = "shoutbox_{this->getId()}_max_num_chars";
     	$html .= "<input type='text' size='6' value='$maxShoutChars' name='$name'>\n";
     	$html .= "</div>\n";
     	$html .= "</li>\n";
     	 
+    	/*shout_field_size*/
+    	$shoutFieldSize = $this->getShoutFieldSize();
+    	$html .= "<li class='admin_element_item_container'>\n";
+    	$html .= "<div class='admin_element_label'>" . ("Size (num characters) of the shout field") . ": </div>\n";
+    	$html .= "<div class='admin_element_data'>\n";
+    	$name = "shoutbox_{this->getId()}_shout_field_size";
+    	$html .= "<input type='text' size='6' value='$shoutFieldSize' name='$name'>\n";
+    	$html .= "</div>\n";
+    	$html .= "</li>\n";
+    	
     	/* OnclickContent */
     	$criteria_array = array (
     	array ('isTextualContent'),
@@ -224,13 +267,17 @@ class ShoutBox extends Content {
     		parent :: processAdminUI();
     		
     		/*display_num_items*/
-    		$name = "banner_add_group_{this->getId()}_display_num_items";
+    		$name = "shoutbox_{this->getId()}_display_num_items";
     		$this->setDisplayNumItems($_REQUEST[$name]);
 
     		/*max_shout_chars*/
-    		$name = "banner_add_group_{this->getId()}_max_num_chars";
+    		$name = "shoutbox_{this->getId()}_max_num_chars";
     		$this->setMaxShoutChars($_REQUEST[$name]);
-
+    		
+    		/*shout_field_size*/
+    		$name = "shoutbox_{this->getId()}_shout_field_size";
+    		$this->setShoutFieldSize($_REQUEST[$name]);
+    		
     		/* OnclickContent */
     		$content = $this->getOnClickContent();
     		if (!$content) {
@@ -262,13 +309,14 @@ class ShoutBox extends Content {
         	$formHtml .= "<input type='hidden' name='shoutbox_id' value='".$this->getId()."'/>\n";
         	//$html .= "destination_url: ";pretty_print_r($_SERVER);
         	$maxShoutChars = $this->getMaxShoutChars();
+        	$shoutFieldSize = $this->getShoutFieldSize();
         	if($maxShoutChars>0) {
         	    $max_size = "maxlength='$maxShoutChars'";
-        	    $maxShoutChars<=self::DEFAULT_MAX_SHOUT_CHARS?$size="size='$maxShoutChars'":$size="size='".self::DEFAULT_MAX_SHOUT_CHARS."'";
+        	    $maxShoutChars<=$shoutFieldSize?$size="size='$maxShoutChars'":$size="size='$shoutFieldSize'";
         	}
         	else {
         	    $max_size = null;
-        	    $size = "size='".self::DEFAULT_MAX_SHOUT_CHARS."'";
+        	    $size = "size='$shoutFieldSize'";
         	}
         	$formHtml .= "<input type='hidden' name='node_id' value='".$node->getId()."'/>\n";
         	$formHtml .= "<input type='text' name='shout_text' id='shout_text' $size $max_size value=''/>\n";
