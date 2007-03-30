@@ -359,9 +359,9 @@ class ShoutBox extends Content {
                     $user = User::getObject($row['author_user_id']);
                     $content = Content::getObject($row['message_content_id']);
                     $html_main .= "<li>";
-                    $html_main .= $user->getListUI()."\n";
-                    $html_main .= "<span class='date'>".strftime('%x', $row['creation_date_php'])."</span>\n";
-                    $html_main .= "<div class='message'>".$content->getListUI()."</div>\n";
+                    $html_main .= $user->getListUI().": \n";
+                    $dateStr = "<span class='date'>".strftime('%x', $row['creation_date_php'])."</span>\n";
+                    $html_main .= "<div class='message'>".$content->getListUI()."$dateStr</div>\n";
                     $html_main .= "</li>";
                 }
                 $html_main .= "</ul>";

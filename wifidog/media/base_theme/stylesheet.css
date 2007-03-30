@@ -812,6 +812,15 @@ fpr_empty_feeds {
     padding: 5px;
 }
 
+/* Shoutbox */
+.ShoutBox .message {
+    display: inline;
+}
+.ShoutBox ul {
+    list-style-type: none;
+    padding-left: 0.5em;
+}
+
 table.content_admin {
     margin-top: 5px;
     border: 1px solid grey;

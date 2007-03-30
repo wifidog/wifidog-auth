@@ -4,6 +4,7 @@
 	Move the shout form in the list.
 	Allow choosing the number of shouts displayed.
 	Make the size of the shout field configurable from the admin interface
+	Put the date of the shout at the end of the shout.
 	* User.php:  Make the entire "edit profile" link CSS targetable, including the parentesis.
 
 2007-03-20 Benoit Grégoire  <bock@step.polymtl.ca>
