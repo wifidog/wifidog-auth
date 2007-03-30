@@ -253,8 +253,8 @@ class ShoutBox extends Content {
        /** Retreives the user interface of this object.  Anything that overrides this method should call the parent method with it's output at the END of processing.
       * @return The HTML fragment for this interface */
        public function getUserUI() {
-        $real_node = Node::getCurrentRealNode();
-        $real_node = Node::getCurrentNode();//For testing
+        $real_node = Node::getCurrentRealNode();//For production
+        //$real_node = Node::getCurrentNode();//For testing
         $node = Node::getCurrentNode();
         $formHtml = null;
         if($real_node) {
