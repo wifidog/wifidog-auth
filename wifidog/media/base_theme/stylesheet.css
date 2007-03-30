@@ -846,6 +846,10 @@ table.content_admin td {
 	font-weight: bold;
 }
 
+.user_edit_profile_link {
+	display: inline;
+	}
+	
 .user_ui_profile_field {
 }
 

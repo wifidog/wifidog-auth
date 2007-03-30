@@ -1,4 +1,11 @@
 2007-03-20 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Shoutbox.php: Allow limiting the number of characters entered for a shout.  
+	(Ideally, this would also need to be enforced at db write level).   
+	Move the shout form in the list.
+	Allow choosing the number of shouts displayed.
+	* User.php:  Make the entire "edit profile" link CSS targetable, including the parentesis.
+
+2007-03-20 Benoit Grégoire  <bock@step.polymtl.ca>
 	* ProfileTemplateField.php:  Only allow simple content types as metadata.
 	* Langstring.php:  Fix bug:  one couldn't change the language of a string without changing the actual text.
 	* Content.php:  Add isExactContentType() method.

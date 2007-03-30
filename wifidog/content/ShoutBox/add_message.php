@@ -48,9 +48,9 @@ require_once('classes/User.php');
 $db = AbstractDb::getObject();
 $user=User::getCurrentUser();
 
-//$node=Node::getObject('cdead28e2b5a75ddbd67f4f11c12ad9e');//For testing
+$node=Node::getObject('6ddf7add76aa0408691106cbb83a7ac2');//For testing, change to your test node's id
 //For production.  If someone is going to spam, at least force him to physically be at a hotspot.
-$node=Node::getCurrentRealNode();
+//$node=Node::getCurrentRealNode();
 //pretty_print_r($node);
 if($user) {
 	if (!empty ($_REQUEST['shoutbox_id']) && !empty ($_REQUEST['shout_text']) && $node) {
