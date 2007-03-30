@@ -361,7 +361,7 @@ class ShoutBox extends Content {
                     $html_main .= "<li>";
                     $dateStr = "<span class='date'>".strftime('%x', $row['creation_date_php'])."</span>\n";
                     $html_main .= $dateStr.' '. $user->getListUI().": \n";
-                    $html_main .= "<div class='message'>".$content->getListUI()."$dateStr</div>\n";
+                    $html_main .= "<div class='message'>".$content->getListUI()."</div>\n";
                     $html_main .= "</li>";
                 }
                 $html_main .= "</ul>";
