@@ -1,3 +1,6 @@
+2007-04-03 Benoit Grégoire  <bock@step.polymtl.ca>
+	* AnonymisedDataExport.php:  New report.  Adds the ability to export anonymised SQL data for academic research. 
+
 2007-03-20 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Shoutbox.php: Allow limiting the number of characters entered for a shout.  
 	(Ideally, this would also need to be enforced at db write level).   
