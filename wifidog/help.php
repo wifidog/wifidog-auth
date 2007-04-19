@@ -39,7 +39,7 @@
  * @package    WiFiDogAuthServer
  * @author     Philippe April
  * @copyright  2005-2006 Philippe April
- * @version    Subversion $Id: faq.php 1009 2006-03-28 08:08:08Z benoitg $
+ * @version    Subversion $Id: help.php 1009 2006-03-28 08:08:08Z benoitg $
  * @link       http://www.wifidog.org/
  */
 

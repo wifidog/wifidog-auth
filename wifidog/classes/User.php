@@ -467,7 +467,7 @@ class User implements GenericObject {
             $db->execSqlUniqueRes($sql, $user_info, false);
 
             if ($user_info['validation_grace_time_expired'] == 't') {
-                $errmsg = sprintf(_("Sorry, your %.0f minutes grace period to retrieve your email and validate your account has now expired. You will have to connect to the internet and validate your account from another location. For more help, please %s click here %s."), $user_info['validation_grace_time']/60, '<a href="' . BASE_URL_PATH . 'faq.php' . '">', '</a>');
+                $errmsg = sprintf(_("Sorry, your %.0f minutes grace period to retrieve your email and validate your account has now expired. You will have to connect to the internet and validate your account from another location."), $user_info['validation_grace_time']/60);
                 $retval = false;
             } else {
                 $errmsg = _("Your account is currently valid.");

@@ -50,14 +50,7 @@
 {*
     BEGIN section TOOLCONTENT
 *}
-    <div id="login_form">
-        <ul>
-			{if $userIsValid}
-			{else}
-            <li><a href="{$base_url_path}faq.php">{"I have trouble connecting and I would like some help"|_}</a></li>
-			{/if}
-        </ul>
-    </div>
+
 {*
     END section TOOLCONTENT
 *}
