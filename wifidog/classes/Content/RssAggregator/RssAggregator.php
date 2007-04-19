@@ -405,7 +405,7 @@ private function initFeedPressReview()
                 $max_item_age = 'NULL';
             }
             else {
-                $max_item_age = "$max_item_age seconds";
+                $max_item_age = "'$max_item_age seconds'";
             }
 
             $max_item_age = $db->escapeString($max_item_age);
