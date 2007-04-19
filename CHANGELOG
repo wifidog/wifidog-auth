@@ -1,3 +1,6 @@
+2007-04-19  Benoit Grégoire  <bock@step.polymtl.ca>
+	* RssAggregator.php:  Fix bug saving the max item age. 
+
 2007-04-03 Benoit Grégoire  <bock@step.polymtl.ca>
 	* AnonymisedDataExport.php:  New report.  Adds the ability to export anonymised SQL data for academic research. 
 
