@@ -1,3 +1,6 @@
+2007-04-24 Benoit Grégoire  <bock@step.polymtl.ca>
+	* AuthenticatorRadius.php:  Fix RADIUS dependency detection bug related to case sensitivity
+
 2007-04-19  Benoit Grégoire  <bock@step.polymtl.ca>
 	* RssAggregator.php:  Fix bug saving the max item age. 
 	* Forgot to remove a bunch of links to faq.php.
