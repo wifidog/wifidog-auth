@@ -351,10 +351,10 @@ class ShoutBox extends Content {
             }
             $sql = "SELECT *, EXTRACT(EPOCH FROM creation_date) as creation_date_php FROM content_shoutbox_messages WHERE origin_node_id='$node_id' ORDER BY creation_date DESC $limit\n";
             $db->execSql($sql, $rows, false);
+            $html_main .= "<ul>";
+            $html_main .= "<li>$formHtml</li>";
             if($rows) {
                 //$html_main .= $heading;
-                $html_main .= "<ul>";
-                $html_main .= "<li>$formHtml</li>";
                 foreach ($rows as $row) {
                     $user = User::getObject($row['author_user_id']);
                     $content = Content::getObject($row['message_content_id']);
@@ -364,8 +364,8 @@ class ShoutBox extends Content {
                     $html_main .= "<div class='message'>".$content->getListUI()."</div>\n";
                     $html_main .= "</li>";
                 }
-                $html_main .= "</ul>";
             }
+            $html_main .= "</ul>";
         }
         else
         {
