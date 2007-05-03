@@ -1,5 +1,8 @@
+2007-05-03  Benoit Gréoire  <bock@step.polymtl.ca>
+    * MainUI_ToolContent.tpl: Make preferences_link, login_link, and logout_link CSS targetable.  Get rid of some deprecated CSS.
+
 2007-04-25  Benoit Gréoire  <bock@step.polymtl.ca>
-        * ShoutBox.php:  The shout form wasn't displayed whent there weren't any Shouts yet, doh!
+    * ShoutBox.php:  The shout form wasn't displayed whent there weren't any Shouts yet, doh!
 
 2007-04-24 Benoit Grégoire  <bock@step.polymtl.ca>
 	* AuthenticatorRadius.php:  Fix RADIUS dependency detection bug related to case sensitivity

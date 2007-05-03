@@ -254,21 +254,15 @@ div.test {
     padding: 0em 1em;
     border: 1px solid #d7d5d5;
 }
-img.separator {
-    display: inline;
-    position: relative;
-    top: 0px;
-    vertical-align: text-top;
-}
-img.administration {
+
+#logout_link IMG {
     vertical-align: middle;
 }
 
-a.administration {
-    color: #616756;
-    font-size: 8pt;
-    text-decoration: none;
+#preferences_link IMG {
+    vertical-align: middle;
 }
+
 a.navigation {
     position: relative;
     top: 10px;
@@ -285,13 +279,6 @@ a.navigation {
 .clearbr {
 	clear: both;
 }
-
-
-.logos {
-    float: right;
-    text-align: center;
-}
-
 
 /** Messages */
 
