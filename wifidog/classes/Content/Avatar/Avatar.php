@@ -55,12 +55,66 @@ class Avatar extends SimplePicture
         parent :: __construct($content_id);
         $this -> configEnableEditWidthHeight(false);
         $this -> configEnableHyperlink(false);
+
+		// Max 40x40 pixels
+        $this->setMaxDisplayWidth(40);
+        $this->setMaxDisplayHeight(40);
     }
 
     public static function getDefaultUserUI() {
         $html = "<img src='" . COMMON_IMAGES_URL . "default_avatar.png' class='Avatar' />";
         return $html;
     }
+
+    /**
+	 * Validates the uploaded file and return a boolean to tell if valid
+	 * This method should be overridden when you need to write special validation scripts
+	 *
+	 * @param string path to input file
+	 * @param string path to output file (by ref.), making sure you create a struct that matches the $_FILES[][] format
+	 *
+	 * @return boolean
+	 */
+	protected function validateUploadedFile($input, &$output) {
+		$errmsg = null;
+		// Only if GD is available, resize to max size
+		if (Dependencies::check("gd", $errmsg)) {
+			// Extract image metadata
+			list($width_orig, $height_orig, $type, $attr) = getimagesize($input['tmp_name']);
+			// Check if it busts the max size
+			if($width_orig > $this->getMaxDisplayWidth() || $height_orig > $this->getMaxDisplayHeight()) {
+				// Init with max values
+				$width = $this->getMaxDisplayWidth();
+				$height = $this->getMaxDisplayHeight();
+
+				// Compute ratios
+				$ratio_orig = $width_orig / $height_orig;
+				if ($this->getMaxDisplayWidth() / $this->getMaxDisplayHeight() > $ratio_orig) {
+				   $width =  $height * $ratio_orig;
+				} else {
+				   $height = $width / $ratio_orig;
+				}
+
+				// Resample
+				$image_p = imagecreatetruecolor($width, $height);
+				$image = imagecreatefromjpeg($input['tmp_name']);
+				imagecopyresampled($image_p, $image, 0, 0, 0, 0, $width, $height, $width_orig, $height_orig);
+
+				// Build output metadata struct
+				$output = array();
+				$output['tmp_name'] = tempnam("/tmp", session_id());
+				$output['type'] = "image/png";
+				$output['name'] = $input['name'];
+
+				// Output PNG at full compression (no artefact)
+				imagepng($image_p, $output['tmp_name'], 9);
+
+				// Write new file size
+				$output['size'] = filesize($output['tmp_name']);
+			}
+		}
+		return true;
+	}
 }
 
 /*

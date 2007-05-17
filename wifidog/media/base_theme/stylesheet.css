@@ -322,7 +322,7 @@ body div#toolTip p em span { font-weight:bold;color:#fff; }
 }
 
 /********** generic object admin interface **********/
-/* Fieldset, wraps every output of displyAdminUI.  
+/* Fieldset, wraps every output of displyAdminUI.
 All admin_container are also admin_element_group (to ensure that
  nesting will be explicit) and include the classname of the object as
  the object class (such as 'Langstring')*/
@@ -332,7 +332,7 @@ All admin_container are also admin_element_group (to ensure that
     border-bottom: 2px solid #DDDDFF;
 }
 
-/* noramlly a fieldset, logically wraps groups of related 
+/* noramlly a fieldset, logically wraps groups of related
 options.*/
 .admin_element_group
 {
@@ -340,7 +340,7 @@ options.*/
     border-top: 2px dotted #DDDDFF;
     border-bottom: 2px dotted #DDDDFF;
 	}
-	
+
 .admin_container, .admin_element_group{
 	display: block;
     border-right: none;
@@ -349,6 +349,11 @@ options.*/
     padding-right: 0px;
     width:auto;
     }
+
+fieldset.admin_container legend {
+	font-size: 1.2em;
+}
+
 /* Contains a list of administrative properties of an object */
 .admin_element_list {
 	/*background-color: red;*/
@@ -610,18 +615,18 @@ td.admin_element_tools, th.admin_element_tools {
 .fpr_title_date {
 	font-weight: lighter;
 	}
-.fpr_title_str  { 
+.fpr_title_str  {
 	display: inline;
 	font-size: 1.3em;
 	color: #000000;
-	} 
+	}
 .fpr_item_title .fpr_title_str  {
-	 }          
+	 }
 .fpr_list {
 	padding: 0em 0em 0em 0em;
 	margin: 0em 0em 0em 0em;
 	}
-.fpr_item { 
+.fpr_item {
 	list-style-type: none;
 	display: block;
 	}
@@ -634,9 +639,9 @@ fpr_empty_feeds {
 	/*font-size: 1.0em;*/
 	color: #003399;
 	}
-.fpr_expand_switch { 
+.fpr_expand_switch {
 	text-decoration: none;
-	}                 
+	}
 .fpr_popup_inner_div {
 	padding: 0.5em;
 	visibility: hidden;
@@ -845,7 +850,7 @@ table.content_admin td {
 .user_edit_profile_link {
 	display: inline;
 	}
-	
+
 .user_ui_profile_field {
 }
 
@@ -869,7 +874,7 @@ table.content_admin td {
 	margin: 0em;
 	padding: 0em;
 	}
-	
+
 .profile_field_label div{
 	display: inline;
 	}

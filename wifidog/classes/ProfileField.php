@@ -218,7 +218,7 @@ class ProfileField implements GenericObject {
         $content_id = "NULL";
         else
         $content_id = "'".$db->escapeString($content->getId())."'";
-         
+
         $_retVal = $db->execSqlUpdate("UPDATE profile_fields SET content_id = $content_id WHERE profile_field_id = '{$this->getId()}'", false);
         $this->refresh();
 
@@ -285,7 +285,7 @@ class ProfileField implements GenericObject {
         else
         throw new Exception("Could not retrieve the associated content type filter.");
 
-         
+
         return $html;
     }
 
@@ -323,18 +323,20 @@ class ProfileField implements GenericObject {
         // Init values
         //echo "ProfileField::getUserUI()";
         $html = "";
+        $template_field = $this->getProfileTemplateField();
+        $html .=  "<div class='user_ui_profile_field ".$template_field->getSemanticId()."'>\n";
+
+        $content_label = $template_field->getDisplayLabelContent();
+        if(!empty($content_label)){
+            $html .=  "<div class='profile_field_label'>".$content_label->getUserUI()."</div>\n";
+        }
+
         $content_field = $this->getContentField();
         if(!empty($content_field)) {
-            $template_field = $this->getProfileTemplateField();
-            $html .=  "<div class='user_ui_profile_field ".$template_field->getSemanticId()."'>\n";
-            $content_label = $template_field->getDisplayLabelContent();
-            if(!empty($content_label)){
-                $html .=  "<div class='profile_field_label'>".$content_label->getUserUI()."</div>\n";
-            }
             // Display the actual value from the profile field
             $html .=  "<div class='profile_field_content'>".$content_field->getUserUI()."</div>\n";
-            $html .=  "</div>\n";
         }
+        $html .=  "</div>\n";
 
         return $html;
     }

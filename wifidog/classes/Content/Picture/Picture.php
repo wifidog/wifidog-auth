@@ -125,6 +125,7 @@ class Picture extends File {
     public function configEnableHyperlink($enabled = true) {
         return $this->configEnableHyperlink = $enabled;
     }
+
     /**
      * Set the maximum width an image can take in the page
      * @param $width A CSS-acceptable width specification
@@ -138,6 +139,14 @@ class Picture extends File {
      */
     public function setMaxDisplayHeight($height) {
         $this->maxDisplayHeight = $height;
+    }
+
+    public function getMaxDisplayWidth() {
+        return $this->maxDisplayWidth;
+    }
+
+    public function getMaxDisplayHeight() {
+        return $this->maxDisplayHeight;
     }
 
     /**
@@ -282,6 +291,7 @@ class Picture extends File {
         }
         // Show File admin UI + display the picture
         $html .= "<li class='admin_element_item_container'>\n";
+        $html .= _("Preview").":";
         $html .= $this->getUserUI();
         $html .= "</li>\n";
         $html .= "</ul>\n";

@@ -422,7 +422,7 @@ class Content implements GenericObject {
         }
         return $retval;
     }
-    
+
     /**
      * Check if this class is NOT any of the class or subclass of one of the content types given as parameter
      * It's the opposite of isContentType()
@@ -1231,11 +1231,13 @@ class Content implements GenericObject {
 
         return $retval;
     }
+
     /** Get the authors of the Content
      * @return null or array of User objects */
     public function getAuthors() {
         $db = AbstractDb :: getObject();
         $retval = array ();
+        $content_owner_row = null;
         $sql = "SELECT user_id FROM content_has_owners WHERE content_id='$this->id' AND is_author=TRUE";
         $db->execSqlUniqueRes($sql, $content_owner_row, false);
         if ($content_owner_row != null) {
@@ -1245,6 +1247,23 @@ class Content implements GenericObject {
 
         return $retval;
     }
+
+    /** Get the owners of the Content
+     * @return null or array of User objects */
+    public function getOwners() {
+        $db = AbstractDb :: getObject();
+        $retval = array ();
+        $content_owner_row = null;
+        $sql = "SELECT user_id FROM content_has_owners WHERE content_id='$this->id'";
+        $db->execSqlUniqueRes($sql, $content_owner_row, false);
+        if ($content_owner_row != null) {
+            $user = User :: getObject($content_owner_row['user_id']);
+            $retval[] = $user;
+        }
+
+        return $retval;
+    }
+
     /** @see GenricObject
      * @return The id */
     public function getId() {

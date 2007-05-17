@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-18 13:02-0500\n"
+"POT-Creation-Date: 2007-05-17 16:22-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,6 +20,7 @@ msgstr ""
 #: ../classes/User.php:491 ../classes/User.php:566 ../classes/User.php:609
 #: ../classes/User.php:552 ../classes/User.php:595 ../classes/User.php:498
 #: ../classes/User.php:533 ../classes/User.php:537 ../classes/User.php:572
+#: ../classes/User.php:591 ../classes/User.php:626
 msgid ""
 "\n"
 "\n"
@@ -32,6 +33,7 @@ msgstr ""
 
 #: ../classes/User.php:470 ../classes/User.php:474 ../classes/User.php:592
 #: ../classes/User.php:578 ../classes/User.php:517 ../classes/User.php:556
+#: ../classes/User.php:610
 msgid ""
 "\n"
 "\n"
@@ -44,6 +46,7 @@ msgstr ""
 
 #: ../classes/User.php:487 ../classes/User.php:491 ../classes/User.php:609
 #: ../classes/User.php:595 ../classes/User.php:533 ../classes/User.php:572
+#: ../classes/User.php:626
 msgid ""
 "\n"
 "Password: "
@@ -74,6 +77,7 @@ msgstr " dans la base de données."
 
 #: ../classes/User.php:443 ../classes/User.php:447 ../classes/User.php:565
 #: ../classes/User.php:551 ../classes/User.php:497 ../classes/User.php:536
+#: ../classes/User.php:590
 msgid " lost username request"
 msgstr " demande de nom d'utilisateur perdu"
 
@@ -89,11 +93,13 @@ msgstr ""
 
 #: ../classes/User.php:486 ../classes/User.php:490 ../classes/User.php:608
 #: ../classes/User.php:594 ../classes/User.php:532 ../classes/User.php:571
+#: ../classes/User.php:625
 msgid " new password request"
 msgstr " demande de changement de mot de passe"
 
 #: ../classes/User.php:468 ../classes/User.php:472 ../classes/User.php:590
 #: ../classes/User.php:576 ../classes/User.php:515 ../classes/User.php:554
+#: ../classes/User.php:608
 msgid " new user validation"
 msgstr " validation de l'enregistrement"
 
@@ -121,6 +127,7 @@ msgstr ""
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:282
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:284
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:325
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:301
 msgid "(Ignored if display type is random)"
 msgstr "(Ignoré si le type d'affichage est aléatoire)"
 
@@ -166,6 +173,8 @@ msgstr "À propos de Pattern Language"
 #: ../classes/Content.php:1564
 #: ../classes/Content/Langstring/Langstring.php:500
 #: ../classes/Content.php:1799
+#: ../classes/Content/Langstring/Langstring.php:551
+#: ../classes/Content.php:1928 ../classes/Content.php:1947
 msgid "Access denied (not owner of content)"
 msgstr "Accès refusé (vous n'êtes pas propriétaire du contenu)"
 
@@ -192,7 +201,8 @@ msgstr "Accès refusé (vous n'êtes pas propriétaire du contenu)"
 #: ../classes/Content.php:772 ../classes/Node.php:210 ../classes/Node.php:890
 #: ../classes/Node.php:1136 ../classes/ContentTypeFilter.php:411
 #: ../classes/Network.php:1707 ../classes/Node.php:1137
-#: ../classes/ProfileTemplate.php:526
+#: ../classes/ProfileTemplate.php:526 ../classes/Content.php:901
+#: ../classes/ContentTypeFilter.php:409 ../classes/ProfileTemplate.php:532
 msgid "Access denied!"
 msgstr "Accès refusé!"
 
@@ -241,6 +251,8 @@ msgstr "Action"
 #: ../classes/Content/RssAggregator/RssAggregator.php:655
 #: ../classes/Content.php:502 ../classes/Content.php:838
 #: ../classes/ProfileTemplate.php:302 ../classes/ProfileTemplateField.php:148
+#: ../classes/Content.php:545 ../classes/Content.php:967
+#: ../classes/ProfileTemplateField.php:147
 msgid "Add"
 msgstr "Ajouter"
 
@@ -275,6 +287,7 @@ msgstr "Ajouter un nouveau propriétaire de noeud"
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:316
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:318
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:385
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:361
 msgid "Add new allowed node"
 msgstr "Ajouter un nouveau noeud permis"
 
@@ -296,6 +309,8 @@ msgstr "Ajouter un nouveau noeud"
 #: ../classes/Content/Langstring/Langstring.php:395
 #: ../classes/Content/Langstring/Langstring.php:339
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:191
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:146
+#: ../classes/Content/Langstring/Langstring.php:229
 msgid "Add new string"
 msgstr "Ajouter une nouvelle chaîne"
 
@@ -307,7 +322,8 @@ msgstr "Ajouter une nouvelle chaîne"
 #: ../classes/Content.php:1314 ../classes/Content.php:1308
 #: ../classes/Content.php:1333 ../classes/Node.php:968
 #: ../classes/Content.php:1516 ../classes/Node.php:1094
-#: ../classes/Node.php:1095
+#: ../classes/Node.php:1095 ../classes/Content.php:1645
+#: ../classes/Content.php:1664
 msgid "Add owner"
 msgstr "Ajouter un propriétaire"
 
@@ -330,6 +346,7 @@ msgstr "Noeuds permis:"
 #: ../resend_validation.php:47 ../resend_validation.php:116 smarty.txt:144
 #: smarty.txt:166 smarty.txt:169 smarty.txt:146 ../resend_validation.php:117
 #: ../signup.php:229 ../portal/index.php:209 ../portal/index.php:189
+#: ../portal/index.php:148
 msgid "An email with confirmation instructions was sent to your email address."
 msgstr ""
 "Un courriel avec les instructions pour confirmer votre inscription a été "
@@ -374,6 +391,7 @@ msgstr "Attributs"
 #: ../classes/Content.php:1070 ../classes/Content.php:1046
 #: ../classes/Content.php:1061 ../classes/Content.php:1055
 #: ../classes/Content.php:1060 ../classes/Content.php:1212
+#: ../classes/Content.php:1341 ../classes/Content.php:1360
 msgid "Author(s):"
 msgstr "Auteur(s) : "
 
@@ -395,6 +413,7 @@ msgstr ""
 #: ../classes/Content/ContentGroup/ContentGroup.php:387
 #: ../classes/Content/ContentGroup/ContentGroup.php:388
 #: ../classes/Content/ContentGroup/ContentGroup.php:281
+#: ../classes/Content/ContentGroup/ContentGroup.php:282
 msgid "Can content be shown more than once to the same user?"
 msgstr "Le contenu peut-il être affiché plus d'une fois au même usager ?"
 
@@ -402,7 +421,7 @@ msgstr "Le contenu peut-il être affiché plus d'une fois au même usager ?"
 msgid "Can not write to directory '"
 msgstr "Impossible d'écrire dans le répertoire '"
 
-#: smarty.txt:2 smarty.txt:8 ../classes/User.php:735
+#: smarty.txt:2 smarty.txt:8 ../classes/User.php:735 ../classes/User.php:789
 msgid "Change my password"
 msgstr "Changer mon mot de passe"
 
@@ -458,6 +477,8 @@ msgstr "Éléments du groupe de contenus:"
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:397
 #: ../classes/Content/Langstring/Langstring.php:482
 #: ../classes/Content.php:1775
+#: ../classes/Content/Langstring/Langstring.php:533
+#: ../classes/Content.php:1904 ../classes/Content.php:1923
 msgid ""
 "Content is persistent (you must make it non persistent before you can delete "
 "it)"
@@ -474,6 +495,7 @@ msgstr "Gestionnaire de contenu"
 #: ../classes/Content.php:1337 ../classes/Content.php:1286
 #: ../classes/Content.php:1284 ../classes/Content.php:1278
 #: ../classes/Content.php:1303 ../classes/Content.php:1486
+#: ../classes/Content.php:1615 ../classes/Content.php:1634
 msgid "Content owner list"
 msgstr "Liste des propriétaires de contenu"
 
@@ -487,6 +509,7 @@ msgstr "Contenu supprimé correctement"
 #: ../classes/Content.php:721 ../classes/Content.php:744
 #: ../classes/Content.php:753 ../classes/Content.php:746
 #: ../classes/Content.php:750 ../classes/Content.php:796
+#: ../classes/Content.php:925
 msgid "Content type"
 msgstr "Type de contenu"
 
@@ -519,6 +542,7 @@ msgstr "Impossible d'ajouter le propriétaire"
 
 #: ../classes/User.php:412 ../classes/User.php:416 ../classes/User.php:534
 #: ../classes/User.php:520 ../classes/User.php:470 ../classes/User.php:509
+#: ../classes/User.php:563
 msgid "Could not change user's password."
 msgstr "Impossible de changer le mot de passe de l'utilisateur"
 
@@ -544,7 +568,7 @@ msgstr "Impossible de supprimer le noeud !"
 #: ../classes/Content/File.php:378 ../classes/Content/File.php:377
 #: ../classes/Content/File/File.php:626 ../classes/Content/File/File.php:593
 #: ../classes/Content/File/File.php:591 ../classes/Content/File/File.php:638
-#: ../classes/Content/File/File.php:617
+#: ../classes/Content/File/File.php:617 ../classes/Content/File/File.php:704
 msgid "Could not delete this file, since it is persistent"
 msgstr "Impossible de supprimer ce fichier, puisqu'il est persistent"
 
@@ -604,7 +628,7 @@ msgid "Could not remove owner"
 msgstr "Impossible de retirer le propriétaire"
 
 #: ../classes/User.php:283 ../classes/User.php:292 ../classes/User.php:410
-#: ../classes/User.php:396 ../classes/User.php:362
+#: ../classes/User.php:396 ../classes/User.php:362 ../classes/User.php:450
 msgid "Could not update status."
 msgstr "Impossible de mettre à jour le statut."
 
@@ -660,7 +684,8 @@ msgstr "Statistiques cumulatives des utilisateurs"
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:228
 #: ../classes/Content/RssAggregator/RssAggregator.php:621
 #: ../classes/Content.php:826 ../admin/generic_object_admin.php:420
-#: ../admin/generic_object_admin.php:440
+#: ../admin/generic_object_admin.php:440 ../admin/generic_object_admin.php:421
+#: ../admin/generic_object_admin.php:441 ../classes/Content.php:955
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -672,6 +697,8 @@ msgstr "Supprimer"
 #: ../classes/Content/Langstring/Langstring.php:335
 #: ../classes/Content/Langstring/Langstring.php:279
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:153
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:211
+#: ../classes/Content/Langstring/Langstring.php:354
 msgid "Delete string"
 msgstr "Supprimer la chaîne"
 
@@ -679,6 +706,7 @@ msgstr "Supprimer la chaîne"
 #: ../admin/generic_object_admin.php:206 ../admin/generic_object_admin.php:232
 #: ../admin/generic_object_admin.php:217 ../admin/generic_object_admin.php:240
 #: ../admin/generic_object_admin.php:219 ../admin/generic_object_admin.php:242
+#: ../admin/generic_object_admin.php:220 ../admin/generic_object_admin.php:243
 msgid "Deletion failed, error was: "
 msgstr "La suppression a échoué, l'erreur était:"
 
@@ -688,7 +716,7 @@ msgstr "La suppression a échoué, l'erreur était:"
 #: smarty.txt:104 smarty.txt:114 smarty.txt:86 smarty.txt:107 smarty.txt:117
 #: smarty.txt:64 smarty.txt:84 smarty.txt:67 smarty.txt:87 smarty.txt:110
 #: smarty.txt:68 smarty.txt:100 smarty.txt:141 smarty.txt:45 smarty.txt:48
-#: smarty.txt:33 smarty.txt:27
+#: smarty.txt:33 smarty.txt:27 smarty.txt:34
 msgid "Deployed HotSpots map"
 msgstr "Carte des points d'accès déployés"
 
@@ -711,7 +739,7 @@ msgstr "Noeuds sans-fil déployés avec coordonnées"
 #: ../classes/Content.php:746 smarty.txt:36 smarty.txt:100
 #: ../classes/Content.php:750 ../classes/Node.php:834 smarty.txt:39
 #: smarty.txt:103 ../classes/Content.php:796 ../classes/Node.php:959
-#: smarty.txt:59 smarty.txt:53
+#: smarty.txt:59 smarty.txt:53 ../classes/Content.php:925 smarty.txt:25
 msgid "Description"
 msgstr "Description"
 
@@ -722,6 +750,8 @@ msgstr "Description"
 #: ../classes/Content.php:1198 ../classes/Content.php:1202
 #: ../classes/Content.php:1223 ../classes/Content.php:1227
 #: ../classes/Content.php:1416 ../classes/Content.php:1420
+#: ../classes/Content.php:1545 ../classes/Content.php:1549
+#: ../classes/Content.php:1564 ../classes/Content.php:1568
 msgid "Description:"
 msgstr "Description:"
 
@@ -746,6 +776,7 @@ msgstr "Dois-je payer pour avoir accès à l'Internet"
 #: ../classes/Content/File/File.php:519 ../classes/Content/File/File.php:593
 #: ../classes/Content/File/File.php:574
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:354
+#: ../classes/Content/File/File.php:565 ../classes/Content/File/File.php:656
 msgid "Download"
 msgstr "Télécharger"
 
@@ -762,7 +793,8 @@ msgstr "Télécharger"
 #: ../classes/Content.php:556 smarty.txt:47 smarty.txt:197
 #: ../classes/Content.php:560 ../admin/generic_object_admin.php:208
 #: ../classes/Content.php:607 ../admin/generic_object_admin.php:210
-#: ../classes/ProfileTemplate.php:368
+#: ../classes/ProfileTemplate.php:368 ../admin/generic_object_admin.php:211
+#: ../classes/Content.php:736
 msgid "Edit"
 msgstr "Modifier"
 
@@ -831,29 +863,33 @@ msgstr ""
 #: ../classes/Content/Avatar/Avatar.php:124
 #: ../classes/Content/File/File.php:478 ../classes/Content/File/File.php:461
 #: ../classes/Content/Avatar/Avatar.php:120
+#: ../classes/Content/File/File.php:518
 msgid "File URL"
 msgstr "URL du fichier"
 
 #: ../classes/Content/File.php:100 ../classes/Content/File/File.php:169
 #: ../classes/Content/File/File.php:164 ../classes/Content/File/File.php:166
+#: ../classes/Content/File/File.php:206
 msgid "File size exceeds limit specified HTML form"
 msgstr ""
 "La taille du fichier excède la limite spécifiée dans le formulaire HTML."
 
 #: ../classes/Content/File.php:97 ../classes/Content/File/File.php:165
 #: ../classes/Content/File/File.php:160 ../classes/Content/File/File.php:162
+#: ../classes/Content/File/File.php:202
 msgid "File size exceeds limit specified in PHP.ini"
 msgstr "La taille du fichier excède celle spécifiée dans PHP.ini"
 
 #: ../classes/Content/File.php:103 ../classes/Content/File/File.php:173
 #: ../classes/Content/File/File.php:168 ../classes/Content/File/File.php:170
+#: ../classes/Content/File/File.php:210
 msgid "File upload was interrupted"
 msgstr "Le transfert du fichier a été interrompu"
 
 #: ../classes/Content/File.php:257 ../classes/Content/File.php:256
 #: ../classes/Content/File/File.php:467 ../classes/Content/File/File.php:441
 #: ../classes/Content/File/File.php:439 ../classes/Content/File/File.php:486
-#: ../classes/Content/File/File.php:470
+#: ../classes/Content/File/File.php:470 ../classes/Content/File/File.php:528
 msgid "Filename to display"
 msgstr "Nom de fichier à afficher"
 
@@ -935,6 +971,7 @@ msgstr "Statut technique complet des noeuds (incluant les noeuds non-déployés)
 #: ../admin/generic_object_admin.php:168 ../admin/generic_object_admin.php:167
 #: ../admin/generic_object_admin.php:425 ../admin/generic_object_admin.php:426
 #: ../admin/generic_object_admin.php:440 ../admin/generic_object_admin.php:465
+#: ../admin/generic_object_admin.php:466
 msgid "Generic object editor"
 msgstr "Éditeur générique d'objets"
 
@@ -970,6 +1007,8 @@ msgstr "Groupe de photos"
 #: ../classes/Content/Picture/Picture.php:210
 #: ../classes/Content/Picture/Picture.php:248
 #: ../classes/Content/Picture/Picture.php:266
+#: ../classes/Content/Picture/Picture.php:278
+#: ../classes/Content/Picture/Picture.php:287
 msgid "Height (leave empty if you want to keep original height)"
 msgstr ""
 "Hauteur (laissez la case vide, si vous désirez conserver la hauteur "
@@ -977,6 +1016,7 @@ msgstr ""
 
 #: ../classes/User.php:470 ../classes/User.php:474 ../classes/User.php:592
 #: ../classes/User.php:578 ../classes/User.php:517 ../classes/User.php:556
+#: ../classes/User.php:610
 msgid ""
 "Hello,\n"
 "Please follow the link below to validate your account.\n"
@@ -987,6 +1027,7 @@ msgstr ""
 
 #: ../classes/User.php:487 ../classes/User.php:491 ../classes/User.php:609
 #: ../classes/User.php:595 ../classes/User.php:533 ../classes/User.php:572
+#: ../classes/User.php:626
 msgid ""
 "Hello,\n"
 "You have requested that the authentication server send you a new password:\n"
@@ -998,6 +1039,7 @@ msgstr ""
 
 #: ../classes/User.php:444 ../classes/User.php:448 ../classes/User.php:566
 #: ../classes/User.php:552 ../classes/User.php:498 ../classes/User.php:537
+#: ../classes/User.php:591
 msgid ""
 "Hello,\n"
 "You have requested that the authentication server send you your username:\n"
@@ -1058,6 +1100,7 @@ msgstr "Administrateur du propriétaire de point d'accès"
 #: ../classes/NodeLists/NodeListPDF.php:954
 #: ../classes/NodeLists/NodeListPDF.php:956
 #: ../classes/NodeLists/NodeListPDF.php:1037
+#: ../classes/Content/FavoriteHotspots/FavoriteHotspots.php:215
 msgid "Hotspots"
 msgstr "Points d'accès"
 
@@ -1167,6 +1210,7 @@ msgstr "Importer la base d'utilisateurs NoCat"
 #: ../classes/Content/ContentGroup/ContentGroup.php:352
 #: ../classes/Content/ContentGroup/ContentGroup.php:353
 #: ../classes/Content/ContentGroup/ContentGroup.php:263
+#: ../classes/Content/ContentGroup/ContentGroup.php:264
 msgid "In what order should the content displayed?"
 msgstr "Dans quel ordre les éléments doivent-ils être affichés ?"
 
@@ -1184,6 +1228,8 @@ msgstr "Mot de passe incorrect (CAPS LOCK peut-être actif?)"
 #: ../classes/Content.php:1232 ../classes/Content.php:1236
 #: ../classes/Content.php:1257 ../classes/Content.php:1261
 #: ../classes/Content.php:1450 ../classes/Content.php:1454
+#: ../classes/Content.php:1579 ../classes/Content.php:1583
+#: ../classes/Content.php:1598 ../classes/Content.php:1602
 msgid "Information on this project:"
 msgstr "Informations sur ce projet:"
 
@@ -1209,12 +1255,14 @@ msgstr "Méthode d'encryption RADIUS invalide."
 #: ../classes/Content/ContentGroup.php:232
 #: ../classes/Content/ContentGroup/ContentGroup.php:266
 #: ../classes/Content/ContentGroup/ContentGroup.php:206
+#: ../classes/Content/ContentGroup/ContentGroup.php:207
 msgid "Invalid content selection mode (must be part of ALLOW_REPEAT_MODES)"
 msgstr "Mode de sélection invalide"
 
 #: ../classes/Content/ContentGroup.php:162
 #: ../classes/Content/ContentGroup/ContentGroup.php:196
 #: ../classes/Content/ContentGroup/ContentGroup.php:148
+#: ../classes/Content/ContentGroup/ContentGroup.php:149
 msgid "Invalid content selection mode (must be part of CONTENT_ORDERING_MODES)"
 msgstr ""
 "Mode de sélection invalide (doit faire partie de CONTENT_ORDERING_MODES)"
@@ -1261,6 +1309,7 @@ msgstr ""
 #: ../classes/Content/File/File.php:588 ../classes/Content/File/File.php:490
 #: ../classes/Content/File/File.php:569
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:354
+#: ../classes/Content/File/File.php:550 ../classes/Content/File/File.php:649
 msgid "KB"
 msgstr "Ko"
 
@@ -1279,7 +1328,10 @@ msgstr "Ko"
 #: ../classes/Content/Langstring/Langstring.php:326
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:126
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:166 smarty.txt:28
-#: smarty.txt:22
+#: smarty.txt:22 ../classes/Content/HTMLeditor/HTMLeditor.php:113
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:184
+#: ../classes/Content/Langstring/Langstring.php:216
+#: ../classes/Content/Langstring/Langstring.php:343 smarty.txt:7
 msgid "Language"
 msgstr "Langue"
 
@@ -1290,7 +1342,7 @@ msgstr "Langue : "
 
 #: ../hotspots_map.php:44 ../hotspots_map.php:57 smarty.txt:84 smarty.txt:106
 #: smarty.txt:109 smarty.txt:86 smarty.txt:89 smarty.txt:70 smarty.txt:47
-#: smarty.txt:50 smarty.txt:35 smarty.txt:29
+#: smarty.txt:50 smarty.txt:35 smarty.txt:29 smarty.txt:36
 msgid "Legend"
 msgstr "Légende"
 
@@ -1306,7 +1358,7 @@ msgstr "Démo de contenu local"
 #: ../classes/Content/File.php:273 ../classes/Content/File.php:272
 #: ../classes/Content/File/File.php:482 ../classes/Content/File/File.php:456
 #: ../classes/Content/File/File.php:454 ../classes/Content/File/File.php:501
-#: ../classes/Content/File/File.php:488
+#: ../classes/Content/File/File.php:488 ../classes/Content/File/File.php:549
 msgid "Locally stored file size"
 msgstr "Taille du fichier stocké localement"
 
@@ -1347,6 +1399,8 @@ msgstr "Authentification"
 #: ../classes/Authenticators/AuthenticatorLDAP.php:256
 #: ../classes/Authenticators/AuthenticatorRadius.php:264
 #: ../classes/Authenticators/AuthenticatorRadius.php:284
+#: ../classes/Authenticators/AuthenticatorLDAP.php:258
+#: ../classes/Authenticators/AuthenticatorLDAP.php:268
 msgid "Login successfull"
 msgstr "Session démarrée correctement"
 
@@ -1365,20 +1419,21 @@ msgstr "Déconnexion"
 
 #: smarty.txt:22 smarty.txt:76 smarty.txt:83 smarty.txt:40 smarty.txt:103
 #: smarty.txt:126 smarty.txt:148 smarty.txt:151 smarty.txt:129 smarty.txt:119
-#: smarty.txt:61 smarty.txt:64 smarty.txt:65 smarty.txt:59
+#: smarty.txt:61 smarty.txt:64 smarty.txt:65 smarty.txt:59 smarty.txt:52
 msgid "Lost password"
 msgstr "Mot de passe perdu"
 
 #: smarty.txt:27 smarty.txt:75 smarty.txt:82 smarty.txt:45 smarty.txt:102
 #: smarty.txt:135 smarty.txt:157 smarty.txt:160 smarty.txt:136 smarty.txt:139
 #: smarty.txt:174 smarty.txt:66 smarty.txt:69 smarty.txt:93 smarty.txt:87
+#: smarty.txt:57
 msgid "Lost username"
 msgstr "Nom d'utilisateur perdu"
 
 #: ../classes/Content/File.php:266 ../classes/Content/File.php:265
 #: ../classes/Content/File/File.php:475 ../classes/Content/File/File.php:449
 #: ../classes/Content/File/File.php:447 ../classes/Content/File/File.php:494
-#: ../classes/Content/File/File.php:480
+#: ../classes/Content/File/File.php:480 ../classes/Content/File/File.php:540
 msgid "MIME type"
 msgstr "Type MIME"
 
@@ -1428,6 +1483,7 @@ msgstr "Moyenne 50x375"
 
 #: ../classes/Content/File.php:110 ../classes/Content/File/File.php:177
 #: ../classes/Content/File/File.php:172 ../classes/Content/File/File.php:174
+#: ../classes/Content/File/File.php:214
 msgid "Missing temp folder"
 msgstr "Répertoire temporaire absent"
 
@@ -1496,6 +1552,7 @@ msgstr "Archives des récits"
 #: ../classes/StatisticReport/UserReport.php:137 smarty.txt:216 smarty.txt:238
 #: smarty.txt:241 smarty.txt:224 smarty.txt:222 smarty.txt:188 smarty.txt:132
 #: smarty.txt:101 ../classes/StatisticReport/UserReport.php:132 smarty.txt:95
+#: smarty.txt:89
 msgid "Network"
 msgstr "Réseau"
 
@@ -1571,6 +1628,7 @@ msgstr "Aucun nom d'utilisateur spécifié!"
 
 #: ../classes/User.php:431 ../classes/User.php:435 ../classes/User.php:553
 #: ../classes/User.php:539 ../classes/User.php:486 ../classes/User.php:525
+#: ../classes/User.php:579
 msgid "No users could not be found in the database"
 msgstr "Aucun utilisateur n'a pu être trouvé dans la base de donnée"
 
@@ -1662,6 +1720,7 @@ msgstr "En ligne à ce point d'accès sans fil"
 #: smarty.txt:208 smarty.txt:35 smarty.txt:143 smarty.txt:206 smarty.txt:18
 #: smarty.txt:74 smarty.txt:214 smarty.txt:69 smarty.txt:114 smarty.txt:72
 #: smarty.txt:117 smarty.txt:36 smarty.txt:104 smarty.txt:30 smarty.txt:98
+#: smarty.txt:78
 msgid "Online users"
 msgstr "Usagers en ligne"
 
@@ -1671,6 +1730,8 @@ msgstr "Usagers en ligne"
 #: ../classes/Content/Langstring/Langstring.php:268
 #: ../classes/Content/Langstring/Langstring.php:211
 #: ../classes/Content/SimpleString/SimpleString.php:101
+#: ../classes/Content/Langstring/Langstring.php:286
+#: ../classes/Content/SimpleString/SimpleString.php:130
 msgid "Only these HTML tags are allowed : "
 msgstr "Seulement ces balises HTML sont permises : "
 
@@ -1718,13 +1779,13 @@ msgstr "Points d'accès participants"
 #: smarty.txt:138 smarty.txt:187 smarty.txt:141 smarty.txt:190 smarty.txt:114
 #: smarty.txt:169 smarty.txt:87 smarty.txt:147 smarty.txt:58 smarty.txt:81
 #: smarty.txt:61 smarty.txt:84 smarty.txt:44 smarty.txt:85 smarty.txt:38
-#: smarty.txt:79
+#: smarty.txt:79 smarty.txt:49 smarty.txt:68
 msgid "Password"
 msgstr "Mot de passe"
 
 #: smarty.txt:67 smarty.txt:87 smarty.txt:166 smarty.txt:188 smarty.txt:191
 #: smarty.txt:170 smarty.txt:88 smarty.txt:82 smarty.txt:85 smarty.txt:45
-#: smarty.txt:39
+#: smarty.txt:39 smarty.txt:69
 msgid "Password (again)"
 msgstr "Mot de passe (encore)"
 
@@ -1738,6 +1799,7 @@ msgstr "Mot de passe trop court, il doit contenir 6 caractères minimum."
 
 #: ../change_password.php:49 ../signup.php:69 ../change_password.php:74
 #: ../signup.php:139 ../change_password.php:100 ../classes/User.php:786
+#: ../classes/User.php:847
 msgid "Passwords do not match."
 msgstr "Les mots de passe ne sont pas identiques."
 
@@ -1822,7 +1884,7 @@ msgstr ""
 
 #: smarty.txt:30 smarty.txt:48 smarty.txt:136 smarty.txt:158 smarty.txt:161
 #: smarty.txt:139 smarty.txt:142 smarty.txt:177 smarty.txt:68 smarty.txt:71
-#: smarty.txt:95 smarty.txt:89
+#: smarty.txt:95 smarty.txt:89 smarty.txt:59
 msgid "Please enter your email address to recover your username"
 msgstr ""
 "Veuillez entrer votre adresse courriel afin de recevoir votre nom "
@@ -1830,7 +1892,7 @@ msgstr ""
 
 #: smarty.txt:62 smarty.txt:82 smarty.txt:154 smarty.txt:176 smarty.txt:179
 #: smarty.txt:160 smarty.txt:156 smarty.txt:168 smarty.txt:76 smarty.txt:79
-#: smarty.txt:91 smarty.txt:85
+#: smarty.txt:91 smarty.txt:85 smarty.txt:63
 msgid ""
 "Please enter your username and the validation email will be resent to your "
 "email address"
@@ -1840,7 +1902,7 @@ msgstr ""
 
 #: smarty.txt:26 smarty.txt:44 smarty.txt:127 smarty.txt:149 smarty.txt:152
 #: smarty.txt:130 smarty.txt:133 smarty.txt:123 smarty.txt:64 smarty.txt:67
-#: smarty.txt:68 smarty.txt:62
+#: smarty.txt:68 smarty.txt:62 smarty.txt:55
 msgid "Please enter your username or email address to reset your password"
 msgstr ""
 "Veuillez entrez votre nom d'utilisateur ou votre adresse courriel pour "
@@ -1849,7 +1911,7 @@ msgstr ""
 #: ../classes/MainUI.php:388 smarty.txt:21 smarty.txt:47
 #: ../classes/MainUI.php:381 ../classes/MainUI.php:383 smarty.txt:27
 #: smarty.txt:65 smarty.txt:59 smarty.txt:81 smarty.txt:84 smarty.txt:63
-#: smarty.txt:62 smarty.txt:155 smarty.txt:29 smarty.txt:87
+#: smarty.txt:62 smarty.txt:155 smarty.txt:29 smarty.txt:87 smarty.txt:15
 msgid "Please get in touch with "
 msgstr "Veuillez contacter "
 
@@ -1910,9 +1972,13 @@ msgstr "Taille préférée"
 #: ../admin/generic_object_admin.php:191 ../admin/generic_object_admin.php:390
 #: ../admin/generic_object_admin.php:391 ../admin/generic_object_admin.php:202
 #: ../admin/generic_object_admin.php:405 ../admin/generic_object_admin.php:204
-#: ../admin/generic_object_admin.php:430
+#: ../admin/generic_object_admin.php:430 ../admin/generic_object_admin.php:205
+#: ../admin/generic_object_admin.php:431
+#: ../classes/Content/Picture/Picture.php:285
+#: ../classes/Content/FavoriteHotspots/FavoriteHotspots.php:152
+#: ../classes/Content/Picture/Picture.php:294
 msgid "Preview"
-msgstr "Prévisualiser"
+msgstr "Aperçu"
 
 msgid "Programming by Benoît Grégoire and François Proulx"
 msgstr "Programmation par Benoît Grégoire et François Proulx"
@@ -1921,7 +1987,8 @@ msgstr "Programmation par Benoît Grégoire et François Proulx"
 #: ../classes/Content.php:740 ../classes/Content.php:775
 #: ../classes/Content.php:1094 ../classes/Content.php:1066
 #: ../classes/Content.php:1081 ../classes/Content.php:1075
-#: ../classes/Content.php:1233
+#: ../classes/Content.php:1233 ../classes/Content.php:1362
+#: ../classes/Content.php:1381
 msgid "Project information:"
 msgstr "Informations sur le projet : "
 
@@ -1974,7 +2041,7 @@ msgstr "Envoyez-moi de nouveau le courriel de validation"
 
 #: smarty.txt:59 smarty.txt:74 smarty.txt:81 smarty.txt:79 smarty.txt:101
 #: smarty.txt:153 smarty.txt:175 smarty.txt:178 smarty.txt:157 smarty.txt:165
-#: smarty.txt:77 smarty.txt:89 smarty.txt:83
+#: smarty.txt:77 smarty.txt:89 smarty.txt:83 smarty.txt:61
 msgid "Re-send validation email"
 msgstr "Envoyez-moi de nouveau le courriel de validation"
 
@@ -2006,7 +2073,7 @@ msgstr "Nom complet"
 
 #: smarty.txt:63 smarty.txt:83 smarty.txt:161 smarty.txt:183 smarty.txt:186
 #: smarty.txt:166 smarty.txt:162 smarty.txt:84 smarty.txt:78 smarty.txt:81
-#: smarty.txt:41 smarty.txt:35
+#: smarty.txt:41 smarty.txt:35 smarty.txt:65
 msgid "Register a free account with"
 msgstr "Ouvrir un compte gratuit avec"
 
@@ -2016,7 +2083,7 @@ msgstr "Taille du fichier distant"
 #: ../classes/Content/File.php:282 ../classes/Content/File.php:281
 #: ../classes/Content/File/File.php:489 ../classes/Content/File/File.php:463
 #: ../classes/Content/File/File.php:461 ../classes/Content/File/File.php:508
-#: ../classes/Content/File/File.php:493
+#: ../classes/Content/File/File.php:493 ../classes/Content/File/File.php:556
 msgid "Remote file size (Automatically converted from KB to Bytes)"
 msgstr ""
 "Taille du fichier distant (La taille sera automatiquement convertie de kilo-"
@@ -2029,6 +2096,7 @@ msgstr ""
 #: ../classes/Content/Avatar/Avatar.php:110
 #: ../classes/Content/File/File.php:464 ../classes/Content/File/File.php:447
 #: ../classes/Content/Avatar/Avatar.php:106
+#: ../classes/Content/File/File.php:501
 msgid "Remote file via URL"
 msgstr "Fichier distant à partir d'un URL"
 
@@ -2045,6 +2113,8 @@ msgstr "Fichier distant à partir d'un URL"
 #: ../classes/Content.php:558 ../classes/Content.php:562
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:373
 #: ../classes/Content.php:609 ../classes/ProfileTemplate.php:370
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:349
+#: ../classes/Content.php:738
 msgid "Remove"
 msgstr "Enlever"
 
@@ -2073,6 +2143,7 @@ msgstr "Rechercher"
 #: ../admin/generic_object_admin.php:112 ../admin/generic_object_admin.php:111
 #: ../admin/generic_object_admin.php:375 ../admin/generic_object_admin.php:376
 #: ../admin/generic_object_admin.php:390 ../admin/generic_object_admin.php:415
+#: ../admin/generic_object_admin.php:416
 msgid "Save"
 msgstr "Enregistrer"
 
@@ -2132,7 +2203,7 @@ msgstr "Afficher les «tags» Flickr ?"
 
 #: ../portal/index.php:315 ../portal/index.php:313 ../portal/index.php:311
 #: smarty.txt:148 smarty.txt:170 smarty.txt:173 smarty.txt:151
-#: ../portal/index.php:281 ../portal/index.php:251
+#: ../portal/index.php:281 ../portal/index.php:251 ../portal/index.php:210
 msgid "Show all available contents for this hotspot"
 msgstr "Afficher tout le contenu disponible à ce point d'accès."
 
@@ -2146,7 +2217,7 @@ msgstr "Afficher uniquement le contenu persistent"
 
 #: ../admin/generic_object_admin.php:136 ../admin/generic_object_admin.php:135
 #: ../admin/generic_object_admin.php:169 ../admin/generic_object_admin.php:178
-#: ../admin/generic_object_admin.php:180
+#: ../admin/generic_object_admin.php:180 ../admin/generic_object_admin.php:181
 msgid "Showing preview as it would appear at "
 msgstr "Prévisualisation tel que le contenu apparaîtrait à "
 
@@ -2237,6 +2308,7 @@ msgstr "Désolé, le paramètre 'object_class' est obligatoire"
 #: ../admin/generic_object_admin.php:98 ../admin/generic_object_admin.php:97
 #: ../admin/generic_object_admin.php:359 ../admin/generic_object_admin.php:360
 #: ../admin/generic_object_admin.php:374 ../admin/generic_object_admin.php:399
+#: ../admin/generic_object_admin.php:400
 msgid "Sorry, the 'object_id' parameter must be specified"
 msgstr "Désolé, le paramètre 'object_id' est obligatoire"
 
@@ -2272,6 +2344,7 @@ msgstr ""
 
 #: ../classes/User.php:318 ../classes/User.php:327 ../classes/User.php:445
 #: ../classes/User.php:431 ../classes/User.php:388 ../classes/User.php:423
+#: ../classes/User.php:477
 msgid "Sorry, your account is not valid: "
 msgstr "Désolé, votre compte n'est pas valide."
 
@@ -2280,7 +2353,7 @@ msgstr "Désolé, votre jeton de validation n'est pas accepté!"
 
 #: smarty.txt:117 smarty.txt:120 smarty.txt:127 smarty.txt:153 smarty.txt:214
 #: smarty.txt:236 smarty.txt:239 smarty.txt:222 smarty.txt:220 smarty.txt:186
-#: smarty.txt:130 smarty.txt:99 smarty.txt:93
+#: smarty.txt:130 smarty.txt:99 smarty.txt:93 smarty.txt:87
 msgid "Sort"
 msgstr "Trier"
 
@@ -2397,6 +2470,9 @@ msgstr "Le serveur RADIUS a rejeté votre requête d'authentification."
 #: ../classes/Content/IFrame/IFrame.php:89
 #: ../classes/Content/Picture/Picture.php:100 ../classes/Content.php:124
 #: ../classes/Content.php:274
+#: ../classes/Content/ContentGroup/ContentGroup.php:111
+#: ../classes/Content/File/File.php:131
+#: ../classes/Content/Picture/Picture.php:103 ../classes/Content.php:275
 msgid "The content with the following id could not be found in the database: "
 msgstr ""
 "Le contenu avec l'ID suivant n'a pu être trouvé dans la base de données:"
@@ -2420,6 +2496,7 @@ msgstr "L'adresse courriel doit être de la forme utilisateur@domaine.com."
 #: ../classes/Content.php:436 ../classes/Content.php:898
 #: ../classes/Content.php:892 ../classes/Content.php:440
 #: ../classes/Content.php:896 ../classes/Content.php:993
+#: ../classes/Content.php:1122
 msgid "The following content type isn't valid: "
 msgstr "Le type de contenu suivant est invalide:"
 
@@ -2438,6 +2515,7 @@ msgstr "Le réseau spécifié n'existe pas :"
 
 #: ../classes/User.php:452 ../classes/User.php:456 ../classes/User.php:574
 #: ../classes/User.php:560 ../classes/User.php:504 ../classes/User.php:543
+#: ../classes/User.php:597
 msgid "The user is not in validation period."
 msgstr "L'utilisateur n'est pas en période de validation."
 
@@ -2448,6 +2526,7 @@ msgstr ""
 
 #: ../classes/User.php:458 ../classes/User.php:462 ../classes/User.php:580
 #: ../classes/User.php:566 ../classes/User.php:507 ../classes/User.php:546
+#: ../classes/User.php:600
 msgid "The validation token is empty."
 msgstr "Le jeton de validation est vide."
 
@@ -2500,7 +2579,7 @@ msgstr "Vignette 100x75"
 #: ../admin/content_admin.php:67 ../classes/Content.php:721
 #: ../classes/Content.php:744 ../classes/Content.php:753
 #: ../classes/Content.php:746 ../classes/Content.php:750
-#: ../classes/Content.php:796
+#: ../classes/Content.php:796 ../classes/Content.php:925
 msgid "Title"
 msgstr "Titre"
 
@@ -2511,6 +2590,8 @@ msgstr "Titre"
 #: ../classes/Content.php:1179 ../classes/Content.php:1183
 #: ../classes/Content.php:1204 ../classes/Content.php:1208
 #: ../classes/Content.php:1396 ../classes/Content.php:1401
+#: ../classes/Content.php:1525 ../classes/Content.php:1530
+#: ../classes/Content.php:1544 ../classes/Content.php:1549
 msgid "Title:"
 msgstr "Titre:"
 
@@ -2547,6 +2628,7 @@ msgstr "Impossible de trouver "
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:225
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:231
 #: ../classes/Content.php:189 ../classes/ProfileTemplateField.php:187
+#: ../classes/ProfileTemplateField.php:186
 msgid "Unable to insert new content into database!"
 msgstr "Impossible d'insérer le nouveau contenu dans la base de données !"
 
@@ -2559,7 +2641,7 @@ msgstr "Impossible d'insérer le nouveau noeud dans la base de données !"
 #: ../classes/Content.php:590 ../classes/Content.php:909
 #: ../classes/Content.php:905 ../classes/Content.php:920
 #: ../classes/Content.php:914 ../classes/Content.php:918
-#: ../classes/Content.php:1015
+#: ../classes/Content.php:1015 ../classes/Content.php:1144
 msgid "Unable to insert the new Owner into database."
 msgstr "Impossible d'insérer un nouveau propriétaire dans la base de données."
 
@@ -2573,7 +2655,7 @@ msgstr "Impossible de trouver "
 #: ../classes/Content.php:337 ../classes/Network.php:560
 #: ../classes/Content.php:341 ../classes/Network.php:711
 #: ../classes/Statistics.php:124 ../classes/Content.php:333
-#: ../classes/NodeList.php:153
+#: ../classes/NodeList.php:153 ../classes/Content.php:335
 msgid "Unable to open directory "
 msgstr "Impossible d'ouvrir le répertoire"
 
@@ -2593,7 +2675,7 @@ msgstr "Impossible d'analyser la réponse de Flickr"
 #: ../classes/Content.php:609 ../classes/Content.php:928
 #: ../classes/Content.php:922 ../classes/Content.php:937
 #: ../classes/Content.php:931 ../classes/Content.php:935
-#: ../classes/Content.php:1032
+#: ../classes/Content.php:1032 ../classes/Content.php:1161
 msgid "Unable to remove the owner from the database."
 msgstr "Impossible de supprimer le propriétaire de la base de données."
 
@@ -2613,6 +2695,7 @@ msgstr ""
 #: ../classes/Content.php:1554 ../classes/Content.php:1454
 #: ../classes/Content.php:1452 ../classes/Content.php:1446
 #: ../classes/Content.php:1471 ../classes/Content.php:1648
+#: ../classes/Content.php:1777 ../classes/Content.php:1796
 msgid "Unable to set as author in the database."
 msgstr "Impossible de définir en tant qu'auteur dans la base de données."
 
@@ -2662,7 +2745,7 @@ msgstr "Mettre à jour le noeud"
 #: ../classes/Content.php:571 ../classes/Content.php:890
 #: ../classes/Content.php:888 ../classes/Content.php:903
 #: ../classes/Content.php:897 ../classes/Content.php:901
-#: ../classes/Content.php:998
+#: ../classes/Content.php:998 ../classes/Content.php:1127
 msgid "Update was unsuccessfull (database error)"
 msgstr "La mise à jour a échoué (erreur de base de données)"
 
@@ -2673,6 +2756,7 @@ msgstr "La mise à jour a échoué (erreur de base de données)"
 #: ../classes/Content/Avatar/Avatar.php:100
 #: ../classes/Content/File/File.php:454 ../classes/Content/File/File.php:437
 #: ../classes/Content/Avatar/Avatar.php:96
+#: ../classes/Content/File/File.php:492
 msgid "Upload a new file (Uploading a new one will replace any existing file)"
 msgstr ""
 "Télécharger un nouveau fichier (Le téléchargement d'un nouveau fichier "
@@ -2728,13 +2812,14 @@ msgstr "Gestion des utilisateurs"
 #: ../classes/User.php:623 ../classes/User.php:658 smarty.txt:100
 #: smarty.txt:106 ../classes/StatisticReport/UserReport.php:284
 #: ../classes/User.php:657 ../classes/User.php:662 ../classes/User.php:710
-#: smarty.txt:94
+#: smarty.txt:94 ../classes/User.php:711 ../classes/User.php:764 smarty.txt:80
+#: smarty.txt:88
 msgid "Username"
 msgstr "Nom d'usager"
 
 #: ../login/index.php:163 ../login/index.php:160 ../login/index.php:161
 #: smarty.txt:115 smarty.txt:137 smarty.txt:140 smarty.txt:113 smarty.txt:146
-#: smarty.txt:57 smarty.txt:60 smarty.txt:84 smarty.txt:78
+#: smarty.txt:57 smarty.txt:60 smarty.txt:84 smarty.txt:78 smarty.txt:48
 msgid "Username (or email)"
 msgstr "Utilisateur (ou courriel)"
 
@@ -2744,7 +2829,7 @@ msgstr "Le nom d'utilisateur contient des caractères invalides."
 
 #: smarty.txt:64 smarty.txt:84 smarty.txt:163 smarty.txt:185 smarty.txt:188
 #: smarty.txt:167 smarty.txt:85 smarty.txt:79 smarty.txt:82 smarty.txt:42
-#: smarty.txt:36
+#: smarty.txt:36 smarty.txt:66
 msgid "Username desired"
 msgstr "Nom d'utilisateur désiré"
 
@@ -2779,7 +2864,7 @@ msgid "Website URL"
 msgstr "URL de mon site Web"
 
 #: ../login/index.php:264 ../portal/index.php:204 ../login/index.php:277
-#: ../portal/index.php:184
+#: ../portal/index.php:184 ../portal/index.php:143
 msgid "Welcome to"
 msgstr "Bienvenue chez"
 
@@ -2800,6 +2885,7 @@ msgstr ""
 #: ../classes/Content/ContentGroup/ContentGroup.php:370
 #: ../classes/Content/ContentGroup/ContentGroup.php:371
 #: ../classes/Content/ContentGroup/ContentGroup.php:272
+#: ../classes/Content/ContentGroup/ContentGroup.php:273
 msgid "When does the content rotate?"
 msgstr "Quand le contenu doit-il être changé ?"
 
@@ -2825,6 +2911,8 @@ msgstr ""
 #: ../classes/Content/Picture/Picture.php:203
 #: ../classes/Content/Picture/Picture.php:241
 #: ../classes/Content/Picture/Picture.php:259
+#: ../classes/Content/Picture/Picture.php:271
+#: ../classes/Content/Picture/Picture.php:280
 msgid "Width (leave empty if you want to keep original width)"
 msgstr ""
 "Largeur (laissez la case vide, si vous désirez conserver la largeur "
@@ -2835,7 +2923,7 @@ msgstr "Merci à tobias c. van Veen & Michael Longford"
 
 #: ../change_password.php:54 ../change_password.php:79
 #: ../change_password.php:107 ../change_password.php:122
-#: ../classes/User.php:783
+#: ../classes/User.php:783 ../classes/User.php:844
 msgid "Wrong password."
 msgstr "Mauvais mot de passe."
 
@@ -2944,6 +3032,7 @@ msgstr "Vous devez être connecté pour vous inscrire !"
 #: ../classes/Content/RssAggregator/RssAggregator.php:195
 #: ../classes/Content/RssAggregator/RssAggregator.php:193
 #: ../classes/Content/ContentGroup/ContentGroup.php:238
+#: ../classes/Content/ContentGroup/ContentGroup.php:239
 msgid "You must display at least one element"
 msgstr "Vous devez afficher au moins un élément"
 
@@ -2955,6 +3044,7 @@ msgstr "Vous devez afficher au moins un élément"
 #: ../classes/Content.php:1149 ../classes/Content.php:1166
 #: ../classes/Content.php:1160 ../classes/Content.php:231
 #: ../classes/Content.php:223 ../classes/Content.php:1363
+#: ../classes/Content.php:1492 ../classes/Content.php:1511
 msgid "You must select a content type: "
 msgstr "Vous devez sélectionner un type de contenu:"
 
@@ -2992,10 +3082,11 @@ msgstr ""
 
 #: ../classes/User.php:312 ../classes/User.php:321 ../classes/User.php:439
 #: ../classes/User.php:425 ../classes/User.php:384 ../classes/User.php:419
+#: ../classes/User.php:473
 msgid "Your account is currently valid."
 msgstr "Votre compte est actuellement valide."
 
-#: smarty.txt:4 ../classes/User.php:719
+#: smarty.txt:4 ../classes/User.php:719 ../classes/User.php:773
 msgid "Your current password"
 msgstr "Votre mot de passe actuel"
 
@@ -3005,7 +3096,7 @@ msgstr "Votre mot de passe actuel"
 #: smarty.txt:128 smarty.txt:168 smarty.txt:131 smarty.txt:140 smarty.txt:86
 #: smarty.txt:121 smarty.txt:175 smarty.txt:63 smarty.txt:67 smarty.txt:80
 #: smarty.txt:66 smarty.txt:70 smarty.txt:83 smarty.txt:43 smarty.txt:94
-#: smarty.txt:37 smarty.txt:61 smarty.txt:88
+#: smarty.txt:37 smarty.txt:61 smarty.txt:88 smarty.txt:54 smarty.txt:58
 msgid "Your email address"
 msgstr "Votre courriel"
 
@@ -3022,7 +3113,7 @@ msgstr ""
 msgid "You must specify your username and password"
 msgstr "Veuillez entrer un nom d'usager et un mot de passe"
 
-#: smarty.txt:5 smarty.txt:6 ../classes/User.php:725
+#: smarty.txt:5 smarty.txt:6 ../classes/User.php:725 ../classes/User.php:779
 msgid "Your new password"
 msgstr "Votre nouveau mot de passe"
 
@@ -3038,7 +3129,7 @@ msgstr "La combinaison nom d'usager / mot de passe est invalide."
 #: smarty.txt:128 smarty.txt:155 smarty.txt:150 smarty.txt:177 smarty.txt:153
 #: smarty.txt:180 smarty.txt:127 smarty.txt:158 smarty.txt:130 smarty.txt:154
 #: smarty.txt:120 smarty.txt:166 smarty.txt:62 smarty.txt:75 smarty.txt:65
-#: smarty.txt:78 smarty.txt:66 smarty.txt:90 smarty.txt:84
+#: smarty.txt:78 smarty.txt:66 smarty.txt:90 smarty.txt:84 smarty.txt:53
 msgid "Your username"
 msgstr "Votre nom d'utilisateur"
 
@@ -3136,7 +3227,7 @@ msgstr "Administration"
 
 #: ../admin/generic_object_admin.php:57 ../admin/generic_object_admin.php:56
 #: ../admin/generic_object_admin.php:134 ../admin/generic_object_admin.php:140
-#: ../admin/generic_object_admin.php:142
+#: ../admin/generic_object_admin.php:142 ../admin/generic_object_admin.php:143
 msgid ""
 "Sorry, the object couldn't be created.  You probably didn't fill the form "
 "properly"
@@ -3148,6 +3239,7 @@ msgstr ""
 #: ../admin/generic_object_admin.php:204 ../admin/generic_object_admin.php:229
 #: ../admin/generic_object_admin.php:215 ../admin/generic_object_admin.php:237
 #: ../admin/generic_object_admin.php:217 ../admin/generic_object_admin.php:239
+#: ../admin/generic_object_admin.php:218 ../admin/generic_object_admin.php:240
 msgid "Object successfully deleted"
 msgstr "Objet supprimé correctement"
 
@@ -3244,7 +3336,7 @@ msgstr "Profil du réseau"
 #: ../classes/Node.php:813 ../classes/Server.php:696 ../classes/Server.php:695
 #: ../classes/Content/File/File.php:438 ../classes/Node.php:824
 #: ../classes/Server.php:672 ../classes/Node.php:949
-#: ../classes/ProfileTemplate.php:482
+#: ../classes/ProfileTemplate.php:482 ../classes/ProfileTemplate.php:486
 msgid "Creation date"
 msgstr "Date de création"
 
@@ -3332,6 +3424,7 @@ msgstr "Noeuds ayant reçu le plus de connexions"
 #: ../admin/generic_object_admin.php:193 smarty.txt:105
 #: ../admin/generic_object_admin.php:195
 #: ../classes/StatisticReport/UserReport.php:182 smarty.txt:99
+#: ../admin/generic_object_admin.php:196 smarty.txt:79
 msgid "Node"
 msgstr "Noeud"
 
@@ -3550,6 +3643,7 @@ msgstr "Date de l'inscription"
 #: ../classes/StatisticReport/UserReport.php:79
 #: ../classes/StatisticReport/NodeStatus.php:132
 #: ../classes/StatisticReport/UserReport.php:117 ../classes/Profile.php:309
+#: ../classes/Profile.php:357
 msgid "Profile"
 msgstr "Profil"
 
@@ -3578,7 +3672,7 @@ msgstr "Membre depuis"
 #: ../classes/StatisticReport/UserReport.php:152 smarty.txt:218 smarty.txt:240
 #: smarty.txt:243 smarty.txt:226 smarty.txt:224 smarty.txt:190 smarty.txt:134
 #: smarty.txt:103 ../classes/StatisticReport/UserReport.php:147
-#: ../classes/User.php:698 smarty.txt:97
+#: ../classes/User.php:698 smarty.txt:97 ../classes/User.php:752 smarty.txt:91
 msgid "Account Status"
 msgstr "État du compte"
 
@@ -3690,6 +3784,8 @@ msgstr "Trouver selon le nom d'utilisateur : "
 #: ../classes/Content.php:1215 ../classes/Content.php:1219
 #: ../classes/Content.php:1240 ../classes/Content.php:1244
 #: ../classes/Content.php:1433 ../classes/Content.php:1437
+#: ../classes/Content.php:1562 ../classes/Content.php:1566
+#: ../classes/Content.php:1581 ../classes/Content.php:1585
 msgid "Long description:"
 msgstr "Description longue :"
 
@@ -3756,6 +3852,7 @@ msgstr "Créer un nouveau réseau avec l'ID"
 #: ../classes/Network.php:260 ../classes/Node.php:343
 #: ../classes/Server.php:406 ../classes/Network.php:334
 #: ../classes/Node.php:440 ../classes/ContentTypeFilter.php:253
+#: ../classes/StatisticReport/AnonymisedDataExport.php:97
 msgid "Access denied"
 msgstr "Accès refusé"
 
@@ -3906,6 +4003,9 @@ msgstr "Créer un nouveau noeud"
 #: ../classes/ContentTypeFilter.php:451 ../classes/Network.php:1901
 #: ../classes/Profile.php:351 ../classes/ProfileTemplate.php:570
 #: ../classes/ProfileTemplateField.php:623 ../classes/ProfileField.php:288
+#: ../classes/ContentTypeFilter.php:449 ../classes/Profile.php:446
+#: ../classes/ProfileField.php:363 ../classes/ProfileTemplate.php:576
+#: ../classes/ProfileTemplateField.php:603
 msgid "Access denied (must have super admin access)"
 msgstr "Accès refusé (vous devez avoir les droits d'administration)"
 
@@ -4061,6 +4161,7 @@ msgstr "Propriétaire du noeud"
 #: ../classes/Content.php:1299 ../classes/Content.php:1324
 #: ../classes/Node.php:964 ../classes/Content.php:1507
 #: ../classes/Node.php:1090 ../classes/Node.php:1091
+#: ../classes/Content.php:1636 ../classes/Content.php:1655
 msgid "Remove owner"
 msgstr "Retirer le propriétaire"
 
@@ -4146,6 +4247,7 @@ msgstr ""
 #: ../classes/User.php:548 ../classes/User.php:573 ../classes/User.php:591
 #: ../classes/User.php:494 ../classes/User.php:512 ../classes/User.php:529
 #: ../classes/User.php:533 ../classes/User.php:551 ../classes/User.php:568
+#: ../classes/User.php:622
 msgid "Registration system"
 msgstr "Système d'enregistrement"
 
@@ -4184,6 +4286,7 @@ msgstr ""
 #: ../classes/Content/ContentGroup.php:197
 #: ../classes/Content/ContentGroup/ContentGroup.php:231
 #: ../classes/Content/ContentGroup/ContentGroup.php:177
+#: ../classes/Content/ContentGroup/ContentGroup.php:178
 msgid ""
 "Invalid content selection mode (must be part of CONTENT_CHANGES_ON_MODES)"
 msgstr ""
@@ -4630,43 +4733,43 @@ msgstr "Nom d'utilisateur : "
 
 #: smarty.txt:117 smarty.txt:124 smarty.txt:150 smarty.txt:211 smarty.txt:233
 #: smarty.txt:236 smarty.txt:219 smarty.txt:217 smarty.txt:183 smarty.txt:127
-#: smarty.txt:96 smarty.txt:90
+#: smarty.txt:96 smarty.txt:90 smarty.txt:84
 msgid "User list"
 msgstr "Liste d'utilisateurs"
 
 #: smarty.txt:118 smarty.txt:125 smarty.txt:151 smarty.txt:212 smarty.txt:234
 #: smarty.txt:237 smarty.txt:220 smarty.txt:218 smarty.txt:184 smarty.txt:128
-#: smarty.txt:97 smarty.txt:91
+#: smarty.txt:97 smarty.txt:91 smarty.txt:85
 msgid "Sort by:"
 msgstr "Trier par : "
 
 #: smarty.txt:119 smarty.txt:126 smarty.txt:152 smarty.txt:213 smarty.txt:235
 #: smarty.txt:238 smarty.txt:221 smarty.txt:219 smarty.txt:185 smarty.txt:129
-#: smarty.txt:98 smarty.txt:92
+#: smarty.txt:98 smarty.txt:92 smarty.txt:86
 msgid "Direction:"
 msgstr "Sens : "
 
 #: smarty.txt:123 smarty.txt:130 smarty.txt:156 smarty.txt:217 smarty.txt:239
 #: smarty.txt:242 smarty.txt:225 smarty.txt:223 smarty.txt:189 smarty.txt:133
-#: smarty.txt:102 smarty.txt:96
+#: smarty.txt:102 smarty.txt:96 smarty.txt:90
 msgid "Registered On"
 msgstr "Date de l'inscription"
 
 #: ../hotspots_map.php:44 smarty.txt:80 smarty.txt:83 smarty.txt:64
-#: smarty.txt:41 smarty.txt:44 smarty.txt:29 smarty.txt:23
+#: smarty.txt:41 smarty.txt:44 smarty.txt:29 smarty.txt:23 smarty.txt:30
 msgid "Show me the closest hotspot"
 msgstr "Où est le point d'accès le plus près ?"
 
 #: ../hotspots_map.php:50 smarty.txt:78 smarty.txt:100 smarty.txt:103
 #: smarty.txt:83 smarty.txt:86 smarty.txt:67 smarty.txt:44 smarty.txt:47
-#: smarty.txt:32 smarty.txt:26
+#: smarty.txt:32 smarty.txt:26 smarty.txt:33
 msgid "Refresh map"
 msgstr "Rafraîchir la carte"
 
 #: ../hotspots_map.php:55 ../hotspots_map.php:148 smarty.txt:83 smarty.txt:105
 #: smarty.txt:108 ../hotspots_map.php:155 smarty.txt:85
 #: ../hotspots_map.php:156 smarty.txt:88 smarty.txt:69 smarty.txt:46
-#: smarty.txt:49 smarty.txt:34 smarty.txt:28
+#: smarty.txt:49 smarty.txt:34 smarty.txt:28 smarty.txt:35
 msgid "Loading, please wait..."
 msgstr "Chargement en cours, veuillez patienter..."
 
@@ -4760,17 +4863,17 @@ msgid "User id: %s could not be found in the database"
 msgstr "L'ID utilisateur : %s n'a pu être trouvé"
 
 #: ../hotspots_map.php:46 smarty.txt:81 smarty.txt:84 smarty.txt:65
-#: smarty.txt:42 smarty.txt:45 smarty.txt:30 smarty.txt:24
+#: smarty.txt:42 smarty.txt:45 smarty.txt:30 smarty.txt:24 smarty.txt:31
 msgid "Enter your postal code"
 msgstr "Entrez votre code postal"
 
 #: ../hotspots_map.php:48 smarty.txt:82 smarty.txt:85 smarty.txt:66
-#: smarty.txt:43 smarty.txt:46 smarty.txt:31 smarty.txt:25
+#: smarty.txt:43 smarty.txt:46 smarty.txt:31 smarty.txt:25 smarty.txt:32
 msgid "Show"
 msgstr "Montrez-moi sur la carte"
 
 #: ../classes/MainUI.php:240 smarty.txt:43 smarty.txt:44 smarty.txt:58
-#: smarty.txt:23 smarty.txt:27 smarty.txt:21
+#: smarty.txt:23 smarty.txt:27 smarty.txt:21 smarty.txt:6
 msgid "I am not logged in."
 msgstr "Je ne suis pas connecté."
 
@@ -4793,6 +4896,7 @@ msgstr "J'ai déjà un compte :"
 #: smarty.txt:73 smarty.txt:77 smarty.txt:62 smarty.txt:63 smarty.txt:68
 #: smarty.txt:76 smarty.txt:80 smarty.txt:40 smarty.txt:64 smarty.txt:86
 #: smarty.txt:88 smarty.txt:92 smarty.txt:34 smarty.txt:58 smarty.txt:82
+#: smarty.txt:50 smarty.txt:51 smarty.txt:56
 msgid "I'm having difficulties"
 msgstr "J'éprouve des difficultés"
 
@@ -4813,13 +4917,13 @@ msgstr "Contenu du noeud (portail) :"
 
 #: smarty.txt:69 smarty.txt:89 smarty.txt:168 smarty.txt:190 smarty.txt:193
 #: smarty.txt:172 smarty.txt:90 smarty.txt:83 smarty.txt:86 smarty.txt:46
-#: smarty.txt:40
+#: smarty.txt:40 smarty.txt:70
 msgid "Please note"
 msgstr "Veuillez noter"
 
 #: smarty.txt:70 smarty.txt:90 smarty.txt:169 smarty.txt:191 smarty.txt:194
 #: smarty.txt:173 smarty.txt:91 smarty.txt:84 smarty.txt:87 smarty.txt:47
-#: smarty.txt:41
+#: smarty.txt:41 smarty.txt:71
 msgid ""
 "While accounts are free, we <em>strongly</em> suggest that you use your "
 "previously created account if you have one."
@@ -4829,13 +4933,13 @@ msgstr ""
 
 #: smarty.txt:71 smarty.txt:91 smarty.txt:170 smarty.txt:192 smarty.txt:195
 #: smarty.txt:174 smarty.txt:173 smarty.txt:95 smarty.txt:88 smarty.txt:51
-#: smarty.txt:45
+#: smarty.txt:45 smarty.txt:75
 msgid "Note to free web-based email users"
 msgstr "Note aux usagers d'un service de courriel Web"
 
 #: smarty.txt:72 smarty.txt:92 smarty.txt:171 smarty.txt:193 smarty.txt:196
 #: smarty.txt:175 smarty.txt:174 smarty.txt:96 smarty.txt:89 smarty.txt:52
-#: smarty.txt:46
+#: smarty.txt:46 smarty.txt:76
 msgid ""
 "Sometimes our validation email ends up in the 'spam' folder of some "
 "providers. If you have not received any email with the validation URL 5 "
@@ -4847,7 +4951,7 @@ msgstr ""
 "votre dossier pourriels (spam)."
 
 #: smarty.txt:73 smarty.txt:93 smarty.txt:176 smarty.txt:175 smarty.txt:97
-#: smarty.txt:90 smarty.txt:53 smarty.txt:47
+#: smarty.txt:90 smarty.txt:53 smarty.txt:47 smarty.txt:77
 msgid "You can also use the following links if you need help"
 msgstr ""
 "Vous pouvez également utiliser les liens suivants, si vous avez besoin "
@@ -5060,6 +5164,7 @@ msgstr "Les noeuds les plus populaires, en fonction des visites"
 
 #: ../classes/StatisticReport/MostPopularNodes.php:82
 #: ../classes/StatisticReport/MostPopularNodes.php:110
+#: ../classes/Content/FavoriteHotspots/FavoriteHotspots.php:216
 msgid "Visits"
 msgstr "Visites"
 
@@ -5178,19 +5283,19 @@ msgstr ""
 
 #: smarty.txt:31 smarty.txt:67 smarty.txt:89 smarty.txt:92 smarty.txt:69
 #: smarty.txt:72 smarty.txt:105 smarty.txt:35 smarty.txt:38 smarty.txt:58
-#: smarty.txt:52
+#: smarty.txt:52 smarty.txt:24
 msgid "Hotspot / Status"
 msgstr "Point d'accès / État"
 
 #: smarty.txt:33 smarty.txt:69 smarty.txt:91 smarty.txt:94 smarty.txt:71
 #: smarty.txt:74 smarty.txt:107 smarty.txt:37 smarty.txt:40 smarty.txt:60
-#: smarty.txt:54
+#: smarty.txt:54 smarty.txt:26
 msgid "Location"
 msgstr "Emplacement"
 
 #: smarty.txt:34 smarty.txt:70 smarty.txt:92 smarty.txt:95 smarty.txt:72
 #: smarty.txt:75 smarty.txt:108 smarty.txt:38 smarty.txt:41 smarty.txt:61
-#: smarty.txt:55
+#: smarty.txt:55 smarty.txt:27
 msgid "Hotspot in testing phase"
 msgstr "Point d'accès en phase de test"
 
@@ -5206,19 +5311,19 @@ msgstr "min"
 
 #: smarty.txt:142 smarty.txt:203 smarty.txt:225 smarty.txt:228 smarty.txt:211
 #: smarty.txt:209 smarty.txt:217 smarty.txt:117 smarty.txt:120 smarty.txt:107
-#: smarty.txt:101
+#: smarty.txt:101 smarty.txt:81
 msgid "Origin"
 msgstr "Origine"
 
 #: smarty.txt:143 smarty.txt:204 smarty.txt:226 smarty.txt:229 smarty.txt:212
 #: smarty.txt:210 smarty.txt:218 smarty.txt:118 smarty.txt:121 smarty.txt:108
-#: smarty.txt:102
+#: smarty.txt:102 smarty.txt:82
 msgid "Logged in Since"
 msgstr "Connecté depuis"
 
 #: smarty.txt:144 smarty.txt:205 smarty.txt:227 smarty.txt:230 smarty.txt:213
 #: smarty.txt:211 smarty.txt:219 smarty.txt:119 smarty.txt:122 smarty.txt:109
-#: smarty.txt:103
+#: smarty.txt:103 smarty.txt:83
 msgid "Traffic IN/OUT"
 msgstr "Trafic ENTRANT/SORTANT"
 
@@ -5314,17 +5419,17 @@ msgid "Node %s (%s) has been down for %d minutes (since %s)"
 msgstr "Le noeud %s (%s) fut hors ligne pendant %d minutes (depuis %s)"
 
 #: ../include/common.php:127 ../include/common.php:155
-#: ../include/common.php:154
+#: ../include/common.php:154 ../include/common.php:163
 msgid "Unused"
 msgstr "Inutilisé"
 
 #: ../include/common.php:128 ../include/common.php:156
-#: ../include/common.php:155
+#: ../include/common.php:155 ../include/common.php:164
 msgid "In use"
 msgstr "En utilisation"
 
 #: ../include/common.php:129 ../include/common.php:157
-#: ../include/common.php:156
+#: ../include/common.php:156 ../include/common.php:165
 msgid "Used"
 msgstr "Utilisé"
 
@@ -5455,12 +5560,13 @@ msgstr "%d enregistrements ont été affectés par la requête SQL"
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:497
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:208
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:200
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:229
 msgid "FCKeditor is not installed"
 msgstr "FCKeditor n'est pas installé"
 
 #: ../classes/Content.php:460 ../classes/Content.php:441
 #: ../classes/Content.php:445 ../classes/Content.php:449
-#: ../classes/Content.php:500
+#: ../classes/Content.php:500 ../classes/Content.php:543
 #, php-format
 msgid "Add a %s"
 msgstr "Ajouter un %s"
@@ -5476,6 +5582,8 @@ msgstr "Choisir un contenu existant"
 #: ../classes/Dependencies.php:207 ../classes/Dependencies.php:223
 #: ../classes/Dependencies.php:258 ../classes/Dependencies.php:274
 #: ../classes/Dependencies.php:290 ../classes/Dependencies.php:305
+#: ../classes/Dependencies.php:317 ../classes/Dependencies.php:332
+#: ../classes/Dependencies.php:347 ../classes/Dependencies.php:361
 #, php-format
 msgid "Component %s is not installed (not found in %s)"
 msgstr "Le composant %s n'est pas installé (impossible de le trouver dans %s)"
@@ -5585,7 +5693,7 @@ msgstr "Information concernant le noeud"
 #: ../classes/Network.php:1576 ../classes/Network.php:1595
 #: ../classes/Network.php:1601 ../classes/Network.php:1626
 #: ../classes/Node.php:1065 ../classes/Profile.php:294
-#: ../classes/Node.php:1066
+#: ../classes/Node.php:1066 ../classes/Profile.php:311
 msgid "Yes"
 msgstr "Oui"
 
@@ -5722,7 +5830,7 @@ msgid "Could not delete server!"
 msgstr "Impossible de supprimer le serveur !"
 
 #: ../classes/User.php:297 ../classes/User.php:330 ../classes/User.php:306
-#: ../classes/User.php:340
+#: ../classes/User.php:340 ../classes/User.php:394
 msgid "Could not update email address."
 msgstr "Impossible de mettre à jour l'adresse de courriel"
 
@@ -5739,22 +5847,22 @@ msgid "Could not update username visibility flag."
 msgstr "Impossible de mettre à jour le paramètre de visibilité de l'usager."
 
 #: ../classes/User.php:384 ../classes/User.php:370 ../classes/User.php:340
-#: ../classes/User.php:374
+#: ../classes/User.php:374 ../classes/User.php:428
 msgid "Could not update username locale."
 msgstr "Impossible de mettre à jour la locale de l'usager."
 
 #: smarty.txt:40 smarty.txt:41 smarty.txt:55 smarty.txt:22 smarty.txt:26
-#: smarty.txt:20
+#: smarty.txt:20 smarty.txt:5
 msgid "Logged in as"
 msgstr "Connecté en tant que"
 
 #: smarty.txt:46 smarty.txt:68 smarty.txt:71 smarty.txt:48 smarty.txt:41
-#: smarty.txt:25 smarty.txt:22 smarty.txt:16
+#: smarty.txt:25 smarty.txt:22 smarty.txt:16 smarty.txt:8
 msgid "User administration"
 msgstr "Gestion de l'usager"
 
 #: smarty.txt:50 smarty.txt:72 smarty.txt:75 smarty.txt:53 smarty.txt:55
-#: smarty.txt:46 smarty.txt:26 smarty.txt:23 smarty.txt:17
+#: smarty.txt:46 smarty.txt:26 smarty.txt:23 smarty.txt:17 smarty.txt:9
 msgid "Node administration"
 msgstr "Gestion du noeud"
 
@@ -5769,7 +5877,7 @@ msgid "Add new Node"
 msgstr "Ajouter un nouveau noeud"
 
 #: smarty.txt:54 smarty.txt:76 smarty.txt:79 smarty.txt:58 smarty.txt:57
-#: smarty.txt:50 smarty.txt:27 smarty.txt:24 smarty.txt:18
+#: smarty.txt:50 smarty.txt:27 smarty.txt:24 smarty.txt:18 smarty.txt:10
 msgid "Network administration"
 msgstr "Gestion du réseau"
 
@@ -5779,7 +5887,7 @@ msgid "Networks"
 msgstr "Réseaux"
 
 #: smarty.txt:56 smarty.txt:78 smarty.txt:81 smarty.txt:60 smarty.txt:59
-#: smarty.txt:52 smarty.txt:28 smarty.txt:25 smarty.txt:19
+#: smarty.txt:52 smarty.txt:28 smarty.txt:25 smarty.txt:19 smarty.txt:11
 msgid "Server administration"
 msgstr "Gestion du serveur"
 
@@ -5791,11 +5899,12 @@ msgstr "Serveurs"
 #: smarty.txt:58 smarty.txt:80 smarty.txt:83 smarty.txt:62
 #: ../classes/Content.php:534 smarty.txt:61 ../classes/Content.php:539
 #: smarty.txt:54 ../classes/Content.php:543 ../classes/Content.php:590
+#: ../classes/Content.php:719
 msgid "Content"
 msgstr "Contenu"
 
 #: smarty.txt:63 smarty.txt:85 smarty.txt:88 smarty.txt:35 smarty.txt:55
-#: smarty.txt:49
+#: smarty.txt:49 smarty.txt:21
 msgid "Get this list as a RSS feed"
 msgstr "Voir cette liste en tant qu'un fil de syndication RSS"
 
@@ -5891,12 +6000,12 @@ msgid "Continue to your requested homepage"
 msgstr "Continuer vers la page demandée"
 
 #: smarty.txt:141 smarty.txt:163 smarty.txt:166 smarty.txt:144 smarty.txt:75
-#: smarty.txt:70 smarty.txt:73 smarty.txt:37 smarty.txt:31
+#: smarty.txt:70 smarty.txt:73 smarty.txt:37 smarty.txt:31 smarty.txt:12
 msgid "user is online at this hotspot"
 msgstr "usager est en ligne à ce point d'accès"
 
 #: smarty.txt:142 smarty.txt:164 smarty.txt:167 smarty.txt:145 smarty.txt:76
-#: smarty.txt:71 smarty.txt:74 smarty.txt:38 smarty.txt:32
+#: smarty.txt:71 smarty.txt:74 smarty.txt:38 smarty.txt:32 smarty.txt:13
 msgid "users are online at this hotspot"
 msgstr "usagers sont en ligne à ce point d'accès"
 
@@ -5967,6 +6076,8 @@ msgstr "Rechercher sur le Web"
 #: ../classes/Authenticators/AuthenticatorLDAP.php:179
 #: ../classes/Authenticators/AuthenticatorLDAP.php:166
 #: ../classes/Authenticators/AuthenticatorLDAP.php:171
+#: ../classes/Authenticators/AuthenticatorLDAP.php:167
+#: ../classes/Authenticators/AuthenticatorLDAP.php:172
 msgid "Error while connecting to the LDAP server."
 msgstr "Erreur de connexion au serveur LDAP."
 
@@ -5980,16 +6091,21 @@ msgstr ""
 #: ../classes/Authenticators/AuthenticatorLDAP.php:184
 #: ../classes/Authenticators/AuthenticatorLDAP.php:190
 #: ../classes/Authenticators/AuthenticatorLDAP.php:196
+#: ../classes/Authenticators/AuthenticatorLDAP.php:185
+#: ../classes/Authenticators/AuthenticatorLDAP.php:191
+#: ../classes/Authenticators/AuthenticatorLDAP.php:197
 msgid "Error while obtaining your username or password from the LDAP server."
 msgstr ""
 
 #: ../classes/Authenticators/AuthenticatorLDAP.php:211
 #: ../classes/Authenticators/AuthenticatorLDAP.php:203
+#: ../classes/Authenticators/AuthenticatorLDAP.php:204
 msgid "Error in username or password."
 msgstr "Erreur dans le nom ou mot de passe."
 
 #: ../classes/Authenticators/AuthenticatorLDAP.php:218
 #: ../classes/Authenticators/AuthenticatorLDAP.php:210
+#: ../classes/Authenticators/AuthenticatorLDAP.php:211
 msgid "Error connecting to the LDAP Server."
 msgstr "Erreur de connexion au serveur LDAP."
 
@@ -6123,6 +6239,7 @@ msgid "Sorry, invalid change password request !"
 msgstr "Désolé, requête de changement de mot de passe invalide !"
 
 #: ../signup.php:230 ../portal/index.php:210 ../portal/index.php:190
+#: ../portal/index.php:149
 #, php-format
 msgid ""
 "Your account has been granted %s minutes of access to retrieve your email "
@@ -6150,39 +6267,44 @@ msgstr "Connexion à %s chez %s"
 msgid "Offsite login page"
 msgstr "Connexion en dehors du réseau de points d'accès"
 
-#: ../portal/index.php:198 ../portal/index.php:178
+#: ../portal/index.php:198 ../portal/index.php:178 ../portal/index.php:138
 #, php-format
 msgid "%s portal for %s"
 msgstr "Portail de %s chez %s"
 
 #: ../classes/Authenticators/AuthenticatorLDAP.php:186
 #: ../classes/Authenticators/AuthenticatorLDAP.php:178
+#: ../classes/Authenticators/AuthenticatorLDAP.php:179
 msgid "Error while obtaining your LDAP information."
 msgstr "Erreur lors de l'obtention de vos informations par LDAP."
 
 #: ../classes/Content.php:417 ../classes/Content.php:421
 #: ../classes/Content.php:425 ../classes/Content.php:485
+#: ../classes/Content.php:520
 msgid "Add new Content of type"
 msgstr "Ajouter un contenu du type"
 
 #: ../classes/Content.php:534 ../classes/Content.php:539
 #: ../classes/Content.php:543 ../classes/Content.php:590
+#: ../classes/Content.php:719
 msgid "Display page"
 msgstr "Voir la page"
 
 #: ../classes/Content.php:534 ../classes/Content.php:539
 #: ../classes/Content.php:543 ../classes/Content.php:590
+#: ../classes/Content.php:719
 msgid "Area"
 msgstr "Zone"
 
 #: ../classes/Content.php:534 ../classes/Content.php:539
 #: ../classes/Content.php:543 ../classes/Content.php:590
+#: ../classes/Content.php:719
 msgid "Order"
 msgstr "Ordre"
 
 #: ../classes/Content.php:534 ../classes/Content.php:539
 #: ../classes/Content.php:543 ../classes/Content.php:590
-#: ../classes/ProfileTemplate.php:358
+#: ../classes/ProfileTemplate.php:358 ../classes/Content.php:719
 msgid "Actions"
 msgstr "Actions"
 
@@ -6274,12 +6396,13 @@ msgid "%s (Theme did not include a description.txt file)"
 msgstr "%s (Le paquetage thématique ne contient pas de description.txt)"
 
 #: ../classes/User.php:313 ../classes/User.php:292 ../classes/User.php:294
+#: ../classes/User.php:348
 #, php-format
 msgid "Sorry, the username %s is not available"
 msgstr "Désolé, le nom d'usager %s est déjà utilisé"
 
 #: ../classes/User.php:720 ../classes/User.php:719 ../classes/User.php:662
-#: ../classes/User.php:713
+#: ../classes/User.php:713 ../classes/User.php:767
 msgid "Be carefull when changing this: it's the username you use to log in!"
 msgstr ""
 "Soyez prudent en modifiant ce champ, il s'agit du nom que vous utiliserez "
@@ -6290,6 +6413,7 @@ msgid "Preferences"
 msgstr "Préférences"
 
 #: smarty.txt:63 smarty.txt:156 smarty.txt:30 smarty.txt:79 smarty.txt:73
+#: smarty.txt:16
 msgid ""
 "We are a not-for-profit group dedicated to making no-fee wireless Internet "
 "access generally available."
@@ -6298,6 +6422,7 @@ msgstr ""
 "accès un accès à Internet sans fil."
 
 #: smarty.txt:64 smarty.txt:157 smarty.txt:31 smarty.txt:80 smarty.txt:74
+#: smarty.txt:17
 msgid ""
 "Our aim is to encourage the growth of wireless networking and to build "
 "community in interesting and innovative ways."
@@ -6306,6 +6431,7 @@ msgstr ""
 "favoriser la création d'une communauté d'une façon inédite."
 
 #: smarty.txt:65 smarty.txt:158 smarty.txt:32 smarty.txt:81 smarty.txt:75
+#: smarty.txt:18
 msgid ""
 "We do this by setting up wireless Internet networks in parks, cafés, "
 "restaurants, bars and other publically-accessible locations across the city."
@@ -6314,17 +6440,18 @@ msgstr ""
 "parcs, cafés, restaurants, bars et autres espaces publics."
 
 #: smarty.txt:66 smarty.txt:159 smarty.txt:33 smarty.txt:82 smarty.txt:76
+#: smarty.txt:19
 msgid "For a complete and up-to-date listing of our nodes, visit"
 msgstr ""
 "Pour voir une liste complète et mise à jour de nos points d'accès, visitez"
 
 #: smarty.txt:114 smarty.txt:145 smarty.txt:56 smarty.txt:59 smarty.txt:83
-#: smarty.txt:77
+#: smarty.txt:77 smarty.txt:47
 msgid "Login or Signup here"
 msgstr "Connectez-vous ou créez un compte ici"
 
 #: smarty.txt:146 smarty.txt:77 smarty.txt:72 smarty.txt:75 smarty.txt:39
-#: smarty.txt:33
+#: smarty.txt:33 smarty.txt:14
 msgid "Nobody is online at this hotspot"
 msgstr "Personne n'est en ligne à ce point d'accès"
 
@@ -6333,7 +6460,7 @@ msgid "Use the Internet"
 msgstr "Cliquez ici pour utiliser Internet"
 
 #: smarty.txt:170 smarty.txt:92 smarty.txt:85 smarty.txt:88 smarty.txt:48
-#: smarty.txt:42
+#: smarty.txt:42 smarty.txt:72
 msgid ""
 "<b>Your email address must be valid</b> in order for your account to be "
 "activated."
@@ -6342,14 +6469,14 @@ msgstr ""
 "valider votre compte."
 
 #: smarty.txt:171 smarty.txt:93 smarty.txt:86 smarty.txt:89 smarty.txt:49
-#: smarty.txt:43
+#: smarty.txt:43 smarty.txt:73
 msgid "A validation email will be sent to that email address."
 msgstr ""
 "Un message vous permettant de valider votre compte vous sera envoyé par "
 "courriel."
 
 #: smarty.txt:172 smarty.txt:94 smarty.txt:87 smarty.txt:90 smarty.txt:50
-#: smarty.txt:44
+#: smarty.txt:44 smarty.txt:74
 msgid "To fully activate your account you must respond to that email."
 msgstr ""
 "Afin d'accéder à Internet, vous devez absolument lire vos courriels dans les "
@@ -6362,18 +6489,21 @@ msgstr "%s %d ordre et endroit d'affichage"
 
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:337
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:405
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:381
 #, php-format
 msgid "%s %d displayed content (%s)"
 msgstr "%s %d: contenu affiché (%s)"
 
 #: ../classes/Content/ContentGroup/ContentGroup.php:329
 #: ../classes/Content/ContentGroup/ContentGroup.php:259
+#: ../classes/Content/ContentGroup/ContentGroup.php:260
 #, php-format
 msgid "%s configuration"
 msgstr "%s: configuration"
 
 #: ../classes/Content/ContentGroup/ContentGroup.php:416
 #: ../classes/Content/ContentGroup/ContentGroup.php:305
+#: ../classes/Content/ContentGroup/ContentGroup.php:306
 #, php-format
 msgid "%s display element list"
 msgstr "%s: liste des éléments à afficher"
@@ -6381,6 +6511,8 @@ msgstr "%s: liste des éléments à afficher"
 #: ../classes/Content/ContentGroup/ContentGroup.php:424
 #: ../classes/Content/ContentGroup/ContentGroup.php:329
 #: ../classes/ProfileTemplate.php:496
+#: ../classes/Content/ContentGroup/ContentGroup.php:330
+#: ../classes/ProfileTemplate.php:500
 #, php-format
 msgid "%s %d"
 msgstr "%s %d"
@@ -6388,12 +6520,14 @@ msgstr "%s %d"
 #: ../classes/Content/ContentGroup/ContentGroup.php:427
 #: ../classes/Content/ContentGroup/ContentGroup.php:332
 #: ../classes/ProfileTemplate.php:499
+#: ../classes/Content/ContentGroup/ContentGroup.php:333
 #, php-format
 msgid "Delete %s %d"
 msgstr "Supprimer le %s %d"
 
 #: ../classes/Content.php:1179 ../classes/Content.php:1173
 #: ../classes/Content.php:1198 ../classes/Content.php:1384
+#: ../classes/Content.php:1513 ../classes/Content.php:1532
 #, php-format
 msgid "%s MetaData"
 msgstr "%s: Métadonnées"
@@ -6409,27 +6543,36 @@ msgstr "%s: Métadonnées"
 #: ../classes/Content.php:1424 ../classes/Content.php:1441
 #: ../classes/Content.php:1458 ../classes/ProfileTemplateField.php:450
 #: ../classes/ProfileTemplateField.php:468
+#: ../classes/Content/ShoutBox/ShoutBox.php:251 ../classes/Content.php:1534
+#: ../classes/Content.php:1553 ../classes/Content.php:1570
+#: ../classes/Content.php:1587 ../classes/ProfileTemplateField.php:454
+#: ../classes/ProfileTemplateField.php:472 ../classes/Content.php:1572
+#: ../classes/Content.php:1589 ../classes/Content.php:1606
 #, php-format
 msgid "Delete %s (%s)"
 msgstr "Supprimer le %s (%s)"
 
 #: ../classes/Content.php:1193 ../classes/Content.php:1187
 #: ../classes/Content.php:1212 ../classes/Content.php:1405
+#: ../classes/Content.php:1534 ../classes/Content.php:1553
 msgid "title"
 msgstr "titre"
 
 #: ../classes/Content.php:1212 ../classes/Content.php:1206
 #: ../classes/Content.php:1231 ../classes/Content.php:1424
+#: ../classes/Content.php:1553 ../classes/Content.php:1572
 msgid "description"
 msgstr "description"
 
 #: ../classes/Content.php:1229 ../classes/Content.php:1223
 #: ../classes/Content.php:1248 ../classes/Content.php:1441
+#: ../classes/Content.php:1570 ../classes/Content.php:1589
 msgid "long description"
 msgstr "description longue"
 
 #: ../classes/Content.php:1246 ../classes/Content.php:1240
 #: ../classes/Content.php:1265 ../classes/Content.php:1458
+#: ../classes/Content.php:1587 ../classes/Content.php:1606
 msgid "project information"
 msgstr "information sur le projet"
 
@@ -6440,6 +6583,7 @@ msgstr "commanditaire"
 
 #: ../classes/Content.php:1270 ../classes/Content.php:1264
 #: ../classes/Content.php:1289 ../classes/Content.php:1472
+#: ../classes/Content.php:1601 ../classes/Content.php:1620
 #, php-format
 msgid "%s access control"
 msgstr "%s: contrôle d'accès"
@@ -6454,6 +6598,8 @@ msgstr "Date de dernière modification"
 
 #: ../classes/Content/Picture/Picture.php:234
 #: ../classes/Content/Picture/Picture.php:252
+#: ../classes/Content/Picture/Picture.php:263
+#: ../classes/Content/Picture/Picture.php:272
 msgid "Hyperlink URL (leave empty if you don't need it)"
 msgstr ""
 "URL de l'hyperlien (laissez le champ vide si vous ne désirez pas l'utiliser)"
@@ -6465,25 +6611,25 @@ msgid ""
 "includes non-validated users who successfully connected."
 msgstr ""
 
-#: smarty.txt:39 smarty.txt:42 smarty.txt:62 smarty.txt:56
+#: smarty.txt:39 smarty.txt:42 smarty.txt:62 smarty.txt:56 smarty.txt:28
 msgid "Hotspot not monitored"
 msgstr "Point d'accès non surveillé"
 
-#: smarty.txt:48 smarty.txt:51 smarty.txt:69 smarty.txt:63
+#: smarty.txt:48 smarty.txt:51 smarty.txt:69 smarty.txt:63 smarty.txt:37
 #, php-format
 msgid "The %s network currently has one valid user."
 msgstr "Le réseau %s possède actuellement un usager valide."
 
-#: smarty.txt:49 smarty.txt:52 smarty.txt:70 smarty.txt:64
+#: smarty.txt:49 smarty.txt:52 smarty.txt:70 smarty.txt:64 smarty.txt:38
 #, php-format
 msgid "The %s network currently has %d valid users."
 msgstr "Le réseau %s possède actuellement %d usagers valides."
 
-#: smarty.txt:50 smarty.txt:53 smarty.txt:71 smarty.txt:65
+#: smarty.txt:50 smarty.txt:53 smarty.txt:71 smarty.txt:65 smarty.txt:39
 msgid "One user is currently online."
 msgstr "Un usager est actuellement connecté."
 
-#: smarty.txt:51 smarty.txt:54 smarty.txt:72 smarty.txt:66
+#: smarty.txt:51 smarty.txt:54 smarty.txt:72 smarty.txt:66 smarty.txt:40
 #, php-format
 msgid "%d users are currently online."
 msgstr "%d usagers sont actuellement connectés."
@@ -6501,11 +6647,11 @@ msgstr "Il possède %d points d'accès déployés."
 msgid "1 hotspot is currently operationnal."
 msgstr "Un point d'accès est fonctionnel."
 
-#: smarty.txt:52 smarty.txt:55 smarty.txt:73 smarty.txt:67
+#: smarty.txt:52 smarty.txt:55 smarty.txt:73 smarty.txt:67 smarty.txt:41
 msgid "This network currently has 1 deployed hotspot."
 msgstr "Ce réseau possède actuellement un point d'accès déployé."
 
-#: smarty.txt:53 smarty.txt:56 smarty.txt:74 smarty.txt:68
+#: smarty.txt:53 smarty.txt:56 smarty.txt:74 smarty.txt:68 smarty.txt:42
 #, php-format
 msgid "This network currently has %d deployed hotspots."
 msgstr "Ce réseau possède actuellement %d points d'accès déployés."
@@ -6634,20 +6780,20 @@ msgstr "Nombre de points d'accès: %d"
 msgid "Last updated on: %s"
 msgstr "Dernière mise à jour: %s"
 
-#: smarty.txt:34 smarty.txt:54 smarty.txt:48
+#: smarty.txt:34 smarty.txt:54 smarty.txt:48 smarty.txt:20
 msgid "Get this list as a PDF file"
 msgstr "Télécharger la liste en format PDF"
 
-#: smarty.txt:36 smarty.txt:56 smarty.txt:50
+#: smarty.txt:36 smarty.txt:56 smarty.txt:50 smarty.txt:22
 msgid "Get this list for Google Earth"
 msgstr "Téléchargez la liste en format Google Earth"
 
-#: smarty.txt:37 smarty.txt:57 smarty.txt:51
+#: smarty.txt:37 smarty.txt:57 smarty.txt:51 smarty.txt:23
 #, php-format
 msgid "Status of the %d open %s Hotspots"
 msgstr "État des %d points d'accès %s"
 
-#: smarty.txt:43 smarty.txt:63 smarty.txt:57
+#: smarty.txt:43 smarty.txt:63 smarty.txt:57 smarty.txt:29
 #, php-format
 msgid "Opened on %s"
 msgstr "Ouvert le %s"
@@ -6796,39 +6942,46 @@ msgid ""
 "this report."
 msgstr ""
 
-#: ../classes/Content/File/File.php:501
+#: ../classes/Content/File/File.php:501 ../classes/Content/File/File.php:566
 msgid "Last update"
 msgstr "Dernière mise à jour"
 
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:315
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:291
 #, php-format
 msgid "%s %d display conditions"
 msgstr ""
 
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:331
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:307
 msgid ""
 "Content can be displayed at any date if no start or end date is specified.  "
 "Warning:  If you do not specify a specific time of day, midnight is assumed."
 msgstr ""
 
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:332
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:308
 msgid "Only display from"
 msgstr ""
 
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:358
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:334
 msgid "Only display at node(s):"
 msgstr ""
 
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:388
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:364
 msgid ""
 "(Content can be displayed at ANY node unless one or more nodes are selected)"
 msgstr ""
 
 #: ../classes/Content/ContentGroup/ContentGroup.php:312
+#: ../classes/Content/ContentGroup/ContentGroup.php:313
 msgid "Show expired group elements"
 msgstr ""
 
 #: ../classes/Content/ContentGroup/ContentGroup.php:318
+#: ../classes/Content/ContentGroup/ContentGroup.php:319
 msgid "Hide expired group elements"
 msgstr ""
 
@@ -7031,10 +7184,12 @@ msgid "There are also a few custom Smarty modifiers available: %s"
 msgstr ""
 
 #: ../classes/Content/ShoutBox/ShoutBox.php:114
+#: ../classes/Content/ShoutBox/ShoutBox.php:240
 msgid "Shout button 'onclick=' value (optionnal):"
 msgstr ""
 
 #: ../classes/Content/ShoutBox/ShoutBox.php:121
+#: ../classes/Content/ShoutBox/ShoutBox.php:247
 #, php-format
 msgid ""
 "Note that the onclick parameter will appear inside double quotes in html.  "
@@ -7043,6 +7198,7 @@ msgid ""
 msgstr ""
 
 #: ../classes/Content/ShoutBox/ShoutBox.php:125
+#: ../classes/Content/ShoutBox/ShoutBox.php:251
 msgid "onclick parameter"
 msgstr ""
 
@@ -7051,18 +7207,21 @@ msgid "Last five messages:"
 msgstr ""
 
 #: ../classes/Content/ShoutBox/ShoutBox.php:189
+#: ../classes/Content/ShoutBox/ShoutBox.php:372
 msgid "Sorry, I am unable to determine your current node"
 msgstr ""
 
 #: ../classes/Content/ShoutBox/ShoutBox.php:207
+#: ../classes/Content/ShoutBox/ShoutBox.php:330
 msgid "Shout!"
 msgstr ""
 
 #: ../classes/Content/ShoutBox/ShoutBox.php:212
+#: ../classes/Content/ShoutBox/ShoutBox.php:335
 msgid "Sorry, you must be at a hotspot to use the shoutbox"
 msgstr ""
 
-#: ../classes/User.php:268 ../classes/User.php:270
+#: ../classes/User.php:268 ../classes/User.php:270 ../classes/User.php:271
 msgid "Guest"
 msgstr "Invité"
 
@@ -7154,31 +7313,35 @@ msgid ""
 "hostname %s in the database!"
 msgstr ""
 
-#: ../classes/Content.php:494
+#: ../classes/Content.php:494 ../classes/Content.php:534
 msgid "No content type matches the filter."
 msgstr ""
 
-#: ../classes/Content.php:782
+#: ../classes/Content.php:782 ../classes/Content.php:911
 msgid "Select from reusable content library"
 msgstr ""
 
 #: ../classes/Content.php:843 ../classes/Content.php:850
+#: ../classes/Content.php:972 ../classes/Content.php:979
 msgid "Sorry, no elligible content available in the database"
 msgstr ""
 
-#: ../classes/Content.php:919
+#: ../classes/Content.php:919 ../classes/Content.php:1048
 msgid "KVP key cannot be null"
 msgstr ""
 
-#: ../classes/Content.php:1354
+#: ../classes/Content.php:1354 ../classes/Content.php:1483
+#: ../classes/Content.php:1502
 msgid "(You do not have access to edit this piece of content)"
 msgstr ""
 
-#: ../classes/Content.php:1387
+#: ../classes/Content.php:1387 ../classes/Content.php:1516
+#: ../classes/Content.php:1535
 msgid "Display the title?"
 msgstr ""
 
-#: ../classes/Content.php:1476
+#: ../classes/Content.php:1476 ../classes/Content.php:1605
+#: ../classes/Content.php:1624
 msgid "Is part of reusable content library (protected from deletion)?"
 msgstr ""
 
@@ -7225,38 +7388,43 @@ msgstr ""
 
 #: ../classes/Node.php:1242 ../classes/Node.php:1243
 msgid "Unable to create geocoder.  Are you sure you set the country?"
-msgstr "Impossible de créer un géocodeur. Assurez-vous de sélectionner un pays."
+msgstr ""
+"Impossible de créer un géocodeur. Assurez-vous de sélectionner un pays."
 
 #: smarty.txt:77
 msgid ""
 "Because of one hotspot not being monitored we don't know if it is currently "
 "operationnal."
-msgstr "Un point d'accès n'est pas surveillé en temps réel; son état est donc inconnu."
+msgstr ""
+"Un point d'accès n'est pas surveillé en temps réel; son état est donc "
+"inconnu."
 
 #: smarty.txt:78
 #, php-format
 msgid ""
 "Because of %d hotspots not being monitored we don't know if they are "
 "currently operationnal."
-msgstr "%d points d'accès ne sont pas surveillés en temps réel; leur état est donc inconnu."
+msgstr ""
+"%d points d'accès ne sont pas surveillés en temps réel; leur état est donc "
+"inconnu."
 
-#: smarty.txt:75 smarty.txt:69
+#: smarty.txt:75 smarty.txt:69 smarty.txt:43
 msgid "One hotspot is currently operational."
 msgstr "Un point d'accès est actuellement opérationnel."
 
-#: smarty.txt:76 smarty.txt:70
+#: smarty.txt:76 smarty.txt:70 smarty.txt:44
 #, php-format
 msgid "%d hotspots are currently operational."
 msgstr "%d points d'accès sont actuellement opérationnels."
 
-#: smarty.txt:77 smarty.txt:71
+#: smarty.txt:77 smarty.txt:71 smarty.txt:45
 msgid ""
 "One hotspot isn't monitored so we don't know if it's currently operational."
 msgstr ""
 "Un point d'accès n'est pas suivi, donc nous ne pouvons pas savoir s'il est "
 "actuellement opérationnel."
 
-#: smarty.txt:78 smarty.txt:72
+#: smarty.txt:78 smarty.txt:72 smarty.txt:46
 #, php-format
 msgid ""
 "%d hotspots aren't monitored so we don't know if they are currently "
@@ -7265,70 +7433,80 @@ msgstr ""
 "%d points d'accès ne sont pas suivis, donc nous ne pouvons pas savoir s'ils "
 "sont actuellement opérationnels."
 
-#: ../classes/User.php:505
+#: ../classes/User.php:505 ../classes/User.php:559
 msgid "Password cannot be empty."
 msgstr "Le mot de passe ne peut être vide."
 
-#: ../classes/User.php:694
+#: ../classes/User.php:694 ../classes/User.php:748
 msgid "Get user statistics"
 msgstr "Afficher les statistiques pour l'usager"
 
-#: ../classes/User.php:699
+#: ../classes/User.php:699 ../classes/User.php:753
 msgid "Note that Error is for internal use only"
 msgstr "Erreur pour usage interne seulement"
 
-#: ../classes/User.php:705
+#: ../classes/User.php:705 ../classes/User.php:759
 msgid "Administrative options"
 msgstr "Options administratives"
 
-#: ../classes/User.php:730
+#: ../classes/User.php:730 ../classes/User.php:784
 msgid "Your new password (again)"
 msgstr "Votre nouveau mot de passe (bis)"
 
-#: ../classes/User.php:737
+#: ../classes/User.php:737 ../classes/User.php:791
 msgid "User preferences"
 msgstr "Préférences usager"
 
-#: ../classes/ContentTypeFilter.php:200
+#: ../classes/ContentTypeFilter.php:200 ../classes/ContentTypeFilter.php:199
 msgid "Unable to insert the new ContentTypeFilter in the database!"
-msgstr "Impossible d'insérer le nouveau filtre de type de contenu dans la base de données!"
+msgstr ""
+"Impossible d'insérer le nouveau filtre de type de contenu dans la base de "
+"données!"
 
-#: ../classes/ContentTypeFilter.php:221
+#: ../classes/ContentTypeFilter.php:221 ../classes/ContentTypeFilter.php:220
 msgid "Add a new content type filter with these rules"
 msgstr "Ajouter un nouveau filtre de type de contenu avec ces règles"
 
 #: ../classes/ContentTypeFilter.php:305
 #: ../classes/ProfileTemplateField.php:430
+#: ../classes/ContentTypeFilter.php:303
+#: ../classes/ProfileTemplateField.php:434
 msgid "Content type filter"
 msgstr "Filtre de type de contenu"
 
 #: ../classes/ContentTypeFilter.php:314 ../classes/ProfileTemplate.php:293
 #: ../classes/ProfileTemplateField.php:129
 #: ../classes/ProfileTemplateField.php:433
+#: ../classes/ContentTypeFilter.php:311
+#: ../classes/ProfileTemplateField.php:128
+#: ../classes/ProfileTemplateField.php:437
 msgid "No label"
 msgstr "Aucune étiquette"
 
-#: ../classes/ContentTypeFilter.php:360
+#: ../classes/ContentTypeFilter.php:360 ../classes/ContentTypeFilter.php:357
 msgid "ContentTypeFilter management"
 msgstr "Gestion du filtre de type de contenu"
 
-#: ../classes/ContentTypeFilter.php:367
+#: ../classes/ContentTypeFilter.php:367 ../classes/ContentTypeFilter.php:364
 msgid "ContentTypeFilter ID"
 msgstr "Identifiant du filtre de type de contenu"
 
 #: ../classes/ContentTypeFilter.php:378 ../classes/ProfileTemplate.php:472
+#: ../classes/ContentTypeFilter.php:375 ../classes/ProfileTemplate.php:476
 msgid "Label"
 msgstr "Étiquette"
 
-#: ../classes/ContentTypeFilter.php:389
+#: ../classes/ContentTypeFilter.php:389 ../classes/ContentTypeFilter.php:386
 msgid "Rules (must be a valid array definition)"
 msgstr "Règles (doit être une déclaration de vecteur valide)"
 
-#: ../classes/ContentTypeFilter.php:430
+#: ../classes/ContentTypeFilter.php:430 ../classes/ContentTypeFilter.php:428
 msgid "The rules must be given as a PHP array declaration."
-msgstr "Les règles doivent être entrées sous forme d'une déclaration d'un vecteur PHP."
+msgstr ""
+"Les règles doivent être entrées sous forme d'une déclaration d'un vecteur "
+"PHP."
 
-#: ../classes/ContentTypeFilter.php:456
+#: ../classes/ContentTypeFilter.php:456 ../classes/ContentTypeFilter.php:454
 msgid "Could not delete ContentTypeFilter!"
 msgstr "Impossible de supprimer le filtre de type de contenu!"
 
@@ -7340,29 +7518,31 @@ msgstr "Patrons de profil réseau"
 msgid "Unable to insert the new profile in the database!"
 msgstr "Impossible d'insérer le nouveau profil dans la base de données!"
 
-#: ../classes/Profile.php:259
+#: ../classes/Profile.php:259 ../classes/ProfileField.php:251
 msgid "Unable to insert the new profile fields in the database!"
-msgstr "Impossible d'insérer le nouveau champ de profil dans la base de données!"
+msgstr ""
+"Impossible d'insérer le nouveau champ de profil dans la base de données!"
 
-#: ../classes/Profile.php:292
+#: ../classes/Profile.php:292 ../classes/Profile.php:309
 msgid "Should this profile be publicly visible?"
 msgstr "Doit-on afficher ce profil aux autres usagers?"
 
-#: ../classes/Profile.php:297
+#: ../classes/Profile.php:297 ../classes/Profile.php:314
 msgid "Profile preferences"
 msgstr "Préférences du profil"
 
-#: ../classes/Profile.php:307
+#: ../classes/Profile.php:307 ../classes/Profile.php:355
 msgid "Profile fields"
 msgstr "Champs du profil"
 
-#: ../classes/Profile.php:356
+#: ../classes/Profile.php:356 ../classes/Profile.php:451
 msgid "Could not delete Profile!"
 msgstr "Impossible de supprimer le profil!"
 
 #: ../classes/ProfileTemplate.php:229
 msgid "Unable to insert the new profile template in the database!"
-msgstr "Impossible d'insérer le nouveau patron de profil dans la base de données!"
+msgstr ""
+"Impossible d'insérer le nouveau patron de profil dans la base de données!"
 
 #: ../classes/ProfileTemplate.php:288
 msgid "Profile template"
@@ -7372,105 +7552,208 @@ msgstr "Patron de profil"
 msgid "Profile template label"
 msgstr "Étiquette du patron de profil"
 
-#: ../classes/ProfileTemplate.php:454
+#: ../classes/ProfileTemplate.php:454 ../classes/ProfileTemplate.php:458
 msgid "Profile template management"
 msgstr "Gestion du patron de profil"
 
-#: ../classes/ProfileTemplate.php:461
+#: ../classes/ProfileTemplate.php:461 ../classes/ProfileTemplate.php:465
 msgid "ProfileTemplate ID"
 msgstr "Identifiant du patron de profil"
 
-#: ../classes/ProfileTemplate.php:491
+#: ../classes/ProfileTemplate.php:491 ../classes/ProfileTemplate.php:495
 msgid "Profile template fields"
 msgstr "Champs du patron de profil"
 
-#: ../classes/ProfileTemplate.php:575
+#: ../classes/ProfileTemplate.php:575 ../classes/ProfileTemplate.php:581
 msgid "Could not delete ProfileTemplate!"
 msgstr "Impossible de supprimer le patron de profil!"
 
 #: ../classes/ProfileTemplateField.php:133
+#: ../classes/ProfileTemplateField.php:132
 msgid "Add new profile template field filtered by"
 msgstr "Ajouter un nouveau patron de champ de profil filtré par"
 
 #: ../classes/ProfileTemplateField.php:142
+#: ../classes/ProfileTemplateField.php:141
 msgid "Sorry, no content type filter exists."
 msgstr "Désolé, aucun filtre de type de contenu n'existe."
 
 #: ../classes/ProfileTemplateField.php:418
+#: ../classes/ProfileTemplateField.php:414
 msgid "Display order"
 msgstr "Ordre d'affichage"
 
 #: ../classes/ProfileTemplateField.php:428
+#: ../classes/ProfileTemplateField.php:432
 msgid "Sorry, content type filter is missing."
 msgstr "Désolé, filtre de type de contenu manquant."
 
 #: ../classes/ProfileTemplateField.php:440
+#: ../classes/ProfileTemplateField.php:444
 msgid "Display label"
 msgstr "Étiquette pour l'affichage"
 
 #: ../classes/ProfileTemplateField.php:446
+#: ../classes/ProfileTemplateField.php:450
 #, php-format
 msgid "%s display label (%s)"
 msgstr "%s étiquette pour l'affichage (%s)"
 
 #: ../classes/ProfileTemplateField.php:450
+#: ../classes/ProfileTemplateField.php:454
 msgid "display label"
 msgstr "Étiquette pour l'affichage"
 
 #: ../classes/ProfileTemplateField.php:457
+#: ../classes/ProfileTemplateField.php:461
 msgid "Admin label"
 msgstr "Étiquette pour l'admin."
 
 #: ../classes/ProfileTemplateField.php:464
+#: ../classes/ProfileTemplateField.php:468
 #, php-format
 msgid "%s admin label (%s)"
 msgstr "%s étiquette pour l'admin. (%s)"
 
 #: ../classes/ProfileTemplateField.php:468
+#: ../classes/ProfileTemplateField.php:472
 msgid "admin label"
 msgstr "étiquette pour l'admin."
 
 #: ../classes/ProfileTemplateField.php:475
+#: ../classes/ProfileTemplateField.php:479
 msgid "Semantic ID"
 msgstr "Identifiant sémantique"
 
 #: ../classes/ProfileTemplateField.php:483
+#: ../classes/ProfileTemplateField.php:487
 msgid "Full name"
 msgstr "Nom complet"
 
 #: ../classes/ProfileTemplateField.php:484
+#: ../classes/ProfileTemplateField.php:488
 msgid "Nickname"
 msgstr "Pseudonyme"
 
 #: ../classes/ProfileTemplateField.php:485
+#: ../classes/ProfileTemplateField.php:489
 msgid "E-mail"
 msgstr "Courriel"
 
 #: ../classes/ProfileTemplateField.php:486
+#: ../classes/ProfileTemplateField.php:490
 msgid "Hashed e-mail"
 msgstr "Courriel hachée"
 
 #: ../classes/ProfileTemplateField.php:487
+#: ../classes/ProfileTemplateField.php:491
 msgid "Picture"
 msgstr "Image"
 
 #: ../classes/ProfileTemplateField.php:488
+#: ../classes/ProfileTemplateField.php:492
 msgid "URL of a blog"
 msgstr "URL d'un blogue"
 
 #: ../classes/ProfileTemplateField.php:489
+#: ../classes/ProfileTemplateField.php:493
 msgid "URL of a homepage"
 msgstr "URL d'une page web"
 
 #: ../classes/ProfileTemplateField.php:628
+#: ../classes/ProfileTemplateField.php:608
 msgid "Could not delete ProfileTemplateField!"
 msgstr "Impossible de supprimer le champ du patron de profil!"
 
-#: ../classes/ProfileField.php:207
+#: ../classes/ProfileField.php:207 ../classes/ProfileField.php:281
 #, php-format
 msgid "Delete %s"
 msgstr "Supprimer %s"
 
-#: ../classes/ProfileField.php:293
+#: ../classes/ProfileField.php:293 ../classes/ProfileField.php:368
 msgid "Could not delete ProfileField!"
 msgstr "Impossible de supprimer le champ du profil!"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:219
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:225
+msgid "Unable to insert new content group element into database!"
+msgstr ""
+
+#: ../classes/Content/FavoriteHotspots/FavoriteHotspots.php:88
+#: ../classes/Content/FavoriteHotspots/FavoriteHotspots.php:134
+#: ../classes/Content/FavoriteHotspots/FavoriteHotspots.php:144
+#, php-format
+msgid ""
+"Allow to share the %d favorite hotspots (most visited) with other users?"
+msgstr ""
+"Permettre le partage de vos %d points d'accès préférés (les plus visités) "
+"avec les autres usagers?"
+
+#: ../classes/Content/HyperLink/HyperLink.php:95
+msgid "Warning: the URL is invalid!"
+msgstr "Avertissement: l'URL est invalide!"
+
+#: ../classes/Content/HyperLink/HyperLink.php:117
+msgid "(invalid URL)"
+msgstr "(URL invalide)"
+
+#: ../classes/Content/ShoutBox/ShoutBox.php:346
+#, php-format
+msgid "Last %d messages:"
+msgstr "Derniers %d messages:"
+
+#: ../classes/Content/UIUserList/UIUserList.php:92
+msgid ""
+"This content type will display a list of online users at the current hotspot."
+msgstr ""
+
+#: ../classes/Content/UIUserList/UIUserList.php:128
+msgid "The online user list must be viewed at a specific node"
+msgstr ""
+"La liste d'usagers peut uniquement être visualisé à partir d'un point "
+"d'accès."
+
+#: ../classes/Profile.php:423
+msgid "Sorry, this user has hidden his profile  temporarily."
+msgstr "Désolé, cet usager a décidé de cacher son profil temporairement."
+
+#: ../classes/ProfileTemplate.php:505
+#, php-format
+msgid "Delete %s %d, used in %d/%d profiles"
+msgstr "Supprimer %s %d, utilisé dans %d/%d profils"
+
+#: ../classes/StatisticReport/AnonymisedDataExport.php:65
+msgid "Anonymised SQL data export (for academic research)"
+msgstr "Exportation SQL anonymisée pour fin de recherche académique"
+
+#: ../classes/User.php:314
+msgid "View this user's profile."
+msgstr "Voir le profil de cet usager."
+
+#: ../classes/User.php:470
+#, php-format
+msgid ""
+"Sorry, your %.0f minutes grace period to retrieve your email and validate "
+"your account has now expired. You will have to connect to the internet and "
+"validate your account from another location."
+msgstr ""
+"Désolé, la période de $.0f minutes pour relever vos courriels et valider "
+"votre compte est maintenant expiré. Vous devrez vous connecter à Internet à "
+"partir d'un et valider votre compte à partir d'un autre endroit."
+
+#: ../classes/User.php:803
+msgid "Completely delete my public profile"
+msgstr "Supprimer complètement mon profil public"
+
+#: ../classes/User.php:812
+msgid "Create my public profile"
+msgstr "Créer mon profil public"
+
+#: ../classes/Content/FavoriteHotspots/FavoriteHotspots.php:240
+msgid "There is no hotspots visit statistics to share."
+msgstr "Il n'y a pas de statistiques de visites à partager."
+
+#: ../classes/Content/FavoriteHotspots/FavoriteHotspots.php:244
+msgid ""
+"The user has chosen not to disclose his favorite hotspots to other users."
+msgstr "L'usager a choisi de ne pas partager ses points d'accès préférés avec les autres usagers."

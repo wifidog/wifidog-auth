@@ -1,3 +1,14 @@
+2007-05-17 François Proulx <francois.proulx@gmail.com>
+	* WARNING: This has not been fully tested. Full testing to be completed on 2006-05-18
+	  but I'm pretty confident that it works pretty well.
+	* Added automatic resize on Avatars
+	* Added FavoriteHotspots content (mostly used for Profiles)
+	* Added new features to Content and File
+	* Fixed URL regexp bug in HyperlinkUtils
+	* Updated French translations
+	* Updates profiles template
+	* TODO: Add getNewUI et processNewUI to FavoriteHotspots to simplify input
+
 2007-05-03  Benoit Gréoire  <bock@step.polymtl.ca>
     * MainUI_ToolContent.tpl: Make preferences_link, login_link, and logout_link CSS targetable.  Get rid of some deprecated CSS.
 
@@ -8,15 +19,15 @@
 	* AuthenticatorRadius.php:  Fix RADIUS dependency detection bug related to case sensitivity
 
 2007-04-19  Benoit Grégoire  <bock@step.polymtl.ca>
-	* RssAggregator.php:  Fix bug saving the max item age. 
+	* RssAggregator.php:  Fix bug saving the max item age.
 	* Forgot to remove a bunch of links to faq.php.
-	
+
 2007-04-03 Benoit Grégoire  <bock@step.polymtl.ca>
-	* AnonymisedDataExport.php:  New report.  Adds the ability to export anonymised SQL data for academic research. 
+	* AnonymisedDataExport.php:  New report.  Adds the ability to export anonymised SQL data for academic research.
 
 2007-03-20 Benoit Grégoire  <bock@step.polymtl.ca>
-	* Shoutbox.php: Allow limiting the number of characters entered for a shout.  
-	(Ideally, this would also need to be enforced at db write level).   
+	* Shoutbox.php: Allow limiting the number of characters entered for a shout.
+	(Ideally, this would also need to be enforced at db write level).
 	Move the shout form in the list.
 	Allow choosing the number of shouts displayed.
 	Make the size of the shout field configurable from the admin interface
@@ -34,26 +45,26 @@
 	* Add HyperLink content type
 	* Add UIUserList content type (work towards #158)
 	* portal/index.php:  Finish refactoring Smarty usage.
-	
+
 2007-03-17 Benoit Grégoire  <bock@step.polymtl.ca>
 	* install.php: Make sure we are in the right directory when uncompressing Smarty
 	* Avatar.php:  Don't allow user to hyperlink the image.
 	* ProfileTemplate:  Display how many profiles will be affected when deleting a template field.
-	* User.php:  Don't show the profile creation button if the network has no profile template. 
+	* User.php:  Don't show the profile creation button if the network has no profile template.
 	 Don't hyperlink the username if the user has no profile.
 
 2007-03-16 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Lots of work on profiles.  The HTML and CSS are not final, but #18 can be considered closed.
 	* ProfileField::getContentField():  Fix bug where the object wouldn't refresh properly.
 	* Content:  Delicate refactoring of the UI to create new content.
-	The content object now supports directly adding the actual values of a new 
- 	Content in getNewContentUI(), if the content filter only allows a single content type.  
- 	For this to work, the Content type must overload the getNewUI() method.  
+	The content object now supports directly adding the actual values of a new
+ 	Content in getNewContentUI(), if the content filter only allows a single content type.
+ 	For this to work, the Content type must overload the getNewUI() method.
  	This saves many mouse clicks for form style interface, like profiles.
  	* User:  Don't create profile automatically.
  	* Don't show profiles when user is invisible.
 	* Langstring, SimpleString, HTMLEditor: Support getNewUI().  As a result of these changes, SmartyTemplate, SimpleSmartyTemplate, Stylesheet also get it for free.
-	* Add new standard Smarty value userOriginallyRequestedURL.  
+	* Add new standard Smarty value userOriginallyRequestedURL.
  Note that this does NOT fix #266
 	* Add new standard Smarty value nodeWebSiteURL
 	* Some work towards #158
@@ -70,8 +81,8 @@
 	* CSS tweaks for RSS feeds.
 	* Fix detection of HTML Safe.
 	* Avatar.php:  Don't allow editing the picture size.
-	* ContentGroup:  In some cases, the same element could be picked twice in the same display.  
-	Make sure that doesn't happen.  Also, implement the option to not rotate content at all, 
+	* ContentGroup:  In some cases, the same element could be picked twice in the same display.
+	Make sure that doesn't happen.  Also, implement the option to not rotate content at all,
 	usefull when showing all elements simultaneously in a specific order. Closes #294
 
 2007-02-24 Damien Raude-Morvan <drazzib@drazzib.com>

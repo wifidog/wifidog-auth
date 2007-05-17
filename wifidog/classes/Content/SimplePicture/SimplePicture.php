@@ -70,6 +70,8 @@ class SimplePicture extends Picture
          * A SimplePicture is NEVER persistent
          */
         parent::setIsPersistent(false);
+
+        $this->setFileMetadataVerbose(false);
     }
     /** When a content object is set as Simple, it means that is is used merely to contain it's own data.  No title, description or other metadata will be set or displayed, during display or administration
      * @return true or false */
@@ -101,5 +103,3 @@ class SimplePicture extends Picture
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
-

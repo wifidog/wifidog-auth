@@ -299,15 +299,15 @@ class User implements GenericObject {
                     }
                 }
             }
-             
-             
-             
+
+
+
             // Display the avatar
             if(empty($avatar))
             $html .= Avatar::getDefaultUserUI();
             else
             $html .= $avatar;
-             
+
             // Display the nickname or the username
             $profiles=$this->getAllProfiles();
             if($profiles){
@@ -321,9 +321,9 @@ class User implements GenericObject {
                 $html .= "</a>\n";
             }
             $profileTemplates = $this->getNetwork()->getAllProfileTemplates();
-            if($this==User::getCurrentUser() && $profileTemplates) {
-                $html .= "<div class='user_edit_profile_link'>(<a href='".BASE_SSL_PATH."admin/generic_object_admin.php?object_id=".$this->getId()."&object_class=User&action=edit'>"._("edit profile")."</a>)</div>";
-            }
+            /*if($this==User::getCurrentUser() && $profileTemplates) {
+                $html .= "<div class='user_edit_profile_link'><br/>(<a href='".BASE_SSL_PATH."admin/generic_object_admin.php?object_id=".$this->getId()."&object_class=User&action=edit'>"._("edit profile")."</a>)</div>";
+            }*/
 
         }
         return $html;

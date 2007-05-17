@@ -63,7 +63,7 @@ class HTMLeditor extends Langstring
      *
 
      */
-    private $_FCKeditorAvailable = false;
+    protected $_FCKeditorAvailable = false;
 
     /**
      * Constructor.
@@ -83,11 +83,11 @@ class HTMLeditor extends Langstring
             $this->_FCKeditorAvailable = true;
         }
     }
-    
+
     /** Indicate that the content is suitable to store plain text.
      * @return true or false */
     public function isTextualContent() {
-    	return false;
+    		return false;
     }
         /**
      * This method contains the interface to add an additional element to a
@@ -108,35 +108,43 @@ class HTMLeditor extends Langstring
         $languages = new LocaleList();
         $locale = LocaleList::GetDefault();
         !empty($userData['typeInterface'])?$typeInterface=$userData['typeInterface']:$typeInterface=null;
-            $html .= "<div class='admin_element_data'>\n";
+        $html .= "<div class='admin_element_data'>\n";
 
-            $html .= _("Language") . ": " . $languages->GenererFormSelect($locale, "langstrings_" . $contentId . "_substring_new_language", null, TRUE);
+        $html .= _("Language") . ": " . $languages->GenererFormSelect($locale, "langstrings_" . $contentId . "_substring_new_language", null, TRUE);
 
-            $_FCKeditor = new FCKeditor('langstrings_' . $contentId . '_substring_new_string');
-            $_FCKeditor->BasePath = SYSTEM_PATH . "lib/FCKeditor/";
-            $_FCKeditor->Config["CustomConfigurationsPath"] = BASE_URL_PATH . "js/HTMLeditor.js";
-            $_FCKeditor->Config["AutoDetectLanguage"] = false;
-            $_FCKeditor->Config["DefaultLanguage"] = substr(Locale::getCurrentLocale()->getId(), 0, 2);
-            $_FCKeditor->Config["StylesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/css/" . substr(Locale::getCurrentLocale()->getId(), 0, 2) . ".xml";
-            $_FCKeditor->Config["TemplatesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/templates/" . substr(Locale::getCurrentLocale()->getId(), 0, 2) . ".xml";
-            $_FCKeditor->ToolbarSet = "WiFiDOG";
+		if (Dependencies::check("FCKeditor")) {
+            // Load FCKeditor class
+            require_once('lib/FCKeditor/fckeditor.php');
 
-            $_FCKeditor->Value = "";
+	        $_FCKeditor = new FCKeditor('langstrings_' . $contentId . '_substring_new_string');
+	        $_FCKeditor->BasePath = SYSTEM_PATH . "lib/FCKeditor/";
+	        $_FCKeditor->Config["CustomConfigurationsPath"] = BASE_URL_PATH . "js/HTMLeditor.js";
+	        $_FCKeditor->Config["AutoDetectLanguage"] = false;
+	        $_FCKeditor->Config["DefaultLanguage"] = substr(Locale::getCurrentLocale()->getId(), 0, 2);
+	        $_FCKeditor->Config["StylesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/css/" . substr(Locale::getCurrentLocale()->getId(), 0, 2) . ".xml";
+	        $_FCKeditor->Config["TemplatesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/templates/" . substr(Locale::getCurrentLocale()->getId(), 0, 2) . ".xml";
+	        $_FCKeditor->ToolbarSet = "WiFiDOG";
 
-            if ($typeInterface == 'LARGE') {
-                $_FCKeditor->Height = 400;
-            } else {
-                $_FCKeditor->Height = 200;
-            }
-            $_FCKeditor->Width = 386;
+	        $_FCKeditor->Value = "";
 
-            $html .= $_FCKeditor->CreateHtml();
+	        if ($typeInterface == 'LARGE') {
+	            $_FCKeditor->Height = 400;
+	        } else {
+	            $_FCKeditor->Height = 200;
+	        }
+	        $_FCKeditor->Width = 386;
 
-            $html .= "</div>\n";
-            $html .= "<div class='admin_element_tools'>\n";
+	        $html .= $_FCKeditor->CreateHtml();
+		}
+		else {
+			$html .= "<textarea name='langstrings_{$contentId}_substring_new_string' class='textarea' cols='60' rows='3'></textarea>";
+		}
 
-            $html .= "<input type='submit' class='submit' name='langstrings_" . $contentId . "_add_new_entry' value='" . _("Add new string") . "'>";
-            $html .= "</div>\n";
+        $html .= "</div>\n";
+        $html .= "<div class='admin_element_tools'>\n";
+
+        $html .= "<input type='submit' class='submit' name='langstrings_" . $contentId . "_add_new_entry' value='" . _("Add new string") . "'>";
+        $html .= "</div>\n";
         return $html;
     }
 
@@ -224,7 +232,7 @@ class HTMLeditor extends Langstring
         return Content :: getAdminUI($html, $title);
     }
 
- 
+
     /**
      * Reloads the object from the database. Should normally be called after
      * a set operation. This function is private because calling it from a
