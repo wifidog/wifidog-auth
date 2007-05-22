@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-17 16:22-0400\n"
+"POT-Creation-Date: 2007-05-22 08:52-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -132,7 +132,7 @@ msgstr "地図で現在地を確認"
 
 #: ../hotspots_map.php:155 smarty.txt:71 smarty.txt:121
 #: ../hotspots_map.php:156 smarty.txt:120 smarty.txt:69 smarty.txt:46
-#: smarty.txt:49 smarty.txt:34 smarty.txt:28 smarty.txt:35
+#: smarty.txt:49 smarty.txt:34 smarty.txt:28 smarty.txt:35 smarty.txt:20
 msgid "Loading, please wait..."
 msgstr "ロード中。しばらくお待ちください。"
 
@@ -943,6 +943,7 @@ msgstr "設置日"
 #: ../classes/Content.php:750 ../classes/Node.php:834 smarty.txt:39
 #: smarty.txt:103 ../classes/Content.php:796 ../classes/Node.php:959
 #: smarty.txt:59 smarty.txt:53 ../classes/Content.php:925 smarty.txt:25
+#: smarty.txt:51
 msgid "Description"
 msgstr "説明"
 
@@ -2045,7 +2046,7 @@ msgstr "使用可能なHTMLタグ : "
 #: smarty.txt:22 ../classes/Content/HTMLeditor/HTMLeditor.php:113
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:184
 #: ../classes/Content/Langstring/Langstring.php:216
-#: ../classes/Content/Langstring/Langstring.php:343 smarty.txt:7
+#: ../classes/Content/Langstring/Langstring.php:343 smarty.txt:7 smarty.txt:14
 msgid "Language"
 msgstr "言語"
 
@@ -3704,7 +3705,7 @@ msgstr "パスワードを変更します。"
 #: smarty.txt:3 smarty.txt:122 smarty.txt:169 smarty.txt:16 smarty.txt:84
 #: smarty.txt:167 smarty.txt:83 smarty.txt:166 smarty.txt:120 smarty.txt:62
 #: smarty.txt:75 smarty.txt:65 smarty.txt:78 smarty.txt:66 smarty.txt:90
-#: smarty.txt:60 smarty.txt:53
+#: smarty.txt:60 smarty.txt:53 smarty.txt:58 smarty.txt:72
 msgid "Your username"
 msgstr "ユーザー名"
 
@@ -3923,7 +3924,7 @@ msgid "Servers"
 msgstr "サーバー"
 
 #: smarty.txt:56 smarty.txt:55 smarty.txt:22 smarty.txt:26 smarty.txt:20
-#: smarty.txt:5
+#: smarty.txt:5 smarty.txt:12
 msgid "Logged in as"
 msgstr "ログイン"
 
@@ -3936,7 +3937,7 @@ msgid "Logout"
 msgstr "ログアウト"
 
 #: smarty.txt:59 smarty.txt:58 smarty.txt:23 smarty.txt:27 smarty.txt:21
-#: smarty.txt:6
+#: smarty.txt:6 smarty.txt:13
 msgid "I am not logged in."
 msgstr "現在ログインしていません。"
 
@@ -3960,34 +3961,34 @@ msgid "Full node technical status (includes non-deployed nodes)"
 msgstr "全ノードの状況表示（未配置ノードも含む）"
 
 #: smarty.txt:66 smarty.txt:116 smarty.txt:115 smarty.txt:64 smarty.txt:41
-#: smarty.txt:44 smarty.txt:29 smarty.txt:23 smarty.txt:30
+#: smarty.txt:44 smarty.txt:29 smarty.txt:23 smarty.txt:30 smarty.txt:15
 msgid "Show me the closest hotspot"
 msgstr "閉じられたホットスポットの閲覧"
 
 #: smarty.txt:67 smarty.txt:117 smarty.txt:116 smarty.txt:65 smarty.txt:42
-#: smarty.txt:45 smarty.txt:30 smarty.txt:24 smarty.txt:31
+#: smarty.txt:45 smarty.txt:30 smarty.txt:24 smarty.txt:31 smarty.txt:16
 msgid "Enter your postal code"
 msgstr "郵便番号を入力してください。"
 
 #: smarty.txt:68 smarty.txt:118 smarty.txt:117 smarty.txt:66 smarty.txt:43
-#: smarty.txt:46 smarty.txt:31 smarty.txt:25 smarty.txt:32
+#: smarty.txt:46 smarty.txt:31 smarty.txt:25 smarty.txt:32 smarty.txt:17
 msgid "Show"
 msgstr "一覧"
 
 #: smarty.txt:69 smarty.txt:119 smarty.txt:118 smarty.txt:67 smarty.txt:44
-#: smarty.txt:47 smarty.txt:32 smarty.txt:26 smarty.txt:33
+#: smarty.txt:47 smarty.txt:32 smarty.txt:26 smarty.txt:33 smarty.txt:18
 msgid "Refresh map"
 msgstr "地図の再読み込み"
 
 #: smarty.txt:70 smarty.txt:102 smarty.txt:143 smarty.txt:64 smarty.txt:120
 #: smarty.txt:157 smarty.txt:63 smarty.txt:119 smarty.txt:156 smarty.txt:68
 #: smarty.txt:100 smarty.txt:141 smarty.txt:45 smarty.txt:48 smarty.txt:33
-#: smarty.txt:27 smarty.txt:34
+#: smarty.txt:27 smarty.txt:34 smarty.txt:19
 msgid "Deployed HotSpots map"
 msgstr "ホットスポット配置図"
 
 #: smarty.txt:72 smarty.txt:122 smarty.txt:121 smarty.txt:70 smarty.txt:47
-#: smarty.txt:50 smarty.txt:35 smarty.txt:29 smarty.txt:36
+#: smarty.txt:50 smarty.txt:35 smarty.txt:29 smarty.txt:36 smarty.txt:21
 msgid "Legend"
 msgstr "警告"
 
@@ -4004,17 +4005,17 @@ msgid "not monitored"
 msgstr "モニター以外"
 
 #: smarty.txt:77 smarty.txt:89 smarty.txt:88 smarty.txt:75 smarty.txt:70
-#: smarty.txt:73 smarty.txt:37 smarty.txt:31 smarty.txt:12
+#: smarty.txt:73 smarty.txt:37 smarty.txt:31 smarty.txt:12 smarty.txt:5
 msgid "user is online at this hotspot"
 msgstr "このホットスポットからオンラインのユーザー"
 
 #: smarty.txt:78 smarty.txt:90 smarty.txt:89 smarty.txt:76 smarty.txt:71
-#: smarty.txt:74 smarty.txt:38 smarty.txt:32 smarty.txt:13
+#: smarty.txt:74 smarty.txt:38 smarty.txt:32 smarty.txt:13 smarty.txt:6
 msgid "users are online at this hotspot"
 msgstr "このホットスポットからオンラインのユーザー"
 
 #: smarty.txt:79 smarty.txt:91 smarty.txt:90 smarty.txt:77 smarty.txt:72
-#: smarty.txt:75 smarty.txt:39 smarty.txt:33 smarty.txt:14
+#: smarty.txt:75 smarty.txt:39 smarty.txt:33 smarty.txt:14 smarty.txt:7
 msgid "Nobody is online at this hotspot"
 msgstr "このホットスポットからオンラインのユーザーはいません。"
 
@@ -4029,7 +4030,7 @@ msgstr "インターネットを利用する"
 #: smarty.txt:65 smarty.txt:73 smarty.txt:62 smarty.txt:63 smarty.txt:68
 #: smarty.txt:76 smarty.txt:80 smarty.txt:40 smarty.txt:64 smarty.txt:86
 #: smarty.txt:88 smarty.txt:34 smarty.txt:58 smarty.txt:82 smarty.txt:50
-#: smarty.txt:51 smarty.txt:56
+#: smarty.txt:51 smarty.txt:56 smarty.txt:32 smarty.txt:70 smarty.txt:74
 msgid "I'm having difficulties"
 msgstr "問題がある時はこちら"
 
@@ -4064,12 +4065,12 @@ msgid "Frequently asked questions"
 msgstr "FAQ"
 
 #: smarty.txt:86 smarty.txt:98 smarty.txt:97 smarty.txt:84 smarty.txt:78
-#: smarty.txt:81 smarty.txt:41 smarty.txt:35 smarty.txt:65
+#: smarty.txt:81 smarty.txt:41 smarty.txt:35 smarty.txt:65 smarty.txt:33
 msgid "Register a free account with"
 msgstr "フリーアカウントの登録"
 
 #: smarty.txt:87 smarty.txt:99 smarty.txt:98 smarty.txt:85 smarty.txt:79
-#: smarty.txt:82 smarty.txt:42 smarty.txt:36 smarty.txt:66
+#: smarty.txt:82 smarty.txt:42 smarty.txt:36 smarty.txt:66 smarty.txt:34
 msgid "Username desired"
 msgstr "希望するユーザー名"
 
@@ -4077,19 +4078,20 @@ msgstr "希望するユーザー名"
 #: smarty.txt:176 smarty.txt:84 smarty.txt:99 smarty.txt:175 smarty.txt:86
 #: smarty.txt:121 smarty.txt:63 smarty.txt:67 smarty.txt:80 smarty.txt:66
 #: smarty.txt:70 smarty.txt:83 smarty.txt:43 smarty.txt:94 smarty.txt:37
-#: smarty.txt:61 smarty.txt:54 smarty.txt:58
+#: smarty.txt:61 smarty.txt:54 smarty.txt:58 smarty.txt:35 smarty.txt:59
+#: smarty.txt:76
 msgid "Your email address"
 msgstr "E-mailアドレス"
 
 #: smarty.txt:89 smarty.txt:153 smarty.txt:101 smarty.txt:132 smarty.txt:100
 #: smarty.txt:131 smarty.txt:87 smarty.txt:147 smarty.txt:58 smarty.txt:81
 #: smarty.txt:61 smarty.txt:84 smarty.txt:44 smarty.txt:85 smarty.txt:38
-#: smarty.txt:79 smarty.txt:49 smarty.txt:68
+#: smarty.txt:79 smarty.txt:49 smarty.txt:68 smarty.txt:36 smarty.txt:63
 msgid "Password"
 msgstr "パスワード"
 
 #: smarty.txt:90 smarty.txt:102 smarty.txt:101 smarty.txt:88 smarty.txt:82
-#: smarty.txt:85 smarty.txt:45 smarty.txt:39 smarty.txt:69
+#: smarty.txt:85 smarty.txt:45 smarty.txt:39 smarty.txt:69 smarty.txt:37
 msgid "Password (again)"
 msgstr "パスワード（確認）"
 
@@ -4098,12 +4100,12 @@ msgid "Sign-up"
 msgstr "登録"
 
 #: smarty.txt:92 smarty.txt:104 smarty.txt:103 smarty.txt:90 smarty.txt:83
-#: smarty.txt:86 smarty.txt:46 smarty.txt:40 smarty.txt:70
+#: smarty.txt:86 smarty.txt:46 smarty.txt:40 smarty.txt:70 smarty.txt:38
 msgid "Please note"
 msgstr "記録"
 
 #: smarty.txt:93 smarty.txt:105 smarty.txt:104 smarty.txt:91 smarty.txt:84
-#: smarty.txt:87 smarty.txt:47 smarty.txt:41 smarty.txt:71
+#: smarty.txt:87 smarty.txt:47 smarty.txt:41 smarty.txt:71 smarty.txt:39
 msgid ""
 "While accounts are free, we <em>strongly</em> suggest that you use your "
 "previously created account if you have one."
@@ -4112,7 +4114,7 @@ msgstr ""
 "ならば、そちらのアカウントを使っていただけるよう強く望みます。"
 
 #: smarty.txt:94 smarty.txt:106 smarty.txt:105 smarty.txt:92 smarty.txt:85
-#: smarty.txt:88 smarty.txt:48 smarty.txt:42 smarty.txt:72
+#: smarty.txt:88 smarty.txt:48 smarty.txt:42 smarty.txt:72 smarty.txt:40
 msgid ""
 "<b>Your email address must be valid</b> in order for your account to be "
 "activated."
@@ -4120,22 +4122,22 @@ msgstr ""
 "あなたのアカウントを有効にするためには、E-mailアドレスが必須となります。"
 
 #: smarty.txt:95 smarty.txt:107 smarty.txt:106 smarty.txt:93 smarty.txt:86
-#: smarty.txt:89 smarty.txt:49 smarty.txt:43 smarty.txt:73
+#: smarty.txt:89 smarty.txt:49 smarty.txt:43 smarty.txt:73 smarty.txt:41
 msgid "A validation email will be sent to that email address."
 msgstr "このE-mailアドレスに、認証用E-mailを送信します。"
 
 #: smarty.txt:96 smarty.txt:108 smarty.txt:107 smarty.txt:94 smarty.txt:87
-#: smarty.txt:90 smarty.txt:50 smarty.txt:44 smarty.txt:74
+#: smarty.txt:90 smarty.txt:50 smarty.txt:44 smarty.txt:74 smarty.txt:42
 msgid "To fully activate your account you must respond to that email."
 msgstr "全ての機能を有効にするためには、E-mailを確認する必要があります。"
 
 #: smarty.txt:97 smarty.txt:109 smarty.txt:108 smarty.txt:95 smarty.txt:88
-#: smarty.txt:91 smarty.txt:51 smarty.txt:45 smarty.txt:75
+#: smarty.txt:91 smarty.txt:51 smarty.txt:45 smarty.txt:75 smarty.txt:43
 msgid "Note to free web-based email users"
 msgstr "フリーメールで登録している利用者一覧"
 
 #: smarty.txt:98 smarty.txt:110 smarty.txt:109 smarty.txt:96 smarty.txt:89
-#: smarty.txt:92 smarty.txt:52 smarty.txt:46 smarty.txt:76
+#: smarty.txt:92 smarty.txt:52 smarty.txt:46 smarty.txt:76 smarty.txt:44
 msgid ""
 "Sometimes our validation email ends up in the 'spam' folder of some "
 "providers. If you have not received any email with the validation URL 5 "
@@ -4146,7 +4148,7 @@ msgstr ""
 "け取ることができない場合、迷惑メールフォルダーを確認してみてください。"
 
 #: smarty.txt:99 smarty.txt:111 smarty.txt:110 smarty.txt:97 smarty.txt:90
-#: smarty.txt:93 smarty.txt:53 smarty.txt:47 smarty.txt:77
+#: smarty.txt:93 smarty.txt:53 smarty.txt:47 smarty.txt:77 smarty.txt:45
 msgid "You can also use the following links if you need help"
 msgstr "何かわからないことがあれば、以下のリンクを参考にしてください。"
 
@@ -4163,22 +4165,22 @@ msgid "Hotspots (Get this list as a <a href='?format=RSS'>RSS feed</a>)"
 msgstr "ホットスポット(この一覧を取得するための<a href='?format=RSS'>RSS</a>)"
 
 #: smarty.txt:107 smarty.txt:69 smarty.txt:68 smarty.txt:105 smarty.txt:35
-#: smarty.txt:38 smarty.txt:58 smarty.txt:52 smarty.txt:24
+#: smarty.txt:38 smarty.txt:58 smarty.txt:52 smarty.txt:24 smarty.txt:50
 msgid "Hotspot / Status"
 msgstr "ステータス / ホットスポット"
 
 #: smarty.txt:109 smarty.txt:71 smarty.txt:70 smarty.txt:107 smarty.txt:37
-#: smarty.txt:40 smarty.txt:60 smarty.txt:54 smarty.txt:26
+#: smarty.txt:40 smarty.txt:60 smarty.txt:54 smarty.txt:26 smarty.txt:52
 msgid "Location"
 msgstr "設置場所"
 
 #: smarty.txt:110 smarty.txt:72 smarty.txt:71 smarty.txt:108 smarty.txt:38
-#: smarty.txt:41 smarty.txt:61 smarty.txt:55 smarty.txt:27
+#: smarty.txt:41 smarty.txt:61 smarty.txt:55 smarty.txt:27 smarty.txt:53
 msgid "Hotspot in testing phase"
 msgstr "テストフェーズ中のホットスポット"
 
 #: smarty.txt:121 smarty.txt:83 smarty.txt:82 smarty.txt:119 smarty.txt:61
-#: smarty.txt:64 smarty.txt:65 smarty.txt:59 smarty.txt:52
+#: smarty.txt:64 smarty.txt:65 smarty.txt:59 smarty.txt:52 smarty.txt:57
 msgid "Lost password"
 msgstr "パスワード紛失"
 
@@ -4187,7 +4189,7 @@ msgid "Reset my password"
 msgstr "パスワードの初期化"
 
 #: smarty.txt:125 smarty.txt:87 smarty.txt:86 smarty.txt:123 smarty.txt:64
-#: smarty.txt:67 smarty.txt:68 smarty.txt:62 smarty.txt:55
+#: smarty.txt:67 smarty.txt:68 smarty.txt:62 smarty.txt:55 smarty.txt:60
 msgid "Please enter your username or email address to reset your password"
 msgstr ""
 "パスワードを初期化したいユーザー名またはE-mailアドレスを入力してください。"
@@ -4257,7 +4259,7 @@ msgid "Administration"
 msgstr "管理"
 
 #: smarty.txt:147 smarty.txt:126 smarty.txt:125 smarty.txt:156 smarty.txt:30
-#: smarty.txt:79 smarty.txt:73 smarty.txt:16
+#: smarty.txt:79 smarty.txt:73 smarty.txt:16 smarty.txt:65
 msgid ""
 "We are a not-for-profit group dedicated to making no-fee wireless Internet "
 "access generally available."
@@ -4266,27 +4268,27 @@ msgstr ""
 "築を目指しています。"
 
 #: smarty.txt:150 smarty.txt:129 smarty.txt:128 smarty.txt:159 smarty.txt:33
-#: smarty.txt:82 smarty.txt:76 smarty.txt:19
+#: smarty.txt:82 smarty.txt:76 smarty.txt:19 smarty.txt:68
 msgid "For a complete and up-to-date listing of our nodes, visit"
 msgstr "私たちのノードへようこそ。"
 
 #: smarty.txt:151 smarty.txt:130 smarty.txt:129 smarty.txt:145 smarty.txt:56
-#: smarty.txt:59 smarty.txt:83 smarty.txt:77 smarty.txt:47
+#: smarty.txt:59 smarty.txt:83 smarty.txt:77 smarty.txt:47 smarty.txt:61
 msgid "Login or Signup here"
 msgstr "ログインまたは登録"
 
 #: smarty.txt:152 smarty.txt:131 smarty.txt:130 smarty.txt:146 smarty.txt:57
-#: smarty.txt:60 smarty.txt:84 smarty.txt:78 smarty.txt:48
+#: smarty.txt:60 smarty.txt:84 smarty.txt:78 smarty.txt:48 smarty.txt:62
 msgid "Username (or email)"
 msgstr "ユーザー名（またはE-mail）"
 
 #: smarty.txt:162 smarty.txt:63 smarty.txt:62 smarty.txt:155 smarty.txt:29
-#: smarty.txt:87 smarty.txt:81 smarty.txt:15
+#: smarty.txt:87 smarty.txt:81 smarty.txt:15 smarty.txt:69
 msgid "Please get in touch with "
 msgstr "ここに触れてください。"
 
 #: smarty.txt:168 smarty.txt:166 smarty.txt:165 smarty.txt:74 smarty.txt:77
-#: smarty.txt:89 smarty.txt:83 smarty.txt:61
+#: smarty.txt:89 smarty.txt:83 smarty.txt:61 smarty.txt:71
 msgid "Re-send validation email"
 msgstr "認証メールの再送信"
 
@@ -4295,7 +4297,7 @@ msgid "Re-send"
 msgstr "再送"
 
 #: smarty.txt:171 smarty.txt:169 smarty.txt:168 smarty.txt:76 smarty.txt:79
-#: smarty.txt:91 smarty.txt:85 smarty.txt:63
+#: smarty.txt:91 smarty.txt:85 smarty.txt:63 smarty.txt:73
 msgid ""
 "Please enter your username and the validation email will be resent to your "
 "email address"
@@ -4304,7 +4306,7 @@ msgstr ""
 "たします。"
 
 #: smarty.txt:177 smarty.txt:175 smarty.txt:174 smarty.txt:66 smarty.txt:69
-#: smarty.txt:93 smarty.txt:87 smarty.txt:57
+#: smarty.txt:93 smarty.txt:87 smarty.txt:57 smarty.txt:75
 msgid "Lost username"
 msgstr "ユーザー名の紛失"
 
@@ -4313,7 +4315,7 @@ msgid "Retrieve"
 msgstr "回収"
 
 #: smarty.txt:180 smarty.txt:178 smarty.txt:177 smarty.txt:68 smarty.txt:71
-#: smarty.txt:95 smarty.txt:89 smarty.txt:59
+#: smarty.txt:95 smarty.txt:89 smarty.txt:59 smarty.txt:77
 msgid "Please enter your email address to recover your username"
 msgstr ""
 "あなたのE-mailアドレスを入力してください。あなたのユーザー名をメールでご連絡"
@@ -4555,12 +4557,14 @@ msgid "Filter:"
 msgstr ""
 
 #: smarty.txt:157 smarty.txt:31 smarty.txt:80 smarty.txt:74 smarty.txt:17
+#: smarty.txt:66
 msgid ""
 "Our aim is to encourage the growth of wireless networking and to build "
 "community in interesting and innovative ways."
 msgstr ""
 
 #: smarty.txt:158 smarty.txt:32 smarty.txt:81 smarty.txt:75 smarty.txt:18
+#: smarty.txt:67
 msgid ""
 "We do this by setting up wireless Internet networks in parks, cafés, "
 "restaurants, bars and other publically-accessible locations across the city."
@@ -4585,33 +4589,40 @@ msgid ""
 msgstr ""
 
 #: smarty.txt:39 smarty.txt:42 smarty.txt:62 smarty.txt:56 smarty.txt:28
+#: smarty.txt:54
 msgid "Hotspot not monitored"
 msgstr ""
 
 #: smarty.txt:48 smarty.txt:51 smarty.txt:69 smarty.txt:63 smarty.txt:37
+#: smarty.txt:22
 #, php-format
 msgid "The %s network currently has one valid user."
 msgstr ""
 
 #: smarty.txt:49 smarty.txt:52 smarty.txt:70 smarty.txt:64 smarty.txt:38
+#: smarty.txt:23
 #, php-format
 msgid "The %s network currently has %d valid users."
 msgstr ""
 
 #: smarty.txt:50 smarty.txt:53 smarty.txt:71 smarty.txt:65 smarty.txt:39
+#: smarty.txt:24
 msgid "One user is currently online."
 msgstr ""
 
 #: smarty.txt:51 smarty.txt:54 smarty.txt:72 smarty.txt:66 smarty.txt:40
+#: smarty.txt:25
 #, php-format
 msgid "%d users are currently online."
 msgstr ""
 
 #: smarty.txt:52 smarty.txt:55 smarty.txt:73 smarty.txt:67 smarty.txt:41
+#: smarty.txt:26
 msgid "This network currently has 1 deployed hotspot."
 msgstr ""
 
 #: smarty.txt:53 smarty.txt:56 smarty.txt:74 smarty.txt:68 smarty.txt:42
+#: smarty.txt:27
 #, php-format
 msgid "This network currently has %d deployed hotspots."
 msgstr ""
@@ -4757,24 +4768,24 @@ msgstr ""
 msgid "Hotspot"
 msgstr ""
 
-#: smarty.txt:34 smarty.txt:54 smarty.txt:48 smarty.txt:20
+#: smarty.txt:34 smarty.txt:54 smarty.txt:48 smarty.txt:20 smarty.txt:46
 msgid "Get this list as a PDF file"
 msgstr ""
 
-#: smarty.txt:35 smarty.txt:55 smarty.txt:49 smarty.txt:21
+#: smarty.txt:35 smarty.txt:55 smarty.txt:49 smarty.txt:21 smarty.txt:47
 msgid "Get this list as a RSS feed"
 msgstr ""
 
-#: smarty.txt:36 smarty.txt:56 smarty.txt:50 smarty.txt:22
+#: smarty.txt:36 smarty.txt:56 smarty.txt:50 smarty.txt:22 smarty.txt:48
 msgid "Get this list for Google Earth"
 msgstr ""
 
-#: smarty.txt:37 smarty.txt:57 smarty.txt:51 smarty.txt:23
+#: smarty.txt:37 smarty.txt:57 smarty.txt:51 smarty.txt:23 smarty.txt:49
 #, php-format
 msgid "Status of the %d open %s Hotspots"
 msgstr ""
 
-#: smarty.txt:43 smarty.txt:63 smarty.txt:57 smarty.txt:29
+#: smarty.txt:43 smarty.txt:63 smarty.txt:57 smarty.txt:29 smarty.txt:55
 #, php-format
 msgid "Opened on %s"
 msgstr ""
@@ -5386,21 +5397,21 @@ msgid ""
 "currently operationnal."
 msgstr ""
 
-#: smarty.txt:75 smarty.txt:69 smarty.txt:43
+#: smarty.txt:75 smarty.txt:69 smarty.txt:43 smarty.txt:28
 msgid "One hotspot is currently operational."
 msgstr ""
 
-#: smarty.txt:76 smarty.txt:70 smarty.txt:44
+#: smarty.txt:76 smarty.txt:70 smarty.txt:44 smarty.txt:29
 #, php-format
 msgid "%d hotspots are currently operational."
 msgstr ""
 
-#: smarty.txt:77 smarty.txt:71 smarty.txt:45
+#: smarty.txt:77 smarty.txt:71 smarty.txt:45 smarty.txt:30
 msgid ""
 "One hotspot isn't monitored so we don't know if it's currently operational."
 msgstr ""
 
-#: smarty.txt:78 smarty.txt:72 smarty.txt:46
+#: smarty.txt:78 smarty.txt:72 smarty.txt:46 smarty.txt:31
 #, php-format
 msgid ""
 "%d hotspots aren't monitored so we don't know if they are currently "

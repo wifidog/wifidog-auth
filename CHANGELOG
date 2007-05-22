@@ -1,3 +1,6 @@
+2007-05-22  Benoit Gréoire  <bock@step.polymtl.ca>
+    * locales/el/: Add new greek translation contributed by Nikola Petrov
+
 2007-05-17 François Proulx <francois.proulx@gmail.com>
 	* WARNING: This has not been fully tested. Full testing to be completed on 2006-05-18
 	  but I'm pretty confident that it works pretty well.

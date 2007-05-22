@@ -170,7 +170,8 @@ $AVAIL_LOCALE_ARRAY = array('fr_CA' => 'Français',
                             'de_DE' => 'Deutsch',
                             'es_ES' => 'Español',
                             'pt_BR' => 'Português',
-                            'ja_JP' => '日本語');
+                            'ja_JP' => '日本語',
+                            'el_GR' => 'Greek');
 
 /**
  * Default language

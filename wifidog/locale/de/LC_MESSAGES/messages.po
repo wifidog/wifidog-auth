@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-17 16:22-0400\n"
+"POT-Creation-Date: 2007-05-22 08:52-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -103,34 +103,36 @@ msgid "Hotspots status map"
 msgstr "Hotspot-Status-Karte"
 
 #: ../hotspots_map.php:44 smarty.txt:80 smarty.txt:44 smarty.txt:29
-#: smarty.txt:23 smarty.txt:30
+#: smarty.txt:23 smarty.txt:30 smarty.txt:15
 msgid "Show me the closest hotspot"
 msgstr "Nächsten Hotspot anzeigen"
 
 #: ../hotspots_map.php:46 smarty.txt:81 smarty.txt:45 smarty.txt:30
-#: smarty.txt:24 smarty.txt:31
+#: smarty.txt:24 smarty.txt:31 smarty.txt:16
 msgid "Enter your postal code"
 msgstr "Geben Sie ihre Postleitzahl ein"
 
 #: ../hotspots_map.php:48 smarty.txt:82 smarty.txt:46 smarty.txt:31
-#: smarty.txt:25 smarty.txt:32
+#: smarty.txt:25 smarty.txt:32 smarty.txt:17
 msgid "Show"
 msgstr "Anzeigen"
 
 #: ../hotspots_map.php:50 smarty.txt:78 smarty.txt:100 smarty.txt:103
 #: smarty.txt:83 smarty.txt:47 smarty.txt:32 smarty.txt:26 smarty.txt:33
+#: smarty.txt:18
 msgid "Refresh map"
 msgstr "Karte aktualisieren"
 
 #: ../hotspots_map.php:55 ../hotspots_map.php:148 smarty.txt:83 smarty.txt:105
 #: smarty.txt:108 ../hotspots_map.php:155 smarty.txt:85
 #: ../hotspots_map.php:156 smarty.txt:49 smarty.txt:34 smarty.txt:28
-#: smarty.txt:35
+#: smarty.txt:35 smarty.txt:20
 msgid "Loading, please wait..."
 msgstr "Die Karte wird geladen ..."
 
 #: ../hotspots_map.php:57 smarty.txt:84 smarty.txt:106 smarty.txt:109
 #: smarty.txt:86 smarty.txt:50 smarty.txt:35 smarty.txt:29 smarty.txt:36
+#: smarty.txt:21
 msgid "Legend"
 msgstr "Legende"
 
@@ -322,7 +324,7 @@ msgstr ""
 #: smarty.txt:194 ../classes/Content.php:750 ../classes/Node.php:834
 #: smarty.txt:39 smarty.txt:103 ../classes/Content.php:796
 #: ../classes/Node.php:959 smarty.txt:59 smarty.txt:53
-#: ../classes/Content.php:925 smarty.txt:25
+#: ../classes/Content.php:925 smarty.txt:25 smarty.txt:51
 msgid "Description"
 msgstr "Beschreibung"
 
@@ -1027,7 +1029,7 @@ msgid "Logout"
 msgstr "Abmelden"
 
 #: ../classes/MainUI.php:240 smarty.txt:43 smarty.txt:23 smarty.txt:27
-#: smarty.txt:21 smarty.txt:6
+#: smarty.txt:21 smarty.txt:6 smarty.txt:13
 msgid "I am not logged in."
 msgstr "Sie sind nicht angemeldet."
 
@@ -1058,6 +1060,7 @@ msgstr "Informieren Sie uns bitte über Probleme oder Störungen unter: "
 #: ../classes/MainUI.php:476 smarty.txt:21 smarty.txt:47 smarty.txt:59
 #: smarty.txt:27 smarty.txt:65 ../classes/MainUI.php:381 smarty.txt:81
 #: smarty.txt:84 smarty.txt:63 smarty.txt:29 smarty.txt:87 smarty.txt:15
+#: smarty.txt:69
 msgid "Please get in touch with "
 msgstr "Support-Meldungen bitte an folgende E-Mail-Adresse richten: "
 
@@ -2002,7 +2005,7 @@ msgstr "Ich habe bereits einen Zugang:"
 
 #: ../login/index.php:160 ../login/index.php:161 smarty.txt:115 smarty.txt:137
 #: smarty.txt:140 smarty.txt:113 smarty.txt:60 smarty.txt:84 smarty.txt:78
-#: smarty.txt:48
+#: smarty.txt:48 smarty.txt:62
 msgid "Username (or email)"
 msgstr "Benutzername (oder E-Mail-Adresse)"
 
@@ -2010,7 +2013,7 @@ msgstr "Benutzername (oder E-Mail-Adresse)"
 #: ../login/index.php:163 smarty.txt:86 smarty.txt:116 smarty.txt:165
 #: smarty.txt:138 smarty.txt:187 smarty.txt:141 smarty.txt:190 smarty.txt:114
 #: smarty.txt:169 smarty.txt:61 smarty.txt:44 smarty.txt:85 smarty.txt:38
-#: smarty.txt:79 smarty.txt:49 smarty.txt:68
+#: smarty.txt:79 smarty.txt:49 smarty.txt:68 smarty.txt:36 smarty.txt:63
 msgid "Password"
 msgstr "Passwort"
 
@@ -2022,7 +2025,7 @@ msgstr "Passwort"
 #: smarty.txt:62 smarty.txt:63 smarty.txt:68 smarty.txt:76 smarty.txt:80
 #: smarty.txt:40 smarty.txt:64 smarty.txt:86 smarty.txt:88 smarty.txt:92
 #: smarty.txt:34 smarty.txt:58 smarty.txt:82 smarty.txt:50 smarty.txt:51
-#: smarty.txt:56 smarty.txt:60
+#: smarty.txt:56 smarty.txt:60 smarty.txt:32 smarty.txt:70 smarty.txt:74
 msgid "I'm having difficulties"
 msgstr "Ich habe Probleme"
 
@@ -2947,7 +2950,7 @@ msgstr "Mein Passwort ändern"
 #: smarty.txt:41 smarty.txt:78 smarty.txt:80 smarty.txt:128 smarty.txt:155
 #: smarty.txt:150 smarty.txt:177 smarty.txt:153 smarty.txt:180 smarty.txt:127
 #: smarty.txt:158 smarty.txt:65 smarty.txt:66 smarty.txt:90 smarty.txt:84
-#: smarty.txt:53 smarty.txt:62
+#: smarty.txt:53 smarty.txt:62 smarty.txt:58
 msgid "Your username"
 msgstr "Ihr Benutzername"
 
@@ -3059,6 +3062,7 @@ msgstr ""
 #: smarty.txt:22 smarty.txt:83 smarty.txt:34 smarty.txt:95 smarty.txt:40
 #: smarty.txt:101 smarty.txt:103 smarty.txt:126 smarty.txt:148 smarty.txt:151
 #: smarty.txt:129 smarty.txt:64 smarty.txt:65 smarty.txt:59 smarty.txt:52
+#: smarty.txt:57
 msgid "Lost password"
 msgstr "Vergessenes Passwort"
 
@@ -3068,7 +3072,7 @@ msgstr "Vergessenes Passwort"
 #: smarty.txt:186 smarty.txt:154 smarty.txt:162 smarty.txt:189 smarty.txt:128
 #: smarty.txt:168 smarty.txt:66 smarty.txt:70 smarty.txt:43 smarty.txt:67
 #: smarty.txt:94 smarty.txt:37 smarty.txt:61 smarty.txt:88 smarty.txt:54
-#: smarty.txt:58
+#: smarty.txt:58 smarty.txt:35 smarty.txt:59 smarty.txt:76
 msgid "Your email address"
 msgstr "Ihre E-Mail-Adresse"
 
@@ -3079,7 +3083,7 @@ msgstr "Passwort zurücksetzen"
 
 #: smarty.txt:26 smarty.txt:38 smarty.txt:44 smarty.txt:127 smarty.txt:149
 #: smarty.txt:152 smarty.txt:130 smarty.txt:67 smarty.txt:68 smarty.txt:62
-#: smarty.txt:55
+#: smarty.txt:55 smarty.txt:60
 msgid "Please enter your username or email address to reset your password"
 msgstr ""
 "Geben Sie bitte ihren Benutzernamen oder ihre E-Mail-Adresse ein, um ihr "
@@ -3088,6 +3092,7 @@ msgstr ""
 #: smarty.txt:27 smarty.txt:82 smarty.txt:39 smarty.txt:94 smarty.txt:45
 #: smarty.txt:100 smarty.txt:102 smarty.txt:135 smarty.txt:157 smarty.txt:160
 #: smarty.txt:136 smarty.txt:69 smarty.txt:93 smarty.txt:87 smarty.txt:57
+#: smarty.txt:75
 msgid "Lost username"
 msgstr "Vergessener Benutzername"
 
@@ -3098,7 +3103,7 @@ msgstr "Empfangen"
 
 #: smarty.txt:30 smarty.txt:42 smarty.txt:48 smarty.txt:136 smarty.txt:158
 #: smarty.txt:161 smarty.txt:139 smarty.txt:71 smarty.txt:95 smarty.txt:89
-#: smarty.txt:59
+#: smarty.txt:59 smarty.txt:77
 msgid "Please enter your email address to recover your username"
 msgstr ""
 "Geben Sie bitte ihre E-Mail-Adresse ein, um ihren Benutzernamen wieder zu "
@@ -3241,7 +3246,7 @@ msgstr "nachmals anfordern"
 
 #: smarty.txt:62 smarty.txt:74 smarty.txt:80 smarty.txt:82 smarty.txt:154
 #: smarty.txt:176 smarty.txt:179 smarty.txt:160 smarty.txt:79 smarty.txt:91
-#: smarty.txt:85 smarty.txt:63
+#: smarty.txt:85 smarty.txt:63 smarty.txt:73
 msgid ""
 "Please enter your username and the validation email will be resent to your "
 "email address"
@@ -3251,19 +3256,19 @@ msgstr ""
 
 #: smarty.txt:63 smarty.txt:75 smarty.txt:81 smarty.txt:83 smarty.txt:161
 #: smarty.txt:183 smarty.txt:186 smarty.txt:166 smarty.txt:41 smarty.txt:35
-#: smarty.txt:65
+#: smarty.txt:65 smarty.txt:33
 msgid "Register a free account with"
 msgstr "Einen neuen Zugang registrieren bei"
 
 #: smarty.txt:64 smarty.txt:76 smarty.txt:82 smarty.txt:84 smarty.txt:163
 #: smarty.txt:185 smarty.txt:188 smarty.txt:167 smarty.txt:42 smarty.txt:36
-#: smarty.txt:66
+#: smarty.txt:66 smarty.txt:34
 msgid "Username desired"
 msgstr "Gewünschter Benutzername"
 
 #: smarty.txt:67 smarty.txt:79 smarty.txt:85 smarty.txt:87 smarty.txt:166
 #: smarty.txt:188 smarty.txt:191 smarty.txt:170 smarty.txt:45 smarty.txt:39
-#: smarty.txt:69
+#: smarty.txt:69 smarty.txt:37
 msgid "Password (again)"
 msgstr "Passwort (wiederholen)"
 
@@ -3274,13 +3279,13 @@ msgstr "Anmelden"
 
 #: smarty.txt:69 smarty.txt:81 smarty.txt:87 smarty.txt:89 smarty.txt:168
 #: smarty.txt:190 smarty.txt:193 smarty.txt:172 smarty.txt:86 smarty.txt:46
-#: smarty.txt:40 smarty.txt:70
+#: smarty.txt:40 smarty.txt:70 smarty.txt:38
 msgid "Please note"
 msgstr "Bitte beachten Sie"
 
 #: smarty.txt:70 smarty.txt:82 smarty.txt:88 smarty.txt:90 smarty.txt:169
 #: smarty.txt:191 smarty.txt:194 smarty.txt:173 smarty.txt:87 smarty.txt:47
-#: smarty.txt:41 smarty.txt:71
+#: smarty.txt:41 smarty.txt:71 smarty.txt:39
 msgid ""
 "While accounts are free, we <em>strongly</em> suggest that you use your "
 "previously created account if you have one."
@@ -3290,13 +3295,13 @@ msgstr ""
 
 #: smarty.txt:71 smarty.txt:83 smarty.txt:89 smarty.txt:91 smarty.txt:170
 #: smarty.txt:192 smarty.txt:195 smarty.txt:174 smarty.txt:51 smarty.txt:45
-#: smarty.txt:75
+#: smarty.txt:75 smarty.txt:43
 msgid "Note to free web-based email users"
 msgstr "Hinweis an Nutzer von kostenlosen E-Mail-Anbietern"
 
 #: smarty.txt:72 smarty.txt:84 smarty.txt:90 smarty.txt:92 smarty.txt:171
 #: smarty.txt:193 smarty.txt:196 smarty.txt:175 smarty.txt:52 smarty.txt:46
-#: smarty.txt:76
+#: smarty.txt:76 smarty.txt:44
 msgid ""
 "Sometimes our validation email ends up in the 'spam' folder of some "
 "providers. If you have not received any email with the validation URL 5 "
@@ -3308,7 +3313,7 @@ msgstr ""
 "dort befindet."
 
 #: smarty.txt:73 smarty.txt:85 smarty.txt:91 smarty.txt:93 smarty.txt:176
-#: smarty.txt:53 smarty.txt:47 smarty.txt:77
+#: smarty.txt:53 smarty.txt:47 smarty.txt:77 smarty.txt:45
 msgid "You can also use the following links if you need help"
 msgstr "Sie können auch die folgenden Links nutzen, falls Sie Hilfe benötigen"
 
@@ -3501,16 +3506,19 @@ msgstr ""
 
 #: smarty.txt:25 smarty.txt:31 smarty.txt:67 smarty.txt:89 smarty.txt:92
 #: smarty.txt:69 smarty.txt:38 smarty.txt:58 smarty.txt:52 smarty.txt:24
+#: smarty.txt:50
 msgid "Hotspot / Status"
 msgstr "Hotspot /Status"
 
 #: smarty.txt:27 smarty.txt:33 smarty.txt:69 smarty.txt:91 smarty.txt:94
 #: smarty.txt:71 smarty.txt:40 smarty.txt:60 smarty.txt:54 smarty.txt:26
+#: smarty.txt:52
 msgid "Location"
 msgstr "Adresse"
 
 #: smarty.txt:28 smarty.txt:34 smarty.txt:70 smarty.txt:92 smarty.txt:95
 #: smarty.txt:72 smarty.txt:41 smarty.txt:61 smarty.txt:55 smarty.txt:27
+#: smarty.txt:53
 msgid "Hotspot in testing phase"
 msgstr "Hotspot befindet sich in Testphase"
 
@@ -4649,6 +4657,7 @@ msgid "Could not update username locale."
 msgstr ""
 
 #: smarty.txt:40 smarty.txt:22 smarty.txt:26 smarty.txt:20 smarty.txt:5
+#: smarty.txt:12
 msgid "Logged in as"
 msgstr "Angemeldet als"
 
@@ -4668,7 +4677,7 @@ msgstr "Angemeldet als"
 #: smarty.txt:22 ../classes/Content/HTMLeditor/HTMLeditor.php:113
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:184
 #: ../classes/Content/Langstring/Langstring.php:216
-#: ../classes/Content/Langstring/Langstring.php:343 smarty.txt:7
+#: ../classes/Content/Langstring/Langstring.php:343 smarty.txt:7 smarty.txt:14
 msgid "Language"
 msgstr "Sprache"
 
@@ -4733,7 +4742,7 @@ msgid "Hotspots"
 msgstr "Hotspots"
 
 #: smarty.txt:63 smarty.txt:85 smarty.txt:88 smarty.txt:66 smarty.txt:35
-#: smarty.txt:55 smarty.txt:49 smarty.txt:21
+#: smarty.txt:55 smarty.txt:49 smarty.txt:21 smarty.txt:47
 msgid "Get this list as a RSS feed"
 msgstr "Diese Liste als RSS-Feed empfangen"
 
@@ -4814,17 +4823,17 @@ msgid "Continue to your requested homepage"
 msgstr "Weiter zur gewünschten Homepage"
 
 #: smarty.txt:141 smarty.txt:163 smarty.txt:166 smarty.txt:144 smarty.txt:73
-#: smarty.txt:37 smarty.txt:31 smarty.txt:12
+#: smarty.txt:37 smarty.txt:31 smarty.txt:12 smarty.txt:5
 msgid "user is online at this hotspot"
 msgstr "Benutzer ist online an diesem Hotspot"
 
 #: smarty.txt:142 smarty.txt:164 smarty.txt:167 smarty.txt:145 smarty.txt:74
-#: smarty.txt:38 smarty.txt:32 smarty.txt:13
+#: smarty.txt:38 smarty.txt:32 smarty.txt:13 smarty.txt:6
 msgid "users are online at this hotspot"
 msgstr "Benutzer sind online an diesem Hotspot"
 
 #: smarty.txt:143 smarty.txt:165 smarty.txt:168 smarty.txt:146 smarty.txt:75
-#: smarty.txt:39 smarty.txt:33 smarty.txt:14
+#: smarty.txt:39 smarty.txt:33 smarty.txt:14 smarty.txt:7
 msgid "Nobody is online at this hotspot"
 msgstr "Niemand ist an diesem Hotspot online"
 
@@ -4889,7 +4898,7 @@ msgstr "Impressum"
 
 #: smarty.txt:83 smarty.txt:104 smarty.txt:114 smarty.txt:86 smarty.txt:107
 #: smarty.txt:117 smarty.txt:64 smarty.txt:84 smarty.txt:48 smarty.txt:33
-#: smarty.txt:27 smarty.txt:34
+#: smarty.txt:27 smarty.txt:34 smarty.txt:19
 msgid "Deployed HotSpots map"
 msgstr "Karte aktiver Hotspots"
 
@@ -4995,10 +5004,12 @@ msgid "Last updated on: %s"
 msgstr "Stand: %s"
 
 #: smarty.txt:67 smarty.txt:34 smarty.txt:54 smarty.txt:48 smarty.txt:20
+#: smarty.txt:46
 msgid "Get this list as a PDF file"
 msgstr "Diese Liste als PDF-Datei herunterladen"
 
 #: smarty.txt:68 smarty.txt:36 smarty.txt:56 smarty.txt:50 smarty.txt:22
+#: smarty.txt:48
 msgid "Get this list for Google Earth"
 msgstr "Diese Liste in Google Earth importieren"
 
@@ -5464,66 +5475,66 @@ msgstr ""
 "Merken Sie sich den geänderten Benutzernamen gut, da Sie sich mit ihm fortan "
 "anmelden müssen!"
 
-#: smarty.txt:30 smarty.txt:79 smarty.txt:73 smarty.txt:16
+#: smarty.txt:30 smarty.txt:79 smarty.txt:73 smarty.txt:16 smarty.txt:65
 msgid ""
 "We are a not-for-profit group dedicated to making no-fee wireless Internet "
 "access generally available."
 msgstr ""
 
-#: smarty.txt:31 smarty.txt:80 smarty.txt:74 smarty.txt:17
+#: smarty.txt:31 smarty.txt:80 smarty.txt:74 smarty.txt:17 smarty.txt:66
 msgid ""
 "Our aim is to encourage the growth of wireless networking and to build "
 "community in interesting and innovative ways."
 msgstr ""
 
-#: smarty.txt:32 smarty.txt:81 smarty.txt:75 smarty.txt:18
+#: smarty.txt:32 smarty.txt:81 smarty.txt:75 smarty.txt:18 smarty.txt:67
 msgid ""
 "We do this by setting up wireless Internet networks in parks, cafés, "
 "restaurants, bars and other publically-accessible locations across the city."
 msgstr ""
 
-#: smarty.txt:33 smarty.txt:82 smarty.txt:76 smarty.txt:19
+#: smarty.txt:33 smarty.txt:82 smarty.txt:76 smarty.txt:19 smarty.txt:68
 msgid "For a complete and up-to-date listing of our nodes, visit"
 msgstr ""
 
-#: smarty.txt:37 smarty.txt:57 smarty.txt:51 smarty.txt:23
+#: smarty.txt:37 smarty.txt:57 smarty.txt:51 smarty.txt:23 smarty.txt:49
 #, php-format
 msgid "Status of the %d open %s Hotspots"
 msgstr "Status der %d aktiven %s Hotspots"
 
-#: smarty.txt:42 smarty.txt:62 smarty.txt:56 smarty.txt:28
+#: smarty.txt:42 smarty.txt:62 smarty.txt:56 smarty.txt:28 smarty.txt:54
 msgid "Hotspot not monitored"
 msgstr "Hotspot wird nicht überwacht"
 
-#: smarty.txt:43 smarty.txt:63 smarty.txt:57 smarty.txt:29
+#: smarty.txt:43 smarty.txt:63 smarty.txt:57 smarty.txt:29 smarty.txt:55
 #, php-format
 msgid "Opened on %s"
 msgstr "Eröffnet am %s"
 
-#: smarty.txt:51 smarty.txt:69 smarty.txt:63 smarty.txt:37
+#: smarty.txt:51 smarty.txt:69 smarty.txt:63 smarty.txt:37 smarty.txt:22
 #, php-format
 msgid "The %s network currently has one valid user."
 msgstr "Das %s Nettzwerk hat einen Benutzer."
 
-#: smarty.txt:52 smarty.txt:70 smarty.txt:64 smarty.txt:38
+#: smarty.txt:52 smarty.txt:70 smarty.txt:64 smarty.txt:38 smarty.txt:23
 #, php-format
 msgid "The %s network currently has %d valid users."
 msgstr "Das %s Netzwerk hat %d Benutzer."
 
-#: smarty.txt:53 smarty.txt:71 smarty.txt:65 smarty.txt:39
+#: smarty.txt:53 smarty.txt:71 smarty.txt:65 smarty.txt:39 smarty.txt:24
 msgid "One user is currently online."
 msgstr "Ein Benutzer ist gerade an einem Hotspot online."
 
-#: smarty.txt:54 smarty.txt:72 smarty.txt:66 smarty.txt:40
+#: smarty.txt:54 smarty.txt:72 smarty.txt:66 smarty.txt:40 smarty.txt:25
 #, php-format
 msgid "%d users are currently online."
 msgstr "%d Benutzer sind gerade an einem Hotspot online."
 
-#: smarty.txt:55 smarty.txt:73 smarty.txt:67 smarty.txt:41
+#: smarty.txt:55 smarty.txt:73 smarty.txt:67 smarty.txt:41 smarty.txt:26
 msgid "This network currently has 1 deployed hotspot."
 msgstr "Momentan ist ein Hotspot verfügbar."
 
-#: smarty.txt:56 smarty.txt:74 smarty.txt:68 smarty.txt:42
+#: smarty.txt:56 smarty.txt:74 smarty.txt:68 smarty.txt:42 smarty.txt:27
 #, php-format
 msgid "This network currently has %d deployed hotspots."
 msgstr "Momentan sind %d Hotspots verfügbar, "
@@ -5537,11 +5548,11 @@ msgstr "davon ist z.Z. ein Hotspot aktiv."
 msgid "%d hotspots are currently operationnal."
 msgstr "davon sind z.Z. %d Hotspots aktiv."
 
-#: smarty.txt:59 smarty.txt:83 smarty.txt:77 smarty.txt:47
+#: smarty.txt:59 smarty.txt:83 smarty.txt:77 smarty.txt:47 smarty.txt:61
 msgid "Login or Signup here"
 msgstr "Anmeldung"
 
-#: smarty.txt:88 smarty.txt:48 smarty.txt:42 smarty.txt:72
+#: smarty.txt:88 smarty.txt:48 smarty.txt:42 smarty.txt:72 smarty.txt:40
 msgid ""
 "<b>Your email address must be valid</b> in order for your account to be "
 "activated."
@@ -5549,11 +5560,11 @@ msgstr ""
 "Zur Freischaltung Ihres Zugangs <b>müssen Sie sich mit einer gültigen E-Mail-"
 "Adresse anmelden</b>."
 
-#: smarty.txt:89 smarty.txt:49 smarty.txt:43 smarty.txt:73
+#: smarty.txt:89 smarty.txt:49 smarty.txt:43 smarty.txt:73 smarty.txt:41
 msgid "A validation email will be sent to that email address."
 msgstr "Nach der Registrierung erhalten Sie von uns eine E-Mail."
 
-#: smarty.txt:90 smarty.txt:50 smarty.txt:44 smarty.txt:74
+#: smarty.txt:90 smarty.txt:50 smarty.txt:44 smarty.txt:74 smarty.txt:42
 msgid "To fully activate your account you must respond to that email."
 msgstr ""
 "Um Ihren Zugang freizuschalten, müssen Sie auf den Link in dieser E-Mail "
@@ -6166,21 +6177,21 @@ msgid ""
 "currently operationnal."
 msgstr ""
 
-#: smarty.txt:75 smarty.txt:69 smarty.txt:43
+#: smarty.txt:75 smarty.txt:69 smarty.txt:43 smarty.txt:28
 msgid "One hotspot is currently operational."
 msgstr ""
 
-#: smarty.txt:76 smarty.txt:70 smarty.txt:44
+#: smarty.txt:76 smarty.txt:70 smarty.txt:44 smarty.txt:29
 #, php-format
 msgid "%d hotspots are currently operational."
 msgstr ""
 
-#: smarty.txt:77 smarty.txt:71 smarty.txt:45
+#: smarty.txt:77 smarty.txt:71 smarty.txt:45 smarty.txt:30
 msgid ""
 "One hotspot isn't monitored so we don't know if it's currently operational."
 msgstr ""
 
-#: smarty.txt:78 smarty.txt:72 smarty.txt:46
+#: smarty.txt:78 smarty.txt:72 smarty.txt:46 smarty.txt:31
 #, php-format
 msgid ""
 "%d hotspots aren't monitored so we don't know if they are currently "

@@ -1,0 +1,4310 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-05-22 08:52-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Nikola Petrov <nvp.online@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../node_list.php:110
+msgid "No nodes could not be found in the database"
+msgstr "Δεν βρέθηκε κανένας κόμβος σε αυτήν την βάση δεδομένων"
+
+#: ../node_list.php:113 ../classes/Node.php:289 ../classes/Node.php:533
+msgid "Deployed"
+msgstr "Ανεπτυγμένος"
+
+#: ../node_list.php:114 ../classes/Node.php:290 ../classes/Node.php:534
+msgid "In planning"
+msgstr "Σε σχεδιασμό"
+
+#: ../node_list.php:114 ../classes/Node.php:291 ../classes/Node.php:535
+msgid "In testing"
+msgstr "Σε έλεγχο"
+
+#: ../node_list.php:114 ../classes/Node.php:292 ../classes/Node.php:536
+msgid "Non-Wifidog node"
+msgstr "Κόμβος μη-WifiDog "
+
+#: ../node_list.php:114 ../classes/Node.php:293 ../classes/Node.php:537
+msgid "Permanently closed"
+msgstr "Μόνιμα κλειστό"
+
+#: ../node_list.php:114 ../classes/Node.php:294 ../classes/Node.php:538
+msgid "Temporarily closed"
+msgstr "Προσωρινά κλειστό"
+
+#: ../validate.php:59
+msgid "No token specified!"
+msgstr "Δεν προσδιορίστηκε κανένα αδειοδοτικό!"
+
+#: ../validate.php:62
+msgid "No user ID specified!"
+msgstr "Δεν προσδιορίστηκε η ταυτότητα του χρήστη!"
+
+#: ../validate.php:67
+msgid "The validation token does not match the one in the database."
+msgstr "Το αδειοδοτικό επικύρωσης δεν ταιριάζει με αυτό της βάσης δεδομένων"
+
+#: ../validate.php:70
+msgid "Your account has already been activated."
+msgstr "Ο λογαριασμός σας έχει ενεργοποιηθεί."
+
+#: ../validate.php:78
+msgid ""
+"Your account has been succesfully activated!\n"
+"\n"
+"You may now browse to a remote Internet address and take advantage of the "
+"free Internet access!\n"
+"\n"
+"If you get prompted for a login, enter the username and password you have "
+"just created."
+msgstr ""
+"Ο λογαριασμός σας ενεργοποιήθηκε με επιτυχία! Μπορείτε να φυλλομετρήσετε μία "
+"απομακρυσμένη διαδικτυακή διεύθυνση και να εκμεταλλευθέιτε την δωρεάν "
+"πρόσβαση στο διαδίκτυο. Εάν σας ζητηθεί να συνδεθείτε, εισάγετε το όνομα "
+"χρήστη και τον κωδικό που μόλις δημιουργήσατε."
+
+#: ../change_password.php:83
+msgid "You must login before you can change your password."
+msgstr "Πρέπει να συνδεθείτε προτού αλλάξετε τον κωδικό πρόσβασης"
+
+#: ../change_password.php:92
+msgid "You MUST fill in all the fields."
+msgstr "ΠΡΕΠΕΙ να συμπληρώσετε όλα τα πεδία"
+
+#: ../change_password.php:98 ../lost_password.php:104
+#: ../resend_validation.php:101 ../signup.php:198 ../lost_username.php:102
+msgid "Sorry, this network does not exist !"
+msgstr "Λυπούμαστε, αυτό το δίκτυο δεν υπάρχει!"
+
+#: ../change_password.php:101 ../signup.php:139 ../classes/User.php:847
+msgid "Passwords do not match."
+msgstr "Οι κωδικοί πρόσβασης δεν ταιριάζουν."
+
+#: ../change_password.php:108 ../change_password.php:123
+#: ../classes/User.php:844
+msgid "Wrong password."
+msgstr "Λάθος κωδικός"
+
+#: ../change_password.php:111
+msgid "Your password has been changed succesfully."
+msgstr "Ο κωδικός πρόσβασης άλλαξε με επιτυχία."
+
+#: ../change_password.php:119
+#, php-format
+msgid "Sorry, user %s does not exist !"
+msgstr "Λυπάμαι, ο χρήστης % δεν υπάρχει!"
+
+#: ../change_password.php:126
+#, php-format
+msgid "The password for %s has been successfully changed."
+msgstr "Ο κωδικός πρόσβασης του % άλλαξε με επιτυχία."
+
+#: ../change_password.php:129
+msgid "Sorry, invalid change password request !"
+msgstr "Λυπούμαστε, μη έγκυρο αίτημα για αλλαγή κωδικού πρόσβασης!"
+
+#: ../lost_password.php:108
+msgid "Please specify a username or email address"
+msgstr ""
+"Παρακαλούμε, προσδιορίστε ένα όνομα χρήστη και μία ηλεκτρονική διεύθυνση"
+
+#: ../lost_password.php:132
+msgid "This username or email could not be found in our database"
+msgstr ""
+"Το όνομα χρήστη ή/και η ηλεκτρονική διεύθυνση δεν βρέθηκαν στην βάση "
+"δεδομένων μας"
+
+#: ../lost_password.php:135
+msgid "A new password has been emailed to you."
+msgstr "Ένας νέος κωδικός χρήστη έχει σταλεί στην ηλεκτρονική σας διεύθυνση."
+
+#: ../hotspots_map.php:125
+msgid "Change network"
+msgstr "Αλλαγή Δικτύου"
+
+#: ../hotspots_map.php:156
+msgid "Sorry, your browser does not support Google Maps."
+msgstr "Λυπούμαστε, ο πλοηγός σας δεν υποστηρίζει τους χάρτες του Google"
+
+#: ../hotspots_map.php:156 ../classes/StatisticReport/NodeStatus.php:174
+#: ../classes/StatisticReport/NetworkStatus.php:109
+msgid "Homepage"
+msgstr "Αρχική Σελίδα"
+
+#: ../hotspots_map.php:156
+msgid "Show me on the map"
+msgstr "Δείξε μου στον χάρτη"
+
+#: ../hotspots_map.php:156 smarty.txt:34 smarty.txt:20
+msgid "Loading, please wait..."
+msgstr "Φόρτωση, παρακαλώ περιμένετε..."
+
+#: ../hotspots_map.php:170
+msgid "Hotspots status map"
+msgstr "Χάρτης κατάστασης Σημείων Ασύρματης Πρόσβασης"
+
+#: ../resend_validation.php:105
+msgid "Please specify a username"
+msgstr "Παρακαλώ προσδιορίστε ένα όνομα χρήστη"
+
+#: ../resend_validation.php:112
+msgid "This username could not be found in our database"
+msgstr "Αυτό το όνομα χρήστη δεν βρέθηκε στην βάση δεδομένων μας"
+
+#: ../resend_validation.php:117 ../signup.php:229 ../portal/index.php:227
+#: ../portal/index.php:148
+msgid "An email with confirmation instructions was sent to your email address."
+msgstr ""
+"Ένα ηλεκτρονικό μήνυμα με οδηγίες επιβεβαίωσης έχει σταλεί στην ηλεκτρονική "
+"σας διεύθυνση."
+
+#: ../signup.php:82
+msgid "Username is required."
+msgstr "Το όνομα χρήστη είναι απαραίτητο."
+
+#: ../signup.php:86
+msgid "Username contains invalid characters."
+msgstr "Το όνομα χρήστη περιέχει μη έγκυρους χαρακτήρες."
+
+#: ../signup.php:104
+msgid "A valid email address is required."
+msgstr "Μία έγκυρη ηλεκτρονική διεύθυνση είναι απαραίτητη."
+
+#: ../signup.php:108
+msgid ""
+"The email address must be valid (i.e. user@domain.com). Please understand "
+"that we also black-listed various temporary-email-address providers."
+msgstr ""
+"Η ηλεκτρονική διεύθυνση πρέπει να είναι έγκυρη (π.χ. χρήστης@domain.com). "
+"Παρακαλούμε να καταλάβετε ότι διατηρούμε \"μαύρη  λίστα\" με τα άτομα που "
+"μας στέλνουν προσωρινές ηλεκτρονικές διευθύνσεις. "
+
+#: ../signup.php:127
+msgid "A password of at least 6 characters is required."
+msgstr "Απαιτείται κωδικός πρόσβασης έξι τουλάχιστον χαρακτήρων"
+
+#: ../signup.php:131
+msgid "Password contains invalid characters."
+msgstr "Ο κωδικός πρόσβασης περιέχει μη έγκυρους  χαρακτήρες."
+
+#: ../signup.php:135
+msgid "You must type your password twice."
+msgstr "Πρέπει να πληκτρολογήσετε τον κωδικό πρόσβασης δύο φορές. "
+
+#: ../signup.php:143
+msgid "Password is too short, it must be 6 characters minimum."
+msgstr ""
+"Ο κωδικός πρόσβασης είναι πολύ μικρός, πρέπει να περιέχει τουλάχιστον έξι "
+"χαρακτήρες."
+
+#: ../signup.php:202
+msgid "Sorry, this network does not accept new user registration !"
+msgstr "Λυπούμαστε, αυτό το δίκτυο δεν δέχεται την καταχώριση νέου χρήστη!"
+
+#: ../signup.php:212
+msgid ""
+"Sorry, a user account is already associated to this username. Pick another "
+"one."
+msgstr ""
+"Λυπούμαστε, υπάρχει ήδη ένας λογαριασμός χρήστη με αυτό το όνομα. Επιλέξτε "
+"κάποιο άλλο. "
+
+#: ../signup.php:216
+msgid "Sorry, a user account is already associated to this email address."
+msgstr ""
+"Λυπούμαστε, υπάρχει ήδη ένας λογαριασμός χρήστη με αυτήν την ηλεκτρονική "
+"διεύθυνση. "
+
+#: ../signup.php:230 ../portal/index.php:228 ../portal/index.php:149
+#, php-format
+msgid ""
+"Your account has been granted %s minutes of access to retrieve your email "
+"and validate your account."
+msgstr ""
+"Ο λογαριασμός σας διαθέτει % λεπτά πρόσβασης για να ανακτήσετε την "
+"ηλεκτρονική σας διεύθυνση και να επικυρώσετε τον λογαριασμό σας."
+
+#: ../signup.php:231
+msgid ""
+"You may now open a browser window or start your email client and go to any "
+"remote Internet address to obtain the validation email."
+msgstr ""
+"Τώρα μπορείτε να ανοίξετε ένα παράθυρο ή να μπείτε στην ηλεκτρονική σας "
+"διεύθυνση και να πάτε σε οποιαδήποτε απομακρυσμένη διεύθυνση στο διαδίκτυο "
+"για να αποκτήσετε το ηλεκτρονικό μήνυμα επικύρωσης."
+
+#: ../lost_username.php:106
+msgid "Please specify an email address"
+msgstr "Παρακαλώ προσδιορίστε μία ηλεκτρονική διεύθυνση. "
+
+#: ../lost_username.php:113
+msgid "This email could not be found in our database"
+msgstr "Αυτή η ηλεκτρονική διεύθυνση δεν βρέθηκε στην βάση δεδομένων μας"
+
+#: ../lost_username.php:118
+msgid "Your username has been emailed to you."
+msgstr "Το όνομα χρήστη έχει αποσταλεί στην ηλεκτρονική σας διεύθυνση."
+
+#: ../gw_message.php:62
+#, php-format
+msgid "You have failed to validate your account in %d minutes."
+msgstr "Αποτύχατε να επικυρώσετε τον λογαριασμό σας σε % δευτερόλεπτα."
+
+#: ../gw_message.php:63
+msgid "Please validate your account from somewhere else or create a new one."
+msgstr ""
+"Παρακαλούμε, επικυρώστε τον λογαριασμό σας από κάπου αλλού, ή δημιουργήστε "
+"έναν καινούριο. "
+
+#: ../gw_message.php:68
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:900
+#: ../classes/Statistics.php:375 ../classes/Statistics.php:378
+#: ../classes/Network.php:1701 ../classes/Server.php:760
+#: ../classes/Content.php:766 ../classes/Node.php:210 ../classes/Node.php:890
+#: ../classes/Node.php:1136
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:896
+#: ../classes/ContentTypeFilter.php:409 ../classes/Network.php:1707
+#: ../classes/ProfileTemplate.php:532 ../classes/Content.php:901
+#: ../classes/Node.php:1137
+msgid "Access denied!"
+msgstr "Άρνηση πρόσβασης!"
+
+#: ../gw_message.php:74
+#, php-format
+msgid ""
+"You have now been granted %d minutes of Internet access without being "
+"validated to go and activate your account."
+msgstr ""
+"Σας έχουν τώρα παραχωρηθεί % λεπτά σύνδεσης στο Διαδίκτυο για να επικυρώσετε "
+"τον λογαριασμό σας."
+
+#: ../gw_message.php:75
+#, php-format
+msgid ""
+"If you fail to validate your account in %d minutes, you will have to "
+"validate it from somewhere else."
+msgstr ""
+"Έαν αποτύχετε να επικυρώσετε τον λογαριασμό σας σε % λεπτά, θα πρέπει να τον "
+"επικυρώσετε από κάπου αλλού. "
+
+#: ../gw_message.php:76
+msgid ""
+"If you do not receive an email from our validation server in the next "
+"minute, perhaps you have made a typo in your email address, you might have "
+"to create another account."
+msgstr ""
+"Έαν δεν λάβετε ηλεκτρονικό μήνυμα από τον διακομιστή επικύρωσης μέσα στο "
+"επόμενο λεπτό, ίσως έχετε κάνει κάποιο τυπογραφικό λάθος στην ηλεκτρονική "
+"σας διεύθυνση και μπορεί να πρέπει να δημιουργήσετε άλλον λογαριασμό."
+
+#: ../gw_message.php:81
+msgid "Unknown message specified! (this is probably an error)"
+msgstr "Προσδιορισμός άγνωστου μηνύματος! (μάλλον έχει γίνει λάθος)"
+
+#: ../gw_message.php:86
+msgid "No message has been specified! (this is probably an error)"
+msgstr "Κανένα μήνυμα δεν προσδιορίστηκε! (μάλλον έχει γίνει λάθος)"
+
+#: ../admin/generic_object_admin.php:84 ../admin/generic_object_admin.php:86
+msgid "Sorry, the 'object_class' parameter must be specified"
+msgstr ""
+"Λυπούμαστε, η παράμετρος \"κλάση_αντικειμένου\" πρέπει να προσδιοριστεί"
+
+#: ../admin/generic_object_admin.php:90 ../admin/generic_object_admin.php:92
+#, php-format
+msgid "Create %s"
+msgstr "Δημιουργία %"
+
+#: ../admin/generic_object_admin.php:91 ../admin/generic_object_admin.php:93
+#, php-format
+msgid "Add %s"
+msgstr "Προσθήκη %"
+
+#: ../admin/generic_object_admin.php:92 ../admin/generic_object_admin.php:94
+#, php-format
+msgid "Create a new %s"
+msgstr "Δημιουργία ενός νέου %"
+
+#: ../admin/generic_object_admin.php:93 ../admin/generic_object_admin.php:95
+#, php-format
+msgid "Add a new %s"
+msgstr "Προσθήκη ενός νέου %"
+
+#: ../admin/generic_object_admin.php:94 ../admin/generic_object_admin.php:96
+#, php-format
+msgid "Show all %s"
+msgstr "Δείξε όλα τα %"
+
+#: ../admin/generic_object_admin.php:95 ../admin/generic_object_admin.php:97
+#, php-format
+msgid "Show only persistant %s"
+msgstr "Δείξε μόνο τα επαναλαμβανόμενα %"
+
+#: ../admin/generic_object_admin.php:96 ../admin/generic_object_admin.php:98
+#, php-format
+msgid "Edit %s"
+msgstr "Επεξεργασία των %"
+
+#: ../admin/generic_object_admin.php:140 ../admin/generic_object_admin.php:143
+msgid ""
+"Sorry, the object couldn't be created.  You probably didn't fill the form "
+"properly"
+msgstr ""
+"Λυπούμαστε, το αντικείμενο δεν μπορεί να δημιουργηθεί. Πιθανώς, δεν "
+"συμπληρώσατε σωστά την φόρμα. "
+
+#: ../admin/generic_object_admin.php:178 ../admin/generic_object_admin.php:181
+msgid "Showing preview as it would appear at "
+msgstr "Εμφάνιση προεπισκόπησης, όπως θα εμφανιζόταν σε"
+
+#: ../admin/generic_object_admin.php:193
+#: ../classes/StatisticReport/UserReport.php:192
+#: ../classes/StatisticReport/RegistrationLog.php:120
+#: ../classes/StatisticReport/MostPopularNodes.php:109
+#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:97
+#: ../admin/generic_object_admin.php:196
+#: ../classes/StatisticReport/UserReport.php:182 smarty.txt:79
+msgid "Node"
+msgstr "Κόμβος"
+
+#: ../admin/generic_object_admin.php:202 ../admin/generic_object_admin.php:405
+#: ../admin/generic_object_admin.php:205 ../admin/generic_object_admin.php:431
+#: ../classes/Content/Picture/Picture.php:294
+msgid "Preview"
+msgstr "Προεπισκόπηση"
+
+#: ../admin/generic_object_admin.php:208 ../classes/Content.php:601
+#: ../admin/generic_object_admin.php:211 ../classes/ProfileTemplate.php:368
+#: ../classes/Content.php:736
+msgid "Edit"
+msgstr "Επεξεργασία"
+
+#: ../admin/generic_object_admin.php:215 ../admin/generic_object_admin.php:237
+#: ../admin/generic_object_admin.php:218 ../admin/generic_object_admin.php:240
+msgid "Object successfully deleted"
+msgstr "Το αντικείμενο διαγράφηκε με επιτυχία"
+
+#: ../admin/generic_object_admin.php:217 ../admin/generic_object_admin.php:240
+#: ../admin/generic_object_admin.php:220 ../admin/generic_object_admin.php:243
+msgid "Deletion failed, error was: "
+msgstr "Η διαγραφή απέτυχε, το σφάλμα ήταν:"
+
+#: ../admin/generic_object_admin.php:374 ../admin/generic_object_admin.php:400
+msgid "Sorry, the 'object_id' parameter must be specified"
+msgstr "Λυπούμαστε, η παράμετρος \"αντικείμενο_ταυτότητα\" πρέπει να οριστεί"
+
+#: ../admin/generic_object_admin.php:390 ../admin/generic_object_admin.php:416
+msgid "Save"
+msgstr "Αποθήκευση"
+
+#: ../admin/generic_object_admin.php:395 ../admin/generic_object_admin.php:415
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:204
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:228
+#: ../classes/Content/RssAggregator/RssAggregator.php:618
+#: ../classes/Content.php:820 ../admin/generic_object_admin.php:421
+#: ../admin/generic_object_admin.php:441
+#: ../classes/Content/RssAggregator/RssAggregator.php:621
+#: ../classes/Content.php:955
+msgid "Delete"
+msgstr "Διαγραφή"
+
+#: ../admin/generic_object_admin.php:440 ../admin/generic_object_admin.php:466
+msgid "Generic object editor"
+msgstr "Επεξεργαστής αντικειμένου γενικής χρήσης"
+
+#: ../admin/import_user_database.php:65
+msgid "NoCat user database import"
+msgstr "Εισαγωγή χρήστη NoCat στην βάση δεδομένων"
+
+#: ../admin/import_user_database.php:71
+msgid "Please select the NoCat passwd file you want to import."
+msgstr "Παρακαλούμε επιλέξτε το NoCat αρχείο που θέλετε να εισάγετε."
+
+#: ../admin/import_user_database.php:75
+msgid ""
+"Accept users with no email addresses (Normally, NoCat usernames are expected "
+"to be the user's email address, and the username is generated from the "
+"prefix."
+msgstr ""
+"Αποδοχή χρηστών χωρίς ηλεκτρονική διεύθυνση (Κανονικά τα ονόματα χρήστη του "
+"NoCat είναι η ηλεκτρονική διεύθυνση του χρήστη και το όνομα συμπεραίνεται "
+"από το πρόθεμα)."
+
+#: ../admin/import_user_database.php:77
+msgid "Upload file"
+msgstr "Φόρτωση Αρχείου"
+
+#: ../admin/import_user_database.php:80
+msgid ""
+"I am sure I want to import (Otherwise, the import will only be simulated)."
+msgstr ""
+"Είμαι σίγουρος ότι θέλω να εισάγω (διαφορετικά η εισαγωγή θα προσομοιωθεί). "
+
+#: ../admin/import_user_database.php:174
+msgid "Sorry, a user account is already associated to the email address: "
+msgstr ""
+"Λυπούμαστε, υπάρχει ήδη λογαριασμός με αυτήν την ηλεκτρονική διεύθυνση:"
+
+#: ../admin/import_user_database.php:180
+msgid "Sorry, the user must have a email address."
+msgstr "Λυπούμαστε, ο χρήστης πρέπει να έχει ηλεκτρονική διεύθυνση."
+
+#: ../admin/import_user_database.php:189
+msgid "Sorry, a user account already exists with the username: "
+msgstr "Λυπούμαστε, υπάρχει ήδη λογαριασμός με αυτό το όνομα χρήστη:"
+
+#: ../admin/import_user_database.php:210
+msgid "SQL error on: "
+msgstr "Σφάλμα SQL σε:"
+
+#: ../admin/import_user_database.php:216
+msgid "Report"
+msgstr "Αναφορά"
+
+#: ../admin/stats.php:68
+msgid "Connections at"
+msgstr "Συνδέσεις σε"
+
+#: ../admin/stats.php:74
+msgid "User information for"
+msgstr "Πληροφορίες χρήστη για"
+
+#: ../admin/stats.php:79
+msgid "Connections from MAC"
+msgstr "Συνδέσεις από MAC"
+
+#: ../admin/stats.php:85
+msgid "Network information for"
+msgstr "Πληροφορίες Δικτύου για"
+
+#: ../admin/stats.php:116
+msgid "Generate statistics"
+msgstr "Παραγωγή στατιστικών στοιχείων"
+
+#: ../admin/user_log.php:106
+msgid "Internal error."
+msgstr "Εσωτερικό σφάλμα"
+
+#: ../admin/user_log.php:114
+msgid "Find a user ID : "
+msgstr "Εύρεση της ταυτότητας κάποιου χρήστη"
+
+#: ../admin/hotspot_location_map.php:59
+msgid "Hotspot location map"
+msgstr "Χάρτης τοποθεσίας Σημείου Ασύρματης Πρόσβασης "
+
+#: ../admin/hotspot_location_map.php:70
+msgid ""
+"Click anywhere on the map to extract the GIS location, then click on the "
+"button to save the data."
+msgstr ""
+"Πατήστε οπουδήποτε πάνω στον χάρτη για να εξάγετε την τοποθεσία GIS, και "
+"στην συνέχεια πατήστε το κουμπί για να αποθηκεύσετε τα δεδομένα. "
+
+#: ../admin/hotspot_location_map.php:72
+msgid "Use these coordinates"
+msgstr "Χρησιμοποιήστε αυτές τις συντεταγμένες"
+
+#: ../admin/hotspot_location_map.php:80
+msgid ""
+"Error:  You need to set the GIS coordinates of the center of your network"
+msgstr ""
+"Λάθος: Πρέπει να ορίσετε τις GIS συντεταγμένες του κέντρου του δικτύου σας"
+
+#: ../admin/hotspot_location_map.php:124
+msgid "You need to set a node ID."
+msgstr "Πρέπει να ορίσετε μία ταυτότητα κόμβου."
+
+#: ../cron/page.php:70
+msgid "Monitoring system"
+msgstr "Σύστημα ελέγχου"
+
+#: ../cron/page.php:73
+msgid "node"
+msgstr "κόμβος"
+
+#: ../cron/page.php:74
+#, php-format
+msgid "Node %s (%s) has been down for %d minutes (since %s)"
+msgstr "Ο κόμβος % (%) είναι πεσμένος εδώ και % λεπτά (από %)"
+
+#: ../cron/page.php:90 ../cron/page.php:91
+msgid "No deployed nodes could not be found in the database"
+msgstr "Δεν βρέθηκαν ανεπτυγμένοι κόμβοι σε αυτήν την βάση δεδομένων."
+
+#: ../include/schema_validate.php:74 ../include/schema_validate.php:75
+msgid ""
+"Unable to retrieve schema version. The database schema is too old to be "
+"updated."
+msgstr ""
+"Αδύνατη η ανάκτηση της έκδοσης σχήματος. Η σχηματική βάση δεδομένων είναι "
+"πολύ παλιά για να ενημερωθεί. "
+
+#: ../include/schema_validate.php:75 ../include/schema_validate.php:76
+msgid "Try running the"
+msgstr "Δοκιμάστε να εκτελέσετε το "
+
+#: ../include/schema_validate.php:75 ../include/schema_validate.php:76
+msgid "installation script"
+msgstr "Γραφή εγκατάστασης"
+
+#: ../include/schema_validate.php:102 ../include/schema_validate.php:104
+msgid ""
+"No user matches the default network, a new user admin/admin will be created. "
+"Change the password as soon as possible !"
+msgstr ""
+"Κανένας χρήστης δεν ταιριάζει με το προεπιλεγμένο δίκτυο, ένας νέος χρήστης "
+"admin/admin θα δημιουργηθεί. Αλλάξτε κωδικό πρόσβασης όσο το δυνατόν "
+"συντομότερα. "
+
+#: ../include/schema_validate.php:113 ../include/schema_validate.php:116
+msgid "Could not get a default network!"
+msgstr "Δεν βρέθηκε προεπιλεγμένο δίκτυο!"
+
+#: ../include/schema_validate.php:145 ../include/schema_validate.php:148
+msgid "Trying to update the database schema."
+msgstr "Προσπάθεια ενημέρωσης της βάσης δεδομένων σχήματος"
+
+#: ../include/schema_validate.php:150 ../include/schema_validate.php:153
+msgid ""
+"Unable to retrieve schema version.  The database schema is too old to be "
+"updated."
+msgstr ""
+"Αδύνατη η ανάκτηση της έκδοσης σχήματος. Η βάση δεδομένων σχήματος είναι "
+"πολύ παλιά για να ενημερωθεί. "
+
+#: ../include/common.php:154 ../include/common.php:163
+msgid "Unused"
+msgstr "Αχρησιμοποίητο"
+
+#: ../include/common.php:155 ../include/common.php:164
+msgid "In use"
+msgstr "Σε χρήση"
+
+#: ../include/common.php:156 ../include/common.php:165
+msgid "Used"
+msgstr "Έχει χρησιμοποιηθεί"
+
+#: ../login/index.php:93
+msgid "Create a free account"
+msgstr "Δημιουργήστε έναν δωρεάν λογαριασμό"
+
+#: ../login/index.php:208
+#, php-format
+msgid "Unable to generate token for user %s"
+msgstr "Δεν είναι δυνατή η δημιουργία αδειοδοτικού για τον χρήστη %"
+
+#: ../login/index.php:267 ../login/index.php:266
+#, php-format
+msgid "%s login page for %s"
+msgstr "% σελίδα σύνδεσης για %"
+
+#: ../login/index.php:269 ../login/index.php:268
+msgid "Offsite login page"
+msgstr "Σελίδα σύνδεσης εκτός διεύθυνσης"
+
+#: ../login/index.php:278 ../portal/index.php:222 ../login/index.php:277
+#: ../portal/index.php:143
+msgid "Welcome to"
+msgstr "Καλώς ήρθατε σε"
+
+#: ../portal/index.php:67
+msgid ""
+"For some reason, we were unable to determine the web site you initially "
+"wanted to see.  You should now enter a web address in your URL bar."
+msgstr ""
+"Για κάποιο λόγο, δεν ήταν δυνατό να προσδιορίσουμε την σελίδα που θέλετε να "
+"δείτε. Πρέπει να εισάγετε μία νέα διεύθυνση."
+
+#: ../portal/index.php:106
+msgid "No Hotspot specified!"
+msgstr "Δεν έχει καθοριστεί Σημείο Ασύρματης Πρόσβασης"
+
+#: ../portal/index.php:216 ../portal/index.php:138
+#, php-format
+msgid "%s portal for %s"
+msgstr "% πύλη για %"
+
+#: ../portal/index.php:289 ../portal/index.php:210
+msgid "Show all available contents for this hotspot"
+msgstr ""
+"Επίδειξη όλου του διαθέσιμου περιεχομένου σε αυτό το Σημείο Ασύρματης "
+"Πρόσβασης."
+
+#: ../classes/StatisticGraph/RegistrationsPerMonth.php:62
+msgid "Number of validated user registration for the selected network(s)"
+msgstr ""
+"Νούμερο των επικυρωμένων καταχωρίσεων χρηστών για το(α) επιλεγμένο(α) δίκτυο "
+"(α)"
+
+#: ../classes/StatisticGraph/RegistrationsCumulative.php:62
+msgid "Cumulative number of validated users for the selected network(s)"
+msgstr ""
+"Αθροιστικό νούμερο των επικυρωμένων εγγραφών χρήσης για το(α) επιλεγμένο(α) "
+"δίκτυο (α)"
+
+#: ../classes/StatisticGraph/VisitsPerMonth.php:62
+msgid "Number of individual user visits per month"
+msgstr "Νούμερο επισκέψεων μεμονωμένων χρηστών τον μήνα"
+
+#: ../classes/StatisticGraph/VisitsPerMonth.php:82
+#: ../classes/StatisticGraph/VisitsPerWeekday.php:82
+#: ../classes/StatisticReport/MostPopularNodes.php:135
+msgid ""
+"Note:  A visit is like counting connections, but only counting one "
+"connection per day for each user at a single node"
+msgstr ""
+"Σημείωση: ως μία επίσκεψη μετράμε την μία σύνδεση, αλλά υπολογίζεται μόνο "
+"μία σύνδεση την μέρα για τον κάθε χρήστη σε κάθε έναν κόμβο"
+
+#: ../classes/StatisticGraph/VisitsPerWeekday.php:62
+msgid "Number of individual user visits per weekday"
+msgstr "Νούμερο επισκέψεων μεμονωμένων χρηστών την ημέρα"
+
+#: ../classes/StatisticGraph/ConnectionsPerHour.php:62
+msgid "Number of new connections opening per hour of the day"
+msgstr "Νούμερο νέων συνδέσεων κάθε ώρα της ημέρας"
+
+#: ../classes/Authenticators/AuthenticatorLocalUser.php:129
+#: ../classes/Authenticators/AuthenticatorLDAP.php:256
+#: ../classes/Authenticators/AuthenticatorLDAP.php:266
+#: ../classes/Authenticators/AuthenticatorRadius.php:264
+#: ../classes/Authenticators/AuthenticatorRadius.php:284
+#: ../classes/Authenticators/AuthenticatorLDAP.php:258
+#: ../classes/Authenticators/AuthenticatorLDAP.php:268
+msgid "Login successfull"
+msgstr "Επιτυχής σύνδεση"
+
+#: ../classes/Authenticators/AuthenticatorLocalUser.php:143
+msgid "Unknown username or email"
+msgstr "Άγνωστο όνομα χρήστη ή ηλεκτρονική διεύθυνση"
+
+#: ../classes/Authenticators/AuthenticatorLocalUser.php:145
+msgid "Incorrect password (Maybe you have CAPS LOCK on?)"
+msgstr "Λάθος κωδικός εισόδου (ίσως γράφετε με ΚΕΦΑΛΑΙΑ;)"
+
+#: ../classes/Authenticators/AuthenticatorLDAP.php:166
+#: ../classes/Authenticators/AuthenticatorLDAP.php:171
+#: ../classes/Authenticators/AuthenticatorLDAP.php:167
+#: ../classes/Authenticators/AuthenticatorLDAP.php:172
+msgid "Error while connecting to the LDAP server."
+msgstr "Λάθος κατά την σύνδεση με τον διακομιστή LDAP "
+
+#: ../classes/Authenticators/AuthenticatorLDAP.php:178
+#: ../classes/Authenticators/AuthenticatorLDAP.php:179
+msgid "Error while obtaining your LDAP information."
+msgstr "Λάθος κατά την ανάκτηση των πληροφοριών LDAP"
+
+#: ../classes/Authenticators/AuthenticatorLDAP.php:184
+#: ../classes/Authenticators/AuthenticatorLDAP.php:190
+#: ../classes/Authenticators/AuthenticatorLDAP.php:196
+#: ../classes/Authenticators/AuthenticatorLDAP.php:185
+#: ../classes/Authenticators/AuthenticatorLDAP.php:191
+#: ../classes/Authenticators/AuthenticatorLDAP.php:197
+msgid "Error while obtaining your username or password from the LDAP server."
+msgstr ""
+"Λάθος κατά την ανάκτηση του ονόματος χρήστη ή του κωδικού εισόδου από τον "
+"διακομιστή  LDAP"
+
+#: ../classes/Authenticators/AuthenticatorLDAP.php:203
+#: ../classes/Authenticators/AuthenticatorLDAP.php:204
+msgid "Error in username or password."
+msgstr "Λάθος στο όνομα χρήστη ή στον κωδικό εισόδου"
+
+#: ../classes/Authenticators/AuthenticatorLDAP.php:210
+#: ../classes/Authenticators/AuthenticatorLDAP.php:211
+msgid "Error connecting to the LDAP Server."
+msgstr "Λάθος κατά την σύνδεση με τον LDAP  διακομιστή "
+
+#: ../classes/Authenticators/AuthenticatorRadius.php:203
+msgid "Invalid RADIUS encryption method."
+msgstr "Μη έγκυρη μέθοδος αποκρυπτογράφησης RADIUS"
+
+#: ../classes/Authenticators/AuthenticatorRadius.php:240
+msgid "Could not initiate PEAR RADIUS Auth class : "
+msgstr "Δεν ήταν δυνατή η έναρξη του PEAR RADIUS Auth class : "
+
+#: ../classes/Authenticators/AuthenticatorRadius.php:248
+msgid "Failed to send authentication request to the RADIUS server. : "
+msgstr ""
+"Αποτυχία αποστολής αιτήματος ελέγχου ταυτότητας στον  διακομιστή  RADIUS"
+
+#: ../classes/Authenticators/AuthenticatorRadius.php:289
+msgid "The RADIUS server rejected this username/password combination."
+msgstr ""
+"Ο  διακομιστής RADIUS απέρριψε τον συνδυασμό ονόματος χρήστη/κωδικού εισόδου"
+
+#: ../classes/StatisticReport/MostMobileUsers.php:65
+#, php-format
+msgid "%d most mobile users"
+msgstr "% οι περισσότεροι χρήστες κινητών"
+
+#: ../classes/StatisticReport/MostMobileUsers.php:97
+#: ../classes/StatisticReport/MostFrequentUsers.php:98
+#: ../classes/StatisticReport/HighestBandwidthUsers.php:98
+msgid "User (username)"
+msgstr "Χρήστης (όνομα χρήστη)"
+
+#: ../classes/StatisticReport/MostMobileUsers.php:99
+#: ../classes/StatisticReport/MostFrequentUsers.php:100
+#: ../classes/StatisticReport/HighestBandwidthUsers.php:100
+msgid "User (MAC address)"
+msgstr "Χρήστης (διεύθυνση MAC) "
+
+#: ../classes/StatisticReport/MostMobileUsers.php:101
+msgid "Nodes visited"
+msgstr "Κόμβοι που έχουν δεχτεί επίσκεψη"
+
+#: ../classes/StatisticReport/MostMobileUsers.php:133
+#: ../classes/StatisticReport/UserReport.php:184
+#: ../classes/StatisticReport/MostFrequentUsers.php:133
+#: ../classes/StatisticReport/MostPopularNodes.php:142
+#: ../classes/StatisticReport/HighestBandwidthUsers.php:136
+#: ../classes/StatisticReport/UserRegistrationReport.php:164
+#: ../classes/StatisticReport/UserReport.php:174
+msgid "No information found matching the report configuration"
+msgstr ""
+"Δεν βρέθηκαν πληροφορίες που να ταιριάζουν με τις ρυθμίσεις της αναφοράς"
+
+#: ../classes/StatisticReport/NodeStatus.php:64
+msgid "Node status information"
+msgstr "Πληροφορίες για την κατάσταση του κόμβου"
+
+#: ../classes/StatisticReport/NodeStatus.php:87
+msgid "Sorry, this report requires you to select individual nodes"
+msgstr "Λυπούμαστε, αυτή η αναφορά απαιτεί να επιλέξετε μεμονωμένους κόμβους"
+
+#: ../classes/StatisticReport/NodeStatus.php:99
+msgid "Status"
+msgstr "Κατάσταση"
+
+#: ../classes/StatisticReport/NodeStatus.php:105
+msgid "WifiDog status"
+msgstr "Κατάσταση WifiDog "
+
+#: ../classes/StatisticReport/NodeStatus.php:110
+msgid "Last heartbeat"
+msgstr "Τελευταίο διάστημα παλμών"
+
+#: ../classes/StatisticReport/NodeStatus.php:111
+#, php-format
+msgid "%s ago"
+msgstr "Πριν από %"
+
+#: ../classes/StatisticReport/NodeStatus.php:115
+msgid "WifiDog version"
+msgstr "Έκδοση WifiDog"
+
+#: ../classes/StatisticReport/NodeStatus.php:119
+msgid "IP Address"
+msgstr "Διεύθυνση IP"
+
+#: ../classes/StatisticReport/NodeStatus.php:123
+msgid "Number of users online"
+msgstr "Νούμερο συνδεδεμένων χρηστών "
+
+#: ../classes/StatisticReport/NodeStatus.php:132
+#: ../classes/StatisticReport/UserReport.php:117 ../classes/Profile.php:357
+msgid "Profile"
+msgstr "Προφίλ"
+
+#: ../classes/StatisticReport/NodeStatus.php:136
+#: ../classes/StatisticReport/NetworkStatus.php:99 ../classes/Node.php:944
+msgid "Name"
+msgstr "Όνομα"
+
+#: ../classes/StatisticReport/NodeStatus.php:140
+msgid "Node ID"
+msgstr "Ταυτότητα Κόμβου"
+
+#: ../classes/StatisticReport/NodeStatus.php:144 ../classes/Node.php:346
+msgid "Deployment Status"
+msgstr "Κατάσταση Ανάπτυξης"
+
+#: ../classes/StatisticReport/NodeStatus.php:148
+msgid "Deployment date"
+msgstr "Ημερομηνία ανάπτυξης"
+
+#: ../classes/StatisticReport/NodeStatus.php:152 ../classes/Content.php:790
+#: ../classes/Node.php:959 smarty.txt:59 ../classes/Content.php:925
+#: smarty.txt:51
+msgid "Description"
+msgstr "Περιγραφή"
+
+#: ../classes/StatisticReport/NodeStatus.php:156
+#: ../classes/StatisticReport/UserReport.php:137 smarty.txt:107
+#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:89
+msgid "Network"
+msgstr "Δίκτυο"
+
+#: ../classes/StatisticReport/NodeStatus.php:160
+msgid "GIS Location"
+msgstr "Τοποθεσία GIS"
+
+#: ../classes/StatisticReport/NodeStatus.php:165 ../classes/Network.php:1040
+msgid "Map"
+msgstr "Χάρτης"
+
+#: ../classes/StatisticReport/NodeStatus.php:169
+msgid "NOT SET"
+msgstr "ΜΗ ΟΡΙΣΜΕΝΟΣ"
+
+#: ../classes/StatisticReport/NodeStatus.php:178
+#: ../classes/NodeLists/NodeListRSS.php:325
+#: ../classes/NodeLists/NodeListPDF.php:1081
+#: ../classes/NodeLists/NodeListKML.php:239
+msgid "Address"
+msgstr "Διεύθυνση "
+
+#: ../classes/StatisticReport/NodeStatus.php:186
+#: ../classes/NodeLists/NodeListPDF.php:1081
+msgid "Telephone"
+msgstr "Τηλέφωνο"
+
+#: ../classes/StatisticReport/NodeStatus.php:190
+#: ../classes/StatisticReport/UserReport.php:132
+#: ../classes/NodeLists/NodeListPDF.php:1081
+#: ../classes/NodeLists/NodeListKML.php:242
+#: ../classes/StatisticReport/UserReport.php:127
+msgid "Email"
+msgstr "Ηλεκτρονική Διεύθυνση"
+
+#: ../classes/StatisticReport/NodeStatus.php:194
+msgid "Transit Info"
+msgstr "Πληροφορίες μεταφοράς"
+
+#: ../classes/StatisticReport/NodeStatus.php:204 ../classes/Node.php:918
+msgid "Statistics"
+msgstr "Στατιστικά στοιχεία"
+
+#: ../classes/StatisticReport/NodeStatus.php:209
+msgid "Average visits per day"
+msgstr "Μέσος όρος επισκέψεων την ημέρα"
+
+#: ../classes/StatisticReport/NodeStatus.php:210
+#: ../classes/StatisticReport/NodeStatus.php:221
+msgid "(for the selected period)"
+msgstr "(για την επιλεγμένη περίοδο)"
+
+#: ../classes/StatisticReport/NodeStatus.php:215
+msgid "Traffic"
+msgstr "Κυκλοφορία"
+
+#: ../classes/StatisticReport/NodeStatus.php:217
+#: ../classes/StatisticReport/HighestBandwidthUsers.php:102
+msgid "Incoming"
+msgstr "Εισερχόμενα"
+
+#: ../classes/StatisticReport/NodeStatus.php:219
+#: ../classes/StatisticReport/HighestBandwidthUsers.php:103
+msgid "Outgoing"
+msgstr "Εξερχόμενα"
+
+#: ../classes/StatisticReport/UserReport.php:64
+msgid "Individual user report"
+msgstr "Αναφορά μεμονωμένου χρήστη"
+
+#: ../classes/StatisticReport/UserReport.php:111 ../classes/User.php:234
+#: ../classes/User.php:236
+#, php-format
+msgid "User id: %s could not be found in the database"
+msgstr "Ταυτότητα χρήστη: % δεν μπόρεσε να βρεθεί στην βάση δεδομένων"
+
+#: ../classes/StatisticReport/UserReport.php:122
+#: ../classes/StatisticReport/UserReport.php:294
+#: ../classes/StatisticReport/RegistrationLog.php:123
+#: ../classes/StatisticReport/ConnectionLog.php:115
+#: ../classes/StatisticReport/ConnectionLog.php:164 ../classes/User.php:618
+#: ../classes/User.php:623 ../classes/User.php:658 smarty.txt:98
+#: smarty.txt:106 ../classes/StatisticReport/UserReport.php:284
+#: ../classes/User.php:711 ../classes/User.php:716 ../classes/User.php:764
+#: smarty.txt:80 smarty.txt:88
+msgid "Username"
+msgstr "Όνομα χρήστη"
+
+#: ../classes/StatisticReport/UserReport.php:127
+msgid "Real Name"
+msgstr "Πραγματικό όνομα"
+
+#: ../classes/StatisticReport/UserReport.php:142
+#: ../classes/StatisticReport/UserReport.php:137
+msgid "Unique ID"
+msgstr "Μοναδική ταυτότητα"
+
+#: ../classes/StatisticReport/UserReport.php:147
+#: ../classes/StatisticReport/UserReport.php:142
+msgid "Member since"
+msgstr "Μέλος από "
+
+#: ../classes/StatisticReport/UserReport.php:152 smarty.txt:109
+#: ../classes/StatisticReport/UserReport.php:147 ../classes/User.php:752
+#: smarty.txt:91
+msgid "Account Status"
+msgstr "Κατάσταση λογαριασμού"
+
+#: ../classes/StatisticReport/UserReport.php:157
+msgid "Website"
+msgstr "Ιστοσελίδα"
+
+#: ../classes/StatisticReport/UserReport.php:162
+#: ../classes/StatisticReport/UserReport.php:152
+msgid "Prefered Locale"
+msgstr "Προτιμητέα τοποθεσία"
+
+#: ../classes/StatisticReport/UserReport.php:175
+#: ../classes/StatisticReport/UserReport.php:165
+#, php-format
+msgid "%d Connections"
+msgstr "% συνδέσεις"
+
+#: ../classes/StatisticReport/UserReport.php:189
+#: ../classes/StatisticReport/UserReport.php:179
+msgid "Logged in"
+msgstr "Συνδεδεμένος"
+
+#: ../classes/StatisticReport/UserReport.php:190
+#: ../classes/StatisticReport/ConnectionLog.php:167
+#: ../classes/StatisticReport/UserReport.php:180
+msgid "Time spent"
+msgstr "Χρόνος που πέρασε"
+
+#: ../classes/StatisticReport/UserReport.php:191
+#: ../classes/StatisticReport/UserReport.php:181
+msgid "Token status"
+msgstr "Κατάσταση αδειοδοτικού"
+
+#: ../classes/StatisticReport/UserReport.php:193
+#: ../classes/StatisticReport/UserReport.php:183
+msgid "IP"
+msgstr "IP"
+
+#: ../classes/StatisticReport/UserReport.php:194
+#: ../classes/StatisticReport/UserReport.php:184
+msgid "D"
+msgstr "D"
+
+#: ../classes/StatisticReport/UserReport.php:195
+#: ../classes/StatisticReport/UserReport.php:185
+msgid "U"
+msgstr "U"
+
+#: ../classes/StatisticReport/UserReport.php:222
+#: ../classes/StatisticReport/UserReport.php:212
+msgid "N/A"
+msgstr "N/A"
+
+#: ../classes/StatisticReport/UserReport.php:233
+#: ../classes/StatisticReport/RegistrationLog.php:162
+#: ../classes/StatisticReport/MostPopularNodes.php:131
+#: ../classes/StatisticReport/HighestBandwidthUsers.php:104
+#: ../classes/StatisticReport/UserRegistrationReport.php:153
+#: ../classes/StatisticReport/UserReport.php:223
+msgid "Total"
+msgstr "Σύνολο"
+
+#: ../classes/StatisticReport/UserReport.php:254
+#: ../classes/StatisticReport/UserReport.php:244
+#, php-format
+msgid "%d MAC addresses"
+msgstr "% διευθύνσεις MAC"
+
+#: ../classes/StatisticReport/UserReport.php:258
+#: ../classes/StatisticReport/ConnectionLog.php:165
+#: ../classes/StatisticReport/UserReport.php:248
+msgid "MAC"
+msgstr "MAC"
+
+#: ../classes/StatisticReport/UserReport.php:259
+#: ../classes/StatisticReport/UserReport.php:295
+#: ../classes/StatisticReport/ContentReport.php:115
+#: ../classes/StatisticReport/UserReport.php:249
+#: ../classes/StatisticReport/UserReport.php:285
+msgid "Count"
+msgstr "Μέτρηση"
+
+#: ../classes/StatisticReport/UserReport.php:290
+#: ../classes/StatisticReport/UserReport.php:280
+#, php-format
+msgid "%d users"
+msgstr "% χρηστών"
+
+#: ../classes/StatisticReport/MostFrequentUsers.php:66
+#, php-format
+msgid "%d most frequent users"
+msgstr "% πιο συχνοί χρήστες"
+
+#: ../classes/StatisticReport/MostFrequentUsers.php:102
+msgid "Different days connected"
+msgstr "Διαφορετικές μέρες σύνδεσης"
+
+#: ../classes/StatisticReport/RegistrationLog.php:64
+msgid "Registration Log (New user's first connection)"
+msgstr "Καταχώριση Εγγραφής  (πρώτη σύνδεση νέου χρήστη)"
+
+#: ../classes/StatisticReport/RegistrationLog.php:116
+msgid "Users who signed up here"
+msgstr "Χρήστες που έχουν εγγραφεί εδώ"
+
+#: ../classes/StatisticReport/RegistrationLog.php:127
+msgid "MAC address"
+msgstr "Διεύθυνση MAC"
+
+#: ../classes/StatisticReport/RegistrationLog.php:130
+msgid "Registration date"
+msgstr "Ημερομηνία καταχώρισης"
+
+#: ../classes/StatisticReport/NetworkStatus.php:64
+msgid "Network status information"
+msgstr "Πληροφορίες κατάστασης δικτύου"
+
+#: ../classes/StatisticReport/NetworkStatus.php:87
+msgid "Sorry, this report requires you to select individual networks"
+msgstr "Λυπούμαστε, αυτή η αναφορά απαιτεί την επιλογή μεμονωμένων δικτύων"
+
+#: ../classes/StatisticReport/NetworkStatus.php:104 ../classes/Server.php:672
+#: ../classes/Node.php:949 ../classes/ProfileTemplate.php:486
+msgid "Creation date"
+msgstr "Ημερομηνία δημιουργίας"
+
+#: ../classes/StatisticReport/NetworkStatus.php:114
+msgid "Tech support email"
+msgstr "Ηλεκτρονικό μήνυμα τεχνικής υποστήριξης"
+
+#: ../classes/StatisticReport/NetworkStatus.php:119
+msgid "Validation grace time"
+msgstr "Περίοδος χάριτος επικύρωσης"
+
+#: ../classes/StatisticReport/NetworkStatus.php:124
+msgid "Validation email"
+msgstr "Ηλεκτρονικό μήνυμα επικύρωσης"
+
+#: ../classes/StatisticReport/NetworkStatus.php:129
+msgid "Allows multiple login"
+msgstr "Επιτρέπει πολλαπλές συνδέσεις"
+
+#: ../classes/StatisticReport/NetworkStatus.php:134
+msgid "Splash only nodes allowed"
+msgstr "Επιτρέπονται κόμβοι ελεύθερης πρόσβασης"
+
+#: ../classes/StatisticReport/NetworkStatus.php:139
+msgid "Custom portal redirect nodes allowed"
+msgstr "Επιτρέπονται κόμβοι ανακατεύθυνσης σε πύλη"
+
+#: ../classes/StatisticReport/NetworkStatus.php:144
+msgid "Number of users"
+msgstr "Αριθμός χρηστών"
+
+#: ../classes/StatisticReport/NetworkStatus.php:149
+msgid "Number of validated users"
+msgstr "Νούμερο επικυρωμένων χρηστών"
+
+#: ../classes/StatisticReport/NetworkStatus.php:154
+msgid "Number of users currently online"
+msgstr "Νούμερο συνδεδεμένων χρηστών"
+
+#: ../classes/StatisticReport/MostPopularNodes.php:65
+msgid "Most popular nodes, by visit"
+msgstr "Πιο δημημοφιλείς κόμβοι, ανά επίσκεψη"
+
+#: ../classes/StatisticReport/MostPopularNodes.php:110
+msgid "Visits"
+msgstr "Επισκέψεις"
+
+#: ../classes/StatisticReport/ConnectionLog.php:64
+msgid "Connection Log"
+msgstr "Ημερολόγιο σύνδεσης"
+
+#: ../classes/StatisticReport/ConnectionLog.php:89 ../classes/Network.php:334
+#: ../classes/Server.php:406 ../classes/Node.php:440
+#: ../classes/StatisticReport/AnonymisedDataExport.php:97
+#: ../classes/ContentTypeFilter.php:253
+msgid "Access denied"
+msgstr "Άρνηση πρόσβασης"
+
+#: ../classes/StatisticReport/ConnectionLog.php:109
+msgid "Number of unique Users:"
+msgstr "Αριθμός μοναδικών χρηστών:"
+
+#: ../classes/StatisticReport/ConnectionLog.php:116
+msgid "MAC Count"
+msgstr "Μέτρηση MAC"
+
+#: ../classes/StatisticReport/ConnectionLog.php:124
+msgid "Cx Count"
+msgstr "Μέτρηση Cx"
+
+#: ../classes/StatisticReport/ConnectionLog.php:125
+msgid "Last seen"
+msgstr "Ειδώθηκε τελευταία φορά"
+
+#: ../classes/StatisticReport/ConnectionLog.php:159
+msgid "Number of non-unique connections:"
+msgstr "Αριθμός μη-μοναδικών συνδέσεων:"
+
+#: ../classes/StatisticReport/ConnectionLog.php:163
+msgid "Node name"
+msgstr "Όνομα Κόμβου "
+
+#: ../classes/StatisticReport/ConnectionLog.php:166
+msgid "Date"
+msgstr "Ημερομηνία "
+
+#: ../classes/StatisticReport/ConnectionLog.php:192
+msgid "Unknown"
+msgstr "Άγνωστο"
+
+#: ../classes/StatisticReport/ConnectionGraphs.php:62
+msgid "Graph on network use per hour, weekday and month"
+msgstr "Γράφημα της χρήσης δικτύου ανά ώρα, ημέρα και μήνα"
+
+#: ../classes/StatisticReport/HighestBandwidthUsers.php:65
+#, php-format
+msgid "%d highest bandwidth consumers"
+msgstr "% καταναλωτές υψηλότερου εύρους ζώνης"
+
+#: ../classes/StatisticReport/ContentReport.php:63
+msgid "Content display and clickthrough report"
+msgstr "Εμφάνιση περιεχομένου και αναφορά επισκέψεων "
+
+#: ../classes/StatisticReport/ContentReport.php:98
+msgid "Untitled Content"
+msgstr "Άτιτλο περιεχόμενο"
+
+#: ../classes/StatisticReport/ContentReport.php:100
+msgid "Content report for:"
+msgstr "Αναφορά περιεχομένου για:"
+
+#: ../classes/StatisticReport/ContentReport.php:104
+msgid "Clickthrough"
+msgstr "Επισκεψιμότητα"
+
+#: ../classes/StatisticReport/ContentReport.php:105
+msgid "Prints"
+msgstr "Εκτυπώσεις "
+
+#: ../classes/StatisticReport/ContentReport.php:106
+msgid "Clickthrough/Prints"
+msgstr "Επισκεψιμότητα/Εκτυπώσεις"
+
+#: ../classes/StatisticReport/ContentReport.php:126
+msgid "First"
+msgstr "Πρώτο "
+
+#: ../classes/StatisticReport/ContentReport.php:133
+msgid "Last"
+msgstr "Τελευταίο"
+
+#: ../classes/StatisticReport/ContentReport.php:141
+msgid "Rate"
+msgstr "Βαθμολογία"
+
+#: ../classes/StatisticReport/ContentReport.php:143
+#: ../classes/StatisticReport/ContentReport.php:149
+#, php-format
+msgid "%0.2f per day"
+msgstr "%0.2f την ημέρα"
+
+#: ../classes/StatisticReport/ContentReport.php:157
+msgid "Unique users"
+msgstr "Μοναδικοί χρήστες"
+
+#: ../classes/StatisticReport/ContentReport.php:168
+msgid "Unique locations"
+msgstr "Μοναδικές τοποθεσίες"
+
+#: ../classes/StatisticReport/ContentReport.php:203
+msgid "Content group elements report"
+msgstr "Αναφορά στοιχείων ομάδας περιεχομένου"
+
+#: ../classes/StatisticReport/ContentReport.php:206
+msgid "Element # of prints"
+msgstr "Στοιχείο # εκτυπώσεων"
+
+#: ../classes/StatisticReport/ContentReport.php:207
+msgid "Displayed content report"
+msgstr "Αναφορά περιεχομένου που έχει παρουσιαστεί"
+
+#: ../classes/StatisticReport/ContentReport.php:233
+msgid ""
+"Note:  The statistics above include all the prints and clickthroughs of the "
+"displayed element, not just those resulting from it's display in this group."
+msgstr ""
+"Σημείωση: Οι ανωτέρω στατιστικές περιλαμβάνουν όλες τις εκτυπώσεις και τις "
+"επισκέψεις του εμφανιζόμενου στοιχείου, και όχι μόνο τις εμφανίσεις του σε "
+"αυτήν την ομάδα. "
+
+#: ../classes/StatisticReport/ContentReport.php:309
+msgid ""
+"Important note:  Currently, Report configuration options are ignored for "
+"this report."
+msgstr ""
+"Σημαντική σημείωση: Αυτήν τη στιγμή, οι επιλογές ρυθμίσεων της αναφοράς δεν "
+"έχουν ληφθεί υπόψη για αυτήν την αναφορά. "
+
+#: ../classes/StatisticReport/UserRegistrationReport.php:62
+msgid "User registration report"
+msgstr "Αναφορά καταχώρισης χρήστη"
+
+#: ../classes/StatisticReport/UserRegistrationReport.php:94
+msgid "First connection per node"
+msgstr "Πρώτη σύνδεση ανά κόμβο"
+
+#: ../classes/StatisticReport/UserRegistrationReport.php:132
+msgid "# of new user first connection"
+msgstr "# της πρώτης σύνδεσης του νέου χρήστη"
+
+#: ../classes/StatisticReport/UserRegistrationReport.php:157
+msgid ""
+"Note:  This is actually a list of how many new user's first connection "
+"occured at each hotspot, taking report restrictions into account.  It "
+"includes non-validated users who successfully connected."
+msgstr ""
+"Σημείωση: Αυτός είναι ένας κατάλογος των πρώτων συνδέσεων νέων χρηστών που "
+"πραγματοποιήθηκαν σε κάθε Σημείο Ασύρματης Πρόσβασης. Περιλαμβάνει και τους "
+"μη-επικυρωμένους χρήστες που συνδέθηκαν με επιτυχία."
+
+#: ../classes/NodeLists/NodeListRSS.php:158
+#: ../classes/NodeLists/NodeListHTML.php:229
+msgid "Newest Hotspots"
+msgstr "Νεώτερα Σημεία Ασύρματης Πρόσβασης"
+
+#: ../classes/NodeLists/NodeListRSS.php:170
+msgid "List of the most recent Hotspots opened by the network: "
+msgstr ""
+"Κατάλογος των πιο πρόσφατων Σημείων Ασύρματης Πρόσβασης που έχουν ανοιχτεί "
+"σε αυτό το δίκτυο:"
+
+#: ../classes/NodeLists/NodeListRSS.php:191
+msgid "Copyright "
+msgstr "Πνευματική Ιδιοκτησία"
+
+#: ../classes/NodeLists/NodeListRSS.php:359
+msgid "See Map"
+msgstr "Βλέπε Χάρτη"
+
+#: ../classes/NodeLists/NodeListRSS.php:372
+msgid "Contact"
+msgstr "Επικοινωνία"
+
+#: ../classes/NodeLists/NodeListPDF.php:791
+msgid ""
+"To protect the server the PDF file has not been created, because the server "
+"is too busy right now!"
+msgstr ""
+"Για την προστασία του  διακομιστή,  το αρχείο PDF δεν δημιουργήθηκε, επειδή "
+"ο εξυπηρετητής είναι πολύ απασχολημένος αυτή την στιγμή!"
+
+#: ../classes/NodeLists/NodeListPDF.php:799
+msgid "PDF file cannot be created because the FPDF library is not installed!"
+msgstr ""
+"Το αρχείο PDF δεν δημιουργήθηκε γιατί η βιβλιοθήκη FPDF δεν έχει εγκατασταθεί"
+
+#: ../classes/NodeLists/NodeListPDF.php:953
+#: ../classes/NodeLists/NodeListPDF.php:954
+#: ../classes/NodeLists/NodeListPDF.php:956
+#: ../classes/NodeLists/NodeListPDF.php:1037
+msgid "Hotspots"
+msgstr "Σημεία Ασύρματης Πρόσβασης"
+
+#: ../classes/NodeLists/NodeListPDF.php:1046
+msgid "street name"
+msgstr "Οδός"
+
+#: ../classes/NodeLists/NodeListPDF.php:1050
+msgid "postal code"
+msgstr "Ταχυδρομικός Κώδικας"
+
+#: ../classes/NodeLists/NodeListPDF.php:1054
+msgid "city"
+msgstr "Πόλη"
+
+#: ../classes/NodeLists/NodeListPDF.php:1058
+msgid "name"
+msgstr "Όνομα"
+
+#: ../classes/NodeLists/NodeListPDF.php:1063
+#, php-format
+msgid "This list contains all Hotspots of %s sorted by %s."
+msgstr ""
+"Αυτός ο κατάλογος περιέχει όλα τα Σημεία Ασύρματης Πρόσβασης του %, "
+"ταξινομημένα ανά %."
+
+#: ../classes/NodeLists/NodeListPDF.php:1066
+#, php-format
+msgid "Number of Hotspots: %d"
+msgstr "Αριθμός Σημείων Ασύρματης Πρόσβασης: %"
+
+#: ../classes/NodeLists/NodeListPDF.php:1069
+#, php-format
+msgid "Last updated on: %s"
+msgstr "Τελευταία ενημέρωση την: %"
+
+#: ../classes/NodeLists/NodeListPDF.php:1081
+msgid "Hotspot"
+msgstr "Σημείο Ασύρματης Πρόσβασης"
+
+#: ../classes/NodeLists/NodeListPDF.php:1081 ../classes/Node.php:984
+#: ../classes/Node.php:985
+msgid "Postal code"
+msgstr "Ταχυδρομικός Κώδικας"
+
+#: ../classes/NodeLists/NodeListPDF.php:1081 ../classes/Node.php:974
+#: ../classes/Node.php:975
+msgid "City"
+msgstr "Πόλη"
+
+#: ../classes/NodeLists/NodeListPDF.php:1081 ../classes/Node.php:979
+#: ../classes/Node.php:980
+msgid "Province / State"
+msgstr "Επαρχία/Χώρα"
+
+#: ../classes/NodeLists/NodeListPDF.php:1081 ../classes/Node.php:1004
+#: ../classes/Node.php:1005
+msgid "Homepage URL"
+msgstr "Διεύθυνση Αρχικής Σελίδας"
+
+#: ../classes/NodeLists/NodeListKML.php:241
+#: ../classes/Content/RssAggregator/RssAggregator.php:750
+#: ../classes/Content/RssAggregator/RssAggregator.php:753
+msgid "URL"
+msgstr "Διεύθυνση Ιστοσελίδας"
+
+#: ../classes/NodeLists/NodeListHTML.php:228
+msgid "Hotspot list"
+msgstr "Κατάλογος Σημείων Ασύρματης Πρόσβασης"
+
+#: ../classes/Content/File/File.php:119
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:92
+#: ../classes/Content/ContentGroup/ContentGroup.php:110
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:131
+#: ../classes/Content/IFrame/IFrame.php:89
+#: ../classes/Content/Picture/Picture.php:100 ../classes/Content.php:119
+#: ../classes/Content.php:269 ../classes/Content/File/File.php:131
+#: ../classes/Content/ContentGroup/ContentGroup.php:111
+#: ../classes/Content/Picture/Picture.php:103 ../classes/Content.php:124
+#: ../classes/Content.php:275
+msgid "The content with the following id could not be found in the database: "
+msgstr ""
+"Το περιεχόμενο με την ακόλουθη ταυτότητα δεν βρέθηκε στην βάση δεδομένων:"
+
+#: ../classes/Content/File/File.php:162 ../classes/Content/File/File.php:202
+msgid "File size exceeds limit specified in PHP.ini"
+msgstr ""
+"Το μέγεθος του αρχείου υπερβαίνει το όριο που έχει προσδιοριστεί στο PHP.ini"
+
+#: ../classes/Content/File/File.php:166 ../classes/Content/File/File.php:206
+msgid "File size exceeds limit specified HTML form"
+msgstr ""
+"Το μέγεθος του αρχείου υπερβαίνει το όριο που έχει προσδιοριστεί στην μορφή "
+"HTML"
+
+#: ../classes/Content/File/File.php:170 ../classes/Content/File/File.php:210
+msgid "File upload was interrupted"
+msgstr "Η φόρτωση του αρχείου διακόπηκε"
+
+#: ../classes/Content/File/File.php:174 ../classes/Content/File/File.php:214
+msgid "Missing temp folder"
+msgstr "Προσωρινός φάκελος που λείπει"
+
+#: ../classes/Content/File/File.php:437
+#: ../classes/Content/Avatar/Avatar.php:96
+#: ../classes/Content/File/File.php:492
+msgid "Upload a new file (Uploading a new one will replace any existing file)"
+msgstr ""
+"Φόρτωση νέου αρχείου (Η φόρτωση του νέου αρχείου θα αντικαταστήσει τυχόν "
+"υπάρχον αρχείο)"
+
+#: ../classes/Content/File/File.php:447
+#: ../classes/Content/Avatar/Avatar.php:106
+#: ../classes/Content/File/File.php:501
+msgid "Remote file via URL"
+msgstr "Απομακρυσμένο αρχείο μέσω URL"
+
+#: ../classes/Content/File/File.php:461
+#: ../classes/Content/Avatar/Avatar.php:120
+#: ../classes/Content/File/File.php:518
+msgid "File URL"
+msgstr "Αρχείο URL"
+
+#: ../classes/Content/File/File.php:470 ../classes/Content/File/File.php:528
+msgid "Filename to display"
+msgstr "Όνομα αρχείου για εμφάνιση"
+
+#: ../classes/Content/File/File.php:480 ../classes/Content/File/File.php:540
+msgid "MIME type"
+msgstr "Τύπος MIME"
+
+#: ../classes/Content/File/File.php:488 ../classes/Content/File/File.php:549
+msgid "Locally stored file size"
+msgstr "Μέγεθος αρχείου τοπικά αποθηκευμένου"
+
+#: ../classes/Content/File/File.php:490 ../classes/Content/File/File.php:571
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:357
+#: ../classes/Content/File/File.php:550 ../classes/Content/File/File.php:649
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:354
+msgid "KB"
+msgstr "ΚΒ"
+
+#: ../classes/Content/File/File.php:493 ../classes/Content/File/File.php:556
+msgid "Remote file size (Automatically converted from KB to Bytes)"
+msgstr "Μέγεθος απομακρυσμένου αρχείου (Αυτόματη μετατροπή KB σε Bytes)"
+
+#: ../classes/Content/File/File.php:500 ../classes/Content/File/File.php:576
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:357
+#: ../classes/Content/File/File.php:565 ../classes/Content/File/File.php:656
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:354
+msgid "Download"
+msgstr "Λήψη"
+
+#: ../classes/Content/File/File.php:501 ../classes/Content/File/File.php:566
+msgid "Last update"
+msgstr "Τελευταία ενημέρωση"
+
+#: ../classes/Content/File/File.php:619 ../classes/Content/File/File.php:704
+msgid "Could not delete this file, since it is persistent"
+msgstr ""
+"Δεν ήταν δυνατή η διαγραφή αυτού του αρχείου καθώς είναι επαναλαμβανόμενο. "
+
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:111
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:102
+msgid "Subscribe to Pattern Language"
+msgstr "Εγγραφή στην πρότυπη γλώσσα"
+
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:112
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:127
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:103
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:118
+msgid "Read narratives archives"
+msgstr "Ανάγνωση των αφηγηματικών αρχείων"
+
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:126
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:117
+msgid "Read my narrative"
+msgstr "Ανάγνωση της αφήγησής μου"
+
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:128
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:119
+msgid "Unsubscribe"
+msgstr "Ακύρωση εγγραφής"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:172
+msgid "Embedded content"
+msgstr "Ενσωματωμένο περιεχόμενο"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:190
+msgid "Attributes"
+msgstr "Ιδιότητες"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:192
+msgid ""
+"It is recommended to specify at least <b>width='x' height='y'</b> as "
+"attributes"
+msgstr ""
+"Προτείνεται να καθοριστούν τουλάχιστον <b> πλάτος=χ ύψος=y</b> ως ιδιότητες"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:198
+msgid "Parameters"
+msgstr "Παράμετροι"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:212
+msgid ""
+"Fallback content (Can be another embedded content to create a fallback "
+"hierarchy)"
+msgstr ""
+"Εναλλακτικό περιεχόμενο (είναι δυνατόν να είναι άλλο ενσωματωμένο "
+"περιεχόμενο, ώστε να δημιουργείται ιεραρχία εναλλαγών)"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:261
+msgid "You MUST choose a File object or any of its siblings."
+msgstr "ΠΡΕΠΕΙ να επιλέξετε ένα αρχείο ή κάτι συγγενές"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:401
+#: ../classes/Content/Langstring/Langstring.php:483
+#: ../classes/Content.php:1699
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:397
+#: ../classes/Content/Langstring/Langstring.php:533
+#: ../classes/Content.php:1923
+msgid ""
+"Content is persistent (you must make it non persistent before you can delete "
+"it)"
+msgstr ""
+"Το περιεχόμενο είναι επαναλαμβανόμενο (πρέπει να μετατραπεί σε μη  "
+"επαναλαμβανόμενο πριν το διαγράψετε). "
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:225
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:231
+#: ../classes/Content.php:184 ../classes/ProfileTemplateField.php:186
+#: ../classes/Content.php:189
+msgid "Unable to insert new content into database!"
+msgstr "Δεν ήταν δυνατή η εισαγωγή νέου περιεχομένου στην βάση δεδομένων!"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:315
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:291
+#, php-format
+msgid "%s %d display conditions"
+msgstr "% % συνθήκες παρουσίασης"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:325
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:301
+msgid "(Ignored if display type is random)"
+msgstr "(Αγνοείται έαν ο τύπος της παρουσίασης είναι τυχαίος)"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:331
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:307
+msgid ""
+"Content can be displayed at any date if no start or end date is specified.  "
+"Warning:  If you do not specify a specific time of day, midnight is assumed."
+msgstr ""
+"Το περιεχόμενο μπορεί να παρουσιάζεται οποιαδήποτε ημερομηνία αν δεν "
+"προσδιοριστεί ημερομηνία έναρξης και λήξης. Προειδοποίηση: Αν δεν "
+"προσδιορίσετε συγκεκριμένη ώρα της ημέρας, θα οριστούν τα μεσάνυχτα. "
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:332
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:308
+msgid "Only display from"
+msgstr "Εμφάνιση μόνο από"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:358
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:334
+msgid "Only display at node(s):"
+msgstr "Εμφάνιση μόνο στον κόμβο:"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:373
+#: ../classes/Content.php:603
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:349
+#: ../classes/ProfileTemplate.php:370 ../classes/Content.php:738
+msgid "Remove"
+msgstr "Μετακίνηση"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:385
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:361
+msgid "Add new allowed node"
+msgstr "Προσθήκη νέου επιτρεπτού κόμβου"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:388
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:364
+msgid ""
+"(Content can be displayed at ANY node unless one or more nodes are selected)"
+msgstr ""
+"(Το περιεχόμενο μπορεί να εμφανιστεί σε ΚΑΘΕ κόμβο, εκτός αν ένας ή "
+"περισσότεροι κόμβοι επιλεχθούν)"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:405
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:381
+#, php-format
+msgid "%s %d displayed content (%s)"
+msgstr "% % παρουσίαση περιεχομένου (%)"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:148
+#: ../classes/Content/ContentGroup/ContentGroup.php:149
+msgid "Invalid content selection mode (must be part of CONTENT_ORDERING_MODES)"
+msgstr ""
+"Μη έγκυρος τρόπος επιλογής περιεχομένου (θα έπρεπε να είναι μέρος του "
+"ΠΕΡΙΕΧΟΜΕΝΟ_ΠΑΡΑΓΓΕΛΙΑ_ΤΡΟΠΟΙ)"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:177
+#: ../classes/Content/ContentGroup/ContentGroup.php:178
+msgid ""
+"Invalid content selection mode (must be part of CONTENT_CHANGES_ON_MODES)"
+msgstr ""
+"Μη έγκυρος τρόπος επιλογής περιεχομένου (πρέπει να είναι μέρος του "
+"ΠΕΡΙΕΧΟΜΕΝΟ_ΑΛΛΑΓΕΣ_ΣΕ_ΤΡΟΠΟΙ)"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:206
+#: ../classes/Content/ContentGroup/ContentGroup.php:207
+msgid "Invalid content selection mode (must be part of ALLOW_REPEAT_MODES)"
+msgstr ""
+"Μη έγκυρος τρόπος επιλογής περιεχομένου (πρέπει να είναι μέρος του "
+"ΕΠΙΤΡΕΠΕΤΑΙ_ΕΠΑΝΑΛΗΨΗ_ΤΡΟΠΩΝ)"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:238
+#: ../classes/Content/RssAggregator/RssAggregator.php:199
+#: ../classes/Content/ContentGroup/ContentGroup.php:239
+msgid "You must display at least one element"
+msgstr "Πρέπει να παρουσιάσετε τουλάχιστον ένα στοιχείο"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:259
+#: ../classes/Content/ContentGroup/ContentGroup.php:260
+#, php-format
+msgid "%s configuration"
+msgstr "% ρύθμιση"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:263
+#: ../classes/Content/ContentGroup/ContentGroup.php:264
+msgid "In what order should the content displayed?"
+msgstr "Με ποια σειρά πρέπει να παρουσιάζεται το περιεχόμενο;"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:272
+#: ../classes/Content/ContentGroup/ContentGroup.php:273
+msgid "When does the content rotate?"
+msgstr "Πότε περιστρέφεται το περιεχόμενο;"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:281
+#: ../classes/Content/ContentGroup/ContentGroup.php:282
+msgid "Can content be shown more than once to the same user?"
+msgstr ""
+"Μπορεί το περιεχόμενο να παρουσιαστεί περισσότερο από μία φορά στον ίδιο "
+"χρήστη;"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:305
+#: ../classes/Content/ContentGroup/ContentGroup.php:306
+#, php-format
+msgid "%s display element list"
+msgstr "% εμφάνιση καταλόγου στοιχείων"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:312
+#: ../classes/Content/ContentGroup/ContentGroup.php:313
+msgid "Show expired group elements"
+msgstr "Εμφάνιση στοιχείων ομάδας που έχουν λήξει"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:318
+#: ../classes/Content/ContentGroup/ContentGroup.php:319
+msgid "Hide expired group elements"
+msgstr "Απόκρυψη στοιχείων ομάδας που έχουν λήξει"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:329
+#: ../classes/Content/ContentGroup/ContentGroup.php:330
+#: ../classes/ProfileTemplate.php:500
+#, php-format
+msgid "%s %d"
+msgstr "% %"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:332
+#: ../classes/Content/ContentGroup/ContentGroup.php:333
+#, php-format
+msgid "Delete %s %d"
+msgstr "Διαγραφή % % "
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:654
+msgid ""
+"Sorry, no elements available at this hotspot or all elements of the content "
+"group have already been shown"
+msgstr ""
+"Λυπούμαστε, δεν υπάρχουν διαθέσιμα στοιχεία σε αυτό το Σημείο Ασύρματης "
+"Πρόσβασης, ή όλα τα στοιχεία της ομάδας περιεχομένου έχουν ήδη παρουσιαστεί"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:82
+msgid "300x250 - IAB Medium Rectangle"
+msgstr ""
+"300x250 - (IAB  Medium Rectangle) Μεσαίο Τετράγωνο του Γραφείου για την "
+"Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:83
+msgid "250x250 - IAB Square Pop-Up"
+msgstr ""
+"250x250 - (IAB Square Pop-Up) Τετράγωνο Αναδυόμενο παράθυρο  του Γραφείου "
+"για την Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:84
+msgid "240x400 - IAB Vertical Rectangle"
+msgstr ""
+"240x400 - (IAB Vertical Rectangle) Κάθετο Τετράγωνο  του Γραφείου για την "
+"Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:85
+msgid "336x280 - IAB Large Rectangle"
+msgstr ""
+"336x280 - (IAB Large Rectangle) Μεγάλο Τετράγωνο του Γραφείου για την "
+"Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:86
+msgid "180x150 - IAB Rectangle"
+msgstr ""
+"180x150 - (IAB Rectangle) Τετράγωνο  του Γραφείου για την Διαδραστική "
+"Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:88
+msgid "468x60  - IAB Full Banner"
+msgstr ""
+"468x60  - (IAB Full Banner) Πλήρης Διαφημιστική Επιφάνεια του Γραφείου για "
+"την Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:89
+msgid "234x60  - IAB Half Banner"
+msgstr ""
+"234x60  - (IAB Half Banner) Μισή Διαφημιστική Επιφάνεια του Γραφείου για την "
+"Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:90
+msgid "88x31   - IAB Micro Bar"
+msgstr ""
+"88x31   - (IAB Micro Bar) Μικρή μπάρα του Γραφείου για την Διαδραστική "
+"Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:91
+msgid "120x90  - IAB Button 1"
+msgstr ""
+"120x90 - (IAB  Button 1) Κουμπί 1 του Γραφείου για την Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:92
+msgid "120x60  - IAB Button 2"
+msgstr ""
+"120x60 - (IAB Button 2) Κουμπί 2 του Γραφείου για την Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:93
+msgid "120x240 - IAB Vertical Banner"
+msgstr ""
+"120x240 - (IAB Vertical Banner) Κάθετη Διαφημιστική Επιφάνεια  του Γραφείου "
+"για την Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:94
+msgid "125x125 - IAB Square Button"
+msgstr ""
+"125x125 - (IAB Square Button) Τετράγωνο Κουμπί του Γραφείου για την "
+"Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:95
+msgid "728x90  - IAB Leaderboard"
+msgstr ""
+"728x90  - (IAB Leaderboard) Leaderboard του Γραφείου για την Διαδραστική "
+"Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:97
+msgid "160x600 - IAB Wide Skyscraper"
+msgstr ""
+"160x600 - (IAB Wide Skyscraper) Ευρύς Ουρανοξύστης του Γραφείου για την "
+"Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:98
+msgid "120x600 - IAB Skyscraper"
+msgstr ""
+"120x600 - (IAB Skyscraper) Ουρανοξύστης του Γραφείου για την Διαδραστική "
+"Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:99
+msgid "300x600 - IAB Half Page Ad"
+msgstr ""
+"300x600 - (IAB Half Page Ad)  Διαφήμιση μισής σελίδας του Γραφείου για την "
+"Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:128
+msgid "Maximum display size"
+msgstr "Μέγιστο μέγεθος εμφάνισης"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:131
+msgid "Use the values below for width and height"
+msgstr "Χρησιμοποιήστε τις κατωτέρω τιμές για το πλάτος και το ύψος"
+
+#: ../classes/Content/Stylesheet/Stylesheet.php:99
+#: ../classes/Content/Stylesheet/Stylesheet.php:106
+msgid ""
+"Hints:  Note that the order in which Stylesheets are assigned relative to "
+"other content doesn't matter (except relative to other Stylesheets).  "
+"Stylesheets will be linked to the page in the order they are assigned, but "
+"always after the base stylesheet and network theme pack (if applicable).  "
+"They must be written as patches to those stylesheets."
+msgstr ""
+"Υπόδειξη: Σημειώστε ότι η σειρά με την οποία τα φύλλα τεχνοτροπίας ορίζονται "
+"σε σχέση με άλλο περιεχόμενο δεν έχει σημασία (εκτός αν είναι σε σχέση με "
+"άλλα φύλλα τεχνοτροπίας). Τα φύλλα τεχνοτροπίας συνδέονται με  την σελίδα με "
+"την σειρά που έχουν οριστεί, αλλά πάντα μετά από το βασικό φύλλο "
+"τεχνοτροπίας και το θεματικό πακέτο του δικτύου (όπου αυτό είναι "
+"εφαρμόσιμο). Πρέπει να είναι γραμμένα σαν ενημερωμένες εκδόσεις κώδικα σε "
+"αυτά τα φύλλα τεχνοτροπίας."
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:198
+msgid "Illegal Flickr Photostream selection mode."
+msgstr "Η τρόπος επιλογής του Flickr Photostream είναι παράνομος"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:238
+msgid "Illegal Flickr Photostream display mode."
+msgstr "Η τρόπος εμφάνισης του Flickr Photostream είναι παράνομος"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:441
+#, php-format
+msgid "%s: Options"
+msgstr "%: Επιλογές"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:448
+msgid "Flickr API key"
+msgstr "Κλειδί Flickr API"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:456
+msgid "Shared secret"
+msgstr "Κοινό μυστικό"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:464
+msgid "Photos display mode"
+msgstr "Τρόπος εμφάνισης φωτογραφιών"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:466
+msgid "Grid display"
+msgstr "Εμφάνιση πλέγματος"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:466
+msgid "Feature photo (last one)"
+msgstr "Δυνατότητα φωτογραφίας (τελευταία)"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:466
+msgid "Feature photo + one at random"
+msgstr "Δυνατότητα φωτογραφίας + μία τυχαία"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:472
+msgid "Flick photo selection mode :"
+msgstr "Τρόπος επιλογής φωτογραφιών Flick"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:475
+msgid "Select by group"
+msgstr "Επιλογή ανά ομάδα"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:475
+msgid "Select by tags"
+msgstr "Επιλογή ανά ετικέτες"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:475
+msgid "Select by user"
+msgstr "Επιλογή ανά χρήστη"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:491
+msgid "Flickr User ID + Username"
+msgstr "Ταυτότητα χρήστη Flickr + όνομα χρήστη"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:495
+msgid "Reset Flickr User ID"
+msgstr "Επαναφορά ταυτότητας χρήστη Flickr"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:502
+msgid "Flickr User E-mail"
+msgstr "Ηλεκτρονική διεύθυνση χρήστη Flickr"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:518
+msgid "Group Photo Pool"
+msgstr "Διαθέσιμη ομάδα φωτογραφιών"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:531
+msgid "Could not find any group photo pool."
+msgstr "Δεν βρέθηκε καμία διαθέσιμη ομάδα φωτογραφιών."
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:539
+msgid "Tags (comma-separated)"
+msgstr "Ετικέτες (χωρισμένες με κόμμα)"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:543
+msgid "Match any tag"
+msgstr "Συνδυασμός οποιασδήποτε ετικέτας"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:543
+msgid "Match all tags"
+msgstr "Συνδυασμός όλων των ετικετών"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:551
+msgid "Flickr photo display options"
+msgstr "Επιλογές εμφάνισης φωτογραφιών Flickr"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:555
+msgid "Show Flickr photo title ?"
+msgstr "Επίδειξη τίτλου φωτογραφιών Flickr;"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:564
+msgid "Show Flickr tags ?"
+msgstr "Επίδειξη ετικετών Flickr;"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:573
+msgid "Show Flickr photo description ?"
+msgstr "Επίδειξη περιγραφής φωτογραφιών Flickr;"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:582
+msgid "Preferred size"
+msgstr "Προτιμώμενο μέγεθος"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:584
+msgid "Squared 75x75"
+msgstr "Τετραγωνισμένο 75x75"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:584
+msgid "Thumbnail 100x75"
+msgstr "Μικρογραφία 100x75"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:584
+msgid "Small 240x180"
+msgstr "Μικρό 240x180"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:584
+msgid "Medium 500x375"
+msgstr "Μεσαίο 500x375"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:584
+msgid "Large 1024x*"
+msgstr "Μεγάλο 1024x*"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:584
+msgid "Original size"
+msgstr "Αυθεντικό μέγεθος"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:596
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:856
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:853
+msgid "Unable to connect to Flickr API."
+msgstr "Δεν ήταν δυνατή η σύνδεση με το  Flickr API."
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:601
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:860
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:857
+msgid "Some of the request parameters provided to Flickr API are invalid."
+msgstr ""
+"Κάποιες παράμετροι του αιτήματος που δόθηκαν στο  Flickr API δεν είναι "
+"έγκυροι. "
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:605
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:865
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:862
+msgid "Unable to parse Flickr's response."
+msgstr "Δεν ήταν δυνατή η μεταβίβαση της απάντησης του Flickr. "
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:609
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:869
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:866
+msgid "Could not get content from Flickr : "
+msgstr "Δεν ήταν δυνατή η λήψη περιεχομένου από το Flickr."
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:615
+msgid "YOU MUST SPECIFY AN API KEY BEFORE YOU CAN GO ON."
+msgstr "ΠΡΕΠΕΙ ΝΑ ΠΡΟΣΔΙΟΡΙΣΕΤΕ ΕΝΑ API ΚΛΕΙΔΙ ΠΡΙΝ ΣΥΝΕΧΙΣΕΤΕ"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:621
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:876
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:873
+msgid "PEAR::Phlickr is not installed"
+msgstr "PEAR::Το Flickr δεν έχει εγκατασταθεί."
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:674
+msgid "Could not find a Flickr user with this e-mail."
+msgstr ""
+"Δεν μπορέσαμε να βρούμε χρήστη του Flickr με αυτήν την ηλεκτρονική διεύθυνση."
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:690
+msgid "Could not complete successfully the saving procedure."
+msgstr "Η διαδικασία αποθήκευσης δεν μπόρεσε να ολοκληρωθεί με επιτυχία"
+
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:851
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:848
+msgid "No Flickr content matches the request !"
+msgstr "Κανένα περιεχόμενο του Flickr δεν αντιστοιχεί σε αυτό το αίτημα."
+
+#: ../classes/Content/IFrameRest/IFrameRest.php:119
+msgid "Actual URL after substitution"
+msgstr "Πραγματικό URL μετά από υποκατάσταση"
+
+#: ../classes/Content/IFrameRest/IFrameRest.php:122
+msgid ""
+"The IFrameRest content type is meant to allow the result of REST-style "
+"queries to remote systems to be displayed in a IFrame.  To that end, The "
+"following strings will be replaced in the URL:"
+msgstr ""
+"Ο τύπος περιεχομένου  IFrameRest επιτρέπει τα αποτελέσματα των ερωτημάτων σε "
+"απομακρυσμένα συστήματα να εμφανίζονται σε IFrame. Για τον σκοπό αυτό, οι "
+"ακόλουθες ακολουθίες χαρακτήρων θα αντικατασταθούν στο URL:"
+
+#: ../classes/Content/IFrameRest/IFrameRest.php:128
+msgid ""
+"Will be replaced by the urlencoded node_id of the node\n"
+"                    where the content is displayed, or an empty string if "
+"there is no\n"
+"                    current node</td></tr>"
+msgstr ""
+"Θα αντικατασταθεί από την κωδικοποιημένη σε url ταυτότητα_κόμβου του κόμβου "
+"στον οποίο εμφανίζεται το περιεχόμενο, ή από μία άδεια ακολουθία χαρακτήρων "
+"εάν δεν υπάρχει τρέχων κόμβος "
+
+#: ../classes/Content/IFrameRest/IFrameRest.php:133
+msgid "Will be replaced by the user_id"
+msgstr "Θα αντικατασταθεί από την ταυτότητα_χρήστη"
+
+#: ../classes/Content/IFrameRest/IFrameRest.php:137
+msgid ""
+"will be replaced by a ISO-8601 timestamp of the date the user was last shown "
+"this content, or an empty string if the user was never presented with this "
+"IFrame."
+msgstr ""
+"θα αντικατασταθεί από ένα χρονικό σημάδι ISO-8601 της ημερομηνίας που ο "
+"χρήστης είδε για τελευταία φορά το περιεχόμενο, ή από μία κενή  ακολουθία "
+"χαρακτήρων εάν ο χρήστης δεν είδε ποτέ αυτό το IFrame."
+
+#: ../classes/Content/IFrame/IFrame.php:231
+msgid "Width (suggested width is 600 (pixels))"
+msgstr "Πλάτος (προτεινόμενο πλάτος 600 pixels)"
+
+#: ../classes/Content/IFrame/IFrame.php:240
+msgid "Height (suggested width is 400 (pixels))"
+msgstr "Ύψος (προτεινόμενο ύψος 400 pixels)"
+
+#: ../classes/Content/IFrame/IFrame.php:247
+msgid "HTML content URL"
+msgstr "HTML περιεχόμενο URL"
+
+#: ../classes/Content/IFrame/IFrame.php:301
+#: ../classes/Content/IFrame/IFrame.php:296
+msgid "Your browser does not support IFrames."
+msgstr "Ο πλοηγός σας δεν υποστηρίζει IFrames."
+
+#: ../classes/Content/Langstring/Langstring.php:124
+#: ../classes/Content/Langstring/Langstring.php:131
+#, php-format
+msgid "(Empty %s)"
+msgstr "(Άδειο %)"
+
+#: ../classes/Content/Langstring/Langstring.php:205
+#: ../classes/Content/SimpleString/SimpleString.php:130
+#: ../classes/Content/Langstring/Langstring.php:286
+msgid "Only these HTML tags are allowed : "
+msgstr "Μόνο αυτές οι  HTML ετικέτες επιτρέπονται:"
+
+#: ../classes/Content/Langstring/Langstring.php:262
+#: ../classes/Content/Langstring/Langstring.php:320
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:119
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:159 smarty.txt:28
+#: ../classes/Content/Langstring/Langstring.php:216
+#: ../classes/Content/Langstring/Langstring.php:343
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:113
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:184 smarty.txt:14
+msgid "Language"
+msgstr "Γλώσσα"
+
+#: ../classes/Content/Langstring/Langstring.php:273
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:146
+#: ../classes/Content/Langstring/Langstring.php:354
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:211
+msgid "Delete string"
+msgstr "Διαγρφή  ακολουθίας χαρακτήρων"
+
+#: ../classes/Content/Langstring/Langstring.php:333
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:184
+#: ../classes/Content/Langstring/Langstring.php:229
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:146
+msgid "Add new string"
+msgstr "Προσθήκη νέας  ακολουθίας χαρακτήρων"
+
+#: ../classes/Content/Langstring/Langstring.php:501
+#: ../classes/Content.php:1707
+#: ../classes/Content/Langstring/Langstring.php:551
+#: ../classes/Content.php:1947
+msgid "Access denied (not owner of content)"
+msgstr "Αρνηση πρόσβασης (δεν είστε κάτοχος του περιοχομένου) "
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:115
+msgid ""
+"The RssAggregator content with the following id could not be found in the "
+"database: "
+msgstr ""
+"Το περιεχόμενο RssAggregator με την ακόλουθη ταυτότητα δεν βρέθηκε στην βάση "
+"δεδομένων:"
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:415
+#: ../classes/Content/RssAggregator/RssAggregator.php:418
+msgid "The maximum age must be a positive integer or null"
+msgstr "Η μέγιαστη ηλικία πρέπει να είναι θετικός ακέραιος αριθμός ή μηδέν"
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:501
+#: ../classes/Content/RssAggregator/RssAggregator.php:504
+msgid "Total number of items to display (from all feeds)"
+msgstr ""
+"Συνολικός αριθμός αντικειμένων προς επίδειξη (από όλες τις τροφοδοσίες)"
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:516
+#: ../classes/Content/RssAggregator/RssAggregator.php:519
+msgid ""
+"How much bonus feeds that do not publish as often get over feed that publish "
+"more often.\n"
+"                                            The default is 0.75, with a "
+"typical range between 0 and 1.\n"
+"                                            At 0, you have a classic RSS "
+"aggregator, meaning the n most recent entries picked from all feeds\n"
+"                                            will be displayed. 1 is usually "
+"as high as you'll want to go:  Assuming that all feeds have \n"
+"                                            an homogenous internal "
+"distribution (ex:  one feed publishes exactly one entry a day, the\n"
+"                                            second once every two days, and "
+"the third once every three days), and you ask for 15 entries,\n"
+"                                            there will be 5 of each.  While "
+"that may not sound usefull, it still is, as the feed's distribution is\n"
+"                                            usually not homogenous."
+msgstr ""
+"Πόσες από τις τροφοδοσίες που δεν δημοσιεύουν τόσο συχνά αντιπαρέρχονται τις "
+"τροφοδοσίες που δημοσιεύουν συχνότερα. Η προεπιλογή είναι 0,75, με τυπική "
+"απόκλιση μεταξύ 0 και 1. Στο 0, θα έχετε έναν κλασικό  RSS αθροιστή, που "
+"σημαίνει ότι οι πιο πρόσφατες καταχωρίσεις θα επιλέγονται από όλες τις "
+"τροφοδοσίες και θα εμφανίζονται. Το 1 είναι συνήθως το πιο υψηλό που θα "
+"θέλατε να φτάσετε: εάν υποθέσουμε ότι όλοι οι τροφοδότες έχουν ομογενή "
+"εσωτερική διάταξη (π.χ. μία τροφοδοσία δημοσιεύει ακριβώς μία καταχώριση την "
+"ημέρα, η δεύτερη μία φορά κάθε δύο μέρες και η τρίτη μία φορά κάθε τρεις "
+"ημέρες) και εσείς ζητήσετε για 15 ημέρες, θα υπάρχουν πέντε από την κάθε "
+"μία. Ενώ αυτό δεν ακούγεται χρήσιμο, στην πραγματικότητα είναι, καθώς η "
+"διάταξη των τροφοδοσιών συνήθως δεν είναι ομογενής."
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:524
+#: ../classes/Content/RssAggregator/RssAggregator.php:527
+msgid "Algorithm Strength"
+msgstr "Δύναμη Αλγορίθμου"
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:540
+#: ../classes/Content/RssAggregator/RssAggregator.php:543
+msgid ""
+"Set the criteria that determines which feed items will be shown expanded by "
+"default."
+msgstr ""
+"Ορίστε τα κριτήρια που θα καθορίσουν ποια αντικείμενα τροφοδοσίας θα "
+"προβάλλονται  διευρυμένα από προεπιλογή."
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:541
+#: ../classes/Content/RssAggregator/RssAggregator.php:544
+msgid "Feed item expansion criteria"
+msgstr "Κριτηρία διεύρυνσης αντικειμένων τροφοδοσίας"
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:555
+#: ../classes/Content/RssAggregator/RssAggregator.php:558
+msgid ""
+"Set in which order the feeds are displayed, and if items from all source "
+"should be merged together"
+msgstr ""
+"Ορίστε με ποια σειρά θα εμφανίζονται οιτροφοδοσίες και εάν τα αντικείμενα "
+"από διαφορετικές πηγές θα συγχωνεύονται"
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:556
+#: ../classes/Content/RssAggregator/RssAggregator.php:559
+msgid "Item ordering"
+msgstr "Παραγγελία αντικειμένου "
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:570
+#: ../classes/Content/RssAggregator/RssAggregator.php:573
+msgid "Display empty feeds?"
+msgstr "Εμφάνιση άδειων τροφοδοσιών;"
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:583
+#: ../classes/Content/RssAggregator/RssAggregator.php:586
+msgid ""
+"Set the oldest entries (in seconds) you are willing to see.  Any entries "
+"older than this will not\n"
+"                                            be considered at all for "
+"display, even if it means that the configured number of items to be "
+"displayed isn't reached.\n"
+"                                            It's only usefull if all your "
+"feed publish very rarely, and you don't want very old entries to show up."
+msgstr ""
+"Ορίστε τις παλαιότερες καταχωρίσεις (σε δευτερόλεπτα) που θέλετε να δείτε. "
+"Παλαιότερες καταχωρίσεις δεν θα εμφανίζονται καθόλου, ακόμη και αν αυτό "
+"σημαίνει ότι ο αριθμός των εμφανιζόμενων καταχωρίσεων δεν θα αγγίξει τον "
+"ζητούμενο. Αυτό είναι χρήσιμο εάν η τροφοδοσία σας δημοσιεύει σπάνια και δεν "
+"θέλετε να εμφανίζονται πολύ παλιές καταχωρίσεις.  "
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:586
+#: ../classes/Content/RssAggregator/RssAggregator.php:589
+msgid "Maximum age (seconds)"
+msgstr "Μέγιστη ηλικία (σε δευτερόλεπτα)"
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:594
+#: ../classes/Content/RssAggregator/RssAggregator.php:597
+msgid "seconds"
+msgstr "Δευτερόλεπτα"
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:602
+#: ../classes/Content/RssAggregator/RssAggregator.php:605
+msgid "Feeds:"
+msgstr "Τροφοδοσίες:"
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:627
+#: ../classes/Content/RssAggregator/RssAggregator.php:630
+msgid ""
+"Add a new feed or pick one from the other feeds in the system "
+"(most_popular_first)"
+msgstr ""
+"Προσθήκη νέας τροφοδοσίας ή επιλογή από τις τροφοδοσίες του συστήματος "
+"(πιο_δημοφιλής_πρώτη)"
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:643
+#: ../classes/Content/RssAggregator/RssAggregator.php:646
+#, php-format
+msgid "%s, used %d times"
+msgstr "%, χρησιμοποιήθηκε % φορές"
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:649
+#: ../classes/Content/RssAggregator/RssAggregator.php:652
+msgid "Type URL manually"
+msgstr "Πληκτρολογήστε το URL"
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:652
+#: ../classes/Content.php:496 ../classes/Content.php:832
+#: ../classes/Content/RssAggregator/RssAggregator.php:655
+#: ../classes/ProfileTemplateField.php:147 ../classes/ProfileTemplate.php:302
+#: ../classes/Content.php:545 ../classes/Content.php:967
+msgid "Add"
+msgstr "Προσθήκη"
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:753
+#: ../classes/Content/RssAggregator/RssAggregator.php:756
+msgid ""
+"WARNING:  Either the feed couldn't be retrieved, or it couldn't be parsed.  "
+"Please double check the URL."
+msgstr ""
+"ΠΡΟΕΙΔΟΠΟΙΗΣΗ: η τροφοδοσία, είτε δεν μπόρεσε να ανακτηθεί, ή δεν μπόρεσε να "
+"περαστεί. Παρακαλώ, ελέγξτε το URL"
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:773
+#: ../classes/Content/RssAggregator/RssAggregator.php:776
+#, php-format
+msgid "The feed publishes an item every %.2f day(s)"
+msgstr "Η τροφοδοσία δημοσιεύει ένα αντικείκειμενο κάθε % μέρα"
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:775
+#: ../classes/Content/RssAggregator/RssAggregator.php:778
+msgid ""
+"WARNING:  This feed does not include the publication dates.\n"
+"                                                                                                                             The "
+"system needs to be able to compute approximate publication\n"
+"                                                                                                                             date "
+"for each entry, so the entry can be weighted against the\n"
+"                                                                                                                             others. "
+"In order for the aggregator to do a good job, you need\n"
+"                                                                                                                             to "
+"estimate fublication frequency of the items, in days.\n"
+"                                                                                                                             If "
+"unset, defaults to one day."
+msgstr ""
+"ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Αυτή η τροφοδοσία δεν περιλαμβάνει τις ημερομηνίες "
+"δημοσίευσης. Το σύστημα πρέπει να είναι σε θέση να υπολογίζει περίπου την "
+"ημερομηνία δημοσίευσης για κάθε καταχώριση, έτσι ώστε η κάθε καταχώριση να "
+"σταθμίζεται σε σχέση με τις υπόλοιπες. Για να μπορεί η στάθμιση να γίνει "
+"σωστά, πρέπει να υπολογίσετε την συχνότητα της δημοσίευσης των αντικειμένων "
+"σε ημέρες /. Εάν δεν ρυθμιστεί, θα οριστεί η μία ημέρα ως προεπιλογή. "
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:801
+#: ../classes/Content/RssAggregator/RssAggregator.php:804
+msgid ""
+"The bias to be given to the source by the selection algorithm.\n"
+"                                                                                    Bias "
+"must be > 0 , typical values would be between 0.75 and 1.5\n"
+"                                                                                    and "
+"default is 1 (no bias).  A bias of 2 will cause the items\n"
+"                                                                                    to "
+"look twice as recent to the algorithm. A bias of 0.5 to\n"
+"                                                                                    look "
+"twice as old. Be carefull, a bias of 2 will statistically\n"
+"                                                                                    cause "
+"the feed to have MORE than twice as many items displayed."
+msgstr ""
+"Ο περιορισμός που θα δίνεται στην πηγή από τον αλγόριθμο επιλογής. / Ο "
+"περιορισμός πρέπει να είναι >0, οι τυπικές τιμές θα είναι μεταξύ 0.75 και "
+"1.5 /και η προεπιλογή είναι 1 (κανένας περιορισμός). Ο περιορισμός 2 θα "
+"κάνει τα αντικείμενα να δείχνουν δύο φορές πιο πρόσφατα από τον αλγόριθμο. Ο "
+"περιορισμός 0.5, δύο φορές πιο παλιά. Δείξτε προσοχή, καθώς ο περιορισμός 2 "
+"θα προκαλέσει στατιστικά την τροφοδοσία να παρουσιάζει ΠΕΡΙΣΣΟΤΕΡΑ από τα "
+"διπλά αντικείμενα. "
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:808
+#: ../classes/Content/RssAggregator/RssAggregator.php:811
+msgid "Algorithm bias for this feed"
+msgstr "Περιορισμός αλγορίθμου για αυτήν την τροφοδοσία"
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:852
+#: ../classes/Content/RssAggregator/RssAggregator.php:855
+msgid "The bias must be a positive real number"
+msgstr "Ο περιορισμός πρέπει να είναι ένας θετικός πραγματικός αριθμός "
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:880
+#: ../classes/Content/RssAggregator/RssAggregator.php:883
+msgid "The default publication must must be a positive integer or empty"
+msgstr ""
+"Η προεπιλεγμένη έκδοση πρέπει να είναι θετικός ακέραιος αριθμός, ή να είναι "
+"άδεια"
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:902
+#: ../classes/Content/RssAggregator/RssAggregator.php:905
+msgid "The URL cannot be empty!"
+msgstr "Το URL δεν μπορεί να είναι άδειο!"
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:940
+#: ../classes/Content/RssAggregator/RssAggregator.php:941
+msgid "See more"
+msgstr "Δείτε περισσότερα"
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:940
+#: ../classes/Statistics.php:157
+#: ../classes/Content/RssAggregator/RssAggregator.php:941
+#: ../classes/Statistics.php:153
+msgid "-"
+msgstr "-"
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:942
+#: ../classes/Content/RssAggregator/RssAggregator.php:943
+#, php-format
+msgid "Could not get RSS feed: %s"
+msgstr "Δεν ήταν δυνατή η λήψη της τροφοδοσίας RSS: %"
+
+#: ../classes/Content/RssAggregator/RssAggregator.php:948
+#: ../classes/Content/RssAggregator/RssAggregator.php:949
+msgid "RSS support is disabled"
+msgstr "Η υποστήριξη RSS είναι απενεργοποιημένη"
+
+#: ../classes/Content/Picture/Picture.php:252
+#: ../classes/Content/Picture/Picture.php:272
+msgid "Hyperlink URL (leave empty if you don't need it)"
+msgstr "Υπερσύνδεσμος URL (αφήστε το κενό αν δεν το χρειάζεστε)"
+
+#: ../classes/Content/Picture/Picture.php:259
+#: ../classes/Content/Picture/Picture.php:280
+msgid "Width (leave empty if you want to keep original width)"
+msgstr "Πλάτος (αφήστε το κενό αν θέλεται να διατηρήσετε το αρχικό πλάτος)"
+
+#: ../classes/Content/Picture/Picture.php:266
+#: ../classes/Content/Picture/Picture.php:287
+msgid "Height (leave empty if you want to keep original height)"
+msgstr "Ύψος  (αφήστε το κενό αν θέλεται να διατηρήσετε το αρχικό ύψος)"
+
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:193
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:229
+msgid "FCKeditor is not installed"
+msgstr "Ο Επεξεργαστής FCK δεν έχει εγκατασταθεί"
+
+#: ../classes/Content/Avatar/Avatar.php:86
+msgid "Picture preview"
+msgstr "Προεπισκόπηση εικόνας"
+
+#: ../classes/Dependencies.php:173 ../classes/Dependencies.php:190
+#: ../classes/Dependencies.php:207 ../classes/Dependencies.php:223
+#: ../classes/Dependencies.php:317 ../classes/Dependencies.php:332
+#: ../classes/Dependencies.php:347 ../classes/Dependencies.php:361
+#, php-format
+msgid "Component %s is not installed (not found in %s)"
+msgstr "Το συστατικό % δεν είναι εγκατεστημένο (δεν βρέθηκε σε %)"
+
+#: ../classes/Security.php:72
+msgid "You do not have administrator privileges"
+msgstr "Δεν έχετε τα δικαιώματα του διαχειριστή"
+
+#: ../classes/Security.php:100
+msgid "You do not have owner privileges"
+msgstr "Δεν έχετε τα δικαιώματα του κατόχου"
+
+#: ../classes/FormSelectGenerator.php:103
+#: ../classes/FormSelectGenerator.php:112
+msgid " (Empty langstring, ID is displayed)"
+msgstr "(Άδεια ακολουθία χαρακτήρων, εμφάνιση ταυτότητας)"
+
+#: ../classes/User.php:268 ../classes/User.php:271
+msgid "Guest"
+msgstr "Επισκέπτης"
+
+#: ../classes/User.php:292 ../classes/User.php:348
+#, php-format
+msgid "Sorry, the username %s is not available"
+msgstr "Λυπούμαστε, το όνομα χρήστη % δεν είναι διαθέσιμο"
+
+#: ../classes/User.php:306 ../classes/User.php:394
+msgid "Could not update email address."
+msgstr "Δεν μπορέσαμε να ενημερώσουμε την ηλεκτρονική διεύθυνση"
+
+#: ../classes/User.php:340 ../classes/User.php:428
+msgid "Could not update username locale."
+msgstr "Η τοποθεσία του ονόματος χρήστη δεν μπόρεσε να ενημερωθεί."
+
+#: ../classes/User.php:362 ../classes/User.php:450
+msgid "Could not update status."
+msgstr "Λυπούμαστε, δεν μπορέσαμε να ενημερώσουμε την κατάσταση."
+
+#: ../classes/User.php:381
+#, php-format
+msgid ""
+"Sorry, your %.0f minutes grace period to retrieve your email and validate "
+"your account has now expired. You will have to connect to the internet and "
+"validate your account from another location. For more help, please %s click "
+"here %s."
+msgstr ""
+"Λυπούμαστε, τα % λεπτά της περιόδου χάριτος για να ανακτήσσετε το "
+"ηλεκτρονικό σας μήνυμα και να επικυρώσετε τον λογαριασμό σας πέρασαν. Θα "
+"πρέπει να να συνδεθείτε στο διαδίκτυο και να επικυρώσετε τον λογαριασμό σας "
+"από κάποια άλλη τοποθεσία. Για βοήθεια, παρακαλούμε % πατήστε εδώ %"
+
+#: ../classes/User.php:384 ../classes/User.php:473
+msgid "Your account is currently valid."
+msgstr "Ο λογαριασμός σας είναι τώρα έγκυρος"
+
+#: ../classes/User.php:388 ../classes/User.php:477
+msgid "Sorry, your account is not valid: "
+msgstr "Λυπούμαστε, ο λογαριασμός σας δεν είναι έγκυρος:"
+
+#: ../classes/User.php:470 ../classes/User.php:563
+msgid "Could not change user's password."
+msgstr "Δεν μπορέσαμε να αλλάξουμε τον κωδικό εισόδου του χρήστη"
+
+#: ../classes/User.php:486 ../classes/User.php:579
+msgid "No users could not be found in the database"
+msgstr "Δεν βρέθηκαν χρήστες στην βάση δεδομένων"
+
+#: ../classes/User.php:494 ../classes/User.php:512 ../classes/User.php:529
+#: ../classes/User.php:587 ../classes/User.php:605 ../classes/User.php:622
+msgid "Registration system"
+msgstr "Σύστημα καταχώρισης"
+
+#: ../classes/User.php:497 ../classes/User.php:590
+msgid " lost username request"
+msgstr "χαμένη αίτηση ονόματος χρήστη"
+
+#: ../classes/User.php:498 ../classes/User.php:591
+msgid ""
+"Hello,\n"
+"You have requested that the authentication server send you your username:\n"
+"Username: "
+msgstr ""
+"Γεια σας, Ζητήσατε από τον  διακομιστή ελέγχου ταυτότητας να σας στείλει ένα "
+"όνομα χρήστη:/Όνομα Χρήστη:"
+
+#: ../classes/User.php:498 ../classes/User.php:533
+msgid ""
+"\n"
+"\n"
+"\n"
+"Have a nice day,\n"
+"The Team"
+msgstr ""
+"\n"
+"// Καλημέρα, // Η Ομάδα"
+
+#: ../classes/User.php:504 ../classes/User.php:597
+msgid "The user is not in validation period."
+msgstr "Ο χρήστης δεν είναι σε περίοδο επικύρωσης."
+
+#: ../classes/User.php:507 ../classes/User.php:600
+msgid "The validation token is empty."
+msgstr "Το αδειοδοτικό επικύρωσης είναι άδειο"
+
+#: ../classes/User.php:515 ../classes/User.php:608
+msgid " new user validation"
+msgstr "επικύρωση νέου χρήστη"
+
+#: ../classes/User.php:517
+msgid ""
+"\n"
+"Hello,\n"
+"Please follow the link below to validate your account.\n"
+msgstr ""
+"\n"
+"Γεια σας, Παρακαλούμε να ακολουθήσετε την παρακάτω υπερσύνδεση για να "
+"επικυρώσετε τον λογαριασμό σας.//\n"
+
+#: ../classes/User.php:517 ../classes/User.php:610
+msgid ""
+"\n"
+"\n"
+"Thank you,\n"
+"The Team."
+msgstr ""
+"\n"
+"//Ευχαριστούμε,/ Η Ομάδα"
+
+#: ../classes/User.php:532 ../classes/User.php:625
+msgid " new password request"
+msgstr "Αίτηση νέου κωδικού εισόδου"
+
+#: ../classes/User.php:533 ../classes/User.php:626
+msgid ""
+"Hello,\n"
+"You have requested that the authentication server send you a new password:\n"
+"Username: "
+msgstr ""
+"Γεια σας, /Ζητήσατε από τον   διακομιστή ελέγχου ταυτότητας να σας στείλει "
+"έναν νέο κωδικό εισόδου:/Κωδικός εισόδου:"
+
+#: ../classes/User.php:533
+msgid ""
+"\n"
+"\n"
+"Password: "
+msgstr ""
+"\n"
+" //Κωδικός εισόδου:"
+
+#: ../classes/User.php:662 ../classes/User.php:767
+msgid "Be carefull when changing this: it's the username you use to log in!"
+msgstr ""
+"Δείξτε προσοχή αλλάζοντας αυτό: Είναι το όνομα χρήστη το οποίο "
+"χρησιμοποιούσατε!"
+
+#: ../classes/Statistics.php:85
+msgid "Usernames"
+msgstr "Ονόματα χρήστη"
+
+#: ../classes/Statistics.php:86
+msgid "MAC addresses"
+msgstr "Διευθύνσεις MAC"
+
+#: ../classes/Statistics.php:124 ../classes/Network.php:711
+#: ../classes/Content.php:328 ../classes/NodeList.php:153
+#: ../classes/Content.php:335
+msgid "Unable to open directory "
+msgstr "Δεν ήταν δυνατό το άνοιγμα του ευρετηρίου"
+
+#: ../classes/Statistics.php:156 ../classes/Statistics.php:152
+msgid "No restriction..."
+msgstr "Κανένας περιορισμός..."
+
+#: ../classes/Statistics.php:157 ../classes/Statistics.php:153
+msgid "yesterday"
+msgstr "χθες"
+
+#: ../classes/Statistics.php:157 ../classes/Statistics.php:153
+msgid "today"
+msgstr "σήμερα"
+
+#: ../classes/Statistics.php:157 ../classes/Statistics.php:153
+msgid "2 days ago"
+msgstr "πριν από 2 μέρες"
+
+#: ../classes/Statistics.php:157 ../classes/Statistics.php:153
+msgid "3 days ago"
+msgstr "πριν από 3 μέρες"
+
+#: ../classes/Statistics.php:157 ../classes/Statistics.php:153
+msgid "1 week ago"
+msgstr "πριν από 1 εβδομάδα"
+
+#: ../classes/Statistics.php:157 ../classes/Statistics.php:153
+msgid "2 weeks ago"
+msgstr "πριν από 2 εβδομάδες"
+
+#: ../classes/Statistics.php:157 ../classes/Statistics.php:153
+msgid "3 weeks ago"
+msgstr "πριν από 3 εβδομάδες"
+
+#: ../classes/Statistics.php:157 ../classes/Statistics.php:153
+msgid "1 month ago"
+msgstr "πριν από ένα μήνα"
+
+#: ../classes/Statistics.php:157 ../classes/Statistics.php:153
+msgid "2 months ago"
+msgstr "πριν από δύο μήνες"
+
+#: ../classes/Statistics.php:157 ../classes/Statistics.php:153
+msgid "6 months ago"
+msgstr "πριν από 6 μήνες"
+
+#: ../classes/Statistics.php:157 ../classes/Statistics.php:153
+msgid "1 year ago"
+msgstr "πριν από 1 χρόνο"
+
+#: ../classes/Statistics.php:157 ../classes/Statistics.php:153
+msgid "Select from and to..."
+msgstr "Επιλέξτε από και σε.........."
+
+#: ../classes/Statistics.php:157 ../classes/Statistics.php:153
+msgid "yesterday (whole day)"
+msgstr "χθες (όλη μέρα)"
+
+#: ../classes/Statistics.php:157 ../classes/Statistics.php:153
+msgid "today (whole day)"
+msgstr "σήμερα (όλη μέρα)"
+
+#: ../classes/Statistics.php:157 ../classes/Statistics.php:153
+msgid "this month"
+msgstr "αυτόν τον μήνα"
+
+#: ../classes/Statistics.php:157 ../classes/Statistics.php:153
+msgid "last month"
+msgstr "τον προηγούμενο μήνα"
+
+#: ../classes/Statistics.php:157 ../classes/Statistics.php:153
+msgid "this year"
+msgstr "αυτόν τον χρόνο"
+
+#: ../classes/Statistics.php:157 ../classes/Statistics.php:153
+msgid "forever"
+msgstr "για πάντα"
+
+#: ../classes/Statistics.php:161
+msgid "From"
+msgstr "Από"
+
+#: ../classes/Statistics.php:176
+msgid "To"
+msgstr "Σε"
+
+#: ../classes/Statistics.php:447
+msgid "Invalid parameter"
+msgstr "Μη έγκυρη παράμετρος"
+
+#: ../classes/Statistics.php:479
+msgid "Username or MAC address, depending on selection above"
+msgstr "Όνομα χρήστη ή διεύθυνση MAC, ανάλογα με την ανωτέρω επιλογή"
+
+#: ../classes/Statistics.php:574
+msgid "Report configuration"
+msgstr "Ρυθμίσεις αναφοράς"
+
+#: ../classes/Statistics.php:586
+msgid "Restrict the time range for which statistics will be computed"
+msgstr ""
+"Περιορισμός της χρονικής περιόδου για την οποία θα υπολογιστούν τα "
+"στατιστικά δεδομένα"
+
+#: ../classes/Statistics.php:594
+msgid "Restrict stats to the following nodes"
+msgstr "Περιορισμός στατιστικών για τους ακόλουθους κόμβους"
+
+#: ../classes/Statistics.php:604
+msgid "Distinguish users by"
+msgstr "Διαχωρισμός χρηστών ανά"
+
+#: ../classes/Statistics.php:613
+msgid "Restrict stats to the selected users"
+msgstr "Περιορισμός στατιστικών για τους επιλεγμένους χρήστες"
+
+#: ../classes/Statistics.php:622
+msgid "Selected reports"
+msgstr "Επιλεγμένες αναφορές"
+
+#: ../classes/Network.php:122 ../classes/Network.php:245
+msgid "Network::getAllNetworks:  Fatal error: No networks in the database!"
+msgstr ""
+"Δίκτυο: λήψη όλων των δικτύων: Ανεπανόρθωτο σφάλμα: Κανένα δίκτυο στην βάση "
+"δεδομένων!"
+
+#: ../classes/Network.php:148
+msgid ""
+"Network::getDefaultNetwork:  Fatal error: Unable to find the default network!"
+msgstr ""
+"Δίκτυο: λήψη του προεπιλεγμένου δικτύου: Ανεπανόρθωτο σφάλμα: Δεν είναι "
+"δυνατό να βρεθεί το προεπιλεγμένο δίκτυο!"
+
+#: ../classes/Network.php:205
+msgid "Unable to insert the new network in the database!"
+msgstr "Αδύνατο να εισαχθεί νέο δίκτυο στην βάση δεδομένων!"
+
+#: ../classes/Network.php:256 ../classes/Network.php:262
+msgid "Network:"
+msgstr "Δίκτυο:"
+
+#: ../classes/Network.php:304
+msgid "Create a new network with ID"
+msgstr "Δημιουργία νέου δικτύου με ταυτότητα"
+
+#: ../classes/Network.php:1040
+msgid "Satellite"
+msgstr "Δορυφόρος"
+
+#: ../classes/Network.php:1040
+msgid "Hybrid"
+msgstr "Υβριδικός"
+
+#: ../classes/Network.php:1503
+msgid "Network management"
+msgstr "Διαχείριση Δικτύου"
+
+#: ../classes/Network.php:1509
+msgid "Network content"
+msgstr "Περιεχόμενο Δικτύου"
+
+#: ../classes/Network.php:1520
+msgid "Network ID"
+msgstr "Ταυτότητα Δικτύου"
+
+#: ../classes/Network.php:1525
+msgid "Network name"
+msgstr "Όνομα Δικτύου"
+
+#: ../classes/Network.php:1530
+msgid "Network creation date"
+msgstr "Ημερομηνία δημιουργίας δικτύου"
+
+#: ../classes/Network.php:1535
+msgid "Network's web site"
+msgstr "Ιστοσελίδα δικτύου"
+
+#: ../classes/Network.php:1540
+msgid "Technical support email"
+msgstr "Ηλεκτρονική διεύθυνση τεχνικής υποστήριξης"
+
+#: ../classes/Network.php:1545
+msgid "Information about the network"
+msgstr "Πληροφορίες για το δίκτυο"
+
+#: ../classes/Network.php:1553
+msgid "Network authenticator class"
+msgstr "Κλάση Υπηρεσίας ελέγχου ταυτότητας δικτύου"
+
+#: ../classes/Network.php:1554
+msgid ""
+"The subclass of Authenticator to be used for user authentication. Example: "
+"AuthenticatorRadius"
+msgstr ""
+"Υπο-κλάση Υπηρεσίας ελέγχου ταυτότητας που θα χρησιμοποιηθεί για τον έλεγχο "
+"ταυτότητας του χρήστη. Παράδειγμα:AuthenticatorRadius"
+
+#: ../classes/Network.php:1561
+msgid "Authenticator parameters"
+msgstr "Παράμετροι υπηρεσίας ελέγχου ταυτότητας"
+
+#: ../classes/Network.php:1562
+msgid ""
+"The explicit parameters to be passed to the authenticator. Example: "
+"'my_network_id', '192.168.0.11', 1812, 1813, 'secret_key', 'CHAP_MD5'"
+msgstr ""
+"Σαφείς παράμετροι πρέπει να περαστούν στην υπηρεσία ελέγχου ταυτότητας. "
+"Παράδειγμα: 'ταυτότητα_δικτύου', '192.168.0.11', 1812,1813, "
+"'μυστικό_κλειδί', 'CHAP_MD5'"
+
+#: ../classes/Network.php:1567
+msgid "Network Authentication"
+msgstr "Έλεγχος ταυτότητας δικτύου"
+
+#: ../classes/Network.php:1575
+msgid "Is this network the default network?"
+msgstr "Αυτό το Δίκτυο είναι το προεπιλεγμένο δίκτυο;"
+
+#: ../classes/Network.php:1576 ../classes/Network.php:1595
+#: ../classes/Network.php:1601 ../classes/Network.php:1626
+#: ../classes/Node.php:1065 ../classes/Profile.php:311
+#: ../classes/Node.php:1066
+msgid "Yes"
+msgstr "Ναι"
+
+#: ../classes/Network.php:1580
+msgid "Selected theme pack for this network"
+msgstr "Επιλέξτε θεματικό πακέτο για αυτό το δίκτυο "
+
+#: ../classes/Network.php:1585
+msgid "Network properties"
+msgstr "Ιδιότητες Δικτύου"
+
+#: ../classes/Network.php:1593
+msgid "Splash-only nodes"
+msgstr "Κόμβοι ελεύθερης πρόσβασης μόνο"
+
+#: ../classes/Network.php:1594
+msgid "Are nodes allowed to be set as splash-only (no login)?"
+msgstr ""
+"Μπορούν αυτοί οι κόμβοι να οριστούν ως ελεύθερης πρόσβασης (χωρίς διαδικασία "
+"σύνδεσης);"
+
+#: ../classes/Network.php:1599
+msgid "Portal page redirection"
+msgstr "Ανακατεύθυνση της πύλης"
+
+#: ../classes/Network.php:1600
+msgid ""
+"Are nodes allowed to redirect users to an arbitrary web page instead of the "
+"portal?"
+msgstr ""
+"Επιτρέπεται οι κόμβοι να ανακατευθύνουν τους χρήστες σε τυχαίες ιστοσελίσες "
+"αντί της πύλης;"
+
+#: ../classes/Network.php:1605
+msgid "Network's node properties"
+msgstr "Ιδιότητες του κόμβου του δικτύου"
+
+#: ../classes/Network.php:1613
+msgid "Validation grace period"
+msgstr "Περίοδος χάριτος προς επικύρωση"
+
+#: ../classes/Network.php:1614
+msgid ""
+"The length of the validation grace period in seconds.  A new user is granted "
+"Internet access for this period check his email and validate his account."
+msgstr ""
+"Η διάρκεια της περιόδου χάριτος της επικύρωσης σε δευτερόλεπτα. Ένας νέος "
+"χρήστης αποκτά πρόσβαση στο Διαδίκτυο για αυτό το διάστημα για να ελέγξει τα "
+"ηλεκτρονικά του μηνύματα και να επικυρώσει τον λογαριασμό του. "
+
+#: ../classes/Network.php:1619
+msgid "This will be the from address of the validation email"
+msgstr ""
+"Αυτή θα είναι η διεύθυνση αποστολής του ηλεκτρονικού μηνύματος επικύρωσης"
+
+#: ../classes/Network.php:1624
+msgid "Multiple connections"
+msgstr "Πολλαπλές συνδέσεις"
+
+#: ../classes/Network.php:1625
+msgid "Can an account be connected more than once at the same time?"
+msgstr ""
+"Μπορεί ένας λογαριασμός να είναι συνδεδεμένος περισσότερες από μία φορές "
+"ταυτόχρονα;"
+
+#: ../classes/Network.php:1630
+msgid "Network's user verification"
+msgstr "Επαλήθευση χρήστη δικτύου"
+
+#: ../classes/Network.php:1638
+msgid "Network stakeholders"
+msgstr "Μέτοχοι δικτύου"
+
+#: ../classes/Network.php:1643 ../classes/Node.php:1116
+#: ../classes/Node.php:1117
+msgid "Access rights"
+msgstr "Δικαιώματα πρόσβασης"
+
+#: ../classes/Network.php:1659 ../classes/Node.php:1023
+#: ../classes/Node.php:1024
+msgid "Latitude"
+msgstr "Γεωγραφικό πλάτος"
+
+#: ../classes/Network.php:1660
+msgid "Center latitude for your the area of your wireless network"
+msgstr "Κέντρο του γεωγραφικού πλάτους της περιοχής του ασύρματου δικτύου σας"
+
+#: ../classes/Network.php:1664 ../classes/Node.php:1028
+#: ../classes/Node.php:1029
+msgid "Longitude"
+msgstr "Γεωγραφικό μήκος"
+
+#: ../classes/Network.php:1665
+msgid "Center longitude for your the area of your wireless network"
+msgstr "Κέντρο του γεωγραφικού μήκους της περιοχής του ασύρματου δικτύου σας"
+
+#: ../classes/Network.php:1669
+msgid "Zoomlevel"
+msgstr "Επίπεδο εστίασης"
+
+#: ../classes/Network.php:1670
+msgid "Zoomlevel of the Google Map for your the area of your wireless network"
+msgstr ""
+"Επίπεδο εστίασης του Χάρτη του Google για την περιοχή του ασύρματου δικτύου "
+"σας"
+
+#: ../classes/Network.php:1674
+msgid "Map type"
+msgstr "Τύπος χάρτη"
+
+#: ../classes/Network.php:1675
+msgid "Default Google Map type for your the area of your wireless network"
+msgstr ""
+"Προεπιλεγμένος τύπος Χάρτη του Google για την περιοχή του ασύρματου δικτύου "
+"σας"
+
+#: ../classes/Network.php:1680 ../classes/Node.php:1050
+#: ../classes/Node.php:1051
+msgid "GIS data"
+msgstr "Δεδομένα GIS"
+
+#: ../classes/Network.php:1840 ../classes/Server.php:819
+#: ../classes/Profile.php:446 ../classes/ProfileTemplateField.php:603
+#: ../classes/ContentTypeFilter.php:449 ../classes/Network.php:1901
+#: ../classes/ProfileTemplate.php:576 ../classes/ProfileField.php:363
+msgid "Access denied (must have super admin access)"
+msgstr "Άρνηση πρόσβασης (πρέπει να έχετε πρόσβαση υπέρ-διαχείρισης)"
+
+#: ../classes/Network.php:1843 ../classes/Network.php:1904
+msgid ""
+"Cannot delete default network, create another one and select it before "
+"remove this one."
+msgstr ""
+"Δεν είναι δυνατή η διαγραφή του προεπιλεγμένου δικτύου, δημιουργήστε ένα "
+"καινούριο και επιλέξτε το προτού μετακινήσετε αυτό."
+
+#: ../classes/Network.php:1848 ../classes/Network.php:1909
+msgid "Could not delete network!"
+msgstr "Δεν ήταν δυνατή η διαγραφή του δικτύου!"
+
+#: ../classes/LocaleList.php:71
+msgid "French"
+msgstr "Γαλλικά"
+
+#: ../classes/LocaleList.php:72
+msgid "English"
+msgstr "Αγγλικά"
+
+#: ../classes/LocaleList.php:73
+msgid "German"
+msgstr "Γερμανικά"
+
+#: ../classes/LocaleList.php:74
+msgid "Spanish"
+msgstr "Ισπανικά"
+
+#: ../classes/LocaleList.php:75
+msgid "Portuguese"
+msgstr "Πορτογαλικά"
+
+#: ../classes/LocaleList.php:76
+msgid "Japanese"
+msgstr "Ιαπωνικά"
+
+#: ../classes/ThemePack.php:87
+#, php-format
+msgid "Theme pack %s cannot be found in %s"
+msgstr "Το θεματικό πακέτο δεν βρέθηκε στα %"
+
+#: ../classes/ThemePack.php:94
+#, php-format
+msgid "%s (Theme did not include a name.txt file)"
+msgstr "% (θέμα δεν περιλαμβάνει όνομα.txt file)"
+
+#: ../classes/ThemePack.php:100
+#, php-format
+msgid "%s (Theme did not include a description.txt file)"
+msgstr "% (θέμα δεν περιλαμβάνει περιγραφή.txt file)"
+
+#: ../classes/ThemePack.php:121
+msgid "Theme pack:"
+msgstr "Θεματικό πακέτο:"
+
+#: ../classes/ThemePack.php:144
+msgid "Unable to open the network theme packs directory"
+msgstr ""
+"Δεν είναι δυνατό το άνοιγμα του καταλόγου των θεματικών πακέτων του δικτύου"
+
+#: ../classes/ThemePack.php:151
+#, php-format
+msgid "No network theme packs available in %s"
+msgstr "Δεν υπάρχουν διαθέσιμα θεματικά πακέτα δικτύου σε %"
+
+#: ../classes/AbstractDb.php:96
+#, php-format
+msgid "Unable to connect to database on %s"
+msgstr "Δεν ήταν δυνατή η σύνδεση με την βάση δεδομένων σε %"
+
+#: ../classes/AbstractDb.php:118 ../classes/AbstractDb.php:318
+#: ../classes/AbstractDb.php:391
+msgid "SQL Query"
+msgstr "Ερώτημα SQL"
+
+#: ../classes/AbstractDb.php:118
+msgid "Query plan"
+msgstr "Πλάνο ερωτημάτων"
+
+#: ../classes/AbstractDb.php:137 ../classes/AbstractDb.php:328
+#, php-format
+msgid "Elapsed time for query execution : %.6f second(s)"
+msgstr ""
+"Χρόνος που έχει διανυθεί για την πραγματοποίηση του ερωτήματος: %.6 "
+"δευτερόλεπτο(α)"
+
+#: ../classes/AbstractDb.php:141 ../classes/AbstractDb.php:332
+#: ../classes/AbstractDb.php:342 ../classes/AbstractDb.php:406
+msgid "An error occured while executing the following SQL query"
+msgstr "Ένα λάθος προέκυψε κατά την εκτέλεση του ακόλουθου SQL ερωτήματος"
+
+#: ../classes/AbstractDb.php:142 ../classes/AbstractDb.php:333
+#: ../classes/AbstractDb.php:407
+msgid "Error message"
+msgstr "Μήνυμα λάθους"
+
+#: ../classes/AbstractDb.php:159
+#, php-format
+msgid "The query returned %d results"
+msgstr "Το ερώτημα επέστρεψε % αποτελέσματα"
+
+#: ../classes/AbstractDb.php:343
+#, php-format
+msgid ""
+"The query returned %d results, although there should have been only one."
+msgstr ""
+"Το ερώτημα επέστρεψε % αποτελέσματα, παρόλο που θα έπρεπε να είναι μόνο ένα"
+
+#: ../classes/AbstractDb.php:351
+#, php-format
+msgid "The query returned %d result(s)"
+msgstr "Το ερώτημα επέστρεψε % αποτελέσμα (τα)"
+
+#: ../classes/AbstractDb.php:400 ../classes/AbstractDb.php:411
+#, php-format
+msgid "%d rows affected by the SQL query."
+msgstr "% σειρών επηρεάστηκαν από το ερώτημα SQL "
+
+#: ../classes/AbstractDb.php:401
+#, php-format
+msgid "Elapsed time for query execution : %6f second(s)"
+msgstr ""
+"Χρόνος που έχει διανυθεί για την πραγματοποίηση του ερωτήματος %.6f "
+"δευτερόλεπτο(α)"
+
+#: ../classes/Server.php:157
+msgid "Server::getAllServers: Fatal error: No servers in the database!"
+msgstr ""
+"Διακομιστής:::λήψηΌλωντωνΔιακομιστών: Ανεπανόρθωτο Σφάλμα: Δεν υπάρχουν "
+"διακομιστές στην βάση δεδομένων!"
+
+#: ../classes/Server.php:192
+msgid ""
+"Server::getDefaultServer: Fatal error: Unable to find the default server!"
+msgstr ""
+"Διακομιστής:::λήψη ΠροεπιλεγμένουΔιακομιστή: Ανεπανόρθωτο σφάλμα: Δεν είναι "
+"δυνατή η εύρεση του προεπιλεγμένου διακομιστή !"
+
+#: ../classes/Server.php:230
+#, php-format
+msgid ""
+"Server::getCurrentServer: Fatal error: Unable to find a server matching "
+"hostname %s in the database!"
+msgstr ""
+"Διακομιστής:::λήψηΤρέχονταΔιακομιστή: Ανεπανόρθωτο Σφάλμα: Δεν είναι δυνατή "
+"η εύρεση διακομιστή που να ταιριάζει με το όνομα του κεντρικού υπολογιστή % "
+"στην βάση δεδομένων!"
+
+#: ../classes/Server.php:265
+msgid "Unable to insert the new server in the database!"
+msgstr "Δεν ήταν δυνατή η προσθήκη νέου  διακομιστή στην βάση δεδομένων!"
+
+#: ../classes/Server.php:301
+msgid "Server:"
+msgstr "Διακομιστής:"
+
+#: ../classes/Server.php:315
+msgid "Server::getSelectServerUI: Fatal error: No servers in the database!"
+msgstr ""
+"Διακομιστής:::λήψηΕπιλογήΔιακομιστήUI:Ανεπανόρθωτο Σφάλμα: Δεν υπάρχουν "
+"διακομιστές στην βάση δεδομένων!"
+
+#: ../classes/Server.php:378
+msgid "Add a new server with ID"
+msgstr "Προσθήκη νέου  διακομιστή με ταυτότητα"
+
+#: ../classes/Server.php:655
+msgid "Server management"
+msgstr "Διαχείριση  διακομιστή "
+
+#: ../classes/Server.php:661
+msgid "Server ID"
+msgstr "Ταυτότητα διακομιστή "
+
+#: ../classes/Server.php:683
+msgid "Server name"
+msgstr "Ονομα  διακομιστή "
+
+#: ../classes/Server.php:694
+msgid "Hostname"
+msgstr "Όνομα κεντρικού υπολογιστή"
+
+#: ../classes/Server.php:710
+msgid "Is this server the default server?"
+msgstr "Αυτός ο  διακομιστής είναι ο προεπιλεγμένος;"
+
+#: ../classes/Server.php:726
+msgid "Use SSL on this server?"
+msgstr "Να χρησιμοποιήθεί SSL σε αυτόν τον  διακομιστή;"
+
+#: ../classes/Server.php:738
+msgid "Google public API key"
+msgstr "Δημόσιο API κλειδί του Google"
+
+#: ../classes/Server.php:822
+msgid ""
+"Cannot delete default server, create another one and select it before "
+"removing this one."
+msgstr ""
+"Δεν είναι δυνατή η διαγραφή του προεπιλεγμένου  διακομιστή, δημιουργήστε "
+"έναν άλλον και επιλέξτε τον πριν μεταφέρετε αυτόν."
+
+#: ../classes/Server.php:827
+msgid "Could not delete server!"
+msgstr "Δεν ήταν δυνατή η διαγραφή του  διακομιστή!"
+
+#: ../classes/Content.php:145 ../classes/Content.php:150
+msgid "Untitled content"
+msgstr "Άτιτλο περιεχόμενο"
+
+#: ../classes/Content.php:176 ../classes/Content.php:181
+msgid "Content type is optionnal, but cannot be empty!"
+msgstr ""
+"Ο τύπος περιεχομένου είναι προαιρετικός, αλλά δεν είναι δυνατό να είναι "
+"άδειος!"
+
+#: ../classes/Content.php:216 ../classes/Content.php:221
+msgid "It appears that you have not installed any Content plugin !"
+msgstr ""
+"Φαίνεται ότι δεν έχετε εγκαταστήσει καμία σύνδεση για λήψη Περιεχομένου!"
+
+#: ../classes/Content.php:218 ../classes/Content.php:1287
+#: ../classes/Content.php:223 ../classes/Content.php:1511
+msgid "You must select a content type: "
+msgstr "Πρέπει να επιλέξετε έναν τύπο περιεχομένου:"
+
+#: ../classes/Content.php:479 ../classes/Content.php:520
+msgid "Add new Content of type"
+msgstr "Προσθήκη νέου τύπου Περιεχομένου"
+
+#: ../classes/Content.php:488 ../classes/Content.php:534
+msgid "No content type matches the filter."
+msgstr "Κανένας τύπος περιεχομένου δεν ταιριάζει σε αυτό το φίλτρο"
+
+#: ../classes/Content.php:494 ../classes/Content.php:543
+#, php-format
+msgid "Add a %s"
+msgstr "Προσθήκη %"
+
+#: ../classes/Content.php:584 ../classes/Content.php:719
+msgid "Display page"
+msgstr "Σελίδα Έκθεσης"
+
+#: ../classes/Content.php:584 ../classes/Content.php:719
+msgid "Area"
+msgstr "Περιοχή"
+
+#: ../classes/Content.php:584 ../classes/Content.php:719
+msgid "Order"
+msgstr "Σειρά"
+
+#: ../classes/Content.php:584 ../classes/Content.php:719
+msgid "Content"
+msgstr "Περιεχόμενο"
+
+#: ../classes/Content.php:584 ../classes/ProfileTemplate.php:358
+#: ../classes/Content.php:719
+msgid "Actions"
+msgstr "Δράσεις"
+
+#: ../classes/Content.php:776 ../classes/Content.php:911
+msgid "Select from reusable content library"
+msgstr "Επιλέξτε από το επαναχρησιμοποιούμενο περιεχόμενο της βιβλιοθήκης"
+
+#: ../classes/Content.php:790 ../classes/Content.php:925
+msgid "Title"
+msgstr "Τίτλος"
+
+#: ../classes/Content.php:790 ../classes/Content.php:925
+msgid "Content type"
+msgstr "Τύπος περιεχομένου"
+
+#: ../classes/Content.php:837 ../classes/Content.php:844
+#: ../classes/Content.php:972 ../classes/Content.php:979
+msgid "Sorry, no elligible content available in the database"
+msgstr "Λυπούμαστε, δεν υπάρχει νόμιμο περιεχόμενο σε αυτήν την βάση δεδομένων"
+
+#: ../classes/Content.php:976 ../classes/Content.php:1122
+msgid "The following content type isn't valid: "
+msgstr "Ο ακόλουθος τύπος περιεχομένου δεν είναι έγκυρος:"
+
+#: ../classes/Content.php:981 ../classes/Content.php:1127
+msgid "Update was unsuccessfull (database error)"
+msgstr "Η ενημέρωση απέτυχε (λάθος στην βάση δεδομένων)"
+
+#: ../classes/Content.php:998 ../classes/Content.php:1144
+msgid "Unable to insert the new Owner into database."
+msgstr "Δεν ήταν δυνατή η προσθήκη νέου κατόχου στην βάση δεδομένων"
+
+#: ../classes/Content.php:1015 ../classes/Content.php:1161
+msgid "Unable to remove the owner from the database."
+msgstr "Δεν ήταν δυνατή η μεταφορά του κατόχου από την βάση δεδομένων"
+
+#: ../classes/Content.php:1151 ../classes/Content.php:1360
+msgid "Author(s):"
+msgstr "Συντάκτης (ες):"
+
+#: ../classes/Content.php:1172 ../classes/Content.php:1381
+msgid "Project information:"
+msgstr "Πληροφορίες έργου:"
+
+#: ../classes/Content.php:1278 ../classes/Content.php:1502
+msgid "(You do not have access to edit this piece of content)"
+msgstr "(Δεν έχετε πρόσβαση για να επεξεργαστείτε αυτήν την πληροφορία)"
+
+#: ../classes/Content.php:1308 ../classes/Content.php:1532
+#, php-format
+msgid "%s MetaData"
+msgstr "% Μεταδεδομένα"
+
+#: ../classes/Content.php:1311 ../classes/Content.php:1535
+msgid "Display the title?"
+msgstr "Εμφάνιση τίτλου;"
+
+#: ../classes/Content.php:1320 ../classes/Content.php:1325
+#: ../classes/Content.php:1544 ../classes/Content.php:1549
+msgid "Title:"
+msgstr "Τίτλος:"
+
+#: ../classes/Content.php:1329 ../classes/Content.php:1348
+#: ../classes/Content.php:1365 ../classes/Content.php:1382
+#: ../classes/Content/ShoutBox/ShoutBox.php:251
+#: ../classes/ProfileTemplateField.php:454
+#: ../classes/ProfileTemplateField.php:472 ../classes/Content.php:1553
+#: ../classes/Content.php:1572 ../classes/Content.php:1589
+#: ../classes/Content.php:1606
+#, php-format
+msgid "Delete %s (%s)"
+msgstr "Διαγραφή % (%)"
+
+#: ../classes/Content.php:1329 ../classes/Content.php:1553
+msgid "title"
+msgstr "Τίτλος"
+
+#: ../classes/Content.php:1340 ../classes/Content.php:1344
+#: ../classes/Content.php:1564 ../classes/Content.php:1568
+msgid "Description:"
+msgstr "Περιγραφή:"
+
+#: ../classes/Content.php:1348 ../classes/Content.php:1572
+msgid "description"
+msgstr "περιγραφή"
+
+#: ../classes/Content.php:1357 ../classes/Content.php:1361
+#: ../classes/Content.php:1581 ../classes/Content.php:1585
+msgid "Long description:"
+msgstr "Εκτενής περιγραφή:"
+
+#: ../classes/Content.php:1365 ../classes/Content.php:1589
+msgid "long description"
+msgstr "εκτενής περιγραφή"
+
+#: ../classes/Content.php:1374 ../classes/Content.php:1378
+#: ../classes/Content.php:1598 ../classes/Content.php:1602
+msgid "Information on this project:"
+msgstr "Πληροφορίες για αυτό το έργο:"
+
+#: ../classes/Content.php:1382 ../classes/Content.php:1606
+msgid "project information"
+msgstr "πληροφορίες έργου"
+
+#: ../classes/Content.php:1396 ../classes/Content.php:1620
+#, php-format
+msgid "%s access control"
+msgstr "% έλεγχος πρόσβασης"
+
+#: ../classes/Content.php:1400 ../classes/Content.php:1624
+msgid "Is part of reusable content library (protected from deletion)?"
+msgstr ""
+"Είναι μέρος επαναχρησιμοποιούμενου περιεχομένου βιβλιοήκης (προστατευμένο "
+"από διαγραφή);"
+
+#: ../classes/Content.php:1410 ../classes/Content.php:1634
+msgid "Content owner list"
+msgstr "Κατάλογος κατόχων του περιεχομένου"
+
+#: ../classes/Content.php:1431 ../classes/Node.php:1090
+#: ../classes/Content.php:1655 ../classes/Node.php:1091
+msgid "Remove owner"
+msgstr "Μεταφορά κατόχου"
+
+#: ../classes/Content.php:1440 ../classes/Node.php:1094
+#: ../classes/Content.php:1664 ../classes/Node.php:1095
+msgid "Add owner"
+msgstr "Προσθήκη κατόχου"
+
+#: ../classes/Content.php:1572 ../classes/Content.php:1796
+msgid "Unable to set as author in the database."
+msgstr "Δεν είναι δυνατός ο ορισμός συντάκτη στην βάση δεδομένων"
+
+#: ../classes/MainUI.php:162
+msgid "authentication server"
+msgstr "Διακομιστής ελέγχου ταυτότητας"
+
+#: ../classes/MainUI.php:189
+#, php-format
+msgid "%s is not a valid structural display area"
+msgstr "% δεν είναι έγκυρη περιοχή επίδειξης δομής"
+
+#: ../classes/MainUI.php:440 ../classes/MainUI.php:439
+msgid "Unknown section:"
+msgstr "Άγνωστο τμήμα:"
+
+#: ../classes/MainUI.php:652 ../classes/MainUI.php:643
+#, php-format
+msgid "%s Login"
+msgstr "% Σύνδεση"
+
+#: ../classes/MainUI.php:652 ../classes/MainUI.php:643
+msgid "Login"
+msgstr "Σύνδεση"
+
+#: ../classes/MainUI.php:656 ../classes/MainUI.php:647
+#, php-format
+msgid "Click <a href='%s'>here</a> to continue"
+msgstr "Πατήστε <a href='%s'> εδώ </a> για να συνεχίσετε"
+
+#: ../classes/MainUI.php:656 ../classes/MainUI.php:647
+msgid ""
+"The transfer from secure login back to regular http may cause a warning."
+msgstr ""
+"Η μετάβαση από μία ασφαλή σελίδα σύνδεσης σε μία κοινή σελίδα, μπορεί να "
+"προκαλέσει την εμφάνιση προειδοποίησης."
+
+#: ../classes/Node.php:201
+msgid "Could not delete node!"
+msgstr "Δεν ήταν δυνατή η διαγραφή του κόμβου!"
+
+#: ../classes/Node.php:234
+msgid "PUT_GATEWAY_ID_HERE"
+msgstr "ΤΟΠΟΘΕΤΗΣΗ_ΤΑΥΤΟΤΗΤΑΣ_ΠΥΛΗΣ_ΕΔΩ"
+
+#: ../classes/Node.php:250
+msgid "New node"
+msgstr "Νέος Κόμβος"
+
+#: ../classes/Node.php:259
+#, php-format
+msgid "Sorry, a node for the gateway %s already exists."
+msgstr "Λυπούμαστε, ο κόμβος για την πύλη % υπάρχει ήδη. "
+
+#: ../classes/Node.php:265
+msgid "Unable to insert new node into database!"
+msgstr "Δεν είναι δυνατή η προσθήκη νέου κόμβου στην βάση δεδομένων!"
+
+#: ../classes/Node.php:336
+msgid "Filter:"
+msgstr "Φίλτρο:"
+
+#: ../classes/Node.php:344
+msgid "Node Name"
+msgstr "Όνομα κόμβου"
+
+#: ../classes/Node.php:345 ../classes/Node.php:928
+msgid "Gateway ID"
+msgstr "Ταυτότητα Πύλης"
+
+#: ../classes/Node.php:368
+msgid "Sorry, no nodes available in the database"
+msgstr "Λυπούμαστε, δεν υπάρχουν διαθέσιμοι κόμβοι στην βάση δεδομένων"
+
+#: ../classes/Node.php:393
+msgid "Add a new node for the gateway ID"
+msgstr "Προσθήκη νέου κόμβου για την ταυτότητα πύλης "
+
+#: ../classes/Node.php:403
+msgid "in "
+msgstr "σε"
+
+#: ../classes/Node.php:477
+msgid "No deployment statuses could be found in the database"
+msgstr "Καμία κατάσταση ανάπτυξης δεν βρέθηκε στην βάση δεδομένων"
+
+#: ../classes/Node.php:529
+#, php-format
+msgid "The node with %s: %s could not be found in the database!"
+msgstr "Ο κόμβος με %: % δεν βρέθηκε στην βάση δεδομένων!"
+
+#: ../classes/Node.php:912
+msgid "Edit a node"
+msgstr "Επεξεργασία κόμβου"
+
+#: ../classes/Node.php:919
+msgid "Get access statistics"
+msgstr "Λήψη στατιστικών στοιχείων πρόσβασης"
+
+#: ../classes/Node.php:939
+msgid "Node content"
+msgstr "Περιεχόμενο κόμβου"
+
+#: ../classes/Node.php:964 ../classes/Node.php:965
+msgid "Civic number"
+msgstr "Αστικός αριθμός"
+
+#: ../classes/Node.php:969 ../classes/Node.php:970
+msgid "Street name"
+msgstr "Όνομα οδού"
+
+#: ../classes/Node.php:989 ../classes/Node.php:990
+msgid "Country"
+msgstr "Χώρα"
+
+#: ../classes/Node.php:994 ../classes/Node.php:995
+msgid "Public phone number"
+msgstr "Αριθμός δημόσιου τηλεφώνου"
+
+#: ../classes/Node.php:999 ../classes/Node.php:1000
+msgid "Public email"
+msgstr "Δημόσια ηλεκτρονική διεύθυνση"
+
+#: ../classes/Node.php:1009 ../classes/Node.php:1010
+msgid "Mass transit info"
+msgstr "Πληροφορίες μαζικής μεταφοράς"
+
+#: ../classes/Node.php:1014 ../classes/Node.php:1015
+msgid "Information about the node"
+msgstr "Πληροφορίες για τον κόμβο"
+
+#: ../classes/Node.php:1034 ../classes/Node.php:1038 ../classes/Node.php:1035
+#: ../classes/Node.php:1039
+msgid "Geocode the address or postal code above"
+msgstr ""
+"Δώστε γεωγραφικό κωδικό για την ανωτέρω διεύθυνση ή ταχυδρομικό κωδικό "
+
+#: ../classes/Node.php:1035 ../classes/Node.php:1036
+msgid "Check using Google Maps"
+msgstr "Έλεγχος με χρήση των χαρτών του Google"
+
+#: ../classes/Node.php:1036 ../classes/Node.php:1037
+msgid ""
+"Use a geocoding service, then use Google Maps to pinpoint the exact location."
+msgstr ""
+"Χρησιμοποιήστε υπηρεσία γεωγραφικής κωδικοποίησης, και στην συνέχεια "
+"χρησιμοποιήστε τους χάρτες του Google για να επισημάνετε την ακριβή τοποθεσία"
+
+#: ../classes/Node.php:1039 ../classes/Node.php:1040
+msgid "Use a geocoding service"
+msgstr "Χρησιμοποιήστε υπηρεσία γεωγραφικής κωδικοποίησης"
+
+#: ../classes/Node.php:1045 ../classes/Node.php:1046
+msgid "Map URL"
+msgstr "URL χάρτης"
+
+#: ../classes/Node.php:1058 ../classes/Node.php:1059
+msgid "Node deployment status"
+msgstr "Κατάσταση ανάπτυξης του κόμβου"
+
+#: ../classes/Node.php:1064 ../classes/Node.php:1065
+msgid "Is this node splash-only (no login)?"
+msgstr ""
+"Αυτός ο κόμβος επιτρέπει ελεύθερη πρόσβαση (χωρίς διαδικασία σύνδεσης);"
+
+#: ../classes/Node.php:1071 ../classes/Node.php:1072
+msgid "URL to show instead of the portal"
+msgstr "URL που θα εμφανιστεί σντί της πύλης"
+
+#: ../classes/Node.php:1073 ../classes/Node.php:1074
+msgid ""
+"If this is not empty, the portal will be disabled and this URL will be shown "
+"instead"
+msgstr ""
+"Εάν δεν είναι άδειο, η πύλη θα απενεργοποιηθεί και θα εμφανιστεί αυτό το URL"
+
+#: ../classes/Node.php:1078 ../classes/Node.php:1079
+msgid "Node configuration"
+msgstr "Ρυθμίσεις κόμβου"
+
+#: ../classes/Node.php:1096 ../classes/Node.php:1097
+msgid "Node owners"
+msgstr "Κάτοχοι κόμβου"
+
+#: ../classes/Node.php:1105 ../classes/Node.php:1106
+msgid "Remove technical officer"
+msgstr "Μεταφορά τενχικού υπαλλήλου"
+
+#: ../classes/Node.php:1109 ../classes/Node.php:1110
+msgid "Add technical officer"
+msgstr "Προσθήκη τεχνικού υπαλλήλου"
+
+#: ../classes/Node.php:1111 ../classes/Node.php:1112
+msgid "Technical officers"
+msgstr "Τεχνικοί υπάλληλοι"
+
+#: ../classes/Node.php:1235 ../classes/Node.php:1236
+msgid ""
+"It appears that the Geocoder could not be reached or could not geocode the "
+"given address."
+msgstr ""
+"Φαίνεται ότι ο γεωγραφικός κωδικοποιητής δεν είναι προσβάσιμος ή ότι δεν "
+"μπόρεσε να δώσει γεωγραφικκό κωδικό για την συγκεκριμένη διεύθυνση."
+
+#: ../classes/Node.php:1238 ../classes/Node.php:1239
+msgid "You must enter a valid address."
+msgstr "Πρέπει να εισάγετε μία έγκυρη διεύθυνση."
+
+#: ../classes/Node.php:1242 ../classes/Node.php:1243
+msgid "Unable to create geocoder.  Are you sure you set the country?"
+msgstr ""
+"Αδύνατη η δημιουργία γεωγραφικού κωδικού. Είστε σίγουροι ότι ορίσατε την "
+"χώρα;"
+
+#: ../classes/Node.php:1293 ../classes/Node.php:1322 ../classes/Node.php:1294
+#: ../classes/Node.php:1323
+msgid "Invalid user!"
+msgstr "Μη έγκυρος χρήστης!"
+
+#: ../classes/Node.php:1305 ../classes/Node.php:1306
+msgid "The user is already an owner of this node."
+msgstr "Ο χρήστης είναι ήδη κάτοχος αυτού του κόμβου"
+
+#: ../classes/Node.php:1334 ../classes/Node.php:1335
+msgid "The user is already a technical officer of this node."
+msgstr "Ο χρήστης είναι ήδη τεχνικός υπάλληλος αυτού του κόμβου"
+
+#: ../classes/Node.php:1468 ../classes/Node.php:1472 ../classes/Node.php:1469
+#: ../classes/Node.php:1473
+msgid "Could not add owner"
+msgstr "Δεν ήταν δυνατή η προσθήκη κατόχου"
+
+#: ../classes/Node.php:1486 ../classes/Node.php:1487
+msgid "Could not add tech officer"
+msgstr "Δεν ήταν δυνατή η προσθήκη τεχνικού υπαλλήλου"
+
+#: ../classes/Node.php:1490 ../classes/Node.php:1491
+msgid "Could not set existing user as tech officer"
+msgstr "Δεν ήταν δυνατός ο ορισμός του υπάρχοντος χρήστη ως τεχνικού υπαλλήλου"
+
+#: ../classes/Node.php:1500 ../classes/Node.php:1501
+msgid "Could not remove owner"
+msgstr "Δεν ήταν δυνατή η μεταφορά κατόχου"
+
+#: ../classes/Node.php:1510 ../classes/Node.php:1511
+msgid "Could not remove tech officer"
+msgstr "Δεν ήταν δυνατή η μεταφορά του τεχνικού υπαλλήλου "
+
+#: smarty.txt:2 ../classes/User.php:789
+msgid "Change my password"
+msgstr "Αλλαγή κωδικού πρόσβασης"
+
+#: smarty.txt:3 smarty.txt:66 smarty.txt:90 smarty.txt:58 smarty.txt:72
+msgid "Your username"
+msgstr "Το όνομα χρήστη σας"
+
+#: smarty.txt:4 ../classes/User.php:773
+msgid "Your current password"
+msgstr "Ο τρέχων κωδικός πρόσβασής σας"
+
+#: smarty.txt:5 smarty.txt:6 ../classes/User.php:779
+msgid "Your new password"
+msgstr "Ο νέος σας κωδικός πρόσβασης"
+
+#: smarty.txt:7
+msgid ""
+"Please enter your current username, your current password, and your new "
+"password (with confirmation)"
+msgstr ""
+"Παρακαλώ εισάγετε το τρέχον όνομα χρήστη, τον τρέχοντα κωδικό πρόσβασης και "
+"τον νέο σας κωδικό πρόσβασης (με επιβεβαίωση)"
+
+#: smarty.txt:8 smarty.txt:2
+msgid "Status of all nodes of the"
+msgstr "Κατάσταση όλων των κόμβων του "
+
+#: smarty.txt:9 smarty.txt:3
+msgid "Local content demo"
+msgstr "Πρόγραμμα επίδειξης τοπικού περιεχομένου"
+
+#: smarty.txt:10 smarty.txt:4
+msgid "days"
+msgstr "Μέρες"
+
+#: smarty.txt:11
+msgid "Frequently Asked Questions"
+msgstr "Συνήθεις Ερωτήσεις"
+
+#: smarty.txt:12 smarty.txt:14 smarty.txt:16
+msgid "Q:"
+msgstr "Ε:"
+
+#: smarty.txt:13 smarty.txt:15 smarty.txt:17
+msgid "A:"
+msgstr "Α:"
+
+#: smarty.txt:18
+msgid ""
+"Pick a username, enter your email address, and enter the password you would "
+"like. An email will be sent to you with a link you can click to validate "
+"your account"
+msgstr ""
+"Επιλέξτε ένα όνομα χρήστη, εισάγετε την ηλεκτρονική σας διεύθυνση και τον "
+"κωδικό πρόσβασης που θέλετε. Θα λάβετε ένα ηλεκτρονικό μήνυμα με μία "
+"υπερσύνδεση στην οποία μπορείτε να επικυρώσετε τον λογαριασμό σας."
+
+#: smarty.txt:19
+msgid ""
+"Once the account is created, you need Internet access in order to check your "
+"email and click the validation link. In order to get temporary access to the "
+"Internet during your validation period, visit any URL (for example www."
+"google.com) to get the login page again"
+msgstr ""
+"Μόλις δημιουργηθεί ο λογαριασμός σας, χρειάζεστε πρόσβαση στο Διαδίκτυο για "
+"να ελέγξετε τα ηλεκτρονικά σας μηνύματα και να συνδεθείτε με την υπερσύνδεση "
+"επικύρωσης. Για να λάβετε προσωρινή σύνδεση στο διαδίκτυο κατά την διάρκεια "
+"της περιόδου επικύρωσης, επισκεφθείτε οποιαδήποτε σελίδα (για παράδειγμα www."
+"google.com) κσι θα δείτε ξανά την σελίδα σύνδεσης."
+
+#: smarty.txt:20
+msgid ""
+"Enter your login information. You will be given 15 minutes of Internet "
+"access, plenty of time to check your email and click on the link"
+msgstr ""
+"Εισάγετε τις πληροφορίες σύνδεσης. Θα σας δωθούν 15 λεπτά πρόσβασης στο "
+"Διαδίκτυο, αρκετός χρόνος για να ελέγξετε τα ηλεκτρονικά σας μηνύματα και να "
+"επισκεφθείτε την υπερσύνδεση. "
+
+#: smarty.txt:21
+msgid "Once that last step is done, you will have full free Internet access"
+msgstr ""
+"Μόλις πραγματοποιηθεί το τελευταίο βήμα, θα έχετε δωρεάν σύνδεση στο "
+"Διαδίκτυο"
+
+#: smarty.txt:22 smarty.txt:8
+msgid "User administration"
+msgstr "Διαχείριση Χρήστη"
+
+#: smarty.txt:23 smarty.txt:9
+msgid "Node administration"
+msgstr "Διαχείριση Κόμβου"
+
+#: smarty.txt:24 smarty.txt:10
+msgid "Network administration"
+msgstr "Διαχείριση δικτύου"
+
+#: smarty.txt:25 smarty.txt:11
+msgid "Server administration"
+msgstr "Διαχείριση  Διακομιστή "
+
+#: smarty.txt:26 smarty.txt:12
+msgid "Logged in as"
+msgstr "Σύνδεση ως"
+
+#: smarty.txt:27 smarty.txt:13
+msgid "I am not logged in."
+msgstr "Δεν έχω συνδεθεί"
+
+#: smarty.txt:29 smarty.txt:15
+msgid "Show me the closest hotspot"
+msgstr "Δείξτε μου το κοντινότερο Σημείο Ασύρματης Πρόσβασης"
+
+#: smarty.txt:30 smarty.txt:16
+msgid "Enter your postal code"
+msgstr "Εισάγετε τον ταχυδρομικό σας κώδικα"
+
+#: smarty.txt:31 smarty.txt:17
+msgid "Show"
+msgstr "Δείξτε"
+
+#: smarty.txt:32 smarty.txt:18
+msgid "Refresh map"
+msgstr "Ανανέωση χάρτη"
+
+#: smarty.txt:33 smarty.txt:19
+msgid "Deployed HotSpots map"
+msgstr "Χάρτης ανεπτυγμένων Σημείων Ασύρματης Πρόσβασης"
+
+#: smarty.txt:35 smarty.txt:21
+msgid "Legend"
+msgstr "Υπόμνημα"
+
+#: smarty.txt:36 smarty.txt:96 smarty.txt:78
+msgid "Online users"
+msgstr "Συνδεδεμένοι χρήστες"
+
+#: smarty.txt:37 smarty.txt:5
+msgid "user is online at this hotspot"
+msgstr "Χρήστης που είναι συνδεδεμένος σε αυτό το Σημείο Ασύρματης Πρόσβασης"
+
+#: smarty.txt:38 smarty.txt:6
+msgid "users are online at this hotspot"
+msgstr "Χρήστες που είναι συνδεδεμένοι σε αυτό το Σημείο Ασύρματης Πρόσβασης"
+
+#: smarty.txt:39 smarty.txt:7
+msgid "Nobody is online at this hotspot"
+msgstr "Κανείς δεν είναι συνδεδεμένος σε αυτό το Σημείο Ασύρματης Πρόσβασης. "
+
+#: smarty.txt:40 smarty.txt:64 smarty.txt:86 smarty.txt:88 smarty.txt:92
+#: smarty.txt:32 smarty.txt:56 smarty.txt:70 smarty.txt:74
+msgid "I'm having difficulties"
+msgstr "Συναντάω δυσκολίες"
+
+#: smarty.txt:41 smarty.txt:33
+msgid "Register a free account with"
+msgstr "Καταχώριση δωρεάν λογαριασμού με"
+
+#: smarty.txt:42 smarty.txt:34
+msgid "Username desired"
+msgstr "Επιθυμητό Όνομα χρήστη"
+
+#: smarty.txt:43 smarty.txt:67 smarty.txt:94 smarty.txt:35 smarty.txt:59
+#: smarty.txt:76
+msgid "Your email address"
+msgstr "Η ηλεκτρονική σας διεύθυνση"
+
+#: smarty.txt:44 smarty.txt:85 smarty.txt:36 smarty.txt:63
+msgid "Password"
+msgstr "Κωδικός πρόσβασης"
+
+#: smarty.txt:45 smarty.txt:37
+msgid "Password (again)"
+msgstr "Κωδικός πρόσβασης (ξανά)"
+
+#: smarty.txt:46 smarty.txt:38
+msgid "Please note"
+msgstr "Παρακαλούμε, σημειώστε"
+
+#: smarty.txt:47 smarty.txt:39
+msgid ""
+"While accounts are free, we <em>strongly</em> suggest that you use your "
+"previously created account if you have one."
+msgstr ""
+"Αν και οι λογαριασμοί είναι δωρεάν, συνιστάται να χρησιμοποιείτε τον "
+"λογαριασμό που έχετε ήδη δημιουργήσει, εάν έχετε. "
+
+#: smarty.txt:48 smarty.txt:40
+msgid ""
+"<b>Your email address must be valid</b> in order for your account to be "
+"activated."
+msgstr ""
+"Για να ενεργοποιηθεί ο λογαριασμός σας πρέπει η ηλεκτρονική σας διεύθυνση να "
+"είναι έγκυρη"
+
+#: smarty.txt:49 smarty.txt:41
+msgid "A validation email will be sent to that email address."
+msgstr ""
+"Ένα ηλεκτρονικό μήνυμα επικύρωσης θα σταλεί στην ηλεκτρονική σας διεύθυνση"
+
+#: smarty.txt:50 smarty.txt:42
+msgid "To fully activate your account you must respond to that email."
+msgstr ""
+"Για να ενεργοποιήσετε πλήρως τον λογαριασμό σας, πρέπει να απαντήσετε σε "
+"αυτό το ηλεκτρονικό μήνυμα"
+
+#: smarty.txt:51 smarty.txt:43
+msgid "Note to free web-based email users"
+msgstr "Σημείωση στους χρήστες ελεύθερου ηλεκτρονικού ταχυδρομίου στο δίκτυο"
+
+#: smarty.txt:52 smarty.txt:44
+msgid ""
+"Sometimes our validation email ends up in the 'spam' folder of some "
+"providers. If you have not received any email with the validation URL 5 "
+"minutes after submitting this form, please take a look in the spam folder."
+msgstr ""
+"Κάποιες φορές, το ηλεκτρονικό μήνυμα επικύρωσης καταλήγει στον φάκελο με τα "
+"άχρηστα. Εάν δεν έχετε λάβει το μήνυμα επικύρωσης πέντε λεπτά από την "
+"υποβολή της φόρμας, παρακαλούμε ελέγξτε τον φάκελο με τα άχρηστα."
+
+#: smarty.txt:53 smarty.txt:45
+msgid "You can also use the following links if you need help"
+msgstr ""
+"Μπορείτε να χρεισιμοποιήσετε τις ακόλουθες υπερσυνδέσεις αν χρειάζεστε "
+"βοήθεια"
+
+#: smarty.txt:54 smarty.txt:46
+msgid "Get this list as a PDF file"
+msgstr "Λήψη αυτής της λίστας ως αρχείο PDF"
+
+#: smarty.txt:55 smarty.txt:47
+msgid "Get this list as a RSS feed"
+msgstr "Λ'ηψη αυτής της λίστας ως τροφοδοσία RSS  "
+
+#: smarty.txt:56 smarty.txt:48
+msgid "Get this list for Google Earth"
+msgstr "Λήψη αυτής της λίστας για το Google Earth"
+
+#: smarty.txt:57 smarty.txt:49
+#, php-format
+msgid "Status of the %d open %s Hotspots"
+msgstr "Κατάσταση των % ανοιχτών % Σημείων Ασύρματης Πρόσβασης"
+
+#: smarty.txt:58 smarty.txt:50
+msgid "Hotspot / Status"
+msgstr "Σημείο Ασύρματης Πρόσβασης / Κατάσταση"
+
+#: smarty.txt:60 smarty.txt:52
+msgid "Location"
+msgstr "Τοποθεσία"
+
+#: smarty.txt:61 smarty.txt:53
+msgid "Hotspot in testing phase"
+msgstr "Σημείο Ασύρματης Πρόσβασης σε φάση ελέγχου"
+
+#: smarty.txt:62 smarty.txt:54
+msgid "Hotspot not monitored"
+msgstr "Σημείο Ασύρματης Πρόσβασης που δεν παρακολουθείται"
+
+#: smarty.txt:63 smarty.txt:55
+#, php-format
+msgid "Opened on %s"
+msgstr "Άνοιξε την %"
+
+#: smarty.txt:65 smarty.txt:57
+msgid "Lost password"
+msgstr "Χαμένος κωδικός πρόσβασης"
+
+#: smarty.txt:68 smarty.txt:60
+msgid "Please enter your username or email address to reset your password"
+msgstr ""
+"Παρακαλούμε, εισάγετε το όνομα χρήστη ή την ηλεκτρονική σας διεύθυνση για να "
+"αλλάξετε τον κωδικό σας"
+
+#: smarty.txt:69 smarty.txt:22
+#, php-format
+msgid "The %s network currently has one valid user."
+msgstr "Το % δίκτυο έχει έναν έγκυρο χρήστη."
+
+#: smarty.txt:70 smarty.txt:23
+#, php-format
+msgid "The %s network currently has %d valid users."
+msgstr "Το % δίκτυο έχει % έγκυρους χρήστες. "
+
+#: smarty.txt:71 smarty.txt:24
+msgid "One user is currently online."
+msgstr "Ένας χρήστης είναι αυτή τη στιγμή συνδεδεμένος."
+
+#: smarty.txt:72 smarty.txt:25
+#, php-format
+msgid "%d users are currently online."
+msgstr "% χρήστες είναι αυτή την στιγμή συνδεδεμένοι. "
+
+#: smarty.txt:73 smarty.txt:26
+msgid "This network currently has 1 deployed hotspot."
+msgstr ""
+"Αυτό το δίκτυο έχει αυτή την στιγμή ένα ανεπτυγμένο Σημείο Ασύρματης "
+"Πρόσβασης "
+
+#: smarty.txt:74 smarty.txt:27
+#, php-format
+msgid "This network currently has %d deployed hotspots."
+msgstr ""
+"Αυτό το δίκτυο έχει αυτή την στιγμή %  ανεπτυγμένα Σημεία Ασύρματης "
+"Πρόσβασης "
+
+#: smarty.txt:75
+msgid "One hotspot is currently operationnal."
+msgstr "Ένα Σημείο Ασύρματης Πρόσβασης είναι αυτή τη στιγμή λειτουργικό."
+
+#: smarty.txt:76
+#, php-format
+msgid "%d hotspots are currently operationnal."
+msgstr "% Σημεία Ασύρματης Πρόσβασης είναι αυτή τη στιγμή λειτουργικά."
+
+#: smarty.txt:77
+msgid ""
+"Because of one hotspot not being monitored we don't know if it is currently "
+"operationnal."
+msgstr ""
+"Επειδή ένα Σημείο Ασύρματης Πρόσβασης δεν παρακολουθείται δεν γνωρίζουμε εάν "
+"είναι αυτήν την στιγμή λειτουργικό ."
+
+#: smarty.txt:78
+#, php-format
+msgid ""
+"Because of %d hotspots not being monitored we don't know if they are "
+"currently operationnal."
+msgstr ""
+"Επειδή % Σημεία  Ασύρματης Πρόσβασης δεν παρακολουθούνται δεν γνωρίζουμε εάν "
+"είναι αυτήν την στιγμή λειτουργικά. "
+
+#: smarty.txt:79 smarty.txt:65
+msgid ""
+"We are a not-for-profit group dedicated to making no-fee wireless Internet "
+"access generally available."
+msgstr ""
+"Είμαστε μία μη κερδοσκοπική ομάδα αφοσιωμένη στο να κάνουμε την δωρεάν "
+"πρόσβαση στο ασύρματο διαδίκτυο γενικότερα διαθέσιμη."
+
+#: smarty.txt:80 smarty.txt:66
+msgid ""
+"Our aim is to encourage the growth of wireless networking and to build "
+"community in interesting and innovative ways."
+msgstr ""
+"Στόχος μας είναι να ενθαρρύνουμε την ανάπτυξη του ασύρματου δικτύου και να "
+"δημιουργήσουμε μία κοινότητα με νέους ενδιαφέροντες τρόπους."
+
+#: smarty.txt:81 smarty.txt:67
+msgid ""
+"We do this by setting up wireless Internet networks in parks, cafés, "
+"restaurants, bars and other publically-accessible locations across the city."
+msgstr ""
+"Αυτό το κάνουμε με την εγκατάσταση ασύρματου δικτύου σε πάρκα, καφετέρειες, "
+"εστιατόρεια, μπαρ, και άλλους δημόσιους χώρους στην πόλη. "
+
+#: smarty.txt:82 smarty.txt:68
+msgid "For a complete and up-to-date listing of our nodes, visit"
+msgstr "Για έναν πλήρη και ενημερωμένο κατάλογο των κόμβων μας, επισκεφτείτε"
+
+#: smarty.txt:83 smarty.txt:61
+msgid "Login or Signup here"
+msgstr "Σύνδεση ή εγγραφή εδώ"
+
+#: smarty.txt:84 smarty.txt:62
+msgid "Username (or email)"
+msgstr "Όνομα χρήστη (ή ηλεκτρονική διεύθυνση)"
+
+#: smarty.txt:87 smarty.txt:69
+msgid "Please get in touch with "
+msgstr "Παρακαλούμε επικοινωνήστε με"
+
+#: smarty.txt:89 smarty.txt:71
+msgid "Re-send validation email"
+msgstr "Στείλτε ξανά το ηλεκτρονικό μήνυμα επικύρωσης"
+
+#: smarty.txt:91 smarty.txt:73
+msgid ""
+"Please enter your username and the validation email will be resent to your "
+"email address"
+msgstr ""
+"Παρακαλούμε, εισάγετε το όνομα χρήστη και ένα μήνυμα επικύρωσης θα σταλεί "
+"ξανά στην ηλεκτρονική σας διεύθυνση"
+
+#: smarty.txt:93 smarty.txt:75
+msgid "Lost username"
+msgstr "Απώλεια ονόματος χρήστη"
+
+#: smarty.txt:95 smarty.txt:77
+msgid "Please enter your email address to recover your username"
+msgstr ""
+"Παρακαλώ, εισάγετε την ηλεκτρονική σας διεύθυνση για να ανακτήσετε το όνομα "
+"χρήστη "
+
+#: smarty.txt:99 smarty.txt:81
+msgid "Origin"
+msgstr "Προέλευση"
+
+#: smarty.txt:100 smarty.txt:82
+msgid "Logged in Since"
+msgstr "Συνδεδεμένος από"
+
+#: smarty.txt:101 smarty.txt:83
+msgid "Traffic IN/OUT"
+msgstr "Κυκλοφορία ΜΕΣΑ/ΕΞΩ"
+
+#: smarty.txt:102 smarty.txt:84
+msgid "User list"
+msgstr "Κατάλογος χρηστών"
+
+#: smarty.txt:103 smarty.txt:85
+msgid "Sort by:"
+msgstr "Ταξινόμηση ανά:"
+
+#: smarty.txt:104 smarty.txt:86
+msgid "Direction:"
+msgstr "Κατεύθυνση:"
+
+#: smarty.txt:105 smarty.txt:87
+msgid "Sort"
+msgstr "Ταξινόμηση"
+
+#: smarty.txt:108 smarty.txt:90
+msgid "Registered On"
+msgstr "Καταχωρημένος σε"
+
+#: ../classes/StatisticReport/AnonymisedDataExport.php:65
+msgid "Anonymised SQL data export (for academic research)"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:219
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:225
+msgid "Unable to insert new content group element into database!"
+msgstr ""
+
+#: ../classes/Content/ShoutBox/ShoutBox.php:240
+msgid "Shout button 'onclick=' value (optionnal):"
+msgstr ""
+
+#: ../classes/Content/ShoutBox/ShoutBox.php:247
+#, php-format
+msgid ""
+"Note that the onclick parameter will appear inside double quotes in html.  "
+"They must be properly encoded fot that context.  You can access the shout "
+"text in Javascript with: %s"
+msgstr ""
+
+#: ../classes/Content/ShoutBox/ShoutBox.php:251
+msgid "onclick parameter"
+msgstr ""
+
+#: ../classes/Content/ShoutBox/ShoutBox.php:330
+msgid "Shout!"
+msgstr ""
+
+#: ../classes/Content/ShoutBox/ShoutBox.php:335
+msgid "Sorry, you must be at a hotspot to use the shoutbox"
+msgstr ""
+
+#: ../classes/Content/ShoutBox/ShoutBox.php:346
+#, php-format
+msgid "Last %d messages:"
+msgstr ""
+
+#: ../classes/Content/ShoutBox/ShoutBox.php:372
+msgid "Sorry, I am unable to determine your current node"
+msgstr ""
+
+#: ../classes/Content/SmartyTemplate/SmartyTemplate.php:85
+#, php-format
+msgid ""
+"To list the available Smarty variables, put %s in the input field, save and "
+"then click preview"
+msgstr ""
+
+#: ../classes/Content/SmartyTemplate/SmartyTemplate.php:86
+#, php-format
+msgid "There are also a few custom Smarty modifiers available: %s"
+msgstr ""
+
+#: ../classes/Content/HyperLink/HyperLink.php:95
+msgid "Warning: the URL is invalid!"
+msgstr ""
+
+#: ../classes/Content/HyperLink/HyperLink.php:117
+msgid "(invalid URL)"
+msgstr ""
+
+#: ../classes/Content/UIUserList/UIUserList.php:92
+msgid ""
+"This content type will display a list of online users at the current hotspot."
+msgstr ""
+
+#: ../classes/Content/UIUserList/UIUserList.php:128
+msgid "The online user list must be viewed at a specific node"
+msgstr ""
+
+#: ../classes/Profile.php:206
+msgid "Unable to insert the new profile in the database!"
+msgstr ""
+
+#: ../classes/Profile.php:309
+msgid "Should this profile be publicly visible?"
+msgstr ""
+
+#: ../classes/Profile.php:314
+msgid "Profile preferences"
+msgstr ""
+
+#: ../classes/Profile.php:355
+msgid "Profile fields"
+msgstr ""
+
+#: ../classes/Profile.php:423
+msgid "Sorry, this user has hidden his profile  temporarily."
+msgstr ""
+
+#: ../classes/Profile.php:451
+msgid "Could not delete Profile!"
+msgstr ""
+
+#: ../classes/User.php:314
+msgid "View this user's profile."
+msgstr ""
+
+#: ../classes/User.php:470
+#, php-format
+msgid ""
+"Sorry, your %.0f minutes grace period to retrieve your email and validate "
+"your account has now expired. You will have to connect to the internet and "
+"validate your account from another location."
+msgstr ""
+
+#: ../classes/User.php:559
+msgid "Password cannot be empty."
+msgstr ""
+
+#: ../classes/User.php:591 ../classes/User.php:626
+msgid ""
+"\n"
+"\n"
+"Have a nice day,\n"
+"The Team"
+msgstr ""
+
+#: ../classes/User.php:610
+msgid ""
+"Hello,\n"
+"Please follow the link below to validate your account.\n"
+msgstr ""
+
+#: ../classes/User.php:626
+msgid ""
+"\n"
+"Password: "
+msgstr ""
+
+#: ../classes/User.php:748
+msgid "Get user statistics"
+msgstr ""
+
+#: ../classes/User.php:753
+msgid "Note that Error is for internal use only"
+msgstr ""
+
+#: ../classes/User.php:759
+msgid "Administrative options"
+msgstr ""
+
+#: ../classes/User.php:784
+msgid "Your new password (again)"
+msgstr ""
+
+#: ../classes/User.php:791
+msgid "User preferences"
+msgstr ""
+
+#: ../classes/User.php:803
+msgid "Completely delete my public profile"
+msgstr ""
+
+#: ../classes/User.php:812
+msgid "Create my public profile"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:128
+#: ../classes/ProfileTemplateField.php:437
+#: ../classes/ContentTypeFilter.php:311 ../classes/ProfileTemplate.php:293
+msgid "No label"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:132
+msgid "Add new profile template field filtered by"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:141
+msgid "Sorry, no content type filter exists."
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:414
+msgid "Display order"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:432
+msgid "Sorry, content type filter is missing."
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:434
+#: ../classes/ContentTypeFilter.php:303
+msgid "Content type filter"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:444
+msgid "Display label"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:450
+#, php-format
+msgid "%s display label (%s)"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:454
+msgid "display label"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:461
+msgid "Admin label"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:468
+#, php-format
+msgid "%s admin label (%s)"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:472
+msgid "admin label"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:479
+msgid "Semantic ID"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:487
+msgid "Full name"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:488
+msgid "Nickname"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:489
+msgid "E-mail"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:490
+msgid "Hashed e-mail"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:491
+msgid "Picture"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:492
+msgid "URL of a blog"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:493
+msgid "URL of a homepage"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:608
+msgid "Could not delete ProfileTemplateField!"
+msgstr ""
+
+#: ../classes/ContentTypeFilter.php:199
+msgid "Unable to insert the new ContentTypeFilter in the database!"
+msgstr ""
+
+#: ../classes/ContentTypeFilter.php:220
+msgid "Add a new content type filter with these rules"
+msgstr ""
+
+#: ../classes/ContentTypeFilter.php:357
+msgid "ContentTypeFilter management"
+msgstr ""
+
+#: ../classes/ContentTypeFilter.php:364
+msgid "ContentTypeFilter ID"
+msgstr ""
+
+#: ../classes/ContentTypeFilter.php:375 ../classes/ProfileTemplate.php:476
+msgid "Label"
+msgstr ""
+
+#: ../classes/ContentTypeFilter.php:386
+msgid "Rules (must be a valid array definition)"
+msgstr ""
+
+#: ../classes/ContentTypeFilter.php:428
+msgid "The rules must be given as a PHP array declaration."
+msgstr ""
+
+#: ../classes/ContentTypeFilter.php:454
+msgid "Could not delete ContentTypeFilter!"
+msgstr ""
+
+#: ../classes/Network.php:1684
+msgid "Network profile templates"
+msgstr ""
+
+#: ../classes/ProfileTemplate.php:229
+msgid "Unable to insert the new profile template in the database!"
+msgstr ""
+
+#: ../classes/ProfileTemplate.php:288
+msgid "Profile template"
+msgstr ""
+
+#: ../classes/ProfileTemplate.php:358
+msgid "Profile template label"
+msgstr ""
+
+#: ../classes/ProfileTemplate.php:458
+msgid "Profile template management"
+msgstr ""
+
+#: ../classes/ProfileTemplate.php:465
+msgid "ProfileTemplate ID"
+msgstr ""
+
+#: ../classes/ProfileTemplate.php:495
+msgid "Profile template fields"
+msgstr ""
+
+#: ../classes/ProfileTemplate.php:505
+#, php-format
+msgid "Delete %s %d, used in %d/%d profiles"
+msgstr ""
+
+#: ../classes/ProfileTemplate.php:581
+msgid "Could not delete ProfileTemplate!"
+msgstr ""
+
+#: ../classes/ProfileField.php:251
+msgid "Unable to insert the new profile fields in the database!"
+msgstr ""
+
+#: ../classes/ProfileField.php:281
+#, php-format
+msgid "Delete %s"
+msgstr ""
+
+#: ../classes/ProfileField.php:368
+msgid "Could not delete ProfileField!"
+msgstr ""
+
+#: ../classes/Content.php:1048
+msgid "KVP key cannot be null"
+msgstr ""
+
+#: smarty.txt:28
+msgid "One hotspot is currently operational."
+msgstr ""
+
+#: smarty.txt:29
+#, php-format
+msgid "%d hotspots are currently operational."
+msgstr ""
+
+#: smarty.txt:30
+msgid ""
+"One hotspot isn't monitored so we don't know if it's currently operational."
+msgstr ""
+
+#: smarty.txt:31
+#, php-format
+msgid ""
+"%d hotspots aren't monitored so we don't know if they are currently "
+"operational."
+msgstr ""
