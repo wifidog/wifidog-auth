@@ -100,6 +100,11 @@ $editText = sprintf(_("Edit %s"), $_REQUEST['object_class']);
 $newText = $createText;
 $newLongText = $createLongText;
 
+$objectClass = $_REQUEST['object_class'];
+$objectId = "none";
+if (!empty($_REQUEST['object_id'])) { $objectId = $_REQUEST['object_id']; }
+
+
 /*
  * Check for debugging requests
  */
@@ -463,7 +468,7 @@ $_htmlHeader .= "<script type='text/javascript' src='" . BASE_SSL_PATH . "js/int
  * Render output
  */
 
-$ui->setTitle(_("Generic object editor"));
+$ui->setTitle(_("Generic object editor") . " (" .  $objectClass . ": " . $objectId . ")");
 $ui->appendHtmlHeadContent($_htmlHeader);
 $ui->setToolSection('ADMIN');
 $ui->addContent('main_area_middle', "<div>" . $html . "</div>");
