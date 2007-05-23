@@ -107,11 +107,11 @@ class UIUserList extends Content
         $smarty = SmartyWifidog::getObject();
         // Set details about onlineusers
         if($current_node){
+            // online users
             $online_users = $current_node->getOnlineUsers();
             foreach ($online_users as $online_user) {
                 $online_user_array[] = $online_user->getListUI();
             }
-
             $num_online_users = count($online_users);
 
             if ($num_online_users > 0) {
@@ -120,7 +120,35 @@ class UIUserList extends Content
             else {
                 $smarty->assign('onlineUsers', array ());
             }
+            
+            // recent users
+            $recent_users = $current_node->getRecentUsers();
+            foreach ($recent_users as $recent_user) {
+                $recent_user_array[] = $recent_user->getListUI();
+            }
+            $num_recent_users = count($recent_users);
 
+            if ($num_recent_users > 0) {
+                $smarty->assign('recentUsers', $recent_user_array);
+            }
+            else {
+                $smarty->assign('recentUsers', array ());
+            }
+
+            // active users
+            $active_users = $current_node->getActiveUsers();
+            foreach ($active_users as $active_user) {
+                $active_user_array[] = $active_user->getListUI();
+            }
+            $num_active_users = count($active_users);
+
+            if ($num_active_users > 0) {
+                $smarty->assign('activeUsers', $active_user_array);
+            }
+            else {
+                $smarty->assign('activeUsers', array ());
+            }
+            
             // Compile HTML code
             $html = $smarty->fetch("templates/classes/UIUserList_getUserUI.tpl");
         }
@@ -140,7 +168,6 @@ class UIUserList extends Content
      * constructor from the wrong scope
      *
      * @return void
-
      */
     private function refresh()
     {
