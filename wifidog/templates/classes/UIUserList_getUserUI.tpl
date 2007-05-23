@@ -46,11 +46,12 @@
  * @link http://www.wifidog.org/ */
   *}
         {if $nodeId != null}
+            <div id="online_users">
             {if ($nodeNumOnlineUsers > 0)}
                 {if ($nodeNumOnlineUsers == 1)}
-                    1 {"user is online at this hotspot"|_}
+                    <label>1 {"user is online at this hotspot"|_}</label>
                 {else}
-                    {$nodeNumOnlineUsers} {"users are online at this hotspot"|_}
+                    <label>{$nodeNumOnlineUsers} {"users are online at this hotspot"|_}</label>
                 {/if}
 
                 <ul>
@@ -60,5 +61,24 @@
                 </ul>
             {else}
                  {"Nobody is online at this hotspot"|_} ...
-             {/if}
+            {/if}
+            </div>
+
+            <div id="recent_users">
+                  <label>Recent Users:</label>
+                  <ul>
+                  {section name=recentUser loop=$recentUsers}
+                      <li>{$recentUsers[recentUser]}</li>
+                  {/section}
+                  </ul>
+             </div>
+
+              <div id="active_users">
+                  <label>Most Active Users:</label>
+                  <ul>
+                  {section name=activeUser loop=$activeUsers}
+                      <li>{$activeUsers[activeUser]}</li>
+                  {/section}
+                  </ul>
+             </div>
          {/if}
