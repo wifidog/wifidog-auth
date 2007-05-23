@@ -73,7 +73,7 @@ class Langstring extends Content {
 	    /**
     	 * HTML allowed to be used
      	*/
-   		$this->allowed_html_tags = "<a><br><b><h1><h2><h3><h4><i><img><li><ol><p><strong><u><ul><li><br/><hr><script></script><div></div>";
+   		$this->allowed_html_tags = "<a><br><b><h1><h2><h3><h4><h5><h6><i><img><li><ol><p><strong><u><ul><li><br/><hr><div></div>";
         $this->mBd = &$db;
     }
 
