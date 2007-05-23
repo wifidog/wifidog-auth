@@ -1365,6 +1365,63 @@ class Node implements GenericObject
 	}
 
 	/**
+	 * The list of the 5 most recent users who have logged into this node in the past week
+	 *
+	 * @return array An array of User object, or an empty array
+	 *
+	 * @access public
+	 */
+	public function getRecentUsers()
+	{
+	    
+		$db = AbstractDb::getObject();
+
+		// Init values
+		$retval = array();
+		$users = null;
+		$anonUsers = 0;
+		$weekAgoDate = strftime("%Y-%m-%d 00:00", strtotime("-1 week"));
+
+		$db->execSql("SELECT DISTINCT users.user_id FROM users,connections WHERE connections.timestamp_in>'{$weekAgoDate}' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}' LIMIT 5", $users, false);
+
+		if ($users != null) {
+			foreach ($users as $user_row) {
+				    $retval[] = User::getObject($user_row['user_id']);
+			}
+		}
+
+		return $retval;
+	}
+
+	/**
+	 * The list of the 5 users who have logged into this node most often
+	 *
+	 * @return array An array of User object, or an empty array
+	 *
+	 * @access public
+	 */
+	public function getActiveUsers()
+	{
+	    
+		$db = AbstractDb::getObject();
+
+		// Init values
+		$retval = array();
+		$users = null;
+		$anonUsers = 0;
+
+		$db->execSql("SELECT DISTINCT users.user_id, count(users.user_id) as connections FROM users, connections WHERE users.user_id=connections.user_id AND connections.node_id='{$this->id}' GROUP BY users.user_id ORDER BY connections desc LIMIT 5", $users, false);
+
+		if ($users != null) {
+			foreach ($users as $user_row) {
+				    $retval[] = User::getObject($user_row['user_id']);
+			}
+		}
+
+		return $retval;
+	}
+
+	/**
 	 * The list of users online at this node
 	 *
 	 * @return array An array of User object, or an empty array
