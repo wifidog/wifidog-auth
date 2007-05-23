@@ -70,10 +70,10 @@ class Langstring extends Content {
     {
         parent::__construct($content_id);
         $db = AbstractDb::getObject();
-        /**
-         * HTML allowed to be used
-         */
-        $this->allowed_html_tags = "<a><br><b><h1><h2><h3><h4><i><img><li><ol><p><strong><u><ul><li>";
+	    /**
+    	 * HTML allowed to be used
+     	*/
+   		$this->allowed_html_tags = "<a><br><b><h1><h2><h3><h4><i><img><li><ol><p><strong><u><ul><li><br/><hr><script></script><div></div>";
         $this->mBd = &$db;
     }
 
