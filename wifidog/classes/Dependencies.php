@@ -131,7 +131,7 @@ class Dependencies
 		),
 		'curl' => array (
 			"type" => "phpExtension",
-			'description' => 'Required for RSS support and if you want to use Phlickr'
+			'description' => 'Allows faster RSS support and required if you want to use Phlickr'
 		),
 		'gd' => array (
 			"type" => "phpExtension",

@@ -1,3 +1,6 @@
+2007-05-28  Benoit Gréoire  <bock@step.polymtl.ca>
+	* ActiveUserReport.php:  Merge new report from my development tree.  Gives a breakdown of how many users actually use the network.
+
 2007-05-22  Benoit Gréoire  <bock@step.polymtl.ca>
 	* Reverse part of [1230], hotspot_network_name was already available as standardised variable networkName, and hotspot_network_url as networkWebSiteURL.
 	* Reverse part of [1231]:  remove script tag, banning it was the reason the sag striping code was put in in the first place.  We may want to consider creating a RawHTMLContent Content Type.
