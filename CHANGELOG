@@ -1,3 +1,6 @@
+2007-05-30  Benoit Gréoire  <bock@step.polymtl.ca>
+	* VisitsPerMonth.php, VisitePerWeekday.php:  Fix small sql bug when selecting a single user 
+
 2007-05-28  Benoit Gréoire  <bock@step.polymtl.ca>
 	* ActiveUserReport.php:  Merge new report from my development tree.  Gives a breakdown of how many users actually use the network.
 

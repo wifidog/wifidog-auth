@@ -99,7 +99,7 @@ $Bar =& Image_Graph::factory("Image_Graph_Plot_Bar", $Dataset);
 $Bar->setFillColor("#9db8d2");
 $Plot =& $Plotarea->add($Bar);
 
-        $candidate_connections_sql = self :: $stats->getSqlCandidateConnectionsQuery("COUNT(DISTINCT user_id||connections.node_id) AS daily_connections, date_trunc('day', timestamp_in) AS date");
+        $candidate_connections_sql = self :: $stats->getSqlCandidateConnectionsQuery("COUNT(DISTINCT connections.user_id||connections.node_id) AS daily_connections, date_trunc('day', timestamp_in) AS date");
 $db->execSql("SELECT SUM(daily_connections) AS connections, date_trunc('month', date) AS month FROM ($candidate_connections_sql GROUP BY date) AS daily_connections_table GROUP BY month ORDER BY month", $results, false);
 if ($results != null) {
     foreach($results as $row) {
