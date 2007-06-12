@@ -48,6 +48,7 @@
     <div id="login_form">
         <h1>{"Login or Signup here"|_}:</h1>
         <form name="login_form" action="{$base_ssl_path}login/index.php" method="post" onsubmit="return validateForm(this);">
+        	<div>
         		<input type="hidden" name="form_request" value="login">
             {if $gw_address != null}
                 <input type="hidden" name="gw_address" value="{$gw_address}">
@@ -81,6 +82,7 @@
 
             <input class="submit" type="submit" tabindex="3" name="form_submit" value="{"Login"|_}" />&nbsp;
             <input class="submit" type="button" tabindex="4" name="form_signup" value="{$create_a_free_account}" onclick="location.href='{$base_ssl_path}signup.php';" />
+			</div>
         </form>
     </div>
     <div id="login_help">

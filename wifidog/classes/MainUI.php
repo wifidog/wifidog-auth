@@ -514,7 +514,7 @@ class MainUI {
          */
 
         // Assign the action URL for the form
-        $this->smarty->assign('formAction', $_SERVER['REQUEST_URI']);
+        $this->smarty->assign('formAction', htmlspecialchars($_SERVER['REQUEST_URI']));
 
         foreach ($AVAIL_LOCALE_ARRAY as $_langIds => $_langNames) {
             if (Locale :: getCurrentLocale()->getId() == $_langIds) {

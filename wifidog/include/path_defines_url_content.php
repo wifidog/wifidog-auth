@@ -53,7 +53,12 @@
 /**
  * Define base web address without SLL
  */
-define('BASE_NON_SSL_PATH', 'http://'.$_SERVER['SERVER_NAME'].SYSTEM_PATH);
+if ($_SERVER['SERVER_PORT'] != 80) {
+    define('BASE_NON_SSL_PATH', 'http://'.$_SERVER['SERVER_NAME'] . ':'.$_SERVER['SERVER_PORT']. SYSTEM_PATH);
+} else {
+    define('BASE_NON_SSL_PATH', 'http://'.$_SERVER['SERVER_NAME'] . SYSTEM_PATH);
+}
+
 
 //echo "<pre>";print_r($_SERVER);echo "</pre>";
 

@@ -78,7 +78,7 @@ class HyperLinkUtils {
     private static function getClickThroughLink($hyperlink, Content & $content, $node, $user) {
         $node ? $node_id = urlencode($node->getId()) : $node_id = null;
         $user ? $user_id = urlencode($user->getId()) : $user_id = null;
-        return BASE_URL_PATH . "clickthrough.php?destination_url=" . urlencode($hyperlink) . "&content_id=" . urlencode($content->getId()) . "&node_id={$node_id}&user_id={$user_id}";
+        return htmlspecialchars(BASE_URL_PATH . "clickthrough.php?destination_url=" . urlencode($hyperlink) . "&content_id=" . urlencode($content->getId()) . "&node_id={$node_id}&user_id={$user_id}");
     }
 
     /** Replace all hyperlinks in the source string with their clickthrough-logged equivalents */

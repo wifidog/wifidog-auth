@@ -1,3 +1,8 @@
+2007-06-12  Benoit Gréoire  <bock@step.polymtl.ca>
+	* IE6 layout workarounds (not perfect, but better)
+	* HTML validation of the login and portal pages
+	* Apply patch from tdb@timothy86.orangehome.co.uk, fixes #334
+
 2007-05-30  Benoit Gréoire  <bock@step.polymtl.ca>
 	* VisitsPerMonth.php, VisitePerWeekday.php:  Fix small sql bug when selecting a single user 
 
