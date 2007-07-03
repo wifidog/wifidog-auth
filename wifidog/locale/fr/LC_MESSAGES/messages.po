@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-22 08:52-0400\n"
+"POT-Creation-Date: 2007-07-03 11:54-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,6 +42,7 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
+"\n"
 "Merci, de la part de toute l'équipe"
 
 #: ../classes/User.php:487 ../classes/User.php:491 ../classes/User.php:609
@@ -60,7 +61,7 @@ msgid ""
 msgstr ""
 " sont et vont demeurer <emp>totalement gratuits</emp>, utilisez le menu de "
 "gauche pour créer un nouveau compte ou retrouver un nom d'utilisateur ou un "
-"mot de passe perdu"
+"mot de passe perdu."
 
 #: ../classes/User.php:193
 msgid " could not be found in the database"
@@ -217,7 +218,7 @@ msgstr "Comptes sur"
 #: ../classes/MainUI.php:293 ../classes/MainUI.php:436
 #, php-format
 msgid "Accounts on %s are and will stay completely free."
-msgstr "Les comptes sont et resteront complètement gratuits."
+msgstr "Les comptes sur %s sont et resteront complètement gratuits."
 
 #: smarty.txt:89 smarty.txt:108 smarty.txt:116 smarty.txt:96 smarty.txt:115
 #: smarty.txt:123 smarty.txt:135 smarty.txt:149 smarty.txt:177 smarty.txt:196
@@ -537,6 +538,7 @@ msgstr "Tous droits réservés "
 #: ../classes/Node.php:1362 ../classes/Node.php:1377 ../classes/Node.php:1381
 #: ../classes/Node.php:1372 ../classes/Node.php:1376 ../classes/Node.php:1468
 #: ../classes/Node.php:1472 ../classes/Node.php:1469 ../classes/Node.php:1473
+#: ../classes/Node.php:1526 ../classes/Node.php:1530
 msgid "Could not add owner"
 msgstr "Impossible d'ajouter le propriétaire"
 
@@ -569,6 +571,7 @@ msgstr "Impossible de supprimer le noeud !"
 #: ../classes/Content/File/File.php:626 ../classes/Content/File/File.php:593
 #: ../classes/Content/File/File.php:591 ../classes/Content/File/File.php:638
 #: ../classes/Content/File/File.php:617 ../classes/Content/File/File.php:704
+#: ../classes/Content/File/File.php:708
 msgid "Could not delete this file, since it is persistent"
 msgstr "Impossible de supprimer ce fichier, puisqu'il est persistent"
 
@@ -623,7 +626,7 @@ msgstr "Le système n'a pu initialiser la classe PEAR RADIUS."
 #: ../classes/Node.php:1413 ../classes/Node.php:1411 ../classes/Node.php:1386
 #: ../classes/Node.php:1406 ../classes/Node.php:1390 ../classes/Node.php:1409
 #: ../classes/Node.php:1412 ../classes/Node.php:1404 ../classes/Node.php:1500
-#: ../classes/Node.php:1501
+#: ../classes/Node.php:1501 ../classes/Node.php:1558
 msgid "Could not remove owner"
 msgstr "Impossible de retirer le propriétaire"
 
@@ -686,6 +689,7 @@ msgstr "Statistiques cumulatives des utilisateurs"
 #: ../classes/Content.php:826 ../admin/generic_object_admin.php:420
 #: ../admin/generic_object_admin.php:440 ../admin/generic_object_admin.php:421
 #: ../admin/generic_object_admin.php:441 ../classes/Content.php:955
+#: ../admin/generic_object_admin.php:426 ../admin/generic_object_admin.php:446
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -707,6 +711,7 @@ msgstr "Supprimer la chaîne"
 #: ../admin/generic_object_admin.php:217 ../admin/generic_object_admin.php:240
 #: ../admin/generic_object_admin.php:219 ../admin/generic_object_admin.php:242
 #: ../admin/generic_object_admin.php:220 ../admin/generic_object_admin.php:243
+#: ../admin/generic_object_admin.php:225 ../admin/generic_object_admin.php:248
 msgid "Deletion failed, error was: "
 msgstr "La suppression a échoué, l'erreur était:"
 
@@ -778,6 +783,7 @@ msgstr "Dois-je payer pour avoir accès à l'Internet"
 #: ../classes/Content/File/File.php:574
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:354
 #: ../classes/Content/File/File.php:565 ../classes/Content/File/File.php:656
+#: ../classes/Content/File/File.php:569 ../classes/Content/File/File.php:660
 msgid "Download"
 msgstr "Télécharger"
 
@@ -795,7 +801,7 @@ msgstr "Télécharger"
 #: ../classes/Content.php:560 ../admin/generic_object_admin.php:208
 #: ../classes/Content.php:607 ../admin/generic_object_admin.php:210
 #: ../classes/ProfileTemplate.php:368 ../admin/generic_object_admin.php:211
-#: ../classes/Content.php:736
+#: ../classes/Content.php:736 ../admin/generic_object_admin.php:216
 msgid "Edit"
 msgstr "Modifier"
 
@@ -864,26 +870,26 @@ msgstr ""
 #: ../classes/Content/Avatar/Avatar.php:124
 #: ../classes/Content/File/File.php:478 ../classes/Content/File/File.php:461
 #: ../classes/Content/Avatar/Avatar.php:120
-#: ../classes/Content/File/File.php:518
+#: ../classes/Content/File/File.php:518 ../classes/Content/File/File.php:522
 msgid "File URL"
 msgstr "URL du fichier"
 
 #: ../classes/Content/File.php:100 ../classes/Content/File/File.php:169
 #: ../classes/Content/File/File.php:164 ../classes/Content/File/File.php:166
-#: ../classes/Content/File/File.php:206
+#: ../classes/Content/File/File.php:206 ../classes/Content/File/File.php:210
 msgid "File size exceeds limit specified HTML form"
 msgstr ""
 "La taille du fichier excède la limite spécifiée dans le formulaire HTML."
 
 #: ../classes/Content/File.php:97 ../classes/Content/File/File.php:165
 #: ../classes/Content/File/File.php:160 ../classes/Content/File/File.php:162
-#: ../classes/Content/File/File.php:202
+#: ../classes/Content/File/File.php:202 ../classes/Content/File/File.php:206
 msgid "File size exceeds limit specified in PHP.ini"
 msgstr "La taille du fichier excède celle spécifiée dans PHP.ini"
 
 #: ../classes/Content/File.php:103 ../classes/Content/File/File.php:173
 #: ../classes/Content/File/File.php:168 ../classes/Content/File/File.php:170
-#: ../classes/Content/File/File.php:210
+#: ../classes/Content/File/File.php:210 ../classes/Content/File/File.php:214
 msgid "File upload was interrupted"
 msgstr "Le transfert du fichier a été interrompu"
 
@@ -891,6 +897,7 @@ msgstr "Le transfert du fichier a été interrompu"
 #: ../classes/Content/File/File.php:467 ../classes/Content/File/File.php:441
 #: ../classes/Content/File/File.php:439 ../classes/Content/File/File.php:486
 #: ../classes/Content/File/File.php:470 ../classes/Content/File/File.php:528
+#: ../classes/Content/File/File.php:532
 msgid "Filename to display"
 msgstr "Nom de fichier à afficher"
 
@@ -972,7 +979,7 @@ msgstr "Statut technique complet des noeuds (incluant les noeuds non-déployés)
 #: ../admin/generic_object_admin.php:168 ../admin/generic_object_admin.php:167
 #: ../admin/generic_object_admin.php:425 ../admin/generic_object_admin.php:426
 #: ../admin/generic_object_admin.php:440 ../admin/generic_object_admin.php:465
-#: ../admin/generic_object_admin.php:466
+#: ../admin/generic_object_admin.php:466 ../admin/generic_object_admin.php:471
 msgid "Generic object editor"
 msgstr "Éditeur générique d'objets"
 
@@ -1311,6 +1318,7 @@ msgstr ""
 #: ../classes/Content/File/File.php:569
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:354
 #: ../classes/Content/File/File.php:550 ../classes/Content/File/File.php:649
+#: ../classes/Content/File/File.php:554 ../classes/Content/File/File.php:653
 msgid "KB"
 msgstr "Ko"
 
@@ -1360,6 +1368,7 @@ msgstr "Démo de contenu local"
 #: ../classes/Content/File/File.php:482 ../classes/Content/File/File.php:456
 #: ../classes/Content/File/File.php:454 ../classes/Content/File/File.php:501
 #: ../classes/Content/File/File.php:488 ../classes/Content/File/File.php:549
+#: ../classes/Content/File/File.php:553
 msgid "Locally stored file size"
 msgstr "Taille du fichier stocké localement"
 
@@ -1436,6 +1445,7 @@ msgstr "Nom d'utilisateur perdu"
 #: ../classes/Content/File/File.php:475 ../classes/Content/File/File.php:449
 #: ../classes/Content/File/File.php:447 ../classes/Content/File/File.php:494
 #: ../classes/Content/File/File.php:480 ../classes/Content/File/File.php:540
+#: ../classes/Content/File/File.php:544
 msgid "MIME type"
 msgstr "Type MIME"
 
@@ -1485,7 +1495,7 @@ msgstr "Moyenne 50x375"
 
 #: ../classes/Content/File.php:110 ../classes/Content/File/File.php:177
 #: ../classes/Content/File/File.php:172 ../classes/Content/File/File.php:174
-#: ../classes/Content/File/File.php:214
+#: ../classes/Content/File/File.php:214 ../classes/Content/File/File.php:218
 msgid "Missing temp folder"
 msgstr "Répertoire temporaire absent"
 
@@ -1980,6 +1990,7 @@ msgstr "Taille préférée"
 #: ../classes/Content/Picture/Picture.php:285
 #: ../classes/Content/FavoriteHotspots/FavoriteHotspots.php:152
 #: ../classes/Content/Picture/Picture.php:294
+#: ../admin/generic_object_admin.php:210 ../admin/generic_object_admin.php:436
 msgid "Preview"
 msgstr "Aperçu"
 
@@ -2087,6 +2098,7 @@ msgstr "Taille du fichier distant"
 #: ../classes/Content/File/File.php:489 ../classes/Content/File/File.php:463
 #: ../classes/Content/File/File.php:461 ../classes/Content/File/File.php:508
 #: ../classes/Content/File/File.php:493 ../classes/Content/File/File.php:556
+#: ../classes/Content/File/File.php:560
 msgid "Remote file size (Automatically converted from KB to Bytes)"
 msgstr ""
 "Taille du fichier distant (La taille sera automatiquement convertie de kilo-"
@@ -2099,7 +2111,7 @@ msgstr ""
 #: ../classes/Content/Avatar/Avatar.php:110
 #: ../classes/Content/File/File.php:464 ../classes/Content/File/File.php:447
 #: ../classes/Content/Avatar/Avatar.php:106
-#: ../classes/Content/File/File.php:501
+#: ../classes/Content/File/File.php:501 ../classes/Content/File/File.php:505
 msgid "Remote file via URL"
 msgstr "Fichier distant à partir d'un URL"
 
@@ -2146,7 +2158,7 @@ msgstr "Rechercher"
 #: ../admin/generic_object_admin.php:112 ../admin/generic_object_admin.php:111
 #: ../admin/generic_object_admin.php:375 ../admin/generic_object_admin.php:376
 #: ../admin/generic_object_admin.php:390 ../admin/generic_object_admin.php:415
-#: ../admin/generic_object_admin.php:416
+#: ../admin/generic_object_admin.php:416 ../admin/generic_object_admin.php:421
 msgid "Save"
 msgstr "Enregistrer"
 
@@ -2221,6 +2233,7 @@ msgstr "Afficher uniquement le contenu persistent"
 #: ../admin/generic_object_admin.php:136 ../admin/generic_object_admin.php:135
 #: ../admin/generic_object_admin.php:169 ../admin/generic_object_admin.php:178
 #: ../admin/generic_object_admin.php:180 ../admin/generic_object_admin.php:181
+#: ../admin/generic_object_admin.php:186
 msgid "Showing preview as it would appear at "
 msgstr "Prévisualisation tel que le contenu apparaîtrait à "
 
@@ -2311,7 +2324,7 @@ msgstr "Désolé, le paramètre 'object_class' est obligatoire"
 #: ../admin/generic_object_admin.php:98 ../admin/generic_object_admin.php:97
 #: ../admin/generic_object_admin.php:359 ../admin/generic_object_admin.php:360
 #: ../admin/generic_object_admin.php:374 ../admin/generic_object_admin.php:399
-#: ../admin/generic_object_admin.php:400
+#: ../admin/generic_object_admin.php:400 ../admin/generic_object_admin.php:405
 msgid "Sorry, the 'object_id' parameter must be specified"
 msgstr "Désolé, le paramètre 'object_id' est obligatoire"
 
@@ -2759,7 +2772,7 @@ msgstr "La mise à jour a échoué (erreur de base de données)"
 #: ../classes/Content/Avatar/Avatar.php:100
 #: ../classes/Content/File/File.php:454 ../classes/Content/File/File.php:437
 #: ../classes/Content/Avatar/Avatar.php:96
-#: ../classes/Content/File/File.php:492
+#: ../classes/Content/File/File.php:492 ../classes/Content/File/File.php:496
 msgid "Upload a new file (Uploading a new one will replace any existing file)"
 msgstr ""
 "Télécharger un nouveau fichier (Le téléchargement d'un nouveau fichier "
@@ -3234,6 +3247,7 @@ msgstr "Administration"
 #: ../admin/generic_object_admin.php:57 ../admin/generic_object_admin.php:56
 #: ../admin/generic_object_admin.php:134 ../admin/generic_object_admin.php:140
 #: ../admin/generic_object_admin.php:142 ../admin/generic_object_admin.php:143
+#: ../admin/generic_object_admin.php:148
 msgid ""
 "Sorry, the object couldn't be created.  You probably didn't fill the form "
 "properly"
@@ -3246,6 +3260,7 @@ msgstr ""
 #: ../admin/generic_object_admin.php:215 ../admin/generic_object_admin.php:237
 #: ../admin/generic_object_admin.php:217 ../admin/generic_object_admin.php:239
 #: ../admin/generic_object_admin.php:218 ../admin/generic_object_admin.php:240
+#: ../admin/generic_object_admin.php:223 ../admin/generic_object_admin.php:245
 msgid "Object successfully deleted"
 msgstr "Objet supprimé correctement"
 
@@ -3431,6 +3446,7 @@ msgstr "Noeuds ayant reçu le plus de connexions"
 #: ../admin/generic_object_admin.php:195
 #: ../classes/StatisticReport/UserReport.php:182 smarty.txt:99
 #: ../admin/generic_object_admin.php:196 smarty.txt:79
+#: ../admin/generic_object_admin.php:201
 msgid "Node"
 msgstr "Noeud"
 
@@ -4224,13 +4240,14 @@ msgstr "Aucun état de déploiement n'a pu être trouvé dans la base de donnée
 #: ../classes/Node.php:1401 ../classes/Node.php:1372 ../classes/Node.php:1376
 #: ../classes/Node.php:1392 ../classes/Node.php:1395 ../classes/Node.php:1398
 #: ../classes/Node.php:1390 ../classes/Node.php:1486 ../classes/Node.php:1487
+#: ../classes/Node.php:1544
 msgid "Could not add tech officer"
 msgstr "Impossible d'ajouter l'officier technique."
 
 #: ../classes/Node.php:1423 ../classes/Node.php:1421 ../classes/Node.php:1396
 #: ../classes/Node.php:1416 ../classes/Node.php:1400 ../classes/Node.php:1419
 #: ../classes/Node.php:1422 ../classes/Node.php:1414 ../classes/Node.php:1510
-#: ../classes/Node.php:1511
+#: ../classes/Node.php:1511 ../classes/Node.php:1568
 msgid "Could not remove tech officer"
 msgstr "Impossible de retirer l'officier technique"
 
@@ -4980,7 +4997,7 @@ msgstr "Impossible de se connecter à la base de données %s"
 
 #: ../classes/Node.php:1396 ../classes/Node.php:1380 ../classes/Node.php:1399
 #: ../classes/Node.php:1402 ../classes/Node.php:1394 ../classes/Node.php:1490
-#: ../classes/Node.php:1491
+#: ../classes/Node.php:1491 ../classes/Node.php:1548
 msgid "Could not set existing user as tech officer"
 msgstr "Impossible de promouvoir l'utilisateur en tant qu'officier technique"
 
@@ -5603,15 +5620,15 @@ msgstr "Le composant %s n'est pas installé (impossible de le trouver dans %s)"
 msgid " (Empty langstring, ID is displayed)"
 msgstr " (Chaîne vide, l'identifiant est affiché)"
 
-#: ../classes/LocaleList.php:71
+#: ../classes/LocaleList.php:71 ../config.php:168 ../config.php:172
 msgid "French"
 msgstr "Français"
 
-#: ../classes/LocaleList.php:72
+#: ../classes/LocaleList.php:72 ../config.php:169
 msgid "English"
 msgstr "Anglais"
 
-#: ../classes/LocaleList.php:73
+#: ../classes/LocaleList.php:73 ../config.php:170
 msgid "German"
 msgstr "Allemand"
 
@@ -6688,7 +6705,7 @@ msgstr "%d points d'accès sont fonctionnels."
 #: ../classes/Content/Langstring/Langstring.php:130
 #, php-format
 msgid "(Empty %s)"
-msgstr ""
+msgstr "(%s vide)"
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:432
 msgid ""
@@ -6817,13 +6834,13 @@ msgstr "État des %d points d'accès %s"
 msgid "Opened on %s"
 msgstr "Ouvert le %s"
 
-#: ../classes/LocaleList.php:74
+#: ../classes/LocaleList.php:74 ../config.php:171
 msgid "Spanish"
-msgstr ""
+msgstr "Espagnol"
 
-#: ../classes/LocaleList.php:76
+#: ../classes/LocaleList.php:76 ../config.php:173
 msgid "Japanese"
-msgstr ""
+msgstr "Japonais"
 
 #: ../node_list.php:113 ../classes/Node.php:289 ../classes/Node.php:533
 msgid "Deployed"
@@ -6962,6 +6979,7 @@ msgid ""
 msgstr ""
 
 #: ../classes/Content/File/File.php:501 ../classes/Content/File/File.php:566
+#: ../classes/Content/File/File.php:570
 msgid "Last update"
 msgstr "Dernière mise à jour"
 
@@ -7727,6 +7745,7 @@ msgid ""
 msgstr ""
 
 #: ../classes/Content/UIUserList/UIUserList.php:128
+#: ../classes/Content/UIUserList/UIUserList.php:156
 msgid "The online user list must be viewed at a specific node"
 msgstr ""
 "La liste d'usagers peut uniquement être visualisé à partir d'un point "
@@ -7756,7 +7775,7 @@ msgid ""
 "your account has now expired. You will have to connect to the internet and "
 "validate your account from another location."
 msgstr ""
-"Désolé, la période de $.0f minutes pour relever vos courriels et valider "
+"Désolé, la période de %.0f minutes pour relever vos courriels et valider "
 "votre compte est maintenant expiré. Vous devrez vous connecter à Internet à "
 "partir d'un et valider votre compte à partir d'un autre endroit."
 
@@ -7778,3 +7797,77 @@ msgid ""
 msgstr ""
 "L'usager a choisi de ne pas partager ses points d'accès préférés avec les "
 "autres usagers."
+
+#: ../signup.php:131
+msgid ""
+"Password contains invalid characters.  Allowed characters are 0-9, a-z and A-"
+"Z"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:62
+msgid "Breakdown of how many users actually use the network"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:85
+msgid "User activity"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:94
+msgid "Last day"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:95
+msgid "Last week"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:96
+msgid "Last month"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:97
+msgid "Last 3 month"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:98
+msgid "Last 6 months"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:99
+msgid "Last year"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:100
+msgid "Ever"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:138
+#, php-format
+msgid "Activity report for the %d validated users"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:141
+#: ../classes/StatisticReport/ActiveUserReport.php:172
+msgid "Period"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:142
+#: ../classes/StatisticReport/ActiveUserReport.php:173
+msgid "# of users who used the network"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:169
+#, php-format
+msgid "Activity report for the %d non-validated users"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:198
+msgid "warning:  This report does not count connections at Splash-Only nodes"
+msgstr ""
+
+#: ../config.php:174
+msgid "Greek"
+msgstr "Grec"
+
+#: ../config.php:175
+msgid "Bulgarian"
+msgstr "Bulgare"

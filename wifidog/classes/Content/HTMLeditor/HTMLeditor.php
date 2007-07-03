@@ -105,12 +105,11 @@ class HTMLeditor extends Langstring
      */
     public static function getNewUI($contentId, $userData=null) {
         $html = '';
-        $languages = new LocaleList();
         $locale = LocaleList::GetDefault();
         !empty($userData['typeInterface'])?$typeInterface=$userData['typeInterface']:$typeInterface=null;
         $html .= "<div class='admin_element_data'>\n";
 
-        $html .= _("Language") . ": " . $languages->GenererFormSelect($locale, "langstrings_" . $contentId . "_substring_new_language", null, TRUE);
+        $html .= _("Language") . ": " . LocaleList::GenererFormSelect($locale, "langstrings_" . $contentId . "_substring_new_language", null, TRUE);
 
 		if (Dependencies::check("FCKeditor")) {
             // Load FCKeditor class
@@ -166,7 +165,6 @@ class HTMLeditor extends Langstring
             $_result = null;
             $html = '';
             $html .= $subclass_admin_interface;
-            $languages = new LocaleList();
 	 		$html .= "<ul class='admin_element_list'>\n";
 
             $html .= "<li class='admin_element_item_container content_html_editor'>\n";
@@ -181,7 +179,7 @@ class HTMLeditor extends Langstring
                 while (list($_key, $_value) = each($_result)) {
                     $html .= "<li class='admin_element_item_container'>\n";
                     $html .= "<div class='admin_element_data'>\n";
-                    $html .= _("Language") . ": " . $languages->GenererFormSelect($_value["locales_id"], "langstrings_" . $this->id . "_substring_" . $_value["langstring_entries_id"] . "_language", null, TRUE);
+                    $html .= _("Language") . ": " . LocaleList::GenererFormSelect($_value["locales_id"], "langstrings_" . $this->id . "_substring_" . $_value["langstring_entries_id"] . "_language", null, TRUE);
 
                     $_FCKeditor = new FCKeditor('langstrings_' . $this->id . '_substring_' . $_value["langstring_entries_id"] . '_string');
                     $_FCKeditor->BasePath = SYSTEM_PATH . "lib/FCKeditor/";

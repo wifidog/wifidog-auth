@@ -140,40 +140,6 @@ define('DATE_TIMEZONE', 'Canada/Eastern');
 //define("CUSTOM_SIGNUP_URL","https://www.bcwireless.net/hotspot/signup.php");
 
 /**
- * Available locales (languages)
- * =============================
- *
- * Define the list of locales you want to support.
- * English, French and German are supported.
- *
- * See below examples
- */
-global $AVAIL_LOCALE_ARRAY;
-
-
-/**
- * Array of available languages for the user.  Each entry must have:
- * -The language code (the part before the _) be present in wifidog/locales
- * -Have the entire locale available in your system locale
- * OR
- * -Have a system locale available with only the language (ex: an en locale).
- * Note that if you specify en_UK and en_US, and have only en available the
- * system will NOT warn you that both will have identical results.
- * Note that even if your system uses locales like fr_CA.UTF8, you do not need
- * to change this, ifidog will translate for you.
- *
- * @todo Setting an array of only one entry should disable the language select
- *       box.
- */
-$AVAIL_LOCALE_ARRAY = array('fr_CA' => 'Français',
-                            'en_US' => 'English',
-                            'de_DE' => 'Deutsch',
-                            'es_ES' => 'Español',
-                            'pt_BR' => 'Português',
-                            'ja_JP' => '日本語',
-                            'el_GR' => 'Greek');
-
-/**
  * Default language
  * ================
  *

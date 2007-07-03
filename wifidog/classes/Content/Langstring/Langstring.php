@@ -211,9 +211,8 @@ class Langstring extends Content {
         !empty($userData['excludeArray'])?$excludeArray=$userData['excludeArray']:$excludeArray=null;
         !empty($userData['typeInterface'])?$typeInterface=$userData['typeInterface']:$typeInterface='LARGE';
         $html .= "<div class='admin_element_data'>\n";
-        $liste_languages = new LocaleList();
         $locale = LocaleList :: GetDefault();
-        $html .= _("Language") . ": " . $liste_languages->GenererFormSelect($locale, "langstrings_" . $contentId . "_substring_new_language", null, TRUE, $excludeArray);
+        $html .= _("Language") . ": " . LocaleList::GenererFormSelect($locale, "langstrings_" . $contentId . "_substring_new_language", null, TRUE, $excludeArray);
         $new_substring_name = "langstrings_" . $contentId . "_substring_new_string";
 
         if ($typeInterface == 'LARGE') {
@@ -286,7 +285,6 @@ class Langstring extends Content {
             $html .= "<div class='admin_section_hint'>" . _("Only these HTML tags are allowed : ") . htmlentities($this->allowed_html_tags) . "</div>";
         }
         $html .= "<ul class='admin_element_list'>\n";
-        $liste_languages = new LocaleList();
         $sql = "SELECT * FROM content_langstring_entries WHERE content_langstring_entries.langstrings_id = '$this->id' ORDER BY locales_id";
         $this->mBd->execSql($sql, $result, false); //echo "type_interface: $type_interface\n";
 
@@ -313,7 +311,7 @@ class Langstring extends Content {
                 //                }
                 //
                 //                $html .= "<div class='admin_element_data' id='langstrings_".$this->id."_substring_$value[langstring_entries_id]_language_section' style='display: none;'>\n";
-                //                $html .= $liste_languages->GenererFormSelect("$value[locales_id]", "langstrings_".$this->id."_substring_$value[langstring_entries_id]_language", null, TRUE);
+                //                $html .= LocaleList::GenererFormSelect("$value[locales_id]", "langstrings_".$this->id."_substring_$value[langstring_entries_id]_language", null, TRUE);
                 //                $html .= "</div>\n";
                 //
                 //                $html .= "</div>\n";
@@ -340,7 +338,7 @@ class Langstring extends Content {
                 $html .= "<li class='admin_element_item_container'>\n";
                 $html .= "<div class='admin_element_data'>\n";
 
-                $html .= _("Language") . ": " . $liste_languages->GenererFormSelect("$value[locales_id]", "langstrings_" . $this->id . "_substring_$value[langstring_entries_id]_language", null, TRUE);
+                $html .= _("Language") . ": " . LocaleList::GenererFormSelect("$value[locales_id]", "langstrings_" . $this->id . "_substring_$value[langstring_entries_id]_language", null, TRUE);
 
                 if ($type_interface == 'LARGE') {
                     $html .= "<textarea name='langstrings_" . $this->id . "_substring_$value[langstring_entries_id]_string' class='textarea' cols='60' rows='3'>" . htmlspecialchars($value['value'], ENT_QUOTES, 'UTF-8') . "</textarea>\n";
@@ -376,7 +374,7 @@ class Langstring extends Content {
         //
         //        $html .= "<div class='admin_element_data' id='langstrings_".$this->id."_substring_new_language_section'>\n";
         //        $html .= "<img src='" . BASE_SSL_PATH . "images/icons/language.gif' id='langstrings_".$this->id."_substring_new_language_section_image' class='admin_section_button' alt='"._("Choose language")."' title='"._("Choose language")."'>";
-        //        $html .= $liste_languages->GenererFormSelect($locale, "langstrings_".$this->id."_substring_new_language", null, TRUE);
+        //        $html .= LocaleList::GenererFormSelect($locale, "langstrings_".$this->id."_substring_new_language", null, TRUE);
         //        $html .= "</div>\n";
         //
         //        $html .= "</div>\n";

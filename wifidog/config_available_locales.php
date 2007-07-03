@@ -34,83 +34,36 @@
 // +-------------------------------------------------------------------+
 
 /**
+ * Configuration file to list the available locales in the WiFiDog Authentication Server
+ *
  * @package    WiFiDogAuthServer
- * @subpackage ContentClasses
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
- * @version    Subversion $Id$
+ * @copyright  2007 Benoit Grégoire, Technologies Coeus inc.
+ * @version    Subversion $Id: $
  * @link       http://www.wifidog.org/
  */
 
-/**
- * Load required classes
+/** Returns an array of available languages for the user.  Each entry must have:
+ * -The language code (the part before the _) be present in wifidog/locales
+ * -Have the entire locale available in your system locale
+ * OR
+ * -Have a system locale available with only the language (ex: an en locale).
+ * Note that if you specify en_UK and en_US, and have only en available the
+ * system will NOT warn you that both will have identical results.
+ * Note that even if your system uses locales like fr_CA.UTF8, you do not need
+ * to change this, wifidog will translate for you.
  */
-require_once('classes/Content/Langstring/Langstring.php');
-
-/**
- * Represents a simple Langstring (no title, description, etc.)
- *
- * @package    WiFiDogAuthServer
- * @subpackage ContentClasses
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
- */
-class TrivialLangstring extends Langstring
-{
-    /**
-     * Constructor
-     *
-     * @param string $content_id Content id
-     *
-     * @return void     */
-    protected function __construct($content_id)
-    {
-        parent::__construct($content_id);
-
-        /*
-         * A TrivialLangstring is NEVER persistent
-         */
-        parent::setIsPersistent(false);
-    }
-    /** When a content object is set as Simple, it means that is is used merely to contain it's own data.  No title, description or other metadata will be set or displayed, during display or administration
-     * @return true or false */
-    public function isSimpleContent() {
-        return true;
-    }
-    /**
-     * A short string representation of the content
-     *
-     * @return string Returns the content
-     */
-    public function __toString($verbose = true)
-    {
-        return strip_tags($this->getString($verbose));
-    }
-
-    /**
-     * Reloads the object from the database.
-     *
-     * Should normally be called after a set operation.
-     *
-     * This function is private because calling it from a subclass will call the
-     * constructor from the wrong scope
-     *
-     * @return void
-
-     */
-    private function refresh()
-    {
-        $this->__construct($this->id);
-    }
-
+function getAvailableLanguageArray() {
+    $retval = array(
+    'fr_CA' => array('Français', _("French")),
+    'en_US' => array('English',_("English")),
+    'de_DE' => array('Deutsch',_("German")),
+    'es_ES' => array('Español',_("Spanish")),
+    'pt_BR' => array('Português',_("French")),
+    'ja_JP' => array('日本語',_("Japanese")),
+    'el_GR' => array('Greek',_("Greek")),
+    'bg_BG' => array('Български език',_("Bulgarian"))
+    );
+    return $retval;
 }
-
-/*
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * c-hanging-comment-ender-p: nil
- * End:
- */
-
-
+?>

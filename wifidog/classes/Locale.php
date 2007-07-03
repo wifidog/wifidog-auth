@@ -124,7 +124,7 @@ class Locale {
 
     public static function getCurrentLocale() {
         $session = Session::getObject();
-        global $AVAIL_LOCALE_ARRAY;
+        $AVAIL_LOCALE_ARRAY = LocaleList::getAvailableLanguageArray();
         $object = null;
         $locale_id = $session->get(SESS_LANGUAGE_VAR);
         //echo sprintf("Debug in /classes/Locale.php getCurrentLocale(): session->get(SESS_LANGUAGE_VAR)=%s", $session->get(SESS_LANGUAGE_VAR))."<br/>";
@@ -151,7 +151,7 @@ class Locale {
       * empty.
       */
 	public static function getBestLanguage($availableLanguages=false) {
-		global $AVAIL_LOCALE_ARRAY;
+		$AVAIL_LOCALE_ARRAY = LocaleList::getAvailableLanguageArray();
 		if (empty($availableLanguages)) $availableLanguages=$AVAIL_LOCALE_ARRAY;
 
 		// the HTTP_ACCEPT_LANGUAGE server string comes from the browser in the
@@ -216,7 +216,7 @@ class Locale {
      */
     public static function setCurrentLocale($locale) {
         $session = Session::getObject();
-         global $AVAIL_LOCALE_ARRAY;
+        $AVAIL_LOCALE_ARRAY = LocaleList::getAvailableLanguageArray();
         $retval = false;
 
         // Get new locale ID, assume default if null

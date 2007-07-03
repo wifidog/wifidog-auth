@@ -128,7 +128,7 @@ function validate_passwords($password, $password_again)
     }
 
     if (!ereg("^[0-9a-zA-Z]*$", $password)) {
-        throw new Exception(_("Password contains invalid characters."));
+        throw new Exception(_("Password contains invalid characters.  Allowed characters are 0-9, a-z and A-Z"));
     }
 
     if (!isset ($password_again)) {

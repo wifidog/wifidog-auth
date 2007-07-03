@@ -453,7 +453,7 @@ class MainUI {
     private function getToolContent() {
 
         $session = Session :: getObject();
-        global $AVAIL_LOCALE_ARRAY;
+        $AVAIL_LOCALE_ARRAY = LocaleList::getAvailableLanguageArray();
 
         // Init values
         $_html = "";
@@ -522,8 +522,8 @@ class MainUI {
             } else {
                 $_selected = "";
             }
-
-            $_languageChooser[] = '<option label="' . $_langNames . '" value="' . $_langIds . '"' . $_selected . '>' . $_langNames . '</option>';
+            $langName = "{$_langNames[0]} ({$_langNames[1]})";
+            $_languageChooser[] = '<option label="' . $_langNames . '" value="' . $_langIds . '"' . $_selected . '>' . $langName . '</option>';
         }
 
         // Provide Smarty all available languages

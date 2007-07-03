@@ -259,7 +259,7 @@ class AbstractDb
         uasort($this->sql_executed_queries_array, "cmp_query_time");
         $this->sql_executed_queries_array = array_reverse($this->sql_executed_queries_array, true);
         $retval .= "<div class='content'>Sorted by execution time: <pre>\n";
-        $retval .= var_export($this->sql_executed_queries_array, true);
+        $retval .= stripslashes(var_export($this->sql_executed_queries_array, true));
         $retval .= "</pre></div>\n";
         return $retval;
     }

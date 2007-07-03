@@ -46,7 +46,6 @@
 /**
  * Load required class
  */
-require_once ('classes/LocaleList.php');
 
 /**
  * Defines path to cache directory of Magpie

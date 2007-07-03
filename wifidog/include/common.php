@@ -68,8 +68,6 @@ function cmnSearchParentDirectories($dirname, $searchfor)
 
 function cmnRequireConfig($config_file = 'config.php')
 {
-	global $AVAIL_LOCALE_ARRAY; // so that nobody has to change their custom config.php
-
 	$config_path = cmnSearchParentDirectories(dirname(__FILE__), $config_file);
 
 	if (!empty ($config_path)) {

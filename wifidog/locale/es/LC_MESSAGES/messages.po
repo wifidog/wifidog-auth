@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-22 08:51-0400\n"
+"POT-Creation-Date: 2007-07-03 11:54-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -357,6 +357,7 @@ msgstr ""
 #: ../admin/generic_object_admin.php:169 ../admin/generic_object_admin.php:183
 #: ../admin/generic_object_admin.php:168 ../admin/generic_object_admin.php:178
 #: ../admin/generic_object_admin.php:180 ../admin/generic_object_admin.php:181
+#: ../admin/generic_object_admin.php:186
 msgid "Showing preview as it would appear at "
 msgstr "Mostrando vista preeliminar de como se apereceria en"
 
@@ -369,6 +370,7 @@ msgstr "Mostrando vista preeliminar de como se apereceria en"
 #: ../classes/Content/Picture/Picture.php:285
 #: ../classes/Content/FavoriteHotspots/FavoriteHotspots.php:152
 #: ../classes/Content/Picture/Picture.php:294
+#: ../admin/generic_object_admin.php:210 ../admin/generic_object_admin.php:436
 msgid "Preview"
 msgstr "Vista Preeliminar del "
 
@@ -377,7 +379,7 @@ msgstr "Vista Preeliminar del "
 #: ../classes/Content.php:561 ../admin/generic_object_admin.php:196
 #: ../admin/generic_object_admin.php:208 ../classes/Content.php:607
 #: ../admin/generic_object_admin.php:210 ../classes/ProfileTemplate.php:368
-#: ../classes/Content.php:736
+#: ../classes/Content.php:736 ../admin/generic_object_admin.php:216
 msgid "Edit"
 msgstr "Edici&oacute;n"
 
@@ -386,7 +388,8 @@ msgstr "Edici&oacute;n"
 #: ../admin/generic_object_admin.php:203 ../admin/generic_object_admin.php:225
 #: ../admin/generic_object_admin.php:215 ../admin/generic_object_admin.php:237
 #: ../admin/generic_object_admin.php:217 ../admin/generic_object_admin.php:239
-#: ../admin/generic_object_admin.php:240
+#: ../admin/generic_object_admin.php:240 ../admin/generic_object_admin.php:223
+#: ../admin/generic_object_admin.php:245
 msgid "Object successfully deleted"
 msgstr "Objeto eliminado exitosamente"
 
@@ -395,19 +398,22 @@ msgstr "Objeto eliminado exitosamente"
 #: ../admin/generic_object_admin.php:205 ../admin/generic_object_admin.php:228
 #: ../admin/generic_object_admin.php:217 ../admin/generic_object_admin.php:240
 #: ../admin/generic_object_admin.php:219 ../admin/generic_object_admin.php:242
-#: ../admin/generic_object_admin.php:243
+#: ../admin/generic_object_admin.php:243 ../admin/generic_object_admin.php:225
+#: ../admin/generic_object_admin.php:248
 msgid "Deletion failed, error was: "
 msgstr "Eliminaci&acute;n fall&oacute;"
 
 #: ../admin/generic_object_admin.php:359 ../admin/generic_object_admin.php:375
 #: ../admin/generic_object_admin.php:355 ../admin/generic_object_admin.php:374
 #: ../admin/generic_object_admin.php:399 ../admin/generic_object_admin.php:400
+#: ../admin/generic_object_admin.php:405
 msgid "Sorry, the 'object_id' parameter must be specified"
 msgstr "Lo siente, el parametro 'object_id' debe ser especificado"
 
 #: ../admin/generic_object_admin.php:375 ../admin/generic_object_admin.php:391
 #: ../admin/generic_object_admin.php:371 ../admin/generic_object_admin.php:390
 #: ../admin/generic_object_admin.php:415 ../admin/generic_object_admin.php:416
+#: ../admin/generic_object_admin.php:421
 msgid "Save"
 msgstr "Guardar"
 
@@ -434,12 +440,14 @@ msgstr "Guardar"
 #: ../classes/Content.php:826 ../admin/generic_object_admin.php:420
 #: ../admin/generic_object_admin.php:440 ../admin/generic_object_admin.php:421
 #: ../admin/generic_object_admin.php:441 ../classes/Content.php:955
+#: ../admin/generic_object_admin.php:426 ../admin/generic_object_admin.php:446
 msgid "Delete"
 msgstr "Borrar"
 
 #: ../admin/generic_object_admin.php:425 ../admin/generic_object_admin.php:441
 #: ../admin/generic_object_admin.php:421 ../admin/generic_object_admin.php:440
 #: ../admin/generic_object_admin.php:465 ../admin/generic_object_admin.php:466
+#: ../admin/generic_object_admin.php:471
 msgid "Generic object editor"
 msgstr "Editor Generico de Objetos"
 
@@ -1099,6 +1107,7 @@ msgstr "Estado del Token"
 #: ../admin/generic_object_admin.php:195
 #: ../classes/StatisticReport/UserReport.php:182 smarty.txt:99
 #: ../admin/generic_object_admin.php:196 smarty.txt:79
+#: ../admin/generic_object_admin.php:201
 msgid "Node"
 msgstr "Nodo"
 
@@ -1378,6 +1387,7 @@ msgstr ""
 
 #: ../classes/Content/File/File.php:165 ../classes/Content/File/File.php:158
 #: ../classes/Content/File/File.php:162 ../classes/Content/File/File.php:202
+#: ../classes/Content/File/File.php:206
 msgid "File size exceeds limit specified in PHP.ini"
 msgstr ""
 "El tama&ntilde;o del archivo excede el limite especificado en el archivo PHP."
@@ -1385,16 +1395,19 @@ msgstr ""
 
 #: ../classes/Content/File/File.php:169 ../classes/Content/File/File.php:162
 #: ../classes/Content/File/File.php:166 ../classes/Content/File/File.php:206
+#: ../classes/Content/File/File.php:210
 msgid "File size exceeds limit specified HTML form"
 msgstr "El tamano de archivo excede el especificado por la forma HTML"
 
 #: ../classes/Content/File/File.php:173 ../classes/Content/File/File.php:166
 #: ../classes/Content/File/File.php:170 ../classes/Content/File/File.php:210
+#: ../classes/Content/File/File.php:214
 msgid "File upload was interrupted"
 msgstr "La subida del archivo fue interrumpida"
 
 #: ../classes/Content/File/File.php:177 ../classes/Content/File/File.php:170
 #: ../classes/Content/File/File.php:174 ../classes/Content/File/File.php:214
+#: ../classes/Content/File/File.php:218
 msgid "Missing temp folder"
 msgstr "Falta directorio temp"
 
@@ -1404,6 +1417,7 @@ msgstr "Falta directorio temp"
 #: ../classes/Content/Avatar/Avatar.php:102
 #: ../classes/Content/Avatar/Avatar.php:96
 #: ../classes/Content/File/File.php:437 ../classes/Content/File/File.php:492
+#: ../classes/Content/File/File.php:496
 msgid "Upload a new file (Uploading a new one will replace any existing file)"
 msgstr ""
 "Subir un nuevo archivo (subir un archivo nuevo remplazara el archivo "
@@ -1415,6 +1429,7 @@ msgstr ""
 #: ../classes/Content/Avatar/Avatar.php:112
 #: ../classes/Content/Avatar/Avatar.php:106
 #: ../classes/Content/File/File.php:447 ../classes/Content/File/File.php:501
+#: ../classes/Content/File/File.php:505
 msgid "Remote file via URL"
 msgstr "Archivo remoto via URL"
 
@@ -1424,21 +1439,25 @@ msgstr "Archivo remoto via URL"
 #: ../classes/Content/Avatar/Avatar.php:126
 #: ../classes/Content/Avatar/Avatar.php:120
 #: ../classes/Content/File/File.php:461 ../classes/Content/File/File.php:518
+#: ../classes/Content/File/File.php:522
 msgid "File URL"
 msgstr "URL del archivo"
 
 #: ../classes/Content/File/File.php:467 ../classes/Content/File/File.php:484
 #: ../classes/Content/File/File.php:470 ../classes/Content/File/File.php:528
+#: ../classes/Content/File/File.php:532
 msgid "Filename to display"
 msgstr "Archivo a desplegar"
 
 #: ../classes/Content/File/File.php:475 ../classes/Content/File/File.php:492
 #: ../classes/Content/File/File.php:480 ../classes/Content/File/File.php:540
+#: ../classes/Content/File/File.php:544
 msgid "MIME type"
 msgstr "Tipo de MIME"
 
 #: ../classes/Content/File/File.php:482 ../classes/Content/File/File.php:499
 #: ../classes/Content/File/File.php:488 ../classes/Content/File/File.php:549
+#: ../classes/Content/File/File.php:553
 msgid "Locally stored file size"
 msgstr "Tama&ntilde;o de archivo almacenado localmente"
 
@@ -1450,11 +1469,13 @@ msgstr "Tama&ntilde;o de archivo almacenado localmente"
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:354
 #: ../classes/Content/File/File.php:490 ../classes/Content/File/File.php:569
 #: ../classes/Content/File/File.php:550 ../classes/Content/File/File.php:649
+#: ../classes/Content/File/File.php:554 ../classes/Content/File/File.php:653
 msgid "KB"
 msgstr ""
 
 #: ../classes/Content/File/File.php:489 ../classes/Content/File/File.php:506
 #: ../classes/Content/File/File.php:493 ../classes/Content/File/File.php:556
+#: ../classes/Content/File/File.php:560
 msgid "Remote file size (Automatically converted from KB to Bytes)"
 msgstr ""
 "Tama&ntilde;o de remoto de archivo (Automaticamente se convierte de KB a "
@@ -1465,12 +1486,14 @@ msgstr ""
 #: ../classes/Content/File/File.php:517 ../classes/Content/File/File.php:591
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:354
 #: ../classes/Content/File/File.php:574 ../classes/Content/File/File.php:565
-#: ../classes/Content/File/File.php:656
+#: ../classes/Content/File/File.php:656 ../classes/Content/File/File.php:569
+#: ../classes/Content/File/File.php:660
 msgid "Download"
 msgstr "Descargar"
 
 #: ../classes/Content/File/File.php:626 ../classes/Content/File/File.php:634
 #: ../classes/Content/File/File.php:617 ../classes/Content/File/File.php:704
+#: ../classes/Content/File/File.php:708
 msgid "Could not delete this file, since it is persistent"
 msgstr "No se puede borrar este archivo, debido a que es persistente"
 
@@ -2860,15 +2883,15 @@ msgstr "Restringir las estadisticas por los usuarios selecionados"
 msgid "Selected reports"
 msgstr "Reportes selecionados"
 
-#: ../classes/LocaleList.php:71
+#: ../classes/LocaleList.php:71 ../config.php:168 ../config.php:172
 msgid "French"
 msgstr "Frances"
 
-#: ../classes/LocaleList.php:72
+#: ../classes/LocaleList.php:72 ../config.php:169
 msgid "English"
 msgstr "Ingles"
 
-#: ../classes/LocaleList.php:73
+#: ../classes/LocaleList.php:73 ../config.php:170
 msgid "German"
 msgstr "Aleman"
 
@@ -3515,27 +3538,27 @@ msgstr "El usuario ya es un oficial tecnico en este nodo"
 #: ../classes/Node.php:1351 ../classes/Node.php:1355 ../classes/Node.php:1450
 #: ../classes/Node.php:1454 ../classes/Node.php:1451 ../classes/Node.php:1455
 #: ../classes/Node.php:1468 ../classes/Node.php:1472 ../classes/Node.php:1469
-#: ../classes/Node.php:1473
+#: ../classes/Node.php:1473 ../classes/Node.php:1526 ../classes/Node.php:1530
 msgid "Could not add owner"
 msgstr "No se puede agregar due&ntilde;o"
 
 #: ../classes/Node.php:1369 ../classes/Node.php:1468 ../classes/Node.php:1469
-#: ../classes/Node.php:1486 ../classes/Node.php:1487
+#: ../classes/Node.php:1486 ../classes/Node.php:1487 ../classes/Node.php:1544
 msgid "Could not add tech officer"
 msgstr "No se puede agregar oficial tecnico"
 
 #: ../classes/Node.php:1373 ../classes/Node.php:1472 ../classes/Node.php:1473
-#: ../classes/Node.php:1490 ../classes/Node.php:1491
+#: ../classes/Node.php:1490 ../classes/Node.php:1491 ../classes/Node.php:1548
 msgid "Could not set existing user as tech officer"
 msgstr "No se puede espeficiar el usuario existente como oficial tecnico"
 
 #: ../classes/Node.php:1383 ../classes/Node.php:1482 ../classes/Node.php:1483
-#: ../classes/Node.php:1500 ../classes/Node.php:1501
+#: ../classes/Node.php:1500 ../classes/Node.php:1501 ../classes/Node.php:1558
 msgid "Could not remove owner"
 msgstr "No se puede quitar el due&ntilde;o"
 
 #: ../classes/Node.php:1393 ../classes/Node.php:1492 ../classes/Node.php:1493
-#: ../classes/Node.php:1510 ../classes/Node.php:1511
+#: ../classes/Node.php:1510 ../classes/Node.php:1511 ../classes/Node.php:1568
 msgid "Could not remove tech officer"
 msgstr "No se puede quitar el oficial tecnico"
 
@@ -4556,11 +4579,11 @@ msgstr "Nivel de Zoom"
 msgid "Map type"
 msgstr "Tipo de mapa"
 
-#: ../classes/LocaleList.php:74
+#: ../classes/LocaleList.php:74 ../config.php:171
 msgid "Spanish"
 msgstr "Espanol"
 
-#: ../classes/LocaleList.php:76
+#: ../classes/LocaleList.php:76 ../config.php:173
 msgid "Japanese"
 msgstr "Japones"
 
@@ -5057,6 +5080,7 @@ msgid ""
 msgstr ""
 
 #: ../classes/Content/File/File.php:501 ../classes/Content/File/File.php:566
+#: ../classes/Content/File/File.php:570
 msgid "Last update"
 msgstr ""
 
@@ -5634,6 +5658,7 @@ msgid ""
 msgstr ""
 
 #: ../classes/Content/UIUserList/UIUserList.php:128
+#: ../classes/Content/UIUserList/UIUserList.php:156
 msgid "The online user list must be viewed at a specific node"
 msgstr ""
 
@@ -5677,4 +5702,78 @@ msgstr ""
 #: ../classes/Content/FavoriteHotspots/FavoriteHotspots.php:244
 msgid ""
 "The user has chosen not to disclose his favorite hotspots to other users."
+msgstr ""
+
+#: ../signup.php:131
+msgid ""
+"Password contains invalid characters.  Allowed characters are 0-9, a-z and A-"
+"Z"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:62
+msgid "Breakdown of how many users actually use the network"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:85
+msgid "User activity"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:94
+msgid "Last day"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:95
+msgid "Last week"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:96
+msgid "Last month"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:97
+msgid "Last 3 month"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:98
+msgid "Last 6 months"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:99
+msgid "Last year"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:100
+msgid "Ever"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:138
+#, php-format
+msgid "Activity report for the %d validated users"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:141
+#: ../classes/StatisticReport/ActiveUserReport.php:172
+msgid "Period"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:142
+#: ../classes/StatisticReport/ActiveUserReport.php:173
+msgid "# of users who used the network"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:169
+#, php-format
+msgid "Activity report for the %d non-validated users"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:198
+msgid "warning:  This report does not count connections at Splash-Only nodes"
+msgstr ""
+
+#: ../config.php:174
+msgid "Greek"
+msgstr ""
+
+#: ../config.php:175
+msgid "Bulgarian"
 msgstr ""

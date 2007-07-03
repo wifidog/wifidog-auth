@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-22 08:52-0400\n"
+"POT-Creation-Date: 2007-07-03 11:54-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -370,6 +370,7 @@ msgstr "'object_class'は必須項目です。"
 
 #: ../admin/generic_object_admin.php:134 ../admin/generic_object_admin.php:140
 #: ../admin/generic_object_admin.php:142 ../admin/generic_object_admin.php:143
+#: ../admin/generic_object_admin.php:148
 msgid ""
 "Sorry, the object couldn't be created.  You probably didn't fill the form "
 "properly"
@@ -379,6 +380,7 @@ msgstr ""
 
 #: ../admin/generic_object_admin.php:169 ../admin/generic_object_admin.php:178
 #: ../admin/generic_object_admin.php:180 ../admin/generic_object_admin.php:181
+#: ../admin/generic_object_admin.php:186
 msgid "Showing preview as it would appear at "
 msgstr "プレビュー"
 
@@ -389,6 +391,7 @@ msgstr "プレビュー"
 #: ../classes/Content/Picture/Picture.php:285
 #: ../classes/Content/FavoriteHotspots/FavoriteHotspots.php:152
 #: ../classes/Content/Picture/Picture.php:294
+#: ../admin/generic_object_admin.php:210 ../admin/generic_object_admin.php:436
 msgid "Preview"
 msgstr "プレビュー"
 
@@ -398,7 +401,7 @@ msgstr "プレビュー"
 #: ../classes/Content.php:560 ../admin/generic_object_admin.php:208
 #: ../classes/Content.php:607 ../admin/generic_object_admin.php:210
 #: ../classes/ProfileTemplate.php:368 ../admin/generic_object_admin.php:211
-#: ../classes/Content.php:736
+#: ../classes/Content.php:736 ../admin/generic_object_admin.php:216
 msgid "Edit"
 msgstr "編集"
 
@@ -406,6 +409,7 @@ msgstr "編集"
 #: ../admin/generic_object_admin.php:215 ../admin/generic_object_admin.php:237
 #: ../admin/generic_object_admin.php:217 ../admin/generic_object_admin.php:239
 #: ../admin/generic_object_admin.php:218 ../admin/generic_object_admin.php:240
+#: ../admin/generic_object_admin.php:223 ../admin/generic_object_admin.php:245
 msgid "Object successfully deleted"
 msgstr "オブジェクトは正常に削除されました。"
 
@@ -413,16 +417,19 @@ msgstr "オブジェクトは正常に削除されました。"
 #: ../admin/generic_object_admin.php:217 ../admin/generic_object_admin.php:240
 #: ../admin/generic_object_admin.php:219 ../admin/generic_object_admin.php:242
 #: ../admin/generic_object_admin.php:220 ../admin/generic_object_admin.php:243
+#: ../admin/generic_object_admin.php:225 ../admin/generic_object_admin.php:248
 msgid "Deletion failed, error was: "
 msgstr "削除失敗。エラー :"
 
 #: ../admin/generic_object_admin.php:360 ../admin/generic_object_admin.php:374
 #: ../admin/generic_object_admin.php:399 ../admin/generic_object_admin.php:400
+#: ../admin/generic_object_admin.php:405
 msgid "Sorry, the 'object_id' parameter must be specified"
 msgstr "'object_id'は必須項目です。"
 
 #: ../admin/generic_object_admin.php:376 ../admin/generic_object_admin.php:390
 #: ../admin/generic_object_admin.php:415 ../admin/generic_object_admin.php:416
+#: ../admin/generic_object_admin.php:421
 msgid "Save"
 msgstr "保存"
 
@@ -452,11 +459,13 @@ msgstr "保存"
 #: ../classes/Content.php:826 ../admin/generic_object_admin.php:420
 #: ../admin/generic_object_admin.php:440 ../admin/generic_object_admin.php:421
 #: ../admin/generic_object_admin.php:441 ../classes/Content.php:955
+#: ../admin/generic_object_admin.php:426 ../admin/generic_object_admin.php:446
 msgid "Delete"
 msgstr "削除"
 
 #: ../admin/generic_object_admin.php:426 ../admin/generic_object_admin.php:440
 #: ../admin/generic_object_admin.php:465 ../admin/generic_object_admin.php:466
+#: ../admin/generic_object_admin.php:471
 msgid "Generic object editor"
 msgstr "一般的なオブジェクトエディター"
 
@@ -1116,6 +1125,7 @@ msgstr "トークンステータス"
 #: ../admin/generic_object_admin.php:195
 #: ../classes/StatisticReport/UserReport.php:182 smarty.txt:99
 #: ../admin/generic_object_admin.php:196 smarty.txt:79
+#: ../admin/generic_object_admin.php:201
 msgid "Node"
 msgstr "ノード"
 
@@ -1392,21 +1402,25 @@ msgstr ""
 
 #: ../classes/Content/File/File.php:165 ../classes/Content/File/File.php:160
 #: ../classes/Content/File/File.php:162 ../classes/Content/File/File.php:202
+#: ../classes/Content/File/File.php:206
 msgid "File size exceeds limit specified in PHP.ini"
 msgstr "PHP.iniで設定されているファイルサイズを超えています。"
 
 #: ../classes/Content/File/File.php:169 ../classes/Content/File/File.php:164
 #: ../classes/Content/File/File.php:166 ../classes/Content/File/File.php:206
+#: ../classes/Content/File/File.php:210
 msgid "File size exceeds limit specified HTML form"
 msgstr "HTMLフォームから送信できるファイルサイズを超えています。"
 
 #: ../classes/Content/File/File.php:173 ../classes/Content/File/File.php:168
 #: ../classes/Content/File/File.php:170 ../classes/Content/File/File.php:210
+#: ../classes/Content/File/File.php:214
 msgid "File upload was interrupted"
 msgstr "ファイルのアップロードに失敗しました。"
 
 #: ../classes/Content/File/File.php:177 ../classes/Content/File/File.php:172
 #: ../classes/Content/File/File.php:174 ../classes/Content/File/File.php:214
+#: ../classes/Content/File/File.php:218
 msgid "Missing temp folder"
 msgstr "一時フォルダーの喪失"
 
@@ -1416,7 +1430,7 @@ msgstr "一時フォルダーの喪失"
 #: ../classes/Content/Avatar/Avatar.php:100
 #: ../classes/Content/File/File.php:454 ../classes/Content/File/File.php:437
 #: ../classes/Content/Avatar/Avatar.php:96
-#: ../classes/Content/File/File.php:492
+#: ../classes/Content/File/File.php:492 ../classes/Content/File/File.php:496
 msgid "Upload a new file (Uploading a new one will replace any existing file)"
 msgstr ""
 "新しいファイルのアップロード(新しいファイルをアップロードし、既存のファイルと"
@@ -1428,7 +1442,7 @@ msgstr ""
 #: ../classes/Content/Avatar/Avatar.php:110
 #: ../classes/Content/File/File.php:464 ../classes/Content/File/File.php:447
 #: ../classes/Content/Avatar/Avatar.php:106
-#: ../classes/Content/File/File.php:501
+#: ../classes/Content/File/File.php:501 ../classes/Content/File/File.php:505
 msgid "Remote file via URL"
 msgstr "送信ファイルのURL"
 
@@ -1438,25 +1452,28 @@ msgstr "送信ファイルのURL"
 #: ../classes/Content/Avatar/Avatar.php:124
 #: ../classes/Content/File/File.php:478 ../classes/Content/File/File.php:461
 #: ../classes/Content/Avatar/Avatar.php:120
-#: ../classes/Content/File/File.php:518
+#: ../classes/Content/File/File.php:518 ../classes/Content/File/File.php:522
 msgid "File URL"
 msgstr "ファイルのURL"
 
 #: ../classes/Content/File/File.php:467 ../classes/Content/File/File.php:441
 #: ../classes/Content/File/File.php:439 ../classes/Content/File/File.php:486
 #: ../classes/Content/File/File.php:470 ../classes/Content/File/File.php:528
+#: ../classes/Content/File/File.php:532
 msgid "Filename to display"
 msgstr "ファイル名を表示"
 
 #: ../classes/Content/File/File.php:475 ../classes/Content/File/File.php:449
 #: ../classes/Content/File/File.php:447 ../classes/Content/File/File.php:494
 #: ../classes/Content/File/File.php:480 ../classes/Content/File/File.php:540
+#: ../classes/Content/File/File.php:544
 msgid "MIME type"
 msgstr "MIMEタイプ"
 
 #: ../classes/Content/File/File.php:482 ../classes/Content/File/File.php:456
 #: ../classes/Content/File/File.php:454 ../classes/Content/File/File.php:501
 #: ../classes/Content/File/File.php:488 ../classes/Content/File/File.php:549
+#: ../classes/Content/File/File.php:553
 msgid "Locally stored file size"
 msgstr "ローカルファイルサイズ"
 
@@ -1472,12 +1489,14 @@ msgstr "ローカルファイルサイズ"
 #: ../classes/Content/File/File.php:569
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:354
 #: ../classes/Content/File/File.php:550 ../classes/Content/File/File.php:649
+#: ../classes/Content/File/File.php:554 ../classes/Content/File/File.php:653
 msgid "KB"
 msgstr "KB"
 
 #: ../classes/Content/File/File.php:489 ../classes/Content/File/File.php:463
 #: ../classes/Content/File/File.php:461 ../classes/Content/File/File.php:508
 #: ../classes/Content/File/File.php:493 ../classes/Content/File/File.php:556
+#: ../classes/Content/File/File.php:560
 msgid "Remote file size (Automatically converted from KB to Bytes)"
 msgstr "送信ファイルサイズ（自動的にキロバイトからバイトに変換されます)"
 
@@ -1490,12 +1509,14 @@ msgstr "送信ファイルサイズ（自動的にキロバイトからバイト
 #: ../classes/Content/File/File.php:574
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:354
 #: ../classes/Content/File/File.php:565 ../classes/Content/File/File.php:656
+#: ../classes/Content/File/File.php:569 ../classes/Content/File/File.php:660
 msgid "Download"
 msgstr "ダウンロード"
 
 #: ../classes/Content/File/File.php:625 ../classes/Content/File/File.php:593
 #: ../classes/Content/File/File.php:591 ../classes/Content/File/File.php:638
 #: ../classes/Content/File/File.php:617 ../classes/Content/File/File.php:704
+#: ../classes/Content/File/File.php:708
 msgid "Could not delete this file, since it is persistent"
 msgstr "ファイルを削除できませんでした。"
 
@@ -2916,15 +2937,15 @@ msgstr "統計を算出するユーザー"
 msgid "Selected reports"
 msgstr "出力するレポートの選択"
 
-#: ../classes/LocaleList.php:71
+#: ../classes/LocaleList.php:71 ../config.php:168 ../config.php:172
 msgid "French"
 msgstr "フランス語"
 
-#: ../classes/LocaleList.php:72
+#: ../classes/LocaleList.php:72 ../config.php:169
 msgid "English"
 msgstr "英語"
 
-#: ../classes/LocaleList.php:73
+#: ../classes/LocaleList.php:73 ../config.php:170
 msgid "German"
 msgstr "ドイツ語"
 
@@ -3673,27 +3694,27 @@ msgstr "このユーザーはすでにこのノードの技術担当者になっ
 #: ../classes/Node.php:1377 ../classes/Node.php:1381 ../classes/Node.php:1380
 #: ../classes/Node.php:1384 ../classes/Node.php:1372 ../classes/Node.php:1376
 #: ../classes/Node.php:1468 ../classes/Node.php:1472 ../classes/Node.php:1469
-#: ../classes/Node.php:1473
+#: ../classes/Node.php:1473 ../classes/Node.php:1526 ../classes/Node.php:1530
 msgid "Could not add owner"
 msgstr "オーナーを追加することが出来ません"
 
 #: ../classes/Node.php:1395 ../classes/Node.php:1398 ../classes/Node.php:1390
-#: ../classes/Node.php:1486 ../classes/Node.php:1487
+#: ../classes/Node.php:1486 ../classes/Node.php:1487 ../classes/Node.php:1544
 msgid "Could not add tech officer"
 msgstr "技術担当者を追加することができません。"
 
 #: ../classes/Node.php:1399 ../classes/Node.php:1402 ../classes/Node.php:1394
-#: ../classes/Node.php:1490 ../classes/Node.php:1491
+#: ../classes/Node.php:1490 ../classes/Node.php:1491 ../classes/Node.php:1548
 msgid "Could not set existing user as tech officer"
 msgstr "技術担当者に設定されているユーザーがいません。"
 
 #: ../classes/Node.php:1409 ../classes/Node.php:1412 ../classes/Node.php:1404
-#: ../classes/Node.php:1500 ../classes/Node.php:1501
+#: ../classes/Node.php:1500 ../classes/Node.php:1501 ../classes/Node.php:1558
 msgid "Could not remove owner"
 msgstr "オーナーを削除することは出来ません。"
 
 #: ../classes/Node.php:1419 ../classes/Node.php:1422 ../classes/Node.php:1414
-#: ../classes/Node.php:1510 ../classes/Node.php:1511
+#: ../classes/Node.php:1510 ../classes/Node.php:1511 ../classes/Node.php:1568
 msgid "Could not remove tech officer"
 msgstr "技術担当者を削除することができません。"
 
@@ -4790,11 +4811,11 @@ msgstr ""
 msgid "Opened on %s"
 msgstr ""
 
-#: ../classes/LocaleList.php:74
+#: ../classes/LocaleList.php:74 ../config.php:171
 msgid "Spanish"
 msgstr ""
 
-#: ../classes/LocaleList.php:76
+#: ../classes/LocaleList.php:76 ../config.php:173
 msgid "Japanese"
 msgstr ""
 
@@ -4933,6 +4954,7 @@ msgid ""
 msgstr ""
 
 #: ../classes/Content/File/File.php:501 ../classes/Content/File/File.php:566
+#: ../classes/Content/File/File.php:570
 msgid "Last update"
 msgstr ""
 
@@ -5685,6 +5707,7 @@ msgid ""
 msgstr ""
 
 #: ../classes/Content/UIUserList/UIUserList.php:128
+#: ../classes/Content/UIUserList/UIUserList.php:156
 msgid "The online user list must be viewed at a specific node"
 msgstr ""
 
@@ -5728,4 +5751,78 @@ msgstr ""
 #: ../classes/Content/FavoriteHotspots/FavoriteHotspots.php:244
 msgid ""
 "The user has chosen not to disclose his favorite hotspots to other users."
+msgstr ""
+
+#: ../signup.php:131
+msgid ""
+"Password contains invalid characters.  Allowed characters are 0-9, a-z and A-"
+"Z"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:62
+msgid "Breakdown of how many users actually use the network"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:85
+msgid "User activity"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:94
+msgid "Last day"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:95
+msgid "Last week"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:96
+msgid "Last month"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:97
+msgid "Last 3 month"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:98
+msgid "Last 6 months"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:99
+msgid "Last year"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:100
+msgid "Ever"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:138
+#, php-format
+msgid "Activity report for the %d validated users"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:141
+#: ../classes/StatisticReport/ActiveUserReport.php:172
+msgid "Period"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:142
+#: ../classes/StatisticReport/ActiveUserReport.php:173
+msgid "# of users who used the network"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:169
+#, php-format
+msgid "Activity report for the %d non-validated users"
+msgstr ""
+
+#: ../classes/StatisticReport/ActiveUserReport.php:198
+msgid "warning:  This report does not count connections at Splash-Only nodes"
+msgstr ""
+
+#: ../config.php:174
+msgid "Greek"
+msgstr ""
+
+#: ../config.php:175
+msgid "Bulgarian"
 msgstr ""

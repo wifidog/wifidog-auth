@@ -1,3 +1,8 @@
+2007-07-03  Benoit Gréoire  <bock@step.polymtl.ca>
+	* wifidog/signup.php:  Notify the user of the allowed characters.
+	* Add Bulgarian translation from "Nikola Petrov" <nvp.online A T gmail.com>
+	* config_available_languages:  Centralise the list there so that there is only one to modify everytime we add a translation
+	
 2007-06-12  Benoit Gréoire  <bock@step.polymtl.ca>
 	* IE6 layout workarounds (not perfect, but better)
 	* HTML validation of the login and portal pages

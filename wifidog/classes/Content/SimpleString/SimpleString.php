@@ -130,7 +130,6 @@ class SimpleString extends Langstring
             $html .= "<div class='admin_section_hint'>" . _("Only these HTML tags are allowed : ") . htmlentities($this->allowed_html_tags) . "</div>";
         }
         $html .= "<ul class='admin_element_list'>\n";
-        $liste_languages = new LocaleList();
         $sql = "SELECT * FROM content_langstring_entries WHERE content_langstring_entries.langstrings_id = '$this->id' ORDER BY locales_id";
         $this->mBd->execSql($sql, $result, false); //echo "type_interface: $type_interface\n";
 
