@@ -136,9 +136,13 @@ class File extends Content
 		$this->files_row = $row;
 	}
 
+	public function isFileMetadataVerbose() {
+		return $this->fileMetadataVerboseFlag;
+	}
+
 	public function setFileMetadataVerbose($flag) {
 		if(is_bool($flag))
-			$this->metadataVerboseFlag = $flag;
+			$this->fileMetadataVerboseFlag = $flag;
 	}
 
 	/**
@@ -545,7 +549,7 @@ class File extends Content
 			}
 
 			//$html .= "<li class='admin_element_item_container'>\n";
-			if($this->metadataVerboseFlag == true) {
+			if($this->isFileMetadataVerbose() == true) {
 				$html .= "<div class='admin_element_data'>" . _("Locally stored file size") . " : \n";
 				$html .= $this->getFileSize(self :: UNIT_KILOBYTES) . " " . _("KB");
 			}
@@ -561,7 +565,7 @@ class File extends Content
 
 		}
 
-		if($this->metadataVerboseFlag == true) {
+		if($this->isFileMetadataVerbose() == true) {
 			$html .= " <a href='" . $this->getFileUrl() . "'>" . _("Download") . "</a>\n";
 			$html .= " " . _("Last update") . " : \n";
 			$html .= $this->getLastUpdateTimestamp();
