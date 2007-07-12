@@ -1,4 +1,8 @@
 2007-06-12  Benoit Grégoire  <bock@step.polymtl.ca>
+	* Fix #291 by adding a proper warning and location of documentation
+	* Fix #336:  Add Swedish translation by Christian Svensson <blue ATT cmd.nu>
+
+2007-06-12  Benoit Grégoire  <bock@step.polymtl.ca>
 	-This is a behemoth "the road to 1.0"  commit.  I've been working on this for 6 months, 
 	and it's reached the point where others can help.  Those are very far reaching changes, please
 	notify me if anything isn't working right (and im sure I can't have caught everything).

@@ -62,7 +62,8 @@ function getAvailableLanguageArray() {
     'pt_BR' => array('Português',_("French")),
     'ja_JP' => array('日本語',_("Japanese")),
     'el_GR' => array('Greek',_("Greek")),
-    'bg_BG' => array('Български език',_("Bulgarian"))
+    'bg_BG' => array('Български език',_("Bulgarian")),
+    'sv_SE' => array('Svenska',_("Swedish"))
     );
     return $retval;
 }
