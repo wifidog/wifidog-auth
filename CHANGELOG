@@ -1,11 +1,40 @@
+2007-06-12  Benoit Grégoire  <bock@step.polymtl.ca>
+	-This is a behemoth "the road to 1.0"  commit.  I've been working on this for 6 months, 
+	and it's reached the point where others can help.  Those are very far reaching changes, please
+	notify me if anything isn't working right (and im sure I can't have caught everything).
+    * Completely revamp exception handling, all exceptions are now trapped and handled centrally.
+    * Major changes in the login process to allow repeating a request after a time out or missing permission exception.
+    * New user roles architecture,  as described in https://dev.wifidog.org/wiki/doc/developer/UserRolesArchitecture
+ 	Mostly complete.  Missing parts are Content stakeholders, system roles and "su" functionnality. 
+ 	I need help replacing all the DEPRECATED* methods.  Please read the wiki page above for instructions.
+	* generic_object_admin.php:  More work towards making it generic once again.
+	* GenericDataObject:  New class.  Eventually, most classes should extend this, instead of directly implementing GenericObject
+	* Menu.php:  Finally a uniform Menuing system to replace the mismatch of links that made wifidog 
+	impossible to navigate.  It's not very sophisticated yet, but it IS permission aware
+	Loosely inspired from Drupal's menuing system.  HTML is slightly modified "Son of suckerfish", 
+	so will be easy to style (althouh I haven't had time yet).
+	Actual menus are added in the hook_menu methods of each class.
+	* VirtualHost.php:  Finally properly split off Virtual Hosts, and make Server a singleton.
+	* install.php:  Do the bare minimum changes so it's still possible to setup a wifidog auth server.
+	However, install.php still needs 1- A good overhaull, 2- A way to install sample databases instead of the minimal one.
+	-Other changes
+    * Unbreak signup link for non-javascript enabled devices
+	* FlickrPhotostream:  Check CURL, which is a mandatory dependency of Flickr
+    * AbstractDb:  Improve debuging features
+    * *:getObject():  Hopefully improve performance of class caching by making sure 
+    that we do not manipulate different objects.  Otherwise copies would be generated as soon as we change properties, wasting much memory.
+	* Add dependency check for XSL module for hotspot_status.php.
+	* Some work towards respecting the coding style: http://dev.wifidog.org/wiki/doc/developer/CodingStandard
+	* wifidog/admin/index.php:  Delete admin page.  There is no longuer a concept of a separate admin section.  Menu will depend on your access level.
+
 2007-07-11  Benoit Gréoire  <bock@step.polymtl.ca>
 	* path_defines_url_content.php: Fix #348
 
 2007-07-03  Benoit Gréoire  <bock@step.polymtl.ca>
 	* wifidog/signup.php:  Notify the user of the allowed characters.
 	* Add Bulgarian translation from "Nikola Petrov" <nvp.online A T gmail.com>
-	* config_available_languages:  Centralise the list there so that there is only one to modify everytime we add a translation
-	
+	* config_available_languages:  Centralize the list there so that there is only one to modify everytime we add a translation
+
 2007-06-12  Benoit Gréoire  <bock@step.polymtl.ca>
 	* IE6 layout workarounds (not perfect, but better)
 	* HTML validation of the login and portal pages

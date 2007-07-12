@@ -3,11 +3,13 @@
 --
 
 SET client_encoding = 'UTF8';
+SET standard_conforming_strings = off;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET escape_string_warning = off;
 
 --
--- Name: wifidog; Type: DATABASE; Schema: -; Owner: wifidog
+-- Name: wifidog; Type: DATABASE; Schema: -; Owner: -
 --
 
 CREATE DATABASE wifidog WITH TEMPLATE = template0 ENCODING = 'UTF8';
@@ -16,14 +18,23 @@ CREATE DATABASE wifidog WITH TEMPLATE = template0 ENCODING = 'UTF8';
 \connect wifidog
 
 SET client_encoding = 'UTF8';
+SET standard_conforming_strings = off;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET escape_string_warning = off;
 
 --
--- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: -
 --
 
 COMMENT ON SCHEMA public IS 'Standard public schema';
+
+
+--
+-- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: -; Owner: -
+--
+
+CREATE PROCEDURAL LANGUAGE plpgsql;
 
 
 SET search_path = public, pg_catalog;
@@ -33,20 +44,11 @@ SET default_tablespace = '';
 SET default_with_oids = true;
 
 --
--- Name: administrators; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
---
-
-CREATE TABLE administrators (
-    user_id character varying(45) DEFAULT ''::character varying NOT NULL
-);
-
-
---
--- Name: connections; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: connections; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE connections (
-    conn_id serial NOT NULL,
+    conn_id integer NOT NULL,
     token character varying(32) DEFAULT ''::character varying NOT NULL,
     token_status character varying(10) DEFAULT 'UNUSED'::character varying NOT NULL,
     timestamp_in timestamp without time zone,
@@ -63,7 +65,25 @@ CREATE TABLE connections (
 
 
 --
--- Name: content; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: connections_conn_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE connections_conn_id_seq
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+--
+-- Name: connections_conn_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE connections_conn_id_seq OWNED BY connections.conn_id;
+
+
+--
+-- Name: content; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE content (
@@ -82,7 +102,7 @@ CREATE TABLE content (
 
 
 --
--- Name: content_available_display_areas; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_available_display_areas; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE content_available_display_areas (
@@ -91,7 +111,7 @@ CREATE TABLE content_available_display_areas (
 
 
 --
--- Name: content_available_display_pages; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_available_display_pages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE content_available_display_pages (
@@ -102,7 +122,7 @@ CREATE TABLE content_available_display_pages (
 SET default_with_oids = false;
 
 --
--- Name: content_clickthrough_log; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_clickthrough_log; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE content_clickthrough_log (
@@ -120,7 +140,7 @@ CREATE TABLE content_clickthrough_log (
 SET default_with_oids = true;
 
 --
--- Name: content_display_log; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_display_log; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE content_display_log (
@@ -134,7 +154,7 @@ CREATE TABLE content_display_log (
 
 
 --
--- Name: content_embedded_content; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_embedded_content; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE content_embedded_content (
@@ -147,7 +167,7 @@ CREATE TABLE content_embedded_content (
 
 
 --
--- Name: content_file; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_file; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE content_file (
@@ -162,7 +182,7 @@ CREATE TABLE content_file (
 
 
 --
--- Name: content_file_image; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_file_image; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE content_file_image (
@@ -174,7 +194,7 @@ CREATE TABLE content_file_image (
 
 
 --
--- Name: content_flickr_photostream; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_flickr_photostream; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE content_flickr_photostream (
@@ -203,7 +223,7 @@ CREATE TABLE content_flickr_photostream (
 
 
 --
--- Name: content_group; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_group; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE content_group (
@@ -217,7 +237,7 @@ CREATE TABLE content_group (
 
 
 --
--- Name: content_group_element; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_group_element; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE content_group_element (
@@ -232,7 +252,7 @@ CREATE TABLE content_group_element (
 
 
 --
--- Name: content_group_element_has_allowed_nodes; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_group_element_has_allowed_nodes; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE content_group_element_has_allowed_nodes (
@@ -243,7 +263,7 @@ CREATE TABLE content_group_element_has_allowed_nodes (
 
 
 --
--- Name: content_has_owners; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_has_owners; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE content_has_owners (
@@ -255,7 +275,7 @@ CREATE TABLE content_has_owners (
 
 
 --
--- Name: content_iframe; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_iframe; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE content_iframe (
@@ -269,7 +289,7 @@ CREATE TABLE content_iframe (
 SET default_with_oids = false;
 
 --
--- Name: content_key_value_pairs; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_key_value_pairs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE content_key_value_pairs (
@@ -282,7 +302,7 @@ CREATE TABLE content_key_value_pairs (
 SET default_with_oids = true;
 
 --
--- Name: content_langstring_entries; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_langstring_entries; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE content_langstring_entries (
@@ -294,7 +314,7 @@ CREATE TABLE content_langstring_entries (
 
 
 --
--- Name: content_rss_aggregator; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_rss_aggregator; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE content_rss_aggregator (
@@ -309,7 +329,7 @@ CREATE TABLE content_rss_aggregator (
 
 
 --
--- Name: content_rss_aggregator_feeds; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_rss_aggregator_feeds; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE content_rss_aggregator_feeds (
@@ -324,7 +344,7 @@ CREATE TABLE content_rss_aggregator_feeds (
 SET default_with_oids = false;
 
 --
--- Name: content_shoutbox_messages; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_shoutbox_messages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE content_shoutbox_messages (
@@ -337,7 +357,7 @@ CREATE TABLE content_shoutbox_messages (
 
 
 --
--- Name: content_type_filters; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_type_filters; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE content_type_filters (
@@ -351,7 +371,7 @@ CREATE TABLE content_type_filters (
 SET default_with_oids = true;
 
 --
--- Name: locales; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: locales; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE locales (
@@ -360,7 +380,7 @@ CREATE TABLE locales (
 
 
 --
--- Name: network_has_content; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: network_has_content; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE network_has_content (
@@ -376,7 +396,7 @@ CREATE TABLE network_has_content (
 SET default_with_oids = false;
 
 --
--- Name: network_has_profile_templates; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: network_has_profile_templates; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE network_has_profile_templates (
@@ -385,29 +405,37 @@ CREATE TABLE network_has_profile_templates (
 );
 
 
-SET default_with_oids = true;
-
 --
--- Name: network_stakeholders; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: stakeholders; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE TABLE network_stakeholders (
-    network_id text NOT NULL,
-    user_id character varying(45) NOT NULL,
-    is_admin boolean DEFAULT false NOT NULL,
-    is_stat_viewer boolean DEFAULT false NOT NULL
+CREATE TABLE stakeholders (
+    user_id text NOT NULL,
+    role_id text NOT NULL,
+    object_id text NOT NULL,
+    CONSTRAINT user_has_roles_objct_id_not_empty_string CHECK ((object_id <> ''::text))
 );
 
 
 --
--- Name: networks; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: network_stakeholders; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE network_stakeholders (
+)
+INHERITS (stakeholders);
+
+
+SET default_with_oids = true;
+
+--
+-- Name: networks; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE networks (
     network_id text NOT NULL,
     network_authenticator_class text NOT NULL,
     network_authenticator_params text,
-    is_default_network boolean DEFAULT false NOT NULL,
     name text DEFAULT 'Unnamed network'::text NOT NULL,
     creation_date date DEFAULT now() NOT NULL,
     homepage_url text,
@@ -432,7 +460,7 @@ CREATE TABLE networks (
 SET default_with_oids = false;
 
 --
--- Name: node_deployment_status; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: node_deployment_status; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE node_deployment_status (
@@ -443,7 +471,7 @@ CREATE TABLE node_deployment_status (
 SET default_with_oids = true;
 
 --
--- Name: node_has_content; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: node_has_content; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE node_has_content (
@@ -456,20 +484,21 @@ CREATE TABLE node_has_content (
 );
 
 
+SET default_with_oids = false;
+
 --
--- Name: node_stakeholders; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: node_stakeholders; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE node_stakeholders (
-    node_id character varying(32) NOT NULL,
-    user_id character varying(45) NOT NULL,
-    is_owner boolean DEFAULT false NOT NULL,
-    is_tech_officer boolean DEFAULT false NOT NULL
-);
+)
+INHERITS (stakeholders);
 
+
+SET default_with_oids = true;
 
 --
--- Name: nodes; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: nodes; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE nodes (
@@ -509,7 +538,18 @@ CREATE TABLE nodes (
 SET default_with_oids = false;
 
 --
--- Name: profile_fields; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: permissions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE permissions (
+    permission_id text NOT NULL,
+    stakeholder_type_id text NOT NULL,
+    CONSTRAINT permission_rules_id_not_empty_string CHECK ((permission_id <> ''::text))
+);
+
+
+--
+-- Name: profile_fields; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE profile_fields (
@@ -522,7 +562,7 @@ CREATE TABLE profile_fields (
 
 
 --
--- Name: profile_template_fields; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: profile_template_fields; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE profile_template_fields (
@@ -537,7 +577,7 @@ CREATE TABLE profile_template_fields (
 
 
 --
--- Name: profile_templates; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: profile_templates; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE profile_templates (
@@ -548,7 +588,7 @@ CREATE TABLE profile_templates (
 
 
 --
--- Name: profiles; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: profiles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE profiles (
@@ -559,10 +599,34 @@ CREATE TABLE profiles (
 );
 
 
+--
+-- Name: role_has_permissions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE role_has_permissions (
+    role_id text NOT NULL,
+    permission_id text NOT NULL
+);
+
+
+--
+-- Name: roles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE roles (
+    role_id text NOT NULL,
+    role_description_content_id text,
+    is_system_role boolean DEFAULT false NOT NULL,
+    stakeholder_type_id text NOT NULL,
+    role_creation_date timestamp without time zone DEFAULT now(),
+    CONSTRAINT roles_rules_id_not_empty_string CHECK ((role_id <> ''::text))
+);
+
+
 SET default_with_oids = true;
 
 --
--- Name: schema_info; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: schema_info; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE schema_info (
@@ -571,25 +635,42 @@ CREATE TABLE schema_info (
 );
 
 
+SET default_with_oids = false;
+
 --
--- Name: servers; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: server; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE TABLE servers (
+CREATE TABLE server (
     server_id text NOT NULL,
-    is_default_server boolean DEFAULT false NOT NULL,
-    name text DEFAULT 'Unnamed server'::text NOT NULL,
     creation_date date DEFAULT now() NOT NULL,
-    hostname text DEFAULT 'localhost'::text NOT NULL,
-    ssl_available boolean DEFAULT false NOT NULL,
-    gmaps_api_key text,
-    CONSTRAINT servers_hostname CHECK ((name <> ''::text)),
-    CONSTRAINT servers_name CHECK ((name <> ''::text))
+    default_virtual_host text NOT NULL
 );
 
 
 --
--- Name: token_status; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: server_stakeholders; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE server_stakeholders (
+)
+INHERITS (stakeholders);
+
+
+--
+-- Name: stakeholder_types; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE stakeholder_types (
+    stakeholder_type_id text NOT NULL,
+    CONSTRAINT stakeholder_types_id_not_empty_string CHECK ((stakeholder_type_id <> ''::text))
+);
+
+
+SET default_with_oids = true;
+
+--
+-- Name: token_status; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE token_status (
@@ -598,7 +679,7 @@ CREATE TABLE token_status (
 
 
 --
--- Name: user_has_content; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: user_has_content; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE user_has_content (
@@ -611,7 +692,7 @@ CREATE TABLE user_has_content (
 SET default_with_oids = false;
 
 --
--- Name: user_has_profiles; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: user_has_profiles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE user_has_profiles (
@@ -623,7 +704,7 @@ CREATE TABLE user_has_profiles (
 SET default_with_oids = true;
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE users (
@@ -644,7 +725,7 @@ CREATE TABLE users (
 SET default_with_oids = false;
 
 --
--- Name: venue_types; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: venue_types; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE venue_types (
@@ -653,7 +734,7 @@ CREATE TABLE venue_types (
 
 
 --
--- Name: venues; Type: TABLE; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: venues; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE venues (
@@ -663,15 +744,29 @@ CREATE TABLE venues (
 
 
 --
--- Name: administrators_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: virtual_hosts; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
-ALTER TABLE ONLY administrators
-    ADD CONSTRAINT administrators_pkey PRIMARY KEY (user_id);
+CREATE TABLE virtual_hosts (
+    virtual_host_id text NOT NULL,
+    hostname text NOT NULL,
+    creation_date date DEFAULT now() NOT NULL,
+    ssl_available boolean DEFAULT false NOT NULL,
+    gmaps_api_key text,
+    default_network text NOT NULL,
+    CONSTRAINT virtual_hosts_hostname_check CHECK ((hostname <> ''::text))
+);
 
 
 --
--- Name: connections_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: conn_id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE connections ALTER COLUMN conn_id SET DEFAULT nextval('connections_conn_id_seq'::regclass);
+
+
+--
+-- Name: connections_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY connections
@@ -679,7 +774,7 @@ ALTER TABLE ONLY connections
 
 
 --
--- Name: content_available_display_areas_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_available_display_areas_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY content_available_display_areas
@@ -687,7 +782,7 @@ ALTER TABLE ONLY content_available_display_areas
 
 
 --
--- Name: content_clickthrough_log_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_clickthrough_log_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY content_clickthrough_log
@@ -695,7 +790,7 @@ ALTER TABLE ONLY content_clickthrough_log
 
 
 --
--- Name: content_display_location_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_display_location_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY content_available_display_pages
@@ -703,7 +798,7 @@ ALTER TABLE ONLY content_available_display_pages
 
 
 --
--- Name: content_display_log_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_display_log_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY content_display_log
@@ -711,7 +806,7 @@ ALTER TABLE ONLY content_display_log
 
 
 --
--- Name: content_group_element_has_allowed_nodes_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_group_element_has_allowed_nodes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY content_group_element_has_allowed_nodes
@@ -719,7 +814,7 @@ ALTER TABLE ONLY content_group_element_has_allowed_nodes
 
 
 --
--- Name: content_group_element_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_group_element_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY content_group_element
@@ -727,7 +822,7 @@ ALTER TABLE ONLY content_group_element
 
 
 --
--- Name: content_group_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_group_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY content_group
@@ -735,7 +830,7 @@ ALTER TABLE ONLY content_group
 
 
 --
--- Name: content_has_owners_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_has_owners_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY content_has_owners
@@ -743,7 +838,7 @@ ALTER TABLE ONLY content_has_owners
 
 
 --
--- Name: content_key_value_pairs_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_key_value_pairs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY content_key_value_pairs
@@ -751,7 +846,7 @@ ALTER TABLE ONLY content_key_value_pairs
 
 
 --
--- Name: content_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY content
@@ -759,7 +854,7 @@ ALTER TABLE ONLY content
 
 
 --
--- Name: content_rss_aggregator_feeds_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_rss_aggregator_feeds_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY content_rss_aggregator_feeds
@@ -767,7 +862,7 @@ ALTER TABLE ONLY content_rss_aggregator_feeds
 
 
 --
--- Name: content_rss_aggregator_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_rss_aggregator_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY content_rss_aggregator
@@ -775,7 +870,7 @@ ALTER TABLE ONLY content_rss_aggregator
 
 
 --
--- Name: content_shoutbox_messages_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_shoutbox_messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY content_shoutbox_messages
@@ -783,7 +878,7 @@ ALTER TABLE ONLY content_shoutbox_messages
 
 
 --
--- Name: content_type_filters_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: content_type_filters_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY content_type_filters
@@ -791,7 +886,7 @@ ALTER TABLE ONLY content_type_filters
 
 
 --
--- Name: files_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: files_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY content_file
@@ -799,7 +894,7 @@ ALTER TABLE ONLY content_file
 
 
 --
--- Name: flickr_photostream_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: flickr_photostream_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY content_flickr_photostream
@@ -807,7 +902,7 @@ ALTER TABLE ONLY content_flickr_photostream
 
 
 --
--- Name: iframes_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: iframes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY content_iframe
@@ -815,7 +910,7 @@ ALTER TABLE ONLY content_iframe
 
 
 --
--- Name: langstring_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: langstring_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY content_langstring_entries
@@ -823,7 +918,7 @@ ALTER TABLE ONLY content_langstring_entries
 
 
 --
--- Name: locales_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: locales_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY locales
@@ -831,7 +926,7 @@ ALTER TABLE ONLY locales
 
 
 --
--- Name: network_has_content_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: network_has_content_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY network_has_content
@@ -839,7 +934,7 @@ ALTER TABLE ONLY network_has_content
 
 
 --
--- Name: network_has_profile_templates_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: network_has_profile_templates_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY network_has_profile_templates
@@ -847,15 +942,15 @@ ALTER TABLE ONLY network_has_profile_templates
 
 
 --
--- Name: network_stakeholders_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: network_stakeholders_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY network_stakeholders
-    ADD CONSTRAINT network_stakeholders_pkey PRIMARY KEY (network_id, user_id);
+    ADD CONSTRAINT network_stakeholders_pkey PRIMARY KEY (user_id, role_id, object_id);
 
 
 --
--- Name: networks_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: networks_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY networks
@@ -863,7 +958,7 @@ ALTER TABLE ONLY networks
 
 
 --
--- Name: node_deployment_status_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: node_deployment_status_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY node_deployment_status
@@ -871,7 +966,7 @@ ALTER TABLE ONLY node_deployment_status
 
 
 --
--- Name: node_has_content_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: node_has_content_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY node_has_content
@@ -879,15 +974,15 @@ ALTER TABLE ONLY node_has_content
 
 
 --
--- Name: node_stakeholders_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: node_stakeholders_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY node_stakeholders
-    ADD CONSTRAINT node_stakeholders_pkey PRIMARY KEY (node_id, user_id);
+    ADD CONSTRAINT node_stakeholders_pkey PRIMARY KEY (user_id, role_id, object_id);
 
 
 --
--- Name: nodes_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: nodes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY nodes
@@ -895,7 +990,15 @@ ALTER TABLE ONLY nodes
 
 
 --
--- Name: pictures_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY permissions
+    ADD CONSTRAINT permissions_pkey PRIMARY KEY (permission_id);
+
+
+--
+-- Name: pictures_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY content_file_image
@@ -903,7 +1006,7 @@ ALTER TABLE ONLY content_file_image
 
 
 --
--- Name: profile_fields_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: profile_fields_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY profile_fields
@@ -911,7 +1014,7 @@ ALTER TABLE ONLY profile_fields
 
 
 --
--- Name: profile_template_fields_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: profile_template_fields_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY profile_template_fields
@@ -919,7 +1022,7 @@ ALTER TABLE ONLY profile_template_fields
 
 
 --
--- Name: profile_templates_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: profile_templates_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY profile_templates
@@ -927,7 +1030,7 @@ ALTER TABLE ONLY profile_templates
 
 
 --
--- Name: profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY profiles
@@ -935,7 +1038,23 @@ ALTER TABLE ONLY profiles
 
 
 --
--- Name: schema_info_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: role_has_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY role_has_permissions
+    ADD CONSTRAINT role_has_permissions_pkey PRIMARY KEY (role_id, permission_id);
+
+
+--
+-- Name: roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY roles
+    ADD CONSTRAINT roles_pkey PRIMARY KEY (role_id);
+
+
+--
+-- Name: schema_info_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY schema_info
@@ -943,15 +1062,39 @@ ALTER TABLE ONLY schema_info
 
 
 --
--- Name: servers_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: server_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
-ALTER TABLE ONLY servers
-    ADD CONSTRAINT servers_pkey PRIMARY KEY (server_id);
+ALTER TABLE ONLY server
+    ADD CONSTRAINT server_pkey PRIMARY KEY (server_id);
 
 
 --
--- Name: token_status_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: server_stakeholders_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY server_stakeholders
+    ADD CONSTRAINT server_stakeholders_pkey PRIMARY KEY (user_id, role_id, object_id);
+
+
+--
+-- Name: stakeholder_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY stakeholder_types
+    ADD CONSTRAINT stakeholder_types_pkey PRIMARY KEY (stakeholder_type_id);
+
+
+--
+-- Name: stakeholders_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY stakeholders
+    ADD CONSTRAINT stakeholders_pkey PRIMARY KEY (user_id, role_id, object_id);
+
+
+--
+-- Name: token_status_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY token_status
@@ -959,7 +1102,7 @@ ALTER TABLE ONLY token_status
 
 
 --
--- Name: user_has_content_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: user_has_content_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY user_has_content
@@ -967,7 +1110,7 @@ ALTER TABLE ONLY user_has_content
 
 
 --
--- Name: user_has_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: user_has_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY user_has_profiles
@@ -975,7 +1118,7 @@ ALTER TABLE ONLY user_has_profiles
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY users
@@ -983,7 +1126,7 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: venue_types_pkey; Type: CONSTRAINT; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: venue_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY venue_types
@@ -991,84 +1134,100 @@ ALTER TABLE ONLY venue_types
 
 
 --
--- Name: idx_connections_node_id; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: virtual_hosts_hostname_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY virtual_hosts
+    ADD CONSTRAINT virtual_hosts_hostname_key UNIQUE (hostname);
+
+
+--
+-- Name: virtual_hosts_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY virtual_hosts
+    ADD CONSTRAINT virtual_hosts_pkey PRIMARY KEY (virtual_host_id);
+
+
+--
+-- Name: idx_connections_node_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX idx_connections_node_id ON connections USING btree (node_id);
 
 
 --
--- Name: idx_connections_user_id; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: idx_connections_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX idx_connections_user_id ON connections USING btree (user_id);
 
 
 --
--- Name: idx_connections_user_mac; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: idx_connections_user_mac; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX idx_connections_user_mac ON connections USING btree (user_mac);
 
 
 --
--- Name: idx_content_group_element_content_group_id; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: idx_content_group_element_content_group_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX idx_content_group_element_content_group_id ON content_group_element USING btree (content_group_id);
 
 
 --
--- Name: idx_content_group_element_valid_from_timestamp; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: idx_content_group_element_valid_from_timestamp; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX idx_content_group_element_valid_from_timestamp ON content_group_element USING btree (valid_from_timestamp);
 
 
 --
--- Name: idx_content_group_element_valid_until_timestamp; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: idx_content_group_element_valid_until_timestamp; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX idx_content_group_element_valid_until_timestamp ON content_group_element USING btree (valid_until_timestamp);
 
 
 --
--- Name: idx_gw_id; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: idx_gw_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX idx_gw_id ON nodes USING btree (gw_id);
 
 
 --
--- Name: idx_token; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: idx_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX idx_token ON connections USING btree (token);
 
 
 --
--- Name: idx_token_status_and_user_id; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: idx_token_status_and_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX idx_token_status_and_user_id ON connections USING btree (token_status, user_id);
 
 
 --
--- Name: idx_unique_username_and_account_origin; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: idx_unique_username_and_account_origin; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX idx_unique_username_and_account_origin ON users USING btree (username, account_origin);
 
 
 --
--- Name: profile_template_fields_semantic_id; Type: INDEX; Schema: public; Owner: wifidog; Tablespace: 
+-- Name: profile_template_fields_semantic_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX profile_template_fields_semantic_id ON profile_template_fields USING btree (semantic_id);
 
 
 --
--- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY connections
@@ -1076,7 +1235,7 @@ ALTER TABLE ONLY connections
 
 
 --
--- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY users
@@ -1084,7 +1243,7 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content
@@ -1092,7 +1251,7 @@ ALTER TABLE ONLY content
 
 
 --
--- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_has_owners
@@ -1100,7 +1259,7 @@ ALTER TABLE ONLY content_has_owners
 
 
 --
--- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_langstring_entries
@@ -1108,7 +1267,7 @@ ALTER TABLE ONLY content_langstring_entries
 
 
 --
--- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_group
@@ -1116,7 +1275,7 @@ ALTER TABLE ONLY content_group
 
 
 --
--- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_group_element
@@ -1124,7 +1283,7 @@ ALTER TABLE ONLY content_group_element
 
 
 --
--- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_group_element_has_allowed_nodes
@@ -1132,7 +1291,7 @@ ALTER TABLE ONLY content_group_element_has_allowed_nodes
 
 
 --
--- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY user_has_content
@@ -1140,7 +1299,7 @@ ALTER TABLE ONLY user_has_content
 
 
 --
--- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY node_has_content
@@ -1148,7 +1307,7 @@ ALTER TABLE ONLY node_has_content
 
 
 --
--- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY network_has_content
@@ -1156,7 +1315,7 @@ ALTER TABLE ONLY network_has_content
 
 
 --
--- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_display_log
@@ -1164,7 +1323,7 @@ ALTER TABLE ONLY content_display_log
 
 
 --
--- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_file_image
@@ -1172,7 +1331,7 @@ ALTER TABLE ONLY content_file_image
 
 
 --
--- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_iframe
@@ -1180,7 +1339,7 @@ ALTER TABLE ONLY content_iframe
 
 
 --
--- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_rss_aggregator
@@ -1188,7 +1347,7 @@ ALTER TABLE ONLY content_rss_aggregator
 
 
 --
--- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_rss_aggregator_feeds
@@ -1196,7 +1355,7 @@ ALTER TABLE ONLY content_rss_aggregator_feeds
 
 
 --
--- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content
@@ -1204,7 +1363,7 @@ ALTER TABLE ONLY content
 
 
 --
--- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_has_owners
@@ -1212,7 +1371,7 @@ ALTER TABLE ONLY content_has_owners
 
 
 --
--- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_langstring_entries
@@ -1220,7 +1379,7 @@ ALTER TABLE ONLY content_langstring_entries
 
 
 --
--- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_group_element
@@ -1228,7 +1387,7 @@ ALTER TABLE ONLY content_group_element
 
 
 --
--- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_group_element_has_allowed_nodes
@@ -1236,7 +1395,7 @@ ALTER TABLE ONLY content_group_element_has_allowed_nodes
 
 
 --
--- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY user_has_content
@@ -1244,7 +1403,7 @@ ALTER TABLE ONLY user_has_content
 
 
 --
--- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY node_has_content
@@ -1252,7 +1411,7 @@ ALTER TABLE ONLY node_has_content
 
 
 --
--- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_display_log
@@ -1260,7 +1419,7 @@ ALTER TABLE ONLY content_display_log
 
 
 --
--- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY network_has_content
@@ -1268,7 +1427,7 @@ ALTER TABLE ONLY network_has_content
 
 
 --
--- Name: $3; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $3; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content
@@ -1276,7 +1435,7 @@ ALTER TABLE ONLY content
 
 
 --
--- Name: $3; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $3; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_group_element
@@ -1284,7 +1443,7 @@ ALTER TABLE ONLY content_group_element
 
 
 --
--- Name: $3; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $3; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_display_log
@@ -1292,7 +1451,7 @@ ALTER TABLE ONLY content_display_log
 
 
 --
--- Name: $3; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $3; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY node_has_content
@@ -1300,7 +1459,7 @@ ALTER TABLE ONLY node_has_content
 
 
 --
--- Name: $5; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: $5; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content
@@ -1308,7 +1467,7 @@ ALTER TABLE ONLY content
 
 
 --
--- Name: account_origin_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: account_origin_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY users
@@ -1316,15 +1475,7 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: administrators_ibfk_1; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY administrators
-    ADD CONSTRAINT administrators_ibfk_1 FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: content_clickthrough_log_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: content_clickthrough_log_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_clickthrough_log
@@ -1332,7 +1483,7 @@ ALTER TABLE ONLY content_clickthrough_log
 
 
 --
--- Name: content_clickthrough_log_node_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: content_clickthrough_log_node_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_clickthrough_log
@@ -1340,7 +1491,7 @@ ALTER TABLE ONLY content_clickthrough_log
 
 
 --
--- Name: content_clickthrough_log_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: content_clickthrough_log_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_clickthrough_log
@@ -1348,7 +1499,7 @@ ALTER TABLE ONLY content_clickthrough_log
 
 
 --
--- Name: content_key_value_pairs_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: content_key_value_pairs_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_key_value_pairs
@@ -1356,7 +1507,7 @@ ALTER TABLE ONLY content_key_value_pairs
 
 
 --
--- Name: content_shoutbox_messages_author_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: content_shoutbox_messages_author_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_shoutbox_messages
@@ -1364,7 +1515,7 @@ ALTER TABLE ONLY content_shoutbox_messages
 
 
 --
--- Name: content_shoutbox_messages_message_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: content_shoutbox_messages_message_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_shoutbox_messages
@@ -1372,7 +1523,7 @@ ALTER TABLE ONLY content_shoutbox_messages
 
 
 --
--- Name: content_shoutbox_messages_origin_node_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: content_shoutbox_messages_origin_node_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_shoutbox_messages
@@ -1380,7 +1531,7 @@ ALTER TABLE ONLY content_shoutbox_messages
 
 
 --
--- Name: content_shoutbox_messages_shoutbox_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: content_shoutbox_messages_shoutbox_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_shoutbox_messages
@@ -1388,7 +1539,7 @@ ALTER TABLE ONLY content_shoutbox_messages
 
 
 --
--- Name: display_location_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: display_location_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY network_has_content
@@ -1396,7 +1547,7 @@ ALTER TABLE ONLY network_has_content
 
 
 --
--- Name: display_location_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: display_location_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY node_has_content
@@ -1404,15 +1555,23 @@ ALTER TABLE ONLY node_has_content
 
 
 --
--- Name: fk_network; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: fk_network; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY network_stakeholders
-    ADD CONSTRAINT fk_network FOREIGN KEY (network_id) REFERENCES networks(network_id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT fk_network FOREIGN KEY (object_id) REFERENCES networks(network_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: fk_node_deployment_status; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: fk_network; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY server_stakeholders
+    ADD CONSTRAINT fk_network FOREIGN KEY (object_id) REFERENCES server(server_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_node_deployment_status; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY nodes
@@ -1420,7 +1579,7 @@ ALTER TABLE ONLY nodes
 
 
 --
--- Name: fk_nodes; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: fk_nodes; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY connections
@@ -1428,7 +1587,15 @@ ALTER TABLE ONLY connections
 
 
 --
--- Name: fk_users; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: fk_nodes; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY node_stakeholders
+    ADD CONSTRAINT fk_nodes FOREIGN KEY (object_id) REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_users; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY connections
@@ -1436,23 +1603,7 @@ ALTER TABLE ONLY connections
 
 
 --
--- Name: fk_users; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY node_stakeholders
-    ADD CONSTRAINT fk_users FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: fk_users; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
---
-
-ALTER TABLE ONLY network_stakeholders
-    ADD CONSTRAINT fk_users FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: fk_venue_types; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: fk_venue_types; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY nodes
@@ -1460,7 +1611,7 @@ ALTER TABLE ONLY nodes
 
 
 --
--- Name: flickr_photostream_content_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: flickr_photostream_content_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY content_flickr_photostream
@@ -1468,7 +1619,7 @@ ALTER TABLE ONLY content_flickr_photostream
 
 
 --
--- Name: network_has_profile_templates_network_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: network_has_profile_templates_network_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY network_has_profile_templates
@@ -1476,7 +1627,7 @@ ALTER TABLE ONLY network_has_profile_templates
 
 
 --
--- Name: network_has_profile_templates_profile_template_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: network_has_profile_templates_profile_template_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY network_has_profile_templates
@@ -1484,7 +1635,7 @@ ALTER TABLE ONLY network_has_profile_templates
 
 
 --
--- Name: network_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: network_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY network_has_content
@@ -1492,7 +1643,7 @@ ALTER TABLE ONLY network_has_content
 
 
 --
--- Name: network_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: network_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY nodes
@@ -1500,15 +1651,15 @@ ALTER TABLE ONLY nodes
 
 
 --
--- Name: nodes_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: permissions_stakeholder_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY node_stakeholders
-    ADD CONSTRAINT nodes_fkey FOREIGN KEY (node_id) REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY permissions
+    ADD CONSTRAINT permissions_stakeholder_type_id_fkey FOREIGN KEY (stakeholder_type_id) REFERENCES stakeholder_types(stakeholder_type_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: profile_fields_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: profile_fields_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY profile_fields
@@ -1516,7 +1667,7 @@ ALTER TABLE ONLY profile_fields
 
 
 --
--- Name: profile_fields_profile_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: profile_fields_profile_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY profile_fields
@@ -1524,7 +1675,7 @@ ALTER TABLE ONLY profile_fields
 
 
 --
--- Name: profile_fields_profile_template_field_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: profile_fields_profile_template_field_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY profile_fields
@@ -1532,7 +1683,7 @@ ALTER TABLE ONLY profile_fields
 
 
 --
--- Name: profile_template_fields_admin_label_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: profile_template_fields_admin_label_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY profile_template_fields
@@ -1540,7 +1691,7 @@ ALTER TABLE ONLY profile_template_fields
 
 
 --
--- Name: profile_template_fields_content_type_filter_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: profile_template_fields_content_type_filter_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY profile_template_fields
@@ -1548,7 +1699,7 @@ ALTER TABLE ONLY profile_template_fields
 
 
 --
--- Name: profile_template_fields_display_label_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: profile_template_fields_display_label_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY profile_template_fields
@@ -1556,7 +1707,7 @@ ALTER TABLE ONLY profile_template_fields
 
 
 --
--- Name: profile_template_fields_profile_template_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: profile_template_fields_profile_template_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY profile_template_fields
@@ -1564,7 +1715,7 @@ ALTER TABLE ONLY profile_template_fields
 
 
 --
--- Name: profiles_profile_template_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: profiles_profile_template_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY profiles
@@ -1572,7 +1723,63 @@ ALTER TABLE ONLY profiles
 
 
 --
--- Name: user_has_profiles_profile_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: role_has_permissions_permission_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY role_has_permissions
+    ADD CONSTRAINT role_has_permissions_permission_id_fkey FOREIGN KEY (permission_id) REFERENCES permissions(permission_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: role_has_permissions_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY role_has_permissions
+    ADD CONSTRAINT role_has_permissions_role_id_fkey FOREIGN KEY (role_id) REFERENCES roles(role_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: roles_role_description_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY roles
+    ADD CONSTRAINT roles_role_description_content_id_fkey FOREIGN KEY (role_description_content_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+--
+-- Name: roles_stakeholder_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY roles
+    ADD CONSTRAINT roles_stakeholder_type_id_fkey FOREIGN KEY (stakeholder_type_id) REFERENCES stakeholder_types(stakeholder_type_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: server_default_virtual_host_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY server
+    ADD CONSTRAINT server_default_virtual_host_fkey FOREIGN KEY (default_virtual_host) REFERENCES virtual_hosts(virtual_host_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: stakeholders_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY stakeholders
+    ADD CONSTRAINT stakeholders_role_id_fkey FOREIGN KEY (role_id) REFERENCES roles(role_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: stakeholders_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY stakeholders
+    ADD CONSTRAINT stakeholders_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: user_has_profiles_profile_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY user_has_profiles
@@ -1580,11 +1787,19 @@ ALTER TABLE ONLY user_has_profiles
 
 
 --
--- Name: user_has_profiles_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wifidog
+-- Name: user_has_profiles_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY user_has_profiles
     ADD CONSTRAINT user_has_profiles_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: virtual_hosts_default_network_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY virtual_hosts
+    ADD CONSTRAINT virtual_hosts_default_network_fkey FOREIGN KEY (default_network) REFERENCES networks(network_id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --

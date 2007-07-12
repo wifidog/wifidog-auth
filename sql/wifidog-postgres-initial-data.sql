@@ -4,8 +4,10 @@ BEGIN;
 --
 
 SET client_encoding = 'UTF8';
+SET standard_conforming_strings = off;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET escape_string_warning = off;
 
 SET search_path = public, pg_catalog;
 
@@ -27,8 +29,10 @@ INSERT INTO token_status (token_status) VALUES ('USED');
 --
 
 SET client_encoding = 'UTF8';
+SET standard_conforming_strings = off;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET escape_string_warning = off;
 
 SET search_path = public, pg_catalog;
 
@@ -81,8 +85,10 @@ INSERT INTO venue_types (venue_type) VALUES ('Wi-Fi Zone');
 --
 
 SET client_encoding = 'UTF8';
+SET standard_conforming_strings = off;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET escape_string_warning = off;
 
 SET search_path = public, pg_catalog;
 
@@ -107,8 +113,10 @@ INSERT INTO node_deployment_status (node_deployment_status) VALUES ('TEMPORARILY
 --
 
 SET client_encoding = 'UTF8';
+SET standard_conforming_strings = off;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET escape_string_warning = off;
 
 SET search_path = public, pg_catalog;
 
@@ -138,8 +146,10 @@ INSERT INTO content_available_display_areas (display_area) VALUES ('left_area_to
 --
 
 SET client_encoding = 'UTF8';
+SET standard_conforming_strings = off;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET escape_string_warning = off;
 
 SET search_path = public, pg_catalog;
 
@@ -156,16 +166,47 @@ INSERT INTO content_available_display_pages (display_page) VALUES ('everywhere')
 -- PostgreSQL database dump complete
 --
 
-INSERT INTO networks (network_id, is_default_network, network_authenticator_class, network_authenticator_params) VALUES ('default-network', true, 'AuthenticatorLocalUser', '\'default-network\'');
-INSERT INTO nodes (network_id, node_id, gw_id, name) VALUES ('default-network', 'default', 'default', 'My first node');
-INSERT INTO servers (server_id, is_default_server, name) VALUES ('localhost', true, default);
 --
 -- PostgreSQL database dump
 --
 
 SET client_encoding = 'UTF8';
+SET standard_conforming_strings = off;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET escape_string_warning = off;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for Name: stakeholder_types; Type: TABLE DATA; Schema: public; Owner: wifidog
+--
+
+INSERT INTO stakeholder_types (stakeholder_type_id) VALUES ('Node');
+INSERT INTO stakeholder_types (stakeholder_type_id) VALUES ('Network');
+INSERT INTO stakeholder_types (stakeholder_type_id) VALUES ('Server');
+INSERT INTO stakeholder_types (stakeholder_type_id) VALUES ('Content');
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+INSERT INTO networks (network_id, network_authenticator_class, network_authenticator_params) VALUES ('default-network', 'AuthenticatorLocalUser', '\'default-network\'');
+INSERT INTO nodes (network_id, node_id, gw_id, name) VALUES ('default-network', 'default', 'default', 'My first node');
+INSERT INTO virtual_hosts (virtual_host_id, hostname, default_network) VALUES ('DEFAULT_VHOST', 'localhost', 'default-network');
+INSERT INTO server (server_id, default_virtual_host) VALUES ('SERVER_ID', 'DEFAULT_VHOST');
+INSERT into roles (role_id, stakeholder_type_id) VALUES ('SERVER_SYSADMIN', 'Server');
+INSERT into roles (role_id, stakeholder_type_id) VALUES ('NETWORK_SYSADMIN', 'Network');
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = off;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET escape_string_warning = off;
 
 SET search_path = public, pg_catalog;
 
@@ -173,7 +214,7 @@ SET search_path = public, pg_catalog;
 -- Data for Name: schema_info; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
-INSERT INTO schema_info (tag, value) VALUES ('schema_version', '53');
+INSERT INTO schema_info (tag, value) VALUES ('schema_version', '54');
 
 
 --
@@ -185,8 +226,10 @@ INSERT INTO schema_info (tag, value) VALUES ('schema_version', '53');
 --
 
 SET client_encoding = 'UTF8';
+SET standard_conforming_strings = off;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET escape_string_warning = off;
 
 SET search_path = public, pg_catalog;
 

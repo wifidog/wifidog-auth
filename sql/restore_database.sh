@@ -12,7 +12,7 @@ fi
 echo "Do I need to delete the current $DATABASE_NAME database before restoring from $FILENAME? (y/n)"
 read delete_confirm
 if [ $delete_confirm = "y" -o $delete_confirm = "Y" ] ; then
-cmd="dropdb -U $USERNAME $DATABASE_NAME" 
+cmd="dropdb -U $SUPERUSER $DATABASE_NAME" 
 echo $cmd
 $cmd
 retval=$?
@@ -51,7 +51,7 @@ if [[ $retval -ne 0 ]] ; then
 fi
 
 
-echo "Do I need to Adding the plpgsql language to database (as the admin user)? (y/n)"
+echo "Do I need to add the plpgsql language to database (as the admin user)? (y/n)"
 read add_plpgsql_confirm
 if [ $add_plpgsql_confirm = "y" -o $add_plpgsql_confirm = "Y" ] ; then
 cmd="createlang -U $SUPERUSER plpgsql $DATABASE_NAME"
