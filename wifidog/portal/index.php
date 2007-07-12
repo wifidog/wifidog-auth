@@ -53,20 +53,11 @@
  */
 require_once ('../include/common.php');
 
-require_once ('include/common_interface.php');
 require_once ('classes/Node.php');
 require_once ('classes/MainUI.php');
 require_once ('classes/Session.php');
 $smarty = SmartyWifidog::getObject();
 $db = AbstractDb::getObject();
-/*
- * Check for missing URL switch
- */
-if (isset ($_REQUEST['missing']) && $_REQUEST['missing'] == "url") {
-    $ui = MainUI::getObject();
-    $ui->displayError(_('For some reason, we were unable to determine the web site you initially wanted to see.  You should now enter a web address in your URL bar.'), false);
-    exit;
-}
 
 // Init values
 $node = null;
@@ -145,7 +136,7 @@ $ui->addContent('page_header', "<div class='welcome_msg'><div class='welcome_msg
 // While in validation period, alert user that he should validate his account ASAP
 if ($current_user && $current_user->getAccountStatus() == ACCOUNT_STATUS_VALIDATION) {
     $validationMsgHtml = "<div id='warning_message_area'>\n";
-    $validationMsgHtml .= _("An email with confirmation instructions was sent to your email address.");
+    $validationMsgHtml .= _("You NEED to confirm your account.  An email with confirmation instructions was sent to your email address.  If you don't see it in your inbox, make sure to look in your spam folder.");
     $validationMsgHtml .= sprintf(_("Your account has been granted %s minutes of access to retrieve your email and validate your account."), ($current_user->getNetwork()->getValidationGraceTime() / 60));
     $validationMsgHtml .= "</div>\n";
     $ui->addContent('page_header', $validationMsgHtml);

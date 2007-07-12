@@ -158,7 +158,7 @@ class BannerAdGroup extends ContentGroup {
     * @return void
     */
     public function processAdminUI() {
-        if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
+        if ($this->DEPRECATEDisOwner(User :: getCurrentUser()) || User :: getCurrentUser()->DEPRECATEDisSuperAdmin()) {
             parent :: processAdminUI();
             /* width and height */
             $name = "banner_add_group_{this->getId()}_widthxheight";

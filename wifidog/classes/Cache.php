@@ -140,7 +140,7 @@ class Cache
         $_doCache = false;
 
         // Check if PEAR::Cache_Lite is available.
-        if (defined("USE_CACHE_LITE") && USE_CACHE_LITE == true && Dependencies::check("Cache")) {
+        if (defined("USE_CACHE_LITE") && USE_CACHE_LITE == true && Dependency::check("Cache")) {
             // Check if caching has been enabled in config.php or local.config.php.
                 $_doCache = true;
         }

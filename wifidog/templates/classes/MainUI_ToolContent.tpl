@@ -59,7 +59,7 @@
 					{if !$shrinkLeftArea}
                     <p>
                         {"I am not logged in."|_}<br>
-                        <a id="login_link" href="{$base_ssl_path}login/{$loginParameters}">{"Login"|_}</a>
+                        <a id="login_link" href="{$base_ssl_path}login/">{"Login"|_}</a>
                     </p>
 					{/if}
                 {/if}

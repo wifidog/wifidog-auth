@@ -263,7 +263,7 @@ class ShoutBox extends Content {
      */
     public function processAdminUI() {
         $db=AbstractDb::getObject();
-        if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
+        if ($this->DEPRECATEDisOwner(User :: getCurrentUser()) || User :: getCurrentUser()->DEPRECATEDisSuperAdmin()) {
             parent :: processAdminUI();
 
             /*display_num_items*/

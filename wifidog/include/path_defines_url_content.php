@@ -50,6 +50,33 @@
  * 
  *   */
 
+require_once ('classes/VirtualHost.php');
+/**
+ * Check for SSL support
+ */
+try {
+$vhost = VirtualHost :: getCurrentVirtualHost();
+if ($vhost == null) {
+    $vhost = VirtualHost :: getDefaultVirtualHost();
+}
+
+    if ($vhost->isSSLAvailable()) {
+        /**
+         * @ignore
+         */
+        define("SSL_AVAILABLE", true);
+    } else {
+        /**
+         * @ignore
+         */
+        define("SSL_AVAILABLE", false);
+    }
+}
+catch (Exception $e){
+    //Leave this catch here, in case the schema update hasn't yet been done.
+            define("SSL_AVAILABLE", false);
+}
+    
 /**
  * Define base web address without SLL
  */

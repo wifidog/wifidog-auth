@@ -92,7 +92,7 @@ class AnonymisedDataExport extends StatisticReport
 
         /* User visits */
         // Only Super admin
-        if (!User :: getCurrentUser()->isSuperAdmin())
+        if (!User :: getCurrentUser()->DEPRECATEDisSuperAdmin())
         {
             $html .= "<p class='error'>"._("Access denied")."</p>";
         }

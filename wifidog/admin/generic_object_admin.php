@@ -69,6 +69,7 @@ require_once ('classes/Server.php');
 require_once ('classes/ContentTypeFilter.php');
 require_once ('classes/ProfileTemplate.php');
 require_once ('classes/InterfaceElements.php');
+require_once ('classes/Role.php');
 
 // Init values
 $ui = MainUI :: getObject();
@@ -132,16 +133,16 @@ if (!isset ($_REQUEST['action_delete'])) {
 switch ($_REQUEST['action']) {
     case "new" :
         $object = call_user_func(array (
-            $class,
-            'createNewObject'
+        $class,
+        'createNewObject'
         ));
         $_REQUEST['action'] = 'edit';
         break;
 
     case "process_new_ui" :
         $object = call_user_func(array (
-            $class,
-            'processCreateNewObjectUI'
+        $class,
+        'processCreateNewObjectUI'
         ));
 
         if (!$object) {
@@ -159,8 +160,8 @@ switch ($_REQUEST['action']) {
 
     default :
         $object = call_user_func(array (
-            $class,
-            'getObject'
+        $class,
+        'getObject'
         ), $_REQUEST['object_id']);
         break;
 }
@@ -275,43 +276,32 @@ switch ($_REQUEST['action']) {
                 $objectSelector = Node :: getSelectNodeUI('object_id', null, null, null, "table");
                 $displayEditButton = false;
                 break;
-
-            case "Network" :
-                $objectSelector = Network :: getSelectNetworkUI('object_id');
-                break;
-
-            case "Server" :
-                $newLongText = $addLongText;
-                $objectSelector = Server :: getSelectServerUI('object_id');
-                break;
-                
-            case "ContentTypeFilter" :
-                $objectSelector = ContentTypeFilter :: getSelectContentTypeFilterUI('object_id');
-                break;
-
-			case "ProfileTemplate" :
-                $objectSelector = ProfileTemplate :: getSelectProfileTemplateUI('object_id');
+            case "ProfileTemplate" :
                 $hasCreateNewObjectUI = false;
-                break;
-                
+
             default :
-                $objectSelector = "";
+                $newLongText = $addLongText;
+                $objectSelector = call_user_func(array (
+                $_REQUEST['object_class'],
+                'getSelectUI'
+        ), 'object_id');
                 break;
+
         }
 
-		if($hasCreateNewObjectUI == true) {
-		    $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
-		    $html .= "<input type='hidden' name='object_class' value='$class'>";
-		    $html .= "<input type='hidden' name='action' value='new_ui'>";
-		    $html .= "<input type='submit' name='new_submit' value='$newLongText'>\n";
-		    $html .= '</form>';
-		} else {
-			$html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
-		    $html .= "<input type='hidden' name='object_class' value='$class'>";
-		    $html .= "<input type='hidden' name='action' value='new'>";
-		    $html .= "<input type='submit' name='new_submit' value='$newLongText'>\n";
-		    $html .= '</form>';
-		}
+        if($hasCreateNewObjectUI == true) {
+            $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
+            $html .= "<input type='hidden' name='object_class' value='$class'>";
+            $html .= "<input type='hidden' name='action' value='new_ui'>";
+            $html .= "<input type='submit' name='new_submit' value='$newLongText'>\n";
+            $html .= '</form>';
+        } else {
+            $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
+            $html .= "<input type='hidden' name='object_class' value='$class'>";
+            $html .= "<input type='hidden' name='action' value='new'>";
+            $html .= "<input type='submit' name='new_submit' value='$newLongText'>\n";
+            $html .= '</form>';
+        }
 
         if ($displayShowAllButton) {
             $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
@@ -342,119 +332,119 @@ switch ($_REQUEST['action']) {
         }
         break;
 
-    case "new_ui" :
-        switch ($_REQUEST['object_class']) {
-            case "Node" :
-            case "Server" :
-            case "Content" :
-            case "ContentTypeFilter" :
-            case "ProfileTemplate" :
-                $newText = $addText;
-                break;
+            case "new_ui" :
+                switch ($_REQUEST['object_class']) {
+                    case "Node" :
+                    case "Server" :
+                    case "Content" :
+                    case "ContentTypeFilter" :
+                    case "ProfileTemplate" :
+                        $newText = $addText;
+                        break;
 
-            default :
-                break;
-        }
-
-        $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
-        $html .= "<input type='hidden' name='object_class' value='$class'>";
-        $html .= call_user_func(array (
-            $class,
-            'getCreateNewObjectUI'
-        ));
-        $html .= "<input type='hidden' name='action' value='process_new_ui'>";
-        $html .= "<input type=submit name='new_ui_submit' value='$newText'>";
-        $html .= '</form>';
-        break;
-
-    case "edit" :
-        // Process preview abilities
-        switch ($_REQUEST['object_class']) {
-            case "Network" :
-            case "Server" :
-            case "User" :
-            case "ContentTypeFilter" :
-            case "ProfileTemplate" :
-                $supportsPreview = false;
-                break;
-
-            default :
-                break;
-        }
-
-        // Process deletion abilities
-        switch ($_REQUEST['object_class']) {
-            case "User" :
-                $supportsDeletion = false;
-                break;
-            case "Network" :
-            case "Node" :
-            case "Server" :
-            case "ProfileTemplate" :
-            case "ContentTypeFilter" :
-                if (!User :: getCurrentUser()->isSuperAdmin()) {
-                    $supportsDeletion = false;
+                    default :
+                        break;
                 }
+
+                $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
+                $html .= "<input type='hidden' name='object_class' value='$class'>";
+                $html .= call_user_func(array (
+                $class,
+                'getCreateNewObjectUI'
+        ));
+                $html .= "<input type='hidden' name='action' value='process_new_ui'>";
+                $html .= "<input type=submit name='new_ui_submit' value='$newText'>";
+                $html .= '</form>';
                 break;
 
-            default :
-                break;
-        }
+                    case "edit" :
+                        // Process preview abilities
+                        switch ($_REQUEST['object_class']) {
+                            case "Network" :
+                            case "Server" :
+                            case "User" :
+                            case "ContentTypeFilter" :
+                            case "ProfileTemplate" :
+                                $supportsPreview = false;
+                                break;
 
-        if (!$object) {
-            echo "<div class='errormsg'>" . _("Sorry, the 'object_id' parameter must be specified") . "</div>";
-            exit;
-        }
+                            default :
+                                break;
+                        }
 
-        if (!empty ($_REQUEST['debug'])) {
-            $common_input .= "<input type='hidden' name='debug' value='true'>";
-        }
+                        // Process deletion abilities
+                        switch ($_REQUEST['object_class']) {
+                            case "User" :
+                                $supportsDeletion = false;
+                                break;
+                            case "Network" :
+                            case "Node" :
+                            case "Server" :
+                            case "ProfileTemplate" :
+                            case "ContentTypeFilter" :
+                                if (!User :: getCurrentUser()->DEPRECATEDisSuperAdmin()) {
+                                    $supportsDeletion = false;
+                                }
+                                break;
 
-        $common_input .= "<input type='hidden' name='object_id' value='" . $object->GetId() . "'>";
-        $common_input .= "<input type='hidden' name='object_class' value='" . get_class($object) . "'>";
+                            default :
+                                break;
+                        }
 
-        $html .= "<form name='generic_object_form' enctype='multipart/form-data' action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
-        $html .= $common_input;
-        $html .= $object->getAdminUI();
-        $html .= "<div class='generic_object_admin_edit'>";
-        $html .= "<input type='hidden' name='action' value='save'>";
-        $html .= "<input type='submit' class='submit' name='save_submit' value='" . _("Save") . " " . get_class($object) . "'>";
+                        if (!$object) {
+                            echo "<div class='errormsg'>" . _("Sorry, the 'object_id' parameter must be specified") . "</div>";
+                            exit;
+                        }
 
-        if ($supportsDeletion) {
-            $html .= "<script type='text/javascript'>";
-            $html .= "document.write(\"<input type='hidden' name='action_delete' value='no' id='form_action_delete' />\");";
-            $html .= "document.write(\"<input type='submit' class='submit' name='action_delete_submit' onmouseup='document.getElementById(\\\"form_action_delete\\\").value = \\\"delete\\\"' onkeyup='document.getElementById(\\\"form_action_delete\\\").value = \\\"delete\\\"' value='" . _("Delete") . " " . get_class($object) . "' />\");";
-            $html .= "</script>";
-        }
+                        if (!empty ($_REQUEST['debug'])) {
+                            $common_input .= "<input type='hidden' name='debug' value='true'>";
+                        }
 
-        $html .= '</form>';
+                        $common_input .= "<input type='hidden' name='object_id' value='" . $object->GetId() . "'>";
+                        $common_input .= "<input type='hidden' name='object_class' value='" . get_class($object) . "'>";
 
-        if ($supportsPreview) {
-            $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' target='_blank' method='post'>";
-            $html .= $common_input;
-            $html .= "<input type='hidden' name='action' value='preview'>";
-            $html .= "<input type='submit' class='submit' name='preview_submit' value='" . _("Preview") . " " . get_class($object) . "'>";
-            $html .= '</form>';
-        }
+                        $html .= "<form name='generic_object_form' enctype='multipart/form-data' action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
+                        $html .= $common_input;
+                        $html .= $object->getAdminUI();
+                        $html .= "<div class='generic_object_admin_edit'>";
+                        $html .= "<input type='hidden' name='action' value='save'>";
+                        $html .= "<input type='submit' class='submit' name='save_submit' value='" . _("Save") . " " . get_class($object) . "'>";
 
-        // Display delete button (without check for unchecked persitant switch) only if JavaScript has been disabled
-        if ($supportsDeletion) {
-            $html .= "<noscript>";
-            $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
-            $html .= $common_input;
-            $html .= "<input type='hidden' name='action' value='delete'>";
-            $html .= "<input type='submit' class='submit'  name='delete_submit' value='" . _("Delete") . " " . get_class($object) . "'>";
-            $html .= '</form>';
-            $html .= "</noscript>";
-        }
+                        if ($supportsDeletion) {
+                            $html .= "<script type='text/javascript'>";
+                            $html .= "document.write(\"<input type='hidden' name='action_delete' value='no' id='form_action_delete' />\");";
+                            $html .= "document.write(\"<input type='submit' class='submit' name='action_delete_submit' onmouseup='document.getElementById(\\\"form_action_delete\\\").value = \\\"delete\\\"' onkeyup='document.getElementById(\\\"form_action_delete\\\").value = \\\"delete\\\"' value='" . _("Delete") . " " . get_class($object) . "' />\");";
+                            $html .= "</script>";
+                        }
 
-        $html .= "<div class='clearbr'></div>";
-        $html .= "</div>";
-        break;
+                        $html .= '</form>';
 
-    default :
-        // Do nothing
-        break;
+                        if ($supportsPreview) {
+                            $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' target='_blank' method='post'>";
+                            $html .= $common_input;
+                            $html .= "<input type='hidden' name='action' value='preview'>";
+                            $html .= "<input type='submit' class='submit' name='preview_submit' value='" . _("Preview") . " " . get_class($object) . "'>";
+                            $html .= '</form>';
+                        }
+
+                        // Display delete button (without check for unchecked persitant switch) only if JavaScript has been disabled
+                        if ($supportsDeletion) {
+                            $html .= "<noscript>";
+                            $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
+                            $html .= $common_input;
+                            $html .= "<input type='hidden' name='action' value='delete'>";
+                            $html .= "<input type='submit' class='submit'  name='delete_submit' value='" . _("Delete") . " " . get_class($object) . "'>";
+                            $html .= '</form>';
+                            $html .= "</noscript>";
+                        }
+
+                        $html .= "<div class='clearbr'></div>";
+                        $html .= "</div>";
+                        break;
+
+                            default :
+                                // Do nothing
+                                break;
 }
 
 /*
@@ -470,7 +460,6 @@ $_htmlHeader .= "<script type='text/javascript' src='" . BASE_SSL_PATH . "js/int
 
 $ui->setTitle(_("Generic object editor") . " (" .  $objectClass . ": " . $objectId . ")");
 $ui->appendHtmlHeadContent($_htmlHeader);
-$ui->setToolSection('ADMIN');
 $ui->addContent('main_area_middle', "<div>" . $html . "</div>");
 $ui->display();
 

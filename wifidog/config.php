@@ -161,18 +161,6 @@ define('DEFAULT_LANG', 'fr_CA');
  */
 define('GMAPS_HOTSPOTS_MAP_ENABLED', true);
 
-/**
- * XSLT support for Hotspot status page
- * ====================================
- *
- * If you want to enable XSLT support for the Hotspot status page enable this
- * value.
- *
- * Enabling it will let you you display hostpot status in any format.
- * http://server_ip/hotspot_status.php?format=XML&xslt=http://xslt_server/xslt/wifidog_status.xsl
- */
-define('XSLT_SUPPORT', true);
-
 /********************************************************************\
  * ADVANCED CONFIGURATION                                           *
  *                                                                  *

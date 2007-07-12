@@ -586,7 +586,7 @@ class File extends Content
 	public function processAdminUI()
 	{
 		//echo "File::processAdminUI()<br/>\n";
-		if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
+		if ($this->DEPRECATEDisOwner(User :: getCurrentUser()) || User :: getCurrentUser()->DEPRECATEDisSuperAdmin())
 		{
 			parent :: processAdminUI();
 

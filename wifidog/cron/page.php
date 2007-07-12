@@ -63,7 +63,7 @@ function page_if_down_since($nodeObject, $minutes) {
 
             $nodeObject->setLastPaged(time());
 
-            foreach ($nodeObject->getTechnicalOfficers() as $officer) {
+            foreach ($nodeObject->DEPRECATEDgetTechnicalOfficers() as $officer) {
                 # Doesn't work if called from cron
                 #Locale :: setCurrentLocale(Locale::getObject($officer->getPreferedLocale()));
                 $mail = new Mail();

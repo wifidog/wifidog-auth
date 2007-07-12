@@ -77,7 +77,7 @@ class HTMLeditor extends Langstring
 		$this->allowed_html_tags = "<p><div><pre><address><h1><h2><h3><h4><h5><h6><br><b><strong><i><em><u><span><ol><ul><li><a><img><embed><table><tbody><thead><th><tr><td><hr>";
 
         // Check FCKeditor support
-        if (Dependencies::check("FCKeditor")) {
+        if (Dependency::check("FCKeditor")) {
             // Load FCKeditor class
             require_once('lib/FCKeditor/fckeditor.php');
             $this->_FCKeditorAvailable = true;
@@ -111,7 +111,7 @@ class HTMLeditor extends Langstring
 
         $html .= _("Language") . ": " . LocaleList::GenererFormSelect($locale, "langstrings_" . $contentId . "_substring_new_language", null, TRUE);
 
-		if (Dependencies::check("FCKeditor")) {
+		if (Dependency::check("FCKeditor")) {
             // Load FCKeditor class
             require_once('lib/FCKeditor/fckeditor.php');
 
@@ -171,8 +171,8 @@ class HTMLeditor extends Langstring
 
             $html .= "<ul class='admin_element_list'>\n";
 
-            $_sql = "SELECT * FROM content_langstring_entries WHERE content_langstring_entries.langstrings_id = '$this->id' ORDER BY locales_id";
-            $this->mBd->execSql($_sql, $_result, FALSE);
+            $sql = "SELECT * FROM content_langstring_entries WHERE content_langstring_entries.langstrings_id = '$this->id' ORDER BY locales_id";
+            $this->mBd->execSql($sql, $_result, FALSE);
 
             // Show existing content
             if ($_result != null) {

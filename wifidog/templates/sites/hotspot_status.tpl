@@ -46,28 +46,6 @@
 
 *}
 
-{if $sectionTOOLCONTENT}
-{*
-    BEGIN section TOOLCONTENT
-*}
-    <div id="login_form">
-        <ul>
-            {if $GMapsEnabled && !$realNodeId}
-                <li><a href="{$base_non_ssl_path}hotspots_map.php">{"Deployed HotSpots map"|_}</a></li>
-            {/if}
-            {if $PdfSupported}
-                <li><a href="?format=PDF">{"Get this list as a PDF file"|_}</a></li>
-            {/if}
-            <li><a href="?format=RSS">{"Get this list as a RSS feed"|_}</a></li>
-            <li><a href="?format=KML">{"Get this list for Google Earth"|_}</a></li>
-            <li><a href="{$base_non_ssl_path}node_list.php">{"Full node technical status (includes non-deployed nodes)"|_}</a></li>
-        </ul>
-    </div>
-{*
-    END section TOOLCONTENT
-*}
-{/if}
-
 {if $sectionMAINCONTENT}
 {*
     BEGIN section MAINCONTENT

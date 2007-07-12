@@ -35,73 +35,94 @@
 
 /**
  * @package    WiFiDogAuthServer
- * @subpackage Statistics
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
- * @version    Subversion $Id$
+ * @copyright  2007 Benoit Grégoire, Technologies Coeus inc.
+ * @version    Subversion $Id: GenericObject.php 1042 2006-05-20 20:28:27Z benoitg $
  * @link       http://www.wifidog.org/
  */
 
 /**
- * Load required classes
+ * Load content classes
  */
-require_once('classes/StatisticGraph.php');
 
 /**
- * An abstract class.  All statistics must inherit from this class
+ * Any object that implement this interface can be administered in a generic way.
  *
  * @package    WiFiDogAuthServer
- * @subpackage Statistics
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  */
-abstract class StatisticReport
+abstract class GenericDataObject implements GenericObject
 {
-    protected $stats; /**< The Statistics object passed to the constructor */
-    /** Get the report's name.  Must be overriden by the report class
-     * @return a localised string */
-    abstract public static function getReportName();
-
-    /** Get the report object.
-     * @param $statistics_object Mandatory to give the report it's context
-     * @return a localised string */
-    final public static function &getObject($classname, Statistics $statistics_object)
-    {
-        return new $classname ($statistics_object);
-    }
-
-    /** Is the report available.  (Are all Dependency available,
-     * are all preconditions in the statistics calss available, etc.)
-     * Always returns true unless overriden by the child class
-     * @param $statistics_object Mandatory to give the report it's context
-     * @param &$errormsg Optionnal error message returned by the class
-     * @return true or false */
-    public static function isAvailable(Statistics $statistics_object, & $errormsg = null)
-    {
-        return true;
-    }
-
-    /** Constructor, must be called by subclasses
-         * @param $statistics_object Mandatory to give the report it's context */
-    protected function __construct(Statistics $statistics_object)
-    {
-        $this->stats = $statistics_object;
-    }
-
-    /** Get the actual report.
-     * Classes must override this, but must call the parent's method with what
-     * would otherwise be their return value and return that instead.
-     * @param $child_html The child method's return value
-     * @return A html fragment
+    /** The object Id, a string */
+    protected $_id;
+    /** Get an instance of the object
+     * @see GenericObject
+     * @param $id The object id
+     * @return the Content object, or null if there was an error (an exception is also thrown)
      */
-    public function getReportUI($child_html)
+    //static public function &getObject($id);
+    /*
+    * Example implementation:
+    private static $instanceArray = array();
+    static function &getObject($class, $id) {
+    if(!isset(self::$instanceArray[$id]))
     {
-        $html = '';
-        $html .= "<fieldset>";
-        $html .= "<legend>".$this->getReportName()."</legend>";
-        $html .= $child_html;
-        $html .= "</fieldset>";
-        return $html;
+    self::$instanceArray[$id] = new $class($id);
+    }
+    return self::$instanceArray[$id];
+    }
+    */
+
+    /** Create a new object in the database
+     * @see GenericObject
+     * @return the newly created object, or null if there was an error (or if method is unsupported)
+     */
+    //static function createNewObject()
+
+    /** Get an interface to create a new object.
+     * @return html markup, or null.  If it returns null, this object does not support new
+     * object creation
+     */
+    public static function getCreateNewObjectUI() {
+        return null;
+    }
+
+    /** Process the new object interface.
+     *  Will return the new object if the user has the credentials
+     * necessary (Else an exception is thrown) and and the form was fully
+     * filled (Else the object returns null).
+     * @return the object or null if no new object was created.
+     */
+    public static function processCreateNewObjectUI() {
+        return null;
+    }
+
+    /** Retreives the id of the object
+     * @return The id, a string */
+    public function getId()
+    {
+        return $this->_id;
+    }
+    /** Retreives the admin interface of this object.
+     * @return The HTML fragment for this interface, or null.
+     * If it returns null, this object does not support new object creation */
+    public function getAdminUI() {
+        return null;
+    }
+
+    /** Process admin interface of this object.
+     */
+    public function processAdminUI() {
+        return null;
+    }
+
+    /** Delete this Object form it's storage mechanism
+     * @param &$errmsg Appends an explanation of the error on failure
+     * @return true on success, false on failure or access denied */
+    public function delete(& $errmsg) {
+        $errmsg .= sprintf(_("Delete not supported on class %s"),get_class($this));
+        return false;
     }
 
 }
@@ -113,5 +134,4 @@ abstract class StatisticReport
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
 

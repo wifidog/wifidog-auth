@@ -1,4 +1,4 @@
-<?php
+{*
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
@@ -34,47 +34,80 @@
 // +-------------------------------------------------------------------+
 
 /**
+ * Login page
+ *
  * @package    WiFiDogAuthServer
- * @author     Philippe April
- * @copyright  2004-2006 Philippe April
- * @version    Subversion $Id$
+ * @subpackage Templates
+ * @author     Max Horváth <max.horvath@freenet.de>
+ * @copyright  2006 Max Horváth, Horvath Web Consulting
+ * @version    Subversion $Id: $
  * @link       http://www.wifidog.org/
  */
 
-/**
- * Load common include file
- */
-require_once('admin_common.php');
+*}
 
-require_once('classes/Content.php');
-require_once('classes/MainUI.php');
+                <h1>{"Login or Signup here"|_}:</h1>
 
-// Init values
-$html = '';
 
-// Load MainUI class
-$ui = MainUI::getObject();
+			<p>
+            {$selectNetworkUI}
+            </p>
 
-// Get information about curent user
-$current_user = User::getCurrentUser();
+            {"Username (or email)"|_}:<br/>
+            <input type="text" name="username" id="form_username" tabindex="1" value="{$username}" size="20" /><br/>
+            {"Password"|_}:<br/>
+            <input type="password" name="password" id="form_password" tabindex="2" size="20" /><br/>
 
-if(!$current_user) {
-    // Redirect to login form automatically
-    header("Location: ../login/?origin=admin");
-    exit;
-} else {
-    $ui->setToolSection('ADMIN');
-}
+            <div id="form_errormsg" class="errormsg">
+			{if $error == null}
+			  &nbsp;
+			{else}
+			  {$error}
+			{/if}
+			</div>
 
-$ui->addContent('main_area_middle', $html);
-$ui->display();
+            <input class="submit" type="submit" tabindex="3" name="login_form_submit" value="{"Login"|_}"  onclick="return validateForm(this.form);"/>&nbsp;
+            <input class="submit" type="submit" tabindex="4" name="form_signup" value="{"Create a free account"|_}" onclick="location.href='{$base_ssl_path}signup.php';" />
+    <script type="text/javascript">
+        <!--
+		{literal}
+		var messages = {
+		{/literal}
+		  empty_form: "{"You must specify your username and password"|_}",
+		  username_required: "{'Username is required.'|_}",
+		  username_invalid: "{'Username contains invalid characters.'|_}",
+		  email_invalid: "{'A valid email address is required.'|_}",
+		  password_empty: "{'A password is required.'|_}",
+		  password_invalid: "{'Password contains invalid characters.'|_}",
+		  password_short: "{'Password is too short, it must be 6 characters minimum'|_}"
+		{literal}
+		};
 
-/*
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * c-hanging-comment-ender-p: nil
- * End:
- */
+		document.getElementById("form_username").focus();
 
-?>
+		function validateForm(form) {
+		  if (!isValidUsername(form.username)) {
+			if (isEmpty(form.username)) {
+			  document.getElementById("form_errormsg").innerHTML = messages.username_required;
+			  return false;
+			}
+			else {
+			  if (!isValidEmail(form.username)) {
+				document.getElementById("form_errormsg").innerHTML = messages.username_invalid;
+				return false;
+			  }
+			}
+		  }
+
+
+			if (isEmpty(form.password)){
+			  document.getElementById("form_errormsg").innerHTML = messages.password_empty;
+			return false;
+		  }
+
+		  return true;
+		}
+
+		{/literal}
+        //-->
+    </script>

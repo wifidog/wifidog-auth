@@ -52,11 +52,11 @@
  */
 require_once(dirname(__FILE__) . '/include/common.php');
 
-require_once('include/common_interface.php');
+require_once('classes/SmartyWifidog.php');
 require_once('classes/Network.php');
 require_once('classes/NodeList.php');
 $smarty = SmartyWifidog::getObject();
-$db = AbstractDb::getObject(); 
+$db = AbstractDb::getObject();
 if (!empty ($_REQUEST['format'])) {
     $format = $db->escapeString($_REQUEST['format']);
 } else {
@@ -72,16 +72,35 @@ if (!empty ($_REQUEST['network_id'])) {
 if ($network) {
     // Init node list type
     $nodeList = new NodeList($format, $network);
+    /**
+     * XSLT support for Hotspot status page
+     * ====================================
+     *
+     * If you want to enable XSLT support for the Hotspot status page enable this
+     * value.
+     *
+     * Enabling it will let you you display hostpot status in any format.
+     * http://server_ip/hotspot_status.php?format=XML&xslt=http://xslt_server/xslt/wifidog_status.xsl
+     */
+    // If a XSL transform stylesheet has been specified, try to use it.
+    if ($format == "XML" && !empty($_REQUEST['xslt'])) {
+        if(Dependency::check("xsl")) {// Load the XSLT
+            if($xslt_dom = @DomDocument::load($_REQUEST['xslt']) === false) {
+                echo sprintf("Unable to load XSTL : %s", $_REQUEST['xslt']);
+            }
+            else {
+                $xslt_proc = new XsltProcessor();
+                $xslt_proc->importStyleSheet($xslt_dom);
 
-    // If a XSL transform stylesheet has been specified, try to us it.
-    if ($format == "XML" && defined('XSLT_SUPPORT') && XSLT_SUPPORT && !empty($_REQUEST['xslt']) && ($xslt_dom = @DomDocument::load($_REQUEST['xslt'])) !== false) {
-        // Load the XSLT
-        $xslt_proc = new XsltProcessor();
-        $xslt_proc->importStyleSheet($xslt_dom);
-
-        // Prepare HTML
-        header("Content-Type: text/html; charset=UTF-8");
-        echo $xslt_proc->transformToXML($nodeList->nodeList->getOutput(true));
+                // Prepare HTML
+                header("Content-Type: text/html; charset=UTF-8");
+                echo $xslt_proc->transformToXML($nodeList->nodeList->getOutput(true));
+            }
+        }
+        else {
+            $dep = Dependency::getObject("xsl");
+            echo sprintf("Missing dependency: %s: %s", $dep->getId(), $dep->getDescription());
+        }
     } else {
         // Deliver node list
         $nodeList->nodeList->getOutput();

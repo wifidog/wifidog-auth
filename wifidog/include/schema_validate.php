@@ -47,7 +47,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 53);
+define('REQUIRED_SCHEMA_VERSION', 54);
 /** Used to test a new shecma version before modyfying the database */
 define('SCHEMA_UPDATE_TEST_MODE', false);
 /**
@@ -565,12 +565,12 @@ function real_update_schema($targetSchema) {
                 $sql .= "INSERT INTO content_rss_aggregator (content_id) VALUES ('$content_id');\n";
                 $sql .= "INSERT INTO content_rss_aggregator_feeds (content_id, url) VALUES ('$content_id', '" . $row['rss_url'] . "');\n";
                 $node = Node :: getObject($row['node_id']);
-                $owners = $node->getOwners();
-
-                foreach ($owners as $owner) {
-                    $sql .= "INSERT INTO content_has_owners (content_id, user_id) VALUES ('$content_id', '" . $owner->getId() . "');\n";
+                $db->execSql("SELECT user_id FROM node_stakeholders WHERE is_owner = true AND node_id='".$node->getId()."'", $ownersRow, false);
+                if ($ownersRow != null) {
+                    foreach ($ownersRow as $owner_row) {
+                    $sql .= "INSERT INTO content_has_owners (content_id, user_id) VALUES ('$content_id', '" . $owner_row['user_id'] . "');\n";
+                    }
                 }
-
                 $sql .= "INSERT INTO node_has_content (content_id, node_id) VALUES ('$content_id', '" . $row['node_id'] . "');\n";
             }
         }
@@ -750,12 +750,12 @@ function real_update_schema($targetSchema) {
                 $sql .= "INSERT INTO pictures (pictures_id) VALUES ('$content_id');\n";
 
                 $node = Node :: getObject($row['node_id']);
-                $owners = $node->getOwners();
-
-                foreach ($owners as $owner) {
-                    $sql .= "INSERT INTO content_has_owners (content_id, user_id) VALUES ('$content_id', '" . $owner->getId() . "');\n";
+                $db->execSql("SELECT user_id FROM node_stakeholders WHERE is_owner = true AND node_id='".$node->getId()."'", $ownersRow, false);
+                if ($ownersRow != null) {
+                    foreach ($ownersRow as $owner_row) {
+                    $sql .= "INSERT INTO content_has_owners (content_id, user_id) VALUES ('$content_id', '" . $owner_row['user_id'] . "');\n";
+                    }
                 }
-
                 $sql .= "INSERT INTO node_has_content (content_id, node_id, display_location) VALUES ('$content_id', '" . $row['node_id'] . "', 'login_page');\n";
             }
         }
@@ -1077,7 +1077,7 @@ function real_update_schema($targetSchema) {
     if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
         printUpdateVersion($new_schema_version);
         $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
-       $sql .= "CREATE TABLE content_shoutbox_messages \n";
+        $sql .= "CREATE TABLE content_shoutbox_messages \n";
         $sql .= "( \n";
         $sql .= "message_content_id text  PRIMARY KEY REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE, \n";
         $sql .= "shoutbox_id text NOT NULL REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE, \n";
@@ -1086,26 +1086,26 @@ function real_update_schema($targetSchema) {
         $sql .= "creation_date timestamp DEFAULT now() \n";
         $sql .= "); \n";
     }
-    
+
     $new_schema_version = 53;
     if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
         printUpdateVersion($new_schema_version);
         $sql .= "\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
-        
+
         $sql .= "CREATE TABLE content_type_filters \n";
         $sql .= "( \n";
         $sql .= "content_type_filter_id text NOT NULL PRIMARY KEY,\n";
         $sql .= "content_type_filter_label text,\n";
         $sql .= "content_type_filter_rules text NOT NULL CONSTRAINT content_type_filter_rules_not_empty_string CHECK (content_type_filter_rules != '')\n";
         $sql .= ");\n\n";
-        
+
         $sql .= "CREATE TABLE profile_templates \n";
         $sql .= "( \n";
         $sql .= "profile_template_id text NOT NULL PRIMARY KEY, \n";
         $sql .= "profile_template_label text,\n";
         $sql .= "creation_date timestamp DEFAULT now()\n";
         $sql .= ");\n\n";
-        
+
         $sql .= "CREATE TABLE profile_template_fields \n";
         $sql .= "( \n";
         $sql .= "profile_template_field_id text NOT NULL PRIMARY KEY,\n";
@@ -1117,14 +1117,14 @@ function real_update_schema($targetSchema) {
         $sql .= "semantic_id text\n";
         $sql .= ");\n";
         $sql .= "CREATE INDEX profile_template_fields_semantic_id ON profile_template_fields(semantic_id);\n\n";
-        
+
         $sql .= "CREATE TABLE network_has_profile_templates \n";
         $sql .= "( \n";
         $sql .= "network_id text REFERENCES networks ON UPDATE CASCADE ON DELETE CASCADE,\n";
         $sql .= "profile_template_id text REFERENCES profile_templates ON UPDATE CASCADE ON DELETE CASCADE,\n";
         $sql .= "PRIMARY KEY(network_id, profile_template_id) \n";
         $sql .= ");\n\n";
-        
+
         $sql .= "CREATE TABLE profiles \n";
         $sql .= "( \n";
         $sql .= "profile_id text NOT NULL PRIMARY KEY, \n";
@@ -1132,41 +1132,157 @@ function real_update_schema($targetSchema) {
         $sql .= "creation_date timestamp DEFAULT now(),\n";
         $sql .= "is_visible boolean DEFAULT TRUE\n";
         $sql .= ");\n\n";
-        
+
         $sql .= "CREATE TABLE user_has_profiles \n";
         $sql .= "( \n";
         $sql .= "user_id text REFERENCES users ON UPDATE CASCADE ON DELETE CASCADE,\n";
         $sql .= "profile_id text REFERENCES profiles ON UPDATE CASCADE ON DELETE CASCADE,\n";
         $sql .= "PRIMARY KEY(user_id, profile_id) \n";
         $sql .= ");\n\n";
-        
+
         $sql .= "CREATE TABLE profile_fields \n";
         $sql .= "( \n";
-        $sql .= "profile_field_id text NOT NULL PRIMARY KEY,\n"; 
+        $sql .= "profile_field_id text NOT NULL PRIMARY KEY,\n";
         $sql .= "profile_id text REFERENCES profiles ON UPDATE CASCADE ON DELETE CASCADE,\n";
         $sql .= "profile_template_field_id text REFERENCES profile_template_fields ON UPDATE CASCADE ON DELETE CASCADE, \n";
         $sql .= "content_id text REFERENCES content ON UPDATE CASCADE ON DELETE CASCADE, \n";
         $sql .= "last_modified timestamp DEFAULT now()\n";
         $sql .= ");\n";
     }
-    
-    /*
-    $new_schema_version = ;
+
+    $new_schema_version = 54;
     if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
         printUpdateVersion($new_schema_version);
-        $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
-        $sql .= "\n";
-        $sql .= "\n";
-        $sql .= "\n";
-        $sql .= "\n";
-        $sql .= "\n";
-        $sql .= "\n";
-        $sql .= "\n";
-        $sql .= "\n";
-        $sql .= "\n";
-        $sql .= "\n";
-        $sql .= "\n";
+        $sql .= "\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+
+        $sql .= "CREATE TABLE stakeholder_types \n";
+        $sql .= "( \n";
+        $sql .= "stakeholder_type_id text NOT NULL PRIMARY KEY CONSTRAINT stakeholder_types_id_not_empty_string CHECK (stakeholder_type_id != '')\n";
+        $sql .= ");\n\n";
+        $sql .= "INSERT into stakeholder_types (stakeholder_type_id) VALUES ('Node');\n\n";
+        $sql .= "INSERT into stakeholder_types (stakeholder_type_id) VALUES ('Network');\n\n";
+        $sql .= "INSERT into stakeholder_types (stakeholder_type_id) VALUES ('Server');\n\n";
+        $sql .= "INSERT into stakeholder_types (stakeholder_type_id) VALUES ('Content');\n\n";
+
+        $sql .= "CREATE TABLE permissions \n";
+        $sql .= "( \n";
+        $sql .= "permission_id text NOT NULL PRIMARY KEY CONSTRAINT permission_rules_id_not_empty_string CHECK (permission_id != ''),\n";
+        $sql .= "stakeholder_type_id text NOT NULL REFERENCES stakeholder_types ON UPDATE CASCADE ON DELETE CASCADE\n";
+        $sql .= ");\n\n";
+
+        $sql .= "CREATE TABLE roles \n";
+        $sql .= "( \n";
+        $sql .= "role_id text NOT NULL PRIMARY KEY CONSTRAINT roles_rules_id_not_empty_string CHECK (role_id != ''), \n";
+        $sql .= "role_description_content_id text REFERENCES content ON UPDATE CASCADE ON DELETE SET NULL,\n";
+        $sql .= "is_system_role boolean NOT NULL DEFAULT FALSE,\n";
+        $sql .= "stakeholder_type_id text NOT NULL REFERENCES stakeholder_types ON UPDATE CASCADE ON DELETE CASCADE,\n";
+        $sql .= "role_creation_date timestamp DEFAULT now()\n";
+        $sql .= ");\n\n";
+
+        $sql .= "CREATE TABLE role_has_permissions \n";
+        $sql .= "( \n";
+        $sql .= "role_id text REFERENCES roles ON UPDATE CASCADE ON DELETE CASCADE,\n";
+        $sql .= "permission_id text REFERENCES permissions ON UPDATE CASCADE ON DELETE CASCADE,\n";
+        $sql .= "PRIMARY KEY(role_id, permission_id) \n";
+        $sql .= ");\n\n";
+
+        $sql .= "CREATE TABLE stakeholders \n";
+        $sql .= "( \n";
+        $sql .= "user_id text REFERENCES users ON UPDATE CASCADE ON DELETE CASCADE,\n";
+        $sql .= "role_id text REFERENCES roles ON UPDATE CASCADE ON DELETE CASCADE,\n";
+        $sql .= "object_id text NOT NULL CONSTRAINT user_has_roles_objct_id_not_empty_string CHECK (object_id != ''),\n";
+        $sql .= "PRIMARY KEY(user_id, role_id, object_id) \n";
+        $sql .= ");\n\n";
+
+        /* Fix the Virtual Host/Server confusion... */
+        $sql .= "CREATE TABLE virtual_hosts ( \n";
+        $sql .= "  virtual_host_id text NOT NULL PRIMARY KEY,\n";
+        $sql .= "  hostname text NOT NULL UNIQUE CHECK (hostname<>''),\n";
+        $sql .= "  creation_date date NOT NULL DEFAULT now(),\n";
+        $sql .= "  ssl_available BOOLEAN NOT NULL DEFAULT FALSE,\n";
+        $sql .= "  gmaps_api_key text,\n";
+        $sql .= "  default_network text NOT NULL REFERENCES networks ON UPDATE cascade ON DELETE RESTRICT\n";
+        $sql .= ");\n";
+        $sql .= "INSERT INTO virtual_hosts (virtual_host_id, hostname, creation_date, ssl_available, gmaps_api_key, default_network) (SELECT server_id, hostname, creation_date, ssl_available, gmaps_api_key, (SELECT network_id FROM networks WHERE is_default_network = true LIMIT 1) FROM servers);\n";
+        $sql .= "ALTER TABLE networks DROP column is_default_network;\n";
+
+        $sql .= "CREATE TABLE server ( \n";
+        $sql .= "  server_id text NOT NULL PRIMARY KEY,\n";
+        $sql .= "  creation_date date NOT NULL DEFAULT now(),\n";
+        $sql .= "  default_virtual_host text NOT NULL REFERENCES virtual_hosts ON UPDATE cascade ON DELETE RESTRICT\n";
+        $sql .= ");\n";
+        $sql .= "INSERT INTO server (server_id, default_virtual_host) VALUES ('SERVER_ID', (SELECT server_id FROM servers WHERE is_default_server = true LIMIT 1));\n";
+        $sql .= "DROP TABLE servers;\n";
+
+        $sql .= "DROP TABLE network_stakeholders; \n";
+
+        $sql .= "CREATE TABLE network_stakeholders \n";
+        $sql .= "( \n";
+        $sql .= "  CONSTRAINT fk_network FOREIGN KEY (object_id) REFERENCES networks (network_id) ON UPDATE CASCADE ON DELETE CASCADE, \n";
+        $sql .= "PRIMARY KEY(user_id, role_id, object_id) \n";
+        $sql .= ") inherits(stakeholders);\n\n";
+
+        /* Convert superusers */
+
+        $sql .= "DROP TABLE administrators; \n";
+
+        $sql .= "CREATE TABLE server_stakeholders \n";
+        $sql .= "( \n";
+        $sql .= "  CONSTRAINT fk_network FOREIGN KEY (object_id) REFERENCES server (server_id) ON UPDATE CASCADE ON DELETE CASCADE, \n";
+        $sql .= "PRIMARY KEY(user_id, role_id, object_id) \n";
+        $sql .= ") inherits(stakeholders);\n\n";
+
+        $sql .= "INSERT into roles (role_id, stakeholder_type_id) VALUES ('SERVER_SYSADMIN', 'Server');\n";
+        $sql .= "INSERT into roles (role_id, stakeholder_type_id) VALUES ('NETWORK_SYSADMIN', 'Network');\n";
+
+        $db->execSql("SELECT * FROM administrators", $results, false);
+        foreach ($results as $row) {
+            $sql .= "INSERT into server_stakeholders (user_id, role_id, object_id) VALUES ('{$row['user_id']}', 'SERVER_SYSADMIN', (SELECT server_id FROM server LIMIT 1));\n";
+            $db->execSql("SELECT network_id FROM networks", $networkRows, false);
+            foreach ($networkRows as $networkRow) {
+                $sql .= "INSERT into network_stakeholders (user_id, role_id, object_id) VALUES ('{$row['user_id']}', 'NETWORK_SYSADMIN', '{$networkRow['network_id']}');\n";
+            }
+        }
+
+        $sql .= "DROP TABLE node_stakeholders; \n";
+
+        $sql .= "CREATE TABLE node_stakeholders \n";
+        $sql .= "( \n";
+        $sql .= "  CONSTRAINT fk_nodes FOREIGN KEY (object_id) REFERENCES nodes (node_id) ON UPDATE CASCADE ON DELETE CASCADE, \n";
+        $sql .= "PRIMARY KEY(user_id, role_id, object_id) \n";
+        $sql .= ") inherits(stakeholders);\n\n";
+
+        /* Convert node owners and tech officer */
+        $sql .= "INSERT into roles (role_id, stakeholder_type_id) VALUES ('NODE_OWNER', 'Node');\n";
+        $db->execSql("SELECT * FROM node_stakeholders WHERE is_owner = true", $results, false);
+        foreach ($results as $row) {
+            $sql .= "INSERT into node_stakeholders (user_id, role_id, object_id) VALUES ('{$row['user_id']}', 'NODE_OWNER', '{$row['node_id']}');\n";
+        }
+        $sql .= "INSERT into roles (role_id, stakeholder_type_id) VALUES ('NODE_TECH_OFFICER', 'Node');\n";
+        $db->execSql("SELECT * FROM node_stakeholders WHERE is_tech_officer = true", $results, false);
+        foreach ($results as $row) {
+            $sql .= "INSERT into node_stakeholders (user_id, role_id, object_id) VALUES ('{$row['user_id']}', 'NODE_TECH_OFFICER', '{$row['node_id']}');\n";
+        }
+
     }
+
+    /*
+     $new_schema_version = ;
+     if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
+     printUpdateVersion($new_schema_version);
+     $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+     $sql .= "\n";
+     $sql .= "\n";
+     $sql .= "\n";
+     $sql .= "\n";
+     $sql .= "\n";
+     $sql .= "\n";
+     $sql .= "\n";
+     $sql .= "\n";
+     $sql .= "\n";
+     $sql .= "\n";
+     $sql .= "\n";
+     }
      */
     if (SCHEMA_UPDATE_TEST_MODE) {
         $retval = $db->execSqlUpdate("BEGIN;\n$sql\nROLLBACK;\n", true);

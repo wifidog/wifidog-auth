@@ -411,7 +411,7 @@ class Langstring extends Content {
         // Init values.
         $result = null;
 
-        if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
+        if ($this->DEPRECATEDisOwner(User :: getCurrentUser()) || User :: getCurrentUser()->DEPRECATEDisSuperAdmin()) {
             parent :: processAdminUI();
             $generateur_form_select = new FormSelectGenerator();
             $sql = "SELECT * FROM content_langstring_entries WHERE content_langstring_entries.langstrings_id = '$this->id'";
@@ -532,9 +532,9 @@ class Langstring extends Content {
         } else {
             $db = AbstractDb :: getObject();
 
-            if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
-                $_sql = "DELETE FROM content WHERE content_id='$this->id'";
-                $db->execSqlUpdate($_sql, false);
+            if ($this->DEPRECATEDisOwner(User :: getCurrentUser()) || User :: getCurrentUser()->DEPRECATEDisSuperAdmin()) {
+                $sql = "DELETE FROM content WHERE content_id='$this->id'";
+                $db->execSqlUpdate($sql, false);
                 $_retval = true;
 
                 // Create new cache object.

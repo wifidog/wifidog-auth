@@ -34,33 +34,43 @@
 // +-------------------------------------------------------------------+
 
 /**
- * Common objects which don't need a session for every call and ping from a
- * gateway
- *
- * The purpose of this file is to have common objects and things declared but
- * NOT to have them in common.php because common.php is also used for functions
- * called by the gateway and we do not (for example) want to create a session
- * for every call and pings from the gateways.
- *
  * @package    WiFiDogAuthServer
- * @author     Philippe April
- * @copyright  2005-2006 Philippe April
- * @version    Subversion $Id$
+ * @subpackage Security
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2007 Benoit Grégoire, Technologies Coeus inc.
+ * @version    Subversion $Id: $
  * @link       http://www.wifidog.org/
  */
 
-/**
- * Include PHP initialization file file
- */
-require_once('init_php.php');
 
 /**
- * Load required files
+ * This class represent the different stakeholder types for permissions. 
+ * The stakeholder id is actually the table name storing the object to which the role applies
+ *
+ * @package    WiFiDogAuthServer
+ * @subpackage Security
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @copyright  2007 Benoit Grégoire, Technologies Coeus inc.
  */
-require_once('classes/Session.php');
-require_once('classes/SmartyWifidog.php');
-require_once('classes/User.php');
-require_once('include/language.php');
+class SecurityException extends Exception
+{
+    // Redefine the exception so message isn't optional
+    public function __construct($message, $code = 0) {
+        // some code
+   
+        // make sure everything is assigned properly
+        parent::__construct($message, $code);
+    }
+
+    // custom string representation of object
+    public function __toString() {
+        return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
+    }
+
+    public function customFunction() {
+        echo "A Custom function for this type of exception\n";
+    }
+}
 
 /*
  * Local variables:
@@ -69,5 +79,3 @@ require_once('include/language.php');
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
-?>

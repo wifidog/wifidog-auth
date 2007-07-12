@@ -197,7 +197,7 @@ $dir_array = array (
         )
         );
 
-        $loadedExtensions = array_flip(get_loaded_extensions()); # Debug : An empty array for $loadedExtensions will show needed dependencies
+        $loadedExtensions = array_flip(get_loaded_extensions()); # Debug : An empty array for $loadedExtensions will show needed Dependency
 
         $optionsInfo = array (
         /* TODO:  SSL is now configured in the DB, but should still be handled by the install script
@@ -209,11 +209,6 @@ $dir_array = array (
          */
     'CONF_USE_CRON_FOR_DB_CLEANUP' => array (
         'title' => 'Use cron for DB cleanup',
-        'depend' => 'return 1;',
-        'message' => '&nbsp;'
-        ),
-    'XSLT_SUPPORT' => array (
-        'title' => 'XSLT Support',
         'depend' => 'return 1;',
         'message' => '&nbsp;'
         ),
@@ -493,7 +488,7 @@ EndHTML;
                 break;
             ###################################
             case 'version' :
-                print "<h1>Checking dependencies</h1>";
+                print "<h1>Checking Dependency</h1>";
                 print "<table BORDER=\"1\">";
 
                 /* PHP version check */
@@ -513,8 +508,8 @@ EndHTML;
                 }
                 print "</tr></table><BR>";
                 
-                require_once ('classes/Dependencies.php');
-                $components = Dependencies::getDependencies();
+                require_once ('classes/Dependency.php');
+                $components = Dependency::getDependency();
                  print "<table BORDER=\"1\">\n";
                 print "<tr><th>Component</th><th>Type</th><th>Status</th><th>Description</th><th>Message</th></tr>";
                  
@@ -532,7 +527,7 @@ EndHTML;
                    echo "<td>$component_key</td>\n";
                     }
                      echo "<td>$type</td>\n";
-                    $available = Dependencies::check($component_key, $message);
+                    $available = Dependency::check($component_key, $message);
                     if ($available) {
                         print "$okMsg<td>$description</td><td>&nbsp;</td></tr>";
                     }
@@ -863,15 +858,17 @@ EndHTML;
                 print "<UL><LI>Postgresql database connection : ";
 
                 $conn_string = "host=$CONF_DATABASE_HOST dbname=$CONF_DATABASE_NAME user=$CONF_DATABASE_USER password=$CONF_DATABASE_PASSWORD";
-                $ptr_connexion = pg_connect($conn_string) or die(); # or die("Couldn't Connect ==".pg_last_error()."==<BR>");
+                $ptr_connexion = pg_connect($conn_string);
 
-                #if ($ptr_connexion == TRUE) {
-                print "Success<BR>";
-                #}
-                #        } else {
-                #          print "Unable to connect to database on $CONF_DATABASE_HOST<BR>The database must be online to continue.<BR>Please go back and retry with correct values";
-                #          navigation(array(array("title" => "Back", "page" => "database")));
-                #        }
+                if ($ptr_connexion == TRUE) {
+                    print "Success<BR>";
+                }
+                else {
+                    print "Unable to connect to database on $CONF_DATABASE_HOST<BR>The database must be online to continue.<BR>Please go back and retry with correct values";
+                    refreshButton();
+                    navigation(array(array("title" => "Back", "page" => "database")));
+                    die();
+                }
 
                 $postgresql_info = pg_version();
                 #        $postgresql_info['server'];
@@ -1159,11 +1156,13 @@ EndHTML;
             $user_id = $created_user->getId();
 
             # Add user to admin table, hide his username and set his account status to 1 (allowed)
-            $sql = "INSERT INTO administrators (user_id) VALUES ('$user_id'); UPDATE users SET  account_status='1', never_show_username=true WHERE user_id='$user_id'";
+            $sql = "INSERT INTO server_stakeholders (user_id, role_id, object_id) VALUES ('$user_id', 'SERVER_SYSADMIN', 'SERVER_ID');\n";
+            $sql .= "INSERT INTO network_stakeholders (user_id, role_id, object_id) VALUES ('$user_id', 'NETWORK_SYSADMIN', 'default-network');\n";
+            $sql .= "UPDATE users SET account_status='1' WHERE user_id='$user_id'";
             $result = pg_query($connection, $sql);
         }
 
-        $sql = "SELECT * FROM users NATURAL JOIN administrators WHERE account_origin = 'default-network'";
+        $sql = "SELECT * FROM users NATURAL JOIN server_stakeholders WHERE account_origin = 'default-network'";
         $result = pg_query($connection, $sql);
         $result_array = pg_fetch_all($result);
         $username_db = $result_array[0]['username'];
@@ -1390,7 +1389,7 @@ EndHTML;
 
 <em>Change Log</em>
   15-08-2005 : Bugs correction + comments added
-  11-08-2005 : Options rewrite with foreach and dependencies
+  11-08-2005 : Options rewrite with foreach and Dependency
   09-08-2005 : Admin user creation + network configuration
   27-07-2005 : Added jpgraph install
   26-07-2005 : Added minimal security password validation

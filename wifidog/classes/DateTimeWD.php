@@ -60,7 +60,7 @@ class DateTimeWD
     /**
      * @todo Complete this
      */
-    public static function getSelectDateTimeUI(DateTimeWD $datetime, $user_prefix, $interface_type, $id = "")
+    public static function getSelectDateTimeUI(DateTimeWD $datetime, $userPrefix, $interface_type, $id = "")
     {
         $html = "";
         switch($interface_type)
@@ -75,14 +75,14 @@ class DateTimeWD
 
         case self::INTERFACE_DATETIME_FIELD:
             $str = $datetime->getIso8601FormattedString();
-            $html = InterfaceElements::generateInputText($user_prefix, $str, $id);
+            $html = InterfaceElements::generateInputText($userPrefix, $str, $id);
             break;
         }
 
         return $html;
     }
 
-    static function processSelectDateTimeUI($user_prefix, $interface_type)
+    static function processSelectDateTimeUI($userPrefix, $interface_type)
     {
         $object = null;
 
@@ -97,7 +97,7 @@ class DateTimeWD
             break;
 
         case self::INTERFACE_DATETIME_FIELD:
-            $object = new self($_REQUEST[$user_prefix]);
+            $object = new self($_REQUEST[$userPrefix]);
             break;
 
         }

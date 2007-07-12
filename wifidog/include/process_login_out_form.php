@@ -35,76 +35,18 @@
 
 /**
  * @package    WiFiDogAuthServer
- * @subpackage Statistics
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
- * @version    Subversion $Id$
+ * @copyright  2007 Benoit Grégoire, Technologies Coeus inc.
+ * @version    Subversion $Id: $
  * @link       http://www.wifidog.org/
  */
 
 /**
- * Load required classes
+ * Load required files
  */
-require_once('classes/StatisticGraph.php');
+require_once('classes/Authenticator.php');
 
-/**
- * An abstract class.  All statistics must inherit from this class
- *
- * @package    WiFiDogAuthServer
- * @subpackage Statistics
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
- */
-abstract class StatisticReport
-{
-    protected $stats; /**< The Statistics object passed to the constructor */
-    /** Get the report's name.  Must be overriden by the report class
-     * @return a localised string */
-    abstract public static function getReportName();
-
-    /** Get the report object.
-     * @param $statistics_object Mandatory to give the report it's context
-     * @return a localised string */
-    final public static function &getObject($classname, Statistics $statistics_object)
-    {
-        return new $classname ($statistics_object);
-    }
-
-    /** Is the report available.  (Are all Dependency available,
-     * are all preconditions in the statistics calss available, etc.)
-     * Always returns true unless overriden by the child class
-     * @param $statistics_object Mandatory to give the report it's context
-     * @param &$errormsg Optionnal error message returned by the class
-     * @return true or false */
-    public static function isAvailable(Statistics $statistics_object, & $errormsg = null)
-    {
-        return true;
-    }
-
-    /** Constructor, must be called by subclasses
-         * @param $statistics_object Mandatory to give the report it's context */
-    protected function __construct(Statistics $statistics_object)
-    {
-        $this->stats = $statistics_object;
-    }
-
-    /** Get the actual report.
-     * Classes must override this, but must call the parent's method with what
-     * would otherwise be their return value and return that instead.
-     * @param $child_html The child method's return value
-     * @return A html fragment
-     */
-    public function getReportUI($child_html)
-    {
-        $html = '';
-        $html .= "<fieldset>";
-        $html .= "<legend>".$this->getReportName()."</legend>";
-        $html .= $child_html;
-        $html .= "</fieldset>";
-        return $html;
-    }
-
-}
+Authenticator::processLoginUI($errmsg);
 
 /*
  * Local variables:
@@ -113,5 +55,3 @@ abstract class StatisticReport
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
-

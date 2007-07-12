@@ -49,7 +49,7 @@ require_once("classes/Utils.php");
 require_once("include/smarty.resource.string.php");
 
 // Check if Smarty installed, if not redirect user to web-base installation
-if (Dependencies::check("Smarty", $errmsg)) {
+if (Dependency::check("Smarty", $errmsg)) {
     // Load Smarty library
     require_once('lib/smarty/Smarty.class.php');
 } else {
@@ -124,8 +124,9 @@ function smarty_modifier_fsize_format($size,$format = '',$precision = 2, $dec_po
  * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class SmartyWifidog extends Smarty {
-    public static function getObject() {
-        return new self();
+    public static function &getObject() {
+        $retval = new self();
+        return $retval;
     }
     private function __construct()
     {

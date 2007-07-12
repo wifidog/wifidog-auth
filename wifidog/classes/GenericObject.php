@@ -59,12 +59,24 @@ interface GenericObject
      * @param $id The object id
      * @return the Content object, or null if there was an error (an exception is also thrown)
      */
-    static public function getObject($id);
+    static public function &getObject($id);
+        /*
+     * Example implementation:    
+     private static $instanceArray = array();
+     static function &getObject($class, $id) {
+        if(!isset(self::$instanceArray[$id]))
+        {
+            self::$instanceArray[$id] = new $class($id);
+        }
+        return self::$instanceArray[$id];
+    }
+     */
+
     /** Create a new object in the database
      * @see GenericObject
      * @return the newly created object, or null if there was an error
      */
-    static function createNewObject();
+    //static function createNewObject();
 
     /** Get an interface to create a new object.
     * @return html markup
@@ -78,7 +90,6 @@ interface GenericObject
      * @return the node object or null if no new node was created.
      */
     static function processCreateNewObjectUI();
-
 
     /** Retreives the id of the object
      * @return The id, a string */

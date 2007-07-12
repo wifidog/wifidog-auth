@@ -65,13 +65,13 @@ abstract class StatisticGraph
 
     /** Get the report object.
      * @return a localised string */
-    final public static function getObject($classname)
+    final public static function &getObject($classname)
     {
         require_once('classes/StatisticGraph/' . $classname . '.php');
         return new $classname ();
     }
 
-    /** Is the graph available.  (Are all dependencies available,
+    /** Is the graph available.  (Are all Dependency available,
      * are all preconditions in the statistics class available, etc.) Always
      * returns true unless overriden by the child class
      * @param &$errormsg Optionnal error message returned by the class
@@ -79,7 +79,7 @@ abstract class StatisticGraph
     public function isAvailable(& $errormsg = null)
     {
         $retval = false;
-        if (Dependencies :: check("Image_Graph", $errormsg))
+        if (Dependency :: check("Image_Graph", $errormsg))
         {
             require_once ("Image/Graph.php");
             $retval = true;

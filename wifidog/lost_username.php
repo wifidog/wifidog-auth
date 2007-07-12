@@ -52,7 +52,6 @@
  */
 require_once(dirname(__FILE__) . '/include/common.php');
 
-require_once('include/common_interface.php');
 require_once('classes/User.php');
 require_once('classes/MainUI.php');
 $smarty = SmartyWifidog::getObject();
@@ -185,7 +184,7 @@ if (isset($_REQUEST["auth_source"])) {
     $smarty->assign('selected_auth_source', $_REQUEST["auth_source"]);
 }
 
-$smarty->assign('SelectNetworkUI', Network::getSelectNetworkUI('auth_source'));
+$smarty->assign('SelectNetworkUI', Network::getSelectUI('auth_source'));
 
 // Compile HTML code
 $html_body = $smarty->fetch("templates/sites/lost_username.tpl");

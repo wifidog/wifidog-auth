@@ -63,7 +63,7 @@ if(!empty($_REQUEST['node_id']))
     $node = Node::getObject($_REQUEST['node_id']);
 
     // Add Google Maps JavaScript ( must set config values )
-    $html_headers = "<script src=\"http://maps.google.com/maps?file=api&v=1&key=" . Server::getCurrentServer()->getGoogleAPIKey() . "\" type=\"text/javascript\"></script>";
+    $html_headers = "<script src=\"http://maps.google.com/maps?file=api&v=1&key=" . VirtualHost::getCurrentVirtualHost()->getGoogleAPIKey() . "\" type=\"text/javascript\"></script>";
     $ui->appendHtmlHeadContent($html_headers);
 
     // Create HTML body

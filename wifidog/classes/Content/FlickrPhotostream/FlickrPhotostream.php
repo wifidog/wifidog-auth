@@ -105,7 +105,7 @@ class FlickrPhotostream extends Content
 
         parent :: __construct($content_id);
 
-        if (Dependencies::check("Phlickr", $errmsg)) {
+        if (Dependency::check("Phlickr", $errmsg) && Dependency::check('curl', $errmsg)) {
             // Defined globals
             $db = AbstractDb::getObject();
 
@@ -618,7 +618,7 @@ $api = $this->getFlickrApi();
 
             $html .= $subclass_admin_interface;
         } else {
-            $html .= _("PEAR::Phlickr is not installed");
+            $html .= _("PEAR::Phlickr or PHP mudule CURL is not installed");
         }
 
         $html .= "</fieldset>\n";
@@ -628,7 +628,7 @@ $api = $this->getFlickrApi();
 
     function processAdminUI()
     {
-        if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin())
+        if ($this->DEPRECATEDisOwner(User :: getCurrentUser()) || User :: getCurrentUser()->DEPRECATEDisSuperAdmin())
         {
             parent :: processAdminUI();
             $generator = new FormSelectGenerator();
@@ -891,7 +891,7 @@ $api = $this->getFlickrApi();
     public function delete(& $errmsg)
     {
         $user = User :: getCurrentUser();
-        if (!$this->isOwner($user) || !$user->isSuperAdmin())
+        if (!$this->DEPRECATEDisOwner($user) || !$user->DEPRECATEDisSuperAdmin())
         {
             $errmsg = _('Access denied!');
         }

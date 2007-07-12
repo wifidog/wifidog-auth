@@ -55,6 +55,9 @@ require_once('classes/Cache.php');
  * @author     Max Horváth <max.horvath@freenet.de>
  * @copyright  2006 Max Horváth, Horvath Web Consulting
  */
+/**
+ * Directory of NodeList classes
+ */   define ('NODE_LIST_CLASSES_DIR', WIFIDOG_ABS_FILE_PATH . "classes/NodeLists");
 class NodeList {
     /**
      * Directory of NodeList classes
@@ -63,7 +66,7 @@ class NodeList {
      *
 
      */
-    private static $_classesDir;
+
 
     /**
      * NodeList being used
@@ -82,12 +85,9 @@ class NodeList {
      */
     public function __construct($nodeListType, &$network)
     {
-        // Set path to the NodeList classes
-        self::$_classesDir = WIFIDOG_ABS_FILE_PATH . "classes/NodeLists";
-
         // Check if node list type exists
-        if (in_array("NodeList" . $nodeListType, self::getAvailableNodeListTypes())) {
-            require_once(self::$_classesDir . "/NodeList" . $nodeListType . ".php");
+        if (in_array($nodeListType, self::getAvailableNodeListTypes())) {
+            require_once(NODE_LIST_CLASSES_DIR . "/NodeList" . $nodeListType . ".php");
         } else {
             throw new Exception(_("The node list type '$nodeListType' is not supported!"));
         }
@@ -129,7 +129,7 @@ class NodeList {
         }
 
         if (!$_useCache) {
-            $_dir = self::$_classesDir;
+            $_dir = NODE_LIST_CLASSES_DIR;
             $_dirHandle = @opendir($_dir);
 
             if ($_dirHandle) {
@@ -139,7 +139,7 @@ class NodeList {
                     if ($_filename != '.' && $_filename != '..') {
                         $_matches = null;
 
-                        if (preg_match("/^(.*)\.php$/", $_filename, $_matches) > 0) {
+                        if (preg_match("/^NodeList(.*)\.php$/", $_filename, $_matches) > 0) {
                             // Only add files containing a corresponding NodeList class
                             if (is_file("{$_dir}/{$_matches[0]}")) {
                                 $_nodeListTypes[] = $_matches[1];
@@ -165,6 +165,37 @@ class NodeList {
 
         return $_nodeListTypes;
     }
+    /** Menu hook function */
+    static public function hookMenu() {
+        $items = array();
+
+        $items[] = array('path' => 'node_lists/map',
+        'title' => _("Deployed HotSpots map"),
+        'url' => BASE_URL_PATH."hotspots_map.php"
+		);
+
+        $listTypes=self::getAvailableNodeListTypes();
+        //pretty_print_r($listTypes);
+        foreach ($listTypes as $type) {
+            $items[] = array('path' => 'node_lists/'.$type,
+            'title' => sprintf(_("List in %s format"), $type),
+            'url' => BASE_URL_PATH."hotspot_status.php?format=$type"
+            );
+        }
+        $items[] = array('path' => 'node_lists/technical_status',
+        'title' => _("Full node technical status (includes non-deployed nodes)"),
+        'url' => BASE_URL_PATH."node_list.php"
+		);
+        $items[] = array('path' => 'node_lists',
+        'title' => _('Node lists'),
+        'type' => MENU_ITEM_GROUPING);
+
+
+
+
+        return $items;
+    }
+
 }
 
 /*

@@ -96,7 +96,7 @@ class ContentTypeFilter implements GenericObject {
      * @return object The ContentTypeFilter object, or null if there was an error
      *                (an exception is also thrown)
      */
-    public static function getObject($value) {
+    public static function &getObject($value) {
     	// Since PHP does not support polymorphism, we need to emulate it.
     	$retval = null;
     	
@@ -213,15 +213,15 @@ class ContentTypeFilter implements GenericObject {
 	public static function getCreateNewObjectUI()
 	{
 	    // Init values
-		$_html = '';
+		$html = '';
 
-		$_name = "new_content_type_filter_rules";
+		$name = "new_content_type_filter_rules";
 
-		$_html .= "<b>"._("Add a new content type filter with these rules") . ": </b><br/>";
-		$_html .= "<pre>array (\r\n\tarray('isContentType',\r\n\t\tarray (\r\n\t\t\tarray (\r\n\t\t\t\t'SimplePicture'\r\n\t)\r\n\t\t)\r\n\t)\r\n)</pre><br/>";
-		$_html .= "<textarea cols='50' rows='10' name='{$_name}'></textarea><br/>";
+		$html .= "<b>"._("Add a new content type filter with these rules") . ": </b><br/>";
+		$html .= "<pre>array (\r\n\tarray('isContentType',\r\n\t\tarray (\r\n\t\t\tarray (\r\n\t\t\t\t'SimplePicture'\r\n\t)\r\n\t\t)\r\n\t)\r\n)</pre><br/>";
+		$html .= "<textarea cols='50' rows='10' name='{$name}'></textarea><br/>";
 
-		return $_html;
+		return $html;
 	}
 	
 	
@@ -241,15 +241,15 @@ class ContentTypeFilter implements GenericObject {
 	    // Init values
 		$_retVal = null;
 
-		$_name = "new_content_type_filter_rules";
+		$name = "new_content_type_filter_rules";
 
-		if (!empty($_REQUEST[$_name])) {
+		if (!empty($_REQUEST[$name])) {
 			// Prepend return so that the eval call actually builds the array
-			$new_content_type_filter_rules =  self::parseScalarArray($_REQUEST[$_name]);
+			$new_content_type_filter_rules =  self::parseScalarArray($_REQUEST[$name]);
 
 			// Make sure the string eval'd to an array
 			if (!empty($new_content_type_filter_rules) && is_array($new_content_type_filter_rules)) {
-				if (!User::getCurrentUser()->isSuperAdmin()) {
+				if (!User::getCurrentUser()->DEPRECATEDisSuperAdmin()) {
 					throw new Exception(_("Access denied"));
 				}
 				// Let the system create a GUID
@@ -261,46 +261,44 @@ class ContentTypeFilter implements GenericObject {
 	}
 	
 	/**
-	 * Get an interface to pick a ContentTypeFilter
-	 *
-	 * If there is only one server available, no interface is actually shown
+	 * Get an interface to pick a ContentTypeFilter 
 	 *
      * @param string $user_prefix         A identifier provided by the
      *                                    programmer to recognise it's generated
      *                                    html form
-     * @param object $pre_content_type_filter An optional ContenTypeFilter object
-     * 
-     * @param string $additional_where    Additional SQL conditions for the
-     *                                    servers to select
+     *  @param string $userData=null Array of contextual data optionally sent to the method.
+     *  The function must still function if none of it is present.
+     *
+     * This method understands:
+     *  $userData['preSelectedId'] An optional ProfileTemplate object id.
+     *	$userData['additionalWhere'] Additional SQL conditions for the
+     *                                    objects to select
      *
      * @return string HTML markup
 
      */
-    public static function getSelectContentTypeFilterUI($user_prefix, $pre_selected_content_type_filter = null, $additional_where = null)
+    public static function getSelectUI($user_prefix, $userData = null)
     {
 		$db = AbstractDb::getObject();
 
         // Init values
-		$_html = "";
+		$html = "";
 		$_content_type_filter_rows = null;
-		
-		if ($pre_selected_content_type_filter) {
-			$_selectedId = $pre_selected_content_type_filter->getId();
-		} else {
-			$_selectedId = null;
-		}
 
+		!empty($userData['preSelectedId'])?$selectedId=$userData['preSelectedId']:$selectedId=null;
+		!empty($userData['additionalWhere'])?$additional_where=$userData['additionalWhere']:$additional_where=null;
+		
 		$additional_where = $db->escapeString($additional_where);
 
-		$_sql = "SELECT * FROM content_type_filters WHERE 1=1 $additional_where ORDER BY content_type_filter_label ASC";
-		$db->execSql($_sql, $_content_type_filter_rows, false);
+		$sql = "SELECT * FROM content_type_filters WHERE 1=1 $additional_where ORDER BY content_type_filter_label ASC";
+		$db->execSql($sql, $_content_type_filter_rows, false);
 
 		if ($_content_type_filter_rows == null) {
-			return $_html;
+			return $html;
 		}
 
-		$_name = $user_prefix;
-		$_html .= _("Content type filter").": \n";
+		$name = $user_prefix;
+		$html .= _("Content type filter").": \n";
 		$_numberOfContentTypeFilters = count($_content_type_filter_rows);
 
 		if ($_numberOfContentTypeFilters > 1) {
@@ -312,15 +310,15 @@ class ContentTypeFilter implements GenericObject {
 				$_i ++;
 			}
 
-			$_html .= FormSelectGenerator::generateFromArray($_tab, $_selectedId, $_name, null, false);
+			$html .= FormSelectGenerator::generateFromArray($_tab, $selectedId, $name, null, false);
 		} else {
 			foreach ($_content_type_filter_rows as $_content_type_filter_row) {
-				$_html .= " {$_content_type_filter_row['content_type_filter_label']} ";
-				$_html .= "<input type='hidden' name='$_name' value='{$_content_type_filter_row['content_type_filter_id']}'>";
+				$html .= " {$_content_type_filter_row['content_type_filter_label']} ";
+				$html .= "<input type='hidden' name='$name' value='{$_content_type_filter_row['content_type_filter_id']}'>";
 			}
 		}
 
-		return $_html;
+		return $html;
 	}
 	
 	public static function getAllContentTypeFilters() {
@@ -350,49 +348,50 @@ class ContentTypeFilter implements GenericObject {
      */
 	public function getAdminUI()
 	{
+	    	    Security::requirePermission(Permission::P('SERVER_PERM_EDIT_CONTENT_TYPE_FILTERS'), Server::getServer());    
 	    // Init values
-		$_html = '';
+		$html = '';
 
-		$_html .= "<fieldset class='admin_container ".get_class($this)."'>\n";
-		$_html .= "<legend>"._("ContentTypeFilter management")."</legend>\n";
-        $_html .= "<ul class='admin_element_list'>\n";
+		$html .= "<fieldset class='admin_container ".get_class($this)."'>\n";
+		$html .= "<legend>"._("ContentTypeFilter management")."</legend>\n";
+        $html .= "<ul class='admin_element_list'>\n";
         
 		// content_type_filter_id
 		$_value = htmlspecialchars($this->getId(), ENT_QUOTES);
 
-		$_html .= "<li class='admin_element_item_container'>\n";
-		$_html .= "<div class='admin_element_label'>" . _("ContentTypeFilter ID") . ":</div>\n";
-		$_html .= "<div class='admin_element_data'>\n";
-		$_html .= $_value;
-		$_html .= "</div>\n";
-		$_html .= "</li>\n";
+		$html .= "<li class='admin_element_item_container'>\n";
+		$html .= "<div class='admin_element_label'>" . _("ContentTypeFilter ID") . ":</div>\n";
+		$html .= "<div class='admin_element_data'>\n";
+		$html .= $_value;
+		$html .= "</div>\n";
+		$html .= "</li>\n";
 
 		// label
-		$_name = "content_type_filter_" . $this->getId() . "_label";
+		$name = "content_type_filter_" . $this->getId() . "_label";
 		$_value = htmlspecialchars($this->getLabel(), ENT_QUOTES);
 
-		$_html .= "<li class='admin_element_item_container'>\n";
-		$_html .= "<div class='admin_element_label'>" . _("Label") . ":</div>\n";
-		$_html .= "<div class='admin_element_data'>\n";
-		$_html .= "<input type='text' size='50' value='$_value' name='$_name'>\n";
-		$_html .= "</div>\n";
-		$_html .= "</li>\n";
+		$html .= "<li class='admin_element_item_container'>\n";
+		$html .= "<div class='admin_element_label'>" . _("Label") . ":</div>\n";
+		$html .= "<div class='admin_element_data'>\n";
+		$html .= "<input type='text' size='50' value='$_value' name='$name'>\n";
+		$html .= "</div>\n";
+		$html .= "</li>\n";
 
 		// rules
-		$_name = "content_type_filter_" . $this->getId() . "_rules";
+		$name = "content_type_filter_" . $this->getId() . "_rules";
 		$_value = htmlspecialchars(var_export($this->getRules(), true), ENT_QUOTES);
 
-		$_html .= "<li class='admin_element_item_container'>\n";
-		$_html .= "<div class='admin_element_label'>" . _("Rules (must be a valid array definition)") . ":</div>\n";
-		$_html .= "<div class='admin_element_data'>\n";
-		$_html .= "<pre>array (\r\n\tarray('isContentType',\r\n\t\tarray (\r\n\t\t\tarray (\r\n\t\t\t\t'SimplePicture'\r\n\t\t\t)\r\n\t\t)\r\n\t)\r\n)</pre>";
-		$_html .= "<textarea cols='50' rows='10' name='{$_name}'>{$_value}</textarea><br/>\n";
-		$_html .= "</div>\n";
-		$_html .= "</li>\n";
+		$html .= "<li class='admin_element_item_container'>\n";
+		$html .= "<div class='admin_element_label'>" . _("Rules (must be a valid array definition)") . ":</div>\n";
+		$html .= "<div class='admin_element_data'>\n";
+		$html .= "<pre>array (\r\n\tarray('isContentType',\r\n\t\tarray (\r\n\t\t\tarray (\r\n\t\t\t\t'SimplePicture'\r\n\t\t\t)\r\n\t\t)\r\n\t)\r\n)</pre>";
+		$html .= "<textarea cols='50' rows='10' name='{$name}'>{$_value}</textarea><br/>\n";
+		$html .= "</div>\n";
+		$html .= "</li>\n";
 
-        $_html .= "</ul>\n";
-        $_html .= "</fieldset>\n";
-		return $_html;
+        $html .= "</ul>\n";
+        $html .= "</fieldset>\n";
+		return $html;
 	}
 
     /**
@@ -402,26 +401,16 @@ class ContentTypeFilter implements GenericObject {
      */
 	public function processAdminUI()
 	{
+	    Security::requirePermission(Permission::P('SERVER_PERM_EDIT_CONTENT_TYPE_FILTERS'), Server::getServer());    
         require_once('classes/User.php');
 
-        try {
-    		if (!User::getCurrentUser()->isSuperAdmin()) {
-    			throw new Exception(_('Access denied!'));
-    		}
-        } catch (Exception $e) {
-            $ui = MainUI::getObject();
-            $ui->setToolSection('ADMIN');
-            $ui->displayError($e->getMessage(), false);
-            exit;
-        }
-
 		// label
-		$_name = "content_type_filter_" . $this->getId() . "_label";
-		$this->setLabel($_REQUEST[$_name]);
+		$name = "content_type_filter_" . $this->getId() . "_label";
+		$this->setLabel($_REQUEST[$name]);
 
 		// rules
-		$_name = "content_type_filter_" . $this->getId() . "_rules";
-		$new_rules_array = self::parseScalarArray($_REQUEST[$_name]);
+		$name = "content_type_filter_" . $this->getId() . "_rules";
+		$new_rules_array = self::parseScalarArray($_REQUEST[$name]);
 		if(is_array($new_rules_array))
 			$this->setRules($new_rules_array);
 		else {
@@ -445,8 +434,8 @@ class ContentTypeFilter implements GenericObject {
 	    // Init values
 		$_retVal = false;
 
-		if (!User::getCurrentUser()->isSuperAdmin()) {
-			$errmsg = _('Access denied (must have super admin access)');
+		if (	    Security::hasPermission(Permission::P('SERVER_PERM_EDIT_CONTENT_TYPE_FILTERS'), Server::getServer())) {
+			$errmsg = _('Access denied');
 		} else {
 			$_id = $db->escapeString($this->getId());
 
@@ -472,6 +461,20 @@ class ContentTypeFilter implements GenericObject {
 		$this->__construct($this->_id);
 	}
 	
+    /** Menu hook function */
+    static public function hookMenu() {
+        $items = array();
+        $server = Server::getServer();
+        if(Security::hasPermission(Permission::P('SERVER_PERM_EDIT_CONTENT_TYPE_FILTERS'), $server))
+        {
+            $items[] = array('path' => 'server/content_type_filter',
+            'title' => _("Content type filters"),
+            'url' => BASE_URL_PATH."admin/generic_object_admin.php?object_class=ContentTypeFilter&action=list"
+		);
+        }
+        return $items;
+    }
+    
     /** Is this class name an acceptable content type?  Will call all functions in the criteria array, but ADDING THE CANDIDATE CLASSNAME as the LAST parameter.
      * @param string $classname The classname to check
      * @return true or false.  Will also silently return false if the class does not exist */

@@ -48,7 +48,6 @@
  */
 require_once(dirname(__FILE__) . '/include/common.php');
 
-require_once('include/common_interface.php');
 require_once('classes/MainUI.php');
 require_once('classes/Network.php');
 $smarty = SmartyWifidog::getObject();

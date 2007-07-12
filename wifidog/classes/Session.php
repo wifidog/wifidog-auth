@@ -63,7 +63,7 @@ define('SESS_NODE_ID_VAR', 'SESS_NODE_ID');/**<Deprecated benoitg 22/11/2006*/
 class Session
 {
     private static $object;
-    public static function getObject() {
+    public static function &getObject() {
     	if (self::$object==null)
     	{
     		self::$object=new self();

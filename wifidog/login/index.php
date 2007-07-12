@@ -61,7 +61,7 @@
  * @package    WiFiDogAuthServer
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @author     Max Horváth <max.horvath@freenet.de>
- * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
+ * @copyright  2004-2007 Benoit Grégoire, Technologies Coeus inc.
  * @copyright  2006 Max Horváth, Horvath Web Consulting
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
@@ -72,17 +72,16 @@
  */
 require_once('../include/common.php');
 
-require_once('include/common_interface.php');
 require_once('classes/Security.php');
 require_once('classes/Node.php');
 require_once('classes/User.php');
 require_once('classes/Network.php');
+require_once('classes/Authenticator.php');
 require_once('classes/MainUI.php');
 $smarty = SmartyWifidog::getObject();
 $session = Session::getObject();
-$db = AbstractDb::getObject(); 
+$db = AbstractDb::getObject();
 // Init values
-$continueToAdmin = false;
 $username = null;
 $password = null;
 $gw_address = null;
@@ -90,19 +89,10 @@ $gw_port = null;
 $gw_id = null;
 $logout = null;
 
-$create_a_free_account = _("Create a free account");
-
 /*
  * General request parameter processing section
  */
 
-if (isset($_REQUEST["username"])) {
-    $username = $_REQUEST["username"];
-}
-
-if (isset($_REQUEST["password"])) {
-    $password = $_REQUEST["password"];
-}
 
 if (isset($_REQUEST["gw_address"])) {
     $gw_address = $_REQUEST['gw_address'];
@@ -123,9 +113,9 @@ if (isset($_REQUEST["logout"])) {
     $logout = $_REQUEST['logout'];
 }
 
-if (isset($_REQUEST["form_signup"]) && $_REQUEST["form_signup"] == $create_a_free_account) {
-	MainUI::redirect(BASE_URL_PATH . "signup.php");
-	exit;
+if (isset($_REQUEST["form_signup"])) {
+    MainUI::redirect(BASE_URL_PATH . "signup.php");
+    exit;
 }
 
 /*
@@ -135,10 +125,6 @@ if (!empty($_REQUEST['url'])) {
     $session->set(SESS_ORIGINAL_URL_VAR, $_REQUEST['url']);
 }
 
-// Check if user wanted to enter the administration interface
-if (!empty($_REQUEST['origin']) && $_REQUEST['origin'] == "admin") {
-    $continueToAdmin = true;
-}
 /*
  * Start general request parameter processing section
  */
@@ -157,7 +143,7 @@ if (!empty($gw_id)) {
         exit;
     }
 
-	$network = $node->getNetwork();
+    $network = $node->getNetwork();
 } else {
     // Gateway ID is not set ... virtual login
     $network = Network::getCurrentNetwork();
@@ -183,44 +169,41 @@ if (!empty($node) && $node->isSplashOnly()) {
         header("Location: http://" . $gw_address . ":" . $gw_port . "/wifidog/auth?token=" . $token);
     } else {
         // Virtual login, redirect to the auth server homepage
-        header("Location: " . BASE_SSL_PATH . ($continueToAdmin ? "admin/" : ""));
+        header("Location: " . BASE_SSL_PATH);
     }
 }
 
 /*
  * Normal login process
  */
-if (isset ($_REQUEST["form_request"]) && $_REQUEST["form_request"] == "login") {
-	if (!empty($username) && !empty($password)) {
-		// Init values
-		$errmsg = '';
-		// Authenticating the user through the selected auth source.
-		$network = Network::processSelectNetworkUI('auth_source');
+if (!empty($_REQUEST["login_form_submit"])) {
+    // Init values
+    $errmsg = '';
+    $user = User::getCurrentUser();
+    if (!$user) {
+        //Normally, we already have a user logged-in (precessed by process_login_out.php).  But we try again, if only to display the error
+        Authenticator::processLoginUI($errmsg);
+    }
 
-		$user = $network->getAuthenticator()->login($username, $password, $errmsg);
+    if ($user != null) {
+        if (!empty($gw_address) && !empty($gw_port)) {
+            // Login from a gateway, redirect to the gateway to activate the token
+            $token = $user->generateConnectionToken();
+            if(!$token)
+            {
+                throw new exception(sprintf(_("Unable to generate token for user %s"),$user->getUsername()));
+            }
+            else
+            {
+                header("Location: http://" . $gw_address . ":" . $gw_port . "/wifidog/auth?token=" . $token);
+            }
+        } else {
+            // Virtual login, redirect to the auth server homepage
+            header("Location: " . BASE_SSL_PATH);
+        }
 
-		if ($user != null) {
-			if (!empty($gw_address) && !empty($gw_port)) {
-				// Login from a gateway, redirect to the gateway to activate the token
-				$token = $user->generateConnectionToken();
-                if(!$token)
-                {
-                    throw new exception(sprintf(_("Unable to generate token for user %s"),$user->getUsername()));
-                }
-                else
-                {
-				header("Location: http://" . $gw_address . ":" . $gw_port . "/wifidog/auth?token=" . $token);
-                }
-			} else {
-				// Virtual login, redirect to the auth server homepage
-				header("Location: " . BASE_SSL_PATH . ($continueToAdmin ? "admin/" : ""));
-			}
-
-			exit;
-		} else {
-			$error = $errmsg;
-		}
-	}
+        exit;
+    }
 }
 
 /*
@@ -245,25 +228,30 @@ $smarty->assign('gw_address', $gw_address);
 $smarty->assign('gw_port', $gw_port);
 $smarty->assign('gw_id', $gw_id);
 
-// Check if user wanted to enter the administration interface
-$smarty->assign('origin', empty($_REQUEST['origin']) ? null : $_REQUEST['origin']);
-
-// Set network selector
-$smarty->assign('selectNetworkUI', Network::getSelectNetworkUI('auth_source'));
-// Set user details
-$smarty->assign('username', !empty($username) ? $username : "");
-
-// Set error message
-$smarty->assign('error', !empty($error) ? $error : null);
-
-$smarty->assign('create_a_free_account', $create_a_free_account);
-
-// Compile HTML code
-$html = $smarty->fetch("templates/sites/login.tpl");
+// Get the login form
+$html = "";
+$html .= "<form name='login_form'  id='login_form' action='".BASE_SSL_PATH."login/index.php' method='post'>\n";
+$html .= "<input type='hidden' name='form_request' value='login'>\n";
+if ($gw_address != null)
+$html .= "<input type='hidden' name='gw_address' value='{$gw_address}'>\n";
+if ($gw_port != null)
+$html .= "<input type='hidden' name='gw_port' value='{$gw_port}'>\n";
+if ($gw_id != null)
+$html .= "<input type='hidden' name='gw_id' value='{$gw_id}'>\n";
+$html .= Authenticator::getLoginUI();
+$html .= "</form>\n";
+$html .= "<div id='login_help'>\n";
+$html .= "<h1>"._("I'm having difficulties:")."</h1>\n";
+$html .= "<ul>\n";
+$html .= "<li><a href='".BASE_URL_PATH."lost_username.php'>"._("I Forgot my username")."</a></li>\n";
+$html .= "<li><a href='".BASE_URL_PATH."lost_password.php'>"._("I Forgot my password")."</a></li>\n";
+$html .= "<li><a href='".BASE_URL_PATH."resend_validation.php'>"._("Re-send the validation email")."</a></li>\n";
+$html .= "</ul>\n";
+$html .= "</div>\n";
 
 $ui = MainUI::getObject();
 if($node) {
-	$ui->setTitle(sprintf(_("%s login page for %s"), $network->getName(), $node->getName()));
+    $ui->setTitle(sprintf(_("%s login page for %s"), $network->getName(), $node->getName()));
 } else {
     $ui->setTitle(_("Offsite login page"));
 }
@@ -273,48 +261,48 @@ if($node){
     $name = $node->getName();
 }
 else {
-$name = $network->getName();}
- $welcome_msg = sprintf("<span>%s</span> <em>%s</em>",_("Welcome to"), $name);
- $ui->addContent('page_header', "<div class='welcome_msg'><div class='welcome_msg_inner'>$welcome_msg</div></div>");
-$ui->addContent('main_area_top', $html);
+    $name = $network->getName();}
+    $welcome_msg = sprintf("<span>%s</span> <em>%s</em>",_("Welcome to"), $name);
+    $ui->addContent('page_header', "<div class='welcome_msg'><div class='welcome_msg_inner'>$welcome_msg</div></div>");
+    $ui->addContent('main_area_top', $html);
 
-/*
- * Main content
- */
+    /*
+     * Main content (login form)
+     */
 
-         // Get all network content and node "login" content
-        $content_rows = null;
-        $network_id = $network->getId();
-        $sql_network = "(SELECT content_id, display_area, display_order, subscribe_timestamp FROM network_has_content WHERE network_id='$network_id'  AND display_page='login') ";
-        $sql_node = null;
-        if ($node) {
-            // Get all node content
-            $node_id = $db->escapeString($node->getId());
-            $sql_node = "UNION (SELECT content_id, display_area, display_order, subscribe_timestamp FROM node_has_content WHERE node_id='$node_id'  AND display_page='login')";
-        }
-        $sql = "SELECT * FROM ($sql_network $sql_node) AS content_everywhere ORDER BY display_area, display_order, subscribe_timestamp DESC";
+    // Get all network content and node "login" content
+    $content_rows = null;
+    $network_id = $network->getId();
+    $sql_network = "(SELECT content_id, display_area, display_order, subscribe_timestamp FROM network_has_content WHERE network_id='$network_id'  AND display_page='login') ";
+    $sql_node = null;
+    if ($node) {
+        // Get all node content
+        $node_id = $db->escapeString($node->getId());
+        $sql_node = "UNION (SELECT content_id, display_area, display_order, subscribe_timestamp FROM node_has_content WHERE node_id='$node_id'  AND display_page='login')";
+    }
+    $sql = "SELECT * FROM ($sql_network $sql_node) AS content_everywhere ORDER BY display_area, display_order, subscribe_timestamp DESC";
 
-        $db->execSql($sql, $content_rows, false);
-        if ($content_rows) {
-            foreach ($content_rows as $content_row) {
-                $content = Content :: getObject($content_row['content_id']);
-                if ($content->isDisplayableAt($node)) {
-                    $ui->addContent($content_row['display_area'], $content, $content_row['display_order']);
-                }
+    $db->execSql($sql, $content_rows, false);
+    if ($content_rows) {
+        foreach ($content_rows as $content_row) {
+            $content = Content :: getObject($content_row['content_id']);
+            if ($content->isDisplayableAt($node)) {
+                $ui->addContent($content_row['display_area'], $content, $content_row['display_order']);
             }
         }
+    }
 
-/*
- * Render output
- */
-$ui->display();
+    /*
+     * Render output
+     */
+    $ui->display();
 
-/*
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * c-hanging-comment-ender-p: nil
- * End:
- */
+    /*
+     * Local variables:
+     * tab-width: 4
+     * c-basic-offset: 4
+     * c-hanging-comment-ender-p: nil
+     * End:
+     */
 
-?>
+    ?>

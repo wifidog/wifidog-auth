@@ -50,7 +50,6 @@
  */
 require_once(dirname(__FILE__) . '/include/common.php');
 
-require_once('include/common_interface.php');
 require_once('classes/MainUI.php');
 require_once('classes/Network.php');
 require_once('classes/Node.php');
@@ -69,17 +68,16 @@ if (!defined("GMAPS_HOTSPOTS_MAP_ENABLED") || (defined("GMAPS_HOTSPOTS_MAP_ENABL
 // Check if user is at a Hotspot and if he is authenticated
 /*This code is definitely not ready for prime time
  * if (!is_null(Node::getCurrentRealNode()) && !$currentUser) {
-    header("Location: hotspot_status.php");
-    exit();
-}*/
+ header("Location: hotspot_status.php");
+ exit();
+ }*/
 
 // Init ALL smarty SWITCH values
-$smarty->assign('sectionTOOLCONTENT', false);
 $smarty->assign('sectionMAINCONTENT', false);
 
 // Init ALL smarty values
-$smarty->assign('isSuperAdmin', false);
-$smarty->assign('isOwner', false);
+$smarty->assign('DEPRECATEDisSuperAdmin', false);
+$smarty->assign('DEPRECATEDisOwner', false);
 $smarty->assign('selectNetworkUI', null);
 
 /**
@@ -89,40 +87,32 @@ $smarty->assign('selectNetworkUI', null);
  * in a customized template to restrict certain links to specific user
  * access levels.
  */
-$smarty->assign('isSuperAdmin', $currentUser && $currentUser->isSuperAdmin());
-$smarty->assign('isOwner', $currentUser && $currentUser->isOwner());
+$smarty->assign('DEPRECATEDisSuperAdmin', $currentUser && $currentUser->DEPRECATEDisSuperAdmin());
+$smarty->assign('DEPRECATEDisOwner', $currentUser && $currentUser->DEPRECATEDisOwner());
 
 /*
  * Header JavaScripts
  */
 
 // Add Google Maps JavaScript (must set config values)
-$html_headers  = "<script src='http://maps.google.com/maps?file=api&amp;v=2&amp;&key=" . Server::getCurrentServer()->getGoogleAPIKey() . "' type='text/javascript'></script>";
+if(!$vhost=VirtualHost::getCurrentVirtualHost()) {
+    throw new Exception(_("Unable to get the google API key, because I couldn't find a vhost matching the current hostname"));
+}
+$html_headers  = "<script src='http://maps.google.com/maps?file=api&amp;v=2&amp;&key=" . $vhost->getGoogleAPIKey() . "' type='text/javascript'></script>";
 $html_headers .= "<script src='js/hotspots_status_map.js' type='text/javascript'></script>";
 
-/*
- * Tool content
- */
-
-// Set section of Smarty template
-$smarty->assign('sectionTOOLCONTENT', true);
-
-// Compile HTML code
-$html = $smarty->fetch("templates/sites/hotspots_map.tpl");
-
+$html = null;
 /*
  * Main content
  */
-
-// Reset ALL smarty SWITCH values
-$smarty->assign('sectionTOOLCONTENT', false);
-$smarty->assign('sectionMAINCONTENT', false);
 
 // Set section of Smarty template
 $smarty->assign('sectionMAINCONTENT', true);
 
 // Set network selector
-$smarty->assign('selectNetworkUI', Network::getSelectNetworkUI('network_map', (!empty($_REQUEST['network_map']) ? Network::getObject($_REQUEST['network_map']) : Network::getCurrentNetwork())) . (count(Network::getAllNetworks()) > 1 ? '<input class="submit" type="submit" name="submit" value="' . _("Change network") . '">' : ""));
+$preSelectedObject = (!empty($_REQUEST['network_map']) ? Network::getObject($_REQUEST['network_map']) : Network::getCurrentNetwork());
+$selectNetworkUI = Network::getSelectUI('network_map', array('preSelectedObject' => $preSelectedObject));
+$smarty->assign('selectNetworkUI', $selectNetworkUI . (count(Network::getAllNetworks()) > 1 ? '<input class="submit" type="submit" name="submit" value="' . _("Change network") . '">' : ""));
 
 // Compile HTML code
 $html_body = $smarty->fetch("templates/sites/hotspots_map.tpl");

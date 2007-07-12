@@ -45,7 +45,7 @@
 /**
  * Load required classes
  */
-require_once('classes/Dependencies.php');
+require_once('classes/Dependency.php');
 require_once('classes/Network.php');
 require_once('classes/Node.php');
 require_once('classes/MainUI.php');
@@ -162,8 +162,8 @@ class NodeListHTML {
         $this->_smarty->assign('sectionMAINCONTENT', false);
 
         // Init ALL smarty values
-        $this->_smarty->assign('isSuperAdmin', false);
-        $this->_smarty->assign('isOwner', false);
+        $this->_smarty->assign('DEPRECATEDisSuperAdmin', false);
+        $this->_smarty->assign('DEPRECATEDisOwner', false);
         $this->_smarty->assign('GMapsEnabled', false);
         $this->_smarty->assign('nodes', array());
         $this->_smarty->assign('num_deployed_nodes', 0);
@@ -180,23 +180,14 @@ class NodeListHTML {
          * in a customized template to restrict certain links to specific user
          * access levels.
          */
-        $this->_smarty->assign('isSuperAdmin', $this->_currentUser && $this->_currentUser->isSuperAdmin());
-        $this->_smarty->assign('isOwner', $this->_currentUser && $this->_currentUser->isOwner());
+        $this->_smarty->assign('DEPRECATEDisSuperAdmin', $this->_currentUser && $this->_currentUser->DEPRECATEDisSuperAdmin());
+        $this->_smarty->assign('DEPRECATEDisOwner', $this->_currentUser && $this->_currentUser->DEPRECATEDisOwner());
 
         if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED == true) {
             $this->_smarty->assign('GMapsEnabled', true);
         }
-
-        if (Dependencies::check("FPDF")) {
-            $this->_smarty->assign('PdfSupported', true);
-        }
-
-        // Set section of Smarty template
-        $this->_smarty->assign('sectionTOOLCONTENT', true);
-
-        // Compile HTML code
-        $_html = $this->_smarty->fetch("templates/sites/hotspot_status.tpl");
-
+        
+        $_html=null;
         /*
          * Main content
          */

@@ -45,8 +45,9 @@
  */
 require_once('admin_common.php');
 require_once('classes/MainUI.php');
+require_once('classes/Server.php');
 
-Security::requireAdmin();
+Security::requirePermission('SERVER_PERM_EDIT_SERVER_CONFIG', Server::getServer());
 $db = AbstractDb::getObject(); 
 $html = '';
 
@@ -259,7 +260,6 @@ else if ($_REQUEST['action'] == 'upload_file')
         $html .=  "</fieldset>\n";
 
     $ui=MainUI::getObject();
-    $ui->setToolSection('ADMIN');
     $ui->addContent('main_area_middle', $html);
     $ui->display();
 

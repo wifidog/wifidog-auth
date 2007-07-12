@@ -76,7 +76,7 @@ class RssAggregator extends Content {
      */
     private $press_review;
     /**
-     * Check if this specific ContentType is usable (all dependencies
+     * Check if this specific ContentType is usable (all Dependency
      * met,etc.
      * This method is meant to be overloaded by the different content classes
      * @return true or flase
@@ -668,7 +668,7 @@ private function initFeedPressReview()
      * @return void
      */
     public function processAdminUI() {
-        if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
+        if ($this->DEPRECATEDisOwner(User :: getCurrentUser()) || User :: getCurrentUser()->DEPRECATEDisSuperAdmin()) {
             parent :: processAdminUI();
 
             /*

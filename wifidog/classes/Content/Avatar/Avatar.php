@@ -78,7 +78,7 @@ class Avatar extends SimplePicture
 	protected function validateUploadedFile($input, &$output) {
 		$errmsg = null;
 		// Only if GD is available, resize to max size
-		if (Dependencies::check("gd", $errmsg)) {
+		if (Dependency::check("gd", $errmsg)) {
 			// Extract image metadata
 			list($width_orig, $height_orig, $type, $attr) = getimagesize($input['tmp_name']);
 			// Check if it busts the max size

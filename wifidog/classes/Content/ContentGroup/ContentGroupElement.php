@@ -558,9 +558,9 @@ class ContentGroupElement extends Content {
      *
      * @return bool True if the user is a owner, false if he isn't or if the user is null
      */
-    public function isOwner($user) {
+    public function DEPRECATEDisOwner($user) {
         $content_group = Content :: getObject($this->content_group_element_row['content_group_id']);
-        return $content_group->isOwner($user);
+        return $content_group->DEPRECATEDisOwner($user);
     }
 
     /**

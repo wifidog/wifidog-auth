@@ -307,7 +307,7 @@ class Picture extends File {
      * @return void
      */
     public function processAdminUI() {
-        if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
+        if ($this->DEPRECATEDisOwner(User :: getCurrentUser()) || User :: getCurrentUser()->DEPRECATEDisSuperAdmin()) {
             parent :: processAdminUI();
 
             if ($this->configEnableHyperlink){

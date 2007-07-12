@@ -125,7 +125,6 @@ catch (exception $e)
 	$html .= "</p>";
 }
 $ui = MainUI::getObject();
-$ui->setToolSection('ADMIN');
 $ui->addContent('main_area_middle', $html);
 $ui->display();
 

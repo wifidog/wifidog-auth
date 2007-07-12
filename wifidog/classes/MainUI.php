@@ -34,10 +34,10 @@
 // |                                                                   |
 // +-------------------------------------------------------------------+
 
-/**
+/** This file contains the code for the MainUI class, as well as GUI exception handling.
  * @package    WiFiDogAuthServer
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
- * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
+ * @copyright  2005-2007 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
@@ -48,18 +48,87 @@
  */
 require_once ('include/schema_validate.php');
 validate_schema();
+require_once ('include/process_login_out_form.php');
 
+/** Protects against secondary exceptions during exception display */
+function exception_output_helper($html) {
+    try{
+        // Load MainUI class
+        $ui = MainUI::getObject();
+        $ui->addContent('main_area_middle', $html);
+        $ui->display();
+    }
+    catch (Exception $e)
+    {
+        echo "Notice:  A secondary Exception was thrown trying to display the Exception graphically using MainUI.  Here is the text-only output:<br/>";
+        echo $html;
+    }
+}
+/**
+ * This custom exception handler is only called if the MainUI file is included
+ */
+function wifidog_exception_handler($e) {
+    $exceptionClass = get_class($e);
+    switch ($exceptionClass) {
+        case 'SecurityException':
+            $html = null;
+            $html .= "<div class = 'errormsg'>\n";
+            $user = User::getCurrentUser();
+            if($user) {
+                $html .= sprintf(_("Your current user (%s) does not have the required level of access.  Please login with with a user with the required permission(s) to try this operation again."),$user->getUserName());
+            }
+            else {
+                $html .= sprintf(_("You didn't log-in or your session timed-out.  Please login to try this operation again."));
+            }
+            $html .= "</div>\n";
+            $html .= "<form name='login_form' id='login_form' action='' method='post'>\n";
+            require_once ('classes/Authenticator.php');
+            $html .= Authenticator::getLoginUI();
+            $html .= "</form>\n";
+            $html .= "<div class = 'warningmsg'>\n";
+            $html .= sprintf(_("%s"), $e->getMessage());
+            $html .= "<pre>\n";
+            $html .= sprintf(_("%s was thrown in %s, line %d\n"), get_class($e), $e->getFile(), $e->getLine());
+            $html .= $e->getTraceAsString();
+            $html .= "</pre>\n";
+            $html .= "</div>\n";
+            exception_output_helper($html);
+
+            break;
+        default:
+            //@ob_clean();
+            $html = null;
+            $html .= "<div class = 'errormsg'>\n";
+            $html .= sprintf(_("Detailed error was:  Uncaught %s %s (%s) thrown in file %s, line %d"),get_class($e), $e->getMessage(), $e->getCode(), $e->getFile(), $e->getLine());
+            $html .= "<pre>\n";
+            $html .= $e->getTraceAsString();
+            $html .= "</pre>\n";
+            $html .= "</div>\n";
+            exception_output_helper($html);
+    }
+}
+
+set_exception_handler('wifidog_exception_handler');
 /**
  * If the database doesn't get cleaned up by a cron job, we'll do now
  */
 if (CONF_USE_CRON_FOR_DB_CLEANUP == false) {
     garbage_collect();
 }
-
+// Clear the buffer
+@ob_clean();
 /**
  * Load required file
  */
-require_once ('include/common_interface.php');
+require_once('include/init_php.php');
+
+/**
+ * Load required files
+ */
+require_once('classes/Session.php');
+require_once('classes/SmartyWifidog.php');
+require_once('classes/User.php');
+require_once('include/language.php');
 
 /**
  * Singleton class for managing headers, footers, stylesheet, etc.
@@ -73,19 +142,19 @@ class MainUI {
     private static $object;
 
     /**
-    * Content to be displayed the page
-    *
-    * @var array
-    * @access private
-    */
+     * Content to be displayed the page
+     *
+     * @var array
+     * @access private
+     */
     private $_contentDisplayArray;
 
     /**
-    * Content to be displayed on the page, before ordering
-    *
-    * @var array
-    * @access private
-    */
+     * Content to be displayed on the page, before ordering
+     *
+     * @var array
+     * @access private
+     */
     private $_contentArray;
 
     /**
@@ -140,7 +209,7 @@ class MainUI {
      * Get the MainUI object
      * @return object The MainUI object
      */
-    public static function getObject() {
+    public static function &getObject() {
         if (self :: $object == null) {
             self :: $object = new self();
         }
@@ -189,9 +258,9 @@ class MainUI {
             throw new exception(sprintf(_('%s is not a valid structural display area'), $displayArea));
         }
         $this->_contentArray[] = array (
-            'display_area' => $displayArea,
-            'display_order' => $displayOrderIndex,
-            'content' => $content
+        'display_area' => $displayArea,
+        'display_order' => $displayOrderIndex,
+        'content' => $content
         );
     }
 
@@ -204,10 +273,10 @@ class MainUI {
     }
 
     /** Main processing function do generate the final content.
-     * It will successively call prepareGetUserUI() on all content objects, 
+     * It will successively call prepareGetUserUI() on all content objects,
      * and then getUserUI() on all objects.  Note that the point of calling
-     * prepareGetUserUI is to allow that function to call methods of MainUI 
-     * (such ans changing headers, etc.).  However, please note that you should not 
+     * prepareGetUserUI is to allow that function to call methods of MainUI
+     * (such ans changing headers, etc.).  However, please note that you should not
      * call MainUI::addContent() from prepareGetUserUI, as prepareGetUserUI() wouldn't
      * in turn get called on objects added this way.
      * Orders the content and put it in the _contentDisplayArray array
@@ -217,8 +286,8 @@ class MainUI {
     private function generateDisplayContent() {
         //pretty_print_r($this->_contentArray);
         usort($this->_contentArray, array (
-            $this,
-            "_contentArrayCmp"
+        $this,
+        "_contentArrayCmp"
         ));
 
         //Fist pass (preparation pass)
@@ -279,12 +348,12 @@ class MainUI {
     }
 
     /**
-    * Check if the tool section is enabled
-    *
-    * @return bool True or false
-    *
-    * @access public
-    */
+     * Check if the tool section is enabled
+     *
+     * @return bool True or false
+     *
+     * @access public
+     */
     public function isToolSectionEnabled() {
         return $this->_toolSectionEnabled;
     }
@@ -331,19 +400,19 @@ class MainUI {
     }
 
     /**
-    * Add content at the very end of the <body>.
-    *
-    * This is NOT meant to add footers or other display content, it is meant
-    * to add <script></script> tag pairs that have to be executed only once
-    * the page is loaded.
-    *
-    * @param string $script A piece of script surrounded by
-    *                       <script></script> tags.
-    *
-    * @return void
-    *
-    * @access public
-    */
+     * Add content at the very end of the <body>.
+     *
+     * This is NOT meant to add footers or other display content, it is meant
+     * to add <script></script> tag pairs that have to be executed only once
+     * the page is loaded.
+     *
+     * @param string $script A piece of script surrounded by
+     *                       <script></script> tags.
+     *
+     * @return void
+     *
+     * @access public
+     */
     public function addFooterScript($script) {
         $this->_footerScripts[] = $script;
     }
@@ -375,73 +444,6 @@ class MainUI {
         //Note:  using the URL as value AND key will remove duplicate while keeping the stylesheet inclusion order, because of the way foreach is implemented in PHP
         $this->stylesheetUrlArray[$stylesheet_url] = $stylesheet_url;
     }
-    /**
-     * Set the section to be displayed in the tool pane
-     *
-     * @param string $section Section to be displayed:
-     *                          + ADMIN for administration tool pane
-     *
-     * @return string HTML code of tool pane
-     *
-     * @access public
-     */
-    public function setToolSection($section) {
-        // Init ALL smarty SWITCH values
-        $this->smarty->assign('sectionADMIN', false);
-
-        switch ($section) {
-            case "ADMIN" :
-                // Set section of Smarty template
-                $this->smarty->assign('sectionADMIN', true);
-
-                // Get information about user
-                $_currentUser = User :: getCurrentUser();
-
-                // Init values
-                $_sqlAdditionalWhere = "";
-
-                // Init ALL smarty values
-                $this->smarty->assign('formAction', "");
-                $this->smarty->assign('nodeUI', "");
-                $this->smarty->assign('networkUI', "");
-
-                /*
-                 * If the user is super admin OR owner of at least one node
-                 * show the node menu
-                 */
-                if ($_currentUser && ($_currentUser->isSuperAdmin() || $_currentUser->isOwner())) {
-                    // Assign the action URL for the form
-                    $this->smarty->assign('formAction', GENERIC_OBJECT_ADMIN_ABS_HREF);
-
-                    /*
-                     * If current user is a owner the SQL query must be changed
-                     * to return his nodes only
-                     */
-                    if (!$_currentUser->isSuperAdmin()) {
-                        $_sqlAdditionalWhere = "AND node_id IN (SELECT node_id from node_stakeholders WHERE is_owner = true AND user_id='" . $_currentUser->getId() . "')";
-                        // Provide node select control to the template
-                        $this->smarty->assign('nodeUI', Node :: getSelectNodeUI('object_id', null, $_sqlAdditionalWhere));
-                    }
-
-                }
-
-                // If the user is network admin show the network menu
-                if ($_currentUser && $_currentUser->isSuperAdmin()) {
-                    // Provide network select control to the template
-                    $this->smarty->assign('networkUI', Network :: getSelectNetworkUI('object_id'));
-                }
-
-                // Compile HTML code
-                $_html = $this->smarty->fetch("templates/classes/MainUI_ToolSection.tpl");
-                break;
-
-            default :
-                $_html = _("Unknown section:") . $section;
-                break;
-        }
-
-        $this->addContent('left_area_middle', $_html);
-    }
 
     /**
      * Get the content to be displayed in the tool pane
@@ -456,7 +458,7 @@ class MainUI {
         $AVAIL_LOCALE_ARRAY = LocaleList::getAvailableLanguageArray();
 
         // Init values
-        $_html = "";
+        $html = "";
         $_gwId = null;
         $_gwAddress = null;
         $_gwPort = null;
@@ -498,15 +500,6 @@ class MainUI {
                 $this->smarty->assign('logoutParameters', "&amp;gw_id=" . $_gwId . "&amp;gw_address=" . $_gwAddress . "&amp;gw_port=" . $_gwPort);
             }
         } else {
-            // Detect gateway information
-            $_gwId = !empty ($_REQUEST['gw_id']) ? $_REQUEST['gw_id'] : $session->get(SESS_GW_ID_VAR);
-            $_gwAddress = !empty ($_REQUEST['gw_address']) ? $_REQUEST['gw_address'] : $session->get(SESS_GW_ADDRESS_VAR);
-            $_gwPort = !empty ($_REQUEST['gw_port']) ? $_REQUEST['gw_port'] : $session->get(SESS_GW_PORT_VAR);
-
-            // If gateway information could be detected tell them Smarty
-            if (!empty ($_gwId) && !empty ($_gwAddress) && !empty ($_gwPort)) {
-                $this->smarty->assign('loginParameters', "?gw_id=" . $_gwId . "&amp;gw_address=" . $_gwAddress . "&amp;gw_port=" . $_gwPort);
-            }
         }
 
         /*
@@ -530,9 +523,9 @@ class MainUI {
         $this->smarty->assign('languageChooser', $_languageChooser);
 
         // Compile HTML code
-        $_html = $this->smarty->fetch("templates/classes/MainUI_ToolContent.tpl");
+        $html = $this->smarty->fetch("templates/classes/MainUI_ToolContent.tpl");
 
-        return $_html;
+        return $html;
     }
 
     /**
@@ -557,11 +550,16 @@ class MainUI {
 
         //Handle content (must be done before headers and anything else is handled)
         /*
-         * Build tool pane if it has been enabled
-         */
+        * Build tool pane if it has been enabled
+        */
         if ($this->isToolSectionEnabled()) {
             $this->addContent('left_area_top', $this->getToolContent());
+            //Display main menu
+            require_once('classes/Menu.php');
+            $menu = Menu::getObject();
+            $this->addContent('left_area_middle', $menu->getUserUI());
         }
+
         $this->addEverywhereContent();
         $this->generateDisplayContent();
 
@@ -594,7 +592,7 @@ class MainUI {
 
         // Add SQL queries log (must be done manually here at the very end to catch everything)
         if (defined("LOG_SQL_QUERIES") && LOG_SQL_QUERIES == true)
-            $this->_contentDisplayArray['page_footer'] .= $db->getSqlQueriesLog();
+        $this->_contentDisplayArray['page_footer'] .= $db->getSqlQueriesLog();
 
         // Provide the content array to Smarty
         $this->smarty->assign('contentDisplayArray', $this->_contentDisplayArray);
@@ -631,9 +629,9 @@ class MainUI {
         /*
          * Output the error message
          */
-        $_html = $this->smarty->fetch("templates/sites/error.tpl");
+        $html = $this->smarty->fetch("templates/sites/error.tpl");
 
-        $this->addContent('page_header', $_html);
+        $this->addContent('page_header', $html);
         $this->display();
     }
 

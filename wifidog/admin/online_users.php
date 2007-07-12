@@ -49,7 +49,7 @@ require_once('admin_common.php');
 require_once('classes/Node.php');
 require_once('classes/MainUI.php');
 
-Security::requireAdmin();
+Security::requirePermission(Permission::P('NETWORK_PERM_VIEW_ONLINE_USERS'), Network::getCurrentNetwork());
 
 $db = AbstractDb::getObject();
 $smarty = SmartyWifidog::getObject();
@@ -58,7 +58,6 @@ $db->execSql("SELECT connections.user_id, name, username, account_origin, timest
 $smarty->assign("users_array", $online_users);
 
 $ui = MainUI::getObject();
-$ui->setToolSection('ADMIN');
 $ui->addContent('main_area_middle', $smarty->fetch("admin/templates/online_users.html"));
 $ui->display();
 

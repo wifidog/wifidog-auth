@@ -67,7 +67,7 @@ require_once ('classes/Utils.php');
  * @copyright  2005-2007 Max Horváth, Horvath Web Consulting
  * @copyright  2006-2007 Benoit Grégoire, Technologies Coeus inc.
  */
-class Dependencies
+class Dependency
 {
 	/**
 	 * List of components used by WiFiDog
@@ -137,7 +137,10 @@ class Dependencies
 			"type" => "phpExtension",
 			'description' => 'Required if you want to generate graphical statistics'
 		),
-
+		'xsl' => array (
+			"type" => "phpExtension",
+			'description' => 'Required if you want to generate a node list using XSLT stylesheets'
+		),
 		/*
 		 * Pecl libraries
 		 */
@@ -223,21 +226,21 @@ class Dependencies
 	 */
 	private static $instanceArray = array();
 
-	private $id;
+	private $_id;
 
 	/**
 	 * Constructor
 	 */
 	private function __construct($component) {
-		$this->id = $component;
+		$this->_id = $component;
 	}
 
 	/**
-	 * Get the entire array of dependencies
+	 * Get the entire array of Dependency
 	 *
 	 * @return boolean Returns whether the file has been found or not.
 	 */
-	public static function getDependencies()
+	public static function getDependency()
 	{
 		$retval = array();
 
@@ -379,7 +382,7 @@ class Dependencies
 	 * @return The id, a string
 	 */
 	public function getId() {
-		return $this->id;
+		return $this->_id;
 	}
 
 	/**
@@ -394,7 +397,7 @@ class Dependencies
 	 * @static
 	 * @access public
 	 */
-	public static function getObject($id)
+	public static function &getObject($id)
 	{
 		if(!isset(self::$instanceArray[$id])) {
 			self::$instanceArray[$id] = new self($id);
@@ -412,15 +415,15 @@ class Dependencies
 	{
 		$retval = null;
 
-		if(self::$_components[$this->id]["type"] == "phpExtension") {
-			$retval = "http://www.php.net/" . $this->id . "/";
-		} else if(self::$_components[$this->id]["type"] == "pearStandard") {
-			$retval = "http://pear.php.net/package/" . $this->id . "/";
-		} else if(self::$_components[$this->id]["type"] == "peclStandard") {
-			$retval = "http://pecl.php.net/package/" . $this->id . "/";
+		if(self::$_components[$this->_id]["type"] == "phpExtension") {
+			$retval = "http://www.php.net/" . $this->_id . "/";
+		} else if(self::$_components[$this->_id]["type"] == "pearStandard") {
+			$retval = "http://pear.php.net/package/" . $this->_id . "/";
+		} else if(self::$_components[$this->_id]["type"] == "peclStandard") {
+			$retval = "http://pecl.php.net/package/" . $this->_id . "/";
 		} else {
-			if(!empty(self::$_components[$this->id]['website'])) {
-				$retval = self::$_components[$this->id]['website'];
+			if(!empty(self::$_components[$this->_id]['website'])) {
+				$retval = self::$_components[$this->_id]['website'];
 			}
 		}
 
@@ -436,8 +439,8 @@ class Dependencies
 	{
 		$retval = null;
 
-		if(!empty(self::$_components[$this->id]['description'])) {
-			$retval = self::$_components[$this->id]['description'];
+		if(!empty(self::$_components[$this->_id]['description'])) {
+			$retval = self::$_components[$this->_id]['description'];
 		}
 
 		return $retval;
@@ -450,7 +453,7 @@ class Dependencies
 	 */
 	public function getType()
 	{
-		return self::$_components[$this->id]['type'];
+		return self::$_components[$this->_id]['type'];
 	}
 
 	/**
@@ -462,7 +465,7 @@ class Dependencies
 	{
 		$retval = null;
 
-		if(!empty(self::$_components[$this->id]['mandatory'])) {
+		if(!empty(self::$_components[$this->_id]['mandatory'])) {
 			$retval = true;
 		}
 

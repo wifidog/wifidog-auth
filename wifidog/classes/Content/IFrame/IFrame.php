@@ -263,7 +263,7 @@ class IFrame extends Content
      */
     public function processAdminUI()
     {
-        if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
+        if ($this->DEPRECATEDisOwner(User :: getCurrentUser()) || User :: getCurrentUser()->DEPRECATEDisSuperAdmin()) {
             parent::processAdminUI();
 
             // If the URL is not empty

@@ -50,7 +50,7 @@ require_once ('classes/Mail.php');
 require_once ('classes/InterfaceElements.php');
 require_once ('classes/ProfileTemplate.php');
 require_once ('classes/Profile.php');
-
+require_once ('classes/Permission.php');
 /**
  * Abstract a User
  *
@@ -59,7 +59,7 @@ require_once ('classes/Profile.php');
  * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class User implements GenericObject {
-    private $mRow;
+    private $_row;
     private $id;
     /** Object cache for the object factory (getObject())*/
     private static $instanceArray = array();
@@ -68,7 +68,7 @@ class User implements GenericObject {
      * @param $id The user id of the requested user
      * @return a User object, or null if there was an error
      */
-    public static function getObject($id) {
+    public static function &getObject($id) {
         if(!isset(self::$instanceArray[$id]))
         {
             self::$instanceArray[$id] = new self($id);
@@ -136,22 +136,13 @@ class User implements GenericObject {
         }
     }
 
-    /**
-     * Returns the server the user is connected to
-     *
-     * @return string Hostname of server
-
-     */
-    public static function getCurrentServer() {
-        return $_SERVER['SERVER_NAME'];
-    }
-
     /** Instantiate a user object
      * @param $username The username of the user
      * @param $account_origin Network:  The account origin
+     * @param &$errMsg An error message will be appended to this is the username is not empty, but the user doesn't exist.
      * @return a User object, or null if there was an error
      */
-    public static function getUserByUsernameAndOrigin($username, Network $account_origin) {
+    public static function getUserByUsernameAndOrigin($username, Network $account_origin, &$errMsg = null) {
         $db = AbstractDb::getObject();
         $object = null;
 
@@ -159,8 +150,12 @@ class User implements GenericObject {
         $account_origin_str = $db->escapeString($account_origin->getId());
         $db->execSqlUniqueRes("SELECT user_id FROM users WHERE username = '$username_str' AND account_origin = '$account_origin_str'", $user_info, false);
 
-        if ($user_info != null)
-        $object = self::getObject($user_info['user_id']);
+        if ($user_info != null) {
+            $object = self::getObject($user_info['user_id']);
+        }
+        else if (!empty($username)) {
+            $errMsg .= sprintf(_("There is no user with username %s"),$username);
+        }
         return $object;
     }
 
@@ -235,7 +230,7 @@ class User implements GenericObject {
         if ($row == null) {
             throw new Exception(sprintf(_("User id: %s could not be found in the database"), $object_id_str));
         }
-        $this->mRow = $row;
+        $this->_row = $row;
         $this->id = $row['user_id'];
     } //End class
 
@@ -247,25 +242,11 @@ class User implements GenericObject {
      * @return Network object (never returns null)
      */
     public function getNetwork() {
-        return Network :: getObject($this->mRow['account_origin']);
+        return Network :: getObject($this->_row['account_origin']);
     }
 
     /** Get a user display suitable for a user list.  Will include link to the user profile. */
     function getListUI() {
-        /*
-         $roles = array ();
-
-         if ($current_node->isOwner($online_user)) {
-         $roles[] = _("owner");
-         }
-
-         if ($current_node->isTechnicalOfficer($online_user)) {
-         $roles[] = _("technical officer");
-         }
-
-         if ($roles) {
-         $rolenames = join($roles, ",");
-         }*/
         $html = '';
         if ($this->isSplashOnlyUser()) {
             $html .= _("Guest");
@@ -311,7 +292,7 @@ class User implements GenericObject {
             // Display the nickname or the username
             $profiles=$this->getAllProfiles();
             if($profiles){
-                $html .= "<a href='".BASE_URL_PATH."profile/?profile_user_id=".$this->getId()."' title='".htmlentities(_("View this user's profile."), ENT_QUOTES)."' class='user_nickname'>\n";
+                $html .= "<a href='".BASE_URL_PATH."profile/?profile_user_id=".$this->getId()."' title='".htmlentities(_("View this user's profile."), ENT_QUOTES)."' class='user_nickname'>";
             }
             if(empty($nickname))
             $html .= $this->getUserName();
@@ -322,15 +303,15 @@ class User implements GenericObject {
             }
             $profileTemplates = $this->getNetwork()->getAllProfileTemplates();
             /*if($this==User::getCurrentUser() && $profileTemplates) {
-                $html .= "<div class='user_edit_profile_link'><br/>(<a href='".BASE_SSL_PATH."admin/generic_object_admin.php?object_id=".$this->getId()."&object_class=User&action=edit'>"._("edit profile")."</a>)</div>";
-            }*/
+             $html .= "<div class='user_edit_profile_link'><br/>(<a href='".BASE_SSL_PATH."admin/generic_object_admin.php?object_id=".$this->getId()."&object_class=User&action=edit'>"._("edit profile")."</a>)</div>";
+             }*/
 
         }
         return $html;
     }
 
     function getUsername() {
-        return $this->mRow['username'];
+        return $this->_row['username'];
     }
 
     /** Set the user's username
@@ -385,7 +366,7 @@ class User implements GenericObject {
     }
 
     public function getEmail() {
-        return $this->mRow['email'];
+        return $this->_row['email'];
     }
 
     public function setEmail($email) {
@@ -393,7 +374,7 @@ class User implements GenericObject {
         if (!($update = $this->mDb->execSqlUpdate("UPDATE users SET email='{$email_str}' WHERE user_id='{$this->id}'"))) {
             throw new Exception(_("Could not update email address."));
         }
-        $this->mRow['email'] = $email; // unescaped
+        $this->_row['email'] = $email; // unescaped
     }
 
     function setIsInvisible($value) {
@@ -408,13 +389,13 @@ class User implements GenericObject {
     }
 
     public function isInvisible() {
-        return (($this->mRow['is_invisible'] == 't') ? true : false);
+        return (($this->_row['is_invisible'] == 't') ? true : false);
     }
 
     /**What locale (language) does the user prefer? */
     public function getPreferedLocale() {
         $session = Session::getObject();
-        $locale = $this->mRow['prefered_locale'];
+        $locale = $this->_row['prefered_locale'];
         if (empty ($locale) && !empty ($session))
         $locale = $session->get(SESS_LANGUAGE_VAR);
         if (empty ($locale))
@@ -427,19 +408,19 @@ class User implements GenericObject {
         if (!($update = $this->mDb->execSqlUpdate("UPDATE users SET prefered_locale='{$locale_str}' WHERE user_id='{$this->id}'"))) {
             throw new Exception(_("Could not update username locale."));
         }
-        $this->mRow['prefered_locale'] = $locale;
+        $this->_row['prefered_locale'] = $locale;
     }
 
     /** get the hashed password stored in the database */
     public function getPasswordHash() {
-        return $this->mRow['pass'];
+        return $this->_row['pass'];
     }
 
     /** Get the account status.
      * @return Possible values are listed in common.php
      */
     function getAccountStatus() {
-        return $this->mRow['account_status'];
+        return $this->_row['account_status'];
     }
 
     function setAccountStatus($status) {
@@ -449,7 +430,7 @@ class User implements GenericObject {
             if (!($update = $db->execSqlUpdate("UPDATE users SET account_status='{$status_str}' WHERE user_id='{$this->id}'"))) {
                 throw new Exception(_("Could not update status."));
             }
-            $this->mRow['account_status'] = $status;
+            $this->_row['account_status'] = $status;
         }
     }
 
@@ -480,11 +461,11 @@ class User implements GenericObject {
         return $retval;
     }
 
-    public function isSuperAdmin() {
+    public function DEPRECATEDisSuperAdmin() {
         $db = AbstractDb::getObject();
         //$this->session->dump();
 
-        $db->execSqlUniqueRes("SELECT * FROM users NATURAL JOIN administrators WHERE (users.user_id='$this->id')", $user_info, false);
+        $db->execSqlUniqueRes("SELECT * FROM users JOIN server_stakeholders USING (user_id) WHERE (users.user_id='$this->id')", $user_info, false);
         if (!empty ($user_info)) {
             return true;
         } else {
@@ -496,26 +477,18 @@ class User implements GenericObject {
     /**
      * Tells if the current user is owner of at least one hotspot.
      */
-    public function isOwner() {
+    public function DEPRECATEDisOwner() {
         $db = AbstractDb::getObject();
-        $db->execSql("SELECT * FROM node_stakeholders WHERE is_owner = true AND user_id='{$this->getId()}'", $row, false);
+        $db->execSql("SELECT * FROM node_stakeholders WHERE role_id = 'NODE_OWNER' AND user_id='{$this->getId()}'", $row, false);
         if ($row != null)
         return true;
         return false;
 
     }
 
-    public function isNobody() {
-        $db = AbstractDb::getObject();
-        $db->execSqlUniqueRes("SELECT DISTINCT user_id FROM (SELECT user_id FROM network_stakeholders WHERE user_id='{$this->getId()}' UNION SELECT user_id FROM node_stakeholders WHERE user_id='{$this->getId()}' UNION SELECT user_id FROM administrators WHERE user_id='{$this->getId()}') as tmp", $row, false);
-        if ($row == null)
-        return true;
-        return false;
-    }
-
     /** Is this user the Splash Only User() */
     public function isSplashOnlyUser() {
-        if ($this->mRow['username'] == "SPLASH_ONLY_USER") {
+        if ($this->_row['username'] == "SPLASH_ONLY_USER") {
             return true;
         } else {
             return false;
@@ -523,7 +496,7 @@ class User implements GenericObject {
     }
 
     function getValidationToken() {
-        return $this->mRow['validation_token'];
+        return $this->_row['validation_token'];
     }
 
     /** Generate a token in the connection table so the user can actually use the internet
@@ -562,11 +535,11 @@ class User implements GenericObject {
         if (!($update = $db->execSqlUpdate("UPDATE users SET pass='$new_password_hash' WHERE user_id='{$this->id}'"))) {
             throw new Exception(_("Could not change user's password."));
         }
-        $this->mRow['pass'] = $password;
+        $this->_row['pass'] = $password;
     }
 
     function getAccountOrigin() {
-        return $this->mRow['account_origin'];
+        return $this->_row['account_origin'];
     }
 
     /** Return all the users
@@ -701,11 +674,8 @@ class User implements GenericObject {
 
      */
     public static function getSelectUserUI($user_prefix, $add_button_name = null, $add_button_value = null) {
-
         $db = AbstractDb::getObject();
-
-        $networkSelector = Network :: getSelectNetworkUI($user_prefix);
-
+        $networkSelector = Network :: getSelectUI($user_prefix);
         // Check if we need to add an "add" button
         if ($add_button_name && $add_button_value) {
             $userSelector = _("Username") . ": " . InterfaceElements :: generateInputText("select_user_" . $user_prefix . "_username", "", "", "input_text", array (
@@ -721,16 +691,17 @@ class User implements GenericObject {
 
     /** Get the selected user, IF one was selected and is valid
      * @param $user_prefix A identifier provided by the programmer to recognise it's generated form
+     * @param &$errMsg An error message will be appended to this is the username is not empty, but the user doesn't exist.
      * @return the User object, or null if the user is invalid or none was selected
      */
-    static function processSelectUserUI($user_prefix) {
+    static function processSelectUserUI($user_prefix, &$errMsg) {
         $object = null;
         try {
-            $network = Network :: processSelectNetworkUI($user_prefix);
+            $network = Network :: processSelectUI($user_prefix);
             $name = "select_user_{$user_prefix}_username";
             if (!empty ($_REQUEST[$name])) {
                 $username = $_REQUEST[$name];
-                return self :: getUserByUsernameAndOrigin($username, $network);
+                return self :: getUserByUsernameAndOrigin($username, $network, $errMsg);
             } else
             return null;
         } catch (Exception $e) {
@@ -743,7 +714,7 @@ class User implements GenericObject {
         $currentUser = self :: getCurrentUser();
         $userPreferencesItems = array();
         $finalHtml = '';
-        if($this->getNetwork()->hasAdminAccess($currentUser)) {
+        if($this->getNetwork()->DEPRECATEDhasAdminAccess($currentUser)) {
             /* Statistics */
             $content = "<a href='".BASE_SSL_PATH."admin/stats.php?Statistics=".$this->getNetwork()->getId()."&distinguish_users_by=user_id&stats_selected_users=".$this->getUsername()."&UserReport=on&user_id=".$this->getId()."&action=generate'>"._("Get user statistics")."</a>\n";
             $administrationItems[] = InterfaceElements::genSectionItem($content);
@@ -759,7 +730,7 @@ class User implements GenericObject {
             $finalHtml .= InterfaceElements::genSection($administrationItems, _("Administrative options"));
         }
 
-        if (($this == $currentUser && !$this->isSplashOnlyUser() )|| $this->getNetwork()->hasAdminAccess($currentUser)) {
+        if (($this == $currentUser && !$this->isSplashOnlyUser() )|| $this->getNetwork()->DEPRECATEDhasAdminAccess($currentUser)) {
             /* Username */
             $title = _("Username");
             $name = "user_" . $this->getId() . "_username";
@@ -823,14 +794,14 @@ class User implements GenericObject {
     public function processAdminUI() {
         $db = AbstractDb::getObject();
         $currentUser = self :: getCurrentUser();
-        if ($this->getNetwork()->hasAdminAccess($currentUser)) {
+        if ($this->getNetwork()->DEPRECATEDhasAdminAccess($currentUser)) {
             /* Account status */
             $name = "user_" . $this->getId() . "_accountstatus";
             $status = FormSelectGenerator::getResult($name, null);
             $this->setAccountStatus($status);
         }
 
-        if ($this == $currentUser || $this->getNetwork()->hasAdminAccess($currentUser)) {
+        if ($this == $currentUser || $this->getNetwork()->DEPRECATEDhasAdminAccess($currentUser)) {
             /* Username */
             $name = "user_" . $this->getId() . "_username";
             $this->setUsername($_REQUEST[$name]);
@@ -927,6 +898,43 @@ class User implements GenericObject {
     protected function refresh() {
         $this->__construct($this->id);
     }
+    /** Menu hook function */
+    static public function hookMenu() {
+        $items = array();
+        $network = Network::getCurrentNetwork();
+        $server = Server::getServer();
+        if(Security::hasAnyPermission(array(array(Permission::P('NETWORK_PERM_VIEW_ONLINE_USERS'), $network))))
+        {
+            $items[] = array('path' => 'users/online_users',
+            'title' => _("Online Users"),
+            'url' => BASE_URL_PATH."admin/online_users.php");
+        }
+        if(Security::hasPermission(Permission::P('SERVER_PERM_EDIT_SERVER_CONFIG'), $server))
+        {
+            $items[] = array('path' => 'users/import_nocat',
+            'title' => _("Import NoCat user database"),
+            'url' => BASE_URL_PATH."admin/import_user_database.php"
+		);
+        }
+            if(Security::getObjectsWithPermission(Permission::P('NETWORK_PERM_EDIT_ANY_USER')))
+        {
+            $items[] = array('path' => 'users/user_manager',
+            'title' => _("User manager"),
+            'url' => BASE_URL_PATH."admin/user_log.php"
+		);
+        }
+            if(Security::getObjectsWithPermission(Permission::P('NETWORK_PERM_VIEW_STATISTICS')))
+        {
+            $items[] = array('path' => 'users/statistics',
+            'title' => _("Statistics"),
+            'url' => BASE_URL_PATH."admin/stats.php"
+		);
+        }
+        $items[] = array('path' => 'users',
+        'title' => _('User administration'),
+        'type' => MENU_ITEM_GROUPING);
+        return $items;
+    }
 
     /** Set Smarty template values.  Standardization routine. */
     public static function assignSmartyValues($smarty, $user = null) {
@@ -945,10 +953,10 @@ class User implements GenericObject {
          * new roles system.
          */
         $smarty->assign('userIsValid', $user && !$user->isSplashOnlyUser() ? true : false);
-        $smarty->assign('userIsSuperAdmin', $user && $user->isSuperAdmin());
-        $smarty->assign('userIsANodeOwner', $user && $user->isOwner());
+        $smarty->assign('userDEPRECATEDisSuperAdmin', $user && $user->DEPRECATEDisSuperAdmin());
+        $smarty->assign('userIsANodeOwner', $user && $user->DEPRECATEDisOwner());
 
-        if (isset ($_REQUEST['debug_request']) && ($user && $user->isSuperAdmin())) {
+        if (isset ($_REQUEST['debug_request']) && ($user && $user->DEPRECATEDisSuperAdmin())) {
             // Tell Smarty everything it needs to know
             $smarty->assign('debugRequested', true);
             $smarty->assign('debugOutput', print_r($_REQUEST, true));

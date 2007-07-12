@@ -110,7 +110,6 @@ class AuthenticatorLocalUser extends Authenticator
         $db = AbstractDb::getObject();
 
         // Init values
-        $security = new Security();
         $retval = false;
 
         $username = $db->escapeString($username);

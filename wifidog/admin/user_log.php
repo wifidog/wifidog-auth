@@ -49,15 +49,16 @@ require_once('admin_common.php');
 require_once('classes/MainUI.php');
 require_once('classes/User.php');
 
-Security::requireAdmin();
-$db = AbstractDb::getObject(); 
-$smarty = SmartyWifidog::getObject(); 
+$networks = Security::getObjectsWithPermission(Permission::P('NETWORK_PERM_EDIT_ANY_USER'));
+$db = AbstractDb::getObject();
+$smarty = SmartyWifidog::getObject();
 $total = array ();
 $total['incoming'] = 0;
 $total['outgoing'] = 0;
 
 // Process user ID searchbox
-$user = User::processSelectUserUI("user_id_searchbox");
+$errmsg = null;
+$user = User::processSelectUserUI("user_id_searchbox", $errmsg);
 
 if (!empty ($_REQUEST['user_id']) || !empty($user))
 {
@@ -95,8 +96,14 @@ else
     {
         $smarty->append("pages", array ('number' => $i, 'selected' => ($i == $current_page),));
     }
-
-    $db->execSql("SELECT user_id,username,account_origin,reg_date,account_status FROM users ORDER BY $sort $direction LIMIT $per_page OFFSET $offset", $users_res);
+    $sqlNetwork = " AND (FALSE\n";
+    foreach ($networks as $network) {
+        $idStr = $db->escapeString($network->getId());
+        $sqlNetwork .= " OR account_origin='$idStr'\n";
+    }
+        $sqlNetwork .= ")\n";
+    $sql = "SELECT user_id,username,account_origin,reg_date,account_status FROM users WHERE 1=1 $sqlNetwork ORDER BY $sort $direction LIMIT $per_page OFFSET $offset";
+    $db->execSql($sql, $users_res, false);
     if ($users_res)
     {
         $smarty->assign("users_array", $users_res);
@@ -120,7 +127,6 @@ else
     $html .= $smarty->fetch("admin/templates/user_log.html");
 
     $ui=MainUI::getObject();
-    $ui->setToolSection('ADMIN');
     $ui->addContent('main_area_middle', $html);
     $ui->display();
 }

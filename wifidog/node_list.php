@@ -53,8 +53,7 @@ define('DEFAULT_SORT_BY_PARAM', "name");
  * Load required files
  */
 require_once (dirname(__FILE__) . '/include/common.php');
-
-require_once ('include/common_interface.php');
+require_once ('classes/SmartyWifidog.php');
 require_once ('classes/Node.php');
 require_once ('classes/Utils.php');
 $smarty = SmartyWifidog :: getObject();

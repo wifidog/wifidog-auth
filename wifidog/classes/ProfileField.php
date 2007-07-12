@@ -75,7 +75,7 @@ class ProfileField implements GenericObject {
         $this->profile_field_row = $row;
     }
 
-    public static function getObject($id)
+    public static function &getObject($id)
     {
         if(!isset(self::$instanceArray[$id]))
         {
@@ -155,7 +155,7 @@ class ProfileField implements GenericObject {
      */
     public function getLastModificationDate()
     {
-        return $this->mRow['last_modified'];
+        return $this->_row['last_modified'];
     }
 
     /**
@@ -359,7 +359,7 @@ class ProfileField implements GenericObject {
         // Init values
         $_retVal = false;
 
-        if (!User::getCurrentUser()->isSuperAdmin()) {
+        if (!User::getCurrentUser()->DEPRECATEDisSuperAdmin()) {
             $errmsg = _('Access denied (must have super admin access)');
         } else {
             $_id = $db->escapeString($this->getId());

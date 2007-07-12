@@ -350,7 +350,7 @@ class ContentGroup extends Content {
         // Init values
         $errmsg = null;
 
-        if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
+        if ($this->DEPRECATEDisOwner(User :: getCurrentUser()) || User :: getCurrentUser()->DEPRECATEDisSuperAdmin()) {
             parent :: processAdminUI();
 
             /* content_ordering_mode */

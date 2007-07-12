@@ -258,7 +258,7 @@ class Content implements GenericObject {
      *                (an exception is also thrown)
 
      */
-    public static function getObject($content_id) {
+    public static function &getObject($content_id) {
         //echo "Content::g e tObject(".$content_id.")<br/>\n";
         if (!isset (self :: $instanceArray[$content_id])) {
             //echo "Cache MISS!<br/>\n";
@@ -349,7 +349,7 @@ class Content implements GenericObject {
         return $contentTypes;
     }
     /**
-     * Check if this specific ContentType is usable (all dependencies
+     * Check if this specific ContentType is usable (all Dependency
      * met,etc.
      * This method is meant to be overloaded by the different content classes
      * @return true or flase
@@ -410,10 +410,10 @@ class Content implements GenericObject {
         if (false === is_array($candidates)) {
             throw new exception("classnames must be an array");
         }
-        $classname_reflector = new ReflectionClass($classname);
+        //$classname_reflector = new ReflectionClass($classname);
 
         foreach ($candidates as $candidate) {
-            $candidate_reflector = new ReflectionClass($candidate);
+            //$candidate_reflector = new ReflectionClass($candidate);
             //echo"classname: $classname, candidate: $candidate<br>";
             if ($candidate == $classname) {
                 $retval = true;
@@ -1217,7 +1217,7 @@ class Content implements GenericObject {
     /** Check if a user is one of the owners of the object
      * @param $user User object:  the user to be tested.
      * @return true if the user is a owner, false if he isn't of the user is null */
-    public function isOwner($user) {
+    public function DEPRECATEDisOwner($user) {
         $db = AbstractDb :: getObject();
         $retval = false;
         if ($user != null) {
@@ -1497,7 +1497,7 @@ class Content implements GenericObject {
         $db = AbstractDb :: getObject();
 
         $html = '';
-        if (!(User :: getCurrentUser()->isSuperAdmin() || $this->isOwner(User :: getCurrentUser()))) {
+        if (!(User :: getCurrentUser()->DEPRECATEDisSuperAdmin() || $this->DEPRECATEDisOwner(User :: getCurrentUser()))) {
             $html .= $this->getListUI();
             $html .= ' ' . _("(You do not have access to edit this piece of content)");
         } else {
@@ -1681,7 +1681,7 @@ class Content implements GenericObject {
 
     */
     public function processAdminUI() {
-        if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
+        if ($this->DEPRECATEDisOwner(User :: getCurrentUser()) || User :: getCurrentUser()->DEPRECATEDisSuperAdmin()) {
             $db = AbstractDb :: getObject();
             if ($this->getObjectType() == 'Content') /* The object hasn't yet been typed */ {
                 $content_type = FormSelectGenerator :: getResult("content_" . $this->id . "_content_type", "Content");
@@ -1923,7 +1923,7 @@ class Content implements GenericObject {
             $errmsg = _("Content is persistent (you must make it non persistent before you can delete it)");
         } else {
             $db = AbstractDb :: getObject();
-            if ($this->isOwner(User :: getCurrentUser()) || User :: getCurrentUser()->isSuperAdmin()) {
+            if ($this->DEPRECATEDisOwner(User :: getCurrentUser()) || User :: getCurrentUser()->DEPRECATEDisSuperAdmin()) {
                 $metadata = $this->getTitle();
                 if ($metadata){
                     $metadata->delete();
@@ -1949,6 +1949,21 @@ class Content implements GenericObject {
         }
         return $retval;
     }
+       /** Menu hook function */
+    static public function hookMenu() {
+        $items = array();
+        $server = Server::getServer();
+        if(Security::hasAnyPermission(array(array(Permission::P('SERVER_PERM_EDIT_CONTENT_LIBRARY'), $server))))
+        {
+            $items[] = array('path' => 'server/content_library',
+            'title' => _("Reusable content library"),
+            'url' => BASE_URL_PATH."admin/generic_object_admin.php?object_class=Content&action=list"
+		);
+        }
+
+        return $items;
+    }
+    
 
 } // End class
 

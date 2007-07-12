@@ -45,14 +45,14 @@
 /**
  * Load required classes
  */
-require_once('classes/Dependencies.php');
+require_once('classes/Dependency.php');
 require_once('classes/MainUI.php');
 require_once('classes/Network.php');
 require_once('classes/Node.php');
 require_once('classes/User.php');
 
 // Check for FPDF library
-if (Dependencies::check("FPDF")) {
+if (Dependency::check("FPDF")) {
     // Start server load check
     $_serverBusy = false;
 
@@ -898,7 +898,7 @@ class NodeListPDF
         $this->_network = $network;
 
         // Init PdfWifidog and check if FDPF is available
-        if (Dependencies::check("FPDF")) {
+        if (Dependency::check("FPDF")) {
             // Set PDF availability switch
             $this->_pdfAvailable = true;
 
@@ -987,7 +987,7 @@ class NodeListPDF
      */
     public function setHeader()
     {
-        if (Dependencies::check("FPDF")) {
+        if (Dependency::check("FPDF")) {
             header("Cache-control: private, no-cache, must-revalidate, post-check=0, pre-check=0");
             header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); # Past date
             header("Pragma: no-cache");

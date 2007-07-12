@@ -46,7 +46,7 @@
 /**
  * Load required classes
  */
-require_once('classes/GenericObject.php');
+require_once('classes/GenericDataObject.php');
 require_once('classes/Content.php');
 require_once('classes/User.php');
 require_once('classes/Node.php');
@@ -66,20 +66,10 @@ require_once('classes/ThemePack.php');
  * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  * @copyright  2006 Max Horváth, Horvath Web Consulting
  */
-class Network implements GenericObject
+class Network extends GenericDataObject
 {
-	    /** Object cache for the object factory (getObject())*/
+    /** Object cache for the object factory (getObject())*/
     private static $instanceArray = array();
-    /**
-     * The network Id
-     *
-     * @var string
-     *
-     * @access private
-     */
-    private $id;
-
-    private $mRow;
 
     /**
      * Get an instance of the object
@@ -93,11 +83,11 @@ class Network implements GenericObject
      * @static
      * @access public
      */
-    public static function getObject($id)
+    public static function &getObject($id)
     {
-    	if(!isset(self::$instanceArray[$id]))
+        if(!isset(self::$instanceArray[$id]))
         {
-        	self::$instanceArray[$id] = new self($id);
+            self::$instanceArray[$id] = new self($id);
         }
         return self::$instanceArray[$id];
     }
@@ -115,7 +105,7 @@ class Network implements GenericObject
     {
         $retval = array ();
         $db = AbstractDb::getObject();
-        $sql = "SELECT network_id FROM networks ORDER BY is_default_network DESC";
+        $sql = "SELECT network_id FROM networks";
         $network_rows = null;
         $db->execSql($sql, $network_rows, false);
         if ($network_rows == null) {
@@ -130,25 +120,19 @@ class Network implements GenericObject
     /**
      * Get the default network
      *
-     * @param bool $real_network_only Return a real network only?
-     *
      * @return object A Network object, NEVER returns null.
      *
      * @static
      * @access public
      */
-    public static function getDefaultNetwork($real_network_only = false)
+    public static function getDefaultNetwork()
     {
         $retval = null;
-        $db = AbstractDb::getObject();
-        $sql = "SELECT network_id FROM networks WHERE is_default_network=TRUE ORDER BY creation_date LIMIT 1";
-        $network_row = null;
-        $db->execSqlUniqueRes($sql, $network_row, false);
-        if ($network_row == null) {
-            throw new Exception(_("Network::getDefaultNetwork:  Fatal error: Unable to find the default network!"));
+        $vhost = VirtualHost :: getCurrentVirtualHost();
+        if ($vhost == null) {
+            $vhost = VirtualHost :: getDefaultVirtualHost();
         }
-        $retval = self::getObject($network_row['network_id']);
-        return $retval;
+        return $vhost->getDefaultNetwork();
     }
 
     /**
@@ -209,6 +193,25 @@ class Network implements GenericObject
 
     }
 
+     /**
+     * Get an interface to pick an object of this class
+     *
+     * If there is only one server available, no interface is actually shown
+     *
+     * @param string $user_prefix         A identifier provided by the
+     *                                    programmer to recognise it's generated
+     *                                    html form
+     *  @param string $userData=null Array of contextual data optionally sent to the method.
+     *  The function must still function if none of it is present.
+     *
+     * This method understands:
+     *  $userData['preSelectedObject'] An optional Object of this class to be selected.
+     *	$userData['additionalWhere'] Additional SQL conditions for the
+     *                                    objects to select
+     *  $userData['allowEmpty'] boolean Allow not selecting any object
+     * @return string HTML markup
+
+     */
     /**
      * Get an interface to pick a network
      *
@@ -217,28 +220,25 @@ class Network implements GenericObject
      * @param string $user_prefix          A identifier provided by the
      *                                     programmer to recognise it's
      *                                     generated html form
-     * @param object $pre_selected_network Network object: The network to be
+     * @param object $preSelectedObject Network object: The network to be
      *                                     pre-selected in the form object
-     * @param string $additional_where     Additional SQL conditions for the
+     * @param string $additionalWhere     Additional SQL conditions for the
      *                                     networks to select
-     * @param string $additional_where     boolean Allow not selecting any network
+     * @param string $allowEmpty     boolean Allow not selecting any network
      * @return string HTML markup
 
      */
-    public static function getSelectNetworkUI($user_prefix, $pre_selected_network = null, $additional_where = null, $allow_empty = false)
+    public static function getSelectUI($user_prefix, $userData=null)
     {
         $html = '';
         $name = $user_prefix;
-
-        if ($pre_selected_network) {
-            $selected_id = $pre_selected_network->getId();
-        } else {
-            $selected_id = null;
-        }
-
+        //pretty_print_r($userData);
+        !empty($userData['preSelectedObject'])?$selected_id=$userData['preSelectedObject']->getId():$selected_id=self::getDefaultNetwork()->getId();
+		!empty($userData['additionalWhere'])?$additional_where=$userData['additionalWhere']:$additional_where=null;
+		!empty($userData['allowEmpty'])?$allow_empty=$userData['allowEmpty']:$allow_empty=false;
+		
         $db = AbstractDb::getObject();
-        $additional_where = $db->escapeString($additional_where);
-        $sql = "SELECT network_id, name FROM networks WHERE 1=1 $additional_where ORDER BY is_default_network DESC";
+        $sql = "SELECT network_id, name FROM networks WHERE 1=1 $additional_where";
         $network_rows = null;
         $db->execSql($sql, $network_rows, false);
         if ($network_rows == null) {
@@ -258,7 +258,7 @@ class Network implements GenericObject
 
         } else {
             foreach ($network_rows as $network_row) //iterates only once...
-                {
+            {
                 $html .= _("Network:")." \n";
                 $html .= " $network_row[name] ";
                 $html .= "<input type='hidden' name='$name' value='".htmlspecialchars($network_row['network_id'], ENT_QUOTES, 'UTF-8')."'>";
@@ -277,10 +277,9 @@ class Network implements GenericObject
      * @return mixed The network object or null
 
      */
-    public static function processSelectNetworkUI($user_prefix)
+    public static function processSelectUI($user_prefix)
     {
         $name = "{$user_prefix}";
-
         if (!empty ($_REQUEST[$name])) {
             return self::getObject($_REQUEST[$name]);
         } else {
@@ -330,12 +329,11 @@ class Network implements GenericObject
 
             if ($network_id) {
                 try {
-                    if (!User::getCurrentUser()->isSuperAdmin()) {
+                    if (!User::getCurrentUser()->DEPRECATEDisSuperAdmin()) {
                         throw new Exception(_("Access denied"));
                     }
                 } catch (Exception $e) {
                     $ui = MainUI::getObject();
-                    $ui->setToolSection('ADMIN');
                     $ui->displayError($e->getMessage(), false);
                     exit;
                 }
@@ -366,20 +364,13 @@ class Network implements GenericObject
         if ($row == null) {
             throw new Exception("The network with id $network_id_str could not be found in the database");
         }
-        $this->mRow = $row;
-        $this->id = $db->escapeString($row['network_id']);
+        $this->_row = $row;
+        $this->_id = $p_network_id;
     }
 
-    /**
-     * Retreives the id of the object
-     *
-     * @return string The id
-     *
-     * @access public
-     */
-    public function getId()
+    public function __toString()
     {
-        return $this->id;
+        return $this->getName();
     }
 
     /**
@@ -391,7 +382,7 @@ class Network implements GenericObject
      */
     public function getTechSupportEmail()
     {
-        return $this->mRow['tech_support_email'];
+        return $this->_row['tech_support_email'];
     }
 
     /**
@@ -427,7 +418,7 @@ class Network implements GenericObject
      */
     public function getName()
     {
-        return $this->mRow['name'];
+        return $this->_row['name'];
     }
 
     /**
@@ -463,8 +454,8 @@ class Network implements GenericObject
      */
     public function getThemePack()
     {
-        if (!empty ($this->mRow['theme_pack'])) {
-            return ThemePack::getObject($this->mRow['theme_pack']);
+        if (!empty ($this->_row['theme_pack'])) {
+            return ThemePack::getObject($this->_row['theme_pack']);
         } else {
             return null;
         }
@@ -503,7 +494,7 @@ class Network implements GenericObject
      */
     public function getCreationDate()
     {
-        return $this->mRow['creation_date'];
+        return $this->_row['creation_date'];
     }
 
     /**
@@ -515,7 +506,7 @@ class Network implements GenericObject
      */
     public function setCreationDate($value)
     {
-        
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -539,7 +530,7 @@ class Network implements GenericObject
      */
     public function getWebSiteURL()
     {
-        return $this->mRow['homepage_url'];
+        return $this->_row['homepage_url'];
     }
 
     /**
@@ -573,7 +564,7 @@ class Network implements GenericObject
      */
     public function getAuthenticatorClassName()
     {
-        return $this->mRow['network_authenticator_class'];
+        return $this->_row['network_authenticator_class'];
     }
 
     /**
@@ -588,7 +579,7 @@ class Network implements GenericObject
      */
     public function setAuthenticatorClassName($value)
     {
-        
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -610,7 +601,7 @@ class Network implements GenericObject
      */
     public function getAuthenticatorConstructorParams()
     {
-        return $this->mRow['network_authenticator_params'];
+        return $this->_row['network_authenticator_params'];
     }
 
     /**
@@ -624,7 +615,7 @@ class Network implements GenericObject
      */
     public function setAuthenticatorConstructorParams($value)
     {
-        
+
         $db = AbstractDb::getObject();
 
         // init values
@@ -649,13 +640,13 @@ class Network implements GenericObject
         require_once ('classes/Authenticator.php');
 
         // Include only the authenticator we are about to use
-        require_once ("classes/Authenticators/".$this->mRow['network_authenticator_class'].".php");
+        require_once ("classes/Authenticators/".$this->_row['network_authenticator_class'].".php");
 
-        if (strpos($this->mRow['network_authenticator_params'], ';') != false) {
+        if (strpos($this->_row['network_authenticator_params'], ';') != false) {
             throw new Exception("Network::getAuthenticator(): Security error: The parameters passed to the constructor of the authenticator are potentially unsafe");
         }
 
-        return call_user_func_array(array (new ReflectionClass($this->mRow['network_authenticator_class']), 'newInstance'), explode(",", str_replace(array ("'", '"'), "", str_replace(", ", ",", $this->mRow['network_authenticator_params']))));
+        return call_user_func_array(array (new ReflectionClass($this->_row['network_authenticator_class']), 'newInstance'), explode(",", str_replace(array ("'", '"'), "", str_replace(", ", ",", $this->_row['network_authenticator_params']))));
     }
 
     /**
@@ -738,7 +729,7 @@ class Network implements GenericObject
      */
     public static function getSelectAuthenticator($user_prefix, $pre_selected_authenticator = null)
     {
-        
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -771,7 +762,7 @@ class Network implements GenericObject
      */
     public function isDefaultNetwork()
     {
-        ($this->mRow['is_default_network'] == 't') ? $retval = true : $retval = false;
+        (self::getDefaultNetwork()->getId() == $this->getId()) ? $retval = true : $retval = false;
         return $retval;
     }
 
@@ -810,7 +801,7 @@ class Network implements GenericObject
      */
     public function getValidationGraceTime()
     {
-        return $this->mRow['validation_grace_time_seconds'];
+        return $this->_row['validation_grace_time_seconds'];
     }
 
     /**
@@ -849,7 +840,7 @@ class Network implements GenericObject
      */
     public function getValidationEmailFromAddress()
     {
-        return $this->mRow['validation_email_from_address'];
+        return $this->_row['validation_email_from_address'];
     }
 
     /**
@@ -885,7 +876,7 @@ class Network implements GenericObject
      */
     public function getMultipleLoginAllowed()
     {
-        return ($this->mRow['allow_multiple_login'] == 't') ? true : false;
+        return ($this->_row['allow_multiple_login'] == 't') ? true : false;
     }
 
     /**
@@ -921,7 +912,7 @@ class Network implements GenericObject
      */
     public function getSplashOnlyNodesAllowed()
     {
-        return (($this->mRow['allow_splash_only_nodes'] == 't') ? true : false);
+        return (($this->_row['allow_splash_only_nodes'] == 't') ? true : false);
     }
 
     /**
@@ -955,7 +946,7 @@ class Network implements GenericObject
      */
     public function getGisLocation()
     {
-        return new GisPoint($this->mRow['gmaps_initial_latitude'], $this->mRow['gmaps_initial_longitude'], $this->mRow['gmaps_initial_zoom_level']);
+        return new GisPoint($this->_row['gmaps_initial_latitude'], $this->_row['gmaps_initial_longitude'], $this->_row['gmaps_initial_zoom_level']);
     }
 
     /**
@@ -967,7 +958,7 @@ class Network implements GenericObject
      */
     public function setGisLocation($pt)
     {
-        
+
         $db = AbstractDb::getObject();
 
         if (!empty ($pt)) {
@@ -993,7 +984,7 @@ class Network implements GenericObject
      */
     public function getGisMapType()
     {
-        return $this->mRow['gmaps_map_type'];
+        return $this->_row['gmaps_map_type'];
     }
 
     /**
@@ -1005,7 +996,7 @@ class Network implements GenericObject
      */
     public function setGisMapType($value)
     {
-        
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -1033,7 +1024,7 @@ class Network implements GenericObject
      */
     public static function getSelectGisMapType($user_prefix, $pre_selected_map_type = "G_NORMAL_MAP")
     {
-        
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -1085,7 +1076,7 @@ class Network implements GenericObject
      */
     public function getNumUsers()
     {
-        
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -1095,7 +1086,7 @@ class Network implements GenericObject
         $_cachedData = null;
 
         // Create new cache objects (valid for 1 minute)
-        $_cache = new Cache('network_'.$this->id.'_num_users', $this->id, 60);
+        $_cache = new Cache('network_'.$this->_id.'_num_users', $this->_id, 60);
 
         // Check if caching has been enabled.
         if ($_cache->isCachingEnabled) {
@@ -1110,7 +1101,7 @@ class Network implements GenericObject
 
         if (!$_useCache) {
             // Get number of users
-            $_network_id = $db->escapeString($this->id);
+            $_network_id = $db->escapeString($this->_id);
             $db->execSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_origin='$_network_id'", $_row, false);
 
             // String has been found
@@ -1133,7 +1124,7 @@ class Network implements GenericObject
      */
     public function getNumValidUsers()
     {
-        
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -1143,7 +1134,7 @@ class Network implements GenericObject
         $_cachedData = null;
 
         // Create new cache objects (valid for 1 minute)
-        $_cache = new Cache('network_'.$this->id.'_num_valid_users', $this->id, 60);
+        $_cache = new Cache('network_'.$this->_id.'_num_valid_users', $this->_id, 60);
 
         // Check if caching has been enabled.
         if ($_cache->isCachingEnabled) {
@@ -1158,7 +1149,7 @@ class Network implements GenericObject
 
         if (!$_useCache) {
             // Get number of valid users
-            $_network_id = $db->escapeString($this->id);
+            $_network_id = $db->escapeString($this->_id);
             $db->execSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_status = ".ACCOUNT_STATUS_ALLOWED." AND account_origin='$_network_id'", $_row, false);
             // String has been found
             $_retval = $_row['count'];
@@ -1181,7 +1172,7 @@ class Network implements GenericObject
      */
     public function getNumOnlineUsers()
     {
-        
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -1191,7 +1182,7 @@ class Network implements GenericObject
         $_cachedData = null;
 
         // Create new cache objects (valid for 1 minute)
-        $_cache = new Cache('network_'.$this->id.'_num_online_users', $this->id, 60);
+        $_cache = new Cache('network_'.$this->_id.'_num_online_users', $this->_id, 60);
 
         // Check if caching has been enabled.
         if ($_cache->isCachingEnabled) {
@@ -1206,7 +1197,7 @@ class Network implements GenericObject
 
         if (!$_useCache) {
             // Get number of online users
-            $_network_id = $db->escapeString($this->id);
+            $_network_id = $db->escapeString($this->_id);
             $db->execSqlUniqueRes("SELECT COUNT(DISTINCT users.user_id) FROM users,connections NATURAL JOIN nodes JOIN networks ON (nodes.network_id=networks.network_id AND networks.network_id='$_network_id') "."WHERE connections.token_status='".TOKEN_INUSE."' "."AND users.user_id=connections.user_id ", $_row, false);
 
             // String has been found
@@ -1229,7 +1220,7 @@ class Network implements GenericObject
      */
     public function getNumNodes()
     {
-        
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -1239,7 +1230,7 @@ class Network implements GenericObject
         $_cachedData = null;
 
         // Create new cache objects (valid for 5 minutes)
-        $_cache = new Cache('network_'.$this->id.'_num_nodes', $this->id, 300);
+        $_cache = new Cache('network_'.$this->_id.'_num_nodes', $this->_id, 300);
 
         // Check if caching has been enabled.
         if ($_cache->isCachingEnabled) {
@@ -1254,7 +1245,7 @@ class Network implements GenericObject
 
         if (!$_useCache) {
             // Get number of nodes
-            $_network_id = $db->escapeString($this->id);
+            $_network_id = $db->escapeString($this->_id);
             $db->execSqlUniqueRes("SELECT COUNT(node_id) FROM nodes WHERE network_id = '$_network_id'", $_row, false);
 
             // String has been found
@@ -1277,7 +1268,7 @@ class Network implements GenericObject
      */
     public function getNumDeployedNodes()
     {
-        
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -1287,7 +1278,7 @@ class Network implements GenericObject
         $_cachedData = null;
 
         // Create new cache objects (valid for 5 minutes)
-        $_cache = new Cache('network_'.$this->id.'_num_deployed_nodes', $this->id, 300);
+        $_cache = new Cache('network_'.$this->_id.'_num_deployed_nodes', $this->_id, 300);
 
         // Check if caching has been enabled.
         if ($_cache->isCachingEnabled) {
@@ -1302,7 +1293,7 @@ class Network implements GenericObject
 
         if (!$_useCache) {
             // Get number of deployed nodes
-            $_network_id = $db->escapeString($this->id);
+            $_network_id = $db->escapeString($this->_id);
             $db->execSqlUniqueRes("SELECT COUNT(node_id) FROM nodes WHERE network_id = '$_network_id' AND (node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE')", $_row, false);
 
             // String has been found
@@ -1327,7 +1318,7 @@ class Network implements GenericObject
      */
     public function getNumOnlineNodes($nonMonitoredOnly = false)
     {
-        
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -1338,9 +1329,9 @@ class Network implements GenericObject
 
         // Create new cache objects (valid for 5 minutes)
         if ($nonMonitoredOnly) {
-            $_cache = new Cache('network_'.$this->id.'_num_online_nodes_non_monitored', $this->id, 300);
+            $_cache = new Cache('network_'.$this->_id.'_num_online_nodes_non_monitored', $this->_id, 300);
         } else {
-            $_cache = new Cache('network_'.$this->id.'_num_online_nodes', $this->id, 300);
+            $_cache = new Cache('network_'.$this->_id.'_num_online_nodes', $this->_id, 300);
         }
 
         // Check if caching has been enabled.
@@ -1356,7 +1347,7 @@ class Network implements GenericObject
 
         if (!$_useCache) {
             // Get number of online nodes
-            $_network_id = $db->escapeString($this->id);
+            $_network_id = $db->escapeString($this->_id);
 
             if ($nonMonitoredOnly) {
                 $db->execSqlUniqueRes("SELECT COUNT(node_id) FROM nodes WHERE network_id = '$_network_id' AND node_deployment_status = 'NON_WIFIDOG_NODE' AND ((CURRENT_TIMESTAMP-last_heartbeat_timestamp) >= interval '5 minutes')", $_row, false);
@@ -1387,7 +1378,7 @@ class Network implements GenericObject
      */
     public function getCustomPortalRedirectAllowed()
     {
-        return (($this->mRow['allow_custom_portal_redirect'] == 't') ? true : false);
+        return (($this->_row['allow_custom_portal_redirect'] == 't') ? true : false);
     }
 
     /**
@@ -1422,9 +1413,9 @@ class Network implements GenericObject
      *
      * @access public
      */
-    public function hasAdminAccess(User $user)
+    public function DEPRECATEDhasAdminAccess(User $user)
     {
-        
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -1432,17 +1423,9 @@ class Network implements GenericObject
         $retval = false;
 
         if ($user != null) {
-            $user_id = $user->getId();
-            $db->execSqlUniqueRes("SELECT * FROM network_stakeholders WHERE is_admin = true AND network_id='{$this->id}' AND user_id='{$user_id}'", $row, false);
-
-            if ($row != null) {
-                $retval = true;
-            }
-            else {
-                if ($user->isSuperAdmin()) {
+                if ($user->DEPRECATEDisSuperAdmin()) {
                     $retval = true;
                 }
-            }
         }
 
         return $retval;
@@ -1458,32 +1441,32 @@ class Network implements GenericObject
      * @return array An array of Content or an empty array
      */
     /*public function getAllContent($exclude_subscribed_content = false, $subscriber = null)
-    {
-        
+     {
+
     	$db = AbstractDb::getObject();
 
-        // Init values
-        $content_rows = null;
+    	// Init values
+    	$content_rows = null;
     	$retval = array ();
 
     	// Get all network, but exclude user subscribed content if asked
     	if ($exclude_subscribed_content == true && $subscriber) {
-    		$sql = "SELECT content_id FROM network_has_content WHERE network_id='$this->id' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$subscriber->getId()}') ORDER BY subscribe_timestamp DESC";
+    	$sql = "SELECT content_id FROM network_has_content WHERE network_id='$this->_id' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$subscriber->getId()}') ORDER BY subscribe_timestamp DESC";
     	} else {
-    		$sql = "SELECT content_id FROM network_has_content WHERE network_id='$this->id' ORDER BY subscribe_timestamp DESC";
+    	$sql = "SELECT content_id FROM network_has_content WHERE network_id='$this->_id' ORDER BY subscribe_timestamp DESC";
     	}
 
     	$db->execSql($sql, $content_rows, false);
 
     	if ($content_rows != null) {
-    		foreach ($content_rows as $content_row) {
-    			$retval[] = Content :: getObject($content_row['content_id']);
-    		}
+    	foreach ($content_rows as $content_row) {
+    	$retval[] = Content :: getObject($content_row['content_id']);
+    	}
     	}
 
     	return $retval;
-    }
-    */
+    	}
+    	*/
 
     /**
      * Retreives the admin interface of this object
@@ -1496,9 +1479,9 @@ class Network implements GenericObject
         // Init values
         $html = '';
 
-		/*
-		 * Begin with admin interface
-		 */
+        /*
+         * Begin with admin interface
+         */
         $html .= "<fieldset class='admin_container ".get_class($this)."'>\n";
         $html .= "<legend>"._("Network management")."</legend>\n";
         $html .= "<ul class='admin_element_list'>\n";
@@ -1507,146 +1490,146 @@ class Network implements GenericObject
          * Content management
          */
         $title = _("Network content");
-        $name = "network_".$this->id."_content";
-        $data = Content::getLinkedContentUI($name, "network_has_content", "network_id", $this->id, $display_page = "portal");
+        $name = "network_".$this->_id."_content";
+        $data = Content::getLinkedContentUI($name, "network_has_content", "network_id", $this->_id, $display_page = "portal");
         $html .= InterfaceElements::generateAdminSectionContainer("network_content", $title, $data);
 
         /*
          * Network information
          */
-		$html_network_information = array();
+        $html_network_information = array();
 
         // network_id
-		$title = _("Network ID");
+        $title = _("Network ID");
         $data = htmlspecialchars($this->getId(), ENT_QUOTES);
-		$html_network_information[] = InterfaceElements::generateAdminSectionContainer("network_id", $title, $data);
+        $html_network_information[] = InterfaceElements::generateAdminSectionContainer("network_id", $title, $data);
 
         // name
-		$title = _("Network name");
-		$data = InterfaceElements::generateInputText("network_" . $this->getId() . "_name", $this->getName(), "network_name_input");
-		$html_network_information[] = InterfaceElements::generateAdminSectionContainer("network_name", $title, $data);
+        $title = _("Network name");
+        $data = InterfaceElements::generateInputText("network_" . $this->getId() . "_name", $this->getName(), "network_name_input");
+        $html_network_information[] = InterfaceElements::generateAdminSectionContainer("network_name", $title, $data);
 
         // creation_date
-		$title = _("Network creation date");
+        $title = _("Network creation date");
         $data = DateTimeWD::getSelectDateTimeUI(new DateTimeWD($this->getCreationDate()), "network_" . $this->getId() . "_creation_date", DateTimeWD::INTERFACE_DATETIME_FIELD, "network_creation_date_input");
-		$html_network_information[] = InterfaceElements::generateAdminSectionContainer("network_creation_date", $title, $data);
+        $html_network_information[] = InterfaceElements::generateAdminSectionContainer("network_creation_date", $title, $data);
 
         // homepage_url
-		$title = _("Network's web site");
-		$data = InterfaceElements::generateInputText("network_" . $this->getId() . "_homepage_url", $this->getWebSiteURL(), "network_homepage_url_input");
-		$html_network_information[] = InterfaceElements::generateAdminSectionContainer("network_homepage_url", $title, $data);
+        $title = _("Network's web site");
+        $data = InterfaceElements::generateInputText("network_" . $this->getId() . "_homepage_url", $this->getWebSiteURL(), "network_homepage_url_input");
+        $html_network_information[] = InterfaceElements::generateAdminSectionContainer("network_homepage_url", $title, $data);
 
         // tech_support_email
-		$title = _("Technical support email");
-		$data = InterfaceElements::generateInputText("network_" . $this->getId() . "_tech_support_email", $this->getTechSupportEmail(), "network_tech_support_email_input");
-		$html_network_information[] = InterfaceElements::generateAdminSectionContainer("network_tech_support_email", $title, $data);
+        $title = _("Technical support email");
+        $data = InterfaceElements::generateInputText("network_" . $this->getId() . "_tech_support_email", $this->getTechSupportEmail(), "network_tech_support_email_input");
+        $html_network_information[] = InterfaceElements::generateAdminSectionContainer("network_tech_support_email", $title, $data);
 
-		// Build section
-		$html .= InterfaceElements::generateAdminSectionContainer("network_information", _("Information about the network"), implode(null, $html_network_information));
+        // Build section
+        $html .= InterfaceElements::generateAdminSectionContainer("network_information", _("Information about the network"), implode(null, $html_network_information));
 
         /*
          * Network authentication
          */
-		$html_network_authentication = array();
+        $html_network_authentication = array();
 
         //  network_authenticator_class
-		$title = _("Network authenticator class");
-		$help = _("The subclass of Authenticator to be used for user authentication. Example: AuthenticatorRadius");
+        $title = _("Network authenticator class");
+        $help = _("The subclass of Authenticator to be used for user authentication. Example: AuthenticatorRadius");
         $name = "network_" . $this->getId() . "_network_authenticator_class";
         $value = htmlspecialchars($this->getAuthenticatorClassName(), ENT_QUOTES);
         $data = $this->getSelectAuthenticator($name, $value);
-		$html_network_authentication[] = InterfaceElements::generateAdminSectionContainer("network_network_authenticator_class", $title, $data, $help);
+        $html_network_authentication[] = InterfaceElements::generateAdminSectionContainer("network_network_authenticator_class", $title, $data, $help);
 
         //  network_authenticator_params
-		$title = _("Authenticator parameters");
+        $title = _("Authenticator parameters");
         $help = _("The explicit parameters to be passed to the authenticator. Example: 'my_network_id', '192.168.0.11', 1812, 1813, 'secret_key', 'CHAP_MD5'");
-		$data = InterfaceElements::generateInputText("network_" . $this->getId() . "_network_authenticator_params", $this->getAuthenticatorConstructorParams(), "network_network_authenticator_params_input");
-		$html_network_authentication[] = InterfaceElements::generateAdminSectionContainer("network_network_authenticator_params", $title, $data, $help);
+        $data = InterfaceElements::generateInputText("network_" . $this->getId() . "_network_authenticator_params", $this->getAuthenticatorConstructorParams(), "network_network_authenticator_params_input");
+        $html_network_authentication[] = InterfaceElements::generateAdminSectionContainer("network_network_authenticator_params", $title, $data, $help);
 
-		// Build section
-		$html .= InterfaceElements::generateAdminSectionContainer("network_authentication", _("Network Authentication"), implode(null, $html_network_authentication));
+        // Build section
+        $html .= InterfaceElements::generateAdminSectionContainer("network_authentication", _("Network Authentication"), implode(null, $html_network_authentication));
 
         /*
          * Network properties
          */
-		$html_network_properties = array();
+        $html_network_properties = array();
 
         //  is_default_network
-		$title = _("Is this network the default network?");
-		$data = InterfaceElements::generateInputCheckbox("network_" . $this->getId() . "_is_default_network", "", _("Yes"), $this->isDefaultNetwork(), "network_is_default_network_radio");
-		$html_network_properties[] = InterfaceElements::generateAdminSectionContainer("network_is_default_network", $title, $data);
+        $title = _("Is this network the default network?");
+        $data = InterfaceElements::generateInputCheckbox("network_" . $this->getId() . "_is_default_network", "", _("Yes"), $this->isDefaultNetwork(), "network_is_default_network_radio");
+        $html_network_properties[] = InterfaceElements::generateAdminSectionContainer("network_is_default_network", $title, $data);
 
         //  theme_pack
-		$title = _("Selected theme pack for this network");
+        $title = _("Selected theme pack for this network");
         $data = ThemePack::getSelectUI("network_" . $this->getId() . "_theme_pack", $this->getThemePack());
-		$html_network_properties[] = InterfaceElements::generateAdminSectionContainer("network_theme_pack", $title, $data);
+        $html_network_properties[] = InterfaceElements::generateAdminSectionContainer("network_theme_pack", $title, $data);
 
-		// Build section
-		$html .= InterfaceElements::generateAdminSectionContainer("network_properties", _("Network properties"), implode(null, $html_network_properties));
+        // Build section
+        $html .= InterfaceElements::generateAdminSectionContainer("network_properties", _("Network properties"), implode(null, $html_network_properties));
 
         /*
          * Network's node properties
          */
-		$html_network_node_properties = array();
+        $html_network_node_properties = array();
 
         //  allow_splash_only_nodes
-		$title = _("Splash-only nodes");
-		$help = _("Are nodes allowed to be set as splash-only (no login)?");
-		$data = InterfaceElements::generateInputCheckbox("network_" . $this->getId() . "_allow_splash_only_nodes", "", _("Yes"), $this->getSplashOnlyNodesAllowed(), "network_allow_splash_only_nodes_radio");
-		$html_network_node_properties[] = InterfaceElements::generateAdminSectionContainer("network_allow_splash_only_nodes", $title, $data, $help);
+        $title = _("Splash-only nodes");
+        $help = _("Are nodes allowed to be set as splash-only (no login)?");
+        $data = InterfaceElements::generateInputCheckbox("network_" . $this->getId() . "_allow_splash_only_nodes", "", _("Yes"), $this->getSplashOnlyNodesAllowed(), "network_allow_splash_only_nodes_radio");
+        $html_network_node_properties[] = InterfaceElements::generateAdminSectionContainer("network_allow_splash_only_nodes", $title, $data, $help);
 
         //  allow_custom_portal_redirect
-		$title = _("Portal page redirection");
-		$help = _("Are nodes allowed to redirect users to an arbitrary web page instead of the portal?");
-		$data = InterfaceElements::generateInputCheckbox("network_" . $this->getId() . "_allow_custom_portal_redirect", "", _("Yes"), $this->getCustomPortalRedirectAllowed(), "network_allow_custom_portal_redirect_radio");
-		$html_network_node_properties[] = InterfaceElements::generateAdminSectionContainer("network_allow_custom_portal_redirect", $title, $data, $help);
+        $title = _("Portal page redirection");
+        $help = _("Are nodes allowed to redirect users to an arbitrary web page instead of the portal?");
+        $data = InterfaceElements::generateInputCheckbox("network_" . $this->getId() . "_allow_custom_portal_redirect", "", _("Yes"), $this->getCustomPortalRedirectAllowed(), "network_allow_custom_portal_redirect_radio");
+        $html_network_node_properties[] = InterfaceElements::generateAdminSectionContainer("network_allow_custom_portal_redirect", $title, $data, $help);
 
-		// Build section
-		$html .= InterfaceElements::generateAdminSectionContainer("network_node_properties", _("Network's node properties"), implode(null, $html_network_node_properties));
+        // Build section
+        $html .= InterfaceElements::generateAdminSectionContainer("network_node_properties", _("Network's node properties"), implode(null, $html_network_node_properties));
 
         /*
          * Network's user verification
          */
-		$html_network_user_verification = array();
+        $html_network_user_verification = array();
 
         //  validation_grace_time
-		$title = _("Validation grace period");
+        $title = _("Validation grace period");
         $help = _("The length of the validation grace period in seconds.  A new user is granted Internet access for this period check his email and validate his account.");
-		$data = InterfaceElements::generateInputText("network_" . $this->getId() . "_validation_grace_time", $this->getValidationGraceTime(), "network_validation_grace_time_input");
-		$html_network_user_verification[] = InterfaceElements::generateAdminSectionContainer("network_validation_grace_time", $title, $data, $help);
+        $data = InterfaceElements::generateInputText("network_" . $this->getId() . "_validation_grace_time", $this->getValidationGraceTime(), "network_validation_grace_time_input");
+        $html_network_user_verification[] = InterfaceElements::generateAdminSectionContainer("network_validation_grace_time", $title, $data, $help);
 
         //  validation_email_from_address
-		$title = _("This will be the from address of the validation email");
-		$data = InterfaceElements::generateInputText("network_" . $this->getId() . "_validation_email_from_address", $this->getValidationEmailFromAddress(), "network_validation_email_from_address_input");
-		$html_network_user_verification[] = InterfaceElements::generateAdminSectionContainer("network_validation_email_from_address", $title, $data);
+        $title = _("This will be the from address of the validation email");
+        $data = InterfaceElements::generateInputText("network_" . $this->getId() . "_validation_email_from_address", $this->getValidationEmailFromAddress(), "network_validation_email_from_address_input");
+        $html_network_user_verification[] = InterfaceElements::generateAdminSectionContainer("network_validation_email_from_address", $title, $data);
 
         //  allow_multiple_login
-		$title = _("Multiple connections");
-		$help = _("Can an account be connected more than once at the same time?");
-		$data = InterfaceElements::generateInputCheckbox("network_" . $this->getId() . "_allow_multiple_login", "", _("Yes"), $this->getMultipleLoginAllowed(), "network_allow_multiple_login_radio");
-		$html_network_user_verification[] = InterfaceElements::generateAdminSectionContainer("network_allow_multiple_login", $title, $data, $help);
+        $title = _("Multiple connections");
+        $help = _("Can an account be connected more than once at the same time?");
+        $data = InterfaceElements::generateInputCheckbox("network_" . $this->getId() . "_allow_multiple_login", "", _("Yes"), $this->getMultipleLoginAllowed(), "network_allow_multiple_login_radio");
+        $html_network_user_verification[] = InterfaceElements::generateAdminSectionContainer("network_allow_multiple_login", $title, $data, $help);
 
-		// Build section
-		$html .= InterfaceElements::generateAdminSectionContainer("network_user_verification", _("Network's user verification"), implode(null, $html_network_user_verification));
+        // Build section
+        $html .= InterfaceElements::generateAdminSectionContainer("network_user_verification", _("Network's user verification"), implode(null, $html_network_user_verification));
 
-		/*
-		 * Access management
-		 */
-		$html_access_rights = array();
+        /*
+         * Access management
+         */
+        $html_access_rights = array();
 
-        //	network_stakeholders
-		$title = _("Network stakeholders");
-        $data = "WRITEME!";
-		$html_access_rights[] = InterfaceElements::generateAdminSectionContainer("network_stakeholders", $title, $data);
-
-		// Build section
-		$html .= InterfaceElements::generateAdminSectionContainer("network_access_rights", _("Access rights"), implode(null, $html_access_rights));
-
-		/*
-		 * Network GIS data
-		 */
+        /*
+         * Access rights
+         */
+        if (true) {
+            require_once('classes/Stakeholder.php');
+            $html_access_rights = Stakeholder::getAssignStakeholdersUI($this);
+            $html .= InterfaceElements::generateAdminSectionContainer("access_rights", _("Access rights"), $html_access_rights);
+        }
+        /*
+         * Network GIS data
+         */
         if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED == true) {
-    		$html_network_gis_data = array();
+            $html_network_gis_data = array();
 
             $gis_point = $this->getGisLocation();
             $gis_lat_name = "network_" . $this->getId() . "_gis_latitude";
@@ -1656,34 +1639,34 @@ class Network implements GenericObject
             $gis_alt_name = "network_" . $this->getId() . "_gis_altitude";
             $gis_alt_value = htmlspecialchars($gis_point->getAltitude(), ENT_QUOTES);
 
-    		$title = _("Latitude");
-    		$help = _("Center latitude for your the area of your wireless network");
-    		$data = InterfaceElements::generateInputText($gis_lat_name, $gis_lat_value, "network_gis_latitude_input");
-    		$html_network_gis_data[] = InterfaceElements::generateAdminSectionContainer("network_gis_latitude", $title, $data, $help);
+            $title = _("Latitude");
+            $help = _("Center latitude for your the area of your wireless network");
+            $data = InterfaceElements::generateInputText($gis_lat_name, $gis_lat_value, "network_gis_latitude_input");
+            $html_network_gis_data[] = InterfaceElements::generateAdminSectionContainer("network_gis_latitude", $title, $data, $help);
 
-    		$title = _("Longitude");
-    		$help = _("Center longitude for your the area of your wireless network");
-    		$data = InterfaceElements::generateInputText($gis_long_name, $gis_long_value, "network_gis_longitude_input");
-    		$html_network_gis_data[] = InterfaceElements::generateAdminSectionContainer("network_gis_longitude", $title, $data, $help);
+            $title = _("Longitude");
+            $help = _("Center longitude for your the area of your wireless network");
+            $data = InterfaceElements::generateInputText($gis_long_name, $gis_long_value, "network_gis_longitude_input");
+            $html_network_gis_data[] = InterfaceElements::generateAdminSectionContainer("network_gis_longitude", $title, $data, $help);
 
-    		$title = _("Zoomlevel");
-    		$help = _("Zoomlevel of the Google Map for your the area of your wireless network");
-    		$data = InterfaceElements::generateInputText($gis_alt_name, $gis_alt_value, "network_gis_altitude_input");
-    		$html_network_gis_data[] = InterfaceElements::generateAdminSectionContainer("network_gis_altitude", $title, $data, $help);
+            $title = _("Zoomlevel");
+            $help = _("Zoomlevel of the Google Map for your the area of your wireless network");
+            $data = InterfaceElements::generateInputText($gis_alt_name, $gis_alt_value, "network_gis_altitude_input");
+            $html_network_gis_data[] = InterfaceElements::generateAdminSectionContainer("network_gis_altitude", $title, $data, $help);
 
-    		$title = _("Map type");
-    		$help = _("Default Google Map type for your the area of your wireless network");
-    		$data = $this->getSelectGisMapType("network_" . $this->getId() . "_gmaps_map_type", $this->getGisMapType());
-    		$html_network_gis_data[] = InterfaceElements::generateAdminSectionContainer("network_gmaps_map_type", $title, $data, $help);
+            $title = _("Map type");
+            $help = _("Default Google Map type for your the area of your wireless network");
+            $data = $this->getSelectGisMapType("network_" . $this->getId() . "_gmaps_map_type", $this->getGisMapType());
+            $html_network_gis_data[] = InterfaceElements::generateAdminSectionContainer("network_gmaps_map_type", $title, $data, $help);
 
-    		// Build section
-    		$html .= InterfaceElements::generateAdminSectionContainer("network_gis_data", _("GIS data"), implode(null, $html_network_gis_data));
+            // Build section
+            $html .= InterfaceElements::generateAdminSectionContainer("network_gis_data", _("GIS data"), implode(null, $html_network_gis_data));
         }
         
         // Profile templates
         $title = _("Network profile templates");
-        $name = "network_".$this->id."_profile_templates";
-        $data = ProfileTemplate::getLinkedProfileTemplateUI($name, "network_has_profile_templates", "network_id", $this->id);
+        $name = "network_".$this->_id."_profile_templates";
+        $data = ProfileTemplate::getLinkedProfileTemplateUI($name, "network_has_profile_templates", "network_id", $this->_id);
         $html .= InterfaceElements::generateAdminSectionContainer("network_profile_templates", $title, $data);
 
         $html .= "</ul>\n";
@@ -1703,14 +1686,14 @@ class Network implements GenericObject
     {
         $user = User::getCurrentUser();
 
-            if (!$this->hasAdminAccess($user)) {
-                throw new Exception(_('Access denied!'));
-            }
-            
+        if (!$this->DEPRECATEDhasAdminAccess($user)) {
+            throw new Exception(_('Access denied!'));
+        }
+
         // Content management
-        $name = "network_".$this->id."_content";
-        Content :: processLinkedContentUI($name, 'network_has_content', 'network_id', $this->id);
-		
+        $name = "network_".$this->_id."_content";
+        Content :: processLinkedContentUI($name, 'network_has_content', 'network_id', $this->_id);
+
         // name
         $name = "network_".$this->getId()."_name";
         $this->setName($_REQUEST[$name]);
@@ -1738,7 +1721,7 @@ class Network implements GenericObject
         //  is_default_network
         $name = "network_".$this->getId()."_is_default_network";
         if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == 'on')
-            $this->setAsDefaultNetwork();
+        $this->setAsDefaultNetwork();
 
         //  validation_grace_time
         $name = "network_".$this->getId()."_validation_grace_time";
@@ -1769,7 +1752,14 @@ class Network implements GenericObject
         //  allow_custom_portal_redirect
         $name = "network_".$this->getId()."_allow_custom_portal_redirect";
         $this->setCustomPortalRedirectAllowed(empty ($_REQUEST[$name]) ? false : true);
-
+        
+        // Access rights
+            require_once('classes/Stakeholder.php');
+        Stakeholder::processAssignStakeholdersUI($this, $errMsg);
+        if(!empty($errMsg)) {
+        echo $errMsg;
+        }
+        
         // GIS data
         if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED == true) {
             $gis_lat_name = "network_".$this->getId()."_gis_latitude";
@@ -1782,8 +1772,8 @@ class Network implements GenericObject
         }
         
         // Profile templates
-        $name = "network_".$this->id."_profile_templates";
-		ProfileTemplate :: processLinkedProfileTemplateUI($name, 'network_has_profile_templates', 'network_id', $this->id);
+        $name = "network_".$this->_id."_profile_templates";
+        ProfileTemplate :: processLinkedProfileTemplateUI($name, 'network_has_profile_templates', 'network_id', $this->_id);
 
         // Node creation
         $new_node = Node :: processCreateNewObjectUI();
@@ -1807,7 +1797,7 @@ class Network implements GenericObject
         $db = AbstractDb::getObject();
 
         $content_id = $db->escapeString($content->getId());
-        $sql = "INSERT INTO network_has_content (network_id, content_id) VALUES ('$this->id','$content_id')";
+        $sql = "INSERT INTO network_has_content (network_id, content_id) VALUES ('$this->_id','$content_id')";
         $db->execSqlUpdate($sql, false);
     }
 
@@ -1825,11 +1815,11 @@ class Network implements GenericObject
         $db = AbstractDb::getObject();
 
         $content_id = $db->escapeString($content->getId());
-        $sql = "DELETE FROM network_has_content WHERE network_id='$this->id' AND content_id='$content_id'";
+        $sql = "DELETE FROM network_has_content WHERE network_id='$this->_id' AND content_id='$content_id'";
         $db->execSqlUpdate($sql, false);
     }
 
-	
+
     /**
      * Add a profile template to this network
      *
@@ -1844,7 +1834,7 @@ class Network implements GenericObject
         $db = AbstractDb::getObject();
 
         $profile_template_id = $db->escapeString($profile_template->getId());
-        $sql = "INSERT INTO network_has_profile_templates (network_id, profile_template_id) VALUES ('$this->id','$profile_template_id')";
+        $sql = "INSERT INTO network_has_profile_templates (network_id, profile_template_id) VALUES ('$this->_id','$profile_template_id')";
         $db->execSqlUpdate($sql, false);
     }
 
@@ -1858,21 +1848,21 @@ class Network implements GenericObject
      * @access public
      */
     public function removeProfileTemplate(ProfileTemplate $profile_template)
-    {   
+    {
         $db = AbstractDb::getObject();
 
         $profile_template_id = $db->escapeString($profile_template->getId());
-        $sql = "DELETE FROM network_has_profile_templates WHERE network_id='$this->id' AND profile_template_id='$profile_template_id'";
+        $sql = "DELETE FROM network_has_profile_templates WHERE network_id='$this->_id' AND profile_template_id='$profile_template_id'";
         $db->execSqlUpdate($sql, false);
     }
-    
+
     /**Get an array of all ProfileTemplates linked to this network
-    * @return an array of ProfileTemplates or an empty arrray */
+     * @return an array of ProfileTemplates or an empty arrray */
     function getAllProfileTemplates() {
         $db = AbstractDb::getObject();
         $retval = array ();
         $profile_template_rows = null;
-        $sql = "SELECT profile_template_id FROM network_has_profile_templates WHERE network_id='$this->id'";
+        $sql = "SELECT profile_template_id FROM network_has_profile_templates WHERE network_id='$this->_id'";
         $db->execSql($sql, $profile_template_rows, false);
         if ($profile_template_rows != null) {
             foreach ($profile_template_rows as $profile_template_row) {
@@ -1881,7 +1871,7 @@ class Network implements GenericObject
         }
         return $retval;
     }
-    
+
     /**
      * Delete this Object form the it's storage mechanism
      *
@@ -1897,7 +1887,7 @@ class Network implements GenericObject
         $retval = false;
 
         $user = User :: getCurrentUser();
-        if (!$user->isSuperAdmin()) {
+        if (!$user->DEPRECATEDisSuperAdmin()) {
             $errmsg = _('Access denied (must have super admin access)');
         } else {
             if ($this->isDefaultNetwork() === true) {
@@ -1926,9 +1916,28 @@ class Network implements GenericObject
      */
     protected function refresh()
     {
-        $this->__construct($this->id);
+        $this->__construct($this->_id);
     }
-
+    
+    /** Menu hook function */
+    static public function hookMenu() {
+        $items = array();
+        if($networks = Security::getObjectsWithPermission(Permission::P('NETWORK_PERM_EDIT_NETWORK_CONFIG')))
+        {
+                    foreach ($networks as $networkId => $network) {
+                $items[] = array('path' => 'network/network_'.$networkId.'edit',
+                'title' => sprintf(_("Edit %s"), $network->getName()),
+                'url' => BASE_URL_PATH."admin/generic_object_admin.php?object_class=Network&action=edit&object_id=$networkId"
+                );
+            }
+        }
+                $items[] = array('path' => 'network',
+                'title' => _('Network administration'),
+                'type' => MENU_ITEM_GROUPING);
+            
+            return $items; 
+        }
+    
     /**
      * Assigns values about network to be processed by the Smarty engine.
      *

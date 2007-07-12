@@ -70,7 +70,7 @@ class Statistics {
     private $user_distinguish_by_options = array ();
 
     /** An array of the node_ids to which the statistics should be restricted.
-         * The key is the network_id, the value is the Network object.*/
+     * The key is the network_id, the value is the Network object.*/
     private $report_selected_nodes = array ();
     /** An array of the selected reports to be generated.
      *  The key is the classname, the value is the report object */
@@ -82,7 +82,7 @@ class Statistics {
     private $report_selected_users = array ();
     function __construct() {
         $this->user_distinguish_by_options = array (
-            'user_id' => _("Usernames"
+        'user_id' => _("Usernames"
         ), 'user_mac' => _("MAC addresses"));
 
     }
@@ -106,16 +106,16 @@ class Statistics {
                         require_once ($filename);
                         $classname = $matches[1];
                         if (call_user_func(array (
-                                $classname,
-                                'isAvailable'
+                        $classname,
+                        'isAvailable'
                             ), $this)) {
-                            $name = call_user_func(array (
-                                $classname,
-                                'getReportName'
+                        $name = call_user_func(array (
+                        $classname,
+                        'getReportName'
                             ), $this);
 
-                            $tab[$classname] = $name;
-                        }
+                        $tab[$classname] = $name;
+                            }
                     }
                 }
             }
@@ -148,12 +148,12 @@ class Statistics {
     }
 </script>
 EOF;
-        $from_presets = array (
-            _("No restriction..."
+$from_presets = array (
+        _("No restriction..."
         ) => "", _("yesterday") => strftime("%Y-%m-%d 00:00", strtotime("-1 day")), _("today") => strftime("%Y-%m-%d 00:00", time()), _("2 days ago") => strftime("%Y-%m-%d 00:00", strtotime("-2 days")), _("3 days ago") => strftime("%Y-%m-%d 00:00", strtotime("-3 days")), _("1 week ago") => strftime("%Y-%m-%d 00:00", strtotime("-1 week")), _("2 weeks ago") => strftime("%Y-%m-%d 00:00", strtotime("-2 weeks")), _("3 weeks ago") => strftime("%Y-%m-%d 00:00", strtotime("-3 weeks")), _("1 month ago") => strftime("%Y-%m-%d 00:00", strtotime("-1 month")), _("2 months ago") => strftime("%Y-%m-%d 00:00", strtotime("-2 months")), _("6 months ago") => strftime("%Y-%m-%d 00:00", strtotime("-6 months")), _("1 year ago") => strftime("%Y-%m-%d 00:00", strtotime("-1 year")), _("-") => "", _("Select from and to...") => "", _("yesterday (whole day)") => strftime("%Y-%m-%d 00:00", strtotime("-1 day")) . "," . strftime("%Y-%m-%d 11:59", strtotime("-1 day")), _("today (whole day)") => strftime("%Y-%m-%d 00:00", time()) . "," . strftime("%Y-%m-%d %H:%M", time()), _("this month") => strftime("%Y-%m-01 00:00", time()) . "," . strftime("%Y-%m-%d %H:%M", time()), _("last month") => strftime("%Y-%m-01 00:00", strtotime("-1 month")) . "," . strftime("%Y-%m-01 00:00", time()), _("this year") => strftime("%Y-01-01 00:00", time()) . "," . strftime("%Y-%m-%d %H:%M", time()), _("forever") => "1970-01-01 00:00," . strftime("%Y-%m-%d %H:%M", time()));
 
         $to_presets = array (
-            _("No restriction..."
+        _("No restriction..."
         ) => "", _("yesterday") => strftime("%Y-%m-%d 11:59", strtotime("-1 day")), _("today") => strftime("%Y-%m-%d 11:59", time()), _("2 days ago") => strftime("%Y-%m-%d 11:59", strtotime("-2 days")), _("3 days ago") => strftime("%Y-%m-%d 11:59", strtotime("-3 days")), _("1 week ago") => strftime("%Y-%m-%d 11:59", strtotime("-1 week")), _("2 weeks ago") => strftime("%Y-%m-%d 11:59", strtotime("-2 weeks")), _("3 weeks ago") => strftime("%Y-%m-%d 11:59", strtotime("-3 weeks")), _("1 month ago") => strftime("%Y-%m-%d 11:59", strtotime("-1 month")), _("2 months ago") => strftime("%Y-%m-%d 11:59", strtotime("-2 months")), _("6 months ago") => strftime("%Y-%m-%d 11:59", strtotime("-6 months")), _("1 year ago") => strftime("%Y-%m-%d 11:59", strtotime("-1 year")), _("-") => "", _("Select from and to...") => "", _("yesterday (whole day)") => strftime("%Y-%m-%d 11:59", strtotime("-1 day")) . "," . strftime("%Y-%m-%d 00:00", strtotime("-1 day")), _("today (whole day)") => strftime("%Y-%m-%d %H:%M", time()) . "," . strftime("%Y-%m-%d 00:00", time()), _("this month") => strftime("%Y-%m-%d %H:%M", time()) . "," . strftime("%Y-%m-01 00:00", time()), _("last month") => strftime("%Y-%m-01 00:00", time()) . "," . strftime("%Y-%m-01 00:00", strtotime("-1 month")), _("this year") => strftime("%Y-%m-%d %H:%M", time()) . "," . strftime("%Y-01-01 00:00", time()), _("forever") => strftime("%Y-%m-%d %H:%M", time()) . ",1970-01-01 00:00");
 
         $html .= "<table class='admin_element_list'>";
@@ -330,7 +330,7 @@ EOF;
 
     /**
      * Get the actual SQL fragment to get all the conn_id of the all users first successfull connections from the connections table.  Only connections
-     * with actuall data transferred is considered. It will ignore all report
+     * with actual data transferred aare considered. It will ignore all report
      * configuration except getDistinguishUsersBy() and selected users, because
      * doing otherwise would not give the real first connection.
      *
@@ -374,11 +374,11 @@ EOF;
         if (!isset ($user)) {
             throw new Exception(_('Access denied!'));
         } else
-            if ((!$user->isSuperAdmin() && !$user->isOwner()) || $user->isNobody()) {
-                throw new Exception(_('Access denied!'));
-            }
+        if ((!$user->DEPRECATEDisSuperAdmin() && !$user->DEPRECATEDisOwner())) {
+            throw new Exception(_('Access denied!'));
+        }
 
-        if ($user->isSuperAdmin()) {
+        if ($user->DEPRECATEDisSuperAdmin()) {
             $sql_join = '';
         } else {
             $user_id = $db->escapeString($user->getId());
@@ -400,7 +400,7 @@ EOF;
         if (!empty ($_REQUEST[$name])) {
             foreach ($_REQUEST[$name] as $value) {
                 if (!empty ($value))
-                    $this->report_selected_nodes[$value] = Node :: getObject($value);
+                $this->report_selected_nodes[$value] = Node :: getObject($value);
             }
         }
     }
@@ -423,9 +423,9 @@ EOF;
         $html = '';
 
         /*      $html .= " < input type = \ "radio\" name=\"group_connections\" value=\"\"";
-        $html .= empty ($_REQUEST['group_connections']) ? 'CHECKED' : '';
-        $html .= ">"._("No")."<br>";
-        */
+         $html .= empty ($_REQUEST['group_connections']) ? 'CHECKED' : '';
+         $html .= ">"._("No")."<br>";
+         */
         $html .= "    <select name=\"distinguish_users_by\">";
 
         foreach ($this->user_distinguish_by_options as $value => $label) {
@@ -444,7 +444,7 @@ EOF;
      */
     private function processDistinguishUsersByUI() {
         if (!isset ($this->user_distinguish_by_options[$_REQUEST['distinguish_users_by']]))
-            throw new exception(_("Invalid parameter"));
+        throw new exception(_("Invalid parameter"));
         $this->report_distinguish_users_by = $_REQUEST['distinguish_users_by'];
     }
 
@@ -504,7 +504,7 @@ EOF;
             } else {
                 //We have a MAC address
                 if (!empty ($_REQUEST['stats_selected_users']))
-                    $this->report_selected_users[$_REQUEST['stats_selected_users']] = null;
+                $this->report_selected_users[$_REQUEST['stats_selected_users']] = null;
             }
         }
     }
@@ -560,8 +560,8 @@ EOF;
         foreach (self :: getAvailableReports() as $key => $name) {
             if (array_key_exists($key, $_REQUEST)) {
                 $this->report_selected_reports[$key] = call_user_func(array (
-                    $key,
-                    'getObject'
+                $key,
+                'getObject'
                 ), $key, $this);
             }
         }
@@ -569,6 +569,7 @@ EOF;
     }
 
     public function getAdminUI() {
+        $db=AbstractDb::getObject();
         $html = '';
         $html .= "<fieldset class='admin_container'>\n";
         $html .= "<legend>" . _("Report configuration") . "</legend>\n";
@@ -576,7 +577,18 @@ EOF;
         // Network
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<div class='admin_element_data'>\n";
-        $html .= Network :: getSelectNetworkUI('Statistics', reset($this->report_selected_networks), null, User :: getCurrentUser()->isSuperAdmin());
+
+        $networks = Security::getObjectsWithPermission(Permission::P('NETWORK_PERM_VIEW_STATISTICS'));
+        $additionalWhere=" AND (FALSE\n";
+        foreach ($networks as $network) {
+            $idStr = $db->escapeString($network->getId());
+            $additionalWhere .= " OR network_id='$idStr'\n";
+        }
+        $additionalWhere .= ")\n";
+        $networkUserData['preSelectedObject']=reset($this->report_selected_networks);
+        $networkUserData['allowEmpty']=true;
+        $networkUserData['additionalWhere']=$additionalWhere;
+        $html .= Network :: getSelectUI('Statistics', $networkUserData);
         $html .= "</div>\n";
         $html .= "</li>\n";
 
@@ -631,11 +643,14 @@ EOF;
     }
 
     public function processAdminUI() {
-        $network = Network :: processSelectNetworkUI('Statistics');
+        $network = Network :: processSelectUI('Statistics');
         if ($network) {
             $this->report_selected_networks[$network->getId()] = $network;
         } else {
-            Security :: requireAdmin();
+            $networks = Security::getObjectsWithPermission(Permission::P('NETWORK_PERM_VIEW_STATISTICS'));
+            foreach($networks as $network) {
+                $this->report_selected_networks[$network->getId()] = $network;
+            }
         }
         $this->processDateRangeUI();
         $this->processSelectedNodesUI();

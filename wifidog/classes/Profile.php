@@ -53,7 +53,7 @@ class Profile implements GenericObject {
     private static $instanceArray = array();
 
     private $id = null;
-    private $mRow;
+    private $_row;
 
     private function __construct($profile_id)
     {
@@ -70,7 +70,7 @@ class Profile implements GenericObject {
             throw new Exception("The profile with id {$profile_id} could not be found in the database!");
         }
 
-        $this->mRow = $row;
+        $this->_row = $row;
         $this->id = $db->escapeString($row['profile_id']);
     }
 
@@ -86,7 +86,7 @@ class Profile implements GenericObject {
      * @static
      * @access public
      */
-    public static function getObject($id)
+    public static function &getObject($id)
     {
         if(!isset(self::$instanceArray[$id]))
         {
@@ -114,7 +114,7 @@ class Profile implements GenericObject {
      */
     public function getCreationDate()
     {
-        return $this->mRow['creation_date'];
+        return $this->_row['creation_date'];
     }
 
     /**
@@ -150,7 +150,7 @@ class Profile implements GenericObject {
      */
     public function isVisible()
     {
-        if($this->mRow['is_visible'] == "f")
+        if($this->_row['is_visible'] == "f")
         return false;
         else
         return true;
@@ -224,7 +224,7 @@ class Profile implements GenericObject {
      */
     public function getTemplate()
     {
-        $retval = ProfileTemplate :: getObject($this->mRow['profile_template_id']);
+        $retval = ProfileTemplate :: getObject($this->_row['profile_template_id']);
         return $retval;
     }
 
@@ -442,7 +442,7 @@ class Profile implements GenericObject {
         // Init values
         $_retVal = false;
 
-        if (!User::getCurrentUser()->isSuperAdmin()) {
+        if (!User::getCurrentUser()->DEPRECATEDisSuperAdmin()) {
             $errmsg = _('Access denied (must have super admin access)');
         } else {
             $_id = $db->escapeString($this->getId());

@@ -46,21 +46,6 @@
 
 *}
 
-{if $sectionTOOLCONTENT}
-{*
-    BEGIN section TOOLCONTENT
-*}
-    <div id="login_form">
-        <ul>
-            <li><a href="{$base_url_path}hotspot_status.php">{"Deployed HotSpots status with coordinates"|_}</a></li>
-            <li><a href="{$base_url_path}node_list.php">{"Full node technical status (includes non-deployed nodes)"|_}</a></li>
-        </ul>
-    </div>
-{*
-    END section TOOLCONTENT
-*}
-{/if}
-
 {if $sectionMAINCONTENT}
 {*
     BEGIN section MAINCONTENT

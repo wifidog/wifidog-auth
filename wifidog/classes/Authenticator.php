@@ -66,12 +66,9 @@ abstract class Authenticator
 {
     /**
      * Object of current network
-     *
-     * @var object
-
      */
-    private $mNetwork;
-
+    private $_network;
+    static private $_loginLastError = null;
     /**
      * Constructor
      *
@@ -81,7 +78,7 @@ abstract class Authenticator
      */
     public function __construct($network_id)
     {
-        $this->mNetwork = Network::getObject($network_id);
+        $this->_network = Network::getObject($network_id);
     }
 
     /**
@@ -91,7 +88,7 @@ abstract class Authenticator
      */
     public function getNetwork()
     {
-        return $this->mNetwork;
+        return $this->_network;
     }
 
     /**
@@ -104,6 +101,67 @@ abstract class Authenticator
         // Must be defined in child class
     }
 
+    /** Recursively converts any array to a chain of hidden form inputs
+     * @param $array The array to be converted */
+    static private function ArrayToHiddenInput($array) {
+        $retval = '';
+        if ($array != null) {
+            foreach ($_POST as $key => $value) {
+                if (is_array($value)) /* If the parameter is an array itself */ {
+                    foreach ($value as $array_element) {
+                        $retval .= "<input type='hidden' name='" . $key . "[]' value='$array_element'>\n";
+                    }
+                }
+                else {
+                    $retval .= "<input type='hidden' name='$key' value='$value'>\n";
+                }
+            }
+        }
+        return $retval;
+    }
+    /**
+     * Get the login interface
+     * @return HTML markup
+     */
+    static public function getLoginUI()
+    {
+        require_once('classes/SmartyWifidog.php');
+        $smarty=SmartyWiFiDog::getObject();
+        // Set network selector
+        $smarty->assign('selectNetworkUI', Network::getSelectUI('auth_source'));
+        // Set user details
+        $smarty->assign('username', !empty($username) ? $username : "");
+
+        // Set error message
+        $smarty->assign('error', self::$_loginLastError);
+
+        // Compile HTML code
+        $html = self::ArrayToHiddenInput($_POST);//This must remain BEFORE the actual form
+        $html .= $smarty->fetch("templates/classes/Authenticator_getLoginForm.tpl");
+        return $html;
+    }
+
+    /**
+     * Process the login interface
+     */
+    static public function processLoginUI(&$errmsg)
+    {
+        if (!empty($_REQUEST["login_form_submit"])) {
+            if (isset($_REQUEST["username"])) {
+                $username = $_REQUEST["username"];
+            }
+
+            if (isset($_REQUEST["password"])) {
+                $password = $_REQUEST["password"];
+            }
+            // Authenticating the user through the selected auth source.
+            $network = Network::processSelectUI('auth_source');
+            $user = $network->getAuthenticator()->login($username, $password, $errmsg);
+            self::$_loginLastError = $errmsg;
+        }
+
+
+    }
     /**
      * Logs out the user
      *
@@ -119,7 +177,7 @@ abstract class Authenticator
      */
     public function logout($conn_id = null)
     {
-        
+
         $db = AbstractDb::getObject();
         $session = Session::getObject();
 
@@ -183,7 +241,7 @@ abstract class Authenticator
      */
     public function acctStart($conn_id)
     {
-        
+
         $db = AbstractDb::getObject();
 
         $conn_id = $db->escapeString($conn_id);
@@ -235,7 +293,7 @@ abstract class Authenticator
      */
     public function acctUpdate($conn_id, $incoming, $outgoing)
     {
-        
+
         $db = AbstractDb::getObject();
 
         // Write traffic counters to database
@@ -253,7 +311,7 @@ abstract class Authenticator
      * */
     public function acctStop($conn_id)
     {
-        
+
         $db = AbstractDb::getObject();
 
         // Stop traffic counters update
