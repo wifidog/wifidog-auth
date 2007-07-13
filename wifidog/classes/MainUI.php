@@ -515,8 +515,8 @@ class MainUI {
             } else {
                 $_selected = "";
             }
-            $langName = "{$_langNames[0]} ({$_langNames[1]})";
-            $_languageChooser[] = '<option label="' . $_langNames . '" value="' . $_langIds . '"' . $_selected . '>' . $langName . '</option>';
+            $langName = "{$_langNames[0]}";
+            $_languageChooser[] = '<option value="' . $_langIds . '"' . $_selected . '>' . $langName . '</option>';
         }
 
         // Provide Smarty all available languages

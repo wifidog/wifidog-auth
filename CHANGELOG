@@ -1,4 +1,7 @@
 2007-06-12  Benoit Grégoire  <bock@step.polymtl.ca>
+	* MainUI.php:  Fix label problem in language chooser.
+	
+2007-06-12  Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix #291 by adding a proper warning and location of documentation
 	* Fix #336:  Add Swedish translation by Christian Svensson <blue ATT cmd.nu>
 
