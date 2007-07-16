@@ -65,7 +65,7 @@
             </div>
 
             <div id="recent_users">
-                  <label>Recent Users:</label>
+                  <label>{"Recent Users:"|_}</label>
                   <ul>
                   {section name=recentUser loop=$recentUsers}
                       <li>{$recentUsers[recentUser]}</li>
@@ -74,7 +74,7 @@
              </div>
 
               <div id="active_users">
-                  <label>Most Active Users:</label>
+                  <label>{"Most Active Users:"|_}</label>
                   <ul>
                   {section name=activeUser loop=$activeUsers}
                       <li>{$activeUsers[activeUser]}</li>
