@@ -36,15 +36,19 @@
 /**
  * @package    WiFiDogAuthServer
  * @subpackage NodeLists
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Francois Proulx <francois.proulx@gmail.com>
  * @author     Max Horváth <max.horvath@freenet.de>
+ * @copyright  2004-2007 Benoit Grégoire, Technologies Coeus inc.
  * @copyright  2006 Max Horváth, Horvath Web Consulting
- * @version    Subversion $Id: Content.php 974 2006-02-25 15:08:12Z max-horvath $
+ * @version    Subversion $Id: $
  * @link       http://www.wifidog.org/
  */
 
 /**
  * Load required classes
  */
+require_once('classes/NodeList.php');
 require_once('classes/Network.php');
 require_once('classes/Node.php');
 
@@ -53,10 +57,13 @@ require_once('classes/Node.php');
  *
  * @package    WiFiDogAuthServer
  * @subpackage NodeLists
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Francois Proulx <francois.proulx@gmail.com>
  * @author     Max Horváth <max.horvath@freenet.de>
+ * @copyright  2004-2007 Benoit Grégoire, Technologies Coeus inc.
  * @copyright  2006 Max Horváth, Horvath Web Consulting
  */
-class NodeListXML {
+class NodeListXML extends NodeList{
 
     /**
      * XML DOM Document that will contain all the data concerning the nodes
@@ -89,7 +96,7 @@ class NodeListXML {
      */
     public function __construct(&$network)
     {
-        
+
         $db = AbstractDb::getObject();
 
         // Init XML Document
@@ -206,7 +213,7 @@ class NodeListXML {
                 // Node ID
                 $_nodeId = $this->_xmldoc->createElement("nodeId", $_node->getId());
                 $_nodeMetadataNode->appendChild($_nodeId);
-                
+
                 // Online Users
                 $_nodeUserNum = $this->_xmldoc->createElement("numOnlineUsers", $_node->GetNumOnlineUsers());
                 $_nodeMetadataNode->appendChild($_nodeUserNum);
@@ -224,7 +231,7 @@ class NodeListXML {
                     $_nodeMetadataNode->appendChild($_nodeStatus);
                 }
 
-				if (($_gisData = $_node->getGisLocation()) !== null) {
+                if (($_gisData = $_node->getGisLocation()) !== null) {
                     $_nodeGis = $this->_xmldoc->createElement("gisLatLong");
                     $_nodeGis->setAttribute("lat", $_gisData->getLatitude());
                     $_nodeGis->setAttribute("long", $_gisData->getLongitude());
@@ -319,7 +326,7 @@ class NodeListXML {
                 }
 
                 // Long / Lat
-				if (($_gisData = $_node->getGisLocation()) !== null) {
+                if (($_gisData = $_node->getGisLocation()) !== null) {
                     $_hotspotGis = $this->_xmldoc->createElement("gisCenterLatLong");
                     $_hotspotGis->setAttribute("lat", $_gisData->getLatitude());
                     $_hotspotGis->setAttribute("long", $_gisData->getLongitude());

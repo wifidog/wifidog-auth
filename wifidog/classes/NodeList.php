@@ -58,22 +58,8 @@ require_once('classes/Cache.php');
 /**
  * Directory of NodeList classes
  */   define ('NODE_LIST_CLASSES_DIR', WIFIDOG_ABS_FILE_PATH . "classes/NodeLists");
-class NodeList {
-    /**
-     * Directory of NodeList classes
-     *
-     * @var string
-     *
+abstract class NodeList {
 
-     */
-
-
-    /**
-     * NodeList being used
-     *
-     * @var object
-     */
-    public $nodeList;
 
     /**
      * Constructor
@@ -83,7 +69,7 @@ class NodeList {
      *
      * @return void
      */
-    public function __construct($nodeListType, &$network)
+    public static function &getObject($nodeListType, &$network)
     {
         // Check if node list type exists
         if (in_array($nodeListType, self::getAvailableNodeListTypes())) {
@@ -92,13 +78,12 @@ class NodeList {
             throw new Exception(_("The node list type '$nodeListType' is not supported!"));
         }
 
-        $_nodeListClass = "NodeList" . $nodeListType;
-        $this->nodeList = new $_nodeListClass($network);
+        $nodeListClass = "NodeList" . $nodeListType;
+        $nodeList = new $nodeListClass($network);
 
         // Set header of node list if node list class supports it
-        if (method_exists($this->nodeList, "setHeader")) {
-            $this->nodeList->setHeader();
-        }
+        $nodeList->setHeader();
+        return $nodeList;
     }
 
     /**
@@ -165,6 +150,34 @@ class NodeList {
 
         return $_nodeListTypes;
     }
+    
+    /**
+     * Sets header of output.  If not extended, doesn't touch headers.
+     *
+     * @return void
+     */
+    public function setHeader()
+    {
+        ;
+    }
+    
+    /**
+     * Does the node list have all required dependencies, etc.?  In not redefined by the child class,
+     * returns true
+     *
+     * @return true or false
+     */
+    static public function isAvailable()
+    {
+        return true;
+    }    
+    /**
+     * Displays the output of this node list.
+	 *
+     * @return void
+     */
+    abstract public function getOutput();
+
     /** Menu hook function */
     static public function hookMenu() {
         $items = array();
@@ -177,10 +190,14 @@ class NodeList {
         $listTypes=self::getAvailableNodeListTypes();
         //pretty_print_r($listTypes);
         foreach ($listTypes as $type) {
+                    $nodeListClass = "NodeList" . $type;
+                    require_once("classes/NodeLists/NodeList{$type}.php");
+            if(call_user_func(array($nodeListClass, 'isAvailable'))) {
             $items[] = array('path' => 'node_lists/'.$type,
             'title' => sprintf(_("List in %s format"), $type),
             'url' => BASE_URL_PATH."hotspot_status.php?format=$type"
             );
+            }
         }
         $items[] = array('path' => 'node_lists/technical_status',
         'title' => _("Full node technical status (includes non-deployed nodes)"),

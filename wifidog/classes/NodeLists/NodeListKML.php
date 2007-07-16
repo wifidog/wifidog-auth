@@ -49,6 +49,7 @@
  */
 require_once('classes/Network.php');
 require_once('classes/Node.php');
+require_once('classes/NodeList.php');
 
 /**
  * Defines the KML type of node list
@@ -58,7 +59,7 @@ require_once('classes/Node.php');
  * @author     Joe Bowser <bowserj@resist.ca>
  * @copyright  2006 Joe Bowser
  */
-class NodeListKML {
+class NodeListKML extends NodeList{
 
     /**
      * XML DOM Document that will contain all the data concerning the nodes
@@ -121,11 +122,9 @@ class NodeListKML {
     }
 
     /**
-     * Retreives the output of this object.
+     * Displays the output of this object.
      *
-     * @param bool $return_object If true this function only returns the DOM object
-     *
-     * @return string The XML output
+     * @return void
      *
      * @author     Benoit Gregoire <bock@step.polymtl.ca>
      * @author     Francois Proulx <francois.proulx@gmail.com>
@@ -136,7 +135,7 @@ class NodeListKML {
      * @copyright  2006 Max Horváth, Horvath Web Consulting
 	 * @copyright  2006 Joe Bowser
      */
-    public function getOutput($return_object = false)
+    public function getOutput()
     {
 		$_kml = $this->_xmldoc->createElement("kml");
 		$_kml->setAttribute('xmlns', 'http://earth.google.com/kml/2.0');

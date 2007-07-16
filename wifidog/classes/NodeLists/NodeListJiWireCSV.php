@@ -46,7 +46,7 @@
  */
 require_once('classes/Network.php');
 require_once('classes/Node.php');
-
+require_once('classes/NodeList.php');
 /**
  * Defines the JiWire CSV type of node list
  *
@@ -55,7 +55,7 @@ require_once('classes/Node.php');
  * @author     François Proulx <francois.proulx@gmail.com>
  * @copyright  (c) 2006 François Proulx
  */
-class NodeListJiWireCSV {
+class NodeListJiWireCSV extends NodeList {
 
 	/**
 	 *
@@ -119,8 +119,6 @@ class NodeListJiWireCSV {
     /**
      * Retreives the output of this object.
      *
-     * @param bool $return_object If true this function only returns the DOM object
-     *
      * @return string The XML output
      *
      * @author     Benoit Grégoire <bock@step.polymtl.ca>
@@ -130,7 +128,7 @@ class NodeListJiWireCSV {
      * @copyright  2004-2006 Francois Proulx, Technologies Coeus inc.
      * @copyright  2006 Max Horváth, Horvath Web Consulting
      */
-    public function getOutput($return_object = false)
+    public function getOutput()
     {
     		$this->_csv_document = "jiwire_ref, status, provider_id, provider_name, address, address2, city, state, country, postal_code, website_url, email, phone, fax, location_name, location_type_id, field17, node_type, ssid, fee_comments, equipement, standard_802_11, MAC_address, network_drop, latitude, longitude\r\n";
 

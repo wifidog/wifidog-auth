@@ -117,7 +117,7 @@ class Menu {
         isset($userData['html'])?$userData['html'].=$html:$userData['html']=$html;
     }
     /** Takes an array_walk_recursive compatible callback.  Will be called for each menu item */
-    private function menuArrayWalkRecursiveReal($menuArray, $menuItemIdx, $funcname, &$userdata = null) {
+    private static function menuArrayWalkRecursiveReal($menuArray, $menuItemIdx, $funcname, &$userdata = null) {
         //echo "menuArrayWalkRecursive called with menuArray:"; pretty_print_r($menuArray);
         $retval = true;
         if(isset($menuArray['path'])){
@@ -136,6 +136,30 @@ class Menu {
     /** Takes an array_walk_recursive compatible callback.  Will be called for each menu item */
     public function menuArrayWalkRecursive($funcname, &$userdata = null) {
         return self::menuArrayWalkRecursiveReal($this->_menuArray, 0, $funcname, &$userdata);
+    }
+    /** Compare menu items according to it's title output passed to strcoll().  The toString
+     * output is converted to ISO-8859-1 before sorting to allow strcoll() to be used
+     *  for locale-specific sorting.
+     */
+    public static function titlestrcoll($object1, $object2)
+    {
+        //echo "CMP: ".$object1['title']." vs ". $object2['title']."<br/>\n";
+        return strcoll ( utf8_decode($object1['title']), utf8_decode($object2['title']) );
+    }
+    
+    /** Sort the menu using a user defined sort function */
+    private static function menuArraySort(&$menuArray, $funcname, &$userdata = null) {
+        //echo "menuArraySort called with menuArray:"; pretty_print_r($menuArray);
+        $retval = true;
+        //Sort childrens
+        $retval = uasort($menuArray['childrens'], $funcname);
+        foreach ($menuArray['childrens'] as $menuItemIdx => &$menuItem) {
+            //Recursive call
+            //pretty_print_r($menuItem);
+            //echo "Recusively calling for $menuItemIdx<br/>";
+            $retval = $retval & self::menuArraySort($menuItem, $funcname, &$userdata);
+        }
+        return $retval;
     }
 
     public function processHookMenu($classname) {
@@ -164,12 +188,13 @@ class Menu {
         $this->processHookMenu('Node');
         $this->processHookMenu('Network');
         $this->processHookMenu('User');
-                $this->processHookMenu('Content');
-                                $this->processHookMenu('NodeList');
+        $this->processHookMenu('Content');
+        $this->processHookMenu('NodeList');
         $this->processHookMenu('Role');
         $this->processHookMenu('VirtualHost');
         $this->processHookMenu('ContentTypeFilter');
         $this->processHookMenu('ProfileTemplate');
+        self::menuArraySort($this->_menuArray, array('Menu','titlestrcoll'));
         //pretty_print_r($this->_menuArray);
     }
 

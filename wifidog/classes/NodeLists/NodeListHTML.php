@@ -36,9 +36,12 @@
 /**
  * @package    WiFiDogAuthServer
  * @subpackage NodeLists
+ * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Francois Proulx <francois.proulx@gmail.com>
  * @author     Max Horváth <max.horvath@freenet.de>
+ * @copyright  2004-2007 Benoit Grégoire, Technologies Coeus inc.
  * @copyright  2006 Max Horváth, Horvath Web Consulting
- * @version    Subversion $Id: Content.php 974 2006-02-25 15:08:12Z max-horvath $
+ * @version    Subversion $Id: $
  * @link       http://www.wifidog.org/
  */
 
@@ -46,6 +49,7 @@
  * Load required classes
  */
 require_once('classes/Dependency.php');
+require_once('classes/NodeList.php');
 require_once('classes/Network.php');
 require_once('classes/Node.php');
 require_once('classes/MainUI.php');
@@ -59,7 +63,7 @@ require_once('classes/User.php');
  * @author     Max Horváth <max.horvath@freenet.de>
  * @copyright  2006 Max Horváth, Horvath Web Consulting
  */
-class NodeListHTML {
+class NodeListHTML extends NodeList{
 
     /**
      * Smarty object
@@ -141,11 +145,8 @@ class NodeListHTML {
     }
 
     /**
-     * Retreives the output of this object.
-     *
-     * @param bool $return_object This parameter doesn't have any effect in
-     *                            the class
-     *
+     * Displays the output of this node list.
+	 *
      * @return void
      *
      * @author     Benoit Grégoire <bock@step.polymtl.ca>
@@ -155,11 +156,8 @@ class NodeListHTML {
      * @copyright  2004-2006 Francois Proulx, Technologies Coeus inc.
      * @copyright  2006 Max Horváth, Horvath Web Consulting
      */
-    public function getOutput($return_object = false)
+    public function getOutput()
     {
-        // Init ALL smarty SWITCH values
-        $this->_smarty->assign('sectionTOOLCONTENT', false);
-        $this->_smarty->assign('sectionMAINCONTENT', false);
 
         // Init ALL smarty values
         $this->_smarty->assign('DEPRECATEDisSuperAdmin', false);
@@ -168,10 +166,6 @@ class NodeListHTML {
         $this->_smarty->assign('nodes', array());
         $this->_smarty->assign('num_deployed_nodes', 0);
         $this->_smarty->assign('PdfSupported', false);
-
-        /*
-         * Tool content
-         */
 
         /**
          * Define user security levels for the template
@@ -193,7 +187,6 @@ class NodeListHTML {
          */
 
         // Reset ALL smarty SWITCH values
-        $this->_smarty->assign('sectionTOOLCONTENT', false);
         $this->_smarty->assign('sectionMAINCONTENT', false);
 
         // Set section of Smarty template

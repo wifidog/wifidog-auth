@@ -38,7 +38,7 @@
  * @subpackage NodeLists
  * @author     Max Horváth <max.horvath@freenet.de>
  * @copyright  2006 Max Horváth, Horvath Web Consulting
- * @version    Subversion $Id: Content.php 974 2006-02-25 15:08:12Z max-horvath $
+ * @version    Subversion $Id: $
  * @link       http://www.wifidog.org/
  */
 
@@ -46,6 +46,7 @@
  * Load required classes
  */
 require_once('classes/Dependency.php');
+require_once('classes/NodeList.php');
 require_once('classes/MainUI.php');
 require_once('classes/Network.php');
 require_once('classes/Node.php');
@@ -57,11 +58,11 @@ if (Dependency::check("FPDF")) {
     $_serverBusy = false;
 
     if (PHP_OS != "Windows" && PHP_OS != "Darwin" && @file_exists('/proc/loadavg') && $_loadavgFile = @file_get_contents('/proc/loadavg')) {
-    	$_loadavg = explode(' ', $_loadavgFile);
+        $_loadavg = explode(' ', $_loadavgFile);
 
-    	if (trim($_loadavg[0]) > 5) {
-    		$_serverBusy = true;
-    	}
+        if (trim($_loadavg[0]) > 5) {
+            $_serverBusy = true;
+        }
     }
 
     if (!$_serverBusy) {
@@ -182,7 +183,7 @@ if (Dependency::check("FPDF")) {
                 $this->_encrypted = false;
                 $this->_lastRC4Key = '';
                 $this->padding = "\x28\xBF\x4E\x5E\x4E\x75\x8A\x41\x64\x00\x4E\x56\xFF\xFA\x01\x08" .
-                                 "\x2E\x2E\x00\xB6\xD0\x68\x3E\x80\x2F\x0C\xA9\xFE\x64\x53\x69\x7A";
+                "\x2E\x2E\x00\xB6\xD0\x68\x3E\x80\x2F\x0C\xA9\xFE\x64\x53\x69\x7A";
             }
 
             /**
@@ -313,40 +314,40 @@ if (Dependency::check("FPDF")) {
                     for ($_i = 0; $_i < 8; $_i++) {
                         // Define which array data to use
                         switch ($_i) {
-                        case 0:
-                            $_dataPart = $_row['name'];
-                            break;
+                            case 0:
+                                $_dataPart = $_row['name'];
+                                break;
 
-                        case 1:
-                            $_dataPart = $_row['civic_number'] . " " . $_row['street_name'];
-                            break;
-                        case 2:
-                            $_dataPart = $_row['postal_code'];
-                            break;
+                            case 1:
+                                $_dataPart = $_row['civic_number'] . " " . $_row['street_name'];
+                                break;
+                            case 2:
+                                $_dataPart = $_row['postal_code'];
+                                break;
 
-                        case 3:
-                            $_dataPart = $_row['city'];
-                            break;
+                            case 3:
+                                $_dataPart = $_row['city'];
+                                break;
 
-                        case 4:
-                            $_dataPart = $_row['province'];
-                            break;
+                            case 4:
+                                $_dataPart = $_row['province'];
+                                break;
 
-                        case 5:
-                            $_dataPart = $_row['public_phone_number'];
-                            break;
+                            case 5:
+                                $_dataPart = $_row['public_phone_number'];
+                                break;
 
-                        case 6:
-                            $_dataPart = $_row['public_email'];
-                            break;
+                            case 6:
+                                $_dataPart = $_row['public_email'];
+                                break;
 
-                        case 7:
-                            $_dataPart = str_replace(array("http://", "https://"), "", $_row['home_page_url']);
-                            break;
+                            case 7:
+                                $_dataPart = str_replace(array("http://", "https://"), "", $_row['home_page_url']);
+                                break;
 
-                        default:
-                            throw new Exception("Error: PdfWifidog::nodeList(): Fatal error while defining which array data to use.");
-                            break;
+                            default:
+                                throw new Exception("Error: PdfWifidog::nodeList(): Fatal error while defining which array data to use.");
+                                break;
                         }
 
                         $_nb = max($_nb, $this->_nbLines($this->_widths[$_i], $_dataPart));
@@ -361,44 +362,44 @@ if (Dependency::check("FPDF")) {
                     for ($_i = 0; $_i < 8; $_i++) {
                         // Define which array data to use
                         switch ($_i) {
-                        case 0:
-                            $_dataPart = $_row['name'];
-                            break;
+                            case 0:
+                                $_dataPart = $_row['name'];
+                                break;
 
-                        case 1:
-                            if (defined("ORDER_CIVIC_NUMBER") && ORDER_CIVIC_NUMBER == "street_name_first") {
-                                $_dataPart = $_row['street_name'] . " " . $_row['civic_number'];
-                            } else {
-                                $_dataPart = $_row['civic_number'] . " " . $_row['street_name'];
-                            }
-                            break;
-                        case 2:
-                            $_dataPart = $_row['postal_code'];
-                            break;
+                            case 1:
+                                if (defined("ORDER_CIVIC_NUMBER") && ORDER_CIVIC_NUMBER == "street_name_first") {
+                                    $_dataPart = $_row['street_name'] . " " . $_row['civic_number'];
+                                } else {
+                                    $_dataPart = $_row['civic_number'] . " " . $_row['street_name'];
+                                }
+                                break;
+                            case 2:
+                                $_dataPart = $_row['postal_code'];
+                                break;
 
-                        case 3:
-                            $_dataPart = $_row['city'];
-                            break;
+                            case 3:
+                                $_dataPart = $_row['city'];
+                                break;
 
-                        case 4:
-                            $_dataPart = $_row['province'];
-                            break;
+                            case 4:
+                                $_dataPart = $_row['province'];
+                                break;
 
-                        case 5:
-                            $_dataPart = $_row['public_phone_number'];
-                            break;
+                            case 5:
+                                $_dataPart = $_row['public_phone_number'];
+                                break;
 
-                        case 6:
-                            $_dataPart = $_row['public_email'];
-                            break;
+                            case 6:
+                                $_dataPart = $_row['public_email'];
+                                break;
 
-                        case 7:
-                            $_dataPart = str_replace(array("http://", "https://"), "", $_row['home_page_url']);
-                            break;
+                            case 7:
+                                $_dataPart = str_replace(array("http://", "https://"), "", $_row['home_page_url']);
+                                break;
 
-                        default:
-                            throw new Exception("Error: PdfWifidog::nodeList(): Fatal error while defining which array data to use.");
-                            break;
+                            default:
+                                throw new Exception("Error: PdfWifidog::nodeList(): Fatal error while defining which array data to use.");
+                                break;
                         }
 
                         // Get styles
@@ -432,33 +433,33 @@ if (Dependency::check("FPDF")) {
              */
             function _putinfo()
             {
-        		if (defined("WIFIDOG_NAME")) {
-                	$this->_out('/Producer ' . $this->_textstring(WIFIDOG_NAME));
-        		} else {
-                	$this->_out('/Producer ' . $this->_textstring('WiFiDog Authentication Server'));
-        		}
+                if (defined("WIFIDOG_NAME")) {
+                    $this->_out('/Producer ' . $this->_textstring(WIFIDOG_NAME));
+                } else {
+                    $this->_out('/Producer ' . $this->_textstring('WiFiDog Authentication Server'));
+                }
 
-            	if (!empty($this->title)) {
-            		$this->_out('/Title ' . $this->_textstring($this->title));
-            	}
+                if (!empty($this->title)) {
+                    $this->_out('/Title ' . $this->_textstring($this->title));
+                }
 
-            	if (!empty($this->subject)) {
-            		$this->_out('/Subject ' . $this->_textstring($this->subject));
-            	}
+                if (!empty($this->subject)) {
+                    $this->_out('/Subject ' . $this->_textstring($this->subject));
+                }
 
-            	if (!empty($this->author)) {
-            		$this->_out('/Author ' . $this->_textstring($this->author));
-            	}
+                if (!empty($this->author)) {
+                    $this->_out('/Author ' . $this->_textstring($this->author));
+                }
 
-            	if (!empty($this->keywords)) {
-            		$this->_out('/Keywords ' . $this->_textstring($this->keywords));
-            	}
+                if (!empty($this->keywords)) {
+                    $this->_out('/Keywords ' . $this->_textstring($this->keywords));
+                }
 
-            	if (!empty($this->creator)) {
-            		$this->_out('/Creator ' . $this->_textstring($this->creator));
-            	}
+                if (!empty($this->creator)) {
+                    $this->_out('/Creator ' . $this->_textstring($this->creator));
+                }
 
-            	$this->_out('/CreationDate ' . $this->_textstring('D:' . date('YmdHis')));
+                $this->_out('/CreationDate ' . $this->_textstring('D:' . date('YmdHis')));
             }
 
             /**
@@ -793,13 +794,6 @@ if (Dependency::check("FPDF")) {
 
         exit();
     }
-} else {
-    $ui = MainUI::getObject();
-
-    $errmsg = _("PDF file cannot be created because the FPDF library is not installed!");
-    $ui->displayError($errmsg);
-
-    exit();
 }
 
 /**
@@ -810,7 +804,7 @@ if (Dependency::check("FPDF")) {
  * @author     Max Horváth <max.horvath@freenet.de>
  * @copyright  2006 Max Horváth, Horvath Web Consulting
  */
-class NodeListPDF
+class NodeListPDF extends NodeList
 {
     /**
      * Is FPDF available?
@@ -885,13 +879,24 @@ class NodeListPDF
     private $_currentUser;
 
     /**
+     * Does the node list have all required dependencies, etc.?  In not redefined by the child class,
+     * returns true
+     *
+     * @return true or false
+     */
+    static public function isAvailable()
+    {
+        return Dependency::check("FPDF");
+    }
+
+    /**
      * Constructor
      *
      * @return void
      */
     public function __construct(&$network)
     {
-        
+
         $db = AbstractDb::getObject();
 
         // Init network
@@ -919,15 +924,15 @@ class NodeListPDF
             // Sort by?
             if (defined("PDF_SORT")) {
                 switch (PDF_SORT) {
-                case "street_name":
-                case "postal_code":
-                case "city":
-                    $this->_pdfSort = PDF_SORT;
-                    break;
+                    case "street_name":
+                    case "postal_code":
+                    case "city":
+                        $this->_pdfSort = PDF_SORT;
+                        break;
 
-                default:
-                    $this->_pdfSort = "name";
-                    break;
+                    default:
+                        $this->_pdfSort = "name";
+                        break;
 
                 }
             }
@@ -955,9 +960,9 @@ class NodeListPDF
             $this->_pdf->SetAuthor($this->_network->getName());
             $this->_pdf->SetKeywords($this->_network->getName() . ", " . _("Hotspots"));
 
-    		if (defined("WIFIDOG_NAME")) {
+            if (defined("WIFIDOG_NAME")) {
                 $this->_pdf->SetCreator(WIFIDOG_NAME);
-    		}
+            }
 
             // Define styles
             $this->_pdf->SetAligns(array("L", "L", "C", "L", "L", "L", "L", "L"));
@@ -998,14 +1003,11 @@ class NodeListPDF
     }
 
     /**
-     * Retreives the output of this object.
-     *
-     * @param bool $return_object This parameter doesn't have any effect in
-     *                            the class
+     * Displays the output of this object.
      *
      * @return string The PDF file
      */
-    public function getOutput($return_object = false)
+    public function getOutput()
     {
         // Init values
         $_nodeDetails = array();
@@ -1058,7 +1060,7 @@ class NodeListPDF
                     $_sortBy = _("name");
                     break;
 
-                }
+            }
 
             $this->_pdf->Write(10, utf8_decode(sprintf(_("This list contains all Hotspots of %s sorted by %s."), $this->_network->getName(), $_sortBy)));
             $this->_pdf->Ln(4);
@@ -1084,6 +1086,14 @@ class NodeListPDF
 
             // Compile PDF file
             $this->_pdf->Output();
+        }
+        else {
+            $ui = MainUI::getObject();
+
+            $errmsg = _("PDF file cannot be created because the FPDF library is not installed!");
+            $ui->displayError($errmsg);
+
+            exit();
         }
     }
 

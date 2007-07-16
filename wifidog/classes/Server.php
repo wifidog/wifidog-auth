@@ -302,7 +302,7 @@ class Server extends GenericDataObject
 		);
         }
         $items[] = array('path' => 'server',
-        'title' => _('Server'),
+        'title' => _('Server administration'),
         'type' => MENU_ITEM_GROUPING);
 
         return $items;

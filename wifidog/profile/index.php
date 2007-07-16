@@ -88,7 +88,6 @@ if (!empty ($_REQUEST['profile_user_id'])) {
 }
 
 // Init ALL smarty SWITCH values
-$smarty->assign('sectionTOOLCONTENT', false);
 $smarty->assign('sectionMAINCONTENT', false);
 
 /*

@@ -45,6 +45,7 @@
 /**
  * Load required classes
  */
+require_once('classes/NodeList.php');
 require_once('classes/Network.php');
 require_once('classes/Node.php');
 require_once('classes/User.php');
@@ -56,8 +57,9 @@ require_once('classes/User.php');
  * @subpackage NodeLists
  * @author     Max Horváth <max.horvath@freenet.de>
  * @copyright  2006 Max Horváth, Horvath Web Consulting
+ * @copyright  2004-2007 Benoit Grégoire, Technologies Coeus inc.
  */
-class NodeListRSS {
+class NodeListRSS extends NodeList{
 
     /**
      * XML DOM Document that will contain all the data concerning the nodes
@@ -120,9 +122,6 @@ class NodeListRSS {
     /**
      * Retreives the output of this object.
      *
-     * @param bool $return_object This parameter doesn't have any effect in
-     *                            the class
-     *
      * @return void
      *
      * @author     Benoit Grégoire <bock@step.polymtl.ca>
@@ -132,7 +131,7 @@ class NodeListRSS {
      * @copyright  2004-2006 Francois Proulx, Technologies Coeus inc.
      * @copyright  2006 Max Horváth, Horvath Web Consulting
      */
-    public function getOutput($return_object = false)
+    public function getOutput()
     {
         
         $db = AbstractDb::getObject();

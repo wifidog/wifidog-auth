@@ -57,9 +57,6 @@ require_once('classes/Node.php');
 require_once('classes/User.php');
 
 $smarty = SmartyWifidog::getObject();
-// Init ALL smarty SWITCH values
-$smarty->assign('sectionTOOLCONTENT', false);
-$smarty->assign('sectionMAINCONTENT', false);
 
 // Init ALL smarty values
 $smarty->assign('googleMapsEnabled', false);
@@ -68,23 +65,8 @@ $smarty->assign('googleMapsEnabled', false);
 $network = Network::getCurrentNetwork();
 
 /*
- * Tool content
- */
-
-// Set section of Smarty template
-$smarty->assign('sectionTOOLCONTENT', true);
-
-// Compile HTML code
-$html = $smarty->fetch("templates/sites/index.tpl");
-
-/*
  * Main content
  */
-
-// Reset ALL smarty SWITCH values
-$smarty->assign('sectionTOOLCONTENT', false);
-$smarty->assign('sectionMAINCONTENT', false);
-
 // Set section of Smarty template
 $smarty->assign('sectionMAINCONTENT', true);
 
@@ -97,11 +79,15 @@ $smarty->assign('networkNumValidUsers', $net ? $net->getNumValidUsers() : 0);
 // Compile HTML code
 $html_body = $smarty->fetch("templates/sites/index.tpl");
 
+$currentNode = Node::getCurrentRealNode();
+if($currentNode){
+    header("Location: ".BASE_URL_PATH."portal/?node_id=".$currentNode->getId());
+    exit();
+}
 /*
  * Render output
  */
 $ui = MainUI::getObject();
-$ui->addContent('left_area_middle', $html);
 $ui->addContent('main_area_top', $html_body);
 $ui->display();
 

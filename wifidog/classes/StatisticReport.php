@@ -67,7 +67,8 @@ abstract class StatisticReport
      * @return a localised string */
     final public static function &getObject($classname, Statistics $statistics_object)
     {
-        return new $classname ($statistics_object);
+        $object = new $classname ($statistics_object);
+        return $object;
     }
 
     /** Is the report available.  (Are all Dependency available,

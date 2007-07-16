@@ -46,16 +46,6 @@
 
 *}
 
-{if $sectionTOOLCONTENT}
-{*
-    BEGIN section TOOLCONTENT
-*}
-
-{*
-    END section TOOLCONTENT
-*}
-{/if}
-
 {if $sectionMAINCONTENT}
 {*
     BEGIN section MAINCONTENT

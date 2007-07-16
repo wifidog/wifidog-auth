@@ -98,6 +98,14 @@ else if (!empty ($_REQUEST['gw_id'])) {//This section MUST remain, the gw_id cal
     exit;
 }
 
+$node_id = $node->getId();
+Node :: setCurrentNode($node);
+
+if (isset ($session)) {
+    if ($node) {
+        $session->set(SESS_NODE_ID_VAR, $node_id);
+    }
+}
 /*
  * If this node has a custom portal defined, and the network config allows it,
  * redirect to the custom portal
@@ -106,19 +114,9 @@ $custom_portal_url = $node->getCustomPortalRedirectUrl();
 
 if (!empty ($custom_portal_url) && $network->getCustomPortalRedirectAllowed()) {
     header("Location: {$custom_portal_url}");
+    exit;
 }
 
-$node_id = $node->getId();
-$portal_template = $node_id.".html";
-Node :: setCurrentNode($node);
-
-if (isset ($session)) {
-    if ($node) {
-        $session->set(SESS_NODE_ID_VAR, $node_id);
-    }
-}
-
-$smarty->assign('sectionTOOLCONTENT', false);
 $smarty->assign('sectionMAINCONTENT', false);
 
 /*

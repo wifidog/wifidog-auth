@@ -141,51 +141,54 @@ class Node implements GenericObject
      */
     public static function getCurrentRealNode()
     {
-        static $currentRealNode;
-        static $currentRealNodeComputed;
+        static $currentRealNode;//For caching
+        static $currentRealNodeComputed;//For caching
+        $currentIp = $_SERVER['REMOTE_ADDR'];
+        //For testing:
+        //$currentIp = '24.201.12.219';
         if(!isset($currentRealNodeComputed))
         {
             $currentRealNodeComputed=true;
             $db = AbstractDb::getObject();
-            $sql = "SELECT node_id, last_heartbeat_ip from nodes WHERE last_heartbeat_ip='$_SERVER[REMOTE_ADDR]' ORDER BY last_heartbeat_timestamp DESC";
+            $sql_ip = "SELECT node_id from nodes WHERE last_heartbeat_ip='$currentIp' ORDER BY last_heartbeat_timestamp DESC";
             $node_rows = null;
-            $db->execSql($sql, $node_rows, false);
+            $db->execSql($sql_ip, $node_rows, false);
             $num_match = count($node_rows);
             if ($num_match == 0)
             {
-
                 // User is not physically connected to a node
                 $currentRealNode = null;
             }
-            else
-            if ($num_match = 1)
+            else if ($num_match == 1)
             {
                 // Only a single node matches, the user is presumed to be there
                 $currentRealNode = self::getObject($node_rows[0]['node_id']);
             }
             else
             {
-                /* We have more than one node matching the IP (the nodes are behind the same NAT).
-                 * We will try to discriminate by finding which node the user last authenticated against.
-                 * If the IP matches, we can be pretty certain the user is there.
-                 */
+                /* We have more than one node matching the IP (the nodes are behind the same NAT).*/
                 $currentRealNode = null;
                 $current_user = User :: getCurrentUser();
                 if ($current_user != null)
                 {
+                    /* We will try to discriminate by finding which node the user last authenticated against.
+                     * If the IP matches, we can be pretty certain the user is there.
+                     */
                     $current_user_id = $current_user->getId();
-                    $_SERVER['REMOTE_ADDR'];
-                    $sql = "SELECT node_id, last_heartbeat_ip from connections NATURAL JOIN nodes WHERE user_id='$current_user_id' ORDER BY last_updated DESC ";
-                    $db->execSql($sql, $node_rows, false);
-                    $node_row = $node_rows[0];
-                    if ($node_row != null && $node_row['last_heartbeat_ip'] == $_SERVER['REMOTE_ADDR'])
+                    $sql = "SELECT node_id, last_heartbeat_ip, name, last_updated from connections NATURAL JOIN nodes WHERE user_id='$current_user_id' AND node_id IN ($sql_ip) ORDER BY last_updated DESC ";
+                    //$db->execSql($sql, $tmp, true);
+                    $db->execSqlUniqueRes("$sql LIMIT 1", $node_row, false);
+                    if ($node_row != null)
                     {
                         $currentRealNode = self::getObject($node_row['node_id']);
                     }
                 }
+                else {
+                    /* Darn, the user doesn't have a session open, we can only take the first node in the list, which is marginaly better than nothing */
+                    $currentRealNode = self::getObject($node_rows[0]['node_id']);
+                }
             }
         }
-
         return $currentRealNode;
     }
 
@@ -805,6 +808,26 @@ class Node implements GenericObject
         return $this->_row['last_heartbeat_user_agent'];
     }
 
+    function getLastHeartbeatWifidogUptime()
+    {
+        return $this->_row['last_heartbeat_wifidog_uptime'];
+    }
+    
+    function getLastHeartbeatSysUptime()
+    {
+        return $this->_row['last_heartbeat_sys_uptime'];
+    }
+    
+    function getLastHeartbeatSysLoad()
+    {
+        return $this->_row['last_heartbeat_sys_load'];
+    }
+    
+    function getLastHeartbeatSysMemfree()
+    {
+        return $this->_row['last_heartbeat_sys_memfree'];
+    }
+      
     function getLastHeartbeatTimestamp()
     {
         return $this->_row['last_heartbeat_timestamp'];

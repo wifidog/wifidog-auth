@@ -40,7 +40,7 @@
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @author     Francois Proulx <francois.proulx@gmail.com>
  * @author     Max Horváth <max.horvath@freenet.de>
- * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
+ * @copyright  2004-2007 Benoit Grégoire, Technologies Coeus inc.
  * @copyright  2004-2006 Francois Proulx, Technologies Coeus inc.
  * @copyright  2006 Max Horváth, Horvath Web Consulting
  * @version    Subversion $Id$
@@ -71,7 +71,7 @@ if (!empty ($_REQUEST['network_id'])) {
 
 if ($network) {
     // Init node list type
-    $nodeList = new NodeList($format, $network);
+    $nodeList = NodeList::getObject($format, $network);
     /**
      * XSLT support for Hotspot status page
      * ====================================
@@ -94,7 +94,7 @@ if ($network) {
 
                 // Prepare HTML
                 header("Content-Type: text/html; charset=UTF-8");
-                echo $xslt_proc->transformToXML($nodeList->nodeList->getOutput(true));
+                echo $xslt_proc->transformToXML($nodeList->getOutput(true));
             }
         }
         else {
@@ -103,7 +103,7 @@ if ($network) {
         }
     } else {
         // Deliver node list
-        $nodeList->nodeList->getOutput();
+        $nodeList->getOutput();
     }
 }
 
