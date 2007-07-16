@@ -229,6 +229,7 @@ $html .= "<ul id='nav'>\n";
             $html .= "</ul>\n";
         }
         $html .= "</ul>\n";
+                $html .= "<br/ class='clear'>\n";
         //echo htmlspecialchars($userData['html']);
         return $html;
     }

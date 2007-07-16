@@ -557,7 +557,7 @@ class MainUI {
             //Display main menu
             require_once('classes/Menu.php');
             $menu = Menu::getObject();
-            $this->addContent('left_area_middle', $menu->getUserUI());
+            $this->addContent('main_area_top', $menu->getUserUI());
         }
 
         $this->addEverywhereContent();

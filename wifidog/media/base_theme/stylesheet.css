@@ -161,7 +161,7 @@ select {
 	background: #f5f5f5 url('images/back_header_fade.gif') repeat-x bottom
 		left;
 	margin: -1px 1em 1em 1em;
-	padding: 0.1em 1em 1em 1em;
+	padding: 0;
 	border-right: 1px solid #e7e7e7;
 	border-bottom: 1px solid #d7d5d5;
 	border-left: 1px solid #e7e7e7;
@@ -644,69 +644,92 @@ td.admin_element_tools,th.admin_element_tools {
 	display: inline;
 }
 
-/********** Content type section **********/ 
-/* MainMenu */
-ul#nav,#nav ul { /* all lists */
-/*	padding: 0;
-	margin: 0;
+/********** Content type section **********/ /* MainMenu */
+#nav,#nav ul {
+	float: left;
+	width: auto;
 	list-style: none;
-	float: left;
-	width: 11em;
-	*/
-}
-
-#nav li { /* all list items */
-/*	position: relative;
-	float: left;
-	line-height: 1.25em;
-	margin-bottom: -1px;
-	width: 11em;
-	*/
-}
-
-#nav li ul { /* second-level lists */
-/*	position: absolute;
-	left: -999em;
-	margin-left: 11.05em;
-	margin-top: -1.35em;
-*/
-	}
-
-#nav li ul ul { /* third-and-above-level lists */
-/*	left: -999em;
-	*/
-}
-
-#nav li a {
-/*	width: 11em;
-	w\idth: 10em;
-	display: block;
-	color: black;
+	line-height: 1;
+	background: white;
 	font-weight: bold;
-	text-decoration: none;
-	background-color: white;
-	border: 1px solid black;
-	padding: 0 0.5em;
-	*/
+	padding: 0;
+	border: solid #d7d5d5;
+	border-width: 1px 0;
+	margin: 0 0 1em 0;
+	z-index: 99;
 }
 
-#nav li a:hover {
-/*	color: white;
-	background-color: black;
-	*/
+#nav {
+	background: none;
+	margin: 0 0 0 0;
+	border: none;
+	clear: both;
+	display: block;
+	float: none;
+}
+
+#nav>li {
+	border-left: 1px solid #d7d5d5;
+	border-right: 1px solid #d7d5d5;
+		border-bottom: 1px solid #d7d5d5;
+}
+
+#nav a {
+	display: block;
+	width: 10em;
+	w\idth: 6em;
+	/*color: #7C6240;*/
+	text-decoration: none;
+	padding: 0.25em 2em;
+}
+
+#nav a.daddy {
+	background: url(rightarrow2.gif) center right no-repeat;
+}
+
+#nav li {
+	float: left;
+	padding: 0;
+	width: 10em;
+}
+
+#nav li ul {
+	position: absolute;
+	left: -999em;
+	height: auto;
+	width: 14.4em;
+	w\idth: 13.9em;
+	font-weight: normal;
+	border-width: 0.25em;
+	margin: 0;
+}
+
+#nav li li {
+	padding-right: 1em;
+	width: 13em
+}
+
+#nav li ul a {
+	width: 13em;
+	w\idth: 9em;
+}
+
+#nav li ul ul {
+	margin: -1.75em 0 0 14em;
 }
 
 #nav li:hover ul ul,#nav li:hover ul ul ul,#nav li.sfhover ul ul,#nav li.sfhover ul ul ul
 	{
-	/*
 	left: -999em;
-	*/
 }
 
 #nav li:hover ul,#nav li li:hover ul,#nav li li li:hover ul,#nav li.sfhover ul,#nav li li.sfhover ul,#nav li li li.sfhover ul
-	{ /* lists nested under hovered list items */
-	/*left: auto;
-	*/
+	{
+	left: auto;
+}
+
+#nav li:hover,#nav li.sfhover {
+	background: #f5f5f5;
 }
 
 /* UIUserList */
@@ -776,7 +799,7 @@ fpr_empty_feeds {
 	width: 100%;
 	z-index: 100;
 	opacity: 0.90;
-	filter: alpha(opacity = 90);
+	filter: alpha(opacity =   90);
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
@@ -1345,14 +1368,40 @@ fieldset .red {
 	width: 100%;
 }
 
-\html div.tableContainer table /* */ {
-	margin: 0 -16px 0 0
+\html
+ 
+div
+.tableContainer
+ 
+table
+  /* */
+{
+margin
+:
+ 
+0
+-16
+px
+ 
+0
+0
 }
-
-\html div.tableContainer /* */ {
-	padding: 0 16px 0 0;
+\html
+ 
+div
+.tableContainer
+  /* */
+{
+padding
+:
+ 
+0
+16
+px
+ 
+0
+0;
 }
-
 table.scrollable thead tr {
 	position: relative;
 }

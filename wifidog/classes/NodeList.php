@@ -204,7 +204,7 @@ abstract class NodeList {
         'url' => BASE_URL_PATH."node_list.php"
 		);
         $items[] = array('path' => 'node_lists',
-        'title' => _('Node lists'),
+        'title' => _('Find Hotspots'),
         'type' => MENU_ITEM_GROUPING);
 
 
