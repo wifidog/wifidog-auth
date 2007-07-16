@@ -1198,7 +1198,7 @@ class Network extends GenericDataObject
         if (!$_useCache) {
             // Get number of online users
             $_network_id = $db->escapeString($this->_id);
-            $db->execSqlUniqueRes("SELECT COUNT(DISTINCT users.user_id) FROM users,connections NATURAL JOIN nodes JOIN networks ON (nodes.network_id=networks.network_id AND networks.network_id='$_network_id') "."WHERE connections.token_status='".TOKEN_INUSE."' "."AND users.user_id=connections.user_id ", $_row, false);
+            $db->execSqlUniqueRes("SELECT COUNT(conn_id) FROM connections NATURAL JOIN nodes JOIN networks ON (nodes.network_id=networks.network_id AND networks.network_id='$_network_id') "."WHERE connections.token_status='".TOKEN_INUSE."' ", $_row, false);
 
             // String has been found
             $_retval = $_row['count'];

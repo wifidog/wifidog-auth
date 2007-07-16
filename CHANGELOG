@@ -1,4 +1,7 @@
+Subversion $Id: $
+
 2007-06-16  Benoit Grégoire  <bock@step.polymtl.ca>
+	* Network::getNumOnlineUsers():  Fix #40 by counting active connexion tokens, not distinct user id's.  That way users logged in twice (splash-only, or username if allowed in network config) will be counted twice. 
 	* UIUserList_getUserUI.tpl:  Fix #337
 	* Node.php:  Improve getCurrentRealNode()
 	* Implement #4:  Allow the user to easily come back to the portal by typing in the root auth server adress from a hotspot.
