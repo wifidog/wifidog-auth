@@ -1,6 +1,9 @@
 # $Id: $
 
-2007-06-16  Benoit Grégoire  <bock@step.polymtl.ca>
+2007-07-17 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Use last_heartbeat_sys_uptime untill #354 is fixed
+
+2007-07-16  Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix display of wifidog uptime in node list
 	* Preliminary skinning of the menu
 	* Network::getNumOnlineUsers():  Fix #40 by counting active connexion tokens, not distinct user id's.  That way users logged in twice (splash-only, or username if allowed in network config) will be counted twice. 
@@ -13,14 +16,14 @@
 	* Menu.php:  Sort menus alphabetically according to the user's locale.  TODO:  Implement menu weights.
 	* NodeLists:  Only list node types that have dependencies met in the menu.  Refactor the NodeLists for proper object-orientation.
 	
-2007-06-12  Benoit Grégoire  <bock@step.polymtl.ca>
+2007-07-12  Benoit Grégoire  <bock@step.polymtl.ca>
 	* MainUI.php:  Fix label problem in language chooser.
 	
-2007-06-12  Benoit Grégoire  <bock@step.polymtl.ca>
+2007-07-12  Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix #291 by adding a proper warning and location of documentation
 	* Fix #336:  Add Swedish translation by Christian Svensson <blue ATT cmd.nu>
 
-2007-06-12  Benoit Grégoire  <bock@step.polymtl.ca>
+2007-07-12  Benoit Grégoire  <bock@step.polymtl.ca>
 	-This is a behemoth "the road to 1.0"  commit.  I've been working on this for 6 months, 
 	and it's reached the point where others can help.  Those are very far reaching changes, please
 	notify me if anything isn't working right (and im sure I can't have caught everything).
