@@ -97,10 +97,10 @@ if ($sort_by_using_sql === true) {
     else {
         $sort_by_param_sql = $sort_by_param;
     }
-    $sql = "SELECT node_id, gw_id, name, last_heartbeat_user_agent, (CURRENT_TIMESTAMP-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((CURRENT_TIMESTAMP-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS online, creation_date, node_deployment_status FROM nodes WHERE node_deployment_status != 'PERMANENTLY_CLOSED' ORDER BY {$sort_by_param_sql}";
+    $sql = "SELECT node_id, gw_id, name, last_heartbeat_user_agent, (CURRENT_TIMESTAMP-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((CURRENT_TIMESTAMP-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS online, creation_date, node_deployment_status, last_heartbeat_wifidog_uptime FROM nodes WHERE node_deployment_status != 'PERMANENTLY_CLOSED' ORDER BY {$sort_by_param_sql}";
 }
 else {
-    $sql = "SELECT node_id, gw_id, name, last_heartbeat_user_agent, (CURRENT_TIMESTAMP-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((CURRENT_TIMESTAMP-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS online, creation_date, node_deployment_status FROM nodes WHERE node_deployment_status != 'PERMANENTLY_CLOSED' ORDER BY " . DEFAULT_SORT_BY_PARAM;
+    $sql = "SELECT node_id, gw_id, name, last_heartbeat_user_agent, (CURRENT_TIMESTAMP-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((CURRENT_TIMESTAMP-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS online, creation_date, node_deployment_status, last_heartbeat_wifidog_uptime FROM nodes WHERE node_deployment_status != 'PERMANENTLY_CLOSED' ORDER BY " . DEFAULT_SORT_BY_PARAM;
 }
 $nodes_results = null;
 $db->execSql($sql, $nodes_results, false);
@@ -116,6 +116,9 @@ $nodes_list = array ();
 foreach ($nodes_results as $node_row) {
     $node = Node :: getObject($node_row['node_id']);
     $node_row['duration'] = $db->GetDurationArrayFromIntervalStr($node_row['since_last_heartbeat']);
+    if($node_row['last_heartbeat_wifidog_uptime']) {
+    $node_row['wifidog_uptime'] = $db->GetDurationArrayFromIntervalStr($node_row['last_heartbeat_wifidog_uptime'].' seconds');
+    }
     $node_row['num_online_users'] = $node->getNumOnlineUsers();
     $nodeDeploymentStatus = $node_row['node_deployment_status'];
     $node_row['node_deployment_status'] = $deploymentStatuses["$nodeDeploymentStatus"];

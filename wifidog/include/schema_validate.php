@@ -1255,13 +1255,17 @@ function real_update_schema($targetSchema) {
         /* Convert node owners and tech officer */
         $sql .= "INSERT into roles (role_id, stakeholder_type_id) VALUES ('NODE_OWNER', 'Node');\n";
         $db->execSql("SELECT * FROM node_stakeholders WHERE is_owner = true", $results, false);
-        foreach ($results as $row) {
-            $sql .= "INSERT into node_stakeholders (user_id, role_id, object_id) VALUES ('{$row['user_id']}', 'NODE_OWNER', '{$row['node_id']}');\n";
+        if($results) {
+            foreach ($results as $row) {
+                $sql .= "INSERT into node_stakeholders (user_id, role_id, object_id) VALUES ('{$row['user_id']}', 'NODE_OWNER', '{$row['node_id']}');\n";
+            }
         }
         $sql .= "INSERT into roles (role_id, stakeholder_type_id) VALUES ('NODE_TECH_OFFICER', 'Node');\n";
         $db->execSql("SELECT * FROM node_stakeholders WHERE is_tech_officer = true", $results, false);
-        foreach ($results as $row) {
-            $sql .= "INSERT into node_stakeholders (user_id, role_id, object_id) VALUES ('{$row['user_id']}', 'NODE_TECH_OFFICER', '{$row['node_id']}');\n";
+        if($results) {
+            foreach ($results as $row) {
+                $sql .= "INSERT into node_stakeholders (user_id, role_id, object_id) VALUES ('{$row['user_id']}', 'NODE_TECH_OFFICER', '{$row['node_id']}');\n";
+            }
         }
 
     }

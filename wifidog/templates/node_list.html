@@ -35,8 +35,8 @@
 		    <td class="status">
 		    {if $nodes[node].online == 't'}
 		    <img src='{$common_images_url}HotspotStatus/up.gif'>
-		    	{if $nodes[node].last_heartbeat_wifidog_uptime != ''}
-		    		{$nodes[node].last_heartbeat_wifidog_uptime.days} {"days"|_} {$nodes[node].last_heartbeat_wifidog_uptime.hours}{"h"|_} {$nodes[node].last_heartbeat_wifidog_uptime.minutes}{"min"|_}<br />
+		    	{if $nodes[node].wifidog_uptime != ''}
+		    		{$nodes[node].wifidog_uptime.days} {"days"|_} {$nodes[node].wifidog_uptime.hours}{"h"|_} {$nodes[node].wifidog_uptime.minutes}{"min"|_}<br />
 		    	{/if}
 		    {else}
 		    <img src='{$common_images_url}HotspotStatus/down.gif'>
