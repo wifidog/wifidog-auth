@@ -1,5 +1,11 @@
 # $Id: $
 
+2007-07-19 Benoit Grégoire  <bock@step.polymtl.ca>
+	UIUserList fixes:
+	* Node::getRecentUsers():  Get the 5 most recent users, not some random users in the last week.  Also, exclude users currently logged-in.
+	* Node::getActiveUsers():  Function was unbearably slow, now limit the search space to the last 3 months.  Get the 5 user who connected on the most differents days, instead of users with the worst wireless card ;) 
+	* schema_validate.php: Add index for timestamp_in on connection table.
+	
 2007-07-17 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Use last_heartbeat_sys_uptime untill #354 is fixed
 

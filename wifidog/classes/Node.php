@@ -148,6 +148,7 @@ class Node implements GenericObject
         //$currentIp = '24.201.12.219';
         if(!isset($currentRealNodeComputed))
         {
+            //echo "getCurrentTealNode(): Computing for IP $currentIp<br/>";
             $currentRealNodeComputed=true;
             $db = AbstractDb::getObject();
             $sql_ip = "SELECT node_id from nodes WHERE last_heartbeat_ip='$currentIp' ORDER BY last_heartbeat_timestamp DESC";
@@ -812,22 +813,22 @@ class Node implements GenericObject
     {
         return $this->_row['last_heartbeat_wifidog_uptime'];
     }
-    
+
     function getLastHeartbeatSysUptime()
     {
         return $this->_row['last_heartbeat_sys_uptime'];
     }
-    
+
     function getLastHeartbeatSysLoad()
     {
         return $this->_row['last_heartbeat_sys_load'];
     }
-    
+
     function getLastHeartbeatSysMemfree()
     {
         return $this->_row['last_heartbeat_sys_memfree'];
     }
-      
+
     function getLastHeartbeatTimestamp()
     {
         return $this->_row['last_heartbeat_timestamp'];
@@ -1313,7 +1314,8 @@ class Node implements GenericObject
     }
 
     /**
-     * The list of the 5 most recent users who have logged into this node in the past week
+     * The list of the 5 most recent users who have logged into this node in the past week,
+     * excluding those that are currently connected.
      *
      * @return array An array of User object, or an empty array
      *
@@ -1321,7 +1323,7 @@ class Node implements GenericObject
      */
     public function getRecentUsers()
     {
-         
+        $numUsers = 5;
         $db = AbstractDb::getObject();
 
         // Init values
@@ -1330,11 +1332,28 @@ class Node implements GenericObject
         $anonUsers = 0;
         $weekAgoDate = strftime("%Y-%m-%d 00:00", strtotime("-1 week"));
 
-        $db->execSql("SELECT DISTINCT users.user_id FROM users,connections WHERE connections.timestamp_in>'{$weekAgoDate}' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}' LIMIT 5", $users, false);
+        $sql = null;
+        $sql .= "SELECT user_id, timestamp_in FROM connections \n";
+        $sql .= "WHERE connections.node_id='{$this->id}' \n";
+        $sql .= "AND connections.user_id NOT IN (".$this->getOnlineUsersSql().")  \n";
+        $sql .= "AND connections.timestamp_in>'{$weekAgoDate}' \n";
+
+        $sql .= "ORDER BY connections.timestamp_in DESC\n";
+        $sql .= "LIMIT $numUsers * 4 \n";
+        $db->execSql($sql, $users, false);
 
         if ($users != null) {
+            $alreadyPresentArray[] = array(); //Only keep the top $num
+            $count = 0;
             foreach ($users as $user_row) {
-                $retval[] = User::getObject($user_row['user_id']);
+                if(empty($alreadyPresentArray[$user_row['user_id']])) {
+                    $retval[] = User::getObject($user_row['user_id']);
+                    $alreadyPresentArray[$user_row['user_id']]=true;
+                    $count++;
+                    if($count>=$numUsers) {
+                        break;
+                    }
+                }
             }
         }
 
@@ -1342,7 +1361,7 @@ class Node implements GenericObject
     }
 
     /**
-     * The list of the 5 users who have logged into this node most often
+     * The list of the 5 users who have logged into this node the most different days during the last 3 months
      *
      * @return array An array of User object, or an empty array
      *
@@ -1350,15 +1369,21 @@ class Node implements GenericObject
      */
     public function getActiveUsers()
     {
-         
+        $numUsers = 5;
         $db = AbstractDb::getObject();
 
         // Init values
         $retval = array();
         $users = null;
         $anonUsers = 0;
-
-        $db->execSql("SELECT DISTINCT users.user_id, count(users.user_id) as connections FROM users, connections WHERE users.user_id=connections.user_id AND connections.node_id='{$this->id}' GROUP BY users.user_id ORDER BY connections desc LIMIT 5", $users, false);
+        $sql = null;
+        $sql .= "SELECT DISTINCT connections.user_id, count(distinct date_trunc('day', timestamp_in)) as connections FROM connections \n";
+        $sql .= " WHERE connections.node_id='{$this->id}' \n";
+        $sql .= " AND timestamp_in > (CURRENT_TIMESTAMP - interval '3 month') \n";
+        $sql .= " GROUP BY connections.user_id  \n";
+        $sql .= "ORDER BY connections desc \n";
+        $sql .= " LIMIT $numUsers\n";
+        $db->execSql($sql, $users, false);
 
         if ($users != null) {
             foreach ($users as $user_row) {
@@ -1369,6 +1394,9 @@ class Node implements GenericObject
         return $retval;
     }
 
+    private function getOnlineUsersSql() {
+        return "SELECT users.user_id FROM users,connections WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}'";
+    }
     /**
      * The list of users online at this node
      *
@@ -1385,9 +1413,7 @@ class Node implements GenericObject
         $retval = array();
         $users = null;
         $anonUsers = 0;
-
-        $db->execSql("SELECT users.user_id FROM users,connections WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}'", $users, false);
-
+        $db->execSql($this->getOnlineUsersSql(), $users, false);
         if ($users != null) {
             foreach ($users as $user_row) {
                 $retval[] = User::getObject($user_row['user_id']);

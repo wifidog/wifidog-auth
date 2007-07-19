@@ -47,7 +47,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 55);
+define('REQUIRED_SCHEMA_VERSION', 56);
 /** Used to test a new shecma version before modyfying the database */
 define('SCHEMA_UPDATE_TEST_MODE', false);
 /**
@@ -1282,6 +1282,14 @@ function real_update_schema($targetSchema) {
         $sql .= "ALTER TABLE nodes ADD COLUMN last_heartbeat_sys_load real;\n";
         $sql .= "ALTER TABLE nodes ALTER COLUMN last_heartbeat_sys_load SET DEFAULT NULL;\n";
      }
+     
+     $new_schema_version = 56;
+     if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
+     printUpdateVersion($new_schema_version);
+     $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+        $sql .= "CREATE INDEX idx_connections_timestamp_in ON connections (timestamp_in);\n";
+     }
+     
     /*
      $new_schema_version = ;
      if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
