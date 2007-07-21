@@ -2,7 +2,9 @@
 2007-07-21 Benoit Grégoire  <bock@step.polymtl.ca>
 	* AnonymisedDataExport.php:  Work around the huge memory requirements this report used to have.
 	* install.php:  Strip create procedural language from schema, that requires superuser anyway.
-		
+					Strip a few other things to hopefully allow it to work again with postgresql 7.4, but I need the full output of the commant "psql -f wifidog-postgres-schema.sql", run from the sql directory of a svn checkout, from someone still running 7.4, otherwise I can't do much. 
+	* DependenciesList.php:  New class.  Allow seeing the dependency list once the server is installed.  A small step towards centralized dependency installation.
+
 2007-07-20 Benoit Grégoire  <bock@step.polymtl.ca>
 	* At long last, implement #9:  Automatic new node creation.  When attempting to login from an unknown node, the user (if he has the permissions) will be prompted to create the node, or "steal" en existing one (for hardware swaps).
 	* Refactor Node:getSelectNodeUI().

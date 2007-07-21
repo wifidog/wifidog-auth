@@ -194,6 +194,7 @@ class Menu {
         $this->processHookMenu('VirtualHost');
         $this->processHookMenu('ContentTypeFilter');
         $this->processHookMenu('ProfileTemplate');
+                $this->processHookMenu('DependenciesList');
         self::menuArraySort($this->_menuArray, array('Menu','titlestrcoll'));
         //pretty_print_r($this->_menuArray);
     }

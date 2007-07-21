@@ -155,10 +155,6 @@ EndHTML;
 #print "</pre>";     # DEBUG
 #exit();
 
-# Minimal version needed
-$requiredPHPVersion = '5.0.0';
-$requiredPostgeSQLVersion = '0.0.0'; // Todo
-
 # Needed files/directories with write access
 $dir_array = array (
     'tmp',
@@ -196,8 +192,6 @@ $dir_array = array (
         'svn_source' => 'http://projects.coeus.ca/svn/feedpressreview/trunk/'
         )
         );
-
-        $loadedExtensions = array_flip(get_loaded_extensions()); # Debug : An empty array for $loadedExtensions will show needed Dependency
 
         $optionsInfo = array (
         /* TODO:  SSL is now configured in the DB, but should still be handled by the install script
@@ -489,63 +483,10 @@ EndHTML;
             ###################################
             case 'version' :
                 print "<h1>Checking Dependency</h1>";
-                print "<table BORDER=\"1\">";
-
-                /* PHP version check */
-                $phpVersion = phpversion();
-                $okMsg = '<TD ALIGN="CENTER" STYLE="background:lime;">OK</td>';
-                $errorMsg = '<TD ALIGN="CENTER" STYLE="background:red;">ERROR</td>';
-                $warningMsg = '<TD ALIGN="CENTER" STYLE="background:yellow;">Warning</td>';
-                $error = 0;
-
-                print "<tr><td>PHP</td>";
-                if (version_compare($phpVersion, $requiredPHPVersion, ">=")) {
-                    print "$okMsg<td>$phpVersion</td>"; // Version 5.0.0 or later
-                }
-                else {
-                    print "$errorMsg<td>Version $requiredPHPVersion needed</td>"; // Version < 5.0.0
-                    $error = 1;
-                }
-                print "</tr></table><BR>";
-                
-                require_once ('classes/Dependency.php');
-                $components = Dependency::getDependency();
-                 print "<table BORDER=\"1\">\n";
-                print "<tr><th>Component</th><th>Type</th><th>Status</th><th>Description</th><th>Message</th></tr>";
-                 
-                foreach ($components as $dependency) {
-                    echo "<tr>\n";
-                    $websiteUrl = $dependency->getWebsiteURL();
-                    $component_key = $dependency->getId();
-                    $description = $dependency->getDescription();
-                    $mandatory = $dependency->isMandatory();
-                    $type = $dependency->getType();
-                    if($websiteUrl){
-                        echo "<td><A HREF=\"$websiteUrl\">$component_key</A></td>\n";
-                    }
-                    else{
-                   echo "<td>$component_key</td>\n";
-                    }
-                     echo "<td>$type</td>\n";
-                    $available = Dependency::check($component_key, $message);
-                    if ($available) {
-                        print "$okMsg<td>$description</td><td>&nbsp;</td></tr>";
-                    }
-                    else {
-                        if ($mandatory) {
-                            print "$errorMsg<td>$description</td><td>$message</td></tr>";
-                            $error = 1;
-                        }
-                        else {
-                            print "$warningMsg<td>$description</td><td>$message</td></tr>";
-                        }
-                    }
-                }
-                print "</table><BR>";
-                               
-        //TODO: PostgreSQL and MySQL version are not validated";
-        print "We recommend you use PostgreSQL 8.0 or newer (but it isn't required)";
-
+               $error = 0;
+               $userData['error']=&$error;
+               require_once("classes/DependenciesList.php");
+               print DependenciesList::getAdminUI($userData);
         refreshButton();
         if ($error != 1) {
             navigation(array (
@@ -891,20 +832,23 @@ EndHTML;
     case 'dbinit' :
         print "<h1>Database initialisation</h1>";
 
-        # SQL are executed with PHP, some lignes need to be commented
+        # SQL are executed with PHP, some lignes need to be commented.
         $file_db_version = 'UNKNOW';
         $patterns[0] = '/CREATE DATABASE wifidog/';
         $patterns[1] = '/\\\connect/';
+        //The following is strictly for compatibility with postgresql 7.4
         $patterns[2] = '/COMMENT/';
         $patterns[3] = '/SET default_tablespace/';
         $patterns[4] = '/SET default_with_oids/';
         $patterns[5] = '/CREATE PROCEDURAL LANGUAGE/';
+        $patterns[6] = '/ALTER SEQUENCE/';
         $replacements[0] = '-- ';
         $replacements[1] = '-- ';
         $replacements[2] = '-- ';
         $replacements[3] = '-- ';
         $replacements[4] = '-- ';
-        $replacements[5] = '-- ';
+        $replacements[5] = '-- ';        
+        $replacements[6] = '-- ';
         
         $content_schema_array = file(WIFIDOG_ABS_FILE_PATH . "../sql/wifidog-postgres-schema.sql") or die("<em>Error</em>: Can not open $basepath/../sql/wifidog-postgres-schema.sql"); # Read SQL schema file
         $content_schema = implode("", $content_schema_array);

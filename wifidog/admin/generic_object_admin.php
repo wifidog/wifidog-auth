@@ -62,14 +62,7 @@ require_once ('admin_common.php');
 
 require_once ('classes/GenericObject.php');
 require_once ('classes/MainUI.php');
-require_once ('classes/User.php');
-require_once ('classes/Node.php');
-require_once ('classes/Network.php');
-require_once ('classes/Server.php');
-require_once ('classes/ContentTypeFilter.php');
-require_once ('classes/ProfileTemplate.php');
-require_once ('classes/InterfaceElements.php');
-require_once ('classes/Role.php');
+
 
 // Init values
 $ui = MainUI :: getObject();
@@ -88,6 +81,7 @@ if (empty ($_REQUEST['object_class'])) {
     exit;
 } else {
     $class = $_REQUEST['object_class'];
+    require_once ("classes/{$class}.php");
 }
 // Init text values
 $createText = sprintf(_("Create %s"), $_REQUEST['object_class']);
@@ -162,7 +156,7 @@ switch ($_REQUEST['action']) {
         $object = call_user_func(array (
         $class,
         'getObject'
-        ), $_REQUEST['object_id']);
+        ), $objectId);
         break;
 }
 
@@ -401,7 +395,7 @@ switch ($_REQUEST['action']) {
                             $common_input .= "<input type='hidden' name='debug' value='true'>";
                         }
 
-                        $common_input .= "<input type='hidden' name='object_id' value='" . $object->GetId() . "'>";
+                        $common_input .= "<input type='hidden' name='object_id' value='" . $objectId . "'>";
                         $common_input .= "<input type='hidden' name='object_class' value='" . get_class($object) . "'>";
 
                         $html .= "<form name='generic_object_form' enctype='multipart/form-data' action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
