@@ -191,6 +191,76 @@ class AbstractDb
         return $return_value;
     }
 
+        /**
+     * Execute an SQL query and returns the RAW postgresql result handle or throws an error
+     * This is NOT for general use, as it breaks abstraction
+     * @param $sql SQL query to execute
+     * @param $resultSet The postgresql result handle
+     * @param $debug When set to true the function will spit out debug informations
+     * @return TRUE indicated the query went fine, FALSE something went wrong
+     */
+    function execSqlRaw($sql, & $resultSet, $debug = false)
+    {
+        // Get a connection handle
+        $connection = $this->connect(NULL);
+
+        // In debug mode spit out the SQL query
+        if ($debug == TRUE)
+        {
+            // Header
+            echo "<hr/><p/>execSql() : "._("SQL Query")."<br/>\n<pre>{$sql}</pre></p>\n";
+
+            // Prepend EXPLAIN statement to the SQL query
+            $result = @pg_query($connection, "EXPLAIN ".$sql);
+            if($result) {
+                echo "<p>"._("Query plan")." :<br/>\n";
+                $plan_array = pg_fetch_all($result);
+
+                foreach ($plan_array as $plan_line)
+                echo $plan_line['QUERY PLAN']."<br/>\n";
+                echo "</p>\n";
+            }
+
+        }
+
+        // Start the clockwatch
+        $sql_starttime = microtime();
+        $result = @pg_query($connection, $sql);
+        $sql_endtime = microtime();
+
+        $sql_timetaken = $this->logQueries($sql, 'SELECT', $sql_starttime, $sql_endtime);
+
+        if ($debug == TRUE)
+        echo "<p>".sprintf(_("Elapsed time for query execution : %.6f second(s)"), $sql_timetaken)."</p>\n";
+
+        if ($result == FALSE)
+        {
+            echo "<p>execSql() : "._("An error occured while executing the following SQL query")." :<br>{$sql}</p>";
+            echo "<p>"._("Error message")." : <br/>".pg_last_error($connection)."</p>";
+            echo "<p>"._("Backtrace:")."</p>";
+            echo "<pre>";
+            $btArray = debug_backtrace();
+            foreach($btArray as $index=>$bt) {
+                printf("#%d %s(%d): %s%s%s()\n", $index, $bt['file'], $bt['line'], $bt['class'], $bt['type'], $bt['function']);
+            }
+            echo "</pre>";
+            $resultSet = NULL;
+            $return_value = FALSE;
+        }
+        else
+        if (pg_num_rows($result) == 0)
+        {
+            $resultSet = NULL;
+            $return_value = TRUE;
+        }
+        else
+        {
+            $resultSet = $result;
+            $return_value = TRUE;
+        }
+        return $return_value;
+    }
+    
     /* Logs a sql query for profiling purposes */
     function logQueries($sql, $type, $sql_starttime, $sql_endtime)
     {

@@ -98,6 +98,10 @@ class AnonymisedDataExport extends StatisticReport
         }
         else
         {
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: inline; filename="anonymised_data.sql"');
+            header("Content-Transfer-Encoding: binary");
+
             $html  .= <<<EOT
             CREATE TABLE connections_anonymised
             (
@@ -112,47 +116,48 @@ class AnonymisedDataExport extends StatisticReport
             );
 EOT;
 $html .= "\n";
+            echo $html;
             $distinguish_users_by = $this->stats->getDistinguishUsersBy();
 
             $candidate_connections_sql = $this->stats->getSqlCandidateConnectionsQuery("conn_id, users.user_id, nodes.node_id, connections.user_id, user_mac, timestamp_in, timestamp_out, incoming, outgoing ", true);
 
             $sql = "$candidate_connections_sql ORDER BY timestamp_in DESC";
-            $db->execSql($sql, $rows, false);
-            foreach ($rows as $row)
-            {
-                $keys = null;
-                $values = null;
-                $first = true;
-                foreach ($row as $key=>$value)
+            $db->execSqlRaw($sql, $resultHandle, false);
+            if($resultHandle) {
+                while($row=pg_fetch_array($resultHandle,null,PGSQL_ASSOC))
                 {
-                    if($key == 'user_id' || $key == 'node_id' || $key == 'conn_id' || $key == 'user_mac' ) {
-                        $value = "'".$this->getNonRepeatableHash($value)."'";
+
+                    $keys = null;
+                    $values = null;
+                    $first = true;
+                    foreach ($row as $key=>$value)
+                    {
+                        if($key == 'user_id' || $key == 'node_id' || $key == 'conn_id' || $key == 'user_mac' ) {
+                            $value = "'".$this->getNonRepeatableHash($value)."'";
+                        }
+                        else if ($key == 'timestamp_out' && empty ($value)) {
+                            $value = 'NULL';
+                        }
+                        else {
+                            $value = "'$value'";
+                        }
+                        if(!$first) {
+                            $keys .= ', ';
+                            $values .= ', ';
+                        }
+                        else {
+                            $first = false;
+                        }
+                        $keys .= $key;
+                        $values .= $value;
                     }
-                    else if ($key == 'timestamp_out' && empty ($value)) {
-                        $value = 'NULL';
-                    }
-                    else {
-                        $value = "'$value'";
-                    }
-                    if(!$first) {
-                        $keys .= ', ';
-                        $values .= ', ';
-                    }
-                    else {
-                        $first = false;
-                    }
-                    $keys .= $key;
-                    $values .= $value;
+                    //fwrite($temp, "INSERT INTO connections_anonymised ($keys) VALUES ($values);\n");
+                    echo "INSERT INTO connections_anonymised ($keys) VALUES ($values);\n";
                 }
-                $html .= "INSERT INTO connections_anonymised ($keys) VALUES ($values);\n";
-                //$html .= "<br/>\n";
             }
+            exit;
         }
-        header('Content-Type: text/plain');
-        header('Content-Disposition: inline; filename="anonymised_data.sql"');
-        header("Content-Transfer-Encoding: binary");
-        echo $html;
-        exit;
+        return $html;
     }
 
 }
