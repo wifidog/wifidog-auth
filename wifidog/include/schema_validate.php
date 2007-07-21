@@ -61,10 +61,10 @@ function validate_schema() {
 
     // Init values
     $row = null;
-
+    $dbRetval = false;
     try {
         // Check the schema info
-        $db->execSqlUniqueRes("SELECT * FROM schema_info WHERE tag='schema_version'", $row, false);
+        $dbRetval = $db->execSqlUniqueRes("SELECT * FROM schema_info WHERE tag='schema_version'", $row, false);
     }
     catch (Exception $e) {
         /* Be quiet */
@@ -72,7 +72,8 @@ function validate_schema() {
 
     if (empty ($row)) {
         echo "<html><body>";
-        echo "<h1>" . _("Unable to retrieve schema version. The database schema is too old to be updated.") . "</h1>";
+                      echo "<h1>" . _("I am unable to retrieve the schema version. Either the wifidog database hasn't been created yet, the postgresql server is down, or pg_hba.conf does not allow your web server to connect to the wifidog database.") . "</h1>";
+        
         echo "<h2>" . _("Try running the") . " <a href='" . BASE_URL_PATH . "install.php'>" . _("installation script") . "</a>.</h2>\n";
         echo "</html></body>";
         exit ();

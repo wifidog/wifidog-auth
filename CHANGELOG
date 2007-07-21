@@ -1,7 +1,8 @@
 # $Id$
 2007-07-21 Benoit Grégoire  <bock@step.polymtl.ca>
 	* AnonymisedDataExport.php:  Work around the huge memory requirements this report used to have.
-	
+	* install.php:  Strip create procedural language from schema, that requires superuser anyway.
+		
 2007-07-20 Benoit Grégoire  <bock@step.polymtl.ca>
 	* At long last, implement #9:  Automatic new node creation.  When attempting to login from an unknown node, the user (if he has the permissions) will be prompted to create the node, or "steal" en existing one (for hardware swaps).
 	* Refactor Node:getSelectNodeUI().

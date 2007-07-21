@@ -898,12 +898,14 @@ EndHTML;
         $patterns[2] = '/COMMENT/';
         $patterns[3] = '/SET default_tablespace/';
         $patterns[4] = '/SET default_with_oids/';
+        $patterns[5] = '/CREATE PROCEDURAL LANGUAGE/';
         $replacements[0] = '-- ';
         $replacements[1] = '-- ';
         $replacements[2] = '-- ';
         $replacements[3] = '-- ';
         $replacements[4] = '-- ';
-
+        $replacements[5] = '-- ';
+        
         $content_schema_array = file(WIFIDOG_ABS_FILE_PATH . "../sql/wifidog-postgres-schema.sql") or die("<em>Error</em>: Can not open $basepath/../sql/wifidog-postgres-schema.sql"); # Read SQL schema file
         $content_schema = implode("", $content_schema_array);
         $content_data_array = file(WIFIDOG_ABS_FILE_PATH . "../sql/wifidog-postgres-initial-data.sql"); # Read SQL initial data file
