@@ -131,18 +131,35 @@ if (!empty($_REQUEST['url'])) {
 if (!empty($gw_id)) {
     try {
         $node = Node::getObjectByGatewayId($gw_id);
-        if($node)
-        {
-            $session->set(SESS_NODE_ID_VAR, $node->getId());
-        }
     }
 
     catch (Exception $e) {
-        $ui = MainUI::getObject();
-        $ui->displayError($e->getMessage());
-        exit;
-    }
+        $returnedNodeIsNew = false;
+        $node = Node::processStealOrCreateNewUI($gw_id, $returnedNodeIsNew);
 
+        if(!$node){
+            $ui = MainUI::getObject();
+            $ui->addContent('main_area_middle', '<p class=errormsg>'.$e->getMessage()."</p>\n", 1);
+            $stealNodeForm=null;
+            $stealNodeForm.="<form action='' method='POST'>\n";
+            $stealNodeForm.=Node::getStealOrCreateNewUI($gw_id);
+            $stealNodeForm.="</form>\n";
+            $ui->addContent('main_area_middle',$stealNodeForm,2);
+            $ui->display();
+            exit;
+        }
+        else {
+            if($returnedNodeIsNew) {
+                $url = BASE_URL_PATH."admin/generic_object_admin.php?object_class=Node&action=edit&object_id=".$node->getId();
+                header("Location: {$url}");
+                exit;
+            }
+        }
+    }
+    if($node)
+    {
+        $session->set(SESS_NODE_ID_VAR, $node->getId());
+    }
     $network = $node->getNetwork();
 } else {
     // Gateway ID is not set ... virtual login

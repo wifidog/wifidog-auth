@@ -214,7 +214,7 @@ SET search_path = public, pg_catalog;
 -- Data for Name: schema_info; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
-INSERT INTO schema_info (tag, value) VALUES ('schema_version', '54');
+INSERT INTO schema_info (tag, value) VALUES ('schema_version', '56');
 
 
 --

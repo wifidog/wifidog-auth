@@ -220,11 +220,15 @@ class Network extends GenericDataObject
      * @param string $user_prefix          A identifier provided by the
      *                                     programmer to recognise it's
      *                                     generated html form
-     * @param object $preSelectedObject Network object: The network to be
-     *                                     pre-selected in the form object
-     * @param string $additionalWhere     Additional SQL conditions for the
-     *                                     networks to select
-     * @param string $allowEmpty     boolean Allow not selecting any network
+     * 
+     * @param string $userData=null Array of contextual data optionally sent to the method.
+     *  The function must still function if none of it is present.
+     *
+     * This method understands:
+     *  $userData['preSelectedObject'] An optional object to pre-select.
+     *	$userData['additionalWhere'] Additional SQL conditions for the
+     *                                    objects to select
+     *	$userData['allowEmpty'] boolean Allow not selecting any object
      * @return string HTML markup
 
      */

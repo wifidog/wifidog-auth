@@ -201,7 +201,7 @@ switch ($_REQUEST['action']) {
         $name = "node_id";
         $html .= _("Node");
         $html .= ": ";
-        $html .= Node :: getSelectNodeUI($name);
+        $html .= Node :: getSelectUI($name);
 
         if (method_exists($object, "getUserUI")) {
             $ui->addContent('main_area_middle', $object, 1);
@@ -273,7 +273,8 @@ switch ($_REQUEST['action']) {
 
             case "Node" :
                 $newLongText = $addLongText;
-                $objectSelector = Node :: getSelectNodeUI('object_id', null, null, null, "table");
+                $userData['typeInterface'] = "table";
+                $objectSelector = Node :: getSelectUI('object_id', $userData);
                 $displayEditButton = false;
                 break;
             case "ProfileTemplate" :

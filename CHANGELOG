@@ -1,5 +1,10 @@
-# $Id: $
+# $Id$
 
+2007-07-20 Benoit Grégoire  <bock@step.polymtl.ca>
+	* At long last, implement #9:  Automatic new node creation.  When attempting to login from an unknown node, the user (if he has the permissions) will be prompted to create the node, or "steal" en existing one (for hardware swaps).
+	* Refactor Node:getSelectNodeUI().
+	* Menu.php:  Fix small oversight causing menu not to clear.
+	
 2007-07-19 Benoit Grégoire  <bock@step.polymtl.ca>
 	UIUserList fixes:
 	* Node::getRecentUsers():  Get the 5 most recent users, not some random users in the last week.  Also, exclude users currently logged-in.

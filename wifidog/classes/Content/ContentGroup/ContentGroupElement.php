@@ -354,9 +354,9 @@ class ContentGroupElement extends Content {
 
         $html .= "<li class='admin_element_item_container'>\n";
 
-        $sql_additional_where = "AND node_id NOT IN (SELECT node_id FROM content_group_element_has_allowed_nodes WHERE content_group_element_id='$this->id')";
+        $userDataNode['additionalWhere'] = "AND node_id NOT IN (SELECT node_id FROM content_group_element_has_allowed_nodes WHERE content_group_element_id='$this->id')";
         $name = "content_group_element_{$this->id}_new_allowed_node";
-        $html .= Node :: getSelectNodeUI($name, null, $sql_additional_where);
+        $html .= Node :: getSelectUI($name, $userDataNode);
         $name = "content_group_element_{$this->id}_new_allowed_node_submit";
         $html .= "<input type='submit' name='$name' value='" . _("Add new allowed node") . "'>";
         $html .= "</li'>\n";
@@ -439,7 +439,7 @@ class ContentGroupElement extends Content {
 
         if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true) {
             $name = "content_group_element_{$this->id}_new_allowed_node";
-            $node = Node :: processSelectNodeUI($name);
+            $node = Node :: processSelectUI($name);
             $node_id = $node->GetId();
             $db->execSqlUpdate("INSERT INTO content_group_element_has_allowed_nodes (content_group_element_id, node_id) VALUES ('$this->id', '$node_id')", FALSE);
         }

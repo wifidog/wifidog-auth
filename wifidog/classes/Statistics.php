@@ -386,7 +386,10 @@ $from_presets = array (
         }
         $selectedNodes = $this->getSelectedNodes();
         $sql = "SELECT nodes.node_id, nodes.name from nodes $sql_join WHERE 1=1 ORDER BY lower(nodes.node_id)";
-        $html .= Node :: getSelectNodeUI($name, $sql_join, null, $selectedNodes, "select_multiple");
+        $userData['preSelectedObjects']=$selectedNodes;
+                $userData['sqlJoin']=$sql_join;
+                                $userData['typeInterface']="select_multiple";
+        $html .= Node :: getSelectUI($name, $userData);
         return $html;
     }
 

@@ -75,16 +75,20 @@ abstract class Security
             foreach ($permissionsCheckArray as $permissionsCheck) {
                 $permission = $permissionsCheck[0];
                 $targetObject = $permissionsCheck[1];
-                $object_class = get_class($targetObject);
-                if($permission->getTargetObjectClass()!=$object_class) {
-                    throw new Exception(sprintf("Tried to check if an object of class %s has a permission of type %s",$object_class, $permission->getTargetObjectClass()));
+                $objectClass = $permission->getTargetObjectClass();
+                if($targetObject) {
+                    if($objectClass!=get_class($targetObject)) {
+                        throw new Exception(sprintf("Tried to check if an object of class %s has a permission of type %s",$objectClass, get_class($targetObject)));
+                    }
+                    $objectId = $db->escapeString($targetObject->getId());
+                    $objectSqlAnd = "\n AND object_id = '$objectId' \n";
                 }
-                $table = strtolower($object_class).'_stakeholders';
-                $object_id = $db->escapeString($targetObject->getId());
+                else {
+                    $objectSqlAnd = '';
+                }
+                $table = strtolower($objectClass).'_stakeholders';
                 $permissionIdStr = $db->escapeString($permission->getId());
-
-
-                $sqlSelect = "SELECT permission_id FROM $table JOIN role_has_permissions USING (role_id) WHERE object_id = '$object_id' AND user_id='{$user->getId()}' AND permission_id = '$permissionIdStr'";
+                $sqlSelect = "SELECT permission_id FROM $table JOIN role_has_permissions USING (role_id) WHERE user_id='{$user->getId()}' $objectSqlAnd AND permission_id = '$permissionIdStr'";
                 if($operator == 'OR') {
                     $first?$sql .= " ($sqlSelect)\n":$sql .= ", ($sqlSelect)\n";
                 }
@@ -121,15 +125,15 @@ abstract class Security
 
     /* Check if the current user has the requested permission
      * @param permission The permission to check
-     * @param $targetObject The Object on which the permssion applies (Network, Server, etc.)
+     * @param $targetObject The Object on which the permssion applies (Network, Server, etc.)  If null, the user must have this permission on at least one object
      * @param user User object, optional, if unspecified, the current user is used.  Note that there may be no current user (annonymous)
      */
-    public static function hasPermission(Permission $permission, $targetObject, $user=null)
+    public static function hasPermission(Permission $permission, $targetObject=null, $user=null)
     {
         return self::hasPermissionsHelper(array(array($permission, $targetObject)), 'AND', $user);
     }
-    
-        /* Check if the current user has ANY of the requested permission
+
+    /* Check if the current user has ANY of the requested permission
      * @param $permissionsArray An two dimensionnal array of permissions to check
      * permissionsArray[]=array($permission, $targetObject);
      * @param user User object, optional, if unspecified, the current user is used.  Note that there may be no current user (annonymous)
@@ -148,13 +152,13 @@ abstract class Security
     {
         return self::hasPermissionsHelper($permissionsArray, 'AND', $user);
     }
-    
+
     /* require that the user has the current permission, otherwise, throw up an interface to deal with the proplem
      * @param permission The permission to check
-     * @param $targetObject The Object on which the permssion applies (Network, Server, etc.)
+     * @param $targetObject The Object on which the permission applies (Network, Server, etc.).  If null, the user must have this permission on at least one object
      * @param user User object, optional, if unspecified, the current user is used.  Note that there may be no current user (annonymous)
      */
-    public static function requirePermission(Permission $permission, $targetObject)
+    public static function requirePermission(Permission $permission, $targetObject=null)
     {
         $hasPermission = self::hasPermission($permission, $targetObject, User::getCurrentUser());
         if(!$hasPermission) {
@@ -176,7 +180,7 @@ abstract class Security
         }
         return true;
     }
-    
+
     /* Require that the user has ALL of the requested permissions
      * @param $permissionsArray A two dimensionnal array of permissions to check
      * permissionsArray[]=array($permission, $targetObject);
@@ -190,7 +194,7 @@ abstract class Security
         }
         return true;
     }
-    
+
     private static function handleMissingPermissions(Array $permissionsArray)
     {
         $missingPerms = null;
@@ -198,13 +202,13 @@ abstract class Security
             $permission = $permissionsCheck[0];
             $targetObject = $permissionsCheck[1];
             if(!self::hasPermission($permission, $targetObject)) {
-                $missingPerms .= sprintf(_("%s (%s) on  %s object %s")."<br/>\n", $permission->getId(), $permission->getDescription(), get_class($targetObject), (string)$targetObject);
+                $missingPerms .= sprintf(_("%s (%s) on  %s: %s")."<br/>\n", $permission->getId(), $permission->getDescription(), $permission->getTargetObjectClass(), $targetObject?(string)$targetObject:_('Any'));
             }
         }
         $msg =  _("Some (possibly all) of the following permission(s) you don't have are required to perform the operation your requested:")."<br/>\n$missingPerms";
         throw new SecurityException($msg);
     }
-    
+
     /* Returns an array of objects for which the user has the specified permission
      * @param permission The permission to check
      * @param user User object, optional, if unspecified, the current user is used.  Note that there may be no current user (annonymous)

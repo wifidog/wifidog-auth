@@ -277,14 +277,27 @@ class Node implements GenericObject
     /** Get an interface to pick a node.
      * @param $user_prefix A identifier provided by the programmer to recognise it's generated html form
      *
-     * @param $sql_additional_where Addidional where conditions to restrict the candidate objects
-     * @param $type_interface:  select, select_multiple or table
-     * @param $selectedNodes; Node object or array of node objects to be pre-selected (not
+     * @param string $userData=null Array of contextual data optionally sent to the method.
+     *  The function must still function if none of it is present.
+     * This method understands:
+     *  $userData['preSelectedObject'] An optional object to pre-select.
+     *	$userData['additionalWhere'] Additional SQL conditions for the
+     *                                    objects to select
+     *  $userData['additionalJoin'] Additional SQL JOIN conditions for the
+     *                                    objects to select
+     *	$userData['preSelectedObjects'] An optional object or array of objects to pre-select. (not
      * supported by type_interface=table)
+     *  $userData['typeInterface'] select, select_multiple or table.  Default is "select"
+     *
      * * @return html markup
      */
-    public static function getSelectNodeUI($user_prefix, $sql_additional_join = null, $sql_additional_where = null,$selectedNodes = null, $type_interface = "select")
+    public static function getSelectUI($user_prefix, $userData=null)
     {
+        !empty($userData['additionalJoin'])?$sql_additional_join=$userData['additionalJoin']:$sql_additional_join=null;
+        !empty($userData['additionalWhere'])?$sql_additional_where=$userData['additionalWhere']:$sql_additional_where=null;
+        !empty($userData['preSelectedObjects'])?$selectedNodes=$userData['preSelectedObjects']:$selectedNodes=null;
+        !empty($userData['typeInterface'])?$type_interface=$userData['typeInterface']:$type_interface="select";
+
         $db = AbstractDb::getObject();
         $html = '';
         $name = "{$user_prefix}";
@@ -379,7 +392,7 @@ class Node implements GenericObject
      * @param $user_prefix A identifier provided by the programmer to recognise it's generated form
      * @return the node object
      */
-    static function processSelectNodeUI($user_prefix)
+    static function processSelectUI($user_prefix)
     {
         $object = null;
         $name = "{$user_prefix}";
@@ -454,6 +467,119 @@ class Node implements GenericObject
 
         return $retval;
     }
+
+
+    /** Get an interface to deal with missing nodes.  If the user has the permissions, he will be asked to create a new node for that gateway id, or assign that gateway id to an existing node.
+     * @param $gwId The unknown gwId
+     * @return html markup
+     */
+    public static function getStealOrCreateNewUI($gwId)
+    {
+        $permissionArray[]=array(Permission::P('NETWORK_PERM_EDIT_ANY_NODE_CONFIG'), null);
+        $permissionArray[]=array(Permission::P('NODE_PERM_EDIT_GATEWAY_ID'), null);
+        Security::requireAnyPermission($permissionArray);
+        $db = AbstractDb::getObject();
+        $html = '';
+        $allowedNetworks = Security::getObjectsWithPermission(Permission::P('NETWORK_PERM_EDIT_ANY_NODE_CONFIG'));
+        $allowedNodes = Security::getObjectsWithPermission(Permission::P('NODE_PERM_EDIT_GATEWAY_ID'));
+        $html .= "<p>"._("Here is what you can do to fix this:")."</p>\n";
+        $html .= "<ul>\n";
+        if($allowedNetworks) {
+            //Add a new node for unknown node id
+            $html .= "<li>".sprintf(_("You can create a new node with %s as it's associated gateway id.  This is typical for new installations."), $gwId)."<br/>\n";
+
+            $networkAdditionalWhere=" AND (FALSE\n";
+            foreach ($allowedNetworks as $network) {
+                $idStr = $db->escapeString($network->getId());
+                $networkAdditionalWhere .= " OR network_id='$idStr'\n";
+            }
+            $networkAdditionalWhere .= ")\n";
+            $userData['preSelectedObject']=null;
+            $userData['allowEmpty']=true;
+            $userData['additionalWhere']=$networkAdditionalWhere;
+            $name = "{$gwId}_new_node_network";
+            $networkSelectUI = Network :: getSelectUI($name, $userData);
+            $html .= sprintf(_("Add a new node in %s"), $networkSelectUI)." \n";
+            $name = "{$gwId}_new_node_submit";
+            $value = _("Add node");
+            $html .= "<input type='submit' size='10' name='{$name}' value='$value'>\n";
+            $html .= "</li>\n";
+        }
+
+        if($allowedNetworks || $allowedNodes){
+            //"Steal" an existing node for this ID (typically for hardware replacement)
+            $html .= "<li>".sprintf(_("You can \"steal\" an existing node.  The node's gateway id will be replaced with %s.  This is typical when replacing hardware."), $gwId)."<br/>\n";
+            if($allowedNetworks) {
+                $additionalWhere=$networkAdditionalWhere;
+            }
+            else {
+                $additionalWhere=" AND (FALSE\n";
+                foreach ($allowedNetworks as $network) {
+                    $idStr = $db->escapeString($node->getId());
+                    $additionalWhere .= " OR node_id='$idStr'\n";
+                }
+                $additionalWhere .= ")\n";
+            }
+
+            $userData['preSelectedObject']=null;
+            $userData['allowEmpty']=true;
+            $userData['additionalWhere']=$additionalWhere;
+            $name = "{$gwId}_steal_node";
+            $html .= Node :: getSelectUI($name, $userData);
+            $name = "{$gwId}_steal_node_submit";
+            $value = _("Steal node");
+            $html .= "<input type='submit' size='10' name='{$name}' value='$value'>\n";
+            $html .= "</li>\n";
+        }
+        $html .= "</ul>\n";
+        return $html;
+
+    }
+
+    /**
+     * Process the interface to deal with missing nodes.
+     * @param $gwId The unknown gwId
+     * @param $nodeIsNew Output parameter.  Will be set to true if a new node was created to resolve the situation
+     * @return the created or stolen node object, or null if none was created (or stolen).
+     */
+    public static function processStealOrCreateNewUI($gwId, &$nodeIsNew=null)
+    {
+        // Init values
+        $retval = null;
+        $nodeIsNew = false;
+        $name = "{$gwId}_new_node_submit";
+        if(!empty($_REQUEST[$name])) {
+            //Create new node
+            $name = "{$gwId}_new_node_network";
+            $network = Network :: processSelectUI($name);
+            if($network) {
+                Security::requirePermission(Permission::P('NETWORK_PERM_EDIT_ANY_NODE_CONFIG'), $network);
+                //echo  _("Adding node");
+                $node = Node::createNewObject($gwId, $network);
+                $nodeIsNew = true;
+                $retval = $node;
+            }
+        }
+        $name = "{$gwId}_steal_node_submit";
+        if(!empty($_REQUEST[$name])){
+            //"Steal" an existing node for this ID (typically for hardware replacement)
+            $name = "{$gwId}_steal_node";
+            $node = Node :: processSelectUI($name);
+            if($node) {
+                $permissionArray[]=array(Permission::P('NETWORK_PERM_EDIT_ANY_NODE_CONFIG'), $node->getNetwork());
+                $permissionArray[]=array(Permission::P('NODE_PERM_EDIT_GATEWAY_ID'), $node);
+                Security::requireAnyPermission($permissionArray);
+                //echo _("Stealing node $node");
+                $node->setGatewayId($gwId);
+                $retval = $node;
+            }
+        }
+
+
+        return $retval;
+    }
+
+
 
     /**
      * Get an interface to select the deployment status

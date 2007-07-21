@@ -531,7 +531,11 @@ CREATE TABLE nodes (
     last_paged timestamp without time zone,
     is_splash_only_node boolean DEFAULT false,
     custom_portal_redirect_url text,
-    gw_id text NOT NULL
+    gw_id text NOT NULL,
+    last_heartbeat_sys_uptime integer,
+    last_heartbeat_wifidog_uptime integer,
+    last_heartbeat_sys_memfree integer,
+    last_heartbeat_sys_load real
 );
 
 
@@ -1154,6 +1158,13 @@ ALTER TABLE ONLY virtual_hosts
 --
 
 CREATE INDEX idx_connections_node_id ON connections USING btree (node_id);
+
+
+--
+-- Name: idx_connections_timestamp_in; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX idx_connections_timestamp_in ON connections USING btree (timestamp_in);
 
 
 --
