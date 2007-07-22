@@ -1,4 +1,7 @@
 # $Id$
+2007-07-22 Benoit Grégoire  <bock@step.polymtl.ca>
+	* install.php:  Fix #215
+
 2007-07-21 Benoit Grégoire  <bock@step.polymtl.ca>
 	* AnonymisedDataExport.php:  Work around the huge memory requirements this report used to have.
 	* install.php:  Strip create procedural language from schema, that requires superuser anyway.
