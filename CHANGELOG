@@ -1,5 +1,8 @@
 # $Id$
 2007-07-22 Benoit Grégoire  <bock@step.polymtl.ca>
+	* More schema compatibility defensive coding.  Comment out all SET commands in the schema
+	
+2007-07-22 Benoit Grégoire  <bock@step.polymtl.ca>
 	* install.php:  Fix #215
 
 2007-07-21 Benoit Grégoire  <bock@step.polymtl.ca>

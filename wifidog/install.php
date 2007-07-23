@@ -856,18 +856,16 @@ EndHTML;
             $patterns[1] = '/\\\connect/';
             //The following is strictly for compatibility with postgresql 7.4
             $patterns[2] = '/COMMENT/';
-            $patterns[3] = '/SET default_tablespace/';
-            $patterns[4] = '/SET default_with_oids/';
-            $patterns[5] = '/CREATE PROCEDURAL LANGUAGE/';
-            $patterns[6] = '/ALTER SEQUENCE/';
+            $patterns[3] = '/^SET /m';
+            $patterns[4] = '/CREATE PROCEDURAL LANGUAGE/';
+            $patterns[5] = '/ALTER SEQUENCE/';
             $replacements[0] = '-- ';
             $replacements[1] = '-- ';
             $replacements[2] = '-- ';
             $replacements[3] = '-- ';
             $replacements[4] = '-- ';
             $replacements[5] = '-- ';
-            $replacements[6] = '-- ';
-
+            
             $content_schema_array = file(WIFIDOG_ABS_FILE_PATH . "../sql/wifidog-postgres-schema.sql") or die("<em>Error</em>: Can not open $basepath/../sql/wifidog-postgres-schema.sql"); # Read SQL schema file
             $content_schema = implode("", $content_schema_array);
             $content_data_array = file(WIFIDOG_ABS_FILE_PATH . "../sql/wifidog-postgres-initial-data.sql"); # Read SQL initial data file
@@ -936,7 +934,7 @@ EndHTML;
 
             print "<UL><LI>Creating wifidog database schema : ";
             $content_schema = preg_replace($patterns, $replacements, $content_schema); # Comment bad SQL lines
-
+            //echo "<pre>$content_schema</pre>";
             $result = pg_query($connection, $content_schema) or die("<em>" . pg_last_error() . "</em> <=<BR>");
             print "OK";
 
