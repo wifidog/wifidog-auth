@@ -47,6 +47,7 @@
  * Load required classes
  */
 require_once('classes/GenericObject.php');
+require_once('classes/Server.php');
 
 /**
  * Administration interface for defining all Virtual hosts on the server running WiFiDog
