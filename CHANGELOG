@@ -1,5 +1,9 @@
 # $Id$
 2007-07-22 Benoit Grégoire  <bock@step.polymtl.ca>
+	* generic_object_admin.pgp:  Fix problems when creating new content objects.  Fix problems including the content type classes.
+	* Avatar.php:  Make the resampling code support any format available to GD, not just jpeg.
+	
+2007-07-22 Benoit Grégoire  <bock@step.polymtl.ca>
 	* More schema compatibility defensive coding.  Comment out all SET commands in the schema
 	
 2007-07-22 Benoit Grégoire  <bock@step.polymtl.ca>

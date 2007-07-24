@@ -97,8 +97,14 @@ class Avatar extends SimplePicture
 
 				// Resample
 				$image_p = imagecreatetruecolor($width, $height);
-				$image = imagecreatefromjpeg($input['tmp_name']);
+				$image = imagecreatefromstring(file_get_contents($input['tmp_name']));
+				if(!$image) {
+				    pretty_print_r(gd_info());
+				    throw new Exception(_("Unable to process image (GD probably doesn't have support for it enabled)"));
+				}
+				else {
 				imagecopyresampled($image_p, $image, 0, 0, 0, 0, $width, $height, $width_orig, $height_orig);
+				}
 
 				// Build output metadata struct
 				$output = array();

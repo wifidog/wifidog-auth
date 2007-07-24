@@ -81,7 +81,13 @@ if (empty ($_REQUEST['object_class'])) {
     exit;
 } else {
     $class = $_REQUEST['object_class'];
-    require_once ("classes/{$class}.php");
+
+    //For some reason, we can't use the || operator here (probably a PHP bug)
+    if(!@include_once("classes/{$class}.php")) {
+        if(!@include_once("classes/Content/{$class}/{$class}.php")) {
+            throw new Exception(sprintf("Unable to include the class for %s",  $class));
+        }
+    }
 }
 // Init text values
 $createText = sprintf(_("Create %s"), $_REQUEST['object_class']);
@@ -251,7 +257,7 @@ switch ($_REQUEST['action_delete']) {
 }
 
 /*
- * Process action requests (new and edit)
+ * Process action requests (list and new_ui and edit)
  */
 switch ($_REQUEST['action']) {
     case "list" :
@@ -395,7 +401,7 @@ switch ($_REQUEST['action']) {
                             $common_input .= "<input type='hidden' name='debug' value='true'>";
                         }
 
-                        $common_input .= "<input type='hidden' name='object_id' value='" . $objectId . "'>";
+                        $common_input .= "<input type='hidden' name='object_id' value='" . $object->getId() . "'>";
                         $common_input .= "<input type='hidden' name='object_class' value='" . get_class($object) . "'>";
 
                         $html .= "<form name='generic_object_form' enctype='multipart/form-data' action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
