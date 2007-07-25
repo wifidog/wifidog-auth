@@ -589,8 +589,8 @@ class Content implements GenericObject {
                 $object = self::getObject($contentId);
                 $object->setContentType($contentType);
                 if($processNewUIHasData) {
-                //If there was data to processs, process it for real
-                call_user_func(array ($contentType, 'processNewUI'), $contentId, false);
+                    //If there was data to processs, process it for real
+                    call_user_func(array ($contentType, 'processNewUI'), $contentId, false);
                 }
             }
         }
@@ -1801,7 +1801,8 @@ class Content implements GenericObject {
                             }
                         }
                     }
-                    $user = User :: processSelectUserUI("content_{$this->id}_new_owner");
+                    $errMsg=null;
+                    $user = User :: processSelectUserUI("content_{$this->id}_new_owner", $errMsg);
                     $name = "content_{$this->id}_add_owner_submit";
                     if (!empty ($_REQUEST[$name]) && $user != null) {
                         $this->addOwner($user);
@@ -1924,24 +1925,34 @@ class Content implements GenericObject {
         } else {
             $db = AbstractDb :: getObject();
             if ($this->DEPRECATEDisOwner(User :: getCurrentUser()) || User :: getCurrentUser()->DEPRECATEDisSuperAdmin()) {
-                $metadata = $this->getTitle();
-                if ($metadata){
-                    $metadata->delete();
-                }
-                $metadata = $this->getDescription();
-                if ($metadata){
-                    $metadata->delete();
-                }
-                $metadata = $this->getLongDescription();
-                if ($metadata){
-                    $metadata->delete();
-                }
-                $metadata = $this->getProjectInfo();
-                if ($metadata){
-                    $metadata->delete();
-                }
+
                 $sql = "DELETE FROM content WHERE content_id='$this->id'";
                 $db->execSqlUpdate($sql, false);
+                //Metadata mmust be deleted AFTER the main content.
+                $errmsgTmp = null;
+                $metadata = $this->getTitle();
+                if ($metadata){
+                    $metadata->delete($errmsgTmp);
+                }
+                $errmsg .= $errmsgTmp;
+                $errmsgTmp = null;
+                $metadata = $this->getDescription();
+                if ($metadata){
+                    $metadata->delete($errmsgTmp);
+                }
+                $errmsg .= $errmsgTmp;
+                $errmsgTmp = null;
+                $metadata = $this->getLongDescription();
+                if ($metadata){
+                    $metadata->delete($errmsgTmp);
+                }
+                $errmsg .= $errmsgTmp;
+                $errmsgTmp = null;
+                $metadata = $this->getProjectInfo();
+                if ($metadata){
+                    $metadata->delete($errmsgTmp);
+                }
+                $errmsg .= $errmsgTmp;
                 $retval = true;
             } else {
                 $errmsg = _("Access denied (not owner of content)");
@@ -1949,7 +1960,7 @@ class Content implements GenericObject {
         }
         return $retval;
     }
-       /** Menu hook function */
+    /** Menu hook function */
     static public function hookMenu() {
         $items = array();
         $server = Server::getServer();
@@ -1963,7 +1974,7 @@ class Content implements GenericObject {
 
         return $items;
     }
-    
+
 
 } // End class
 

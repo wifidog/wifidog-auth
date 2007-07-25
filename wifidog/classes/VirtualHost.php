@@ -244,24 +244,25 @@ class VirtualHost implements GenericObject
      * @static
      * @access public
      */
-    public static function createNewObject($server_id = null)
+    public static function createNewObject($hostname)
     {
          
         $db = AbstractDb::getObject();
 
-        if (empty($server_id)) {
-            $server_id = get_guid();
+        if (empty($id)) {
+            $id = get_guid();
         }
 
-        $server_id = $db->escapeString($server_id);
-
-        $sql = "INSERT INTO servers (server_id) VALUES ('$server_id')";
+        $id = $db->escapeString($id);
+        $hostname = $db->escapeString($hostname);
+        $networkId = Network::getCurrentNetwork()->getId();
+        $sql = "INSERT INTO virtual_hosts (virtual_host_id, hostname, default_network) VALUES ('$id', '$hostname', '$networkId')";
 
         if (!$db->execSqlUpdate($sql, false)) {
             throw new Exception(_('Unable to insert the new server in the database!'));
         }
 
-        $_object = self::getObject($server_id);
+        $_object = self::getObject($id);
 
         return $_object;
 
@@ -369,10 +370,10 @@ class VirtualHost implements GenericObject
         // Init values
         $html = '';
 
-        $name = "new_server_id";
+        $name = "new_vhost_hostname";
 
-        $html .= _("Add a new virtual host with ID") . ": ";
-        $html .= "<input type='text' size='10' name='{$name}'>";
+        $html .= _("Add a new virtual host for hostname") . ": ";
+        $html .= "<input type='text' size='60' name='{$name}'>";
 
         return $html;
     }
@@ -392,21 +393,18 @@ class VirtualHost implements GenericObject
         // Init values
         $retVal = null;
 
-        $name = "new_server_id";
+        $name = "new_vhost_hostname";
 
         if (!empty($_REQUEST[$name])) {
-            $_serverId = $_REQUEST[$name];
+            $hostname = $_REQUEST[$name];
 
-            if ($_serverId) {
+            if ($hostname) {
                 if (!User::getCurrentUser()->DEPRECATEDisSuperAdmin()) {
                     throw new Exception(_("Access denied"));
                 }
-
-
-                $retVal = self::createNewObject($_serverId);
+                $retVal = self::createNewObject($hostname);
             }
         }
-
         return $retVal;
     }
 

@@ -68,7 +68,8 @@ abstract class StatisticGraph
     final public static function &getObject($classname)
     {
         require_once('classes/StatisticGraph/' . $classname . '.php');
-        return new $classname ();
+        $retval = new $classname ();
+        return $retval;
     }
 
     /** Is the graph available.  (Are all Dependency available,
