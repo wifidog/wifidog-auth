@@ -3,6 +3,7 @@
 	* VirtualHost.php:  Fix critical problem preventing new Virtual Hosts from being created.
 	* StatisticGraph.php:  Fix a bad return by reference that prevented graphs from being displayed.  Thanks to Daniel Lemay for finding it.
 	* Content.php:  Fix warning when selecting owners. Fix dangling metadata objects when deleting an object.
+	* Statistics::getDateRangeUI():  Make days end a minute before midnight, not a minute before noon, DOH!
 
 2007-07-22 Benoit Grégoire  <bock@step.polymtl.ca>
 	* generic_object_admin.pgp:  Fix problems when creating new content objects.  Fix problems including the content type classes.
