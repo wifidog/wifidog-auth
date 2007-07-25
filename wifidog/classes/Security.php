@@ -256,7 +256,7 @@ abstract class Security
         if($user) {
             $sql = "SELECT * FROM $table WHERE object_id = '$object_id' AND user_id='{$user->getId()}' AND role_id = '$roleIdStr';";
             $rows = null;
-            $db->execSql($sql, $rows, true);
+            $db->execSql($sql, $rows, false);
             if($rows) {
                 $retval = true;
             }
