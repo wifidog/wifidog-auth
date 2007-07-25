@@ -4,7 +4,9 @@
 	* StatisticGraph.php:  Fix a bad return by reference that prevented graphs from being displayed.  Thanks to Daniel Lemay for finding it.
 	* Content.php:  Fix warning when selecting owners. Fix dangling metadata objects when deleting an object.
 	* Statistics::getDateRangeUI():  Make days end a minute before midnight, not a minute before noon, DOH!
-
+	* import_user_database.php:  Fix permission call systax error.  That does't mean the script works as a whole, it hasn't been maintained for years.
+	* DependenciesList.php:  Make it extend GenericDataObject after all.  Fixes problem displaying it in the generic editor.
+	
 2007-07-22 Benoit Grégoire  <bock@step.polymtl.ca>
 	* generic_object_admin.pgp:  Fix problems when creating new content objects.  Fix problems including the content type classes.
 	* Avatar.php:  Make the resampling code support any format available to GD, not just jpeg.

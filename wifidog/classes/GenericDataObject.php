@@ -42,9 +42,9 @@
  */
 
 /**
- * Load content classes
+ * Load required classes
  */
-
+require_once ('classes/GenericObject.php');
 /**
  * Any object that implement this interface can be administered in a generic way.
  *

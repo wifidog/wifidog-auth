@@ -68,7 +68,9 @@ require_once ('classes/Utils.php');
  */
 /*WARNING:  You must NOT require anything, or extend anything except Dependency.php.  DependenciesList is used from the install script.*/
 require_once ('classes/Dependency.php');
-class DependenciesList
+require_once ('classes/GenericDataObject.php');
+
+class DependenciesList extends GenericDataObject
 {
     public static function &getObject($id)
     {

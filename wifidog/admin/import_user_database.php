@@ -47,7 +47,7 @@ require_once('admin_common.php');
 require_once('classes/MainUI.php');
 require_once('classes/Server.php');
 
-Security::requirePermission('SERVER_PERM_EDIT_SERVER_CONFIG', Server::getServer());
+Security::requirePermission(Permission::P('SERVER_PERM_EDIT_SERVER_CONFIG'), Server::getServer());
 $db = AbstractDb::getObject(); 
 $html = '';
 
