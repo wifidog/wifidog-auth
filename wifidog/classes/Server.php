@@ -220,8 +220,9 @@ class Server extends GenericDataObject
      */
     public function getAdminUI()
     {
-                Security::requirePermission(Permission::P('SERVER_PERM_EDIT_SERVER_CONFIG'), $this);
+        Security::requirePermission(Permission::P('SERVER_PERM_EDIT_SERVER_CONFIG'), $this);
         // Init values
+        $db = AbstractDb::getObject();
         $html = '';
 
         $html .= "<fieldset class='admin_container ".get_class($this)."'>\n";
@@ -247,6 +248,24 @@ class Server extends GenericDataObject
         $html .= $value."\n";
         $html .= "</div>\n";
         $html .= "</li>\n";
+
+        //timezone check
+
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>" . _("Timezone check:  The following must be in the same timezone") . ":</div>\n";
+        $html .= "<div class='admin_element_data'>\n";
+        $html .= "<p>";
+        $db->execSqlUniqueRes("SHOW timezone", $row, false);
+        $html .= " ".sprintf(_("Timezone from postgresql: %s"), $row['TimeZone'])."</p>"; // Version < 5.0.0
+        $date_default_timezone_get = 'date_default_timezone_get';
+        is_callable($date_default_timezone_get)?$phpTimezone = date_default_timezone_get():$phpTimezone = "Requires PHP 5.1 to tell";
+        $html .= " ".sprintf(_("Timezone from PHP: %s"), $phpTimezone)."</p>"; // Version < 5.0.0
+         
+        $html .= "</div>\n";
+        $html .= "</li>\n";
+
+
+
         /*
          * Access rights
          */

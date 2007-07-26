@@ -1,6 +1,10 @@
 # $Id$
+2007-07-26 Benoit Grégoire  <bock@step.polymtl.ca>
+	* DependenciesList::hook_menu():  Fix menu path conflict with Server::hook_menu();
+	* Server::getAdminUI(): Add output to help debug timezone problems.  	
+
 2007-07-25 Benoit Grégoire  <bock@step.polymtl.ca>
-	* VirtualHost.php:  Fix critical problem preventing new Virtual Hosts from being created.
+	* VirtualHost.php:  Fix critical problem preventing new Virtual Hosts from being created.  Thanks to Miguel for pointing this out!ssss
 	* StatisticGraph.php:  Fix a bad return by reference that prevented graphs from being displayed.  Thanks to Daniel Lemay for finding it.
 	* Content.php:  Fix warning when selecting owners. Fix dangling metadata objects when deleting an object.
 	* Statistics::getDateRangeUI():  Make days end a minute before midnight, not a minute before noon, DOH!

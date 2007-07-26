@@ -129,6 +129,7 @@ if($pgVersion){
 }
         $html .= "</tr>";
         $html .= "</table>";
+    
         $components = Dependency::getDependency();
         $html .= "<table BORDER=\"1\">\n";
         $html .= "<tr><th>"._("Component").'<br/>'._("Click for the component's website")."</th>\n";
@@ -183,7 +184,7 @@ if($pgVersion){
         $server = Server::getServer();
         if(Security::hasPermission(Permission::P('SERVER_PERM_EDIT_SERVER_CONFIG'), $server))
         {
-            $items[] = array('path' => 'server/admin',
+            $items[] = array('path' => 'server/dependencies',
             'title' => _("Dependencies"),
             'url' => BASE_URL_PATH."admin/generic_object_admin.php?object_class=DependenciesList&action=edit&object_id=DUMMY"
 		);
