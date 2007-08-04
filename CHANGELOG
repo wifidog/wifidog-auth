@@ -1,4 +1,7 @@
 # $Id$
+2007-06-04 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Portugese (from portugal) translation contributed by MiguelCMA
+	
 2007-08-03 Damien Raude-Morvan <drazzib@drazzib.com>
 	* init_php.php : Fix #363 by applying patch from Leandro to correctly set timezone info in Wifidog
 	if set in configuration (allow Wifidog to work not only in Canada :).
