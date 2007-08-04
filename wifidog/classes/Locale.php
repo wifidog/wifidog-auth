@@ -172,11 +172,15 @@ class Locale {
 		// french or fr or fr_CA or fr_CA.utf8 or fr_CA.iso88591
 
 		$browser_preferences = array();
+		// $appendIdx help differentiation between same quality locales
+		// first locale in string get better quality than next
+		$appendIdx = 9999;
 		foreach(explode(',', empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? DEFAULT_LANG : $_SERVER['HTTP_ACCEPT_LANGUAGE']) as $lang) {
 			//echo $lang."\n";
 			if (preg_match('/^\s*([a-z_-]+).*?(?:;\s*q=([0-9.]+))?/i', $lang.';q=1.0', $split)) {
-				$browser_preferences[sprintf('%f%d', $split[2], rand(0,9999))] = strtolower($split[1]);
+				$browser_preferences[sprintf('%f%d', $split[2], $appendIdx)] = strtolower($split[1]);
 			}
+			$appendIdx--;
 		}
 
 		// sort preferences by key in reverse order, from high to low

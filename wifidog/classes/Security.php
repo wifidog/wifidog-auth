@@ -88,7 +88,7 @@ abstract class Security
                 }
                 $table = strtolower($objectClass).'_stakeholders';
                 $permissionIdStr = $db->escapeString($permission->getId());
-                $sqlSelect = "SELECT permission_id FROM $table JOIN role_has_permissions USING (role_id) WHERE user_id='{$user->getId()}' $objectSqlAnd AND permission_id = '$permissionIdStr'";
+                $sqlSelect = "SELECT DISTINCT permission_id FROM $table JOIN role_has_permissions USING (role_id) WHERE user_id='{$user->getId()}' $objectSqlAnd AND permission_id = '$permissionIdStr'";
                 if($operator == 'OR') {
                     $first?$sql .= " ($sqlSelect)\n":$sql .= ", ($sqlSelect)\n";
                 }

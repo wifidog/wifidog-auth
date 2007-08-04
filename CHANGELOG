@@ -1,4 +1,11 @@
 # $Id$
+2007-08-05 Damien Raude-Morvan <drazzib@drazzib.com>
+	* Security.php : A permission can be acquired by a user via multiples roles, this means
+	that, for the moment, we have to use DISTINCT to check if a user had correct permission
+	(otherwise the SQL request is invalid : subrequest return more than one line).
+	* Locale.php : If the browser send Accept-Value header without any quality (i.e. q=x.y)
+	we have to use order of the locales to select between them (and don't use a rand() number).
+
 2007-06-04 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Portugese (from portugal) translation contributed by MiguelCMA
 	* locale/gen.sh:  Major change to .po file generation.  Now uses msgmerge so we won't completely throw away previous efforts by translators (will preserve comments, and use fuzzy translation).  It's also much faster (seconds instead of minutes), and produces less strings to translate.
