@@ -1080,7 +1080,10 @@ class Node implements GenericObject
 
         // Gateway ID
         $_title = _("Gateway ID");
-        if (Security::hasPermission(Permission::P('NODE_PERM_EDIT_GATEWAY_ID'), $this)) {
+        $permArray = null;
+        $permArray[]=array(Permission::P('NETWORK_PERM_EDIT_ANY_NODE_CONFIG'), $network);
+        $permArray[]=array(Permission::P('NODE_PERM_EDIT_GATEWAY_ID'), $this);
+        if (Security::hasAnyPermission($permArray)) {
             $_data = InterfaceElements::generateInputText("node_" . $node_id . "_gw_id", $this->getGatewayId(), "gw_id_input");
         } else {
             $_data  = htmlspecialchars($this->getGatewayId(), ENT_QUOTES);
@@ -1258,6 +1261,8 @@ class Node implements GenericObject
     {
         require_once('classes/Stakeholder.php');
         $user = User::getCurrentUser();
+                // Get information about the network
+        $network = $this->getNetwork();
         //pretty_print_r($_REQUEST);
         $permArray[]=array(Permission::P('NETWORK_PERM_EDIT_ANY_NODE_CONFIG'), $this->getNetwork());
         $permArray[]=array(Permission::P('NODE_PERM_EDIT_CONFIG'), $this);
@@ -1271,7 +1276,10 @@ class Node implements GenericObject
         $node_id = $this->getId();
 
         // Gateway Id
-        if(Security::hasPermission(Permission::P('NODE_PERM_EDIT_GATEWAY_ID'), $this)) {
+                $permArray = null;
+        $permArray[]=array(Permission::P('NETWORK_PERM_EDIT_ANY_NODE_CONFIG'), $network);
+        $permArray[]=array(Permission::P('NODE_PERM_EDIT_GATEWAY_ID'), $this);
+        if (Security::hasAnyPermission($permArray)) {
             $name = "node_" . $node_id . "_gw_id";
             $this->setGatewayId($_REQUEST[$name]);
         }
