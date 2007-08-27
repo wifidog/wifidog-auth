@@ -1,4 +1,13 @@
 # $Id$
+2007-08-27 Benoit Grégoire  <bock@step.polymtl.ca>
+	* install.php:  Fix #368: Correct the svn source for SimplePie 1.0, the 1.0b2 branch was unexpectedly renamed.  
+	Note that this forces a rather disruptive change.  To update an existing install, you'll need to run the following commands:
+	cd lib/simplepie
+	svn switch http://svn.simplepie.org/simplepie/branches/1.0/
+	But this also requires a recent feedpressreview (revision 13), so you'll also need to run:
+	cd lib/feedpressreview
+	svn update
+	
 2007-08-06 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Allow users with NETWORK_PERM_EDIT_ANY_NODE_CONFIG to edit gateway id's
 	

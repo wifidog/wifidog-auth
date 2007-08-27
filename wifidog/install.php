@@ -182,7 +182,7 @@ $neededPackages = array (
 'available' => 0,
 'message' => '',
 'file' => 'lib/simplepie/simplepie.inc',
-'svn_source' => 'http://svn.simplepie.org/simplepie/branches/1.0_b3/'
+'svn_source' => 'http://svn.simplepie.org/simplepie/branches/1.0/'
         ),
 'feedpressreview' => array (
 'needed' => 0,
