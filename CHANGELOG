@@ -1,5 +1,9 @@
 # $Id$
 2007-08-27 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Added vacuum_last_resort_fix_backup_restore_database.sh.  This is DANGEROUS, and should only be run when your neglected (or had problem with) your VACCUMs,
+	your database has become slow as molases, and VACUUM FULL is not an option because your db has grown too big.
+
+2007-08-27 Benoit Grégoire  <bock@step.polymtl.ca>
 	* install.php:  Fix #368: Correct the svn source for SimplePie 1.0, the 1.0b2 branch was unexpectedly renamed.  
 	Note that this forces a rather disruptive change.  To update an existing install, you'll need to run the following commands:
 	cd lib/simplepie
