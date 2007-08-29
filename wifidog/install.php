@@ -505,7 +505,7 @@ EndHTML;
             $error = 0;
             $userData['error']=&$error;
             require_once("classes/DependenciesList.php");
-            print DependenciesList::getAdminUI($userData);
+            print DependenciesList::getAdminUIStatic($userData);
             refreshButton();
             if ($error != 1) {
                 navigation(array (
