@@ -1,4 +1,7 @@
 # $Id$
+2007-08-30 Benoit Grégoire  <bock@step.polymtl.ca>
+	* install.php:  Experimental fix for #353
+
 2007-08-28 Benoit Grégoire  <bock@step.polymtl.ca>
 	* install.php:  Fix bug that would manifest as a blank page at the "Checking Dependency" stage if PHP's postgres module was not installed.  Thanks to drfense for providing an account on a server where the bug occured.
 

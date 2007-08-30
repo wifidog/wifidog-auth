@@ -859,13 +859,15 @@ EndHTML;
             $patterns[3] = '/^SET /m';
             $patterns[4] = '/CREATE PROCEDURAL LANGUAGE/';
             $patterns[5] = '/ALTER SEQUENCE/';
+            $patterns[6] = '/::regclass/';//To fix incompatibility of postgres < 8.1 with later nextval() calling convention
             $replacements[0] = '-- ';
             $replacements[1] = '-- ';
             $replacements[2] = '-- ';
             $replacements[3] = '-- ';
             $replacements[4] = '-- ';
             $replacements[5] = '-- ';
-            
+            $replacements[6] = '::text';            
+
             $content_schema_array = file(WIFIDOG_ABS_FILE_PATH . "../sql/wifidog-postgres-schema.sql") or die("<em>Error</em>: Can not open $basepath/../sql/wifidog-postgres-schema.sql"); # Read SQL schema file
             $content_schema = implode("", $content_schema_array);
             $content_data_array = file(WIFIDOG_ABS_FILE_PATH . "../sql/wifidog-postgres-initial-data.sql"); # Read SQL initial data file
