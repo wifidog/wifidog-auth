@@ -1591,7 +1591,7 @@ class Node implements GenericObject
         $db = AbstractDb::getObject();
         $retval = array ();
         $officers = null;
-        $db->execSql("SELECT user_id FROM node_stakeholders WHERE role_id = 'IS_TECH_OFFICER' AND object_id='{$this->id}'", $officers, false);
+        $db->execSql("SELECT user_id FROM node_stakeholders WHERE role_id = 'NODE_TECH_OFFICER' AND object_id='{$this->id}'", $officers, false);
         if ($officers != null)
         {
             foreach ($officers as $officer_row)
