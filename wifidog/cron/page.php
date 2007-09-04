@@ -55,13 +55,15 @@
       $last_heartbeat = strtotime($nodeObject->getLastHeartbeatTimestamp());
 $time = time();
 
-      if ($time - $last_heartbeat > 60*$minutes) {
+      if ($time - $last_heartbeat > 60*$minutes) {//If hostpot is down for longuer than the requested average interval
           $lastPaged = strtotime($nodeObject->getLastPaged());
           //echo sprintf("Node down for %f minutes, Last paged: %f minutes ago, difference between last page and last heartbeat: %s, difference must be less than %d minutes to page again <br/>\n", ($time-$last_heartbeat)/60, ($time-$lastPaged)/60, ($lastPaged - $last_heartbeat)/60, $minutes);
           if (!$nodeObject->getLastPaged() || !$lastPaged) {
-              $nodeObject->setLastPaged($time);
+              //If we can't retrieve or parse, pretend we last paged right before the hostpot went down
+              $lastPaged = $last_heartbeat-1;
           }
-          else if (($lastPaged >= $last_heartbeat) && ($lastPaged - $last_heartbeat <= 60*$minutes)) {//If we haven't paged within this downtime period AND we haven't paged after this downtime reached the threshold
+          
+          if ($lastPaged < ($last_heartbeat + 60*$minutes)) {//If we haven't paged since the downtime reached the threshold
               $network = $nodeObject->getNetwork();
 
               $nodeObject->setLastPaged(time());
@@ -80,10 +82,10 @@ $time = time();
                   $usersMsg .= sprintf("%s: %s", $officer->getUsername(), $mailRetval?_("Success"):_("Failed sending mail"))."\n";
 
               }
-              $msg = sprintf("Node %s has been DOWN for %d minutes, we mailed the following %d user(s):\n%s", $nodeObject->getName(), $minutes, count($usersToPage), $usersMsg) ;
+              $msg = sprintf("Node %s has been DOWN for %d minutes, we mailed the following %d user(s):\n%s", $nodeObject->getName(), ($time-$last_heartbeat)/60, count($usersToPage), $usersMsg) ;
               throw new exception($msg);
           }
-          throw new exception(sprintf("Node %s DOWN for more than %d minutes, but we already notified everyone"."\n",$nodeObject->getName(),  $minutes));
+          throw new exception(sprintf("Node %s has been DOWN for %d minutes (more than %d minutes), but we already notified everyone after %d minutes."."\n",$nodeObject->getName(), ($time-$last_heartbeat)/60, $minutes, ($lastPaged-$last_heartbeat)/60));
       }
   }
 
