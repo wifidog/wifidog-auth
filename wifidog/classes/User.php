@@ -437,6 +437,7 @@ class User implements GenericObject {
     /** Is the user valid?  Valid means that the account is validated or hasn't exhausted it's validation period.
      $errmsg: Returs the reason why the account is or isn't valid */
     function isUserValid(& $errmsg = null) {
+        global $account_status_to_text;
         $db = AbstractDb::getObject();
         $retval = false;
         $account_status = $this->getAccountStatus();

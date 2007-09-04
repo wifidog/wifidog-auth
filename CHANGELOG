@@ -3,6 +3,7 @@
 	* cron/page.php:  Improve script to output what it did.
 	* fix typo in Node::DEPRECATEDgetTechnicalOfficers(), that prevented getting the users to page in case a node is down.
 	* Delete leftover login.tpl
+	* Apply patch from leandro@texnet.it to fix #371
 	
 2007-08-30 Benoit Grégoire  <bock@step.polymtl.ca>
 	* install.php:  Experimental fix for #353
