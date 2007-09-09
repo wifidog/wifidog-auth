@@ -96,6 +96,7 @@ if (!$auth) { # Ask user for the passorwd
 # End of Security validation
 
 print<<<EndHTML
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <HTML>
 <HEAD>
   <TITLE>$page - Wifidog Auth-server configuration</TITLE>
@@ -134,25 +135,29 @@ print<<<EndHTML
   padding: 3px 5px 3px 5px;
 }
 
+body
+{
+  background-color: white;
+}
+
 td
 {
   padding: 1px 4px 1px 4px;
 }
-//-->
+-->
 </style>
 
 <FORM NAME="myform" METHOD="post">
-<INPUT TYPE="HIDDEN" NAME="page">
 <INPUT TYPE="HIDDEN" NAME="action">
 <INPUT TYPE="HIDDEN" NAME="debug">
 <INPUT TYPE="HIDDEN" NAME="config">
 
 EndHTML;
 
-#print "<pre>";      # DEBUG
-#print_r($_SERVER);  # DEBUG
-#print_r($_REQUEST); # DEBUG
-#print "</pre>";     # DEBUG
+//print "<pre>";      # DEBUG
+//print_r($_SERVER);  # DEBUG
+//print_r($_REQUEST); # DEBUG
+//print "</pre>";     # DEBUG
 #exit();
 
 # Needed files/directories with write access
@@ -1399,7 +1404,7 @@ EndHTML;
             )
             ));
     }
-    echo "<input type hidden name='page' value='$_REQUEST[page]'/>\n" ;
+    echo "<input type='hidden' name='page' value='$_REQUEST[page]'/>\n" ;
     ?>
 
 </form>
