@@ -42,7 +42,7 @@
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
-
+require_once('classes/Dependency.php');
 /**
  * Database Abstraction class, deprecated, this should be transitioned to PDO over time
  *
@@ -89,6 +89,9 @@ class AbstractDb
         // Build connection string
         $conn_string = "host=".CONF_DATABASE_HOST." dbname=$db_name user=".CONF_DATABASE_USER." password=".CONF_DATABASE_PASSWORD."";
         // Try connecting and hide warning, errors
+        if ( !dependency::check('pgsql') )
+        throw new Exception(_("It appears the postgresql module isn't loaded"));
+        
         $ptr_connexion = @ pg_pconnect($conn_string);
 
         // Throw an exception if anything went wrong

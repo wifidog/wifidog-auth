@@ -159,6 +159,7 @@ EndHTML;
 $dir_array = array (
 'tmp',
 'tmp/simplepie_cache',
+'lib/',
 'lib/smarty',
 'lib/smarty/plugins',
 'tmp/smarty/templates_c',
@@ -290,29 +291,6 @@ function refreshButton() {
 EndHTML;
 }
 
-    /** Use PHP internal functions to download a file */
-    function downloadFile($remoteURL, $localPath) {
-        set_time_limit(1500); // 25 minutes timeout
-        return copy($remoteURL, $localPath);
-    }
-
-    /** Use PHP internal functions to execute a command
-      @return: Return value of the command*/
-    function execVerbose($command, & $output, & $return_var, $always_show_output = true) {
-        print "$command";
-        $retval = exec($command.'  2>&1', $output, $return_var);
-        if ($return_var != 0)
-        print "<p style='color:red'><em>Error:</em>  Command did not complete successfully  (returned $return_var): <br/>\n";
-        else
-        print "<p style='color:green'>Command completed successfully  (returned $return_var): <br/>\n";
-
-        if (($return_var != 0 || $always_show_output) && $output) {
-            foreach ($output as $output_line)
-            print " $output_line <br/>\n";
-        }
-        print "</p>\n";
-        return $retval;
-    }
 
     ###################################
     #
@@ -331,9 +309,9 @@ EndHTML;
 
     print "Download source code ($filename) : ";
     if (!file_exists($filename))
-    execVerbose("wget \"$url\"", $output, $return);
+    Dependency::execVerbose("wget \"$url\"", $output, $return);
     if (!file_exists($filename)) // wget success if file exists
-    execVerbose("wget \"$full_url\" 2>&1", $output_array, $return);
+    Dependency::execVerbose("wget \"$full_url\" 2>&1", $output_array, $return);
     if (!file_exists($filename)) {
     print "<B STYLE=\"color:red\">Error</b><p>Current working directory : <em>$basepath/tmp/smarty</em>";
     $output = implode("\n", $output_array);
@@ -347,12 +325,12 @@ EndHTML;
     $dirname = array_shift(split(".tar.gz", $filename));
 
     if (!file_exists($dirname))
-    execVerbose("tar -xzf $dirname.tar.gz", $output, $return);
+    Dependency::execVerbose("tar -xzf $dirname.tar.gz", $output, $return);
     print "OK<BR>";
     print "Copying : ";
     if (!file_exists('../../lib/smarty/Smarty.class.php'));
-    execVerbose("cp -r $dirname/libs/* ../../lib/smarty", $output, $return);
-    execVerbose("cp -r $dirname/libs/* ../../lib/smarty", $output, $return);
+    Dependency::execVerbose("cp -r $dirname/libs/* ../../lib/smarty", $output, $return);
+    Dependency::execVerbose("cp -r $dirname/libs/* ../../lib/smarty", $output, $return);
     $copy
     print "OK<BR>";
     }*/
@@ -537,7 +515,7 @@ else {
 
     print "Download source code ($filename) : ";
     if (!file_exists($output.$filename))
-    downloadFile($smarty_full_url, $output.$filename);
+    Dependency::downloadFile($smarty_full_url, $output.$filename);
 
     if (!file_exists($output.$filename)) {
         print "<B STYLE=\"color:red\">Error</b><p>Current working directory : <em>$output</em>";
@@ -553,11 +531,11 @@ else {
     $dirname = array_shift($dir_array);
 
     if (!file_exists($dirname))
-    execVerbose("cd $output; tar -xzf $dirname.tar.gz", $output, $return);
+    Dependency::execVerbose("cd $output; tar -xzf $dirname.tar.gz", $output, $return);
     print "OK<BR>";
     print "Copying : ";
     if (!file_exists(WIFIDOG_ABS_FILE_PATH . "lib/smarty"));
-    execVerbose("cp -r $dirname/libs/* " . WIFIDOG_ABS_FILE_PATH . "/lib/smarty", $output, $return); # TODO : Utiliser SMARTY_REL_PATH
+    Dependency::execVerbose("cp -r $dirname/libs/* " . WIFIDOG_ABS_FILE_PATH . "/lib/smarty", $output, $return); # TODO : Utiliser SMARTY_REL_PATH
     print "OK<BR>";
 
     refreshButton();
@@ -593,8 +571,8 @@ break;
             elseif ($action == 'install') {
 
                 print "Download source code frpm svn($filename) : ";
-                execVerbose("svn co ".escapeshellarg($neededPackages['simplepie']['svn_source'])." ".escapeshellarg(WIFIDOG_ABS_FILE_PATH."lib/simplepie"), $output, $return);
-                #execVerbose("locale", $output, $return);
+                Dependency::execVerbose("svn co ".escapeshellarg($neededPackages['simplepie']['svn_source'])." ".escapeshellarg(WIFIDOG_ABS_FILE_PATH."lib/simplepie"), $output, $return);
+                #Dependency::execVerbose("locale", $output, $return);
 
                 refreshButton();
                 navigation(array (
@@ -651,8 +629,8 @@ navigation(array (
             elseif ($action == 'install') {
 
                 print "Download source code frpm svn($filename) : ";
-                execVerbose("svn co ".escapeshellarg($neededPackages['feedpressreview']['svn_source'])." ".escapeshellarg(WIFIDOG_ABS_FILE_PATH."lib/feedpressreview"), $output, $return);
-                #execVerbose("locale", $output, $return);
+                Dependency::execVerbose("svn co ".escapeshellarg($neededPackages['feedpressreview']['svn_source'])." ".escapeshellarg(WIFIDOG_ABS_FILE_PATH."lib/feedpressreview"), $output, $return);
+                #Dependency::execVerbose("locale", $output, $return);
 
                 refreshButton();
                 navigation(array (
@@ -712,7 +690,7 @@ navigation(array (
 
                 print "Download source code ($filename) : ";
                 if (!file_exists($filename))
-                execVerbose("wget \"$jpgraph_full_url\" 2>&1", $output, $return);
+                Dependency::execVerbose("wget \"$jpgraph_full_url\" 2>&1", $output, $return);
                 if (!file_exists($filename)) { # Error occured, print output of wget
                     print "<B STYLE=\"color:red\">Error</b><p>Current working directory : <em>$basepath/tmp</em>";
                     $output = implode("\n", $output);
@@ -726,12 +704,12 @@ navigation(array (
                 print "Uncompressing : ";
                 $dirname = array_shift(split(".tar.gz", $filename));
                 if (!file_exists($dirname))
-                execVerbose("tar -xzf $dirname.tar.gz", $output, $return);
+                Dependency::execVerbose("tar -xzf $dirname.tar.gz", $output, $return);
                 print "OK<BR>";
 
                 print "Copying : ";
                 if (!file_exists(WIFIDOG_ABS_FILE_PATH."lib/jpgraph/jpgraph.php"))
-                execVerbose("cp $dirname/src/* ".WIFIDOG_ABS_FILE_PATH."lib/jpgraph", $output, $return); # TODO : Utiliser JPGRAPH_REL_PATH
+                Dependency::execVerbose("cp $dirname/src/* ".WIFIDOG_ABS_FILE_PATH."lib/jpgraph", $output, $return); # TODO : Utiliser JPGRAPH_REL_PATH
 
                 print "OK<BR>";
 
@@ -1067,7 +1045,7 @@ EndHTML;
 <DIV style="border:solid black;">Warning: language.php: Unable to setlocale() to fr, return value: , current locale: LC_CTYPE=en_US.UTF-8;LC_NUMERIC=C; [...]</DIV>
 <p><em>I repeat</em> : This is an example of message you can see in the top of your working auth-server if language are not set correctly. To change these values please edit <em>config.php</em> in auth-server install directory. Look for "Available locales" and "Default language" header in config.php.
 EndHTML;
-//    execVerbose("locale -a 2>&1", $output, $return);
+//    Dependency::execVerbose("locale -a 2>&1", $output, $return);
 
             navigation(array (
             array (
@@ -1421,6 +1399,7 @@ EndHTML;
             )
             ));
     }
+    echo "<input type hidden name='page' value='$_REQUEST[page]'/>\n" ;
     ?>
 
 </form>

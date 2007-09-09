@@ -1,4 +1,9 @@
 # $Id$
+2007-09-08 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Dependencies installation:  Improve layout, add embryo of unified install sytem (currently works for tarballs).  Improve error output.
+	* Add dependencies for future OpenId support
+	* AbstractDb:  Make sure to throw an exception, avoiding a blank page when trying to access the index page on a auth server that hasn't been setup.  Patch by Mathieu Bruno.
+
 2007-09-04 Benoit Grégoire  <bock@step.polymtl.ca>
 	* cron/page.php:  Improve script to output what it did.
 	* fix typo in Node::DEPRECATEDgetTechnicalOfficers(), that prevented getting the users to page in case a node is down.

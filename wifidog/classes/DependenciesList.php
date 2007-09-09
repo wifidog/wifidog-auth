@@ -135,10 +135,9 @@
            $html .= "<tr><th>"._("Component").'<br/>'._("Click for the component's website")."</th>\n";
            $html .= "<th>"._("Type")."</th>\n";
            $html .= "<th>"._("Status")."</th>\n";
-           $html .= "<th>"._("Description")."</th>\n";
-           $html .= "<th>"._("Message")."</th>\n";
+           $html .= "<th>"._("Information")."</th>\n";
            $html .= "</tr>\n";
-            
+
            foreach ($components as $dependency) {
                $html .= "<tr>\n";
                $websiteUrl = $dependency->getWebsiteURL();
@@ -153,22 +152,39 @@
                    $html .= "<td>$component_key</td>\n";
                }
                $html .= "<td>$type</td>\n";
+               $instalMessage = null;
+               $dependency->processInstallUI($instalMessage);
+                
+               $message = null;
                $available = Dependency::check($component_key, $message);
                if ($available) {
-                   $html .=  "$okMsg<td>$description</td><td>&nbsp;</td></tr>\n";
+                   $html .=  "$okMsg\n";
                }
                else {
                    if ($mandatory) {
-                       $html .=  "$errorMsg<td>$description</td><td>$message</td></tr>\n";
+                       $html .=  "$errorMsg\n";
                        $error = 1;
                    }
                    else {
-                       $html .=  "$warningMsg<td>$description</td><td>$message</td></tr>\n";
+                       $html .=  "$warningMsg\n";
                    }
                }
+               $html .= "<td>\n";
+               $html .= "<em>"._("Description").":</em> $description<br/>\n";
+                
+               if($instalMessage) {
+                   $html .= "<em>"._("Install message").":</em> $instalMessage<br/>\n";
+               }
+               if($message){
+                   $html .= "<em>"._("Detection message").":</em> $message<br/>\n";
+               }
+               if (!$available) {
+                   $html .= "<em>"._("To install").":</em> ".$dependency->getInstallUI()."<br/>\n";
+               }
+               $html .= "</td></tr>\n";
            }
            $html .=  "</table>\n";
-            
+
            return $html;
        }
 
