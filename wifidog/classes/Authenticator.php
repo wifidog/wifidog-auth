@@ -121,16 +121,31 @@ abstract class Authenticator
     }
     /**
      * Get the login interface
+     *  @param string $userData=null Array of contextual data optionally sent to the method.
+     *  The function must still function if none of it is present.
+     *
+     *      * This method understands:
+     *  $userData['preSelectedUser'] An optional User object.
      * @return HTML markup
      */
-    static public function getLoginUI()
+    static public function getLoginUI($userData=null)
     {
         require_once('classes/SmartyWifidog.php');
+        $networkUserData = null;
+        if(!empty($userData['preSelectedUser'])){
+            $selectedUser=$userData['preSelectedUser'];
+            $networkUserData['preSelectedObject']=$selectedUser;
+        }
+        else {
+            $selectedUser=null;
+        }
+        
         $smarty=SmartyWiFiDog::getObject();
         // Set network selector
-        $smarty->assign('selectNetworkUI', Network::getSelectUI('auth_source'));
+        $smarty->assign('selectNetworkUI', Network::getSelectUI('auth_source', $networkUserData));
         // Set user details
-        $smarty->assign('username', !empty($username) ? $username : "");
+        $smarty->assign('user_id', $selectedUser ? $selectedUser->getId() : "");
+        $smarty->assign('username', $selectedUser ? $selectedUser->getUsername() : "");
 
         // Set error message
         $smarty->assign('error', self::$_loginLastError);
@@ -144,23 +159,25 @@ abstract class Authenticator
     /**
      * Process the login interface
      */
-    static public function processLoginUI(&$errmsg)
+    static public function processLoginUI(&$errmsg = null)
     {
         if (!empty($_REQUEST["login_form_submit"])) {
-            if (isset($_REQUEST["username"])) {
+                    if (isset($_REQUEST["user_id"])) {
+                $username = User::getObject($_REQUEST["user_id"])->getUsername();
+            }
+            else if (isset($_REQUEST["username"])) {
                 $username = $_REQUEST["username"];
             }
 
             if (isset($_REQUEST["password"])) {
                 $password = $_REQUEST["password"];
             }
+            
             // Authenticating the user through the selected auth source.
             $network = Network::processSelectUI('auth_source');
             $user = $network->getAuthenticator()->login($username, $password, $errmsg);
             self::$_loginLastError = $errmsg;
         }
-
-
     }
     /**
      * Logs out the user

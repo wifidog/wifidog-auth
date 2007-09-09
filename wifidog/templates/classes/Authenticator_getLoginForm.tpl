@@ -45,16 +45,16 @@
  */
 
 *}
-
                 <h1>{"Login or Signup here"|_}:</h1>
-
-
 			<p>
             {$selectNetworkUI}
             </p>
-
-            {"Username (or email)"|_}:<br/>
-            <input type="text" name="username" id="form_username" tabindex="1" value="{$username}" size="20" /><br/>
+			{if $user_id}
+			    <input type="hidden" name="user_id" id="form_user_id" value="{$user_id}"/>
+			{else}
+            	{"Username (or email)"|_}:<br/>
+            	<input type="text" name="username" id="form_username" tabindex="1" value="{$username}" size="20" /><br/>
+            {/if}
             {"Password"|_}:<br/>
             <input type="password" name="password" id="form_password" tabindex="2" size="20" /><br/>
 

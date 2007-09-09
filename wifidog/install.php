@@ -169,6 +169,7 @@ $dir_array = array (
 'lib/smarty/plugins',
 'tmp/smarty/templates_c',
 'tmp/smarty/cache',
+'tmp/openidserver',
 'lib/simplepie',
 'lib/feedpressreview',
 'config.php'

@@ -47,7 +47,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 56);
+define('REQUIRED_SCHEMA_VERSION', 57);
 /** Used to test a new shecma version before modyfying the database */
 define('SCHEMA_UPDATE_TEST_MODE', false);
 /**
@@ -1290,7 +1290,14 @@ function real_update_schema($targetSchema) {
      $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
         $sql .= "CREATE INDEX idx_connections_timestamp_in ON connections (timestamp_in);\n";
      }
-     
+
+     $new_schema_version = 57;
+     if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
+     printUpdateVersion($new_schema_version);
+     $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+        $sql .= "ALTER TABLE users ADD COLUMN open_id_url text;\n";
+        $sql .= "CREATE INDEX idx_users_topen_id_url ON users (open_id_url);\n";
+     }
     /*
      $new_schema_version = ;
      if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {

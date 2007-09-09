@@ -67,9 +67,9 @@ $current_user = User :: getCurrentUser();
 /*
  * Start general request parameter processing section
  */
-if (!empty ($_REQUEST['profile_user_id'])) {
+if (!empty ($_REQUEST['user_id'])) {
     try {
-        $profile_user = User :: getObject($_REQUEST['profile_user_id']);
+        $profile_user = User :: getObject($_REQUEST['user_id']);
         if(!empty($profile_user)) {
         	$profiles = $profile_user->getAllProfiles();
         	if(!empty($profiles)) {
@@ -96,6 +96,10 @@ $smarty->assign('sectionMAINCONTENT', false);
 
 $ui = MainUI::getObject();
 $ui->setTitle(_("User profile"));
+if(Dependency::check('php-openid')){
+    require_once('classes/OpenIdServerWifidog.php');
+$ui->appendHtmlHeadContent("<link rel='openid.server' href='".OpenIdServerWifidog::getOpenIdServerUrl()."' />");
+}
 $ui->setPageName('profile');
 //$ui->addContent('left_area_middle', $tool_html);
 

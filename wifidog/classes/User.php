@@ -160,6 +160,22 @@ class User implements GenericObject {
     }
 
     /** Instantiate a user object
+     * @param $url The OpenId url
+     * @return a User object, or null if none matched
+     */
+    public static function getUserByOpenIdUrl($url) {
+        $db = AbstractDb::getObject();
+        $object = null;
+
+        $url_str = $db->escapeString($url);
+        $db->execSqlUniqueRes("SELECT user_id FROM users WHERE open_id_url = '$url_str'", $user_rows, false);
+
+        if ($user_rows != null) {
+            $object = self::getObject($user_rows[0]['user_id']);
+        }
+        return $object;
+    }
+    /** Instantiate a user object
      * @param $email The email of the user
      * @param $account_origin Network:  The account origin
      * @return a User object, or null if there was an error
@@ -292,7 +308,7 @@ class User implements GenericObject {
             // Display the nickname or the username
             $profiles=$this->getAllProfiles();
             if($profiles){
-                $html .= "<a href='".BASE_URL_PATH."profile/?profile_user_id=".$this->getId()."' title='".htmlentities(_("View this user's profile."), ENT_QUOTES)."' class='user_nickname'>";
+                $html .= "<a href='".BASE_URL_PATH."profile/?user_id=".$this->getId()."' title='".htmlentities(_("View this user's profile."), ENT_QUOTES)."' class='user_nickname'>";
             }
             if(empty($nickname))
             $html .= $this->getUserName();
@@ -310,6 +326,10 @@ class User implements GenericObject {
         return $html;
     }
 
+    function getOpenIdUrl() {
+        return $this->_row['open_id_url'];
+    }
+    
     function getUsername() {
         return $this->_row['username'];
     }
