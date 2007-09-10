@@ -199,12 +199,13 @@ class Menu {
         //pretty_print_r($this->_menuArray);
     }
 
-    public function getUserUI()
-    {
-        $this->initMenu();
-        $html = '';
-        //Deal with internet explorer's baindeadness.  From http://www.htmldog.com/articles/suckerfish/dropdowns/example/vertical.html
-        $html .= <<<EOT
+    /**
+     * IE's braindeadness requires a javascript workaround to allow suckerfish menus to work.
+     *
+     * @return HTML markup
+     */
+    static public function getIEWorkaroundJS() {
+                $html = <<<EOT
         <script type="text/javascript"><!--//--><![CDATA[//><!--
 
 sfHover = function() {
@@ -214,7 +215,9 @@ sfHover = function() {
 			this.className+=" sfhover";
 		}
 		sfEls[i].onmouseout=function() {
-			this.className=this.className.replace(new RegExp(" sfhover\\b"), "");
+			//alert(this.className);
+			this.className=this.className.replace(new RegExp(" sfhover"), "");
+			//alert(this.className);
 		}
 	}
 }
@@ -222,6 +225,14 @@ if (window.attachEvent) window.attachEvent("onload", sfHover);
 
 //--><!]]></script>
 EOT;
+return $html;
+    }
+    public function getUserUI()
+    {
+        $this->initMenu();
+        $html = '';
+        //Deal with internet explorer's baindeadness.  From http://www.htmldog.com/articles/suckerfish/dropdowns/example/vertical.html
+
 $html .= "<ul id='nav'>\n";
         $userData=null;
         self::menuArrayWalkRecursive(array('Menu','buildHtmlMenuItemCallback'), $userData);

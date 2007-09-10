@@ -558,6 +558,7 @@ class MainUI {
             require_once('classes/Menu.php');
             $menu = Menu::getObject();
             $this->addContent('main_area_top', $menu->getUserUI());
+                        $this->appendHtmlHeadContent(Menu::getIEWorkaroundJS());
         }
 
         $this->addEverywhereContent();

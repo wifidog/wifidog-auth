@@ -1,4 +1,7 @@
 # $Id$
+2007-09-10 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Fix #370:  Dropdown Javascript menus didn't retract in Internet Explorer.  My thanks to Robin Jones for at least proposing a solution to the problem, even if it didn't work in this case.  The problem turned out to be a wrong regex in the IE workaround javascript.
+	
 2007-09-09 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Early OpenID support.  The auth server can now be used as an identity provider, with your profile page as the identity URL
 	
