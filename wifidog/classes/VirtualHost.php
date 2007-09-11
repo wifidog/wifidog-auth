@@ -739,7 +739,7 @@ Security::requirePermission(Permission::P('SERVER_PERM_EDIT_ANY_VIRTUAL_HOST'), 
             } else {
                 $_id = $db->escapeString($this->getId());
 
-                if (!$db->execSqlUpdate("DELETE FROM virtual_host WHERE virtual_host_id='{$_id}'", false)) {
+                if (!$db->execSqlUpdate("DELETE FROM virtual_hosts WHERE virtual_host_id='{$_id}'", false)) {
                     $errmsg = _('Could not delete server!');
                 } else {
                     $retVal = true;

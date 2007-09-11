@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-04 18:47-0400\n"
+"POT-Creation-Date: 2007-09-11 14:10-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,46 +16,60 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../config_available_locales.php:58
-msgid "French"
-msgstr "Γαλλικά"
+#: ../gw_message.php:61
+#, fuzzy, php-format
+msgid "You have failed to validate your account in %d minutes."
+msgstr "Αποτύχατε να επικυρώσετε τον λογαριασμό σας σε % δευτερόλεπτα."
 
-#: ../config_available_locales.php:59
-msgid "English"
-msgstr "Αγγλικά"
-
-#: ../config_available_locales.php:60
-msgid "German"
-msgstr "Γερμανικά"
-
-#: ../config_available_locales.php:61
-msgid "Spanish"
-msgstr "Ισπανικά"
-
-#: ../config_available_locales.php:62
-#, fuzzy
-msgid "Brazilian Portuguese"
-msgstr "Πορτογαλικά"
-
-#: ../config_available_locales.php:63
-msgid "Portuguese"
-msgstr "Πορτογαλικά"
-
-#: ../config_available_locales.php:64
-msgid "Japanese"
-msgstr "Ιαπωνικά"
-
-#: ../config_available_locales.php:65
-msgid "Greek"
+#: ../gw_message.php:62
+msgid "Please validate your account from somewhere else or create a new one."
 msgstr ""
+"Παρακαλούμε, επικυρώστε τον λογαριασμό σας από κάπου αλλού, ή δημιουργήστε "
+"έναν καινούριο. "
 
-#: ../config_available_locales.php:66
-msgid "Bulgarian"
-msgstr ""
+#: ../gw_message.php:67
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:896
+#: ../classes/Role.php:494 ../classes/Statistics.php:375
+#: ../classes/Statistics.php:378 ../classes/Network.php:1694
+#: ../classes/Content.php:901 ../classes/Node.php:214
+msgid "Access denied!"
+msgstr "Άρνηση πρόσβασης!"
 
-#: ../config_available_locales.php:67
-msgid "Swedish"
+#: ../gw_message.php:73
+#, fuzzy, php-format
+msgid ""
+"You have now been granted %d minutes of Internet access without being "
+"validated to go and activate your account."
 msgstr ""
+"Σας έχουν τώρα παραχωρηθεί % λεπτά σύνδεσης στο Διαδίκτυο για να επικυρώσετε "
+"τον λογαριασμό σας."
+
+#: ../gw_message.php:74
+#, fuzzy, php-format
+msgid ""
+"If you fail to validate your account in %d minutes, you will have to "
+"validate it from somewhere else."
+msgstr ""
+"Έαν αποτύχετε να επικυρώσετε τον λογαριασμό σας σε % λεπτά, θα πρέπει να τον "
+"επικυρώσετε από κάπου αλλού. "
+
+#: ../gw_message.php:75
+msgid ""
+"If you do not receive an email from our validation server in the next "
+"minute, perhaps you have made a typo in your email address, you might have "
+"to create another account."
+msgstr ""
+"Έαν δεν λάβετε ηλεκτρονικό μήνυμα από τον διακομιστή επικύρωσης μέσα στο "
+"επόμενο λεπτό, ίσως έχετε κάνει κάποιο τυπογραφικό λάθος στην ηλεκτρονική "
+"σας διεύθυνση και μπορεί να πρέπει να δημιουργήσετε άλλον λογαριασμό."
+
+#: ../gw_message.php:80
+msgid "Unknown message specified! (this is probably an error)"
+msgstr "Προσδιορισμός άγνωστου μηνύματος! (μάλλον έχει γίνει λάθος)"
+
+#: ../gw_message.php:85
+msgid "No message has been specified! (this is probably an error)"
+msgstr "Κανένα μήνυμα δεν προσδιορίστηκε! (μάλλον έχει γίνει λάθος)"
 
 #: ../admin/generic_object_admin.php:80
 msgid "Sorry, the 'object_class' parameter must be specified"
@@ -93,7 +107,7 @@ msgid "Show only persistant %s"
 msgstr "Δείξε μόνο τα επαναλαμβανόμενα %"
 
 #: ../admin/generic_object_admin.php:99 ../classes/Network.php:1933
-#: ../classes/Node.php:1616
+#: ../classes/Node.php:1624
 #, php-format
 msgid "Edit %s"
 msgstr "Επεξεργασία των %"
@@ -114,7 +128,7 @@ msgstr "Εμφάνιση προεπισκόπησης, όπως θα εμφαν�
 #: ../classes/StatisticReport/UserReport.php:182
 #: ../classes/StatisticReport/RegistrationLog.php:120
 #: ../classes/StatisticReport/MostPopularNodes.php:109
-#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:85
+#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:73
 msgid "Node"
 msgstr "Κόμβος"
 
@@ -123,8 +137,8 @@ msgstr "Κόμβος"
 msgid "Preview"
 msgstr "Προεπισκόπηση"
 
-#: ../admin/generic_object_admin.php:217 ../classes/Content.php:736
-#: ../classes/ProfileTemplate.php:369
+#: ../admin/generic_object_admin.php:217 ../classes/ProfileTemplate.php:369
+#: ../classes/Content.php:736
 msgid "Edit"
 msgstr "Επεξεργασία"
 
@@ -259,20 +273,28 @@ msgstr ""
 msgid "You need to set a node ID."
 msgstr "Πρέπει να ορίσετε μία ταυτότητα κόμβου."
 
-#: ../cron/page.php:70
+#: ../cron/page.php:76
 msgid "Monitoring system"
 msgstr "Σύστημα ελέγχου"
 
-#: ../cron/page.php:73
+#: ../cron/page.php:79
 msgid "node"
 msgstr "κόμβος"
 
-#: ../cron/page.php:74
+#: ../cron/page.php:80
 #, php-format
 msgid "Node %s (%s) has been down for %d minutes (since %s)"
 msgstr "Ο κόμβος % (%) είναι πεσμένος εδώ και % λεπτά (από %)"
 
-#: ../cron/page.php:91
+#: ../cron/page.php:82
+msgid "Success"
+msgstr ""
+
+#: ../cron/page.php:82
+msgid "Failed sending mail"
+msgstr ""
+
+#: ../cron/page.php:99
 msgid "No deployed nodes could not be found in the database"
 msgstr "Δεν βρέθηκαν ανεπτυγμένοι κόμβοι σε αυτήν την βάση δεδομένων."
 
@@ -578,7 +600,7 @@ msgid "Profile"
 msgstr "Προφίλ"
 
 #: ../classes/StatisticReport/NodeStatus.php:152
-#: ../classes/StatisticReport/NetworkStatus.php:99 ../classes/Node.php:1098
+#: ../classes/StatisticReport/NetworkStatus.php:99 ../classes/Node.php:1101
 msgid "Name"
 msgstr "Όνομα"
 
@@ -595,12 +617,12 @@ msgid "Deployment date"
 msgstr "Ημερομηνία ανάπτυξης"
 
 #: ../classes/StatisticReport/NodeStatus.php:168 ../classes/Content.php:925
-#: ../classes/Node.php:1113 ../classes/DependenciesList.php:138 smarty.txt:43
+#: ../classes/Node.php:1116 ../classes/DependenciesList.php:173 smarty.txt:49
 msgid "Description"
 msgstr "Περιγραφή"
 
 #: ../classes/StatisticReport/NodeStatus.php:172
-#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:81
+#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:83
 msgid "Network"
 msgstr "Δίκτυο"
 
@@ -622,8 +644,8 @@ msgid "Homepage"
 msgstr "Αρχική Σελίδα"
 
 #: ../classes/StatisticReport/NodeStatus.php:194
-#: ../classes/NodeLists/NodeListRSS.php:324
 #: ../classes/NodeLists/NodeListPDF.php:1083
+#: ../classes/NodeLists/NodeListRSS.php:324
 #: ../classes/NodeLists/NodeListKML.php:238
 msgid "Address"
 msgstr "Διεύθυνση "
@@ -644,7 +666,7 @@ msgstr "Ηλεκτρονική Διεύθυνση"
 msgid "Transit Info"
 msgstr "Πληροφορίες μεταφοράς"
 
-#: ../classes/StatisticReport/NodeStatus.php:220 ../classes/User.php:929
+#: ../classes/StatisticReport/NodeStatus.php:220 ../classes/User.php:950
 #: ../classes/Node.php:1072
 msgid "Statistics"
 msgstr "Στατιστικά στοιχεία"
@@ -676,7 +698,7 @@ msgstr "Εξερχόμενα"
 msgid "Individual user report"
 msgstr "Αναφορά μεμονωμένου χρήστη"
 
-#: ../classes/StatisticReport/UserReport.php:111 ../classes/User.php:231
+#: ../classes/StatisticReport/UserReport.php:111 ../classes/User.php:247
 #, php-format
 msgid "User id: %s could not be found in the database"
 msgstr "Ταυτότητα χρήστη: % δεν μπόρεσε να βρεθεί στην βάση δεδομένων"
@@ -685,8 +707,8 @@ msgstr "Ταυτότητα χρήστη: % δεν μπόρεσε να βρεθε
 #: ../classes/StatisticReport/UserReport.php:284
 #: ../classes/StatisticReport/RegistrationLog.php:123
 #: ../classes/StatisticReport/ConnectionLog.php:115
-#: ../classes/StatisticReport/ConnectionLog.php:164 ../classes/User.php:681
-#: ../classes/User.php:686 ../classes/User.php:735 smarty.txt:80 smarty.txt:86
+#: ../classes/StatisticReport/ConnectionLog.php:164 ../classes/User.php:702
+#: ../classes/User.php:707 ../classes/User.php:756 smarty.txt:74 smarty.txt:82
 msgid "Username"
 msgstr "Όνομα χρήστη"
 
@@ -698,8 +720,8 @@ msgstr "Μοναδική ταυτότητα"
 msgid "Member since"
 msgstr "Μέλος από "
 
-#: ../classes/StatisticReport/UserReport.php:147 ../classes/User.php:723
-#: smarty.txt:83
+#: ../classes/StatisticReport/UserReport.php:147 ../classes/User.php:744
+#: smarty.txt:85
 msgid "Account Status"
 msgstr "Κατάσταση λογαριασμού"
 
@@ -803,10 +825,9 @@ msgstr "Πληροφορίες κατάστασης δικτύου"
 msgid "Sorry, this report requires you to select individual networks"
 msgstr "Λυπούμαστε, αυτή η αναφορά απαιτεί την επιλογή μεμονωμένων δικτύων"
 
-#: ../classes/StatisticReport/NetworkStatus.php:104
-#: ../classes/VirtualHost.php:603 ../classes/Server.php:246
-#: ../classes/Node.php:1103 ../classes/ProfileTemplate.php:488
-#: ../classes/Role.php:362
+#: ../classes/StatisticReport/NetworkStatus.php:104 ../classes/Role.php:362
+#: ../classes/ProfileTemplate.php:488 ../classes/Server.php:246
+#: ../classes/Node.php:1106 ../classes/VirtualHost.php:603
 msgid "Creation date"
 msgstr "Ημερομηνία δημιουργίας"
 
@@ -846,6 +867,19 @@ msgstr "Νούμερο επικυρωμένων χρηστών"
 msgid "Number of users currently online"
 msgstr "Νούμερο συνδεδεμένων χρηστών"
 
+#: ../classes/StatisticReport/AnonymisedDataExport.php:65
+msgid "Anonymised SQL data export (for academic research)"
+msgstr ""
+
+#: ../classes/StatisticReport/AnonymisedDataExport.php:97
+#: ../classes/StatisticReport/ConnectionLog.php:89
+#: ../classes/ContentTypeFilter.php:253 ../classes/ContentTypeFilter.php:438
+#: ../classes/Network.php:337 ../classes/ProfileTemplate.php:568
+#: ../classes/Node.php:457 ../classes/VirtualHost.php:403
+#: ../classes/VirtualHost.php:735
+msgid "Access denied"
+msgstr "Άρνηση πρόσβασης"
+
 #: ../classes/StatisticReport/MostPopularNodes.php:65
 msgid "Most popular nodes, by visit"
 msgstr "Πιο δημημοφιλείς κόμβοι, ανά επίσκεψη"
@@ -857,15 +891,6 @@ msgstr "Επισκέψεις"
 #: ../classes/StatisticReport/ConnectionLog.php:64
 msgid "Connection Log"
 msgstr "Ημερολόγιο σύνδεσης"
-
-#: ../classes/StatisticReport/ConnectionLog.php:89
-#: ../classes/StatisticReport/AnonymisedDataExport.php:97
-#: ../classes/VirtualHost.php:403 ../classes/VirtualHost.php:735
-#: ../classes/Network.php:337 ../classes/Node.php:457
-#: ../classes/ProfileTemplate.php:568 ../classes/ContentTypeFilter.php:253
-#: ../classes/ContentTypeFilter.php:438
-msgid "Access denied"
-msgstr "Άρνηση πρόσβασης"
 
 #: ../classes/StatisticReport/ConnectionLog.php:109
 msgid "Number of unique Users:"
@@ -1009,10 +1034,6 @@ msgstr ""
 "πραγματοποιήθηκαν σε κάθε Σημείο Ασύρματης Πρόσβασης. Περιλαμβάνει και τους "
 "μη-επικυρωμένους χρήστες που συνδέθηκαν με επιτυχία."
 
-#: ../classes/StatisticReport/AnonymisedDataExport.php:65
-msgid "Anonymised SQL data export (for academic research)"
-msgstr ""
-
 #: ../classes/StatisticReport/ActiveUserReport.php:62
 msgid "Breakdown of how many users actually use the network"
 msgstr ""
@@ -1073,33 +1094,6 @@ msgstr ""
 msgid "warning:  This report does not count connections at Splash-Only nodes"
 msgstr ""
 
-#: ../classes/NodeLists/NodeListRSS.php:157
-#: ../classes/NodeLists/NodeListHTML.php:213
-msgid "Newest Hotspots"
-msgstr "Νεώτερα Σημεία Ασύρματης Πρόσβασης"
-
-#: ../classes/NodeLists/NodeListRSS.php:169
-msgid "List of the most recent Hotspots opened by the network: "
-msgstr ""
-"Κατάλογος των πιο πρόσφατων Σημείων Ασύρματης Πρόσβασης που έχουν ανοιχτεί "
-"σε αυτό το δίκτυο:"
-
-#: ../classes/NodeLists/NodeListRSS.php:190
-msgid "Copyright "
-msgstr "Πνευματική Ιδιοκτησία"
-
-#: ../classes/NodeLists/NodeListRSS.php:358
-msgid "See Map"
-msgstr "Βλέπε Χάρτη"
-
-#: ../classes/NodeLists/NodeListRSS.php:371
-msgid "Contact"
-msgstr "Επικοινωνία"
-
-#: ../classes/NodeLists/NodeListHTML.php:212
-msgid "Hotspot list"
-msgstr "Κατάλογος Σημείων Ασύρματης Πρόσβασης"
-
 #: ../classes/NodeLists/NodeListPDF.php:792
 msgid ""
 "To protect the server the PDF file has not been created, because the server "
@@ -1152,19 +1146,19 @@ msgstr "Τελευταία ενημέρωση την: %"
 msgid "Hotspot"
 msgstr "Σημείο Ασύρματης Πρόσβασης"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1139
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1142
 msgid "Postal code"
 msgstr "Ταχυδρομικός Κώδικας"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1129
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1132
 msgid "City"
 msgstr "Πόλη"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1134
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1137
 msgid "Province / State"
 msgstr "Επαρχία/Χώρα"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1159
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1162
 msgid "Homepage URL"
 msgstr "Διεύθυνση Αρχικής Σελίδας"
 
@@ -1173,16 +1167,43 @@ msgid "PDF file cannot be created because the FPDF library is not installed!"
 msgstr ""
 "Το αρχείο PDF δεν δημιουργήθηκε γιατί η βιβλιοθήκη FPDF δεν έχει εγκατασταθεί"
 
+#: ../classes/NodeLists/NodeListRSS.php:157
+#: ../classes/NodeLists/NodeListHTML.php:213
+msgid "Newest Hotspots"
+msgstr "Νεώτερα Σημεία Ασύρματης Πρόσβασης"
+
+#: ../classes/NodeLists/NodeListRSS.php:169
+msgid "List of the most recent Hotspots opened by the network: "
+msgstr ""
+"Κατάλογος των πιο πρόσφατων Σημείων Ασύρματης Πρόσβασης που έχουν ανοιχτεί "
+"σε αυτό το δίκτυο:"
+
+#: ../classes/NodeLists/NodeListRSS.php:190
+msgid "Copyright "
+msgstr "Πνευματική Ιδιοκτησία"
+
+#: ../classes/NodeLists/NodeListRSS.php:358
+msgid "See Map"
+msgstr "Βλέπε Χάρτη"
+
+#: ../classes/NodeLists/NodeListRSS.php:371
+msgid "Contact"
+msgstr "Επικοινωνία"
+
+#: ../classes/NodeLists/NodeListHTML.php:212
+msgid "Hotspot list"
+msgstr "Κατάλογος Σημείων Ασύρματης Πρόσβασης"
+
 #: ../classes/NodeLists/NodeListKML.php:240
 #: ../classes/Content/RssAggregator/RssAggregator.php:752
 msgid "URL"
 msgstr "Διεύθυνση Ιστοσελίδας"
 
 #: ../classes/Content/File/File.php:131
-#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:131
-#: ../classes/Content/IFrame/IFrame.php:89
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:92
 #: ../classes/Content/ContentGroup/ContentGroup.php:111
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:131
+#: ../classes/Content/IFrame/IFrame.php:89
 #: ../classes/Content/Picture/Picture.php:103 ../classes/Content.php:124
 #: ../classes/Content.php:275
 msgid "The content with the following id could not be found in the database: "
@@ -1256,6 +1277,306 @@ msgstr "Τελευταία ενημέρωση"
 msgid "Could not delete this file, since it is persistent"
 msgstr ""
 "Δεν ήταν δυνατή η διαγραφή αυτού του αρχείου καθώς είναι επαναλαμβανόμενο. "
+
+#: ../classes/Content/SimpleString/SimpleString.php:130
+#: ../classes/Content/Langstring/Langstring.php:285
+msgid "Only these HTML tags are allowed : "
+msgstr "Μόνο αυτές οι  HTML ετικέτες επιτρέπονται:"
+
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:102
+msgid "Subscribe to Pattern Language"
+msgstr "Εγγραφή στην πρότυπη γλώσσα"
+
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:103
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:118
+msgid "Read narratives archives"
+msgstr "Ανάγνωση των αφηγηματικών αρχείων"
+
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:117
+msgid "Read my narrative"
+msgstr "Ανάγνωση της αφήγησής μου"
+
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:119
+msgid "Unsubscribe"
+msgstr "Ακύρωση εγγραφής"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:172
+msgid "Embedded content"
+msgstr "Ενσωματωμένο περιεχόμενο"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:190
+msgid "Attributes"
+msgstr "Ιδιότητες"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:192
+msgid ""
+"It is recommended to specify at least <b>width='x' height='y'</b> as "
+"attributes"
+msgstr ""
+"Προτείνεται να καθοριστούν τουλάχιστον <b> πλάτος=χ ύψος=y</b> ως ιδιότητες"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:198
+msgid "Parameters"
+msgstr "Παράμετροι"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:212
+msgid ""
+"Fallback content (Can be another embedded content to create a fallback "
+"hierarchy)"
+msgstr ""
+"Εναλλακτικό περιεχόμενο (είναι δυνατόν να είναι άλλο ενσωματωμένο "
+"περιεχόμενο, ώστε να δημιουργείται ιεραρχία εναλλαγών)"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:261
+msgid "You MUST choose a File object or any of its siblings."
+msgstr "ΠΡΕΠΕΙ να επιλέξετε ένα αρχείο ή κάτι συγγενές"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:397
+#: ../classes/Content/Langstring/Langstring.php:531
+#: ../classes/Content.php:1924
+msgid ""
+"Content is persistent (you must make it non persistent before you can delete "
+"it)"
+msgstr ""
+"Το περιεχόμενο είναι επαναλαμβανόμενο (πρέπει να μετατραπεί σε μη  "
+"επαναλαμβανόμενο πριν το διαγράψετε). "
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:219
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:225
+msgid "Unable to insert new content group element into database!"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:291
+#, php-format
+msgid "%s %d display conditions"
+msgstr "% % συνθήκες παρουσίασης"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:301
+msgid "(Ignored if display type is random)"
+msgstr "(Αγνοείται έαν ο τύπος της παρουσίασης είναι τυχαίος)"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:307
+msgid ""
+"Content can be displayed at any date if no start or end date is specified.  "
+"Warning:  If you do not specify a specific time of day, midnight is assumed."
+msgstr ""
+"Το περιεχόμενο μπορεί να παρουσιάζεται οποιαδήποτε ημερομηνία αν δεν "
+"προσδιοριστεί ημερομηνία έναρξης και λήξης. Προειδοποίηση: Αν δεν "
+"προσδιορίσετε συγκεκριμένη ώρα της ημέρας, θα οριστούν τα μεσάνυχτα. "
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:308
+msgid "Only display from"
+msgstr "Εμφάνιση μόνο από"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:334
+msgid "Only display at node(s):"
+msgstr "Εμφάνιση μόνο στον κόμβο:"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:349
+#: ../classes/ProfileTemplate.php:371 ../classes/Content.php:738
+msgid "Remove"
+msgstr "Μετακίνηση"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:361
+msgid "Add new allowed node"
+msgstr "Προσθήκη νέου επιτρεπτού κόμβου"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:364
+msgid ""
+"(Content can be displayed at ANY node unless one or more nodes are selected)"
+msgstr ""
+"(Το περιεχόμενο μπορεί να εμφανιστεί σε ΚΑΘΕ κόμβο, εκτός αν ένας ή "
+"περισσότεροι κόμβοι επιλεχθούν)"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:381
+#, php-format
+msgid "%s %d displayed content (%s)"
+msgstr "% % παρουσίαση περιεχομένου (%)"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:149
+msgid "Invalid content selection mode (must be part of CONTENT_ORDERING_MODES)"
+msgstr ""
+"Μη έγκυρος τρόπος επιλογής περιεχομένου (θα έπρεπε να είναι μέρος του "
+"ΠΕΡΙΕΧΟΜΕΝΟ_ΠΑΡΑΓΓΕΛΙΑ_ΤΡΟΠΟΙ)"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:178
+msgid ""
+"Invalid content selection mode (must be part of CONTENT_CHANGES_ON_MODES)"
+msgstr ""
+"Μη έγκυρος τρόπος επιλογής περιεχομένου (πρέπει να είναι μέρος του "
+"ΠΕΡΙΕΧΟΜΕΝΟ_ΑΛΛΑΓΕΣ_ΣΕ_ΤΡΟΠΟΙ)"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:207
+msgid "Invalid content selection mode (must be part of ALLOW_REPEAT_MODES)"
+msgstr ""
+"Μη έγκυρος τρόπος επιλογής περιεχομένου (πρέπει να είναι μέρος του "
+"ΕΠΙΤΡΕΠΕΤΑΙ_ΕΠΑΝΑΛΗΨΗ_ΤΡΟΠΩΝ)"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:239
+#: ../classes/Content/RssAggregator/RssAggregator.php:198
+msgid "You must display at least one element"
+msgstr "Πρέπει να παρουσιάσετε τουλάχιστον ένα στοιχείο"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:260
+#, php-format
+msgid "%s configuration"
+msgstr "% ρύθμιση"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:264
+msgid "In what order should the content displayed?"
+msgstr "Με ποια σειρά πρέπει να παρουσιάζεται το περιεχόμενο;"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:273
+msgid "When does the content rotate?"
+msgstr "Πότε περιστρέφεται το περιεχόμενο;"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:282
+msgid "Can content be shown more than once to the same user?"
+msgstr ""
+"Μπορεί το περιεχόμενο να παρουσιαστεί περισσότερο από μία φορά στον ίδιο "
+"χρήστη;"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:306
+#, php-format
+msgid "%s display element list"
+msgstr "% εμφάνιση καταλόγου στοιχείων"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:313
+msgid "Show expired group elements"
+msgstr "Εμφάνιση στοιχείων ομάδας που έχουν λήξει"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:319
+msgid "Hide expired group elements"
+msgstr "Απόκρυψη στοιχείων ομάδας που έχουν λήξει"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:330
+#: ../classes/ProfileTemplate.php:502
+#, php-format
+msgid "%s %d"
+msgstr "% %"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:333
+#, php-format
+msgid "Delete %s %d"
+msgstr "Διαγραφή % % "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:82
+msgid "300x250 - IAB Medium Rectangle"
+msgstr ""
+"300x250 - (IAB  Medium Rectangle) Μεσαίο Τετράγωνο του Γραφείου για την "
+"Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:83
+msgid "250x250 - IAB Square Pop-Up"
+msgstr ""
+"250x250 - (IAB Square Pop-Up) Τετράγωνο Αναδυόμενο παράθυρο  του Γραφείου "
+"για την Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:84
+msgid "240x400 - IAB Vertical Rectangle"
+msgstr ""
+"240x400 - (IAB Vertical Rectangle) Κάθετο Τετράγωνο  του Γραφείου για την "
+"Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:85
+msgid "336x280 - IAB Large Rectangle"
+msgstr ""
+"336x280 - (IAB Large Rectangle) Μεγάλο Τετράγωνο του Γραφείου για την "
+"Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:86
+msgid "180x150 - IAB Rectangle"
+msgstr ""
+"180x150 - (IAB Rectangle) Τετράγωνο  του Γραφείου για την Διαδραστική "
+"Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:88
+msgid "468x60  - IAB Full Banner"
+msgstr ""
+"468x60  - (IAB Full Banner) Πλήρης Διαφημιστική Επιφάνεια του Γραφείου για "
+"την Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:89
+msgid "234x60  - IAB Half Banner"
+msgstr ""
+"234x60  - (IAB Half Banner) Μισή Διαφημιστική Επιφάνεια του Γραφείου για την "
+"Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:90
+msgid "88x31   - IAB Micro Bar"
+msgstr ""
+"88x31   - (IAB Micro Bar) Μικρή μπάρα του Γραφείου για την Διαδραστική "
+"Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:91
+msgid "120x90  - IAB Button 1"
+msgstr ""
+"120x90 - (IAB  Button 1) Κουμπί 1 του Γραφείου για την Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:92
+msgid "120x60  - IAB Button 2"
+msgstr ""
+"120x60 - (IAB Button 2) Κουμπί 2 του Γραφείου για την Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:93
+msgid "120x240 - IAB Vertical Banner"
+msgstr ""
+"120x240 - (IAB Vertical Banner) Κάθετη Διαφημιστική Επιφάνεια  του Γραφείου "
+"για την Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:94
+msgid "125x125 - IAB Square Button"
+msgstr ""
+"125x125 - (IAB Square Button) Τετράγωνο Κουμπί του Γραφείου για την "
+"Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:95
+msgid "728x90  - IAB Leaderboard"
+msgstr ""
+"728x90  - (IAB Leaderboard) Leaderboard του Γραφείου για την Διαδραστική "
+"Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:97
+msgid "160x600 - IAB Wide Skyscraper"
+msgstr ""
+"160x600 - (IAB Wide Skyscraper) Ευρύς Ουρανοξύστης του Γραφείου για την "
+"Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:98
+msgid "120x600 - IAB Skyscraper"
+msgstr ""
+"120x600 - (IAB Skyscraper) Ουρανοξύστης του Γραφείου για την Διαδραστική "
+"Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:99
+msgid "300x600 - IAB Half Page Ad"
+msgstr ""
+"300x600 - (IAB Half Page Ad)  Διαφήμιση μισής σελίδας του Γραφείου για την "
+"Διαδραστική Διαφήμιση "
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:128
+msgid "Maximum display size"
+msgstr "Μέγιστο μέγεθος εμφάνισης"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:131
+msgid "Use the values below for width and height"
+msgstr "Χρησιμοποιήστε τις κατωτέρω τιμές για το πλάτος και το ύψος"
+
+#: ../classes/Content/Stylesheet/Stylesheet.php:106
+msgid ""
+"Hints:  Note that the order in which Stylesheets are assigned relative to "
+"other content doesn't matter (except relative to other Stylesheets).  "
+"Stylesheets will be linked to the page in the order they are assigned, but "
+"always after the base stylesheet and network theme pack (if applicable).  "
+"They must be written as patches to those stylesheets."
+msgstr ""
+"Υπόδειξη: Σημειώστε ότι η σειρά με την οποία τα φύλλα τεχνοτροπίας ορίζονται "
+"σε σχέση με άλλο περιεχόμενο δεν έχει σημασία (εκτός αν είναι σε σχέση με "
+"άλλα φύλλα τεχνοτροπίας). Τα φύλλα τεχνοτροπίας συνδέονται με  την σελίδα με "
+"την σειρά που έχουν οριστεί, αλλά πάντα μετά από το βασικό φύλλο "
+"τεχνοτροπίας και το θεματικό πακέτο του δικτύου (όπου αυτό είναι "
+"εφαρμόσιμο). Πρέπει να είναι γραμμένα σαν ενημερωμένες εκδόσεις κώδικα σε "
+"αυτά τα φύλλα τεχνοτροπίας."
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:198
 msgid "Illegal Flickr Photostream selection mode."
@@ -1433,13 +1754,6 @@ msgstr "Κανένα περιεχόμενο του Flickr δεν αντιστο�
 msgid "PEAR::Phlickr is not installed"
 msgstr "PEAR::Το Flickr δεν έχει εγκατασταθεί."
 
-#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:896
-#: ../classes/Network.php:1694 ../classes/Statistics.php:375
-#: ../classes/Statistics.php:378 ../classes/Content.php:901
-#: ../classes/Node.php:214 ../classes/Role.php:494
-msgid "Access denied!"
-msgstr "Άρνηση πρόσβασης!"
-
 #: ../classes/Content/IFrameRest/IFrameRest.php:119
 msgid "Actual URL after substitution"
 msgstr "Πραγματικό URL μετά από υποκατάσταση"
@@ -1479,23 +1793,6 @@ msgstr ""
 "χρήστης είδε για τελευταία φορά το περιεχόμενο, ή από μία κενή  ακολουθία "
 "χαρακτήρων εάν ο χρήστης δεν είδε ποτέ αυτό το IFrame."
 
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:102
-msgid "Subscribe to Pattern Language"
-msgstr "Εγγραφή στην πρότυπη γλώσσα"
-
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:103
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:118
-msgid "Read narratives archives"
-msgstr "Ανάγνωση των αφηγηματικών αρχείων"
-
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:117
-msgid "Read my narrative"
-msgstr "Ανάγνωση της αφήγησής μου"
-
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:119
-msgid "Unsubscribe"
-msgstr "Ακύρωση εγγραφής"
-
 #: ../classes/Content/IFrame/IFrame.php:231
 msgid "Width (suggested width is 600 (pixels))"
 msgstr "Πλάτος (προτεινόμενο πλάτος 600 pixels)"
@@ -1512,166 +1809,6 @@ msgstr "HTML περιεχόμενο URL"
 msgid "Your browser does not support IFrames."
 msgstr "Ο πλοηγός σας δεν υποστηρίζει IFrames."
 
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:172
-msgid "Embedded content"
-msgstr "Ενσωματωμένο περιεχόμενο"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:190
-msgid "Attributes"
-msgstr "Ιδιότητες"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:192
-msgid ""
-"It is recommended to specify at least <b>width='x' height='y'</b> as "
-"attributes"
-msgstr ""
-"Προτείνεται να καθοριστούν τουλάχιστον <b> πλάτος=χ ύψος=y</b> ως ιδιότητες"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:198
-msgid "Parameters"
-msgstr "Παράμετροι"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:212
-msgid ""
-"Fallback content (Can be another embedded content to create a fallback "
-"hierarchy)"
-msgstr ""
-"Εναλλακτικό περιεχόμενο (είναι δυνατόν να είναι άλλο ενσωματωμένο "
-"περιεχόμενο, ώστε να δημιουργείται ιεραρχία εναλλαγών)"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:261
-msgid "You MUST choose a File object or any of its siblings."
-msgstr "ΠΡΕΠΕΙ να επιλέξετε ένα αρχείο ή κάτι συγγενές"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:397
-#: ../classes/Content/Langstring/Langstring.php:531
-#: ../classes/Content.php:1924
-msgid ""
-"Content is persistent (you must make it non persistent before you can delete "
-"it)"
-msgstr ""
-"Το περιεχόμενο είναι επαναλαμβανόμενο (πρέπει να μετατραπεί σε μη  "
-"επαναλαμβανόμενο πριν το διαγράψετε). "
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:219
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:225
-msgid "Unable to insert new content group element into database!"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:291
-#, php-format
-msgid "%s %d display conditions"
-msgstr "% % συνθήκες παρουσίασης"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:301
-msgid "(Ignored if display type is random)"
-msgstr "(Αγνοείται έαν ο τύπος της παρουσίασης είναι τυχαίος)"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:307
-msgid ""
-"Content can be displayed at any date if no start or end date is specified.  "
-"Warning:  If you do not specify a specific time of day, midnight is assumed."
-msgstr ""
-"Το περιεχόμενο μπορεί να παρουσιάζεται οποιαδήποτε ημερομηνία αν δεν "
-"προσδιοριστεί ημερομηνία έναρξης και λήξης. Προειδοποίηση: Αν δεν "
-"προσδιορίσετε συγκεκριμένη ώρα της ημέρας, θα οριστούν τα μεσάνυχτα. "
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:308
-msgid "Only display from"
-msgstr "Εμφάνιση μόνο από"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:334
-msgid "Only display at node(s):"
-msgstr "Εμφάνιση μόνο στον κόμβο:"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:349
-#: ../classes/Content.php:738 ../classes/ProfileTemplate.php:371
-msgid "Remove"
-msgstr "Μετακίνηση"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:361
-msgid "Add new allowed node"
-msgstr "Προσθήκη νέου επιτρεπτού κόμβου"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:364
-msgid ""
-"(Content can be displayed at ANY node unless one or more nodes are selected)"
-msgstr ""
-"(Το περιεχόμενο μπορεί να εμφανιστεί σε ΚΑΘΕ κόμβο, εκτός αν ένας ή "
-"περισσότεροι κόμβοι επιλεχθούν)"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:381
-#, php-format
-msgid "%s %d displayed content (%s)"
-msgstr "% % παρουσίαση περιεχομένου (%)"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:149
-msgid "Invalid content selection mode (must be part of CONTENT_ORDERING_MODES)"
-msgstr ""
-"Μη έγκυρος τρόπος επιλογής περιεχομένου (θα έπρεπε να είναι μέρος του "
-"ΠΕΡΙΕΧΟΜΕΝΟ_ΠΑΡΑΓΓΕΛΙΑ_ΤΡΟΠΟΙ)"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:178
-msgid ""
-"Invalid content selection mode (must be part of CONTENT_CHANGES_ON_MODES)"
-msgstr ""
-"Μη έγκυρος τρόπος επιλογής περιεχομένου (πρέπει να είναι μέρος του "
-"ΠΕΡΙΕΧΟΜΕΝΟ_ΑΛΛΑΓΕΣ_ΣΕ_ΤΡΟΠΟΙ)"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:207
-msgid "Invalid content selection mode (must be part of ALLOW_REPEAT_MODES)"
-msgstr ""
-"Μη έγκυρος τρόπος επιλογής περιεχομένου (πρέπει να είναι μέρος του "
-"ΕΠΙΤΡΕΠΕΤΑΙ_ΕΠΑΝΑΛΗΨΗ_ΤΡΟΠΩΝ)"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:239
-#: ../classes/Content/RssAggregator/RssAggregator.php:198
-msgid "You must display at least one element"
-msgstr "Πρέπει να παρουσιάσετε τουλάχιστον ένα στοιχείο"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:260
-#, php-format
-msgid "%s configuration"
-msgstr "% ρύθμιση"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:264
-msgid "In what order should the content displayed?"
-msgstr "Με ποια σειρά πρέπει να παρουσιάζεται το περιεχόμενο;"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:273
-msgid "When does the content rotate?"
-msgstr "Πότε περιστρέφεται το περιεχόμενο;"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:282
-msgid "Can content be shown more than once to the same user?"
-msgstr ""
-"Μπορεί το περιεχόμενο να παρουσιαστεί περισσότερο από μία φορά στον ίδιο "
-"χρήστη;"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:306
-#, php-format
-msgid "%s display element list"
-msgstr "% εμφάνιση καταλόγου στοιχείων"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:313
-msgid "Show expired group elements"
-msgstr "Εμφάνιση στοιχείων ομάδας που έχουν λήξει"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:319
-msgid "Hide expired group elements"
-msgstr "Απόκρυψη στοιχείων ομάδας που έχουν λήξει"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:330
-#: ../classes/ProfileTemplate.php:502
-#, php-format
-msgid "%s %d"
-msgstr "% %"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:333
-#, php-format
-msgid "Delete %s %d"
-msgstr "Διαγραφή % % "
-
 #: ../classes/Content/Langstring/Langstring.php:131
 #, php-format
 msgid "(Empty %s)"
@@ -1680,7 +1817,7 @@ msgstr "(Άδειο %)"
 #: ../classes/Content/Langstring/Langstring.php:215
 #: ../classes/Content/Langstring/Langstring.php:341
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:112
-#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:7
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:12
 msgid "Language"
 msgstr "Γλώσσα"
 
@@ -1688,11 +1825,6 @@ msgstr "Γλώσσα"
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:145
 msgid "Add new string"
 msgstr "Προσθήκη νέας  ακολουθίας χαρακτήρων"
-
-#: ../classes/Content/Langstring/Langstring.php:285
-#: ../classes/Content/SimpleString/SimpleString.php:130
-msgid "Only these HTML tags are allowed : "
-msgstr "Μόνο αυτές οι  HTML ετικέτες επιτρέπονται:"
 
 #: ../classes/Content/Langstring/Langstring.php:352
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:209
@@ -1829,8 +1961,8 @@ msgid "Type URL manually"
 msgstr "Πληκτρολογήστε το URL"
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:654
+#: ../classes/ProfileTemplateField.php:147 ../classes/ProfileTemplate.php:303
 #: ../classes/Content.php:545 ../classes/Content.php:967
-#: ../classes/ProfileTemplate.php:303 ../classes/ProfileTemplateField.php:147
 msgid "Add"
 msgstr "Προσθήκη"
 
@@ -1926,152 +2058,6 @@ msgstr "Δεν ήταν δυνατή η λήψη της τροφοδοσίας R
 msgid "RSS support is disabled"
 msgstr "Η υποστήριξη RSS είναι απενεργοποιημένη"
 
-#: ../classes/Content/HTMLeditor/HTMLeditor.php:227
-msgid "FCKeditor is not installed"
-msgstr "Ο Επεξεργαστής FCK δεν έχει εγκατασταθεί"
-
-#: ../classes/Content/Picture/Picture.php:272
-msgid "Hyperlink URL (leave empty if you don't need it)"
-msgstr "Υπερσύνδεσμος URL (αφήστε το κενό αν δεν το χρειάζεστε)"
-
-#: ../classes/Content/Picture/Picture.php:280
-msgid "Width (leave empty if you want to keep original width)"
-msgstr "Πλάτος (αφήστε το κενό αν θέλεται να διατηρήσετε το αρχικό πλάτος)"
-
-#: ../classes/Content/Picture/Picture.php:287
-msgid "Height (leave empty if you want to keep original height)"
-msgstr "Ύψος  (αφήστε το κενό αν θέλεται να διατηρήσετε το αρχικό ύψος)"
-
-#: ../classes/Content/Stylesheet/Stylesheet.php:106
-msgid ""
-"Hints:  Note that the order in which Stylesheets are assigned relative to "
-"other content doesn't matter (except relative to other Stylesheets).  "
-"Stylesheets will be linked to the page in the order they are assigned, but "
-"always after the base stylesheet and network theme pack (if applicable).  "
-"They must be written as patches to those stylesheets."
-msgstr ""
-"Υπόδειξη: Σημειώστε ότι η σειρά με την οποία τα φύλλα τεχνοτροπίας ορίζονται "
-"σε σχέση με άλλο περιεχόμενο δεν έχει σημασία (εκτός αν είναι σε σχέση με "
-"άλλα φύλλα τεχνοτροπίας). Τα φύλλα τεχνοτροπίας συνδέονται με  την σελίδα με "
-"την σειρά που έχουν οριστεί, αλλά πάντα μετά από το βασικό φύλλο "
-"τεχνοτροπίας και το θεματικό πακέτο του δικτύου (όπου αυτό είναι "
-"εφαρμόσιμο). Πρέπει να είναι γραμμένα σαν ενημερωμένες εκδόσεις κώδικα σε "
-"αυτά τα φύλλα τεχνοτροπίας."
-
-#: ../classes/Content/SmartyTemplate/SmartyTemplate.php:85
-#, php-format
-msgid ""
-"To list the available Smarty variables, put %s in the input field, save and "
-"then click preview"
-msgstr ""
-
-#: ../classes/Content/SmartyTemplate/SmartyTemplate.php:86
-#, php-format
-msgid "There are also a few custom Smarty modifiers available: %s"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:82
-msgid "300x250 - IAB Medium Rectangle"
-msgstr ""
-"300x250 - (IAB  Medium Rectangle) Μεσαίο Τετράγωνο του Γραφείου για την "
-"Διαδραστική Διαφήμιση "
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:83
-msgid "250x250 - IAB Square Pop-Up"
-msgstr ""
-"250x250 - (IAB Square Pop-Up) Τετράγωνο Αναδυόμενο παράθυρο  του Γραφείου "
-"για την Διαδραστική Διαφήμιση "
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:84
-msgid "240x400 - IAB Vertical Rectangle"
-msgstr ""
-"240x400 - (IAB Vertical Rectangle) Κάθετο Τετράγωνο  του Γραφείου για την "
-"Διαδραστική Διαφήμιση "
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:85
-msgid "336x280 - IAB Large Rectangle"
-msgstr ""
-"336x280 - (IAB Large Rectangle) Μεγάλο Τετράγωνο του Γραφείου για την "
-"Διαδραστική Διαφήμιση "
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:86
-msgid "180x150 - IAB Rectangle"
-msgstr ""
-"180x150 - (IAB Rectangle) Τετράγωνο  του Γραφείου για την Διαδραστική "
-"Διαφήμιση "
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:88
-msgid "468x60  - IAB Full Banner"
-msgstr ""
-"468x60  - (IAB Full Banner) Πλήρης Διαφημιστική Επιφάνεια του Γραφείου για "
-"την Διαδραστική Διαφήμιση "
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:89
-msgid "234x60  - IAB Half Banner"
-msgstr ""
-"234x60  - (IAB Half Banner) Μισή Διαφημιστική Επιφάνεια του Γραφείου για την "
-"Διαδραστική Διαφήμιση "
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:90
-msgid "88x31   - IAB Micro Bar"
-msgstr ""
-"88x31   - (IAB Micro Bar) Μικρή μπάρα του Γραφείου για την Διαδραστική "
-"Διαφήμιση "
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:91
-msgid "120x90  - IAB Button 1"
-msgstr ""
-"120x90 - (IAB  Button 1) Κουμπί 1 του Γραφείου για την Διαδραστική Διαφήμιση "
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:92
-msgid "120x60  - IAB Button 2"
-msgstr ""
-"120x60 - (IAB Button 2) Κουμπί 2 του Γραφείου για την Διαδραστική Διαφήμιση "
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:93
-msgid "120x240 - IAB Vertical Banner"
-msgstr ""
-"120x240 - (IAB Vertical Banner) Κάθετη Διαφημιστική Επιφάνεια  του Γραφείου "
-"για την Διαδραστική Διαφήμιση "
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:94
-msgid "125x125 - IAB Square Button"
-msgstr ""
-"125x125 - (IAB Square Button) Τετράγωνο Κουμπί του Γραφείου για την "
-"Διαδραστική Διαφήμιση "
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:95
-msgid "728x90  - IAB Leaderboard"
-msgstr ""
-"728x90  - (IAB Leaderboard) Leaderboard του Γραφείου για την Διαδραστική "
-"Διαφήμιση "
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:97
-msgid "160x600 - IAB Wide Skyscraper"
-msgstr ""
-"160x600 - (IAB Wide Skyscraper) Ευρύς Ουρανοξύστης του Γραφείου για την "
-"Διαδραστική Διαφήμιση "
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:98
-msgid "120x600 - IAB Skyscraper"
-msgstr ""
-"120x600 - (IAB Skyscraper) Ουρανοξύστης του Γραφείου για την Διαδραστική "
-"Διαφήμιση "
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:99
-msgid "300x600 - IAB Half Page Ad"
-msgstr ""
-"300x600 - (IAB Half Page Ad)  Διαφήμιση μισής σελίδας του Γραφείου για την "
-"Διαδραστική Διαφήμιση "
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:128
-msgid "Maximum display size"
-msgstr "Μέγιστο μέγεθος εμφάνισης"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:131
-msgid "Use the values below for width and height"
-msgstr "Χρησιμοποιήστε τις κατωτέρω τιμές για το πλάτος και το ύψος"
-
 #: ../classes/Content/ShoutBox/ShoutBox.php:240
 msgid "Shout button 'onclick=' value (optionnal):"
 msgstr ""
@@ -2084,11 +2070,11 @@ msgid ""
 "text in Javascript with: %s"
 msgstr ""
 
-#: ../classes/Content/ShoutBox/ShoutBox.php:251 ../classes/Content.php:1553
-#: ../classes/Content.php:1572 ../classes/Content.php:1589
-#: ../classes/Content.php:1606 ../classes/Role.php:352
+#: ../classes/Content/ShoutBox/ShoutBox.php:251
 #: ../classes/ProfileTemplateField.php:454
-#: ../classes/ProfileTemplateField.php:472
+#: ../classes/ProfileTemplateField.php:472 ../classes/Role.php:352
+#: ../classes/Content.php:1553 ../classes/Content.php:1572
+#: ../classes/Content.php:1589 ../classes/Content.php:1606
 #, php-format
 msgid "Delete %s (%s)"
 msgstr "Διαγραφή % (%)"
@@ -2114,6 +2100,34 @@ msgstr ""
 msgid "Sorry, I am unable to determine your current node"
 msgstr ""
 
+#: ../classes/Content/Picture/Picture.php:272
+msgid "Hyperlink URL (leave empty if you don't need it)"
+msgstr "Υπερσύνδεσμος URL (αφήστε το κενό αν δεν το χρειάζεστε)"
+
+#: ../classes/Content/Picture/Picture.php:280
+msgid "Width (leave empty if you want to keep original width)"
+msgstr "Πλάτος (αφήστε το κενό αν θέλεται να διατηρήσετε το αρχικό πλάτος)"
+
+#: ../classes/Content/Picture/Picture.php:287
+msgid "Height (leave empty if you want to keep original height)"
+msgstr "Ύψος  (αφήστε το κενό αν θέλεται να διατηρήσετε το αρχικό ύψος)"
+
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:227
+msgid "FCKeditor is not installed"
+msgstr "Ο Επεξεργαστής FCK δεν έχει εγκατασταθεί"
+
+#: ../classes/Content/SmartyTemplate/SmartyTemplate.php:85
+#, php-format
+msgid ""
+"To list the available Smarty variables, put %s in the input field, save and "
+"then click preview"
+msgstr ""
+
+#: ../classes/Content/SmartyTemplate/SmartyTemplate.php:86
+#, php-format
+msgid "There are also a few custom Smarty modifiers available: %s"
+msgstr ""
+
 #: ../classes/Content/Avatar/Avatar.php:103
 msgid ""
 "Unable to process image (GD probably doesn't have support for it enabled)"
@@ -2136,62 +2150,6 @@ msgstr ""
 msgid "The online user list must be viewed at a specific node"
 msgstr ""
 
-#: ../classes/VirtualHost.php:162
-msgid "Server::getAllServers: Fatal error: No servers in the database!"
-msgstr ""
-"Διακομιστής:::λήψηΌλωντωνΔιακομιστών: Ανεπανόρθωτο Σφάλμα: Δεν υπάρχουν "
-"διακομιστές στην βάση δεδομένων!"
-
-#: ../classes/VirtualHost.php:262 ../classes/Server.php:151
-msgid "Unable to insert the new server in the database!"
-msgstr "Δεν ήταν δυνατή η προσθήκη νέου  διακομιστή στην βάση δεδομένων!"
-
-#: ../classes/VirtualHost.php:298
-msgid "Virtual host:"
-msgstr ""
-
-#: ../classes/VirtualHost.php:375
-msgid "Add a new virtual host for hostname"
-msgstr ""
-
-#: ../classes/VirtualHost.php:595
-msgid "Virtual hosts management"
-msgstr ""
-
-#: ../classes/VirtualHost.php:614
-msgid "Hostname"
-msgstr "Όνομα κεντρικού υπολογιστή"
-
-#: ../classes/VirtualHost.php:622
-msgid "Default network for this vhost"
-msgstr ""
-
-#: ../classes/VirtualHost.php:639
-msgid "Make this Virtual Host the server's default?"
-msgstr ""
-
-#: ../classes/VirtualHost.php:655
-msgid "Use SSL on this server?"
-msgstr "Να χρησιμοποιήθεί SSL σε αυτόν τον  διακομιστή;"
-
-#: ../classes/VirtualHost.php:667
-msgid "Google public API key"
-msgstr "Δημόσιο API κλειδί του Google"
-
-#: ../classes/VirtualHost.php:738
-msgid ""
-"Cannot delete default virtual host, create another one and select it before "
-"removing this one."
-msgstr ""
-
-#: ../classes/VirtualHost.php:743
-msgid "Could not delete server!"
-msgstr "Δεν ήταν δυνατή η διαγραφή του  διακομιστή!"
-
-#: ../classes/VirtualHost.php:771
-msgid "Virtual Hosts"
-msgstr ""
-
 #: ../classes/Profile.php:206
 msgid "Unable to insert the new profile in the database!"
 msgstr ""
@@ -2202,7 +2160,7 @@ msgstr ""
 
 #: ../classes/Profile.php:311 ../classes/Network.php:1563
 #: ../classes/Network.php:1582 ../classes/Network.php:1588
-#: ../classes/Network.php:1613 ../classes/Node.php:1220
+#: ../classes/Network.php:1613 ../classes/Node.php:1223
 msgid "Yes"
 msgstr "Ναι"
 
@@ -2218,13 +2176,361 @@ msgstr ""
 msgid "Sorry, this user has hidden his profile  temporarily."
 msgstr ""
 
-#: ../classes/Profile.php:446 ../classes/Network.php:1895
-#: ../classes/ProfileTemplateField.php:603 ../classes/ProfileField.php:363
+#: ../classes/Profile.php:446 ../classes/ProfileTemplateField.php:603
+#: ../classes/Network.php:1895 ../classes/ProfileField.php:363
 msgid "Access denied (must have super admin access)"
 msgstr "Άρνηση πρόσβασης (πρέπει να έχετε πρόσβαση υπέρ-διαχείρισης)"
 
 #: ../classes/Profile.php:451
 msgid "Could not delete Profile!"
+msgstr ""
+
+#: ../classes/User.php:157
+#, php-format
+msgid "There is no user with username %s"
+msgstr ""
+
+#: ../classes/User.php:268
+msgid "Guest"
+msgstr "Επισκέπτης"
+
+#: ../classes/User.php:311
+msgid "View this user's profile."
+msgstr ""
+
+#: ../classes/User.php:349
+#, php-format
+msgid "Sorry, the username %s is not available"
+msgstr "Λυπούμαστε, το όνομα χρήστη % δεν είναι διαθέσιμο"
+
+#: ../classes/User.php:395
+msgid "Could not update email address."
+msgstr "Δεν μπορέσαμε να ενημερώσουμε την ηλεκτρονική διεύθυνση"
+
+#: ../classes/User.php:429
+msgid "Could not update username locale."
+msgstr "Η τοποθεσία του ονόματος χρήστη δεν μπόρεσε να ενημερωθεί."
+
+#: ../classes/User.php:451
+msgid "Could not update status."
+msgstr "Λυπούμαστε, δεν μπορέσαμε να ενημερώσουμε την κατάσταση."
+
+#: ../classes/User.php:472
+#, php-format
+msgid ""
+"Sorry, your %.0f minutes grace period to retrieve your email and validate "
+"your account has now expired. You will have to connect to the internet and "
+"validate your account from another location."
+msgstr ""
+
+#: ../classes/User.php:475
+msgid "Your account is currently valid."
+msgstr "Ο λογαριασμός σας είναι τώρα έγκυρος"
+
+#: ../classes/User.php:479
+msgid "Sorry, your account is not valid: "
+msgstr "Λυπούμαστε, ο λογαριασμός σας δεν είναι έγκυρος:"
+
+#: ../classes/User.php:553
+msgid "Password cannot be empty."
+msgstr ""
+
+#: ../classes/User.php:557
+msgid "Could not change user's password."
+msgstr "Δεν μπορέσαμε να αλλάξουμε τον κωδικό εισόδου του χρήστη"
+
+#: ../classes/User.php:573
+msgid "No users could not be found in the database"
+msgstr "Δεν βρέθηκαν χρήστες στην βάση δεδομένων"
+
+#: ../classes/User.php:581 ../classes/User.php:599 ../classes/User.php:616
+msgid "Registration system"
+msgstr "Σύστημα καταχώρισης"
+
+#: ../classes/User.php:584
+msgid " lost username request"
+msgstr "χαμένη αίτηση ονόματος χρήστη"
+
+#: ../classes/User.php:585
+msgid ""
+"Hello,\n"
+"You have requested that the authentication server send you your username:\n"
+"Username: "
+msgstr ""
+"Γεια σας, Ζητήσατε από τον  διακομιστή ελέγχου ταυτότητας να σας στείλει ένα "
+"όνομα χρήστη:/Όνομα Χρήστη:"
+
+#: ../classes/User.php:585 ../classes/User.php:620
+msgid ""
+"\n"
+"\n"
+"Have a nice day,\n"
+"The Team"
+msgstr ""
+
+#: ../classes/User.php:591
+msgid "The user is not in validation period."
+msgstr "Ο χρήστης δεν είναι σε περίοδο επικύρωσης."
+
+#: ../classes/User.php:594
+msgid "The validation token is empty."
+msgstr "Το αδειοδοτικό επικύρωσης είναι άδειο"
+
+#: ../classes/User.php:602
+msgid " new user validation"
+msgstr "επικύρωση νέου χρήστη"
+
+#: ../classes/User.php:604
+msgid ""
+"Hello,\n"
+"Please follow the link below to validate your account.\n"
+msgstr ""
+
+#: ../classes/User.php:604
+msgid ""
+"\n"
+"\n"
+"Thank you,\n"
+"The Team."
+msgstr ""
+"\n"
+"//Ευχαριστούμε,/ Η Ομάδα"
+
+#: ../classes/User.php:619
+msgid " new password request"
+msgstr "Αίτηση νέου κωδικού εισόδου"
+
+#: ../classes/User.php:620
+msgid ""
+"Hello,\n"
+"You have requested that the authentication server send you a new password:\n"
+"Username: "
+msgstr ""
+"Γεια σας, /Ζητήσατε από τον   διακομιστή ελέγχου ταυτότητας να σας στείλει "
+"έναν νέο κωδικό εισόδου:/Κωδικός εισόδου:"
+
+#: ../classes/User.php:620
+msgid ""
+"\n"
+"Password: "
+msgstr ""
+
+#: ../classes/User.php:740
+msgid "Get user statistics"
+msgstr ""
+
+#: ../classes/User.php:745
+msgid "Note that Error is for internal use only"
+msgstr ""
+
+#: ../classes/User.php:751
+msgid "Administrative options"
+msgstr ""
+
+#: ../classes/User.php:759
+msgid "Be carefull when changing this: it's the username you use to log in!"
+msgstr ""
+"Δείξτε προσοχή αλλάζοντας αυτό: Είναι το όνομα χρήστη το οποίο "
+"χρησιμοποιούσατε!"
+
+#: ../classes/User.php:765
+msgid "Your current password"
+msgstr "Ο τρέχων κωδικός πρόσβασής σας"
+
+#: ../classes/User.php:771
+msgid "Your new password"
+msgstr "Ο νέος σας κωδικός πρόσβασης"
+
+#: ../classes/User.php:776
+msgid "Your new password (again)"
+msgstr ""
+
+#: ../classes/User.php:781
+msgid "Change my password"
+msgstr "Αλλαγή κωδικού πρόσβασης"
+
+#: ../classes/User.php:783
+msgid "User preferences"
+msgstr ""
+
+#: ../classes/User.php:795
+msgid "Completely delete my public profile"
+msgstr ""
+
+#: ../classes/User.php:804
+msgid "Create my public profile"
+msgstr ""
+
+#: ../classes/User.php:836
+msgid "Wrong password."
+msgstr "Λάθος κωδικός"
+
+#: ../classes/User.php:839
+msgid "Passwords do not match."
+msgstr "Οι κωδικοί πρόσβασης δεν ταιριάζουν."
+
+#: ../classes/User.php:930
+msgid "Online Users"
+msgstr ""
+
+#: ../classes/User.php:936
+msgid "Import NoCat user database"
+msgstr ""
+
+#: ../classes/User.php:943
+msgid "User manager"
+msgstr ""
+
+#: ../classes/User.php:955
+msgid "User administration"
+msgstr "Διαχείριση Χρήστη"
+
+#: ../classes/ProfileTemplateField.php:128
+#: ../classes/ProfileTemplateField.php:437
+#: ../classes/ContentTypeFilter.php:309 ../classes/ProfileTemplate.php:294
+msgid "No label"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:132
+msgid "Add new profile template field filtered by"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:141
+msgid "Sorry, no content type filter exists."
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:186 ../classes/Content.php:189
+msgid "Unable to insert new content into database!"
+msgstr "Δεν ήταν δυνατή η εισαγωγή νέου περιεχομένου στην βάση δεδομένων!"
+
+#: ../classes/ProfileTemplateField.php:414
+msgid "Display order"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:432
+msgid "Sorry, content type filter is missing."
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:434
+#: ../classes/ContentTypeFilter.php:301
+msgid "Content type filter"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:444
+msgid "Display label"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:450
+#, php-format
+msgid "%s display label (%s)"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:454
+msgid "display label"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:461
+msgid "Admin label"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:468
+#, php-format
+msgid "%s admin label (%s)"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:472
+msgid "admin label"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:479
+msgid "Semantic ID"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:487
+msgid "Full name"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:488
+msgid "Nickname"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:489
+msgid "E-mail"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:490
+msgid "Hashed e-mail"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:491
+msgid "Picture"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:492
+msgid "URL of a blog"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:493
+msgid "URL of a homepage"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:608
+msgid "Could not delete ProfileTemplateField!"
+msgstr ""
+
+#: ../classes/Role.php:151
+#, php-format
+msgid "Sorry: No available roles in the database for stakeholder type: %s!"
+msgstr ""
+
+#: ../classes/Role.php:162 ../classes/Role.php:168
+msgid "Role:"
+msgstr ""
+
+#: ../classes/Role.php:217 ../classes/ContentTypeFilter.php:199
+msgid "Unable to insert the new ContentTypeFilter in the database!"
+msgstr ""
+
+#: ../classes/Role.php:238
+#, php-format
+msgid "Add a new role of type %s with id %s"
+msgstr ""
+
+#: ../classes/Role.php:302
+msgid "User roles management"
+msgstr ""
+
+#: ../classes/Role.php:309
+msgid "Stakeholder type"
+msgstr ""
+
+#: ../classes/Role.php:318
+msgid "This role is a system role"
+msgstr ""
+
+#: ../classes/Role.php:325
+msgid "Role ID"
+msgstr ""
+
+#: ../classes/Role.php:344 ../classes/Role.php:348 ../classes/Content.php:1564
+#: ../classes/Content.php:1568
+msgid "Description:"
+msgstr "Περιγραφή:"
+
+#: ../classes/Role.php:352 ../classes/Content.php:1572
+msgid "description"
+msgstr "περιγραφή"
+
+#: ../classes/Role.php:379
+msgid "Permissions"
+msgstr ""
+
+#: ../classes/Role.php:485
+msgid "Could not delete object!"
+msgstr ""
+
+#: ../classes/Role.php:506
+msgid "User roles"
 msgstr ""
 
 #: ../classes/Security.php:205
@@ -2247,205 +2553,168 @@ msgstr ""
 msgid " (Empty langstring, ID is displayed)"
 msgstr "(Άδεια ακολουθία χαρακτήρων, εμφάνιση ταυτότητας)"
 
-#: ../classes/User.php:157
-#, php-format
-msgid "There is no user with username %s"
+#: ../classes/ContentTypeFilter.php:220
+msgid "Add a new content type filter with these rules"
 msgstr ""
 
-#: ../classes/User.php:252
-msgid "Guest"
-msgstr "Επισκέπτης"
-
-#: ../classes/User.php:295
-msgid "View this user's profile."
+#: ../classes/ContentTypeFilter.php:356
+msgid "ContentTypeFilter management"
 msgstr ""
 
-#: ../classes/User.php:329
-#, php-format
-msgid "Sorry, the username %s is not available"
-msgstr "Λυπούμαστε, το όνομα χρήστη % δεν είναι διαθέσιμο"
-
-#: ../classes/User.php:375
-msgid "Could not update email address."
-msgstr "Δεν μπορέσαμε να ενημερώσουμε την ηλεκτρονική διεύθυνση"
-
-#: ../classes/User.php:409
-msgid "Could not update username locale."
-msgstr "Η τοποθεσία του ονόματος χρήστη δεν μπόρεσε να ενημερωθεί."
-
-#: ../classes/User.php:431
-msgid "Could not update status."
-msgstr "Λυπούμαστε, δεν μπορέσαμε να ενημερώσουμε την κατάσταση."
-
-#: ../classes/User.php:451
-#, php-format
-msgid ""
-"Sorry, your %.0f minutes grace period to retrieve your email and validate "
-"your account has now expired. You will have to connect to the internet and "
-"validate your account from another location."
+#: ../classes/ContentTypeFilter.php:363
+msgid "ContentTypeFilter ID"
 msgstr ""
 
-#: ../classes/User.php:454
-msgid "Your account is currently valid."
-msgstr "Ο λογαριασμός σας είναι τώρα έγκυρος"
-
-#: ../classes/User.php:458
-msgid "Sorry, your account is not valid: "
-msgstr "Λυπούμαστε, ο λογαριασμός σας δεν είναι έγκυρος:"
-
-#: ../classes/User.php:532
-msgid "Password cannot be empty."
+#: ../classes/ContentTypeFilter.php:374 ../classes/ProfileTemplate.php:478
+msgid "Label"
 msgstr ""
 
-#: ../classes/User.php:536
-msgid "Could not change user's password."
-msgstr "Δεν μπορέσαμε να αλλάξουμε τον κωδικό εισόδου του χρήστη"
-
-#: ../classes/User.php:552
-msgid "No users could not be found in the database"
-msgstr "Δεν βρέθηκαν χρήστες στην βάση δεδομένων"
-
-#: ../classes/User.php:560 ../classes/User.php:578 ../classes/User.php:595
-msgid "Registration system"
-msgstr "Σύστημα καταχώρισης"
-
-#: ../classes/User.php:563
-msgid " lost username request"
-msgstr "χαμένη αίτηση ονόματος χρήστη"
-
-#: ../classes/User.php:564
-msgid ""
-"Hello,\n"
-"You have requested that the authentication server send you your username:\n"
-"Username: "
-msgstr ""
-"Γεια σας, Ζητήσατε από τον  διακομιστή ελέγχου ταυτότητας να σας στείλει ένα "
-"όνομα χρήστη:/Όνομα Χρήστη:"
-
-#: ../classes/User.php:564 ../classes/User.php:599
-msgid ""
-"\n"
-"\n"
-"Have a nice day,\n"
-"The Team"
+#: ../classes/ContentTypeFilter.php:385
+msgid "Rules (must be a valid array definition)"
 msgstr ""
 
-#: ../classes/User.php:570
-msgid "The user is not in validation period."
-msgstr "Ο χρήστης δεν είναι σε περίοδο επικύρωσης."
-
-#: ../classes/User.php:573
-msgid "The validation token is empty."
-msgstr "Το αδειοδοτικό επικύρωσης είναι άδειο"
-
-#: ../classes/User.php:581
-msgid " new user validation"
-msgstr "επικύρωση νέου χρήστη"
-
-#: ../classes/User.php:583
-msgid ""
-"Hello,\n"
-"Please follow the link below to validate your account.\n"
+#: ../classes/ContentTypeFilter.php:417
+msgid "The rules must be given as a PHP array declaration."
 msgstr ""
 
-#: ../classes/User.php:583
-msgid ""
-"\n"
-"\n"
-"Thank you,\n"
-"The Team."
-msgstr ""
-"\n"
-"//Ευχαριστούμε,/ Η Ομάδα"
-
-#: ../classes/User.php:598
-msgid " new password request"
-msgstr "Αίτηση νέου κωδικού εισόδου"
-
-#: ../classes/User.php:599
-msgid ""
-"Hello,\n"
-"You have requested that the authentication server send you a new password:\n"
-"Username: "
-msgstr ""
-"Γεια σας, /Ζητήσατε από τον   διακομιστή ελέγχου ταυτότητας να σας στείλει "
-"έναν νέο κωδικό εισόδου:/Κωδικός εισόδου:"
-
-#: ../classes/User.php:599
-msgid ""
-"\n"
-"Password: "
+#: ../classes/ContentTypeFilter.php:443
+msgid "Could not delete ContentTypeFilter!"
 msgstr ""
 
-#: ../classes/User.php:719
-msgid "Get user statistics"
+#: ../classes/ContentTypeFilter.php:471
+msgid "Content type filters"
 msgstr ""
 
-#: ../classes/User.php:724
-msgid "Note that Error is for internal use only"
+#: ../classes/Statistics.php:85
+msgid "Usernames"
+msgstr "Ονόματα χρήστη"
+
+#: ../classes/Statistics.php:86
+msgid "MAC addresses"
+msgstr "Διευθύνσεις MAC"
+
+#: ../classes/Statistics.php:124 ../classes/Network.php:706
+#: ../classes/Content.php:335 ../classes/NodeList.php:138
+msgid "Unable to open directory "
+msgstr "Δεν ήταν δυνατό το άνοιγμα του ευρετηρίου"
+
+#: ../classes/Statistics.php:152 ../classes/Statistics.php:156
+msgid "No restriction..."
+msgstr "Κανένας περιορισμός..."
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "yesterday"
+msgstr "χθες"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "today"
+msgstr "σήμερα"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "2 days ago"
+msgstr "πριν από 2 μέρες"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "3 days ago"
+msgstr "πριν από 3 μέρες"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "1 week ago"
+msgstr "πριν από 1 εβδομάδα"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "2 weeks ago"
+msgstr "πριν από 2 εβδομάδες"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "3 weeks ago"
+msgstr "πριν από 3 εβδομάδες"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "1 month ago"
+msgstr "πριν από ένα μήνα"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "2 months ago"
+msgstr "πριν από δύο μήνες"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "6 months ago"
+msgstr "πριν από 6 μήνες"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "1 year ago"
+msgstr "πριν από 1 χρόνο"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "Select from and to..."
+msgstr "Επιλέξτε από και σε.........."
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "yesterday (whole day)"
+msgstr "χθες (όλη μέρα)"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "today (whole day)"
+msgstr "σήμερα (όλη μέρα)"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "this month"
+msgstr "αυτόν τον μήνα"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "last month"
+msgstr "τον προηγούμενο μήνα"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "this year"
+msgstr "αυτόν τον χρόνο"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "forever"
+msgstr "για πάντα"
+
+#: ../classes/Statistics.php:161
+msgid "From"
+msgstr "Από"
+
+#: ../classes/Statistics.php:176
+msgid "To"
+msgstr "Σε"
+
+#: ../classes/Statistics.php:450
+msgid "Invalid parameter"
+msgstr "Μη έγκυρη παράμετρος"
+
+#: ../classes/Statistics.php:482
+msgid "Username or MAC address, depending on selection above"
+msgstr "Όνομα χρήστη ή διεύθυνση MAC, ανάλογα με την ανωτέρω επιλογή"
+
+#: ../classes/Statistics.php:578
+msgid "Report configuration"
+msgstr "Ρυθμίσεις αναφοράς"
+
+#: ../classes/Statistics.php:601
+msgid "Restrict the time range for which statistics will be computed"
 msgstr ""
+"Περιορισμός της χρονικής περιόδου για την οποία θα υπολογιστούν τα "
+"στατιστικά δεδομένα"
 
-#: ../classes/User.php:730
-msgid "Administrative options"
-msgstr ""
+#: ../classes/Statistics.php:609
+msgid "Restrict stats to the following nodes"
+msgstr "Περιορισμός στατιστικών για τους ακόλουθους κόμβους"
 
-#: ../classes/User.php:738
-msgid "Be carefull when changing this: it's the username you use to log in!"
-msgstr ""
-"Δείξτε προσοχή αλλάζοντας αυτό: Είναι το όνομα χρήστη το οποίο "
-"χρησιμοποιούσατε!"
+#: ../classes/Statistics.php:619
+msgid "Distinguish users by"
+msgstr "Διαχωρισμός χρηστών ανά"
 
-#: ../classes/User.php:744
-msgid "Your current password"
-msgstr "Ο τρέχων κωδικός πρόσβασής σας"
+#: ../classes/Statistics.php:628
+msgid "Restrict stats to the selected users"
+msgstr "Περιορισμός στατιστικών για τους επιλεγμένους χρήστες"
 
-#: ../classes/User.php:750
-msgid "Your new password"
-msgstr "Ο νέος σας κωδικός πρόσβασης"
-
-#: ../classes/User.php:755
-msgid "Your new password (again)"
-msgstr ""
-
-#: ../classes/User.php:760
-msgid "Change my password"
-msgstr "Αλλαγή κωδικού πρόσβασης"
-
-#: ../classes/User.php:762
-msgid "User preferences"
-msgstr ""
-
-#: ../classes/User.php:774
-msgid "Completely delete my public profile"
-msgstr ""
-
-#: ../classes/User.php:783
-msgid "Create my public profile"
-msgstr ""
-
-#: ../classes/User.php:815
-msgid "Wrong password."
-msgstr "Λάθος κωδικός"
-
-#: ../classes/User.php:818
-msgid "Passwords do not match."
-msgstr "Οι κωδικοί πρόσβασης δεν ταιριάζουν."
-
-#: ../classes/User.php:909
-msgid "Online Users"
-msgstr ""
-
-#: ../classes/User.php:915
-msgid "Import NoCat user database"
-msgstr ""
-
-#: ../classes/User.php:922
-msgid "User manager"
-msgstr ""
-
-#: ../classes/User.php:934
-msgid "User administration"
-msgstr "Διαχείριση Χρήστη"
+#: ../classes/Statistics.php:637
+msgid "Selected reports"
+msgstr "Επιλεγμένες αναφορές"
 
 #: ../classes/Network.php:112 ../classes/Network.php:249
 msgid "Network::getAllNetworks:  Fatal error: No networks in the database!"
@@ -2464,11 +2733,6 @@ msgstr "Δίκτυο:"
 #: ../classes/Network.php:307
 msgid "Create a new network with ID"
 msgstr "Δημιουργία νέου δικτύου με ταυτότητα"
-
-#: ../classes/Network.php:706 ../classes/Statistics.php:124
-#: ../classes/Content.php:335 ../classes/NodeList.php:138
-msgid "Unable to open directory "
-msgstr "Δεν ήταν δυνατό το άνοιγμα του ευρετηρίου"
 
 #: ../classes/Network.php:1035
 msgid "Satellite"
@@ -2609,11 +2873,11 @@ msgid "Network's user verification"
 msgstr "Επαλήθευση χρήστη δικτύου"
 
 #: ../classes/Network.php:1630 ../classes/Server.php:275
-#: ../classes/Node.php:1241
+#: ../classes/Node.php:1244
 msgid "Access rights"
 msgstr "Δικαιώματα πρόσβασης"
 
-#: ../classes/Network.php:1646 ../classes/Node.php:1178
+#: ../classes/Network.php:1646 ../classes/Node.php:1181
 msgid "Latitude"
 msgstr "Γεωγραφικό πλάτος"
 
@@ -2621,7 +2885,7 @@ msgstr "Γεωγραφικό πλάτος"
 msgid "Center latitude for your the area of your wireless network"
 msgstr "Κέντρο του γεωγραφικού πλάτους της περιοχής του ασύρματου δικτύου σας"
 
-#: ../classes/Network.php:1651 ../classes/Node.php:1183
+#: ../classes/Network.php:1651 ../classes/Node.php:1186
 msgid "Longitude"
 msgstr "Γεωγραφικό μήκος"
 
@@ -2649,7 +2913,7 @@ msgstr ""
 "Προεπιλεγμένος τύπος Χάρτη του Google για την περιοχή του ασύρματου δικτύου "
 "σας"
 
-#: ../classes/Network.php:1667 ../classes/Node.php:1205
+#: ../classes/Network.php:1667 ../classes/Node.php:1208
 msgid "GIS data"
 msgstr "Δεδομένα GIS"
 
@@ -2673,202 +2937,96 @@ msgstr "Δεν ήταν δυνατή η διαγραφή του δικτύου!"
 msgid "Network administration"
 msgstr "Διαχείριση δικτύου"
 
-#: ../classes/Statistics.php:85
-msgid "Usernames"
-msgstr "Ονόματα χρήστη"
-
-#: ../classes/Statistics.php:86
-msgid "MAC addresses"
-msgstr "Διευθύνσεις MAC"
-
-#: ../classes/Statistics.php:152 ../classes/Statistics.php:156
-msgid "No restriction..."
-msgstr "Κανένας περιορισμός..."
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "yesterday"
-msgstr "χθες"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "today"
-msgstr "σήμερα"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "2 days ago"
-msgstr "πριν από 2 μέρες"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "3 days ago"
-msgstr "πριν από 3 μέρες"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "1 week ago"
-msgstr "πριν από 1 εβδομάδα"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "2 weeks ago"
-msgstr "πριν από 2 εβδομάδες"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "3 weeks ago"
-msgstr "πριν από 3 εβδομάδες"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "1 month ago"
-msgstr "πριν από ένα μήνα"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "2 months ago"
-msgstr "πριν από δύο μήνες"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "6 months ago"
-msgstr "πριν από 6 μήνες"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "1 year ago"
-msgstr "πριν από 1 χρόνο"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "Select from and to..."
-msgstr "Επιλέξτε από και σε.........."
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "yesterday (whole day)"
-msgstr "χθες (όλη μέρα)"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "today (whole day)"
-msgstr "σήμερα (όλη μέρα)"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "this month"
-msgstr "αυτόν τον μήνα"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "last month"
-msgstr "τον προηγούμενο μήνα"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "this year"
-msgstr "αυτόν τον χρόνο"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "forever"
-msgstr "για πάντα"
-
-#: ../classes/Statistics.php:161
-msgid "From"
-msgstr "Από"
-
-#: ../classes/Statistics.php:176
-msgid "To"
-msgstr "Σε"
-
-#: ../classes/Statistics.php:450
-msgid "Invalid parameter"
-msgstr "Μη έγκυρη παράμετρος"
-
-#: ../classes/Statistics.php:482
-msgid "Username or MAC address, depending on selection above"
-msgstr "Όνομα χρήστη ή διεύθυνση MAC, ανάλογα με την ανωτέρω επιλογή"
-
-#: ../classes/Statistics.php:578
-msgid "Report configuration"
-msgstr "Ρυθμίσεις αναφοράς"
-
-#: ../classes/Statistics.php:601
-msgid "Restrict the time range for which statistics will be computed"
-msgstr ""
-"Περιορισμός της χρονικής περιόδου για την οποία θα υπολογιστούν τα "
-"στατιστικά δεδομένα"
-
-#: ../classes/Statistics.php:609
-msgid "Restrict stats to the following nodes"
-msgstr "Περιορισμός στατιστικών για τους ακόλουθους κόμβους"
-
-#: ../classes/Statistics.php:619
-msgid "Distinguish users by"
-msgstr "Διαχωρισμός χρηστών ανά"
-
-#: ../classes/Statistics.php:628
-msgid "Restrict stats to the selected users"
-msgstr "Περιορισμός στατιστικών για τους επιλεγμένους χρήστες"
-
-#: ../classes/Statistics.php:637
-msgid "Selected reports"
-msgstr "Επιλεγμένες αναφορές"
-
-#: ../classes/AbstractDb.php:96
-#, php-format
-msgid "Unable to connect to database on %s"
-msgstr "Δεν ήταν δυνατή η σύνδεση με την βάση δεδομένων σε %"
-
-#: ../classes/AbstractDb.php:118 ../classes/AbstractDb.php:211
-#: ../classes/AbstractDb.php:399 ../classes/AbstractDb.php:472
-msgid "SQL Query"
-msgstr "Ερώτημα SQL"
-
-#: ../classes/AbstractDb.php:123 ../classes/AbstractDb.php:216
-msgid "Query plan"
-msgstr "Πλάνο ερωτημάτων"
-
-#: ../classes/AbstractDb.php:141 ../classes/AbstractDb.php:234
-#: ../classes/AbstractDb.php:409
-#, php-format
-msgid "Elapsed time for query execution : %.6f second(s)"
-msgstr ""
-"Χρόνος που έχει διανυθεί για την πραγματοποίηση του ερωτήματος: %.6 "
-"δευτερόλεπτο(α)"
-
-#: ../classes/AbstractDb.php:145 ../classes/AbstractDb.php:238
-#: ../classes/AbstractDb.php:413 ../classes/AbstractDb.php:423
-#: ../classes/AbstractDb.php:487
-msgid "An error occured while executing the following SQL query"
-msgstr "Ένα λάθος προέκυψε κατά την εκτέλεση του ακόλουθου SQL ερωτήματος"
-
-#: ../classes/AbstractDb.php:146 ../classes/AbstractDb.php:239
-#: ../classes/AbstractDb.php:414 ../classes/AbstractDb.php:488
-msgid "Error message"
-msgstr "Μήνυμα λάθους"
-
-#: ../classes/AbstractDb.php:147 ../classes/AbstractDb.php:240
-#: ../classes/AbstractDb.php:489
-msgid "Backtrace:"
+#: ../classes/ProfileTemplate.php:229
+msgid "Unable to insert the new profile template in the database!"
 msgstr ""
 
-#: ../classes/AbstractDb.php:170
-#, php-format
-msgid "The query returned %d results"
-msgstr "Το ερώτημα επέστρεψε % αποτελέσματα"
-
-#: ../classes/AbstractDb.php:424
-#, php-format
-msgid ""
-"The query returned %d results, although there should have been only one."
+#: ../classes/ProfileTemplate.php:289
+msgid "Profile template"
 msgstr ""
-"Το ερώτημα επέστρεψε % αποτελέσματα, παρόλο που θα έπρεπε να είναι μόνο ένα"
 
-#: ../classes/AbstractDb.php:432
-#, php-format
-msgid "The query returned %d result(s)"
-msgstr "Το ερώτημα επέστρεψε % αποτελέσμα (τα)"
-
-#: ../classes/AbstractDb.php:481 ../classes/AbstractDb.php:499
-#, php-format
-msgid "%d rows affected by the SQL query."
-msgstr "% σειρών επηρεάστηκαν από το ερώτημα SQL "
-
-#: ../classes/AbstractDb.php:482
-#, php-format
-msgid "Elapsed time for query execution : %6f second(s)"
+#: ../classes/ProfileTemplate.php:359
+msgid "Profile template label"
 msgstr ""
-"Χρόνος που έχει διανυθεί για την πραγματοποίηση του ερωτήματος %.6f "
-"δευτερόλεπτο(α)"
+
+#: ../classes/ProfileTemplate.php:359 ../classes/Content.php:719
+msgid "Actions"
+msgstr "Δράσεις"
+
+#: ../classes/ProfileTemplate.php:460
+msgid "Profile template management"
+msgstr ""
+
+#: ../classes/ProfileTemplate.php:467
+msgid "ProfileTemplate ID"
+msgstr ""
+
+#: ../classes/ProfileTemplate.php:497
+msgid "Profile template fields"
+msgstr ""
+
+#: ../classes/ProfileTemplate.php:507
+#, php-format
+msgid "Delete %s %d, used in %d/%d profiles"
+msgstr ""
+
+#: ../classes/ProfileTemplate.php:573
+msgid "Could not delete ProfileTemplate!"
+msgstr ""
+
+#: ../classes/ProfileTemplate.php:601
+msgid "Profile templates"
+msgstr ""
+
+#: ../classes/ThemePack.php:87
+#, php-format
+msgid "Theme pack %s cannot be found in %s"
+msgstr "Το θεματικό πακέτο δεν βρέθηκε στα %"
+
+#: ../classes/ThemePack.php:94
+#, php-format
+msgid "%s (Theme did not include a name.txt file)"
+msgstr "% (θέμα δεν περιλαμβάνει όνομα.txt file)"
+
+#: ../classes/ThemePack.php:100
+#, php-format
+msgid "%s (Theme did not include a description.txt file)"
+msgstr "% (θέμα δεν περιλαμβάνει περιγραφή.txt file)"
+
+#: ../classes/ThemePack.php:121
+msgid "Theme pack:"
+msgstr "Θεματικό πακέτο:"
+
+#: ../classes/ThemePack.php:144
+msgid "Unable to open the network theme packs directory"
+msgstr ""
+"Δεν είναι δυνατό το άνοιγμα του καταλόγου των θεματικών πακέτων του δικτύου"
+
+#: ../classes/ThemePack.php:151
+#, php-format
+msgid "No network theme packs available in %s"
+msgstr "Δεν υπάρχουν διαθέσιμα θεματικά πακέτα δικτύου σε %"
+
+#: ../classes/ProfileField.php:251
+msgid "Unable to insert the new profile fields in the database!"
+msgstr ""
+
+#: ../classes/ProfileField.php:281
+#, php-format
+msgid "Delete %s"
+msgstr ""
+
+#: ../classes/ProfileField.php:368
+msgid "Could not delete ProfileField!"
+msgstr ""
 
 #: ../classes/Server.php:91
 msgid "Main server object"
 msgstr ""
+
+#: ../classes/Server.php:151 ../classes/VirtualHost.php:262
+msgid "Unable to insert the new server in the database!"
+msgstr "Δεν ήταν δυνατή η προσθήκη νέου  διακομιστή στην βάση δεδομένων!"
 
 #: ../classes/Server.php:229
 msgid "Server management"
@@ -2900,6 +3058,77 @@ msgstr ""
 msgid "Server administration"
 msgstr "Διαχείριση  Διακομιστή "
 
+#: ../classes/AbstractDb.php:93
+msgid "It appears the postgresql module isn't loaded"
+msgstr ""
+
+#: ../classes/AbstractDb.php:99
+#, php-format
+msgid "Unable to connect to database on %s"
+msgstr "Δεν ήταν δυνατή η σύνδεση με την βάση δεδομένων σε %"
+
+#: ../classes/AbstractDb.php:121 ../classes/AbstractDb.php:214
+#: ../classes/AbstractDb.php:402 ../classes/AbstractDb.php:475
+msgid "SQL Query"
+msgstr "Ερώτημα SQL"
+
+#: ../classes/AbstractDb.php:126 ../classes/AbstractDb.php:219
+msgid "Query plan"
+msgstr "Πλάνο ερωτημάτων"
+
+#: ../classes/AbstractDb.php:144 ../classes/AbstractDb.php:237
+#: ../classes/AbstractDb.php:412
+#, php-format
+msgid "Elapsed time for query execution : %.6f second(s)"
+msgstr ""
+"Χρόνος που έχει διανυθεί για την πραγματοποίηση του ερωτήματος: %.6 "
+"δευτερόλεπτο(α)"
+
+#: ../classes/AbstractDb.php:148 ../classes/AbstractDb.php:241
+#: ../classes/AbstractDb.php:416 ../classes/AbstractDb.php:426
+#: ../classes/AbstractDb.php:490
+msgid "An error occured while executing the following SQL query"
+msgstr "Ένα λάθος προέκυψε κατά την εκτέλεση του ακόλουθου SQL ερωτήματος"
+
+#: ../classes/AbstractDb.php:149 ../classes/AbstractDb.php:242
+#: ../classes/AbstractDb.php:417 ../classes/AbstractDb.php:491
+msgid "Error message"
+msgstr "Μήνυμα λάθους"
+
+#: ../classes/AbstractDb.php:150 ../classes/AbstractDb.php:243
+#: ../classes/AbstractDb.php:492
+msgid "Backtrace:"
+msgstr ""
+
+#: ../classes/AbstractDb.php:173
+#, php-format
+msgid "The query returned %d results"
+msgstr "Το ερώτημα επέστρεψε % αποτελέσματα"
+
+#: ../classes/AbstractDb.php:427
+#, php-format
+msgid ""
+"The query returned %d results, although there should have been only one."
+msgstr ""
+"Το ερώτημα επέστρεψε % αποτελέσματα, παρόλο που θα έπρεπε να είναι μόνο ένα"
+
+#: ../classes/AbstractDb.php:435
+#, php-format
+msgid "The query returned %d result(s)"
+msgstr "Το ερώτημα επέστρεψε % αποτελέσμα (τα)"
+
+#: ../classes/AbstractDb.php:484 ../classes/AbstractDb.php:502
+#, php-format
+msgid "%d rows affected by the SQL query."
+msgstr "% σειρών επηρεάστηκαν από το ερώτημα SQL "
+
+#: ../classes/AbstractDb.php:485
+#, php-format
+msgid "Elapsed time for query execution : %6f second(s)"
+msgstr ""
+"Χρόνος που έχει διανυθεί για την πραγματοποίηση του ερωτήματος %.6f "
+"δευτερόλεπτο(α)"
+
 #: ../classes/Content.php:150
 msgid "Untitled content"
 msgstr "Άτιτλο περιεχόμενο"
@@ -2909,10 +3138,6 @@ msgid "Content type is optionnal, but cannot be empty!"
 msgstr ""
 "Ο τύπος περιεχομένου είναι προαιρετικός, αλλά δεν είναι δυνατό να είναι "
 "άδειος!"
-
-#: ../classes/Content.php:189 ../classes/ProfileTemplateField.php:186
-msgid "Unable to insert new content into database!"
-msgstr "Δεν ήταν δυνατή η εισαγωγή νέου περιεχομένου στην βάση δεδομένων!"
 
 #: ../classes/Content.php:221
 msgid "It appears that you have not installed any Content plugin !"
@@ -2951,10 +3176,6 @@ msgstr "Σειρά"
 #: ../classes/Content.php:719
 msgid "Content"
 msgstr "Περιεχόμενο"
-
-#: ../classes/Content.php:719 ../classes/ProfileTemplate.php:359
-msgid "Actions"
-msgstr "Δράσεις"
 
 #: ../classes/Content.php:911
 msgid "Select from reusable content library"
@@ -3020,15 +3241,6 @@ msgstr "Τίτλος:"
 #: ../classes/Content.php:1553
 msgid "title"
 msgstr "Τίτλος"
-
-#: ../classes/Content.php:1564 ../classes/Content.php:1568
-#: ../classes/Role.php:344 ../classes/Role.php:348
-msgid "Description:"
-msgstr "Περιγραφή:"
-
-#: ../classes/Content.php:1572 ../classes/Role.php:352
-msgid "description"
-msgstr "περιγραφή"
 
 #: ../classes/Content.php:1581 ../classes/Content.php:1585
 msgid "Long description:"
@@ -3134,21 +3346,21 @@ msgstr "Διακομιστής ελέγχου ταυτότητας"
 msgid "%s is not a valid structural display area"
 msgstr "% δεν είναι έγκυρη περιοχή επίδειξης δομής"
 
-#: ../classes/MainUI.php:641
+#: ../classes/MainUI.php:642
 #, php-format
 msgid "%s Login"
 msgstr "% Σύνδεση"
 
-#: ../classes/MainUI.php:641
+#: ../classes/MainUI.php:642
 msgid "Login"
 msgstr "Σύνδεση"
 
-#: ../classes/MainUI.php:645
+#: ../classes/MainUI.php:646
 #, php-format
 msgid "Click <a href='%s'>here</a> to continue"
 msgstr "Πατήστε <a href='%s'> εδώ </a> για να συνεχίσετε"
 
-#: ../classes/MainUI.php:645
+#: ../classes/MainUI.php:646
 msgid ""
 "The transfer from secure login back to regular http may cause a warning."
 msgstr ""
@@ -3274,87 +3486,87 @@ msgstr "Επεξεργασία κόμβου"
 msgid "Get access statistics"
 msgstr "Λήψη στατιστικών στοιχείων πρόσβασης"
 
-#: ../classes/Node.php:1093
+#: ../classes/Node.php:1096
 msgid "Node content"
 msgstr "Περιεχόμενο κόμβου"
 
-#: ../classes/Node.php:1119
+#: ../classes/Node.php:1122
 msgid "Civic number"
 msgstr "Αστικός αριθμός"
 
-#: ../classes/Node.php:1124
+#: ../classes/Node.php:1127
 msgid "Street name"
 msgstr "Όνομα οδού"
 
-#: ../classes/Node.php:1144
+#: ../classes/Node.php:1147
 msgid "Country"
 msgstr "Χώρα"
 
-#: ../classes/Node.php:1149
+#: ../classes/Node.php:1152
 msgid "Public phone number"
 msgstr "Αριθμός δημόσιου τηλεφώνου"
 
-#: ../classes/Node.php:1154
+#: ../classes/Node.php:1157
 msgid "Public email"
 msgstr "Δημόσια ηλεκτρονική διεύθυνση"
 
-#: ../classes/Node.php:1164
+#: ../classes/Node.php:1167
 msgid "Mass transit info"
 msgstr "Πληροφορίες μαζικής μεταφοράς"
 
-#: ../classes/Node.php:1169
+#: ../classes/Node.php:1172
 msgid "Information about the node"
 msgstr "Πληροφορίες για τον κόμβο"
 
-#: ../classes/Node.php:1189 ../classes/Node.php:1193
+#: ../classes/Node.php:1192 ../classes/Node.php:1196
 msgid "Geocode the address or postal code above"
 msgstr ""
 "Δώστε γεωγραφικό κωδικό για την ανωτέρω διεύθυνση ή ταχυδρομικό κωδικό "
 
-#: ../classes/Node.php:1190
+#: ../classes/Node.php:1193
 msgid "Check using Google Maps"
 msgstr "Έλεγχος με χρήση των χαρτών του Google"
 
-#: ../classes/Node.php:1191
+#: ../classes/Node.php:1194
 msgid ""
 "Use a geocoding service, then use Google Maps to pinpoint the exact location."
 msgstr ""
 "Χρησιμοποιήστε υπηρεσία γεωγραφικής κωδικοποίησης, και στην συνέχεια "
 "χρησιμοποιήστε τους χάρτες του Google για να επισημάνετε την ακριβή τοποθεσία"
 
-#: ../classes/Node.php:1194
+#: ../classes/Node.php:1197
 msgid "Use a geocoding service"
 msgstr "Χρησιμοποιήστε υπηρεσία γεωγραφικής κωδικοποίησης"
 
-#: ../classes/Node.php:1200
+#: ../classes/Node.php:1203
 msgid "Map URL"
 msgstr "URL χάρτης"
 
-#: ../classes/Node.php:1213
+#: ../classes/Node.php:1216
 msgid "Node deployment status"
 msgstr "Κατάσταση ανάπτυξης του κόμβου"
 
-#: ../classes/Node.php:1219
+#: ../classes/Node.php:1222
 msgid "Is this node splash-only (no login)?"
 msgstr ""
 "Αυτός ο κόμβος επιτρέπει ελεύθερη πρόσβαση (χωρίς διαδικασία σύνδεσης);"
 
-#: ../classes/Node.php:1226
+#: ../classes/Node.php:1229
 msgid "URL to show instead of the portal"
 msgstr "URL που θα εμφανιστεί σντί της πύλης"
 
-#: ../classes/Node.php:1228
+#: ../classes/Node.php:1231
 msgid ""
 "If this is not empty, the portal will be disabled and this URL will be shown "
 "instead"
 msgstr ""
 "Εάν δεν είναι άδειο, η πύλη θα απενεργοποιηθεί και θα εμφανιστεί αυτό το URL"
 
-#: ../classes/Node.php:1233
+#: ../classes/Node.php:1236
 msgid "Node configuration"
 msgstr "Ρυθμίσεις κόμβου"
 
-#: ../classes/Node.php:1363
+#: ../classes/Node.php:1371
 msgid ""
 "It appears that the Geocoder could not be reached or could not geocode the "
 "given address."
@@ -3362,268 +3574,132 @@ msgstr ""
 "Φαίνεται ότι ο γεωγραφικός κωδικοποιητής δεν είναι προσβάσιμος ή ότι δεν "
 "μπόρεσε να δώσει γεωγραφικκό κωδικό για την συγκεκριμένη διεύθυνση."
 
-#: ../classes/Node.php:1366
+#: ../classes/Node.php:1374
 msgid "You must enter a valid address."
 msgstr "Πρέπει να εισάγετε μία έγκυρη διεύθυνση."
 
-#: ../classes/Node.php:1370
+#: ../classes/Node.php:1378
 msgid "Unable to create geocoder.  Are you sure you set the country?"
 msgstr ""
 "Αδύνατη η δημιουργία γεωγραφικού κωδικού. Είστε σίγουροι ότι ορίσατε την "
 "χώρα;"
 
-#: ../classes/Node.php:1608
+#: ../classes/Node.php:1616
 msgid "Edit nodes"
 msgstr ""
 
-#: ../classes/Node.php:1622
+#: ../classes/Node.php:1630
 msgid "Node administration"
 msgstr "Διαχείριση Κόμβου"
 
-#: ../classes/ProfileTemplate.php:229
-msgid "Unable to insert the new profile template in the database!"
+#: ../classes/VirtualHost.php:162
+msgid "Server::getAllServers: Fatal error: No servers in the database!"
+msgstr ""
+"Διακομιστής:::λήψηΌλωντωνΔιακομιστών: Ανεπανόρθωτο Σφάλμα: Δεν υπάρχουν "
+"διακομιστές στην βάση δεδομένων!"
+
+#: ../classes/VirtualHost.php:298
+msgid "Virtual host:"
 msgstr ""
 
-#: ../classes/ProfileTemplate.php:289
-msgid "Profile template"
+#: ../classes/VirtualHost.php:375
+msgid "Add a new virtual host for hostname"
 msgstr ""
 
-#: ../classes/ProfileTemplate.php:294 ../classes/ContentTypeFilter.php:309
-#: ../classes/ProfileTemplateField.php:128
-#: ../classes/ProfileTemplateField.php:437
-msgid "No label"
+#: ../classes/VirtualHost.php:595
+msgid "Virtual hosts management"
 msgstr ""
 
-#: ../classes/ProfileTemplate.php:359
-msgid "Profile template label"
+#: ../classes/VirtualHost.php:614
+msgid "Hostname"
+msgstr "Όνομα κεντρικού υπολογιστή"
+
+#: ../classes/VirtualHost.php:622
+msgid "Default network for this vhost"
 msgstr ""
 
-#: ../classes/ProfileTemplate.php:460
-msgid "Profile template management"
+#: ../classes/VirtualHost.php:639
+msgid "Make this Virtual Host the server's default?"
 msgstr ""
 
-#: ../classes/ProfileTemplate.php:467
-msgid "ProfileTemplate ID"
+#: ../classes/VirtualHost.php:655
+msgid "Use SSL on this server?"
+msgstr "Να χρησιμοποιήθεί SSL σε αυτόν τον  διακομιστή;"
+
+#: ../classes/VirtualHost.php:667
+msgid "Google public API key"
+msgstr "Δημόσιο API κλειδί του Google"
+
+#: ../classes/VirtualHost.php:738
+msgid ""
+"Cannot delete default virtual host, create another one and select it before "
+"removing this one."
 msgstr ""
 
-#: ../classes/ProfileTemplate.php:478 ../classes/ContentTypeFilter.php:374
-msgid "Label"
+#: ../classes/VirtualHost.php:743
+msgid "Could not delete server!"
+msgstr "Δεν ήταν δυνατή η διαγραφή του  διακομιστή!"
+
+#: ../classes/VirtualHost.php:771
+msgid "Virtual Hosts"
 msgstr ""
 
-#: ../classes/ProfileTemplate.php:497
-msgid "Profile template fields"
-msgstr ""
-
-#: ../classes/ProfileTemplate.php:507
+#: ../classes/GenericDataObject.php:124
 #, php-format
-msgid "Delete %s %d, used in %d/%d profiles"
+msgid "Delete not supported on class %s"
 msgstr ""
 
-#: ../classes/ProfileTemplate.php:573
-msgid "Could not delete ProfileTemplate!"
+#: ../classes/Stakeholder.php:92
+msgid "Remove stakeholder"
 msgstr ""
 
-#: ../classes/ProfileTemplate.php:601
-msgid "Profile templates"
+#: ../classes/Stakeholder.php:98
+msgid "Add stakeholder"
 msgstr ""
 
-#: ../classes/ThemePack.php:87
+#: ../classes/Stakeholder.php:125
 #, php-format
-msgid "Theme pack %s cannot be found in %s"
+msgid "User %s already has role %s for this object"
+msgstr ""
+
+#: ../classes/Dependency.php:339 ../classes/Dependency.php:355
+#, php-format
+msgid "File %s not found"
+msgstr ""
+
+#: ../classes/Dependency.php:369 ../classes/Dependency.php:383
+#, fuzzy, php-format
+msgid "File %s not found in %s"
 msgstr "Το θεματικό πακέτο δεν βρέθηκε στα %"
 
-#: ../classes/ThemePack.php:94
+#: ../classes/Dependency.php:422
 #, php-format
-msgid "%s (Theme did not include a name.txt file)"
-msgstr "% (θέμα δεν περιλαμβάνει όνομα.txt file)"
+msgid ""
+"To install this standard PHP extension, look for a package with a similar "
+"name in your distribution's package manager.  Ex: For Debian based "
+"distributions, you may try 'sudo apt-get install php5-%s'"
+msgstr ""
 
-#: ../classes/ThemePack.php:100
+#: ../classes/Dependency.php:427
 #, php-format
-msgid "%s (Theme did not include a description.txt file)"
-msgstr "% (θέμα δεν περιλαμβάνει περιγραφή.txt file)"
-
-#: ../classes/ThemePack.php:121
-msgid "Theme pack:"
-msgstr "Θεματικό πακέτο:"
-
-#: ../classes/ThemePack.php:144
-msgid "Unable to open the network theme packs directory"
+msgid "<input type='submit' name='%s' value='Install %s'/>"
 msgstr ""
-"Δεν είναι δυνατό το άνοιγμα του καταλόγου των θεματικών πακέτων του δικτύου"
 
-#: ../classes/ThemePack.php:151
+#: ../classes/Dependency.php:437
 #, php-format
-msgid "No network theme packs available in %s"
-msgstr "Δεν υπάρχουν διαθέσιμα θεματικά πακέτα δικτύου σε %"
+msgid ""
+"url_to_the_tarball (Sorry, i couldn't find the source for %s in "
+"installSourceUrl)"
+msgstr ""
 
-#: ../classes/Role.php:151
+#: ../classes/Dependency.php:439
 #, php-format
-msgid "Sorry: No available roles in the database for stakeholder type: %s!"
+msgid "To install this custom PEAR extension, use 'sudo pear install %s'"
 msgstr ""
 
-#: ../classes/Role.php:162 ../classes/Role.php:168
-msgid "Role:"
-msgstr ""
-
-#: ../classes/Role.php:217 ../classes/ContentTypeFilter.php:199
-msgid "Unable to insert the new ContentTypeFilter in the database!"
-msgstr ""
-
-#: ../classes/Role.php:238
+#: ../classes/Dependency.php:442
 #, php-format
-msgid "Add a new role of type %s with id %s"
-msgstr ""
-
-#: ../classes/Role.php:302
-msgid "User roles management"
-msgstr ""
-
-#: ../classes/Role.php:309
-msgid "Stakeholder type"
-msgstr ""
-
-#: ../classes/Role.php:318
-msgid "This role is a system role"
-msgstr ""
-
-#: ../classes/Role.php:325
-msgid "Role ID"
-msgstr ""
-
-#: ../classes/Role.php:379
-msgid "Permissions"
-msgstr ""
-
-#: ../classes/Role.php:485
-msgid "Could not delete object!"
-msgstr ""
-
-#: ../classes/Role.php:506
-msgid "User roles"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:220
-msgid "Add a new content type filter with these rules"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:301
-#: ../classes/ProfileTemplateField.php:434
-msgid "Content type filter"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:356
-msgid "ContentTypeFilter management"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:363
-msgid "ContentTypeFilter ID"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:385
-msgid "Rules (must be a valid array definition)"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:417
-msgid "The rules must be given as a PHP array declaration."
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:443
-msgid "Could not delete ContentTypeFilter!"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:471
-msgid "Content type filters"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:132
-msgid "Add new profile template field filtered by"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:141
-msgid "Sorry, no content type filter exists."
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:414
-msgid "Display order"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:432
-msgid "Sorry, content type filter is missing."
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:444
-msgid "Display label"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:450
-#, php-format
-msgid "%s display label (%s)"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:454
-msgid "display label"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:461
-msgid "Admin label"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:468
-#, php-format
-msgid "%s admin label (%s)"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:472
-msgid "admin label"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:479
-msgid "Semantic ID"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:487
-msgid "Full name"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:488
-msgid "Nickname"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:489
-msgid "E-mail"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:490
-msgid "Hashed e-mail"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:491
-msgid "Picture"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:492
-msgid "URL of a blog"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:493
-msgid "URL of a homepage"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:608
-msgid "Could not delete ProfileTemplateField!"
-msgstr ""
-
-#: ../classes/ProfileField.php:251
-msgid "Unable to insert the new profile fields in the database!"
-msgstr ""
-
-#: ../classes/ProfileField.php:281
-#, php-format
-msgid "Delete %s"
-msgstr ""
-
-#: ../classes/ProfileField.php:368
-msgid "Could not delete ProfileField!"
+msgid "Sorry, I don't know how to install a %s extension"
 msgstr ""
 
 #: ../classes/Permission.php:85
@@ -3680,41 +3756,17 @@ msgid ""
 "This will be replaced with more granular permissions in the future"
 msgstr ""
 
-#: ../classes/Stakeholder.php:92
-msgid "Remove stakeholder"
-msgstr ""
-
-#: ../classes/Stakeholder.php:98
-msgid "Add stakeholder"
-msgstr ""
-
-#: ../classes/Stakeholder.php:125
-#, php-format
-msgid "User %s already has role %s for this object"
-msgstr ""
-
-#: ../classes/GenericDataObject.php:124
-#, php-format
-msgid "Delete not supported on class %s"
-msgstr ""
-
-#: ../classes/Dependency.php:320 ../classes/Dependency.php:335
-#: ../classes/Dependency.php:350 ../classes/Dependency.php:364
-#, php-format
-msgid "Component %s is not installed (not found in %s)"
-msgstr "Το συστατικό % δεν είναι εγκατεστημένο (δεν βρέθηκε σε %)"
-
-#: ../classes/DependenciesList.php:107
+#: ../classes/DependenciesList.php:105
 #, php-format
 msgid "Version %s needed"
 msgstr ""
 
-#: ../classes/DependenciesList.php:123
+#: ../classes/DependenciesList.php:122
 #, php-format
 msgid "%s may work, but version %s is recommended"
 msgstr ""
 
-#: ../classes/DependenciesList.php:126
+#: ../classes/DependenciesList.php:125
 #, php-format
 msgid "%s is too old, version %s needed"
 msgstr ""
@@ -3732,12 +3784,26 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: ../classes/DependenciesList.php:139
+#: ../classes/DependenciesList.php:138
 #, fuzzy
-msgid "Message"
+msgid "Information"
+msgstr "πληροφορίες έργου"
+
+#: ../classes/DependenciesList.php:176
+msgid "Install message"
+msgstr ""
+
+#: ../classes/DependenciesList.php:179
+#, fuzzy
+msgid "Detection message"
 msgstr "Μήνυμα λάθους"
 
-#: ../classes/DependenciesList.php:188
+#: ../classes/DependenciesList.php:182
+#, fuzzy
+msgid "To install"
+msgstr "Σύνολο"
+
+#: ../classes/DependenciesList.php:204
 msgid "Dependencies"
 msgstr ""
 
@@ -3754,42 +3820,42 @@ msgid "days"
 msgstr "Μέρες"
 
 #: smarty.txt:5
-msgid "Logged in as"
-msgstr "Σύνδεση ως"
-
-#: smarty.txt:6
-msgid "I am not logged in."
-msgstr "Δεν έχω συνδεθεί"
-
-#: smarty.txt:8
 msgid "user is online at this hotspot"
 msgstr "Χρήστης που είναι συνδεδεμένος σε αυτό το Σημείο Ασύρματης Πρόσβασης"
 
-#: smarty.txt:9
+#: smarty.txt:6
 msgid "users are online at this hotspot"
 msgstr "Χρήστες που είναι συνδεδεμένοι σε αυτό το Σημείο Ασύρματης Πρόσβασης"
 
-#: smarty.txt:10
+#: smarty.txt:7
 msgid "Nobody is online at this hotspot"
 msgstr "Κανείς δεν είναι συνδεδεμένος σε αυτό το Σημείο Ασύρματης Πρόσβασης. "
 
-#: smarty.txt:11
+#: smarty.txt:8
 msgid "Recent Users:"
 msgstr ""
 
-#: smarty.txt:12
+#: smarty.txt:9
 msgid "Most Active Users:"
 msgstr ""
 
-#: smarty.txt:13 smarty.txt:23
+#: smarty.txt:10
+msgid "Logged in as"
+msgstr "Σύνδεση ως"
+
+#: smarty.txt:11
+msgid "I am not logged in."
+msgstr "Δεν έχω συνδεθεί"
+
+#: smarty.txt:13
 msgid "Login or Signup here"
 msgstr "Σύνδεση ή εγγραφή εδώ"
 
-#: smarty.txt:14 smarty.txt:24
+#: smarty.txt:14
 msgid "Username (or email)"
 msgstr "Όνομα χρήστη (ή ηλεκτρονική διεύθυνση)"
 
-#: smarty.txt:15 smarty.txt:25 smarty.txt:31
+#: smarty.txt:15 smarty.txt:37
 msgid "Password"
 msgstr "Κωδικός πρόσβασης"
 
@@ -3817,31 +3883,84 @@ msgstr "Φόρτωση, παρακαλώ περιμένετε..."
 msgid "Legend"
 msgstr "Υπόμνημα"
 
-#: smarty.txt:26 smarty.txt:27 smarty.txt:48 smarty.txt:68 smarty.txt:72
+#: smarty.txt:23
+#, php-format
+msgid "The %s network currently has one valid user."
+msgstr "Το % δίκτυο έχει έναν έγκυρο χρήστη."
+
+#: smarty.txt:24
+#, php-format
+msgid "The %s network currently has %d valid users."
+msgstr "Το % δίκτυο έχει % έγκυρους χρήστες. "
+
+#: smarty.txt:25
+msgid "One user is currently online."
+msgstr "Ένας χρήστης είναι αυτή τη στιγμή συνδεδεμένος."
+
+#: smarty.txt:26
+#, php-format
+msgid "%d users are currently online."
+msgstr "% χρήστες είναι αυτή την στιγμή συνδεδεμένοι. "
+
+#: smarty.txt:27
+msgid "This network currently has 1 deployed hotspot."
+msgstr ""
+"Αυτό το δίκτυο έχει αυτή την στιγμή ένα ανεπτυγμένο Σημείο Ασύρματης "
+"Πρόσβασης "
+
+#: smarty.txt:28
+#, php-format
+msgid "This network currently has %d deployed hotspots."
+msgstr ""
+"Αυτό το δίκτυο έχει αυτή την στιγμή %  ανεπτυγμένα Σημεία Ασύρματης "
+"Πρόσβασης "
+
+#: smarty.txt:29
+msgid "One hotspot is currently operational."
+msgstr ""
+
+#: smarty.txt:30
+#, php-format
+msgid "%d hotspots are currently operational."
+msgstr ""
+
+#: smarty.txt:31
+msgid ""
+"One hotspot isn't monitored so we don't know if it's currently operational."
+msgstr ""
+
+#: smarty.txt:32
+#, php-format
+msgid ""
+"%d hotspots aren't monitored so we don't know if they are currently "
+"operational."
+msgstr ""
+
+#: smarty.txt:33 smarty.txt:54 smarty.txt:64 smarty.txt:68
 msgid "I'm having difficulties"
 msgstr "Συναντάω δυσκολίες"
 
-#: smarty.txt:28
+#: smarty.txt:34
 msgid "Register a free account with"
 msgstr "Καταχώριση δωρεάν λογαριασμού με"
 
-#: smarty.txt:29
+#: smarty.txt:35
 msgid "Username desired"
 msgstr "Επιθυμητό Όνομα χρήστη"
 
-#: smarty.txt:30 smarty.txt:51 smarty.txt:74
+#: smarty.txt:36 smarty.txt:57 smarty.txt:70
 msgid "Your email address"
 msgstr "Η ηλεκτρονική σας διεύθυνση"
 
-#: smarty.txt:32
+#: smarty.txt:38
 msgid "Password (again)"
 msgstr "Κωδικός πρόσβασης (ξανά)"
 
-#: smarty.txt:33
+#: smarty.txt:39
 msgid "Please note"
 msgstr "Παρακαλούμε, σημειώστε"
 
-#: smarty.txt:34
+#: smarty.txt:40
 msgid ""
 "While accounts are free, we <em>strongly</em> suggest that you use your "
 "previously created account if you have one."
@@ -3849,7 +3968,7 @@ msgstr ""
 "Αν και οι λογαριασμοί είναι δωρεάν, συνιστάται να χρησιμοποιείτε τον "
 "λογαριασμό που έχετε ήδη δημιουργήσει, εάν έχετε. "
 
-#: smarty.txt:35
+#: smarty.txt:41
 msgid ""
 "<b>Your email address must be valid</b> in order for your account to be "
 "activated."
@@ -3857,22 +3976,22 @@ msgstr ""
 "Για να ενεργοποιηθεί ο λογαριασμός σας πρέπει η ηλεκτρονική σας διεύθυνση να "
 "είναι έγκυρη"
 
-#: smarty.txt:36
+#: smarty.txt:42
 msgid "A validation email will be sent to that email address."
 msgstr ""
 "Ένα ηλεκτρονικό μήνυμα επικύρωσης θα σταλεί στην ηλεκτρονική σας διεύθυνση"
 
-#: smarty.txt:37
+#: smarty.txt:43
 msgid "To fully activate your account you must respond to that email."
 msgstr ""
 "Για να ενεργοποιήσετε πλήρως τον λογαριασμό σας, πρέπει να απαντήσετε σε "
 "αυτό το ηλεκτρονικό μήνυμα"
 
-#: smarty.txt:38
+#: smarty.txt:44
 msgid "Note to free web-based email users"
 msgstr "Σημείωση στους χρήστες ελεύθερου ηλεκτρονικού ταχυδρομίου στο δίκτυο"
 
-#: smarty.txt:39
+#: smarty.txt:45
 msgid ""
 "Sometimes our validation email ends up in the 'spam' folder of some "
 "providers. If you have not received any email with the validation URL 5 "
@@ -3882,110 +4001,53 @@ msgstr ""
 "άχρηστα. Εάν δεν έχετε λάβει το μήνυμα επικύρωσης πέντε λεπτά από την "
 "υποβολή της φόρμας, παρακαλούμε ελέγξτε τον φάκελο με τα άχρηστα."
 
-#: smarty.txt:40
+#: smarty.txt:46
 msgid "You can also use the following links if you need help"
 msgstr ""
 "Μπορείτε να χρεισιμοποιήσετε τις ακόλουθες υπερσυνδέσεις αν χρειάζεστε "
 "βοήθεια"
 
-#: smarty.txt:41
+#: smarty.txt:47
 #, php-format
 msgid "Status of the %d open %s Hotspots"
 msgstr "Κατάσταση των % ανοιχτών % Σημείων Ασύρματης Πρόσβασης"
 
-#: smarty.txt:42
+#: smarty.txt:48
 msgid "Hotspot / Status"
 msgstr "Σημείο Ασύρματης Πρόσβασης / Κατάσταση"
 
-#: smarty.txt:44
+#: smarty.txt:50
 msgid "Location"
 msgstr "Τοποθεσία"
 
-#: smarty.txt:45
+#: smarty.txt:51
 msgid "Hotspot in testing phase"
 msgstr "Σημείο Ασύρματης Πρόσβασης σε φάση ελέγχου"
 
-#: smarty.txt:46
+#: smarty.txt:52
 msgid "Hotspot not monitored"
 msgstr "Σημείο Ασύρματης Πρόσβασης που δεν παρακολουθείται"
 
-#: smarty.txt:47
+#: smarty.txt:53
 #, php-format
 msgid "Opened on %s"
 msgstr "Άνοιξε την %"
 
-#: smarty.txt:49
+#: smarty.txt:55
 msgid "Lost password"
 msgstr "Χαμένος κωδικός πρόσβασης"
 
-#: smarty.txt:50 smarty.txt:70
+#: smarty.txt:56 smarty.txt:66
 msgid "Your username"
 msgstr "Το όνομα χρήστη σας"
 
-#: smarty.txt:52
+#: smarty.txt:58
 msgid "Please enter your username or email address to reset your password"
 msgstr ""
 "Παρακαλούμε, εισάγετε το όνομα χρήστη ή την ηλεκτρονική σας διεύθυνση για να "
 "αλλάξετε τον κωδικό σας"
 
-#: smarty.txt:53
-#, php-format
-msgid "The %s network currently has one valid user."
-msgstr "Το % δίκτυο έχει έναν έγκυρο χρήστη."
-
-#: smarty.txt:54
-#, php-format
-msgid "The %s network currently has %d valid users."
-msgstr "Το % δίκτυο έχει % έγκυρους χρήστες. "
-
-#: smarty.txt:55
-msgid "One user is currently online."
-msgstr "Ένας χρήστης είναι αυτή τη στιγμή συνδεδεμένος."
-
-#: smarty.txt:56
-#, php-format
-msgid "%d users are currently online."
-msgstr "% χρήστες είναι αυτή την στιγμή συνδεδεμένοι. "
-
-#: smarty.txt:57
-msgid "This network currently has 1 deployed hotspot."
-msgstr ""
-"Αυτό το δίκτυο έχει αυτή την στιγμή ένα ανεπτυγμένο Σημείο Ασύρματης "
-"Πρόσβασης "
-
-#: smarty.txt:58
-#, php-format
-msgid "This network currently has %d deployed hotspots."
-msgstr ""
-"Αυτό το δίκτυο έχει αυτή την στιγμή %  ανεπτυγμένα Σημεία Ασύρματης "
-"Πρόσβασης "
-
 #: smarty.txt:59
-msgid "One hotspot is currently operational."
-msgstr ""
-
-#: smarty.txt:60
-#, php-format
-msgid "%d hotspots are currently operational."
-msgstr ""
-
-#: smarty.txt:61
-msgid ""
-"One hotspot isn't monitored so we don't know if it's currently operational."
-msgstr ""
-
-#: smarty.txt:62
-#, php-format
-msgid ""
-"%d hotspots aren't monitored so we don't know if they are currently "
-"operational."
-msgstr ""
-
-#: smarty.txt:63
-msgid "Please get in touch with "
-msgstr "Παρακαλούμε επικοινωνήστε με"
-
-#: smarty.txt:64
 msgid ""
 "We are a not-for-profit group dedicated to making no-fee wireless Internet "
 "access generally available."
@@ -3993,7 +4055,7 @@ msgstr ""
 "Είμαστε μία μη κερδοσκοπική ομάδα αφοσιωμένη στο να κάνουμε την δωρεάν "
 "πρόσβαση στο ασύρματο διαδίκτυο γενικότερα διαθέσιμη."
 
-#: smarty.txt:65
+#: smarty.txt:60
 msgid ""
 "Our aim is to encourage the growth of wireless networking and to build "
 "community in interesting and innovative ways."
@@ -4001,7 +4063,7 @@ msgstr ""
 "Στόχος μας είναι να ενθαρρύνουμε την ανάπτυξη του ασύρματου δικτύου και να "
 "δημιουργήσουμε μία κοινότητα με νέους ενδιαφέροντες τρόπους."
 
-#: smarty.txt:66
+#: smarty.txt:61
 msgid ""
 "We do this by setting up wireless Internet networks in parks, cafés, "
 "restaurants, bars and other publically-accessible locations across the city."
@@ -4009,15 +4071,19 @@ msgstr ""
 "Αυτό το κάνουμε με την εγκατάσταση ασύρματου δικτύου σε πάρκα, καφετέρειες, "
 "εστιατόρεια, μπαρ, και άλλους δημόσιους χώρους στην πόλη. "
 
-#: smarty.txt:67
+#: smarty.txt:62
 msgid "For a complete and up-to-date listing of our nodes, visit"
 msgstr "Για έναν πλήρη και ενημερωμένο κατάλογο των κόμβων μας, επισκεφτείτε"
 
-#: smarty.txt:69
+#: smarty.txt:63
+msgid "Please get in touch with "
+msgstr "Παρακαλούμε επικοινωνήστε με"
+
+#: smarty.txt:65
 msgid "Re-send validation email"
 msgstr "Στείλτε ξανά το ηλεκτρονικό μήνυμα επικύρωσης"
 
-#: smarty.txt:71
+#: smarty.txt:67
 msgid ""
 "Please enter your username and the validation email will be resent to your "
 "email address"
@@ -4025,51 +4091,80 @@ msgstr ""
 "Παρακαλούμε, εισάγετε το όνομα χρήστη και ένα μήνυμα επικύρωσης θα σταλεί "
 "ξανά στην ηλεκτρονική σας διεύθυνση"
 
-#: smarty.txt:73
+#: smarty.txt:69
 msgid "Lost username"
 msgstr "Απώλεια ονόματος χρήστη"
 
-#: smarty.txt:75
+#: smarty.txt:71
 msgid "Please enter your email address to recover your username"
 msgstr ""
 "Παρακαλώ, εισάγετε την ηλεκτρονική σας διεύθυνση για να ανακτήσετε το όνομα "
 "χρήστη "
 
-#: smarty.txt:76
-msgid "User list"
-msgstr "Κατάλογος χρηστών"
-
-#: smarty.txt:77
-msgid "Sort by:"
-msgstr "Ταξινόμηση ανά:"
-
-#: smarty.txt:78
-msgid "Direction:"
-msgstr "Κατεύθυνση:"
-
-#: smarty.txt:79
-msgid "Sort"
-msgstr "Ταξινόμηση"
-
-#: smarty.txt:82
-msgid "Registered On"
-msgstr "Καταχωρημένος σε"
-
-#: smarty.txt:84
+#: smarty.txt:72
 msgid "Online users"
 msgstr "Συνδεδεμένοι χρήστες"
 
-#: smarty.txt:87
+#: smarty.txt:75
 msgid "Origin"
 msgstr "Προέλευση"
 
-#: smarty.txt:88
+#: smarty.txt:76
 msgid "Logged in Since"
 msgstr "Συνδεδεμένος από"
 
-#: smarty.txt:89
+#: smarty.txt:77
 msgid "Traffic IN/OUT"
 msgstr "Κυκλοφορία ΜΕΣΑ/ΕΞΩ"
+
+#: smarty.txt:78
+msgid "User list"
+msgstr "Κατάλογος χρηστών"
+
+#: smarty.txt:79
+msgid "Sort by:"
+msgstr "Ταξινόμηση ανά:"
+
+#: smarty.txt:80
+msgid "Direction:"
+msgstr "Κατεύθυνση:"
+
+#: smarty.txt:81
+msgid "Sort"
+msgstr "Ταξινόμηση"
+
+#: smarty.txt:84
+msgid "Registered On"
+msgstr "Καταχωρημένος σε"
+
+#~ msgid "French"
+#~ msgstr "Γαλλικά"
+
+#~ msgid "English"
+#~ msgstr "Αγγλικά"
+
+#~ msgid "German"
+#~ msgstr "Γερμανικά"
+
+#~ msgid "Spanish"
+#~ msgstr "Ισπανικά"
+
+#, fuzzy
+#~ msgid "Brazilian Portuguese"
+#~ msgstr "Πορτογαλικά"
+
+#~ msgid "Portuguese"
+#~ msgstr "Πορτογαλικά"
+
+#~ msgid "Japanese"
+#~ msgstr "Ιαπωνικά"
+
+#~ msgid "Component %s is not installed (not found in %s)"
+#~ msgstr "Το συστατικό % δεν είναι εγκατεστημένο (δεν βρέθηκε σε %)"
+
+#, fuzzy
+#~ msgid "Message"
+#~ msgstr "Μήνυμα λάθους"
 
 #~ msgid "No nodes could not be found in the database"
 #~ msgstr "Δεν βρέθηκε κανένας κόμβος σε αυτήν την βάση δεδομένων"
@@ -4220,44 +4315,6 @@ msgstr "Κυκλοφορία ΜΕΣΑ/ΕΞΩ"
 
 #~ msgid "Your username has been emailed to you."
 #~ msgstr "Το όνομα χρήστη έχει αποσταλεί στην ηλεκτρονική σας διεύθυνση."
-
-#~ msgid "You have failed to validate your account in %d minutes."
-#~ msgstr "Αποτύχατε να επικυρώσετε τον λογαριασμό σας σε % δευτερόλεπτα."
-
-#~ msgid ""
-#~ "Please validate your account from somewhere else or create a new one."
-#~ msgstr ""
-#~ "Παρακαλούμε, επικυρώστε τον λογαριασμό σας από κάπου αλλού, ή "
-#~ "δημιουργήστε έναν καινούριο. "
-
-#~ msgid ""
-#~ "You have now been granted %d minutes of Internet access without being "
-#~ "validated to go and activate your account."
-#~ msgstr ""
-#~ "Σας έχουν τώρα παραχωρηθεί % λεπτά σύνδεσης στο Διαδίκτυο για να "
-#~ "επικυρώσετε τον λογαριασμό σας."
-
-#~ msgid ""
-#~ "If you fail to validate your account in %d minutes, you will have to "
-#~ "validate it from somewhere else."
-#~ msgstr ""
-#~ "Έαν αποτύχετε να επικυρώσετε τον λογαριασμό σας σε % λεπτά, θα πρέπει να "
-#~ "τον επικυρώσετε από κάπου αλλού. "
-
-#~ msgid ""
-#~ "If you do not receive an email from our validation server in the next "
-#~ "minute, perhaps you have made a typo in your email address, you might "
-#~ "have to create another account."
-#~ msgstr ""
-#~ "Έαν δεν λάβετε ηλεκτρονικό μήνυμα από τον διακομιστή επικύρωσης μέσα στο "
-#~ "επόμενο λεπτό, ίσως έχετε κάνει κάποιο τυπογραφικό λάθος στην ηλεκτρονική "
-#~ "σας διεύθυνση και μπορεί να πρέπει να δημιουργήσετε άλλον λογαριασμό."
-
-#~ msgid "Unknown message specified! (this is probably an error)"
-#~ msgstr "Προσδιορισμός άγνωστου μηνύματος! (μάλλον έχει γίνει λάθος)"
-
-#~ msgid "No message has been specified! (this is probably an error)"
-#~ msgstr "Κανένα μήνυμα δεν προσδιορίστηκε! (μάλλον έχει γίνει λάθος)"
 
 #~ msgid ""
 #~ "Unable to retrieve schema version. The database schema is too old to be "

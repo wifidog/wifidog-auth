@@ -19,11 +19,11 @@ msgstr ""
 #: ../gw_message.php:61
 #, php-format
 msgid "You have failed to validate your account in %d minutes."
-msgstr "Usted ha fallado en validar su cuenta en %d minutos."
+msgstr ""
 
 #: ../gw_message.php:62
 msgid "Please validate your account from somewhere else or create a new one."
-msgstr "Por favor valide su cuenta en otro lado o cree una nueva."
+msgstr ""
 
 #: ../gw_message.php:67
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:896
@@ -31,23 +31,23 @@ msgstr "Por favor valide su cuenta en otro lado o cree una nueva."
 #: ../classes/Statistics.php:378 ../classes/Network.php:1694
 #: ../classes/Content.php:901 ../classes/Node.php:214
 msgid "Access denied!"
-msgstr "Acceso denegado!"
+msgstr "Accesso negato!"
 
 #: ../gw_message.php:73
-#, php-format
+#, fuzzy, php-format
 msgid ""
 "You have now been granted %d minutes of Internet access without being "
 "validated to go and activate your account."
 msgstr ""
-"Se le ha dado %d minutos de Acceso a Internet para poder activar su cuenta."
+"Il suo account le garantisce %s minuti di accesso per scaricare la sua email "
+"e confermare la registrazione."
 
 #: ../gw_message.php:74
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "If you fail to validate your account in %d minutes, you will have to "
 "validate it from somewhere else."
 msgstr ""
-"Si no valida su cuenta en 15 minutos, tendra que validarla en otro lado."
 
 #: ../gw_message.php:75
 msgid ""
@@ -55,72 +55,66 @@ msgid ""
 "minute, perhaps you have made a typo in your email address, you might have "
 "to create another account."
 msgstr ""
-"Si no recibe un mensaje de correo del servidor de validacion en el siguiente "
-"minuto,talvez cometio un error al escribir su cuenta de correo y tendra que "
-"crear una nueva cuenta."
 
 #: ../gw_message.php:80
-#, fuzzy
 msgid "Unknown message specified! (this is probably an error)"
-msgstr "No se ha especificado un error! (este puede ser un error)"
+msgstr ""
 
 #: ../gw_message.php:85
 msgid "No message has been specified! (this is probably an error)"
-msgstr "No se ha especificado un error! (este puede ser un error)"
+msgstr ""
 
 #: ../admin/generic_object_admin.php:80
 msgid "Sorry, the 'object_class' parameter must be specified"
-msgstr ""
-"Lo siente, el parametro del 'clase_objeto'(object_class) debe ser "
-"especificado"
+msgstr "Siamo spiacenti, il parametro 'object_class' dev'essere specificato"
 
 #: ../admin/generic_object_admin.php:93
 #, php-format
 msgid "Create %s"
-msgstr "Crear %s"
+msgstr "Crea %s"
 
 #: ../admin/generic_object_admin.php:94
 #, php-format
 msgid "Add %s"
-msgstr "Agregar %s"
+msgstr "Aggiungi %s"
 
 #: ../admin/generic_object_admin.php:95
 #, php-format
 msgid "Create a new %s"
-msgstr "Crear una nueva %s"
+msgstr "Crea un nuovo %s"
 
 #: ../admin/generic_object_admin.php:96
 #, php-format
 msgid "Add a new %s"
-msgstr "Agregar una nueva %s"
+msgstr "Aggiungi un nuovo %s"
 
 #: ../admin/generic_object_admin.php:97
 #, php-format
 msgid "Show all %s"
-msgstr "Mostrar todo los %s"
+msgstr "Vedi tutti %s"
 
 #: ../admin/generic_object_admin.php:98
 #, php-format
 msgid "Show only persistant %s"
-msgstr "Mostrar solo persistente %s"
+msgstr "Vedi solo i persistenti %s"
 
 #: ../admin/generic_object_admin.php:99 ../classes/Network.php:1933
 #: ../classes/Node.php:1624
 #, php-format
 msgid "Edit %s"
-msgstr "Editar %s"
+msgstr "Modifica %s"
 
 #: ../admin/generic_object_admin.php:149
 msgid ""
 "Sorry, the object couldn't be created.  You probably didn't fill the form "
 "properly"
 msgstr ""
-"Lo siente el objeto no se pudo crear. Lo mas probale no termino de llenar la "
-"forma."
+"Siamo spiacenti, l'oggetto non pu&ograve essere creato. Probabilmente non ha "
+"compilato il form correttamente"
 
 #: ../admin/generic_object_admin.php:187
 msgid "Showing preview as it would appear at "
-msgstr "Mostrando vista preeliminar de como se apereceria en"
+msgstr "Mostra un anteprima cos&igrave come appare al"
 
 #: ../admin/generic_object_admin.php:202
 #: ../classes/StatisticReport/UserReport.php:182
@@ -133,28 +127,28 @@ msgstr "Nodo"
 #: ../admin/generic_object_admin.php:211 ../admin/generic_object_admin.php:427
 #: ../classes/Content/Picture/Picture.php:294
 msgid "Preview"
-msgstr "Vista Preeliminar del "
+msgstr "Anteprima"
 
 #: ../admin/generic_object_admin.php:217 ../classes/ProfileTemplate.php:369
 #: ../classes/Content.php:736
 msgid "Edit"
-msgstr "Edici&oacute;n"
+msgstr "Modifica"
 
 #: ../admin/generic_object_admin.php:224 ../admin/generic_object_admin.php:246
 msgid "Object successfully deleted"
-msgstr "Objeto eliminado exitosamente"
+msgstr "Oggetto cancellato con successo"
 
 #: ../admin/generic_object_admin.php:226 ../admin/generic_object_admin.php:249
 msgid "Deletion failed, error was: "
-msgstr "Eliminaci&acute;n fall&oacute;"
+msgstr "Cancellazione fallita, l'errore &egrave: "
 
 #: ../admin/generic_object_admin.php:396
 msgid "Sorry, the 'object_id' parameter must be specified"
-msgstr "Lo siente, el parametro 'object_id' debe ser especificado"
+msgstr "Siamo spiacenti, il parametro 'object_id' dev'essere specificato"
 
 #: ../admin/generic_object_admin.php:412
 msgid "Save"
-msgstr "Guardar"
+msgstr "Salva"
 
 #: ../admin/generic_object_admin.php:417 ../admin/generic_object_admin.php:437
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:204
@@ -162,21 +156,19 @@ msgstr "Guardar"
 #: ../classes/Content/RssAggregator/RssAggregator.php:620
 #: ../classes/Content.php:955
 msgid "Delete"
-msgstr "Borrar"
+msgstr "Cancella"
 
 #: ../admin/generic_object_admin.php:462
 msgid "Generic object editor"
-msgstr "Editor Generico de Objetos"
+msgstr "Editor generico degli oggetti"
 
 #: ../admin/import_user_database.php:66
 msgid "NoCat user database import"
-msgstr "Importar base de datos de usuarios de NoCat"
+msgstr "Utente del database NoCat"
 
 #: ../admin/import_user_database.php:72
 msgid "Please select the NoCat passwd file you want to import."
-msgstr ""
-"Por favor seleccione el archivo de contrase&ntilde;as de NoCat que desea "
-"importar."
+msgstr "Prego selezionare la password del file NoCat che vuole importare."
 
 #: ../admin/import_user_database.php:76
 msgid ""
@@ -184,95 +176,99 @@ msgid ""
 "to be the user's email address, and the username is generated from the "
 "prefix."
 msgstr ""
+"Accetta utenti senza indirizzi email (normalmente, i nomi utenti NoCat "
+"corrispondono all'indirizzo email dell'utente, e il nome utente &egrave "
+"generato dal prefisso."
 
 #: ../admin/import_user_database.php:78
 msgid "Upload file"
-msgstr "Subir Archivo"
+msgstr "Upload file"
 
 #: ../admin/import_user_database.php:81
 msgid ""
 "I am sure I want to import (Otherwise, the import will only be simulated)."
 msgstr ""
-"Estoy seguro que deseo importar (De otra manera, la importaci&oacute;n solo "
-"sera simulada)."
+"E' sicuro di volete importare (altrimenti l'importazione verr&agrave "
+"simulata)."
 
 #: ../admin/import_user_database.php:175
 msgid "Sorry, a user account is already associated to the email address: "
 msgstr ""
-"Lo siento, una cuenta de usuario ya tiene asociado ese correo electronico: "
+"Siamo spiacenti, un nome account &egrave gi&agrave associato all'indirizzo "
+"email: "
 
 #: ../admin/import_user_database.php:181
 msgid "Sorry, the user must have a email address."
-msgstr ""
+msgstr "Siamo spiacenti, l'utente deve avere un indirizzo email."
 
 #: ../admin/import_user_database.php:190
 msgid "Sorry, a user account already exists with the username: "
-msgstr "Lo siento, una cuenta de usuario ya existe con ese usuario: "
+msgstr "Siamo spiacenti, esiste gi&agrave l'utente: "
 
 #: ../admin/import_user_database.php:211
 msgid "SQL error on: "
-msgstr "Error de SQL en: "
+msgstr "Errore SQL: "
 
 #: ../admin/import_user_database.php:217
 msgid "Report"
-msgstr "Reporte"
+msgstr "Rapporti"
 
 #: ../admin/stats.php:68
 msgid "Connections at"
-msgstr "Conexiones en"
+msgstr "Connessione al"
 
 #: ../admin/stats.php:74
 msgid "User information for"
-msgstr "Informacion de usuario para"
+msgstr "Informazioni dell'utente"
 
 #: ../admin/stats.php:79
 msgid "Connections from MAC"
-msgstr "Conexiones de MAC"
+msgstr "Connessione dal MAC address"
 
 #: ../admin/stats.php:85
 msgid "Network information for"
-msgstr "Informacion de Red para"
+msgstr "Informazioni sulla rete di"
 
 #: ../admin/stats.php:116
 msgid "Generate statistics"
-msgstr "Generar Estadisticas"
+msgstr "Genera statistiche"
 
 #: ../admin/user_log.php:113
 msgid "Internal error."
-msgstr "Error Interno."
+msgstr "Errore del server."
 
 #: ../admin/user_log.php:121
 msgid "Find a user ID : "
-msgstr "Encontrar un usuario : "
+msgstr "Cerca un nome utente: "
 
 #: ../admin/hotspot_location_map.php:59
 msgid "Hotspot location map"
-msgstr "Mapa de ubicaci&oacute;n de Hotspot"
+msgstr "Mappa dei punti di accesso"
 
 #: ../admin/hotspot_location_map.php:70
 msgid ""
 "Click anywhere on the map to extract the GIS location, then click on the "
 "button to save the data."
 msgstr ""
-"Haga clic donde quiera en el mapa para extraer la ubicaci&oacute;n GIS, "
-"luego haga clic en el bot&oacute; para guardar la data."
+"Clicca sulla mappa per estrarre la posizione GIS, poi clicca sul bottone per "
+"salvare i dati."
 
 #: ../admin/hotspot_location_map.php:72
 msgid "Use these coordinates"
-msgstr "Utilice estas coordenadas"
+msgstr "Usa queste coordinate"
 
 #: ../admin/hotspot_location_map.php:80
 msgid ""
 "Error:  You need to set the GIS coordinates of the center of your network"
-msgstr ""
+msgstr "Errore: deve settare le coordinate GIS del centro della sua rete"
 
 #: ../admin/hotspot_location_map.php:124
 msgid "You need to set a node ID."
-msgstr "Un Hotspot no ha sido espceficado."
+msgstr "E' obbligatorio settare un ID node"
 
 #: ../cron/page.php:76
 msgid "Monitoring system"
-msgstr "Sistema de Monitoreo"
+msgstr "Monitorizza il sistema"
 
 #: ../cron/page.php:79
 msgid "node"
@@ -281,7 +277,7 @@ msgstr "nodo"
 #: ../cron/page.php:80
 #, php-format
 msgid "Node %s (%s) has been down for %d minutes (since %s)"
-msgstr "Nodo %s (%s) esta caido por %d minutos (desde %s)"
+msgstr "Il nodo %s (%s) non ha risposto per %d minuti (dal %s)"
 
 #: ../cron/page.php:82
 msgid "Success"
@@ -293,7 +289,7 @@ msgstr ""
 
 #: ../cron/page.php:99
 msgid "No deployed nodes could not be found in the database"
-msgstr "No se puede encontrar nodos en produccion en la base de datos"
+msgstr "Nessun nodo configurato &egrave stato trovato nel database"
 
 #: ../include/schema_validate.php:75
 msgid ""
@@ -301,55 +297,59 @@ msgid ""
 "hasn't been created yet, the postgresql server is down, or pg_hba.conf does "
 "not allow your web server to connect to the wifidog database."
 msgstr ""
+"Non posso trovare la versione dello schema. Oppure il database di wifidog "
+"non &egrave stato ancora creato, oppure il database PostGreSQL non &egrave "
+"disponibile, oppure il il file pg_hba.conf non è configurato per accettare "
+"le connessioni al database."
 
 #: ../include/schema_validate.php:77
 msgid "Try running the"
-msgstr "Intente correr el"
+msgstr "Prova ad eseguire"
 
 #: ../include/schema_validate.php:77
 msgid "installation script"
-msgstr "script de instalaci&oacute;n."
+msgstr "Script di installazione"
 
 #: ../include/schema_validate.php:105
 msgid ""
 "No user matches the default network, a new user admin/admin will be created. "
 "Change the password as soon as possible !"
 msgstr ""
-"No existe usuarios en la red defecto, un nuevo usuario administrador (admin/"
-"admin) sera creado.Cambie la clave lo mas antes posible !"
+"Nessun utente corrisponde alla rete di default, verr&agrave creato un utente "
+"admin/admin. Cambi la password il prima possibile!"
 
 #: ../include/schema_validate.php:117
 msgid "Could not get a default network!"
-msgstr "No se puede obtener la red por omisi&oacute;n"
+msgstr "Non ho trovato la rete di default!"
 
 #: ../include/schema_validate.php:149
 msgid "Trying to update the database schema."
-msgstr "Tratando de actualizar la estructura de la base de datos."
+msgstr "Provo ad aggiornare lo schema del database."
 
 #: ../include/schema_validate.php:154
 msgid ""
 "Unable to retrieve schema version.  The database schema is too old to be "
 "updated."
 msgstr ""
-"No se puede obtener la version de estructura. La estructura de la base de "
-"datos es muy vieja para ser actualizada."
+"Impossibile richiamare la versione dello schema. Lo schema del database "
+"&egrave troppo vecchio per essere aggiornato."
 
 #: ../include/common.php:142
 msgid "Unused"
-msgstr "Sin uso"
+msgstr "Non usato"
 
 #: ../include/common.php:143
 msgid "In use"
-msgstr "En uso"
+msgstr "In uso"
 
 #: ../include/common.php:144
 msgid "Used"
-msgstr "Usado"
+msgstr "Usato"
 
 #: ../login/index.php:211
 #, php-format
 msgid "Unable to generate token for user %s"
-msgstr ""
+msgstr "Impossibile generare la chiave per l'utente %s"
 
 #: ../login/index.php:261
 msgid "I'm having difficulties:"
@@ -357,37 +357,39 @@ msgstr ""
 
 #: ../login/index.php:263
 msgid "I Forgot my username"
-msgstr "Olvide mi usuario"
+msgstr ""
 
 #: ../login/index.php:264
+#, fuzzy
 msgid "I Forgot my password"
-msgstr "Olvide mi contrase&ntilde;a"
+msgstr "Cambio password"
 
 #: ../login/index.php:265
+#, fuzzy
 msgid "Re-send the validation email"
-msgstr "Renviar el email de validacion"
+msgstr "Email di conferma registrazione"
 
 #: ../login/index.php:271
 #, php-format
 msgid "%s login page for %s"
-msgstr "%s para de inicio de sesi&oacute;n para %s"
+msgstr "%s pagina di autenticazione di %s"
 
 #: ../login/index.php:273
 msgid "Offsite login page"
-msgstr "Pagina de Inicio de Sesi&oacute;n Fuera de Sitio"
+msgstr "Pagina di login di Offsite"
 
 #: ../login/index.php:282 ../portal/index.php:132
 msgid "Welcome to"
-msgstr "Bienvenido a"
+msgstr "Benvenuti in"
 
 #: ../portal/index.php:97
 msgid "No Hotspot specified!"
-msgstr "Ningun Hotspot fue especificado."
+msgstr "Nessun punto di accesso specificato!"
 
 #: ../portal/index.php:127
 #, php-format
 msgid "%s portal for %s"
-msgstr "%s portal de %s"
+msgstr "%s portale di %s"
 
 #: ../portal/index.php:137
 msgid ""
@@ -395,6 +397,9 @@ msgid ""
 "was sent to your email address.  If you don't see it in your inbox, make "
 "sure to look in your spam folder."
 msgstr ""
+"Lei deve confermare il suo account. Un'email con le istruzioni di conferma "
+"saranno inviate al suo indirizzo email. Se non trova il messaggio nella "
+"casella, controlli tra la posta indesiderata."
 
 #: ../portal/index.php:138
 #, php-format
@@ -402,25 +407,27 @@ msgid ""
 "Your account has been granted %s minutes of access to retrieve your email "
 "and validate your account."
 msgstr ""
-"SU cuenta tiene %s minutos para obtener el mensaje enviado y activar su "
-"cuenta."
+"Il suo account le garantisce %s minuti di accesso per scaricare la sua email "
+"e confermare la registrazione."
 
 #: ../portal/index.php:199
 msgid "Show all available contents for this hotspot"
-msgstr "Mostrar todo el contenido de este hotspot"
+msgstr "Cerca tutti i servizi disponibili per questo punto di accesso"
 
 #: ../classes/StatisticGraph/RegistrationsPerMonth.php:62
 msgid "Number of validated user registration for the selected network(s)"
 msgstr ""
-"Numero de usuarios registrados validados por las red(es) seleccionada(s) "
+"Numero di registrazioni verificate di utenti per la rete(le reti) selezionata"
+"(e) "
 
 #: ../classes/StatisticGraph/RegistrationsCumulative.php:62
 msgid "Cumulative number of validated users for the selected network(s)"
-msgstr "Numero acumulado de usuarios validos por red(es) selecionada(s)"
+msgstr ""
+"Numero totale di utenti verificati per la rete (le reti) selezionata(te) "
 
 #: ../classes/StatisticGraph/VisitsPerMonth.php:62
 msgid "Number of individual user visits per month"
-msgstr "Numero de visitas de usuarios individuales por mes"
+msgstr "Numero di visite del singolo utente al mese"
 
 #: ../classes/StatisticGraph/VisitsPerMonth.php:82
 #: ../classes/StatisticGraph/VisitsPerWeekday.php:82
@@ -429,16 +436,16 @@ msgid ""
 "Note:  A visit is like counting connections, but only counting one "
 "connection per day for each user at a single node"
 msgstr ""
-"Nota: Una visita es como contar conexiones, pero ahora se cuenta una "
-"conexion por dia por usuario en un nodo especifico"
+"Nota: per visite non si intendono il numero di connessioni ma solo il numero "
+"di utenti connessi al giorno in un singolo nodo"
 
 #: ../classes/StatisticGraph/VisitsPerWeekday.php:62
 msgid "Number of individual user visits per weekday"
-msgstr "Numero de visitias de usuarios unicos semanal"
+msgstr "Numero di visite del singolo utente per giorno"
 
 #: ../classes/StatisticGraph/ConnectionsPerHour.php:62
 msgid "Number of new connections opening per hour of the day"
-msgstr "Numero de conexiones nuevas creandose por hour en el dia"
+msgstr "Numero di nuove connessioni aperte per ora "
 
 #: ../classes/Authenticators/AuthenticatorLocalUser.php:128
 #: ../classes/Authenticators/AuthenticatorLDAP.php:257
@@ -446,77 +453,76 @@ msgstr "Numero de conexiones nuevas creandose por hour en el dia"
 #: ../classes/Authenticators/AuthenticatorRadius.php:263
 #: ../classes/Authenticators/AuthenticatorRadius.php:283
 msgid "Login successfull"
-msgstr "Sesi&oacute;n se Inicio"
+msgstr "Autenticazione avvenuta con successo"
 
 #: ../classes/Authenticators/AuthenticatorLocalUser.php:142
 msgid "Unknown username or email"
-msgstr "No se conoce el cuenta de correo o usuario"
+msgstr "nomeutente o email sconosciute"
 
 #: ../classes/Authenticators/AuthenticatorLocalUser.php:144
 msgid "Incorrect password (Maybe you have CAPS LOCK on?)"
-msgstr "Clave incorrecta (talvez tiene CAPS LOCK activado?)"
+msgstr "Password errata (verificare che non sia attivo il blocco maiuscole)"
 
 #: ../classes/Authenticators/AuthenticatorLDAP.php:167
 #: ../classes/Authenticators/AuthenticatorLDAP.php:172
 msgid "Error while connecting to the LDAP server."
-msgstr "Error en comunicaci&oacute;n con el servidor de autenticaci&oacute;n."
+msgstr "Errore di connessione al server LDAP"
 
 #: ../classes/Authenticators/AuthenticatorLDAP.php:179
 msgid "Error while obtaining your LDAP information."
-msgstr "Error al obtener su informacion de LDAP."
+msgstr "Errore nel ricevimento delle tue informazioni dal server L"
 
 #: ../classes/Authenticators/AuthenticatorLDAP.php:185
 #: ../classes/Authenticators/AuthenticatorLDAP.php:191
 #: ../classes/Authenticators/AuthenticatorLDAP.php:197
 msgid "Error while obtaining your username or password from the LDAP server."
-msgstr "Error al intentar autenticarse con el servidor."
+msgstr ""
+"Errore nel ricevimento del suo nome utente e/o password dal server LDAP"
 
 #: ../classes/Authenticators/AuthenticatorLDAP.php:204
 msgid "Error in username or password."
-msgstr "Error en el usuario o contrase&ntilde;a."
+msgstr "Nome utente o password sbagliata"
 
 #: ../classes/Authenticators/AuthenticatorLDAP.php:211
 msgid "Error connecting to the LDAP Server."
-msgstr "Error al conectrse al servidor de autenticaci&oacute;n LDAP"
+msgstr "Errore di connessione al server LDAP"
 
 #: ../classes/Authenticators/AuthenticatorRadius.php:202
 msgid "Invalid RADIUS encryption method."
-msgstr "Metodo invalido de encriptaci&oacute;n de RADIUS"
+msgstr "Metodo di criptazione RADIUS non valido"
 
 #: ../classes/Authenticators/AuthenticatorRadius.php:239
 msgid "Could not initiate PEAR RADIUS Auth class : "
-msgstr "No se puede iniciar el objeto PEAR RADIUS auth : "
+msgstr "Impossibile inizializzare la classe d'autenticazione PEAR RADIUS"
 
 #: ../classes/Authenticators/AuthenticatorRadius.php:247
 msgid "Failed to send authentication request to the RADIUS server. : "
-msgstr ""
-"No se pudo mandar la solicitud de autenticaci&oacute;n al servidor de "
-"RADIUS. : "
+msgstr "Impossibile inviare la richiesta d'autenticazione al server RADIUS"
 
 #: ../classes/Authenticators/AuthenticatorRadius.php:288
 msgid "The RADIUS server rejected this username/password combination."
-msgstr "El servidor RADIUS no acepto la combinaci&oacute;n de usuario/clave."
+msgstr "Il server RADIUS ha rifiutato la coppia nomeutente e password"
 
 #: ../classes/StatisticReport/MostMobileUsers.php:65
 #, php-format
 msgid "%d most mobile users"
-msgstr "Los %d usuarios mas moviles"
+msgstr "%d utenti pi&ugrave mobili"
 
 #: ../classes/StatisticReport/MostMobileUsers.php:97
 #: ../classes/StatisticReport/MostFrequentUsers.php:98
 #: ../classes/StatisticReport/HighestBandwidthUsers.php:98
 msgid "User (username)"
-msgstr "Usuario (usuario)"
+msgstr "Utente (nome utente)"
 
 #: ../classes/StatisticReport/MostMobileUsers.php:99
 #: ../classes/StatisticReport/MostFrequentUsers.php:100
 #: ../classes/StatisticReport/HighestBandwidthUsers.php:100
 msgid "User (MAC address)"
-msgstr "Usuario (Direcci&oacute;n MAC)"
+msgstr "Utente (indirizzo MAC)"
 
 #: ../classes/StatisticReport/MostMobileUsers.php:101
 msgid "Nodes visited"
-msgstr "Nodos visitados"
+msgstr "Nodi visitati"
 
 #: ../classes/StatisticReport/MostMobileUsers.php:133
 #: ../classes/StatisticReport/UserReport.php:174
@@ -525,118 +531,118 @@ msgstr "Nodos visitados"
 #: ../classes/StatisticReport/HighestBandwidthUsers.php:136
 #: ../classes/StatisticReport/UserRegistrationReport.php:164
 msgid "No information found matching the report configuration"
-msgstr "No hay datos para el reporte solicitado"
+msgstr "Nessuna informazione corrisponde alla configurazione del rapporto"
 
 #: ../classes/StatisticReport/NodeStatus.php:64
 msgid "Node status information"
-msgstr "Informaci&oacute;n del estado del Nodo"
+msgstr "Informazioni sullo stato del nodo"
 
 #: ../classes/StatisticReport/NodeStatus.php:87
 msgid "Sorry, this report requires you to select individual nodes"
-msgstr "Lo siento, este reporte requiere que seleccione nodos individuales"
+msgstr ""
+"Siamo spiacenti, questo rapporto richiede la selezione di nodi individuali"
 
 #: ../classes/StatisticReport/NodeStatus.php:99
 #: ../classes/DependenciesList.php:137
 msgid "Status"
-msgstr "Estado"
+msgstr "Stato"
 
 #: ../classes/StatisticReport/NodeStatus.php:105
 msgid "WifiDog status"
-msgstr "Estado de WifiDog"
+msgstr "Stato di WifiDog"
 
 #: ../classes/StatisticReport/NodeStatus.php:110
 msgid "Last heartbeat"
-msgstr "Ultima Informaci&oacute;n de Estado"
+msgstr "Ultimo segno di vita"
 
 #: ../classes/StatisticReport/NodeStatus.php:111
 #, php-format
 msgid "%s ago"
-msgstr "%s pasados"
+msgstr "%s ago"
 
 #: ../classes/StatisticReport/NodeStatus.php:115
 msgid "WifiDog version"
-msgstr "Version de WifiDog"
+msgstr "Versione di WifiDog"
 
 #: ../classes/StatisticReport/NodeStatus.php:119
-#, fuzzy
 msgid "WifiDog uptime"
-msgstr "Estado de WifiDog"
+msgstr "WifiDog uptime"
 
 #: ../classes/StatisticReport/NodeStatus.php:123
 msgid "System uptime"
-msgstr ""
+msgstr "Uptime del sistema"
 
 #: ../classes/StatisticReport/NodeStatus.php:127
 msgid "System load"
-msgstr ""
+msgstr "Carico del sistema"
 
 #: ../classes/StatisticReport/NodeStatus.php:131
 msgid "System free memory"
-msgstr ""
+msgstr "Memoria disponibile del sistema"
 
 #: ../classes/StatisticReport/NodeStatus.php:135
 msgid "IP Address"
-msgstr "Direcci&oacute;n IP"
+msgstr "Indirizzo IP"
 
 #: ../classes/StatisticReport/NodeStatus.php:139
 msgid "Number of users online"
-msgstr "Numero de usuarios en linea"
+msgstr "Numero di utenti connessi"
 
 #: ../classes/StatisticReport/NodeStatus.php:148
 #: ../classes/StatisticReport/UserReport.php:117 ../classes/Profile.php:357
 msgid "Profile"
-msgstr "Perfil"
+msgstr "Profilo"
 
 #: ../classes/StatisticReport/NodeStatus.php:152
 #: ../classes/StatisticReport/NetworkStatus.php:99 ../classes/Node.php:1101
 msgid "Name"
-msgstr "Nombre"
+msgstr "Nome"
 
 #: ../classes/StatisticReport/NodeStatus.php:156
 msgid "Node ID"
-msgstr "ID del Nodo"
+msgstr "Identificativo del nodo"
 
 #: ../classes/StatisticReport/NodeStatus.php:160 ../classes/Node.php:363
 msgid "Deployment Status"
-msgstr "Estado de Implementaci&oacute;n"
+msgstr "Stato di funzionamento"
 
 #: ../classes/StatisticReport/NodeStatus.php:164
 msgid "Deployment date"
-msgstr "Fecha de Implementaci&oacute;n"
+msgstr "Data di installazione"
 
 #: ../classes/StatisticReport/NodeStatus.php:168 ../classes/Content.php:925
 #: ../classes/Node.php:1116 ../classes/DependenciesList.php:173 smarty.txt:49
 msgid "Description"
-msgstr "Descripci&oacute;n"
+msgstr "Descrizione"
 
 #: ../classes/StatisticReport/NodeStatus.php:172
 #: ../classes/StatisticReport/UserReport.php:132 smarty.txt:83
 msgid "Network"
-msgstr "Red"
+msgstr "Rete"
 
 #: ../classes/StatisticReport/NodeStatus.php:176
 msgid "GIS Location"
-msgstr "Localidad GIS"
+msgstr "Locazione GIS"
 
 #: ../classes/StatisticReport/NodeStatus.php:181 ../classes/Network.php:1035
 msgid "Map"
-msgstr "Mapa"
+msgstr "Mappa"
 
 #: ../classes/StatisticReport/NodeStatus.php:185
 msgid "NOT SET"
-msgstr "NOT CONFIGURADO"
+msgstr "NON CONFIGURATO"
 
 #: ../classes/StatisticReport/NodeStatus.php:190
 #: ../classes/StatisticReport/NetworkStatus.php:109
 msgid "Homepage"
-msgstr "Pagina de Inicio"
+msgstr "Homepage"
 
 #: ../classes/StatisticReport/NodeStatus.php:194
 #: ../classes/NodeLists/NodeListPDF.php:1083
 #: ../classes/NodeLists/NodeListRSS.php:324
 #: ../classes/NodeLists/NodeListKML.php:238
 msgid "Address"
-msgstr "Direcci&oacute;n"
+msgstr "Indirizzo"
 
 #: ../classes/StatisticReport/NodeStatus.php:202
 #: ../classes/NodeLists/NodeListPDF.php:1083
@@ -652,44 +658,44 @@ msgstr "Email"
 
 #: ../classes/StatisticReport/NodeStatus.php:210
 msgid "Transit Info"
-msgstr "Informacion de Traffico"
+msgstr "Informazioni sul transito"
 
 #: ../classes/StatisticReport/NodeStatus.php:220 ../classes/User.php:950
 #: ../classes/Node.php:1072
 msgid "Statistics"
-msgstr "Estadisticas"
+msgstr "Statistiche"
 
 #: ../classes/StatisticReport/NodeStatus.php:225
 msgid "Average visits per day"
-msgstr "Promedio de visitas por dia"
+msgstr "Media di visite per giorno"
 
 #: ../classes/StatisticReport/NodeStatus.php:226
 #: ../classes/StatisticReport/NodeStatus.php:237
 msgid "(for the selected period)"
-msgstr "(por el periodo seleccionado)"
+msgstr "(per il periodo selezionato)"
 
 #: ../classes/StatisticReport/NodeStatus.php:231
 msgid "Traffic"
-msgstr "Trafico"
+msgstr "Traffico"
 
 #: ../classes/StatisticReport/NodeStatus.php:233
 #: ../classes/StatisticReport/HighestBandwidthUsers.php:102
 msgid "Incoming"
-msgstr "Entrante"
+msgstr "In entrata"
 
 #: ../classes/StatisticReport/NodeStatus.php:235
 #: ../classes/StatisticReport/HighestBandwidthUsers.php:103
 msgid "Outgoing"
-msgstr "Saliente"
+msgstr "In uscita"
 
 #: ../classes/StatisticReport/UserReport.php:64
 msgid "Individual user report"
-msgstr "Reporte individual por usuario"
+msgstr "Rapporto individuale dell'utente"
 
 #: ../classes/StatisticReport/UserReport.php:111 ../classes/User.php:247
 #, php-format
 msgid "User id: %s could not be found in the database"
-msgstr "Usuario: %s no se puede encontrar en la base de datos"
+msgstr "L'utente %s non &egrave presente nel database"
 
 #: ../classes/StatisticReport/UserReport.php:122
 #: ../classes/StatisticReport/UserReport.php:284
@@ -698,58 +704,58 @@ msgstr "Usuario: %s no se puede encontrar en la base de datos"
 #: ../classes/StatisticReport/ConnectionLog.php:164 ../classes/User.php:702
 #: ../classes/User.php:707 ../classes/User.php:756 smarty.txt:74 smarty.txt:82
 msgid "Username"
-msgstr "Usuario"
+msgstr "Nome Utente"
 
 #: ../classes/StatisticReport/UserReport.php:137
 msgid "Unique ID"
-msgstr "Id Unico"
+msgstr "Identificativo utente"
 
 #: ../classes/StatisticReport/UserReport.php:142
 msgid "Member since"
-msgstr "Miembre Desde"
+msgstr "Membro dal"
 
 #: ../classes/StatisticReport/UserReport.php:147 ../classes/User.php:744
 #: smarty.txt:85
 msgid "Account Status"
-msgstr "Estado de la Cuenta"
+msgstr "Stato dell'account"
 
 #: ../classes/StatisticReport/UserReport.php:152
 msgid "Prefered Locale"
-msgstr "Localidad Preferidad"
+msgstr "Preferenze locali"
 
 #: ../classes/StatisticReport/UserReport.php:165
 #, php-format
 msgid "%d Connections"
-msgstr "%d Conexiones"
+msgstr "%d Connessioni"
 
 #: ../classes/StatisticReport/UserReport.php:179
 msgid "Logged in"
-msgstr "Sesi&oacute;n Iniciada"
+msgstr "Autenticato"
 
 #: ../classes/StatisticReport/UserReport.php:180
 #: ../classes/StatisticReport/ConnectionLog.php:167
 msgid "Time spent"
-msgstr "Tiempo Utilizado"
+msgstr "Tempo utilizzato"
 
 #: ../classes/StatisticReport/UserReport.php:181
 msgid "Token status"
-msgstr "Estado del Token"
+msgstr "Stato delle chiavi"
 
 #: ../classes/StatisticReport/UserReport.php:183
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: ../classes/StatisticReport/UserReport.php:184
 msgid "D"
-msgstr ""
+msgstr "D"
 
 #: ../classes/StatisticReport/UserReport.php:185
 msgid "U"
-msgstr ""
+msgstr "U"
 
 #: ../classes/StatisticReport/UserReport.php:212
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 #: ../classes/StatisticReport/UserReport.php:223
 #: ../classes/StatisticReport/RegistrationLog.php:162
@@ -757,107 +763,108 @@ msgstr ""
 #: ../classes/StatisticReport/HighestBandwidthUsers.php:104
 #: ../classes/StatisticReport/UserRegistrationReport.php:153
 msgid "Total"
-msgstr "Total"
+msgstr "Totale"
 
 #: ../classes/StatisticReport/UserReport.php:244
 #, php-format
 msgid "%d MAC addresses"
-msgstr "%d direcciones MAC"
+msgstr "%d indirizzi MAC"
 
 #: ../classes/StatisticReport/UserReport.php:248
 #: ../classes/StatisticReport/ConnectionLog.php:165
 msgid "MAC"
-msgstr ""
+msgstr "MAC"
 
 #: ../classes/StatisticReport/UserReport.php:249
 #: ../classes/StatisticReport/UserReport.php:285
 #: ../classes/StatisticReport/ContentReport.php:115
 msgid "Count"
-msgstr "Contado"
+msgstr "Conteggio"
 
 #: ../classes/StatisticReport/UserReport.php:280
 #, php-format
 msgid "%d users"
-msgstr "%d usuarios"
+msgstr "%d utenti"
 
 #: ../classes/StatisticReport/MostFrequentUsers.php:66
 #, php-format
 msgid "%d most frequent users"
-msgstr "%d usuarios mas frecuentes"
+msgstr "%d utenti pi&ugrave assidui"
 
 #: ../classes/StatisticReport/MostFrequentUsers.php:102
 msgid "Different days connected"
-msgstr "Dias diferentes conectados"
+msgstr "Connessioni in giorni differenti"
 
 #: ../classes/StatisticReport/RegistrationLog.php:64
 msgid "Registration Log (New user's first connection)"
-msgstr "Log de Registro (Primera conexi&oacute;n de usuarios nuevos)"
+msgstr "Log delle registrazioni (prime connessioni dei nuovi utenti)"
 
 #: ../classes/StatisticReport/RegistrationLog.php:116
 msgid "Users who signed up here"
-msgstr "Usuarios que se inscribier&oacute;n aqui"
+msgstr "Utenti registrati qui"
 
 #: ../classes/StatisticReport/RegistrationLog.php:127
 msgid "MAC address"
-msgstr "Direcciones MAC"
+msgstr "Indirizzi MAC"
 
 #: ../classes/StatisticReport/RegistrationLog.php:130
 msgid "Registration date"
-msgstr "Fecha de Registro"
+msgstr "Data di registrazione"
 
 #: ../classes/StatisticReport/NetworkStatus.php:64
 msgid "Network status information"
-msgstr "Informacion del Estado de la Red"
+msgstr "Informazioni sullo stato della rete"
 
 #: ../classes/StatisticReport/NetworkStatus.php:87
 msgid "Sorry, this report requires you to select individual networks"
-msgstr "Este reporte necesita que se seleccione redes individuales"
+msgstr ""
+"Siamo spiacenti, questo rapporto richiede la selezione individuale delle reti"
 
 #: ../classes/StatisticReport/NetworkStatus.php:104 ../classes/Role.php:362
 #: ../classes/ProfileTemplate.php:488 ../classes/Server.php:246
 #: ../classes/Node.php:1106 ../classes/VirtualHost.php:603
 msgid "Creation date"
-msgstr "Fecha de Creaci&oacute;n"
+msgstr "Data di creazione"
 
 #: ../classes/StatisticReport/NetworkStatus.php:114
 msgid "Tech support email"
-msgstr "Email de soporte tecnico"
+msgstr "Email del supporto tecnico"
 
 #: ../classes/StatisticReport/NetworkStatus.php:119
 msgid "Validation grace time"
-msgstr "Tiempo de gracia para validaci&oacute;n"
+msgstr "Tempo disponibile per confermare la registrazione"
 
 #: ../classes/StatisticReport/NetworkStatus.php:124
 msgid "Validation email"
-msgstr "Email de validaci&oacute;"
+msgstr "Email di conferma registrazione"
 
 #: ../classes/StatisticReport/NetworkStatus.php:129
 msgid "Allows multiple login"
-msgstr "Permite varias sesiones por un usuario"
+msgstr "Consenti login multipli"
 
 #: ../classes/StatisticReport/NetworkStatus.php:134
 msgid "Splash only nodes allowed"
-msgstr "Permitir nodos sin autenticacion(Splash only)"
+msgstr "(Splash) solo i nodi consentiti"
 
 #: ../classes/StatisticReport/NetworkStatus.php:139
 msgid "Custom portal redirect nodes allowed"
-msgstr "Permitir redirecci&oacute;n a nodos con portales modificados(custom) "
+msgstr "Il portale personalizzato ridireziona verso i nodi consentiti"
 
 #: ../classes/StatisticReport/NetworkStatus.php:144
 msgid "Number of users"
-msgstr "Numero de usuarios"
+msgstr "Numero di utenti"
 
 #: ../classes/StatisticReport/NetworkStatus.php:149
 msgid "Number of validated users"
-msgstr "Numero de usuarios validados"
+msgstr "Numero di utenti verificati"
 
 #: ../classes/StatisticReport/NetworkStatus.php:154
 msgid "Number of users currently online"
-msgstr "Numero de usuarios actualmente en linea"
+msgstr "Numero di utenti online attualmente"
 
 #: ../classes/StatisticReport/AnonymisedDataExport.php:65
 msgid "Anonymised SQL data export (for academic research)"
-msgstr ""
+msgstr "Esporta dati SQL anonimi (per ricerche accademiche)"
 
 #: ../classes/StatisticReport/AnonymisedDataExport.php:97
 #: ../classes/StatisticReport/ConnectionLog.php:89
@@ -866,146 +873,151 @@ msgstr ""
 #: ../classes/Node.php:457 ../classes/VirtualHost.php:403
 #: ../classes/VirtualHost.php:735
 msgid "Access denied"
-msgstr "Acceso Denegado"
+msgstr "Accesso negato"
 
 #: ../classes/StatisticReport/MostPopularNodes.php:65
 msgid "Most popular nodes, by visit"
-msgstr "Nodos mas populares, segun visita"
+msgstr "Il nodo pi&ugrave visitato"
 
 #: ../classes/StatisticReport/MostPopularNodes.php:110
 msgid "Visits"
-msgstr "Visitas"
+msgstr "Visite"
 
 #: ../classes/StatisticReport/ConnectionLog.php:64
 msgid "Connection Log"
-msgstr "Log de conexiones"
+msgstr "Log delle connessioni"
 
 #: ../classes/StatisticReport/ConnectionLog.php:109
 msgid "Number of unique Users:"
-msgstr "Numero de usuarios unicos:"
+msgstr "Numero di utenti unici:"
 
 #: ../classes/StatisticReport/ConnectionLog.php:116
 msgid "MAC Count"
-msgstr "Acumolado de MAC"
+msgstr "Conteggio degli indirizzi MAC"
 
 #: ../classes/StatisticReport/ConnectionLog.php:124
 msgid "Cx Count"
-msgstr "Acumulado e Cx"
+msgstr "Conteggio Cx"
 
 #: ../classes/StatisticReport/ConnectionLog.php:125
 msgid "Last seen"
-msgstr "Ultima Vez visto"
+msgstr "Ultima visita"
 
 #: ../classes/StatisticReport/ConnectionLog.php:159
 msgid "Number of non-unique connections:"
-msgstr "Numero de conexiones no unicas:"
+msgstr "Numero di connessioni non uniche:"
 
 #: ../classes/StatisticReport/ConnectionLog.php:163
 msgid "Node name"
-msgstr "Nombre de Nodo"
+msgstr "Nome del nodo"
 
 #: ../classes/StatisticReport/ConnectionLog.php:166
 msgid "Date"
-msgstr "Fecha"
+msgstr "Data"
 
 #: ../classes/StatisticReport/ConnectionLog.php:192
 msgid "Unknown"
-msgstr "Desconocido"
+msgstr "Sconosciuto"
 
 #: ../classes/StatisticReport/ConnectionGraphs.php:62
 msgid "Graph on network use per hour, weekday and month"
-msgstr "Grapico de uso de la red por hora, semana y mes"
+msgstr "Grafico sull'uso della rete per ora, settimana e mese"
 
 #: ../classes/StatisticReport/HighestBandwidthUsers.php:65
 #, php-format
 msgid "%d highest bandwidth consumers"
-msgstr "Los %d mas altos consumidores de banda ancha"
+msgstr "%d maggior consumo di banda"
 
 #: ../classes/StatisticReport/ContentReport.php:63
 msgid "Content display and clickthrough report"
-msgstr ""
+msgstr "Visualizzazione del contenuto e rapporto della navigazione"
 
 #: ../classes/StatisticReport/ContentReport.php:98
 msgid "Untitled Content"
-msgstr ""
+msgstr "Contenuto senza titolo"
 
 #: ../classes/StatisticReport/ContentReport.php:100
 msgid "Content report for:"
-msgstr ""
+msgstr "Rapporto dei contenuti per:"
 
 #: ../classes/StatisticReport/ContentReport.php:104
 msgid "Clickthrough"
-msgstr ""
+msgstr "Navigazione"
 
 #: ../classes/StatisticReport/ContentReport.php:105
 msgid "Prints"
-msgstr ""
+msgstr "Stampe"
 
 #: ../classes/StatisticReport/ContentReport.php:106
 msgid "Clickthrough/Prints"
-msgstr ""
+msgstr "Navigazione/Stampe"
 
 #: ../classes/StatisticReport/ContentReport.php:126
 msgid "First"
-msgstr ""
+msgstr "Primo"
 
 #: ../classes/StatisticReport/ContentReport.php:133
 msgid "Last"
-msgstr ""
+msgstr "Ultimo"
 
 #: ../classes/StatisticReport/ContentReport.php:141
 msgid "Rate"
-msgstr ""
+msgstr "Tasso"
 
 #: ../classes/StatisticReport/ContentReport.php:143
 #: ../classes/StatisticReport/ContentReport.php:149
 #, php-format
 msgid "%0.2f per day"
-msgstr ""
+msgstr "%0.2f al giorno"
 
 #: ../classes/StatisticReport/ContentReport.php:157
 msgid "Unique users"
-msgstr ""
+msgstr "Utenti unici"
 
 #: ../classes/StatisticReport/ContentReport.php:168
 msgid "Unique locations"
-msgstr ""
+msgstr "Localit&agrave uniche"
 
 #: ../classes/StatisticReport/ContentReport.php:203
 msgid "Content group elements report"
-msgstr ""
+msgstr "Rapporto sui contenuti degli elementi del gruppo"
 
 #: ../classes/StatisticReport/ContentReport.php:206
 msgid "Element # of prints"
-msgstr ""
+msgstr "Numero degli elementi delle stampe"
 
 #: ../classes/StatisticReport/ContentReport.php:207
 msgid "Displayed content report"
-msgstr ""
+msgstr "Rapporto dei contenuti visualizzati"
 
 #: ../classes/StatisticReport/ContentReport.php:233
 msgid ""
 "Note:  The statistics above include all the prints and clickthroughs of the "
 "displayed element, not just those resulting from it's display in this group."
 msgstr ""
+"Nota: La statistica sopra include tutte le stampe e la navigazione degli "
+"elementi visualizzati, non solo di quelli che risultano visualizzati in "
+"questo gruppo."
 
 #: ../classes/StatisticReport/ContentReport.php:309
 msgid ""
 "Important note:  Currently, Report configuration options are ignored for "
 "this report."
 msgstr ""
+"Nota importante: Attualmente, le opzioni di configurazione dei report sono "
+"ignorati per questa ricerca."
 
 #: ../classes/StatisticReport/UserRegistrationReport.php:62
 msgid "User registration report"
-msgstr "Reporte de numero de usuarios registrados"
+msgstr "Rapporto di registrazione utenti"
 
 #: ../classes/StatisticReport/UserRegistrationReport.php:94
 msgid "First connection per node"
-msgstr "Primera conexi&oacute;n por nodo"
+msgstr "Prima connessione per nodo"
 
 #: ../classes/StatisticReport/UserRegistrationReport.php:132
 msgid "# of new user first connection"
-msgstr "# de primera conexion de nuevos usuarios"
+msgstr "Numero delle prime connessioni dei nuovi utenti"
 
 #: ../classes/StatisticReport/UserRegistrationReport.php:157
 msgid ""
@@ -1013,149 +1025,152 @@ msgid ""
 "occured at each hotspot, taking report restrictions into account.  It "
 "includes non-validated users who successfully connected."
 msgstr ""
-"Nota: Esta lista es de usuarios con primera conexion ocurrida en cada "
-"hotspot, tomando en cuenta las restricciones de las cuentas. Esta incluye "
-"usuarios validadosque exitosamente esta conectado"
+"Nota. questa &egrave attualmente la lista di quante prime connessioni di "
+"nuovi utenti avvengono in ogni punto di accesso, applicando le restrizioni "
+"del rapporto nell'account. Questo include gli utenti non autenticati che si "
+"collegato con successo."
 
 #: ../classes/StatisticReport/ActiveUserReport.php:62
 msgid "Breakdown of how many users actually use the network"
-msgstr ""
+msgstr "Fotografia di quanti utenti usano attualmente la rete"
 
 #: ../classes/StatisticReport/ActiveUserReport.php:85
 msgid "User activity"
-msgstr ""
+msgstr "Attivit&agrave degli utenti"
 
 #: ../classes/StatisticReport/ActiveUserReport.php:94
 msgid "Last day"
-msgstr ""
+msgstr "Ultimo giorno"
 
 #: ../classes/StatisticReport/ActiveUserReport.php:95
 msgid "Last week"
-msgstr ""
+msgstr "Ultima settimana"
 
 #: ../classes/StatisticReport/ActiveUserReport.php:96
 msgid "Last month"
-msgstr ""
+msgstr "Ultimo mese"
 
 #: ../classes/StatisticReport/ActiveUserReport.php:97
 msgid "Last 3 month"
-msgstr ""
+msgstr "Ultimi 3 mesi"
 
 #: ../classes/StatisticReport/ActiveUserReport.php:98
 msgid "Last 6 months"
-msgstr ""
+msgstr "Ultimi sei mesi"
 
 #: ../classes/StatisticReport/ActiveUserReport.php:99
 msgid "Last year"
-msgstr ""
+msgstr "Ultimo anno"
 
 #: ../classes/StatisticReport/ActiveUserReport.php:100
 msgid "Ever"
-msgstr ""
+msgstr "Sempre"
 
 #: ../classes/StatisticReport/ActiveUserReport.php:138
 #, php-format
 msgid "Activity report for the %d validated users"
-msgstr ""
+msgstr "Rapporto di attivit&agrave dei %d utenti verificati"
 
 #: ../classes/StatisticReport/ActiveUserReport.php:141
 #: ../classes/StatisticReport/ActiveUserReport.php:172
 msgid "Period"
-msgstr ""
+msgstr "Periodo"
 
 #: ../classes/StatisticReport/ActiveUserReport.php:142
 #: ../classes/StatisticReport/ActiveUserReport.php:173
 msgid "# of users who used the network"
-msgstr ""
+msgstr "Numero degli utenti che usano la rete"
 
 #: ../classes/StatisticReport/ActiveUserReport.php:169
 #, php-format
 msgid "Activity report for the %d non-validated users"
-msgstr ""
+msgstr "Rapporto di attivit&agrave dei %d utenti non verificati"
 
 #: ../classes/StatisticReport/ActiveUserReport.php:198
 msgid "warning:  This report does not count connections at Splash-Only nodes"
 msgstr ""
+"Attenzione: questo rapporto non include le connessioni dei nodi 'Splash-Only'"
 
 #: ../classes/NodeLists/NodeListPDF.php:792
 msgid ""
 "To protect the server the PDF file has not been created, because the server "
 "is too busy right now!"
 msgstr ""
-"Para proteger el servidor el pdf no fue creado, porque el servidor esta muy "
-"ocupado!"
+"Per proteggere il server il file PDF non &egrave stato creato, il server "
+"&egrave sovraccarico al momento!"
 
 #: ../classes/NodeLists/NodeListPDF.php:958
 #: ../classes/NodeLists/NodeListPDF.php:959
 #: ../classes/NodeLists/NodeListPDF.php:961
 #: ../classes/NodeLists/NodeListPDF.php:1039
 msgid "Hotspots"
-msgstr "Hotspots"
+msgstr "Punti d'accesso"
 
 #: ../classes/NodeLists/NodeListPDF.php:1048
 msgid "street name"
-msgstr "nombre de la calle"
+msgstr "Indirizzo"
 
 #: ../classes/NodeLists/NodeListPDF.php:1052
 msgid "postal code"
-msgstr "codigo postal"
+msgstr "codice postale"
 
 #: ../classes/NodeLists/NodeListPDF.php:1056
 msgid "city"
-msgstr "ciudad"
+msgstr "citt&agrave"
 
 #: ../classes/NodeLists/NodeListPDF.php:1060
 msgid "name"
-msgstr "nombre"
+msgstr "Nome"
 
 #: ../classes/NodeLists/NodeListPDF.php:1065
 #, php-format
 msgid "This list contains all Hotspots of %s sorted by %s."
-msgstr "Esta lista contiene todo los Hotspots de %s ordenados por %s"
+msgstr "Questa lista contiene tutti i punti d'accesso di %s ordinati per %s."
 
 #: ../classes/NodeLists/NodeListPDF.php:1068
 #, php-format
 msgid "Number of Hotspots: %d"
-msgstr "Numero de hotspots: %d"
+msgstr "Numero di punti d'accesso: %d"
 
 #: ../classes/NodeLists/NodeListPDF.php:1071
 #, php-format
 msgid "Last updated on: %s"
-msgstr "Ultima actualizaci&oacute;n de: %s"
+msgstr "Ultimo aggiornamento in data: %s"
 
 #: ../classes/NodeLists/NodeListPDF.php:1083
 msgid "Hotspot"
-msgstr "Hotspot"
+msgstr "Punto d'accesso"
 
 #: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1142
 msgid "Postal code"
-msgstr "Codigo Postal"
+msgstr ""
 
 #: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1132
 msgid "City"
-msgstr "Ciudad"
+msgstr ""
 
 #: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1137
 msgid "Province / State"
-msgstr "Provincia / Estado"
+msgstr ""
 
 #: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1162
 msgid "Homepage URL"
-msgstr "URL de Pagina Personal"
+msgstr ""
 
 #: ../classes/NodeLists/NodeListPDF.php:1093
 msgid "PDF file cannot be created because the FPDF library is not installed!"
 msgstr ""
-"Archivo pdf no puede ser creado porque la libreria FPDF no esta instalada!"
+"Il file PDF non pu&ograve essere creato perch&egrave la libreria FPDF non "
+"&egrave installata!"
 
 #: ../classes/NodeLists/NodeListRSS.php:157
 #: ../classes/NodeLists/NodeListHTML.php:213
 msgid "Newest Hotspots"
-msgstr "Hotspots mas nuevos"
+msgstr "Nuovi punti d'accesso"
 
 #: ../classes/NodeLists/NodeListRSS.php:169
 msgid "List of the most recent Hotspots opened by the network: "
-msgstr "Lista de los hotspotas hotspots mas recientes abiertos en la red: "
+msgstr "Lista dei pi&ugrave recenti nuovi punti d'accesso aperti nella rete:"
 
 #: ../classes/NodeLists/NodeListRSS.php:190
 msgid "Copyright "
@@ -1163,15 +1178,15 @@ msgstr ""
 
 #: ../classes/NodeLists/NodeListRSS.php:358
 msgid "See Map"
-msgstr "Ver Mapa"
+msgstr "Guarda la mappa"
 
 #: ../classes/NodeLists/NodeListRSS.php:371
 msgid "Contact"
-msgstr "Contacto"
+msgstr "Contatti"
 
 #: ../classes/NodeLists/NodeListHTML.php:212
 msgid "Hotspot list"
-msgstr "Lista de Hotspot"
+msgstr "Lista punti d'accesso"
 
 #: ../classes/NodeLists/NodeListKML.php:240
 #: ../classes/Content/RssAggregator/RssAggregator.php:752
@@ -1187,129 +1202,120 @@ msgstr ""
 #: ../classes/Content.php:275
 msgid "The content with the following id could not be found in the database: "
 msgstr ""
-"El contenido con el siguiente id no pudo ser encontrado en la base de datos: "
 
 #: ../classes/Content/File/File.php:206
 msgid "File size exceeds limit specified in PHP.ini"
-msgstr ""
-"El tama&ntilde;o del archivo excede el limite especificado en el archivo PHP."
-"ini"
+msgstr "La dimensione del file supera il limite specificato nel file PHP.ini"
 
 #: ../classes/Content/File/File.php:210
 msgid "File size exceeds limit specified HTML form"
-msgstr "El tamano de archivo excede el especificado por la forma HTML"
+msgstr "La dimensione del file supera il limite specificato nel form HTML"
 
 #: ../classes/Content/File/File.php:214
 msgid "File upload was interrupted"
-msgstr "La subida del archivo fue interrumpida"
+msgstr "L'upload del file &egrave stato interrotto"
 
 #: ../classes/Content/File/File.php:218
 msgid "Missing temp folder"
-msgstr "Falta directorio temp"
+msgstr "Non &egrave stata trovata la cartella temporanea"
 
 #: ../classes/Content/File/File.php:496
 msgid "Upload a new file (Uploading a new one will replace any existing file)"
 msgstr ""
-"Subir un nuevo archivo (subir un archivo nuevo remplazara el archivo "
-"existente)"
+"Caricare un nuovo file (caricando un nuovo file il precedente sar&agrave "
+"cancellato)"
 
 #: ../classes/Content/File/File.php:505
 msgid "Remote file via URL"
-msgstr "Archivo remoto via URL"
+msgstr "Carica un file remoto via URL"
 
 #: ../classes/Content/File/File.php:522
 msgid "File URL"
-msgstr "URL del archivo"
+msgstr "URL del file"
 
 #: ../classes/Content/File/File.php:532
 msgid "Filename to display"
-msgstr "Archivo a desplegar"
+msgstr "Nome del file da visualizzare"
 
 #: ../classes/Content/File/File.php:544
 msgid "MIME type"
-msgstr "Tipo de MIME"
+msgstr "Tipo MIME"
 
 #: ../classes/Content/File/File.php:553
 msgid "Locally stored file size"
-msgstr "Tama&ntilde;o de archivo almacenado localmente"
+msgstr "Dimensione del file salvato in locale"
 
 #: ../classes/Content/File/File.php:554 ../classes/Content/File/File.php:653
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:354
 msgid "KB"
-msgstr ""
+msgstr "KB"
 
 #: ../classes/Content/File/File.php:560
 msgid "Remote file size (Automatically converted from KB to Bytes)"
-msgstr ""
-"Tama&ntilde;o de remoto de archivo (Automaticamente se convierte de KB a "
-"Bytes)"
+msgstr "Dimensione del file remoto (Automaticamente convertito da KB in Bytes)"
 
 #: ../classes/Content/File/File.php:569 ../classes/Content/File/File.php:660
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:354
 msgid "Download"
-msgstr "Descargar"
+msgstr "Scarica"
 
 #: ../classes/Content/File/File.php:570
 msgid "Last update"
-msgstr ""
+msgstr "Ultimo aggiornamento"
 
 #: ../classes/Content/File/File.php:708
 msgid "Could not delete this file, since it is persistent"
-msgstr "No se puede borrar este archivo, debido a que es persistente"
+msgstr "Non posso cancellare questo file finch&egrave &egrave persistente"
 
 #: ../classes/Content/SimpleString/SimpleString.php:130
 #: ../classes/Content/Langstring/Langstring.php:285
 msgid "Only these HTML tags are allowed : "
-msgstr "Solo estas tags de HTML pueden ser mostradas : "
+msgstr ""
 
 #: ../classes/Content/PatternLanguage/PatternLanguage.php:102
 msgid "Subscribe to Pattern Language"
-msgstr "Suscribir a Lenguage de Patrones"
+msgstr ""
 
 #: ../classes/Content/PatternLanguage/PatternLanguage.php:103
 #: ../classes/Content/PatternLanguage/PatternLanguage.php:118
 msgid "Read narratives archives"
-msgstr "Leer historial de narativas"
+msgstr ""
 
 #: ../classes/Content/PatternLanguage/PatternLanguage.php:117
 msgid "Read my narrative"
-msgstr "Leer mi narativa"
+msgstr ""
 
 #: ../classes/Content/PatternLanguage/PatternLanguage.php:119
 msgid "Unsubscribe"
-msgstr "Desregistrarse"
+msgstr ""
 
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:172
 msgid "Embedded content"
-msgstr "Contenido empotrado"
+msgstr ""
 
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:190
 msgid "Attributes"
-msgstr "Atributos"
+msgstr ""
 
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:192
 msgid ""
 "It is recommended to specify at least <b>width='x' height='y'</b> as "
 "attributes"
 msgstr ""
-"Se recomendia especifcar por lomentos los atributos <b>width='x' "
-"height='y'como atributos"
 
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:198
 msgid "Parameters"
-msgstr "Parametros"
+msgstr ""
 
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:212
 msgid ""
 "Fallback content (Can be another embedded content to create a fallback "
 "hierarchy)"
 msgstr ""
-"Contenido de Respaldo ( Puede ser otro contenido emprotado para crear una "
-"herarquia de respaldo"
 
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:261
 msgid "You MUST choose a File object or any of its siblings."
-msgstr "Debe selecionar una objeto de archivo o alguno de sus hermanos."
+msgstr ""
 
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:397
 #: ../classes/Content/Langstring/Langstring.php:531
@@ -1318,8 +1324,6 @@ msgid ""
 "Content is persistent (you must make it non persistent before you can delete "
 "it)"
 msgstr ""
-"El contenido es persistente (debe de hacerlo no persistente antes que lo "
-"puede borrar)"
 
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:219
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:225
@@ -1329,11 +1333,11 @@ msgstr ""
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:291
 #, php-format
 msgid "%s %d display conditions"
-msgstr "%s %d condiciones para mostrar"
+msgstr ""
 
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:301
 msgid "(Ignored if display type is random)"
-msgstr "(Ignorar si el tipo de despligue es random)"
+msgstr ""
 
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:307
 msgid ""
@@ -1343,78 +1347,70 @@ msgstr ""
 
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:308
 msgid "Only display from"
-msgstr "Solo mostrar por"
+msgstr ""
 
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:334
 msgid "Only display at node(s):"
-msgstr "Solo mostrar el nodo(s):"
+msgstr ""
 
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:349
 #: ../classes/ProfileTemplate.php:371 ../classes/Content.php:738
 msgid "Remove"
-msgstr "Remover"
+msgstr ""
 
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:361
 msgid "Add new allowed node"
-msgstr "Agregar nuevo nodo permitido"
+msgstr ""
 
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:364
 msgid ""
 "(Content can be displayed at ANY node unless one or more nodes are selected)"
 msgstr ""
-"(Contenido puede ser desplegado de cualquier nodo si no se selecciona uno o "
-"mas nodos)"
 
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:381
 #, php-format
 msgid "%s %d displayed content (%s)"
-msgstr "%s %d contenido mostrado (%s)"
+msgstr ""
 
 #: ../classes/Content/ContentGroup/ContentGroup.php:149
 msgid "Invalid content selection mode (must be part of CONTENT_ORDERING_MODES)"
 msgstr ""
-"Invalido modo de seleccion de contenido (debe ser parte de "
-"CONTENT_ORDERING_MODES)"
 
 #: ../classes/Content/ContentGroup/ContentGroup.php:178
 msgid ""
 "Invalid content selection mode (must be part of CONTENT_CHANGES_ON_MODES)"
 msgstr ""
-"Invalido modo de seleccion de contenido (debe ser parte de "
-"CONTENT_CHANGES_MODES)"
 
 #: ../classes/Content/ContentGroup/ContentGroup.php:207
 msgid "Invalid content selection mode (must be part of ALLOW_REPEAT_MODES)"
 msgstr ""
-"Invalido modo de seleccion de contenido (debe ser parte de "
-"ALLOW_REPEAT_MODES)"
 
 #: ../classes/Content/ContentGroup/ContentGroup.php:239
 #: ../classes/Content/RssAggregator/RssAggregator.php:198
 msgid "You must display at least one element"
-msgstr "Debe de mostrar al menos un elemento"
+msgstr ""
 
 #: ../classes/Content/ContentGroup/ContentGroup.php:260
 #, php-format
 msgid "%s configuration"
-msgstr "%s configuraci&oacute;n"
+msgstr ""
 
 #: ../classes/Content/ContentGroup/ContentGroup.php:264
 msgid "In what order should the content displayed?"
-msgstr "En que orden deben ser mostrado el contenido?"
+msgstr ""
 
 #: ../classes/Content/ContentGroup/ContentGroup.php:273
 msgid "When does the content rotate?"
-msgstr "Cuando se rota el contenido?"
+msgstr ""
 
 #: ../classes/Content/ContentGroup/ContentGroup.php:282
 msgid "Can content be shown more than once to the same user?"
-msgstr "Puede el contenido ser mostrado mas de una vez al mismo usuario?"
+msgstr ""
 
 #: ../classes/Content/ContentGroup/ContentGroup.php:306
 #, php-format
 msgid "%s display element list"
-msgstr "%s lista de elementos ha mostrar"
+msgstr ""
 
 #: ../classes/Content/ContentGroup/ContentGroup.php:313
 msgid "Show expired group elements"
@@ -1428,12 +1424,12 @@ msgstr ""
 #: ../classes/ProfileTemplate.php:502
 #, php-format
 msgid "%s %d"
-msgstr "%s %d"
+msgstr ""
 
 #: ../classes/Content/ContentGroup/ContentGroup.php:333
 #, php-format
 msgid "Delete %s %d"
-msgstr "Borrar %s %d"
+msgstr ""
 
 #: ../classes/Content/BannerAdGroup/BannerAdGroup.php:82
 msgid "300x250 - IAB Medium Rectangle"
@@ -1518,156 +1514,156 @@ msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:198
 msgid "Illegal Flickr Photostream selection mode."
-msgstr "Modo ilegal de selecci&oacute;n de Flujo de Fotos de Flickr"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:238
 msgid "Illegal Flickr Photostream display mode."
-msgstr "Modo ilegal de despligue de Flujo de fotos de Flickr"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:441
 #, php-format
 msgid "%s: Options"
-msgstr "%s: Opciones"
+msgstr "%s: Optioni"
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:448
 msgid "Flickr API key"
-msgstr "Llave del API de Flicker"
+msgstr "Chiave API di Flickr"
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:456
 msgid "Shared secret"
-msgstr "Secreto compartido"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:464
 msgid "Photos display mode"
-msgstr "Modo de despligue de fotos"
+msgstr "Modo di visualizzazione delle foto"
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:466
 msgid "Grid display"
-msgstr "Ver en Matriz"
+msgstr "Visualizzazione griglia"
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:466
 msgid "Feature photo (last one)"
-msgstr "Foto Principal (La ultima)"
+msgstr "Impostazione foto (ultima)"
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:466
 msgid "Feature photo + one at random"
-msgstr "Foto Principal + una al azar"
+msgstr "Impostazione foto + una a caso"
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:472
 msgid "Flick photo selection mode :"
-msgstr "Mode de selecci&oacute;n de Flick foto"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:475
 msgid "Select by group"
-msgstr "Seleccionar por grupo"
+msgstr "Seleziona da gruppo"
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:475
 msgid "Select by tags"
-msgstr "Seleccionar por tags"
+msgstr "Selezione da tag"
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:475
 msgid "Select by user"
-msgstr "Seleccionar por usuario"
+msgstr "Selezione da utente"
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:491
 msgid "Flickr User ID + Username"
-msgstr "Id de Usuario Flickr + Usuario"
+msgstr "Id utente e nome utente di Flickr"
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:495
 msgid "Reset Flickr User ID"
-msgstr "Reiniciar Id de Usuario Flickr "
+msgstr "Resetta l'user id di Flickr"
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:502
 msgid "Flickr User E-mail"
-msgstr "Email del usuario Flickr"
+msgstr "E-mail utente di Flickr"
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:518
 msgid "Group Photo Pool"
-msgstr "Pila de Grupo de Fotos"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:531
 msgid "Could not find any group photo pool."
-msgstr "No se puede encontrar alguna pila de grupo de fotos"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:539
 msgid "Tags (comma-separated)"
-msgstr "Tags (separados por coma)"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:543
 msgid "Match any tag"
-msgstr "Selecionar por cualquier Tag"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:543
 msgid "Match all tags"
-msgstr "Seleccionar por cualquier tag"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:551
 msgid "Flickr photo display options"
-msgstr "Opciones de despligue de fotos Flickr"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:555
 msgid "Show Flickr photo title ?"
-msgstr "Mostar el titulo de foto Flickr?"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:564
 msgid "Show Flickr tags ?"
-msgstr "Mostrar tags de Flickr?"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:573
 msgid "Show Flickr photo description ?"
-msgstr "Mostrar la descripci&oacute;n de la foto de Flickr?"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:582
 msgid "Preferred size"
-msgstr "Tama&ntilde;o preferido"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:584
 msgid "Squared 75x75"
-msgstr "Cuadrado 75x75"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:584
 msgid "Thumbnail 100x75"
-msgstr "Pesta&ntilde;a 100x75"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:584
 msgid "Small 240x180"
-msgstr "Peque&ntilde;a 241x180"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:584
 msgid "Medium 500x375"
-msgstr "Mediana 500x375"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:584
 msgid "Large 1024x*"
-msgstr "Grande 1024x*"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:584
 msgid "Original size"
-msgstr "Tama&ntilde;o Original"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:596
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:853
 msgid "Unable to connect to Flickr API."
-msgstr "No se puede conectar al API de Flickr"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:601
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:857
 msgid "Some of the request parameters provided to Flickr API are invalid."
-msgstr "Alguno de los parametros especificados al Api de Flickr son invalidos"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:605
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:862
 msgid "Unable to parse Flickr's response."
-msgstr "No se puede interpretar la respuesta de Flickr"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:609
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:866
 msgid "Could not get content from Flickr : "
-msgstr "No se puede obtener contenido de Flickr"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:615
 msgid "YOU MUST SPECIFY AN API KEY BEFORE YOU CAN GO ON."
-msgstr "DEBE DE ESPECIFICAR UNA LLAVE ANTES DE SEGUIR"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:621
 msgid "PEAR::Phlickr or PHP mudule CURL is not installed"
@@ -1675,23 +1671,23 @@ msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:674
 msgid "Could not find a Flickr user with this e-mail."
-msgstr "No se puede encontrar un usuario Flickr con este e-mail."
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:690
 msgid "Could not complete successfully the saving procedure."
-msgstr "No se puede completar exitosamente el procedimiente de almacenar."
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:848
 msgid "No Flickr content matches the request !"
-msgstr "No hay contenido de Flickr con lo que se ha especificado!"
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:873
 msgid "PEAR::Phlickr is not installed"
-msgstr "PEAR::Phlickr no esta instalado"
+msgstr ""
 
 #: ../classes/Content/IFrameRest/IFrameRest.php:119
 msgid "Actual URL after substitution"
-msgstr "URL actual despues de la substituci&oacute;n"
+msgstr "URL attuale dopo la sostituzione"
 
 #: ../classes/Content/IFrameRest/IFrameRest.php:122
 msgid ""
@@ -1699,9 +1695,6 @@ msgid ""
 "queries to remote systems to be displayed in a IFrame.  To that end, The "
 "following strings will be replaced in the URL:"
 msgstr ""
-"El tipo de contenido en el IFrameRest es para permitir un resultado estilo a "
-"consultas tipo REST-style a sistemas remotos que sera desplegados en una "
-"IFRAME.A este fin, la siguiente cadena sera remplazada en el URL:"
 
 #: ../classes/Content/IFrameRest/IFrameRest.php:128
 msgid ""
@@ -1710,12 +1703,10 @@ msgid ""
 "there is no\n"
 "                    current node</td></tr>"
 msgstr ""
-"Sera remplazada por un node_id urlencoded de un nodo\n"
-"donde el contenido es desplegado, o una cadena vacia si no hay un nodo actual"
 
 #: ../classes/Content/IFrameRest/IFrameRest.php:133
 msgid "Will be replaced by the user_id"
-msgstr "Sera remplazado por un user_id"
+msgstr "Sar&agrave sostituito dal nome utente"
 
 #: ../classes/Content/IFrameRest/IFrameRest.php:137
 msgid ""
@@ -1723,68 +1714,63 @@ msgid ""
 "this content, or an empty string if the user was never presented with this "
 "IFrame."
 msgstr ""
-"Sera remplazada por un ISO-8601 timestamp de la fecha que el contenido fue "
-"mostrado por el usuario, o una cadena vacia si no se le ha presentado "
-"contenido en un IFRAME al usuario"
 
 #: ../classes/Content/IFrame/IFrame.php:231
 msgid "Width (suggested width is 600 (pixels))"
-msgstr "Ancho (el ancho sugerido es de 600 (piexles))"
+msgstr ""
 
 #: ../classes/Content/IFrame/IFrame.php:240
 msgid "Height (suggested width is 400 (pixels))"
-msgstr "Tama&ntilde;o (el ancho sugerido es de 400 (pixeles))"
+msgstr ""
 
 #: ../classes/Content/IFrame/IFrame.php:247
 msgid "HTML content URL"
-msgstr "URL con el Contenido de HTML"
+msgstr ""
 
 #: ../classes/Content/IFrame/IFrame.php:296
 msgid "Your browser does not support IFrames."
-msgstr "Su Navegador no soporta IFrames."
+msgstr ""
 
 #: ../classes/Content/Langstring/Langstring.php:131
 #, php-format
 msgid "(Empty %s)"
-msgstr "(Borrar %s)"
+msgstr ""
 
 #: ../classes/Content/Langstring/Langstring.php:215
 #: ../classes/Content/Langstring/Langstring.php:341
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:112
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:12
 msgid "Language"
-msgstr "Lenguaje"
+msgstr "Lingua"
 
 #: ../classes/Content/Langstring/Langstring.php:228
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:145
 msgid "Add new string"
-msgstr "Agrega nueva cadena"
+msgstr "Aggiungi una nuova stringa"
 
 #: ../classes/Content/Langstring/Langstring.php:352
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:209
 msgid "Delete string"
-msgstr "Borrar cadena"
+msgstr "Cancella stringa"
 
 #: ../classes/Content/Langstring/Langstring.php:549
 #: ../classes/Content.php:1958
 msgid "Access denied (not owner of content)"
-msgstr "Acceso denegado (no es due&ntild;o del contenido)"
+msgstr ""
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:114
 msgid ""
 "The RssAggregator content with the following id could not be found in the "
 "database: "
 msgstr ""
-"El Agregador de contenido RSS con el este ID, no puede ser encontrado en la "
-"base de datos: "
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:417
 msgid "The maximum age must be a positive integer or null"
-msgstr "La edad maxima debe ser un entero positivo o nulo"
+msgstr ""
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:503
 msgid "Total number of items to display (from all feeds)"
-msgstr "Numero total de objetos que van a ser desplegados(de todas la fuentes)"
+msgstr ""
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:518
 msgid ""
@@ -1850,47 +1836,43 @@ msgstr ""
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:596
 msgid "seconds"
-msgstr "segundos"
+msgstr ""
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:604
 msgid "Feeds:"
-msgstr "Fuentes:"
+msgstr ""
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:629
 msgid ""
 "Add a new feed or pick one from the other feeds in the system "
 "(most_popular_first)"
 msgstr ""
-"Agregar una nueva fuente o eligir una de las otras fuentes del sistema "
-"(mas_popular_primero)"
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:645
 #, php-format
 msgid "%s, used %d times"
-msgstr "%s, usados %d veces"
+msgstr ""
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:651
 msgid "Type URL manually"
-msgstr "Introduzca el URL de manera manual"
+msgstr ""
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:654
 #: ../classes/ProfileTemplateField.php:147 ../classes/ProfileTemplate.php:303
 #: ../classes/Content.php:545 ../classes/Content.php:967
 msgid "Add"
-msgstr "Agregar"
+msgstr ""
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:755
 msgid ""
 "WARNING:  Either the feed couldn't be retrieved, or it couldn't be parsed.  "
 "Please double check the URL."
 msgstr ""
-"Advertencia: La fuente no se pudo obtener, o no puede ser parseado. Por "
-"favor dele doble clic en el URL"
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:775
 #, php-format
 msgid "The feed publishes an item every %.2f day(s)"
-msgstr "La fuente publica un elemento cada %.2f dia(s)"
+msgstr ""
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:777
 msgid ""
@@ -1906,16 +1888,6 @@ msgid ""
 "                                                                                                                             If "
 "unset, defaults to one day."
 msgstr ""
-"Cuantas fuentes adicionales que no seran publicadas tan frecuente sobre las "
-"fuentesque si se publican frecuente\n"
-"\tPor defecto es 0.75, el cual es un rango tipico entre 0 y 1\n"
-".En 0, se tendra un clasico Agregador RSS, esto significa que la ultima "
-"entrada de la fuente sera desplegada. 1 es usualmente es lo mas alto que se "
-"desea llegar: Asumiendo  que existe una distribucion homogenea de las "
-"fuentas publicadas en un dia, el segundo cada dos dias y el tercero cada 3 "
-"dias), si pide por 15 elementos, se obtendra 5 de cada uno.\n"
-" Aunque no sea util, porque la distribucion de la fuente usualmenbte no es "
-"homogenea"
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:803
 msgid ""
@@ -1938,16 +1910,15 @@ msgstr ""
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:854
 msgid "The bias must be a positive real number"
-msgstr "El bias debe ser un numero positivo real"
+msgstr ""
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:882
 msgid "The default publication must must be a positive integer or empty"
 msgstr ""
-"La publicacion por defecto debe ser un numero entero positivo o estar vacio"
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:904
 msgid "The URL cannot be empty!"
-msgstr "El URL no puede estar vacio!"
+msgstr ""
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:940
 msgid "See more"
@@ -1956,16 +1927,16 @@ msgstr ""
 #: ../classes/Content/RssAggregator/RssAggregator.php:940
 #: ../classes/Statistics.php:153 ../classes/Statistics.php:157
 msgid "-"
-msgstr ""
+msgstr "-"
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:942
 #, php-format
 msgid "Could not get RSS feed: %s"
-msgstr "No se puede obtener la fuente RSS: %s"
+msgstr ""
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:948
 msgid "RSS support is disabled"
-msgstr "Soporte de RSS esta deshabilitado"
+msgstr ""
 
 #: ../classes/Content/ShoutBox/ShoutBox.php:240
 msgid "Shout button 'onclick=' value (optionnal):"
@@ -1986,7 +1957,7 @@ msgstr ""
 #: ../classes/Content.php:1589 ../classes/Content.php:1606
 #, php-format
 msgid "Delete %s (%s)"
-msgstr "Borrar %s (%s)"
+msgstr ""
 
 #: ../classes/Content/ShoutBox/ShoutBox.php:251
 msgid "onclick parameter"
@@ -2011,19 +1982,19 @@ msgstr ""
 
 #: ../classes/Content/Picture/Picture.php:272
 msgid "Hyperlink URL (leave empty if you don't need it)"
-msgstr "Url( deje vacio si no se necesita)"
+msgstr ""
 
 #: ../classes/Content/Picture/Picture.php:280
 msgid "Width (leave empty if you want to keep original width)"
-msgstr "Ancho (deje vacio si desea mantener el ancho original)"
+msgstr ""
 
 #: ../classes/Content/Picture/Picture.php:287
 msgid "Height (leave empty if you want to keep original height)"
-msgstr "Altura (deje vacio si desea mantener la altura original)"
+msgstr ""
 
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:227
 msgid "FCKeditor is not installed"
-msgstr "No esta instalado FCKeditor"
+msgstr ""
 
 #: ../classes/Content/SmartyTemplate/SmartyTemplate.php:85
 #, php-format
@@ -2044,11 +2015,11 @@ msgstr ""
 
 #: ../classes/Content/HyperLink/HyperLink.php:95
 msgid "Warning: the URL is invalid!"
-msgstr ""
+msgstr "Attenzione: l'URL non &egrave valido"
 
 #: ../classes/Content/HyperLink/HyperLink.php:117
 msgid "(invalid URL)"
-msgstr ""
+msgstr "(URL non valido)"
 
 #: ../classes/Content/UIUserList/UIUserList.php:92
 msgid ""
@@ -2061,11 +2032,11 @@ msgstr ""
 
 #: ../classes/Profile.php:206
 msgid "Unable to insert the new profile in the database!"
-msgstr ""
+msgstr "Impossibile inserire il nuovo profilo nel database!"
 
 #: ../classes/Profile.php:309
 msgid "Should this profile be publicly visible?"
-msgstr ""
+msgstr "Questo profilo pu&ograve essere pubblico?"
 
 #: ../classes/Profile.php:311 ../classes/Network.php:1563
 #: ../classes/Network.php:1582 ../classes/Network.php:1588
@@ -2075,54 +2046,54 @@ msgstr "Si"
 
 #: ../classes/Profile.php:314
 msgid "Profile preferences"
-msgstr ""
+msgstr "Preferenze del profilo"
 
 #: ../classes/Profile.php:355
 msgid "Profile fields"
-msgstr ""
+msgstr "Campi del profilo"
 
 #: ../classes/Profile.php:423
 msgid "Sorry, this user has hidden his profile  temporarily."
-msgstr ""
+msgstr "Siamo spiacenti, l'utente ha nascosto temporaneamente il suo profilo."
 
 #: ../classes/Profile.php:446 ../classes/ProfileTemplateField.php:603
 #: ../classes/Network.php:1895 ../classes/ProfileField.php:363
 msgid "Access denied (must have super admin access)"
-msgstr "Acceso denegado (debe tener acceso de super administrador)"
+msgstr "Accesso negato (accesso riservato all'amministratore)"
 
 #: ../classes/Profile.php:451
 msgid "Could not delete Profile!"
-msgstr ""
+msgstr "Non &egrave possibile cancellare il profilo!"
 
 #: ../classes/User.php:157
 #, php-format
 msgid "There is no user with username %s"
-msgstr ""
+msgstr "L'utente %s non esiste"
 
 #: ../classes/User.php:268
 msgid "Guest"
-msgstr "Invitado"
+msgstr "Ospite"
 
 #: ../classes/User.php:311
 msgid "View this user's profile."
-msgstr ""
+msgstr "Guarda il profilo di questo utente."
 
 #: ../classes/User.php:349
 #, php-format
 msgid "Sorry, the username %s is not available"
-msgstr "Lo siento, el usuario %s no esta disponible"
+msgstr "Siamo spiacenti ma il nome utente %s non &egrave disponibile"
 
 #: ../classes/User.php:395
 msgid "Could not update email address."
-msgstr "No se puede actualizar la direccion email)."
+msgstr "Impossibile aggiornare l'indirizzo email."
 
 #: ../classes/User.php:429
 msgid "Could not update username locale."
-msgstr "No se puede actualizar el locale del usuario."
+msgstr "Non &egrave possibile aggiornare il nome utente locale."
 
 #: ../classes/User.php:451
 msgid "Could not update status."
-msgstr "No se puede actualizar el estado."
+msgstr "Non &egrave possibile aggiornare lo stato."
 
 #: ../classes/User.php:472
 #, php-format
@@ -2131,34 +2102,37 @@ msgid ""
 "your account has now expired. You will have to connect to the internet and "
 "validate your account from another location."
 msgstr ""
+"Siamo spiacenti, i %.0f minuti per controllare la sua casella di posta e "
+"confermare il suo account sono terminati. La preghiamo di connettersi ad "
+"internet da un'altra postazione per procedere con l'autenticazione."
 
 #: ../classes/User.php:475
 msgid "Your account is currently valid."
-msgstr "Su cuenta esta valida."
+msgstr "Il suo account &egrave attivo."
 
 #: ../classes/User.php:479
 msgid "Sorry, your account is not valid: "
-msgstr "Lo siento, su cuenta no es valida: "
+msgstr "Siamo spiacenti, il suo account non &egrave pi&ugrave attivo: "
 
 #: ../classes/User.php:553
 msgid "Password cannot be empty."
-msgstr ""
+msgstr "Il campo password non pu&ograve essere vuoto."
 
 #: ../classes/User.php:557
 msgid "Could not change user's password."
-msgstr "No se puede cambiar la clave del usuario."
+msgstr "Non &egrave possibile cambiare la sua password."
 
 #: ../classes/User.php:573
 msgid "No users could not be found in the database"
-msgstr "No se puede encontrar usuarios en la base de datos"
+msgstr "Nessun utente &egrave stato trovato nel database"
 
 #: ../classes/User.php:581 ../classes/User.php:599 ../classes/User.php:616
 msgid "Registration system"
-msgstr "Sistema de registro"
+msgstr "Sistema di registrazione"
 
 #: ../classes/User.php:584
 msgid " lost username request"
-msgstr " pedido de usuario perdido"
+msgstr " richiesta nomeutente persa"
 
 #: ../classes/User.php:585
 msgid ""
@@ -2166,8 +2140,10 @@ msgid ""
 "You have requested that the authentication server send you your username:\n"
 "Username: "
 msgstr ""
-"Hola,Usted ha pedido que el servidor de autenticacion envie su usuario:\n"
-"Usuario:"
+"Salve,\n"
+"Lei ha richiesto la comunicazione del suo nome utente presso il nostro "
+"server:\n"
+"Username: "
 
 #: ../classes/User.php:585 ../classes/User.php:620
 msgid ""
@@ -2178,28 +2154,28 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"Tenga un buen dia,\n"
-"El Equipo"
+"Buona giornata,\n"
+"Il Team"
 
 #: ../classes/User.php:591
 msgid "The user is not in validation period."
-msgstr "El usuario no esta en el tiempo de validacion."
+msgstr "Il nome utente non &egrave stato confermato."
 
 #: ../classes/User.php:594
 msgid "The validation token is empty."
-msgstr "El token de validacion esta vacio."
+msgstr "La chiave di conferma &egrave vuota."
 
 #: ../classes/User.php:602
 msgid " new user validation"
-msgstr " validacion de usuario nuevo"
+msgstr " nuova conferma dell'utente"
 
 #: ../classes/User.php:604
 msgid ""
 "Hello,\n"
 "Please follow the link below to validate your account.\n"
 msgstr ""
-"Hola,\n"
-"Por favor haga el clic en el siguiente link para validar su cuenta.\n"
+"Salve, \n"
+"La prego di cliccare sul link sottostante per confermare il suo account.\n"
 
 #: ../classes/User.php:604
 msgid ""
@@ -2210,12 +2186,12 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"Gracias,\n"
-"El equipo."
+"Grazie,\n"
+"Il Team."
 
 #: ../classes/User.php:619
 msgid " new password request"
-msgstr " solicitud de nueva clave"
+msgstr " nuova richiesta della password"
 
 #: ../classes/User.php:620
 msgid ""
@@ -2223,10 +2199,10 @@ msgid ""
 "You have requested that the authentication server send you a new password:\n"
 "Username: "
 msgstr ""
-"Hola,\n"
-"Usted ha solicitado que el servidor de autenticacion le envie una nueva "
-"clave:\n"
-"Usuario:"
+"Salve,\n"
+"Lei ha richiesto l'invio di una nuova password attraverso il nostro server "
+"di autenticazione:\n"
+"Nome utente: "
 
 #: ../classes/User.php:620
 msgid ""
@@ -2234,76 +2210,77 @@ msgid ""
 "Password: "
 msgstr ""
 "\n"
-"Contrase&ntilde;a: "
+"Password: "
 
 #: ../classes/User.php:740
 msgid "Get user statistics"
-msgstr ""
+msgstr "Vai alle statistiche dell'utente"
 
 #: ../classes/User.php:745
 msgid "Note that Error is for internal use only"
-msgstr ""
+msgstr "Attenzione: gli errori sono solo per uso interno"
 
 #: ../classes/User.php:751
 msgid "Administrative options"
-msgstr ""
+msgstr "Opzioni di amministrazione"
 
 #: ../classes/User.php:759
 msgid "Be carefull when changing this: it's the username you use to log in!"
 msgstr ""
-"Tenga cuidado al cambiar esto: es el usuario utilizado para iniciar sesion!"
+"Faccia attenzione quando cambia questo campo: &egrave il nome utente da "
+"utilizzare per autenticarsi!"
 
 #: ../classes/User.php:765
 msgid "Your current password"
-msgstr "Su clave actual"
+msgstr "Digiti la password attuale"
 
 #: ../classes/User.php:771
 msgid "Your new password"
-msgstr "Su clave nueva"
+msgstr "Digiti la nuova password"
 
 #: ../classes/User.php:776
 msgid "Your new password (again)"
-msgstr ""
+msgstr "Digiti nuovamente la nuova password"
 
 #: ../classes/User.php:781
 msgid "Change my password"
-msgstr "Cambiar mi clave"
+msgstr "Cambio password"
 
 #: ../classes/User.php:783
 msgid "User preferences"
-msgstr ""
+msgstr "Preferenze dell'utente"
 
 #: ../classes/User.php:795
 msgid "Completely delete my public profile"
-msgstr ""
+msgstr "Cancella completamente il profilo pubblico"
 
 #: ../classes/User.php:804
 msgid "Create my public profile"
-msgstr ""
+msgstr "Crea un profilo pubblico"
 
 #: ../classes/User.php:836
 msgid "Wrong password."
-msgstr "Clave incorrecta."
+msgstr "Password errata."
 
 #: ../classes/User.php:839
 msgid "Passwords do not match."
-msgstr "Las claves no son iguales."
+msgstr "Le password non corrispondono."
 
 #: ../classes/User.php:930
 msgid "Online Users"
-msgstr "Usuarios en linea"
+msgstr "Utenti connessi"
 
 #: ../classes/User.php:936
 msgid "Import NoCat user database"
-msgstr "Importar base de datos de NoCat"
+msgstr "Importa il database utenti NoCat"
 
 #: ../classes/User.php:943
 msgid "User manager"
-msgstr ""
+msgstr "Gestione utente"
 
 #: ../classes/User.php:955
 msgid "User administration"
-msgstr "Administraci&oacute;n de Usuarios"
+msgstr "Amministrazione utente"
 
 #: ../classes/ProfileTemplateField.php:128
 #: ../classes/ProfileTemplateField.php:437
@@ -2321,7 +2298,7 @@ msgstr ""
 
 #: ../classes/ProfileTemplateField.php:186 ../classes/Content.php:189
 msgid "Unable to insert new content into database!"
-msgstr "No se puede insertar nuevo contenido a la base de datos!"
+msgstr ""
 
 #: ../classes/ProfileTemplateField.php:414
 msgid "Display order"
@@ -2347,7 +2324,7 @@ msgstr ""
 
 #: ../classes/ProfileTemplateField.php:454
 msgid "display label"
-msgstr ""
+msgstr "visualizza etichetta"
 
 #: ../classes/ProfileTemplateField.php:461
 msgid "Admin label"
@@ -2356,7 +2333,7 @@ msgstr ""
 #: ../classes/ProfileTemplateField.php:468
 #, php-format
 msgid "%s admin label (%s)"
-msgstr ""
+msgstr "%s etichetta dell'amministratore (%s)"
 
 #: ../classes/ProfileTemplateField.php:472
 msgid "admin label"
@@ -2368,114 +2345,117 @@ msgstr ""
 
 #: ../classes/ProfileTemplateField.php:487
 msgid "Full name"
-msgstr ""
+msgstr "Nome Completo"
 
 #: ../classes/ProfileTemplateField.php:488
 msgid "Nickname"
-msgstr ""
+msgstr "Soprannome"
 
 #: ../classes/ProfileTemplateField.php:489
 msgid "E-mail"
-msgstr ""
+msgstr "email"
 
 #: ../classes/ProfileTemplateField.php:490
 msgid "Hashed e-mail"
-msgstr ""
+msgstr "Email sicura (?)"
 
 #: ../classes/ProfileTemplateField.php:491
 msgid "Picture"
-msgstr ""
+msgstr "Immagine"
 
 #: ../classes/ProfileTemplateField.php:492
 msgid "URL of a blog"
-msgstr ""
+msgstr "URL del vostro blog"
 
 #: ../classes/ProfileTemplateField.php:493
 msgid "URL of a homepage"
-msgstr ""
+msgstr "URL della vostra homepage"
 
 #: ../classes/ProfileTemplateField.php:608
 msgid "Could not delete ProfileTemplateField!"
-msgstr ""
+msgstr "Non &egrave possibile cancellare il campo generale del profilo"
 
 #: ../classes/Role.php:151
 #, php-format
 msgid "Sorry: No available roles in the database for stakeholder type: %s!"
-msgstr ""
+msgstr "Spiacente: nessun ruolo nel database per (?) :%s"
 
 #: ../classes/Role.php:162 ../classes/Role.php:168
 msgid "Role:"
-msgstr ""
+msgstr "ruolo"
 
 #: ../classes/Role.php:217 ../classes/ContentTypeFilter.php:199
 msgid "Unable to insert the new ContentTypeFilter in the database!"
 msgstr ""
+"Impossibile inserire il nuovo tipo di filtro di contenuto nel database!"
 
 #: ../classes/Role.php:238
 #, php-format
 msgid "Add a new role of type %s with id %s"
-msgstr ""
+msgstr "Aggiunga un nuovo tipo di ruolo %s con identificativo %s"
 
 #: ../classes/Role.php:302
 msgid "User roles management"
-msgstr ""
+msgstr "Amministrazione dei ruoli degli utenti"
 
 #: ../classes/Role.php:309
 msgid "Stakeholder type"
-msgstr ""
+msgstr "(?)"
 
 #: ../classes/Role.php:318
 msgid "This role is a system role"
-msgstr ""
+msgstr "Questo &egrave un ruolo di sistema"
 
 #: ../classes/Role.php:325
 msgid "Role ID"
-msgstr ""
+msgstr "Identificativo del ruolo"
 
 #: ../classes/Role.php:344 ../classes/Role.php:348 ../classes/Content.php:1564
 #: ../classes/Content.php:1568
 msgid "Description:"
-msgstr "Descripcion"
+msgstr "Descrizione:"
 
 #: ../classes/Role.php:352 ../classes/Content.php:1572
 msgid "description"
-msgstr "descripci&oacute;n"
+msgstr "Descrizione"
 
 #: ../classes/Role.php:379
 msgid "Permissions"
-msgstr ""
+msgstr "Permessi"
 
 #: ../classes/Role.php:485
 msgid "Could not delete object!"
-msgstr ""
+msgstr "L'oggetto non pu&ograve essere eliminato"
 
 #: ../classes/Role.php:506
 msgid "User roles"
-msgstr ""
+msgstr "Ruoli dell'utente"
 
 #: ../classes/Security.php:205
 #, php-format
 msgid "%s (%s) on  %s: %s"
-msgstr ""
+msgstr "%s (%s) in %s: %s"
 
 #: ../classes/Security.php:205
 msgid "Any"
-msgstr ""
+msgstr "Qualunque"
 
 #: ../classes/Security.php:208
 msgid ""
 "Some (possibly all) of the following permission(s) you don't have are "
 "required to perform the operation your requested:"
 msgstr ""
+"Alcuni (o tutti) dei seguenti permessi sono necessari per effettuare le "
+"operazioni richieste:"
 
 #: ../classes/FormSelectGenerator.php:103
 #: ../classes/FormSelectGenerator.php:112
 msgid " (Empty langstring, ID is displayed)"
-msgstr " (Langstring vacio, ID sera mostrado)"
+msgstr " (Langstring vuota, viene visualizzato l'ID"
 
 #: ../classes/ContentTypeFilter.php:220
 msgid "Add a new content type filter with these rules"
-msgstr ""
+msgstr "Aggiunge un nuovo tipo di filtro con queste regole"
 
 #: ../classes/ContentTypeFilter.php:356
 msgid "ContentTypeFilter management"
@@ -2487,11 +2467,11 @@ msgstr ""
 
 #: ../classes/ContentTypeFilter.php:374 ../classes/ProfileTemplate.php:478
 msgid "Label"
-msgstr ""
+msgstr "Etichetta"
 
 #: ../classes/ContentTypeFilter.php:385
 msgid "Rules (must be a valid array definition)"
-msgstr ""
+msgstr "Ruoli (Deve deve essere un valida definizione nell'array)"
 
 #: ../classes/ContentTypeFilter.php:417
 msgid "The rules must be given as a PHP array declaration."
@@ -2507,206 +2487,203 @@ msgstr ""
 
 #: ../classes/Statistics.php:85
 msgid "Usernames"
-msgstr "Usuarios"
+msgstr "Nomi utenti"
 
 #: ../classes/Statistics.php:86
 msgid "MAC addresses"
-msgstr ""
+msgstr "Indirizzi MAC"
 
 #: ../classes/Statistics.php:124 ../classes/Network.php:706
 #: ../classes/Content.php:335 ../classes/NodeList.php:138
 msgid "Unable to open directory "
-msgstr "No se puede abir el directorio"
+msgstr "Impossibile aprire la directory "
 
 #: ../classes/Statistics.php:152 ../classes/Statistics.php:156
 msgid "No restriction..."
-msgstr "Sin restriccion..."
+msgstr "Nessuna restrizione..."
 
 #: ../classes/Statistics.php:153 ../classes/Statistics.php:157
 msgid "yesterday"
-msgstr "ayer"
+msgstr "ieri"
 
 #: ../classes/Statistics.php:153 ../classes/Statistics.php:157
 msgid "today"
-msgstr "hoy"
+msgstr "oggi"
 
 #: ../classes/Statistics.php:153 ../classes/Statistics.php:157
 msgid "2 days ago"
-msgstr "2 dias"
+msgstr "2 giorni fa"
 
 #: ../classes/Statistics.php:153 ../classes/Statistics.php:157
 msgid "3 days ago"
-msgstr "3 dias"
+msgstr "3 giorni fa"
 
 #: ../classes/Statistics.php:153 ../classes/Statistics.php:157
 msgid "1 week ago"
-msgstr "1 semana"
+msgstr "1 settimana fa"
 
 #: ../classes/Statistics.php:153 ../classes/Statistics.php:157
 msgid "2 weeks ago"
-msgstr "2 semanas"
+msgstr "2 settimane fa"
 
 #: ../classes/Statistics.php:153 ../classes/Statistics.php:157
 msgid "3 weeks ago"
-msgstr "3 semanas"
+msgstr "3 settimane fa"
 
 #: ../classes/Statistics.php:153 ../classes/Statistics.php:157
 msgid "1 month ago"
-msgstr "1 mes"
+msgstr "1 mese fa"
 
 #: ../classes/Statistics.php:153 ../classes/Statistics.php:157
 msgid "2 months ago"
-msgstr "2 meses"
+msgstr "2 mesi fa"
 
 #: ../classes/Statistics.php:153 ../classes/Statistics.php:157
 msgid "6 months ago"
-msgstr "6 meses"
+msgstr "6 mesi fa"
 
 #: ../classes/Statistics.php:153 ../classes/Statistics.php:157
 msgid "1 year ago"
-msgstr "1 a&ntilde;o"
+msgstr "1 anno fa"
 
 #: ../classes/Statistics.php:153 ../classes/Statistics.php:157
 msgid "Select from and to..."
-msgstr ""
+msgstr "Seleziona intervallo date"
 
 #: ../classes/Statistics.php:153 ../classes/Statistics.php:157
 msgid "yesterday (whole day)"
-msgstr ""
+msgstr "ieri (intera giornata)"
 
 #: ../classes/Statistics.php:153 ../classes/Statistics.php:157
 msgid "today (whole day)"
-msgstr ""
+msgstr "oggi (intera giornata)"
 
 #: ../classes/Statistics.php:153 ../classes/Statistics.php:157
 msgid "this month"
-msgstr ""
+msgstr "questo mese"
 
 #: ../classes/Statistics.php:153 ../classes/Statistics.php:157
 msgid "last month"
-msgstr ""
+msgstr "il mese scorso"
 
 #: ../classes/Statistics.php:153 ../classes/Statistics.php:157
 msgid "this year"
-msgstr ""
+msgstr "quest'anno"
 
 #: ../classes/Statistics.php:153 ../classes/Statistics.php:157
 msgid "forever"
-msgstr " para siempre"
+msgstr "per sempre"
 
 #: ../classes/Statistics.php:161
 msgid "From"
-msgstr "De"
+msgstr "Da"
 
 #: ../classes/Statistics.php:176
 msgid "To"
-msgstr "Para"
+msgstr "A"
 
 #: ../classes/Statistics.php:450
 msgid "Invalid parameter"
-msgstr "Parametro Invalido"
+msgstr "Parametro non valido"
 
 #: ../classes/Statistics.php:482
 msgid "Username or MAC address, depending on selection above"
-msgstr ""
+msgstr "Nome utente o indirizzo MAC, dipende dalla selezione precedente"
 
 #: ../classes/Statistics.php:578
 msgid "Report configuration"
-msgstr "Configuracion del Reporte"
+msgstr "Configurazione dei rapporti"
 
 #: ../classes/Statistics.php:601
 msgid "Restrict the time range for which statistics will be computed"
 msgstr ""
-"Restringir el rango del tiempo para la cual las estadisticas sera calculadas"
+"Restringi l'intervallo di tempo per le statistiche che saranno prodotte"
 
 #: ../classes/Statistics.php:609
 msgid "Restrict stats to the following nodes"
-msgstr "Restringir las estadisticas para los siguientes nodos"
+msgstr "Restringi le statistiche ai seguenti nodi"
 
 #: ../classes/Statistics.php:619
 msgid "Distinguish users by"
-msgstr "Distinguir los usuarios por"
+msgstr "Distingui gli utenti per"
 
 #: ../classes/Statistics.php:628
 msgid "Restrict stats to the selected users"
-msgstr "Restringir las estadisticas por los usuarios selecionados"
+msgstr "Restringi le statistiche agli utenti selezionati"
 
 #: ../classes/Statistics.php:637
 msgid "Selected reports"
-msgstr "Reportes selecionados"
+msgstr "Rapporti selezionati"
 
 #: ../classes/Network.php:112 ../classes/Network.php:249
 msgid "Network::getAllNetworks:  Fatal error: No networks in the database!"
 msgstr ""
-"Network::getAllNetworks: Error Fatal: No hay redes en la base de datos!"
 
 #: ../classes/Network.php:189
 msgid "Unable to insert the new network in the database!"
-msgstr "No se puede insertar la nueva red en la base de datos!"
+msgstr ""
 
 #: ../classes/Network.php:260 ../classes/Network.php:266
 msgid "Network:"
-msgstr "Red:"
+msgstr ""
 
 #: ../classes/Network.php:307
 msgid "Create a new network with ID"
-msgstr "Crear la nueva red con el ID"
+msgstr ""
 
 #: ../classes/Network.php:1035
 msgid "Satellite"
-msgstr "Satelite"
+msgstr ""
 
 #: ../classes/Network.php:1035
 msgid "Hybrid"
-msgstr "Hibrida"
+msgstr ""
 
 #: ../classes/Network.php:1490
 msgid "Network management"
-msgstr "Administracion de Red"
+msgstr ""
 
 #: ../classes/Network.php:1496
 msgid "Network content"
-msgstr "Contenido de la Red"
+msgstr ""
 
 #: ../classes/Network.php:1507
 msgid "Network ID"
-msgstr "Id de la RED"
+msgstr ""
 
 #: ../classes/Network.php:1512
 msgid "Network name"
-msgstr "Nombre de la Red"
+msgstr ""
 
 #: ../classes/Network.php:1517
 msgid "Network creation date"
-msgstr "Fecha de Creacion de la Red"
+msgstr ""
 
 #: ../classes/Network.php:1522
 msgid "Network's web site"
-msgstr "Sitio web de la Red"
+msgstr ""
 
 #: ../classes/Network.php:1527
 msgid "Technical support email"
-msgstr "Email de soporte tecnico"
+msgstr ""
 
 #: ../classes/Network.php:1532
 msgid "Information about the network"
-msgstr "Informacion acerca de la red"
+msgstr ""
 
 #: ../classes/Network.php:1540
 msgid "Network authenticator class"
-msgstr "Clase para el autenticador de la Red"
+msgstr ""
 
 #: ../classes/Network.php:1541
 msgid ""
 "The subclass of Authenticator to be used for user authentication. Example: "
 "AuthenticatorRadius"
 msgstr ""
-"La subclase del Authenticador que sera usuario para autenticacion. Por "
-"Ejemplo: AuthenticatorRadius"
 
 #: ../classes/Network.php:1548
 msgid "Authenticator parameters"
-msgstr "Parametros del Autenticador"
+msgstr ""
 
 #: ../classes/Network.php:1549
 msgid ""
@@ -2718,23 +2695,23 @@ msgstr ""
 
 #: ../classes/Network.php:1554
 msgid "Network Authentication"
-msgstr "Autenticacion de Red"
+msgstr ""
 
 #: ../classes/Network.php:1562
 msgid "Is this network the default network?"
-msgstr "Es esta la red la red por defecto?"
+msgstr ""
 
 #: ../classes/Network.php:1567
 msgid "Selected theme pack for this network"
-msgstr "Tema selecionado para esta red"
+msgstr ""
 
 #: ../classes/Network.php:1572
 msgid "Network properties"
-msgstr "Propiedas de red"
+msgstr ""
 
 #: ../classes/Network.php:1580
 msgid "Splash-only nodes"
-msgstr "Nodo Splash-only"
+msgstr ""
 
 #: ../classes/Network.php:1581
 msgid "Are nodes allowed to be set as splash-only (no login)?"
@@ -2742,23 +2719,21 @@ msgstr ""
 
 #: ../classes/Network.php:1586
 msgid "Portal page redirection"
-msgstr "Pagina del portal de redirecci&oacute;n"
+msgstr ""
 
 #: ../classes/Network.php:1587
 msgid ""
 "Are nodes allowed to redirect users to an arbitrary web page instead of the "
 "portal?"
 msgstr ""
-"Se les permite a los nodos redirigir a los usuarios a caulquiera otra "
-"paginas web en vez del portal?"
 
 #: ../classes/Network.php:1592
 msgid "Network's node properties"
-msgstr "Propiedas de nodo de la red"
+msgstr ""
 
 #: ../classes/Network.php:1600
 msgid "Validation grace period"
-msgstr "Tiempo de gracia para  validaci&oacute;n"
+msgstr ""
 
 #: ../classes/Network.php:1601
 msgid ""
@@ -2772,57 +2747,56 @@ msgstr ""
 
 #: ../classes/Network.php:1611
 msgid "Multiple connections"
-msgstr "Conexiones Multiples"
+msgstr ""
 
 #: ../classes/Network.php:1612
 msgid "Can an account be connected more than once at the same time?"
-msgstr "Puede una cuenta conectarse mas de una vez al mismo tiempo?"
+msgstr ""
 
 #: ../classes/Network.php:1617
 msgid "Network's user verification"
-msgstr "Verificacion de usuario de red"
+msgstr ""
 
 #: ../classes/Network.php:1630 ../classes/Server.php:275
 #: ../classes/Node.php:1244
 msgid "Access rights"
-msgstr "Derechos de acceso"
+msgstr ""
 
 #: ../classes/Network.php:1646 ../classes/Node.php:1181
 msgid "Latitude"
-msgstr "Latitud"
+msgstr ""
 
 #: ../classes/Network.php:1647
 msgid "Center latitude for your the area of your wireless network"
-msgstr "Latitud Central del area de su red inalambrica"
+msgstr ""
 
 #: ../classes/Network.php:1651 ../classes/Node.php:1186
 msgid "Longitude"
-msgstr "Longitud"
+msgstr ""
 
 #: ../classes/Network.php:1652
 msgid "Center longitude for your the area of your wireless network"
-msgstr "Longitud Central del area de su red inalambrica"
+msgstr ""
 
 #: ../classes/Network.php:1656
 msgid "Zoomlevel"
-msgstr "Nivel de Zoom"
+msgstr ""
 
 #: ../classes/Network.php:1657
 msgid "Zoomlevel of the Google Map for your the area of your wireless network"
-msgstr "Nivel de Zoom del Mapa de Google del area de su red inalambrica"
+msgstr ""
 
 #: ../classes/Network.php:1661
 msgid "Map type"
-msgstr "Tipo de mapa"
+msgstr ""
 
 #: ../classes/Network.php:1662
 msgid "Default Google Map type for your the area of your wireless network"
 msgstr ""
-"Tipo por defecto del Mapa de Google para el area de su red inahalambrica "
 
 #: ../classes/Network.php:1667 ../classes/Node.php:1208
 msgid "GIS data"
-msgstr "Data de GIS"
+msgstr ""
 
 #: ../classes/Network.php:1671
 msgid "Network profile templates"
@@ -2833,98 +2807,96 @@ msgid ""
 "Cannot delete default network, create another one and select it before "
 "remove this one."
 msgstr ""
-"No puede borrar la red por defecto, por favor cree una nueva y seleccionela "
-"antes  como red por defecto antes de borrar esta"
 
 #: ../classes/Network.php:1903
 msgid "Could not delete network!"
-msgstr "No se puede borrar la red!"
+msgstr "Non posso cancellare la rete"
 
 #: ../classes/Network.php:1939
 msgid "Network administration"
-msgstr "Administraci&oacute;n de Redes"
+msgstr "Amministrazione della rete"
 
 #: ../classes/ProfileTemplate.php:229
 msgid "Unable to insert the new profile template in the database!"
-msgstr ""
+msgstr "Impossibile inserire il modello del nuovo profilo nel database"
 
 #: ../classes/ProfileTemplate.php:289
 msgid "Profile template"
-msgstr ""
+msgstr "Modello di profilo"
 
 #: ../classes/ProfileTemplate.php:359
 msgid "Profile template label"
-msgstr ""
+msgstr "Etichetta del modello del profilo"
 
 #: ../classes/ProfileTemplate.php:359 ../classes/Content.php:719
 msgid "Actions"
-msgstr "Acciones"
+msgstr "Azioni"
 
 #: ../classes/ProfileTemplate.php:460
 msgid "Profile template management"
-msgstr ""
+msgstr "Amministrazione modelli dei profili"
 
 #: ../classes/ProfileTemplate.php:467
 msgid "ProfileTemplate ID"
-msgstr ""
+msgstr "Identificativo del modello del profilo"
 
 #: ../classes/ProfileTemplate.php:497
 msgid "Profile template fields"
-msgstr ""
+msgstr "campo del modello del profilo"
 
 #: ../classes/ProfileTemplate.php:507
 #, php-format
 msgid "Delete %s %d, used in %d/%d profiles"
-msgstr ""
+msgstr "Elimina %s %d, usato in %d/%d profili"
 
 #: ../classes/ProfileTemplate.php:573
 msgid "Could not delete ProfileTemplate!"
-msgstr ""
+msgstr "Impossibile eliminare il modello del profilo"
 
 #: ../classes/ProfileTemplate.php:601
 msgid "Profile templates"
-msgstr ""
+msgstr "Modelli di profili"
 
 #: ../classes/ThemePack.php:87
 #, php-format
 msgid "Theme pack %s cannot be found in %s"
-msgstr "El tema %s no puede ser encontrado en %s"
+msgstr "Il tema %s non &egrave stati trovato in %s"
 
 #: ../classes/ThemePack.php:94
 #, php-format
 msgid "%s (Theme did not include a name.txt file)"
-msgstr "%s (Tema no incluye el archivo name.txt)"
+msgstr "%s (Il tema non include nessun file name.txt)"
 
 #: ../classes/ThemePack.php:100
 #, php-format
 msgid "%s (Theme did not include a description.txt file)"
-msgstr "%s (Tema no incluye el archivo description.txt )"
+msgstr "%s (Il tema non include nessun file description.txt)"
 
 #: ../classes/ThemePack.php:121
 msgid "Theme pack:"
-msgstr "Temas:"
+msgstr "Tema:"
 
 #: ../classes/ThemePack.php:144
 msgid "Unable to open the network theme packs directory"
-msgstr "No se puede abrir el directorio del tema"
+msgstr "Impossibile aprire la directory dei temi di rete"
 
 #: ../classes/ThemePack.php:151
 #, php-format
 msgid "No network theme packs available in %s"
-msgstr "No hay temas para la red en %s"
+msgstr "Nessun tema disponibile in %s"
 
 #: ../classes/ProfileField.php:251
 msgid "Unable to insert the new profile fields in the database!"
-msgstr ""
+msgstr "Impossibile inserire i nuovi campi del profilo nel database"
 
 #: ../classes/ProfileField.php:281
 #, php-format
 msgid "Delete %s"
-msgstr ""
+msgstr "Elimina %s"
 
 #: ../classes/ProfileField.php:368
 msgid "Could not delete ProfileField!"
-msgstr ""
+msgstr "Impossibile cancellare il campo"
 
 #: ../classes/Server.php:91
 msgid "Main server object"
@@ -2932,11 +2904,11 @@ msgstr ""
 
 #: ../classes/Server.php:151 ../classes/VirtualHost.php:262
 msgid "Unable to insert the new server in the database!"
-msgstr "No se puede insertar el nuevo servidor en la base de datos!"
+msgstr "Impossibile inserire un nuovo server nel database!"
 
 #: ../classes/Server.php:229
 msgid "Server management"
-msgstr "Administracion del Servidor"
+msgstr "Amministrazione del server"
 
 #: ../classes/Server.php:255
 msgid "Timezone check:  The following must be in the same timezone"
@@ -2954,15 +2926,15 @@ msgstr ""
 
 #: ../classes/Server.php:309
 msgid "The server can never be deleted!"
-msgstr ""
+msgstr "Il server non pu&ograve mai essere eliminato"
 
 #: ../classes/Server.php:319
 msgid "Server access control"
-msgstr ""
+msgstr "Controllo d'accesso al server"
 
 #: ../classes/Server.php:324
 msgid "Server administration"
-msgstr "Administraci&oacute;n de Servidores"
+msgstr "Amministrazione del server"
 
 #: ../classes/AbstractDb.php:93
 msgid "It appears the postgresql module isn't loaded"
@@ -2971,240 +2943,242 @@ msgstr ""
 #: ../classes/AbstractDb.php:99
 #, php-format
 msgid "Unable to connect to database on %s"
-msgstr "No se puede conectar la base de datos en %s"
+msgstr "Impossibile collegarsi al database %s"
 
 #: ../classes/AbstractDb.php:121 ../classes/AbstractDb.php:214
 #: ../classes/AbstractDb.php:402 ../classes/AbstractDb.php:475
 msgid "SQL Query"
-msgstr "Consulta de SQL"
+msgstr "Query SQL"
 
 #: ../classes/AbstractDb.php:126 ../classes/AbstractDb.php:219
 msgid "Query plan"
-msgstr "Plan del SQL"
+msgstr "Query plan"
 
 #: ../classes/AbstractDb.php:144 ../classes/AbstractDb.php:237
 #: ../classes/AbstractDb.php:412
 #, php-format
 msgid "Elapsed time for query execution : %.6f second(s)"
-msgstr "Tiempo transcurrido en la ejecucion de la consulta: %.6f segundo(s)"
+msgstr "Tempo trascorso per eseguire la query: %.6f secondi"
 
 #: ../classes/AbstractDb.php:148 ../classes/AbstractDb.php:241
 #: ../classes/AbstractDb.php:416 ../classes/AbstractDb.php:426
 #: ../classes/AbstractDb.php:490
 msgid "An error occured while executing the following SQL query"
-msgstr "Un error ocurrio al ejecutar la siguiente consulta de sql"
+msgstr ""
+"Si &egrave verificato un errore durante l'esecuzione della seguente query SQL"
 
 #: ../classes/AbstractDb.php:149 ../classes/AbstractDb.php:242
 #: ../classes/AbstractDb.php:417 ../classes/AbstractDb.php:491
 msgid "Error message"
-msgstr "Mensaje de Error"
+msgstr "Messaggio di errore"
 
 #: ../classes/AbstractDb.php:150 ../classes/AbstractDb.php:243
 #: ../classes/AbstractDb.php:492
 msgid "Backtrace:"
-msgstr ""
+msgstr "Pista:"
 
 #: ../classes/AbstractDb.php:173
 #, php-format
 msgid "The query returned %d results"
-msgstr "La consulta retorno %d resultados"
+msgstr "La query ha prodotto %d risultati"
 
 #: ../classes/AbstractDb.php:427
 #, php-format
 msgid ""
 "The query returned %d results, although there should have been only one."
 msgstr ""
-"La consulta retorno %d resultados, pero solo tenia que haber solo un "
-"resultado."
+"La query ha prodotto %d risultati, anche se avrebbe dovuto fornirne solo uno."
 
 #: ../classes/AbstractDb.php:435
 #, php-format
 msgid "The query returned %d result(s)"
-msgstr "La consulta retorno %d resultado(s)"
+msgstr "La query ha prodotto %d risultati"
 
 #: ../classes/AbstractDb.php:484 ../classes/AbstractDb.php:502
 #, php-format
 msgid "%d rows affected by the SQL query."
-msgstr "%d filas afectados por la consulta de SQL"
+msgstr "%d righe coinvolte dalla query SQL"
 
 #: ../classes/AbstractDb.php:485
 #, php-format
 msgid "Elapsed time for query execution : %6f second(s)"
-msgstr "Tiempo transcurrido en la ejecucion de la consulta: %.6f segundo(s)"
+msgstr "Tempo trascorso per l'esecuzione della query: %6f secondi"
 
 #: ../classes/Content.php:150
 msgid "Untitled content"
-msgstr "Contenido sin titulo"
+msgstr "Contenuto senza titolo"
 
 #: ../classes/Content.php:181
 msgid "Content type is optionnal, but cannot be empty!"
-msgstr "Contenido es opcional, pero no puede ser vacio!"
+msgstr ""
 
 #: ../classes/Content.php:221
 msgid "It appears that you have not installed any Content plugin !"
-msgstr "Parece no tiene instalado un plugin de Contenido !"
+msgstr ""
 
 #: ../classes/Content.php:223 ../classes/Content.php:1511
 msgid "You must select a content type: "
-msgstr "Debe de selecionar un tipo de contenido: "
+msgstr "Deve selezionare un tipo di contenuto"
 
 #: ../classes/Content.php:520
 msgid "Add new Content of type"
-msgstr "Agregar un nuevo tipo de contenido"
+msgstr "Aggiunga un nuovo tipo di contenuto"
 
 #: ../classes/Content.php:534
 msgid "No content type matches the filter."
-msgstr "No hay contenido que sea igual al filtro"
+msgstr "Nessun tipo di contenuto corrisponde al filtro"
 
 #: ../classes/Content.php:543
 #, php-format
 msgid "Add a %s"
-msgstr "Agregar a %s"
+msgstr "Aggiungi un %s"
 
 #: ../classes/Content.php:719
 msgid "Display page"
-msgstr "Pagina de mostrar"
+msgstr "Visualizza pagina"
 
 #: ../classes/Content.php:719
 msgid "Area"
-msgstr ""
+msgstr "Area"
 
 #: ../classes/Content.php:719
 msgid "Order"
-msgstr "Orden"
+msgstr "Ordine"
 
 #: ../classes/Content.php:719
 msgid "Content"
-msgstr "Contenido"
+msgstr "Contenuto"
 
 #: ../classes/Content.php:911
 msgid "Select from reusable content library"
-msgstr ""
+msgstr "Seleziona dalla libreria di contenuti riutilizzabili"
 
 #: ../classes/Content.php:925
 msgid "Title"
-msgstr "Titulo"
+msgstr "Titolo"
 
 #: ../classes/Content.php:925
 msgid "Content type"
-msgstr "Tipo del Contenido"
+msgstr "Tipo di contenuto"
 
 #: ../classes/Content.php:972 ../classes/Content.php:979
 msgid "Sorry, no elligible content available in the database"
-msgstr "Lo siento, no hay contenido en la base de datos"
+msgstr ""
+"Spiacente, nessun contenuto selezionabile &egrave disponibile nel database"
 
 #: ../classes/Content.php:1048
 msgid "KVP key cannot be null"
-msgstr ""
+msgstr "La chiave KVP non pu&ograve essere vuota"
 
 #: ../classes/Content.php:1122
 msgid "The following content type isn't valid: "
-msgstr "El siguiente tipo de contenido no es valido: "
+msgstr "Il seguente tipo di contenuto non &egrave valido: "
 
 #: ../classes/Content.php:1127
 msgid "Update was unsuccessfull (database error)"
-msgstr "No se pudo hacer la actualizacion ( error en la base de datos"
+msgstr "Errore nell'aggiornamento (errore nel database)"
 
 #: ../classes/Content.php:1144
 msgid "Unable to insert the new Owner into database."
-msgstr "No se puede agregar un nuevo due&ntilde;o a la base de datos"
+msgstr "Impossibile inserire il nuovo proprietario nel database"
 
 #: ../classes/Content.php:1161
 msgid "Unable to remove the owner from the database."
-msgstr "No se puede quitar el due&ntilde;o de la base de datos."
+msgstr "Impossibile rimuovere il proprietario dal database"
 
 #: ../classes/Content.php:1360
 msgid "Author(s):"
-msgstr "Autor(es)"
+msgstr "Autore(i)"
 
 #: ../classes/Content.php:1381
 msgid "Project information:"
-msgstr "Informacion del Proyecto"
+msgstr "Informazioni sul progetto"
 
 #: ../classes/Content.php:1502
 msgid "(You do not have access to edit this piece of content)"
-msgstr "(No tiene acceso para editar esta porcion del contenido)"
+msgstr ""
+"(I tuoi privilegi non permettono di modificare questa parte del contenuto)"
 
 #: ../classes/Content.php:1532
 #, php-format
 msgid "%s MetaData"
-msgstr ""
+msgstr "%s Metadata"
 
 #: ../classes/Content.php:1535
 msgid "Display the title?"
-msgstr "Mostrar el titulo?"
+msgstr "Visualizzare il titolo?"
 
 #: ../classes/Content.php:1544 ../classes/Content.php:1549
 msgid "Title:"
-msgstr "Titulo"
+msgstr "Titolo:"
 
 #: ../classes/Content.php:1553
 msgid "title"
-msgstr "titulo"
+msgstr "titolo"
 
 #: ../classes/Content.php:1581 ../classes/Content.php:1585
 msgid "Long description:"
-msgstr "Descripcion Larga"
+msgstr "Descrizione estesa"
 
 #: ../classes/Content.php:1589
 msgid "long description"
-msgstr "descripci&oacute;n larga"
+msgstr "Descrizione estesa"
 
 #: ../classes/Content.php:1598 ../classes/Content.php:1602
 msgid "Information on this project:"
-msgstr "Informacion de este proyecto:"
+msgstr "Informazioni su questo progettoi: "
 
 #: ../classes/Content.php:1606
 msgid "project information"
-msgstr "informacion de projecto"
+msgstr "Note sul progetto"
 
 #: ../classes/Content.php:1620
 #, php-format
 msgid "%s access control"
-msgstr "%s control de acceso"
+msgstr "%s controllo d'accesso"
 
 #: ../classes/Content.php:1624
 msgid "Is part of reusable content library (protected from deletion)?"
 msgstr ""
-"Esta parte de la libreria de contenido reusable (protegido de eliminacion)?"
+"E' parte di una libreria di contenuti riutilizzabili (protetta dalla "
+"cancellazione)? "
 
 #: ../classes/Content.php:1634
 msgid "Content owner list"
-msgstr "Lista de Dueno de Contenido"
+msgstr "Lista dei proprietari dei contenuti"
 
 #: ../classes/Content.php:1655
 msgid "Remove owner"
-msgstr "Quitar Dueno"
+msgstr "Rimuovi il proprietario"
 
 #: ../classes/Content.php:1664
 msgid "Add owner"
-msgstr "Agregar Dueno"
+msgstr "Aggiungi proprietario"
 
 #: ../classes/Content.php:1796
 msgid "Unable to set as author in the database."
-msgstr "No se puede especificar un autor en la base de datos"
+msgstr "Impossibile settare l'autore nel database"
 
 #: ../classes/Content.php:1970
 msgid "Reusable content library"
-msgstr ""
+msgstr "Libreria di contenuti riutilizzabili"
 
 #: ../classes/NodeList.php:186 smarty.txt:20
 msgid "Deployed HotSpots map"
-msgstr "Mapas de HotSpots Activos"
+msgstr "Mappa dei punti di accesso attivi"
 
 #: ../classes/NodeList.php:197
 #, php-format
 msgid "List in %s format"
-msgstr ""
+msgstr "Lista in formato %s"
 
 #: ../classes/NodeList.php:203
 msgid "Full node technical status (includes non-deployed nodes)"
-msgstr "Estado tecnico completo del Nodo(incluye nodos no desplegados)"
+msgstr "Stato completo dei nodi (inclusi i nodi inattivi)"
 
 #: ../classes/NodeList.php:207
-#, fuzzy
 msgid "Find Hotspots"
-msgstr "Hotspots"
+msgstr "Ricerca un punto d'accesso"
 
 #: ../classes/MainUI.php:78
 #, php-format
@@ -3213,6 +3187,9 @@ msgid ""
 "login with with a user with the required permission(s) to try this operation "
 "again."
 msgstr ""
+"Il suo utente attuale (%s) non ha sufficiente livello d'accesso. Per "
+"favoreeseguire l'accesso con un utente con sufficienti permessi per provare "
+"nuovamentequesta operazione "
 
 #: ../classes/MainUI.php:81
 #, php-format
@@ -3220,6 +3197,8 @@ msgid ""
 "You didn't log-in or your session timed-out.  Please login to try this "
 "operation again."
 msgstr ""
+"Non hai eseguito l'autenticazione o la tua sessione &egrave scaduta.Per "
+"favore autenticarsi di nuovo."
 
 #: ../classes/MainUI.php:89
 #, php-format
@@ -3238,37 +3217,37 @@ msgstr ""
 
 #: ../classes/MainUI.php:231
 msgid "authentication server"
-msgstr "servidor de autenticacion"
+msgstr "Server d'autenticazione"
 
 #: ../classes/MainUI.php:258
 #, php-format
 msgid "%s is not a valid structural display area"
-msgstr "%s no es una valida area de estructura visual"
+msgstr "%s non &egrave una valida area strutturata del display"
 
 #: ../classes/MainUI.php:642
 #, php-format
 msgid "%s Login"
-msgstr "%s Sesion"
+msgstr "%s ha effettuato l'autenticazione"
 
 #: ../classes/MainUI.php:642
 msgid "Login"
-msgstr "Iniciar Sesi&oacute;n:"
+msgstr "Autenticazione"
 
 #: ../classes/MainUI.php:646
 #, php-format
 msgid "Click <a href='%s'>here</a> to continue"
-msgstr "Haga clic en para <a href='%s'>here</a> continuar"
+msgstr "Clicca <a href='%s'>qui </a>per continuare"
 
 #: ../classes/MainUI.php:646
 msgid ""
 "The transfer from secure login back to regular http may cause a warning."
 msgstr ""
-"La transferencia del iniciado de sesion seguro al http regular podra causar "
-"una advertencia."
+"Il trasferimento dall'autenticazione sicura all'http standard pu&ograve "
+"generare warning. "
 
 #: ../classes/Node.php:205
 msgid "Could not delete node!"
-msgstr "No se puede borrar el nodo!"
+msgstr ""
 
 #: ../classes/Node.php:238
 msgid "PUT_GATEWAY_ID_HERE"
@@ -3276,7 +3255,7 @@ msgstr ""
 
 #: ../classes/Node.php:254
 msgid "New node"
-msgstr "Nodo Nuevo"
+msgstr ""
 
 #: ../classes/Node.php:263
 #, php-format
@@ -3285,35 +3264,35 @@ msgstr ""
 
 #: ../classes/Node.php:269
 msgid "Unable to insert new node into database!"
-msgstr "No se pudo inserta un nuevo nodo a la base de datos!"
+msgstr ""
 
 #: ../classes/Node.php:306 ../classes/Node.php:661
 msgid "Deployed"
-msgstr "en Produccion"
+msgstr "Funzionante"
 
 #: ../classes/Node.php:307 ../classes/Node.php:662
 msgid "In planning"
-msgstr "En Planificaci&oacute;n"
+msgstr "Di prossima attivazione"
 
 #: ../classes/Node.php:308 ../classes/Node.php:663
 msgid "In testing"
-msgstr "En prueba"
+msgstr "In fase di testing"
 
 #: ../classes/Node.php:309 ../classes/Node.php:664
 msgid "Non-Wifidog node"
-msgstr "Nodo No-Wifidog"
+msgstr "Nodo Non-Wifidog"
 
 #: ../classes/Node.php:310 ../classes/Node.php:665
 msgid "Permanently closed"
-msgstr "Cerrado permanentemente"
+msgstr "Permanentemente disattivato"
 
 #: ../classes/Node.php:311 ../classes/Node.php:666
 msgid "Temporarily closed"
-msgstr "Cerrado temporalmente"
+msgstr "Temporaneamente disattivato"
 
 #: ../classes/Node.php:353
 msgid "Filter:"
-msgstr "Filtro:"
+msgstr ""
 
 #: ../classes/Node.php:361
 msgid "Node Name"
@@ -3325,7 +3304,7 @@ msgstr ""
 
 #: ../classes/Node.php:385
 msgid "Sorry, no nodes available in the database"
-msgstr "Lo siento, no hay nodos disponibles en la base de datos"
+msgstr ""
 
 #: ../classes/Node.php:410
 msgid "Add a new node for the gateway ID"
@@ -3333,7 +3312,7 @@ msgstr ""
 
 #: ../classes/Node.php:420
 msgid "in "
-msgstr "en "
+msgstr ""
 
 #: ../classes/Node.php:485
 msgid "Here is what you can do to fix this:"
@@ -3347,14 +3326,13 @@ msgid ""
 msgstr ""
 
 #: ../classes/Node.php:502
-#, fuzzy, php-format
+#, php-format
 msgid "Add a new node in %s"
-msgstr "Agregar un nuevo nodo"
+msgstr ""
 
 #: ../classes/Node.php:504
-#, fuzzy
 msgid "Add node"
-msgstr "Agregar nuevo nodo"
+msgstr ""
 
 #: ../classes/Node.php:511
 #, php-format
@@ -3364,13 +3342,12 @@ msgid ""
 msgstr ""
 
 #: ../classes/Node.php:530
-#, fuzzy
 msgid "Steal node"
-msgstr "Nodo Nuevo"
+msgstr ""
 
 #: ../classes/Node.php:606
 msgid "No deployment statuses could be found in the database"
-msgstr "No se pudo encontrados estados de producion en la base de datos"
+msgstr ""
 
 #: ../classes/Node.php:657
 #, php-format
@@ -3379,43 +3356,43 @@ msgstr ""
 
 #: ../classes/Node.php:1066
 msgid "Edit a node"
-msgstr "Editar un nodo"
+msgstr ""
 
 #: ../classes/Node.php:1073
 msgid "Get access statistics"
-msgstr "Obtener estadisticas de acceso"
+msgstr ""
 
 #: ../classes/Node.php:1096
 msgid "Node content"
-msgstr "Contenido del Nodo"
+msgstr ""
 
 #: ../classes/Node.php:1122
 msgid "Civic number"
-msgstr "Numero civico"
+msgstr ""
 
 #: ../classes/Node.php:1127
 msgid "Street name"
-msgstr "Nombre de calle"
+msgstr ""
 
 #: ../classes/Node.php:1147
 msgid "Country"
-msgstr "Pais"
+msgstr ""
 
 #: ../classes/Node.php:1152
 msgid "Public phone number"
-msgstr "Numero publico de telefono"
+msgstr ""
 
 #: ../classes/Node.php:1157
 msgid "Public email"
-msgstr "Email publico"
+msgstr ""
 
 #: ../classes/Node.php:1167
 msgid "Mass transit info"
-msgstr "Informacion de transito en masa"
+msgstr ""
 
 #: ../classes/Node.php:1172
 msgid "Information about the node"
-msgstr "Informacion acerca del nodo"
+msgstr ""
 
 #: ../classes/Node.php:1192 ../classes/Node.php:1196
 msgid "Geocode the address or postal code above"
@@ -3423,56 +3400,52 @@ msgstr ""
 
 #: ../classes/Node.php:1193
 msgid "Check using Google Maps"
-msgstr "Revisar usando Google Maps"
+msgstr ""
 
 #: ../classes/Node.php:1194
 msgid ""
 "Use a geocoding service, then use Google Maps to pinpoint the exact location."
 msgstr ""
-"Utilice un servicio de geocode, despues utilice Google Maps para eligir la "
-"direccion exacta."
 
 #: ../classes/Node.php:1197
 msgid "Use a geocoding service"
-msgstr "Utilice un servicio de geocode"
+msgstr ""
 
 #: ../classes/Node.php:1203
 msgid "Map URL"
-msgstr "URL de Mapa"
+msgstr ""
 
 #: ../classes/Node.php:1216
 msgid "Node deployment status"
-msgstr "Estado del nodo en produccion"
+msgstr ""
 
 #: ../classes/Node.php:1222
 msgid "Is this node splash-only (no login)?"
-msgstr "Es este nodo splash-only (no utiliza login)"
+msgstr ""
 
 #: ../classes/Node.php:1229
 msgid "URL to show instead of the portal"
-msgstr "URL que se mostrara en vez del portal"
+msgstr ""
 
 #: ../classes/Node.php:1231
 msgid ""
 "If this is not empty, the portal will be disabled and this URL will be shown "
 "instead"
 msgstr ""
-"Si este no esta vacio, el portal se desactivara y este URL sera mostrado en "
-"vez"
 
 #: ../classes/Node.php:1236
 msgid "Node configuration"
-msgstr "Configuracion del Nodo"
+msgstr ""
 
 #: ../classes/Node.php:1371
 msgid ""
 "It appears that the Geocoder could not be reached or could not geocode the "
 "given address."
-msgstr "No se puede llegar al Geocoder o no se puede geocode esta direccion"
+msgstr ""
 
 #: ../classes/Node.php:1374
 msgid "You must enter a valid address."
-msgstr "Debe de introducir una direccion valida"
+msgstr ""
 
 #: ../classes/Node.php:1378
 msgid "Unable to create geocoder.  Are you sure you set the country?"
@@ -3484,63 +3457,64 @@ msgstr ""
 
 #: ../classes/Node.php:1630
 msgid "Node administration"
-msgstr "Administraci&oacute;n de Nodos"
+msgstr ""
 
 #: ../classes/VirtualHost.php:162
 msgid "Server::getAllServers: Fatal error: No servers in the database!"
-msgstr ""
-"Server::getAllServers: Error fatal: No hay servidor en la base de datos!"
+msgstr "Server::getAllServers: Errore fatale: Nessun server nel database!"
 
 #: ../classes/VirtualHost.php:298
 msgid "Virtual host:"
-msgstr ""
+msgstr "Host virtuale:"
 
 #: ../classes/VirtualHost.php:375
 msgid "Add a new virtual host for hostname"
-msgstr ""
+msgstr "Aggiungi un nuovo host virtuale per questo hostname"
 
 #: ../classes/VirtualHost.php:595
 msgid "Virtual hosts management"
-msgstr ""
+msgstr "Gestione degli host virtuali"
 
 #: ../classes/VirtualHost.php:614
 msgid "Hostname"
-msgstr "Nombre del servidor"
+msgstr "Nome host"
 
 #: ../classes/VirtualHost.php:622
 msgid "Default network for this vhost"
-msgstr ""
+msgstr "Netword di default per questo host virtuale"
 
 #: ../classes/VirtualHost.php:639
 msgid "Make this Virtual Host the server's default?"
-msgstr ""
+msgstr "Rendi questo host virtuale quello di default?"
 
 #: ../classes/VirtualHost.php:655
 msgid "Use SSL on this server?"
-msgstr "Usa SSL en este servidor?"
+msgstr "Usare SSL su questo server?"
 
 #: ../classes/VirtualHost.php:667
 msgid "Google public API key"
-msgstr "Llave del Api publico de Google"
+msgstr "Chiave API pubblica di Google"
 
 #: ../classes/VirtualHost.php:738
 msgid ""
 "Cannot delete default virtual host, create another one and select it before "
 "removing this one."
 msgstr ""
+"Impossibile cancellare il virtual host di default, crearne un'altro e "
+"selezionarlo prima di rimuovere il primo."
 
 #: ../classes/VirtualHost.php:743
 msgid "Could not delete server!"
-msgstr "No se puede borrar el servidor!"
+msgstr "Impossibile cancellare il server!"
 
 #: ../classes/VirtualHost.php:771
 msgid "Virtual Hosts"
-msgstr ""
+msgstr "Host virtuali"
 
 #: ../classes/GenericDataObject.php:124
 #, php-format
 msgid "Delete not supported on class %s"
-msgstr ""
+msgstr "Eliminazione non supportata per la classe %s"
 
 #: ../classes/Stakeholder.php:92
 msgid "Remove stakeholder"
@@ -3553,7 +3527,7 @@ msgstr ""
 #: ../classes/Stakeholder.php:125
 #, php-format
 msgid "User %s already has role %s for this object"
-msgstr ""
+msgstr "L'utente %s ha gi&agrave il ruolo %s per questo oggetto "
 
 #: ../classes/Dependency.php:339 ../classes/Dependency.php:355
 #, php-format
@@ -3563,7 +3537,7 @@ msgstr ""
 #: ../classes/Dependency.php:369 ../classes/Dependency.php:383
 #, fuzzy, php-format
 msgid "File %s not found in %s"
-msgstr "El tema %s no puede ser encontrado en %s"
+msgstr "Il tema %s non &egrave stati trovato in %s"
 
 #: ../classes/Dependency.php:422
 #, php-format
@@ -3597,90 +3571,103 @@ msgstr ""
 
 #: ../classes/Permission.php:85
 msgid "User is allowed to view online users troughout the network"
-msgstr ""
+msgstr "Utente abilitato a vedere lo stato degli utenti in rete"
 
 #: ../classes/Permission.php:86
 msgid "User is allowed to edit any user for this network"
-msgstr ""
+msgstr "Utente abilitato a modificare qualunque altro utente di questa rete"
 
 #: ../classes/Permission.php:87
 msgid "User is allowed to edit the configuration of this network"
 msgstr ""
+"L'utente &egrave abilitato a modificare la configurazione di questa rete"
 
 #: ../classes/Permission.php:88
 msgid "User is allowed to view all statistics for this network"
-msgstr ""
+msgstr "L'utente &egrave abilitato a vedere le statistiche di questa rete"
 
 #: ../classes/Permission.php:89
 msgid "User is allowed to edit any configuration of any node on the network"
 msgstr ""
+"L'utente &egrave abilitato a modificare la configurazione di qualunque nodo "
+"della rete"
 
 #: ../classes/Permission.php:91
 msgid "User is allowed to edit user role definitions"
 msgstr ""
+"L'utente &egrave abilitato a modificare le definizioni dei ruoli degli utenti"
 
 #: ../classes/Permission.php:92
 msgid "User is allowed to edit any virtual host definition"
 msgstr ""
+"L'utente &egrave abilitato a modificare qualunque definizione di nodi "
+"virtuali"
 
 #: ../classes/Permission.php:93
 msgid "User is allowed to edit general server configuration"
 msgstr ""
+"L'utente &egrave abilitato a modificare la configurazione generale del server"
 
 #: ../classes/Permission.php:94
 msgid "User is allowed to edit the profile templates"
-msgstr ""
+msgstr "L'utente &egrave abilitato a modificare i modelli dei profili"
 
 #: ../classes/Permission.php:95
 msgid "User is allowed to edit the content type filters on the network"
 msgstr ""
+"L'utente &egrave abilitato a modificare i filtri sul tipo di contenuto nella "
+"rete"
 
 #: ../classes/Permission.php:96
 msgid "User is allowed to create reusable content"
-msgstr ""
+msgstr "L'utente &egrave abilitato a creare contenuti riutilizzabili"
 
 #: ../classes/Permission.php:98
 msgid "User is allowed to change the gateway id of this node"
 msgstr ""
+"L'utente &egrave abilitato a modificare l'identificativo del gateway del suo "
+"nodo"
 
 #: ../classes/Permission.php:99
 msgid ""
 "TEMPORARY:  User is allowed to edit general configuration for this node.  "
 "This will be replaced with more granular permissions in the future"
 msgstr ""
+"TEMPORANEO: L'utente &egrave abilitato a modificare la configurazione "
+"generale di questo nodoQuesto sar&agrave sostituito con permessi pi&ugrave "
+"specifici in futuro "
 
 #: ../classes/DependenciesList.php:105
 #, php-format
 msgid "Version %s needed"
-msgstr ""
+msgstr "E' richiesta la versione %s"
 
 #: ../classes/DependenciesList.php:122
 #, php-format
 msgid "%s may work, but version %s is recommended"
-msgstr ""
+msgstr "%s potrebbe funzionare ma si raccomanda la versione %s"
 
 #: ../classes/DependenciesList.php:125
 #, php-format
 msgid "%s is too old, version %s needed"
-msgstr ""
+msgstr "%s &egrave troppo vecchia, si richiede la versione %s"
 
 #: ../classes/DependenciesList.php:135
-#, fuzzy
 msgid "Component"
-msgstr "Contenido"
+msgstr "Componente"
 
 #: ../classes/DependenciesList.php:135
 msgid "Click for the component's website"
-msgstr ""
+msgstr "Clicca per accedere alla risorsa dei componenti"
 
 #: ../classes/DependenciesList.php:136
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #: ../classes/DependenciesList.php:138
 #, fuzzy
 msgid "Information"
-msgstr "informacion de projecto"
+msgstr "Note sul progetto"
 
 #: ../classes/DependenciesList.php:176
 msgid "Install message"
@@ -3689,120 +3676,120 @@ msgstr ""
 #: ../classes/DependenciesList.php:179
 #, fuzzy
 msgid "Detection message"
-msgstr "Mensaje de Error"
+msgstr "Messaggio di errore"
 
 #: ../classes/DependenciesList.php:182
 #, fuzzy
 msgid "To install"
-msgstr "Total"
+msgstr "Totale"
 
 #: ../classes/DependenciesList.php:204
 msgid "Dependencies"
-msgstr ""
+msgstr "Dipendenze"
 
 #: smarty.txt:2
 msgid "Status of all nodes of the"
-msgstr "Estado de los nodos de la "
+msgstr ""
 
 #: smarty.txt:3
 msgid "Local content demo"
-msgstr "Demo del contendio local"
+msgstr ""
 
 #: smarty.txt:4
 msgid "days"
-msgstr "dias"
+msgstr "giorni"
 
 #: smarty.txt:5
 msgid "user is online at this hotspot"
-msgstr "usuario es activo"
+msgstr "L'utente &egrave online da questo punto d'accesso"
 
 #: smarty.txt:6
 msgid "users are online at this hotspot"
-msgstr "usuarios que estan activos en el hotspot"
+msgstr "Utenti online da questo punto d'accesso"
 
 #: smarty.txt:7
 msgid "Nobody is online at this hotspot"
-msgstr "No hay usuario en linea"
+msgstr "Nessun utente connesso da questo punto d'accesso."
 
 #: smarty.txt:8
 msgid "Recent Users:"
-msgstr ""
+msgstr "Utenti recenti"
 
 #: smarty.txt:9
 msgid "Most Active Users:"
-msgstr ""
+msgstr "Utenti pi&ugrave attivi"
 
 #: smarty.txt:10
 msgid "Logged in as"
-msgstr "Se inicio sesi&oacute;n como"
+msgstr "Eseguito accesso come"
 
 #: smarty.txt:11
 msgid "I am not logged in."
-msgstr "No he iniciado sesi&oacute;n."
+msgstr "Non sono autenticato"
 
 #: smarty.txt:13
 msgid "Login or Signup here"
-msgstr "Inicie Sesi&oacute;n o Inscribase Aqui"
+msgstr "Autenticati o registrati qui"
 
 #: smarty.txt:14
 msgid "Username (or email)"
-msgstr "Email Completo"
+msgstr "Nome utente (o email)"
 
 #: smarty.txt:15 smarty.txt:37
 msgid "Password"
-msgstr "Contrase&ntilde;a"
+msgstr "Password"
 
 #: smarty.txt:16
 msgid "Show me the closest hotspot"
-msgstr "Muestreme el hotspot mas cercano"
+msgstr "Mostrami il punto d'accesso pi&ugrave vicino"
 
 #: smarty.txt:17
 msgid "Enter your postal code"
-msgstr "Introduzca su codigo postal"
+msgstr "Inserisci il tuo codice postale"
 
 #: smarty.txt:18
 msgid "Show"
-msgstr "Mostrar"
+msgstr "Mostra"
 
 #: smarty.txt:19
 msgid "Refresh map"
-msgstr "Refrescar mapa"
+msgstr "Aggiorna mappa"
 
 #: smarty.txt:21
 msgid "Loading, please wait..."
-msgstr "Cargando, por favor espere.."
+msgstr "Sto caricando, attendere..."
 
 #: smarty.txt:22
 msgid "Legend"
-msgstr "Leyenda"
+msgstr "Legenda"
 
 #: smarty.txt:23
 #, php-format
 msgid "The %s network currently has one valid user."
-msgstr "La red %s actualmente tiene un usuario valido."
+msgstr ""
 
 #: smarty.txt:24
 #, php-format
 msgid "The %s network currently has %d valid users."
-msgstr "La red %s actulamente tiene %d usuarios validos."
+msgstr ""
 
 #: smarty.txt:25
 msgid "One user is currently online."
-msgstr "Un usuario esta en linea."
+msgstr ""
 
 #: smarty.txt:26
 #, php-format
 msgid "%d users are currently online."
-msgstr "%d usuarios actualmente en linea."
+msgstr ""
 
 #: smarty.txt:27
 msgid "This network currently has 1 deployed hotspot."
-msgstr "Esta red tiene un hotspot en producci&oacute;n."
+msgstr ""
 
 #: smarty.txt:28
 #, php-format
 msgid "This network currently has %d deployed hotspots."
-msgstr "Esta red tiene %d hotspots en producci&oacute;n"
+msgstr ""
 
 #: smarty.txt:29
 msgid "One hotspot is currently operational."
@@ -3827,54 +3814,51 @@ msgstr ""
 
 #: smarty.txt:33 smarty.txt:54 smarty.txt:64 smarty.txt:68
 msgid "I'm having difficulties"
-msgstr "Problemas comunes"
+msgstr ""
 
 #: smarty.txt:34
 msgid "Register a free account with"
-msgstr "Registre una cuenta gratis con"
+msgstr ""
 
 #: smarty.txt:35
 msgid "Username desired"
-msgstr "Usuario Deseado"
+msgstr ""
 
 #: smarty.txt:36 smarty.txt:57 smarty.txt:70
 msgid "Your email address"
-msgstr "Su correo electronico"
+msgstr ""
 
 #: smarty.txt:38
 msgid "Password (again)"
-msgstr "Contraseña(de nuevo)"
+msgstr ""
 
 #: smarty.txt:39
 msgid "Please note"
-msgstr "Porfavor tome en cuenta"
+msgstr ""
 
 #: smarty.txt:40
 msgid ""
 "While accounts are free, we <em>strongly</em> suggest that you use your "
 "previously created account if you have one."
 msgstr ""
-"Las cuentas son gratis, le <em>recomendamos</em> que utilice una cuenta "
-"previamente creada, si tiene alguna"
 
 #: smarty.txt:41
 msgid ""
 "<b>Your email address must be valid</b> in order for your account to be "
 "activated."
 msgstr ""
-"<b>Su correo electronico debe ser valido</b> para poder activar la cuenta"
 
 #: smarty.txt:42
 msgid "A validation email will be sent to that email address."
-msgstr "Un email de validaci&oacte;n debe ser enviado al correo."
+msgstr ""
 
 #: smarty.txt:43
 msgid "To fully activate your account you must respond to that email."
-msgstr "Para activar su cuetna, debe de responder el mensaje."
+msgstr ""
 
 #: smarty.txt:44
 msgid "Note to free web-based email users"
-msgstr "Nota a usuarios que utilizan emails de web gratis"
+msgstr ""
 
 #: smarty.txt:45
 msgid ""
@@ -3882,44 +3866,40 @@ msgid ""
 "providers. If you have not received any email with the validation URL 5 "
 "minutes after submitting this form, please take a look in the spam folder."
 msgstr ""
-"Algunas veces nuestro email de validaci&oacute; termina en el folder 'spam' "
-"de los proveedores. Si no esta recibiendo ningun correo con el URL de "
-"validacion en 5 minutos despues de terminar esta forma, por favor revise el "
-"directorio spam"
 
 #: smarty.txt:46
 msgid "You can also use the following links if you need help"
-msgstr "Puede utilizar el siguiente link si necesita ayuda"
+msgstr ""
 
 #: smarty.txt:47
 #, php-format
 msgid "Status of the %d open %s Hotspots"
-msgstr "Estado del %d abierto %s Hotspots"
+msgstr ""
 
 #: smarty.txt:48
 msgid "Hotspot / Status"
-msgstr "Hotspot / Estado"
+msgstr ""
 
 #: smarty.txt:50
 msgid "Location"
-msgstr "Ubicaci&oacute;n"
+msgstr ""
 
 #: smarty.txt:51
 msgid "Hotspot in testing phase"
-msgstr "Hotspot en estado de prueba"
+msgstr ""
 
 #: smarty.txt:52
 msgid "Hotspot not monitored"
-msgstr "Hotspot no monitoreado"
+msgstr ""
 
 #: smarty.txt:53
 #, php-format
 msgid "Opened on %s"
-msgstr "Abierto en %s"
+msgstr ""
 
 #: smarty.txt:55
 msgid "Lost password"
-msgstr "Clave perdida"
+msgstr ""
 
 #: smarty.txt:56 smarty.txt:66
 msgid "Your username"
@@ -3927,1116 +3907,112 @@ msgstr ""
 
 #: smarty.txt:58
 msgid "Please enter your username or email address to reset your password"
-msgstr "Por favor intrdouzca su usuario o correo para cambiar su clave"
+msgstr ""
 
 #: smarty.txt:59
 msgid ""
 "We are a not-for-profit group dedicated to making no-fee wireless Internet "
 "access generally available."
 msgstr ""
-"Somos un grupo sin fines de lucro dedicado a ofrecer Internet "
-"inahalambricosin ningun costo alguno al publico."
 
 #: smarty.txt:60
 msgid ""
 "Our aim is to encourage the growth of wireless networking and to build "
 "community in interesting and innovative ways."
 msgstr ""
-"Nuestra misi&oacute;n es el crecimiento de redes inal&aacute;mbricasy crear "
-"una comunidad en maneras inovadores e interesantes."
 
 #: smarty.txt:61
 msgid ""
 "We do this by setting up wireless Internet networks in parks, cafés, "
 "restaurants, bars and other publically-accessible locations across the city."
 msgstr ""
-"Hacemos esto, configurando redes de internet inal&aacute;mbricas enparques, "
-"restuarantes, bares y otros lugares publicos en toda la ciudad."
 
 #: smarty.txt:62
 msgid "For a complete and up-to-date listing of our nodes, visit"
-msgstr "Para un lista completa y actualizada de nuestros nodos, visite"
+msgstr ""
 
 #: smarty.txt:63
 msgid "Please get in touch with "
-msgstr "Por favor contacte a "
+msgstr ""
 
 #: smarty.txt:65
 msgid "Re-send validation email"
-msgstr "Reenviar correo de validaci&oacute;n"
+msgstr ""
 
 #: smarty.txt:67
 msgid ""
 "Please enter your username and the validation email will be resent to your "
 "email address"
 msgstr ""
-"Por favor introduzca su usuario y el correo de validacion sera enviada a su "
-"correo electronico"
 
 #: smarty.txt:69
 msgid "Lost username"
-msgstr "Usuario perdido"
+msgstr ""
 
 #: smarty.txt:71
 msgid "Please enter your email address to recover your username"
-msgstr "Por favor introduzca su correo electronico para recobrar su usuario"
+msgstr ""
 
 #: smarty.txt:72
 msgid "Online users"
-msgstr "Usuarios en linea"
+msgstr ""
 
 #: smarty.txt:75
 msgid "Origin"
-msgstr "Origen"
+msgstr ""
 
 #: smarty.txt:76
 msgid "Logged in Since"
-msgstr "Inicio Sesion desde"
+msgstr ""
 
 #: smarty.txt:77
 msgid "Traffic IN/OUT"
-msgstr "Trafico Entrante/Saliente"
+msgstr ""
 
 #: smarty.txt:78
 msgid "User list"
-msgstr "Lista de usuario"
+msgstr ""
 
 #: smarty.txt:79
 msgid "Sort by:"
-msgstr "Ordenar por:"
+msgstr ""
 
 #: smarty.txt:80
 msgid "Direction:"
-msgstr "Direcci&oacute;n:"
+msgstr ""
 
 #: smarty.txt:81
 msgid "Sort"
-msgstr "Ordenar"
+msgstr ""
 
 #: smarty.txt:84
 msgid "Registered On"
-msgstr "Registrado desde"
-
-#~ msgid "French"
-#~ msgstr "Frances"
-
-#~ msgid "English"
-#~ msgstr "Ingles"
-
-#~ msgid "German"
-#~ msgstr "Aleman"
-
-#~ msgid "Spanish"
-#~ msgstr "Espanol"
-
-#, fuzzy
-#~ msgid "Brazilian Portuguese"
-#~ msgstr "Portugues"
-
-#~ msgid "Portuguese"
-#~ msgstr "Portugues"
-
-#~ msgid "Japanese"
-#~ msgstr "Japones"
-
-#~ msgid "Component %s is not installed (not found in %s)"
-#~ msgstr "El componente %s no esta instalado( no encuentrado en %s)"
-
-#, fuzzy
-#~ msgid "Message"
-#~ msgstr "Mensaje de Error"
-
-#~ msgid "No nodes could not be found in the database"
-#~ msgstr "La base de datos no tiene nodos."
-
-#~ msgid "No token specified!"
-#~ msgstr "No se ha especificado un token!"
-
-#~ msgid "No user ID specified!"
-#~ msgstr "Usuario no fue especificado!"
-
-#~ msgid "The validation token does not match the one in the database."
-#~ msgstr ""
-#~ "El token de validaci&ntilde; no es igual al que esta en la base de datos."
-
-#~ msgid "Your account has already been activated."
-#~ msgstr "Su cuenta ya fue activada."
-
-#~ msgid ""
-#~ "Your account has been succesfully activated!\n"
-#~ "\n"
-#~ "You may now browse to a remote Internet address and take advantage of the "
-#~ "free Internet access!\n"
-#~ "\n"
-#~ "If you get prompted for a login, enter the username and password you have "
-#~ "just created."
-#~ msgstr ""
-#~ "Se ha activado exitosamente su cuenta!\n"
-#~ "\n"
-#~ "Usted ya puede navegar a una Sitio Web y tomar ventaja de Internet "
-#~ "Gratis!\n"
-#~ "\n"
-#~ "Si se le pide que inicie sesi&ntilde;n, introduzca su usuario y clave que "
-#~ "acaba de crear."
-
-#~ msgid "You MUST fill in all the fields."
-#~ msgstr "Debe de llenar TODOS los campos"
+msgstr ""
 
 #~ msgid "Sorry, this network does not exist !"
-#~ msgstr "Esta red no existe!"
-
-#~ msgid "Your password has been changed succesfully."
-#~ msgstr "Su clave fue cambiada existosamente."
+#~ msgstr "Questa rete non esiste!"
 
 #~ msgid "Please specify a username or email address"
-#~ msgstr "Por favor especifique su usuario o cuenta de correo electronico"
+#~ msgstr "La prego di specificare un nome utente o un'indirizzo email"
 
 #~ msgid "This username or email could not be found in our database"
 #~ msgstr ""
-#~ "El usuario o cuenta de correo no fue encontrada en nuestra base de datos"
+#~ "Questo nome utente o indirizzo email non &egrave stato trovato nel nostro "
+#~ "database"
 
 #~ msgid "A new password has been emailed to you."
-#~ msgstr "Una nueva clave se le fue enviada a su correo electronico"
-
-#~ msgid "Change network"
-#~ msgstr "Cambiar Red"
-
-#~ msgid "Sorry, your browser does not support Google Maps."
-#~ msgstr "Lo Siento, su navegador no soporta Google Maps."
-
-#~ msgid "Show me on the map"
-#~ msgstr "Muestreme donde estoy en el mapa"
-
-#~ msgid "Hotspots status map"
-#~ msgstr "Mapa de Estado de los Hotspots"
-
-#~ msgid "Change password"
-#~ msgstr "Cambiar clave"
-
-#~ msgid "I have trouble connecting and I would like some help"
-#~ msgstr "Estoy teniendo problemas al conectarme y deseo ayuda"
-
-#~ msgid "User Profile"
-#~ msgstr "Perfil de Usuario"
-
-#~ msgid "Please specify a username"
-#~ msgstr "Por favor especifique el usuario"
-
-#~ msgid "This username could not be found in our database"
-#~ msgstr "Ese usuario no pudo ser encontrado en la base de datos"
-
-#~ msgid ""
-#~ "An email with confirmation instructions was sent to your email address."
 #~ msgstr ""
-#~ "Un email con instrucciones de confirmaciones fue enviado a su cuenta de "
-#~ "correo."
+#~ "Una nuova password sar&agrave spedita al suo indirizzo di posta "
+#~ "elettronica."
 
-#~ msgid "Username is required."
-#~ msgstr "Se necesita un usuario."
+#~ msgid "Component %s is not installed (not found in %s)"
+#~ msgstr "Il componente %s non &egrave installato (non trovato in %s)"
 
-#~ msgid "Username contains invalid characters."
-#~ msgstr "El usuario tiene caracteres invalidos."
+#~ msgid "Message"
+#~ msgstr "Messaggio"
 
-#~ msgid "A valid email address is required."
-#~ msgstr "Se requiere un email valido."
+#~ msgid "Card Usage"
+#~ msgstr "Utilizzo della carta"
 
-#~ msgid ""
-#~ "The email address must be valid (i.e. user@domain.com). Please understand "
-#~ "that we also black-listed various temporary-email-address providers."
-#~ msgstr ""
-#~ "La direccion de email debe ser valida (ej. usuario@domain.com). Debe de "
-#~ "tomaren cuenta que tambien tenemos en lista negra varios provedores de "
-#~ "cuentas de correos temporales."
-
-#~ msgid "A password of at least 6 characters is required."
-#~ msgstr "La clave debe de tener 6 caracteres como minimo."
-
-#~ msgid "Password contains invalid characters."
-#~ msgstr "La clave tiene caracteres invalidos."
-
-#~ msgid "You must type your password twice."
-#~ msgstr "Debe de introducir la clave dos veces."
-
-#~ msgid "Password is too short, it must be 6 characters minimum."
-#~ msgstr "La clave es muy corta, debe tener minimo 6 caracteres."
-
-#~ msgid "Sorry, this network does not accept new user registration !"
-#~ msgstr "Lo siento, esta red no acepta registrar nuevos usuarios."
-
-#~ msgid ""
-#~ "Sorry, a user account is already associated to this username. Pick "
-#~ "another one."
-#~ msgstr ""
-#~ "Lo siento, una cuenta de usuario tiene ese usuario asociado, Elija otro "
-#~ "usuario."
-
-#~ msgid "Sorry, a user account is already associated to this email address."
-#~ msgstr ""
-#~ "Lo siernto, una cuenta de usuario ya tiene asociado este correo "
-#~ "electronico."
-
-#~ msgid ""
-#~ "An email with confirmation instructions was sent to your email address.  "
-#~ "Your account has been granted 15 minutes of access to retrieve your email "
-#~ "and validate your account.  You may now open a browser window and go to "
-#~ "any remote Internet address to obtain the login page."
-#~ msgstr ""
-#~ "Un correo ha sido enviado con las instrucciones para confirmacion. Se le "
-#~ "ha dado 15 minutos para poder accesar su correo y recobrar el mensaje que "
-#~ "se le ha mandado y validar la cuenta. Puede abrir un navegador y navegar  "
-#~ "a cualquier sitio web para obtener una pagina de inicio de sesi&acute;n."
-
-#~ msgid "Please specify an email address"
-#~ msgstr "Por favor especifique un correo electronico"
-
-#~ msgid "This email could not be found in our database"
-#~ msgstr "Este correo electronico no puede ser encontrado en la base de datos"
-
-#~ msgid "Your username has been emailed to you."
-#~ msgstr "Su usuario ha sido enviado a su correo electronico."
-
-#~ msgid ""
-#~ "Accept users with no email adresses (Normally, NoCat usernames are "
-#~ "expected to be the user's email adress, and the username is generated "
-#~ "from the prefix."
-#~ msgstr ""
-#~ "Aceptar usuarios sin cuenta de correo, (En General, Usuarios de NoCat "
-#~ "esperan  ser utilizados como el email del usuario, y los usuarios se "
-#~ "generan del prefijo"
-
-#~ msgid "Sorry, the user must have a email adress."
-#~ msgstr "Lo siento, el usuario debe de tener una cuenta de usuario."
-
-#~ msgid "Nobody is online at this hotspot..."
-#~ msgstr "Nadie esta en linea en este hotspot..."
-
-#~ msgid "You are not currently at a hotspot..."
-#~ msgstr "Usted no esta actualmente en un hotspot..."
-
-#~ msgid "Content from:"
-#~ msgstr "Contenido de:"
-
-#~ msgid ""
-#~ "Unable to retrieve schema version. The database schema is too old to be "
-#~ "updated."
-#~ msgstr ""
-#~ "No se puede obtener la revision del schema. La base de datos es muy vieja "
-#~ "para ser actualizada."
-
-#~ msgid "addSourceFeed(): url is empty!"
-#~ msgstr "addSourceFeed(): url esta vacio!"
-
-#~ msgid "computePublicationInterval(): Missing feed!"
-#~ msgstr "computePublicationInterval: Falta la Fuente!"
-
-#~ msgid "computePublicationInterval(): uasort() failed"
-#~ msgstr "computePublicationInterval(): fallo uasort()"
-
-#~ msgid "get_rss_info(): Feed missing"
-#~ msgstr "get_rss_info(): Falta la fuente"
-
-#~ msgid "get_rss_info(): uasort() failed!"
-#~ msgstr "get_rss_info(): fallo uasort()!"
-
-#~ msgid "Source: "
-#~ msgstr "Fuente: "
-
-#~ msgid "Today"
-#~ msgstr "Hoy"
-
-#~ msgid "Your must specify your username and password"
-#~ msgstr "Debe de especificar su email y contrase&ntilde;a"
-
-#~ msgid ""
-#~ "For some reason, we were unable to determine the web site you initially "
-#~ "wanted to see.  You should now enter a web address in your URL bar."
-#~ msgstr ""
-#~ "Por alguna raz&oacute;n, no podemos determinar el sitio que inicialmente "
-#~ "queria ver. Usted debe de introducir una direcci&oacuteln en en la barra "
-#~ "de URL."
-
-#~ msgid "owner"
-#~ msgstr "due&ntilde;o"
-
-#~ msgid "technical officer"
-#~ msgstr "oficial tecnico"
-
-#~ msgid "Error while obtaingin your LDAP information."
-#~ msgstr "Error al obtener la informaci&oacute;n de LDAP"
-
-#~ msgid "Real Name"
-#~ msgstr "Nombre Real"
-
-#~ msgid "Website"
-#~ msgstr "Sitio Web"
-
-#~ msgid ""
-#~ "Note:  This is actually a list of how many new user's first connection "
-#~ "occured at each hotspot, taking report restrictions into account."
-#~ msgstr ""
-#~ "Nota: Esta es una lista de cuentas primeras conexiones de nuevos usuarios "
-#~ "han ocurrido en cada hotspot, tomando en cuenta las restricciones del "
-#~ "reporte."
-
-#~ msgid "AllowedNodes:"
-#~ msgstr "Nodos Permitodos:"
-
-#~ msgid ""
-#~ "(Content can be displayed on ANY node unless one or more nodes are "
-#~ "selected)"
-#~ msgstr ""
-#~ "(El contenido puede ser desplegar en cualquier nodo, hasta que uno o mas "
-#~ "nodos sean selecionados)"
-
-#~ msgid "Displayed content:"
-#~ msgstr "Desplegar Contenido"
-
-#~ msgid "Add a new displayed content OR select an existing one"
-#~ msgstr "Agregar un nuevo contenido o selecionar uno existente"
-
-#~ msgid "Content group elements:"
-#~ msgstr "Elementos de grupo del contenido:"
-
-#~ msgid "Add a new content OR select previously created content"
-#~ msgstr "Agregar un nuevo contenido o selecionar un previamente creado"
-
-#~ msgid ""
-#~ "Sorry, no elements available at this hotspot or all elements of the "
-#~ "content group have already been shown"
-#~ msgstr ""
-#~ "Lo siento, no hay elementos disponible en este hotspot o todos los "
-#~ "elementos del grupo de contenido  ya han sido mostrados"
-
-#~ msgid ""
-#~ "How much bonus feeds that do not publish as often get over feed that "
-#~ "publish more often.\n"
-#~ "                    The default is 0.75, with a typical range between 0 "
-#~ "and 1.\n"
-#~ "                    At 0, you have a classic RSS aggregator, meaning the "
-#~ "n most recent entries picked from all feeds\n"
-#~ "                    will be displayed. 1 is usually as high as you'll "
-#~ "want to go:  Assuming that all\n"
-#~ "                    an homogenous internal distribution (ex:  one feed "
-#~ "publishes exactly one entry a day, the\n"
-#~ "                    second once every two days, and the third once every "
-#~ "three days), and you ask for 15 entries,\n"
-#~ "                    there will be 5 of each.  While that may not sound "
-#~ "usefull, it still is, as the feed's distribution is\n"
-#~ "                    usually not homogenous."
-#~ msgstr ""
-#~ "Cuantas fuentes adicionales que no seran publicadas tan frecuente sobre "
-#~ "las fuentesque si se publican frecuente\n"
-#~ "\tPor defecto es 0.75, el cual es un rango tipico entre 0 y 1\n"
-#~ ".En 0, se tendra un clasico Agregador RSS, esto significa que la ultima "
-#~ "entrada de la fuente sera desplegada. 1 es usualmente es lo mas alto que "
-#~ "se desea llegar: Asumiendo  que existe una distribucion homogenea de las "
-#~ "fuentas publicadas en un dia, el segundo cada dos dias y el tercero cada "
-#~ "3 dias), si pide por 15 elementos, se obtendra 5 de cada uno.\n"
-#~ " Aunque no sea util, porque la distribucion de la fuente usualmenbte no "
-#~ "es homogenea"
-
-#~ msgid ""
-#~ "Set the oldest entries (in seconds) you are willing to see.  Any entries "
-#~ "older than this will not\n"
-#~ "                    be considered at all for display, even if it means "
-#~ "that the configured number of items to be displayed isn't reached.\n"
-#~ "                    It's only usefull if all your feed publish very "
-#~ "rarely, and you don't want very old entries to show up."
-#~ msgstr ""
-#~ "La ultima entradas (en segundos) sera la que usted podra ver. Otros "
-#~ "elementos  no seran considerados para ser mostrados. Solo es utili si "
-#~ "cada fuente es publicada  no tan frecuente, y no podra ver los ultimos "
-#~ "elementos."
-
-#~ msgid ""
-#~ "WARNING:  This feed does not include the publication dates.\n"
-#~ "                                                                                     The "
-#~ "system needs to be able to compute approximate publication\n"
-#~ "                                                                                     date "
-#~ "for each entry, so the entry can be weighted against the\n"
-#~ "                                                                                     others. "
-#~ "In order for the aggregator to do a good job, you need\n"
-#~ "                                                                                     to "
-#~ "estimate fublication frequency of the items, in days.\n"
-#~ "                                                                                     If "
-#~ "unset, defaults to one day."
-#~ msgstr ""
-#~ "Advertencia: Esta fuente no incluye fecha de publicacion\n"
-#~ "El sitema necesita calcular la fecha de publicacion aproximada\n"
-#~ "por cada elemento, para que el elemento tenga un peso contra otro.\n"
-#~ "Otros agregados para hacer un buen trabajo, neceistan estimar la fecha de "
-#~ "publicacion de los elementos, por dia. Se no sea utiliza, por defecto se "
-#~ "utiliza 1 dia."
-
-#~ msgid ""
-#~ "The bias to be given to the source by the selection algorithm.\n"
-#~ "                                                        Bias must be > "
-#~ "0 , typical values would be between 0.75 and 1.5\n"
-#~ "                                                        and default is 1 "
-#~ "(no bias).  A bias of 2 will cause the items\n"
-#~ "                                                        to \"look\" twice "
-#~ "as recent to the algorithm. A bias of 0.5 to\n"
-#~ "                                                        look twice as "
-#~ "old. Be carefull, a bias of 2 will statistically\n"
-#~ "                                                        because the feed "
-#~ "to have MORE than twice as many items displayed."
-#~ msgstr ""
-#~ "El bias sera dado segun la fuente del algoritmo de seleccion\n"
-#~ "El bias debe ser > 0, los valores tipos son de 0.75 a 1.5\n"
-#~ " y por defecto es 1 ( no bias). Un bias de 2 casuara que los elementos "
-#~ "sea buscados dos veces que el algoritmo estipule. Un bias de 0.5 mirara 2 "
-#~ "veces mas viejo. Tenga precuacion, Un bias de 2 causuara que "
-#~ "estadisticamente el agregador muestre el doble de elementos."
-
-#~ msgid "You do not have administrator privileges"
-#~ msgstr "No tiene privilegios de administrador"
-
-#~ msgid "You do not have owner privileges"
-#~ msgstr "No tiene privilegios de due&ntilde;o"
-
-#~ msgid "Could not update real name."
-#~ msgstr "No se puede actualizar el nombre."
-
-#~ msgid "Could not update website URL."
-#~ msgstr "No se puede actualizar el URL."
-
-#~ msgid "Could not update username visibility flag."
-#~ msgstr "No se puede actualizar la bandera de visibilidad del usuario."
-
-#~ msgid ""
-#~ "Sorry, your %s minutes grace period to retrieve your email and validate "
-#~ "your account has now expired. You will have to connect to the internet "
-#~ "and validate your account from another location or create a new account. "
-#~ "For help, please %s click here %s."
-#~ msgstr ""
-#~ "Lo siento, los %s minutos del periodo de gracio que se le dio para "
-#~ "obtener su email   y validar su cuenta han expirado. Ahora necesitara "
-#~ "conectarse a la red y validar su  cuenta en otra ubicacion o crear una "
-#~ "nueva cuenta. Para ayuda, porfavor %s haga clic aqui %s."
-
-#~ msgid "Real name"
-#~ msgstr "Nombre Real"
-
-#~ msgid "Website URL"
-#~ msgstr "Sitio Web"
-
-#~ msgid ""
-#~ "Network::getDefaultNetwork:  Fatal error: Unable to find the default "
-#~ "network!"
-#~ msgstr ""
-#~ "Network::getDefaultNetwork:  Error fatal: no se puede encontar la red por "
-#~ "defecto!"
-
-#~ msgid ""
-#~ "Unable to retrieve the selected network, the %s REQUEST parameter does "
-#~ "not exist"
-#~ msgstr ""
-#~ "No se puede obtener la informacion de la red seleccionada, el %s paramero "
-#~ "de PEDIDO no existe"
-
-#~ msgid ""
-#~ "Network authenticator class.  The subclass of Authenticator to be used "
-#~ "for user authentication (ex: AuthenticatorRadius)"
-#~ msgstr ""
-#~ "Clase del autenticador de la red. La subclase del Autenticador que sera "
-#~ "utilizado para autenticacion del usuario (Ej: AuthenticatorRadius)"
-
-#~ msgid ""
-#~ "The explicit parameters to be passed to the authenticator (ex: "
-#~ "'my_network_id', '192.168.0.11', 1812, 1813, 'secret_key', 'CHAP_MD5')"
-#~ msgstr ""
-#~ "Los parametros explicitos que seran utilizados para el authenticador (ej: "
-#~ "'my_network_id', '192.168.0.11', 1812, 1813, 'secret_key', 'CHAP_MD5')"
-
-#~ msgid "This will be the from adress of the validation email"
-#~ msgstr ""
-#~ "Esta sera la direccion que aparecera en el PARA en el email de validacion"
-
-#~ msgid "New node ID"
-#~ msgstr "Nuevo nodo de ID"
-
-#~ msgid "Create a new node"
-#~ msgstr "Crear un nuevo nodo"
-
-#~ msgid "MAC adresses"
-#~ msgstr "Direcciones MAC"
-
-#~ msgid ""
-#~ "Server::getDefaultServer: Fatal error: Unable to find the default server!"
-#~ msgstr ""
-#~ "Server::getDefaultServer: Error fatal: No se puede encontrar servidor por "
-#~ "defecto"
-
-#~ msgid ""
-#~ "Server::getCurrentServer: Fatal error: Unable to find current server in "
-#~ "the database!"
-#~ msgstr ""
-#~ "Server::getCurrentServer: Error fatal: No se puede encontrar actual "
-#~ "servidor en la base de datos!"
-
-#~ msgid "Server:"
-#~ msgstr "Servidor:"
-
-#~ msgid "Server::getSelectServerUI: Fatal error: No servers in the database!"
-#~ msgstr ""
-#~ "Server::getSelectServerUI: Error fatal: no hay servidores en la base de "
-#~ "datos!"
-
-#~ msgid "Add a new server with ID"
-#~ msgstr "Agregar un nuevo servidor con ID"
-
-#~ msgid "Server ID"
-#~ msgstr "ID del servidor"
-
-#~ msgid "Server name"
-#~ msgstr "Nombre largo del servidor"
-
-#~ msgid "Is this server the default server?"
-#~ msgstr "Es este servidor el servidor por defecto?"
-
-#~ msgid ""
-#~ "Cannot delete default server, create another one and select it before "
-#~ "removing this one."
-#~ msgstr ""
-#~ "No se puede borrar servidor predeterminado, cree un nuevo y seleccionelo "
-#~ "antesde borrar este."
-
-#~ msgid "Sorry, no content available in the database"
-#~ msgstr "Lo siento, no hay contenido en la base de datos"
-
-#~ msgid "Add existing content"
-#~ msgstr "Agregar contenido existente"
-
-#~ msgid "Project sponsor:"
-#~ msgstr "Patrocinador del Proyecto"
-
-#~ msgid "Is persistent (reusable and read-only)?"
-#~ msgstr "Es persistente (reusable y solo escritura)?"
-
-#~ msgid "Sponsor of this project:"
-#~ msgstr "Patrocinador de este proyecto:"
-
-#~ msgid "You do not have permissions to access any administration functions."
-#~ msgstr ""
-#~ "No tiene permisos para acceder a ninguna funci&oacute;n administrativa."
-
-#~ msgid "Unknown section:"
-#~ msgstr "Seccion no identificada:"
-
-#~ msgid "Accounts on %s are and will stay completely free."
-#~ msgstr ""
-#~ "Las cuentas de Usuarios en %s son y seran siempre completamente gratuitas."
-
-#~ msgid "Please inform us of any problem or service interruption at: %s"
-#~ msgstr ""
-#~ "<br>Por favor informe cualquier problema o interecupcion de servicio a: %s"
-
-#~ msgid "This node already exists."
-#~ msgstr "El nodo ya existe."
-
-#~ msgid "Node: "
-#~ msgstr "Nodo: "
-
-#~ msgid "Add a new node with ID"
-#~ msgstr "Agrega un nuevo nodo con ID"
-
-#~ msgid "The node %s could not be found in the database!"
-#~ msgstr "El nodo %s no puede ser encontrado en la base de datos!"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "Geocode only"
-#~ msgstr "Solamente Codigo Geo (GEOCODE)"
-
-#~ msgid "Geocode location"
-#~ msgstr "Ubicacion Geocode"
-
-#~ msgid ""
-#~ "URL to show instead of the portal (if this is not empty, the portal will "
-#~ "be disabled and this URL will be shown instead)"
-#~ msgstr ""
-#~ "URL que sera mostrado en vez del portal ( si este no esta vacio, el "
-#~ "portal sera  desactivado y este URL sera mostrado en vez)"
-
-#~ msgid "Node owners"
-#~ msgstr "Duenos del Nodo"
-
-#~ msgid "Remove technical officer"
-#~ msgstr "Quitar oficial Tecnico"
-
-#~ msgid "Add technical officer"
-#~ msgstr "Agregar Oficial Tecnico"
-
-#~ msgid "Technical officers"
-#~ msgstr "Oficiales Tecnicos"
-
-#~ msgid "Invalid user!"
-#~ msgstr "Usuario Invalido!"
-
-#~ msgid "The user is already an owner of this node."
-#~ msgstr "Este usuario ya es due&ntilde;o en este nodo."
-
-#~ msgid "The user is already a technical officer of this node."
-#~ msgstr "El usuario ya es un oficial tecnico en este nodo"
-
-#~ msgid "Could not add owner"
-#~ msgstr "No se puede agregar due&ntilde;o"
-
-#~ msgid "Could not add tech officer"
-#~ msgstr "No se puede agregar oficial tecnico"
-
-#~ msgid "Could not set existing user as tech officer"
-#~ msgstr "No se puede espeficiar el usuario existente como oficial tecnico"
-
-#~ msgid "Could not remove owner"
-#~ msgstr "No se puede quitar el due&ntilde;o"
-
-#~ msgid "Could not remove tech officer"
-#~ msgstr "No se puede quitar el oficial tecnico"
-
-#~ msgid "(again)"
-#~ msgstr "(otra vez)"
-
-#~ msgid ""
-#~ "Please enter your current username, your current password, and your new "
-#~ "password (with confirmation)"
-#~ msgstr ""
-#~ "Por favor introduzca su usuario actual, su clave actual y su nueva clave "
-#~ "(con confirmacion)"
-
-#~ msgid "network"
-#~ msgstr "red"
-
-#~ msgid "Opened on"
-#~ msgstr "Abierto el "
-
-#~ msgid "Login page"
-#~ msgstr "Pagina de inicio de sesion"
-
-#~ msgid "Portal page"
-#~ msgstr "Pagina Portal"
-
-#~ msgid "Frequently Asked Questions"
-#~ msgstr "Preguntas frecuentemente preguntadas"
-
-#~ msgid "Do I have to pay to get access to the Internet"
-#~ msgstr "Debo de pagar por el acceso a Internet?"
-
-#~ msgid "A:"
-#~ msgstr "R:"
-
-#~ msgid ""
-#~ "No, Internet access is provided for free by the venue you are actually at"
-#~ msgstr ""
-#~ "No, el Acceso a Internet es dado gratis por el proveedor donde "
-#~ "actualmente esta"
-
-#~ msgid "I have failed to validate my account in x minutes"
-#~ msgstr "No puede validad mi cuenta en los x minutos"
-
-#~ msgid ""
-#~ "You have been given an amount of minutes of Internet access in order to "
-#~ "retrieve the email we sent to you and validate your free account. What "
-#~ "you can do now is either <a href='signup.php'>create a new account</a> "
-#~ "and then validate it properly, or get on the Internet from somewhere else "
-#~ "(home, free Internet cafe, etc.) and validate the account you just "
-#~ "created. If you need us to resend you the validation email, please <a "
-#~ "href='resend_validation.php'>click here</a>"
-#~ msgstr ""
-#~ "Se le ha dado un tiempo determinado de minutos para Accesar interneta "
-#~ "para poder recobrar el email que le hemos mandado para poder validar su "
-#~ "cuenta gratis. Lo que puede hacer es <a href='signup.php'>crear una nueva "
-#~ "cuetna</a> y despues validarla o  obtener acceso a Internet de otro lado "
-#~ "(su casa, trabajo, etc.) y validar la queda  desde alli. Si necesita que "
-#~ "le mandemos de nuevo el email de validacion haga <a>clic aqui</a>"
-
-#~ msgid ""
-#~ "What steps are required in order to create and validate a new account?"
-#~ msgstr ""
-#~ "Que pasos debo de tomar para poder crear y validar una cuenta nueva?"
-
-#~ msgid "Here is an overview of the steps"
-#~ msgstr "En resumen estos son los pasos"
-
-#~ msgid ""
-#~ "Pick a username, enter your email address, and enter the password you "
-#~ "would like. An email will be sent to you with a link you can click to "
-#~ "validate your account"
-#~ msgstr ""
-#~ "Primero elija el usuario, debe de introducir su correo electronico y "
-#~ "introducir  la clave deseada. Un email sera enviado a su correo con el "
-#~ "link que utilizara para validar su cuenta"
-
-#~ msgid ""
-#~ "Once the account is created, you need Internet access in order to check "
-#~ "your email and click the validation link. In order to get temporary "
-#~ "access to the Internet during your validation period, visit any URL (for "
-#~ "example www.google.com) to get the login page again"
-#~ msgstr ""
-#~ "Una vez esta cuenta este creada, usted necesita acceso a internet para "
-#~ "poder revisar su correo y dar clic en el link de validacion. Para obtener "
-#~ "acceso temporal a Internet durante el periodo de validacion, visite cual "
-#~ "URL (por ejemplo www.google.com) para obtener la pagina de inicio de "
-#~ "sesion."
-
-#~ msgid ""
-#~ "Enter your login information. You will be given 15 minutes of Internet "
-#~ "access, plenty of time to check your email and click on the link"
-#~ msgstr ""
-#~ "Introduzca su informaci&oactue;on para iniciar sesi&oacute;n. Se le dara "
-#~ "15 minutos de acceso a Internet, tiempo suficiente para chequear su email "
-#~ "y hacer click en la direcci&oacute;n"
-
-#~ msgid "Once that last step is done, you will have full free Internet access"
-#~ msgstr ""
-#~ "Una vez se termine el ultimo paso, usted tendra acceso completo de "
-#~ "Internet"
-
-#~ msgid "User logs"
-#~ msgstr "Logs de usuarios"
-
-#~ msgid "Nodes"
-#~ msgstr "Nodos"
-
-#~ msgid "Add new Node"
-#~ msgstr "Agregar nuevo nodo"
-
-#~ msgid "Networks"
-#~ msgstr "Redes"
-
-#~ msgid "Servers"
-#~ msgstr "Servidores"
-
-#~ msgid "My Profile"
-#~ msgstr "Mi Perfil"
-
-#~ msgid "Logout"
-#~ msgstr "Terminar Sesi&oacute;n"
-
-#~ msgid "Where am I?"
-#~ msgstr "Donde Estoy?"
-
-#~ msgid "Building your wireless community"
-#~ msgstr "Construyendo tu comunidad inalambrica"
-
-#~ msgid "Deployed HotSpots status with coordinates"
-#~ msgstr "Estado de Hotspots activos con coordenadas"
-
-#~ msgid "the hotspot is operational"
-#~ msgstr "el hotspot esta operacional"
-
-#~ msgid "the hotspot is down"
-#~ msgstr "el hotspot no esta activo"
-
-#~ msgid "not monitored"
-#~ msgstr "no monitoreado"
-
-#~ msgid "Use the Internet"
-#~ msgstr "Use Internet"
-
-#~ msgid "Frequently asked questions"
-#~ msgstr "Preguntas m&aacute;s Frecuentes"
-
-#~ msgid "Sign-up"
-#~ msgstr "Registrarse"
-
-#~ msgid ""
-#~ "Your email address must be valid in order for your account to be activated"
-#~ msgstr "Su direccion de correo debe ser valida para poder activar su cuenta"
-
-#~ msgid "Status of the"
-#~ msgstr "Estado "
-
-#~ msgid "open"
-#~ msgstr "abierto"
-
-#~ msgid "Hotspots (Get this list as a <a href='?format=RSS'>RSS feed</a>)"
-#~ msgstr ""
-#~ "de los Hotspots ( obtenga la lista como <a href='?format=RSS'>RSS feed</"
-#~ "a>)"
-
-#~ msgid "Reset my password"
-#~ msgstr "Cambiar la clave olvidada"
-
-#~ msgid "The"
-#~ msgstr "La red de"
-
-#~ msgid "network currently has"
-#~ msgstr "actualmente tiene "
-
-#~ msgid "valid"
-#~ msgstr "usuarios"
-
-#~ msgid "user,"
-#~ msgstr "valido,"
-
-#~ msgid "users,"
-#~ msgstr "validos,"
-
-#~ msgid "user is"
-#~ msgstr "usuario es"
-
-#~ msgid "users are"
-#~ msgstr "usuarios son"
-
-#~ msgid "currently online"
-#~ msgstr "esta actualmente en linea"
-
-#~ msgid "It currently has"
-#~ msgstr "Actualmente tiene"
-
-#~ msgid "deployed"
-#~ msgstr "hotspot"
-
-#~ msgid "hotspot,"
-#~ msgstr " activos"
-
-#~ msgid "hotspots,"
-#~ msgstr "s activos"
-
-#~ msgid "hotspot is"
-#~ msgstr "hotspot son"
-
-#~ msgid "hotspots are"
-#~ msgstr "hotspots estan"
-
-#~ msgid "currently operational"
-#~ msgstr "en operaci&oacute;n"
-
-#~ msgid "Administration"
-#~ msgstr "Administraci&oacute;n"
-
-#~ msgid "Create a free account"
-#~ msgstr "Crea un usuario gratis"
-
-#~ msgid "To login please use your email,(remember to type in the domain)"
-#~ msgstr "Para continuar debes de utilizar tu cuenta de correo"
-
-#~ msgid "I already have an account"
-#~ msgstr "Tengo un email o usuario"
-
-#~ msgid "Re-send"
-#~ msgstr "Renviar"
-
-#~ msgid "Retrieve"
-#~ msgstr "Recobrar"
-
-#~ msgid "Configurations of all nodes of the"
-#~ msgstr "Configuracion de todos los nodos de "
-
-#~ msgid "Action"
-#~ msgstr "Acci&oacute;n"
-
-#~ msgid "Owner"
-#~ msgstr "Dueno"
-
-#~ msgid "Add a new node"
-#~ msgstr "Agregar un nuevo nodo"
-
-#~ msgid "RSS URL"
-#~ msgstr "URL del RSS"
-
-#~ msgid "Street address"
-#~ msgstr "Direccion"
-
-#~ msgid "Add new node"
-#~ msgstr "Agregar Nuevo Nodo"
-
-#~ msgid "Update node"
-#~ msgstr "Actualizar Nodo"
-
-#~ msgid "Administrators"
-#~ msgstr "Administradores"
-
-#~ msgid "Give a user rights to administer this node"
-#~ msgstr "Dar permisos de administracion de este nodo"
-
-#~ msgid "User ID"
-#~ msgstr "Id del Usuario"
-
-#~ msgid "You must login before you can change your password."
-#~ msgstr "Debe de iniciar sesi&oacute;n antes de poder cambiar su clave."
-
-#~ msgid "Sorry, user %s does not exist !"
-#~ msgstr "Lo siente, el usuario %s no existe !"
-
-#~ msgid "The password for %s has been successfully changed."
-#~ msgstr "La clave para %s ha sido cambiada exitosamente."
-
-#~ msgid "Sorry, invalid change password request !"
-#~ msgstr "Lo siente, cambio invalido de clave !"
-
-#~ msgid ""
-#~ "You may now open a browser window or start your email client and go to "
-#~ "any remote Internet address to obtain the validation email."
-#~ msgstr ""
-#~ "Ya puede abrir una venta de navegador o empezar su cliente de email o ir "
-#~ "a cualquier direccion remota de internet para obtener el email de "
-#~ "validaci&oacute;n"
-
-#~ msgid "Last update date"
-#~ msgstr "Ultima fecha de actualizaci&oacute;n"
-
-#~ msgid ""
-#~ "(Content can be displayed at any date if no start or end date is "
-#~ "specified.  Warning:  If you do not specify a specifig time of day, "
-#~ "midnight is assumed.)"
-#~ msgstr ""
-#~ "(Contenido puede ser desplegado por cualquier fecha si no ha especificado "
-#~ "la fecha )de empezar o terminar. Precuacion: si no especifica el tiempo "
-#~ "del dia se asume que empieza a media noche"
-
-#~ msgid ""
-#~ "How much bonus feeds that do not publish as often get over feed that "
-#~ "publish more often.\n"
-#~ "                            The default is 0.75, with a typical range "
-#~ "between 0 and 1.\n"
-#~ "                            At 0, you have a classic RSS aggregator, "
-#~ "meaning the n most recent entries picked from all feeds\n"
-#~ "                            will be displayed. 1 is usually as high as "
-#~ "you'll want to go:  Assuming that all\n"
-#~ "                            an homogenous internal distribution (ex:  one "
-#~ "feed publishes exactly one entry a day, the\n"
-#~ "                            second once every two days, and the third "
-#~ "once every three days), and you ask for 15 entries,\n"
-#~ "                            there will be 5 of each.  While that may not "
-#~ "sound usefull, it still is, as the feed's distribution is\n"
-#~ "                            usually not homogenous."
-#~ msgstr ""
-#~ "Cuantas fuentes adicionales que no seran publicadas tan frecuente sobre "
-#~ "las fuentesque si se publican frecuente\n"
-#~ "\tPor defecto es 0.75, el cual es un rango tipico entre 0 y 1\n"
-#~ ".En 0, se tendra un clasico Agregador RSS, esto significa que la ultima "
-#~ "entrada de la fuente sera desplegada. 1 es usualmente es lo mas alto que "
-#~ "se desea llegar: Asumiendo  que existe una distribucion homogenea de las "
-#~ "fuentas publicadas en un dia, el segundo cada dos dias y el tercero cada "
-#~ "3 dias), si pide por 15 elementos, se obtendra 5 de cada uno.\n"
-#~ " Aunque no sea util, porque la distribucion de la fuente usualmenbte no "
-#~ "es homogenea"
-
-#~ msgid ""
-#~ "Set the oldest entries (in seconds) you are willing to see.  Any entries "
-#~ "older than this will not\n"
-#~ "                            be considered at all for display, even if it "
-#~ "means that the configured number of items to be displayed isn't reached.\n"
-#~ "                            It's only usefull if all your feed publish "
-#~ "very rarely, and you don't want very old entries to show up."
-#~ msgstr ""
-#~ "La ultima entradas (en segundos) sera la que usted podra ver. Otros "
-#~ "elementos  no seran considerados para ser mostrados. Solo es utili si "
-#~ "cada fuente es publicada  no tan frecuente, y no podra ver los ultimos "
-#~ "elementos."
-
-#~ msgid ""
-#~ "WARNING:  This feed does not include the publication dates.\n"
-#~ "                                                                                                 The "
-#~ "system needs to be able to compute approximate publication\n"
-#~ "                                                                                                 date "
-#~ "for each entry, so the entry can be weighted against the\n"
-#~ "                                                                                                 others. "
-#~ "In order for the aggregator to do a good job, you need\n"
-#~ "                                                                                                 to "
-#~ "estimate fublication frequency of the items, in days.\n"
-#~ "                                                                                                 If "
-#~ "unset, defaults to one day."
-#~ msgstr ""
-#~ "Advertencia: Esta fuente no incluye fecha de publicacion\n"
-#~ "El sitema necesita calcular la fecha de publicacion aproximada\n"
-#~ "por cada elemento, para que el elemento tenga un peso contra otro.\n"
-#~ "Otros agregados para hacer un buen trabajo, neceistan estimar la fecha de "
-#~ "publicacion de los elementos, por dia. Se no sea utiliza, por defecto se "
-#~ "utiliza 1 dia."
-
-#~ msgid ""
-#~ "The bias to be given to the source by the selection algorithm.\n"
-#~ "                                                                Bias must "
-#~ "be > 0 , typical values would be between 0.75 and 1.5\n"
-#~ "                                                                and "
-#~ "default is 1 (no bias).  A bias of 2 will cause the items\n"
-#~ "                                                                to \"look"
-#~ "\" twice as recent to the algorithm. A bias of 0.5 to\n"
-#~ "                                                                look "
-#~ "twice as old. Be carefull, a bias of 2 will statistically\n"
-#~ "                                                                cause the "
-#~ "feed to have MORE than twice as many items displayed."
-#~ msgstr ""
-#~ "El bias sera dado segun la fuente del algoritmo de seleccion\n"
-#~ "El bias debe ser > 0, los valores tipos son de 0.75 a 1.5\n"
-#~ " y por defecto es 1 ( no bias). Un bias de 2 casuara que los elementos "
-#~ "sea buscados dos veces que el algoritmo estipule. Un bias de 0.5 mirara 2 "
-#~ "veces mas viejo. Tenga precuacion, Un bias de 2 causuara que "
-#~ "estadisticamente el agregador muestre el doble de elementos."
-
-#~ msgid ""
-#~ "The explicit parameters to be passed to the authenticator. Example: "
-#~ "'my_network_id', '192.168.0.11', 1812, 1813, 'secret_key', 'CHAP_MD5'"
-#~ msgstr ""
-#~ "Los parametros explicitos que seran pasados al autenticador. Por "
-#~ "ejemplo:'my_network_id', '192.168.0.11', 1812, 1813, 'secret_key', "
-#~ "'CHAP_MD5'"
-
-#~ msgid ""
-#~ "Server::getCurrentServer: Fatal error: Unable to find a server matching "
-#~ "hostname %s in the database!"
-#~ msgstr ""
-#~ "Server::getCurrentServer: Error Fatal: No se puede econtrar un servidor "
-#~ "con nombre%s en la base de datos!"
-
-#~ msgid "Get this list as a PDF file"
-#~ msgstr "Obtenga la lista como un archivo PDF"
-
-#~ msgid "Get this list as a RSS feed"
-#~ msgstr "Obtenga la lista como una fuente de RSS"
-
-#~ msgid "Get this list for Google Earth"
-#~ msgstr "Obtenga la lista para Google Earth"
-
-#~ msgid "La Red %s actualmente tiene un usuario valido."
-#~ msgstr "La Red %s tiene un usuario valido."
-
-#~ msgid "La Red %s actualmente tiene %d usuarios validos."
-#~ msgstr "La Red %s tiene %d usuarios validos"
-
-#~ msgid "One hotspot is currently operationnal."
-#~ msgstr "Un hotspot esta en operaci&oacute;n"
-
-#~ msgid "%d hotspots are currently operationnal."
-#~ msgstr "%d numero de hotspots en operaci&oacute;n."
-
-#~ msgid ""
-#~ "Because of one hotspot not being monitored we don't know if it is "
-#~ "currently operationnal."
-#~ msgstr ""
-#~ "Porque uno de nuestros hotspots no es monitoreado, no sabemos si esta "
-#~ "funciando."
-
-#~ msgid ""
-#~ "Because of %d hotspots not being monitored we don't know if they are "
-#~ "currently operationnal."
-#~ msgstr ""
-#~ "Debido a los %d hotspots que no son monitoreados, no sabemos si estan "
-#~ "funcionando"
-
-#~ msgid ""
-#~ "The bias to be given to the source by the selection algorithm.\n"
-#~ "                                                                                    Bias "
-#~ "must be > 0 , typical values would be between 0.75 and 1.5\n"
-#~ "                                                                                    and "
-#~ "default is 1 (no bias).  A bias of 2 will cause the items\n"
-#~ "                                                                                    to "
-#~ "\"look\" twice as recent to the algorithm. A bias of 0.5 to\n"
-#~ "                                                                                    look "
-#~ "twice as old. Be carefull, a bias of 2 will statistically\n"
-#~ "                                                                                    cause "
-#~ "the feed to have MORE than twice as many items displayed."
-#~ msgstr ""
-#~ "El bias sera dado segun la fuente del algoritmo de seleccion\n"
-#~ "El bias debe ser > 0, los valores tipos son de 0.75 a 1.5\n"
-#~ " y por defecto es 1 ( no bias). Un bias de 2 casuara que los elementos "
-#~ "sea buscados dos veces que el algoritmo estipule. Un bias de 0.5 mirara 2 "
-#~ "veces mas viejo. Tenga precuacion, Un bias de 2 causuara que "
-#~ "estadisticamente el agregador muestre el doble de elementos."
-
-#~ msgid "Add reusable content from library"
-#~ msgstr "Agregar contenido reusable a la libreria"
+#~ msgid "User Accounting"
+#~ msgstr "Informazioni Utente"

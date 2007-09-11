@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-04 18:47-0400\n"
+"POT-Creation-Date: 2007-09-11 14:10-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,46 +16,58 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../config_available_locales.php:58
-msgid "French"
-msgstr "Френски език"
+#: ../gw_message.php:61
+#, php-format
+msgid "You have failed to validate your account in %d minutes."
+msgstr "Вие не успяхте да валидирате вашия акаунт за %d минути."
 
-#: ../config_available_locales.php:59
-msgid "English"
-msgstr "Английски език"
+#: ../gw_message.php:62
+msgid "Please validate your account from somewhere else or create a new one."
+msgstr "Моля валидирайте вашия акаунт от друго място или създайте нов."
 
-#: ../config_available_locales.php:60
-msgid "German"
-msgstr "Немски език"
+#: ../gw_message.php:67
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:896
+#: ../classes/Role.php:494 ../classes/Statistics.php:375
+#: ../classes/Statistics.php:378 ../classes/Network.php:1694
+#: ../classes/Content.php:901 ../classes/Node.php:214
+msgid "Access denied!"
+msgstr "Достъпа е отказан!"
 
-#: ../config_available_locales.php:61
-msgid "Spanish"
-msgstr "Испански език"
-
-#: ../config_available_locales.php:62
-#, fuzzy
-msgid "Brazilian Portuguese"
-msgstr "Португалски език"
-
-#: ../config_available_locales.php:63
-msgid "Portuguese"
-msgstr "Португалски език"
-
-#: ../config_available_locales.php:64
-msgid "Japanese"
-msgstr "Японски език"
-
-#: ../config_available_locales.php:65
-msgid "Greek"
+#: ../gw_message.php:73
+#, php-format
+msgid ""
+"You have now been granted %d minutes of Internet access without being "
+"validated to go and activate your account."
 msgstr ""
+"Сега са ви предоставени %d минути на интернет достъп без да сте оторизирани "
+"в което време трябва да активирате вашия акаунт."
 
-#: ../config_available_locales.php:66
-msgid "Bulgarian"
+#: ../gw_message.php:74
+#, php-format
+msgid ""
+"If you fail to validate your account in %d minutes, you will have to "
+"validate it from somewhere else."
 msgstr ""
+"Ако не успеете да потвърдите вашия акаунт след %d минути, вие ше трябва да "
+"го потвърдите някъде другаде."
 
-#: ../config_available_locales.php:67
-msgid "Swedish"
+#: ../gw_message.php:75
+msgid ""
+"If you do not receive an email from our validation server in the next "
+"minute, perhaps you have made a typo in your email address, you might have "
+"to create another account."
 msgstr ""
+"Ако не получите имейл от нашия сървър за валидация в следващите минути, може "
+"би сте направили грешка при изписването на имейл адреса и ще трябва да "
+"създадете нов акаунт."
+
+#: ../gw_message.php:80
+msgid "Unknown message specified! (this is probably an error)"
+msgstr "Упоменато е неизвестно съобщение (това най-вероятно е грешка)"
+
+#: ../gw_message.php:85
+msgid "No message has been specified! (this is probably an error)"
+msgstr "Няма уточнено съобщение! (това вероятно е грешка)"
 
 #: ../admin/generic_object_admin.php:80
 msgid "Sorry, the 'object_class' parameter must be specified"
@@ -92,7 +104,7 @@ msgid "Show only persistant %s"
 msgstr "Показване само на непроменливите %s"
 
 #: ../admin/generic_object_admin.php:99 ../classes/Network.php:1933
-#: ../classes/Node.php:1616
+#: ../classes/Node.php:1624
 #, php-format
 msgid "Edit %s"
 msgstr "Редактиране %s"
@@ -113,7 +125,7 @@ msgstr "Показване на преглед, така както би изг�
 #: ../classes/StatisticReport/UserReport.php:182
 #: ../classes/StatisticReport/RegistrationLog.php:120
 #: ../classes/StatisticReport/MostPopularNodes.php:109
-#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:85
+#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:73
 msgid "Node"
 msgstr "Хотспот"
 
@@ -122,8 +134,8 @@ msgstr "Хотспот"
 msgid "Preview"
 msgstr "Преглед"
 
-#: ../admin/generic_object_admin.php:217 ../classes/Content.php:736
-#: ../classes/ProfileTemplate.php:369
+#: ../admin/generic_object_admin.php:217 ../classes/ProfileTemplate.php:369
+#: ../classes/Content.php:736
 msgid "Edit"
 msgstr "Редактирай"
 
@@ -261,20 +273,28 @@ msgstr ""
 msgid "You need to set a node ID."
 msgstr "Трябва да настроите хотспот"
 
-#: ../cron/page.php:70
+#: ../cron/page.php:76
 msgid "Monitoring system"
 msgstr "Система за мониторинг"
 
-#: ../cron/page.php:73
+#: ../cron/page.php:79
 msgid "node"
 msgstr "хотспот"
 
-#: ../cron/page.php:74
+#: ../cron/page.php:80
 #, php-format
 msgid "Node %s (%s) has been down for %d minutes (since %s)"
 msgstr "Хотспот %s (%s) е за %d минути неактивен (от %s)"
 
-#: ../cron/page.php:91
+#: ../cron/page.php:82
+msgid "Success"
+msgstr ""
+
+#: ../cron/page.php:82
+msgid "Failed sending mail"
+msgstr ""
+
+#: ../cron/page.php:99
 msgid "No deployed nodes could not be found in the database"
 msgstr "Не може да се намерят действащи възли (хотспотове в базата данни."
 
@@ -573,7 +593,7 @@ msgid "Profile"
 msgstr "Профил"
 
 #: ../classes/StatisticReport/NodeStatus.php:152
-#: ../classes/StatisticReport/NetworkStatus.php:99 ../classes/Node.php:1098
+#: ../classes/StatisticReport/NetworkStatus.php:99 ../classes/Node.php:1101
 msgid "Name"
 msgstr "Име"
 
@@ -590,12 +610,12 @@ msgid "Deployment date"
 msgstr "Дата на разгръщане"
 
 #: ../classes/StatisticReport/NodeStatus.php:168 ../classes/Content.php:925
-#: ../classes/Node.php:1113 ../classes/DependenciesList.php:138 smarty.txt:43
+#: ../classes/Node.php:1116 ../classes/DependenciesList.php:173 smarty.txt:49
 msgid "Description"
 msgstr "Описание"
 
 #: ../classes/StatisticReport/NodeStatus.php:172
-#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:81
+#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:83
 msgid "Network"
 msgstr "Мрежа"
 
@@ -617,8 +637,8 @@ msgid "Homepage"
 msgstr "Собствена интернет страница"
 
 #: ../classes/StatisticReport/NodeStatus.php:194
-#: ../classes/NodeLists/NodeListRSS.php:324
 #: ../classes/NodeLists/NodeListPDF.php:1083
+#: ../classes/NodeLists/NodeListRSS.php:324
 #: ../classes/NodeLists/NodeListKML.php:238
 msgid "Address"
 msgstr "Адрес"
@@ -639,7 +659,7 @@ msgstr "Имейл"
 msgid "Transit Info"
 msgstr "Транзитна информация"
 
-#: ../classes/StatisticReport/NodeStatus.php:220 ../classes/User.php:929
+#: ../classes/StatisticReport/NodeStatus.php:220 ../classes/User.php:950
 #: ../classes/Node.php:1072
 msgid "Statistics"
 msgstr "Статистика"
@@ -671,7 +691,7 @@ msgstr "Излизащ"
 msgid "Individual user report"
 msgstr "Доклад за отделен потребител"
 
-#: ../classes/StatisticReport/UserReport.php:111 ../classes/User.php:231
+#: ../classes/StatisticReport/UserReport.php:111 ../classes/User.php:247
 #, php-format
 msgid "User id: %s could not be found in the database"
 msgstr "ИН на потребителя: %s не може да се намери в базата данни"
@@ -680,8 +700,8 @@ msgstr "ИН на потребителя: %s не може да се намер�
 #: ../classes/StatisticReport/UserReport.php:284
 #: ../classes/StatisticReport/RegistrationLog.php:123
 #: ../classes/StatisticReport/ConnectionLog.php:115
-#: ../classes/StatisticReport/ConnectionLog.php:164 ../classes/User.php:681
-#: ../classes/User.php:686 ../classes/User.php:735 smarty.txt:80 smarty.txt:86
+#: ../classes/StatisticReport/ConnectionLog.php:164 ../classes/User.php:702
+#: ../classes/User.php:707 ../classes/User.php:756 smarty.txt:74 smarty.txt:82
 msgid "Username"
 msgstr "Потребителско име"
 
@@ -693,8 +713,8 @@ msgstr "Уникален идентификационен номер"
 msgid "Member since"
 msgstr "Член от"
 
-#: ../classes/StatisticReport/UserReport.php:147 ../classes/User.php:723
-#: smarty.txt:83
+#: ../classes/StatisticReport/UserReport.php:147 ../classes/User.php:744
+#: smarty.txt:85
 msgid "Account Status"
 msgstr "Статус на акаунта"
 
@@ -798,10 +818,9 @@ msgstr "Информация за състоянието на мрежата"
 msgid "Sorry, this report requires you to select individual networks"
 msgstr "Съжаляваме, този доклад ви кара да изберете отделни мрежи"
 
-#: ../classes/StatisticReport/NetworkStatus.php:104
-#: ../classes/VirtualHost.php:603 ../classes/Server.php:246
-#: ../classes/Node.php:1103 ../classes/ProfileTemplate.php:488
-#: ../classes/Role.php:362
+#: ../classes/StatisticReport/NetworkStatus.php:104 ../classes/Role.php:362
+#: ../classes/ProfileTemplate.php:488 ../classes/Server.php:246
+#: ../classes/Node.php:1106 ../classes/VirtualHost.php:603
 msgid "Creation date"
 msgstr "Дата на създаване"
 
@@ -841,6 +860,19 @@ msgstr "Брой оторизирани потребители"
 msgid "Number of users currently online"
 msgstr "Брой потребители, които в момента са онлайн"
 
+#: ../classes/StatisticReport/AnonymisedDataExport.php:65
+msgid "Anonymised SQL data export (for academic research)"
+msgstr ""
+
+#: ../classes/StatisticReport/AnonymisedDataExport.php:97
+#: ../classes/StatisticReport/ConnectionLog.php:89
+#: ../classes/ContentTypeFilter.php:253 ../classes/ContentTypeFilter.php:438
+#: ../classes/Network.php:337 ../classes/ProfileTemplate.php:568
+#: ../classes/Node.php:457 ../classes/VirtualHost.php:403
+#: ../classes/VirtualHost.php:735
+msgid "Access denied"
+msgstr "Достъпа е забранен"
+
 #: ../classes/StatisticReport/MostPopularNodes.php:65
 msgid "Most popular nodes, by visit"
 msgstr "Най-популярни хотспотове, по брой на посещенията"
@@ -852,15 +884,6 @@ msgstr "Посещения"
 #: ../classes/StatisticReport/ConnectionLog.php:64
 msgid "Connection Log"
 msgstr "Лог на връзката"
-
-#: ../classes/StatisticReport/ConnectionLog.php:89
-#: ../classes/StatisticReport/AnonymisedDataExport.php:97
-#: ../classes/VirtualHost.php:403 ../classes/VirtualHost.php:735
-#: ../classes/Network.php:337 ../classes/Node.php:457
-#: ../classes/ProfileTemplate.php:568 ../classes/ContentTypeFilter.php:253
-#: ../classes/ContentTypeFilter.php:438
-msgid "Access denied"
-msgstr "Достъпа е забранен"
 
 #: ../classes/StatisticReport/ConnectionLog.php:109
 msgid "Number of unique Users:"
@@ -1004,10 +1027,6 @@ msgstr ""
 "предвид ограниченията при даването на сведения. Включват се и не-потвърдени "
 "потребители, които успешно са се включили."
 
-#: ../classes/StatisticReport/AnonymisedDataExport.php:65
-msgid "Anonymised SQL data export (for academic research)"
-msgstr ""
-
 #: ../classes/StatisticReport/ActiveUserReport.php:62
 msgid "Breakdown of how many users actually use the network"
 msgstr ""
@@ -1068,31 +1087,6 @@ msgstr ""
 msgid "warning:  This report does not count connections at Splash-Only nodes"
 msgstr ""
 
-#: ../classes/NodeLists/NodeListRSS.php:157
-#: ../classes/NodeLists/NodeListHTML.php:213
-msgid "Newest Hotspots"
-msgstr "Най-нови хотспотове"
-
-#: ../classes/NodeLists/NodeListRSS.php:169
-msgid "List of the most recent Hotspots opened by the network: "
-msgstr "Списък с най-актуалните хотспотов намиращи се в мрежата "
-
-#: ../classes/NodeLists/NodeListRSS.php:190
-msgid "Copyright "
-msgstr "Авторско право"
-
-#: ../classes/NodeLists/NodeListRSS.php:358
-msgid "See Map"
-msgstr "Вижте карта"
-
-#: ../classes/NodeLists/NodeListRSS.php:371
-msgid "Contact"
-msgstr "Контакт"
-
-#: ../classes/NodeLists/NodeListHTML.php:212
-msgid "Hotspot list"
-msgstr "Списък на хотспотове"
-
 #: ../classes/NodeLists/NodeListPDF.php:792
 msgid ""
 "To protect the server the PDF file has not been created, because the server "
@@ -1143,19 +1137,19 @@ msgstr "Последно актуализиран на: %s"
 msgid "Hotspot"
 msgstr "Хотспот"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1139
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1142
 msgid "Postal code"
 msgstr "Пощенски код"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1129
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1132
 msgid "City"
 msgstr "Град"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1134
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1137
 msgid "Province / State"
 msgstr "Провинция / Щат"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1159
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1162
 msgid "Homepage URL"
 msgstr "Домашна страница"
 
@@ -1164,16 +1158,41 @@ msgid "PDF file cannot be created because the FPDF library is not installed!"
 msgstr ""
 "PDF файла не може да се създаде, защото библиотеката FPDF не е инсталирана!"
 
+#: ../classes/NodeLists/NodeListRSS.php:157
+#: ../classes/NodeLists/NodeListHTML.php:213
+msgid "Newest Hotspots"
+msgstr "Най-нови хотспотове"
+
+#: ../classes/NodeLists/NodeListRSS.php:169
+msgid "List of the most recent Hotspots opened by the network: "
+msgstr "Списък с най-актуалните хотспотов намиращи се в мрежата "
+
+#: ../classes/NodeLists/NodeListRSS.php:190
+msgid "Copyright "
+msgstr "Авторско право"
+
+#: ../classes/NodeLists/NodeListRSS.php:358
+msgid "See Map"
+msgstr "Вижте карта"
+
+#: ../classes/NodeLists/NodeListRSS.php:371
+msgid "Contact"
+msgstr "Контакт"
+
+#: ../classes/NodeLists/NodeListHTML.php:212
+msgid "Hotspot list"
+msgstr "Списък на хотспотове"
+
 #: ../classes/NodeLists/NodeListKML.php:240
 #: ../classes/Content/RssAggregator/RssAggregator.php:752
 msgid "URL"
 msgstr "Адрес"
 
 #: ../classes/Content/File/File.php:131
-#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:131
-#: ../classes/Content/IFrame/IFrame.php:89
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:92
 #: ../classes/Content/ContentGroup/ContentGroup.php:111
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:131
+#: ../classes/Content/IFrame/IFrame.php:89
 #: ../classes/Content/Picture/Picture.php:103 ../classes/Content.php:124
 #: ../classes/Content.php:275
 msgid "The content with the following id could not be found in the database: "
@@ -1246,6 +1265,274 @@ msgstr "Последна актуализация"
 #: ../classes/Content/File/File.php:708
 msgid "Could not delete this file, since it is persistent"
 msgstr "Не може да се изтрие този файл, тъй като е със стаус \" непроменлив\""
+
+#: ../classes/Content/SimpleString/SimpleString.php:130
+#: ../classes/Content/Langstring/Langstring.php:285
+msgid "Only these HTML tags are allowed : "
+msgstr "Само тези HTML тагове са позволени:"
+
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:102
+msgid "Subscribe to Pattern Language"
+msgstr "Заявка(абонамент) за  Езиков шаблон"
+
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:103
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:118
+msgid "Read narratives archives"
+msgstr "Четене на описателни архиви"
+
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:117
+msgid "Read my narrative"
+msgstr "Четене на мое описание"
+
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:119
+msgid "Unsubscribe"
+msgstr "Изключване на абонамента"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:172
+msgid "Embedded content"
+msgstr "Обхванато съдържание"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:190
+msgid "Attributes"
+msgstr "Атрибути"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:192
+msgid ""
+"It is recommended to specify at least <b>width='x' height='y'</b> as "
+"attributes"
+msgstr ""
+"Препоръчително е да се уточнят поне <b>width='x' height='y'</b> като атрибути"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:198
+msgid "Parameters"
+msgstr "Параметри"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:212
+msgid ""
+"Fallback content (Can be another embedded content to create a fallback "
+"hierarchy)"
+msgstr ""
+"Резервно съдържание (Може да има още едно обхванато съдържание, за да се "
+"създаде резервна йерархия) "
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:261
+msgid "You MUST choose a File object or any of its siblings."
+msgstr "Вие трябва да изберете \"Файлов\" обект или някой от подобните"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:397
+#: ../classes/Content/Langstring/Langstring.php:531
+#: ../classes/Content.php:1924
+msgid ""
+"Content is persistent (you must make it non persistent before you can delete "
+"it)"
+msgstr ""
+"Съдържанието е непроменливо (трябва да го направите променливо преди да може "
+"да го изтриете)"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:219
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:225
+msgid "Unable to insert new content group element into database!"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:291
+#, php-format
+msgid "%s %d display conditions"
+msgstr "%s %d условия на дисплей"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:301
+msgid "(Ignored if display type is random)"
+msgstr "(Не се взема предвид, ако вида на съдържанието е произволно)"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:307
+msgid ""
+"Content can be displayed at any date if no start or end date is specified.  "
+"Warning:  If you do not specify a specific time of day, midnight is assumed."
+msgstr ""
+"Съдържанието може да се види на която и да е дата, ако няма уточнена начална "
+"или крайна дата. Внимание: Ако не уточните конкретно време от деня, приема "
+"се полунощ по подразбиране."
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:308
+msgid "Only display from"
+msgstr "Покажи само от"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:334
+msgid "Only display at node(s):"
+msgstr "Покажи само при точка (и)"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:349
+#: ../classes/ProfileTemplate.php:371 ../classes/Content.php:738
+msgid "Remove"
+msgstr "Премахване"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:361
+msgid "Add new allowed node"
+msgstr "Прибавяне на нов позволен хотспот"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:364
+msgid ""
+"(Content can be displayed at ANY node unless one or more nodes are selected)"
+msgstr ""
+"(Съдържанието може да се покаже във ВСЯКА точка, освен ако една или повече "
+"точки не се изберат)"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:381
+#, php-format
+msgid "%s %d displayed content (%s)"
+msgstr "%s %d показано съдържание (%s)"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:149
+msgid "Invalid content selection mode (must be part of CONTENT_ORDERING_MODES)"
+msgstr ""
+"Избран режим с невалидно съдържание (трябва да е част от "
+"CONTENT_ORDERING_MODES sein)"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:178
+msgid ""
+"Invalid content selection mode (must be part of CONTENT_CHANGES_ON_MODES)"
+msgstr ""
+"Избран режим с невалидно съдържание (трябва да е част от "
+"CONTENT_CHANGES_ON_MODES)"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:207
+msgid "Invalid content selection mode (must be part of ALLOW_REPEAT_MODES)"
+msgstr ""
+"Избран режим с невалидно съдържание (трябва да е част от ALLOW_REPEAT_MODES)"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:239
+#: ../classes/Content/RssAggregator/RssAggregator.php:198
+msgid "You must display at least one element"
+msgstr "Трябва да покажете поне един елемент"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:260
+#, php-format
+msgid "%s configuration"
+msgstr "%s конфигурация"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:264
+msgid "In what order should the content displayed?"
+msgstr "В каква последователност трябва да се покаже съдържанието?"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:273
+msgid "When does the content rotate?"
+msgstr "Кога ще се завърти съдържанието?"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:282
+msgid "Can content be shown more than once to the same user?"
+msgstr ""
+"Може ли съдържанието да се покаже повече от един път на един и същ "
+"потребител?"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:306
+#, php-format
+msgid "%s display element list"
+msgstr "%s списък с дисплей елементи"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:313
+msgid "Show expired group elements"
+msgstr "Показване на изтекли групови елементи"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:319
+msgid "Hide expired group elements"
+msgstr "Скриване на изтекли групови елементи"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:330
+#: ../classes/ProfileTemplate.php:502
+#, php-format
+msgid "%s %d"
+msgstr "%s %d"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:333
+#, php-format
+msgid "Delete %s %d"
+msgstr "%s %d изтриване"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:82
+msgid "300x250 - IAB Medium Rectangle"
+msgstr "300x250 - IAB Среден правоъгълник"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:83
+msgid "250x250 - IAB Square Pop-Up"
+msgstr "250x250 - IAB Показващ се квадрат"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:84
+msgid "240x400 - IAB Vertical Rectangle"
+msgstr "240x400 - IAB Вертикален правоъгълник"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:85
+msgid "336x280 - IAB Large Rectangle"
+msgstr "336x280 - IAB Голям правоъгълник"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:86
+msgid "180x150 - IAB Rectangle"
+msgstr "180x150 - IAB Правоъгълник"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:88
+msgid "468x60  - IAB Full Banner"
+msgstr "468x60  - IAB Пълен флаг"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:89
+msgid "234x60  - IAB Half Banner"
+msgstr "234x60  - IAB Половин флаг"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:90
+msgid "88x31   - IAB Micro Bar"
+msgstr "88x31   - IAB Микро флаг"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:91
+msgid "120x90  - IAB Button 1"
+msgstr "120x90  - IAB Бутон 1"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:92
+msgid "120x60  - IAB Button 2"
+msgstr "120x60  - IAB Бутон 2"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:93
+msgid "120x240 - IAB Vertical Banner"
+msgstr "120x240 - IAB Вертикален флаг"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:94
+msgid "125x125 - IAB Square Button"
+msgstr "125x125 - IAB Квадратен бутон"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:95
+msgid "728x90  - IAB Leaderboard"
+msgstr "728x90  - IAB Водещ борд"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:97
+msgid "160x600 - IAB Wide Skyscraper"
+msgstr "160x600 - IAB Широк небостъргач"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:98
+msgid "120x600 - IAB Skyscraper"
+msgstr "120x600 - IAB Небостъргач"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:99
+msgid "300x600 - IAB Half Page Ad"
+msgstr "300x600 - IAB Реклама на половин страница"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:128
+msgid "Maximum display size"
+msgstr "Максимален размер на дисплей"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:131
+msgid "Use the values below for width and height"
+msgstr "Използвайте стойностите дадени по-долу за широчина и височина."
+
+#: ../classes/Content/Stylesheet/Stylesheet.php:106
+msgid ""
+"Hints:  Note that the order in which Stylesheets are assigned relative to "
+"other content doesn't matter (except relative to other Stylesheets).  "
+"Stylesheets will be linked to the page in the order they are assigned, but "
+"always after the base stylesheet and network theme pack (if applicable).  "
+"They must be written as patches to those stylesheets."
+msgstr ""
+"Кратки съвети: Отбележете, че реда в който \"Стилизирани листове\" се "
+"определят в съответсвтие с друго съдържание не от значение (освен ако не са "
+"свързани с други \"Стилизирани листове\"). \"Стилизирани листове\" ше бъдат "
+"свързани към страницата в реда в който са определени, но винаги след "
+"основния \"Стилизиран лист\" и мрежовия тематичен пакет (ако е приложимо). "
+"Те трябва да са написани като пачове на тези \"Стилизирани листове\"."
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:198
 msgid "Illegal Flickr Photostream selection mode."
@@ -1421,13 +1708,6 @@ msgstr "Няма Flickr съдържание, което да отговаря �
 msgid "PEAR::Phlickr is not installed"
 msgstr "PEAR::Phlickr не е инсталиран"
 
-#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:896
-#: ../classes/Network.php:1694 ../classes/Statistics.php:375
-#: ../classes/Statistics.php:378 ../classes/Content.php:901
-#: ../classes/Node.php:214 ../classes/Role.php:494
-msgid "Access denied!"
-msgstr "Достъпа е отказан!"
-
 #: ../classes/Content/IFrameRest/IFrameRest.php:119
 msgid "Actual URL after substitution"
 msgstr "Действителен адрес URL след заместването"
@@ -1467,23 +1747,6 @@ msgstr ""
 "показано това съдържание, или празна връзка ако потребителя никога не е бил "
 "представен с този IFrame."
 
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:102
-msgid "Subscribe to Pattern Language"
-msgstr "Заявка(абонамент) за  Езиков шаблон"
-
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:103
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:118
-msgid "Read narratives archives"
-msgstr "Четене на описателни архиви"
-
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:117
-msgid "Read my narrative"
-msgstr "Четене на мое описание"
-
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:119
-msgid "Unsubscribe"
-msgstr "Изключване на абонамента"
-
 #: ../classes/Content/IFrame/IFrame.php:231
 msgid "Width (suggested width is 600 (pixels))"
 msgstr "Ширина (предполагаемата ширина е 600 пиксела)"
@@ -1500,165 +1763,6 @@ msgstr "Адресно съдържание на HTML"
 msgid "Your browser does not support IFrames."
 msgstr "Вашият браузър не поддържа IFrames."
 
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:172
-msgid "Embedded content"
-msgstr "Обхванато съдържание"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:190
-msgid "Attributes"
-msgstr "Атрибути"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:192
-msgid ""
-"It is recommended to specify at least <b>width='x' height='y'</b> as "
-"attributes"
-msgstr ""
-"Препоръчително е да се уточнят поне <b>width='x' height='y'</b> като атрибути"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:198
-msgid "Parameters"
-msgstr "Параметри"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:212
-msgid ""
-"Fallback content (Can be another embedded content to create a fallback "
-"hierarchy)"
-msgstr ""
-"Резервно съдържание (Може да има още едно обхванато съдържание, за да се "
-"създаде резервна йерархия) "
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:261
-msgid "You MUST choose a File object or any of its siblings."
-msgstr "Вие трябва да изберете \"Файлов\" обект или някой от подобните"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:397
-#: ../classes/Content/Langstring/Langstring.php:531
-#: ../classes/Content.php:1924
-msgid ""
-"Content is persistent (you must make it non persistent before you can delete "
-"it)"
-msgstr ""
-"Съдържанието е непроменливо (трябва да го направите променливо преди да може "
-"да го изтриете)"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:219
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:225
-msgid "Unable to insert new content group element into database!"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:291
-#, php-format
-msgid "%s %d display conditions"
-msgstr "%s %d условия на дисплей"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:301
-msgid "(Ignored if display type is random)"
-msgstr "(Не се взема предвид, ако вида на съдържанието е произволно)"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:307
-msgid ""
-"Content can be displayed at any date if no start or end date is specified.  "
-"Warning:  If you do not specify a specific time of day, midnight is assumed."
-msgstr ""
-"Съдържанието може да се види на която и да е дата, ако няма уточнена начална "
-"или крайна дата. Внимание: Ако не уточните конкретно време от деня, приема "
-"се полунощ по подразбиране."
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:308
-msgid "Only display from"
-msgstr "Покажи само от"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:334
-msgid "Only display at node(s):"
-msgstr "Покажи само при точка (и)"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:349
-#: ../classes/Content.php:738 ../classes/ProfileTemplate.php:371
-msgid "Remove"
-msgstr "Премахване"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:361
-msgid "Add new allowed node"
-msgstr "Прибавяне на нов позволен хотспот"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:364
-msgid ""
-"(Content can be displayed at ANY node unless one or more nodes are selected)"
-msgstr ""
-"(Съдържанието може да се покаже във ВСЯКА точка, освен ако една или повече "
-"точки не се изберат)"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:381
-#, php-format
-msgid "%s %d displayed content (%s)"
-msgstr "%s %d показано съдържание (%s)"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:149
-msgid "Invalid content selection mode (must be part of CONTENT_ORDERING_MODES)"
-msgstr ""
-"Избран режим с невалидно съдържание (трябва да е част от "
-"CONTENT_ORDERING_MODES sein)"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:178
-msgid ""
-"Invalid content selection mode (must be part of CONTENT_CHANGES_ON_MODES)"
-msgstr ""
-"Избран режим с невалидно съдържание (трябва да е част от "
-"CONTENT_CHANGES_ON_MODES)"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:207
-msgid "Invalid content selection mode (must be part of ALLOW_REPEAT_MODES)"
-msgstr ""
-"Избран режим с невалидно съдържание (трябва да е част от ALLOW_REPEAT_MODES)"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:239
-#: ../classes/Content/RssAggregator/RssAggregator.php:198
-msgid "You must display at least one element"
-msgstr "Трябва да покажете поне един елемент"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:260
-#, php-format
-msgid "%s configuration"
-msgstr "%s конфигурация"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:264
-msgid "In what order should the content displayed?"
-msgstr "В каква последователност трябва да се покаже съдържанието?"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:273
-msgid "When does the content rotate?"
-msgstr "Кога ще се завърти съдържанието?"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:282
-msgid "Can content be shown more than once to the same user?"
-msgstr ""
-"Може ли съдържанието да се покаже повече от един път на един и същ "
-"потребител?"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:306
-#, php-format
-msgid "%s display element list"
-msgstr "%s списък с дисплей елементи"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:313
-msgid "Show expired group elements"
-msgstr "Показване на изтекли групови елементи"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:319
-msgid "Hide expired group elements"
-msgstr "Скриване на изтекли групови елементи"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:330
-#: ../classes/ProfileTemplate.php:502
-#, php-format
-msgid "%s %d"
-msgstr "%s %d"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:333
-#, php-format
-msgid "Delete %s %d"
-msgstr "%s %d изтриване"
-
 #: ../classes/Content/Langstring/Langstring.php:131
 #, php-format
 msgid "(Empty %s)"
@@ -1667,7 +1771,7 @@ msgstr "(Празно %s)"
 #: ../classes/Content/Langstring/Langstring.php:215
 #: ../classes/Content/Langstring/Langstring.php:341
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:112
-#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:7
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:12
 msgid "Language"
 msgstr "Език"
 
@@ -1675,11 +1779,6 @@ msgstr "Език"
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:145
 msgid "Add new string"
 msgstr "Прибавяне на нова връзка"
-
-#: ../classes/Content/Langstring/Langstring.php:285
-#: ../classes/Content/SimpleString/SimpleString.php:130
-msgid "Only these HTML tags are allowed : "
-msgstr "Само тези HTML тагове са позволени:"
 
 #: ../classes/Content/Langstring/Langstring.php:352
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:209
@@ -1817,8 +1916,8 @@ msgid "Type URL manually"
 msgstr "Въведете ръчно адреса"
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:654
+#: ../classes/ProfileTemplateField.php:147 ../classes/ProfileTemplate.php:303
 #: ../classes/Content.php:545 ../classes/Content.php:967
-#: ../classes/ProfileTemplate.php:303 ../classes/ProfileTemplateField.php:147
 msgid "Add"
 msgstr "Прибавяне"
 
@@ -1920,122 +2019,6 @@ msgstr "Не може да се извлече RSS форма: %s"
 msgid "RSS support is disabled"
 msgstr "RSS поддръжката е неактивирана"
 
-#: ../classes/Content/HTMLeditor/HTMLeditor.php:227
-msgid "FCKeditor is not installed"
-msgstr "FCK editor не е инсталиран"
-
-#: ../classes/Content/Picture/Picture.php:272
-msgid "Hyperlink URL (leave empty if you don't need it)"
-msgstr "Хипервръзка URL (оставете празно, ако не ви е нужно)"
-
-#: ../classes/Content/Picture/Picture.php:280
-msgid "Width (leave empty if you want to keep original width)"
-msgstr "Ширина (оставете празно, ако искате да запазите първоначалната ширина)"
-
-#: ../classes/Content/Picture/Picture.php:287
-msgid "Height (leave empty if you want to keep original height)"
-msgstr ""
-"Височина (оставете празно, ако искате да запазите първоначалната височинаl)"
-
-#: ../classes/Content/Stylesheet/Stylesheet.php:106
-msgid ""
-"Hints:  Note that the order in which Stylesheets are assigned relative to "
-"other content doesn't matter (except relative to other Stylesheets).  "
-"Stylesheets will be linked to the page in the order they are assigned, but "
-"always after the base stylesheet and network theme pack (if applicable).  "
-"They must be written as patches to those stylesheets."
-msgstr ""
-"Кратки съвети: Отбележете, че реда в който \"Стилизирани листове\" се "
-"определят в съответсвтие с друго съдържание не от значение (освен ако не са "
-"свързани с други \"Стилизирани листове\"). \"Стилизирани листове\" ше бъдат "
-"свързани към страницата в реда в който са определени, но винаги след "
-"основния \"Стилизиран лист\" и мрежовия тематичен пакет (ако е приложимо). "
-"Те трябва да са написани като пачове на тези \"Стилизирани листове\"."
-
-#: ../classes/Content/SmartyTemplate/SmartyTemplate.php:85
-#, php-format
-msgid ""
-"To list the available Smarty variables, put %s in the input field, save and "
-"then click preview"
-msgstr ""
-
-#: ../classes/Content/SmartyTemplate/SmartyTemplate.php:86
-#, php-format
-msgid "There are also a few custom Smarty modifiers available: %s"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:82
-msgid "300x250 - IAB Medium Rectangle"
-msgstr "300x250 - IAB Среден правоъгълник"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:83
-msgid "250x250 - IAB Square Pop-Up"
-msgstr "250x250 - IAB Показващ се квадрат"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:84
-msgid "240x400 - IAB Vertical Rectangle"
-msgstr "240x400 - IAB Вертикален правоъгълник"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:85
-msgid "336x280 - IAB Large Rectangle"
-msgstr "336x280 - IAB Голям правоъгълник"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:86
-msgid "180x150 - IAB Rectangle"
-msgstr "180x150 - IAB Правоъгълник"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:88
-msgid "468x60  - IAB Full Banner"
-msgstr "468x60  - IAB Пълен флаг"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:89
-msgid "234x60  - IAB Half Banner"
-msgstr "234x60  - IAB Половин флаг"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:90
-msgid "88x31   - IAB Micro Bar"
-msgstr "88x31   - IAB Микро флаг"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:91
-msgid "120x90  - IAB Button 1"
-msgstr "120x90  - IAB Бутон 1"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:92
-msgid "120x60  - IAB Button 2"
-msgstr "120x60  - IAB Бутон 2"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:93
-msgid "120x240 - IAB Vertical Banner"
-msgstr "120x240 - IAB Вертикален флаг"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:94
-msgid "125x125 - IAB Square Button"
-msgstr "125x125 - IAB Квадратен бутон"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:95
-msgid "728x90  - IAB Leaderboard"
-msgstr "728x90  - IAB Водещ борд"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:97
-msgid "160x600 - IAB Wide Skyscraper"
-msgstr "160x600 - IAB Широк небостъргач"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:98
-msgid "120x600 - IAB Skyscraper"
-msgstr "120x600 - IAB Небостъргач"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:99
-msgid "300x600 - IAB Half Page Ad"
-msgstr "300x600 - IAB Реклама на половин страница"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:128
-msgid "Maximum display size"
-msgstr "Максимален размер на дисплей"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:131
-msgid "Use the values below for width and height"
-msgstr "Използвайте стойностите дадени по-долу за широчина и височина."
-
 #: ../classes/Content/ShoutBox/ShoutBox.php:240
 msgid "Shout button 'onclick=' value (optionnal):"
 msgstr ""
@@ -2048,11 +2031,11 @@ msgid ""
 "text in Javascript with: %s"
 msgstr ""
 
-#: ../classes/Content/ShoutBox/ShoutBox.php:251 ../classes/Content.php:1553
-#: ../classes/Content.php:1572 ../classes/Content.php:1589
-#: ../classes/Content.php:1606 ../classes/Role.php:352
+#: ../classes/Content/ShoutBox/ShoutBox.php:251
 #: ../classes/ProfileTemplateField.php:454
-#: ../classes/ProfileTemplateField.php:472
+#: ../classes/ProfileTemplateField.php:472 ../classes/Role.php:352
+#: ../classes/Content.php:1553 ../classes/Content.php:1572
+#: ../classes/Content.php:1589 ../classes/Content.php:1606
 #, php-format
 msgid "Delete %s (%s)"
 msgstr "%s изтриване (%s)"
@@ -2078,6 +2061,35 @@ msgstr ""
 msgid "Sorry, I am unable to determine your current node"
 msgstr ""
 
+#: ../classes/Content/Picture/Picture.php:272
+msgid "Hyperlink URL (leave empty if you don't need it)"
+msgstr "Хипервръзка URL (оставете празно, ако не ви е нужно)"
+
+#: ../classes/Content/Picture/Picture.php:280
+msgid "Width (leave empty if you want to keep original width)"
+msgstr "Ширина (оставете празно, ако искате да запазите първоначалната ширина)"
+
+#: ../classes/Content/Picture/Picture.php:287
+msgid "Height (leave empty if you want to keep original height)"
+msgstr ""
+"Височина (оставете празно, ако искате да запазите първоначалната височинаl)"
+
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:227
+msgid "FCKeditor is not installed"
+msgstr "FCK editor не е инсталиран"
+
+#: ../classes/Content/SmartyTemplate/SmartyTemplate.php:85
+#, php-format
+msgid ""
+"To list the available Smarty variables, put %s in the input field, save and "
+"then click preview"
+msgstr ""
+
+#: ../classes/Content/SmartyTemplate/SmartyTemplate.php:86
+#, php-format
+msgid "There are also a few custom Smarty modifiers available: %s"
+msgstr ""
+
 #: ../classes/Content/Avatar/Avatar.php:103
 msgid ""
 "Unable to process image (GD probably doesn't have support for it enabled)"
@@ -2100,60 +2112,6 @@ msgstr ""
 msgid "The online user list must be viewed at a specific node"
 msgstr ""
 
-#: ../classes/VirtualHost.php:162
-msgid "Server::getAllServers: Fatal error: No servers in the database!"
-msgstr "Сървър::getAllServers: Фатална грешкаr: Няма сървъри в базата данни!"
-
-#: ../classes/VirtualHost.php:262 ../classes/Server.php:151
-msgid "Unable to insert the new server in the database!"
-msgstr "Не може да се въведе новият сървър в базата данни!"
-
-#: ../classes/VirtualHost.php:298
-msgid "Virtual host:"
-msgstr ""
-
-#: ../classes/VirtualHost.php:375
-msgid "Add a new virtual host for hostname"
-msgstr ""
-
-#: ../classes/VirtualHost.php:595
-msgid "Virtual hosts management"
-msgstr ""
-
-#: ../classes/VirtualHost.php:614
-msgid "Hostname"
-msgstr "Име на хоста"
-
-#: ../classes/VirtualHost.php:622
-msgid "Default network for this vhost"
-msgstr ""
-
-#: ../classes/VirtualHost.php:639
-msgid "Make this Virtual Host the server's default?"
-msgstr ""
-
-#: ../classes/VirtualHost.php:655
-msgid "Use SSL on this server?"
-msgstr "Използвате ли SSL на този сървър?"
-
-#: ../classes/VirtualHost.php:667
-msgid "Google public API key"
-msgstr "Обществен API ключ на Google"
-
-#: ../classes/VirtualHost.php:738
-msgid ""
-"Cannot delete default virtual host, create another one and select it before "
-"removing this one."
-msgstr ""
-
-#: ../classes/VirtualHost.php:743
-msgid "Could not delete server!"
-msgstr "Не може да се изтрие сървъра!"
-
-#: ../classes/VirtualHost.php:771
-msgid "Virtual Hosts"
-msgstr ""
-
 #: ../classes/Profile.php:206
 msgid "Unable to insert the new profile in the database!"
 msgstr ""
@@ -2164,7 +2122,7 @@ msgstr ""
 
 #: ../classes/Profile.php:311 ../classes/Network.php:1563
 #: ../classes/Network.php:1582 ../classes/Network.php:1588
-#: ../classes/Network.php:1613 ../classes/Node.php:1220
+#: ../classes/Network.php:1613 ../classes/Node.php:1223
 msgid "Yes"
 msgstr "Да"
 
@@ -2180,13 +2138,373 @@ msgstr ""
 msgid "Sorry, this user has hidden his profile  temporarily."
 msgstr ""
 
-#: ../classes/Profile.php:446 ../classes/Network.php:1895
-#: ../classes/ProfileTemplateField.php:603 ../classes/ProfileField.php:363
+#: ../classes/Profile.php:446 ../classes/ProfileTemplateField.php:603
+#: ../classes/Network.php:1895 ../classes/ProfileField.php:363
 msgid "Access denied (must have super admin access)"
 msgstr "Достъпа е отказан (трябва да имате достъп като супер администратор)"
 
 #: ../classes/Profile.php:451
 msgid "Could not delete Profile!"
+msgstr ""
+
+#: ../classes/User.php:157
+#, php-format
+msgid "There is no user with username %s"
+msgstr ""
+
+#: ../classes/User.php:268
+msgid "Guest"
+msgstr "Посетител"
+
+#: ../classes/User.php:311
+msgid "View this user's profile."
+msgstr ""
+
+#: ../classes/User.php:349
+#, php-format
+msgid "Sorry, the username %s is not available"
+msgstr "Съжаляваме, това потребителско име %s не е налично"
+
+#: ../classes/User.php:395
+msgid "Could not update email address."
+msgstr "Не е възможно да се актуализира вашия електронен пощенски адрес."
+
+#: ../classes/User.php:429
+msgid "Could not update username locale."
+msgstr "Не може да се актуализира локала на потребителското име "
+
+#: ../classes/User.php:451
+msgid "Could not update status."
+msgstr "Не може да се актуализира статуса."
+
+#: ../classes/User.php:472
+#, php-format
+msgid ""
+"Sorry, your %.0f minutes grace period to retrieve your email and validate "
+"your account has now expired. You will have to connect to the internet and "
+"validate your account from another location."
+msgstr ""
+
+#: ../classes/User.php:475
+msgid "Your account is currently valid."
+msgstr "В момента вашия акаунт е валиден."
+
+#: ../classes/User.php:479
+msgid "Sorry, your account is not valid: "
+msgstr "Съжаляваме, вашия акаунт не е валиден:"
+
+#: ../classes/User.php:553
+msgid "Password cannot be empty."
+msgstr ""
+
+#: ../classes/User.php:557
+msgid "Could not change user's password."
+msgstr "Не може да се спени паролата на потребителя."
+
+#: ../classes/User.php:573
+msgid "No users could not be found in the database"
+msgstr "Никакви потребители не могат да бъдат намерени в базата данни"
+
+#: ../classes/User.php:581 ../classes/User.php:599 ../classes/User.php:616
+msgid "Registration system"
+msgstr "Регистрационна система"
+
+#: ../classes/User.php:584
+msgid " lost username request"
+msgstr "изгубена е заявката за потребителско име"
+
+#: ../classes/User.php:585
+msgid ""
+"Hello,\n"
+"You have requested that the authentication server send you your username:\n"
+"Username: "
+msgstr ""
+"Здравейте,\n"
+"Вие подадохте заявка сървъра да ви предостави ваше потребителско име:\n"
+"Потребителско име: "
+
+#: ../classes/User.php:585 ../classes/User.php:620
+msgid ""
+"\n"
+"\n"
+"Have a nice day,\n"
+"The Team"
+msgstr ""
+"\n"
+"\n"
+"Лек ден,\n"
+"От екипа"
+
+#: ../classes/User.php:591
+msgid "The user is not in validation period."
+msgstr "Потребителят не се намира в период на валидация."
+
+#: ../classes/User.php:594
+msgid "The validation token is empty."
+msgstr "Потвърждението на валидацията е несъстоятелно."
+
+#: ../classes/User.php:602
+msgid " new user validation"
+msgstr "валидация на нов потребител"
+
+#: ../classes/User.php:604
+msgid ""
+"Hello,\n"
+"Please follow the link below to validate your account.\n"
+msgstr ""
+"Здравейте,\n"
+"Моля проследете линка долу, за да потвърдите вашия акаунт.\n"
+
+#: ../classes/User.php:604
+msgid ""
+"\n"
+"\n"
+"Thank you,\n"
+"The Team."
+msgstr ""
+"\n"
+"\n"
+"Благодарим,\n"
+"Екипът"
+
+#: ../classes/User.php:619
+msgid " new password request"
+msgstr "искане за нова парола"
+
+#: ../classes/User.php:620
+msgid ""
+"Hello,\n"
+"You have requested that the authentication server send you a new password:\n"
+"Username: "
+msgstr ""
+"Здравейте,\n"
+"Вие поискахте сървъра за валидация да ви изпрати нова парола:\n"
+"Потребителско име: "
+
+#: ../classes/User.php:620
+msgid ""
+"\n"
+"Password: "
+msgstr ""
+"\n"
+"Парола: "
+
+#: ../classes/User.php:740
+msgid "Get user statistics"
+msgstr ""
+
+#: ../classes/User.php:745
+msgid "Note that Error is for internal use only"
+msgstr ""
+
+#: ../classes/User.php:751
+msgid "Administrative options"
+msgstr ""
+
+#: ../classes/User.php:759
+msgid "Be carefull when changing this: it's the username you use to log in!"
+msgstr ""
+"Внимавайте когато променяте това: това е потребителското име, което "
+"използвате, за да се логнете!"
+
+#: ../classes/User.php:765
+msgid "Your current password"
+msgstr "Вашата актуална парола"
+
+#: ../classes/User.php:771
+msgid "Your new password"
+msgstr "Вашата нова парола"
+
+#: ../classes/User.php:776
+msgid "Your new password (again)"
+msgstr ""
+
+#: ../classes/User.php:781
+msgid "Change my password"
+msgstr "Промяна на моята парола"
+
+#: ../classes/User.php:783
+msgid "User preferences"
+msgstr ""
+
+#: ../classes/User.php:795
+msgid "Completely delete my public profile"
+msgstr ""
+
+#: ../classes/User.php:804
+msgid "Create my public profile"
+msgstr ""
+
+#: ../classes/User.php:836
+msgid "Wrong password."
+msgstr "Грешна парола."
+
+#: ../classes/User.php:839
+msgid "Passwords do not match."
+msgstr "Паролите не съответстват."
+
+#: ../classes/User.php:930
+msgid "Online Users"
+msgstr "Онлайн потребители"
+
+#: ../classes/User.php:936
+msgid "Import NoCat user database"
+msgstr "Вмъкване на NoCat потребителска база данни"
+
+#: ../classes/User.php:943
+msgid "User manager"
+msgstr ""
+
+#: ../classes/User.php:955
+msgid "User administration"
+msgstr "Потребителкса администрация"
+
+#: ../classes/ProfileTemplateField.php:128
+#: ../classes/ProfileTemplateField.php:437
+#: ../classes/ContentTypeFilter.php:309 ../classes/ProfileTemplate.php:294
+msgid "No label"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:132
+msgid "Add new profile template field filtered by"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:141
+msgid "Sorry, no content type filter exists."
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:186 ../classes/Content.php:189
+msgid "Unable to insert new content into database!"
+msgstr " Невъзможно вмъкването на ново съдържание в базата данни!"
+
+#: ../classes/ProfileTemplateField.php:414
+msgid "Display order"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:432
+msgid "Sorry, content type filter is missing."
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:434
+#: ../classes/ContentTypeFilter.php:301
+msgid "Content type filter"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:444
+msgid "Display label"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:450
+#, php-format
+msgid "%s display label (%s)"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:454
+msgid "display label"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:461
+msgid "Admin label"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:468
+#, php-format
+msgid "%s admin label (%s)"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:472
+msgid "admin label"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:479
+msgid "Semantic ID"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:487
+msgid "Full name"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:488
+msgid "Nickname"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:489
+msgid "E-mail"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:490
+msgid "Hashed e-mail"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:491
+msgid "Picture"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:492
+msgid "URL of a blog"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:493
+msgid "URL of a homepage"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:608
+msgid "Could not delete ProfileTemplateField!"
+msgstr ""
+
+#: ../classes/Role.php:151
+#, php-format
+msgid "Sorry: No available roles in the database for stakeholder type: %s!"
+msgstr ""
+
+#: ../classes/Role.php:162 ../classes/Role.php:168
+msgid "Role:"
+msgstr ""
+
+#: ../classes/Role.php:217 ../classes/ContentTypeFilter.php:199
+msgid "Unable to insert the new ContentTypeFilter in the database!"
+msgstr ""
+
+#: ../classes/Role.php:238
+#, php-format
+msgid "Add a new role of type %s with id %s"
+msgstr ""
+
+#: ../classes/Role.php:302
+msgid "User roles management"
+msgstr ""
+
+#: ../classes/Role.php:309
+msgid "Stakeholder type"
+msgstr ""
+
+#: ../classes/Role.php:318
+msgid "This role is a system role"
+msgstr ""
+
+#: ../classes/Role.php:325
+msgid "Role ID"
+msgstr ""
+
+#: ../classes/Role.php:344 ../classes/Role.php:348 ../classes/Content.php:1564
+#: ../classes/Content.php:1568
+msgid "Description:"
+msgstr "Описание:"
+
+#: ../classes/Role.php:352 ../classes/Content.php:1572
+msgid "description"
+msgstr "описание"
+
+#: ../classes/Role.php:379
+msgid "Permissions"
+msgstr ""
+
+#: ../classes/Role.php:485
+msgid "Could not delete object!"
+msgstr ""
+
+#: ../classes/Role.php:506
+msgid "User roles"
 msgstr ""
 
 #: ../classes/Security.php:205
@@ -2209,217 +2527,168 @@ msgstr ""
 msgid " (Empty langstring, ID is displayed)"
 msgstr " (Празно текстово поле, ИН се вижда)"
 
-#: ../classes/User.php:157
-#, php-format
-msgid "There is no user with username %s"
+#: ../classes/ContentTypeFilter.php:220
+msgid "Add a new content type filter with these rules"
 msgstr ""
 
-#: ../classes/User.php:252
-msgid "Guest"
-msgstr "Посетител"
-
-#: ../classes/User.php:295
-msgid "View this user's profile."
+#: ../classes/ContentTypeFilter.php:356
+msgid "ContentTypeFilter management"
 msgstr ""
 
-#: ../classes/User.php:329
-#, php-format
-msgid "Sorry, the username %s is not available"
-msgstr "Съжаляваме, това потребителско име %s не е налично"
-
-#: ../classes/User.php:375
-msgid "Could not update email address."
-msgstr "Не е възможно да се актуализира вашия електронен пощенски адрес."
-
-#: ../classes/User.php:409
-msgid "Could not update username locale."
-msgstr "Не може да се актуализира локала на потребителското име "
-
-#: ../classes/User.php:431
-msgid "Could not update status."
-msgstr "Не може да се актуализира статуса."
-
-#: ../classes/User.php:451
-#, php-format
-msgid ""
-"Sorry, your %.0f minutes grace period to retrieve your email and validate "
-"your account has now expired. You will have to connect to the internet and "
-"validate your account from another location."
+#: ../classes/ContentTypeFilter.php:363
+msgid "ContentTypeFilter ID"
 msgstr ""
 
-#: ../classes/User.php:454
-msgid "Your account is currently valid."
-msgstr "В момента вашия акаунт е валиден."
-
-#: ../classes/User.php:458
-msgid "Sorry, your account is not valid: "
-msgstr "Съжаляваме, вашия акаунт не е валиден:"
-
-#: ../classes/User.php:532
-msgid "Password cannot be empty."
+#: ../classes/ContentTypeFilter.php:374 ../classes/ProfileTemplate.php:478
+msgid "Label"
 msgstr ""
 
-#: ../classes/User.php:536
-msgid "Could not change user's password."
-msgstr "Не може да се спени паролата на потребителя."
-
-#: ../classes/User.php:552
-msgid "No users could not be found in the database"
-msgstr "Никакви потребители не могат да бъдат намерени в базата данни"
-
-#: ../classes/User.php:560 ../classes/User.php:578 ../classes/User.php:595
-msgid "Registration system"
-msgstr "Регистрационна система"
-
-#: ../classes/User.php:563
-msgid " lost username request"
-msgstr "изгубена е заявката за потребителско име"
-
-#: ../classes/User.php:564
-msgid ""
-"Hello,\n"
-"You have requested that the authentication server send you your username:\n"
-"Username: "
-msgstr ""
-"Здравейте,\n"
-"Вие подадохте заявка сървъра да ви предостави ваше потребителско име:\n"
-"Потребителско име: "
-
-#: ../classes/User.php:564 ../classes/User.php:599
-msgid ""
-"\n"
-"\n"
-"Have a nice day,\n"
-"The Team"
-msgstr ""
-"\n"
-"\n"
-"Лек ден,\n"
-"От екипа"
-
-#: ../classes/User.php:570
-msgid "The user is not in validation period."
-msgstr "Потребителят не се намира в период на валидация."
-
-#: ../classes/User.php:573
-msgid "The validation token is empty."
-msgstr "Потвърждението на валидацията е несъстоятелно."
-
-#: ../classes/User.php:581
-msgid " new user validation"
-msgstr "валидация на нов потребител"
-
-#: ../classes/User.php:583
-msgid ""
-"Hello,\n"
-"Please follow the link below to validate your account.\n"
-msgstr ""
-"Здравейте,\n"
-"Моля проследете линка долу, за да потвърдите вашия акаунт.\n"
-
-#: ../classes/User.php:583
-msgid ""
-"\n"
-"\n"
-"Thank you,\n"
-"The Team."
-msgstr ""
-"\n"
-"\n"
-"Благодарим,\n"
-"Екипът"
-
-#: ../classes/User.php:598
-msgid " new password request"
-msgstr "искане за нова парола"
-
-#: ../classes/User.php:599
-msgid ""
-"Hello,\n"
-"You have requested that the authentication server send you a new password:\n"
-"Username: "
-msgstr ""
-"Здравейте,\n"
-"Вие поискахте сървъра за валидация да ви изпрати нова парола:\n"
-"Потребителско име: "
-
-#: ../classes/User.php:599
-msgid ""
-"\n"
-"Password: "
-msgstr ""
-"\n"
-"Парола: "
-
-#: ../classes/User.php:719
-msgid "Get user statistics"
+#: ../classes/ContentTypeFilter.php:385
+msgid "Rules (must be a valid array definition)"
 msgstr ""
 
-#: ../classes/User.php:724
-msgid "Note that Error is for internal use only"
+#: ../classes/ContentTypeFilter.php:417
+msgid "The rules must be given as a PHP array declaration."
 msgstr ""
 
-#: ../classes/User.php:730
-msgid "Administrative options"
+#: ../classes/ContentTypeFilter.php:443
+msgid "Could not delete ContentTypeFilter!"
 msgstr ""
 
-#: ../classes/User.php:738
-msgid "Be carefull when changing this: it's the username you use to log in!"
-msgstr ""
-"Внимавайте когато променяте това: това е потребителското име, което "
-"използвате, за да се логнете!"
-
-#: ../classes/User.php:744
-msgid "Your current password"
-msgstr "Вашата актуална парола"
-
-#: ../classes/User.php:750
-msgid "Your new password"
-msgstr "Вашата нова парола"
-
-#: ../classes/User.php:755
-msgid "Your new password (again)"
+#: ../classes/ContentTypeFilter.php:471
+msgid "Content type filters"
 msgstr ""
 
-#: ../classes/User.php:760
-msgid "Change my password"
-msgstr "Промяна на моята парола"
+#: ../classes/Statistics.php:85
+msgid "Usernames"
+msgstr "Потребителски имена"
 
-#: ../classes/User.php:762
-msgid "User preferences"
+#: ../classes/Statistics.php:86
+msgid "MAC addresses"
+msgstr "МАС адреси"
+
+#: ../classes/Statistics.php:124 ../classes/Network.php:706
+#: ../classes/Content.php:335 ../classes/NodeList.php:138
+msgid "Unable to open directory "
+msgstr "Не може да се отвори директорията"
+
+#: ../classes/Statistics.php:152 ../classes/Statistics.php:156
+msgid "No restriction..."
+msgstr "Без ограничения..."
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "yesterday"
+msgstr "вчера"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "today"
+msgstr "днес"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "2 days ago"
+msgstr "преди 2 дни"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "3 days ago"
+msgstr "преди 3 дни"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "1 week ago"
+msgstr "преди 1 седмица"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "2 weeks ago"
+msgstr "преди 2 седмици"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "3 weeks ago"
+msgstr "преди 3 седмици"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "1 month ago"
+msgstr "преди 1 месец"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "2 months ago"
+msgstr "преди 2 месеца"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "6 months ago"
+msgstr "преди 6 месеца"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "1 year ago"
+msgstr "преди 1 година"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "Select from and to..."
+msgstr "Избери от и до..."
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "yesterday (whole day)"
+msgstr "вчера (целия ден)"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "today (whole day)"
+msgstr "днес (целия ден)"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "this month"
+msgstr "този месец"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "last month"
+msgstr "миналия месец"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "this year"
+msgstr "тази година"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "forever"
+msgstr "завинаги"
+
+#: ../classes/Statistics.php:161
+msgid "From"
+msgstr "От"
+
+#: ../classes/Statistics.php:176
+msgid "To"
+msgstr "До"
+
+#: ../classes/Statistics.php:450
+msgid "Invalid parameter"
+msgstr "Невалиден параметър"
+
+#: ../classes/Statistics.php:482
+msgid "Username or MAC address, depending on selection above"
 msgstr ""
+"Потребителско име или МАС адрес, в зависимост от направения избор по-горе"
 
-#: ../classes/User.php:774
-msgid "Completely delete my public profile"
+#: ../classes/Statistics.php:578
+msgid "Report configuration"
+msgstr "Конфигурация на доклада"
+
+#: ../classes/Statistics.php:601
+msgid "Restrict the time range for which statistics will be computed"
 msgstr ""
+"Ограничаване на времевия диапазон за който статистиката ще се изчислява"
 
-#: ../classes/User.php:783
-msgid "Create my public profile"
-msgstr ""
+#: ../classes/Statistics.php:609
+msgid "Restrict stats to the following nodes"
+msgstr "Ограничи статистиката за следните хотспотове"
 
-#: ../classes/User.php:815
-msgid "Wrong password."
-msgstr "Грешна парола."
+#: ../classes/Statistics.php:619
+msgid "Distinguish users by"
+msgstr "Разграничи потребителите чрез"
 
-#: ../classes/User.php:818
-msgid "Passwords do not match."
-msgstr "Паролите не съответстват."
+#: ../classes/Statistics.php:628
+msgid "Restrict stats to the selected users"
+msgstr "Ограничи статистическите данни за избраните потребители"
 
-#: ../classes/User.php:909
-msgid "Online Users"
-msgstr "Онлайн потребители"
-
-#: ../classes/User.php:915
-msgid "Import NoCat user database"
-msgstr "Вмъкване на NoCat потребителска база данни"
-
-#: ../classes/User.php:922
-msgid "User manager"
-msgstr ""
-
-#: ../classes/User.php:934
-msgid "User administration"
-msgstr "Потребителкса администрация"
+#: ../classes/Statistics.php:637
+msgid "Selected reports"
+msgstr "Избрани доклади"
 
 #: ../classes/Network.php:112 ../classes/Network.php:249
 msgid "Network::getAllNetworks:  Fatal error: No networks in the database!"
@@ -2436,11 +2705,6 @@ msgstr "Мрежа:"
 #: ../classes/Network.php:307
 msgid "Create a new network with ID"
 msgstr "Създаване на нова мрежа с ИН"
-
-#: ../classes/Network.php:706 ../classes/Statistics.php:124
-#: ../classes/Content.php:335 ../classes/NodeList.php:138
-msgid "Unable to open directory "
-msgstr "Не може да се отвори директорията"
 
 #: ../classes/Network.php:1035
 msgid "Satellite"
@@ -2578,11 +2842,11 @@ msgid "Network's user verification"
 msgstr "Валидация на потребителя в мрежата"
 
 #: ../classes/Network.php:1630 ../classes/Server.php:275
-#: ../classes/Node.php:1241
+#: ../classes/Node.php:1244
 msgid "Access rights"
 msgstr "Права на достъп"
 
-#: ../classes/Network.php:1646 ../classes/Node.php:1178
+#: ../classes/Network.php:1646 ../classes/Node.php:1181
 msgid "Latitude"
 msgstr "Географска ширина"
 
@@ -2590,7 +2854,7 @@ msgstr "Географска ширина"
 msgid "Center latitude for your the area of your wireless network"
 msgstr "Централна географска ширина на площта на вашата безжична мрежа"
 
-#: ../classes/Network.php:1651 ../classes/Node.php:1183
+#: ../classes/Network.php:1651 ../classes/Node.php:1186
 msgid "Longitude"
 msgstr "Географска дължина"
 
@@ -2614,7 +2878,7 @@ msgstr "Тип на картата"
 msgid "Default Google Map type for your the area of your wireless network"
 msgstr "Вид на Google Map по подразбиране за площта на вашата безжична мрежа"
 
-#: ../classes/Network.php:1667 ../classes/Node.php:1205
+#: ../classes/Network.php:1667 ../classes/Node.php:1208
 msgid "GIS data"
 msgstr "Географска информация"
 
@@ -2638,198 +2902,95 @@ msgstr "Не може да се премахне мрежата!"
 msgid "Network administration"
 msgstr "Мрежова администрация"
 
-#: ../classes/Statistics.php:85
-msgid "Usernames"
-msgstr "Потребителски имена"
-
-#: ../classes/Statistics.php:86
-msgid "MAC addresses"
-msgstr "МАС адреси"
-
-#: ../classes/Statistics.php:152 ../classes/Statistics.php:156
-msgid "No restriction..."
-msgstr "Без ограничения..."
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "yesterday"
-msgstr "вчера"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "today"
-msgstr "днес"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "2 days ago"
-msgstr "преди 2 дни"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "3 days ago"
-msgstr "преди 3 дни"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "1 week ago"
-msgstr "преди 1 седмица"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "2 weeks ago"
-msgstr "преди 2 седмици"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "3 weeks ago"
-msgstr "преди 3 седмици"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "1 month ago"
-msgstr "преди 1 месец"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "2 months ago"
-msgstr "преди 2 месеца"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "6 months ago"
-msgstr "преди 6 месеца"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "1 year ago"
-msgstr "преди 1 година"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "Select from and to..."
-msgstr "Избери от и до..."
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "yesterday (whole day)"
-msgstr "вчера (целия ден)"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "today (whole day)"
-msgstr "днес (целия ден)"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "this month"
-msgstr "този месец"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "last month"
-msgstr "миналия месец"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "this year"
-msgstr "тази година"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "forever"
-msgstr "завинаги"
-
-#: ../classes/Statistics.php:161
-msgid "From"
-msgstr "От"
-
-#: ../classes/Statistics.php:176
-msgid "To"
-msgstr "До"
-
-#: ../classes/Statistics.php:450
-msgid "Invalid parameter"
-msgstr "Невалиден параметър"
-
-#: ../classes/Statistics.php:482
-msgid "Username or MAC address, depending on selection above"
-msgstr ""
-"Потребителско име или МАС адрес, в зависимост от направения избор по-горе"
-
-#: ../classes/Statistics.php:578
-msgid "Report configuration"
-msgstr "Конфигурация на доклада"
-
-#: ../classes/Statistics.php:601
-msgid "Restrict the time range for which statistics will be computed"
-msgstr ""
-"Ограничаване на времевия диапазон за който статистиката ще се изчислява"
-
-#: ../classes/Statistics.php:609
-msgid "Restrict stats to the following nodes"
-msgstr "Ограничи статистиката за следните хотспотове"
-
-#: ../classes/Statistics.php:619
-msgid "Distinguish users by"
-msgstr "Разграничи потребителите чрез"
-
-#: ../classes/Statistics.php:628
-msgid "Restrict stats to the selected users"
-msgstr "Ограничи статистическите данни за избраните потребители"
-
-#: ../classes/Statistics.php:637
-msgid "Selected reports"
-msgstr "Избрани доклади"
-
-#: ../classes/AbstractDb.php:96
-#, php-format
-msgid "Unable to connect to database on %s"
-msgstr "Невъзможност за връзка с базата данни на %s"
-
-#: ../classes/AbstractDb.php:118 ../classes/AbstractDb.php:211
-#: ../classes/AbstractDb.php:399 ../classes/AbstractDb.php:472
-msgid "SQL Query"
-msgstr "SQL заявка"
-
-#: ../classes/AbstractDb.php:123 ../classes/AbstractDb.php:216
-msgid "Query plan"
-msgstr "План на заявките"
-
-#: ../classes/AbstractDb.php:141 ../classes/AbstractDb.php:234
-#: ../classes/AbstractDb.php:409
-#, php-format
-msgid "Elapsed time for query execution : %.6f second(s)"
-msgstr "Изтекло време за изпълнение на заявката: %.6f секунда(и)"
-
-#: ../classes/AbstractDb.php:145 ../classes/AbstractDb.php:238
-#: ../classes/AbstractDb.php:413 ../classes/AbstractDb.php:423
-#: ../classes/AbstractDb.php:487
-msgid "An error occured while executing the following SQL query"
-msgstr "Появи се грешка при изпълнение на следната SQL заявка"
-
-#: ../classes/AbstractDb.php:146 ../classes/AbstractDb.php:239
-#: ../classes/AbstractDb.php:414 ../classes/AbstractDb.php:488
-msgid "Error message"
-msgstr "Съобщение на грешка"
-
-#: ../classes/AbstractDb.php:147 ../classes/AbstractDb.php:240
-#: ../classes/AbstractDb.php:489
-msgid "Backtrace:"
+#: ../classes/ProfileTemplate.php:229
+msgid "Unable to insert the new profile template in the database!"
 msgstr ""
 
-#: ../classes/AbstractDb.php:170
-#, php-format
-msgid "The query returned %d results"
-msgstr "Заявката донесе %d резултата"
-
-#: ../classes/AbstractDb.php:424
-#, php-format
-msgid ""
-"The query returned %d results, although there should have been only one."
+#: ../classes/ProfileTemplate.php:289
+msgid "Profile template"
 msgstr ""
-"Заявката доведе %d резултата въпреки, че трябваше да има само един резултат."
 
-#: ../classes/AbstractDb.php:432
-#, php-format
-msgid "The query returned %d result(s)"
-msgstr "Заявката доведе %d резултат(а)"
+#: ../classes/ProfileTemplate.php:359
+msgid "Profile template label"
+msgstr ""
 
-#: ../classes/AbstractDb.php:481 ../classes/AbstractDb.php:499
-#, php-format
-msgid "%d rows affected by the SQL query."
-msgstr "%d реда бяха повлияни от SQL заявката."
+#: ../classes/ProfileTemplate.php:359 ../classes/Content.php:719
+msgid "Actions"
+msgstr "Действия"
 
-#: ../classes/AbstractDb.php:482
+#: ../classes/ProfileTemplate.php:460
+msgid "Profile template management"
+msgstr ""
+
+#: ../classes/ProfileTemplate.php:467
+msgid "ProfileTemplate ID"
+msgstr ""
+
+#: ../classes/ProfileTemplate.php:497
+msgid "Profile template fields"
+msgstr ""
+
+#: ../classes/ProfileTemplate.php:507
 #, php-format
-msgid "Elapsed time for query execution : %6f second(s)"
-msgstr "Изминало време за изпълнение на заявката: %.6f секунда(и)"
+msgid "Delete %s %d, used in %d/%d profiles"
+msgstr ""
+
+#: ../classes/ProfileTemplate.php:573
+msgid "Could not delete ProfileTemplate!"
+msgstr ""
+
+#: ../classes/ProfileTemplate.php:601
+msgid "Profile templates"
+msgstr ""
+
+#: ../classes/ThemePack.php:87
+#, php-format
+msgid "Theme pack %s cannot be found in %s"
+msgstr "Тематичния пакет %s не може да се намери в %s"
+
+#: ../classes/ThemePack.php:94
+#, php-format
+msgid "%s (Theme did not include a name.txt file)"
+msgstr "%s (Темата не включваше име в текстов файл)"
+
+#: ../classes/ThemePack.php:100
+#, php-format
+msgid "%s (Theme did not include a description.txt file)"
+msgstr "%s (темата не включва описане в текстов файл)"
+
+#: ../classes/ThemePack.php:121
+msgid "Theme pack:"
+msgstr "Тематичен пакет:"
+
+#: ../classes/ThemePack.php:144
+msgid "Unable to open the network theme packs directory"
+msgstr "Не е възможно отварянето на директорията с теми от мрежови пакети)"
+
+#: ../classes/ThemePack.php:151
+#, php-format
+msgid "No network theme packs available in %s"
+msgstr "Няма налични тематични пакети в %s"
+
+#: ../classes/ProfileField.php:251
+msgid "Unable to insert the new profile fields in the database!"
+msgstr ""
+
+#: ../classes/ProfileField.php:281
+#, php-format
+msgid "Delete %s"
+msgstr ""
+
+#: ../classes/ProfileField.php:368
+msgid "Could not delete ProfileField!"
+msgstr ""
 
 #: ../classes/Server.php:91
 msgid "Main server object"
 msgstr ""
+
+#: ../classes/Server.php:151 ../classes/VirtualHost.php:262
+msgid "Unable to insert the new server in the database!"
+msgstr "Не може да се въведе новият сървър в базата данни!"
 
 #: ../classes/Server.php:229
 msgid "Server management"
@@ -2861,6 +3022,73 @@ msgstr ""
 msgid "Server administration"
 msgstr "Сървърна администрация"
 
+#: ../classes/AbstractDb.php:93
+msgid "It appears the postgresql module isn't loaded"
+msgstr ""
+
+#: ../classes/AbstractDb.php:99
+#, php-format
+msgid "Unable to connect to database on %s"
+msgstr "Невъзможност за връзка с базата данни на %s"
+
+#: ../classes/AbstractDb.php:121 ../classes/AbstractDb.php:214
+#: ../classes/AbstractDb.php:402 ../classes/AbstractDb.php:475
+msgid "SQL Query"
+msgstr "SQL заявка"
+
+#: ../classes/AbstractDb.php:126 ../classes/AbstractDb.php:219
+msgid "Query plan"
+msgstr "План на заявките"
+
+#: ../classes/AbstractDb.php:144 ../classes/AbstractDb.php:237
+#: ../classes/AbstractDb.php:412
+#, php-format
+msgid "Elapsed time for query execution : %.6f second(s)"
+msgstr "Изтекло време за изпълнение на заявката: %.6f секунда(и)"
+
+#: ../classes/AbstractDb.php:148 ../classes/AbstractDb.php:241
+#: ../classes/AbstractDb.php:416 ../classes/AbstractDb.php:426
+#: ../classes/AbstractDb.php:490
+msgid "An error occured while executing the following SQL query"
+msgstr "Появи се грешка при изпълнение на следната SQL заявка"
+
+#: ../classes/AbstractDb.php:149 ../classes/AbstractDb.php:242
+#: ../classes/AbstractDb.php:417 ../classes/AbstractDb.php:491
+msgid "Error message"
+msgstr "Съобщение на грешка"
+
+#: ../classes/AbstractDb.php:150 ../classes/AbstractDb.php:243
+#: ../classes/AbstractDb.php:492
+msgid "Backtrace:"
+msgstr ""
+
+#: ../classes/AbstractDb.php:173
+#, php-format
+msgid "The query returned %d results"
+msgstr "Заявката донесе %d резултата"
+
+#: ../classes/AbstractDb.php:427
+#, php-format
+msgid ""
+"The query returned %d results, although there should have been only one."
+msgstr ""
+"Заявката доведе %d резултата въпреки, че трябваше да има само един резултат."
+
+#: ../classes/AbstractDb.php:435
+#, php-format
+msgid "The query returned %d result(s)"
+msgstr "Заявката доведе %d резултат(а)"
+
+#: ../classes/AbstractDb.php:484 ../classes/AbstractDb.php:502
+#, php-format
+msgid "%d rows affected by the SQL query."
+msgstr "%d реда бяха повлияни от SQL заявката."
+
+#: ../classes/AbstractDb.php:485
+#, php-format
+msgid "Elapsed time for query execution : %6f second(s)"
+msgstr "Изминало време за изпълнение на заявката: %.6f секунда(и)"
+
 #: ../classes/Content.php:150
 msgid "Untitled content"
 msgstr "Съдържание без заглавие"
@@ -2868,10 +3096,6 @@ msgstr "Съдържание без заглавие"
 #: ../classes/Content.php:181
 msgid "Content type is optionnal, but cannot be empty!"
 msgstr "Видът на съдържанието е по желание, но не може да бъде празно!"
-
-#: ../classes/Content.php:189 ../classes/ProfileTemplateField.php:186
-msgid "Unable to insert new content into database!"
-msgstr " Невъзможно вмъкването на ново съдържание в базата данни!"
 
 #: ../classes/Content.php:221
 msgid "It appears that you have not installed any Content plugin !"
@@ -2909,10 +3133,6 @@ msgstr "Ред"
 #: ../classes/Content.php:719
 msgid "Content"
 msgstr "Съдържание"
-
-#: ../classes/Content.php:719 ../classes/ProfileTemplate.php:359
-msgid "Actions"
-msgstr "Действия"
 
 #: ../classes/Content.php:911
 msgid "Select from reusable content library"
@@ -2978,15 +3198,6 @@ msgstr "Заглавие:"
 #: ../classes/Content.php:1553
 msgid "title"
 msgstr "заглавие"
-
-#: ../classes/Content.php:1564 ../classes/Content.php:1568
-#: ../classes/Role.php:344 ../classes/Role.php:348
-msgid "Description:"
-msgstr "Описание:"
-
-#: ../classes/Content.php:1572 ../classes/Role.php:352
-msgid "description"
-msgstr "описание"
 
 #: ../classes/Content.php:1581 ../classes/Content.php:1585
 msgid "Long description:"
@@ -3092,21 +3303,21 @@ msgstr "Сървър за автентикация"
 msgid "%s is not a valid structural display area"
 msgstr "%s невалидна структурна  повърхност за изображение"
 
-#: ../classes/MainUI.php:641
+#: ../classes/MainUI.php:642
 #, php-format
 msgid "%s Login"
 msgstr "%s Влизане (login)"
 
-#: ../classes/MainUI.php:641
+#: ../classes/MainUI.php:642
 msgid "Login"
 msgstr "Влизане (login)"
 
-#: ../classes/MainUI.php:645
+#: ../classes/MainUI.php:646
 #, php-format
 msgid "Click <a href='%s'>here</a> to continue"
 msgstr "Кликнете <a href='%s'>тук</a>, за да продължите"
 
-#: ../classes/MainUI.php:645
+#: ../classes/MainUI.php:646
 msgid ""
 "The transfer from secure login back to regular http may cause a warning."
 msgstr ""
@@ -3232,74 +3443,74 @@ msgstr "Редактиране на хотспот"
 msgid "Get access statistics"
 msgstr "Получаване на статистика за достъпа"
 
-#: ../classes/Node.php:1093
+#: ../classes/Node.php:1096
 msgid "Node content"
 msgstr "Съдържание на хотспота"
 
-#: ../classes/Node.php:1119
+#: ../classes/Node.php:1122
 msgid "Civic number"
 msgstr "Граждански номер"
 
-#: ../classes/Node.php:1124
+#: ../classes/Node.php:1127
 msgid "Street name"
 msgstr "Име на улица"
 
-#: ../classes/Node.php:1144
+#: ../classes/Node.php:1147
 msgid "Country"
 msgstr "Държава"
 
-#: ../classes/Node.php:1149
+#: ../classes/Node.php:1152
 msgid "Public phone number"
 msgstr "Обществен телефонен номер"
 
-#: ../classes/Node.php:1154
+#: ../classes/Node.php:1157
 msgid "Public email"
 msgstr "Обществен и-мейл"
 
-#: ../classes/Node.php:1164
+#: ../classes/Node.php:1167
 msgid "Mass transit info"
 msgstr "Информация за масов транзит"
 
-#: ../classes/Node.php:1169
+#: ../classes/Node.php:1172
 msgid "Information about the node"
 msgstr "Информация за хотспота"
 
-#: ../classes/Node.php:1189 ../classes/Node.php:1193
+#: ../classes/Node.php:1192 ../classes/Node.php:1196
 msgid "Geocode the address or postal code above"
 msgstr "Да се геокодира адреса или горния пощенски код"
 
-#: ../classes/Node.php:1190
+#: ../classes/Node.php:1193
 msgid "Check using Google Maps"
 msgstr "Провери с Google Maps"
 
-#: ../classes/Node.php:1191
+#: ../classes/Node.php:1194
 msgid ""
 "Use a geocoding service, then use Google Maps to pinpoint the exact location."
 msgstr ""
 "Използвайте геокодираща услуга, след което изполвайте картата на Google, за "
 "да определите точното местоположение."
 
-#: ../classes/Node.php:1194
+#: ../classes/Node.php:1197
 msgid "Use a geocoding service"
 msgstr "Използване на геокодираща услуга"
 
-#: ../classes/Node.php:1200
+#: ../classes/Node.php:1203
 msgid "Map URL"
 msgstr "Карта на интернет адреса"
 
-#: ../classes/Node.php:1213
+#: ../classes/Node.php:1216
 msgid "Node deployment status"
 msgstr "Състояние на внедряването на хотспотове"
 
-#: ../classes/Node.php:1219
+#: ../classes/Node.php:1222
 msgid "Is this node splash-only (no login)?"
 msgstr "Този хотспот само \"SPLASH\" ли е (без Login)?"
 
-#: ../classes/Node.php:1226
+#: ../classes/Node.php:1229
 msgid "URL to show instead of the portal"
 msgstr "Интернет страницата ще се покаже вместо портала"
 
-#: ../classes/Node.php:1228
+#: ../classes/Node.php:1231
 msgid ""
 "If this is not empty, the portal will be disabled and this URL will be shown "
 "instead"
@@ -3307,11 +3518,11 @@ msgstr ""
 "Ако това поле не е празно, портала ще се деактивира и вместо това ще се "
 "покаже тази интернет страница."
 
-#: ../classes/Node.php:1233
+#: ../classes/Node.php:1236
 msgid "Node configuration"
 msgstr "Конфигурация на хотспота"
 
-#: ../classes/Node.php:1363
+#: ../classes/Node.php:1371
 msgid ""
 "It appears that the Geocoder could not be reached or could not geocode the "
 "given address."
@@ -3319,267 +3530,130 @@ msgstr ""
 "По всичко личи, че Геокода не може да се достигне и не може да геокодира "
 "дадения адрес."
 
-#: ../classes/Node.php:1366
+#: ../classes/Node.php:1374
 msgid "You must enter a valid address."
 msgstr "Вие трябва да въведете валиден адрес."
 
-#: ../classes/Node.php:1370
+#: ../classes/Node.php:1378
 msgid "Unable to create geocoder.  Are you sure you set the country?"
 msgstr ""
 "Не е възможно създаването на геокодер. Сигурни ли сте, че направихте "
 "съответните настройки за съответната страна?"
 
-#: ../classes/Node.php:1608
+#: ../classes/Node.php:1616
 msgid "Edit nodes"
 msgstr ""
 
-#: ../classes/Node.php:1622
+#: ../classes/Node.php:1630
 msgid "Node administration"
 msgstr "Администрация на хотспота"
 
-#: ../classes/ProfileTemplate.php:229
-msgid "Unable to insert the new profile template in the database!"
+#: ../classes/VirtualHost.php:162
+msgid "Server::getAllServers: Fatal error: No servers in the database!"
+msgstr "Сървър::getAllServers: Фатална грешкаr: Няма сървъри в базата данни!"
+
+#: ../classes/VirtualHost.php:298
+msgid "Virtual host:"
 msgstr ""
 
-#: ../classes/ProfileTemplate.php:289
-msgid "Profile template"
+#: ../classes/VirtualHost.php:375
+msgid "Add a new virtual host for hostname"
 msgstr ""
 
-#: ../classes/ProfileTemplate.php:294 ../classes/ContentTypeFilter.php:309
-#: ../classes/ProfileTemplateField.php:128
-#: ../classes/ProfileTemplateField.php:437
-msgid "No label"
+#: ../classes/VirtualHost.php:595
+msgid "Virtual hosts management"
 msgstr ""
 
-#: ../classes/ProfileTemplate.php:359
-msgid "Profile template label"
+#: ../classes/VirtualHost.php:614
+msgid "Hostname"
+msgstr "Име на хоста"
+
+#: ../classes/VirtualHost.php:622
+msgid "Default network for this vhost"
 msgstr ""
 
-#: ../classes/ProfileTemplate.php:460
-msgid "Profile template management"
+#: ../classes/VirtualHost.php:639
+msgid "Make this Virtual Host the server's default?"
 msgstr ""
 
-#: ../classes/ProfileTemplate.php:467
-msgid "ProfileTemplate ID"
+#: ../classes/VirtualHost.php:655
+msgid "Use SSL on this server?"
+msgstr "Използвате ли SSL на този сървър?"
+
+#: ../classes/VirtualHost.php:667
+msgid "Google public API key"
+msgstr "Обществен API ключ на Google"
+
+#: ../classes/VirtualHost.php:738
+msgid ""
+"Cannot delete default virtual host, create another one and select it before "
+"removing this one."
 msgstr ""
 
-#: ../classes/ProfileTemplate.php:478 ../classes/ContentTypeFilter.php:374
-msgid "Label"
+#: ../classes/VirtualHost.php:743
+msgid "Could not delete server!"
+msgstr "Не може да се изтрие сървъра!"
+
+#: ../classes/VirtualHost.php:771
+msgid "Virtual Hosts"
 msgstr ""
 
-#: ../classes/ProfileTemplate.php:497
-msgid "Profile template fields"
-msgstr ""
-
-#: ../classes/ProfileTemplate.php:507
+#: ../classes/GenericDataObject.php:124
 #, php-format
-msgid "Delete %s %d, used in %d/%d profiles"
+msgid "Delete not supported on class %s"
 msgstr ""
 
-#: ../classes/ProfileTemplate.php:573
-msgid "Could not delete ProfileTemplate!"
+#: ../classes/Stakeholder.php:92
+msgid "Remove stakeholder"
 msgstr ""
 
-#: ../classes/ProfileTemplate.php:601
-msgid "Profile templates"
+#: ../classes/Stakeholder.php:98
+msgid "Add stakeholder"
 msgstr ""
 
-#: ../classes/ThemePack.php:87
+#: ../classes/Stakeholder.php:125
 #, php-format
-msgid "Theme pack %s cannot be found in %s"
+msgid "User %s already has role %s for this object"
+msgstr ""
+
+#: ../classes/Dependency.php:339 ../classes/Dependency.php:355
+#, php-format
+msgid "File %s not found"
+msgstr ""
+
+#: ../classes/Dependency.php:369 ../classes/Dependency.php:383
+#, fuzzy, php-format
+msgid "File %s not found in %s"
 msgstr "Тематичния пакет %s не може да се намери в %s"
 
-#: ../classes/ThemePack.php:94
+#: ../classes/Dependency.php:422
 #, php-format
-msgid "%s (Theme did not include a name.txt file)"
-msgstr "%s (Темата не включваше име в текстов файл)"
+msgid ""
+"To install this standard PHP extension, look for a package with a similar "
+"name in your distribution's package manager.  Ex: For Debian based "
+"distributions, you may try 'sudo apt-get install php5-%s'"
+msgstr ""
 
-#: ../classes/ThemePack.php:100
+#: ../classes/Dependency.php:427
 #, php-format
-msgid "%s (Theme did not include a description.txt file)"
-msgstr "%s (темата не включва описане в текстов файл)"
+msgid "<input type='submit' name='%s' value='Install %s'/>"
+msgstr ""
 
-#: ../classes/ThemePack.php:121
-msgid "Theme pack:"
-msgstr "Тематичен пакет:"
-
-#: ../classes/ThemePack.php:144
-msgid "Unable to open the network theme packs directory"
-msgstr "Не е възможно отварянето на директорията с теми от мрежови пакети)"
-
-#: ../classes/ThemePack.php:151
+#: ../classes/Dependency.php:437
 #, php-format
-msgid "No network theme packs available in %s"
-msgstr "Няма налични тематични пакети в %s"
+msgid ""
+"url_to_the_tarball (Sorry, i couldn't find the source for %s in "
+"installSourceUrl)"
+msgstr ""
 
-#: ../classes/Role.php:151
+#: ../classes/Dependency.php:439
 #, php-format
-msgid "Sorry: No available roles in the database for stakeholder type: %s!"
+msgid "To install this custom PEAR extension, use 'sudo pear install %s'"
 msgstr ""
 
-#: ../classes/Role.php:162 ../classes/Role.php:168
-msgid "Role:"
-msgstr ""
-
-#: ../classes/Role.php:217 ../classes/ContentTypeFilter.php:199
-msgid "Unable to insert the new ContentTypeFilter in the database!"
-msgstr ""
-
-#: ../classes/Role.php:238
+#: ../classes/Dependency.php:442
 #, php-format
-msgid "Add a new role of type %s with id %s"
-msgstr ""
-
-#: ../classes/Role.php:302
-msgid "User roles management"
-msgstr ""
-
-#: ../classes/Role.php:309
-msgid "Stakeholder type"
-msgstr ""
-
-#: ../classes/Role.php:318
-msgid "This role is a system role"
-msgstr ""
-
-#: ../classes/Role.php:325
-msgid "Role ID"
-msgstr ""
-
-#: ../classes/Role.php:379
-msgid "Permissions"
-msgstr ""
-
-#: ../classes/Role.php:485
-msgid "Could not delete object!"
-msgstr ""
-
-#: ../classes/Role.php:506
-msgid "User roles"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:220
-msgid "Add a new content type filter with these rules"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:301
-#: ../classes/ProfileTemplateField.php:434
-msgid "Content type filter"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:356
-msgid "ContentTypeFilter management"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:363
-msgid "ContentTypeFilter ID"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:385
-msgid "Rules (must be a valid array definition)"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:417
-msgid "The rules must be given as a PHP array declaration."
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:443
-msgid "Could not delete ContentTypeFilter!"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:471
-msgid "Content type filters"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:132
-msgid "Add new profile template field filtered by"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:141
-msgid "Sorry, no content type filter exists."
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:414
-msgid "Display order"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:432
-msgid "Sorry, content type filter is missing."
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:444
-msgid "Display label"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:450
-#, php-format
-msgid "%s display label (%s)"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:454
-msgid "display label"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:461
-msgid "Admin label"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:468
-#, php-format
-msgid "%s admin label (%s)"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:472
-msgid "admin label"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:479
-msgid "Semantic ID"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:487
-msgid "Full name"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:488
-msgid "Nickname"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:489
-msgid "E-mail"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:490
-msgid "Hashed e-mail"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:491
-msgid "Picture"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:492
-msgid "URL of a blog"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:493
-msgid "URL of a homepage"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:608
-msgid "Could not delete ProfileTemplateField!"
-msgstr ""
-
-#: ../classes/ProfileField.php:251
-msgid "Unable to insert the new profile fields in the database!"
-msgstr ""
-
-#: ../classes/ProfileField.php:281
-#, php-format
-msgid "Delete %s"
-msgstr ""
-
-#: ../classes/ProfileField.php:368
-msgid "Could not delete ProfileField!"
+msgid "Sorry, I don't know how to install a %s extension"
 msgstr ""
 
 #: ../classes/Permission.php:85
@@ -3636,41 +3710,17 @@ msgid ""
 "This will be replaced with more granular permissions in the future"
 msgstr ""
 
-#: ../classes/Stakeholder.php:92
-msgid "Remove stakeholder"
-msgstr ""
-
-#: ../classes/Stakeholder.php:98
-msgid "Add stakeholder"
-msgstr ""
-
-#: ../classes/Stakeholder.php:125
-#, php-format
-msgid "User %s already has role %s for this object"
-msgstr ""
-
-#: ../classes/GenericDataObject.php:124
-#, php-format
-msgid "Delete not supported on class %s"
-msgstr ""
-
-#: ../classes/Dependency.php:320 ../classes/Dependency.php:335
-#: ../classes/Dependency.php:350 ../classes/Dependency.php:364
-#, php-format
-msgid "Component %s is not installed (not found in %s)"
-msgstr "Компонент %s не е инсталиран (не е намерен в: %s)"
-
-#: ../classes/DependenciesList.php:107
+#: ../classes/DependenciesList.php:105
 #, php-format
 msgid "Version %s needed"
 msgstr ""
 
-#: ../classes/DependenciesList.php:123
+#: ../classes/DependenciesList.php:122
 #, php-format
 msgid "%s may work, but version %s is recommended"
 msgstr ""
 
-#: ../classes/DependenciesList.php:126
+#: ../classes/DependenciesList.php:125
 #, php-format
 msgid "%s is too old, version %s needed"
 msgstr ""
@@ -3688,12 +3738,26 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: ../classes/DependenciesList.php:139
+#: ../classes/DependenciesList.php:138
 #, fuzzy
-msgid "Message"
+msgid "Information"
+msgstr "информация за проекта"
+
+#: ../classes/DependenciesList.php:176
+msgid "Install message"
+msgstr ""
+
+#: ../classes/DependenciesList.php:179
+#, fuzzy
+msgid "Detection message"
 msgstr "Съобщение на грешка"
 
-#: ../classes/DependenciesList.php:188
+#: ../classes/DependenciesList.php:182
+#, fuzzy
+msgid "To install"
+msgstr "Общо"
+
+#: ../classes/DependenciesList.php:204
 msgid "Dependencies"
 msgstr ""
 
@@ -3710,42 +3774,42 @@ msgid "days"
 msgstr "дни"
 
 #: smarty.txt:5
-msgid "Logged in as"
-msgstr "Влязъл съм като"
-
-#: smarty.txt:6
-msgid "I am not logged in."
-msgstr "Не съм влязъл в системата."
-
-#: smarty.txt:8
 msgid "user is online at this hotspot"
 msgstr "потребителя е онлайн при този хотспот"
 
-#: smarty.txt:9
+#: smarty.txt:6
 msgid "users are online at this hotspot"
 msgstr "потребителите са онлайн при този хотспот"
 
-#: smarty.txt:10
+#: smarty.txt:7
 msgid "Nobody is online at this hotspot"
 msgstr "Никой не е онлайн при този хотспот"
 
-#: smarty.txt:11
+#: smarty.txt:8
 msgid "Recent Users:"
 msgstr ""
 
-#: smarty.txt:12
+#: smarty.txt:9
 msgid "Most Active Users:"
 msgstr ""
 
-#: smarty.txt:13 smarty.txt:23
+#: smarty.txt:10
+msgid "Logged in as"
+msgstr "Влязъл съм като"
+
+#: smarty.txt:11
+msgid "I am not logged in."
+msgstr "Не съм влязъл в системата."
+
+#: smarty.txt:13
 msgid "Login or Signup here"
 msgstr "Влезте или направете нова регистрация"
 
-#: smarty.txt:14 smarty.txt:24
+#: smarty.txt:14
 msgid "Username (or email)"
 msgstr "Потребителско име (или електронен пощенски адрес)"
 
-#: smarty.txt:15 smarty.txt:25 smarty.txt:31
+#: smarty.txt:15 smarty.txt:37
 msgid "Password"
 msgstr "Парола"
 
@@ -3773,31 +3837,80 @@ msgstr "Зарежда се, моля изчакайте..."
 msgid "Legend"
 msgstr "Легенда"
 
-#: smarty.txt:26 smarty.txt:27 smarty.txt:48 smarty.txt:68 smarty.txt:72
+#: smarty.txt:23
+#, php-format
+msgid "The %s network currently has one valid user."
+msgstr "Мрежата %s в момента има един валиден потребител."
+
+#: smarty.txt:24
+#, php-format
+msgid "The %s network currently has %d valid users."
+msgstr "Мрежата %s в момента има %d валидни потребителя."
+
+#: smarty.txt:25
+msgid "One user is currently online."
+msgstr "Един потребител в момента е онлайн."
+
+#: smarty.txt:26
+#, php-format
+msgid "%d users are currently online."
+msgstr "%d потребителя в момента са онлайн."
+
+#: smarty.txt:27
+msgid "This network currently has 1 deployed hotspot."
+msgstr "Тази мрежа в момента има 1 действащ хотспот."
+
+#: smarty.txt:28
+#, php-format
+msgid "This network currently has %d deployed hotspots."
+msgstr "Тази мрежа в момента има %d действащи хотспота. "
+
+#: smarty.txt:29
+msgid "One hotspot is currently operational."
+msgstr ""
+
+#: smarty.txt:30
+#, php-format
+msgid "%d hotspots are currently operational."
+msgstr ""
+
+#: smarty.txt:31
+msgid ""
+"One hotspot isn't monitored so we don't know if it's currently operational."
+msgstr ""
+
+#: smarty.txt:32
+#, php-format
+msgid ""
+"%d hotspots aren't monitored so we don't know if they are currently "
+"operational."
+msgstr ""
+
+#: smarty.txt:33 smarty.txt:54 smarty.txt:64 smarty.txt:68
 msgid "I'm having difficulties"
 msgstr "Имам проблеми.."
 
-#: smarty.txt:28
+#: smarty.txt:34
 msgid "Register a free account with"
 msgstr "Регистриране на безплатен акаунт с "
 
-#: smarty.txt:29
+#: smarty.txt:35
 msgid "Username desired"
 msgstr "Желано потребителско име"
 
-#: smarty.txt:30 smarty.txt:51 smarty.txt:74
+#: smarty.txt:36 smarty.txt:57 smarty.txt:70
 msgid "Your email address"
 msgstr "Вашия имейл адрес"
 
-#: smarty.txt:32
+#: smarty.txt:38
 msgid "Password (again)"
 msgstr "Парола (отново)"
 
-#: smarty.txt:33
+#: smarty.txt:39
 msgid "Please note"
 msgstr "Моля отбележете"
 
-#: smarty.txt:34
+#: smarty.txt:40
 msgid ""
 "While accounts are free, we <em>strongly</em> suggest that you use your "
 "previously created account if you have one."
@@ -3805,7 +3918,7 @@ msgstr ""
 "Докато акаунтите са безплатни, ние <b>горещо</b> препоръчваме да използвате "
 "ваш предишно създаден акаунт, ако имате такъв."
 
-#: smarty.txt:35
+#: smarty.txt:41
 msgid ""
 "<b>Your email address must be valid</b> in order for your account to be "
 "activated."
@@ -3813,21 +3926,21 @@ msgstr ""
 "<b>Вашият имейл адрес трябва да е валиден,</b> за да може да се активира "
 "вашия акаунт."
 
-#: smarty.txt:36
+#: smarty.txt:42
 msgid "A validation email will be sent to that email address."
 msgstr "Имейл за валидиране  ще се изпрати на този имейл адрес."
 
-#: smarty.txt:37
+#: smarty.txt:43
 msgid "To fully activate your account you must respond to that email."
 msgstr ""
 "За да активирате вашия акаунт напълно, вие трябва да отговорите на този "
 "имейл."
 
-#: smarty.txt:38
+#: smarty.txt:44
 msgid "Note to free web-based email users"
 msgstr "Бележка към до потребители, използващи безплатни уеб базирани имейли"
 
-#: smarty.txt:39
+#: smarty.txt:45
 msgid ""
 "Sometimes our validation email ends up in the 'spam' folder of some "
 "providers. If you have not received any email with the validation URL 5 "
@@ -3837,104 +3950,51 @@ msgstr ""
 "доставчици. Ако не сте получили още такъв имейл в рамките на 5 минути след "
 "предаването на формата, моля вижте в папката за спам."
 
-#: smarty.txt:40
+#: smarty.txt:46
 msgid "You can also use the following links if you need help"
 msgstr "Вие можете още да използвате следните линкове, ако ви е нужна помощ"
 
-#: smarty.txt:41
+#: smarty.txt:47
 #, php-format
 msgid "Status of the %d open %s Hotspots"
 msgstr "Статус на %d активните %s хотспотове"
 
-#: smarty.txt:42
+#: smarty.txt:48
 msgid "Hotspot / Status"
 msgstr "Хотспот / Статус"
 
-#: smarty.txt:44
+#: smarty.txt:50
 msgid "Location"
 msgstr "Адрес"
 
-#: smarty.txt:45
+#: smarty.txt:51
 msgid "Hotspot in testing phase"
 msgstr "Хотспот в изпитателна фаза"
 
-#: smarty.txt:46
+#: smarty.txt:52
 msgid "Hotspot not monitored"
 msgstr "Хотспотове не се отчитат"
 
-#: smarty.txt:47
+#: smarty.txt:53
 #, php-format
 msgid "Opened on %s"
 msgstr "Отворен на %s"
 
-#: smarty.txt:49
+#: smarty.txt:55
 msgid "Lost password"
 msgstr "Загубена парола"
 
-#: smarty.txt:50 smarty.txt:70
+#: smarty.txt:56 smarty.txt:66
 msgid "Your username"
 msgstr "Вашето потребителско име"
 
-#: smarty.txt:52
+#: smarty.txt:58
 msgid "Please enter your username or email address to reset your password"
 msgstr ""
 "Моля въведете вашето потребителско име или имейл адрес, за да се промени "
 "вашата парола"
 
-#: smarty.txt:53
-#, php-format
-msgid "The %s network currently has one valid user."
-msgstr "Мрежата %s в момента има един валиден потребител."
-
-#: smarty.txt:54
-#, php-format
-msgid "The %s network currently has %d valid users."
-msgstr "Мрежата %s в момента има %d валидни потребителя."
-
-#: smarty.txt:55
-msgid "One user is currently online."
-msgstr "Един потребител в момента е онлайн."
-
-#: smarty.txt:56
-#, php-format
-msgid "%d users are currently online."
-msgstr "%d потребителя в момента са онлайн."
-
-#: smarty.txt:57
-msgid "This network currently has 1 deployed hotspot."
-msgstr "Тази мрежа в момента има 1 действащ хотспот."
-
-#: smarty.txt:58
-#, php-format
-msgid "This network currently has %d deployed hotspots."
-msgstr "Тази мрежа в момента има %d действащи хотспота. "
-
 #: smarty.txt:59
-msgid "One hotspot is currently operational."
-msgstr ""
-
-#: smarty.txt:60
-#, php-format
-msgid "%d hotspots are currently operational."
-msgstr ""
-
-#: smarty.txt:61
-msgid ""
-"One hotspot isn't monitored so we don't know if it's currently operational."
-msgstr ""
-
-#: smarty.txt:62
-#, php-format
-msgid ""
-"%d hotspots aren't monitored so we don't know if they are currently "
-"operational."
-msgstr ""
-
-#: smarty.txt:63
-msgid "Please get in touch with "
-msgstr "Моля свържете се с: "
-
-#: smarty.txt:64
 msgid ""
 "We are a not-for-profit group dedicated to making no-fee wireless Internet "
 "access generally available."
@@ -3942,7 +4002,7 @@ msgstr ""
 "Ние сме организация с идеална цел, посветена на осъществяването на безтаксов "
 "безжичен интернет достъп,който да е достъпен за всички."
 
-#: smarty.txt:65
+#: smarty.txt:60
 msgid ""
 "Our aim is to encourage the growth of wireless networking and to build "
 "community in interesting and innovative ways."
@@ -3950,7 +4010,7 @@ msgstr ""
 "Наша цел е да насърчим разстежа на безжичната мрежа и да изградим една "
 "общност по един интересен и иновативен начин."
 
-#: smarty.txt:66
+#: smarty.txt:61
 msgid ""
 "We do this by setting up wireless Internet networks in parks, cafés, "
 "restaurants, bars and other publically-accessible locations across the city."
@@ -3959,15 +4019,19 @@ msgstr ""
 "паркове, заведения, ресторанти, барове и други обществено достъпни "
 "местоположения в рамките на града."
 
-#: smarty.txt:67
+#: smarty.txt:62
 msgid "For a complete and up-to-date listing of our nodes, visit"
 msgstr "За пълен и актуален списък на наши точки за достъп, посетете"
 
-#: smarty.txt:69
+#: smarty.txt:63
+msgid "Please get in touch with "
+msgstr "Моля свържете се с: "
+
+#: smarty.txt:65
 msgid "Re-send validation email"
 msgstr "Повторно изпращане на имейл за валидация"
 
-#: smarty.txt:71
+#: smarty.txt:67
 msgid ""
 "Please enter your username and the validation email will be resent to your "
 "email address"
@@ -3975,50 +4039,79 @@ msgstr ""
 "Моля въведете вашето потребителско име и имейл за валидация ще бъде изпратен "
 "повторно на вашия имейл адрес."
 
-#: smarty.txt:73
+#: smarty.txt:69
 msgid "Lost username"
 msgstr "Загубено потребителско име"
 
-#: smarty.txt:75
+#: smarty.txt:71
 msgid "Please enter your email address to recover your username"
 msgstr ""
 "Моля въведете вашия имейл адрес, за да възстановите вашето потребителско име"
 
-#: smarty.txt:76
-msgid "User list"
-msgstr "Списък с потребители"
-
-#: smarty.txt:77
-msgid "Sort by:"
-msgstr "Сортиране по:"
-
-#: smarty.txt:78
-msgid "Direction:"
-msgstr "Посока:"
-
-#: smarty.txt:79
-msgid "Sort"
-msgstr "Сортиране"
-
-#: smarty.txt:82
-msgid "Registered On"
-msgstr "Регистриран на"
-
-#: smarty.txt:84
+#: smarty.txt:72
 msgid "Online users"
 msgstr "Онлайн потребители"
 
-#: smarty.txt:87
+#: smarty.txt:75
 msgid "Origin"
 msgstr "Произход"
 
-#: smarty.txt:88
+#: smarty.txt:76
 msgid "Logged in Since"
 msgstr "Логнат От"
 
-#: smarty.txt:89
+#: smarty.txt:77
 msgid "Traffic IN/OUT"
 msgstr "Трафик ВХОДЯЩ/ИЗХОДЯЩ"
+
+#: smarty.txt:78
+msgid "User list"
+msgstr "Списък с потребители"
+
+#: smarty.txt:79
+msgid "Sort by:"
+msgstr "Сортиране по:"
+
+#: smarty.txt:80
+msgid "Direction:"
+msgstr "Посока:"
+
+#: smarty.txt:81
+msgid "Sort"
+msgstr "Сортиране"
+
+#: smarty.txt:84
+msgid "Registered On"
+msgstr "Регистриран на"
+
+#~ msgid "French"
+#~ msgstr "Френски език"
+
+#~ msgid "English"
+#~ msgstr "Английски език"
+
+#~ msgid "German"
+#~ msgstr "Немски език"
+
+#~ msgid "Spanish"
+#~ msgstr "Испански език"
+
+#, fuzzy
+#~ msgid "Brazilian Portuguese"
+#~ msgstr "Португалски език"
+
+#~ msgid "Portuguese"
+#~ msgstr "Португалски език"
+
+#~ msgid "Japanese"
+#~ msgstr "Японски език"
+
+#~ msgid "Component %s is not installed (not found in %s)"
+#~ msgstr "Компонент %s не е инсталиран (не е намерен в: %s)"
+
+#, fuzzy
+#~ msgid "Message"
+#~ msgstr "Съобщение на грешка"
 
 #~ msgid "You MUST fill in all the fields."
 #~ msgstr "Вие ТРЯБВА да попълните всички полета"
@@ -4702,24 +4795,8 @@ msgstr "Трафик ВХОДЯЩ/ИЗХОДЯЩ"
 #~ "Ако не успеете да валидирате вашия акаунт до 15 минути, вие ще трябва да "
 #~ "го валидирате от друго място."
 
-#~ msgid ""
-#~ "If you do not receive an email from our validation server in the next "
-#~ "minute, perhaps you have made a typo in your email address, you might "
-#~ "have to create another account."
-#~ msgstr ""
-#~ "Ако не получите имейл от нашия сървър за валидация в следващите минути, "
-#~ "може би сте направили грешка при изписването на имейл адреса и ще трябва "
-#~ "да създадете нов акаунт."
-
-#~ msgid "No message has been specified! (this is probably an error)"
-#~ msgstr "Няма уточнено съобщение! (това вероятно е грешка)"
-
 #~ msgid "You have failed to validate your account in 15 minutes."
 #~ msgstr "Вие не успяхте да валидирате вашия акаунт за 15 минути."
-
-#~ msgid ""
-#~ "Please validate your account from somewhere else or create a new one."
-#~ msgstr "Моля валидирайте вашия акаунт от друго място или създайте нов."
 
 #~ msgid "is unknown to this authentication server."
 #~ msgstr "не е познато на сървъра за автентикация."
@@ -4870,16 +4947,6 @@ msgstr "Трафик ВХОДЯЩ/ИЗХОДЯЩ"
 
 #~ msgid "Language:"
 #~ msgstr "Език:"
-
-#~ msgid "You have failed to validate your account in %d minutes."
-#~ msgstr "Вие не успяхте да валидирате вашия акаунт за %d минути."
-
-#~ msgid ""
-#~ "You have now been granted %d minutes of Internet access without being "
-#~ "validated to go and activate your account."
-#~ msgstr ""
-#~ "Сега са ви предоставени %d минути на интернет достъп без да сте "
-#~ "оторизирани в което време трябва да активирате вашия акаунт."
 
 #~ msgid "Change network"
 #~ msgstr "Смяна на мрежата"
@@ -5346,16 +5413,6 @@ msgstr "Трафик ВХОДЯЩ/ИЗХОДЯЩ"
 
 #~ msgid "%d hotspots are currently operationnal."
 #~ msgstr "%d хотспота са активни в момента."
-
-#~ msgid ""
-#~ "If you fail to validate your account in %d minutes, you will have to "
-#~ "validate it from somewhere else."
-#~ msgstr ""
-#~ "Ако не успеете да потвърдите вашия акаунт след %d минути, вие ше трябва "
-#~ "да го потвърдите някъде другаде."
-
-#~ msgid "Unknown message specified! (this is probably an error)"
-#~ msgstr "Упоменато е неизвестно съобщение (това най-вероятно е грешка)"
 
 #~ msgid ""
 #~ "Sorry, your %.0f minutes grace period to retrieve your email and validate "

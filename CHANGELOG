@@ -1,4 +1,8 @@
 # $Id$
+2007-09-11 Benoit Grégoire  <bock@step.polymtl.ca>
+	* VitrualHost.php: Close #373: Apply patch from leandro@texnet.it to fix mispelled table name in delete() method
+	* Close #374:  Add preliminary italian translation from leandro@texnet.it 
+	
 2007-09-10 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix #370:  Dropdown Javascript menus didn't retract in Internet Explorer.  My thanks to Robin Jones for at least proposing a solution to the problem, even if it didn't work in this case.  The problem turned out to be a wrong regex in the IE workaround javascript.
 	

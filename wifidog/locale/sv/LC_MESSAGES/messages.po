@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-04 18:47-0400\n"
+"POT-Creation-Date: 2007-09-11 14:10-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,46 +16,61 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../config_available_locales.php:58
-msgid "French"
-msgstr "Franska"
-
-#: ../config_available_locales.php:59
-msgid "English"
-msgstr "Engelska"
-
-#: ../config_available_locales.php:60
-msgid "German"
-msgstr "Tyska"
-
-#: ../config_available_locales.php:61
-msgid "Spanish"
-msgstr "Spanska"
-
-#: ../config_available_locales.php:62
-#, fuzzy
-msgid "Brazilian Portuguese"
-msgstr "Portugisiska"
-
-#: ../config_available_locales.php:63
-msgid "Portuguese"
-msgstr "Portugisiska"
-
-#: ../config_available_locales.php:64
-msgid "Japanese"
-msgstr "Japanska"
-
-#: ../config_available_locales.php:65
-msgid "Greek"
+#: ../gw_message.php:61
+#, php-format
+msgid "You have failed to validate your account in %d minutes."
 msgstr ""
+"Du har misslyckats med att validera ditt konto på de %d minuterna du var "
+"tilldelad."
 
-#: ../config_available_locales.php:66
-msgid "Bulgarian"
+#: ../gw_message.php:62
+msgid "Please validate your account from somewhere else or create a new one."
 msgstr ""
+"Var vänlig och validera ditt kontot någon annanstans eller skapa ett nytt."
 
-#: ../config_available_locales.php:67
-msgid "Swedish"
+#: ../gw_message.php:67
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:896
+#: ../classes/Role.php:494 ../classes/Statistics.php:375
+#: ../classes/Statistics.php:378 ../classes/Network.php:1694
+#: ../classes/Content.php:901 ../classes/Node.php:214
+msgid "Access denied!"
+msgstr "Tillträde nekad!"
+
+#: ../gw_message.php:73
+#, php-format
+msgid ""
+"You have now been granted %d minutes of Internet access without being "
+"validated to go and activate your account."
 msgstr ""
+"Ett email har skickats till dig med instruktioner om hur du skall gå vidare "
+"för att aktivera ditt konto. Ditt konto har därför blivit tilldelat %d "
+"minuters tillgång till Internet för att ge dig möjlighet att läsa mailet."
+
+#: ../gw_message.php:74
+#, php-format
+msgid ""
+"If you fail to validate your account in %d minutes, you will have to "
+"validate it from somewhere else."
+msgstr ""
+"Om du inte hinner att aktivera ditt konto på %d minuter så kommer du behöva "
+"att aktivera ifrån någon annan plats."
+
+#: ../gw_message.php:75
+msgid ""
+"If you do not receive an email from our validation server in the next "
+"minute, perhaps you have made a typo in your email address, you might have "
+"to create another account."
+msgstr ""
+"Om du inte får ett email från vår server inom de närmsta minutrarna så skrev "
+"du kanske fel email. Om detta är fallet måste du skapa ett nytt konto"
+
+#: ../gw_message.php:80
+msgid "Unknown message specified! (this is probably an error)"
+msgstr "Okänt meddelande angivet! (Detta är troligen ett fel)"
+
+#: ../gw_message.php:85
+msgid "No message has been specified! (this is probably an error)"
+msgstr "Inget meddelande är angivet! (Detta är troligen ett fel)"
 
 #: ../admin/generic_object_admin.php:80
 msgid "Sorry, the 'object_class' parameter must be specified"
@@ -92,7 +107,7 @@ msgid "Show only persistant %s"
 msgstr "Visa bara permanenta %s"
 
 #: ../admin/generic_object_admin.php:99 ../classes/Network.php:1933
-#: ../classes/Node.php:1616
+#: ../classes/Node.php:1624
 #, php-format
 msgid "Edit %s"
 msgstr "Modifiera %s"
@@ -113,7 +128,7 @@ msgstr "Förhandsgranskar som det skulle se ut på "
 #: ../classes/StatisticReport/UserReport.php:182
 #: ../classes/StatisticReport/RegistrationLog.php:120
 #: ../classes/StatisticReport/MostPopularNodes.php:109
-#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:85
+#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:73
 msgid "Node"
 msgstr "Hotspot"
 
@@ -122,8 +137,8 @@ msgstr "Hotspot"
 msgid "Preview"
 msgstr "Förhandsgranska"
 
-#: ../admin/generic_object_admin.php:217 ../classes/Content.php:736
-#: ../classes/ProfileTemplate.php:369
+#: ../admin/generic_object_admin.php:217 ../classes/ProfileTemplate.php:369
+#: ../classes/Content.php:736
 msgid "Edit"
 msgstr "Ändra"
 
@@ -256,20 +271,28 @@ msgstr "Fel: Du måste ställa in GIS-koordinaterna för nätverkets centrum"
 msgid "You need to set a node ID."
 msgstr "Du måste fylla i ett nod-ID."
 
-#: ../cron/page.php:70
+#: ../cron/page.php:76
 msgid "Monitoring system"
 msgstr "Övervakningssystem"
 
-#: ../cron/page.php:73
+#: ../cron/page.php:79
 msgid "node"
 msgstr "Hotspot"
 
-#: ../cron/page.php:74
+#: ../cron/page.php:80
 #, php-format
 msgid "Node %s (%s) has been down for %d minutes (since %s)"
 msgstr "Hotspot:en %s (%s) har varit inaktiv i %d minuter (sedan %s)"
 
-#: ../cron/page.php:91
+#: ../cron/page.php:82
+msgid "Success"
+msgstr ""
+
+#: ../cron/page.php:82
+msgid "Failed sending mail"
+msgstr ""
+
+#: ../cron/page.php:99
 msgid "No deployed nodes could not be found in the database"
 msgstr "Inga utrullade Hotspots kunde hittas i databasen"
 
@@ -564,7 +587,7 @@ msgid "Profile"
 msgstr "Profil"
 
 #: ../classes/StatisticReport/NodeStatus.php:152
-#: ../classes/StatisticReport/NetworkStatus.php:99 ../classes/Node.php:1098
+#: ../classes/StatisticReport/NetworkStatus.php:99 ../classes/Node.php:1101
 msgid "Name"
 msgstr "Namn"
 
@@ -581,12 +604,12 @@ msgid "Deployment date"
 msgstr "Utrullningsdatum"
 
 #: ../classes/StatisticReport/NodeStatus.php:168 ../classes/Content.php:925
-#: ../classes/Node.php:1113 ../classes/DependenciesList.php:138 smarty.txt:43
+#: ../classes/Node.php:1116 ../classes/DependenciesList.php:173 smarty.txt:49
 msgid "Description"
 msgstr "Beskrivning"
 
 #: ../classes/StatisticReport/NodeStatus.php:172
-#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:81
+#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:83
 msgid "Network"
 msgstr "Nätverk"
 
@@ -608,8 +631,8 @@ msgid "Homepage"
 msgstr "Hemsida"
 
 #: ../classes/StatisticReport/NodeStatus.php:194
-#: ../classes/NodeLists/NodeListRSS.php:324
 #: ../classes/NodeLists/NodeListPDF.php:1083
+#: ../classes/NodeLists/NodeListRSS.php:324
 #: ../classes/NodeLists/NodeListKML.php:238
 msgid "Address"
 msgstr "Adress"
@@ -630,7 +653,7 @@ msgstr "Offentlig emailadress"
 msgid "Transit Info"
 msgstr "Information om offentliga nätverk"
 
-#: ../classes/StatisticReport/NodeStatus.php:220 ../classes/User.php:929
+#: ../classes/StatisticReport/NodeStatus.php:220 ../classes/User.php:950
 #: ../classes/Node.php:1072
 msgid "Statistics"
 msgstr "Statistik"
@@ -662,7 +685,7 @@ msgstr "Uppladdning"
 msgid "Individual user report"
 msgstr "Individuell användarrapport"
 
-#: ../classes/StatisticReport/UserReport.php:111 ../classes/User.php:231
+#: ../classes/StatisticReport/UserReport.php:111 ../classes/User.php:247
 #, php-format
 msgid "User id: %s could not be found in the database"
 msgstr "Kunde inte hitta användar-ID %s i databasen"
@@ -671,8 +694,8 @@ msgstr "Kunde inte hitta användar-ID %s i databasen"
 #: ../classes/StatisticReport/UserReport.php:284
 #: ../classes/StatisticReport/RegistrationLog.php:123
 #: ../classes/StatisticReport/ConnectionLog.php:115
-#: ../classes/StatisticReport/ConnectionLog.php:164 ../classes/User.php:681
-#: ../classes/User.php:686 ../classes/User.php:735 smarty.txt:80 smarty.txt:86
+#: ../classes/StatisticReport/ConnectionLog.php:164 ../classes/User.php:702
+#: ../classes/User.php:707 ../classes/User.php:756 smarty.txt:74 smarty.txt:82
 msgid "Username"
 msgstr "Användarnamn"
 
@@ -684,8 +707,8 @@ msgstr "Användar-ID"
 msgid "Member since"
 msgstr "Medlem sedan"
 
-#: ../classes/StatisticReport/UserReport.php:147 ../classes/User.php:723
-#: smarty.txt:83
+#: ../classes/StatisticReport/UserReport.php:147 ../classes/User.php:744
+#: smarty.txt:85
 msgid "Account Status"
 msgstr "Kontostatus"
 
@@ -789,10 +812,9 @@ msgstr "Nätverkets status"
 msgid "Sorry, this report requires you to select individual networks"
 msgstr "Denna rapport kräver att du väljer individuella nätverk"
 
-#: ../classes/StatisticReport/NetworkStatus.php:104
-#: ../classes/VirtualHost.php:603 ../classes/Server.php:246
-#: ../classes/Node.php:1103 ../classes/ProfileTemplate.php:488
-#: ../classes/Role.php:362
+#: ../classes/StatisticReport/NetworkStatus.php:104 ../classes/Role.php:362
+#: ../classes/ProfileTemplate.php:488 ../classes/Server.php:246
+#: ../classes/Node.php:1106 ../classes/VirtualHost.php:603
 msgid "Creation date"
 msgstr "Skapelsedatum"
 
@@ -832,6 +854,19 @@ msgstr "Antal validerade användare"
 msgid "Number of users currently online"
 msgstr "Antal användare online för tillfället"
 
+#: ../classes/StatisticReport/AnonymisedDataExport.php:65
+msgid "Anonymised SQL data export (for academic research)"
+msgstr "Anonymiserad SQL-data rapport (för efterforskningar)"
+
+#: ../classes/StatisticReport/AnonymisedDataExport.php:97
+#: ../classes/StatisticReport/ConnectionLog.php:89
+#: ../classes/ContentTypeFilter.php:253 ../classes/ContentTypeFilter.php:438
+#: ../classes/Network.php:337 ../classes/ProfileTemplate.php:568
+#: ../classes/Node.php:457 ../classes/VirtualHost.php:403
+#: ../classes/VirtualHost.php:735
+msgid "Access denied"
+msgstr "Tillträde nekad"
+
 #: ../classes/StatisticReport/MostPopularNodes.php:65
 msgid "Most popular nodes, by visit"
 msgstr "Mest populära Hotspoten (baserad på besökare)"
@@ -843,15 +878,6 @@ msgstr "Besök"
 #: ../classes/StatisticReport/ConnectionLog.php:64
 msgid "Connection Log"
 msgstr "Anslutningslogg"
-
-#: ../classes/StatisticReport/ConnectionLog.php:89
-#: ../classes/StatisticReport/AnonymisedDataExport.php:97
-#: ../classes/VirtualHost.php:403 ../classes/VirtualHost.php:735
-#: ../classes/Network.php:337 ../classes/Node.php:457
-#: ../classes/ProfileTemplate.php:568 ../classes/ContentTypeFilter.php:253
-#: ../classes/ContentTypeFilter.php:438
-msgid "Access denied"
-msgstr "Tillträde nekad"
 
 #: ../classes/StatisticReport/ConnectionLog.php:109
 msgid "Number of unique Users:"
@@ -994,10 +1020,6 @@ msgstr ""
 "Notera: Denna lista är en lista på hur många nya användares första "
 "anslutningar inträffade på varje Hotspot, inräknat rapportrestriktioner."
 
-#: ../classes/StatisticReport/AnonymisedDataExport.php:65
-msgid "Anonymised SQL data export (for academic research)"
-msgstr "Anonymiserad SQL-data rapport (för efterforskningar)"
-
 #: ../classes/StatisticReport/ActiveUserReport.php:62
 msgid "Breakdown of how many users actually use the network"
 msgstr "Nerbrytning av hur många användare som faktiskt använder nätverket"
@@ -1060,31 +1082,6 @@ msgstr ""
 "Varning: Denna rapport räknar <em>inte</em> in anslutningar på 'splash-only' "
 "noder"
 
-#: ../classes/NodeLists/NodeListRSS.php:157
-#: ../classes/NodeLists/NodeListHTML.php:213
-msgid "Newest Hotspots"
-msgstr "Nyaste Hotspot:arna"
-
-#: ../classes/NodeLists/NodeListRSS.php:169
-msgid "List of the most recent Hotspots opened by the network: "
-msgstr "Lista över de senaste Hotspot:arna i nätverket "
-
-#: ../classes/NodeLists/NodeListRSS.php:190
-msgid "Copyright "
-msgstr "Copyright "
-
-#: ../classes/NodeLists/NodeListRSS.php:358
-msgid "See Map"
-msgstr "Se karta"
-
-#: ../classes/NodeLists/NodeListRSS.php:371
-msgid "Contact"
-msgstr "Kontakt"
-
-#: ../classes/NodeLists/NodeListHTML.php:212
-msgid "Hotspot list"
-msgstr "Hotspot-lista"
-
 #: ../classes/NodeLists/NodeListPDF.php:792
 msgid ""
 "To protect the server the PDF file has not been created, because the server "
@@ -1135,19 +1132,19 @@ msgstr "Senast uppdaterad: %s"
 msgid "Hotspot"
 msgstr "Hotspot"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1139
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1142
 msgid "Postal code"
 msgstr "Postnummer"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1129
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1132
 msgid "City"
 msgstr "Ort"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1134
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1137
 msgid "Province / State"
 msgstr "Landskap"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1159
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1162
 msgid "Homepage URL"
 msgstr "Hemsida"
 
@@ -1156,16 +1153,41 @@ msgid "PDF file cannot be created because the FPDF library is not installed!"
 msgstr ""
 "Kunde inte skapa en PDF-fil för att FPDF-biblioteket inte är installerat!"
 
+#: ../classes/NodeLists/NodeListRSS.php:157
+#: ../classes/NodeLists/NodeListHTML.php:213
+msgid "Newest Hotspots"
+msgstr "Nyaste Hotspot:arna"
+
+#: ../classes/NodeLists/NodeListRSS.php:169
+msgid "List of the most recent Hotspots opened by the network: "
+msgstr "Lista över de senaste Hotspot:arna i nätverket "
+
+#: ../classes/NodeLists/NodeListRSS.php:190
+msgid "Copyright "
+msgstr "Copyright "
+
+#: ../classes/NodeLists/NodeListRSS.php:358
+msgid "See Map"
+msgstr "Se karta"
+
+#: ../classes/NodeLists/NodeListRSS.php:371
+msgid "Contact"
+msgstr "Kontakt"
+
+#: ../classes/NodeLists/NodeListHTML.php:212
+msgid "Hotspot list"
+msgstr "Hotspot-lista"
+
 #: ../classes/NodeLists/NodeListKML.php:240
 #: ../classes/Content/RssAggregator/RssAggregator.php:752
 msgid "URL"
 msgstr "URL"
 
 #: ../classes/Content/File/File.php:131
-#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:131
-#: ../classes/Content/IFrame/IFrame.php:89
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:92
 #: ../classes/Content/ContentGroup/ContentGroup.php:111
+#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:131
+#: ../classes/Content/IFrame/IFrame.php:89
 #: ../classes/Content/Picture/Picture.php:103 ../classes/Content.php:124
 #: ../classes/Content.php:275
 msgid "The content with the following id could not be found in the database: "
@@ -1232,6 +1254,265 @@ msgstr "Senaste uppdatering"
 #: ../classes/Content/File/File.php:708
 msgid "Could not delete this file, since it is persistent"
 msgstr "Kunde inte ta bort filen då den är permanent."
+
+#: ../classes/Content/SimpleString/SimpleString.php:130
+#: ../classes/Content/Langstring/Langstring.php:285
+msgid "Only these HTML tags are allowed : "
+msgstr "Bara dessa HTML-Taggar är tillåtna:"
+
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:102
+msgid "Subscribe to Pattern Language"
+msgstr "Prenumerera på Pattern Language"
+
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:103
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:118
+msgid "Read narratives archives"
+msgstr "Läs berättar-arkiven"
+
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:117
+msgid "Read my narrative"
+msgstr "Läs min berättelse"
+
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:119
+msgid "Unsubscribe"
+msgstr "Avprenumerera"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:172
+msgid "Embedded content"
+msgstr "Inbakat innehåll"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:190
+msgid "Attributes"
+msgstr "Attribut"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:192
+msgid ""
+"It is recommended to specify at least <b>width='x' height='y'</b> as "
+"attributes"
+msgstr ""
+"Det är rekommenderat att ange iallafall <b>width='x' height='y'</b> som "
+"Attribut"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:198
+msgid "Parameters"
+msgstr "Parametrar"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:212
+msgid ""
+"Fallback content (Can be another embedded content to create a fallback "
+"hierarchy)"
+msgstr ""
+"Reserv-innehåll (Kan vara ett annat inbakat innehåll för att på så sätt "
+"skara en reserv-hierarki)"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:261
+msgid "You MUST choose a File object or any of its siblings."
+msgstr "Du MÅSTE välja ett Filobjekt eller ett relaterat objekt."
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:397
+#: ../classes/Content/Langstring/Langstring.php:531
+#: ../classes/Content.php:1924
+msgid ""
+"Content is persistent (you must make it non persistent before you can delete "
+"it)"
+msgstr ""
+"Innehållet är permanent. Du måste göra det icke-permanent innan du kan ta "
+"bort det"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:219
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:225
+msgid "Unable to insert new content group element into database!"
+msgstr ""
+"Kunde inte lägga till ett nytt element till en innehålls-grupp i databasen!"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:291
+#, php-format
+msgid "%s %d display conditions"
+msgstr "%s %d visningsvilkor"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:301
+msgid "(Ignored if display type is random)"
+msgstr "(Ignoreras om visningstyp är slumpmässig)"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:307
+msgid ""
+"Content can be displayed at any date if no start or end date is specified.  "
+"Warning:  If you do not specify a specific time of day, midnight is assumed."
+msgstr ""
+"Innehållet kan visas på alla datum om inget start eller slut datum är satt."
+"Varning: Om du inte väljer vilken tid på dagen så antas midnatt"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:308
+msgid "Only display from"
+msgstr "Visa bara från"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:334
+msgid "Only display at node(s):"
+msgstr "Visa bara på Hotspot(s):"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:349
+#: ../classes/ProfileTemplate.php:371 ../classes/Content.php:738
+msgid "Remove"
+msgstr "Ta bort"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:361
+msgid "Add new allowed node"
+msgstr "Lägg till ny tillåten nod"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:364
+msgid ""
+"(Content can be displayed at ANY node unless one or more nodes are selected)"
+msgstr "(Innehållet kan visas på ALLA noder om de inte väljer en eller flera)"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:381
+#, php-format
+msgid "%s %d displayed content (%s)"
+msgstr "%s %d Visat innehåll (%s)"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:149
+msgid "Invalid content selection mode (must be part of CONTENT_ORDERING_MODES)"
+msgstr ""
+"Ogiltigt läge för innehållsmarkering (måste vara del av "
+"CONTENT_ORDERING_MODES)"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:178
+msgid ""
+"Invalid content selection mode (must be part of CONTENT_CHANGES_ON_MODES)"
+msgstr ""
+"Ogiltigt läge för innehållsmarkering (måste vara del av "
+"CONTENT_CHANGES_ON_MODES)"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:207
+msgid "Invalid content selection mode (must be part of ALLOW_REPEAT_MODES)"
+msgstr ""
+"Ogiltigt läge för innehållsmarkering (måste vara del av ALLOW_REPEAT_MODES)"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:239
+#: ../classes/Content/RssAggregator/RssAggregator.php:198
+msgid "You must display at least one element"
+msgstr "Minst ett element måste visas"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:260
+#, php-format
+msgid "%s configuration"
+msgstr "%s konfiguration"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:264
+msgid "In what order should the content displayed?"
+msgstr "I vilken ordning skall innehållet visas?"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:273
+msgid "When does the content rotate?"
+msgstr "När skall innehållet rotera?"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:282
+msgid "Can content be shown more than once to the same user?"
+msgstr "Kan innehållet visas mer än en gång till samma användare?"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:306
+#, php-format
+msgid "%s display element list"
+msgstr "Visa elementlista %s"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:313
+msgid "Show expired group elements"
+msgstr "Visa utgångna gruppelement"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:319
+msgid "Hide expired group elements"
+msgstr "Dölj utgångna gruppelement"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:330
+#: ../classes/ProfileTemplate.php:502
+#, php-format
+msgid "%s %d"
+msgstr "%s %d"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:333
+#, php-format
+msgid "Delete %s %d"
+msgstr "Ta bort %s %d"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:82
+msgid "300x250 - IAB Medium Rectangle"
+msgstr "300x250 - IAB Medium rektangel"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:83
+msgid "250x250 - IAB Square Pop-Up"
+msgstr "250x250 - IAB Kvadratisk pop-up"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:84
+msgid "240x400 - IAB Vertical Rectangle"
+msgstr "240x400 - IAB Vertikal rektangel"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:85
+msgid "336x280 - IAB Large Rectangle"
+msgstr "336x280 - IAB Stor rektangel"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:86
+msgid "180x150 - IAB Rectangle"
+msgstr "180x150 - IAB Rektangel"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:88
+msgid "468x60  - IAB Full Banner"
+msgstr "468x60 - IAB Fullskalig banner"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:89
+msgid "234x60  - IAB Half Banner"
+msgstr "234x60 - IAB Halv banner"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:90
+msgid "88x31   - IAB Micro Bar"
+msgstr "88x31  - IAB Mikro-rad"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:91
+msgid "120x90  - IAB Button 1"
+msgstr "120x90 - IAB Knapp 1"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:92
+msgid "120x60  - IAB Button 2"
+msgstr "120x60 - IAB Knapp 2"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:93
+msgid "120x240 - IAB Vertical Banner"
+msgstr "120x240 - IAB Vertikal banner"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:94
+msgid "125x125 - IAB Square Button"
+msgstr "125x125 - IAB Kvadratisk knapp"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:95
+msgid "728x90  - IAB Leaderboard"
+msgstr "728x90 - IAB Ledarskiva"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:97
+msgid "160x600 - IAB Wide Skyscraper"
+msgstr "160x600 - IAB Bred skyskrapa"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:98
+msgid "120x600 - IAB Skyscraper"
+msgstr "120x600 - IAB Skyskrapa"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:99
+msgid "300x600 - IAB Half Page Ad"
+msgstr "300x600 - IAB Halvsido-annons"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:128
+msgid "Maximum display size"
+msgstr "Maximal visningsstorlek"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:131
+msgid "Use the values below for width and height"
+msgstr "Använd värdena nedan för höjd och bredd"
+
+#: ../classes/Content/Stylesheet/Stylesheet.php:106
+msgid ""
+"Hints:  Note that the order in which Stylesheets are assigned relative to "
+"other content doesn't matter (except relative to other Stylesheets).  "
+"Stylesheets will be linked to the page in the order they are assigned, but "
+"always after the base stylesheet and network theme pack (if applicable).  "
+"They must be written as patches to those stylesheets."
+msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:198
 msgid "Illegal Flickr Photostream selection mode."
@@ -1406,13 +1687,6 @@ msgstr "Inget Flickr-innehåll matchade begäran!"
 msgid "PEAR::Phlickr is not installed"
 msgstr "PEAR::Phlickr är inte installerad"
 
-#: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:896
-#: ../classes/Network.php:1694 ../classes/Statistics.php:375
-#: ../classes/Statistics.php:378 ../classes/Content.php:901
-#: ../classes/Node.php:214 ../classes/Role.php:494
-msgid "Access denied!"
-msgstr "Tillträde nekad!"
-
 #: ../classes/Content/IFrameRest/IFrameRest.php:119
 msgid "Actual URL after substitution"
 msgstr "Faktisk URL efter ersättning"
@@ -1451,23 +1725,6 @@ msgstr ""
 "användaren sist blev visad detta innehåll, eller en tom sträng om användaren "
 "aldrig har blivit visad denna IFrame"
 
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:102
-msgid "Subscribe to Pattern Language"
-msgstr "Prenumerera på Pattern Language"
-
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:103
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:118
-msgid "Read narratives archives"
-msgstr "Läs berättar-arkiven"
-
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:117
-msgid "Read my narrative"
-msgstr "Läs min berättelse"
-
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:119
-msgid "Unsubscribe"
-msgstr "Avprenumerera"
-
 #: ../classes/Content/IFrame/IFrame.php:231
 msgid "Width (suggested width is 600 (pixels))"
 msgstr "Bredd (förslag: 622 pixlar)"
@@ -1484,162 +1741,6 @@ msgstr "URL till innehåll"
 msgid "Your browser does not support IFrames."
 msgstr "Din webbläsare stödjer inte IFrames."
 
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:172
-msgid "Embedded content"
-msgstr "Inbakat innehåll"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:190
-msgid "Attributes"
-msgstr "Attribut"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:192
-msgid ""
-"It is recommended to specify at least <b>width='x' height='y'</b> as "
-"attributes"
-msgstr ""
-"Det är rekommenderat att ange iallafall <b>width='x' height='y'</b> som "
-"Attribut"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:198
-msgid "Parameters"
-msgstr "Parametrar"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:212
-msgid ""
-"Fallback content (Can be another embedded content to create a fallback "
-"hierarchy)"
-msgstr ""
-"Reserv-innehåll (Kan vara ett annat inbakat innehåll för att på så sätt "
-"skara en reserv-hierarki)"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:261
-msgid "You MUST choose a File object or any of its siblings."
-msgstr "Du MÅSTE välja ett Filobjekt eller ett relaterat objekt."
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:397
-#: ../classes/Content/Langstring/Langstring.php:531
-#: ../classes/Content.php:1924
-msgid ""
-"Content is persistent (you must make it non persistent before you can delete "
-"it)"
-msgstr ""
-"Innehållet är permanent. Du måste göra det icke-permanent innan du kan ta "
-"bort det"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:219
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:225
-msgid "Unable to insert new content group element into database!"
-msgstr ""
-"Kunde inte lägga till ett nytt element till en innehålls-grupp i databasen!"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:291
-#, php-format
-msgid "%s %d display conditions"
-msgstr "%s %d visningsvilkor"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:301
-msgid "(Ignored if display type is random)"
-msgstr "(Ignoreras om visningstyp är slumpmässig)"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:307
-msgid ""
-"Content can be displayed at any date if no start or end date is specified.  "
-"Warning:  If you do not specify a specific time of day, midnight is assumed."
-msgstr ""
-"Innehållet kan visas på alla datum om inget start eller slut datum är satt."
-"Varning: Om du inte väljer vilken tid på dagen så antas midnatt"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:308
-msgid "Only display from"
-msgstr "Visa bara från"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:334
-msgid "Only display at node(s):"
-msgstr "Visa bara på Hotspot(s):"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:349
-#: ../classes/Content.php:738 ../classes/ProfileTemplate.php:371
-msgid "Remove"
-msgstr "Ta bort"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:361
-msgid "Add new allowed node"
-msgstr "Lägg till ny tillåten nod"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:364
-msgid ""
-"(Content can be displayed at ANY node unless one or more nodes are selected)"
-msgstr "(Innehållet kan visas på ALLA noder om de inte väljer en eller flera)"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:381
-#, php-format
-msgid "%s %d displayed content (%s)"
-msgstr "%s %d Visat innehåll (%s)"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:149
-msgid "Invalid content selection mode (must be part of CONTENT_ORDERING_MODES)"
-msgstr ""
-"Ogiltigt läge för innehållsmarkering (måste vara del av "
-"CONTENT_ORDERING_MODES)"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:178
-msgid ""
-"Invalid content selection mode (must be part of CONTENT_CHANGES_ON_MODES)"
-msgstr ""
-"Ogiltigt läge för innehållsmarkering (måste vara del av "
-"CONTENT_CHANGES_ON_MODES)"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:207
-msgid "Invalid content selection mode (must be part of ALLOW_REPEAT_MODES)"
-msgstr ""
-"Ogiltigt läge för innehållsmarkering (måste vara del av ALLOW_REPEAT_MODES)"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:239
-#: ../classes/Content/RssAggregator/RssAggregator.php:198
-msgid "You must display at least one element"
-msgstr "Minst ett element måste visas"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:260
-#, php-format
-msgid "%s configuration"
-msgstr "%s konfiguration"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:264
-msgid "In what order should the content displayed?"
-msgstr "I vilken ordning skall innehållet visas?"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:273
-msgid "When does the content rotate?"
-msgstr "När skall innehållet rotera?"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:282
-msgid "Can content be shown more than once to the same user?"
-msgstr "Kan innehållet visas mer än en gång till samma användare?"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:306
-#, php-format
-msgid "%s display element list"
-msgstr "Visa elementlista %s"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:313
-msgid "Show expired group elements"
-msgstr "Visa utgångna gruppelement"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:319
-msgid "Hide expired group elements"
-msgstr "Dölj utgångna gruppelement"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:330
-#: ../classes/ProfileTemplate.php:502
-#, php-format
-msgid "%s %d"
-msgstr "%s %d"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:333
-#, php-format
-msgid "Delete %s %d"
-msgstr "Ta bort %s %d"
-
 #: ../classes/Content/Langstring/Langstring.php:131
 #, php-format
 msgid "(Empty %s)"
@@ -1648,7 +1749,7 @@ msgstr "(Tom %s)"
 #: ../classes/Content/Langstring/Langstring.php:215
 #: ../classes/Content/Langstring/Langstring.php:341
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:112
-#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:7
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:12
 msgid "Language"
 msgstr "Språk"
 
@@ -1656,11 +1757,6 @@ msgstr "Språk"
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:145
 msgid "Add new string"
 msgstr "Lägg till ny sträng"
-
-#: ../classes/Content/Langstring/Langstring.php:285
-#: ../classes/Content/SimpleString/SimpleString.php:130
-msgid "Only these HTML tags are allowed : "
-msgstr "Bara dessa HTML-Taggar är tillåtna:"
 
 #: ../classes/Content/Langstring/Langstring.php:352
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:209
@@ -1779,8 +1875,8 @@ msgid "Type URL manually"
 msgstr "Fyll i URL manuellt"
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:654
+#: ../classes/ProfileTemplateField.php:147 ../classes/ProfileTemplate.php:303
 #: ../classes/Content.php:545 ../classes/Content.php:967
-#: ../classes/ProfileTemplate.php:303 ../classes/ProfileTemplateField.php:147
 msgid "Add"
 msgstr "Lägg till"
 
@@ -1861,117 +1957,6 @@ msgstr "Kunde inte hämta RSS-feeden: %s"
 msgid "RSS support is disabled"
 msgstr "RSS-stödet är inaktiverat"
 
-#: ../classes/Content/HTMLeditor/HTMLeditor.php:227
-msgid "FCKeditor is not installed"
-msgstr "FCKeditor är inte installerad"
-
-#: ../classes/Content/Picture/Picture.php:272
-msgid "Hyperlink URL (leave empty if you don't need it)"
-msgstr "Länk URL (lämna tom om du inte behöver den)"
-
-#: ../classes/Content/Picture/Picture.php:280
-msgid "Width (leave empty if you want to keep original width)"
-msgstr "Bredd (lämna tom om du vill använda original-bredden)"
-
-#: ../classes/Content/Picture/Picture.php:287
-msgid "Height (leave empty if you want to keep original height)"
-msgstr "Höjd (lämna tom om du vill använda original-höjden)"
-
-#: ../classes/Content/Stylesheet/Stylesheet.php:106
-msgid ""
-"Hints:  Note that the order in which Stylesheets are assigned relative to "
-"other content doesn't matter (except relative to other Stylesheets).  "
-"Stylesheets will be linked to the page in the order they are assigned, but "
-"always after the base stylesheet and network theme pack (if applicable).  "
-"They must be written as patches to those stylesheets."
-msgstr ""
-
-#: ../classes/Content/SmartyTemplate/SmartyTemplate.php:85
-#, php-format
-msgid ""
-"To list the available Smarty variables, put %s in the input field, save and "
-"then click preview"
-msgstr ""
-"Att visa en lista på Smarty-variablar, skriv in %s i input-fältet, klicka "
-"Spara och sedan Förhandsgranska."
-
-#: ../classes/Content/SmartyTemplate/SmartyTemplate.php:86
-#, php-format
-msgid "There are also a few custom Smarty modifiers available: %s"
-msgstr "Det finns också några speciella Smarty modifierare tillgängliga: %s"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:82
-msgid "300x250 - IAB Medium Rectangle"
-msgstr "300x250 - IAB Medium rektangel"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:83
-msgid "250x250 - IAB Square Pop-Up"
-msgstr "250x250 - IAB Kvadratisk pop-up"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:84
-msgid "240x400 - IAB Vertical Rectangle"
-msgstr "240x400 - IAB Vertikal rektangel"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:85
-msgid "336x280 - IAB Large Rectangle"
-msgstr "336x280 - IAB Stor rektangel"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:86
-msgid "180x150 - IAB Rectangle"
-msgstr "180x150 - IAB Rektangel"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:88
-msgid "468x60  - IAB Full Banner"
-msgstr "468x60 - IAB Fullskalig banner"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:89
-msgid "234x60  - IAB Half Banner"
-msgstr "234x60 - IAB Halv banner"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:90
-msgid "88x31   - IAB Micro Bar"
-msgstr "88x31  - IAB Mikro-rad"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:91
-msgid "120x90  - IAB Button 1"
-msgstr "120x90 - IAB Knapp 1"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:92
-msgid "120x60  - IAB Button 2"
-msgstr "120x60 - IAB Knapp 2"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:93
-msgid "120x240 - IAB Vertical Banner"
-msgstr "120x240 - IAB Vertikal banner"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:94
-msgid "125x125 - IAB Square Button"
-msgstr "125x125 - IAB Kvadratisk knapp"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:95
-msgid "728x90  - IAB Leaderboard"
-msgstr "728x90 - IAB Ledarskiva"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:97
-msgid "160x600 - IAB Wide Skyscraper"
-msgstr "160x600 - IAB Bred skyskrapa"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:98
-msgid "120x600 - IAB Skyscraper"
-msgstr "120x600 - IAB Skyskrapa"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:99
-msgid "300x600 - IAB Half Page Ad"
-msgstr "300x600 - IAB Halvsido-annons"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:128
-msgid "Maximum display size"
-msgstr "Maximal visningsstorlek"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:131
-msgid "Use the values below for width and height"
-msgstr "Använd värdena nedan för höjd och bredd"
-
 #: ../classes/Content/ShoutBox/ShoutBox.php:240
 msgid "Shout button 'onclick=' value (optionnal):"
 msgstr "Shout-knapp 'onclick=' värde (frivilligt):"
@@ -1987,11 +1972,11 @@ msgstr ""
 "och måste således vara korrekt omkodade för den användningen. Du kan få "
 "tillgång till shout-texten genom Javascript med: %s"
 
-#: ../classes/Content/ShoutBox/ShoutBox.php:251 ../classes/Content.php:1553
-#: ../classes/Content.php:1572 ../classes/Content.php:1589
-#: ../classes/Content.php:1606 ../classes/Role.php:352
+#: ../classes/Content/ShoutBox/ShoutBox.php:251
 #: ../classes/ProfileTemplateField.php:454
-#: ../classes/ProfileTemplateField.php:472
+#: ../classes/ProfileTemplateField.php:472 ../classes/Role.php:352
+#: ../classes/Content.php:1553 ../classes/Content.php:1572
+#: ../classes/Content.php:1589 ../classes/Content.php:1606
 #, php-format
 msgid "Delete %s (%s)"
 msgstr "Ta bort %s (%s)"
@@ -2017,6 +2002,36 @@ msgstr "Senaste %d meddelanden:"
 msgid "Sorry, I am unable to determine your current node"
 msgstr "Ledsen, men jag kunde inte bestämma din nuvarande Hotspot"
 
+#: ../classes/Content/Picture/Picture.php:272
+msgid "Hyperlink URL (leave empty if you don't need it)"
+msgstr "Länk URL (lämna tom om du inte behöver den)"
+
+#: ../classes/Content/Picture/Picture.php:280
+msgid "Width (leave empty if you want to keep original width)"
+msgstr "Bredd (lämna tom om du vill använda original-bredden)"
+
+#: ../classes/Content/Picture/Picture.php:287
+msgid "Height (leave empty if you want to keep original height)"
+msgstr "Höjd (lämna tom om du vill använda original-höjden)"
+
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:227
+msgid "FCKeditor is not installed"
+msgstr "FCKeditor är inte installerad"
+
+#: ../classes/Content/SmartyTemplate/SmartyTemplate.php:85
+#, php-format
+msgid ""
+"To list the available Smarty variables, put %s in the input field, save and "
+"then click preview"
+msgstr ""
+"Att visa en lista på Smarty-variablar, skriv in %s i input-fältet, klicka "
+"Spara och sedan Förhandsgranska."
+
+#: ../classes/Content/SmartyTemplate/SmartyTemplate.php:86
+#, php-format
+msgid "There are also a few custom Smarty modifiers available: %s"
+msgstr "Det finns också några speciella Smarty modifierare tillgängliga: %s"
+
 #: ../classes/Content/Avatar/Avatar.php:103
 msgid ""
 "Unable to process image (GD probably doesn't have support for it enabled)"
@@ -2041,61 +2056,6 @@ msgstr ""
 msgid "The online user list must be viewed at a specific node"
 msgstr "Listan över användare som är online kan bara visas på en Hotspot"
 
-#: ../classes/VirtualHost.php:162
-msgid "Server::getAllServers: Fatal error: No servers in the database!"
-msgstr "Server::getAllServers: Kritiskt fel: Inga servrar i databasen!"
-
-#: ../classes/VirtualHost.php:262 ../classes/Server.php:151
-msgid "Unable to insert the new server in the database!"
-msgstr "Kunde inte lägga till en ny server i databasen!"
-
-#: ../classes/VirtualHost.php:298
-msgid "Virtual host:"
-msgstr ""
-
-#: ../classes/VirtualHost.php:375
-#, fuzzy
-msgid "Add a new virtual host for hostname"
-msgstr "Lägg till en ny repeater för Hotspoten"
-
-#: ../classes/VirtualHost.php:595
-msgid "Virtual hosts management"
-msgstr ""
-
-#: ../classes/VirtualHost.php:614
-msgid "Hostname"
-msgstr "Värdnamn"
-
-#: ../classes/VirtualHost.php:622
-msgid "Default network for this vhost"
-msgstr ""
-
-#: ../classes/VirtualHost.php:639
-msgid "Make this Virtual Host the server's default?"
-msgstr ""
-
-#: ../classes/VirtualHost.php:655
-msgid "Use SSL on this server?"
-msgstr "Använd SSL på denna servern?"
-
-#: ../classes/VirtualHost.php:667
-msgid "Google public API key"
-msgstr "Google API-nyckel"
-
-#: ../classes/VirtualHost.php:738
-msgid ""
-"Cannot delete default virtual host, create another one and select it before "
-"removing this one."
-msgstr ""
-
-#: ../classes/VirtualHost.php:743
-msgid "Could not delete server!"
-msgstr "Kunde inte ta bort server!"
-
-#: ../classes/VirtualHost.php:771
-msgid "Virtual Hosts"
-msgstr ""
-
 #: ../classes/Profile.php:206
 msgid "Unable to insert the new profile in the database!"
 msgstr "Kunde inte lägga till en ny profil i databasen!"
@@ -2106,7 +2066,7 @@ msgstr "Skall denna profilen vara synlig för alla?"
 
 #: ../classes/Profile.php:311 ../classes/Network.php:1563
 #: ../classes/Network.php:1582 ../classes/Network.php:1588
-#: ../classes/Network.php:1613 ../classes/Node.php:1220
+#: ../classes/Network.php:1613 ../classes/Node.php:1223
 msgid "Yes"
 msgstr "Ja"
 
@@ -2122,14 +2082,382 @@ msgstr "Profilfält"
 msgid "Sorry, this user has hidden his profile  temporarily."
 msgstr "Tyvärr, men denna användare har temporärt gömt sin profil."
 
-#: ../classes/Profile.php:446 ../classes/Network.php:1895
-#: ../classes/ProfileTemplateField.php:603 ../classes/ProfileField.php:363
+#: ../classes/Profile.php:446 ../classes/ProfileTemplateField.php:603
+#: ../classes/Network.php:1895 ../classes/ProfileField.php:363
 msgid "Access denied (must have super admin access)"
 msgstr "Tillträde nekad (Du måste ha super-admin behörighet)"
 
 #: ../classes/Profile.php:451
 msgid "Could not delete Profile!"
 msgstr "Kunde inte ta bort profil!"
+
+#: ../classes/User.php:157
+#, php-format
+msgid "There is no user with username %s"
+msgstr ""
+
+#: ../classes/User.php:268
+msgid "Guest"
+msgstr "Gäst"
+
+#: ../classes/User.php:311
+msgid "View this user's profile."
+msgstr "Visa denna användarens profil"
+
+#: ../classes/User.php:349
+#, php-format
+msgid "Sorry, the username %s is not available"
+msgstr "Användarnamnet %s är tyvärr upptaget."
+
+#: ../classes/User.php:395
+msgid "Could not update email address."
+msgstr "Kunde inte uppdatera emailadress"
+
+#: ../classes/User.php:429
+msgid "Could not update username locale."
+msgstr "Kunde inte uppdatera locale för användarnamn"
+
+#: ../classes/User.php:451
+msgid "Could not update status."
+msgstr "Kunde inte uppdatera status."
+
+#: ../classes/User.php:472
+#, php-format
+msgid ""
+"Sorry, your %.0f minutes grace period to retrieve your email and validate "
+"your account has now expired. You will have to connect to the internet and "
+"validate your account from another location."
+msgstr ""
+"Tyvärr, dina %.0f minuter att hämta din email och validera ditt konto har nu "
+"tagit slut. Du är tvungen att hämta din valideringskod på ett annat sätt, t."
+"ex via en annan hotspot och sedan komma tillbaka och validera."
+
+#: ../classes/User.php:475
+msgid "Your account is currently valid."
+msgstr "Ditt konto är för tillfället giltigt."
+
+#: ../classes/User.php:479
+msgid "Sorry, your account is not valid: "
+msgstr "Tyvärr, men ditt konto är inte giltigt: "
+
+#: ../classes/User.php:553
+msgid "Password cannot be empty."
+msgstr "Lösenordet kan inte vara tomt."
+
+#: ../classes/User.php:557
+msgid "Could not change user's password."
+msgstr "Kunde ändra användarens lösenord."
+
+#: ../classes/User.php:573
+msgid "No users could not be found in the database"
+msgstr "Kund inte hitta några användare i databasen"
+
+#: ../classes/User.php:581 ../classes/User.php:599 ../classes/User.php:616
+msgid "Registration system"
+msgstr "Registreringssystem"
+
+#: ../classes/User.php:584
+msgid " lost username request"
+msgstr " förfrågan angående borttappat användarnamn"
+
+#: ../classes/User.php:585
+msgid ""
+"Hello,\n"
+"You have requested that the authentication server send you your username:\n"
+"Username: "
+msgstr ""
+"Hallå,\n"
+"Du har begärt att få ditt användarnamn skickat till dig för hotspot-"
+"användning:\n"
+"\n"
+"Användarnamn: "
+
+#: ../classes/User.php:585 ../classes/User.php:620
+msgid ""
+"\n"
+"\n"
+"Have a nice day,\n"
+"The Team"
+msgstr ""
+"\n"
+"\n"
+"Ha det så bra,\n"
+"Kundtjänst"
+
+#: ../classes/User.php:591
+msgid "The user is not in validation period."
+msgstr "Användaren befinner sig inte i valideringsperioden."
+
+#: ../classes/User.php:594
+msgid "The validation token is empty."
+msgstr "Valideringsnyckeln är tom."
+
+#: ../classes/User.php:602
+msgid " new user validation"
+msgstr " ny användarvalidering"
+
+#: ../classes/User.php:604
+msgid ""
+"Hello,\n"
+"Please follow the link below to validate your account.\n"
+msgstr ""
+"Hallå,\n"
+"För att validera ditt konto så klicka på länken nedan.\n"
+"Länk:\n"
+
+#: ../classes/User.php:604
+msgid ""
+"\n"
+"\n"
+"Thank you,\n"
+"The Team."
+msgstr ""
+"\n"
+"\n"
+"Tack,\n"
+"Kundtjänst"
+
+#: ../classes/User.php:619
+msgid " new password request"
+msgstr " förfrågan angående borttappat lösenord"
+
+#: ../classes/User.php:620
+msgid ""
+"Hello,\n"
+"You have requested that the authentication server send you a new password:\n"
+"Username: "
+msgstr ""
+"Hallå,\n"
+"Du har begärt att få ett nytt lösenord skickat till dig för hotspot-"
+"användning:\n"
+"\n"
+"Användarnamn: "
+
+#: ../classes/User.php:620
+msgid ""
+"\n"
+"Password: "
+msgstr ""
+"\n"
+"Lösenord: "
+
+#: ../classes/User.php:740
+msgid "Get user statistics"
+msgstr "Hämta användarstatistik"
+
+#: ../classes/User.php:745
+msgid "Note that Error is for internal use only"
+msgstr "Notera att Fel är endast till för intern användning"
+
+#: ../classes/User.php:751
+msgid "Administrative options"
+msgstr "Administrativa inställningar"
+
+#: ../classes/User.php:759
+msgid "Be carefull when changing this: it's the username you use to log in!"
+msgstr ""
+"Var försiktig när du ändrar detta, det är användarnamnet du använder när du "
+"loggar in!"
+
+#: ../classes/User.php:765
+msgid "Your current password"
+msgstr "Ditt nuvarande lösenord"
+
+#: ../classes/User.php:771
+msgid "Your new password"
+msgstr "Ditt nya lösenord"
+
+#: ../classes/User.php:776
+msgid "Your new password (again)"
+msgstr "Ditt nya lösenord (igen)"
+
+#: ../classes/User.php:781
+msgid "Change my password"
+msgstr "Ändra mitt lösenord"
+
+#: ../classes/User.php:783
+msgid "User preferences"
+msgstr "Användarinställningar"
+
+#: ../classes/User.php:795
+msgid "Completely delete my public profile"
+msgstr "Ta bort min offentliga profil"
+
+#: ../classes/User.php:804
+msgid "Create my public profile"
+msgstr "Skapa min offentliga profil"
+
+#: ../classes/User.php:836
+msgid "Wrong password."
+msgstr "Fel lösenord."
+
+#: ../classes/User.php:839
+msgid "Passwords do not match."
+msgstr "Lösenorden överensstämmer inte."
+
+#: ../classes/User.php:930
+msgid "Online Users"
+msgstr "Användare online"
+
+#: ../classes/User.php:936
+msgid "Import NoCat user database"
+msgstr "Importera användardatabas från NoCat"
+
+#: ../classes/User.php:943
+msgid "User manager"
+msgstr "Användarhantering"
+
+#: ../classes/User.php:955
+msgid "User administration"
+msgstr "Användaradministration"
+
+#: ../classes/ProfileTemplateField.php:128
+#: ../classes/ProfileTemplateField.php:437
+#: ../classes/ContentTypeFilter.php:309 ../classes/ProfileTemplate.php:294
+msgid "No label"
+msgstr "Ingen etikett"
+
+#: ../classes/ProfileTemplateField.php:132
+msgid "Add new profile template field filtered by"
+msgstr "Lägg till ett ny profilmallfält, filtrerat efter"
+
+#: ../classes/ProfileTemplateField.php:141
+msgid "Sorry, no content type filter exists."
+msgstr "Tyvärr, men inget innehålls-typ filter finns."
+
+#: ../classes/ProfileTemplateField.php:186 ../classes/Content.php:189
+msgid "Unable to insert new content into database!"
+msgstr "Kunde inte lägga till nytt innehåll till databasen!"
+
+#: ../classes/ProfileTemplateField.php:414
+msgid "Display order"
+msgstr "Visa ordning"
+
+#: ../classes/ProfileTemplateField.php:432
+msgid "Sorry, content type filter is missing."
+msgstr "Tyvärr, men innehålls-typ filter saknas."
+
+#: ../classes/ProfileTemplateField.php:434
+#: ../classes/ContentTypeFilter.php:301
+msgid "Content type filter"
+msgstr "Innehållstypfilter"
+
+#: ../classes/ProfileTemplateField.php:444
+msgid "Display label"
+msgstr "Visa etikett"
+
+#: ../classes/ProfileTemplateField.php:450
+#, php-format
+msgid "%s display label (%s)"
+msgstr "%s visa etikett (%s)"
+
+#: ../classes/ProfileTemplateField.php:454
+msgid "display label"
+msgstr "visa etikett"
+
+#: ../classes/ProfileTemplateField.php:461
+msgid "Admin label"
+msgstr "Administrativ etikett"
+
+#: ../classes/ProfileTemplateField.php:468
+#, php-format
+msgid "%s admin label (%s)"
+msgstr "%s administrativ etikett (%s)"
+
+#: ../classes/ProfileTemplateField.php:472
+msgid "admin label"
+msgstr "administrativ etikett"
+
+#: ../classes/ProfileTemplateField.php:479
+msgid "Semantic ID"
+msgstr "Semantiskt ID"
+
+#: ../classes/ProfileTemplateField.php:487
+msgid "Full name"
+msgstr "Fullständigt namn"
+
+#: ../classes/ProfileTemplateField.php:488
+msgid "Nickname"
+msgstr "Smeknamn"
+
+#: ../classes/ProfileTemplateField.php:489
+msgid "E-mail"
+msgstr "Email-adress"
+
+#: ../classes/ProfileTemplateField.php:490
+msgid "Hashed e-mail"
+msgstr "Hashad emailadress"
+
+#: ../classes/ProfileTemplateField.php:491
+msgid "Picture"
+msgstr "Bild"
+
+#: ../classes/ProfileTemplateField.php:492
+msgid "URL of a blog"
+msgstr "URL till blogg"
+
+#: ../classes/ProfileTemplateField.php:493
+msgid "URL of a homepage"
+msgstr "URL till Hemsida"
+
+#: ../classes/ProfileTemplateField.php:608
+msgid "Could not delete ProfileTemplateField!"
+msgstr "Kunde inte ta bort ProfileTemplateField!"
+
+#: ../classes/Role.php:151
+#, php-format
+msgid "Sorry: No available roles in the database for stakeholder type: %s!"
+msgstr ""
+
+#: ../classes/Role.php:162 ../classes/Role.php:168
+msgid "Role:"
+msgstr ""
+
+#: ../classes/Role.php:217 ../classes/ContentTypeFilter.php:199
+msgid "Unable to insert the new ContentTypeFilter in the database!"
+msgstr "Kunde inte lägga till nytt ContentTypeFilter i databasen!"
+
+#: ../classes/Role.php:238
+#, php-format
+msgid "Add a new role of type %s with id %s"
+msgstr ""
+
+#: ../classes/Role.php:302
+msgid "User roles management"
+msgstr ""
+
+#: ../classes/Role.php:309
+msgid "Stakeholder type"
+msgstr ""
+
+#: ../classes/Role.php:318
+msgid "This role is a system role"
+msgstr ""
+
+#: ../classes/Role.php:325
+msgid "Role ID"
+msgstr ""
+
+#: ../classes/Role.php:344 ../classes/Role.php:348 ../classes/Content.php:1564
+#: ../classes/Content.php:1568
+msgid "Description:"
+msgstr "Beskrivning:"
+
+#: ../classes/Role.php:352 ../classes/Content.php:1572
+msgid "description"
+msgstr "Beskrivning"
+
+#: ../classes/Role.php:379
+msgid "Permissions"
+msgstr ""
+
+#: ../classes/Role.php:485
+msgid "Could not delete object!"
+msgstr ""
+
+#: ../classes/Role.php:506
+msgid "User roles"
+msgstr ""
 
 #: ../classes/Security.php:205
 #, php-format
@@ -2151,225 +2479,167 @@ msgstr ""
 msgid " (Empty langstring, ID is displayed)"
 msgstr " (Tom 'langstring', visar ID istället)"
 
-#: ../classes/User.php:157
-#, php-format
-msgid "There is no user with username %s"
+#: ../classes/ContentTypeFilter.php:220
+msgid "Add a new content type filter with these rules"
+msgstr "Lägg till ett nytt innehållstypfilter med dessa regler"
+
+#: ../classes/ContentTypeFilter.php:356
+msgid "ContentTypeFilter management"
+msgstr "Innehållstypfilter-hantering"
+
+#: ../classes/ContentTypeFilter.php:363
+msgid "ContentTypeFilter ID"
+msgstr "Innehållstypfilter-ID"
+
+#: ../classes/ContentTypeFilter.php:374 ../classes/ProfileTemplate.php:478
+msgid "Label"
+msgstr "Etikett"
+
+#: ../classes/ContentTypeFilter.php:385
+msgid "Rules (must be a valid array definition)"
+msgstr "Regler (måste vara en giltig vektordefinition)"
+
+#: ../classes/ContentTypeFilter.php:417
+msgid "The rules must be given as a PHP array declaration."
+msgstr "Reglerna måste vara angivna som en PHP-vektor."
+
+#: ../classes/ContentTypeFilter.php:443
+msgid "Could not delete ContentTypeFilter!"
+msgstr "Kunde inte ta bort ContentTypeFilter!"
+
+#: ../classes/ContentTypeFilter.php:471
+msgid "Content type filters"
+msgstr "Innehållstypfilter"
+
+#: ../classes/Statistics.php:85
+msgid "Usernames"
+msgstr "Användarnamn"
+
+#: ../classes/Statistics.php:86
+msgid "MAC addresses"
+msgstr "MAC-adress"
+
+#: ../classes/Statistics.php:124 ../classes/Network.php:706
+#: ../classes/Content.php:335 ../classes/NodeList.php:138
+msgid "Unable to open directory "
+msgstr "Kunde inte öppna mappen "
+
+#: ../classes/Statistics.php:152 ../classes/Statistics.php:156
+msgid "No restriction..."
+msgstr "Ingen begränsning..."
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "yesterday"
+msgstr "igår"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "today"
+msgstr "idag"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "2 days ago"
+msgstr "förrgår"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "3 days ago"
+msgstr "för 3 dagar sedan"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "1 week ago"
+msgstr "förra veckan"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "2 weeks ago"
+msgstr "för 2 veckor sedan"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "3 weeks ago"
+msgstr "för 3 veckor sedan"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "1 month ago"
+msgstr "förra månaden"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "2 months ago"
+msgstr "för 2 månader sedan"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "6 months ago"
+msgstr "för 6 månader sedan"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "1 year ago"
+msgstr "förra året"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "Select from and to..."
+msgstr "Välj från och till ..."
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "yesterday (whole day)"
+msgstr "igår (hela dagen)"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "today (whole day)"
+msgstr "idag (hela dagen)"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "this month"
+msgstr "denna månaden"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "last month"
+msgstr "förra månaden"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "this year"
+msgstr "detta året"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "forever"
+msgstr "för alltid"
+
+#: ../classes/Statistics.php:161
+msgid "From"
+msgstr "Från"
+
+#: ../classes/Statistics.php:176
+msgid "To"
+msgstr "Till"
+
+#: ../classes/Statistics.php:450
+msgid "Invalid parameter"
+msgstr "Ogiltig parameter"
+
+#: ../classes/Statistics.php:482
+msgid "Username or MAC address, depending on selection above"
+msgstr "Användarnamn eller MAC-adress, beroende på val ovan"
+
+#: ../classes/Statistics.php:578
+msgid "Report configuration"
+msgstr "Rapportkonfiguration"
+
+#: ../classes/Statistics.php:601
+msgid "Restrict the time range for which statistics will be computed"
 msgstr ""
+"Begränsa tidintervallet för vilket statistiken kommer att genereras för"
 
-#: ../classes/User.php:252
-msgid "Guest"
-msgstr "Gäst"
+#: ../classes/Statistics.php:609
+msgid "Restrict stats to the following nodes"
+msgstr "Begränsa data till följande Hotspots"
 
-#: ../classes/User.php:295
-msgid "View this user's profile."
-msgstr "Visa denna användarens profil"
+#: ../classes/Statistics.php:619
+msgid "Distinguish users by"
+msgstr "Skilj på användare genom"
 
-#: ../classes/User.php:329
-#, php-format
-msgid "Sorry, the username %s is not available"
-msgstr "Användarnamnet %s är tyvärr upptaget."
+#: ../classes/Statistics.php:628
+msgid "Restrict stats to the selected users"
+msgstr "Begränsa data till följande användare"
 
-#: ../classes/User.php:375
-msgid "Could not update email address."
-msgstr "Kunde inte uppdatera emailadress"
-
-#: ../classes/User.php:409
-msgid "Could not update username locale."
-msgstr "Kunde inte uppdatera locale för användarnamn"
-
-#: ../classes/User.php:431
-msgid "Could not update status."
-msgstr "Kunde inte uppdatera status."
-
-#: ../classes/User.php:451
-#, php-format
-msgid ""
-"Sorry, your %.0f minutes grace period to retrieve your email and validate "
-"your account has now expired. You will have to connect to the internet and "
-"validate your account from another location."
-msgstr ""
-"Tyvärr, dina %.0f minuter att hämta din email och validera ditt konto har nu "
-"tagit slut. Du är tvungen att hämta din valideringskod på ett annat sätt, t."
-"ex via en annan hotspot och sedan komma tillbaka och validera."
-
-#: ../classes/User.php:454
-msgid "Your account is currently valid."
-msgstr "Ditt konto är för tillfället giltigt."
-
-#: ../classes/User.php:458
-msgid "Sorry, your account is not valid: "
-msgstr "Tyvärr, men ditt konto är inte giltigt: "
-
-#: ../classes/User.php:532
-msgid "Password cannot be empty."
-msgstr "Lösenordet kan inte vara tomt."
-
-#: ../classes/User.php:536
-msgid "Could not change user's password."
-msgstr "Kunde ändra användarens lösenord."
-
-#: ../classes/User.php:552
-msgid "No users could not be found in the database"
-msgstr "Kund inte hitta några användare i databasen"
-
-#: ../classes/User.php:560 ../classes/User.php:578 ../classes/User.php:595
-msgid "Registration system"
-msgstr "Registreringssystem"
-
-#: ../classes/User.php:563
-msgid " lost username request"
-msgstr " förfrågan angående borttappat användarnamn"
-
-#: ../classes/User.php:564
-msgid ""
-"Hello,\n"
-"You have requested that the authentication server send you your username:\n"
-"Username: "
-msgstr ""
-"Hallå,\n"
-"Du har begärt att få ditt användarnamn skickat till dig för hotspot-"
-"användning:\n"
-"\n"
-"Användarnamn: "
-
-#: ../classes/User.php:564 ../classes/User.php:599
-msgid ""
-"\n"
-"\n"
-"Have a nice day,\n"
-"The Team"
-msgstr ""
-"\n"
-"\n"
-"Ha det så bra,\n"
-"Kundtjänst"
-
-#: ../classes/User.php:570
-msgid "The user is not in validation period."
-msgstr "Användaren befinner sig inte i valideringsperioden."
-
-#: ../classes/User.php:573
-msgid "The validation token is empty."
-msgstr "Valideringsnyckeln är tom."
-
-#: ../classes/User.php:581
-msgid " new user validation"
-msgstr " ny användarvalidering"
-
-#: ../classes/User.php:583
-msgid ""
-"Hello,\n"
-"Please follow the link below to validate your account.\n"
-msgstr ""
-"Hallå,\n"
-"För att validera ditt konto så klicka på länken nedan.\n"
-"Länk:\n"
-
-#: ../classes/User.php:583
-msgid ""
-"\n"
-"\n"
-"Thank you,\n"
-"The Team."
-msgstr ""
-"\n"
-"\n"
-"Tack,\n"
-"Kundtjänst"
-
-#: ../classes/User.php:598
-msgid " new password request"
-msgstr " förfrågan angående borttappat lösenord"
-
-#: ../classes/User.php:599
-msgid ""
-"Hello,\n"
-"You have requested that the authentication server send you a new password:\n"
-"Username: "
-msgstr ""
-"Hallå,\n"
-"Du har begärt att få ett nytt lösenord skickat till dig för hotspot-"
-"användning:\n"
-"\n"
-"Användarnamn: "
-
-#: ../classes/User.php:599
-msgid ""
-"\n"
-"Password: "
-msgstr ""
-"\n"
-"Lösenord: "
-
-#: ../classes/User.php:719
-msgid "Get user statistics"
-msgstr "Hämta användarstatistik"
-
-#: ../classes/User.php:724
-msgid "Note that Error is for internal use only"
-msgstr "Notera att Fel är endast till för intern användning"
-
-#: ../classes/User.php:730
-msgid "Administrative options"
-msgstr "Administrativa inställningar"
-
-#: ../classes/User.php:738
-msgid "Be carefull when changing this: it's the username you use to log in!"
-msgstr ""
-"Var försiktig när du ändrar detta, det är användarnamnet du använder när du "
-"loggar in!"
-
-#: ../classes/User.php:744
-msgid "Your current password"
-msgstr "Ditt nuvarande lösenord"
-
-#: ../classes/User.php:750
-msgid "Your new password"
-msgstr "Ditt nya lösenord"
-
-#: ../classes/User.php:755
-msgid "Your new password (again)"
-msgstr "Ditt nya lösenord (igen)"
-
-#: ../classes/User.php:760
-msgid "Change my password"
-msgstr "Ändra mitt lösenord"
-
-#: ../classes/User.php:762
-msgid "User preferences"
-msgstr "Användarinställningar"
-
-#: ../classes/User.php:774
-msgid "Completely delete my public profile"
-msgstr "Ta bort min offentliga profil"
-
-#: ../classes/User.php:783
-msgid "Create my public profile"
-msgstr "Skapa min offentliga profil"
-
-#: ../classes/User.php:815
-msgid "Wrong password."
-msgstr "Fel lösenord."
-
-#: ../classes/User.php:818
-msgid "Passwords do not match."
-msgstr "Lösenorden överensstämmer inte."
-
-#: ../classes/User.php:909
-msgid "Online Users"
-msgstr "Användare online"
-
-#: ../classes/User.php:915
-msgid "Import NoCat user database"
-msgstr "Importera användardatabas från NoCat"
-
-#: ../classes/User.php:922
-msgid "User manager"
-msgstr "Användarhantering"
-
-#: ../classes/User.php:934
-msgid "User administration"
-msgstr "Användaradministration"
+#: ../classes/Statistics.php:637
+msgid "Selected reports"
+msgstr "Markerade rapporter"
 
 #: ../classes/Network.php:112 ../classes/Network.php:249
 msgid "Network::getAllNetworks:  Fatal error: No networks in the database!"
@@ -2386,11 +2656,6 @@ msgstr "Nätverk:"
 #: ../classes/Network.php:307
 msgid "Create a new network with ID"
 msgstr "Skapa ett nytt nätverk med ID"
-
-#: ../classes/Network.php:706 ../classes/Statistics.php:124
-#: ../classes/Content.php:335 ../classes/NodeList.php:138
-msgid "Unable to open directory "
-msgstr "Kunde inte öppna mappen "
 
 #: ../classes/Network.php:1035
 msgid "Satellite"
@@ -2527,11 +2792,11 @@ msgid "Network's user verification"
 msgstr "Nätverkets användarverifikation"
 
 #: ../classes/Network.php:1630 ../classes/Server.php:275
-#: ../classes/Node.php:1241
+#: ../classes/Node.php:1244
 msgid "Access rights"
 msgstr "Behörigheter"
 
-#: ../classes/Network.php:1646 ../classes/Node.php:1178
+#: ../classes/Network.php:1646 ../classes/Node.php:1181
 msgid "Latitude"
 msgstr "Latitud"
 
@@ -2539,7 +2804,7 @@ msgstr "Latitud"
 msgid "Center latitude for your the area of your wireless network"
 msgstr "Latitud för centrum på ditt trådlösa nätverk"
 
-#: ../classes/Network.php:1651 ../classes/Node.php:1183
+#: ../classes/Network.php:1651 ../classes/Node.php:1186
 msgid "Longitude"
 msgstr "Longitud"
 
@@ -2563,7 +2828,7 @@ msgstr "Karttyp"
 msgid "Default Google Map type for your the area of your wireless network"
 msgstr "Standard Google Map-typ för området vid ditt trådlösa nätverk"
 
-#: ../classes/Network.php:1667 ../classes/Node.php:1205
+#: ../classes/Network.php:1667 ../classes/Node.php:1208
 msgid "GIS data"
 msgstr "GIS-information"
 
@@ -2587,197 +2852,95 @@ msgstr "Kunde inte ta bort nätverket!"
 msgid "Network administration"
 msgstr "Nätverksadministration"
 
-#: ../classes/Statistics.php:85
-msgid "Usernames"
-msgstr "Användarnamn"
+#: ../classes/ProfileTemplate.php:229
+msgid "Unable to insert the new profile template in the database!"
+msgstr "Kunde inte skapa en ny profilmall i databasen!"
 
-#: ../classes/Statistics.php:86
-msgid "MAC addresses"
-msgstr "MAC-adress"
+#: ../classes/ProfileTemplate.php:289
+msgid "Profile template"
+msgstr "Profilmall"
 
-#: ../classes/Statistics.php:152 ../classes/Statistics.php:156
-msgid "No restriction..."
-msgstr "Ingen begränsning..."
+#: ../classes/ProfileTemplate.php:359
+msgid "Profile template label"
+msgstr "Profilmalletikett"
 
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "yesterday"
-msgstr "igår"
+#: ../classes/ProfileTemplate.php:359 ../classes/Content.php:719
+msgid "Actions"
+msgstr "Åtgärder"
 
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "today"
-msgstr "idag"
+#: ../classes/ProfileTemplate.php:460
+msgid "Profile template management"
+msgstr "Profilmall-hantering"
 
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "2 days ago"
-msgstr "förrgår"
+#: ../classes/ProfileTemplate.php:467
+msgid "ProfileTemplate ID"
+msgstr "Profilmall-ID"
 
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "3 days ago"
-msgstr "för 3 dagar sedan"
+#: ../classes/ProfileTemplate.php:497
+msgid "Profile template fields"
+msgstr "Profilmallfält"
 
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "1 week ago"
-msgstr "förra veckan"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "2 weeks ago"
-msgstr "för 2 veckor sedan"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "3 weeks ago"
-msgstr "för 3 veckor sedan"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "1 month ago"
-msgstr "förra månaden"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "2 months ago"
-msgstr "för 2 månader sedan"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "6 months ago"
-msgstr "för 6 månader sedan"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "1 year ago"
-msgstr "förra året"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "Select from and to..."
-msgstr "Välj från och till ..."
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "yesterday (whole day)"
-msgstr "igår (hela dagen)"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "today (whole day)"
-msgstr "idag (hela dagen)"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "this month"
-msgstr "denna månaden"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "last month"
-msgstr "förra månaden"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "this year"
-msgstr "detta året"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "forever"
-msgstr "för alltid"
-
-#: ../classes/Statistics.php:161
-msgid "From"
-msgstr "Från"
-
-#: ../classes/Statistics.php:176
-msgid "To"
-msgstr "Till"
-
-#: ../classes/Statistics.php:450
-msgid "Invalid parameter"
-msgstr "Ogiltig parameter"
-
-#: ../classes/Statistics.php:482
-msgid "Username or MAC address, depending on selection above"
-msgstr "Användarnamn eller MAC-adress, beroende på val ovan"
-
-#: ../classes/Statistics.php:578
-msgid "Report configuration"
-msgstr "Rapportkonfiguration"
-
-#: ../classes/Statistics.php:601
-msgid "Restrict the time range for which statistics will be computed"
-msgstr ""
-"Begränsa tidintervallet för vilket statistiken kommer att genereras för"
-
-#: ../classes/Statistics.php:609
-msgid "Restrict stats to the following nodes"
-msgstr "Begränsa data till följande Hotspots"
-
-#: ../classes/Statistics.php:619
-msgid "Distinguish users by"
-msgstr "Skilj på användare genom"
-
-#: ../classes/Statistics.php:628
-msgid "Restrict stats to the selected users"
-msgstr "Begränsa data till följande användare"
-
-#: ../classes/Statistics.php:637
-msgid "Selected reports"
-msgstr "Markerade rapporter"
-
-#: ../classes/AbstractDb.php:96
+#: ../classes/ProfileTemplate.php:507
 #, php-format
-msgid "Unable to connect to database on %s"
-msgstr "Kan inte ansluta till databasen på %s"
+msgid "Delete %s %d, used in %d/%d profiles"
+msgstr "Ta bort %s %d, används i %d/%d profiler"
 
-#: ../classes/AbstractDb.php:118 ../classes/AbstractDb.php:211
-#: ../classes/AbstractDb.php:399 ../classes/AbstractDb.php:472
-msgid "SQL Query"
-msgstr "Databasfråga"
+#: ../classes/ProfileTemplate.php:573
+msgid "Could not delete ProfileTemplate!"
+msgstr "Kunder inte ta bort ProfileTemplate!"
 
-#: ../classes/AbstractDb.php:123 ../classes/AbstractDb.php:216
-msgid "Query plan"
-msgstr "Databasfrågeplan"
+#: ../classes/ProfileTemplate.php:601
+msgid "Profile templates"
+msgstr "Profilmallar"
 
-#: ../classes/AbstractDb.php:141 ../classes/AbstractDb.php:234
-#: ../classes/AbstractDb.php:409
+#: ../classes/ThemePack.php:87
 #, php-format
-msgid "Elapsed time for query execution : %.6f second(s)"
-msgstr "Tidsåtgång för databasförfrågan: %.6f sekund(er)"
+msgid "Theme pack %s cannot be found in %s"
+msgstr "Temat %s kunder inte hittas i %s"
 
-#: ../classes/AbstractDb.php:145 ../classes/AbstractDb.php:238
-#: ../classes/AbstractDb.php:413 ../classes/AbstractDb.php:423
-#: ../classes/AbstractDb.php:487
-msgid "An error occured while executing the following SQL query"
-msgstr "Ett fel inträffade under exekvering av följande databasfråga"
-
-#: ../classes/AbstractDb.php:146 ../classes/AbstractDb.php:239
-#: ../classes/AbstractDb.php:414 ../classes/AbstractDb.php:488
-msgid "Error message"
-msgstr "Felmeddelande"
-
-#: ../classes/AbstractDb.php:147 ../classes/AbstractDb.php:240
-#: ../classes/AbstractDb.php:489
-msgid "Backtrace:"
-msgstr ""
-
-#: ../classes/AbstractDb.php:170
+#: ../classes/ThemePack.php:94
 #, php-format
-msgid "The query returned %d results"
-msgstr "Databasfrågan returnerade %d resultat"
+msgid "%s (Theme did not include a name.txt file)"
+msgstr "%s (Temat innehöll ingen name.txt fil)"
 
-#: ../classes/AbstractDb.php:424
+#: ../classes/ThemePack.php:100
 #, php-format
-msgid ""
-"The query returned %d results, although there should have been only one."
-msgstr ""
-"Databasförfrågan returnerade %d resultat, men vi förväntade oss bara ett."
+msgid "%s (Theme did not include a description.txt file)"
+msgstr "%s (Temat innehöll ingen description.txt fil)"
 
-#: ../classes/AbstractDb.php:432
-#, php-format
-msgid "The query returned %d result(s)"
-msgstr "Databasförfrågan returnerade %d resultat"
+#: ../classes/ThemePack.php:121
+msgid "Theme pack:"
+msgstr "Tema:"
 
-#: ../classes/AbstractDb.php:481 ../classes/AbstractDb.php:499
-#, php-format
-msgid "%d rows affected by the SQL query."
-msgstr "%d rader var påverkade av databasfrågan."
+#: ../classes/ThemePack.php:144
+msgid "Unable to open the network theme packs directory"
+msgstr "Kunde inte öppna nätverkets temakatalog"
 
-#: ../classes/AbstractDb.php:482
+#: ../classes/ThemePack.php:151
 #, php-format
-msgid "Elapsed time for query execution : %6f second(s)"
-msgstr "Tidsåtgång för databasförfrågan: %.6f sekund(er)"
+msgid "No network theme packs available in %s"
+msgstr "Inga nätverksteman hittades i %s"
+
+#: ../classes/ProfileField.php:251
+msgid "Unable to insert the new profile fields in the database!"
+msgstr "Kunde inte lägga till nya profilfält i databasen!"
+
+#: ../classes/ProfileField.php:281
+#, php-format
+msgid "Delete %s"
+msgstr "Ta bort %s"
+
+#: ../classes/ProfileField.php:368
+msgid "Could not delete ProfileField!"
+msgstr "Kunde inte ta bort ProfileField!"
 
 #: ../classes/Server.php:91
 msgid "Main server object"
 msgstr ""
+
+#: ../classes/Server.php:151 ../classes/VirtualHost.php:262
+msgid "Unable to insert the new server in the database!"
+msgstr "Kunde inte lägga till en ny server i databasen!"
 
 #: ../classes/Server.php:229
 msgid "Server management"
@@ -2809,6 +2972,73 @@ msgstr ""
 msgid "Server administration"
 msgstr "Serveradministration"
 
+#: ../classes/AbstractDb.php:93
+msgid "It appears the postgresql module isn't loaded"
+msgstr ""
+
+#: ../classes/AbstractDb.php:99
+#, php-format
+msgid "Unable to connect to database on %s"
+msgstr "Kan inte ansluta till databasen på %s"
+
+#: ../classes/AbstractDb.php:121 ../classes/AbstractDb.php:214
+#: ../classes/AbstractDb.php:402 ../classes/AbstractDb.php:475
+msgid "SQL Query"
+msgstr "Databasfråga"
+
+#: ../classes/AbstractDb.php:126 ../classes/AbstractDb.php:219
+msgid "Query plan"
+msgstr "Databasfrågeplan"
+
+#: ../classes/AbstractDb.php:144 ../classes/AbstractDb.php:237
+#: ../classes/AbstractDb.php:412
+#, php-format
+msgid "Elapsed time for query execution : %.6f second(s)"
+msgstr "Tidsåtgång för databasförfrågan: %.6f sekund(er)"
+
+#: ../classes/AbstractDb.php:148 ../classes/AbstractDb.php:241
+#: ../classes/AbstractDb.php:416 ../classes/AbstractDb.php:426
+#: ../classes/AbstractDb.php:490
+msgid "An error occured while executing the following SQL query"
+msgstr "Ett fel inträffade under exekvering av följande databasfråga"
+
+#: ../classes/AbstractDb.php:149 ../classes/AbstractDb.php:242
+#: ../classes/AbstractDb.php:417 ../classes/AbstractDb.php:491
+msgid "Error message"
+msgstr "Felmeddelande"
+
+#: ../classes/AbstractDb.php:150 ../classes/AbstractDb.php:243
+#: ../classes/AbstractDb.php:492
+msgid "Backtrace:"
+msgstr ""
+
+#: ../classes/AbstractDb.php:173
+#, php-format
+msgid "The query returned %d results"
+msgstr "Databasfrågan returnerade %d resultat"
+
+#: ../classes/AbstractDb.php:427
+#, php-format
+msgid ""
+"The query returned %d results, although there should have been only one."
+msgstr ""
+"Databasförfrågan returnerade %d resultat, men vi förväntade oss bara ett."
+
+#: ../classes/AbstractDb.php:435
+#, php-format
+msgid "The query returned %d result(s)"
+msgstr "Databasförfrågan returnerade %d resultat"
+
+#: ../classes/AbstractDb.php:484 ../classes/AbstractDb.php:502
+#, php-format
+msgid "%d rows affected by the SQL query."
+msgstr "%d rader var påverkade av databasfrågan."
+
+#: ../classes/AbstractDb.php:485
+#, php-format
+msgid "Elapsed time for query execution : %6f second(s)"
+msgstr "Tidsåtgång för databasförfrågan: %.6f sekund(er)"
+
 #: ../classes/Content.php:150
 msgid "Untitled content"
 msgstr "Namnlöst innehåll"
@@ -2816,10 +3046,6 @@ msgstr "Namnlöst innehåll"
 #: ../classes/Content.php:181
 msgid "Content type is optionnal, but cannot be empty!"
 msgstr "Innehållstyp är frivillig, men får inte vara tom!"
-
-#: ../classes/Content.php:189 ../classes/ProfileTemplateField.php:186
-msgid "Unable to insert new content into database!"
-msgstr "Kunde inte lägga till nytt innehåll till databasen!"
 
 #: ../classes/Content.php:221
 msgid "It appears that you have not installed any Content plugin !"
@@ -2857,10 +3083,6 @@ msgstr "Ordning"
 #: ../classes/Content.php:719
 msgid "Content"
 msgstr "Innehåll"
-
-#: ../classes/Content.php:719 ../classes/ProfileTemplate.php:359
-msgid "Actions"
-msgstr "Åtgärder"
 
 #: ../classes/Content.php:911
 msgid "Select from reusable content library"
@@ -2926,15 +3148,6 @@ msgstr "Titel:"
 #: ../classes/Content.php:1553
 msgid "title"
 msgstr "Rubrik"
-
-#: ../classes/Content.php:1564 ../classes/Content.php:1568
-#: ../classes/Role.php:344 ../classes/Role.php:348
-msgid "Description:"
-msgstr "Beskrivning:"
-
-#: ../classes/Content.php:1572 ../classes/Role.php:352
-msgid "description"
-msgstr "Beskrivning"
 
 #: ../classes/Content.php:1581 ../classes/Content.php:1585
 msgid "Long description:"
@@ -3038,21 +3251,21 @@ msgstr "portal"
 msgid "%s is not a valid structural display area"
 msgstr "%s är inte en giltigt visningsregion"
 
-#: ../classes/MainUI.php:641
+#: ../classes/MainUI.php:642
 #, php-format
 msgid "%s Login"
 msgstr "%s Inloggning"
 
-#: ../classes/MainUI.php:641
+#: ../classes/MainUI.php:642
 msgid "Login"
 msgstr "Logga in"
 
-#: ../classes/MainUI.php:645
+#: ../classes/MainUI.php:646
 #, php-format
 msgid "Click <a href='%s'>here</a> to continue"
 msgstr "<a href='%s'>Klicka här</a> för att fortsätta"
 
-#: ../classes/MainUI.php:645
+#: ../classes/MainUI.php:646
 msgid ""
 "The transfer from secure login back to regular http may cause a warning."
 msgstr ""
@@ -3178,74 +3391,74 @@ msgstr "Modifiera Hotspot"
 msgid "Get access statistics"
 msgstr "Hämta användnings-statistik"
 
-#: ../classes/Node.php:1093
+#: ../classes/Node.php:1096
 msgid "Node content"
 msgstr "Innehåll på Hotspot:en"
 
-#: ../classes/Node.php:1119
+#: ../classes/Node.php:1122
 msgid "Civic number"
 msgstr "Husnummer"
 
-#: ../classes/Node.php:1124
+#: ../classes/Node.php:1127
 msgid "Street name"
 msgstr "Gatunamn"
 
-#: ../classes/Node.php:1144
+#: ../classes/Node.php:1147
 msgid "Country"
 msgstr "Land"
 
-#: ../classes/Node.php:1149
+#: ../classes/Node.php:1152
 msgid "Public phone number"
 msgstr "Offentligt telefonnummer"
 
-#: ../classes/Node.php:1154
+#: ../classes/Node.php:1157
 msgid "Public email"
 msgstr "Offentlig emailadress"
 
-#: ../classes/Node.php:1164
+#: ../classes/Node.php:1167
 msgid "Mass transit info"
 msgstr "Information om offentliga nätverk"
 
-#: ../classes/Node.php:1169
+#: ../classes/Node.php:1172
 msgid "Information about the node"
 msgstr "Information om denna Hotspot"
 
-#: ../classes/Node.php:1189 ../classes/Node.php:1193
+#: ../classes/Node.php:1192 ../classes/Node.php:1196
 msgid "Geocode the address or postal code above"
 msgstr "Använd 'Geocode' på adressen ovan"
 
-#: ../classes/Node.php:1190
+#: ../classes/Node.php:1193
 msgid "Check using Google Maps"
 msgstr "Visa med Google Maps"
 
-#: ../classes/Node.php:1191
+#: ../classes/Node.php:1194
 msgid ""
 "Use a geocoding service, then use Google Maps to pinpoint the exact location."
 msgstr ""
 "Använd en geocode-tjänst och använd sedan Google Maps för att välja exakt "
 "plats."
 
-#: ../classes/Node.php:1194
+#: ../classes/Node.php:1197
 msgid "Use a geocoding service"
 msgstr "Använd en Geocode-tjänst"
 
-#: ../classes/Node.php:1200
+#: ../classes/Node.php:1203
 msgid "Map URL"
 msgstr "URL för karta"
 
-#: ../classes/Node.php:1213
+#: ../classes/Node.php:1216
 msgid "Node deployment status"
 msgstr "Utrullningsstatus på Hotspot:"
 
-#: ../classes/Node.php:1219
+#: ../classes/Node.php:1222
 msgid "Is this node splash-only (no login)?"
 msgstr "Är denna Hotspot 'splash-only'?"
 
-#: ../classes/Node.php:1226
+#: ../classes/Node.php:1229
 msgid "URL to show instead of the portal"
 msgstr "URL att visa istället för portalen"
 
-#: ../classes/Node.php:1228
+#: ../classes/Node.php:1231
 msgid ""
 "If this is not empty, the portal will be disabled and this URL will be shown "
 "instead"
@@ -3253,11 +3466,11 @@ msgstr ""
 "Om detta fält inte är tomt så kommer portalen att inaktiveras och denna URL "
 "kommer att visas istället"
 
-#: ../classes/Node.php:1233
+#: ../classes/Node.php:1236
 msgid "Node configuration"
 msgstr "Hotspot-konfiguration"
 
-#: ../classes/Node.php:1363
+#: ../classes/Node.php:1371
 msgid ""
 "It appears that the Geocoder could not be reached or could not geocode the "
 "given address."
@@ -3265,266 +3478,130 @@ msgstr ""
 "Geocode-tjänsten kunde inte kontaktas eller kunde inte hantera den "
 "angivnaadressen"
 
-#: ../classes/Node.php:1366
+#: ../classes/Node.php:1374
 msgid "You must enter a valid address."
 msgstr "Du måste ange en giltig adress."
 
-#: ../classes/Node.php:1370
+#: ../classes/Node.php:1378
 msgid "Unable to create geocoder.  Are you sure you set the country?"
 msgstr "Kunde inte skapa en geocoder. Är du säger på att du fyllde i Land?"
 
-#: ../classes/Node.php:1608
+#: ../classes/Node.php:1616
 msgid "Edit nodes"
 msgstr ""
 
-#: ../classes/Node.php:1622
+#: ../classes/Node.php:1630
 msgid "Node administration"
 msgstr "Hotspotadministration"
 
-#: ../classes/ProfileTemplate.php:229
-msgid "Unable to insert the new profile template in the database!"
-msgstr "Kunde inte skapa en ny profilmall i databasen!"
+#: ../classes/VirtualHost.php:162
+msgid "Server::getAllServers: Fatal error: No servers in the database!"
+msgstr "Server::getAllServers: Kritiskt fel: Inga servrar i databasen!"
 
-#: ../classes/ProfileTemplate.php:289
-msgid "Profile template"
-msgstr "Profilmall"
+#: ../classes/VirtualHost.php:298
+msgid "Virtual host:"
+msgstr ""
 
-#: ../classes/ProfileTemplate.php:294 ../classes/ContentTypeFilter.php:309
-#: ../classes/ProfileTemplateField.php:128
-#: ../classes/ProfileTemplateField.php:437
-msgid "No label"
-msgstr "Ingen etikett"
+#: ../classes/VirtualHost.php:375
+#, fuzzy
+msgid "Add a new virtual host for hostname"
+msgstr "Lägg till en ny repeater för Hotspoten"
 
-#: ../classes/ProfileTemplate.php:359
-msgid "Profile template label"
-msgstr "Profilmalletikett"
+#: ../classes/VirtualHost.php:595
+msgid "Virtual hosts management"
+msgstr ""
 
-#: ../classes/ProfileTemplate.php:460
-msgid "Profile template management"
-msgstr "Profilmall-hantering"
+#: ../classes/VirtualHost.php:614
+msgid "Hostname"
+msgstr "Värdnamn"
 
-#: ../classes/ProfileTemplate.php:467
-msgid "ProfileTemplate ID"
-msgstr "Profilmall-ID"
+#: ../classes/VirtualHost.php:622
+msgid "Default network for this vhost"
+msgstr ""
 
-#: ../classes/ProfileTemplate.php:478 ../classes/ContentTypeFilter.php:374
-msgid "Label"
-msgstr "Etikett"
+#: ../classes/VirtualHost.php:639
+msgid "Make this Virtual Host the server's default?"
+msgstr ""
 
-#: ../classes/ProfileTemplate.php:497
-msgid "Profile template fields"
-msgstr "Profilmallfält"
+#: ../classes/VirtualHost.php:655
+msgid "Use SSL on this server?"
+msgstr "Använd SSL på denna servern?"
 
-#: ../classes/ProfileTemplate.php:507
+#: ../classes/VirtualHost.php:667
+msgid "Google public API key"
+msgstr "Google API-nyckel"
+
+#: ../classes/VirtualHost.php:738
+msgid ""
+"Cannot delete default virtual host, create another one and select it before "
+"removing this one."
+msgstr ""
+
+#: ../classes/VirtualHost.php:743
+msgid "Could not delete server!"
+msgstr "Kunde inte ta bort server!"
+
+#: ../classes/VirtualHost.php:771
+msgid "Virtual Hosts"
+msgstr ""
+
+#: ../classes/GenericDataObject.php:124
 #, php-format
-msgid "Delete %s %d, used in %d/%d profiles"
-msgstr "Ta bort %s %d, används i %d/%d profiler"
+msgid "Delete not supported on class %s"
+msgstr ""
 
-#: ../classes/ProfileTemplate.php:573
-msgid "Could not delete ProfileTemplate!"
-msgstr "Kunder inte ta bort ProfileTemplate!"
+#: ../classes/Stakeholder.php:92
+msgid "Remove stakeholder"
+msgstr ""
 
-#: ../classes/ProfileTemplate.php:601
-msgid "Profile templates"
-msgstr "Profilmallar"
+#: ../classes/Stakeholder.php:98
+msgid "Add stakeholder"
+msgstr ""
 
-#: ../classes/ThemePack.php:87
+#: ../classes/Stakeholder.php:125
 #, php-format
-msgid "Theme pack %s cannot be found in %s"
+msgid "User %s already has role %s for this object"
+msgstr ""
+
+#: ../classes/Dependency.php:339 ../classes/Dependency.php:355
+#, php-format
+msgid "File %s not found"
+msgstr ""
+
+#: ../classes/Dependency.php:369 ../classes/Dependency.php:383
+#, fuzzy, php-format
+msgid "File %s not found in %s"
 msgstr "Temat %s kunder inte hittas i %s"
 
-#: ../classes/ThemePack.php:94
+#: ../classes/Dependency.php:422
 #, php-format
-msgid "%s (Theme did not include a name.txt file)"
-msgstr "%s (Temat innehöll ingen name.txt fil)"
+msgid ""
+"To install this standard PHP extension, look for a package with a similar "
+"name in your distribution's package manager.  Ex: For Debian based "
+"distributions, you may try 'sudo apt-get install php5-%s'"
+msgstr ""
 
-#: ../classes/ThemePack.php:100
+#: ../classes/Dependency.php:427
 #, php-format
-msgid "%s (Theme did not include a description.txt file)"
-msgstr "%s (Temat innehöll ingen description.txt fil)"
+msgid "<input type='submit' name='%s' value='Install %s'/>"
+msgstr ""
 
-#: ../classes/ThemePack.php:121
-msgid "Theme pack:"
-msgstr "Tema:"
-
-#: ../classes/ThemePack.php:144
-msgid "Unable to open the network theme packs directory"
-msgstr "Kunde inte öppna nätverkets temakatalog"
-
-#: ../classes/ThemePack.php:151
+#: ../classes/Dependency.php:437
 #, php-format
-msgid "No network theme packs available in %s"
-msgstr "Inga nätverksteman hittades i %s"
+msgid ""
+"url_to_the_tarball (Sorry, i couldn't find the source for %s in "
+"installSourceUrl)"
+msgstr ""
 
-#: ../classes/Role.php:151
+#: ../classes/Dependency.php:439
 #, php-format
-msgid "Sorry: No available roles in the database for stakeholder type: %s!"
+msgid "To install this custom PEAR extension, use 'sudo pear install %s'"
 msgstr ""
 
-#: ../classes/Role.php:162 ../classes/Role.php:168
-msgid "Role:"
-msgstr ""
-
-#: ../classes/Role.php:217 ../classes/ContentTypeFilter.php:199
-msgid "Unable to insert the new ContentTypeFilter in the database!"
-msgstr "Kunde inte lägga till nytt ContentTypeFilter i databasen!"
-
-#: ../classes/Role.php:238
+#: ../classes/Dependency.php:442
 #, php-format
-msgid "Add a new role of type %s with id %s"
+msgid "Sorry, I don't know how to install a %s extension"
 msgstr ""
-
-#: ../classes/Role.php:302
-msgid "User roles management"
-msgstr ""
-
-#: ../classes/Role.php:309
-msgid "Stakeholder type"
-msgstr ""
-
-#: ../classes/Role.php:318
-msgid "This role is a system role"
-msgstr ""
-
-#: ../classes/Role.php:325
-msgid "Role ID"
-msgstr ""
-
-#: ../classes/Role.php:379
-msgid "Permissions"
-msgstr ""
-
-#: ../classes/Role.php:485
-msgid "Could not delete object!"
-msgstr ""
-
-#: ../classes/Role.php:506
-msgid "User roles"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:220
-msgid "Add a new content type filter with these rules"
-msgstr "Lägg till ett nytt innehållstypfilter med dessa regler"
-
-#: ../classes/ContentTypeFilter.php:301
-#: ../classes/ProfileTemplateField.php:434
-msgid "Content type filter"
-msgstr "Innehållstypfilter"
-
-#: ../classes/ContentTypeFilter.php:356
-msgid "ContentTypeFilter management"
-msgstr "Innehållstypfilter-hantering"
-
-#: ../classes/ContentTypeFilter.php:363
-msgid "ContentTypeFilter ID"
-msgstr "Innehållstypfilter-ID"
-
-#: ../classes/ContentTypeFilter.php:385
-msgid "Rules (must be a valid array definition)"
-msgstr "Regler (måste vara en giltig vektordefinition)"
-
-#: ../classes/ContentTypeFilter.php:417
-msgid "The rules must be given as a PHP array declaration."
-msgstr "Reglerna måste vara angivna som en PHP-vektor."
-
-#: ../classes/ContentTypeFilter.php:443
-msgid "Could not delete ContentTypeFilter!"
-msgstr "Kunde inte ta bort ContentTypeFilter!"
-
-#: ../classes/ContentTypeFilter.php:471
-msgid "Content type filters"
-msgstr "Innehållstypfilter"
-
-#: ../classes/ProfileTemplateField.php:132
-msgid "Add new profile template field filtered by"
-msgstr "Lägg till ett ny profilmallfält, filtrerat efter"
-
-#: ../classes/ProfileTemplateField.php:141
-msgid "Sorry, no content type filter exists."
-msgstr "Tyvärr, men inget innehålls-typ filter finns."
-
-#: ../classes/ProfileTemplateField.php:414
-msgid "Display order"
-msgstr "Visa ordning"
-
-#: ../classes/ProfileTemplateField.php:432
-msgid "Sorry, content type filter is missing."
-msgstr "Tyvärr, men innehålls-typ filter saknas."
-
-#: ../classes/ProfileTemplateField.php:444
-msgid "Display label"
-msgstr "Visa etikett"
-
-#: ../classes/ProfileTemplateField.php:450
-#, php-format
-msgid "%s display label (%s)"
-msgstr "%s visa etikett (%s)"
-
-#: ../classes/ProfileTemplateField.php:454
-msgid "display label"
-msgstr "visa etikett"
-
-#: ../classes/ProfileTemplateField.php:461
-msgid "Admin label"
-msgstr "Administrativ etikett"
-
-#: ../classes/ProfileTemplateField.php:468
-#, php-format
-msgid "%s admin label (%s)"
-msgstr "%s administrativ etikett (%s)"
-
-#: ../classes/ProfileTemplateField.php:472
-msgid "admin label"
-msgstr "administrativ etikett"
-
-#: ../classes/ProfileTemplateField.php:479
-msgid "Semantic ID"
-msgstr "Semantiskt ID"
-
-#: ../classes/ProfileTemplateField.php:487
-msgid "Full name"
-msgstr "Fullständigt namn"
-
-#: ../classes/ProfileTemplateField.php:488
-msgid "Nickname"
-msgstr "Smeknamn"
-
-#: ../classes/ProfileTemplateField.php:489
-msgid "E-mail"
-msgstr "Email-adress"
-
-#: ../classes/ProfileTemplateField.php:490
-msgid "Hashed e-mail"
-msgstr "Hashad emailadress"
-
-#: ../classes/ProfileTemplateField.php:491
-msgid "Picture"
-msgstr "Bild"
-
-#: ../classes/ProfileTemplateField.php:492
-msgid "URL of a blog"
-msgstr "URL till blogg"
-
-#: ../classes/ProfileTemplateField.php:493
-msgid "URL of a homepage"
-msgstr "URL till Hemsida"
-
-#: ../classes/ProfileTemplateField.php:608
-msgid "Could not delete ProfileTemplateField!"
-msgstr "Kunde inte ta bort ProfileTemplateField!"
-
-#: ../classes/ProfileField.php:251
-msgid "Unable to insert the new profile fields in the database!"
-msgstr "Kunde inte lägga till nya profilfält i databasen!"
-
-#: ../classes/ProfileField.php:281
-#, php-format
-msgid "Delete %s"
-msgstr "Ta bort %s"
-
-#: ../classes/ProfileField.php:368
-msgid "Could not delete ProfileField!"
-msgstr "Kunde inte ta bort ProfileField!"
 
 #: ../classes/Permission.php:85
 msgid "User is allowed to view online users troughout the network"
@@ -3580,41 +3657,17 @@ msgid ""
 "This will be replaced with more granular permissions in the future"
 msgstr ""
 
-#: ../classes/Stakeholder.php:92
-msgid "Remove stakeholder"
-msgstr ""
-
-#: ../classes/Stakeholder.php:98
-msgid "Add stakeholder"
-msgstr ""
-
-#: ../classes/Stakeholder.php:125
-#, php-format
-msgid "User %s already has role %s for this object"
-msgstr ""
-
-#: ../classes/GenericDataObject.php:124
-#, php-format
-msgid "Delete not supported on class %s"
-msgstr ""
-
-#: ../classes/Dependency.php:320 ../classes/Dependency.php:335
-#: ../classes/Dependency.php:350 ../classes/Dependency.php:364
-#, php-format
-msgid "Component %s is not installed (not found in %s)"
-msgstr "%s är inte installerad (Hittades inte i %s)"
-
-#: ../classes/DependenciesList.php:107
+#: ../classes/DependenciesList.php:105
 #, php-format
 msgid "Version %s needed"
 msgstr ""
 
-#: ../classes/DependenciesList.php:123
+#: ../classes/DependenciesList.php:122
 #, php-format
 msgid "%s may work, but version %s is recommended"
 msgstr ""
 
-#: ../classes/DependenciesList.php:126
+#: ../classes/DependenciesList.php:125
 #, php-format
 msgid "%s is too old, version %s needed"
 msgstr ""
@@ -3632,12 +3685,27 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: ../classes/DependenciesList.php:139
+#: ../classes/DependenciesList.php:138
 #, fuzzy
-msgid "Message"
+msgid "Information"
+msgstr "Projektinformation"
+
+#: ../classes/DependenciesList.php:176
+#, fuzzy
+msgid "Install message"
+msgstr "Senaste %d meddelanden:"
+
+#: ../classes/DependenciesList.php:179
+#, fuzzy
+msgid "Detection message"
 msgstr "Felmeddelande"
 
-#: ../classes/DependenciesList.php:188
+#: ../classes/DependenciesList.php:182
+#, fuzzy
+msgid "To install"
+msgstr "Totalt"
+
+#: ../classes/DependenciesList.php:204
 msgid "Dependencies"
 msgstr ""
 
@@ -3654,42 +3722,42 @@ msgid "days"
 msgstr "dagar"
 
 #: smarty.txt:5
-msgid "Logged in as"
-msgstr "Inloggad som"
-
-#: smarty.txt:6
-msgid "I am not logged in."
-msgstr "Jag är inte inloggad."
-
-#: smarty.txt:8
 msgid "user is online at this hotspot"
 msgstr "användare är online på denna Hotspot"
 
-#: smarty.txt:9
+#: smarty.txt:6
 msgid "users are online at this hotspot"
 msgstr "användare är online på denna Hotspot"
 
-#: smarty.txt:10
+#: smarty.txt:7
 msgid "Nobody is online at this hotspot"
 msgstr "Ingen är online på denna Hotspot"
 
-#: smarty.txt:11
+#: smarty.txt:8
 msgid "Recent Users:"
 msgstr "Nyligen anslutna användare:"
 
-#: smarty.txt:12
+#: smarty.txt:9
 msgid "Most Active Users:"
 msgstr "Mest aktiva användare:"
 
-#: smarty.txt:13 smarty.txt:23
+#: smarty.txt:10
+msgid "Logged in as"
+msgstr "Inloggad som"
+
+#: smarty.txt:11
+msgid "I am not logged in."
+msgstr "Jag är inte inloggad."
+
+#: smarty.txt:13
 msgid "Login or Signup here"
 msgstr "Logga in eller registrera"
 
-#: smarty.txt:14 smarty.txt:24
+#: smarty.txt:14
 msgid "Username (or email)"
 msgstr "Användarnamn (eller emailadress)"
 
-#: smarty.txt:15 smarty.txt:25 smarty.txt:31
+#: smarty.txt:15 smarty.txt:37
 msgid "Password"
 msgstr "Lösenord"
 
@@ -3717,31 +3785,82 @@ msgstr "Kartan laddas, var vänlig vänta"
 msgid "Legend"
 msgstr "Symbolbetydelser"
 
-#: smarty.txt:26 smarty.txt:27 smarty.txt:48 smarty.txt:68 smarty.txt:72
+#: smarty.txt:23
+#, php-format
+msgid "The %s network currently has one valid user."
+msgstr "%s nätverket har för tillfället en validerad användare."
+
+#: smarty.txt:24
+#, php-format
+msgid "The %s network currently has %d valid users."
+msgstr "%s nätverket har för tillfället %d validerade användare."
+
+#: smarty.txt:25
+msgid "One user is currently online."
+msgstr "En användare är online för tillfället."
+
+#: smarty.txt:26
+#, php-format
+msgid "%d users are currently online."
+msgstr "%d användare är online för tillfället."
+
+#: smarty.txt:27
+msgid "This network currently has 1 deployed hotspot."
+msgstr "Detta nätverk har för tillfället en utrullad Hotspot, "
+
+#: smarty.txt:28
+#, php-format
+msgid "This network currently has %d deployed hotspots."
+msgstr "Detta nätverk har för tillfället %d utrullade Hotspots, "
+
+#: smarty.txt:29
+msgid "One hotspot is currently operational."
+msgstr "En Hotspot är för tillfället fungerande"
+
+#: smarty.txt:30
+#, php-format
+msgid "%d hotspots are currently operational."
+msgstr "%d Hotspots är för tillfället fungerande"
+
+#: smarty.txt:31
+msgid ""
+"One hotspot isn't monitored so we don't know if it's currently operational."
+msgstr ""
+"En Hotspot är inte övervakad så vi vet inte om den fungerar för närvarande."
+
+#: smarty.txt:32
+#, php-format
+msgid ""
+"%d hotspots aren't monitored so we don't know if they are currently "
+"operational."
+msgstr ""
+"%d Hotspots är inte övervakade så vi vet inte om de fungerar för närvarande."
+
+#: smarty.txt:33 smarty.txt:54 smarty.txt:64 smarty.txt:68
 msgid "I'm having difficulties"
 msgstr "Jag har problem"
 
-#: smarty.txt:28
+#: smarty.txt:34
 msgid "Register a free account with"
 msgstr "Registrera ett gratis konto med"
 
-#: smarty.txt:29
+#: smarty.txt:35
 msgid "Username desired"
 msgstr "Önskat användarnamn"
 
-#: smarty.txt:30 smarty.txt:51 smarty.txt:74
+#: smarty.txt:36 smarty.txt:57 smarty.txt:70
 msgid "Your email address"
 msgstr "Din emailadress"
 
-#: smarty.txt:32
+#: smarty.txt:38
 msgid "Password (again)"
 msgstr "Lösenord (igen)"
 
-#: smarty.txt:33
+#: smarty.txt:39
 msgid "Please note"
 msgstr "Notera"
 
-#: smarty.txt:34
+#: smarty.txt:40
 msgid ""
 "While accounts are free, we <em>strongly</em> suggest that you use your "
 "previously created account if you have one."
@@ -3750,7 +3869,7 @@ msgstr ""
 "använder ett befintligt om du har ett. Detta underlättar för både kundtjänst "
 "och dig själv."
 
-#: smarty.txt:35
+#: smarty.txt:41
 msgid ""
 "<b>Your email address must be valid</b> in order for your account to be "
 "activated."
@@ -3758,21 +3877,21 @@ msgstr ""
 "<b>Du måste ange en giltig emailadress</b> för att du skall kunna aktivera "
 "ditt konto."
 
-#: smarty.txt:36
+#: smarty.txt:42
 msgid "A validation email will be sent to that email address."
 msgstr ""
 "Ett valideringsmail kommer att skickas till den emailadressen du angav."
 
-#: smarty.txt:37
+#: smarty.txt:43
 msgid "To fully activate your account you must respond to that email."
 msgstr ""
 "För att aktivera och validera ditt konto, följ länken i valideringsmailet."
 
-#: smarty.txt:38
+#: smarty.txt:44
 msgid "Note to free web-based email users"
 msgstr "Notering till användare av gratis webb-baserade emailtjänster:"
 
-#: smarty.txt:39
+#: smarty.txt:45
 msgid ""
 "Sometimes our validation email ends up in the 'spam' folder of some "
 "providers. If you have not received any email with the validation URL 5 "
@@ -3782,105 +3901,50 @@ msgstr ""
 "tjänsterna. Om du inte har fått något mail från oss på 5 minuter så kolla "
 "din skräppostmapp."
 
-#: smarty.txt:40
+#: smarty.txt:46
 msgid "You can also use the following links if you need help"
 msgstr "Du kan också använda följande länkar som kan vara till hjälp"
 
-#: smarty.txt:41
+#: smarty.txt:47
 #, php-format
 msgid "Status of the %d open %s Hotspots"
 msgstr "Status för %d aktiva %s Hotspots"
 
-#: smarty.txt:42
+#: smarty.txt:48
 msgid "Hotspot / Status"
 msgstr "Hotspot / Status"
 
-#: smarty.txt:44
+#: smarty.txt:50
 msgid "Location"
 msgstr "Adress"
 
-#: smarty.txt:45
+#: smarty.txt:51
 msgid "Hotspot in testing phase"
 msgstr "Hotspot i testningsfas"
 
-#: smarty.txt:46
+#: smarty.txt:52
 msgid "Hotspot not monitored"
 msgstr "Hotspot:en är inte övervakad"
 
-#: smarty.txt:47
+#: smarty.txt:53
 #, php-format
 msgid "Opened on %s"
 msgstr "Aktiverad %s"
 
-#: smarty.txt:49
+#: smarty.txt:55
 msgid "Lost password"
 msgstr "Borttappat lösenord"
 
-#: smarty.txt:50 smarty.txt:70
+#: smarty.txt:56 smarty.txt:66
 msgid "Your username"
 msgstr "Ditt användarnamn"
 
-#: smarty.txt:52
+#: smarty.txt:58
 msgid "Please enter your username or email address to reset your password"
 msgstr ""
 "Fyll i ditt användarnamn eller emailadress för att återställa ditt lösenord"
 
-#: smarty.txt:53
-#, php-format
-msgid "The %s network currently has one valid user."
-msgstr "%s nätverket har för tillfället en validerad användare."
-
-#: smarty.txt:54
-#, php-format
-msgid "The %s network currently has %d valid users."
-msgstr "%s nätverket har för tillfället %d validerade användare."
-
-#: smarty.txt:55
-msgid "One user is currently online."
-msgstr "En användare är online för tillfället."
-
-#: smarty.txt:56
-#, php-format
-msgid "%d users are currently online."
-msgstr "%d användare är online för tillfället."
-
-#: smarty.txt:57
-msgid "This network currently has 1 deployed hotspot."
-msgstr "Detta nätverk har för tillfället en utrullad Hotspot, "
-
-#: smarty.txt:58
-#, php-format
-msgid "This network currently has %d deployed hotspots."
-msgstr "Detta nätverk har för tillfället %d utrullade Hotspots, "
-
 #: smarty.txt:59
-msgid "One hotspot is currently operational."
-msgstr "En Hotspot är för tillfället fungerande"
-
-#: smarty.txt:60
-#, php-format
-msgid "%d hotspots are currently operational."
-msgstr "%d Hotspots är för tillfället fungerande"
-
-#: smarty.txt:61
-msgid ""
-"One hotspot isn't monitored so we don't know if it's currently operational."
-msgstr ""
-"En Hotspot är inte övervakad så vi vet inte om den fungerar för närvarande."
-
-#: smarty.txt:62
-#, php-format
-msgid ""
-"%d hotspots aren't monitored so we don't know if they are currently "
-"operational."
-msgstr ""
-"%d Hotspots är inte övervakade så vi vet inte om de fungerar för närvarande."
-
-#: smarty.txt:63
-msgid "Please get in touch with "
-msgstr "Kontakta "
-
-#: smarty.txt:64
 msgid ""
 "We are a not-for-profit group dedicated to making no-fee wireless Internet "
 "access generally available."
@@ -3888,7 +3952,7 @@ msgstr ""
 "Vi är en icke-vinstdrivande grupp dedicerade att skapa ett fullständigt "
 "gratis trådlöst Internet för alla att använda."
 
-#: smarty.txt:65
+#: smarty.txt:60
 msgid ""
 "Our aim is to encourage the growth of wireless networking and to build "
 "community in interesting and innovative ways."
@@ -3896,7 +3960,7 @@ msgstr ""
 "Vårt mål är att uppmuntra tillväxten av trådlösa nätverk och att bygga en "
 "gemenskap i både intressanta och innovativa vägar."
 
-#: smarty.txt:66
+#: smarty.txt:61
 msgid ""
 "We do this by setting up wireless Internet networks in parks, cafés, "
 "restaurants, bars and other publically-accessible locations across the city."
@@ -3904,15 +3968,19 @@ msgstr ""
 "Detta gör vi genom att sätta upp Hotspots i parker, caféer, resturanger, "
 "barer och andra offentliga platser runtom i staden."
 
-#: smarty.txt:67
+#: smarty.txt:62
 msgid "For a complete and up-to-date listing of our nodes, visit"
 msgstr "För en fullständig och uppdaterad lista över våra Hotspots, besök"
 
-#: smarty.txt:69
+#: smarty.txt:63
+msgid "Please get in touch with "
+msgstr "Kontakta "
+
+#: smarty.txt:65
 msgid "Re-send validation email"
 msgstr "Skicka valideringsmail igen"
 
-#: smarty.txt:71
+#: smarty.txt:67
 msgid ""
 "Please enter your username and the validation email will be resent to your "
 "email address"
@@ -3920,49 +3988,78 @@ msgstr ""
 "Fyll i ditt användarnamn så kommer ditt valideringsmail att skickas till "
 "din  emailadress."
 
-#: smarty.txt:73
+#: smarty.txt:69
 msgid "Lost username"
 msgstr "Borttappat användarnamn"
 
-#: smarty.txt:75
+#: smarty.txt:71
 msgid "Please enter your email address to recover your username"
 msgstr "Fyll i vilken emailadress för att hämta ditt användarnamn"
 
-#: smarty.txt:76
-msgid "User list"
-msgstr "Användarlista"
-
-#: smarty.txt:77
-msgid "Sort by:"
-msgstr "Sortera efter:"
-
-#: smarty.txt:78
-msgid "Direction:"
-msgstr "Riktning:"
-
-#: smarty.txt:79
-msgid "Sort"
-msgstr "Sortera"
-
-#: smarty.txt:82
-msgid "Registered On"
-msgstr "Registrerad"
-
-#: smarty.txt:84
+#: smarty.txt:72
 msgid "Online users"
 msgstr "Användare online"
 
-#: smarty.txt:87
+#: smarty.txt:75
 msgid "Origin"
 msgstr "Ursprung"
 
-#: smarty.txt:88
+#: smarty.txt:76
 msgid "Logged in Since"
 msgstr "Inloggad sedan"
 
-#: smarty.txt:89
+#: smarty.txt:77
 msgid "Traffic IN/OUT"
 msgstr "Trafik (Nerladdat / Uppladdat)"
+
+#: smarty.txt:78
+msgid "User list"
+msgstr "Användarlista"
+
+#: smarty.txt:79
+msgid "Sort by:"
+msgstr "Sortera efter:"
+
+#: smarty.txt:80
+msgid "Direction:"
+msgstr "Riktning:"
+
+#: smarty.txt:81
+msgid "Sort"
+msgstr "Sortera"
+
+#: smarty.txt:84
+msgid "Registered On"
+msgstr "Registrerad"
+
+#~ msgid "French"
+#~ msgstr "Franska"
+
+#~ msgid "English"
+#~ msgstr "Engelska"
+
+#~ msgid "German"
+#~ msgstr "Tyska"
+
+#~ msgid "Spanish"
+#~ msgstr "Spanska"
+
+#, fuzzy
+#~ msgid "Brazilian Portuguese"
+#~ msgstr "Portugisiska"
+
+#~ msgid "Portuguese"
+#~ msgstr "Portugisiska"
+
+#~ msgid "Japanese"
+#~ msgstr "Japanska"
+
+#~ msgid "Component %s is not installed (not found in %s)"
+#~ msgstr "%s är inte installerad (Hittades inte i %s)"
+
+#, fuzzy
+#~ msgid "Message"
+#~ msgstr "Felmeddelande"
 
 #~ msgid "You MUST fill in all the fields."
 #~ msgstr "Alla fält måste fyllas i."
@@ -4554,25 +4651,8 @@ msgstr "Trafik (Nerladdat / Uppladdat)"
 #~ "Om du inte hinner att aktivera ditt konto så kommer du behöva att "
 #~ "aktivera från någon annan plats."
 
-#~ msgid ""
-#~ "If you do not receive an email from our validation server in the next "
-#~ "minute, perhaps you have made a typo in your email address, you might "
-#~ "have to create another account."
-#~ msgstr ""
-#~ "Om du inte får ett email från vår server inom de närmsta minutrarna så "
-#~ "skrev du kanske fel email. Om detta är fallet måste du skapa ett nytt "
-#~ "konto"
-
-#~ msgid "No message has been specified! (this is probably an error)"
-#~ msgstr "Inget meddelande är angivet! (Detta är troligen ett fel)"
-
 #~ msgid "You have failed to validate your account in 15 minutes."
 #~ msgstr "Du har misslyckats med att aktivera ditt konto på de 15 minutrarna."
-
-#~ msgid ""
-#~ "Please validate your account from somewhere else or create a new one."
-#~ msgstr ""
-#~ "Var vänlig och validera ditt kontot någon annanstans eller skapa ett nytt."
 
 #~ msgid "is unknown to this authentication server."
 #~ msgstr "är okänd för denna autentiseringsserver."
@@ -4720,20 +4800,6 @@ msgstr "Trafik (Nerladdat / Uppladdat)"
 
 #~ msgid "Language:"
 #~ msgstr "Språk:"
-
-#~ msgid "You have failed to validate your account in %d minutes."
-#~ msgstr ""
-#~ "Du har misslyckats med att validera ditt konto på de %d minuterna du var "
-#~ "tilldelad."
-
-#~ msgid ""
-#~ "You have now been granted %d minutes of Internet access without being "
-#~ "validated to go and activate your account."
-#~ msgstr ""
-#~ "Ett email har skickats till dig med instruktioner om hur du skall gå "
-#~ "vidare för att aktivera ditt konto. Ditt konto har därför blivit "
-#~ "tilldelat %d minuters tillgång till Internet för att ge dig möjlighet att "
-#~ "läsa mailet."
 
 #~ msgid "Change network"
 #~ msgstr "Byt nätverk"
@@ -5015,16 +5081,6 @@ msgstr "Trafik (Nerladdat / Uppladdat)"
 
 #~ msgid "%d hotspots are currently operationnal."
 #~ msgstr "varav %d Hotspot är aktiva."
-
-#~ msgid ""
-#~ "If you fail to validate your account in %d minutes, you will have to "
-#~ "validate it from somewhere else."
-#~ msgstr ""
-#~ "Om du inte hinner att aktivera ditt konto på %d minuter så kommer du "
-#~ "behöva att aktivera ifrån någon annan plats."
-
-#~ msgid "Unknown message specified! (this is probably an error)"
-#~ msgstr "Okänt meddelande angivet! (Detta är troligen ett fel)"
 
 #~ msgid "Last five messages:"
 #~ msgstr "Senaste fem meddelanden:"
