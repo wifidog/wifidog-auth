@@ -79,6 +79,7 @@ class Mail {
         "dumpmail.de",
         "e4ward.com",
         "emailias.com",
+        "guerrillamail.info",
         "gishpuppy.com",
         "golfilla.info",
         "greensloth.com",
