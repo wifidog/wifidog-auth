@@ -1389,7 +1389,7 @@ class Node implements GenericObject
         // Statistics
         $name = "node_{$this->id}_get_stats";
         if (!empty ($_REQUEST[$name]))
-        header("Location: stats.php?node_id=".urlencode($this->getId()));
+        header("Location: stats.php?".urlencode("selected_nodes[]")."=".urlencode($this->getId()));
 
         // Node configuration section
 

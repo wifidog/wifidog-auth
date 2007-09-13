@@ -57,8 +57,8 @@ class Avatar extends SimplePicture
         $this -> configEnableHyperlink(false);
 
 		// Max 40x40 pixels
-        $this->setMaxDisplayWidth(40);
-        $this->setMaxDisplayHeight(40);
+        $this->setMaxDisplayWidth('40px');
+        $this->setMaxDisplayHeight('40px');
     }
 
     public static function getDefaultUserUI() {

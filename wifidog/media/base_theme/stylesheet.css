@@ -644,10 +644,7 @@ td.admin_element_tools,th.admin_element_tools {
 	display: inline;
 }
 
-/********** Content type section **********/ 
-/* MainMenu */
-
-
+/********** Content type section **********/ /* MainMenu */
 #nav,#nav ul { /* all lists */
 	padding: 0;
 	margin: 0 0 1em 0;
@@ -806,7 +803,7 @@ fpr_empty_feeds {
 	width: 100%;
 	z-index: 100;
 	opacity: 0.90;
-	filter: alpha(opacity =     90);
+	filter: alpha(opacity =       90);
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
@@ -1376,57 +1373,15 @@ fieldset .red {
 }
 
 \html
-
- 
-
-div
-
-
-.tableContainer
-
- 
-
-table
-
-   /* */
-{
-margin
-
-
-:
-0
--16
-px
-
- 
-
-0
-0
+div.tableContainer table { /* */
+	margin: 0 -16px 0 0
 }
+
 \html
-
- 
-
-div
-
-
-.tableContainer
-
-   /* */
-{
-padding
-
-
-:
-0
-16
-px
-
- 
-
-0
-0;
+div.tableContainer { /* */
+	padding: 0 16px 0 0;
 }
+
 table.scrollable thead tr {
 	position: relative;
 }

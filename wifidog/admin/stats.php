@@ -55,19 +55,17 @@ $current_user = User :: getCurrentUser();
 $db = AbstractDb::getObject(); 
 
 $statistics = new Statistics();
-if (!empty ($_REQUEST['action']) && $_REQUEST['action'] == 'generate')
-{
-	$statistics->processAdminUI();
-}
+$statistics->processAdminUI();
+
 try
 {
-	if (!empty ($_REQUEST['node_id']))
+	if (!empty($_REQUEST['selected_nodes'])&& count($_REQUEST['selected_nodes']) == 1)
 	{
-		$node_id = $db->escapeString($_REQUEST["node_id"]);
+		$node_id = $db->escapeString($_REQUEST['selected_nodes'][0]);
 		$nodeObject = Node :: getObject($node_id);
 		$stats_title = _("Connections at")." '".$nodeObject->getName()."'";
 	}
-	elseif (isset ($_REQUEST['user_id']))
+	else if (isset ($_REQUEST['user_id']))
 	{
 		$user_id = $db->escapeString($_REQUEST["user_id"]);
 		$userObject = User :: getObject($user_id);
@@ -84,33 +82,16 @@ try
 		$networkObject = Network :: getObject($network_id);
 		$stats_title = _("Network information for")." '".$networkObject->getName()."'";
 	}
-
-	$html = '';
-
-	if (isset ($stats_title))
-	{
-		$html .= "<h2>{$stats_title}</h2>";
+	else {
+	    $stats_title = null;
 	}
+    
+	$html = '';
+if($stats_title){
+		$html .= "<h2>{$stats_title}</h2>";
+}
 	$html .= "<form name='stats_form'>";
 	$html .= $statistics->getAdminUI();
-
-	if (isset ($_REQUEST['node_id']))
-	{
-		$html .= "<input type='hidden' id='node_id' name='node_id' value='{$_REQUEST['node_id']}'>";
-	}
-	elseif (isset ($_REQUEST['user_id']))
-	{
-		$html .= "<input type='hidden' id='user_id' name='user_id' value='{$_REQUEST['user_id']}'>";
-	}
-	elseif (isset ($_REQUEST['user_mac']))
-	{
-		$html .= "<input type='hidden' id='user_mac' name='user_mac' value='{$_REQUEST['user_mac']}'>";
-	}
-	elseif (isset ($_REQUEST['network_id']))
-	{
-		$html .= "<input type='hidden' id='network_id' name='network_id' value='{$_REQUEST['network_id']}'>";
-	}
-
 	$html .= "<input type='hidden' name='action' value='generate'>";
 
 	$html .= "<input type='submit' value='"._("Generate statistics")."'>";
@@ -125,6 +106,7 @@ catch (exception $e)
 	$html .= "</p>";
 }
 $ui = MainUI::getObject();
+$ui->setTitle($stats_title);
 $ui->addContent('main_area_middle', $html);
 $ui->display();
 

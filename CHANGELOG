@@ -1,4 +1,7 @@
 # $Id$
+2007-09-12 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Scratch a few itches:  Fix the link from node admin to stats, minor CSS fixes
+
 2007-09-11 Benoit Grégoire  <bock@step.polymtl.ca>
 	* VitrualHost.php: Close #373: Apply patch from leandro@texnet.it to fix mispelled table name in delete() method
 	* Close #374:  Add preliminary italian translation from leandro@texnet.it 

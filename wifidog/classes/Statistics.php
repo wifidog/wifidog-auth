@@ -368,7 +368,7 @@ $from_presets = array (
         // Init values
         $html = '';
 
-        $name = "statistics_selected_nodes[]";
+        $name = "selected_nodes[]";
         $user = User :: getCurrentUser();
 
         if (!isset ($user)) {
@@ -397,7 +397,7 @@ $from_presets = array (
      * Get the select node interface.
      */
     private function processSelectedNodesUI() {
-        $name = "statistics_selected_nodes";
+        $name = "selected_nodes";
         //pretty_print_r($_REQUEST[$name]);
         $this->report_selected_nodes = array ();
         if (!empty ($_REQUEST[$name])) {
@@ -444,11 +444,22 @@ $from_presets = array (
 
     /**
      * Process the date range selection UI
+     * @return true id options were set, false otherwise
      */
     private function processDistinguishUsersByUI() {
-        if (!isset ($this->user_distinguish_by_options[$_REQUEST['distinguish_users_by']]))
-        throw new exception(_("Invalid parameter"));
-        $this->report_distinguish_users_by = $_REQUEST['distinguish_users_by'];
+        $retval = false;
+        if (empty($_REQUEST['distinguish_users_by'])) {
+            //Keep whatever was set before
+        }
+        else if (!isset ($this->user_distinguish_by_options[$_REQUEST['distinguish_users_by']])) {
+            throw new exception(_("Invalid parameter"));
+        }
+        else {
+            $this->report_distinguish_users_by = $_REQUEST['distinguish_users_by'];
+                    $retval = true;
+        }
+        return $retval;
+        
     }
 
     /**
