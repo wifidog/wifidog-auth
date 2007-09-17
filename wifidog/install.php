@@ -165,8 +165,6 @@ $dir_array = array (
 'tmp',
 'tmp/simplepie_cache',
 'lib/',
-'lib/smarty',
-'lib/smarty/plugins',
 'tmp/smarty/templates_c',
 'tmp/smarty/cache',
 'tmp/openidserver',
@@ -499,64 +497,12 @@ EndHTML;
                 ),
                 array (
                 "title" => "Next",
-                "page" => "smarty"
+                "page" => "simplepie"
                 )
                 ));
             }
 
             break;
-            ###################################
-        case 'smarty' : // Download, uncompress and install Smarty
-            print<<< EndHTML
-    <h1>Smarty template engine installation</h1>
-    <p><A HREF="http://smarty.php.net/">Smarty</A> is Template Engine. WifiDog requires you install it before you continue.</p>
-EndHTML;
-if ($neededPackages['smarty']['available']) {
-            print "Already installed !<br/>";
-}
-else {
-    $output = WIFIDOG_ABS_FILE_PATH."tmp/";
-    //chdir($output);
-    list ($url, $filename) = split("=", $smarty_full_url);
-
-    print "Download source code ($filename) : ";
-    if (!file_exists($output.$filename))
-    Dependency::downloadFile($smarty_full_url, $output.$filename);
-
-    if (!file_exists($output.$filename)) {
-        print "<B STYLE=\"color:red\">Error</b><p>Current working directory : <em>$output</em>";
-        print "<pre><em>wget \"$smarty_full_url\"</em>\n$output</pre>";
-        exit ();
-    }
-    else {
-        print "OK<BR>";
-    }
-
-    print "Uncompressing : ";
-    $dir_array = split(".tar.gz", $output.$filename);
-    $dirname = array_shift($dir_array);
-
-    if (!file_exists($dirname))
-    Dependency::execVerbose("cd $output; tar -xzf $dirname.tar.gz", $output, $return);
-    print "OK<BR>";
-    print "Copying : ";
-    if (!file_exists(WIFIDOG_ABS_FILE_PATH . "lib/smarty"));
-    Dependency::execVerbose("cp -r $dirname/libs/* " . WIFIDOG_ABS_FILE_PATH . "/lib/smarty", $output, $return); # TODO : Utiliser SMARTY_REL_PATH
-    print "OK<BR>";
-
-    refreshButton();
-}
-navigation(array (
-array (
-"title" => "Back",
-"page" => "version"
-            ),
-array (
-"title" => "Next",
-"page" => "simplepie"
-            )
-));
-break;
 ###################################
         case 'simplepie' : // Download, uncompress and install SimplePie
             print "<h1>SimplePie installation</h1>\n";
@@ -575,7 +521,7 @@ break;
                 ));
             }
             elseif ($action == 'install') {
-
+		require_once (dirname(__FILE__) . '/include/common.php');
                 print "Download source code frpm svn($filename) : ";
                 Dependency::execVerbose("svn co ".escapeshellarg($neededPackages['simplepie']['svn_source'])." ".escapeshellarg(WIFIDOG_ABS_FILE_PATH."lib/simplepie"), $output, $return);
                 #Dependency::execVerbose("locale", $output, $return);
@@ -633,7 +579,7 @@ navigation(array (
                 ));
             }
             elseif ($action == 'install') {
-
+		require_once (dirname(__FILE__) . '/include/common.php');
                 print "Download source code frpm svn($filename) : ";
                 Dependency::execVerbose("svn co ".escapeshellarg($neededPackages['feedpressreview']['svn_source'])." ".escapeshellarg(WIFIDOG_ABS_FILE_PATH."lib/feedpressreview"), $output, $return);
                 #Dependency::execVerbose("locale", $output, $return);

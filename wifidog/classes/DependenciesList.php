@@ -130,7 +130,7 @@
            }
            $html .= "</table>";
 
-           $components = Dependency::getDependency();
+           $components = Dependency::getDependencies();
            $html .= "<table BORDER=\"1\">\n";
            $html .= "<tr><th>"._("Component").'<br/>'._("Click for the component's website")."</th>\n";
            $html .= "<th>"._("Type")."</th>\n";

@@ -46,18 +46,16 @@
  */
 require_once("classes/Locale.php");
 require_once("classes/Utils.php");
-require_once("include/smarty.resource.string.php");
-
-// Check if Smarty installed, if not redirect user to web-base installation
-if (Dependency::check("Smarty", $errmsg)) {
+// Check if all mandatory components (such as Smarty) installed, if not redirect user to web-base installation
+if (Dependency::checkMandatoryComponents($errmsg)) {
     // Load Smarty library
-    require_once('lib/smarty/Smarty.class.php');
+    require_once(SMARTY_PATH.'Smarty.class.php');
 } else {
     // Build the system_path for the auth-server
-    print "Redirecting to Wifidog web-based install script since Smarty is missing (Error was: $errmsg)<META HTTP-EQUIV=Refresh CONTENT=\"5; URL=".BASE_URL_PATH."/install.php\">";
+    print "Redirecting to Wifidog web-based install script since a mandatory Dependency is missing (Error was: $errmsg)<META HTTP-EQUIV=Refresh CONTENT=\"5; URL=".BASE_URL_PATH."/install.php\">";
     exit();
 }
-
+require_once("include/smarty.resource.string.php");
 /*
  * Smarty plugin
  * -------------------------------------------------------------

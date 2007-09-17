@@ -54,7 +54,9 @@
  }
 
  require_once ('classes/Utils.php');
-       define('OPENID_PATH', WIFIDOG_ABS_FILE_PATH.'lib/php-openid-2.0.0-rc2/');
+ 
+        define('OPENID_PATH', WIFIDOG_ABS_FILE_PATH.'lib/php-openid-2.0.0-rc2/');
+        define('SMARTY_PATH', WIFIDOG_ABS_FILE_PATH.'lib/Smarty-2.6.18/libs/');        
  /**
   * This class checks the existence of components required by WiFiDog.
   * Note that it implicitely depends on the defines in include/path_defines_base.php
@@ -70,29 +72,56 @@
   class Dependency
   {
       /**
-       * List of components used by WiFiDog
-       *
+       * An array of components used by WiFiDog
+       * The main array key is the EXACT name name of the dependency.  Do NOT translate it or blindly change it;
+       *   It is used in the code if various ways, for example to detect PHP or PEAR modules 
+       * Documentation of the various array keys:  
+       * 'mandatory' => Optional.  Set to true if the dependency absolutely required for basic operation of an auth server
+       * 'type' => Mandatory.  The type of Dependency.  Currently, allowed values are: 
+	   *	"phpExtension":  Standard PHP extension 
+	   *	"peclStandard":  Standard (in the PECL reposidory) PECL PHP module
+	   *	"peclStandard":	 Standard (in the PEAR reposidory) PEAR PHP module
+	   * 	"pearCustom":	PEAR-compatible tarball
+	   *	"localLib": Custom PHP extension, to be downloaded and installed in wifidog/lib
+	   * 'detectFiles' => Mandatory for most type of dependencies, the relative path to the file that must exist for the dependency to be considered present.
+	   * 					The path is relative to the PHP path, or wifidog/lib depending on the type of install
+	   * 'description' => Description of the dependency, and what it's used for in wifidog
+	   * 'website' => URL to the dependency's official website
+       * 'installSourceUrl' => For localLib and pearCustom dependency, the URL where the dependency can be downloaded.
+       * 'installMethod' => For localLib, the protocol to be used to download and install the dependency.  Currently, allowed values are:
+       * 	'tarball': Decompress a tarball in wifidog/lib
+       * 'installDestination' => For localLib, the path, relative to wifidog/lib where the dependency should be installed
+       * 
        * @var array
        */
 
        private static $_components = array(
        /* PHP extensions (mandatory) */
        'mbstring' => array (
-       'mandatory' => 1,
+       'mandatory' => true,
        "type" => "phpExtension",
        'description' => 'Required for core auth-server and RSS support'
        ),
        'session' => array (
-       'mandatory' => 1,
+       'mandatory' => true,
        "type" => "phpExtension",
        'description' => 'Required for core auth-server'
        ),
        'pgsql' => array (
-       'mandatory' => 1,
+       'mandatory' => true,
        "type" => "phpExtension",
        'description' => 'Required for auth-server to connect to Postgresql database'
        ),
-
+       "Smarty" => array (
+       'mandatory' => true,
+       "type" => "localLib",
+       "detectFiles" => "lib/Smarty-2.6.18/libs/Smarty.class.php",
+       'description' => "Required for all parts of wifidog",
+       'website' => "http://smarty.php.net/",
+       'installSourceUrl' => "http://smarty.php.net/do_download.php?download_file=Smarty-2.6.18.tar.gz",
+       'installMethod' => "tarball",
+       'installDestination' => "/"
+       ),
        /* PHP extensions (optional) */
        'gettext' => array (
        "type" => "phpExtension",
@@ -145,12 +174,6 @@
        ),
 
        /* Locally installed libraries */
-       "Smarty" => array (
-       "type" => "localLib",
-       "detectFiles" => "lib/smarty/Smarty.class.php",
-       'description' => "Required for all parts of wifidog",
-       'website' => "http://smarty.php.net/"
-       ),
        "FCKeditor" => array (
        "type" => "localLib",
        "detectFiles" => "lib/FCKeditor/fckeditor.php",
@@ -246,7 +269,7 @@
           *
           * @return boolean Returns whether the file has been found or not.
           */
-          public static function getDependency()
+          public static function getDependencies()
           {
               $retval = array();
 
@@ -395,6 +418,28 @@
                 return $returnValue;
             }
 
+                       /**
+            * Checks if one of the mandatory components is missing.
+            *
+            * @param string $errmsg    Reference of a string which would contain an
+            *                          error message.
+            *
+            * @return boolean Returns false if any components are missing.
+            */
+            public static function checkMandatoryComponents(&$errmsg = null)
+            {
+                // Init values
+                $returnValue = true;
+$components = self::getDependencies();
+foreach($components as $component) {
+    if($component->isMandatory()) {
+        $returnValue &= self::check($component->getId(), $errmsg);
+    }
+}
+
+                return $returnValue;
+            }
+            
             /** Use PHP internal functions to download a file */
             static public function downloadFile($remoteURL, $localPath) {
                 set_time_limit(1500); // 25 minutes timeout
@@ -423,8 +468,16 @@
 
                              break;
                          case "localLib":
-                             $name = $this->getId().'_install';
-                             $html .= sprintf(_("<input type='submit' name='%s' value='Install %s'/>"), $name,$this->getId());
+                                                  if($this->getInstallSourceUrl()) {
+                                                                                   $name = $this->getId().'_install';
+                                                                                   $value = sprintf(_("Install %s"), $this->getId());
+                                                              $html .= sprintf("<input type='submit' name='%s' value='%s'/>", $name, $value);
+                                                      
+                             }
+                             else {
+                                 $html .= sprintf(_("Sorry, i couldn't find the source for %s in installSourceUrl"), $this->getId());
+                             }
+
 
                              break;
                              //case "pearStandard":

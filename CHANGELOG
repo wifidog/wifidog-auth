@@ -1,4 +1,9 @@
 # $Id$
+2007-09-17 Benoit Grégoire  <bock@step.polymtl.ca>
+	* SmartyWifidog:  If ANY of the mandatory dependencies (not just smarty) are missing, user will be redirected to the install script
+	* Move Smarty detection and install to common framework.  Take this opportunity to move to upgrade to latest Smarty since people will have to re-run the install script anyway.
+	* Fix #381 by applying patch from leandro@texnet.it, mea-culpa, I didn't know I broke the install script.
+	
 2007-09-12 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Scratch a few itches:  Fix the link from node admin to stats, minor CSS fixes
 
