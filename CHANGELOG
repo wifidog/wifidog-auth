@@ -1,4 +1,7 @@
 # $Id$
+2007-09-18 Benoit Grégoire  <bock@step.polymtl.ca>
+	* portal/index.php:  Add a call to garbage_collect() to fix #367
+	
 2007-09-17 Benoit Grégoire  <bock@step.polymtl.ca>
 	* SmartyWifidog:  If ANY of the mandatory dependencies (not just smarty) are missing, user will be redirected to the install script
 	* Move Smarty detection and install to common framework.  Take this opportunity to move to upgrade to latest Smarty since people will have to re-run the install script anyway.

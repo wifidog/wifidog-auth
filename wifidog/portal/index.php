@@ -106,6 +106,7 @@ if (isset ($session)) {
         $session->set(SESS_NODE_ID_VAR, $node_id);
     }
 }
+
 /*
  * If this node has a custom portal defined, and the network config allows it,
  * redirect to the custom portal
@@ -113,6 +114,12 @@ if (isset ($session)) {
 $custom_portal_url = $node->getCustomPortalRedirectUrl();
 
 if (!empty ($custom_portal_url) && $network->getCustomPortalRedirectAllowed()) {
+    /**
+     * If the database doesn't get cleaned up by a cron job, we'll do now (normally this is done in ManiUI, but for custom URLs, MainUI may never be instanciated
+     */
+    if (CONF_USE_CRON_FOR_DB_CLEANUP == false) {
+        garbage_collect();
+    }
     header("Location: {$custom_portal_url}");
     exit;
 }
