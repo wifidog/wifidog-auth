@@ -66,7 +66,7 @@
 			{/if}
 			</div>
 
-            <input class="submit" type="submit" tabindex="3" name="login_form_submit" value="{"Login"|_}"  onclick="return validateForm(this.form);"/>&nbsp;
+            <input class="submit" type="submit" tabindex="3" name="login_form_submit" value="{"Login"|_}" onclick="return validateForm(this.form);"/>&nbsp;
             <input class="submit" type="submit" tabindex="4" name="form_signup" value="{"Create a free account"|_}" onclick="location.href='{$base_ssl_path}signup.php';" />
     <script type="text/javascript">
         <!--

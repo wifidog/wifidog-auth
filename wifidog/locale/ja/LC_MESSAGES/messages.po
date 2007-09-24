@@ -8,13 +8,277 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-11 14:10-0400\n"
+"POT-Creation-Date: 2007-09-24 00:52-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: ../node_list.php:109
+msgid "No nodes could not be found in the database"
+msgstr "そのノードはデータベース上に見つかりません。"
+
+#: ../node_list.php:112 ../classes/Node.php:306 ../classes/Node.php:661
+msgid "Deployed"
+msgstr ""
+
+#: ../node_list.php:113 ../classes/Node.php:307 ../classes/Node.php:662
+msgid "In planning"
+msgstr ""
+
+#: ../node_list.php:113 ../classes/Node.php:308 ../classes/Node.php:663
+msgid "In testing"
+msgstr ""
+
+#: ../node_list.php:113 ../classes/Node.php:309 ../classes/Node.php:664
+msgid "Non-Wifidog node"
+msgstr ""
+
+#: ../node_list.php:113 ../classes/Node.php:310 ../classes/Node.php:665
+msgid "Permanently closed"
+msgstr ""
+
+#: ../node_list.php:113 ../classes/Node.php:311 ../classes/Node.php:666
+msgid "Temporarily closed"
+msgstr ""
+
+#: ../validate.php:58
+msgid "No token specified!"
+msgstr "指定されたトークンがありません!"
+
+#: ../validate.php:61
+msgid "No user ID specified!"
+msgstr "指定されたユーザーIDはありません!"
+
+#: ../validate.php:66
+msgid "The validation token does not match the one in the database."
+msgstr "有効なトークンがデータベース上と一致しません。"
+
+#: ../validate.php:69
+msgid "Your account has already been activated."
+msgstr "あなたのアカウントはすでに有効になっています。"
+
+#: ../validate.php:77
+msgid ""
+"Your account has been succesfully activated!\n"
+"\n"
+"You may now browse to a remote Internet address and take advantage of the "
+"free Internet access!\n"
+"\n"
+"If you get prompted for a login, enter the username and password you have "
+"just created."
+msgstr ""
+"あなたのアカウントを有効にすることに成功しました！\n"
+"\n"
+"インターネットのURLを入力すれば、自由にインターネットをお楽しみいただけま"
+"す！\n"
+"\n"
+"もしあなたがすぐにログインしたければ、ユーザー名とパスワードを入力すれば、即"
+"座にログインできます。"
+
+#: ../lost_password.php:103 ../resend_validation.php:100 ../signup.php:197
+#: ../lost_username.php:101
+msgid "Sorry, this network does not exist !"
+msgstr "申し訳ありません。現在このネットワークは利用できません。"
+
+#: ../lost_password.php:107
+msgid "Please specify a username or email address"
+msgstr "ユーザー名またはE-mailアドレスを指定してください。"
+
+#: ../lost_password.php:131
+msgid "This username or email could not be found in our database"
+msgstr ""
+"このユーザー名またはE-mailアドレスは私たちのデータベース上に見つけることが出"
+"来ません。"
+
+#: ../lost_password.php:134
+msgid "A new password has been emailed to you."
+msgstr "新しいパスワードをあなたのE-mailへ送信しました。"
+
+#: ../hotspots_map.php:99
+msgid ""
+"Unable to get the google API key, because I couldn't find a vhost matching "
+"the current hostname"
+msgstr ""
+
+#: ../hotspots_map.php:115
+msgid "Change network"
+msgstr "ネットワークの変更"
+
+#: ../hotspots_map.php:146
+msgid "Sorry, your browser does not support Google Maps."
+msgstr ""
+"申し訳ありませんが、あなたがご利用のブラウザでは、Google Mapsを利用することが"
+"できません。"
+
+#: ../hotspots_map.php:146 ../classes/StatisticReport/NodeStatus.php:190
+#: ../classes/StatisticReport/NetworkStatus.php:109
+msgid "Homepage"
+msgstr "ホームページ"
+
+#: ../hotspots_map.php:146
+msgid "Show me on the map"
+msgstr "地図で現在地を確認"
+
+#: ../hotspots_map.php:146 smarty.txt:36
+msgid "Loading, please wait..."
+msgstr "ロード中。しばらくお待ちください。"
+
+#: ../hotspots_map.php:160
+msgid "Hotspots status map"
+msgstr "ホットスポットステータスマップ"
+
+#: ../config_available_locales.php:58
+msgid "French"
+msgstr "フランス語"
+
+#: ../config_available_locales.php:59
+msgid "English"
+msgstr "英語"
+
+#: ../config_available_locales.php:60
+msgid "German"
+msgstr "ドイツ語"
+
+#: ../config_available_locales.php:61
+msgid "Spanish"
+msgstr ""
+
+#: ../config_available_locales.php:62
+#, fuzzy
+msgid "Brazilian Portuguese"
+msgstr "ポルトガル語"
+
+#: ../config_available_locales.php:63
+msgid "Portuguese"
+msgstr "ポルトガル語"
+
+#: ../config_available_locales.php:64
+msgid "Japanese"
+msgstr ""
+
+#: ../config_available_locales.php:65
+msgid "Greek"
+msgstr ""
+
+#: ../config_available_locales.php:66
+msgid "Bulgarian"
+msgstr ""
+
+#: ../config_available_locales.php:67
+msgid "Swedish"
+msgstr ""
+
+#: ../config_available_locales.php:68
+msgid "Italian"
+msgstr ""
+
+#: ../resend_validation.php:104
+msgid "Please specify a username"
+msgstr "ユーザー名を指定してください。"
+
+#: ../resend_validation.php:111
+msgid "This username could not be found in our database"
+msgstr "このユーザーネームは私たちのデータベース上に見つけることが出来ません。"
+
+#: ../resend_validation.php:116 ../signup.php:228
+msgid "An email with confirmation instructions was sent to your email address."
+msgstr "確認および諸注意を、あなたのE-mailアドレスへ送信しました。"
+
+#: ../signup.php:81
+msgid "Username is required."
+msgstr "ユーザー名は必須です。"
+
+#: ../signup.php:85
+msgid "Username contains invalid characters."
+msgstr "ユーザー名に無効な文字が含まれています。"
+
+#: ../signup.php:103
+msgid "A valid email address is required."
+msgstr "E-mailアドレスは必須項目です。"
+
+#: ../signup.php:107
+msgid ""
+"The email address must be valid (i.e. user@domain.com). Please understand "
+"that we also black-listed various temporary-email-address providers."
+msgstr ""
+"E-mailアドレスは有効なものを入力してください（例: user@domain.com ）。私たち"
+"のシステムがスパムメールのブラックリストに載らないために、ご協力をお願いしま"
+"す。"
+
+#: ../signup.php:126
+msgid "A password of at least 6 characters is required."
+msgstr "パスワードは６文字以上です。"
+
+#: ../signup.php:130
+#, fuzzy
+msgid ""
+"Password contains invalid characters.  Allowed characters are 0-9, a-z and A-"
+"Z"
+msgstr "パスワードに無効な文字列が使用されています。"
+
+#: ../signup.php:134
+msgid "You must type your password twice."
+msgstr "パスワードを二度入力してください。"
+
+#: ../signup.php:138 ../classes/User.php:839
+msgid "Passwords do not match."
+msgstr "パスワードが一致しません。"
+
+#: ../signup.php:142
+msgid "Password is too short, it must be 6 characters minimum."
+msgstr "パスワードが短すぎます。６文字以上の文字列を入力してください。"
+
+#: ../signup.php:201
+msgid "Sorry, this network does not accept new user registration !"
+msgstr ""
+"申し訳ありません。このネットワークは現在新規ユーザーの受け入れを行っておりま"
+"せん。"
+
+#: ../signup.php:211
+msgid ""
+"Sorry, a user account is already associated to this username. Pick another "
+"one."
+msgstr ""
+"申し訳ありません。このユーザー名のアカウントはすでに存在します。別のユーザー"
+"名を指定してください。"
+
+#: ../signup.php:215
+msgid "Sorry, a user account is already associated to this email address."
+msgstr ""
+"申し訳ありません。このE-mailアドレスに付属しているアカウントはすでに存在しま"
+"す。"
+
+#: ../signup.php:229 ../portal/index.php:145
+#, php-format
+msgid ""
+"Your account has been granted %s minutes of access to retrieve your email "
+"and validate your account."
+msgstr ""
+"あなたのアカウントに %s 分間のアクセス許可が下りました。この間にE-mailを受信"
+"し、アカウントを有効にしてください。"
+
+#: ../signup.php:230
+msgid ""
+"You may now open a browser window or start your email client and go to any "
+"remote Internet address to obtain the validation email."
+msgstr ""
+"新しくブラウザのウィンドウを開くか、お使いのメーラーを起動し、どこかのイン"
+"ターネットへアクセスし、有効なE-mailアドレスを入手してください。"
+
+#: ../lost_username.php:105
+msgid "Please specify an email address"
+msgstr "E-mailアドレスを指定してください。"
+
+#: ../lost_username.php:112
+msgid "This email could not be found in our database"
+msgstr "このE-mailアドレスは我々のデータベース上に見つかりません。"
+
+#: ../lost_username.php:117
+msgid "Your username has been emailed to you."
+msgstr "あなたのユーザー名を、E-mailで送信しました。"
 
 #: ../gw_message.php:61
 #, php-format
@@ -129,7 +393,7 @@ msgstr "プレビュー"
 #: ../classes/StatisticReport/UserReport.php:182
 #: ../classes/StatisticReport/RegistrationLog.php:120
 #: ../classes/StatisticReport/MostPopularNodes.php:109
-#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:73
+#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:110
 msgid "Node"
 msgstr "ノード"
 
@@ -217,23 +481,23 @@ msgstr "SQLエラー :"
 msgid "Report"
 msgstr "報告"
 
-#: ../admin/stats.php:68
+#: ../admin/stats.php:66
 msgid "Connections at"
 msgstr "接続"
 
-#: ../admin/stats.php:74
+#: ../admin/stats.php:72
 msgid "User information for"
 msgstr "ユーザー情報"
 
-#: ../admin/stats.php:79
+#: ../admin/stats.php:77
 msgid "Connections from MAC"
 msgstr "接続されたMACアドレス"
 
-#: ../admin/stats.php:85
+#: ../admin/stats.php:83
 msgid "Network information for"
 msgstr "ネットワーク情報"
 
-#: ../admin/stats.php:116
+#: ../admin/stats.php:97
 msgid "Generate statistics"
 msgstr "統計を出します。"
 
@@ -355,15 +619,18 @@ msgstr ""
 msgid "I'm having difficulties:"
 msgstr ""
 
-#: ../login/index.php:263
+#: ../login/index.php:263 smarty.txt:52 smarty.txt:69 smarty.txt:80
+#: smarty.txt:94 smarty.txt:102
 msgid "I Forgot my username"
 msgstr "ユーザー名を忘れた場合"
 
-#: ../login/index.php:264
+#: ../login/index.php:264 smarty.txt:53 smarty.txt:70 smarty.txt:81
+#: smarty.txt:95 smarty.txt:103
 msgid "I Forgot my password"
 msgstr "パスワードを忘れた場合"
 
-#: ../login/index.php:265
+#: ../login/index.php:265 smarty.txt:54 smarty.txt:82 smarty.txt:96
+#: smarty.txt:104
 msgid "Re-send the validation email"
 msgstr "認証E-mailの再送信"
 
@@ -376,7 +643,7 @@ msgstr " %s ログインページ %s "
 msgid "Offsite login page"
 msgstr "遠隔地ログインページ"
 
-#: ../login/index.php:282 ../portal/index.php:132
+#: ../login/index.php:282 ../portal/index.php:139
 msgid "Welcome to"
 msgstr "ようこそ"
 
@@ -384,28 +651,19 @@ msgstr "ようこそ"
 msgid "No Hotspot specified!"
 msgstr "指定されたホットスポットはありません!"
 
-#: ../portal/index.php:127
+#: ../portal/index.php:134
 #, php-format
 msgid "%s portal for %s"
 msgstr " %s ポータル %s "
 
-#: ../portal/index.php:137
+#: ../portal/index.php:144
 msgid ""
 "You NEED to confirm your account.  An email with confirmation instructions "
 "was sent to your email address.  If you don't see it in your inbox, make "
 "sure to look in your spam folder."
 msgstr ""
 
-#: ../portal/index.php:138
-#, php-format
-msgid ""
-"Your account has been granted %s minutes of access to retrieve your email "
-"and validate your account."
-msgstr ""
-"あなたのアカウントに %s 分間のアクセス許可が下りました。この間にE-mailを受信"
-"し、アカウントを有効にしてください。"
-
-#: ../portal/index.php:199
+#: ../portal/index.php:206
 msgid "Show all available contents for this hotspot"
 msgstr "このホットスポットの利用可能コンテンツを全て表示"
 
@@ -535,7 +793,7 @@ msgstr ""
 "申し訳ありません。このレポートには一つのノードを選択する必要があります。"
 
 #: ../classes/StatisticReport/NodeStatus.php:99
-#: ../classes/DependenciesList.php:137
+#: ../classes/DependenciesList.php:137 smarty.txt:3
 msgid "Status"
 msgstr "ステータス"
 
@@ -588,6 +846,7 @@ msgstr "プロファイル"
 
 #: ../classes/StatisticReport/NodeStatus.php:152
 #: ../classes/StatisticReport/NetworkStatus.php:99 ../classes/Node.php:1101
+#: smarty.txt:6
 msgid "Name"
 msgstr "名前"
 
@@ -604,12 +863,12 @@ msgid "Deployment date"
 msgstr "設置日"
 
 #: ../classes/StatisticReport/NodeStatus.php:168 ../classes/Content.php:925
-#: ../classes/Node.php:1116 ../classes/DependenciesList.php:173 smarty.txt:49
+#: ../classes/Node.php:1116 ../classes/DependenciesList.php:173 smarty.txt:73
 msgid "Description"
 msgstr "説明"
 
 #: ../classes/StatisticReport/NodeStatus.php:172
-#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:83
+#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:120
 msgid "Network"
 msgstr "ネットワーク"
 
@@ -618,17 +877,13 @@ msgid "GIS Location"
 msgstr "位置情報"
 
 #: ../classes/StatisticReport/NodeStatus.php:181 ../classes/Network.php:1035
+#: smarty.txt:78
 msgid "Map"
 msgstr "地図"
 
 #: ../classes/StatisticReport/NodeStatus.php:185
 msgid "NOT SET"
 msgstr "設定なし"
-
-#: ../classes/StatisticReport/NodeStatus.php:190
-#: ../classes/StatisticReport/NetworkStatus.php:109
-msgid "Homepage"
-msgstr "ホームページ"
 
 #: ../classes/StatisticReport/NodeStatus.php:194
 #: ../classes/NodeLists/NodeListPDF.php:1083
@@ -695,7 +950,8 @@ msgstr "ユーザーID: %s はデータベース上で見つかりません。"
 #: ../classes/StatisticReport/RegistrationLog.php:123
 #: ../classes/StatisticReport/ConnectionLog.php:115
 #: ../classes/StatisticReport/ConnectionLog.php:164 ../classes/User.php:702
-#: ../classes/User.php:707 ../classes/User.php:756 smarty.txt:74 smarty.txt:82
+#: ../classes/User.php:707 ../classes/User.php:756 smarty.txt:111
+#: smarty.txt:119
 msgid "Username"
 msgstr "ユーザー名"
 
@@ -708,7 +964,7 @@ msgid "Member since"
 msgstr "メンバー登録日"
 
 #: ../classes/StatisticReport/UserReport.php:147 ../classes/User.php:744
-#: smarty.txt:85
+#: smarty.txt:122
 msgid "Account Status"
 msgstr "アカウントステータス"
 
@@ -1730,7 +1986,7 @@ msgstr ""
 #: ../classes/Content/Langstring/Langstring.php:215
 #: ../classes/Content/Langstring/Langstring.php:341
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:112
-#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:12
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:24
 msgid "Language"
 msgstr "言語"
 
@@ -2250,10 +2506,6 @@ msgstr ""
 msgid "Wrong password."
 msgstr "パスワードに誤りがあります。"
 
-#: ../classes/User.php:839
-msgid "Passwords do not match."
-msgstr "パスワードが一致しません。"
-
 #: ../classes/User.php:930
 msgid "Online Users"
 msgstr "オンラインユーザー"
@@ -2567,35 +2819,35 @@ msgstr "開始"
 msgid "To"
 msgstr "終了"
 
-#: ../classes/Statistics.php:450
+#: ../classes/Statistics.php:455
 msgid "Invalid parameter"
 msgstr "不正なパラメーター"
 
-#: ../classes/Statistics.php:482
+#: ../classes/Statistics.php:493
 msgid "Username or MAC address, depending on selection above"
 msgstr ""
 
-#: ../classes/Statistics.php:578
+#: ../classes/Statistics.php:589
 msgid "Report configuration"
 msgstr "レポートの設定"
 
-#: ../classes/Statistics.php:601
+#: ../classes/Statistics.php:612
 msgid "Restrict the time range for which statistics will be computed"
 msgstr "統計を算出する期間を設定"
 
-#: ../classes/Statistics.php:609
+#: ../classes/Statistics.php:620
 msgid "Restrict stats to the following nodes"
 msgstr "統計を算出するノードを選択"
 
-#: ../classes/Statistics.php:619
+#: ../classes/Statistics.php:630
 msgid "Distinguish users by"
 msgstr "ユーザーの識別方法"
 
-#: ../classes/Statistics.php:628
+#: ../classes/Statistics.php:639
 msgid "Restrict stats to the selected users"
 msgstr "統計を算出するユーザー"
 
-#: ../classes/Statistics.php:637
+#: ../classes/Statistics.php:648
 msgid "Selected reports"
 msgstr "出力するレポートの選択"
 
@@ -3152,7 +3404,7 @@ msgstr "データベースに製作者を追加できませんでした。"
 msgid "Reusable content library"
 msgstr ""
 
-#: ../classes/NodeList.php:186 smarty.txt:20
+#: ../classes/NodeList.php:186 smarty.txt:35
 msgid "Deployed HotSpots map"
 msgstr "ホットスポット配置図"
 
@@ -3214,7 +3466,7 @@ msgstr " %s は構造上の表示可能エリアではありません。"
 msgid "%s Login"
 msgstr "%s ログイン"
 
-#: ../classes/MainUI.php:642
+#: ../classes/MainUI.php:642 smarty.txt:23 smarty.txt:28
 msgid "Login"
 msgstr "ログイン"
 
@@ -3248,30 +3500,6 @@ msgstr ""
 #: ../classes/Node.php:269
 msgid "Unable to insert new node into database!"
 msgstr "データベースに新しいノードを追加できません!"
-
-#: ../classes/Node.php:306 ../classes/Node.php:661
-msgid "Deployed"
-msgstr ""
-
-#: ../classes/Node.php:307 ../classes/Node.php:662
-msgid "In planning"
-msgstr ""
-
-#: ../classes/Node.php:308 ../classes/Node.php:663
-msgid "In testing"
-msgstr ""
-
-#: ../classes/Node.php:309 ../classes/Node.php:664
-msgid "Non-Wifidog node"
-msgstr ""
-
-#: ../classes/Node.php:310 ../classes/Node.php:665
-msgid "Permanently closed"
-msgstr ""
-
-#: ../classes/Node.php:311 ../classes/Node.php:666
-msgid "Temporarily closed"
-msgstr ""
 
 #: ../classes/Node.php:353
 msgid "Filter:"
@@ -3517,17 +3745,17 @@ msgstr ""
 msgid "User %s already has role %s for this object"
 msgstr ""
 
-#: ../classes/Dependency.php:339 ../classes/Dependency.php:355
+#: ../classes/Dependency.php:362 ../classes/Dependency.php:378
 #, php-format
 msgid "File %s not found"
 msgstr ""
 
-#: ../classes/Dependency.php:369 ../classes/Dependency.php:383
+#: ../classes/Dependency.php:392 ../classes/Dependency.php:406
 #, fuzzy, php-format
 msgid "File %s not found in %s"
 msgstr "テーマパック %s が %s に見つかりません。"
 
-#: ../classes/Dependency.php:422
+#: ../classes/Dependency.php:467
 #, php-format
 msgid ""
 "To install this standard PHP extension, look for a package with a similar "
@@ -3535,24 +3763,29 @@ msgid ""
 "distributions, you may try 'sudo apt-get install php5-%s'"
 msgstr ""
 
-#: ../classes/Dependency.php:427
+#: ../classes/Dependency.php:473
+#, fuzzy, php-format
+msgid "Install %s"
+msgstr "合計"
+
+#: ../classes/Dependency.php:478
 #, php-format
-msgid "<input type='submit' name='%s' value='Install %s'/>"
+msgid "Sorry, i couldn't find the source for %s in installSourceUrl"
 msgstr ""
 
-#: ../classes/Dependency.php:437
+#: ../classes/Dependency.php:490
 #, php-format
 msgid ""
 "url_to_the_tarball (Sorry, i couldn't find the source for %s in "
 "installSourceUrl)"
 msgstr ""
 
-#: ../classes/Dependency.php:439
+#: ../classes/Dependency.php:492
 #, php-format
 msgid "To install this custom PEAR extension, use 'sudo pear install %s'"
 msgstr ""
 
-#: ../classes/Dependency.php:442
+#: ../classes/Dependency.php:495
 #, php-format
 msgid "Sorry, I don't know how to install a %s extension"
 msgstr ""
@@ -3667,152 +3900,206 @@ msgstr "プロフィール"
 msgid "Status of all nodes of the"
 msgstr "全ノードのステータス"
 
-#: smarty.txt:3
+#: smarty.txt:4
+#, fuzzy
+msgid "Node id"
+msgstr "ノード"
+
+#: smarty.txt:5
+msgid "Gateway id"
+msgstr ""
+
+#: smarty.txt:7
 msgid "Local content demo"
 msgstr "ローカルコンテンツのデモ"
 
-#: smarty.txt:4
+#: smarty.txt:8
+msgid "Opened on"
+msgstr "開設日"
+
+#: smarty.txt:9 smarty.txt:109
+msgid "Online users"
+msgstr "オンラインユーザー"
+
+#: smarty.txt:10 smarty.txt:11
 msgid "days"
 msgstr "日"
 
-#: smarty.txt:5
+#: smarty.txt:12
+msgid "Login page"
+msgstr "ログインページ"
+
+#: smarty.txt:13
+msgid "Portal page"
+msgstr "ポータルページ"
+
+#: smarty.txt:14
 msgid "user is online at this hotspot"
 msgstr "このホットスポットからオンラインのユーザー"
 
-#: smarty.txt:6
+#: smarty.txt:15
 msgid "users are online at this hotspot"
 msgstr "このホットスポットからオンラインのユーザー"
 
-#: smarty.txt:7
+#: smarty.txt:16
 msgid "Nobody is online at this hotspot"
 msgstr "このホットスポットからオンラインのユーザーはいません。"
 
-#: smarty.txt:8
+#: smarty.txt:17
 msgid "Recent Users:"
 msgstr ""
 
-#: smarty.txt:9
+#: smarty.txt:18
 msgid "Most Active Users:"
 msgstr ""
 
-#: smarty.txt:10
+#: smarty.txt:19
 msgid "Logged in as"
 msgstr "ログイン"
 
-#: smarty.txt:11
+#: smarty.txt:20
+#, fuzzy
+msgid "Profile / Settings"
+msgstr "県 / 市"
+
+#: smarty.txt:21
+msgid "Logout"
+msgstr "ログアウト"
+
+#: smarty.txt:22
 msgid "I am not logged in."
 msgstr "現在ログインしていません。"
 
-#: smarty.txt:13
+#: smarty.txt:25
 msgid "Login or Signup here"
 msgstr "ログインまたは登録"
 
-#: smarty.txt:14
+#: smarty.txt:26
 msgid "Username (or email)"
 msgstr "ユーザー名（またはE-mail）"
 
-#: smarty.txt:15 smarty.txt:37
+#: smarty.txt:27 smarty.txt:58
 msgid "Password"
 msgstr "パスワード"
 
-#: smarty.txt:16
+#: smarty.txt:29
+msgid "Create a free account"
+msgstr "フリーアカウント作成"
+
+#: smarty.txt:30
+msgid "You must specify your username and password"
+msgstr "ユーザー名とパスワードを指定してください。"
+
+#: smarty.txt:31
 msgid "Show me the closest hotspot"
 msgstr "閉じられたホットスポットの閲覧"
 
-#: smarty.txt:17
+#: smarty.txt:32
 msgid "Enter your postal code"
 msgstr "郵便番号を入力してください。"
 
-#: smarty.txt:18
+#: smarty.txt:33
 msgid "Show"
 msgstr "一覧"
 
-#: smarty.txt:19
+#: smarty.txt:34
 msgid "Refresh map"
 msgstr "地図の再読み込み"
 
-#: smarty.txt:21
-msgid "Loading, please wait..."
-msgstr "ロード中。しばらくお待ちください。"
-
-#: smarty.txt:22
+#: smarty.txt:37
 msgid "Legend"
 msgstr "警告"
 
-#: smarty.txt:23
+#: smarty.txt:38
+msgid "the hotspot is operational"
+msgstr "ホットスポットは利用可能です。"
+
+#: smarty.txt:39
+msgid "the hotspot is down"
+msgstr "ホットスポットがダウンしています。"
+
+#: smarty.txt:40
+msgid "not monitored"
+msgstr "モニター以外"
+
+#: smarty.txt:41
 #, php-format
 msgid "The %s network currently has one valid user."
 msgstr ""
 
-#: smarty.txt:24
+#: smarty.txt:42
 #, php-format
 msgid "The %s network currently has %d valid users."
 msgstr ""
 
-#: smarty.txt:25
+#: smarty.txt:43
 msgid "One user is currently online."
 msgstr ""
 
-#: smarty.txt:26
+#: smarty.txt:44
 #, php-format
 msgid "%d users are currently online."
 msgstr ""
 
-#: smarty.txt:27
+#: smarty.txt:45
 msgid "This network currently has 1 deployed hotspot."
 msgstr ""
 
-#: smarty.txt:28
+#: smarty.txt:46
 #, php-format
 msgid "This network currently has %d deployed hotspots."
 msgstr ""
 
-#: smarty.txt:29
+#: smarty.txt:47
 msgid "One hotspot is currently operational."
 msgstr ""
 
-#: smarty.txt:30
+#: smarty.txt:48
 #, php-format
 msgid "%d hotspots are currently operational."
 msgstr ""
 
-#: smarty.txt:31
+#: smarty.txt:49
 msgid ""
 "One hotspot isn't monitored so we don't know if it's currently operational."
 msgstr ""
 
-#: smarty.txt:32
+#: smarty.txt:50
 #, php-format
 msgid ""
 "%d hotspots aren't monitored so we don't know if they are currently "
 "operational."
 msgstr ""
 
-#: smarty.txt:33 smarty.txt:54 smarty.txt:64 smarty.txt:68
+#: smarty.txt:51 smarty.txt:79 smarty.txt:93 smarty.txt:101
 msgid "I'm having difficulties"
 msgstr "問題がある時はこちら"
 
-#: smarty.txt:34
+#: smarty.txt:55
 msgid "Register a free account with"
 msgstr "フリーアカウントの登録"
 
-#: smarty.txt:35
+#: smarty.txt:56
 msgid "Username desired"
 msgstr "希望するユーザー名"
 
-#: smarty.txt:36 smarty.txt:57 smarty.txt:70
+#: smarty.txt:57 smarty.txt:85 smarty.txt:106
 msgid "Your email address"
 msgstr "E-mailアドレス"
 
-#: smarty.txt:38
+#: smarty.txt:59
 msgid "Password (again)"
 msgstr "パスワード（確認）"
 
-#: smarty.txt:39
+#: smarty.txt:60
+msgid "Sign-up"
+msgstr "登録"
+
+#: smarty.txt:61
 msgid "Please note"
 msgstr "記録"
 
-#: smarty.txt:40
+#: smarty.txt:62
 msgid ""
 "While accounts are free, we <em>strongly</em> suggest that you use your "
 "previously created account if you have one."
@@ -3820,26 +4107,26 @@ msgstr ""
 "しばらくの間、アカウントは自由です。もしあなたがすでにアカウントを持っている"
 "ならば、そちらのアカウントを使っていただけるよう強く望みます。"
 
-#: smarty.txt:41
+#: smarty.txt:63
 msgid ""
 "<b>Your email address must be valid</b> in order for your account to be "
 "activated."
 msgstr ""
 "あなたのアカウントを有効にするためには、E-mailアドレスが必須となります。"
 
-#: smarty.txt:42
+#: smarty.txt:64
 msgid "A validation email will be sent to that email address."
 msgstr "このE-mailアドレスに、認証用E-mailを送信します。"
 
-#: smarty.txt:43
+#: smarty.txt:65
 msgid "To fully activate your account you must respond to that email."
 msgstr "全ての機能を有効にするためには、E-mailを確認する必要があります。"
 
-#: smarty.txt:44
+#: smarty.txt:66
 msgid "Note to free web-based email users"
 msgstr "フリーメールで登録している利用者一覧"
 
-#: smarty.txt:45
+#: smarty.txt:67
 msgid ""
 "Sometimes our validation email ends up in the 'spam' folder of some "
 "providers. If you have not received any email with the validation URL 5 "
@@ -3849,50 +4136,54 @@ msgstr ""
 "断されることがあります。もしあなたが５分以上経過しても私たちからのメールを受"
 "け取ることができない場合、迷惑メールフォルダーを確認してみてください。"
 
-#: smarty.txt:46
+#: smarty.txt:68
 msgid "You can also use the following links if you need help"
 msgstr "何かわからないことがあれば、以下のリンクを参考にしてください。"
 
-#: smarty.txt:47
+#: smarty.txt:71
 #, php-format
 msgid "Status of the %d open %s Hotspots"
 msgstr ""
 
-#: smarty.txt:48
+#: smarty.txt:72
 msgid "Hotspot / Status"
 msgstr "ステータス / ホットスポット"
 
-#: smarty.txt:50
+#: smarty.txt:74
 msgid "Location"
 msgstr "設置場所"
 
-#: smarty.txt:51
+#: smarty.txt:75
 msgid "Hotspot in testing phase"
 msgstr "テストフェーズ中のホットスポット"
 
-#: smarty.txt:52
+#: smarty.txt:76
 msgid "Hotspot not monitored"
 msgstr ""
 
-#: smarty.txt:53
+#: smarty.txt:77
 #, php-format
 msgid "Opened on %s"
 msgstr ""
 
-#: smarty.txt:55
+#: smarty.txt:83
 msgid "Lost password"
 msgstr "パスワード紛失"
 
-#: smarty.txt:56 smarty.txt:66
+#: smarty.txt:84 smarty.txt:98
 msgid "Your username"
 msgstr "ユーザー名"
 
-#: smarty.txt:58
+#: smarty.txt:86
+msgid "Reset my password"
+msgstr "パスワードの初期化"
+
+#: smarty.txt:87
 msgid "Please enter your username or email address to reset your password"
 msgstr ""
 "パスワードを初期化したいユーザー名またはE-mailアドレスを入力してください。"
 
-#: smarty.txt:59
+#: smarty.txt:88
 msgid ""
 "We are a not-for-profit group dedicated to making no-fee wireless Internet "
 "access generally available."
@@ -3900,31 +4191,35 @@ msgstr ""
 "私たちは非営利団体で、費用なしでアクセスできるワイヤレスインターネット環境構"
 "築を目指しています。"
 
-#: smarty.txt:60
+#: smarty.txt:89
 msgid ""
 "Our aim is to encourage the growth of wireless networking and to build "
 "community in interesting and innovative ways."
 msgstr ""
 
-#: smarty.txt:61
+#: smarty.txt:90
 msgid ""
 "We do this by setting up wireless Internet networks in parks, cafés, "
 "restaurants, bars and other publically-accessible locations across the city."
 msgstr ""
 
-#: smarty.txt:62
+#: smarty.txt:91
 msgid "For a complete and up-to-date listing of our nodes, visit"
 msgstr "私たちのノードへようこそ。"
 
-#: smarty.txt:63
+#: smarty.txt:92
 msgid "Please get in touch with "
 msgstr "ここに触れてください。"
 
-#: smarty.txt:65
+#: smarty.txt:97
 msgid "Re-send validation email"
 msgstr "認証メールの再送信"
 
-#: smarty.txt:67
+#: smarty.txt:99
+msgid "Re-send"
+msgstr "再送"
+
+#: smarty.txt:100
 msgid ""
 "Please enter your username and the validation email will be resent to your "
 "email address"
@@ -3932,67 +4227,51 @@ msgstr ""
 "あなたのユーザー名と有効なE-mailアドレスを入力してください。メールを再送信い"
 "たします。"
 
-#: smarty.txt:69
+#: smarty.txt:105
 msgid "Lost username"
 msgstr "ユーザー名の紛失"
 
-#: smarty.txt:71
+#: smarty.txt:107
+msgid "Retrieve"
+msgstr "回収"
+
+#: smarty.txt:108
 msgid "Please enter your email address to recover your username"
 msgstr ""
 "あなたのE-mailアドレスを入力してください。あなたのユーザー名をメールでご連絡"
 "いたします。"
 
-#: smarty.txt:72
-msgid "Online users"
-msgstr "オンラインユーザー"
-
-#: smarty.txt:75
+#: smarty.txt:112
 msgid "Origin"
 msgstr "オリジナル"
 
-#: smarty.txt:76
+#: smarty.txt:113
 msgid "Logged in Since"
 msgstr "登録日"
 
-#: smarty.txt:77
+#: smarty.txt:114
 msgid "Traffic IN/OUT"
 msgstr "In/Outトラフィック"
 
-#: smarty.txt:78
+#: smarty.txt:115
 msgid "User list"
 msgstr "ユーザー一覧"
 
-#: smarty.txt:79
+#: smarty.txt:116
 msgid "Sort by:"
 msgstr "整列 :"
 
-#: smarty.txt:80
+#: smarty.txt:117
 msgid "Direction:"
 msgstr "方向 :"
 
-#: smarty.txt:81
+#: smarty.txt:118
 msgid "Sort"
 msgstr "整列"
 
-#: smarty.txt:84
+#: smarty.txt:121
 msgid "Registered On"
 msgstr "登録日"
-
-#~ msgid "French"
-#~ msgstr "フランス語"
-
-#~ msgid "English"
-#~ msgstr "英語"
-
-#~ msgid "German"
-#~ msgstr "ドイツ語"
-
-#, fuzzy
-#~ msgid "Brazilian Portuguese"
-#~ msgstr "ポルトガル語"
-
-#~ msgid "Portuguese"
-#~ msgstr "ポルトガル語"
 
 #~ msgid "Component %s is not installed (not found in %s)"
 #~ msgstr ""
@@ -4002,46 +4281,11 @@ msgstr "登録日"
 #~ msgid "Message"
 #~ msgstr "エラーメッセージ"
 
-#~ msgid "No nodes could not be found in the database"
-#~ msgstr "そのノードはデータベース上に見つかりません。"
-
-#~ msgid "No token specified!"
-#~ msgstr "指定されたトークンがありません!"
-
-#~ msgid "No user ID specified!"
-#~ msgstr "指定されたユーザーIDはありません!"
-
-#~ msgid "The validation token does not match the one in the database."
-#~ msgstr "有効なトークンがデータベース上と一致しません。"
-
-#~ msgid "Your account has already been activated."
-#~ msgstr "あなたのアカウントはすでに有効になっています。"
-
-#~ msgid ""
-#~ "Your account has been succesfully activated!\n"
-#~ "\n"
-#~ "You may now browse to a remote Internet address and take advantage of the "
-#~ "free Internet access!\n"
-#~ "\n"
-#~ "If you get prompted for a login, enter the username and password you have "
-#~ "just created."
-#~ msgstr ""
-#~ "あなたのアカウントを有効にすることに成功しました！\n"
-#~ "\n"
-#~ "インターネットのURLを入力すれば、自由にインターネットをお楽しみいただけま"
-#~ "す！\n"
-#~ "\n"
-#~ "もしあなたがすぐにログインしたければ、ユーザー名とパスワードを入力すれば、"
-#~ "即座にログインできます。"
-
 #~ msgid "You must login before you can change your password."
 #~ msgstr "パスワードを変更する前に、ログインする必要があります。"
 
 #~ msgid "You MUST fill in all the fields."
 #~ msgstr "全ての入力フィールドを埋めてください。"
-
-#~ msgid "Sorry, this network does not exist !"
-#~ msgstr "申し訳ありません。現在このネットワークは利用できません。"
 
 #~ msgid "Your password has been changed succesfully."
 #~ msgstr "パスワードを変更しました。"
@@ -4055,31 +4299,6 @@ msgstr "登録日"
 #~ msgid "Sorry, invalid change password request !"
 #~ msgstr "申し訳ありませんが、パスワード変更の要求は無効です。"
 
-#~ msgid "Please specify a username or email address"
-#~ msgstr "ユーザー名またはE-mailアドレスを指定してください。"
-
-#~ msgid "This username or email could not be found in our database"
-#~ msgstr ""
-#~ "このユーザー名またはE-mailアドレスは私たちのデータベース上に見つけることが"
-#~ "出来ません。"
-
-#~ msgid "A new password has been emailed to you."
-#~ msgstr "新しいパスワードをあなたのE-mailへ送信しました。"
-
-#~ msgid "Change network"
-#~ msgstr "ネットワークの変更"
-
-#~ msgid "Sorry, your browser does not support Google Maps."
-#~ msgstr ""
-#~ "申し訳ありませんが、あなたがご利用のブラウザでは、Google Mapsを利用するこ"
-#~ "とができません。"
-
-#~ msgid "Show me on the map"
-#~ msgstr "地図で現在地を確認"
-
-#~ msgid "Hotspots status map"
-#~ msgstr "ホットスポットステータスマップ"
-
 #~ msgid "Change password"
 #~ msgstr "パスワード変更"
 
@@ -4088,79 +4307,6 @@ msgstr "登録日"
 
 #~ msgid "User Profile"
 #~ msgstr "ユーザープロファイル"
-
-#~ msgid "Please specify a username"
-#~ msgstr "ユーザー名を指定してください。"
-
-#~ msgid "This username could not be found in our database"
-#~ msgstr ""
-#~ "このユーザーネームは私たちのデータベース上に見つけることが出来ません。"
-
-#~ msgid ""
-#~ "An email with confirmation instructions was sent to your email address."
-#~ msgstr "確認および諸注意を、あなたのE-mailアドレスへ送信しました。"
-
-#~ msgid "Username is required."
-#~ msgstr "ユーザー名は必須です。"
-
-#~ msgid "Username contains invalid characters."
-#~ msgstr "ユーザー名に無効な文字が含まれています。"
-
-#~ msgid "A valid email address is required."
-#~ msgstr "E-mailアドレスは必須項目です。"
-
-#~ msgid ""
-#~ "The email address must be valid (i.e. user@domain.com). Please understand "
-#~ "that we also black-listed various temporary-email-address providers."
-#~ msgstr ""
-#~ "E-mailアドレスは有効なものを入力してください（例: user@domain.com ）。私た"
-#~ "ちのシステムがスパムメールのブラックリストに載らないために、ご協力をお願い"
-#~ "します。"
-
-#~ msgid "A password of at least 6 characters is required."
-#~ msgstr "パスワードは６文字以上です。"
-
-#~ msgid "Password contains invalid characters."
-#~ msgstr "パスワードに無効な文字列が使用されています。"
-
-#~ msgid "You must type your password twice."
-#~ msgstr "パスワードを二度入力してください。"
-
-#~ msgid "Password is too short, it must be 6 characters minimum."
-#~ msgstr "パスワードが短すぎます。６文字以上の文字列を入力してください。"
-
-#~ msgid "Sorry, this network does not accept new user registration !"
-#~ msgstr ""
-#~ "申し訳ありません。このネットワークは現在新規ユーザーの受け入れを行っており"
-#~ "ません。"
-
-#~ msgid ""
-#~ "Sorry, a user account is already associated to this username. Pick "
-#~ "another one."
-#~ msgstr ""
-#~ "申し訳ありません。このユーザー名のアカウントはすでに存在します。別のユー"
-#~ "ザー名を指定してください。"
-
-#~ msgid "Sorry, a user account is already associated to this email address."
-#~ msgstr ""
-#~ "申し訳ありません。このE-mailアドレスに付属しているアカウントはすでに存在し"
-#~ "ます。"
-
-#~ msgid ""
-#~ "You may now open a browser window or start your email client and go to "
-#~ "any remote Internet address to obtain the validation email."
-#~ msgstr ""
-#~ "新しくブラウザのウィンドウを開くか、お使いのメーラーを起動し、どこかのイン"
-#~ "ターネットへアクセスし、有効なE-mailアドレスを入手してください。"
-
-#~ msgid "Please specify an email address"
-#~ msgstr "E-mailアドレスを指定してください。"
-
-#~ msgid "This email could not be found in our database"
-#~ msgstr "このE-mailアドレスは我々のデータベース上に見つかりません。"
-
-#~ msgid "Your username has been emailed to you."
-#~ msgstr "あなたのユーザー名を、E-mailで送信しました。"
 
 #~ msgid ""
 #~ "Accept users with no email adresses (Normally, NoCat usernames are "
@@ -4209,9 +4355,6 @@ msgstr "登録日"
 
 #~ msgid "Today"
 #~ msgstr "今日"
-
-#~ msgid "Create a free account"
-#~ msgstr "フリーアカウント作成"
 
 #~ msgid ""
 #~ "For some reason, we were unable to determine the web site you initially "
@@ -4576,29 +4719,17 @@ msgstr "登録日"
 #~ "あなたの正しいユーザー名、正しいパスワードを入力し、新しいパスワードを (確"
 #~ "認欄にも)入力してください。 "
 
-#~ msgid "You must specify your username and password"
-#~ msgstr "ユーザー名とパスワードを指定してください。"
-
 #~ msgid "network"
 #~ msgstr "ネットワーク"
 
 #~ msgid "Id"
 #~ msgstr "ノードID"
 
-#~ msgid "Opened on"
-#~ msgstr "開設日"
-
 #~ msgid "h"
 #~ msgstr "時"
 
 #~ msgid "min"
 #~ msgstr "分"
-
-#~ msgid "Login page"
-#~ msgstr "ログインページ"
-
-#~ msgid "Portal page"
-#~ msgstr "ポータルページ"
 
 #~ msgid "Frequently Asked Questions"
 #~ msgstr "よくある質問"
@@ -4696,9 +4827,6 @@ msgstr "登録日"
 #~ msgid "My Profile"
 #~ msgstr "プロファイル"
 
-#~ msgid "Logout"
-#~ msgstr "ログアウト"
-
 #~ msgid "Where am I?"
 #~ msgstr "これは何？"
 
@@ -4708,23 +4836,11 @@ msgstr "登録日"
 #~ msgid "Deployed HotSpots status with coordinates"
 #~ msgstr "ホットスポットの展開状況"
 
-#~ msgid "the hotspot is operational"
-#~ msgstr "ホットスポットは利用可能です。"
-
-#~ msgid "the hotspot is down"
-#~ msgstr "ホットスポットがダウンしています。"
-
-#~ msgid "not monitored"
-#~ msgstr "モニター以外"
-
 #~ msgid "Use the Internet"
 #~ msgstr "インターネットを利用する"
 
 #~ msgid "Frequently asked questions"
 #~ msgstr "FAQ"
-
-#~ msgid "Sign-up"
-#~ msgstr "登録"
 
 #~ msgid "Status of the"
 #~ msgstr "ステータス数"
@@ -4735,9 +4851,6 @@ msgstr "登録日"
 #~ msgid "Hotspots (Get this list as a <a href='?format=RSS'>RSS feed</a>)"
 #~ msgstr ""
 #~ "ホットスポット(この一覧を取得するための<a href='?format=RSS'>RSS</a>)"
-
-#~ msgid "Reset my password"
-#~ msgstr "パスワードの初期化"
 
 #~ msgid "network currently has"
 #~ msgstr "ネットワークには現在、"
@@ -4783,12 +4896,6 @@ msgstr "登録日"
 
 #~ msgid "Administration"
 #~ msgstr "管理"
-
-#~ msgid "Re-send"
-#~ msgstr "再送"
-
-#~ msgid "Retrieve"
-#~ msgstr "回収"
 
 #~ msgid "Configurations of all nodes of the"
 #~ msgstr "全ノードの設定"

@@ -1,4 +1,4 @@
-# translation of messages.po to Français
+# translation of messages.po to
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
@@ -7,25 +7,285 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-11 14:10-0400\n"
-"PO-Revision-Date: 2007-08-04 19:01-0400\n"
+"POT-Creation-Date: 2007-09-24 00:52-0400\n"
+"PO-Revision-Date: 2007-09-24 00:58-0400\n"
 "Last-Translator: Benoit Grégoire <bock@step.polymtl.ca>\n"
-"Language-Team: Français <fr@li.org>\n"
+"Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
+#: ../node_list.php:109
+msgid "No nodes could not be found in the database"
+msgstr "Aucun point d'accès n'a été trouvé dans la base de données"
+
+#: ../node_list.php:112 ../classes/Node.php:306 ../classes/Node.php:661
+msgid "Deployed"
+msgstr "Déployé"
+
+#: ../node_list.php:113 ../classes/Node.php:307 ../classes/Node.php:662
+msgid "In planning"
+msgstr "En cours de planification"
+
+#: ../node_list.php:113 ../classes/Node.php:308 ../classes/Node.php:663
+msgid "In testing"
+msgstr "En rodage"
+
+#: ../node_list.php:113 ../classes/Node.php:309 ../classes/Node.php:664
+msgid "Non-Wifidog node"
+msgstr "Pas un noeud Wifidog"
+
+#: ../node_list.php:113 ../classes/Node.php:310 ../classes/Node.php:665
+msgid "Permanently closed"
+msgstr "Fermeture permanente"
+
+#: ../node_list.php:113 ../classes/Node.php:311 ../classes/Node.php:666
+msgid "Temporarily closed"
+msgstr "Fermeture temporaire"
+
+#: ../validate.php:58
+msgid "No token specified!"
+msgstr "Aucun jeton spécifié!"
+
+#: ../validate.php:61
+msgid "No user ID specified!"
+msgstr "Aucun nom d'usager spécifié!"
+
+#: ../validate.php:66
+msgid "The validation token does not match the one in the database."
+msgstr "Le jeton de validation ne correspond pas à celui dans la base de données"
+
+#: ../validate.php:69
+msgid "Your account has already been activated."
+msgstr "Votre compte a déjà été activé."
+
+#: ../validate.php:77
+msgid ""
+"Your account has been succesfully activated!\n"
+"\n"
+"You may now browse to a remote Internet address and take advantage of the "
+"free Internet access!\n"
+"\n"
+"If you get prompted for a login, enter the username and password you have "
+"just created."
+msgstr ""
+"Votre compte a été activé avec succès!\n"
+"\n"
+"Vous pouvez maintenant vous connecter n'importe quel site et prendre "
+"avantage de votre accès Internet gratuit!\n"
+"\n"
+"Lorsque l'on vous demandera de vous enregistrer, entrez le nom d'usager et "
+"le mot de passe que vous venez de créer."
+
+#: ../lost_password.php:103 ../resend_validation.php:100 ../signup.php:197
+#: ../lost_username.php:101
+msgid "Sorry, this network does not exist !"
+msgstr "Désolé, ce réseau n'existe pas !"
+
+#: ../lost_password.php:107
+msgid "Please specify a username or email address"
+msgstr "Veuillez spécifier un nom d'utilisateur ou une adresse courriel"
+
+#: ../lost_password.php:131
+msgid "This username or email could not be found in our database"
+msgstr ""
+"Ce nom d'utilisateur ou courriel n'a pu être trouvé dans notre base de "
+"données."
+
+#: ../lost_password.php:134
+msgid "A new password has been emailed to you."
+msgstr "Un nouveau mot de passe vous a été envoyé."
+
+#: ../hotspots_map.php:99
+msgid ""
+"Unable to get the google API key, because I couldn't find a vhost matching "
+"the current hostname"
+msgstr ""
+
+#: ../hotspots_map.php:115
+msgid "Change network"
+msgstr "Choisir un réseau"
+
+#: ../hotspots_map.php:146
+msgid "Sorry, your browser does not support Google Maps."
+msgstr "Désolé, votre navigateur n'est pas supporté par Google Maps."
+
+#: ../hotspots_map.php:146 ../classes/StatisticReport/NodeStatus.php:190
+#: ../classes/StatisticReport/NetworkStatus.php:109
+msgid "Homepage"
+msgstr "Page d'accueil"
+
+#: ../hotspots_map.php:146
+msgid "Show me on the map"
+msgstr "Voir sur la carte"
+
+#: ../hotspots_map.php:146 smarty.txt:36
+msgid "Loading, please wait..."
+msgstr "Chargement en cours, veuillez patienter..."
+
+#: ../hotspots_map.php:160
+msgid "Hotspots status map"
+msgstr "Carte des points d'accès déployés"
+
+#: ../config_available_locales.php:58
+msgid "French"
+msgstr "Français"
+
+#: ../config_available_locales.php:59
+msgid "English"
+msgstr "Anglais"
+
+#: ../config_available_locales.php:60
+msgid "German"
+msgstr "Allemand"
+
+#: ../config_available_locales.php:61
+msgid "Spanish"
+msgstr "Espagnol"
+
+#: ../config_available_locales.php:62
+msgid "Brazilian Portuguese"
+msgstr "Portugais brézilien"
+
+#: ../config_available_locales.php:63
+msgid "Portuguese"
+msgstr "Portugais"
+
+#: ../config_available_locales.php:64
+msgid "Japanese"
+msgstr "Japonais"
+
+#: ../config_available_locales.php:65
+msgid "Greek"
+msgstr "Grec"
+
+#: ../config_available_locales.php:66
+msgid "Bulgarian"
+msgstr "Bulgare"
+
+#: ../config_available_locales.php:67
+msgid "Swedish"
+msgstr "Suédois"
+
+#: ../config_available_locales.php:68
+msgid "Italian"
+msgstr ""
+
+#: ../resend_validation.php:104
+msgid "Please specify a username"
+msgstr "Veuillez spécifier un nom d'utilisateur"
+
+#: ../resend_validation.php:111
+msgid "This username could not be found in our database"
+msgstr "Ce nom d'utilisateur n'a pu être trouvé dans notre base de données."
+
+#: ../resend_validation.php:116 ../signup.php:228
+msgid "An email with confirmation instructions was sent to your email address."
+msgstr ""
+"Un courriel avec les instructions pour confirmer votre inscription a été "
+"envoyé à votre adresse courriel."
+
+#: ../signup.php:81
+msgid "Username is required."
+msgstr "Le nom d'utilisateur est requis."
+
+#: ../signup.php:85
+msgid "Username contains invalid characters."
+msgstr "Le nom d'utilisateur contient des caractères invalides."
+
+#: ../signup.php:103
+msgid "A valid email address is required."
+msgstr "Une adresse courriel est requise."
+
+#: ../signup.php:107
+msgid ""
+"The email address must be valid (i.e. user@domain.com). Please understand "
+"that we also black-listed various temporary-email-address providers."
+msgstr ""
+"L'adresse de courriel doit être valide (i.e usager@domaine.com). Vous devez "
+"également savoir que le système vous empêche d'employer des services de "
+"courriels anonymes."
+
+#: ../signup.php:126
+msgid "A password of at least 6 characters is required."
+msgstr "Un mot de passe d'au moins 6 caractères est requis."
+
+#: ../signup.php:130
+msgid ""
+"Password contains invalid characters.  Allowed characters are 0-9, a-z and A-"
+"Z"
+msgstr ""
+"Le mot de passe contient des caractères invalides.  Les caractères permis "
+"sont 0-9, a-z et A-Z"
+
+#: ../signup.php:134
+msgid "You must type your password twice."
+msgstr "Vous devez entrer votre mot de passe deux fois pour le confirmer."
+
+#: ../signup.php:138 ../classes/User.php:839
+msgid "Passwords do not match."
+msgstr "Les mots de passe ne sont pas identiques."
+
+#: ../signup.php:142
+msgid "Password is too short, it must be 6 characters minimum."
+msgstr "Mot de passe trop court, il doit contenir 6 caractères minimum."
+
+#: ../signup.php:201
+msgid "Sorry, this network does not accept new user registration !"
+msgstr "Désolé, ce réseau ne permet pas la création de compte"
+
+#: ../signup.php:211
+msgid ""
+"Sorry, a user account is already associated to this username. Pick another "
+"one."
+msgstr ""
+"Désolé, un compte est déjà associé à ce nom d'utilisateur. Choisissez-en un "
+"autre."
+
+#: ../signup.php:215
+msgid "Sorry, a user account is already associated to this email address."
+msgstr "Désolé, un compte existant est déjà associé à cette adresse courriel"
+
+#: ../signup.php:229 ../portal/index.php:145
+#, php-format
+msgid ""
+"Your account has been granted %s minutes of access to retrieve your email "
+"and validate your account."
+msgstr ""
+"Votre compte a été crédité de %s minutes d'accès afin de vous permettre de "
+"valider votre compte. Veuillez procéder à l'activation immédiatement sinon "
+"votre accès à Internet sera coupé."
+
+#: ../signup.php:230
+msgid ""
+"You may now open a browser window or start your email client and go to any "
+"remote Internet address to obtain the validation email."
+msgstr ""
+"Vous pouvez désormais ouvrir une fenêtre de votre navigateur ou démarrer "
+"votre logiciel de messagerie électronique. Ensuite, cliquez le lien "
+"d'activation dans le courriel. "
+
+#: ../lost_username.php:105
+msgid "Please specify an email address"
+msgstr "Veuillez spécifier une adresse courriel"
+
+#: ../lost_username.php:112
+msgid "This email could not be found in our database"
+msgstr "Ce courriel n'a pu être trouvé dans notre base de données."
+
+#: ../lost_username.php:117
+msgid "Your username has been emailed to you."
+msgstr "Votre nom d'utilisateur vous a été envoyé."
+
 #: ../gw_message.php:61
 #, php-format
 msgid "You have failed to validate your account in %d minutes."
-msgstr ""
-"Vous avez failli à valider votre compte pendant les %d minutes données."
+msgstr "Vous avez failli à valider votre compte pendant les %d minutes données."
 
 #: ../gw_message.php:62
 msgid "Please validate your account from somewhere else or create a new one."
-msgstr ""
-"Veuillez valider votre compte depuis un autre endroit ou en créer un nouveau."
+msgstr "Veuillez valider votre compte depuis un autre endroit ou en créer un nouveau."
 
 #: ../gw_message.php:67
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:896
@@ -64,9 +324,8 @@ msgstr ""
 "votre adresse de courriel. Vous pourriez devoir créer un autre compte."
 
 #: ../gw_message.php:80
-#, fuzzy
 msgid "Unknown message specified! (this is probably an error)"
-msgstr "Aucun message n'a été spécifié (ceci est probablement une erreur)"
+msgstr "Aucun message n'a été spécifié! (ceci est probablement une erreur)"
 
 #: ../gw_message.php:85
 msgid "No message has been specified! (this is probably an error)"
@@ -128,7 +387,7 @@ msgstr "Prévisualisation tel que le contenu apparaîtrait à "
 #: ../classes/StatisticReport/UserReport.php:182
 #: ../classes/StatisticReport/RegistrationLog.php:120
 #: ../classes/StatisticReport/MostPopularNodes.php:109
-#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:73
+#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:110
 msgid "Node"
 msgstr "Noeud"
 
@@ -176,8 +435,7 @@ msgstr "Importation de la BD de NoCat"
 
 #: ../admin/import_user_database.php:72
 msgid "Please select the NoCat passwd file you want to import."
-msgstr ""
-"Veuillez choisir le fichier de mot de passe de NoCat que vous voulez importer"
+msgstr "Veuillez choisir le fichier de mot de passe de NoCat que vous voulez importer"
 
 #: ../admin/import_user_database.php:76
 msgid ""
@@ -191,8 +449,7 @@ msgid "Upload file"
 msgstr "Envoyer fichier"
 
 #: ../admin/import_user_database.php:81
-msgid ""
-"I am sure I want to import (Otherwise, the import will only be simulated)."
+msgid "I am sure I want to import (Otherwise, the import will only be simulated)."
 msgstr ""
 "Je suis certain de vouloir importer (autrement, l'importation sera seulement "
 "simulée)"
@@ -209,8 +466,7 @@ msgstr ""
 
 #: ../admin/import_user_database.php:190
 msgid "Sorry, a user account already exists with the username: "
-msgstr ""
-"Désolé, un compte d'utilisateur existe déjà avec le nom d'utilisateur: "
+msgstr "Désolé, un compte d'utilisateur existe déjà avec le nom d'utilisateur: "
 
 #: ../admin/import_user_database.php:211
 msgid "SQL error on: "
@@ -220,23 +476,23 @@ msgstr "Erreur SQL :"
 msgid "Report"
 msgstr "Rapport"
 
-#: ../admin/stats.php:68
+#: ../admin/stats.php:66
 msgid "Connections at"
 msgstr "Connexions à partir de"
 
-#: ../admin/stats.php:74
+#: ../admin/stats.php:72
 msgid "User information for"
 msgstr "Informations sur l'usager"
 
-#: ../admin/stats.php:79
+#: ../admin/stats.php:77
 msgid "Connections from MAC"
 msgstr "Connexions à partir la MAC"
 
-#: ../admin/stats.php:85
+#: ../admin/stats.php:83
 msgid "Network information for"
 msgstr "Informations sur le réseau"
 
-#: ../admin/stats.php:116
+#: ../admin/stats.php:97
 msgid "Generate statistics"
 msgstr "Générer les statistiques"
 
@@ -263,8 +519,7 @@ msgid "Use these coordinates"
 msgstr "Utiliser ces coordonnées"
 
 #: ../admin/hotspot_location_map.php:80
-msgid ""
-"Error:  You need to set the GIS coordinates of the center of your network"
+msgid "Error:  You need to set the GIS coordinates of the center of your network"
 msgstr ""
 
 #: ../admin/hotspot_location_map.php:124
@@ -352,17 +607,20 @@ msgstr ""
 
 #: ../login/index.php:261
 msgid "I'm having difficulties:"
-msgstr ""
+msgstr "J'éprouve des difficultés:"
 
-#: ../login/index.php:263
+#: ../login/index.php:263 smarty.txt:52 smarty.txt:69 smarty.txt:80
+#: smarty.txt:94 smarty.txt:102
 msgid "I Forgot my username"
 msgstr "J'ai oublié mon nom d'utilisateur"
 
-#: ../login/index.php:264
+#: ../login/index.php:264 smarty.txt:53 smarty.txt:70 smarty.txt:81
+#: smarty.txt:95 smarty.txt:103
 msgid "I Forgot my password"
 msgstr "J'ai oublié mon mot de passe"
 
-#: ../login/index.php:265
+#: ../login/index.php:265 smarty.txt:54 smarty.txt:82 smarty.txt:96
+#: smarty.txt:104
 msgid "Re-send the validation email"
 msgstr "Envoyez-moi de nouveau le courriel de validation"
 
@@ -375,7 +633,7 @@ msgstr "Connexion à %s chez %s"
 msgid "Offsite login page"
 msgstr "Connexion en dehors du réseau de points d'accès"
 
-#: ../login/index.php:282 ../portal/index.php:132
+#: ../login/index.php:282 ../portal/index.php:139
 msgid "Welcome to"
 msgstr "Bienvenue chez"
 
@@ -383,29 +641,19 @@ msgstr "Bienvenue chez"
 msgid "No Hotspot specified!"
 msgstr "Aucun point d'accès spécifié!"
 
-#: ../portal/index.php:127
+#: ../portal/index.php:134
 #, php-format
 msgid "%s portal for %s"
 msgstr "Portail de %s chez %s"
 
-#: ../portal/index.php:137
+#: ../portal/index.php:144
 msgid ""
 "You NEED to confirm your account.  An email with confirmation instructions "
 "was sent to your email address.  If you don't see it in your inbox, make "
 "sure to look in your spam folder."
 msgstr ""
 
-#: ../portal/index.php:138
-#, php-format
-msgid ""
-"Your account has been granted %s minutes of access to retrieve your email "
-"and validate your account."
-msgstr ""
-"Votre compte a été crédité de %s minutes d'accès afin de vous permettre de "
-"valider votre compte. Veuillez procéder à l'activation immédiatement sinon "
-"votre accès à Internet sera coupé."
-
-#: ../portal/index.php:199
+#: ../portal/index.php:206
 msgid "Show all available contents for this hotspot"
 msgstr "Afficher tout le contenu disponible à ce point d'accès."
 
@@ -533,7 +781,7 @@ msgid "Sorry, this report requires you to select individual nodes"
 msgstr "Désolé, ce rapport exige de sélectionner une liste de noeuds"
 
 #: ../classes/StatisticReport/NodeStatus.php:99
-#: ../classes/DependenciesList.php:137
+#: ../classes/DependenciesList.php:137 smarty.txt:3
 msgid "Status"
 msgstr "Statut"
 
@@ -585,6 +833,7 @@ msgstr "Profil"
 
 #: ../classes/StatisticReport/NodeStatus.php:152
 #: ../classes/StatisticReport/NetworkStatus.php:99 ../classes/Node.php:1101
+#: smarty.txt:6
 msgid "Name"
 msgstr "Nom"
 
@@ -601,12 +850,12 @@ msgid "Deployment date"
 msgstr "Date du déploiement"
 
 #: ../classes/StatisticReport/NodeStatus.php:168 ../classes/Content.php:925
-#: ../classes/Node.php:1116 ../classes/DependenciesList.php:173 smarty.txt:49
+#: ../classes/Node.php:1116 ../classes/DependenciesList.php:173 smarty.txt:73
 msgid "Description"
 msgstr "Description"
 
 #: ../classes/StatisticReport/NodeStatus.php:172
-#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:83
+#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:120
 msgid "Network"
 msgstr "Réseau"
 
@@ -615,17 +864,13 @@ msgid "GIS Location"
 msgstr "Coordonnées de l'emplacement"
 
 #: ../classes/StatisticReport/NodeStatus.php:181 ../classes/Network.php:1035
+#: smarty.txt:78
 msgid "Map"
 msgstr "Carte"
 
 #: ../classes/StatisticReport/NodeStatus.php:185
 msgid "NOT SET"
 msgstr "VIDE"
-
-#: ../classes/StatisticReport/NodeStatus.php:190
-#: ../classes/StatisticReport/NetworkStatus.php:109
-msgid "Homepage"
-msgstr "Page d'accueil"
 
 #: ../classes/StatisticReport/NodeStatus.php:194
 #: ../classes/NodeLists/NodeListPDF.php:1083
@@ -692,7 +937,8 @@ msgstr "L'ID utilisateur : %s n'a pu être trouvé"
 #: ../classes/StatisticReport/RegistrationLog.php:123
 #: ../classes/StatisticReport/ConnectionLog.php:115
 #: ../classes/StatisticReport/ConnectionLog.php:164 ../classes/User.php:702
-#: ../classes/User.php:707 ../classes/User.php:756 smarty.txt:74 smarty.txt:82
+#: ../classes/User.php:707 ../classes/User.php:756 smarty.txt:111
+#: smarty.txt:119
 msgid "Username"
 msgstr "Nom d'usager"
 
@@ -705,7 +951,7 @@ msgid "Member since"
 msgstr "Membre depuis"
 
 #: ../classes/StatisticReport/UserReport.php:147 ../classes/User.php:744
-#: smarty.txt:85
+#: smarty.txt:122
 msgid "Account Status"
 msgstr "État du compte"
 
@@ -910,8 +1156,7 @@ msgstr "Inconnu"
 
 #: ../classes/StatisticReport/ConnectionGraphs.php:62
 msgid "Graph on network use per hour, weekday and month"
-msgstr ""
-"Graphique de l'utilisation du réseau par heure, jour de la semaine et mois"
+msgstr "Graphique de l'utilisation du réseau par heure, jour de la semaine et mois"
 
 #: ../classes/StatisticReport/HighestBandwidthUsers.php:65
 #, php-format
@@ -1177,8 +1422,7 @@ msgstr "URL"
 #: ../classes/Content/Picture/Picture.php:103 ../classes/Content.php:124
 #: ../classes/Content.php:275
 msgid "The content with the following id could not be found in the database: "
-msgstr ""
-"Le contenu avec l'ID suivant n'a pu être trouvé dans la base de données:"
+msgstr "Le contenu avec l'ID suivant n'a pu être trouvé dans la base de données:"
 
 #: ../classes/Content/File/File.php:206
 msgid "File size exceeds limit specified in PHP.ini"
@@ -1186,8 +1430,7 @@ msgstr "La taille du fichier excède celle spécifiée dans PHP.ini"
 
 #: ../classes/Content/File/File.php:210
 msgid "File size exceeds limit specified HTML form"
-msgstr ""
-"La taille du fichier excède la limite spécifiée dans le formulaire HTML."
+msgstr "La taille du fichier excède la limite spécifiée dans le formulaire HTML."
 
 #: ../classes/Content/File/File.php:214
 msgid "File upload was interrupted"
@@ -1281,8 +1524,7 @@ msgstr "Attributs"
 msgid ""
 "It is recommended to specify at least <b>width='x' height='y'</b> as "
 "attributes"
-msgstr ""
-"Il est fortement recommandé d'entrer les attributs <b>width='x' height=y'</b>"
+msgstr "Il est fortement recommandé d'entrer les attributs <b>width='x' height=y'</b>"
 
 #: ../classes/Content/EmbeddedContent/EmbeddedContent.php:198
 msgid "Parameters"
@@ -1348,8 +1590,7 @@ msgid "Add new allowed node"
 msgstr "Ajouter un nouveau noeud permis"
 
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:364
-msgid ""
-"(Content can be displayed at ANY node unless one or more nodes are selected)"
+msgid "(Content can be displayed at ANY node unless one or more nodes are selected)"
 msgstr ""
 
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:381
@@ -1359,12 +1600,10 @@ msgstr "%s %d: contenu affiché (%s)"
 
 #: ../classes/Content/ContentGroup/ContentGroup.php:149
 msgid "Invalid content selection mode (must be part of CONTENT_ORDERING_MODES)"
-msgstr ""
-"Mode de sélection invalide (doit faire partie de CONTENT_ORDERING_MODES)"
+msgstr "Mode de sélection invalide (doit faire partie de CONTENT_ORDERING_MODES)"
 
 #: ../classes/Content/ContentGroup/ContentGroup.php:178
-msgid ""
-"Invalid content selection mode (must be part of CONTENT_CHANGES_ON_MODES)"
+msgid "Invalid content selection mode (must be part of CONTENT_CHANGES_ON_MODES)"
 msgstr ""
 "Mode de sélection des contenus invalide (doit faire partie de "
 "CONTENT_CHANGES_ON_MODES)"
@@ -1733,7 +1972,7 @@ msgstr "(%s vide)"
 #: ../classes/Content/Langstring/Langstring.php:215
 #: ../classes/Content/Langstring/Langstring.php:341
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:112
-#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:12
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:24
 msgid "Language"
 msgstr "Langue"
 
@@ -1976,8 +2215,7 @@ msgstr ""
 
 #: ../classes/Content/Picture/Picture.php:272
 msgid "Hyperlink URL (leave empty if you don't need it)"
-msgstr ""
-"URL de l'hyperlien (laissez le champ vide si vous ne désirez pas l'utiliser)"
+msgstr "URL de l'hyperlien (laissez le champ vide si vous ne désirez pas l'utiliser)"
 
 #: ../classes/Content/Picture/Picture.php:280
 msgid "Width (leave empty if you want to keep original width)"
@@ -2008,8 +2246,7 @@ msgid "There are also a few custom Smarty modifiers available: %s"
 msgstr ""
 
 #: ../classes/Content/Avatar/Avatar.php:103
-msgid ""
-"Unable to process image (GD probably doesn't have support for it enabled)"
+msgid "Unable to process image (GD probably doesn't have support for it enabled)"
 msgstr ""
 
 #: ../classes/Content/HyperLink/HyperLink.php:95
@@ -2021,8 +2258,7 @@ msgid "(invalid URL)"
 msgstr "(URL invalide)"
 
 #: ../classes/Content/UIUserList/UIUserList.php:92
-msgid ""
-"This content type will display a list of online users at the current hotspot."
+msgid "This content type will display a list of online users at the current hotspot."
 msgstr ""
 
 #: ../classes/Content/UIUserList/UIUserList.php:156
@@ -2260,10 +2496,6 @@ msgstr "Créer mon profil public"
 #: ../classes/User.php:836
 msgid "Wrong password."
 msgstr "Mauvais mot de passe."
-
-#: ../classes/User.php:839
-msgid "Passwords do not match."
-msgstr "Les mots de passe ne sont pas identiques."
 
 #: ../classes/User.php:930
 msgid "Online Users"
@@ -2582,37 +2814,37 @@ msgstr "De"
 msgid "To"
 msgstr "À"
 
-#: ../classes/Statistics.php:450
+#: ../classes/Statistics.php:455
 msgid "Invalid parameter"
 msgstr "Paramètre invalide"
 
-#: ../classes/Statistics.php:482
+#: ../classes/Statistics.php:493
 msgid "Username or MAC address, depending on selection above"
 msgstr ""
 
-#: ../classes/Statistics.php:578
+#: ../classes/Statistics.php:589
 msgid "Report configuration"
 msgstr "Configuration du rapport"
 
-#: ../classes/Statistics.php:601
+#: ../classes/Statistics.php:612
 msgid "Restrict the time range for which statistics will be computed"
 msgstr ""
 "Restreindre la période de temps pour laquelle les statistiques seront "
 "comptabilisées."
 
-#: ../classes/Statistics.php:609
+#: ../classes/Statistics.php:620
 msgid "Restrict stats to the following nodes"
 msgstr "Restreindre les stats aux noeuds suivants"
 
-#: ../classes/Statistics.php:619
+#: ../classes/Statistics.php:630
 msgid "Distinguish users by"
 msgstr "Distinguer les usagers par"
 
-#: ../classes/Statistics.php:628
+#: ../classes/Statistics.php:639
 msgid "Restrict stats to the selected users"
 msgstr "Restreindre les stats aux usagers suivants"
 
-#: ../classes/Statistics.php:637
+#: ../classes/Statistics.php:648
 msgid "Selected reports"
 msgstr "Rapports sélectionnés"
 
@@ -2791,8 +3023,7 @@ msgstr "Niveau du zoom"
 
 #: ../classes/Network.php:1657
 msgid "Zoomlevel of the Google Map for your the area of your wireless network"
-msgstr ""
-"Niveau de zoom de la carte pour la zone où se situe votre réseau sans fil"
+msgstr "Niveau de zoom de la carte pour la zone où se situe votre réseau sans fil"
 
 #: ../classes/Network.php:1661
 msgid "Map type"
@@ -2828,8 +3059,7 @@ msgstr "Gestion du réseau"
 
 #: ../classes/ProfileTemplate.php:229
 msgid "Unable to insert the new profile template in the database!"
-msgstr ""
-"Impossible d'insérer le nouveau patron de profil dans la base de données!"
+msgstr "Impossible d'insérer le nouveau patron de profil dans la base de données!"
 
 #: ../classes/ProfileTemplate.php:289
 msgid "Profile template"
@@ -2898,8 +3128,7 @@ msgstr "Aucun paquetage thématique n'est disponible dans %s"
 
 #: ../classes/ProfileField.php:251
 msgid "Unable to insert the new profile fields in the database!"
-msgstr ""
-"Impossible d'insérer le nouveau champ de profil dans la base de données!"
+msgstr "Impossible d'insérer le nouveau champ de profil dans la base de données!"
 
 #: ../classes/ProfileField.php:281
 #, php-format
@@ -2995,8 +3224,7 @@ msgstr "La requête a retourné %d résultat(s)"
 
 #: ../classes/AbstractDb.php:427
 #, php-format
-msgid ""
-"The query returned %d results, although there should have been only one."
+msgid "The query returned %d results, although there should have been only one."
 msgstr ""
 "La requête a retourné %d résultats, alors qu'il y aurait du en avoir qu'un "
 "seul."
@@ -3171,7 +3399,7 @@ msgstr "Impossible de définir en tant qu'auteur dans la base de données."
 msgid "Reusable content library"
 msgstr ""
 
-#: ../classes/NodeList.php:186 smarty.txt:20
+#: ../classes/NodeList.php:186 smarty.txt:35
 msgid "Deployed HotSpots map"
 msgstr "Carte des points d'accès déployés"
 
@@ -3232,7 +3460,7 @@ msgstr "%s n'est pas une zone d'affichage valide"
 msgid "%s Login"
 msgstr "Connexion à %s"
 
-#: ../classes/MainUI.php:642
+#: ../classes/MainUI.php:642 smarty.txt:23 smarty.txt:28
 msgid "Login"
 msgstr "Ouvrir une session"
 
@@ -3242,8 +3470,7 @@ msgid "Click <a href='%s'>here</a> to continue"
 msgstr "Cliquez <a href='%s'>ici</a> pour continuer"
 
 #: ../classes/MainUI.php:646
-msgid ""
-"The transfer from secure login back to regular http may cause a warning."
+msgid "The transfer from secure login back to regular http may cause a warning."
 msgstr ""
 "Le changement de la page de connexion sécurisée vers le portail peut causer "
 "l'affichage d'un message d'avertissement que vous pouvez ignorer."
@@ -3268,30 +3495,6 @@ msgstr ""
 #: ../classes/Node.php:269
 msgid "Unable to insert new node into database!"
 msgstr "Impossible d'insérer le nouveau noeud dans la base de données !"
-
-#: ../classes/Node.php:306 ../classes/Node.php:661
-msgid "Deployed"
-msgstr "Déployé"
-
-#: ../classes/Node.php:307 ../classes/Node.php:662
-msgid "In planning"
-msgstr "En cours de planification"
-
-#: ../classes/Node.php:308 ../classes/Node.php:663
-msgid "In testing"
-msgstr "En rodage"
-
-#: ../classes/Node.php:309 ../classes/Node.php:664
-msgid "Non-Wifidog node"
-msgstr "Pas un noeud Wifidog"
-
-#: ../classes/Node.php:310 ../classes/Node.php:665
-msgid "Permanently closed"
-msgstr "Fermeture permanente"
-
-#: ../classes/Node.php:311 ../classes/Node.php:666
-msgid "Temporarily closed"
-msgstr "Fermeture temporaire"
 
 #: ../classes/Node.php:353
 msgid "Filter:"
@@ -3406,8 +3609,7 @@ msgid "Check using Google Maps"
 msgstr "Voir la position sur la carte"
 
 #: ../classes/Node.php:1194
-msgid ""
-"Use a geocoding service, then use Google Maps to pinpoint the exact location."
+msgid "Use a geocoding service, then use Google Maps to pinpoint the exact location."
 msgstr ""
 "Utiliser un service de géolocalisation, puis utiliser Google Maps pour "
 "déterminer la position exacte."
@@ -3446,8 +3648,7 @@ msgstr "Paramètre du noeud"
 msgid ""
 "It appears that the Geocoder could not be reached or could not geocode the "
 "given address."
-msgstr ""
-"La géolocalisation n'a pu être complétée ou l'adresse n'est pas valide."
+msgstr "La géolocalisation n'a pu être complétée ou l'adresse n'est pas valide."
 
 #: ../classes/Node.php:1374
 msgid "You must enter a valid address."
@@ -3455,8 +3656,7 @@ msgstr "Vous devez entrer une adresse valide."
 
 #: ../classes/Node.php:1378
 msgid "Unable to create geocoder.  Are you sure you set the country?"
-msgstr ""
-"Impossible de créer un géocodeur. Assurez-vous de sélectionner un pays."
+msgstr "Impossible de créer un géocodeur. Assurez-vous de sélectionner un pays."
 
 #: ../classes/Node.php:1616
 msgid "Edit nodes"
@@ -3468,8 +3668,7 @@ msgstr "Gestion du noeud"
 
 #: ../classes/VirtualHost.php:162
 msgid "Server::getAllServers: Fatal error: No servers in the database!"
-msgstr ""
-"Server::getAllServers(): Erreur fatale: Aucun serveur n'a pu être trouvé !"
+msgstr "Server::getAllServers(): Erreur fatale: Aucun serveur n'a pu être trouvé !"
 
 #: ../classes/VirtualHost.php:298
 msgid "Virtual host:"
@@ -3535,17 +3734,17 @@ msgstr ""
 msgid "User %s already has role %s for this object"
 msgstr ""
 
-#: ../classes/Dependency.php:339 ../classes/Dependency.php:355
+#: ../classes/Dependency.php:362 ../classes/Dependency.php:378
 #, php-format
 msgid "File %s not found"
 msgstr ""
 
-#: ../classes/Dependency.php:369 ../classes/Dependency.php:383
-#, fuzzy, php-format
+#: ../classes/Dependency.php:392 ../classes/Dependency.php:406
+#, php-format
 msgid "File %s not found in %s"
-msgstr "Paquetage thématique %s n'a pu être trouvé dans %s"
+msgstr "Le fichier %s n'a pu être trouvé dans %s"
 
-#: ../classes/Dependency.php:422
+#: ../classes/Dependency.php:467
 #, php-format
 msgid ""
 "To install this standard PHP extension, look for a package with a similar "
@@ -3553,24 +3752,29 @@ msgid ""
 "distributions, you may try 'sudo apt-get install php5-%s'"
 msgstr ""
 
-#: ../classes/Dependency.php:427
+#: ../classes/Dependency.php:473
 #, php-format
-msgid "<input type='submit' name='%s' value='Install %s'/>"
+msgid "Install %s"
+msgstr "Installer %s"
+
+#: ../classes/Dependency.php:478
+#, php-format
+msgid "Sorry, i couldn't find the source for %s in installSourceUrl"
 msgstr ""
 
-#: ../classes/Dependency.php:437
+#: ../classes/Dependency.php:490
 #, php-format
 msgid ""
 "url_to_the_tarball (Sorry, i couldn't find the source for %s in "
 "installSourceUrl)"
 msgstr ""
 
-#: ../classes/Dependency.php:439
+#: ../classes/Dependency.php:492
 #, php-format
 msgid "To install this custom PEAR extension, use 'sudo pear install %s'"
 msgstr ""
 
-#: ../classes/Dependency.php:442
+#: ../classes/Dependency.php:495
 #, php-format
 msgid "Sorry, I don't know how to install a %s extension"
 msgstr ""
@@ -3657,24 +3861,20 @@ msgid "Type"
 msgstr ""
 
 #: ../classes/DependenciesList.php:138
-#, fuzzy
 msgid "Information"
-msgstr "information sur le projet"
+msgstr "Information"
 
 #: ../classes/DependenciesList.php:176
-#, fuzzy
 msgid "Install message"
-msgstr "Derniers %d messages:"
+msgstr "Message d'installation"
 
 #: ../classes/DependenciesList.php:179
-#, fuzzy
 msgid "Detection message"
-msgstr "Message d'erreur"
+msgstr "Message de détection"
 
 #: ../classes/DependenciesList.php:182
-#, fuzzy
 msgid "To install"
-msgstr "Total"
+msgstr "Pour installer"
 
 #: ../classes/DependenciesList.php:204
 msgid "Dependencies"
@@ -3684,123 +3884,170 @@ msgstr "Dépendances"
 msgid "Status of all nodes of the"
 msgstr "Statut de tous les noeuds"
 
-#: smarty.txt:3
+#: smarty.txt:4
+msgid "Node id"
+msgstr "Id du noeud"
+
+#: smarty.txt:5
+msgid "Gateway id"
+msgstr "Identifiant de la passerelle"
+
+#: smarty.txt:7
 msgid "Local content demo"
 msgstr "Démo de contenu local"
 
-#: smarty.txt:4
+#: smarty.txt:8
+msgid "Opened on"
+msgstr "Ouvert le"
+
+#: smarty.txt:9 smarty.txt:109
+msgid "Online users"
+msgstr "Usagers en ligne"
+
+#: smarty.txt:10 smarty.txt:11
 msgid "days"
 msgstr "jours"
 
-#: smarty.txt:5
+#: smarty.txt:12
+msgid "Login page"
+msgstr "Page d'ouverture de session"
+
+#: smarty.txt:13
+msgid "Portal page"
+msgstr "Page portail"
+
+#: smarty.txt:14
 msgid "user is online at this hotspot"
 msgstr "usager est en ligne à ce point d'accès"
 
-#: smarty.txt:6
+#: smarty.txt:15
 msgid "users are online at this hotspot"
 msgstr "usagers sont en ligne à ce point d'accès"
 
-#: smarty.txt:7
+#: smarty.txt:16
 msgid "Nobody is online at this hotspot"
 msgstr "Personne n'est en ligne à ce point d'accès"
 
-#: smarty.txt:8
+#: smarty.txt:17
 msgid "Recent Users:"
 msgstr ""
 
-#: smarty.txt:9
+#: smarty.txt:18
 msgid "Most Active Users:"
 msgstr ""
 
-#: smarty.txt:10
+#: smarty.txt:19
 msgid "Logged in as"
 msgstr "Connecté en tant que"
 
-#: smarty.txt:11
+#: smarty.txt:20
+msgid "Profile / Settings"
+msgstr "Profile / Préférences"
+
+#: smarty.txt:21
+msgid "Logout"
+msgstr ""
+
+#: smarty.txt:22
 msgid "I am not logged in."
 msgstr "Je ne suis pas connecté."
 
-#: smarty.txt:13
+#: smarty.txt:25
 msgid "Login or Signup here"
 msgstr "Connectez-vous ou créez un compte ici"
 
-#: smarty.txt:14
+#: smarty.txt:26
 msgid "Username (or email)"
 msgstr "Utilisateur (ou courriel)"
 
-#: smarty.txt:15 smarty.txt:37
+#: smarty.txt:27 smarty.txt:58
 msgid "Password"
 msgstr "Mot de passe"
 
-#: smarty.txt:16
+#: smarty.txt:29
+msgid "Create a free account"
+msgstr "Ouvrir un compte gratuit"
+
+#: smarty.txt:30
+msgid "You must specify your username and password"
+msgstr "Vous devez entrer votre nom d'usager et mot de passe"
+
+#: smarty.txt:31
 msgid "Show me the closest hotspot"
 msgstr "Où est le point d'accès le plus près ?"
 
-#: smarty.txt:17
+#: smarty.txt:32
 msgid "Enter your postal code"
 msgstr "Entrez votre code postal"
 
-#: smarty.txt:18
+#: smarty.txt:33
 msgid "Show"
 msgstr "Montrez-moi sur la carte"
 
-#: smarty.txt:19
+#: smarty.txt:34
 msgid "Refresh map"
 msgstr "Rafraîchir la carte"
 
-#: smarty.txt:21
-msgid "Loading, please wait..."
-msgstr "Chargement en cours, veuillez patienter..."
-
-#: smarty.txt:22
+#: smarty.txt:37
 msgid "Legend"
 msgstr "Légende"
 
-#: smarty.txt:23
+#: smarty.txt:38
+msgid "the hotspot is operational"
+msgstr "Le point d'accès est présentement opérationnel"
+
+#: smarty.txt:39
+msgid "the hotspot is down"
+msgstr ""
+
+#: smarty.txt:40
+msgid "not monitored"
+msgstr "non surveillé"
+
+#: smarty.txt:41
 #, php-format
 msgid "The %s network currently has one valid user."
 msgstr "Le réseau %s possède actuellement un usager valide."
 
-#: smarty.txt:24
+#: smarty.txt:42
 #, php-format
 msgid "The %s network currently has %d valid users."
 msgstr "Le réseau %s possède actuellement %d usagers valides."
 
-#: smarty.txt:25
+#: smarty.txt:43
 msgid "One user is currently online."
 msgstr "Un usager est actuellement connecté."
 
-#: smarty.txt:26
+#: smarty.txt:44
 #, php-format
 msgid "%d users are currently online."
 msgstr "%d usagers sont actuellement connectés."
 
-#: smarty.txt:27
+#: smarty.txt:45
 msgid "This network currently has 1 deployed hotspot."
 msgstr "Ce réseau possède actuellement un point d'accès déployé."
 
-#: smarty.txt:28
+#: smarty.txt:46
 #, php-format
 msgid "This network currently has %d deployed hotspots."
 msgstr "Ce réseau possède actuellement %d points d'accès déployés."
 
-#: smarty.txt:29
+#: smarty.txt:47
 msgid "One hotspot is currently operational."
 msgstr "Un point d'accès est actuellement opérationnel."
 
-#: smarty.txt:30
+#: smarty.txt:48
 #, php-format
 msgid "%d hotspots are currently operational."
 msgstr "%d points d'accès sont actuellement opérationnels."
 
-#: smarty.txt:31
-msgid ""
-"One hotspot isn't monitored so we don't know if it's currently operational."
+#: smarty.txt:49
+msgid "One hotspot isn't monitored so we don't know if it's currently operational."
 msgstr ""
 "Un point d'accès n'est pas suivi, donc nous ne pouvons pas savoir s'il est "
 "actuellement opérationnel."
 
-#: smarty.txt:32
+#: smarty.txt:50
 #, php-format
 msgid ""
 "%d hotspots aren't monitored so we don't know if they are currently "
@@ -3809,31 +4056,35 @@ msgstr ""
 "%d points d'accès ne sont pas suivis, donc nous ne pouvons pas savoir s'ils "
 "sont actuellement opérationnels."
 
-#: smarty.txt:33 smarty.txt:54 smarty.txt:64 smarty.txt:68
+#: smarty.txt:51 smarty.txt:79 smarty.txt:93 smarty.txt:101
 msgid "I'm having difficulties"
 msgstr "J'éprouve des difficultés"
 
-#: smarty.txt:34
+#: smarty.txt:55
 msgid "Register a free account with"
 msgstr "Ouvrir un compte gratuit avec"
 
-#: smarty.txt:35
+#: smarty.txt:56
 msgid "Username desired"
 msgstr "Nom d'utilisateur désiré"
 
-#: smarty.txt:36 smarty.txt:57 smarty.txt:70
+#: smarty.txt:57 smarty.txt:85 smarty.txt:106
 msgid "Your email address"
 msgstr "Votre courriel"
 
-#: smarty.txt:38
+#: smarty.txt:59
 msgid "Password (again)"
 msgstr "Mot de passe (encore)"
 
-#: smarty.txt:39
+#: smarty.txt:60
+msgid "Sign-up"
+msgstr ""
+
+#: smarty.txt:61
 msgid "Please note"
 msgstr "Veuillez noter"
 
-#: smarty.txt:40
+#: smarty.txt:62
 msgid ""
 "While accounts are free, we <em>strongly</em> suggest that you use your "
 "previously created account if you have one."
@@ -3841,7 +4092,7 @@ msgstr ""
 "Bien que les comptes sont offerts gracieusement, nous suggérons fortement "
 "que vous utilisiez votre compte, si vous en avez déjà créé un auparavant."
 
-#: smarty.txt:41
+#: smarty.txt:63
 msgid ""
 "<b>Your email address must be valid</b> in order for your account to be "
 "activated."
@@ -3849,23 +4100,23 @@ msgstr ""
 "<b>Votre adresse de courriel doit être valide</b> afin de vous permettre de "
 "valider votre compte."
 
-#: smarty.txt:42
+#: smarty.txt:64
 msgid "A validation email will be sent to that email address."
 msgstr ""
 "Un message vous permettant de valider votre compte vous sera envoyé par "
 "courriel."
 
-#: smarty.txt:43
+#: smarty.txt:65
 msgid "To fully activate your account you must respond to that email."
 msgstr ""
 "Afin d'accéder à Internet, vous devez absolument lire vos courriels dans les "
 "plus brefs délais et valider votre compte."
 
-#: smarty.txt:44
+#: smarty.txt:66
 msgid "Note to free web-based email users"
 msgstr "Note aux usagers d'un service de courriel Web"
 
-#: smarty.txt:45
+#: smarty.txt:67
 msgid ""
 "Sometimes our validation email ends up in the 'spam' folder of some "
 "providers. If you have not received any email with the validation URL 5 "
@@ -3876,53 +4127,57 @@ msgstr ""
 "contenant l'hyperlien d'activation de votre compte, jetez un coup d'oeil à "
 "votre dossier pourriels (spam)."
 
-#: smarty.txt:46
+#: smarty.txt:68
 msgid "You can also use the following links if you need help"
 msgstr ""
 "Vous pouvez également utiliser les liens suivants, si vous avez besoin "
 "d'aide."
 
-#: smarty.txt:47
+#: smarty.txt:71
 #, php-format
 msgid "Status of the %d open %s Hotspots"
 msgstr "État des %d points d'accès %s"
 
-#: smarty.txt:48
+#: smarty.txt:72
 msgid "Hotspot / Status"
 msgstr "Point d'accès / État"
 
-#: smarty.txt:50
+#: smarty.txt:74
 msgid "Location"
 msgstr "Emplacement"
 
-#: smarty.txt:51
+#: smarty.txt:75
 msgid "Hotspot in testing phase"
 msgstr "Point d'accès en phase de test"
 
-#: smarty.txt:52
+#: smarty.txt:76
 msgid "Hotspot not monitored"
 msgstr "Point d'accès non surveillé"
 
-#: smarty.txt:53
+#: smarty.txt:77
 #, php-format
 msgid "Opened on %s"
 msgstr "Ouvert le %s"
 
-#: smarty.txt:55
+#: smarty.txt:83
 msgid "Lost password"
 msgstr "Mot de passe perdu"
 
-#: smarty.txt:56 smarty.txt:66
+#: smarty.txt:84 smarty.txt:98
 msgid "Your username"
 msgstr "Votre nom d'utilisateur"
 
-#: smarty.txt:58
+#: smarty.txt:86
+msgid "Reset my password"
+msgstr "Ré-initialiser mon mot de passe"
+
+#: smarty.txt:87
 msgid "Please enter your username or email address to reset your password"
 msgstr ""
 "Veuillez entrez votre nom d'utilisateur ou votre adresse courriel pour "
 "réinitialiser votre mot de passe"
 
-#: smarty.txt:59
+#: smarty.txt:88
 msgid ""
 "We are a not-for-profit group dedicated to making no-fee wireless Internet "
 "access generally available."
@@ -3930,7 +4185,7 @@ msgstr ""
 "Nous sommes un groupe communautaire à but non lucratif déterminé à rendre un "
 "accès un accès à Internet sans fil."
 
-#: smarty.txt:60
+#: smarty.txt:89
 msgid ""
 "Our aim is to encourage the growth of wireless networking and to build "
 "community in interesting and innovative ways."
@@ -3938,7 +4193,7 @@ msgstr ""
 "Notre but est d'encourager le déploiement de réseaux sans fil et de "
 "favoriser la création d'une communauté d'une façon inédite."
 
-#: smarty.txt:61
+#: smarty.txt:90
 msgid ""
 "We do this by setting up wireless Internet networks in parks, cafés, "
 "restaurants, bars and other publically-accessible locations across the city."
@@ -3946,20 +4201,23 @@ msgstr ""
 "Nous le faisons en déployant des points d'accès à Internet sans fil dans les "
 "parcs, cafés, restaurants, bars et autres espaces publics."
 
-#: smarty.txt:62
+#: smarty.txt:91
 msgid "For a complete and up-to-date listing of our nodes, visit"
-msgstr ""
-"Pour voir une liste complète et mise à jour de nos points d'accès, visitez"
+msgstr "Pour voir une liste complète et mise à jour de nos points d'accès, visitez"
 
-#: smarty.txt:63
+#: smarty.txt:92
 msgid "Please get in touch with "
 msgstr "Veuillez contacter "
 
-#: smarty.txt:65
+#: smarty.txt:97
 msgid "Re-send validation email"
 msgstr "Envoyez-moi de nouveau le courriel de validation"
 
-#: smarty.txt:67
+#: smarty.txt:99
+msgid "Re-send"
+msgstr "Ré-envoyer"
+
+#: smarty.txt:100
 msgid ""
 "Please enter your username and the validation email will be resent to your "
 "email address"
@@ -3967,1821 +4225,49 @@ msgstr ""
 "Veuillez entrer votre nom d'utilisateur et le courriel de validation vous "
 "sera renvoyé à votre adresse courriel"
 
-#: smarty.txt:69
+#: smarty.txt:105
 msgid "Lost username"
 msgstr "Nom d'utilisateur perdu"
 
-#: smarty.txt:71
+#: smarty.txt:107
+msgid "Retrieve"
+msgstr ""
+
+#: smarty.txt:108
 msgid "Please enter your email address to recover your username"
 msgstr ""
 "Veuillez entrer votre adresse courriel afin de recevoir votre nom "
 "d'utilisateur"
 
-#: smarty.txt:72
-msgid "Online users"
-msgstr "Usagers en ligne"
-
-#: smarty.txt:75
+#: smarty.txt:112
 msgid "Origin"
 msgstr "Origine"
 
-#: smarty.txt:76
+#: smarty.txt:113
 msgid "Logged in Since"
 msgstr "Connecté depuis"
 
-#: smarty.txt:77
+#: smarty.txt:114
 msgid "Traffic IN/OUT"
 msgstr "Trafic ENTRANT/SORTANT"
 
-#: smarty.txt:78
+#: smarty.txt:115
 msgid "User list"
 msgstr "Liste d'utilisateurs"
 
-#: smarty.txt:79
+#: smarty.txt:116
 msgid "Sort by:"
 msgstr "Trier par : "
 
-#: smarty.txt:80
+#: smarty.txt:117
 msgid "Direction:"
 msgstr "Sens : "
 
-#: smarty.txt:81
+#: smarty.txt:118
 msgid "Sort"
 msgstr "Trier"
 
-#: smarty.txt:84
+#: smarty.txt:121
 msgid "Registered On"
 msgstr "Date de l'inscription"
 
-#~ msgid "French"
-#~ msgstr "Français"
-
-#~ msgid "English"
-#~ msgstr "Anglais"
-
-#~ msgid "German"
-#~ msgstr "Allemand"
-
-#~ msgid "Spanish"
-#~ msgstr "Espagnol"
-
-#~ msgid "Brazilian Portuguese"
-#~ msgstr "Portugais brézilien"
-
-#~ msgid "Portuguese"
-#~ msgstr "Portugais"
-
-#~ msgid "Japanese"
-#~ msgstr "Japonais"
-
-#~ msgid "Greek"
-#~ msgstr "Grec"
-
-#~ msgid "Bulgarian"
-#~ msgstr "Bulgare"
-
-#~ msgid "Swedish"
-#~ msgstr "Suédois"
-
-#~ msgid "Component %s is not installed (not found in %s)"
-#~ msgstr ""
-#~ "Le composant %s n'est pas installé (impossible de le trouver dans %s)"
-
-#~ msgid "Message"
-#~ msgstr "Message"
-
-#~ msgid ""
-#~ " are and will remain <emp>totally free</emp>, use the left menu to create "
-#~ "a new one or recover a lost username or password."
-#~ msgstr ""
-#~ " sont et vont demeurer <emp>totalement gratuits</emp>, utilisez le menu "
-#~ "de gauche pour créer un nouveau compte ou retrouver un nom d'utilisateur "
-#~ "ou un mot de passe perdu."
-
-#~ msgid " could not be found in the database"
-#~ msgstr "impossible de trouver dans la base de données"
-
-#~ msgid " cumulative user statistics"
-#~ msgstr " statistiques d'utilisateur cumulatives"
-
-#~ msgid " in the database"
-#~ msgstr " dans la base de données"
-
-#~ msgid " in the database."
-#~ msgstr " dans la base de données."
-
-#~ msgid ""
-#~ " minutes grace period to retrieve your email and validate your account "
-#~ "has now expired. You will have to connect to the internet and validate "
-#~ "your account from another location or create a new account. For help, "
-#~ "please "
-#~ msgstr ""
-#~ " minutes afin de retrouver le courriel et valider votre compte est "
-#~ "maintenant expiré. Vous devrez vous brancher à l'Internet et valider "
-#~ "votre compte d'un autre endroit ou encore de créer un autre compte. Pour "
-#~ "de l'aide, veuillez "
-
-#~ msgid ""
-#~ " with funding from the New Media Research Networks Fund at the Department "
-#~ "of Canadian Heritage."
-#~ msgstr ""
-#~ " avec la participation financière de New Media Research Networks Fund du "
-#~ "Département de l'héritage Canadien."
-
-#~ msgid "', ownership should be set to user "
-#~ msgstr "', le propriétaire n'a pu être assigné à l'usager "
-
-#~ msgid ""
-#~ "(Content can be displayed on ANY node unless one or more nodes are "
-#~ "selected)"
-#~ msgstr ""
-#~ "(Le contenu peut être affiché sur n'importe quel noeud, à moins qu'un "
-#~ "noeud ou plus soit sélectionné)"
-
-#~ msgid "(again)"
-#~ msgstr "(encore)"
-
-#~ msgid ": Newest HotSpots"
-#~ msgstr ": Points d'accès les plus récents"
-
-#~ msgid "A new password has been emailed to you."
-#~ msgstr "Un nouveau mot de passe vous a été envoyé."
-
-#~ msgid "A password of at least 6 characters is required."
-#~ msgstr "Un mot de passe d'au moins 6 caractères est requis."
-
-#~ msgid "A valid email address is required."
-#~ msgstr "Une adresse courriel est requise."
-
-#~ msgid "About"
-#~ msgstr "À propos de"
-
-#~ msgid "About Pattern Language"
-#~ msgstr "À propos de Pattern Language"
-
-#~ msgid "Accounts on"
-#~ msgstr "Les comptes sur"
-
-#~ msgid "Accounts on "
-#~ msgstr "Comptes sur"
-
-#~ msgid "Accounts on %s are and will stay completely free."
-#~ msgstr "Les comptes sur %s sont et resteront complètement gratuits."
-
-#~ msgid "Action"
-#~ msgstr "Action"
-
-#~ msgid "Add a"
-#~ msgstr "Ajouter un"
-
-#~ msgid "Add a new content OR select previously created content"
-#~ msgstr ""
-#~ "Ajoutez un nouveau contenu OU sélectionnez du contenu créé précédemment"
-
-#~ msgid "Add a new displayed content OR select an existing one"
-#~ msgstr "Ajoutez un nouveau contenu OU sélectionnez du contenu existant"
-
-#~ msgid "Add a new hotspot"
-#~ msgstr "Ajouter un nouveau point d'accès"
-
-#~ msgid "Add a new node"
-#~ msgstr "Ajouter un nouveau noeud"
-
-#~ msgid "Add a new node owner"
-#~ msgstr "Ajouter un nouveau propriétaire de noeud"
-
-#~ msgid "Add new content"
-#~ msgstr "Ajouter un nouveau contenu"
-
-#~ msgid "Add new node"
-#~ msgstr "Ajouter un nouveau noeud"
-
-#~ msgid "Address:"
-#~ msgstr "Adresse:"
-
-#~ msgid "Administrators"
-#~ msgstr "Administrateurs"
-
-#~ msgid "AllowedNodes:"
-#~ msgstr "Noeuds permis:"
-
-#~ msgid ""
-#~ "An email with confirmation instructions was sent to your email address."
-#~ msgstr ""
-#~ "Un courriel avec les instructions pour confirmer votre inscription a été "
-#~ "envoyé à votre adresse courriel."
-
-#~ msgid ""
-#~ "An email with confirmation instructions was sent to your email address.  "
-#~ "Your account has been granted 15 minutes of access to retrieve your email "
-#~ "and validate your account."
-#~ msgstr ""
-#~ "Un courriel incluant les instructions pour confirmer votre compte a été "
-#~ "envoyé à votre adresse courriel. 15 minutes d'accès ont été accordées à "
-#~ "votre compte afin que vous puissiez allez lire vos courriels et valider "
-#~ "votre compte. "
-
-#~ msgid ""
-#~ "An email with confirmation instructions was sent to your email address.  "
-#~ "Your account has been granted 15 minutes of access to retrieve your email "
-#~ "and validate your account.  You may now open a browser window and go to "
-#~ "any remote Internet address to obtain the login page."
-#~ msgstr ""
-#~ "Un courriel incluant les instructions pour confirmer votre compte à été "
-#~ "envoyé à votre adresse courriel. 15 minutes d'accès ont été accordées à "
-#~ "votre compte afin que vous puissiez allez lire vos courriels et valider "
-#~ "votre compte. Veuillez maintenant aller à une adresse Internet distante "
-#~ "afin d'obtenir une page de saisie de mot de passe."
-
-#~ msgid "An internal error occured, please contact us."
-#~ msgstr "Une erreur interne est survenue, veuillez nous contacter."
-
-#~ msgid ""
-#~ "By clicking the link below you will subscribe to Pattern Language. "
-#~ "Pattern Language will appear in the user subscribed content section at "
-#~ "the bottom of portal pages. As you visit participating hotspots thoughout "
-#~ "Montréal you will receive patterns that will create your unique "
-#~ "narrative. You can always read other people's narrative using the "
-#~ "archives."
-#~ msgstr ""
-#~ "En cliquant sur le lien ci-dessous vous serez inscrit à Pattern Language. "
-#~ "Le projet apparaîtra dans la section réservée à votre contenu au bas des "
-#~ "pages de portail. Au fur et à mesure de vos visites dans les points "
-#~ "d'accès participants au projet, vous accumulerez des extraits qui "
-#~ "formeront votre récit unique. Vous pouvez à tout moment visiter l'archive "
-#~ "des récits pour lire les récits créés par les autres usagers."
-
-#~ msgid "Can not write to directory '"
-#~ msgstr "Impossible d'écrire dans le répertoire '"
-
-#~ msgid "Change password"
-#~ msgstr "Changer mon mot de passe"
-
-#~ msgid "Channel: "
-#~ msgstr "Canal: "
-
-#~ msgid "Configurations of all nodes of the"
-#~ msgstr "Configuration de tous les noeuds de"
-
-#~ msgid "Contact Kate Armstrong"
-#~ msgstr "Visiter le site de Kate Armstrong"
-
-#~ msgid "Contact:"
-#~ msgstr "Contact :"
-
-#~ msgid "Content from:"
-#~ msgstr "Contenu de :"
-
-#~ msgid "Content group elements:"
-#~ msgstr "Éléments du groupe de contenus:"
-
-#~ msgid "Content manager"
-#~ msgstr "Gestionnaire de contenu"
-
-#~ msgid "Content selection mode"
-#~ msgstr "Mode de sélection du contenu"
-
-#~ msgid "Content successfully deleted"
-#~ msgstr "Contenu supprimé correctement"
-
-#~ msgid "Content type: "
-#~ msgstr "Type de contenu:"
-
-#~ msgid "Could not add owner"
-#~ msgstr "Impossible d'ajouter le propriétaire"
-
-#~ msgid "Could not change your password"
-#~ msgstr "Impossible de changer votre mot de passe"
-
-#~ msgid "Could not delete node owners!"
-#~ msgstr "Impossible de supprimer les propriétaires de noeud !"
-
-#~ msgid ""
-#~ "Could not get a default account origin, make sure you config.php has at "
-#~ "least one AUTH_SOURCE_ARRAY entry."
-#~ msgstr ""
-#~ "Impossible d'obtenir une source d'usager par défaut, assurez-vous que "
-#~ "votre config.php contient au moins un élément de AUTH_SOURCE_ARRAY."
-
-#~ msgid "Could not get hotspot RSS feed"
-#~ msgstr "Impossible d'obtenir le fil RSS du point d'accès"
-
-#~ msgid "Could not get network RSS feed"
-#~ msgstr "Impossible d'obtenir le fil RSS du réseau"
-
-#~ msgid "Could not remove owner"
-#~ msgstr "Impossible de retirer le propriétaire"
-
-#~ msgid "Create a new account"
-#~ msgstr "Créer un nouveau compte"
-
-#~ msgid "Create new account"
-#~ msgstr "Créer un nouveau compte"
-
-#~ msgid "Cumulative user statistics"
-#~ msgstr "Statistiques cumulatives des utilisateurs"
-
-#~ msgid "Deployed HotSpots status with coordinates"
-#~ msgstr "Noeuds sans-fil déployés avec coordonnées"
-
-#~ msgid "Displayed content:"
-#~ msgstr "Contenu affiché:"
-
-#~ msgid "Do I have to pay to get access to the Internet"
-#~ msgstr "Dois-je payer pour avoir accès à l'Internet"
-
-#~ msgid "Edit a hotspot"
-#~ msgstr "Modifier un point d'accès"
-
-#~ msgid "Edit a hotspot with"
-#~ msgstr "Modifier un point d'accès"
-
-#~ msgid "Email me my username"
-#~ msgstr "Envoyez-moi mon nom d'utilisateur"
-
-#~ msgid ""
-#~ "Enter your login information. You will be given 15 minutes of Internet "
-#~ "access, plenty of time to check your email and click on the link"
-#~ msgstr ""
-#~ "Entrez votre nom d'utilisateur et mot de passe. Vous bénéficierez de 15 "
-#~ "minutes d'accès Internet, bien assez de temps pour aller vérifier vos "
-#~ "courriels et cliquer sur le lien"
-
-#~ msgid "Error"
-#~ msgstr "Erreur"
-
-#~ msgid "Error: "
-#~ msgstr "Erreur: "
-
-#~ msgid "Existing users, please log-in"
-#~ msgstr "Si vous possédez un compte, veuillez ouvrir une session"
-
-#~ msgid "FREE WIRELESS INTERNET"
-#~ msgstr "INTERNET SANS-FIL GRATUIT"
-
-#~ msgid "Find a User ID : "
-#~ msgstr "Recherche un utilisateur"
-
-#~ msgid "Find more HotSpots"
-#~ msgstr "Trouver plus de points d'accès sans fil"
-
-#~ msgid "Flickr support isn't enabled in the config file"
-#~ msgstr ""
-#~ "Le support de l'objet Flickr est désactivé dans le fichier de "
-#~ "configuration"
-
-#~ msgid ""
-#~ "For now, you need to be logged in at a hotspot or to fake a login from "
-#~ "one of the HotSpot login pages to have your administrative clearance "
-#~ "recognised."
-#~ msgstr ""
-#~ "Pour l'instant, vous devez être connecté; à partir d'un point d'accès ou "
-#~ "simuler une connexion depuis une des pages de connexion d'un point "
-#~ "d'accès pour pouvoir obtenir les accès administratifs."
-
-#~ msgid "Forgot my password"
-#~ msgstr "Mot de passe oublié"
-
-#~ msgid "Forgot my username"
-#~ msgstr "J'ai oublié mon nom d'utilisateur"
-
-#~ msgid "French translation by Bernard Schutze"
-#~ msgstr "Traduction française par Bernard Schutze"
-
-#~ msgid "Frequently Asked Questions"
-#~ msgstr "Foire aux questions"
-
-#~ msgid "Get an account here."
-#~ msgstr "Créer votre compte ici."
-
-#~ msgid "Give a user rights to administer this node"
-#~ msgstr "Donner à un utilisateur l'accès d'administrer ce noeud"
-
-#~ msgid "Go back to this hotspot portal page"
-#~ msgstr "Retourner au portail de ce point d'accès"
-
-#~ msgid "Go to the site I originally requested"
-#~ msgstr "Aller au site web que j'ai demandé"
-
-#~ msgid "Here is an overview of the steps"
-#~ msgstr "Voici un aperçu des étapes"
-
-#~ msgid "HotSpot"
-#~ msgstr "Point d'accès"
-
-#~ msgid "HotSpots"
-#~ msgstr "Points d'accès"
-
-#~ msgid "Hotspot creation and configuration"
-#~ msgstr "Création et configuration d'un point d'accès"
-
-#~ msgid "Hotspot logs"
-#~ msgstr "Logs des noeuds"
-
-#~ msgid "Hotspot owner administration"
-#~ msgstr "Administrateur du propriétaire de point d'accès"
-
-#~ msgid "Hotspots status map"
-#~ msgstr "Carte des points d'accès déployés"
-
-#~ msgid "I already have an account, but"
-#~ msgstr "J'ai déjà un compte, mais"
-
-#~ msgid "I have failed to validate my account in x minutes"
-#~ msgstr "J'ai échoué la validation de mon compte en x minutes"
-
-#~ msgid "I have trouble connecting and I would like some help"
-#~ msgstr "J'ai des difficultés à me brancher et je voudrais de l'aide"
-
-#~ msgid "I would like to login virtually."
-#~ msgstr "Je désire me connecter virtuellement."
-
-#~ msgid "I'm NOT at a hotspot."
-#~ msgstr "Je ne suis PAS à un point d'accès."
-
-#~ msgid "Id"
-#~ msgstr "Id"
-
-#~ msgid ""
-#~ "If you fail to validate your account in 15 minutes, you will have to "
-#~ "validate it from somewhere else."
-#~ msgstr ""
-#~ "Si vous ne validez pas votre compte d'ici 15 minutes, vous devrez le "
-#~ "valider depuis un autre endroit."
-
-#~ msgid ""
-#~ "If you get prompted for a login, enter the username and password you have "
-#~ "just created."
-#~ msgstr ""
-#~ "Si vous recevez une invite de saisie d'utilisateur et de mot de passe, "
-#~ "veuillez entrer le nom d'utilisateur et le mot de passe que vous venez de "
-#~ "créer."
-
-#~ msgid "Internal Error"
-#~ msgstr "Erreur interne"
-
-#~ msgid "Internal error"
-#~ msgstr "Erreur interne"
-
-#~ msgid ""
-#~ "Invalid content selection mode (must be part of CONTENT_SELECTION_MODES)"
-#~ msgstr ""
-#~ "Mode de sélection du contenu invalide (doit faire partie de "
-#~ "CONTENT_SELECTION_MODES)"
-
-#~ msgid "Invalid user id "
-#~ msgstr "Nom d'utilisateur invalide "
-
-#~ msgid "Invalid user!"
-#~ msgstr "Utilisateur invalide !"
-
-#~ msgid "Language:"
-#~ msgstr "Langue : "
-
-#~ msgid "List of all HotSpots"
-#~ msgstr "Liste de tous les points d'accès sans fil"
-
-#~ msgid "Log in : "
-#~ msgstr "Ouverture de session :"
-
-#~ msgid "Logged in as:"
-#~ msgstr "Connecté en tant que:"
-
-#~ msgid "Login page"
-#~ msgstr "Authentification"
-
-#~ msgid "Login to this hotspot."
-#~ msgstr "Je désire me connecter à ce point d'accès."
-
-#~ msgid "Login?"
-#~ msgstr "Connexion ?"
-
-#~ msgid "Logout"
-#~ msgstr "Déconnexion"
-
-#~ msgid "Mass transit:"
-#~ msgstr "Transport en commun:"
-
-#~ msgid "My Profile"
-#~ msgstr "Mon profil"
-
-#~ msgid "My content"
-#~ msgstr "Mon contenu"
-
-#~ msgid "My profile"
-#~ msgstr "Mon profil"
-
-#~ msgid "NOT IMPLEMENTED YET, ACCESS DENIED"
-#~ msgstr "ACCÈS REFUSÉ PAS ENCORE IMPLÉMENTÉ"
-
-#~ msgid "NOT logged in."
-#~ msgstr "Vous n'êtes PAS connecté."
-
-#~ msgid "Narrative"
-#~ msgstr "Récit"
-
-#~ msgid "Narrative for "
-#~ msgstr "Récit de "
-
-#~ msgid ""
-#~ "Narrative fragments associated with each hotspot correspond to the point "
-#~ "of view of one character, so that repeatedly logging into the system from "
-#~ "a single hotspot will produce a narrative from a single point of view, "
-#~ "while moving between hotspots will insert new characters and perspectives "
-#~ "into the text."
-#~ msgstr ""
-#~ "Les morceaux narratifs associés à chaque point d’accès correspondent au "
-#~ "point de vue d’un personnage. Ainsi, une connexion répétée au système à "
-#~ "partir du même point d’accès produit un récit avec un unique point de "
-#~ "vue, tandis que le déplacement d’un point d’accès à un autre permet "
-#~ "l’insertion de nouveaux personnages et de nouvelles perspectives dans le "
-#~ "texte."
-
-#~ msgid "Narratives Archives"
-#~ msgstr "Archives des récits"
-
-#~ msgid "Network administration:"
-#~ msgstr "Gestion des réseaux :"
-
-#~ msgid "Network content:"
-#~ msgstr "Contenu réseau:"
-
-#~ msgid "Network::delete() not supported"
-#~ msgstr "Network::delete() non supporté"
-
-#~ msgid "Newest"
-#~ msgstr "Plus récent"
-
-#~ msgid "No info to update node with!"
-#~ msgstr "Pas d'informations pour mettre à jour le noeud !"
-
-#~ msgid "No nodes could not be found in the database"
-#~ msgstr "Aucun point d'accès n'a été trouvé dans la base de données"
-
-#~ msgid "No token specified!"
-#~ msgstr "Aucun jeton spécifié!"
-
-#~ msgid "No user ID specified!"
-#~ msgstr "Aucun nom d'usager spécifié!"
-
-#~ msgid ""
-#~ "No user matches the default account origin, a new user admin/admin will "
-#~ "be created. Change the password as soon as possible !"
-#~ msgstr ""
-#~ "Aucun usager correspond à la source d'usagers par défaut, un nouvel "
-#~ "utilisateur admin/admin sera créé. Changer le mot de passe aussitôt que "
-#~ "possible !"
-
-#~ msgid "No username specified!"
-#~ msgstr "Aucun nom d'utilisateur spécifié!"
-
-#~ msgid ""
-#~ "No, Internet access is provided for free by the venue you are actually at"
-#~ msgstr ""
-#~ "Non, l'accès Internet vous est offert gratuitement par l'endroit "
-#~ "o&ugrave; vous êtes présentement"
-
-#~ msgid "NoCat passwd file (user database) import"
-#~ msgstr ""
-#~ "Importation du fichier de mot de passe (base de données des utilisateurs) "
-#~ "de NoCat"
-
-#~ msgid "Nobody is online at this hotspot..."
-#~ msgstr "Personne n'est en ligne à ce point d'accès..."
-
-#~ msgid "Nobody's online!"
-#~ msgstr "Il n'y a personne en ligne!"
-
-#~ msgid "Node administration:"
-#~ msgstr "Gestion des noeuds :"
-
-#~ msgid "Node content:"
-#~ msgstr "Contenu du noeud:"
-
-#~ msgid "Once that last step is done, you will have full free Internet access"
-#~ msgstr ""
-#~ "Dès que cette dernière étape sera terminée, vous aurez un accès complet "
-#~ "gratuit à l'Internet"
-
-#~ msgid ""
-#~ "Once the account is created, you need Internet access in order to check "
-#~ "your email and click the validation link. In order to get temporary "
-#~ "access to the Internet during your validation period, visit any URL (for "
-#~ "example www.google.com) to get the login page again"
-#~ msgstr ""
-#~ "Une fois que votre compte sera créé, vous aurez besoin d'un accès "
-#~ "Internet afin de vérifier vos courriels et de cliquer sur le lien de "
-#~ "validation. Afin d'obtenir un accès temporaire à l'Internet pendant la "
-#~ "période de validation, visitez n'importe quelle adresse (par exemple www."
-#~ "google.com) afin d'obtenir encore une fois une page de saisie "
-#~ "d'utilisateur et mot de passe."
-
-#~ msgid ""
-#~ "Once the fragments have been delivered they are compiled into a document "
-#~ "that is unique to each participant. Each individual narrative is archived "
-#~ "and viewable online. Users may read the documents they have generated or "
-#~ "those that have been generated by others. Participation in Pattern "
-#~ "Language  is limited to those using the system in Montreal, although "
-#~ "narratives generated by participants may be read by anyone visiting the "
-#~ "website."
-#~ msgstr ""
-#~ "Une fois que les morceaux d’histoire sont transmis, ils sont compilés "
-#~ "sous la forme d’un document unique à chaque participant. Chaque récit "
-#~ "individuel est archivé et peut être lu en ligne. Les utilisateurs peuvent "
-#~ "lire les documents qu’ils ont générés et les documents créés par d’autres "
-#~ "participants. La participation à Pattern Language est limitée à ceux qui "
-#~ "utilisent le système à Montréal, mais les récits générés par les "
-#~ "participants peuvent être lus par tous les visiteurs du site web. "
-
-#~ msgid "Online at this hotspot"
-#~ msgstr "En ligne à ce point d'accès sans fil"
-
-#~ msgid "Opened on"
-#~ msgstr "Ouvert le"
-
-#~ msgid "Opened on "
-#~ msgstr "Ouvert le "
-
-#~ msgid "Or"
-#~ msgstr "Ou encore"
-
-#~ msgid "Owner"
-#~ msgstr "Propriétaire"
-
-#~ msgid "Owner hotspot with"
-#~ msgstr "Propriétaire de point d'accès avec"
-
-#~ msgid "Participating hotspots"
-#~ msgstr "Points d'accès participants"
-
-#~ msgid "Password contains invalid characters."
-#~ msgstr "Le mot de passe contient des caractères invalides."
-
-#~ msgid "Password is too short, it must be 6 characters minimum."
-#~ msgstr "Mot de passe trop court, il doit contenir 6 caractères minimum."
-
-#~ msgid "Pattern Language - About"
-#~ msgstr "À propos de Pattern Language"
-
-#~ msgid "Pattern Language - Hotspots list"
-#~ msgstr "Pattern Language - Liste des points d'accès participants"
-
-#~ msgid "Pattern Language - Narrative"
-#~ msgstr "Pattern Language - Récit"
-
-#~ msgid "Pattern Language - Narratives Archives"
-#~ msgstr "Pattern Language - Archives des récits"
-
-#~ msgid "Pattern Language - Subscription"
-#~ msgstr "Pattern Language - Inscription"
-
-#~ msgid "Pattern Language Subscription"
-#~ msgstr "Pattern Language - Inscription"
-
-#~ msgid "Pattern Language is a commission by the Locative Media Lab and the "
-#~ msgstr "Pattern Language est un projet du Locative Media Lab et de "
-
-#~ msgid ""
-#~ "Pattern Language is a location-aware fiction project by Kate Armstrong "
-#~ "that attaches patterns of narrative to individuals as they move through "
-#~ "the city of Montreal. Each person's path is logged in the system and "
-#~ "compiled into a document that can be read online. The work is meant to "
-#~ "engage with the rhythms of the city: by evolving according to the "
-#~ "patterns of an individual, each story forms both a map or trace of "
-#~ "movement and a fabric of sound."
-#~ msgstr ""
-#~ "Pattern Language est un projet fictionnel centré sur la notion de lieu et "
-#~ "qui attache des modèles narratifs à des individus circulant dans la ville "
-#~ "de Montréal. Le trajet de chaque personne est entré dans le système et "
-#~ "compilé sous la forme d’un document qui peut être lu en ligne. Ce travail "
-#~ "vise à s’engager avec les rythmes de la ville: en évoluant par rapport au "
-#~ "trajet d’un individu, chaque histoire façonne la carte ou la trace d’un "
-#~ "mouvement et fabrique un son."
-
-#~ msgid ""
-#~ "Pattern Language is activated through the login system of the Île Sans "
-#~ "Fil network. Once a user subscribes to Pattern Language , a piece of the "
-#~ "story is delivered whenever s/he logs into the ISF wireless network using "
-#~ "a WiFi-enabled laptop or mobile device."
-#~ msgstr ""
-#~ "Pattern Language est activé au travers du système de connexion au réseau "
-#~ "Île Sans Fil. Une fois qu’un utilisateur est abonné à Pattern Language, "
-#~ "un morceau d’histoire est transmis à chaque fois qu’il se connecte au "
-#~ "réseau sans fil ISF en utilisant un ordinateur portable WiFi ou un outil "
-#~ "de connexion mobile. "
-
-#~ msgid "Personal user management"
-#~ msgstr "Gestion de mon compte"
-
-#~ msgid ""
-#~ "Pick a username, enter your email address, and enter the password you "
-#~ "would like. An email will be sent to you with a link you can click to "
-#~ "validate your account"
-#~ msgstr ""
-#~ "Choisissez un nom d'utilisateur, entrez votre adresse courriel et entrez "
-#~ "le mot de passe que vous désirez. Un courriel vous sera envoyé avec un "
-#~ "lien que vous pourrez cliquer afin de valider votre compte."
-
-#~ msgid "Picture preview"
-#~ msgstr "Aperçu de l'image"
-
-#~ msgid ""
-#~ "Please enter your current username, your current password, and your new "
-#~ "password (with confirmation)"
-#~ msgstr ""
-#~ "Veuillez entrer votre nom d'utilisateur, votre mot de passe actuel, et "
-#~ "votre nouveau mot de passe (avec confirmation)"
-
-#~ msgid "Please inform us of any problem or service interruption at:"
-#~ msgstr ""
-#~ "Veuillez nous informer de tout problème ou interruption de service à : "
-
-#~ msgid "Please log-in or"
-#~ msgstr "Ouvrez une session ou"
-
-#~ msgid "Please report any problem or interruption in our service to"
-#~ msgstr ""
-#~ "Veuillez nous faire part de tout problème ou interruption de service à"
-
-#~ msgid "Please report any problem or interruption in our service to:"
-#~ msgstr ""
-#~ "Veuillez rapporter tout problème ou interruption de notre service à:"
-
-#~ msgid "Please specify a username"
-#~ msgstr "Veuillez spécifier un nom d'utilisateur"
-
-#~ msgid "Please specify a username or email address"
-#~ msgstr "Veuillez spécifier un nom d'utilisateur ou une adresse courriel"
-
-#~ msgid "Please specify an email address"
-#~ msgstr "Veuillez spécifier une adresse courriel"
-
-#~ msgid "Portal page"
-#~ msgstr "Portail"
-
-#~ msgid "Programming by Benoît Grégoire and François Proulx"
-#~ msgstr "Programmation par Benoît Grégoire et François Proulx"
-
-#~ msgid "Project sponsor:"
-#~ msgstr "Commanditaires du projet :"
-
-#~ msgid "RSS URL"
-#~ msgstr "Adresse URL du fil RSS"
-
-#~ msgid "Re-send"
-#~ msgstr "Envoyer de nouveau"
-
-#~ msgid "Read narrative"
-#~ msgstr "Lire mon récit"
-
-#~ msgid "Real name"
-#~ msgstr "Nom complet"
-
-#~ msgid "Remote file size"
-#~ msgstr "Taille du fichier distant"
-
-#~ msgid "Reset my password"
-#~ msgstr "Réinitialiser mon mot de passe"
-
-#~ msgid "Retrieve"
-#~ msgstr "Rechercher"
-
-#~ msgid "Select existing Content : "
-#~ msgstr "Sélectionner du contenu existant :"
-
-#~ msgid "Show all content"
-#~ msgstr "Afficher tout le contenu"
-
-#~ msgid "Show only persistent content"
-#~ msgstr "Afficher uniquement le contenu persistent"
-
-#~ msgid "Sign up : "
-#~ msgstr "Inscrivez-vous :"
-
-#~ msgid "Sign-up"
-#~ msgstr "Souscrire"
-
-#~ msgid "Sign-up, it's free!"
-#~ msgstr "Inscrivez-vous, c'est gratuit!"
-
-#~ msgid "Sorry, a user account is already associated to this email address."
-#~ msgstr ""
-#~ "Désolé, un compte existant est déjà associé à cette adresse courriel"
-
-#~ msgid ""
-#~ "Sorry, a user account is already associated to this username. Pick "
-#~ "another one."
-#~ msgstr ""
-#~ "Désolé, un compte est déjà associé à ce nom d'utilisateur. Choisissez-en "
-#~ "un autre."
-
-#~ msgid "Sorry, no content available in the database"
-#~ msgstr "Désolé, aucun contenu disponible dans la base de données"
-
-#~ msgid ""
-#~ "Sorry, no elements available at this hotspot or all elements of the "
-#~ "content group have already been shown"
-#~ msgstr ""
-#~ "Désolé, aucun élément n'est disponible à ce point d'accès ou tous les "
-#~ "éléments ont déjà été affichés."
-
-#~ msgid "Sorry, the user must have a email adress."
-#~ msgstr "Désolé, l'utilisateur doit avoir une adresse de courriel"
-
-#~ msgid "Sorry, this email address is already registered."
-#~ msgstr "Désolé, cette adresse courriel est déjà enregistrée."
-
-#~ msgid "Sorry, this network does not exist !"
-#~ msgstr "Désolé, ce réseau n'existe pas !"
-
-#~ msgid "Sorry, your "
-#~ msgstr "Désolé, votre période de validation de "
-
-#~ msgid ""
-#~ "Sorry, your $validation_grace_time minutes grace period to retrieve your "
-#~ "email and validate your account has now expired. ($validation_grace_time "
-#~ "min grace period started on $user_info[reg_date]).  You will have to "
-#~ "connect to the internet and validate your account from another location."
-#~ msgstr ""
-#~ "Désolé, votre période de $validation_grace_time minutes pour prendre "
-#~ "votre courriel et valider votre compte est expirée. (La période de "
-#~ "$validation_grace_time minutes avait débuté le $user_info[reg_date]).  "
-#~ "Vous devez vous connecter à l'Internet par un autre moyen et valider "
-#~ "votre compte."
-
-#~ msgid "Sorry, your validation token is not valid!"
-#~ msgstr "Désolé, votre jeton de validation n'est pas accepté!"
-
-#~ msgid "Sponsor of this project:"
-#~ msgstr "Commanditaires de ce projet:"
-
-#~ msgid "Statistics:"
-#~ msgstr "Statistiques:"
-
-#~ msgid "Street address"
-#~ msgstr "Adresse"
-
-#~ msgid "Subscribe now"
-#~ msgstr "Inscrivez-vous maintenant"
-
-#~ msgid ""
-#~ "Subscribe to Pattern Language by clicking the link below. Once you have "
-#~ "subscribed you will receive a fragment of text each time you log in to a "
-#~ "participating hotspot in the city of Montreal. These text fragments will "
-#~ "accumulate to form a unique narrative for every user. You can read your "
-#~ "narrative anytime by clicking on \"Read Narrative\", or you can read the "
-#~ "narratives generated by other users by going to \"Archives\"."
-#~ msgstr ""
-#~ "Inscrivez-vous à Pattern Language en cliquant le lien ci-dessous. Une "
-#~ "fois que vous serez inscrits vous recevrez un fragment de texte à chaque "
-#~ "ouverture de session dans un point d'accès participant dans la ville de "
-#~ "Montréal. Ces fragments de texte s'accumuleront pour former un récit "
-#~ "unique pour chaque usager. Vous pouvez lire votre récit à tout moment en "
-#~ "cliquant sur \"Lire mon récit\", ou vous pouvez lire les récits créés par "
-#~ "les autres usagers en cliquant \"Archives\"."
-
-#~ msgid "Subscription"
-#~ msgstr "Inscription"
-
-#~ msgid "Tags"
-#~ msgstr "«Tags»"
-
-#~ msgid "Thank you for subscribing"
-#~ msgstr "Merci pour votre inscription"
-
-#~ msgid ""
-#~ "The database schema is not up to date.  Do you want to try to update it?  "
-#~ "This operation is irreversible."
-#~ msgstr ""
-#~ "Le schéma de la base de données n'est pas à jour. Désirez-vous le mettre "
-#~ "à jour ? Cette opération ne peut être annulée."
-
-#~ msgid "The email address must be of the form user@domain.com."
-#~ msgstr "L'adresse courriel doit être de la forme utilisateur@domaine.com."
-
-#~ msgid "The id $node_id_str could not be found in the database"
-#~ msgstr ""
-#~ "L'identifiant $node_id_str n'a pu être trouvé dans la base de données"
-
-#~ msgid "The network currently has"
-#~ msgstr "Le réseau a présentement"
-
-#~ msgid "The secified network doesn't exist: "
-#~ msgstr "Le réseau spécifié n'existe pas:"
-
-#~ msgid "The specified network doesn't exist: "
-#~ msgstr "Le réseau spécifié n'existe pas :"
-
-#~ msgid "The validation token does not match the one in the database."
-#~ msgstr ""
-#~ "Le jeton de validation ne correspond pas à celui dans la base de données"
-
-#~ msgid "The website I requested"
-#~ msgstr "Le site web que j'ai demandé"
-
-#~ msgid "There are no hotspot on this network."
-#~ msgstr "Il n'y a pas de points d'accès dans ce réseau"
-
-#~ msgid "This email could not be found in our database"
-#~ msgstr "Ce courriel n'a pu être trouvé dans notre base de données."
-
-#~ msgid ""
-#~ "This is the 'virtual login' page you can use to get the credentials which "
-#~ "will then give you access to management functions on the network without "
-#~ "being at a hotspot."
-#~ msgstr ""
-#~ "Cette page vous permet d'ouvrir une 'session virtuelle' afin d'obtenir "
-#~ "les droits pour accéder aux options de gestion, sans toutefois devoir "
-#~ "vous rendre dans un point d'accès."
-
-#~ msgid "This node already exists."
-#~ msgstr "Ce noeud existe déjà."
-
-#~ msgid "This page displays a map of the deployed hotspots."
-#~ msgstr "Cette page propose une carte des points d'accès déployés."
-
-#~ msgid "This username could not be found in our database"
-#~ msgstr "Ce nom d'utilisateur n'a pu être trouvé dans notre base de données."
-
-#~ msgid "This username or email could not be found in our database"
-#~ msgstr ""
-#~ "Ce nom d'utilisateur ou courriel n'a pu être trouvé dans notre base de "
-#~ "données."
-
-#~ msgid "Try to update database schema"
-#~ msgstr "Tenter de mettre à jour le schéma de la base de données."
-
-#~ msgid "Unable to find "
-#~ msgstr "Impossible de trouver "
-
-#~ msgid "Unable to locate "
-#~ msgstr "Impossible de trouver "
-
-#~ msgid "Unable to update database!"
-#~ msgstr "Impossible de mettre à jour la base de données !"
-
-#~ msgid "Unknown section:"
-#~ msgstr "Section inconnue : "
-
-#~ msgid "Unsubscribe now"
-#~ msgstr "Terminer l'inscription maintenant"
-
-#~ msgid "Unsupported selection mode: "
-#~ msgstr "Mode de sélection non-supporté :"
-
-#~ msgid "Update node"
-#~ msgstr "Mettre à jour le noeud"
-
-#~ msgid "User ID"
-#~ msgstr "Nom d'utilisateur"
-
-#~ msgid "User Profile"
-#~ msgstr "Profil d'usager"
-
-#~ msgid "User id: "
-#~ msgstr "Identifiant d'usager"
-
-#~ msgid "User logs"
-#~ msgstr "Historique des utilisateurs"
-
-#~ msgid "User management"
-#~ msgstr "Gestion des utilisateurs"
-
-#~ msgid "Username contains invalid characters."
-#~ msgstr "Le nom d'utilisateur contient des caractères invalides."
-
-#~ msgid "Username is required."
-#~ msgstr "Le nom d'utilisateur est requis."
-
-#~ msgid "Users Online"
-#~ msgstr "Usagers en ligne"
-
-#~ msgid ""
-#~ "Users may choose to actively engage Pattern Language by deliberately "
-#~ "travelling between points in the city in order to generate narrative "
-#~ "activity, or they may decide to have the project running in the "
-#~ "background as they go about their regular activities, only stopping to "
-#~ "read their document now and then over a period of time."
-#~ msgstr ""
-#~ "Les utilisateurs peuvent s’engager de façon active avec Pattern Language "
-#~ "en voyageant délibérément entre différents lieux de la ville dans le but "
-#~ "de créer une activité narrative. Ou bien, ils peuvent décider de reléguer "
-#~ "le projet en arrière-plan pendant qu’ils vaquent à leurs activités "
-#~ "quotidiennes, s’arrêtant seulement pour lire leur document de temps en "
-#~ "temps. "
-
-#~ msgid "Virtual login"
-#~ msgstr "Connexion virtuelle :"
-
-#~ msgid "Website URL"
-#~ msgstr "URL de mon site Web"
-
-#~ msgid "Welcome!"
-#~ msgstr "Bienvenue!"
-
-#~ msgid "Welcome! Hotspot:"
-#~ msgstr "Bienvenue! Noeud sans-fil:"
-
-#~ msgid ""
-#~ "What steps are required in order to create and validate a new account?"
-#~ msgstr ""
-#~ "Quelles étapes sont requises afin de créer un nouveau compte et de le "
-#~ "valider?"
-
-#~ msgid "Where am I?"
-#~ msgstr "Où suis-je ?"
-
-#~ msgid "Why is this service free ?"
-#~ msgstr "Pourquoi ce service est-il gratuit ?"
-
-#~ msgid "WiFiDog list of the most recent HotSpots opened by "
-#~ msgstr "Liste WiFiDog des points d'accès les plus récents ouverts par "
-
-#~ msgid "WiFiDog list of the most recent HotSpots opened by the network: "
-#~ msgstr ""
-#~ "La liste WiFiDog des points d'accès les plus récents ouverts par le "
-#~ "réseau: "
-
-#~ msgid "With thanks to tobias c. van Veen & Michael Longford"
-#~ msgstr "Merci à tobias c. van Veen & Michael Longford"
-
-#~ msgid "Yes, I am sure:"
-#~ msgstr "Oui, je suis certain:"
-
-#~ msgid "You MUST fill in all the fields."
-#~ msgstr "Vous DEVEZ remplir tous les champs"
-
-#~ msgid ""
-#~ "You are already subscribed to Pattern Language, you can terminate your "
-#~ "participation by clicking below."
-#~ msgstr ""
-#~ "Vous êtes déjà inscrit à Pattern Language, vous pouvez mettre fin à votre "
-#~ "inscription en cliquant sur le lien ci-dessous."
-
-#~ msgid "You are not a hotspot owner"
-#~ msgstr "Vous n'êtes pas propriétaire d'un point d'accès"
-
-#~ msgid "You are not currently at a hotspot..."
-#~ msgstr "Vous n'êtes pas actuellement à ce point d'accès"
-
-#~ msgid "You are now unsubscribed"
-#~ msgstr "Vous n'êtes plus inscrit à Pattern Language"
-
-#~ msgid "You do not have administrator privileges"
-#~ msgstr "Vous n'avez pas les privilèges d'administrateur"
-
-#~ msgid "You do not have owner privileges"
-#~ msgstr "Vous n'avez pas les privilèges d'administrateur"
-
-#~ msgid ""
-#~ "You have been given an amount of minutes of Internet access in order to "
-#~ "retrieve the email we sent to you and validate your free account. What "
-#~ "you can do now is either <a href='signup.php'>create a new account</a> "
-#~ "and then validate it properly, or get on the Internet from somewhere else "
-#~ "(home, free Internet cafe, etc.) and validate the account you just "
-#~ "created. If you need us to resend you the validation email, please <a "
-#~ "href='resend_validation.php'>click here</a>"
-#~ msgstr ""
-#~ "Vous avez présentement un nombre de minutes d'accès Internet afin d'aller "
-#~ "retrouver le courriel que nous vous avons envoyé et de valider votre "
-#~ "compte gratuit. Ce que vous pouvez maintenant faire est soit de <a "
-#~ "href='signup.php'>créer un nouveau compte</a> et de le valider de la "
-#~ "bonne façon, ou d'aller sur Internet à partir d'un autre endroit (de la "
-#~ "maison, un café Internet gratuit, etc.) et valider le compte que vous "
-#~ "venez de créer. Si vous voulez que nous vous envoyions de nouveau le "
-#~ "courriel de validation, veuillez <a href='resend_validation.php'>cliquez "
-#~ "ici</a>"
-
-#~ msgid "You have failed to validate your account in 15 minutes."
-#~ msgstr ""
-#~ "Vous n'avez pas validé votre compte à l'intérieur des 15 minutes requises."
-
-#~ msgid ""
-#~ "You have now been granted 15 minutes of Internet access without being "
-#~ "validated to go and activate your account."
-#~ msgstr ""
-#~ "Vous avez maintenant accès à Internet pour les 15 prochaines minutes pour "
-#~ "que vous puissiez aller valider votre compte."
-
-#~ msgid ""
-#~ "You may now browse to a remote Internet address and take advantage of the "
-#~ "free Internet access!"
-#~ msgstr ""
-#~ "Vous pouvez maintenant visiter un site Internet distant et profiter de "
-#~ "l'accès Internet gratuit!"
-
-#~ msgid "You must be logged in to access the administration panel."
-#~ msgstr "Vous devez être connecté pour accéder au panneau d'administration."
-
-#~ msgid "You must be logged in to read your narrative"
-#~ msgstr "Vous devez être connecté pour lire votre récit"
-
-#~ msgid "You must be logged in to subscribe !"
-#~ msgstr "Vous devez être connecté pour vous inscrire !"
-
-#~ msgid "You must type your password twice."
-#~ msgstr "Vous devez entrer votre mot de passe deux fois pour le confirmer."
-
-#~ msgid "Your MUST fill in all the fields"
-#~ msgstr "Vous DEVEZ remplir tous les champs"
-
-#~ msgid "Your account has already been activated."
-#~ msgstr "Votre compte a déjà été activé."
-
-#~ msgid "Your account has been succesfully activated!"
-#~ msgstr "Votre compte a été activé avec succès!"
-
-#~ msgid ""
-#~ "Your account has been succesfully activated!\n"
-#~ "\n"
-#~ "You may now browse to a remote Internet address and take advantage of the "
-#~ "free Internet access!\n"
-#~ "\n"
-#~ "If you get prompted for a login, enter the username and password you have "
-#~ "just created."
-#~ msgstr ""
-#~ "Votre compte a été activé avec succès!\n"
-#~ "\n"
-#~ "Vous pouvez maintenant vous connecter n'importe quel site et prendre "
-#~ "avantage de votre accès Internet gratuit!\n"
-#~ "\n"
-#~ "Lorsque l'on vous demandera de vous enregistrer, entrez le nom d'usager "
-#~ "et le mot de passe que vous venez de créer."
-
-#~ msgid ""
-#~ "Your email address must be valid in order for your account to be activated"
-#~ msgstr ""
-#~ "Votre adresse de courriel doit être valide afin que votre compte puisse "
-#~ "être activé"
-
-#~ msgid "You must specify your username and password"
-#~ msgstr "Veuillez entrer un nom d'usager et un mot de passe"
-
-#~ msgid "Your password has been changed succesfully."
-#~ msgstr "Votre mot de passe a été changé avec succès."
-
-#~ msgid "Your user_id and password do not match"
-#~ msgstr "La combinaison nom d'usager / mot de passe est invalide."
-
-#~ msgid "Your username and password do not match"
-#~ msgstr "Votre nom d'utilisateur et mot de passe ne sont pas valides"
-
-#~ msgid "Your username has been emailed to you."
-#~ msgstr "Votre nom d'utilisateur vous a été envoyé."
-
-#~ msgid ""
-#~ "are and will remain <emp>totally free</emp>, use the left menu to create "
-#~ "a new one or recover a lost username or password"
-#~ msgstr ""
-#~ "sont et resteront <emp>complètement gratuits</emp>, utilisez le menu de "
-#~ "gauche pour créer un nouvel usager ou encore retrouver un nom "
-#~ "d'utilisateur ou un mot de passe perdu"
-
-#~ msgid "click here."
-#~ msgstr "cliquer ici."
-
-#~ msgid "in the database."
-#~ msgstr "dans la base de donnée."
-
-#~ msgid "is unknown to this authentication server."
-#~ msgstr "est inconnu de ce serveur d'authentification."
-
-#~ msgid "network"
-#~ msgstr "réseau"
-
-#~ msgid "new users"
-#~ msgstr "nouveaux utilisateurs"
-
-#~ msgid "not monitored"
-#~ msgstr "non surveillé"
-
-#~ msgid "open"
-#~ msgstr "ouvert"
-
-#~ msgid "other users online at this hotspot..."
-#~ msgstr "autres usagers en ligne à ce point d'accès..."
-
-#~ msgid "sign-up."
-#~ msgstr "créer un compte"
-
-#~ msgid "the hotspot is down"
-#~ msgstr "le point d'accès est hors service"
-
-#~ msgid "the hotspot is operational"
-#~ msgstr "le point d'accès est opérationnel"
-
-#~ msgid "user(s) are currently online"
-#~ msgstr "utilisateur(s) présentement en ligne"
-
-#~ msgid "user(s) online"
-#~ msgstr "utilisateur(s) en ligne"
-
-#~ msgid "valid users"
-#~ msgstr "utilisateurs valides"
-
-#~ msgid "Administration"
-#~ msgstr "Administration"
-
-#~ msgid "Create"
-#~ msgstr "Créer"
-
-#~ msgid ""
-#~ "Accept users with no email adresses (Normally, NoCat usernames are "
-#~ "expected to be the user's email adress, and the username is generated "
-#~ "from the prefix."
-#~ msgstr ""
-#~ "Accepter les usagers sans adresse de courriel (Normalement, les usagers "
-#~ "NoCat doivent avoir une adresse de courriel et un nom d'usager."
-
-#~ msgid "Select the time range for which statistics will be computed."
-#~ msgstr ""
-#~ "Choisissez la période de temps pour laquelle vous désirez obtenir les "
-#~ "statistiques."
-
-#~ msgid "All networks"
-#~ msgstr "Tous les réseaux"
-
-#~ msgid "Network Profile"
-#~ msgstr "Profil du réseau"
-
-#~ msgid "Registrations per month"
-#~ msgstr "Inscriptions par mois"
-
-#~ msgid "Most registrations per node"
-#~ msgstr "Noeuds ayant reçu le plus d'inscriptions"
-
-#~ msgid "Most connections per node"
-#~ msgstr "Noeuds ayant reçu le plus de connexions"
-
-#~ msgid "Connections"
-#~ msgstr "Connexions"
-
-#~ msgid "No information for specified time frame"
-#~ msgstr "Aucune information pour la période demandée"
-
-#~ msgid "Ten most mobile users"
-#~ msgstr "Utilisateurs les plus nomades"
-
-#~ msgid "User"
-#~ msgstr "Utilisateur"
-
-#~ msgid "Ten most frequent users"
-#~ msgstr "Utilisateurs les plus réguliers"
-
-#~ msgid "Ten most greedy users"
-#~ msgstr "Utilisateurs les plus gourmands"
-
-#~ msgid "Connections per hour of the day"
-#~ msgstr "Connexions par heure du jour"
-
-#~ msgid "Connections per week day"
-#~ msgstr "Connexions par journée de la semaine"
-
-#~ msgid "Connections per month"
-#~ msgstr "Connexions par mois"
-
-#~ msgid "Real Name"
-#~ msgstr "Nom complet"
-
-#~ msgid "Website"
-#~ msgstr "Site Web"
-
-#~ msgid " is not installed"
-#~ msgstr " n'est pas installé"
-
-#~ msgid "You do not have permissions to access any administration functions."
-#~ msgstr ""
-#~ "Vous n'avez pas les permissions nécessaires pour accéder aux fonctions "
-#~ "d'administration."
-
-#~ msgid "Building your wireless community"
-#~ msgstr "construit votre communauté sans fil"
-
-#~ msgid ""
-#~ "Network::getDefaultNetwork:  Fatal error: Unable to find the default "
-#~ "network!"
-#~ msgstr ""
-#~ "Network::getDefaultNetwork:  Erreur fatale: Le réseau par défaut n'a pu "
-#~ "être trouvé !"
-
-#~ msgid "Create new network with id"
-#~ msgstr "Créer un nouveau réseau avec l'ID"
-
-#~ msgid ""
-#~ "Network authenticator class.  The subclass of Authenticator to be used "
-#~ "for user authentication (ex: AuthenticatorRadius)"
-#~ msgstr ""
-#~ "Classe d'authentification réseau. Une sous-classe de Authenticator doit "
-#~ "être utilisé (ex: AuthenticatorRadius)"
-
-#~ msgid ""
-#~ "The explicit parameters to be passed to the authenticator (ex: "
-#~ "'my_network_id', '192.168.0.11', 1812, 1813, 'secret_key', 'CHAP_MD5')"
-#~ msgstr ""
-#~ "Les paramètres devant être passé à l'authentificateur (ex: "
-#~ "'my_network_id', '192.168.0.11', 1812, 1813, 'secret_key', 'CHAP_MD5')"
-
-#~ msgid "This will be the from adress of the validation email"
-#~ msgstr "Ce sera l'adresse de l'expéditeur du courriel"
-
-#~ msgid "Network stakeholders"
-#~ msgstr "Intervenants du réseau"
-
-#~ msgid "New node ID"
-#~ msgstr "ID du nouveau noeud"
-
-#~ msgid "Create a new node"
-#~ msgstr "Créer un nouveau noeud"
-
-#~ msgid "Create new node with id"
-#~ msgstr "Créer un nouveau nouveau noeud avec l'ID suivant"
-
-#~ msgid "in network:"
-#~ msgstr "dans le réseau : "
-
-#~ msgid "Information about the node:"
-#~ msgstr "Informations concernant le noeud :"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "Geocode only"
-#~ msgstr "Géolocaliser"
-
-#~ msgid "Geocode location"
-#~ msgstr "Géolocaliser la position"
-
-#~ msgid "Node configuration:"
-#~ msgstr "Configuration du noeud : "
-
-#~ msgid ""
-#~ "URL to show instead of the portal (if this is not empty, the portal will "
-#~ "be disabled and this URL will be shown instead)"
-#~ msgstr "URL à afficher au lieu du portail"
-
-#~ msgid "Node owners"
-#~ msgstr "Propriétaire du noeud"
-
-#~ msgid "Technical officers"
-#~ msgstr "Officiers techniques"
-
-#~ msgid "Remove technical officer"
-#~ msgstr "Retirer l'officier technique"
-
-#~ msgid "Add technical officer"
-#~ msgstr "Ajouter un officier technique"
-
-#~ msgid "The user is already an owner of this node."
-#~ msgstr "L'utilisateur est déjà propriétaire de ce noeud."
-
-#~ msgid "The user is already a technical officer of this node."
-#~ msgstr "L'utilisateur est déjà officier technique de ce noeud."
-
-#~ msgid "No deployment statues  could be found in the database"
-#~ msgstr ""
-#~ "Aucun état de déploiement n'a pu être trouvé dans la base de données."
-
-#~ msgid "Could not add tech officer"
-#~ msgstr "Impossible d'ajouter l'officier technique."
-
-#~ msgid "Could not remove tech officer"
-#~ msgstr "Impossible de retirer l'officier technique"
-
-#~ msgid ""
-#~ "Sorry, your %s minutes grace period to retrieve your email and validate "
-#~ "your account has now expired. You will have to connect to the internet "
-#~ "and validate your account from another location or create a new account. "
-#~ "For help, please %s click here %s."
-#~ msgstr ""
-#~ "Désolé, la période de %s minutes pour vérifier votre courriel et valider "
-#~ "votre compte est maintenant terminée. Vous devrez vous connecter à "
-#~ "l'Internet à partir d'un autre emplacement pour compléter votre "
-#~ "inscription"
-
-#~ msgid "Expand portal"
-#~ msgstr "Étendre le portail"
-
-#~ msgid "Collapse portal"
-#~ msgstr "Réduire le portail"
-
-#~ msgid ""
-#~ "For some reason, we were unable to determine the web site you initially "
-#~ "wanted to see.  You should now enter a web address in your URL bar."
-#~ msgstr ""
-#~ "Nous n'avons pas pu déterminer l'adresse du site Web auquel vous tentiez "
-#~ "d'accéder initialement. Vous pouvez tout simplement pointer votre "
-#~ "navigateur vers le site Web de votre choix."
-
-#~ msgid "Node: "
-#~ msgstr "Noeud : "
-
-#~ msgid "No"
-#~ msgstr "Non"
-
-#~ msgid "By unique MACs"
-#~ msgstr "Par adresses MAC"
-
-#~ msgid "By unique usernames"
-#~ msgstr "Par comptes utilisateur"
-
-#~ msgid "Group connections ?"
-#~ msgstr "Regrouper les connexions ?"
-
-#~ msgid "Start of range ..."
-#~ msgstr "Début de la période ..."
-
-#~ msgid "Choose a range ..."
-#~ msgstr "Choisir une période ..."
-
-#~ msgid "End of range ..."
-#~ msgstr "Fin de la période ..."
-
-#~ msgid "Cumulative registrations"
-#~ msgstr "Cumulatif des inscriptions"
-
-#~ msgid "Number of unique Usernames:"
-#~ msgstr "Nombre d'utilisateurs uniques :"
-
-#~ msgid "Username: "
-#~ msgstr "Nom d'utilisateur : "
-
-#~ msgid ""
-#~ "The %s network currently has %s valid users, %s user(s) are currently "
-#~ "online"
-#~ msgstr ""
-#~ "Le réseau %s a actuellement %s usager(s) valide(s), %s usager(s) sont "
-#~ "connecté(s) en ce moment."
-
-#~ msgid "MAC adresses"
-#~ msgstr "Adresses MAC"
-
-#~ msgid "Create a free account"
-#~ msgstr "Créer un compte gratuit"
-
-#~ msgid "I already have an account:"
-#~ msgstr "J'ai déjà un compte :"
-
-#~ msgid "Frequently asked questions"
-#~ msgstr "Foire aux questions (FAQ)"
-
-#~ msgid "Node content (login):"
-#~ msgstr "Contenu du noeud (login) :"
-
-#~ msgid "Node content (portal):"
-#~ msgstr "Contenu du noeud (portail) :"
-
-#~ msgid "Sorry, this network does not accept new user registration !"
-#~ msgstr "Désolé, ce réseau ne permet pas la création de compte"
-
-#~ msgid "Could not set existing user as tech officer"
-#~ msgstr ""
-#~ "Impossible de promouvoir l'utilisateur en tant qu'officier technique"
-
-#~ msgid ""
-#~ "Unable to retrieve schema version. The database schema is too old to be "
-#~ "updated."
-#~ msgstr ""
-#~ "Impossible d'extraire la version du schéma. Le schéma de base de données "
-#~ "est peut être trop vieux pour être mis à jour."
-
-#~ msgid ""
-#~ "Will be replaced by the urlencoded node_id of the node\n"
-#~ "\t  where the content is displayed, or an empty string if there is no\n"
-#~ "\t  current node</td></tr>"
-#~ msgstr ""
-#~ "Sera substitué par le 'node_id' du noeud dans lequel le contenu sera "
-#~ "affiché ou une chaîne vide s'il n'y pas de noeud courant."
-
-#~ msgid ""
-#~ "Note:  This is actually a list of how many new user's first connection "
-#~ "occured at each hotspot, taking report restrictions into account."
-#~ msgstr ""
-#~ "Note: Il s'agit d'une liste du nombre d'usagers ayant effectué leur "
-#~ "première connexion à chaque noeud, en tenant compte des restrictions."
-
-#~ msgid "Q:"
-#~ msgstr "Q:"
-
-#~ msgid "A:"
-#~ msgstr "A:"
-
-#~ msgid "Status of the"
-#~ msgstr "État du"
-
-#~ msgid "Hotspots (Get this list as a <a href='?format=RSS'>RSS feed</a>)"
-#~ msgstr ""
-#~ "Points d'accès (Voir cette liste en tant qu'un <a href='?format=RSS'>fil "
-#~ "de syndication RSS</a>)"
-
-#~ msgid "h"
-#~ msgstr "h"
-
-#~ msgid "min"
-#~ msgstr "min"
-
-#~ msgid "Change network"
-#~ msgstr "Choisir un réseau"
-
-#~ msgid "Sorry, your browser does not support Google Maps."
-#~ msgstr "Désolé, votre navigateur n'est pas supporté par Google Maps."
-
-#~ msgid "Show me on the map"
-#~ msgstr "Voir sur la carte"
-
-#~ msgid ""
-#~ "The email address must be valid (i.e. user@domain.com). Please understand "
-#~ "that we also black-listed various temporary-email-address providers."
-#~ msgstr ""
-#~ "L'adresse de courriel doit être valide (i.e usager@domaine.com). Vous "
-#~ "devez également savoir que le système vous empêche d'employer des "
-#~ "services de courriels anonymes."
-
-#~ msgid "computePublicationInterval(): Missing feed!"
-#~ msgstr "computePublicationInterval(): Fil de syndication manquant !"
-
-#~ msgid "computePublicationInterval(): uasort() failed"
-#~ msgstr "computePublicationInterval(): La fonction de tri a échouée"
-
-#~ msgid "get_rss_info(): Feed missing"
-#~ msgstr "get_rss_info(): Fil de syndication manquant !"
-
-#~ msgid "get_rss_info(): uasort() failed!"
-#~ msgstr "get_rss_info(): La fonction de tri a échouée"
-
-#~ msgid "Source: "
-#~ msgstr "Source : "
-
-#~ msgid "Today"
-#~ msgstr "Aujourd'hui"
-
-#~ msgid "owner"
-#~ msgstr "proprio"
-
-#~ msgid "technical officer"
-#~ msgstr "officier technique"
-
-#~ msgid "Select existing content"
-#~ msgstr "Choisir un contenu existant"
-
-#~ msgid "Please inform us of any problem or service interruption at: %s"
-#~ msgstr ""
-#~ "Veuillez nous informer de tout problème ou interruption de service à: %s"
-
-#~ msgid "Add a new node with ID"
-#~ msgstr "Ajouter un nouveau noeud avec l'identifiant"
-
-#~ msgid "Node content (login)"
-#~ msgstr "Contenu du noeud (ouverture de session)"
-
-#~ msgid "Node content (portal)"
-#~ msgstr "Contenu du noeud (portail)"
-
-#~ msgid ""
-#~ "Server::getCurrentServer: Fatal error: Unable to find current server in "
-#~ "the database!"
-#~ msgstr ""
-#~ "Erreur fatale : Impossible de trouver la configuration du serveur par "
-#~ "défaut. Server::getCurrentServer"
-
-#~ msgid "Server:"
-#~ msgstr "Serveur:"
-
-#~ msgid "Add a new server with ID"
-#~ msgstr "Ajouter un nouveau serveur avec l'identifiant"
-
-#~ msgid "Server ID"
-#~ msgstr "Identifiant du serveur"
-
-#~ msgid "Server name"
-#~ msgstr "Nom du serveur"
-
-#~ msgid "Is this server the default server?"
-#~ msgstr "Est-ce qu'il s'agit du serveur par défaut ?"
-
-#~ msgid ""
-#~ "Cannot delete default server, create another one and select it before "
-#~ "removing this one."
-#~ msgstr ""
-#~ "Impossible de supprimer le serveur par défaut, créez-en un autre puis "
-#~ "sélectionnez-le avant de supprimer celui-ci."
-
-#~ msgid "Could not update real name."
-#~ msgstr "Impossible de mettre à jour le nom complet."
-
-#~ msgid "Could not update website URL."
-#~ msgstr "Impossible de mettre à jour l'URL du site Web."
-
-#~ msgid "Could not update username visibility flag."
-#~ msgstr "Impossible de mettre à jour le paramètre de visibilité de l'usager."
-
-#~ msgid "Nodes"
-#~ msgstr "Noeuds"
-
-#~ msgid "Add new Node"
-#~ msgstr "Ajouter un nouveau noeud"
-
-#~ msgid "Networks"
-#~ msgstr "Réseaux"
-
-#~ msgid "Servers"
-#~ msgstr "Serveurs"
-
-#~ msgid "Get this list as a RSS feed"
-#~ msgstr "Voir cette liste en tant qu'un fil de syndication RSS"
-
-#~ msgid "Telefone"
-#~ msgstr "Téléphone"
-
-#~ msgid "Welcome at"
-#~ msgstr "Bienvenue chez"
-
-#~ msgid "The"
-#~ msgstr "Le"
-
-#~ msgid "network currently has"
-#~ msgstr "réseau possède"
-
-#~ msgid "valid"
-#~ msgstr "valide"
-
-#~ msgid "user,"
-#~ msgstr "usager,"
-
-#~ msgid "users,"
-#~ msgstr "usagers,"
-
-#~ msgid "user is"
-#~ msgstr "usager est"
-
-#~ msgid "users are"
-#~ msgstr "usagers sont"
-
-#~ msgid "currently online"
-#~ msgstr "en ligne en ce moment"
-
-#~ msgid "It currently has"
-#~ msgstr "Il a en ce moment"
-
-#~ msgid "deployed"
-#~ msgstr "déployé"
-
-#~ msgid "hotspot,"
-#~ msgstr "point d'accès,"
-
-#~ msgid "hotspots,"
-#~ msgstr "points d'accès,"
-
-#~ msgid "hotspot is"
-#~ msgstr "point d'accès est"
-
-#~ msgid "hotspots are"
-#~ msgstr "points d'accès sont"
-
-#~ msgid "currently operational"
-#~ msgstr "actuellement fonctionnel(s)"
-
-#~ msgid "I already have an account"
-#~ msgstr "Je possède déjà un compte"
-
-#~ msgid "Continue to your requested homepage"
-#~ msgstr "Continuer vers la page demandée"
-
-#~ msgid "Your account has been granted"
-#~ msgstr "Votre compte a reçu"
-
-#~ msgid "minutes of access to retrieve your email and validate your account."
-#~ msgstr "minutes"
-
-#~ msgid "Is persistent (reusable and read-only)?"
-#~ msgstr "Est persistent (réutilisable et en lecture seule) ?"
-
-#~ msgid "The node %s could not be found in the database!"
-#~ msgstr "Le noeud %s n'a pu être trouvé dans la base de données !"
-
-#~ msgid "Startpage"
-#~ msgstr "Page d'accueil"
-
-#~ msgid "Deployed Hotspots map"
-#~ msgstr "Carte des points d'accès déployés"
-
-#~ msgid "Deployed Hotspots status"
-#~ msgstr "État des points d'accès déployés"
-
-#~ msgid "FAQ"
-#~ msgstr "FAQ"
-
-#~ msgid "Support"
-#~ msgstr "Support"
-
-#~ msgid "For Hotspot owners"
-#~ msgstr "Pour les propriétaires de points d'accès"
-
-#~ msgid "Impress"
-#~ msgstr "Impressionner"
-
-#~ msgid "Telefon"
-#~ msgstr "Téléphone"
-
-#~ msgid "Deployed Hotspots status with coordinates"
-#~ msgstr "État actuel et coordonnées des points d'accès déployés"
-
-#~ msgid "Search the web"
-#~ msgstr "Rechercher sur le Web"
-
-#~ msgid "Content from"
-#~ msgstr "Contenu de"
-
-#~ msgid "You must login before you can change your password."
-#~ msgstr ""
-#~ "Vous devez vous connecter afin de pouvoir modifier votre mot de passe."
-
-#~ msgid "Sorry, user %s does not exist !"
-#~ msgstr "Désolé, l'usager %s n'existe pas !"
-
-#~ msgid "The password for %s has been successfully changed."
-#~ msgstr "Le mot de passe pour %s fut changé avec succès."
-
-#~ msgid "Sorry, invalid change password request !"
-#~ msgstr "Désolé, requête de changement de mot de passe invalide !"
-
-#~ msgid ""
-#~ "You may now open a browser window or start your email client and go to "
-#~ "any remote Internet address to obtain the validation email."
-#~ msgstr ""
-#~ "Vous pouvez désormais ouvrir une fenêtre de votre navigateur ou démarrer "
-#~ "votre logiciel de messagerie électronique. Ensuite, cliquez le lien "
-#~ "d'activation dans le courriel. "
-
-#~ msgid "Add existing content"
-#~ msgstr "Ajouter un contenu existant"
-
-#~ msgid ""
-#~ "Unable to retrieve the selected network, the %s REQUEST parameter does "
-#~ "not exist"
-#~ msgstr ""
-#~ "Impossible de trouver le réseau sélectionné, le paramètre %s n'existe pas"
-
-#~ msgid "Preferences"
-#~ msgstr "Préférences"
-
-#~ msgid "Use the Internet"
-#~ msgstr "Cliquez ici pour utiliser Internet"
-
-#~ msgid "%s %d display order and location"
-#~ msgstr "%s %d ordre et endroit d'affichage"
-
-#~ msgid "sponsor"
-#~ msgstr "commanditaire"
-
-#~ msgid "Last update date"
-#~ msgstr "Date de dernière modification"
-
-#~ msgid "It currently has 1 deployed hotspot."
-#~ msgstr "Il possède un point d'accès déployé."
-
-#~ msgid "It currently has %d deployed hotspots."
-#~ msgstr "Il possède %d points d'accès déployés."
-
-#~ msgid "1 hotspot is currently operationnal."
-#~ msgstr "Un point d'accès est fonctionnel."
-
-#~ msgid "One hotspot is currently operationnal."
-#~ msgstr "Un point d'accès est fonctionnel."
-
-#~ msgid "%d hotspots are currently operationnal."
-#~ msgstr "%d points d'accès sont fonctionnels."
-
-#~ msgid "Get this list as a PDF file"
-#~ msgstr "Télécharger la liste en format PDF"
-
-#~ msgid "Get this list for Google Earth"
-#~ msgstr "Téléchargez la liste en format Google Earth"
-
-#~ msgid ""
-#~ "Because of one hotspot not being monitored we don't know if it is "
-#~ "currently operationnal."
-#~ msgstr ""
-#~ "Un point d'accès n'est pas surveillé en temps réel; son état est donc "
-#~ "inconnu."
-
-#~ msgid ""
-#~ "Because of %d hotspots not being monitored we don't know if they are "
-#~ "currently operationnal."
-#~ msgstr ""
-#~ "%d points d'accès ne sont pas surveillés en temps réel; leur état est "
-#~ "donc inconnu."
-
-#~ msgid ""
-#~ "Allow to share the %d favorite hotspots (most visited) with other users?"
-#~ msgstr ""
-#~ "Permettre le partage de vos %d points d'accès préférés (les plus visités) "
-#~ "avec les autres usagers?"
-
-#~ msgid "There is no hotspots visit statistics to share."
-#~ msgstr "Il n'y a pas de statistiques de visites à partager."
-
-#~ msgid ""
-#~ "The user has chosen not to disclose his favorite hotspots to other users."
-#~ msgstr ""
-#~ "L'usager a choisi de ne pas partager ses points d'accès préférés avec les "
-#~ "autres usagers."

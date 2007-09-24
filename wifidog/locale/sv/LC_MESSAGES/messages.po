@@ -8,13 +8,263 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-11 14:10-0400\n"
+"POT-Creation-Date: 2007-09-24 00:52-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: ../node_list.php:109
+msgid "No nodes could not be found in the database"
+msgstr "Inga Hotspots kunde hittas i databasen"
+
+#: ../node_list.php:112 ../classes/Node.php:306 ../classes/Node.php:661
+msgid "Deployed"
+msgstr "Utrullad"
+
+#: ../node_list.php:113 ../classes/Node.php:307 ../classes/Node.php:662
+msgid "In planning"
+msgstr "Planeras"
+
+#: ../node_list.php:113 ../classes/Node.php:308 ../classes/Node.php:663
+msgid "In testing"
+msgstr "Testas"
+
+#: ../node_list.php:113 ../classes/Node.php:309 ../classes/Node.php:664
+msgid "Non-Wifidog node"
+msgstr "Icke WiFiDog-nod"
+
+#: ../node_list.php:113 ../classes/Node.php:310 ../classes/Node.php:665
+msgid "Permanently closed"
+msgstr "Permanent nerstängd"
+
+#: ../node_list.php:113 ../classes/Node.php:311 ../classes/Node.php:666
+msgid "Temporarily closed"
+msgstr "Temporärt nerstängd"
+
+#: ../validate.php:58
+msgid "No token specified!"
+msgstr "Ingen angiven nyckel!"
+
+#: ../validate.php:61
+msgid "No user ID specified!"
+msgstr "Inget angivet användar-ID!"
+
+#: ../validate.php:66
+msgid "The validation token does not match the one in the database."
+msgstr "Den angivna aktiverings-nyckeln är ogiltig."
+
+#: ../validate.php:69
+msgid "Your account has already been activated."
+msgstr "Ditt konto är nu aktivt."
+
+#: ../validate.php:77
+msgid ""
+"Your account has been succesfully activated!\n"
+"\n"
+"You may now browse to a remote Internet address and take advantage of the "
+"free Internet access!\n"
+"\n"
+"If you get prompted for a login, enter the username and password you have "
+"just created."
+msgstr ""
+"Ditt konto har nu skapats!\n"
+"\n"
+"Du kan nu surfa till valfri sida. Om du behöver logga in så använd de "
+"uppgifter du precis har skapat."
+
+#: ../lost_password.php:103 ../resend_validation.php:100 ../signup.php:197
+#: ../lost_username.php:101
+msgid "Sorry, this network does not exist !"
+msgstr "Detta nätverk finns inte!"
+
+#: ../lost_password.php:107
+msgid "Please specify a username or email address"
+msgstr "Var vänlig och fyll i ett användarnamn eller en emailadress"
+
+#: ../lost_password.php:131
+msgid "This username or email could not be found in our database"
+msgstr "Användarnamnet eller emailadressen kunde inte hittas"
+
+#: ../lost_password.php:134
+msgid "A new password has been emailed to you."
+msgstr "Ett nytt lösenord har skickats till dig."
+
+#: ../hotspots_map.php:99
+msgid ""
+"Unable to get the google API key, because I couldn't find a vhost matching "
+"the current hostname"
+msgstr ""
+
+#: ../hotspots_map.php:115
+msgid "Change network"
+msgstr "Byt nätverk"
+
+#: ../hotspots_map.php:146
+msgid "Sorry, your browser does not support Google Maps."
+msgstr "Tyvärr, men din webbläsare stödjer inte Google Maps."
+
+#: ../hotspots_map.php:146 ../classes/StatisticReport/NodeStatus.php:190
+#: ../classes/StatisticReport/NetworkStatus.php:109
+msgid "Homepage"
+msgstr "Hemsida"
+
+#: ../hotspots_map.php:146
+msgid "Show me on the map"
+msgstr "Visa mig på kartan"
+
+#: ../hotspots_map.php:146 smarty.txt:36
+msgid "Loading, please wait..."
+msgstr "Kartan laddas, var vänlig vänta"
+
+#: ../hotspots_map.php:160
+msgid "Hotspots status map"
+msgstr "Hotspot-statuskarta"
+
+#: ../config_available_locales.php:58
+msgid "French"
+msgstr "Franska"
+
+#: ../config_available_locales.php:59
+msgid "English"
+msgstr "Engelska"
+
+#: ../config_available_locales.php:60
+msgid "German"
+msgstr "Tyska"
+
+#: ../config_available_locales.php:61
+msgid "Spanish"
+msgstr "Spanska"
+
+#: ../config_available_locales.php:62
+#, fuzzy
+msgid "Brazilian Portuguese"
+msgstr "Portugisiska"
+
+#: ../config_available_locales.php:63
+msgid "Portuguese"
+msgstr "Portugisiska"
+
+#: ../config_available_locales.php:64
+msgid "Japanese"
+msgstr "Japanska"
+
+#: ../config_available_locales.php:65
+msgid "Greek"
+msgstr ""
+
+#: ../config_available_locales.php:66
+msgid "Bulgarian"
+msgstr ""
+
+#: ../config_available_locales.php:67
+msgid "Swedish"
+msgstr ""
+
+#: ../config_available_locales.php:68
+msgid "Italian"
+msgstr ""
+
+#: ../resend_validation.php:104
+msgid "Please specify a username"
+msgstr "Fyll i ett användarnamn"
+
+#: ../resend_validation.php:111
+msgid "This username could not be found in our database"
+msgstr "Användarnamnet kunde inte hittas"
+
+#: ../resend_validation.php:116 ../signup.php:228
+msgid "An email with confirmation instructions was sent to your email address."
+msgstr "Ett email med bekräftelseinformation har skickats till dig. "
+
+#: ../signup.php:81
+msgid "Username is required."
+msgstr "Ett användarnamn är obligatoriskt."
+
+#: ../signup.php:85
+msgid "Username contains invalid characters."
+msgstr "Användarnamnet innehåller ogiltiga tecken."
+
+#: ../signup.php:103
+msgid "A valid email address is required."
+msgstr "En giltig emailadress behövs för registrering."
+
+#: ../signup.php:107
+msgid ""
+"The email address must be valid (i.e. user@domain.com). Please understand "
+"that we also black-listed various temporary-email-address providers."
+msgstr ""
+"Emailadressen måste vara giltig (t.ex. användare@domän.se). Observera också "
+"att vi svartlistar vissa temporära emailadress-tjänster."
+
+#: ../signup.php:126
+msgid "A password of at least 6 characters is required."
+msgstr "Lösenordet måste vara minst 6 tecken."
+
+#: ../signup.php:130
+#, fuzzy
+msgid ""
+"Password contains invalid characters.  Allowed characters are 0-9, a-z and A-"
+"Z"
+msgstr "Lösenordet innehåller ogiltiga tecken."
+
+#: ../signup.php:134
+msgid "You must type your password twice."
+msgstr "Du måste skriva in lösenordet två gånger."
+
+#: ../signup.php:138 ../classes/User.php:839
+msgid "Passwords do not match."
+msgstr "Lösenorden överensstämmer inte."
+
+#: ../signup.php:142
+msgid "Password is too short, it must be 6 characters minimum."
+msgstr "Lösenordet är för kort, det måste vara minst 6 tecken."
+
+#: ../signup.php:201
+msgid "Sorry, this network does not accept new user registration !"
+msgstr "Ledsen, men detta nätverket tar inte emot nya användare!"
+
+#: ../signup.php:211
+msgid ""
+"Sorry, a user account is already associated to this username. Pick another "
+"one."
+msgstr "Användarnamnet används redan, välj ett annat."
+
+#: ../signup.php:215
+msgid "Sorry, a user account is already associated to this email address."
+msgstr "En annan användare är registrerad på denna emailadressen."
+
+#: ../signup.php:229 ../portal/index.php:145
+#, php-format
+msgid ""
+"Your account has been granted %s minutes of access to retrieve your email "
+"and validate your account."
+msgstr ""
+"Ditt konto har därför blivit tilldelat %s minuters tillgång till Internet "
+"för att ge dig möjlighet att läsa mailet."
+
+#: ../signup.php:230
+msgid ""
+"You may now open a browser window or start your email client and go to any "
+"remote Internet address to obtain the validation email."
+msgstr ""
+"Du kan nu öppna din mailklient eller gå till din webbmail för att hämta "
+"valideringsmailet."
+
+#: ../lost_username.php:105
+msgid "Please specify an email address"
+msgstr "Fyll i en emailadress"
+
+#: ../lost_username.php:112
+msgid "This email could not be found in our database"
+msgstr "Emailadressen kunde inte hittas"
+
+#: ../lost_username.php:117
+msgid "Your username has been emailed to you."
+msgstr "Ditt användarnamn har skickats till dig."
 
 #: ../gw_message.php:61
 #, php-format
@@ -128,7 +378,7 @@ msgstr "Förhandsgranskar som det skulle se ut på "
 #: ../classes/StatisticReport/UserReport.php:182
 #: ../classes/StatisticReport/RegistrationLog.php:120
 #: ../classes/StatisticReport/MostPopularNodes.php:109
-#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:73
+#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:110
 msgid "Node"
 msgstr "Hotspot"
 
@@ -218,23 +468,23 @@ msgstr "Databasfel: "
 msgid "Report"
 msgstr "Rapport"
 
-#: ../admin/stats.php:68
+#: ../admin/stats.php:66
 msgid "Connections at"
 msgstr "Anslutningar vid"
 
-#: ../admin/stats.php:74
+#: ../admin/stats.php:72
 msgid "User information for"
 msgstr "Användarinformation för"
 
-#: ../admin/stats.php:79
+#: ../admin/stats.php:77
 msgid "Connections from MAC"
 msgstr "Anslutningar från MAC"
 
-#: ../admin/stats.php:85
+#: ../admin/stats.php:83
 msgid "Network information for"
 msgstr "Nätverksinformation för"
 
-#: ../admin/stats.php:116
+#: ../admin/stats.php:97
 msgid "Generate statistics"
 msgstr "Generera statistik"
 
@@ -356,15 +606,18 @@ msgstr "Kunde inte generera nyckel för användaren %s"
 msgid "I'm having difficulties:"
 msgstr ""
 
-#: ../login/index.php:263
+#: ../login/index.php:263 smarty.txt:52 smarty.txt:69 smarty.txt:80
+#: smarty.txt:94 smarty.txt:102
 msgid "I Forgot my username"
 msgstr "Jag har glömt mitt användarnamn"
 
-#: ../login/index.php:264
+#: ../login/index.php:264 smarty.txt:53 smarty.txt:70 smarty.txt:81
+#: smarty.txt:95 smarty.txt:103
 msgid "I Forgot my password"
 msgstr "Jag har glömt mitt lösenord"
 
-#: ../login/index.php:265
+#: ../login/index.php:265 smarty.txt:54 smarty.txt:82 smarty.txt:96
+#: smarty.txt:104
 msgid "Re-send the validation email"
 msgstr "Skicka ett nytt valideringsmail"
 
@@ -377,7 +630,7 @@ msgstr "%s inloggningssida för %s"
 msgid "Offsite login page"
 msgstr "Inloggningssida"
 
-#: ../login/index.php:282 ../portal/index.php:132
+#: ../login/index.php:282 ../portal/index.php:139
 msgid "Welcome to"
 msgstr "Välkommen till"
 
@@ -385,28 +638,19 @@ msgstr "Välkommen till"
 msgid "No Hotspot specified!"
 msgstr "Ingen Hotspot angiven!"
 
-#: ../portal/index.php:127
+#: ../portal/index.php:134
 #, php-format
 msgid "%s portal for %s"
 msgstr "%s portal för %s"
 
-#: ../portal/index.php:137
+#: ../portal/index.php:144
 msgid ""
 "You NEED to confirm your account.  An email with confirmation instructions "
 "was sent to your email address.  If you don't see it in your inbox, make "
 "sure to look in your spam folder."
 msgstr ""
 
-#: ../portal/index.php:138
-#, php-format
-msgid ""
-"Your account has been granted %s minutes of access to retrieve your email "
-"and validate your account."
-msgstr ""
-"Ditt konto har därför blivit tilldelat %s minuters tillgång till Internet "
-"för att ge dig möjlighet att läsa mailet."
-
-#: ../portal/index.php:199
+#: ../portal/index.php:206
 msgid "Show all available contents for this hotspot"
 msgstr "Visa all tillgängligt innehåll för denna hotspot"
 
@@ -535,7 +779,7 @@ msgstr ""
 "Den rapport du har valt kräver att du väljer individuella Hotspot-noder"
 
 #: ../classes/StatisticReport/NodeStatus.php:99
-#: ../classes/DependenciesList.php:137
+#: ../classes/DependenciesList.php:137 smarty.txt:3
 msgid "Status"
 msgstr "Status"
 
@@ -588,6 +832,7 @@ msgstr "Profil"
 
 #: ../classes/StatisticReport/NodeStatus.php:152
 #: ../classes/StatisticReport/NetworkStatus.php:99 ../classes/Node.php:1101
+#: smarty.txt:6
 msgid "Name"
 msgstr "Namn"
 
@@ -604,12 +849,12 @@ msgid "Deployment date"
 msgstr "Utrullningsdatum"
 
 #: ../classes/StatisticReport/NodeStatus.php:168 ../classes/Content.php:925
-#: ../classes/Node.php:1116 ../classes/DependenciesList.php:173 smarty.txt:49
+#: ../classes/Node.php:1116 ../classes/DependenciesList.php:173 smarty.txt:73
 msgid "Description"
 msgstr "Beskrivning"
 
 #: ../classes/StatisticReport/NodeStatus.php:172
-#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:83
+#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:120
 msgid "Network"
 msgstr "Nätverk"
 
@@ -618,17 +863,13 @@ msgid "GIS Location"
 msgstr "GIS-position"
 
 #: ../classes/StatisticReport/NodeStatus.php:181 ../classes/Network.php:1035
+#: smarty.txt:78
 msgid "Map"
 msgstr "Karta"
 
 #: ../classes/StatisticReport/NodeStatus.php:185
 msgid "NOT SET"
 msgstr "INTE SATT"
-
-#: ../classes/StatisticReport/NodeStatus.php:190
-#: ../classes/StatisticReport/NetworkStatus.php:109
-msgid "Homepage"
-msgstr "Hemsida"
 
 #: ../classes/StatisticReport/NodeStatus.php:194
 #: ../classes/NodeLists/NodeListPDF.php:1083
@@ -695,7 +936,8 @@ msgstr "Kunde inte hitta användar-ID %s i databasen"
 #: ../classes/StatisticReport/RegistrationLog.php:123
 #: ../classes/StatisticReport/ConnectionLog.php:115
 #: ../classes/StatisticReport/ConnectionLog.php:164 ../classes/User.php:702
-#: ../classes/User.php:707 ../classes/User.php:756 smarty.txt:74 smarty.txt:82
+#: ../classes/User.php:707 ../classes/User.php:756 smarty.txt:111
+#: smarty.txt:119
 msgid "Username"
 msgstr "Användarnamn"
 
@@ -708,7 +950,7 @@ msgid "Member since"
 msgstr "Medlem sedan"
 
 #: ../classes/StatisticReport/UserReport.php:147 ../classes/User.php:744
-#: smarty.txt:85
+#: smarty.txt:122
 msgid "Account Status"
 msgstr "Kontostatus"
 
@@ -1749,7 +1991,7 @@ msgstr "(Tom %s)"
 #: ../classes/Content/Langstring/Langstring.php:215
 #: ../classes/Content/Langstring/Langstring.php:341
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:112
-#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:12
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:24
 msgid "Language"
 msgstr "Språk"
 
@@ -2291,10 +2533,6 @@ msgstr "Skapa min offentliga profil"
 msgid "Wrong password."
 msgstr "Fel lösenord."
 
-#: ../classes/User.php:839
-msgid "Passwords do not match."
-msgstr "Lösenorden överensstämmer inte."
-
 #: ../classes/User.php:930
 msgid "Online Users"
 msgstr "Användare online"
@@ -2608,36 +2846,36 @@ msgstr "Från"
 msgid "To"
 msgstr "Till"
 
-#: ../classes/Statistics.php:450
+#: ../classes/Statistics.php:455
 msgid "Invalid parameter"
 msgstr "Ogiltig parameter"
 
-#: ../classes/Statistics.php:482
+#: ../classes/Statistics.php:493
 msgid "Username or MAC address, depending on selection above"
 msgstr "Användarnamn eller MAC-adress, beroende på val ovan"
 
-#: ../classes/Statistics.php:578
+#: ../classes/Statistics.php:589
 msgid "Report configuration"
 msgstr "Rapportkonfiguration"
 
-#: ../classes/Statistics.php:601
+#: ../classes/Statistics.php:612
 msgid "Restrict the time range for which statistics will be computed"
 msgstr ""
 "Begränsa tidintervallet för vilket statistiken kommer att genereras för"
 
-#: ../classes/Statistics.php:609
+#: ../classes/Statistics.php:620
 msgid "Restrict stats to the following nodes"
 msgstr "Begränsa data till följande Hotspots"
 
-#: ../classes/Statistics.php:619
+#: ../classes/Statistics.php:630
 msgid "Distinguish users by"
 msgstr "Skilj på användare genom"
 
-#: ../classes/Statistics.php:628
+#: ../classes/Statistics.php:639
 msgid "Restrict stats to the selected users"
 msgstr "Begränsa data till följande användare"
 
-#: ../classes/Statistics.php:637
+#: ../classes/Statistics.php:648
 msgid "Selected reports"
 msgstr "Markerade rapporter"
 
@@ -3194,7 +3432,7 @@ msgstr "Kan inte välja som ägare i databasen."
 msgid "Reusable content library"
 msgstr "Återanvändbara innehåll"
 
-#: ../classes/NodeList.php:186 smarty.txt:20
+#: ../classes/NodeList.php:186 smarty.txt:35
 msgid "Deployed HotSpots map"
 msgstr "Karta över aktiva Hotspots"
 
@@ -3256,7 +3494,7 @@ msgstr "%s är inte en giltigt visningsregion"
 msgid "%s Login"
 msgstr "%s Inloggning"
 
-#: ../classes/MainUI.php:642
+#: ../classes/MainUI.php:642 smarty.txt:23 smarty.txt:28
 msgid "Login"
 msgstr "Logga in"
 
@@ -3292,30 +3530,6 @@ msgstr "En Hotspot för Gateway:en %s finns redan."
 #: ../classes/Node.php:269
 msgid "Unable to insert new node into database!"
 msgstr "Kan inte lägga till den nya Hotspot:en i databasen!"
-
-#: ../classes/Node.php:306 ../classes/Node.php:661
-msgid "Deployed"
-msgstr "Utrullad"
-
-#: ../classes/Node.php:307 ../classes/Node.php:662
-msgid "In planning"
-msgstr "Planeras"
-
-#: ../classes/Node.php:308 ../classes/Node.php:663
-msgid "In testing"
-msgstr "Testas"
-
-#: ../classes/Node.php:309 ../classes/Node.php:664
-msgid "Non-Wifidog node"
-msgstr "Icke WiFiDog-nod"
-
-#: ../classes/Node.php:310 ../classes/Node.php:665
-msgid "Permanently closed"
-msgstr "Permanent nerstängd"
-
-#: ../classes/Node.php:311 ../classes/Node.php:666
-msgid "Temporarily closed"
-msgstr "Temporärt nerstängd"
 
 #: ../classes/Node.php:353
 msgid "Filter:"
@@ -3563,17 +3777,17 @@ msgstr ""
 msgid "User %s already has role %s for this object"
 msgstr ""
 
-#: ../classes/Dependency.php:339 ../classes/Dependency.php:355
+#: ../classes/Dependency.php:362 ../classes/Dependency.php:378
 #, php-format
 msgid "File %s not found"
 msgstr ""
 
-#: ../classes/Dependency.php:369 ../classes/Dependency.php:383
+#: ../classes/Dependency.php:392 ../classes/Dependency.php:406
 #, fuzzy, php-format
 msgid "File %s not found in %s"
 msgstr "Temat %s kunder inte hittas i %s"
 
-#: ../classes/Dependency.php:422
+#: ../classes/Dependency.php:467
 #, php-format
 msgid ""
 "To install this standard PHP extension, look for a package with a similar "
@@ -3581,24 +3795,29 @@ msgid ""
 "distributions, you may try 'sudo apt-get install php5-%s'"
 msgstr ""
 
-#: ../classes/Dependency.php:427
+#: ../classes/Dependency.php:473
+#, fuzzy, php-format
+msgid "Install %s"
+msgstr "Senaste %d meddelanden:"
+
+#: ../classes/Dependency.php:478
 #, php-format
-msgid "<input type='submit' name='%s' value='Install %s'/>"
+msgid "Sorry, i couldn't find the source for %s in installSourceUrl"
 msgstr ""
 
-#: ../classes/Dependency.php:437
+#: ../classes/Dependency.php:490
 #, php-format
 msgid ""
 "url_to_the_tarball (Sorry, i couldn't find the source for %s in "
 "installSourceUrl)"
 msgstr ""
 
-#: ../classes/Dependency.php:439
+#: ../classes/Dependency.php:492
 #, php-format
 msgid "To install this custom PEAR extension, use 'sudo pear install %s'"
 msgstr ""
 
-#: ../classes/Dependency.php:442
+#: ../classes/Dependency.php:495
 #, php-format
 msgid "Sorry, I don't know how to install a %s extension"
 msgstr ""
@@ -3713,122 +3932,170 @@ msgstr ""
 msgid "Status of all nodes of the"
 msgstr "Status för alla Hotspots i "
 
-#: smarty.txt:3
+#: smarty.txt:4
+msgid "Node id"
+msgstr "Hotspot-ID"
+
+#: smarty.txt:5
+msgid "Gateway id"
+msgstr "Gateway-ID"
+
+#: smarty.txt:7
 msgid "Local content demo"
 msgstr "Demo av lokalt innehåll"
 
-#: smarty.txt:4
+#: smarty.txt:8
+msgid "Opened on"
+msgstr "Öppnades"
+
+#: smarty.txt:9 smarty.txt:109
+msgid "Online users"
+msgstr "Användare online"
+
+#: smarty.txt:10 smarty.txt:11
 msgid "days"
 msgstr "dagar"
 
-#: smarty.txt:5
+#: smarty.txt:12
+msgid "Login page"
+msgstr "Inloggningssida"
+
+#: smarty.txt:13
+msgid "Portal page"
+msgstr "Portal"
+
+#: smarty.txt:14
 msgid "user is online at this hotspot"
 msgstr "användare är online på denna Hotspot"
 
-#: smarty.txt:6
+#: smarty.txt:15
 msgid "users are online at this hotspot"
 msgstr "användare är online på denna Hotspot"
 
-#: smarty.txt:7
+#: smarty.txt:16
 msgid "Nobody is online at this hotspot"
 msgstr "Ingen är online på denna Hotspot"
 
-#: smarty.txt:8
+#: smarty.txt:17
 msgid "Recent Users:"
 msgstr "Nyligen anslutna användare:"
 
-#: smarty.txt:9
+#: smarty.txt:18
 msgid "Most Active Users:"
 msgstr "Mest aktiva användare:"
 
-#: smarty.txt:10
+#: smarty.txt:19
 msgid "Logged in as"
 msgstr "Inloggad som"
 
-#: smarty.txt:11
+#: smarty.txt:20
+msgid "Profile / Settings"
+msgstr "Profil / Inställningar"
+
+#: smarty.txt:21
+msgid "Logout"
+msgstr "Logga ut"
+
+#: smarty.txt:22
 msgid "I am not logged in."
 msgstr "Jag är inte inloggad."
 
-#: smarty.txt:13
+#: smarty.txt:25
 msgid "Login or Signup here"
 msgstr "Logga in eller registrera"
 
-#: smarty.txt:14
+#: smarty.txt:26
 msgid "Username (or email)"
 msgstr "Användarnamn (eller emailadress)"
 
-#: smarty.txt:15 smarty.txt:37
+#: smarty.txt:27 smarty.txt:58
 msgid "Password"
 msgstr "Lösenord"
 
-#: smarty.txt:16
+#: smarty.txt:29
+msgid "Create a free account"
+msgstr "Skapa ett konto gratis"
+
+#: smarty.txt:30
+msgid "You must specify your username and password"
+msgstr "Du måste ange ditt användarnamn och lösenord"
+
+#: smarty.txt:31
 msgid "Show me the closest hotspot"
 msgstr "Visa mig närmsta Hotspot"
 
-#: smarty.txt:17
+#: smarty.txt:32
 msgid "Enter your postal code"
 msgstr "Fyll i ditt postnummer"
 
-#: smarty.txt:18
+#: smarty.txt:33
 msgid "Show"
 msgstr "Visa"
 
-#: smarty.txt:19
+#: smarty.txt:34
 msgid "Refresh map"
 msgstr "Uppdatera karta"
 
-#: smarty.txt:21
-msgid "Loading, please wait..."
-msgstr "Kartan laddas, var vänlig vänta"
-
-#: smarty.txt:22
+#: smarty.txt:37
 msgid "Legend"
 msgstr "Symbolbetydelser"
 
-#: smarty.txt:23
+#: smarty.txt:38
+msgid "the hotspot is operational"
+msgstr "Hotspot:en är aktiv"
+
+#: smarty.txt:39
+msgid "the hotspot is down"
+msgstr "Hotspot:en är inaktiv"
+
+#: smarty.txt:40
+msgid "not monitored"
+msgstr "Hotspot:en är inte övervakad"
+
+#: smarty.txt:41
 #, php-format
 msgid "The %s network currently has one valid user."
 msgstr "%s nätverket har för tillfället en validerad användare."
 
-#: smarty.txt:24
+#: smarty.txt:42
 #, php-format
 msgid "The %s network currently has %d valid users."
 msgstr "%s nätverket har för tillfället %d validerade användare."
 
-#: smarty.txt:25
+#: smarty.txt:43
 msgid "One user is currently online."
 msgstr "En användare är online för tillfället."
 
-#: smarty.txt:26
+#: smarty.txt:44
 #, php-format
 msgid "%d users are currently online."
 msgstr "%d användare är online för tillfället."
 
-#: smarty.txt:27
+#: smarty.txt:45
 msgid "This network currently has 1 deployed hotspot."
 msgstr "Detta nätverk har för tillfället en utrullad Hotspot, "
 
-#: smarty.txt:28
+#: smarty.txt:46
 #, php-format
 msgid "This network currently has %d deployed hotspots."
 msgstr "Detta nätverk har för tillfället %d utrullade Hotspots, "
 
-#: smarty.txt:29
+#: smarty.txt:47
 msgid "One hotspot is currently operational."
 msgstr "En Hotspot är för tillfället fungerande"
 
-#: smarty.txt:30
+#: smarty.txt:48
 #, php-format
 msgid "%d hotspots are currently operational."
 msgstr "%d Hotspots är för tillfället fungerande"
 
-#: smarty.txt:31
+#: smarty.txt:49
 msgid ""
 "One hotspot isn't monitored so we don't know if it's currently operational."
 msgstr ""
 "En Hotspot är inte övervakad så vi vet inte om den fungerar för närvarande."
 
-#: smarty.txt:32
+#: smarty.txt:50
 #, php-format
 msgid ""
 "%d hotspots aren't monitored so we don't know if they are currently "
@@ -3836,31 +4103,35 @@ msgid ""
 msgstr ""
 "%d Hotspots är inte övervakade så vi vet inte om de fungerar för närvarande."
 
-#: smarty.txt:33 smarty.txt:54 smarty.txt:64 smarty.txt:68
+#: smarty.txt:51 smarty.txt:79 smarty.txt:93 smarty.txt:101
 msgid "I'm having difficulties"
 msgstr "Jag har problem"
 
-#: smarty.txt:34
+#: smarty.txt:55
 msgid "Register a free account with"
 msgstr "Registrera ett gratis konto med"
 
-#: smarty.txt:35
+#: smarty.txt:56
 msgid "Username desired"
 msgstr "Önskat användarnamn"
 
-#: smarty.txt:36 smarty.txt:57 smarty.txt:70
+#: smarty.txt:57 smarty.txt:85 smarty.txt:106
 msgid "Your email address"
 msgstr "Din emailadress"
 
-#: smarty.txt:38
+#: smarty.txt:59
 msgid "Password (again)"
 msgstr "Lösenord (igen)"
 
-#: smarty.txt:39
+#: smarty.txt:60
+msgid "Sign-up"
+msgstr "Anmäl"
+
+#: smarty.txt:61
 msgid "Please note"
 msgstr "Notera"
 
-#: smarty.txt:40
+#: smarty.txt:62
 msgid ""
 "While accounts are free, we <em>strongly</em> suggest that you use your "
 "previously created account if you have one."
@@ -3869,7 +4140,7 @@ msgstr ""
 "använder ett befintligt om du har ett. Detta underlättar för både kundtjänst "
 "och dig själv."
 
-#: smarty.txt:41
+#: smarty.txt:63
 msgid ""
 "<b>Your email address must be valid</b> in order for your account to be "
 "activated."
@@ -3877,21 +4148,21 @@ msgstr ""
 "<b>Du måste ange en giltig emailadress</b> för att du skall kunna aktivera "
 "ditt konto."
 
-#: smarty.txt:42
+#: smarty.txt:64
 msgid "A validation email will be sent to that email address."
 msgstr ""
 "Ett valideringsmail kommer att skickas till den emailadressen du angav."
 
-#: smarty.txt:43
+#: smarty.txt:65
 msgid "To fully activate your account you must respond to that email."
 msgstr ""
 "För att aktivera och validera ditt konto, följ länken i valideringsmailet."
 
-#: smarty.txt:44
+#: smarty.txt:66
 msgid "Note to free web-based email users"
 msgstr "Notering till användare av gratis webb-baserade emailtjänster:"
 
-#: smarty.txt:45
+#: smarty.txt:67
 msgid ""
 "Sometimes our validation email ends up in the 'spam' folder of some "
 "providers. If you have not received any email with the validation URL 5 "
@@ -3901,50 +4172,54 @@ msgstr ""
 "tjänsterna. Om du inte har fått något mail från oss på 5 minuter så kolla "
 "din skräppostmapp."
 
-#: smarty.txt:46
+#: smarty.txt:68
 msgid "You can also use the following links if you need help"
 msgstr "Du kan också använda följande länkar som kan vara till hjälp"
 
-#: smarty.txt:47
+#: smarty.txt:71
 #, php-format
 msgid "Status of the %d open %s Hotspots"
 msgstr "Status för %d aktiva %s Hotspots"
 
-#: smarty.txt:48
+#: smarty.txt:72
 msgid "Hotspot / Status"
 msgstr "Hotspot / Status"
 
-#: smarty.txt:50
+#: smarty.txt:74
 msgid "Location"
 msgstr "Adress"
 
-#: smarty.txt:51
+#: smarty.txt:75
 msgid "Hotspot in testing phase"
 msgstr "Hotspot i testningsfas"
 
-#: smarty.txt:52
+#: smarty.txt:76
 msgid "Hotspot not monitored"
 msgstr "Hotspot:en är inte övervakad"
 
-#: smarty.txt:53
+#: smarty.txt:77
 #, php-format
 msgid "Opened on %s"
 msgstr "Aktiverad %s"
 
-#: smarty.txt:55
+#: smarty.txt:83
 msgid "Lost password"
 msgstr "Borttappat lösenord"
 
-#: smarty.txt:56 smarty.txt:66
+#: smarty.txt:84 smarty.txt:98
 msgid "Your username"
 msgstr "Ditt användarnamn"
 
-#: smarty.txt:58
+#: smarty.txt:86
+msgid "Reset my password"
+msgstr "Återställ mitt lösenord"
+
+#: smarty.txt:87
 msgid "Please enter your username or email address to reset your password"
 msgstr ""
 "Fyll i ditt användarnamn eller emailadress för att återställa ditt lösenord"
 
-#: smarty.txt:59
+#: smarty.txt:88
 msgid ""
 "We are a not-for-profit group dedicated to making no-fee wireless Internet "
 "access generally available."
@@ -3952,7 +4227,7 @@ msgstr ""
 "Vi är en icke-vinstdrivande grupp dedicerade att skapa ett fullständigt "
 "gratis trådlöst Internet för alla att använda."
 
-#: smarty.txt:60
+#: smarty.txt:89
 msgid ""
 "Our aim is to encourage the growth of wireless networking and to build "
 "community in interesting and innovative ways."
@@ -3960,7 +4235,7 @@ msgstr ""
 "Vårt mål är att uppmuntra tillväxten av trådlösa nätverk och att bygga en "
 "gemenskap i både intressanta och innovativa vägar."
 
-#: smarty.txt:61
+#: smarty.txt:90
 msgid ""
 "We do this by setting up wireless Internet networks in parks, cafés, "
 "restaurants, bars and other publically-accessible locations across the city."
@@ -3968,19 +4243,23 @@ msgstr ""
 "Detta gör vi genom att sätta upp Hotspots i parker, caféer, resturanger, "
 "barer och andra offentliga platser runtom i staden."
 
-#: smarty.txt:62
+#: smarty.txt:91
 msgid "For a complete and up-to-date listing of our nodes, visit"
 msgstr "För en fullständig och uppdaterad lista över våra Hotspots, besök"
 
-#: smarty.txt:63
+#: smarty.txt:92
 msgid "Please get in touch with "
 msgstr "Kontakta "
 
-#: smarty.txt:65
+#: smarty.txt:97
 msgid "Re-send validation email"
 msgstr "Skicka valideringsmail igen"
 
-#: smarty.txt:67
+#: smarty.txt:99
+msgid "Re-send"
+msgstr "Skicka igen"
+
+#: smarty.txt:100
 msgid ""
 "Please enter your username and the validation email will be resent to your "
 "email address"
@@ -3988,71 +4267,49 @@ msgstr ""
 "Fyll i ditt användarnamn så kommer ditt valideringsmail att skickas till "
 "din  emailadress."
 
-#: smarty.txt:69
+#: smarty.txt:105
 msgid "Lost username"
 msgstr "Borttappat användarnamn"
 
-#: smarty.txt:71
+#: smarty.txt:107
+msgid "Retrieve"
+msgstr "Hämta"
+
+#: smarty.txt:108
 msgid "Please enter your email address to recover your username"
 msgstr "Fyll i vilken emailadress för att hämta ditt användarnamn"
 
-#: smarty.txt:72
-msgid "Online users"
-msgstr "Användare online"
-
-#: smarty.txt:75
+#: smarty.txt:112
 msgid "Origin"
 msgstr "Ursprung"
 
-#: smarty.txt:76
+#: smarty.txt:113
 msgid "Logged in Since"
 msgstr "Inloggad sedan"
 
-#: smarty.txt:77
+#: smarty.txt:114
 msgid "Traffic IN/OUT"
 msgstr "Trafik (Nerladdat / Uppladdat)"
 
-#: smarty.txt:78
+#: smarty.txt:115
 msgid "User list"
 msgstr "Användarlista"
 
-#: smarty.txt:79
+#: smarty.txt:116
 msgid "Sort by:"
 msgstr "Sortera efter:"
 
-#: smarty.txt:80
+#: smarty.txt:117
 msgid "Direction:"
 msgstr "Riktning:"
 
-#: smarty.txt:81
+#: smarty.txt:118
 msgid "Sort"
 msgstr "Sortera"
 
-#: smarty.txt:84
+#: smarty.txt:121
 msgid "Registered On"
 msgstr "Registrerad"
-
-#~ msgid "French"
-#~ msgstr "Franska"
-
-#~ msgid "English"
-#~ msgstr "Engelska"
-
-#~ msgid "German"
-#~ msgstr "Tyska"
-
-#~ msgid "Spanish"
-#~ msgstr "Spanska"
-
-#, fuzzy
-#~ msgid "Brazilian Portuguese"
-#~ msgstr "Portugisiska"
-
-#~ msgid "Portuguese"
-#~ msgstr "Portugisiska"
-
-#~ msgid "Japanese"
-#~ msgstr "Japanska"
 
 #~ msgid "Component %s is not installed (not found in %s)"
 #~ msgstr "%s är inte installerad (Hittades inte i %s)"
@@ -4063,9 +4320,6 @@ msgstr "Registrerad"
 
 #~ msgid "You MUST fill in all the fields."
 #~ msgstr "Alla fält måste fyllas i."
-
-#~ msgid "Sorry, this network does not exist !"
-#~ msgstr "Detta nätverk finns inte!"
 
 #~ msgid "Your password has been changed succesfully."
 #~ msgstr "Ditt lösenord har ändrats."
@@ -4088,18 +4342,6 @@ msgstr "Registrerad"
 #~ msgid "Deployed Hotspots map"
 #~ msgstr "Karta över aktiva Hotspots"
 
-#~ msgid "Hotspots status map"
-#~ msgstr "Hotspot-statuskarta"
-
-#~ msgid "the hotspot is operational"
-#~ msgstr "Hotspot:en är aktiv"
-
-#~ msgid "the hotspot is down"
-#~ msgstr "Hotspot:en är inaktiv"
-
-#~ msgid "not monitored"
-#~ msgstr "Hotspot:en är inte övervakad"
-
 #~ msgid "Deployed Hotspots status with coordinates"
 #~ msgstr "Placerade Hotspots status med kordinater"
 
@@ -4112,100 +4354,11 @@ msgstr "Registrerad"
 #~ msgid "Administration"
 #~ msgstr "Administration"
 
-#~ msgid "Please specify a username or email address"
-#~ msgstr "Var vänlig och fyll i ett användarnamn eller en emailadress"
-
-#~ msgid "This username or email could not be found in our database"
-#~ msgstr "Användarnamnet eller emailadressen kunde inte hittas"
-
-#~ msgid "A new password has been emailed to you."
-#~ msgstr "Ett nytt lösenord har skickats till dig."
-
-#~ msgid "Please specify an email address"
-#~ msgstr "Fyll i en emailadress"
-
-#~ msgid "This email could not be found in our database"
-#~ msgstr "Emailadressen kunde inte hittas"
-
-#~ msgid "Your username has been emailed to you."
-#~ msgstr "Ditt användarnamn har skickats till dig."
-
-#~ msgid "No nodes could not be found in the database"
-#~ msgstr "Inga Hotspots kunde hittas i databasen"
-
-#~ msgid "Please specify a username"
-#~ msgstr "Fyll i ett användarnamn"
-
-#~ msgid "This username could not be found in our database"
-#~ msgstr "Användarnamnet kunde inte hittas"
-
-#~ msgid ""
-#~ "An email with confirmation instructions was sent to your email address."
-#~ msgstr "Ett email med bekräftelseinformation har skickats till dig. "
-
-#~ msgid "Username is required."
-#~ msgstr "Ett användarnamn är obligatoriskt."
-
-#~ msgid "Username contains invalid characters."
-#~ msgstr "Användarnamnet innehåller ogiltiga tecken."
-
-#~ msgid "A valid email address is required."
-#~ msgstr "En giltig emailadress behövs för registrering."
-
 #~ msgid "The email address must be of the form user@domain.com."
 #~ msgstr "Emailadressen måste vara av typen användare@domän.se."
 
-#~ msgid "A password of at least 6 characters is required."
-#~ msgstr "Lösenordet måste vara minst 6 tecken."
-
-#~ msgid "Password contains invalid characters."
-#~ msgstr "Lösenordet innehåller ogiltiga tecken."
-
-#~ msgid "You must type your password twice."
-#~ msgstr "Du måste skriva in lösenordet två gånger."
-
-#~ msgid "Password is too short, it must be 6 characters minimum."
-#~ msgstr "Lösenordet är för kort, det måste vara minst 6 tecken."
-
-#~ msgid "Sorry, this network does not accept new user registration !"
-#~ msgstr "Ledsen, men detta nätverket tar inte emot nya användare!"
-
-#~ msgid ""
-#~ "Sorry, a user account is already associated to this username. Pick "
-#~ "another one."
-#~ msgstr "Användarnamnet används redan, välj ett annat."
-
-#~ msgid "Sorry, a user account is already associated to this email address."
-#~ msgstr "En annan användare är registrerad på denna emailadressen."
-
 #~ msgid "User Profile"
 #~ msgstr "Användarprofil"
-
-#~ msgid "No token specified!"
-#~ msgstr "Ingen angiven nyckel!"
-
-#~ msgid "No user ID specified!"
-#~ msgstr "Inget angivet användar-ID!"
-
-#~ msgid "The validation token does not match the one in the database."
-#~ msgstr "Den angivna aktiverings-nyckeln är ogiltig."
-
-#~ msgid "Your account has already been activated."
-#~ msgstr "Ditt konto är nu aktivt."
-
-#~ msgid ""
-#~ "Your account has been succesfully activated!\n"
-#~ "\n"
-#~ "You may now browse to a remote Internet address and take advantage of the "
-#~ "free Internet access!\n"
-#~ "\n"
-#~ "If you get prompted for a login, enter the username and password you have "
-#~ "just created."
-#~ msgstr ""
-#~ "Ditt konto har nu skapats!\n"
-#~ "\n"
-#~ "Du kan nu surfa till valfri sida. Om du behöver logga in så använd de "
-#~ "uppgifter du precis har skapat."
 
 #~ msgid "Create"
 #~ msgstr "Skapa"
@@ -4299,9 +4452,6 @@ msgstr "Registrerad"
 
 #~ msgid "My Profile"
 #~ msgstr "Min profil"
-
-#~ msgid "Logout"
-#~ msgstr "Logga ut"
 
 #~ msgid "Where am I?"
 #~ msgstr "Vem är jag?"
@@ -4475,9 +4625,6 @@ msgstr "Registrerad"
 #~ msgid "Your must specify your username and password"
 #~ msgstr "Du måste fylla i ditt användarnamn och lösenord"
 
-#~ msgid "Create a free account"
-#~ msgstr "Skapa ett konto gratis"
-
 #~ msgid "I already have an account:"
 #~ msgstr "Jag har redan ett konto:"
 
@@ -4623,12 +4770,6 @@ msgstr "Registrerad"
 #~ "När du har fullföljt instruktionerna kommer du ha helt gratis tillgång "
 #~ "till Internet."
 
-#~ msgid "Reset my password"
-#~ msgstr "Återställ mitt lösenord"
-
-#~ msgid "Retrieve"
-#~ msgstr "Hämta"
-
 #~ msgid "The network currently has"
 #~ msgstr "Nätverket har för tillfället"
 
@@ -4662,21 +4803,6 @@ msgstr "Registrerad"
 
 #~ msgid "Id"
 #~ msgstr "ID"
-
-#~ msgid "Opened on"
-#~ msgstr "Öppnades"
-
-#~ msgid "Login page"
-#~ msgstr "Inloggningssida"
-
-#~ msgid "Portal page"
-#~ msgstr "Portal"
-
-#~ msgid "Re-send"
-#~ msgstr "Skicka igen"
-
-#~ msgid "Sign-up"
-#~ msgstr "Anmäl"
 
 #~ msgid ""
 #~ "Your email address must be valid in order for your account to be activated"
@@ -4800,22 +4926,6 @@ msgstr "Registrerad"
 
 #~ msgid "Language:"
 #~ msgstr "Språk:"
-
-#~ msgid "Change network"
-#~ msgstr "Byt nätverk"
-
-#~ msgid "Sorry, your browser does not support Google Maps."
-#~ msgstr "Tyvärr, men din webbläsare stödjer inte Google Maps."
-
-#~ msgid "Show me on the map"
-#~ msgstr "Visa mig på kartan"
-
-#~ msgid ""
-#~ "The email address must be valid (i.e. user@domain.com). Please understand "
-#~ "that we also black-listed various temporary-email-address providers."
-#~ msgstr ""
-#~ "Emailadressen måste vara giltig (t.ex. användare@domän.se). Observera "
-#~ "också att vi svartlistar vissa temporära emailadress-tjänster."
 
 #~ msgid "addSourceFeed(): url is empty!"
 #~ msgstr "addSourceFeed(): URL är tom!"
@@ -5049,13 +5159,6 @@ msgstr "Registrerad"
 #~ msgid "Sorry, invalid change password request !"
 #~ msgstr "Ogiltig ändring av lösenord!"
 
-#~ msgid ""
-#~ "You may now open a browser window or start your email client and go to "
-#~ "any remote Internet address to obtain the validation email."
-#~ msgstr ""
-#~ "Du kan nu öppna din mailklient eller gå till din webbmail för att hämta "
-#~ "valideringsmailet."
-
 #~ msgid "%s %d display order and location"
 #~ msgstr "Visa ordning och plats %s %d"
 
@@ -5137,18 +5240,6 @@ msgstr "Registrerad"
 #~ msgstr ""
 #~ "Användaren har valt att inte dela med sig av sina favorit-Hotspots till "
 #~ "andra användare"
-
-#~ msgid "Node id"
-#~ msgstr "Hotspot-ID"
-
-#~ msgid "Gateway id"
-#~ msgstr "Gateway-ID"
-
-#~ msgid "Profile / Settings"
-#~ msgstr "Profil / Inställningar"
-
-#~ msgid "You must specify your username and password"
-#~ msgstr "Du måste ange ditt användarnamn och lösenord"
 
 #~ msgid "Could not delete repeater!"
 #~ msgstr "Kunde inte ta bort repeater"

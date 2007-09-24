@@ -8,13 +8,280 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-11 14:10-0400\n"
+"POT-Creation-Date: 2007-09-24 00:52-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Miguel M. Almeida <miguelcma AT gmail DOT com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: ../node_list.php:109
+msgid "No nodes could not be found in the database"
+msgstr "N&atilde;o foi poss&iacute;vel encontrar o HotSpot na base de dados"
+
+#: ../node_list.php:112 ../classes/Node.php:306 ../classes/Node.php:661
+msgid "Deployed"
+msgstr "Em funcionamento"
+
+#: ../node_list.php:113 ../classes/Node.php:307 ../classes/Node.php:662
+msgid "In planning"
+msgstr "Em planeamento"
+
+#: ../node_list.php:113 ../classes/Node.php:308 ../classes/Node.php:663
+msgid "In testing"
+msgstr "Em fase de teste"
+
+#: ../node_list.php:113 ../classes/Node.php:309 ../classes/Node.php:664
+msgid "Non-Wifidog node"
+msgstr "Nodo sem Wifidog"
+
+#: ../node_list.php:113 ../classes/Node.php:310 ../classes/Node.php:665
+msgid "Permanently closed"
+msgstr "Fechado permanentemente"
+
+#: ../node_list.php:113 ../classes/Node.php:311 ../classes/Node.php:666
+msgid "Temporarily closed"
+msgstr "Fechado temporariamente"
+
+#: ../validate.php:58
+msgid "No token specified!"
+msgstr "Token n&atilde;o especificado!"
+
+#: ../validate.php:61
+msgid "No user ID specified!"
+msgstr "username n&atilde;o especificado!"
+
+#: ../validate.php:66
+msgid "The validation token does not match the one in the database."
+msgstr ""
+"O token de valida&ccedil;&atilde;o n&atilde;o coincide com o da base de "
+"dados."
+
+#: ../validate.php:69
+msgid "Your account has already been activated."
+msgstr "A sua conta j&aacute; est&aacute; activa."
+
+#: ../validate.php:77
+msgid ""
+"Your account has been succesfully activated!\n"
+"\n"
+"You may now browse to a remote Internet address and take advantage of the "
+"free Internet access!\n"
+"\n"
+"If you get prompted for a login, enter the username and password you have "
+"just created."
+msgstr ""
+"A sua conta foi activada com sucesso!\n"
+"\n"
+"Poder&aacute; a partir de agora usufruir gratuitamente da Internet!\n"
+"\n"
+"Se lhe for pedido um username e password utilize os dados que acabou de "
+"criar.\n"
+"\n"
+" Obrigado"
+
+#: ../lost_password.php:103 ../resend_validation.php:100 ../signup.php:197
+#: ../lost_username.php:101
+msgid "Sorry, this network does not exist !"
+msgstr "Esta rede n&atilde;o existe !"
+
+#: ../lost_password.php:107
+msgid "Please specify a username or email address"
+msgstr "Por favor especifique um username ou endere&ccedil;o de email"
+
+#: ../lost_password.php:131
+msgid "This username or email could not be found in our database"
+msgstr ""
+"Este username ou email n&atilde;o foi encontrado na nossa base de dados"
+
+#: ../lost_password.php:134
+msgid "A new password has been emailed to you."
+msgstr "Uma nova password foi enviada para o seu email."
+
+#: ../hotspots_map.php:99
+msgid ""
+"Unable to get the google API key, because I couldn't find a vhost matching "
+"the current hostname"
+msgstr ""
+
+#: ../hotspots_map.php:115
+msgid "Change network"
+msgstr "Alterar rede"
+
+#: ../hotspots_map.php:146
+msgid "Sorry, your browser does not support Google Maps."
+msgstr "Pedimos desculpa, mas o seu browser n&atilde;o suporta o Google Maps."
+
+#: ../hotspots_map.php:146 ../classes/StatisticReport/NodeStatus.php:190
+#: ../classes/StatisticReport/NetworkStatus.php:109
+msgid "Homepage"
+msgstr "P&aacute;gina Inicial"
+
+#: ../hotspots_map.php:146
+msgid "Show me on the map"
+msgstr "Mostrar no mapa"
+
+#: ../hotspots_map.php:146 smarty.txt:36
+msgid "Loading, please wait..."
+msgstr "Carregando, por favor aguarde..."
+
+#: ../hotspots_map.php:160
+msgid "Hotspots status map"
+msgstr "Mapa dos HotSpots"
+
+#: ../config_available_locales.php:58
+msgid "French"
+msgstr "Franc&ecirc;s"
+
+#: ../config_available_locales.php:59
+msgid "English"
+msgstr "Ingl&ecirc;s"
+
+#: ../config_available_locales.php:60
+msgid "German"
+msgstr "Alem&atilde;o"
+
+#: ../config_available_locales.php:61
+msgid "Spanish"
+msgstr "Espanhol"
+
+#: ../config_available_locales.php:62
+#, fuzzy
+msgid "Brazilian Portuguese"
+msgstr "Portugu&ecirc;s"
+
+#: ../config_available_locales.php:63
+msgid "Portuguese"
+msgstr "Portugu&ecirc;s"
+
+#: ../config_available_locales.php:64
+msgid "Japanese"
+msgstr "Japon&ecirc;s"
+
+#: ../config_available_locales.php:65
+msgid "Greek"
+msgstr ""
+
+#: ../config_available_locales.php:66
+msgid "Bulgarian"
+msgstr ""
+
+#: ../config_available_locales.php:67
+msgid "Swedish"
+msgstr ""
+
+#: ../config_available_locales.php:68
+msgid "Italian"
+msgstr ""
+
+#: ../resend_validation.php:104
+msgid "Please specify a username"
+msgstr "Por favor especifique um username"
+
+#: ../resend_validation.php:111
+msgid "This username could not be found in our database"
+msgstr "Este username n&atilde;o foi encontrado na nossa base de dados"
+
+#: ../resend_validation.php:116 ../signup.php:228
+msgid "An email with confirmation instructions was sent to your email address."
+msgstr ""
+"Uma mensagem com instru&ccedil;&otilde;es de confirma&ccedil;&atilde;o foi "
+"enviada para o seu endere&ccedil;o de e-mail. Caso n&atilde;o a tenha "
+"recebido,  verifique tamb&eacute;m na caixa de spam."
+
+#: ../signup.php:81
+msgid "Username is required."
+msgstr "O username &eacute; obrigat&oacute;rio."
+
+#: ../signup.php:85
+msgid "Username contains invalid characters."
+msgstr "O username cont&eacute;m caracteres inv&aacute;lidos."
+
+#: ../signup.php:103
+msgid "A valid email address is required."
+msgstr "&Eacute; necess&aacute;rio um endere&ccedil;o de email v&aacute;lido."
+
+#: ../signup.php:107
+msgid ""
+"The email address must be valid (i.e. user@domain.com). Please understand "
+"that we also black-listed various temporary-email-address providers."
+msgstr ""
+"O endere&ccedil;o de email precisa de ser v&aacute;lido (ex. user@dominio."
+"com). Por favor entenda que n&atilde;o aceitamos provedores de email "
+"tempor&aacute;rio."
+
+#: ../signup.php:126
+msgid "A password of at least 6 characters is required."
+msgstr "&Eacute; necess&aacute;rio uma password de pelo menos 6 caracteres."
+
+#: ../signup.php:130
+#, fuzzy
+msgid ""
+"Password contains invalid characters.  Allowed characters are 0-9, a-z and A-"
+"Z"
+msgstr "A password cont&eacute;m caracteres inv&aacute;lidos."
+
+#: ../signup.php:134
+msgid "You must type your password twice."
+msgstr "Precisa de introduzir a sua password duas vezes."
+
+#: ../signup.php:138 ../classes/User.php:839
+msgid "Passwords do not match."
+msgstr "As passwords n&atilde;o coincidem."
+
+#: ../signup.php:142
+msgid "Password is too short, it must be 6 characters minimum."
+msgstr ""
+"A password &eacute; muito curta, necessita ter no m&iacute;nimo 6 caracteres."
+
+#: ../signup.php:201
+msgid "Sorry, this network does not accept new user registration !"
+msgstr ""
+"Esta rede n&atilde;o aceita inscri&ccedil;&atilde;o de novos utilizadores!"
+
+#: ../signup.php:211
+msgid ""
+"Sorry, a user account is already associated to this username. Pick another "
+"one."
+msgstr ""
+"Pedimos desculpa, mas o nome de utilizador que escolheu j&aacute; existe na "
+"base de dados. Por favor escolha outro."
+
+#: ../signup.php:215
+msgid "Sorry, a user account is already associated to this email address."
+msgstr ""
+"Pedimos desculpa, mas o e-mail que escolheu j&aacute; existe na base de "
+"dados. Por favor use outro."
+
+#: ../signup.php:229 ../portal/index.php:145
+#, php-format
+msgid ""
+"Your account has been granted %s minutes of access to retrieve your email "
+"and validate your account."
+msgstr ""
+"Foram lhe concedidos %s minutos de acesso para que possa recuperar o seu "
+"email e a validar a sua conta."
+
+#: ../signup.php:230
+msgid ""
+"You may now open a browser window or start your email client and go to any "
+"remote Internet address to obtain the validation email."
+msgstr ""
+"Pode agora abrir um browser ou user o seu programa de email para verificar o "
+"email de ativa&ccedil;&atilde;o."
+
+#: ../lost_username.php:105
+msgid "Please specify an email address"
+msgstr "Por favor especifique um endere&ccedil;o de email"
+
+#: ../lost_username.php:112
+msgid "This email could not be found in our database"
+msgstr "O email n&atilde;o foi encontrado na nossa base de dados"
+
+#: ../lost_username.php:117
+msgid "Your username has been emailed to you."
+msgstr "O username foi enviado para o seu email."
 
 #: ../gw_message.php:61
 #, php-format
@@ -129,7 +396,7 @@ msgstr ""
 #: ../classes/StatisticReport/UserReport.php:182
 #: ../classes/StatisticReport/RegistrationLog.php:120
 #: ../classes/StatisticReport/MostPopularNodes.php:109
-#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:73
+#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:110
 msgid "Node"
 msgstr "HotSpot"
 
@@ -217,23 +484,23 @@ msgstr "Erro SQL em: "
 msgid "Report"
 msgstr "Relat&oacute;rio"
 
-#: ../admin/stats.php:68
+#: ../admin/stats.php:66
 msgid "Connections at"
 msgstr "Liga&ccedil;&otilde;es feitas a partir de"
 
-#: ../admin/stats.php:74
+#: ../admin/stats.php:72
 msgid "User information for"
 msgstr "Informa&ccedil;&otilde;es do username"
 
-#: ../admin/stats.php:79
+#: ../admin/stats.php:77
 msgid "Connections from MAC"
 msgstr "Liga&ccedil;&otilde;es feitas a partir da MAC"
 
-#: ../admin/stats.php:85
+#: ../admin/stats.php:83
 msgid "Network information for"
 msgstr "Informa&ccedil;&otilde;es da rede"
 
-#: ../admin/stats.php:116
+#: ../admin/stats.php:97
 msgid "Generate statistics"
 msgstr "Gerar estat&iacute;sticas"
 
@@ -355,15 +622,18 @@ msgstr ""
 msgid "I'm having difficulties:"
 msgstr "Dificuldades em ligar?"
 
-#: ../login/index.php:263
+#: ../login/index.php:263 smarty.txt:52 smarty.txt:69 smarty.txt:80
+#: smarty.txt:94 smarty.txt:102
 msgid "I Forgot my username"
 msgstr "Esqueci-me do meu username"
 
-#: ../login/index.php:264
+#: ../login/index.php:264 smarty.txt:53 smarty.txt:70 smarty.txt:81
+#: smarty.txt:95 smarty.txt:103
 msgid "I Forgot my password"
 msgstr "Esqueci-me da minha password"
 
-#: ../login/index.php:265
+#: ../login/index.php:265 smarty.txt:54 smarty.txt:82 smarty.txt:96
+#: smarty.txt:104
 msgid "Re-send the validation email"
 msgstr "Reenviar email de valida&ccedil;&atilde;o"
 
@@ -376,7 +646,7 @@ msgstr "P&aacute;gina de liga&ccedil;&atilde;o %s para %s"
 msgid "Offsite login page"
 msgstr "P&aacute;gina de liga&ccedil;&atilde;o off-line"
 
-#: ../login/index.php:282 ../portal/index.php:132
+#: ../login/index.php:282 ../portal/index.php:139
 msgid "Welcome to"
 msgstr "Bem-vindo ao HotSpot"
 
@@ -384,28 +654,19 @@ msgstr "Bem-vindo ao HotSpot"
 msgid "No Hotspot specified!"
 msgstr "Nenhum Hotspot especificado!"
 
-#: ../portal/index.php:127
+#: ../portal/index.php:134
 #, php-format
 msgid "%s portal for %s"
 msgstr "Portal %s %s"
 
-#: ../portal/index.php:137
+#: ../portal/index.php:144
 msgid ""
 "You NEED to confirm your account.  An email with confirmation instructions "
 "was sent to your email address.  If you don't see it in your inbox, make "
 "sure to look in your spam folder."
 msgstr ""
 
-#: ../portal/index.php:138
-#, php-format
-msgid ""
-"Your account has been granted %s minutes of access to retrieve your email "
-"and validate your account."
-msgstr ""
-"Foram lhe concedidos %s minutos de acesso para que possa recuperar o seu "
-"email e a validar a sua conta."
-
-#: ../portal/index.php:199
+#: ../portal/index.php:206
 msgid "Show all available contents for this hotspot"
 msgstr "Exibir todo conte&uacute;do dispon&iacute;vel para este <i>HotSpot</i>"
 
@@ -546,7 +807,7 @@ msgstr ""
 "Este relat&oacute;rio requer a selec&ccedil;&atilde;o de HotSpots individuais"
 
 #: ../classes/StatisticReport/NodeStatus.php:99
-#: ../classes/DependenciesList.php:137
+#: ../classes/DependenciesList.php:137 smarty.txt:3
 msgid "Status"
 msgstr "Estado"
 
@@ -598,6 +859,7 @@ msgstr "Perfil"
 
 #: ../classes/StatisticReport/NodeStatus.php:152
 #: ../classes/StatisticReport/NetworkStatus.php:99 ../classes/Node.php:1101
+#: smarty.txt:6
 msgid "Name"
 msgstr "Nome"
 
@@ -614,12 +876,12 @@ msgid "Deployment date"
 msgstr "Data de implementa&ccedil;&atilde;o"
 
 #: ../classes/StatisticReport/NodeStatus.php:168 ../classes/Content.php:925
-#: ../classes/Node.php:1116 ../classes/DependenciesList.php:173 smarty.txt:49
+#: ../classes/Node.php:1116 ../classes/DependenciesList.php:173 smarty.txt:73
 msgid "Description"
 msgstr "Descri&ccedil;&atilde;o"
 
 #: ../classes/StatisticReport/NodeStatus.php:172
-#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:83
+#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:120
 msgid "Network"
 msgstr "Rede"
 
@@ -628,17 +890,13 @@ msgid "GIS Location"
 msgstr "Coordenadas de localiza&ccedil;&atilde;o"
 
 #: ../classes/StatisticReport/NodeStatus.php:181 ../classes/Network.php:1035
+#: smarty.txt:78
 msgid "Map"
 msgstr "Mapa"
 
 #: ../classes/StatisticReport/NodeStatus.php:185
 msgid "NOT SET"
 msgstr "N&Atilde;O DEFINIDO"
-
-#: ../classes/StatisticReport/NodeStatus.php:190
-#: ../classes/StatisticReport/NetworkStatus.php:109
-msgid "Homepage"
-msgstr "P&aacute;gina Inicial"
 
 #: ../classes/StatisticReport/NodeStatus.php:194
 #: ../classes/NodeLists/NodeListPDF.php:1083
@@ -705,7 +963,8 @@ msgstr "ID do utilizador: %s n&atilde;o foi encontrado na base de dados"
 #: ../classes/StatisticReport/RegistrationLog.php:123
 #: ../classes/StatisticReport/ConnectionLog.php:115
 #: ../classes/StatisticReport/ConnectionLog.php:164 ../classes/User.php:702
-#: ../classes/User.php:707 ../classes/User.php:756 smarty.txt:74 smarty.txt:82
+#: ../classes/User.php:707 ../classes/User.php:756 smarty.txt:111
+#: smarty.txt:119
 msgid "Username"
 msgstr "Username"
 
@@ -718,7 +977,7 @@ msgid "Member since"
 msgstr "Membro desde"
 
 #: ../classes/StatisticReport/UserReport.php:147 ../classes/User.php:744
-#: smarty.txt:85
+#: smarty.txt:122
 msgid "Account Status"
 msgstr "Estado da Conta"
 
@@ -1758,7 +2017,7 @@ msgstr ""
 #: ../classes/Content/Langstring/Langstring.php:215
 #: ../classes/Content/Langstring/Langstring.php:341
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:112
-#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:12
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:24
 msgid "Language"
 msgstr "Idioma"
 
@@ -2293,10 +2552,6 @@ msgstr ""
 msgid "Wrong password."
 msgstr "Password incorreta."
 
-#: ../classes/User.php:839
-msgid "Passwords do not match."
-msgstr "As passwords n&atilde;o coincidem."
-
 #: ../classes/User.php:930
 msgid "Online Users"
 msgstr "Utilizadores Ligados"
@@ -2614,37 +2869,37 @@ msgstr "De"
 msgid "To"
 msgstr "Para"
 
-#: ../classes/Statistics.php:450
+#: ../classes/Statistics.php:455
 msgid "Invalid parameter"
 msgstr "Par&acirc;metro inv&aacute;lido"
 
-#: ../classes/Statistics.php:482
+#: ../classes/Statistics.php:493
 msgid "Username or MAC address, depending on selection above"
 msgstr "Username ou MAC address (conforme selec&ccedil;&atilde;o acima)"
 
-#: ../classes/Statistics.php:578
+#: ../classes/Statistics.php:589
 msgid "Report configuration"
 msgstr "Configura&ccedil;&atilde;o do relat&oacute;rio"
 
-#: ../classes/Statistics.php:601
+#: ../classes/Statistics.php:612
 msgid "Restrict the time range for which statistics will be computed"
 msgstr ""
 "Restringir o per&iacute;odo de tempo em que as estat&iacute;sticas "
 "ser&atilde;o geradas"
 
-#: ../classes/Statistics.php:609
+#: ../classes/Statistics.php:620
 msgid "Restrict stats to the following nodes"
 msgstr "Restringir estat&iacute;sticas aos seguintes HotSpots"
 
-#: ../classes/Statistics.php:619
+#: ../classes/Statistics.php:630
 msgid "Distinguish users by"
 msgstr "Distinguir usernames por"
 
-#: ../classes/Statistics.php:628
+#: ../classes/Statistics.php:639
 msgid "Restrict stats to the selected users"
 msgstr "Restringir estat&iacute;sticas aos usernames selecionados"
 
-#: ../classes/Statistics.php:637
+#: ../classes/Statistics.php:648
 msgid "Selected reports"
 msgstr "Relat&oacute;rios selecionados"
 
@@ -3205,7 +3460,7 @@ msgstr "Imposs&iacute;vel definir o autor na base de dados."
 msgid "Reusable content library"
 msgstr "Biblioteca de conte&uacute;do reutiliz&aacute;vel"
 
-#: ../classes/NodeList.php:186 smarty.txt:20
+#: ../classes/NodeList.php:186 smarty.txt:35
 msgid "Deployed HotSpots map"
 msgstr "Mapa dos <i>HotSpots</i>"
 
@@ -3266,7 +3521,7 @@ msgstr "%s n&atilde;o &eacute; uma &aacute;rea v&aacute;lida"
 msgid "%s Login"
 msgstr "Ligar %s"
 
-#: ../classes/MainUI.php:642
+#: ../classes/MainUI.php:642 smarty.txt:23 smarty.txt:28
 msgid "Login"
 msgstr "Ligar"
 
@@ -3302,30 +3557,6 @@ msgstr ""
 #: ../classes/Node.php:269
 msgid "Unable to insert new node into database!"
 msgstr "Imposs&iacute;vel inserir novo HotSpot na base de dados!"
-
-#: ../classes/Node.php:306 ../classes/Node.php:661
-msgid "Deployed"
-msgstr "Em funcionamento"
-
-#: ../classes/Node.php:307 ../classes/Node.php:662
-msgid "In planning"
-msgstr "Em planeamento"
-
-#: ../classes/Node.php:308 ../classes/Node.php:663
-msgid "In testing"
-msgstr "Em fase de teste"
-
-#: ../classes/Node.php:309 ../classes/Node.php:664
-msgid "Non-Wifidog node"
-msgstr "Nodo sem Wifidog"
-
-#: ../classes/Node.php:310 ../classes/Node.php:665
-msgid "Permanently closed"
-msgstr "Fechado permanentemente"
-
-#: ../classes/Node.php:311 ../classes/Node.php:666
-msgid "Temporarily closed"
-msgstr "Fechado temporariamente"
 
 #: ../classes/Node.php:353
 msgid "Filter:"
@@ -3575,17 +3806,17 @@ msgstr "Adicionar"
 msgid "User %s already has role %s for this object"
 msgstr "O utilizador %s j&aacute; tem a regra %s para este objecto"
 
-#: ../classes/Dependency.php:339 ../classes/Dependency.php:355
+#: ../classes/Dependency.php:362 ../classes/Dependency.php:378
 #, php-format
 msgid "File %s not found"
 msgstr ""
 
-#: ../classes/Dependency.php:369 ../classes/Dependency.php:383
+#: ../classes/Dependency.php:392 ../classes/Dependency.php:406
 #, fuzzy, php-format
 msgid "File %s not found in %s"
 msgstr "O pacote de tema %s n&atilde;o foi encontrado em &s"
 
-#: ../classes/Dependency.php:422
+#: ../classes/Dependency.php:467
 #, php-format
 msgid ""
 "To install this standard PHP extension, look for a package with a similar "
@@ -3593,24 +3824,29 @@ msgid ""
 "distributions, you may try 'sudo apt-get install php5-%s'"
 msgstr ""
 
-#: ../classes/Dependency.php:427
+#: ../classes/Dependency.php:473
+#, fuzzy, php-format
+msgid "Install %s"
+msgstr "Total"
+
+#: ../classes/Dependency.php:478
 #, php-format
-msgid "<input type='submit' name='%s' value='Install %s'/>"
+msgid "Sorry, i couldn't find the source for %s in installSourceUrl"
 msgstr ""
 
-#: ../classes/Dependency.php:437
+#: ../classes/Dependency.php:490
 #, php-format
 msgid ""
 "url_to_the_tarball (Sorry, i couldn't find the source for %s in "
 "installSourceUrl)"
 msgstr ""
 
-#: ../classes/Dependency.php:439
+#: ../classes/Dependency.php:492
 #, php-format
 msgid "To install this custom PEAR extension, use 'sudo pear install %s'"
 msgstr ""
 
-#: ../classes/Dependency.php:442
+#: ../classes/Dependency.php:495
 #, php-format
 msgid "Sorry, I don't know how to install a %s extension"
 msgstr ""
@@ -3723,152 +3959,207 @@ msgstr "Depend&ecirc;ncias"
 msgid "Status of all nodes of the"
 msgstr "Status de todos os HotSpots do"
 
-#: smarty.txt:3
+#: smarty.txt:4
+#, fuzzy
+msgid "Node id"
+msgstr "HotSpot: "
+
+#: smarty.txt:5
+#, fuzzy
+msgid "Gateway id"
+msgstr "ID do HotSpot"
+
+#: smarty.txt:7
 msgid "Local content demo"
 msgstr "Demonstra&ccedil;&atilde;o de conte&uacute;do local"
 
-#: smarty.txt:4
+#: smarty.txt:8
+msgid "Opened on"
+msgstr "Aberto em"
+
+#: smarty.txt:9 smarty.txt:109
+msgid "Online users"
+msgstr "Utilizadores ligados"
+
+#: smarty.txt:10 smarty.txt:11
 msgid "days"
 msgstr "dias"
 
-#: smarty.txt:5
+#: smarty.txt:12
+msgid "Login page"
+msgstr "Autentica&ccedil;&atilde;o"
+
+#: smarty.txt:13
+msgid "Portal page"
+msgstr "Portal"
+
+#: smarty.txt:14
 msgid "user is online at this hotspot"
 msgstr "utilizador est&aacute; ligado a este <i>HotSpot</i>"
 
-#: smarty.txt:6
+#: smarty.txt:15
 msgid "users are online at this hotspot"
 msgstr "utilizadores est&atilde;o ligados a este <i>HotSpot</i>"
 
-#: smarty.txt:7
+#: smarty.txt:16
 msgid "Nobody is online at this hotspot"
 msgstr "N&atilde;o est&aacute; ningu&eacute;m ligado a este <i>HotSpot</i>"
 
-#: smarty.txt:8
+#: smarty.txt:17
 msgid "Recent Users:"
 msgstr "Utilizadores recentes:"
 
-#: smarty.txt:9
+#: smarty.txt:18
 msgid "Most Active Users:"
 msgstr "Utilizadores mais activos:"
 
-#: smarty.txt:10
+#: smarty.txt:19
 msgid "Logged in as"
 msgstr "Ligado como"
 
-#: smarty.txt:11
+#: smarty.txt:20
+#, fuzzy
+msgid "Profile / Settings"
+msgstr "Estado"
+
+#: smarty.txt:21
+msgid "Logout"
+msgstr "Desligar"
+
+#: smarty.txt:22
 msgid "I am not logged in."
 msgstr "Sem sess&atilde;o iniciada."
 
-#: smarty.txt:13
+#: smarty.txt:25
 msgid "Login or Signup here"
 msgstr "Ligar ou inscrever-se"
 
-#: smarty.txt:14
+#: smarty.txt:26
 msgid "Username (or email)"
 msgstr "Username (ou email)"
 
-#: smarty.txt:15 smarty.txt:37
+#: smarty.txt:27 smarty.txt:58
 msgid "Password"
 msgstr "Password"
 
-#: smarty.txt:16
+#: smarty.txt:29
+msgid "Create a free account"
+msgstr "Criar uma conta gratuita"
+
+#: smarty.txt:30
+msgid "You must specify your username and password"
+msgstr "Precisa de especificar o seu username e password"
+
+#: smarty.txt:31
 msgid "Show me the closest hotspot"
 msgstr "Mostrar o HotSpot mais pr&oacute;ximo"
 
-#: smarty.txt:17
+#: smarty.txt:32
 msgid "Enter your postal code"
 msgstr "Introduza o seu c&oacute;digo postal"
 
-#: smarty.txt:18
+#: smarty.txt:33
 msgid "Show"
 msgstr "Exibir"
 
-#: smarty.txt:19
+#: smarty.txt:34
 msgid "Refresh map"
 msgstr "Actualizar mapa"
 
-#: smarty.txt:21
-msgid "Loading, please wait..."
-msgstr "Carregando, por favor aguarde..."
-
-#: smarty.txt:22
+#: smarty.txt:37
 msgid "Legend"
 msgstr "Legenda"
 
-#: smarty.txt:23
+#: smarty.txt:38
+msgid "the hotspot is operational"
+msgstr "o hotspot est&aacute; operacional"
+
+#: smarty.txt:39
+msgid "the hotspot is down"
+msgstr "o hotspot est&aacute; fora de servi&ccedil;o"
+
+#: smarty.txt:40
+msgid "not monitored"
+msgstr "n&atilde;o monitorizados"
+
+#: smarty.txt:41
 #, php-format
 msgid "The %s network currently has one valid user."
 msgstr "A rede %s tem um utilizador registado."
 
-#: smarty.txt:24
+#: smarty.txt:42
 #, php-format
 msgid "The %s network currently has %d valid users."
 msgstr "A rede %s tem %d utilizadores registados."
 
-#: smarty.txt:25
+#: smarty.txt:43
 msgid "One user is currently online."
 msgstr "Um utilizador on-line"
 
-#: smarty.txt:26
+#: smarty.txt:44
 #, php-format
 msgid "%d users are currently online."
 msgstr "Est&atilde;o %d utilizadores <i>on-line</i>."
 
-#: smarty.txt:27
+#: smarty.txt:45
 msgid "This network currently has 1 deployed hotspot."
 msgstr "Esta rede tem 1 <i>HotSpot</i> em funcionamento."
 
-#: smarty.txt:28
+#: smarty.txt:46
 #, php-format
 msgid "This network currently has %d deployed hotspots."
 msgstr "Esta rede tem %d HotSpots em funcionamento."
 
-#: smarty.txt:29
+#: smarty.txt:47
 msgid "One hotspot is currently operational."
 msgstr "Existe um <i>HotSpot</i> operacional."
 
-#: smarty.txt:30
+#: smarty.txt:48
 #, php-format
 msgid "%d hotspots are currently operational."
 msgstr "Existem %d <i>HotSpots</i> operacionais."
 
-#: smarty.txt:31
+#: smarty.txt:49
 msgid ""
 "One hotspot isn't monitored so we don't know if it's currently operational."
 msgstr "Existe um HotSpot n&atilde;o monitorizado."
 
-#: smarty.txt:32
+#: smarty.txt:50
 #, php-format
 msgid ""
 "%d hotspots aren't monitored so we don't know if they are currently "
 "operational."
 msgstr "Existem %d n&atilde;o monitorizados."
 
-#: smarty.txt:33 smarty.txt:54 smarty.txt:64 smarty.txt:68
+#: smarty.txt:51 smarty.txt:79 smarty.txt:93 smarty.txt:101
 msgid "I'm having difficulties"
 msgstr "Dificuldades em ligar?"
 
-#: smarty.txt:34
+#: smarty.txt:55
 msgid "Register a free account with"
 msgstr "Registar uma conta gratuita no"
 
-#: smarty.txt:35
+#: smarty.txt:56
 msgid "Username desired"
 msgstr "Username"
 
-#: smarty.txt:36 smarty.txt:57 smarty.txt:70
+#: smarty.txt:57 smarty.txt:85 smarty.txt:106
 msgid "Your email address"
 msgstr "Endere&ccedil;o de email"
 
-#: smarty.txt:38
+#: smarty.txt:59
 msgid "Password (again)"
 msgstr "Password  (novamente)"
 
-#: smarty.txt:39
+#: smarty.txt:60
+msgid "Sign-up"
+msgstr "Registar"
+
+#: smarty.txt:61
 msgid "Please note"
 msgstr "Aten&ccedil;&atilde;o"
 
-#: smarty.txt:40
+#: smarty.txt:62
 msgid ""
 "While accounts are free, we <em>strongly</em> suggest that you use your "
 "previously created account if you have one."
@@ -3877,7 +4168,7 @@ msgstr ""
 "<em>fortemente</em> que utilize a sua conta previamente criada, se j&aacute; "
 "tiver uma."
 
-#: smarty.txt:41
+#: smarty.txt:63
 msgid ""
 "<b>Your email address must be valid</b> in order for your account to be "
 "activated."
@@ -3885,22 +4176,22 @@ msgstr ""
 "<b>O seu endere&ccedil;o de email precisa de ser v&aacute;lido</b> para que "
 "a sua conta seja activada."
 
-#: smarty.txt:42
+#: smarty.txt:64
 msgid "A validation email will be sent to that email address."
 msgstr ""
 "Um email de valida&ccedil;&atilde;o ser&aacute; enviado para este "
 "endere&ccedil;o."
 
-#: smarty.txt:43
+#: smarty.txt:65
 msgid "To fully activate your account you must respond to that email."
 msgstr ""
 "Para activar completamente a sua conta necessita de responder a este email."
 
-#: smarty.txt:44
+#: smarty.txt:66
 msgid "Note to free web-based email users"
 msgstr "Nota aos usernames de email baseados em web"
 
-#: smarty.txt:45
+#: smarty.txt:67
 msgid ""
 "Sometimes our validation email ends up in the 'spam' folder of some "
 "providers. If you have not received any email with the validation URL 5 "
@@ -3911,51 +4202,55 @@ msgstr ""
 "&atilde;o 5 minutos ap&oacute;s ter feito o registo, verifique sua pasta de "
 "spam."
 
-#: smarty.txt:46
+#: smarty.txt:68
 msgid "You can also use the following links if you need help"
 msgstr "Pode ainda utilizar os seguintes links para ajuda"
 
-#: smarty.txt:47
+#: smarty.txt:71
 #, php-format
 msgid "Status of the %d open %s Hotspots"
 msgstr ""
 
-#: smarty.txt:48
+#: smarty.txt:72
 msgid "Hotspot / Status"
 msgstr "Hotspot / Estado"
 
-#: smarty.txt:50
+#: smarty.txt:74
 msgid "Location"
 msgstr "Localiza&ccedil;&atilde;o"
 
-#: smarty.txt:51
+#: smarty.txt:75
 msgid "Hotspot in testing phase"
 msgstr "Hotspot em fase de testes"
 
-#: smarty.txt:52
+#: smarty.txt:76
 msgid "Hotspot not monitored"
 msgstr "HotSpot n&atilde;o monitorizado"
 
-#: smarty.txt:53
+#: smarty.txt:77
 #, php-format
 msgid "Opened on %s"
 msgstr "Aberto em %s"
 
-#: smarty.txt:55
+#: smarty.txt:83
 msgid "Lost password"
 msgstr "Password perdida"
 
-#: smarty.txt:56 smarty.txt:66
+#: smarty.txt:84 smarty.txt:98
 msgid "Your username"
 msgstr "Username"
 
-#: smarty.txt:58
+#: smarty.txt:86
+msgid "Reset my password"
+msgstr "Gerar nova password"
+
+#: smarty.txt:87
 msgid "Please enter your username or email address to reset your password"
 msgstr ""
 "Por favor preencha com o seu username ou endere&ccedil;o de email para gerar "
 "uma nova password"
 
-#: smarty.txt:59
+#: smarty.txt:88
 msgid ""
 "We are a not-for-profit group dedicated to making no-fee wireless Internet "
 "access generally available."
@@ -3963,7 +4258,7 @@ msgstr ""
 "HotSpots somos um grupo sem fins lucrativos dedicados a fornecer acesso sem "
 "fios &agrave; Internet gratuitamente."
 
-#: smarty.txt:60
+#: smarty.txt:89
 msgid ""
 "Our aim is to encourage the growth of wireless networking and to build "
 "community in interesting and innovative ways."
@@ -3971,7 +4266,7 @@ msgstr ""
 "O nosso objetivo &eacute; encorajar o crescimento de redes sem fios e "
 "construir uma comunidade de uma maneira inovadora."
 
-#: smarty.txt:61
+#: smarty.txt:90
 msgid ""
 "We do this by setting up wireless Internet networks in parks, cafés, "
 "restaurants, bars and other publically-accessible locations across the city."
@@ -3980,19 +4275,23 @@ msgstr ""
 "restaurantes, bares e outras localidades de acesso p&uacute;blico pela "
 "cidade."
 
-#: smarty.txt:62
+#: smarty.txt:91
 msgid "For a complete and up-to-date listing of our nodes, visit"
 msgstr "Para uma lista completa e actualizada de HotSpots, visite"
 
-#: smarty.txt:63
+#: smarty.txt:92
 msgid "Please get in touch with "
 msgstr "Por favor entre em contato com "
 
-#: smarty.txt:65
+#: smarty.txt:97
 msgid "Re-send validation email"
 msgstr "Reenviar email de valida&ccedil;&atilde;o"
 
-#: smarty.txt:67
+#: smarty.txt:99
+msgid "Re-send"
+msgstr "Reenviar"
+
+#: smarty.txt:100
 msgid ""
 "Please enter your username and the validation email will be resent to your "
 "email address"
@@ -4000,73 +4299,51 @@ msgstr ""
 "Por favor preencha com o seu endere&ccedil;o de email para que o email de "
 "valida&ccedil;&atilde;o seja reenviado"
 
-#: smarty.txt:69
+#: smarty.txt:105
 msgid "Lost username"
 msgstr "Username perdido"
 
-#: smarty.txt:71
+#: smarty.txt:107
+msgid "Retrieve"
+msgstr "Recuperar"
+
+#: smarty.txt:108
 msgid "Please enter your email address to recover your username"
 msgstr ""
 "Por favor preencha com o seu endere&ccedil;o de email para recuperar o seu "
 "username"
 
-#: smarty.txt:72
-msgid "Online users"
-msgstr "Utilizadores ligados"
-
-#: smarty.txt:75
+#: smarty.txt:112
 msgid "Origin"
 msgstr "Origem"
 
-#: smarty.txt:76
+#: smarty.txt:113
 msgid "Logged in Since"
 msgstr "Ligado Desde"
 
-#: smarty.txt:77
+#: smarty.txt:114
 msgid "Traffic IN/OUT"
 msgstr "Tr&aacute;fego IN/OUT"
 
-#: smarty.txt:78
+#: smarty.txt:115
 msgid "User list"
 msgstr "Lista de utilizadores"
 
-#: smarty.txt:79
+#: smarty.txt:116
 msgid "Sort by:"
 msgstr "Classificar por:"
 
-#: smarty.txt:80
+#: smarty.txt:117
 msgid "Direction:"
 msgstr "Dire&ccedil;&atilde;o:"
 
-#: smarty.txt:81
+#: smarty.txt:118
 msgid "Sort"
 msgstr "Classificar"
 
-#: smarty.txt:84
+#: smarty.txt:121
 msgid "Registered On"
 msgstr "Registado em"
-
-#~ msgid "French"
-#~ msgstr "Franc&ecirc;s"
-
-#~ msgid "English"
-#~ msgstr "Ingl&ecirc;s"
-
-#~ msgid "German"
-#~ msgstr "Alem&atilde;o"
-
-#~ msgid "Spanish"
-#~ msgstr "Espanhol"
-
-#, fuzzy
-#~ msgid "Brazilian Portuguese"
-#~ msgstr "Portugu&ecirc;s"
-
-#~ msgid "Portuguese"
-#~ msgstr "Portugu&ecirc;s"
-
-#~ msgid "Japanese"
-#~ msgstr "Japon&ecirc;s"
 
 #~ msgid "Component %s is not installed (not found in %s)"
 #~ msgstr ""
@@ -4129,16 +4406,6 @@ msgstr "Registado em"
 #~ msgid ": Newest HotSpots"
 #~ msgstr ": <i>HotSpots</i> Recentes"
 
-#~ msgid "A new password has been emailed to you."
-#~ msgstr "Uma nova password foi enviada para o seu email."
-
-#~ msgid "A password of at least 6 characters is required."
-#~ msgstr "&Eacute; necess&aacute;rio uma password de pelo menos 6 caracteres."
-
-#~ msgid "A valid email address is required."
-#~ msgstr ""
-#~ "&Eacute; necess&aacute;rio um endere&ccedil;o de email v&aacute;lido."
-
 #~ msgid "About"
 #~ msgstr "Sobre"
 
@@ -4190,13 +4457,6 @@ msgstr "Registado em"
 
 #~ msgid "AllowedNodes:"
 #~ msgstr "HotSpots permitidos:"
-
-#~ msgid ""
-#~ "An email with confirmation instructions was sent to your email address."
-#~ msgstr ""
-#~ "Uma mensagem com instru&ccedil;&otilde;es de confirma&ccedil;&atilde;o "
-#~ "foi enviada para o seu endere&ccedil;o de e-mail. Caso n&atilde;o a tenha "
-#~ "recebido,  verifique tamb&eacute;m na caixa de spam."
 
 #~ msgid ""
 #~ "An email with confirmation instructions was sent to your email address.  "
@@ -4409,9 +4669,6 @@ msgstr "Registado em"
 #~ msgid "Hotspot owner administration"
 #~ msgstr "Administra&ccedil;&atilde;o do dono do <i>HotSpot</i>"
 
-#~ msgid "Hotspots status map"
-#~ msgstr "Mapa dos HotSpots"
-
 #~ msgid "I already have an account, but"
 #~ msgstr "J&aacute; possuo uma conta, mas"
 
@@ -4474,17 +4731,11 @@ msgstr "Registado em"
 #~ msgid "Logged in as:"
 #~ msgstr "Ligado como:"
 
-#~ msgid "Login page"
-#~ msgstr "Autentica&ccedil;&atilde;o"
-
 #~ msgid "Login to this hotspot."
 #~ msgstr "Ligar-se a este <i>HotSpot</i>."
 
 #~ msgid "Login?"
 #~ msgstr "Ligar?"
-
-#~ msgid "Logout"
-#~ msgstr "Desligar"
 
 #~ msgid "Mass transit:"
 #~ msgstr "Transporte maci&ccedil;o:"
@@ -4540,15 +4791,6 @@ msgstr "Registado em"
 
 #~ msgid "No info to update node with!"
 #~ msgstr "Nenhuma informa&ccedil;&atilde;o para actualizar o HotSpot!"
-
-#~ msgid "No nodes could not be found in the database"
-#~ msgstr "N&atilde;o foi poss&iacute;vel encontrar o HotSpot na base de dados"
-
-#~ msgid "No token specified!"
-#~ msgstr "Token n&atilde;o especificado!"
-
-#~ msgid "No user ID specified!"
-#~ msgstr "username n&atilde;o especificado!"
 
 #~ msgid ""
 #~ "No user matches the default account origin, a new user admin/admin will "
@@ -4619,9 +4861,6 @@ msgstr "Registado em"
 #~ msgid "Online at this hotspot"
 #~ msgstr "Ligados neste <i>HotSpot</i>"
 
-#~ msgid "Opened on"
-#~ msgstr "Aberto em"
-
 #~ msgid "Opened on "
 #~ msgstr "Aberto em "
 
@@ -4636,14 +4875,6 @@ msgstr "Registado em"
 
 #~ msgid "Participating hotspots"
 #~ msgstr "<i>HotSpots</i> participantes"
-
-#~ msgid "Password contains invalid characters."
-#~ msgstr "A password cont&eacute;m caracteres inv&aacute;lidos."
-
-#~ msgid "Password is too short, it must be 6 characters minimum."
-#~ msgstr ""
-#~ "A password &eacute; muito curta, necessita ter no m&iacute;nimo 6 "
-#~ "caracteres."
 
 #~ msgid "Pattern Language - About"
 #~ msgstr "Linguagem Padr&atilde;o - Sobre"
@@ -4735,18 +4966,6 @@ msgstr "Registado em"
 #~ "Por favor reporte qualquer problema ou interrup&ccedil;&atilde;o do nosso "
 #~ "servi&ccedil;o para:"
 
-#~ msgid "Please specify a username"
-#~ msgstr "Por favor especifique um username"
-
-#~ msgid "Please specify a username or email address"
-#~ msgstr "Por favor especifique um username ou endere&ccedil;o de email"
-
-#~ msgid "Please specify an email address"
-#~ msgstr "Por favor especifique um endere&ccedil;o de email"
-
-#~ msgid "Portal page"
-#~ msgstr "Portal"
-
 #~ msgid "Programming by Benoît Gr&eacute;goire and Fran&ccedil;ois Proulx"
 #~ msgstr ""
 #~ "Programa&ccedil;&atilde;o por Benoît Gr&eacute;goire et Fran&ccedil;ois "
@@ -4758,9 +4977,6 @@ msgstr "Registado em"
 #~ msgid "RSS URL"
 #~ msgstr "URL do RSS"
 
-#~ msgid "Re-send"
-#~ msgstr "Reenviar"
-
 #~ msgid "Read narrative"
 #~ msgstr "Ler narrativa"
 
@@ -4769,12 +4985,6 @@ msgstr "Registado em"
 
 #~ msgid "Remote file size"
 #~ msgstr "Tamanho do arquivo remoto"
-
-#~ msgid "Reset my password"
-#~ msgstr "Gerar nova password"
-
-#~ msgid "Retrieve"
-#~ msgstr "Recuperar"
 
 #~ msgid "Select existing Content : "
 #~ msgstr "Selecionar conte&uacute;do existente :"
@@ -4788,23 +4998,8 @@ msgstr "Registado em"
 #~ msgid "Sign up : "
 #~ msgstr "Registo:"
 
-#~ msgid "Sign-up"
-#~ msgstr "Registar"
-
 #~ msgid "Sign-up, it's free!"
 #~ msgstr "Registe-se, &eacute; gratuito!"
-
-#~ msgid "Sorry, a user account is already associated to this email address."
-#~ msgstr ""
-#~ "Pedimos desculpa, mas o e-mail que escolheu j&aacute; existe na base de "
-#~ "dados. Por favor use outro."
-
-#~ msgid ""
-#~ "Sorry, a user account is already associated to this username. Pick "
-#~ "another one."
-#~ msgstr ""
-#~ "Pedimos desculpa, mas o nome de utilizador que escolheu j&aacute; existe "
-#~ "na base de dados. Por favor escolha outro."
 
 #~ msgid "Sorry, no content available in the database"
 #~ msgstr ""
@@ -4823,9 +5018,6 @@ msgstr "Registado em"
 
 #~ msgid "Sorry, this email address is already registered."
 #~ msgstr "O este endere&ccedil;o de email j&aacute; est&aacute; registado."
-
-#~ msgid "Sorry, this network does not exist !"
-#~ msgstr "Esta rede n&atilde;o existe !"
 
 #~ msgid "Sorry, your "
 #~ msgstr ""
@@ -4906,19 +5098,11 @@ msgstr "Registado em"
 #~ msgid "The specified network doesn't exist: "
 #~ msgstr "A rede especificada n&atilde;o existe: "
 
-#~ msgid "The validation token does not match the one in the database."
-#~ msgstr ""
-#~ "O token de valida&ccedil;&atilde;o n&atilde;o coincide com o da base de "
-#~ "dados."
-
 #~ msgid "The website I requested"
 #~ msgstr "O site web eu solicitei"
 
 #~ msgid "There are no hotspot on this network."
 #~ msgstr "N&atilde;o existem <i>HotSpots</i> nesta rede."
-
-#~ msgid "This email could not be found in our database"
-#~ msgstr "O email n&atilde;o foi encontrado na nossa base de dados"
 
 #~ msgid ""
 #~ "This is the 'virtual login' page you can use to get the credentials which "
@@ -4935,13 +5119,6 @@ msgstr "Registado em"
 #~ msgid "This page displays a map of the deployed hotspots."
 #~ msgstr ""
 #~ "Esta p&aacute;gina mostra um mapa dos <i>HotSpots</i> implementados."
-
-#~ msgid "This username could not be found in our database"
-#~ msgstr "Este username n&atilde;o foi encontrado na nossa base de dados"
-
-#~ msgid "This username or email could not be found in our database"
-#~ msgstr ""
-#~ "Este username ou email n&atilde;o foi encontrado na nossa base de dados"
 
 #~ msgid "Try to update database schema"
 #~ msgstr "Tente actualizar o esquema da base de dados"
@@ -4981,12 +5158,6 @@ msgstr "Registado em"
 
 #~ msgid "User management"
 #~ msgstr "Gest&atilde;o de utilizadores"
-
-#~ msgid "Username contains invalid characters."
-#~ msgstr "O username cont&eacute;m caracteres inv&aacute;lidos."
-
-#~ msgid "Username is required."
-#~ msgstr "O username &eacute; obrigat&oacute;rio."
 
 #~ msgid "Users Online"
 #~ msgstr "Utilizadores ligados"
@@ -5110,44 +5281,17 @@ msgstr "Registado em"
 #~ msgid "You must be logged in to subscribe !"
 #~ msgstr "Precisa de estar ligado para se inscrever !"
 
-#~ msgid "You must type your password twice."
-#~ msgstr "Precisa de introduzir a sua password duas vezes."
-
 #~ msgid "Your MUST fill in all the fields"
 #~ msgstr "PRECISA de preencher todos os campos"
 
-#~ msgid "Your account has already been activated."
-#~ msgstr "A sua conta j&aacute; est&aacute; activa."
-
 #~ msgid "Your account has been succesfully activated!"
 #~ msgstr "A sua conta foi activada com sucesso!"
-
-#~ msgid ""
-#~ "Your account has been succesfully activated!\n"
-#~ "\n"
-#~ "You may now browse to a remote Internet address and take advantage of the "
-#~ "free Internet access!\n"
-#~ "\n"
-#~ "If you get prompted for a login, enter the username and password you have "
-#~ "just created."
-#~ msgstr ""
-#~ "A sua conta foi activada com sucesso!\n"
-#~ "\n"
-#~ "Poder&aacute; a partir de agora usufruir gratuitamente da Internet!\n"
-#~ "\n"
-#~ "Se lhe for pedido um username e password utilize os dados que acabou de "
-#~ "criar.\n"
-#~ "\n"
-#~ " Obrigado"
 
 #~ msgid ""
 #~ "Your email address must be valid in order for your account to be activated"
 #~ msgstr ""
 #~ "Seu endere&ccedil;o de email precisa de ser valido para que sua conta "
 #~ "possa ser activada"
-
-#~ msgid "You must specify your username and password"
-#~ msgstr "Precisa de especificar o seu username e password"
 
 #~ msgid "Your password has been changed succesfully."
 #~ msgstr "password foi alterada com sucesso."
@@ -5157,9 +5301,6 @@ msgstr "Registado em"
 
 #~ msgid "Your username and password do not match"
 #~ msgstr "O seu username e password s&atilde;o inv&aacute;lidos"
-
-#~ msgid "Your username has been emailed to you."
-#~ msgstr "O username foi enviado para o seu email."
 
 #~ msgid ""
 #~ "are and will remain <emp>totally free</emp>, use the left menu to create "
@@ -5186,9 +5327,6 @@ msgstr "Registado em"
 #~ msgid "new users"
 #~ msgstr "novos utilizadores"
 
-#~ msgid "not monitored"
-#~ msgstr "n&atilde;o monitorizados"
-
 #~ msgid "open"
 #~ msgstr "oberto"
 
@@ -5197,12 +5335,6 @@ msgstr "Registado em"
 
 #~ msgid "sign-up."
 #~ msgstr "registar."
-
-#~ msgid "the hotspot is down"
-#~ msgstr "o hotspot est&aacute; fora de servi&ccedil;o"
-
-#~ msgid "the hotspot is operational"
-#~ msgstr "o hotspot est&aacute; operacional"
 
 #~ msgid "user(s) are currently online"
 #~ msgstr "username(s) actualmente ligado(s)"
@@ -5499,9 +5631,6 @@ msgstr "Registado em"
 #~ "2 will statistically cause the \n"
 #~ "\t\t\t\t\t  feed to have MORE than twice as many items displayed. "
 
-#~ msgid "Node: "
-#~ msgstr "HotSpot: "
-
 #~ msgid "No"
 #~ msgstr "N&atilde;o"
 
@@ -5542,9 +5671,6 @@ msgstr "Registado em"
 #~ msgid "MAC adresses"
 #~ msgstr "Endere&ccedil;os MAC"
 
-#~ msgid "Create a free account"
-#~ msgstr "Criar uma conta gratuita"
-
 #~ msgid "I already have an account:"
 #~ msgstr "J&aacute; possuo uma conta:"
 
@@ -5556,10 +5682,6 @@ msgstr "Registado em"
 
 #~ msgid "Node content (portal):"
 #~ msgstr "Conte&uacute;do do HotSpot (portal):"
-
-#~ msgid "Sorry, this network does not accept new user registration !"
-#~ msgstr ""
-#~ "Esta rede n&atilde;o aceita inscri&ccedil;&atilde;o de novos utilizadores!"
 
 #~ msgid "Could not set existing user as tech officer"
 #~ msgstr ""
@@ -5607,24 +5729,6 @@ msgstr "Registado em"
 
 #~ msgid "min"
 #~ msgstr "min"
-
-#~ msgid "Change network"
-#~ msgstr "Alterar rede"
-
-#~ msgid "Sorry, your browser does not support Google Maps."
-#~ msgstr ""
-#~ "Pedimos desculpa, mas o seu browser n&atilde;o suporta o Google Maps."
-
-#~ msgid "Show me on the map"
-#~ msgstr "Mostrar no mapa"
-
-#~ msgid ""
-#~ "The email address must be valid (i.e. user@domain.com). Please understand "
-#~ "that we also black-listed various temporary-email-address providers."
-#~ msgstr ""
-#~ "O endere&ccedil;o de email precisa de ser v&aacute;lido (ex. user@dominio."
-#~ "com). Por favor entenda que n&atilde;o aceitamos provedores de email "
-#~ "tempor&aacute;rio."
 
 #~ msgid "addSourceFeed(): url is empty!"
 #~ msgstr "addSourceFeed(): url em branco!"
@@ -5852,13 +5956,6 @@ msgstr "Registado em"
 #~ msgid "Sorry, invalid change password request !"
 #~ msgstr ""
 #~ "A requisi&ccedil;&atilde;o de troca de password &eacute; inv&aacute;lida!"
-
-#~ msgid ""
-#~ "You may now open a browser window or start your email client and go to "
-#~ "any remote Internet address to obtain the validation email."
-#~ msgstr ""
-#~ "Pode agora abrir um browser ou user o seu programa de email para "
-#~ "verificar o email de ativa&ccedil;&atilde;o."
 
 #~ msgid "%s %d display order and location"
 #~ msgstr "Mostrar ordem e localiza&ccedil;&atilde;o %s %d"

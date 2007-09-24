@@ -1,4 +1,8 @@
 # $Id$
+2007-09-24 Benoit Grégoire  <bock@step.polymtl.ca>
+	* locale/gensmarty.pl:  Heads up translators:  There was a bug in the regex; about 20 strings in the smarty templates were missed.
+	* Updated french translation
+	
 2007-09-20 Benoit Grégoire  <bock@step.polymtl.ca>
 	* install.php:  Hopefully fix #384, and remove pages unlikely to be implemented for 1.0
 	
