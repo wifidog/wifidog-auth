@@ -117,7 +117,7 @@ class Stakeholder
         $object_id = $db->escapeString($targetObject->getId());
         $object_class = get_class($targetObject);
         $table = strtolower($object_class).'_stakeholders';
-        $user = User::processSelectUserUI($object_id . "_new_stakeholder", &$errMsg);
+        $user = User::processSelectUserUI($object_id . "_new_stakeholder", $errMsg);
         $role = Role::processSelectAvailableRoleUI($object_id . "_new_stakeholder_role");
         if ($user && $role) {
             //The user and role exist
