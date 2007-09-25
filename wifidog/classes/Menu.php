@@ -123,19 +123,19 @@ class Menu {
         if(isset($menuArray['path'])){
             //Only call if we are in a real menu item (and, among other, not at the root)
             //echo "menuArrayWalkRecursive(): Calling callback.<br/>";
-            $retval = call_user_func($funcname, $menuArray, $menuItemIdx, &$userdata);
+            $retval = call_user_func_array($funcname, array($menuArray, $menuItemIdx, &$userdata));
         }
         foreach ($menuArray['childrens'] as $menuItemIdx => $menuItem) {
             //pretty_print_r($menuItem);
             //echo "Recusively calling for $menuItemIdx<br/>";
-            $retval = $retval & self::menuArrayWalkRecursiveReal($menuItem, $menuItemIdx, $funcname, &$userdata);
+            $retval = $retval & self::menuArrayWalkRecursiveReal($menuItem, $menuItemIdx, $funcname, $userdata);
         }
         return $retval;
     }
 
     /** Takes an array_walk_recursive compatible callback.  Will be called for each menu item */
     public function menuArrayWalkRecursive($funcname, &$userdata = null) {
-        return self::menuArrayWalkRecursiveReal($this->_menuArray, 0, $funcname, &$userdata);
+        return self::menuArrayWalkRecursiveReal($this->_menuArray, 0, $funcname, $userdata);
     }
     /** Compare menu items according to it's title output passed to strcoll().  The toString
      * output is converted to ISO-8859-1 before sorting to allow strcoll() to be used
@@ -157,7 +157,7 @@ class Menu {
             //Recursive call
             //pretty_print_r($menuItem);
             //echo "Recusively calling for $menuItemIdx<br/>";
-            $retval = $retval & self::menuArraySort($menuItem, $funcname, &$userdata);
+            $retval = $retval & self::menuArraySort($menuItem, $funcname, $userdata);
         }
         return $retval;
     }
