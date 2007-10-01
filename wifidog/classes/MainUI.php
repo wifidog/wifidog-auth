@@ -435,14 +435,15 @@ class MainUI {
      * Add a stylesheet URL to the main page
      *
      * @param string Stylesheet URL
-     *
+     *@param media The target media of the selected strylesheet (print, screen,etc.)
      * @return void
      *
      * @access public
      */
-    public function appendStylesheetURL($stylesheet_url) {
+    public function appendStylesheetURL($stylesheet_url, $media=null) {
         //Note:  using the URL as value AND key will remove duplicate while keeping the stylesheet inclusion order, because of the way foreach is implemented in PHP
-        $this->stylesheetUrlArray[$stylesheet_url] = $stylesheet_url;
+        $this->stylesheetUrlArray[$stylesheet_url]['href'] = $stylesheet_url;
+                $this->stylesheetUrlArray[$stylesheet_url]['media'] = $media;
     }
 
     /**
@@ -543,6 +544,7 @@ class MainUI {
         // Init values
         // Asign base CSS and theme pack CSS stylesheet
         $this->appendStylesheetURL(BASE_THEME_URL . STYLESHEET_NAME);
+                $this->appendStylesheetURL(BASE_THEME_URL . PRINT_STYLESHEET_NAME, 'print');
         $networkThemePack = Network :: getCurrentNetwork()->getThemePack();
         if ($networkThemePack) {
             $this->appendStylesheetURL($networkThemePack->getStylesheetUrl());

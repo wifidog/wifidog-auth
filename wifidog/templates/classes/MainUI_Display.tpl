@@ -54,7 +54,7 @@
         {$htmlHeaders}
         <title>{$title}</title>
         {foreach from=$stylesheetUrlArray item=stylesheetUrl}
-          <link rel="stylesheet" type="text/css" href="{$stylesheetUrl}">
+          	<link rel="stylesheet" type="text/css" {if !empty($stylesheetUrl.media)}media="{$stylesheetUrl.media}"{/if}	href="{$stylesheetUrl.href}">
         {/foreach}
 		<script src="{$base_url_path}js/formutils.js" type="text/javascript"></script>
 		<script src="{$base_url_path}js/addEvent.js"  type="text/javascript"></script>

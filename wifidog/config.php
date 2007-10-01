@@ -202,6 +202,7 @@ define('WIFIDOG_VERSION', '(Development)');
 // Filenames and directories
 define('NETWORK_THEME_PACKS_DIR', 'media/network_theme_packs/');
 define('STYLESHEET_NAME', 'stylesheet.css');
+define('PRINT_STYLESHEET_NAME', 'printer.css');
 define('LOGIN_PAGE_NAME', 'login.html');
 define('HOTSPOT_STATUS_PAGE', 'hotspot_status.php');
 
