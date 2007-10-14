@@ -62,7 +62,7 @@ abstract class Security
      * Sorry about the weird SQL, it's there to avoid checking any more permissions than strictly necessary
      * @param AND or OR
      */
-    private static function hasPermissionsHelper(Array $permissionsCheckArray, $operator, $user=null)
+    private static function hasPermissionsHelper($permissionsCheckArray, $operator, $user=null)
     {
         $retval = false;
         $first = true;

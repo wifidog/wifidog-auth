@@ -1,5 +1,8 @@
 # $Id$
 2007-10-01 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Remove Array type hinting in Security.php. It's not supported in PHP < 5.1.  Fixes  #393
+
+2007-10-01 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Commited slightly modified patch by Robin Jones to implement #184
 
 2007-09-25 Benoit Grégoire  <bock@step.polymtl.ca>
