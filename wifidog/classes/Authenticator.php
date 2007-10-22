@@ -139,7 +139,7 @@ abstract class Authenticator
         else {
             $selectedUser=null;
         }
-        
+
         $smarty=SmartyWiFiDog::getObject();
         // Set network selector
         $smarty->assign('selectNetworkUI', Network::getSelectUI('auth_source', $networkUserData));
@@ -162,7 +162,7 @@ abstract class Authenticator
     static public function processLoginUI(&$errmsg = null)
     {
         if (!empty($_REQUEST["login_form_submit"])) {
-                    if (isset($_REQUEST["user_id"])) {
+            if (isset($_REQUEST["user_id"])) {
                 $username = User::getObject($_REQUEST["user_id"])->getUsername();
             }
             else if (isset($_REQUEST["username"])) {
@@ -172,7 +172,7 @@ abstract class Authenticator
             if (isset($_REQUEST["password"])) {
                 $password = $_REQUEST["password"];
             }
-            
+
             // Authenticating the user through the selected auth source.
             $network = Network::processSelectUI('auth_source');
             $user = $network->getAuthenticator()->login($username, $password, $errmsg);

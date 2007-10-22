@@ -120,16 +120,26 @@ class User implements GenericObject {
      *
      * This should NOT be called by anything except the Authenticators
      *
-     * @param object $user User a user object
+     * @param object $user User a user object, or null
      *
      * @return bool True if everything went well setting the session
 
      */
-    public static function setCurrentUser(User $user) {
+    public static function setCurrentUser($user) {
+
+        if (get_class($user) == 'User'){
+            $userId = $user->getId();
+            $passwordHash = $user->getPasswordHash();
+        }
+        else {
+            $userId = null;
+            $passwordHash = null;
+        }
+
         try {
             $session = Session::getObject();
-            $session->set(SESS_USER_ID_VAR, $user->getId());
-            $session->set(SESS_PASSWORD_HASH_VAR, $user->getPasswordHash());
+            $session->set(SESS_USER_ID_VAR, $userId);
+            $session->set(SESS_PASSWORD_HASH_VAR, $passwordHash);
             return true;
         } catch (Exception $e) {
             return false;
@@ -329,7 +339,7 @@ class User implements GenericObject {
     function getOpenIdUrl() {
         return $this->_row['open_id_url'];
     }
-    
+
     function getUsername() {
         return $this->_row['username'];
     }
@@ -935,21 +945,21 @@ class User implements GenericObject {
             $items[] = array('path' => 'users/import_nocat',
             'title' => _("Import NoCat user database"),
             'url' => BASE_URL_PATH."admin/import_user_database.php"
-		);
+            );
         }
-            if(Security::getObjectsWithPermission(Permission::P('NETWORK_PERM_EDIT_ANY_USER')))
+        if(Security::getObjectsWithPermission(Permission::P('NETWORK_PERM_EDIT_ANY_USER')))
         {
             $items[] = array('path' => 'users/user_manager',
             'title' => _("User manager"),
             'url' => BASE_URL_PATH."admin/user_log.php"
-		);
+            );
         }
-            if(Security::getObjectsWithPermission(Permission::P('NETWORK_PERM_VIEW_STATISTICS')))
+        if(Security::getObjectsWithPermission(Permission::P('NETWORK_PERM_VIEW_STATISTICS')))
         {
             $items[] = array('path' => 'users/statistics',
             'title' => _("Statistics"),
             'url' => BASE_URL_PATH."admin/stats.php"
-		);
+            );
         }
         $items[] = array('path' => 'users',
         'title' => _('User administration'),

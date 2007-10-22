@@ -198,10 +198,10 @@ if (!empty($_REQUEST["login_form_submit"])) {
     $errmsg = '';
     $user = User::getCurrentUser();
     if (!$user) {
-        //Normally, we already have a user logged-in (precessed by process_login_out.php).  But we try again, if only to display the error
+        //Normally, we already have a user logged-in (processed by process_login_out.php).  But we try again, if only to display the error
         Authenticator::processLoginUI($errmsg);
     }
-
+//echo "DEBUG: user: "; echo $user->getUsername();
     if ($user != null) {
         if (!empty($gw_address) && !empty($gw_port)) {
             // Login from a gateway, redirect to the gateway to activate the token

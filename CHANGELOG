@@ -1,4 +1,7 @@
 # $Id$
+2007-10-22 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Major security fix:  Fix the authenticator for a security breach where a user could get Internet access using an empty username.  LocalUser and LDAP were definitely vulnerable, RADIUS may have been.
+	
 2007-10-01 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Remove Array type hinting in Security.php. It's not supported in PHP < 5.1.  Fixes  #393
 

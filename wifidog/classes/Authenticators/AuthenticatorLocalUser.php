@@ -106,47 +106,52 @@ class AuthenticatorLocalUser extends Authenticator
      */
     public function login($username, $password, &$errmsg = null)
     {
-        
+        //echo "DEBUG:  login($username, $password, $errmsg)<br/>";
         $db = AbstractDb::getObject();
 
         // Init values
         $retval = false;
 
         $username = $db->escapeString($username);
-        $password = $db->escapeString($password);
-        $password_hash = User::passwordHash($_REQUEST['password']);
-
-        $sql = "SELECT user_id FROM users WHERE (username='$username' OR email='$username') AND account_origin='".$this->getNetwork()->getId()."' AND pass='$password_hash'";
-        $db->execSqlUniqueRes($sql, $user_info, false);
-
-        if ($user_info != null) {
-            $user = User::getObject($user_info['user_id']);
-
-            if ($user->isUserValid($errmsg)) {
-                $retval = &$user;
-                User::setCurrentUser($user);
-                $errmsg = _("Login successfull");
-            } else {
-                $retval = false;
-                //Reason for refusal is already in $errmsg
-            }
-        } else {
-            /*
-             * This is only used to discriminate if the problem was a
-             * non-existent user of a wrong password.
-             */
-            $user_info = null;
-            $db->execSqlUniqueRes("SELECT * FROM users WHERE (username='$username' OR email='$username') AND account_origin='".$this->getNetwork()->getId()."'", $user_info, false);
-
-            if ($user_info == null) {
-                $errmsg = _('Unknown username or email');
-            } else {
-                $errmsg = _('Incorrect password (Maybe you have CAPS LOCK on?)');
-            }
-
+        if (empty($username)) {
+            $errmsg .= sprintf(_("Fatal error:  Username cannot be empty"));
             $retval = false;
         }
+        else{
+            $password = $db->escapeString($password);
+            $password_hash = User::passwordHash($_REQUEST['password']);
 
+            $sql = "SELECT user_id FROM users WHERE (username='$username' OR email='$username') AND account_origin='".$this->getNetwork()->getId()."' AND pass='$password_hash'";
+            $db->execSqlUniqueRes($sql, $user_info, false);
+
+            if ($user_info != null) {
+                $user = User::getObject($user_info['user_id']);
+
+                if ($user->isUserValid($errmsg)) {
+                    $retval = &$user;
+                    $errmsg = _("Login successfull");
+                } else {
+                    $retval = false;
+                    //Reason for refusal is already in $errmsg
+                }
+            } else {
+                /*
+                 * This is only used to discriminate if the problem was a
+                 * non-existent user of a wrong password.
+                 */
+                $user_info = null;
+                $db->execSqlUniqueRes("SELECT * FROM users WHERE (username='$username' OR email='$username') AND account_origin='".$this->getNetwork()->getId()."'", $user_info, false);
+
+                if ($user_info == null) {
+                    $errmsg = _('Unknown username or email');
+                } else {
+                    $errmsg = _('Incorrect password (Maybe you have CAPS LOCK on?)');
+                }
+
+                $retval = false;
+            }
+        }
+        User::setCurrentUser($retval);
         return $retval;
     }
 

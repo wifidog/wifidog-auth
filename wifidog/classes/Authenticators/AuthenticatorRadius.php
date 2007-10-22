@@ -173,7 +173,7 @@ class AuthenticatorRadius extends Authenticator
     {
         
         $db = AbstractDb::getObject();
-
+        User :: setCurrentUser(null);//This should fix a security hole if using an empty username.  I didn't have time to audit the radius code to see if it really was vulnerable, and code a better fix.
         // Init values
         $retval = false;
         $username = $db->escapeString($username);

@@ -124,16 +124,16 @@ class AuthenticatorLDAP extends Authenticator
      *
      * @return void
      */
-	public function __construct($account_orgin, $host, $rdn, $pass, $o, $filter)
+    public function __construct($account_orgin, $host, $rdn, $pass, $o, $filter)
     {
         // Call parent constructor
         parent::__construct($account_orgin);
 
-		$this->mldap_hostname = $host;
-		$this->mldap_filter = $filter;
-		$this->mldap_o = $o;
-		$this->mldap_rdn = trim($rdn);
-		$this->mldap_pass = trim($pass);
+        $this->mldap_hostname = $host;
+        $this->mldap_filter = $filter;
+        $this->mldap_o = $o;
+        $this->mldap_rdn = trim($rdn);
+        $this->mldap_pass = trim($pass);
     }
 
     /**
@@ -150,72 +150,72 @@ class AuthenticatorLDAP extends Authenticator
      * @return bool True if the parameter refers to a Local User account origin
 
      */
-	private function checkLdapUser($username, $password, $ldap_server, $o, $f, &$errmsg = null )
-	{
-	    // Init values
-		$rtval = true;
+    private function checkLdapUser($username, $password, $ldap_server, $o, $f, &$errmsg = null )
+    {
+        // Init values
+        $rtval = true;
 
-		// Check if php-ldap extension is loaded
-		if (Dependency::check("ldap", $errmsg)) {
-    		if ($connect = @ldap_connect($ldap_server)) {
-    		    // if connected to ldap server
-    			ldap_set_option($connect, LDAP_OPT_PROTOCOL_VERSION, 3);
+        // Check if php-ldap extension is loaded
+        if (Dependency::check("ldap", $errmsg)) {
+            if ($connect = @ldap_connect($ldap_server)) {
+                // if connected to ldap server
+                ldap_set_option($connect, LDAP_OPT_PROTOCOL_VERSION, 3);
 
-    			// bind to ldap connection
+                // bind to ldap connection
                 if (strlen(trim($this->mldap_rdn)) == 0) {
-    				if (($bind = @ldap_bind($connect)) == false) {
-    					$errmsg = _("Error while connecting to the LDAP server.");
-    					return false;
-    				}
-    			} else {
-    				if (($bind = @ldap_bind($connect, $this->mldap_rdn, $this->mldap_pass )) == false) {
-    					$errmsg = _("Error while connecting to the LDAP server.");
-    					return false;
-    				}
-    			}
+                    if (($bind = @ldap_bind($connect)) == false) {
+                        $errmsg = _("Error while connecting to the LDAP server.");
+                        return false;
+                    }
+                } else {
+                    if (($bind = @ldap_bind($connect, $this->mldap_rdn, $this->mldap_pass )) == false) {
+                        $errmsg = _("Error while connecting to the LDAP server.");
+                        return false;
+                    }
+                }
 
-    			// search for user
-    			if (($res_id = ldap_search($connect, "o=$o", "$f=$username")) == false)  {
-    				$errmsg = _("Error while obtaining your LDAP information.");
+                // search for user
+                if (($res_id = ldap_search($connect, "o=$o", "$f=$username")) == false)  {
+                    $errmsg = _("Error while obtaining your LDAP information.");
 
-    				return false;
-    			}
+                    return false;
+                }
 
-    			if (ldap_count_entries($connect, $res_id) != 1) {
-    				$errmsg = _("Error while obtaining your username or password from the LDAP server.");
+                if (ldap_count_entries($connect, $res_id) != 1) {
+                    $errmsg = _("Error while obtaining your username or password from the LDAP server.");
 
-    				return false;
-    			}
+                    return false;
+                }
 
-    			if (($entry_id = ldap_first_entry($connect, $res_id)) == false) {
-    				$errmsg = _("Error while obtaining your username or password from the LDAP server.");
+                if (($entry_id = ldap_first_entry($connect, $res_id)) == false) {
+                    $errmsg = _("Error while obtaining your username or password from the LDAP server.");
 
-    				return false;
-    			}
+                    return false;
+                }
 
-    			if (($user_dn = ldap_get_dn($connect, $entry_id)) == false) {
-    				$errmsg = _("Error while obtaining your username or password from the LDAP server.");
+                if (($user_dn = ldap_get_dn($connect, $entry_id)) == false) {
+                    $errmsg = _("Error while obtaining your username or password from the LDAP server.");
 
-    				return false;
-    			}
+                    return false;
+                }
 
-    			//Authenticate the User
-    			if (($link_id = ldap_bind($connect, $user_dn, $password)) == false) {
-    				$errmsg = _("Error in username or password.");
+                //Authenticate the User
+                if (($link_id = ldap_bind($connect, $user_dn, $password)) == false) {
+                    $errmsg = _("Error in username or password.");
 
-    				return false;
-    			}
+                    return false;
+                }
 
-    			return true;
-    		} else {
-    			$errmsg = _("Error connecting to the LDAP Server.");
-    		}
+                return true;
+            } else {
+                $errmsg = _("Error connecting to the LDAP Server.");
+            }
 
-    		ldap_close($connect);
-		} else {
-		    $rtval = false;
-		}
-	}
+            ldap_close($connect);
+        } else {
+            $rtval = false;
+        }
+    }
 
     /**
      * Attempts to login a user against the authentication source
@@ -230,50 +230,50 @@ class AuthenticatorLDAP extends Authenticator
      * @return object The actual User object if login was successfull, false
      *                otherwise.
      */
-	public function login($username, $password, &$errmsg = null)
-	{
-	    
-		$db = AbstractDb::getObject();
+    public function login($username, $password, &$errmsg = null)
+    {
+         
+        $db = AbstractDb::getObject();
 
-		// Init values
-		$retval = false;
-		$username = $db->EscapeString($username);
-		$password = $db->EscapeString($password);
+        // Init values
+        $retval = false;
+        $username = $db->EscapeString($username);
+        $password = $db->EscapeString($password);
 
-		// Check if php-ldap extension is loaded
-		if (Dependency::check("ldap", $errmsg)) {
-    		if ($this->checkLdapUser($username, $password, $this->mldap_hostname, $this->mldap_o, $this->mldap_filter, $errmsg)) {
-    			//LDAP Authentication Successful
-    			$sql = "SELECT user_id, pass FROM users WHERE (username='$username') AND account_origin='".$this->getNetwork()->getId()."'";
+        // Check if php-ldap extension is loaded
+        if (Dependency::check("ldap", $errmsg)) {
+            if ($this->checkLdapUser($username, $password, $this->mldap_hostname, $this->mldap_o, $this->mldap_filter, $errmsg)) {
+                //LDAP Authentication Successful
+                $sql = "SELECT user_id, pass FROM users WHERE (username='$username') AND account_origin='".$this->getNetwork()->getId()."'";
 
-    			$db->ExecSqlUniqueRes($sql, $user_info, false);
+                $db->ExecSqlUniqueRes($sql, $user_info, false);
 
-    			if ($user_info != null) {
-    				$user = User::getObject($user_info['user_id']);
+                if ($user_info != null) {
+                    $user = User::getObject($user_info['user_id']);
 
-    				if ($user->isUserValid($errmsg)) {
-    					$retval = $user;
-    					User::setCurrentUser($user);
-    					$errmsg = _("Login successfull");
-    				} else {
-    					$retval = false;
-            			//Error already been set
-    				}
-    			} else {
-    				$user = User::createUser(get_guid(), $username, $this->getNetwork(), "", "");
-    				$retval = &$user;
-    				$user->setAccountStatus(ACCOUNT_STATUS_ALLOWED);
-    				User::setCurrentUser($user);
-    				$errmsg = _("Login successfull");
-    			}
-    		} else {
-    			return false;
-    			//Error already been set
-    		}
-		}
+                    if ($user->isUserValid($errmsg)) {
+                        $retval = $user;
+                        User::setCurrentUser($user);
+                        $errmsg = _("Login successfull");
+                    } else {
+                        $retval = false;
+                        //Error already been set
+                    }
+                } else {
+                    $user = User::createUser(get_guid(), $username, $this->getNetwork(), "", "");
+                    $retval = &$user;
+                    $user->setAccountStatus(ACCOUNT_STATUS_ALLOWED);
 
-		return $retval;
-	}
+                    $errmsg = _("Login successfull");
+                }
+            } else {
+                $retval = false;
+                //Error already been set
+            }
+        }
+    	User::setCurrentUser($retval);
+    	return $retval;
+    }
 
     /**
      * Start accounting traffic for the user
