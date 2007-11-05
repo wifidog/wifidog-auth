@@ -1,6 +1,5 @@
 <?php
 
-
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 // +-------------------------------------------------------------------+
@@ -38,8 +37,8 @@
  * WiFiDog Authentication Server installation and configuration script
  *
  * @package    WiFiDogAuthServer
- * @author     Pascal Leclerc <isf@plec.ca>
- * @copyright  2005-2006 Pascal Leclerc
+ * @author     Pascal Leclerc <isf@plec.ca>, Robin Jones and Benoit Grégoire
+ * @copyright  2005-2006 Pascal Leclerc, 2006-2007 Technologies Coeus inc., 2007 Robin Jones
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
@@ -70,7 +69,7 @@ if (!file_exists($password_file)) {
     fclose($fd);
 }
 
-# Read password file
+#Read password file
 $fd = fopen($password_file, "rb");
 $password = trim(fread($fd, filesize($password_file)));
 fclose($fd);
@@ -87,23 +86,27 @@ if ($page != 'Welcome') {
 else
 $auth = true;
 
-if (!$auth) { # Ask user for the passorwd
+if (!$auth) { 	# Ask user for the password
     header('WWW-Authenticate: Basic realm="Private"');
     header('HTTP/1.0 401 Unauthorized');
-    echo "Authorization Required !";
+    echo "Restricted Access - Authorisation Required!";
     exit;
 }
 # End of Security validation
 
+
+/************************************************************************************
+ * Begin Dynamic HTML Page Header
+ ************************************************************************************/
 print<<<EndHTML
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <HTML>
 <HEAD>
-  <TITLE>$page - Wifidog Auth-server configuration</TITLE>
+  <TITLE>$page - Wifidog Auth-server installation and configuration</TITLE>
 
   <SCRIPT type="text/javascript">
-    // This function add new configuration value to the "config" hidden input
-    // On submit, config will be parsed and value saved to config.php file
+    // This function adds a new configuration value to the "config" hidden input
+    // On submit, the config will be parsed and the value saved to the config.php file
     function newConfig(dataAdd) {
       // TODO : Validate input data
       if (document.myform.config.value == '') {
@@ -115,43 +118,73 @@ print<<<EndHTML
       //alert(document.myform.config.value);  // DEBUG
     }
   </SCRIPT>
-
+  
+<link rel="stylesheet" type="text/css" href="/media/base_theme/stylesheet.css" />
 </HEAD>
-<BODY text="black" bgcolor="#CFCFCF">
+<BODY id='page' class='{$page}'>
 
 <style type="text/css">
 <!--
-.button
+
+.submit
 {
-  font-size: 12pt;
-  font-weight: bold;
-  color: black;
-  background: #D4D0C8;
+  font-size: 14pt;
   text-decoration: none;
-  border-top: 1px solid white;
-  border-right: 2px solid gray;
-  border-bottom: 2px solid gray;
-  border-left: 1px solid white;
   padding: 3px 5px 3px 5px;
+  background-color: #ccccff;
 }
 
-body
-{
-  background-color: white;
+table {
+border-collapse: collapse;
 }
 
-td
-{
-  padding: 1px 4px 1px 4px;
-}
 -->
 </style>
+
 
 <FORM NAME="myform" METHOD="post">
 <INPUT TYPE="HIDDEN" NAME="action">
 <INPUT TYPE="HIDDEN" NAME="debug">
 <INPUT TYPE="HIDDEN" NAME="config">
-
+<div id="page_body">
+	<div id="left_area">
+		<div id="left_area_top">
+			<h1>Installation status</h1>
+			
+EndHTML;
+$pageindex = array("Welcome"=>"Welcome",
+		   "Prerequisites"=>"Prerequisites",
+		   "Permissions"=>"Permissions",
+	           "Dependencies"=> "Dependencies",		   
+	           "Database Access"=> "Database",
+		   "Database Connection"=>"testdatabase",
+		   "Database Initialisation"=>"dbinit",
+		   "Global Options"=>"options",
+		   "Language Locale"=>"languages",
+		   "User Creation"=>"admin",
+		   "Review"=>"Review",
+		   "Finish"=>"finish",);
+foreach($pageindex as $pagekey => $pagevalue){
+    if ($pagevalue != $page){
+        print "$pagekey <br>";
+    }
+    else {
+        print "<strong>$pagekey</strong> <br>";
+    }
+}
+print<<<EndHTML
+		</div>
+		<div id="left_area_bottom">
+			<p><a href="../CHANGELOG">Change Log</a><BR>
+			<a href="http://dev.wifidog.org/report/10">Known issues</a></p>
+		</div>
+	</div>
+<div id="main_area">
+	
+	<div id="main_area_top">
+		<table align="center"><tr><td><img src="/media/base_theme/images/wifidog_logo_banner.png" /></td></tr></table>
+	</div>
+	<div id="main_area_middle">
 EndHTML;
 
 //print "<pre>";      # DEBUG
@@ -160,7 +193,7 @@ EndHTML;
 //print "</pre>";     # DEBUG
 #exit();
 
-# Needed files/directories with write access
+#Begin Perquisite Array 	(Needed files/directories with write access)
 $dir_array = array (
 'tmp',
 'tmp/simplepie_cache',
@@ -172,40 +205,19 @@ $dir_array = array (
 'lib/feedpressreview',
 'config.php'
 );
+#end perquisite array
 
-$smarty_full_url = 'http://smarty.php.net/do_download.php?download_file=Smarty-2.6.14.tar.gz';
 
-$neededPackages = array (
-'smarty' => array (
-'needed' => 1,
-'available' => 0,
-'message' => '',
-'file' => 'lib/smarty/Smarty.class.php'
-),
-'simplepie' => array (
-'needed' => 0,
-'available' => 0,
-'message' => '',
-'file' => 'lib/simplepie/simplepie.inc',
-'svn_source' => 'http://svn.simplepie.org/simplepie/branches/1.0/'
-),
-'feedpressreview' => array (
-'needed' => 0,
-'available' => 0,
-'message' => '',
-'file' => 'lib/feedpressreview/FeedPressReview.inc',
-'svn_source' => 'http://projects.coeus.ca/svn/feedpressreview/trunk/'
-)
-);
-
+#Begin Global Options Array
 $optionsInfo = array (
-/* TODO:  SSL is now configured in the DB, but should still be handled by the install script
- 'SSL_AVAILABLE' => array (
- 'title' => 'SSL Support',
- 'depend' => 'return 1;',
- 'message' => '&nbsp;'
- ),
- */
+/*********************************************************************************************
+TODO:  SSL is now configured in the DB, but should still be handled by the install script
+'SSL_AVAILABLE' => array (
+'title' => 'SSL Support',
+'depend' => 'return 1;',
+'message' => '&nbsp;'
+),
+************************************************************************/
 'CONF_USE_CRON_FOR_DB_CLEANUP' => array (
 'title' => 'Use cron for DB cleanup',
 'depend' => 'return 1;',
@@ -218,10 +230,7 @@ $optionsInfo = array (
 )
 );
 
-foreach ($neededPackages as $key => $value) { # Detect installed libraries (smarty, ...)
-    if (file_exists(WIFIDOG_ABS_FILE_PATH . $neededPackages[$key]['file']))
-    $neededPackages[$key]['available'] = 1;
-}
+
 
 $CONFIG_FILE = 'config.php';
 $LOCAL_CONFIG_FILE = 'local.config.php';
@@ -267,23 +276,22 @@ $CONF_DATABASE_PASSWORD = $configArray['CONF_DATABASE_PASSWORD'];
 
 ###################################
 # array (array1(name1, page1), array2(name2, page2), ..., arrayN(nameN, pageN));
-# Todo : Supporter HTTP_REFERER (j'me comprends)
 function navigation($dataArray) {
     $SERVER = $_SERVER['HTTP_HOST'];
     $SCRIPT = $_SERVER['SCRIPT_NAME'];
-    print "\n<p>";
+    print "<p><br></p>";
     foreach ($dataArray as $num => $navArray) {
         $title = $navArray['title'];
         $page = $navArray['page'];
         empty ($navArray['action']) ? $action = '' : $action = $navArray['action'];
         print<<<EndHTML
-<A HREF="#" ONCLICK="document.myform.page.value = '$page'; document.myform.action.value = '$action'; document.myform.submit();" CLASS="button">$title</A>
+<A HREF="#" ONCLICK="document.myform.page.value = '$page'; document.myform.action.value = '$action'; document.myform.submit();" CLASS="submit">$title</A>
 
 EndHTML;
         if (array_key_exists($num +1, $dataArray))
-        print "&nbsp;-&nbsp;";
+        print "&nbsp; &nbsp;";
     }
-    print "</p>\n";
+
 }
 
 ###################################
@@ -291,7 +299,7 @@ EndHTML;
 function refreshButton() {
     print<<<EndHTML
 
-<p><A HREF="#" ONCLICK="javascript: window.location.reload(true);" CLASS="button">Refresh</A></p>
+<p><A HREF="#" ONCLICK="javascript: window.location.reload(true);" CLASS="submit">Refresh</A></p>
 EndHTML;
 }
 
@@ -303,41 +311,6 @@ EndHTML;
  <p><INPUT TYPE="button" VALUE="Debug" ONCLICK="javascript: window.location.reload(true);"></p>
  EndHTML;
  } */
-
-###################################
-# In development
-/*function installPackage($pkg_name, $full_url, $copy) {
- print "<h1>$pkg_name installation</h1>\n";
- chdir(WIFIDOG_ABS_FILE_PATH."tmp");
- list($url, $filename) = split ("=", $full_url);
-
- print "Download source code ($filename) : ";
- if (!file_exists($filename))
- Dependency::execVerbose("wget \"$url\"", $output, $return);
- if (!file_exists($filename)) // wget success if file exists
- Dependency::execVerbose("wget \"$full_url\" 2>&1", $output_array, $return);
- if (!file_exists($filename)) {
- print "<B STYLE=\"color:red\">Error</b><p>Current working directory : <em>$basepath/tmp/smarty</em>";
- $output = implode("\n", $output_array);
- print "<pre><em>wget \"$full_url\"</em>\n$output</pre>";
- exit();
- } else {
- print "OK<BR>";
- }
-
- print "Uncompressing : ";
- $dirname = array_shift(split(".tar.gz", $filename));
-
- if (!file_exists($dirname))
- Dependency::execVerbose("tar -xzf $dirname.tar.gz", $output, $return);
- print "OK<BR>";
- print "Copying : ";
- if (!file_exists('../../lib/smarty/Smarty.class.php'));
- Dependency::execVerbose("cp -r $dirname/libs/* ../../lib/smarty", $output, $return);
- Dependency::execVerbose("cp -r $dirname/libs/* ../../lib/smarty", $output, $return);
- $copy
- print "OK<BR>";
- }*/
 
 ###################################
 #
@@ -398,10 +371,15 @@ function saveConfig($data) {
     }
 }
 
-###################################
-# MAIN
+
+
+/********************************************************************************
+ * MAIN PROCEDURE																*
+ * case statement to navigate through install script
+ *																				*
+ *********************************************************************************/
 switch ($page) {
-    case 'permission' :
+    case 'Permissions' :
         print "<h1>Permissions</h1>";
 
         $process_info_user_id = posix_getpwuid(posix_getuid());
@@ -427,7 +405,7 @@ switch ($page) {
 
         print "<p><em>HTTP daemon UNIX username/group</em>: $process_username/$process_group</p>";
         #    print "<p><em>HTTPD group</em>: $process_group<BR</p>";
-        print "<p><table BORDER=\"1\"><tr><td><em>Directory</em></td></td><td><em>Owner</em></td><td><em>Writable</em></td></tr>\n";
+        print "<p><table BORDER=\"1\"><tr><td><b>Directory</b></td></td><td><b>Owner</b></td><td><b>Writable</b></td></tr>\n";
 
         foreach ($dir_array as $dir) {
             print "<tr><td>$dir</td>";
@@ -464,26 +442,36 @@ switch ($page) {
         if ($error != 1) {
             navigation(array (
             array (
+                "title" => "Back",
+                "page" => "Prerequisites"
+                ),
+                array (
                 "title" => "Next",
-                "page" => "version"
+                "page" => "Dependencies"
                 )
                 ));
         }
         else {
             refreshButton();
-            print "<p>You need to allow UNIX user <em>$process_username</em> to write to these directories (mkdir, chown or chmod)</p>";
-            if (!empty ($cmd_mkdir) || !empty ($cmd_mkdir))
-            print "<p><b>For instance, you may want to use the following commands</b> :</p>\n";
-            if (!empty ($cmd_mkdir))
-            print "mkdir $cmd_mkdir <br />";
-            if (!empty ($cmd_chown))
-            print "chgrp -R $process_group $cmd_chown;<br/>chmod g+wx $cmd_chown;<br/>";
-            print "<p>After permissions modification done, hit the REFRESH button to see the NEXT button and continue with the installation";
+            navigation(array (
+            array (
+                "title" => "Back",
+                "page" => "Prerequisites"
+                )
+                ));
+                print "<p>UNIX user <em>$process_username</em> must be able to write to these directories (mkdir, chown or chmod)</p>";
+                if (!empty ($cmd_mkdir) || !empty ($cmd_mkdir))
+                print "<p><b>For instance, you may want to use the following commands</b> :</p>\n";
+                if (!empty ($cmd_mkdir))
+                print "mkdir $cmd_mkdir <br />";
+                if (!empty ($cmd_chown))
+                print "chgrp -R $process_group $cmd_chown;<br/>chmod g+wx $cmd_chown;<br/>";
+                print "<p>After permission modifications have been preformed, click the REFRESH button to check they have been completed successfully. The NEXT button will then appear to continue with the installation.";
         }
         break;
-        ###################################
-    case 'version' :
-        print "<h1>Checking Dependency</h1>";
+        ###########################################
+    case 'Dependencies' :
+        print "<h1>Checking Dependencies</h1>";
         $error = 0;
         $userData['error']=&$error;
         require_once("classes/DependenciesList.php");
@@ -493,220 +481,23 @@ switch ($page) {
             navigation(array (
             array (
                 "title" => "Back",
-                "page" => "permission"
+                "page" => "Permissions"
                 ),
                 array (
                 "title" => "Next",
-                "page" => "simplepie"
+                "page" => "Database"
                 )
                 ));
         }
 
         break;
-        ###################################
-    case 'simplepie' : // Download, uncompress and install SimplePie
-        print "<h1>SimplePie installation</h1>\n";
 
-        if ($neededPackages['simplepie']['available']) {
-            print "Already installed !<BR>";
-            navigation(array (
-            array (
-                "title" => "Back",
-                "page" => "smarty"
-                ),
-                array (
-                "title" => "Next",
-                "page" => "feedpressreview"
-                )
-                ));
-        }
-        elseif ($action == 'install') {
-            require_once (dirname(__FILE__) . '/include/common.php');
-            print "Download source code frpm svn($filename) : ";
-            Dependency::execVerbose("svn co ".escapeshellarg($neededPackages['simplepie']['svn_source'])." ".escapeshellarg(WIFIDOG_ABS_FILE_PATH."lib/simplepie"), $output, $return);
-            #Dependency::execVerbose("locale", $output, $return);
-
-            refreshButton();
-            navigation(array (
-            array (
-                "title" => "Back",
-                "page" => "smarty"
-                ),
-                array (
-                "title" => "Next",
-                "page" => "feedpressreview"
-                )
-                ));
-        }
-        else {
-            print<<< EndHTML
-<p><A HREF="http://simplepie.org/">SimplePie</A> is a dependency of provides an RSS parser in PHP. It is required for RssPressReview.  It's is recommended to install it, if you don't, RSS feeds options will be disabled.
-
-<p>Do you want to install SimplePie ?
-EndHTML;
-            navigation(array (
-            array (
-                "title" => "Back",
-                "page" => "smarty"
-                ),
-                array (
-                "title" => "Install",
-                "page" => "simplepie",
-                "action" => "install"
-                ),
-                array (
-                "title" => "Next",
-                "page" => "feedpressreview"
-                )
-                ));
-        }
-        break;
-        ###################################
-    case 'feedpressreview' : // Download, uncompress and install feedpressreview
-        print "<h1>Feed press review installation</h1>\n";
-
-        if ($neededPackages['feedpressreview']['available']) {
-            print "Already installed !<BR>";
-            navigation(array (
-            array (
-                "title" => "Back",
-                "page" => "simplepie"
-                ),
-                array (
-                "title" => "Next",
-                "page" => "database"
-                )
-                ));
-        }
-        elseif ($action == 'install') {
-            require_once (dirname(__FILE__) . '/include/common.php');
-            print "Download source code frpm svn($filename) : ";
-            Dependency::execVerbose("svn co ".escapeshellarg($neededPackages['feedpressreview']['svn_source'])." ".escapeshellarg(WIFIDOG_ABS_FILE_PATH."lib/feedpressreview"), $output, $return);
-            #Dependency::execVerbose("locale", $output, $return);
-
-            refreshButton();
-            navigation(array (
-            array (
-                "title" => "Back",
-                "page" => "smarty"
-                ),
-                array (
-                "title" => "Next",
-                "page" => "database"
-                )
-                ));
-        }
-        else {
-            print<<< EndHTML
-<p><A HREF="http://projects.coeus.ca/feedpressreview/">Feed press review</A> is a dependency that provides a Feed aggregator in PHP.  It is recommended to install it.  If you don't, RSS feeds options will be disabled.
-
-<p>Do you want to install FeedPressReview ?
-EndHTML;
-            navigation(array (
-            array (
-                "title" => "Back",
-                "page" => "simplepie"
-                ),
-                array (
-                "title" => "Install",
-                "page" => "feedpressreview",
-                "action" => "install"
-                ),
-                array (
-                "title" => "Next",
-                "page" => "database"
-                )
-                ));
-        }
-        break;
-        ###################################
-    case 'jpgraph' : // Download, uncompress and install JpGraph library
-        print "<h1>JpGraph installation</h1>\n";
-
-        if ($neededPackages['jpgraph']['available']) {
-            print "Already installed !<BR>";
-            navigation(array (
-            array (
-                "title" => "Back",
-                "page" => "feedpressreview"
-                ),
-                array (
-                "title" => "Next",
-                "page" => "database"
-                )
-                ));
-        }
-        elseif ($action == 'install') {
-            chdir(WIFIDOG_ABS_FILE_PATH . "tmp");
-            $filename = array_pop(preg_split("/\//", $jpgraph_full_url));
-
-            print "Download source code ($filename) : ";
-            if (!file_exists($filename))
-            Dependency::execVerbose("wget \"$jpgraph_full_url\" 2>&1", $output, $return);
-            if (!file_exists($filename)) { # Error occured, print output of wget
-                print "<B STYLE=\"color:red\">Error</b><p>Current working directory : <em>$basepath/tmp</em>";
-                $output = implode("\n", $output);
-                print "<pre><em>wget \"$jpgraph_full_url\"</em>\n$output</pre>";
-                exit ();
-            }
-            else {
-                print "OK<BR>";
-            }
-
-            print "Uncompressing : ";
-            $dirname = array_shift(split(".tar.gz", $filename));
-            if (!file_exists($dirname))
-            Dependency::execVerbose("tar -xzf $dirname.tar.gz", $output, $return);
-            print "OK<BR>";
-
-            print "Copying : ";
-            if (!file_exists(WIFIDOG_ABS_FILE_PATH."lib/jpgraph/jpgraph.php"))
-            Dependency::execVerbose("cp $dirname/src/* ".WIFIDOG_ABS_FILE_PATH."lib/jpgraph", $output, $return); # TODO : Utiliser JPGRAPH_REL_PATH
-
-            print "OK<BR>";
-
-            refreshButton();
-            navigation(array (
-            array (
-                "title" => "Back",
-                "page" => "feedpressreview"
-                ),
-                array (
-                "title" => "Next",
-                "page" => "database"
-                )
-                ));
-        }
-        else {
-            print<<< EndHTML
-<p><A HREF="http://www.aditus.nu/jpgraph/">JpGraph</A> is a Object-Oriented Graph creating library for PHP.
-JpGraph is not currently use by Wifidog (will be use for statistique graph in a later version). You can skip this installation if your not a developper.
-
-<p>Do you want to install JpGraph ?
-EndHTML;
-            navigation(array (
-            array (
-                "title" => "Back",
-                "page" => "feedpressreview"
-                ),
-                array (
-                "title" => "Install",
-                "page" => "jpgraph",
-                "action" => "install"
-                ),
-                array (
-                "title" => "Next",
-                "page" => "database"
-                )
-                ));
-        }
-        break;
-        ###################################
-    case 'database' :
+        ###########################################
+    case 'Database' :
         ### TODO : Valider en javascript que les champs soumit ne sont pas vide
         #          Pouvoir choisir le port de la DB ???
         print<<< EndHTML
-<h1>Database access configuration</h1>
+<h1>Database Access Configuration</h1>
 <BR>
 <table border="1">
   <tr><td>Host</td><td><INPUT type="text" name="CONF_DATABASE_HOST" value="$CONF_DATABASE_HOST"></td></tr>
@@ -715,7 +506,7 @@ EndHTML;
   <tr><td>Password</td><td><INPUT type="text" name="CONF_DATABASE_PASSWORD" value="$CONF_DATABASE_PASSWORD"></td></tr>
 </table>
 
-<p>By clicking Next, your configuration will be automaticaly saved
+<p>By clicking Next, your configuration will be automatically saved.</p>
 
 <script type="text/javascript">
   function submitDatabaseValue() {
@@ -731,16 +522,16 @@ EndHTML;
         navigation(array (
         array (
             "title" => "Back",
-            "page" => "simplepie"
-            )
+            "page" => "Dependencies"
+            ),
             )); #, array("title" => "Next", "page" => "testdatabase")));
             print<<< EndHTML
-<p><A HREF="#" ONCLICK="javascript: document.myform.page.value='testdatabase'; submitDatabaseValue(); document.myform.submit();" CLASS="button">Next</A></p>
+<A HREF="#" ONCLICK="javascript: document.myform.page.value='testdatabase'; submitDatabaseValue(); document.myform.submit();" CLASS="submit">Next</A>
 
 EndHTML;
 
             break;
-            ###################################
+            ###########################################
     case 'testdatabase' :
         print "<h1>Database connection</h1>";
         /* TODO : Tester la version minimale requise de Postgresql                */
@@ -754,17 +545,17 @@ EndHTML;
             print "Success!<BR>";
         }
         else {
-            printf ("<p>Unable to connect!  The server has to be online, the database \"%s\" must exist, and the postgresql.conf and pg_hba.conf must allow the user \"%s\" to open a connection to it on host \"%s\" to continue.  See the error above for hints on what the problem may be.", $CONF_DATABASE_NAME, $CONF_DATABASE_USER, $CONF_DATABASE_HOST);
+            printf ("<p>Unable to connect to database!  Please make sure the server is online and the database \"%s\" exists. Also 'postgresql.conf' and 'pg_hba.conf' must allow the user \"%s\" to open a connection to it on host \"%s\" to continue.  See the error above for clues on what the problem may be.</p>", $CONF_DATABASE_NAME, $CONF_DATABASE_USER, $CONF_DATABASE_HOST);
             print "<p>Please go back and retry with correct values, or fix your server configuration.</p>";
             refreshButton();
-            navigation(array(array("title" => "Back", "page" => "database")));
+            navigation(array(array("title" => "Back", "page" => "Database")));
             die();
         }
         print "</li>";
-               print "<li>"; 
+        print "<li>";
         $postgresql_info = pg_version();
         printf ("PostgreSQL server version: %s", $postgresql_info['server']);        print "</li>";
-        
+
         #        if ($postgresql_info['server'] > $requiredPostgeSQLVersion) { Todo : Do something }
 
 
@@ -773,7 +564,7 @@ EndHTML;
         navigation(array (
         array (
             "title" => "Back",
-            "page" => "database"
+            "page" => "Database"
             ),
             array (
             "title" => "Next",
@@ -781,9 +572,9 @@ EndHTML;
             )
             ));
             break;
-            ###################################
+            ###########################################
     case 'dbinit' :
-        print "<h1>Database initialisation</h1>";
+        print "<h1>Database Initialisation</h1>";
         # SQL are executed with PHP, some lines need to be commented out.
         $file_db_version = 'UNKNOW';
         $patterns[0] = '/CREATE DATABASE wifidog/';
@@ -866,7 +657,7 @@ EndHTML;
             }
             else {
                 print "Error : Unexpected result";
-                            exit ();
+                exit ();
             }
 
         }
@@ -874,7 +665,7 @@ EndHTML;
         navigation(array (
         array (
             "title" => "Back",
-            "page" => "database"
+            "page" => "testdatabase"
             ),
             array (
             "title" => "Next",
@@ -882,13 +673,12 @@ EndHTML;
             )
             ));
             break;
-
-            ###################################
+            ###########################################
     case 'options' :
         # TODO : Tester que la connection SSL est fonctionnelle
         #        Options avancees : Supporter les define de [SMARTY|PHLICKR|JPGRAPH]_REL_PATH
         print<<< EndHTML
-<h1>Available options</h1>
+<h1>Available Options</h1>
   <table border="1">
 
 EndHTML;
@@ -897,12 +687,12 @@ EndHTML;
         foreach ($optionsInfo as $name => $foo) { # Foreach generate all <table> fields
             $value = $configArray[$name]; # Value of option in config.php
             $title = $optionsInfo[$name]['title']; # Field Title
-            $message = $optionsInfo[$name]['message']; # Message why option is disable
+            $message = $optionsInfo[$name]['message']; # Message why option is disabled
             if(empty($value))
             $message .= ", ERROR: unable to find the '$name' directive in the config file";
             $depend = @ eval ($optionsInfo[$name]['depend']); # Evaluate the dependencie
             $selectedTrue = '';
-            $selectedFalse = ''; # Initialize value
+            $selectedFalse = ''; # Initialise value
             $value == 'true' ? $selectedTrue = 'SELECTED' : $selectedFalse = 'SELECTED'; # Use to select the previous saved option
             $depend == 1 ? $disabled = '' : $disabled = 'DISABLED'; # Disable <SELECT> if dependencie is not satisfied
             $jscript = "<script type=\"text/javascript\"> newConfig(\"$name=false\"); </script>\n"; # Use to save a failed dependencie (option=false)
@@ -950,23 +740,64 @@ EndHTML;
             )
             ));
 
-            print<<< EndHTML
-<p><A HREF="#" ONCLICK="javascript: document.myform.page.value='languages'; submitOptionsValue(); document.myform.submit();" CLASS="button">Next</A></p>
+            print<<<EndHTML
+<A HREF="#" ONCLICK="javascript: document.myform.page.value='languages'; submitOptionsValue(); document.myform.submit();" CLASS="submit">Next</A>
 EndHTML;
 
             break;
-
-            ###################################
+            ###########################################
     case 'languages' :
-        print "<h1>Languages configuration</h1>";
-        print<<< EndHTML
-      <p>Not yet implemented ...</p>
-      <p>Will allow selecting language to use.</p>
-<em>Error message example</em> : <BR>
-<DIV style="border:solid black;">Warning: language.php: Unable to setlocale() to fr, return value: , current locale: LC_CTYPE=en_US.UTF-8;LC_NUMERIC=C; [...]</DIV>
-<p><em>I repeat</em> : This is an example of message you can see in the top of your working auth-server if language are not set correctly. To change these values please edit <em>config.php</em> in auth-server install directory. Look for "Available locales" and "Default language" header in config.php.
+
+        require_once('classes/LocaleList.php');
+
+        #check for current language code in config.php
+        $CURRENT_LOCALE = $configArray['DEFAULT_LANG'];
+
+        #pull a list of all available languages (codes and real friendly names)
+        $AVAIL_LOCALE_ARRAY = LocaleList::getAvailableLanguageArray();
+
+
+        print "<h1>Languages Configuration</h1>";
+
+
+
+        print<<<EndHTML
+  
+      <p>Please select the Authentication Servers default language and locale</p>
+
+       <div class="language">
+           <form class="language" name="lang_form" method="post" action="{$formAction}">
+               <div>Default Server Locale:
+	<select name="default_locale" onchange="newConfig('DEFAULT_LANG=' + this.options[this.selectedIndex].value);">
 EndHTML;
-        //    Dependency::execVerbose("locale -a 2>&1", $output, $return);
+        #for each language in the array get the language code and the friendly name
+        foreach ($AVAIL_LOCALE_ARRAY as $_langIds => $_langNames) {
+            #if the current local in config.php is the same as the current member of the array, select it as default
+            if ($CURRENT_LOCALE == $_langIds) {
+                $_selected = (' selected="selected"');
+            } else {#else leave it alone
+                $_selected = "";
+            }
+            #add the options to the combobox (hidden value= language code, user friendly name [0]multilingual [1]English
+            echo'<option value="' . $_langIds . '"' . $_selected . '>'.$_langNames[1].'</option>';
+        }
+        print<<<EndHTML
+		</select>
+               </div>
+           </form>
+       </div>
+
+
+
+ 
+<br><br><br><br>
+<strong>Common Error message:</strong> <BR>
+<p>This is an example of message you may see in the top of your working auth-server IF the languagepacks on your server have not been installed. In most Unix/Linux system, you could use locale -a to list all available locales on the server and run "apt-get install locales-all" for full language support</p>
+
+<DIV style="border:solid black;">Warning: language.php: Unable to setlocale() to fr, return value: , current locale: LC_CTYPE=en_US.UTF-8;LC_NUMERIC=C; [...]</DIV>
+ 
+
+EndHTML;
 
         navigation(array (
         array (
@@ -979,9 +810,9 @@ EndHTML;
             )
             ));
             break;
-            ###################################
+            ###########################################
     case 'admin' :
-        print "<h1>Administration account</h1>";
+        print "<h1>Administration accounts</h1>";
         # TODO : Allow to create more than one admin account and list the current admin users
         #        Allow admin to choose to show or not is username
         empty ($_REQUEST['username']) ? $username = 'admin' : $username = $_REQUEST['username'];
@@ -992,7 +823,12 @@ EndHTML;
         $conn_string = "host=$CONF_DATABASE_HOST dbname=$CONF_DATABASE_NAME user=$CONF_DATABASE_USER password=$CONF_DATABASE_PASSWORD";
         $connection = pg_connect($conn_string) or die();
 
-        if ($action == 'create') {
+        $sql = "SELECT * FROM users NATURAL JOIN server_stakeholders";
+        $result = pg_query($connection, $sql);
+        $result_array = pg_fetch_all($result);
+        $username_db = $result_array[0]['username'];
+
+        if (empty ($username_db) && $action == 'create') {//Only allow creating an adminstrator if we don't already have one.  Otherwise we have a HUGE security hole.
             //      require_once(dirname(__FILE__) . '/config.php');
             require_once (dirname(__FILE__) . '/include/common.php');
             require_once (dirname(__FILE__) . '/classes/User.php');
@@ -1007,28 +843,25 @@ EndHTML;
             $result = pg_query($connection, $sql);
         }
 
-        $sql = "SELECT * FROM users NATURAL JOIN server_stakeholders WHERE account_origin = 'default-network'";
+        $sql = "SELECT * FROM users NATURAL JOIN server_stakeholders";
         $result = pg_query($connection, $sql);
         $result_array = pg_fetch_all($result);
         $username_db = $result_array[0]['username'];
 
-        if (!empty ($username_db)) {
-            print "<p>Your administrator user account is <em>$username_db</em>";
-            navigation(array (
-            array (
-                "title" => "Back",
-                "page" => "languages"
-                ),
-                array (
-                "title" => "Next",
-                "page" => "end"
-                )
-                ));
+        if (!empty ($username_db)) {#if a username exists
+            print "<table>\n";
+            print "<tr><th colspan=2>Your current administrator accounts are:</th></tr>\n";
+            print "<tr><th>email</th><th>username</th></tr>\n";
+            foreach($result_array as $arraykey => $arrayvalue1) {
+                print "<tr><td>".$arrayvalue1['email']."</td><td>".$arrayvalue1['username']."</td></tr>\n";
+            }
+            print "</table>\n";
         }
         else {
+            print"<strong>No current administrators exist, please create at least one...</strong>";
             print<<<EndHTML
         <p>
-        <table BORDER="1">
+        <table>
         <tr>
           <td>Username</td><td><INPUT type="text" name="username" value="$username"></td>
         </tr>
@@ -1043,18 +876,28 @@ EndHTML;
         </tr>
         </table>
 
-        <script type="text/javascript">
+        <script type="text/javascript"> // TODO: check whether user already exists
           function submitValue() {
-            if (document.myform.password.value != document.myform.password2.value) {
+	    if (document.myform.username.value == '') {
+              alert('Please enter a username');
+              exit();
+            }
+	    if (document.myform.password.value != document.myform.password2.value) {
               alert('Password mismatch, Please retry');
               exit();
             }
             if (document.myform.password.value == '') {
-              alert('You need to type a password');
+              alert('Please enter a valid password');
               exit();
             }
+		re = /^[0-9a-zA-Z]{6,}$/;
+            if (!re.test(document.myform.password.value)) {
+              alert('Your password does not meet complexity requirements. 6 letters and/or numbers ');
+              exit();
+            }
+
             if (document.myform.email.value == '') {
-              alert('You need to type a email');
+              alert('Please enter a valid email address');
               exit();
             }
             document.myform.page.value='admin';
@@ -1062,26 +905,43 @@ EndHTML;
             document.myform.submit();
           }
         </script>
-
 EndHTML;
+
+            print "<p><A HREF=\"#\" ONCLICK=\"javascript: submitValue(); window.location.reload(true);\" CLASS=\"submit\">Create User</A></p><br><br><br>\n";
+
+        }
+
+        if (!empty ($username_db)) {
+            navigation(array (
+            array (
+                "title" => "Back",
+                "page" => "languages"
+                ),
+                array (
+                "title" => "Next",
+                "page" => "finish"
+                )
+                ));
+        }
+        else {
             navigation(array (
             array (
                 "title" => "Back",
                 "page" => "languages"
                 )
                 ));
-                print "<p><A HREF=\"#\" ONCLICK=\"javascript: submitValue();\" CLASS=\"button\">Next</A></p>\n";
+
         }
         break;
-        ###################################
-    case 'end' :
+        ###########################################
+    case 'finish' :
         $url = 'http://' . $_SERVER['HTTP_HOST'] . SYSTEM_PATH;
         print<<<EndHTML
-  <h1>Thanks for using Wifidog</h1>
-  Redirection to your new WifiDog Authentification Server in 3 seconds
-  <meta http-equiv="REFRESH" content="3;url=$url">
-  <pre>
-
+  <h1>Thank you for choosing Wifidog</h1>
+  <p>Redirecting you to your new WifiDog Authentification Server in 10 seconds</p>
+  <meta http-equiv="REFRESH" content="10;url=$url">
+  <p>For Help and documentation please visit <a href="http://www.wifidog.org">http://www.wifidog.org</a></p>
+<pre>
                |\   /|              _
                |A\_/A|            z   z
             ___|     |           ( (o) )
@@ -1100,86 +960,25 @@ EndHTML;
              ?_____|          ?_____|
 </pre>
 EndHTML;
-        #navigation(array(array("title" => "Back", "page" => "hotspot")));
+        navigation(array(array("title" => "Back", "page" => "admin")));
         break;
-
-        ###################################
-    case 'toc' :
-        print "<h1>Table of content</h1>";
-        $contentArray = file(__file__); # Read myself
-        print "<UL>\n";
-        foreach ($contentArray as $line) {
-            if (preg_match("/^  case '(\w+)':/", $line, $matchesArray)) { # Parse for "case" regex
-                if ($matchesArray[1] == 'toc')
-                continue;
-                print "<LI><A HREF=\"" . $_SERVER['SCRIPT_NAME'] . "?page=" . $matchesArray[1] . "\">" . $matchesArray[1] . "</A>\n"; # Display a Table of Content
-            }
-        }
-        print "</UL>\n";
-        break;
-        ###################################
-    case 'notes' :
+        ###########################################
+    case 'review' :
         print<<<EndHTML
 <!-- /* Editor highlighting trick -->
 <pre>
-<em>TODO</em>
-  -Support des define de Google Maps dans config.php
-  -Faire une fonction d'execution avec gestion de retour d'erreur et d'affichage de l'exection pour chaque "exec"
-  -Ajouter une veritable validation (user/password admin provenant de la DB)
-     Pour une meilleur securite du script d'installation.
-       Au chargement, valider que la connection DB est fonctionnel, que la DB existe et que l'usager admin existe
-         Si oui, on demande l'authentification
-         Si non, on creer l'usager admin
-  -Faire un vrai menu pour acceder directement aux pages desirees (pas une TOC poche)
-  -Ameliorer le javascript et arreter de faire des document.myform.submit();
-  -Generate valid HTML code
-  -Integrate this script with the portal skin
-  -Tester que les donnees de AVAIL_LOCALE_ARRAY dans config.php sont valides (fonctionnelles)
-     Regarder le code dans include/language.php
-  -Support pour l'option CUSTOM_SIGNUP_URL
-  -Effacer repertoires/fichiers temporaires des installations
-
-  -Nice2Have : Si test d'integrite et de fonctionnement existent, les integrer pour assurer le bon fonctionnement
-  -Nice2Have : Si donnees de tests exitent (pour les developpeurs) Permettre d'en ajouter a la DB
-  -Nice2Have : Creer un wifidog.conf (client) selon config + questions si necessaires
-
-<em>Change Log</em>
-  15-08-2005 : Bugs correction + comments added
-  11-08-2005 : Options rewrite with foreach and Dependency
-  09-08-2005 : Admin user creation + network configuration
-  27-07-2005 : Added jpgraph install
-  26-07-2005 : Added minimal security password validation
-  14-07-2005 : saveConfig and all javascript code
-  09-07-2005 : Added Phlickr installation
-  05-07-2005 : Better PHP extention validation process
-  17-06-2005 : MySQL schema and data submission
-  17-06-2005 : Postgresql schema and data submission
-  24-04-2005 : CSS button
-
+will show a table with all config.php options at the end of the installation
 </pre>
 <!-- Editor highlighting trick */ -->
 EndHTML;
         break;
-        ###################################
-        /*  case 'phpinfo': // Use for debugging, to be removed
-        print "<pre>";
-        print_r(get_loaded_extensions());
-        print "</pre><BR><BR>";
-        phpinfo();
-        break;*/
-
-    default :
-        $WIFIDOG_VERSION = $configArray['WIFIDOG_VERSION'];
-        # TODO : Add links to auth-server web documents
+        ###########################################
+    case 'Prerequisites' :
         print<<<EndHTML
-<h1>Welcome to WifiDog Auth-Server installation and configuration script.</h1>
-<p>This installation still needs improvement, so please any report bug to the mailing list for better support.<BR/>
-The current auth-server version is <em>$WIFIDOG_VERSION</em>.</p>
-
-<p><strong>Before going any further</strong> with this installation you need to do the following:\n
-<h2>1-Make sure you created a valid user and database.</h2>
-<p>If you haven't, here is a command line example for PostgreSQL (or use the way you like) :</p>
-<em>Create the PostgreSQL databaser user for WifiDog</em> (createuser and createdb need to be in you PATH) :
+<h1><strong>Before Continuing with the installation,</strong> please make sure the following has been completed:</h1>
+<h2>1-Make sure you have created a valid PostgreSQL database and database user.</h2>
+<p>Here is an example of creating these through the command line:</p>
+<em>Create the PostgreSQL database user for WifiDog</em> (createuser and createdb need to be in you PATH) :
 <pre>  <I>postgres@yourserver $></I> createuser wifidog --pwprompt
   Enter password for new user:
   Enter it again:
@@ -1196,26 +995,48 @@ EndHTML;
         echo "<table>\n";
         echo "<tr><td>Absolute path to the /wifidog directory (WIFIDOG_ABS_FILE_PATH):</td><td>" . WIFIDOG_ABS_FILE_PATH . "</td></tr>\n";
         echo "<tr><td>URL path to reach the /wifidog directory with a web browser (SYSTEM_PATH): </td><td>" . SYSTEM_PATH . "</td></tr>\n";
-        echo "<tr><td colspan=2><em>Please verify the two values above.</em> They should be autodectected correctly by wifidog in path_defines_base.php.  If there is a bug and they are not, you need to override them in config.php (or find the bug), or your auth server will not work properly.  </td></tr></table>\n";
-        print<<<EndHTML
-<h2>3-Retrieve the install password</h2>
-A password is needed to continue with the installation. You need to read the random password in <em>$password_file</em> file. No username needed, only the password. This password is only usefull for the installation, you will never use it in Auth-Server administration pages.
-</pre>
+        echo "<tr><td colspan=2><em>Please verify the two values above.</em> They should be autodetected correctly by wifidog using path_defines_base.php.  If there is a bug and they are not, you will need to override them manually in config.php (or find the bug), or your auth server will not work properly.  </td></tr></table>\n";
 
-<p>When you are ready click next</p>
+
+        navigation(array (
+        array (
+                "title" => "Back",
+                "page" => "Welcome"
+                ),
+                array (
+                "title" => "Next",
+                "page" => "Permissions"
+                )
+                ));
+                break;
+
+                ###########################################
+    default :
+        $WIFIDOG_VERSION = $configArray['WIFIDOG_VERSION'];
+        print<<<EndHTML
+<h1>Welcome to the WifiDog Auth-Server installation and configuration script.</h1>
+<p>WiFiDog Authentication Server Version: <em>$WIFIDOG_VERSION</em>.</p>
+
+<p>This Software is free. You can redistribute it and/or modify it in any way, under the terms of the GNU General Public Licence V2 or later, as published by the Free Software Foundation. This program is provided without any warranty (either implied or express) of any kind, as such, it is installed entirely at your own risk. More information can be found in the GNU General Public Licence. </p>
+
+<h3>THIS PROGRAM IS STILL IN A BETA STAGE, PLEASE REPORT ANY BUGS AT <a href="http://dev.wifidog.org">http://dev.wifidog.org</a></h3>
+
+<p>To Continue this installation you will need to enter the password found in the file: <em>$password_file</em> on your server's filesystem. Please enter it when prompted. This is to stop accidental or malicious activity from users gaining access to the install.php file if you dont move it from the base directory. <strong>PLEASE LEAVE THE USERNAME FIELD BLANK</strong></p>
 
 EndHTML;
 
         navigation(array (
         array (
             "title" => "Next",
-            "page" => "permission"
+            "page" => "Prerequisites"
             )
             ));
 }
-echo "<input type='hidden' name='page' value='$_REQUEST[page]'/>\n" ;
+echo "<input type='hidden' name='page' value='$_REQUEST[page]'/><br><br>" ;
 ?>
-
+</div>
+</div>
+</div>
 </form>
 </body>
 </html>

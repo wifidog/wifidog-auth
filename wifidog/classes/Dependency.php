@@ -36,11 +36,11 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Philippe April
- * @author     Max Horváth <max.horvath@freenet.de>
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Max HorvÃ¡th <max.horvath@freenet.de>
+ * @author     Benoit GrÃ©goire <bock@step.polymtl.ca>
  * @copyright  2005-2007 Philippe April
- * @copyright  2005-2007 Max Horváth, Horvath Web Consulting
- * @copyright  2006-2007 Benoit Grégoire, Technologies Coeus inc.
+ * @copyright  2005-2007 Max HorvÃ¡th, Horvath Web Consulting
+ * @copyright  2006-2007 Benoit GrÃ©goire, Technologies Coeus inc.
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
@@ -63,11 +63,11 @@
   *
   * @package    WiFiDogAuthServer
   * @author     Philippe April
-  * @author     Max Horváth <max.horvath@freenet.de>
-  * @author     Benoit Grégoire <bock@step.polymtl.ca>
+  * @author     Max HorvÃ¡th <max.horvath@freenet.de>
+  * @author     Benoit GrÃ©goire <bock@step.polymtl.ca>
   * @copyright  2005-2007 Philippe April
-  * @copyright  2005-2007 Max Horváth, Horvath Web Consulting
-  * @copyright  2006-2007 Benoit Grégoire, Technologies Coeus inc.
+  * @copyright  2005-2007 Max HorvÃ¡th, Horvath Web Consulting
+  * @copyright  2006-2007 Benoit GrÃ©goire, Technologies Coeus inc.
   */
   class Dependency
   {
@@ -122,7 +122,36 @@
        'installMethod' => "tarball",
        'installDestination' => "/"
        ),
+      
        /* PHP extensions (optional) */
+       "simplepie" => array (
+       "type" => "localLib",
+       "detectFiles" => "lib/simplepie/simplepie.inc",
+       'description' => "SimplePie is a dependency that provides an RSS parser in PHP. It is required for RssPressReview.  It is is recommended to install it, if you do not, RSS feed options will be disabled.",
+       'website' => "http://simplepie.org/",
+       'installSourceUrl' => "http://svn.simplepie.org/simplepie/branches/1.0/",
+       'installMethod' => "svn",
+       'installDestination' => "simplepie"
+       ),
+       'jpgraph' => array (
+       "type" => "localLib",
+       "detectFiles" => "lib/jpgraph-1.22/src/jpgraph.php",
+       'description' => "JpGraph is a Object-Oriented Graph creating library for PHP.
+JpGraph is not currently used by Wifidog (it will be use for statistic graphs in a later version). You can skip this installation if your not a developper.",
+       'website' => "http://www.aditus.nu/jpgraph/",
+       'installSourceUrl' => "http://hem.bredband.net/jpgraph/jpgraph-1.22.tar.gz",
+       'installMethod' => "tarball",
+       'installDestination' => "/"
+        ),
+       'feedpressreview' => array (
+       "type" => "localLib",
+       "detectFiles" => "lib/feedpressreview/FeedPressReview.inc",
+       'description' => "Feed Press Review allows your athentication server to produce RSS Feeds.  It is recommended that it is installed.  If it is not installed, the RSS feed options will be disabled.",
+       'website' => "http://projects.coeus.ca/feedpressreview/",
+       'installSourceUrl' => "http://projects.coeus.ca/svn/feedpressreview/trunk/",
+       'installMethod' => "svn",
+       'installDestination' => "feedpressreview"
+        ),
        'gettext' => array (
        "type" => "phpExtension",
        'description' => 'Almost essential: Without gettext, the auth-server will still work, but you will loose internationalization'
@@ -281,7 +310,7 @@
           }
 
           /** Use PHP internal functions to execute a command
-            @return: Return value of the command*/
+           Â @return: Return value of the command*/
           function execVerbose($command, & $output, & $return_var, &$errMsg = null) {
               $errMsg .= "Executing: $command <br/>";
               exec($command.'  2>&1', $output, $return_var);
@@ -468,14 +497,15 @@ foreach($components as $component) {
 
                              break;
                          case "localLib":
-                                                  if($this->getInstallSourceUrl()) {
-                                                                                   $name = $this->getId().'_install';
-                                                                                   $value = sprintf(_("Install %s"), $this->getId());
-                                                              $html .= sprintf("<input type='submit' name='%s' value='%s'/>", $name, $value);
+                             if($this->getInstallSourceUrl()) {
+                                 $name = $this->getId().'_install';
+                                 $value = sprintf(_("Install %s"), $this->getId());
+                                 $html .= sprintf("<input type='submit' name='%s' value='%s'/>", $name, $value);
                                                       
                              }
                              else {
-                                 $html .= sprintf(_("Sorry, i couldn't find the source for %s in installSourceUrl"), $this->getId());
+                                 $html .= sprintf(_("Sorry, i couldn't find the source for %s in installSourceUrl"),
+                                 $this->getId());
                              }
 
 
@@ -656,9 +686,15 @@ foreach($components as $component) {
                                $errorMsg .= "<em style=\"color:red\">Error:</em>Either the install source or destination path is missing<br/>\n";
                            }
                            else {
-                               $installDestinationPath = WIFIDOG_ABS_FILE_PATH . "lib/";$installDestinationPathOrig.
+                               $installDestinationPath = WIFIDOG_ABS_FILE_PATH . "lib/" .$installDestinationPathOrig;
                                $installMethod = $this->getInstallMethod();
                                switch($installMethod) {
+                                   case "svn":
+                                       self::execVerbose("svn co ".escapeshellarg($installSourceUrl)." ".escapeshellarg      ($installDestinationPath), $output, $return, $errorMsg);
+
+
+                                       break;
+
                                    case "tarball":
                                        $downloadPath = WIFIDOG_ABS_FILE_PATH . "tmp/";
                                        chdir($downloadPath);

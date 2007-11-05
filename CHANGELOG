@@ -1,4 +1,7 @@
 # $Id$
+2007-11-05 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Commit most of Robin Jones install script improvements.
+		
 2007-10-22 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Major security fix:  Fix the authenticator for a security breach where a user could get Internet access using an empty username.  LocalUser and LDAP were definitely vulnerable, RADIUS may have been.
 	
