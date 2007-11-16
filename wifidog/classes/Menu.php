@@ -101,16 +101,17 @@ class Menu {
             $html .= "</ul>\n</li>\n";
         }
         !empty($menuItemArray['title'])?$title=$menuItemArray['title']:$title=$menuItemArray['path'];
+        $class = preg_replace ("/.*?([^\/]*$)/", "$1", $menuItemArray['path']);//Only take the last fragment of the path as CSS class
         if(!empty($menuItemArray['url'])) {
-            $html .= "<li><a href='{$menuItemArray['url']}'>{$menuItemArray['title']}</a>\n";
+            $html .= "<li class='$class'><a href='{$menuItemArray['url']}'>{$menuItemArray['title']}</a>\n";
         }
         else if(!empty($menuItemArray['childrens'])){
-            $html .= "<li><a href='#'>{$menuItemArray['title']}</a>\n";
+            $html .= "<li class='$class'><a href='#'>{$menuItemArray['title']}</a>\n";
         }
 
         if(!empty($menuItemArray['childrens'])) {
-            $html .= "<ul>\n";
-        } else {
+            $html .= "<ul class='$class'>\n";
+        } else if(!empty($menuItemArray['url'])){
             $html .= "\n</li>\n";
         }
         $userData['previous_level'] = $menuItemArray['level'];
@@ -146,7 +147,7 @@ class Menu {
         //echo "CMP: ".$object1['title']." vs ". $object2['title']."<br/>\n";
         return strcoll ( utf8_decode($object1['title']), utf8_decode($object2['title']) );
     }
-    
+
     /** Sort the menu using a user defined sort function */
     private static function menuArraySort(&$menuArray, $funcname, &$userdata = null) {
         //echo "menuArraySort called with menuArray:"; pretty_print_r($menuArray);
@@ -194,7 +195,7 @@ class Menu {
         $this->processHookMenu('VirtualHost');
         $this->processHookMenu('ContentTypeFilter');
         $this->processHookMenu('ProfileTemplate');
-                $this->processHookMenu('DependenciesList');
+        $this->processHookMenu('DependenciesList');
         self::menuArraySort($this->_menuArray, array('Menu','titlestrcoll'));
         //pretty_print_r($this->_menuArray);
     }
@@ -205,7 +206,7 @@ class Menu {
      * @return HTML markup
      */
     static public function getIEWorkaroundJS() {
-                $html = <<<EOT
+        $html = <<<EOT
         <script type="text/javascript"><!--//--><![CDATA[//><!--
 
 sfHover = function() {
@@ -225,7 +226,7 @@ if (window.attachEvent) window.attachEvent("onload", sfHover);
 
 //--><!]]></script>
 EOT;
-return $html;
+        return $html;
     }
     public function getUserUI()
     {
@@ -233,7 +234,7 @@ return $html;
         $html = '';
         //Deal with internet explorer's baindeadness.  From http://www.htmldog.com/articles/suckerfish/dropdowns/example/vertical.html
 
-$html .= "<ul id='nav'>\n";
+        $html .= "<ul id='nav'>\n";
         $userData=null;
         self::menuArrayWalkRecursive(array('Menu','buildHtmlMenuItemCallback'), $userData);
         $html .= $userData['html'];
@@ -241,7 +242,7 @@ $html .= "<ul id='nav'>\n";
             $html .= "</ul>\n";
         }
         $html .= "</ul>\n";
-                $html .= "<br/ class='clearbr'>\n";
+        $html .= "<br/ class='clearbr'>\n";
         //echo htmlspecialchars($userData['html']);
         return $html;
     }

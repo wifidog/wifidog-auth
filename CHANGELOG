@@ -1,4 +1,7 @@
 # $Id$
+2007-11-15 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Menu.php: Make individual submenus, and individual menu items CSS-targetable.
+
 2007-11-05 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Commit most of Robin Jones install script improvements.
 		
