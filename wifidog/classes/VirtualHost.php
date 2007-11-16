@@ -769,7 +769,7 @@ Security::requirePermission(Permission::P('SERVER_PERM_EDIT_ANY_VIRTUAL_HOST'), 
         {
             $items[] = array('path' => 'server/virtual_host',
             'title' => _("Virtual Hosts"),
-            'url' => BASE_URL_PATH."admin/generic_object_admin.php?object_class=VirtualHost&action=list"
+            'url' => BASE_URL_PATH.htmlspecialchars("admin/generic_object_admin.php?object_class=VirtualHost&action=list")
 		);
         }
         return $items;

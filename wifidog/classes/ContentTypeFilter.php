@@ -469,7 +469,7 @@ class ContentTypeFilter implements GenericObject {
         {
             $items[] = array('path' => 'server/content_type_filter',
             'title' => _("Content type filters"),
-            'url' => BASE_URL_PATH."admin/generic_object_admin.php?object_class=ContentTypeFilter&action=list"
+            'url' => BASE_URL_PATH.htmlspecialchars("admin/generic_object_admin.php?object_class=ContentTypeFilter&action=list")
 		);
         }
         return $items;

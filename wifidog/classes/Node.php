@@ -1614,7 +1614,7 @@ class Node implements GenericObject
         {
             $items[] = array('path' => 'node/node_edit',
             'title' => _("Edit nodes"),
-            'url' => BASE_URL_PATH."admin/generic_object_admin.php?object_class=Node&action=list"
+            'url' => BASE_URL_PATH.htmlspecialchars("admin/generic_object_admin.php?object_class=Node&action=list")
 		);
         }
         else if($nodes = Security::getObjectsWithPermission(Permission::P('NODE_PERM_EDIT_CONFIG'))) {
@@ -1622,7 +1622,7 @@ class Node implements GenericObject
             foreach ($nodes as $nodeId => $node) {
                 $items[] = array('path' => 'node/node_'.$nodeId.'edit',
                 'title' => sprintf(_("Edit %s"), $node->getName()),
-                'url' => BASE_URL_PATH."admin/generic_object_admin.php?object_class=Node&action=edit&object_id=$nodeId"
+                'url' => BASE_URL_PATH.htmlspecialchars("admin/generic_object_admin.php?object_class=Node&action=edit&object_id=$nodeId")
                 );
             }
         }

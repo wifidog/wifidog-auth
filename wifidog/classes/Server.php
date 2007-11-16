@@ -317,7 +317,7 @@ class Server extends GenericDataObject
         {
             $items[] = array('path' => 'server/admin',
             'title' => _("Server access control"),
-            'url' => BASE_URL_PATH."admin/generic_object_admin.php?object_class=Server&action=edit&object_id=".SERVER_ID.""
+            'url' => BASE_URL_PATH.htmlspecialchars("admin/generic_object_admin.php?object_class=Server&action=edit&object_id=".SERVER_ID."")
 		);
         }
         $items[] = array('path' => 'server',

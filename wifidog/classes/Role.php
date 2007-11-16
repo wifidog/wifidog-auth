@@ -504,7 +504,7 @@ class Role extends GenericDataObject
         {
             $items[] = array('path' => 'server/roles',
             'title' => _("User roles"),
-            'url' => BASE_URL_PATH."admin/generic_object_admin.php?object_class=Role&action=list"
+            'url' => BASE_URL_PATH.htmlspecialchars("admin/generic_object_admin.php?object_class=Role&action=list")
 		);
         }
         return $items;

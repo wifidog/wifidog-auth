@@ -202,7 +202,7 @@
             {
                 $items[] = array('path' => 'server/dependencies',
                 'title' => _("Dependencies"),
-                'url' => BASE_URL_PATH."admin/generic_object_admin.php?object_class=DependenciesList&action=edit&object_id=DUMMY"
+                'url' => BASE_URL_PATH.htmlspecialchars("admin/generic_object_admin.php?object_class=DependenciesList&action=edit&object_id=DUMMY")
                 );
             }
             return $items;

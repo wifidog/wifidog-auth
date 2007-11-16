@@ -1968,7 +1968,7 @@ class Content implements GenericObject {
         {
             $items[] = array('path' => 'server/content_library',
             'title' => _("Reusable content library"),
-            'url' => BASE_URL_PATH."admin/generic_object_admin.php?object_class=Content&action=list"
+            'url' => BASE_URL_PATH.htmlspecialchars("admin/generic_object_admin.php?object_class=Content&action=list")
 		);
         }
 

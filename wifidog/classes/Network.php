@@ -1931,7 +1931,7 @@ class Network extends GenericDataObject
                     foreach ($networks as $networkId => $network) {
                 $items[] = array('path' => 'network/network_'.$networkId.'edit',
                 'title' => sprintf(_("Edit %s"), $network->getName()),
-                'url' => BASE_URL_PATH."admin/generic_object_admin.php?object_class=Network&action=edit&object_id=$networkId"
+                'url' => BASE_URL_PATH.htmlspecialchars("admin/generic_object_admin.php?object_class=Network&action=edit&object_id=$networkId")
                 );
             }
         }
