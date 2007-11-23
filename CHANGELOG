@@ -1,4 +1,7 @@
 # $Id$
+2007-11-23 Benoit Grégoire  <bock@step.polymtl.ca>
+	* UIUserList.php: Don't force it to be persistent, it prevented users from deleting it.
+
 2007-11-15 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Menu.php: Make individual submenus, and individual menu items CSS-targetable.
 

@@ -67,10 +67,6 @@ class UIUserList extends Content
     protected function __construct($content_id)
     {
         parent::__construct($content_id);
-        /*
-         * Usually, there is little point in having more than one Userlist...
-         */
-        parent::setIsPersistent(true);
     }
 
     /**
