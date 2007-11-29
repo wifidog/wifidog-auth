@@ -88,7 +88,14 @@
                 </tr>
                 <tr>
                     <th></th>
-                    <td><input class="submit" type="submit" name="form_submit" value="{"Re-send"|_}"{* onclick="if (validateForm(this.form)) this.form.submit()" *}></td>
+                    <td>
+                    	<div id="form_errormsg" class="errormsg">
+							{if $error}
+								{$error}
+							{/if}
+						</div>
+						<input class="submit" type="submit" name="form_submit" value="{"Re-send"|_}"{* onclick="if (validateForm(this.form)) this.form.submit()" *}>
+					</td>
                 </tr>
             </table>
         </form>
@@ -97,12 +104,6 @@
     <div id="help">
 	{"Please enter your username and the validation email will be resent to your email address"|_}.
     </div>
-
-	<div id="form_errormsg" class="errormsg">
-	{if $error}
-		{$error}
-	{/if}
-	</div>
 
   {*  If no one steps-in to maintain this, it will be removed benoitg 2006-11-26
   

@@ -82,6 +82,11 @@
             {/if}
             {"Your email address"|_}: 
             <input type="text" name="email" value="{$email}" size="20" id="form_email" {*onkeypress="return focusNext(this.form, 'form_submit', event)"*}>
+			<div id="form_errormsg" class="errormsg">
+				{if $error}
+					{$error}
+				{/if}
+			</div>
 			<input class="submit" type="submit" name="form_submit" value="{"Retrieve"|_}" {*onclick="if (validateForm(this.form)) this.form.submit()"*}>
         </form>
     </fieldset>
@@ -89,12 +94,6 @@
     <div id="help">
 		{"Please enter your email address to recover your username"|_}.
     </div>
-
-	<div id="form_errormsg" class="errormsg">
-	{if $error}
-		{$error}
-	{/if}
-	</div>
 
 {*   If no one steps-in to maintain this, it will be removed benoitg 2006-11-26
   <script type="text/javascript">

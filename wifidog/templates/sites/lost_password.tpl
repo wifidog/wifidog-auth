@@ -92,7 +92,14 @@
                 </tr>
                 <tr>
                     <th></th>
-                    <td><input class="submit" type="submit" name="form_submit" value="{"Reset my password"|_}" {* onclick="if (validateForm(this.form)) this.form.submit()" *}></td>
+                    <td>
+           				<div id="form_errormsg" class="errormsg">
+						{if $error}
+							{$error}
+						{/if}
+						</div>
+                    	<input class="submit" type="submit" name="form_submit" value="{"Reset my password"|_}" {* onclick="if (validateForm(this.form)) this.form.submit()" *}>
+                    	</td>
                 </tr>
             </table>
         </form>
@@ -102,11 +109,6 @@
     {"Please enter your username or email address to reset your password"|_}.
     </div>
 
-    <div id="form_errormsg" class="errormsg">
-    {if $error}
-		{$error}
-	{/if}
-	</div>
 {*  If no one steps-in to maintain this, it will be removed benoitg 2006-11-26
     <script type="text/javascript">
     <!--

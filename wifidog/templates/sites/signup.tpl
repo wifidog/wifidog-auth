@@ -100,7 +100,14 @@ BEGIN section MAINCONTENT
             </tr>
             <tr>
                 <th></th>
-                <td><input class="submit" type="submit" name="form_submit" value="{"Sign-up"|_}" onclick="if (validateForm(this.form)) this.form.submit()"></td>
+                <td>
+                    <div id="form_errormsg" class="errormsg">
+				    	{if $error != null}
+						  {$error}
+				        {/if}
+					</div>
+                <input class="submit" type="submit" name="form_submit" value="{"Sign-up"|_}" onclick="if (validateForm(this.form)) this.form.submit()">
+                </td>
             </tr>
         </table>
     </form>
@@ -131,12 +138,6 @@ BEGIN section MAINCONTENT
         </ul>
     </p>
 </fieldset>
-
-    <div id="form_errormsg" class="errormsg">
-    	{if $error != null}
-		  {$error}
-        {/if}
-	</div>
 
     <script type="text/javascript">
         <!--

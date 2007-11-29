@@ -1,4 +1,7 @@
 # $Id$
+2007-11-29 Benoit Grégoire  <bock@step.polymtl.ca>
+	* signup.tpl, lost_username.tpl, lost_password.tpl, resend_validation.tpl:  Move the error div near the button for coherence with the login page (and for the same reason).  In fact it was worse than the login page used to be:  the error message during signup could appear completely below the page for a user with a low resolution screeen (or big font), giving the form the apereance of doing absolutely nothing (it stumped even me as I was trying to help a user).
+
 2007-11-23 Benoit Grégoire  <bock@step.polymtl.ca>
 	* UIUserList.php: Don't force it to be persistent, it prevented users from deleting it.
 
