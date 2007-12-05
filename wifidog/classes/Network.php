@@ -962,7 +962,7 @@ class Network extends GenericDataObject
      */
     public function setGisLocation($pt)
     {
-
+            $retval=false;
         $db = AbstractDb::getObject();
 
         if (!empty ($pt)) {
@@ -972,13 +972,14 @@ class Network extends GenericDataObject
 
             if (!empty ($lat) && !empty ($long) && !empty ($alt)) {
                 $db->execSqlUpdate("UPDATE networks SET gmaps_initial_latitude = $lat, gmaps_initial_longitude = $long, gmaps_initial_zoom_level = $alt WHERE network_id = '{$this->getId()}'");
+            $retval=true;
             }
             else {
                 $db->execSqlUpdate("UPDATE networks SET gmaps_initial_latitude = NULL, gmaps_initial_longitude = NULL, gmaps_initial_zoom_level = NULL WHERE network_id = '{$this->getId()}'");
             }
-
             $this->refresh();
         }
+        return $retval;
     }
 
     /**
@@ -1643,18 +1644,19 @@ class Network extends GenericDataObject
             $gis_alt_name = "network_" . $this->getId() . "_gis_altitude";
             $gis_alt_value = htmlspecialchars($gis_point->getAltitude(), ENT_QUOTES);
 
+            $html_network_gis_data[] = '<p>'._("Note that to be valid, all 3 values must be present.")."</p>\n";
             $title = _("Latitude");
-            $help = _("Center latitude for your the area of your wireless network");
+            $help = _("Center latitude for the area covered by your wireless network");
             $data = InterfaceElements::generateInputText($gis_lat_name, $gis_lat_value, "network_gis_latitude_input");
             $html_network_gis_data[] = InterfaceElements::generateAdminSectionContainer("network_gis_latitude", $title, $data, $help);
 
             $title = _("Longitude");
-            $help = _("Center longitude for your the area of your wireless network");
+            $help = _("Center longitude for the area covered by your wireless network");
             $data = InterfaceElements::generateInputText($gis_long_name, $gis_long_value, "network_gis_longitude_input");
             $html_network_gis_data[] = InterfaceElements::generateAdminSectionContainer("network_gis_longitude", $title, $data, $help);
 
             $title = _("Zoomlevel");
-            $help = _("Zoomlevel of the Google Map for your the area of your wireless network");
+            $help = _("Zoomlevel of the Google Map.  12 is a typical value.");
             $data = InterfaceElements::generateInputText($gis_alt_name, $gis_alt_value, "network_gis_altitude_input");
             $html_network_gis_data[] = InterfaceElements::generateAdminSectionContainer("network_gis_altitude", $title, $data, $help);
 
