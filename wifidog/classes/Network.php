@@ -1547,7 +1547,7 @@ class Network extends GenericDataObject
 
         //  network_authenticator_params
         $title = _("Authenticator parameters");
-        $help = _("The explicit parameters to be passed to the authenticator. You MUST read the contructor documentation of your desired authenticator class (in wifidog/classes/Authenticators/) BEFORE you start playing with this.  Example: 'my_network_id', '192.168.0.11', 1812, 1813, 'secret_key', 'CHAP_MD5'");
+        $help = _("The explicit parameters to be passed to the authenticator. You MUST read the constructor documentation of your desired authenticator class (in wifidog/classes/Authenticators/) BEFORE you start playing with this.  Example: 'my_network_id', '192.168.0.11', 1812, 1813, 'secret_key', 'CHAP_MD5'");
         $data = InterfaceElements::generateInputText("network_" . $this->getId() . "_network_authenticator_params", $this->getAuthenticatorConstructorParams(), "network_network_authenticator_params_input");
         $html_network_authentication[] = InterfaceElements::generateAdminSectionContainer("network_network_authenticator_params", $title, $data, $help);
 

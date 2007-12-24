@@ -67,7 +67,7 @@ class Node implements GenericObject
     private $_row;
     private $mdB; /**< An AbstractDb instance */
     private $id;
-    private static $current_node_id = null;
+    private static $currentNode = null;
 
     /**
      * List of deployment statuses
@@ -116,9 +116,9 @@ class Node implements GenericObject
     static function getCurrentNode($real_node_only = false)
     {
         $object = null;
-        if (self :: $current_node_id != null && $real_node_only == false)
+        if (self :: $currentNode != null && $real_node_only == false)
         {
-            $object = self::getObject(self :: $current_node_id);
+            $object = self :: $currentNode;
         }
         else
         {
@@ -127,12 +127,17 @@ class Node implements GenericObject
         return $object;
     }
 
-    /** Set the current node where the user is to be considered connected to.  (For portal and content display purpuses, among other.
-     * @param $node Node.  The new current node.
+    /** Set the current node where the user is to be considered connected to.  (For portal and content display purposes, among other.
+     * @param $node Node object or null.  The new current node.
      * @return true	 */
-    static function setCurrentNode(Node $node)
+    static function setCurrentNode($node)
     {
-        self :: $current_node_id = $node->GetId();
+        if(empty($node) || $node instanceof Node) {
+            self :: $currentNode = $node;
+        }
+        else {
+            throw new Exception(sprintf("Parameter node must be null or of class Node but is of class %s", get_class($node)));
+        }
         return true;
     }
 
@@ -1261,7 +1266,7 @@ class Node implements GenericObject
     {
         require_once('classes/Stakeholder.php');
         $user = User::getCurrentUser();
-                // Get information about the network
+        // Get information about the network
         $network = $this->getNetwork();
         //pretty_print_r($_REQUEST);
         $permArray[]=array(Permission::P('NETWORK_PERM_EDIT_ANY_NODE_CONFIG'), $this->getNetwork());
@@ -1276,7 +1281,7 @@ class Node implements GenericObject
         $node_id = $this->getId();
 
         // Gateway Id
-                $permArray = null;
+        $permArray = null;
         $permArray[]=array(Permission::P('NETWORK_PERM_EDIT_ANY_NODE_CONFIG'), $network);
         $permArray[]=array(Permission::P('NODE_PERM_EDIT_GATEWAY_ID'), $this);
         if (Security::hasAnyPermission($permArray)) {
@@ -1615,7 +1620,7 @@ class Node implements GenericObject
             $items[] = array('path' => 'node/node_edit',
             'title' => _("Edit nodes"),
             'url' => BASE_URL_PATH.htmlspecialchars("admin/generic_object_admin.php?object_class=Node&action=list")
-		);
+            );
         }
         else if($nodes = Security::getObjectsWithPermission(Permission::P('NODE_PERM_EDIT_CONFIG'))) {
              

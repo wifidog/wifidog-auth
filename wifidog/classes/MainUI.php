@@ -216,7 +216,7 @@ class MainUI {
         return self :: $object;
     }
     /**
-     * Contructor
+     * Constructor
      *
      * @return void
      *

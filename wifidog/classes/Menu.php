@@ -77,7 +77,7 @@ class Menu {
         return self :: $object;
     }
     /**
-     * Contructor
+     * Constructor
      *
      * @return void
      *
