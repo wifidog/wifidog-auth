@@ -550,6 +550,7 @@ EndHTML;
             refreshButton();
             navigation(array(array("title" => "Back", "page" => "Database")));
             die();
+            break;
         }
         print "</li>";
         print "<li>";
@@ -766,7 +767,6 @@ EndHTML;
       <p>Please select the Authentication Servers default language and locale</p>
 
        <div class="language">
-           <form class="language" name="lang_form" method="post" action="{$formAction}">
                <div>Default Server Locale:
 	<select name="default_locale" onchange="newConfig('DEFAULT_LANG=' + this.options[this.selectedIndex].value);">
 EndHTML;
@@ -784,7 +784,6 @@ EndHTML;
         print<<<EndHTML
 		</select>
                </div>
-           </form>
        </div>
 
 

@@ -67,7 +67,7 @@ if (Dependency::check("FPDF")) {
 
     if (!$_serverBusy) {
         // Load FPDF library
-        require_once("lib/fpdf/fpdf.php");
+        require_once("lib/fpdf153/fpdf.php");
 
         /**
          * PDF class of WiFiDog, extends FPDF library

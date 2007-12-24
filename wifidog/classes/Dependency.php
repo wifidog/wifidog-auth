@@ -80,7 +80,7 @@
        * 'type' => Mandatory.  The type of Dependency.  Currently, allowed values are: 
 	   *	"phpExtension":  Standard PHP extension 
 	   *	"peclStandard":  Standard (in the PECL reposidory) PECL PHP module
-	   *	"peclStandard":	 Standard (in the PEAR reposidory) PEAR PHP module
+	   *	"peclStandard":	 PEAR PHP module in the standard PEAR repository or in a custom channel
 	   * 	"pearCustom":	PEAR-compatible tarball
 	   *	"localLib": Custom PHP extension, to be downloaded and installed in wifidog/lib
 	   * 'detectFiles' => Mandatory for most type of dependencies, the relative path to the file that must exist for the dependency to be considered present.
@@ -88,9 +88,11 @@
 	   * 'description' => Description of the dependency, and what it's used for in wifidog
 	   * 'website' => URL to the dependency's official website
        * 'installSourceUrl' => For localLib and pearCustom dependency, the URL where the dependency can be downloaded.
+       * 						For pearStandard, either the required alpha or beta name like "Image_Canvas-alpha" or the fulle channel URL like: "channel://pear.php.net/Image_graph-0.7.2" ( normally not used for dependencies in standard pear repositories)
        * 'installMethod' => For localLib, the protocol to be used to download and install the dependency.  Currently, allowed values are:
        * 	'tarball': Decompress a tarball in wifidog/lib
        * 'installDestination' => For localLib, the path, relative to wifidog/lib where the dependency should be installed
+       * 'filename' => temp download filename if sourceurl does not meet preg requirements.
        * 
        * @var array
        */
@@ -199,21 +201,29 @@ JpGraph is not currently used by Wifidog (it will be use for statistic graphs in
        /* Pecl libraries */
        "radius" => array (
        "type" => "peclStandard",
-       'description' => "Required by the optional Radius Authenticator"
+       'description' => "Required by the optional Radius Authenticator.  If it's not detected, make sure it's installed (pecl list) AND loaded in php.ini (extension=radius.so)"
        ),
 
        /* Locally installed libraries */
        "FCKeditor" => array (
        "type" => "localLib",
-       "detectFiles" => "lib/FCKeditor/fckeditor.php",
+       "detectFiles" => "lib/fckeditor/fckeditor.php",
        'description' => "Required by content type FCKEditor (WYSIWYG HTML)",
-       'website' => "http://www.fckeditor.net/"
+       'website' => "http://www.fckeditor.net/",
+       'installSourceUrl' => "http://easynews.dl.sourceforge.net/sourceforge/fckeditor/FCKeditor_2.5.tar.gz",
+       'installMethod' => "tarball",
+       'installDestination' => "/",
        ),
+       
        "FPDF" => array (
        "type" => "localLib",
-       "detectFiles" => "lib/fpdf/fpdf.php",
+       "detectFiles" => "lib/fpdf153/fpdf.php",
        'description' => "Required if you want to be able to export the node list as a PDF file",
-       'website' => "http://www.fpdf.org/"
+       'website' => "http://www.fpdf.org/",
+       'installSourceUrl' => "http://www.fpdf.org/en/dl.php?v=153&f=tgz",
+       'installMethod' => "tarball",
+       'installDestination' => "/",
+       'filename' => "fpdf.tgz"
        ),
        "php-openid" => array (
        "type" => "localLib",
@@ -245,23 +255,26 @@ JpGraph is not currently used by Wifidog (it will be use for statistic graphs in
        ),
        "Cache" => array (
        "type" => "pearStandard",
-       "detectFiles" => "Cache/Lite.php",
-       'description' => "Required if you want to turn on the experimental USE_CACHE_LITE in config.php"
+       "detectFiles" => "Cache/Lite.php", #unsure whether this file still exists.
+       'description' => "Required if you want to turn on the experimental USE_CACHE_LITE in config.php",
        ),
        "HTML_Safe" => array (
        "type" => "pearStandard",
        "detectFiles" => "HTML/Safe.php",
-       'description' => "Optional for content type Langstring (and subtypes) to better strip out dangerous HTML"
+       'description' => "Optional for content type Langstring (and subtypes) to better strip out dangerous HTML",
+       'installSourceUrl' => "HTML_Safe-beta"
        ),
        "Image_Graph" => array (
        "type" => "pearStandard",
        "detectFiles" => "Image/Graph.php",
-       'description' => "Required if you want to generate graphical statistics"
+       'description' => "Required if you want to generate graphical statistics",
+       'installSourceUrl' => "Image_graph-alpha"
        ),
        "Image_Canvas" => array (
        "type" => "pearStandard",
        "detectFiles" => "Image/Canvas.php",
-       'description' => "Required if you want to generate graphical statistics"
+       'description' => "Required if you want to generate graphical statistics",
+       'installSourceUrl' => "Image_Canvas-alpha"
        ),
        "Image_Color" => array (
        "type" => "pearStandard",
@@ -507,20 +520,42 @@ foreach($components as $component) {
                                  $html .= sprintf(_("Sorry, i couldn't find the source for %s in installSourceUrl"),
                                  $this->getId());
                              }
-
-
                              break;
-                             //case "pearStandard":
-                             //    break;
+                             
+                             
+                             case "pearStandard":
+                             if($this->getInstallSourceUrl()) {
+                                 $installSource=$this->getInstallSourceUrl();
+                             }
+                             else {
+                                 $installSource=$this->getId();
+                             }
+                             $html .= sprintf(_("To install this standard PEAR extension, try 'sudo pear install --onlyreqdeps %s'"), $installSource);
+                             break;
+                             
+                                 
+                         case "peclStandard":
+                             if($this->getInstallSourceUrl()) {
+                                 $installSource=$this->getInstallSourceUrl();
+                             }
+                             else {
+                                 $installSource=$this->getId();
+                             }
+                             $html .= sprintf(_("To install this standard PEAR extension, try 'sudo pecl install %s'"), $installSource);
+                             break;
+                             
+                                 
                          case "pearCustom":
                              if($this->getInstallSourceUrl()) {
                                  $installSource=$this->getInstallSourceUrl();
                              }
                              else {
-                                 $installSource=sprintf(_("url_to_the_tarball (Sorry, i couldn't find the source for %s in installSourceUrl)"), $this->getId());
+                             $installSource=sprintf(_("url_to_the_tarball (Sorry, i couldn't find the source for %s in installSourceUrl)"), $this->getId());
                              }
                              $html .= sprintf(_("To install this custom PEAR extension, use 'sudo pear install %s'"), $installSource);
                              break;
+                             
+                             
                          default:
                              $html .= sprintf(_("Sorry, I don't know how to install a %s extension"), $type);
                      }
@@ -614,6 +649,7 @@ foreach($components as $component) {
 
                       return $retval;
                   }
+                  
 
                   /**
                    * Get the source URL where the package can be downloaded.  It's meaning depends on the install method (for example, it may be a svn source)
@@ -698,8 +734,13 @@ foreach($components as $component) {
                                    case "tarball":
                                        $downloadPath = WIFIDOG_ABS_FILE_PATH . "tmp/";
                                        chdir($downloadPath);
-                                       $filename_array = preg_split("/\//", $installSourceUrl);
-                                       $filename = array_pop($filename_array);
+                                        if(!empty(self::$_components[$this->_id]['filename'])) {
+                                            $filename = self::$_components[$this->_id]['filename'];
+                                        }
+                                        else {
+                                            $filename_array = preg_split("/\//", $installSourceUrl);
+                                            $filename = array_pop($filename_array);
+                                        }
 
 
                                        if (!file_exists($downloadPath . $filename)){
