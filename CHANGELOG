@@ -1,4 +1,7 @@
 # $Id$
+2007-12-30 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Workaround IE6 braindeadness in the base theme.  Closes  #406.  Credit goes to Frederic Sheedy (sheedf@gmail.com)
+	
 2007-12-23 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Node.php:  Fix bug in setCurrentNode() reported by Vacio
 	* install.php, Dependency.php:  Commit install script improvements by Robin Jones

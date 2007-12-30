@@ -92,6 +92,7 @@ select {
 }
 
 #left_area {
+	position: absolute; /* Necessary to work around IE6's stupidity */
 	width: 25%;
 	float: left;
 	margin: 0em;
