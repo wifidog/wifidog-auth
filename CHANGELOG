@@ -1,4 +1,7 @@
 # $Id$
+2008-01-05 Benoit Grégoire  <bock@step.polymtl.ca>
+	* French translation update from Frederic Sheedy (sheedf@gmail.com).  Closes #411
+
 2007-12-30 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Workaround IE6 braindeadness in the base theme.  Closes  #406.  Credit goes to Frederic Sheedy (sheedf@gmail.com)
 	
