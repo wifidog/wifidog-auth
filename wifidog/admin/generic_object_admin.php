@@ -261,8 +261,8 @@ switch ($_REQUEST['action_delete']) {
  */
 switch ($_REQUEST['action']) {
     case "list" :
-        $hasCreateNewObjectUI = true;
-
+        $userData = null;
+        $disableCreateNewButton = false;
         switch ($_REQUEST['object_class']) {
             case "Content" :
                 $displayShowAllButton = true;
@@ -270,36 +270,25 @@ switch ($_REQUEST['action']) {
                 $objectSelector = Content :: getSelectExistingContentUI('object_id', $sql_additional_where, null, "creation_timestamp DESC, content_type", "table");
                 $displayEditButton = false;
                 break;
-
             case "Node" :
-                $newLongText = $addLongText;
                 $userData['typeInterface'] = "table";
-                $objectSelector = Node :: getSelectUI('object_id', $userData);
                 $displayEditButton = false;
-                break;
-            case "ProfileTemplate" :
-                $hasCreateNewObjectUI = false;
-
+            case "Network" :
+                $disableCreateNewButton = true;
             default :
                 $newLongText = $addLongText;
                 $objectSelector = call_user_func(array (
                 $_REQUEST['object_class'],
                 'getSelectUI'
-        ), 'object_id');
+                ), 'object_id'
+                , $userData);
                 break;
-
         }
 
-        if($hasCreateNewObjectUI == true) {
+        if($disableCreateNewButton == false && method_exists($_REQUEST['object_class'],'getCreateNewObjectUI')) {
             $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
             $html .= "<input type='hidden' name='object_class' value='$class'>";
             $html .= "<input type='hidden' name='action' value='new_ui'>";
-            $html .= "<input type='submit' name='new_submit' value='$newLongText'>\n";
-            $html .= '</form>';
-        } else {
-            $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
-            $html .= "<input type='hidden' name='object_class' value='$class'>";
-            $html .= "<input type='hidden' name='action' value='new'>";
             $html .= "<input type='submit' name='new_submit' value='$newLongText'>\n";
             $html .= '</form>';
         }
@@ -352,7 +341,7 @@ switch ($_REQUEST['action']) {
                 $html .= call_user_func(array (
                 $class,
                 'getCreateNewObjectUI'
-        ));
+                ));
                 $html .= "<input type='hidden' name='action' value='process_new_ui'>";
                 $html .= "<input type=submit name='new_ui_submit' value='$newText'>";
                 $html .= '</form>';

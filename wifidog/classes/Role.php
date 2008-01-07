@@ -227,10 +227,6 @@ class Role extends GenericDataObject
     {
         // Init values
         $html = '';
-
-
-
-
         $name = "new_role_stakeholder_type";
         $stakeholderTypeSelect = StakeholderType::getSelectUI($name);
         $name = "new_role_id";

@@ -45,60 +45,60 @@
  * @link       http://www.wifidog.org/
  */
 
- // Detect Gettext support
- if (!function_exists('gettext')) {
-     /**
-      * Load Locale class if Gettext support is not available
-      */
-      require_once ('classes/Locale.php');
- }
+// Detect Gettext support
+if (!function_exists('gettext')) {
+    /**
+     * Load Locale class if Gettext support is not available
+     */
+    require_once ('classes/Locale.php');
+}
 
- require_once ('classes/Utils.php');
- 
-        define('OPENID_PATH', WIFIDOG_ABS_FILE_PATH.'lib/php-openid-2.0.0-rc2/');
-        define('SMARTY_PATH', WIFIDOG_ABS_FILE_PATH.'lib/Smarty-2.6.18/libs/');        
- /**
-  * This class checks the existence of components required by WiFiDog.
-  * Note that it implicitely depends on the defines in include/path_defines_base.php
-  *
-  * @package    WiFiDogAuthServer
-  * @author     Philippe April
-  * @author     Max HorvÃ¡th <max.horvath@freenet.de>
-  * @author     Benoit GrÃ©goire <bock@step.polymtl.ca>
-  * @copyright  2005-2007 Philippe April
-  * @copyright  2005-2007 Max HorvÃ¡th, Horvath Web Consulting
-  * @copyright  2006-2007 Benoit GrÃ©goire, Technologies Coeus inc.
-  */
-  class Dependency
-  {
-      /**
-       * An array of components used by WiFiDog
-       * The main array key is the EXACT name name of the dependency.  Do NOT translate it or blindly change it;
-       *   It is used in the code if various ways, for example to detect PHP or PEAR modules 
-       * Documentation of the various array keys:  
-       * 'mandatory' => Optional.  Set to true if the dependency absolutely required for basic operation of an auth server
-       * 'type' => Mandatory.  The type of Dependency.  Currently, allowed values are: 
-	   *	"phpExtension":  Standard PHP extension 
-	   *	"peclStandard":  Standard (in the PECL reposidory) PECL PHP module
-	   *	"peclStandard":	 PEAR PHP module in the standard PEAR repository or in a custom channel
-	   * 	"pearCustom":	PEAR-compatible tarball
-	   *	"localLib": Custom PHP extension, to be downloaded and installed in wifidog/lib
-	   * 'detectFiles' => Mandatory for most type of dependencies, the relative path to the file that must exist for the dependency to be considered present.
-	   * 					The path is relative to the PHP path, or wifidog/lib depending on the type of install
-	   * 'description' => Description of the dependency, and what it's used for in wifidog
-	   * 'website' => URL to the dependency's official website
-       * 'installSourceUrl' => For localLib and pearCustom dependency, the URL where the dependency can be downloaded.
-       * 						For pearStandard, either the required alpha or beta name like "Image_Canvas-alpha" or the fulle channel URL like: "channel://pear.php.net/Image_graph-0.7.2" ( normally not used for dependencies in standard pear repositories)
-       * 'installMethod' => For localLib, the protocol to be used to download and install the dependency.  Currently, allowed values are:
-       * 	'tarball': Decompress a tarball in wifidog/lib
-       * 'installDestination' => For localLib, the path, relative to wifidog/lib where the dependency should be installed
-       * 'filename' => temp download filename if sourceurl does not meet preg requirements.
-       * 
-       * @var array
-       */
+require_once ('classes/Utils.php');
 
-       private static $_components = array(
-       /* PHP extensions (mandatory) */
+define('OPENID_PATH', WIFIDOG_ABS_FILE_PATH.'lib/php-openid-2.0.0-rc2/');
+define('SMARTY_PATH', WIFIDOG_ABS_FILE_PATH.'lib/Smarty-2.6.18/libs/');
+/**
+ * This class checks the existence of components required by WiFiDog.
+ * Note that it implicitely depends on the defines in include/path_defines_base.php
+ *
+ * @package    WiFiDogAuthServer
+ * @author     Philippe April
+ * @author     Max HorvÃ¡th <max.horvath@freenet.de>
+ * @author     Benoit GrÃ©goire <bock@step.polymtl.ca>
+ * @copyright  2005-2007 Philippe April
+ * @copyright  2005-2007 Max HorvÃ¡th, Horvath Web Consulting
+ * @copyright  2006-2007 Benoit GrÃ©goire, Technologies Coeus inc.
+ */
+class Dependency
+{
+    /**
+     * An array of components used by WiFiDog
+     * The main array key is the EXACT name name of the dependency.  Do NOT translate it or blindly change it;
+     *   It is used in the code if various ways, for example to detect PHP or PEAR modules
+     * Documentation of the various array keys:
+     * 'mandatory' => Optional.  Set to true if the dependency absolutely required for basic operation of an auth server
+     * 'type' => Mandatory.  The type of Dependency.  Currently, allowed values are:
+     *	"phpExtension":  Standard PHP extension
+     *	"peclStandard":  Standard (in the PECL reposidory) PECL PHP module
+     *	"peclStandard":	 PEAR PHP module in the standard PEAR repository or in a custom channel
+     * 	"pearCustom":	PEAR-compatible tarball
+     *	"localLib": Custom PHP extension, to be downloaded and installed in wifidog/lib
+     * 'detectFiles' => Mandatory for most type of dependencies, the relative path to the file that must exist for the dependency to be considered present.
+     * 					The path is relative to the PHP path, or wifidog/lib depending on the type of install
+     * 'description' => Description of the dependency, and what it's used for in wifidog
+     * 'website' => URL to the dependency's official website
+     * 'installSourceUrl' => For localLib and pearCustom dependency, the URL where the dependency can be downloaded.
+     * 						For pearStandard, either the required alpha or beta name like "Image_Canvas-alpha" or the fulle channel URL like: "channel://pear.php.net/Image_graph-0.7.2" ( normally not used for dependencies in standard pear repositories)
+     * 'installMethod' => For localLib, the protocol to be used to download and install the dependency.  Currently, allowed values are:
+     * 	'tarball': Decompress a tarball in wifidog/lib
+     * 'installDestination' => For localLib, the path, relative to wifidog/lib where the dependency should be installed
+     * 'filename' => temp download filename if sourceurl does not meet preg requirements.
+     *
+     * @var array
+     */
+
+    private static $_components = array(
+    /* PHP extensions (mandatory) */
        'mbstring' => array (
        'mandatory' => true,
        "type" => "phpExtension",
@@ -124,7 +124,7 @@
        'installMethod' => "tarball",
        'installDestination' => "/"
        ),
-      
+
        /* PHP extensions (optional) */
        "simplepie" => array (
        "type" => "localLib",
@@ -144,7 +144,7 @@ JpGraph is not currently used by Wifidog (it will be use for statistic graphs in
        'installSourceUrl' => "http://hem.bredband.net/jpgraph/jpgraph-1.22.tar.gz",
        'installMethod' => "tarball",
        'installDestination' => "/"
-        ),
+       ),
        'feedpressreview' => array (
        "type" => "localLib",
        "detectFiles" => "lib/feedpressreview/FeedPressReview.inc",
@@ -153,7 +153,7 @@ JpGraph is not currently used by Wifidog (it will be use for statistic graphs in
        'installSourceUrl' => "http://projects.coeus.ca/svn/feedpressreview/trunk/",
        'installMethod' => "svn",
        'installDestination' => "feedpressreview"
-        ),
+       ),
        'gettext' => array (
        "type" => "phpExtension",
        'description' => 'Almost essential: Without gettext, the auth-server will still work, but you will loose internationalization'
@@ -214,7 +214,7 @@ JpGraph is not currently used by Wifidog (it will be use for statistic graphs in
        'installMethod' => "tarball",
        'installDestination' => "/",
        ),
-       
+        
        "FPDF" => array (
        "type" => "localLib",
        "detectFiles" => "lib/fpdf153/fpdf.php",
@@ -295,507 +295,507 @@ JpGraph is not currently used by Wifidog (it will be use for statistic graphs in
        /**
         * Object cache for the object factory (getObject())
         */
-        private static $instanceArray = array();
+       private static $instanceArray = array();
 
-        private $_id;
+       private $_id;
 
-        /**
-         * Constructor
-         */
-         private function __construct($component) {
-             $this->_id = $component;
-         }
+       /**
+        * Constructor
+        */
+       private function __construct($component) {
+           $this->_id = $component;
+       }
 
-         /**
-          * Get the entire array of Dependency
-          *
-          * @return boolean Returns whether the file has been found or not.
-          */
-          public static function getDependencies()
-          {
-              $retval = array();
+       /**
+        * Get the entire array of Dependency
+        *
+        * @return boolean Returns whether the file has been found or not.
+        */
+       public static function getDependencies()
+       {
+           $retval = array();
 
-              foreach (self::$_components as $component_key=>$component_info) {
-                  $retval[] = self::getObject($component_key);
-              }
-
-              return $retval;
-          }
-
-          /** Use PHP internal functions to execute a command
-           Â @return: Return value of the command*/
-          function execVerbose($command, & $output, & $return_var, &$errMsg = null) {
-              $errMsg .= "Executing: $command <br/>";
-              exec($command.'  2>&1', $output, $return_var);
-              if ($return_var != 0)
-              $errMsg .= "<p style='color:red'><em>Error:</em>  Command did not complete successfully  (returned $return_var): <br/>\n";
-              else
-              $errMsg .= "<p style='color:green'><em>Command completed successfully</em>  (returned $return_var): <br/>\n";
-
-              if (($return_var != 0) && $output) {
-                  foreach ($output as $output_line)
-                  $errMsg .= " $output_line <br/>\n";
-              }
-              $errMsg .= "</p>\n";
-              return $return_var;
-          }
-
-          /**
-           * Checks if a file exists, including checking in the include path
-           *
-           * @param string $file Path or name of a file
-           *
-           * @return boolean Returns whether the file has been found or not.
-           *
-           * @author Aidan Lister <aidan@php.net>
-           * @link http://aidanlister.com/repos/v/function.file_exists_incpath.php
-           */
-           public static function file_exists_incpath($file)
-           {
-               $_paths = explode(PATH_SEPARATOR, get_include_path());
-
-               foreach ($_paths as $_path) {
-                   // Formulate the absolute path
-                   $_fullPath = $_path . DIRECTORY_SEPARATOR . $file;
-
-                   // Check it
-                   if (file_exists($_fullPath)) {
-                       return $_fullPath;
-                   }
-               }
-
-               return false;
+           foreach (self::$_components as $component_key=>$component_info) {
+               $retval[] = self::getObject($component_key);
            }
 
-           /**
-            * Checks if a component is available.
-            *
-            * This function checks, if a specific component is available to be used
-            * by Wifidog.
-            *
-            * @param string $component Name of component to be checked.
-            * @param string $errmsg    Reference of a string which would contain an
-            *                          error message.
-            *
-            * @return boolean Returns whether the component has been found or not.
-            */
-            public static function check($component, &$errmsg = null)
-            {
-                // Init values
-                $returnValue = false;
+           return $retval;
+       }
 
-                // Check, if the requested component can be found.
-                if (isset(self::$_components[$component])) {
-                    // What are we checking for?
-                    if (self::$_components[$component]["type"] == "phpExtension" || self::$_components[$component]["type"] == "peclStandard") {
-                        // Warning: extension_loaded(string) is case sensitive
-                        $returnValue = extension_loaded($component);
-                    }
-                    else if (self::$_components[$component]["type"] == "localLib") {
-                        if (is_array(self::$_components[$component]["detectFiles"])) {
-                            $_singleReturns = true;
-                            foreach (self::$_components[$component]["detectFiles"] as $_fileNames) {
-                                $filePath = WIFIDOG_ABS_FILE_PATH . $_fileNames;
+       /** Use PHP internal functions to execute a command
+        Â @return: Return value of the command*/
+       function execVerbose($command, & $output, & $return_var, &$errMsg = null) {
+           $errMsg .= "Executing: $command <br/>";
+           exec($command.'  2>&1', $output, $return_var);
+           if ($return_var != 0)
+           $errMsg .= "<p style='color:red'><em>Error:</em>  Command did not complete successfully  (returned $return_var): <br/>\n";
+           else
+           $errMsg .= "<p style='color:green'><em>Command completed successfully</em>  (returned $return_var): <br/>\n";
 
-                                if (!file_exists($filePath)) {
-                                    echo "TEST";
-                                    $_singleReturns = false;
-                                    // The component has NOT been found. Return error message.
-                                    $errmsg .= sprintf(_("File %s not found"), $filePath);
-                                    break;
-                                }
-                            }
+           if (($return_var != 0) && $output) {
+               foreach ($output as $output_line)
+               $errMsg .= " $output_line <br/>\n";
+           }
+           $errMsg .= "</p>\n";
+           return $return_var;
+       }
 
-                            $returnValue = $_singleReturns;
-                        }
-                        else {
-                            $filePath = WIFIDOG_ABS_FILE_PATH . self::$_components[$component]["detectFiles"];
+       /**
+        * Checks if a file exists, including checking in the include path
+        *
+        * @param string $file Path or name of a file
+        *
+        * @return boolean Returns whether the file has been found or not.
+        *
+        * @author Aidan Lister <aidan@php.net>
+        * @link http://aidanlister.com/repos/v/function.file_exists_incpath.php
+        */
+       public static function file_exists_incpath($file)
+       {
+           $_paths = explode(PATH_SEPARATOR, get_include_path());
 
-                            if (file_exists($filePath)) {
-                                // The component has been found.
-                                $returnValue = true;
-                            }
-                            else {
-                                // The component has NOT been found. Return error message.
-                                $errmsg .= sprintf(_("File %s not found"), $filePath);
-                            }
-                        }
-                    }
-                    else if (self::$_components[$component]["type"] == "pearStandard" || self::$_components[$component]["type"] == "pearCustom") {
-                        if (is_array(self::$_components[$component]["detectFiles"])) {
-                            $_singleReturns = true;
+           foreach ($_paths as $_path) {
+               // Formulate the absolute path
+               $_fullPath = $_path . DIRECTORY_SEPARATOR . $file;
 
-                            foreach (self::$_components[$component]["detectFiles"] as $_fileNames) {
-                                // We need to use a custom file_exists to also check in the include path
-                                if (!self::file_exists_incpath($_fileNames)) {
-                                    $_singleReturns = false;
-
-                                    // The component has NOT been found. Return error message.
-                                    $errmsg .= sprintf(_("File %s not found in %s"), $_fileNames, get_include_path());
-                                }
-                            }
-
-                            $returnValue = $_singleReturns;
-                        } else {
-                            // We need to use a custom file_exists to also check in the include path
-                            if (self::file_exists_incpath(self::$_components[$component]["detectFiles"])) {
-                                // The component has been found.
-                                $returnValue = true;
-                            }
-                            else {
-
-                                // The component has NOT been found. Return error message.
-                                $errmsg .= sprintf(_("File %s not found in %s"), self::$_components[$component]["detectFiles"], get_include_path());
-                            }
-                        }
-                    }
-                    else {
-                        throw new Exception(sprintf("Unknown component type: %s", self::$_components[$component]["type"]));
-                    }
-                } else {
-                    // The requested component has not been defined in this class.
-                    throw new Exception("Component not found");
-                }
-
-                return $returnValue;
-            }
-
-                       /**
-            * Checks if one of the mandatory components is missing.
-            *
-            * @param string $errmsg    Reference of a string which would contain an
-            *                          error message.
-            *
-            * @return boolean Returns false if any components are missing.
-            */
-            public static function checkMandatoryComponents(&$errmsg = null)
-            {
-                // Init values
-                $returnValue = true;
-$components = self::getDependencies();
-foreach($components as $component) {
-    if($component->isMandatory()) {
-        $returnValue &= self::check($component->getId(), $errmsg);
-    }
-}
-
-                return $returnValue;
-            }
-            
-            /** Use PHP internal functions to download a file */
-            static public function downloadFile($remoteURL, $localPath) {
-                set_time_limit(1500); // 25 minutes timeout
-                return copy($remoteURL, $localPath);
-            }
-            /**
-             * Get a UI to install the component
-             *
-             * @return html markup.
-             */
-             public function getInstallUI()
-             {
-                 // Init values
-                 $html = false;
-
-                 // Check, if the requested component can be found.
-                 if (self::check($this->getId())) {
-                     //Component already installed
-                 }
-                 else {
-                     // What are we checking for?
-                     $type = $this->getType();
-                     switch ($type) {
-                         case "phpExtension":
-                             $html .= sprintf(_("To install this standard PHP extension, look for a package with a similar name in your distribution's package manager.  Ex: For Debian based distributions, you may try 'sudo apt-get install php5-%s'"), $this->getId());
-
-                             break;
-                         case "localLib":
-                             if($this->getInstallSourceUrl()) {
-                                 $name = $this->getId().'_install';
-                                 $value = sprintf(_("Install %s"), $this->getId());
-                                 $html .= sprintf("<input type='submit' name='%s' value='%s'/>", $name, $value);
-                                                      
-                             }
-                             else {
-                                 $html .= sprintf(_("Sorry, i couldn't find the source for %s in installSourceUrl"),
-                                 $this->getId());
-                             }
-                             break;
-                             
-                             
-                             case "pearStandard":
-                             if($this->getInstallSourceUrl()) {
-                                 $installSource=$this->getInstallSourceUrl();
-                             }
-                             else {
-                                 $installSource=$this->getId();
-                             }
-                             $html .= sprintf(_("To install this standard PEAR extension, try 'sudo pear install --onlyreqdeps %s'"), $installSource);
-                             break;
-                             
-                                 
-                         case "peclStandard":
-                             if($this->getInstallSourceUrl()) {
-                                 $installSource=$this->getInstallSourceUrl();
-                             }
-                             else {
-                                 $installSource=$this->getId();
-                             }
-                             $html .= sprintf(_("To install this standard PEAR extension, try 'sudo pecl install %s'"), $installSource);
-                             break;
-                             
-                                 
-                         case "pearCustom":
-                             if($this->getInstallSourceUrl()) {
-                                 $installSource=$this->getInstallSourceUrl();
-                             }
-                             else {
-                             $installSource=sprintf(_("url_to_the_tarball (Sorry, i couldn't find the source for %s in installSourceUrl)"), $this->getId());
-                             }
-                             $html .= sprintf(_("To install this custom PEAR extension, use 'sudo pear install %s'"), $installSource);
-                             break;
-                             
-                             
-                         default:
-                             $html .= sprintf(_("Sorry, I don't know how to install a %s extension"), $type);
-                     }
-                 }
-                 return $html;
-             }
-
-             /**
-              * Get a UI to install the component
-              *
-              * @return true if something was processed.
-              */
-              public function processInstallUI(&$errMsg=null)
-              {
-
-                  $retval = false;
-                  $name = $this->getId().'_install';
-                  if(!empty($_REQUEST[$name]))
-                  {
-                      $this->install($errMsg);
-                  }
-                   
-                  return $retval;
-              }
-              /**
-               * Retreives the id of the object
-               *
-               * @return The id, a string
-               */
-               public function getId() {
-                   return $this->_id;
+               // Check it
+               if (file_exists($_fullPath)) {
+                   return $_fullPath;
                }
+           }
 
-               /**
-                * Get an instance of the object
-                *
-                * @param string $id The object id
-                *
-                * @return mixed The Content object, or null if there was an error
-                *               (an exception is also thrown)
-                *
-                * @see GenericObject
-                * @static
-                * @access public
-                */
-                public static function &getObject($id)
-                {
-                    if(!isset(self::$instanceArray[$id])) {
-                        self::$instanceArray[$id] = new self($id);
-                    }
+           return false;
+       }
 
-                    return self::$instanceArray[$id];
-                }
+       /**
+        * Checks if a component is available.
+        *
+        * This function checks, if a specific component is available to be used
+        * by Wifidog.
+        *
+        * @param string $component Name of component to be checked.
+        * @param string $errmsg    Reference of a string which would contain an
+        *                          error message.
+        *
+        * @return boolean Returns whether the component has been found or not.
+        */
+       public static function check($component, &$errmsg = null)
+       {
+           // Init values
+           $returnValue = false;
 
-                /**
-                 * Get website URL for the dependency (if available)
-                 *
-                 * @return URL or null
-                 */
-                 public function getWebsiteURL()
-                 {
-                     $retval = null;
+           // Check, if the requested component can be found.
+           if (isset(self::$_components[$component])) {
+               // What are we checking for?
+               if (self::$_components[$component]["type"] == "phpExtension" || self::$_components[$component]["type"] == "peclStandard") {
+                   // Warning: extension_loaded(string) is case sensitive
+                   $returnValue = extension_loaded($component);
+               }
+               else if (self::$_components[$component]["type"] == "localLib") {
+                   if (is_array(self::$_components[$component]["detectFiles"])) {
+                       $_singleReturns = true;
+                       foreach (self::$_components[$component]["detectFiles"] as $_fileNames) {
+                           $filePath = WIFIDOG_ABS_FILE_PATH . $_fileNames;
 
-                     if(self::$_components[$this->_id]["type"] == "phpExtension") {
-                         $retval = "http://www.php.net/" . $this->_id . "/";
-                     } else if(self::$_components[$this->_id]["type"] == "pearStandard") {
-                         $retval = "http://pear.php.net/package/" . $this->_id . "/";
-                     } else if(self::$_components[$this->_id]["type"] == "peclStandard") {
-                         $retval = "http://pecl.php.net/package/" . $this->_id . "/";
-                     } else {
-                         if(!empty(self::$_components[$this->_id]['website'])) {
-                             $retval = self::$_components[$this->_id]['website'];
-                         }
-                     }
-
-                     return $retval;
-                 }
-
-                 /**
-                  * Get the description of the dependency (if available)
-                  *
-                  * @return String or null
-                  */
-                  public function getDescription()
-                  {
-                      $retval = null;
-
-                      if(!empty(self::$_components[$this->_id]['description'])) {
-                          $retval = self::$_components[$this->_id]['description'];
-                      }
-
-                      return $retval;
-                  }
-                  
-
-                  /**
-                   * Get the source URL where the package can be downloaded.  It's meaning depends on the install method (for example, it may be a svn source)
-                   *
-                   * @return String or null
-                   */
-                   public function getInstallSourceUrl()
-                   {
-                       $retval = null;
-                       if(!empty(self::$_components[$this->_id]['installSourceUrl'])) {
-                           $retval = self::$_components[$this->_id]['installSourceUrl'];
-                       }
-                       return $retval;
-                   }
-                   /**
-                    * Get the install method for this dependency (only for those that can be directly installed by the auth server)                  *
-                    * @return String or null
-                    */
-                    public function getInstallMethod()
-                    {
-                        $retval = null;
-                        if(!empty(self::$_components[$this->_id]['installMethod'])) {
-                            $retval = self::$_components[$this->_id]['installMethod'];
-                        }
-                        return $retval;
-                    }
-
-                    /**
-                     * Get the install destination.  Interpretation depends on the install method.  Usisally the parameter to be passed to tar or SVN                 *
-                     * @return String or null
-                     */
-                     public function getInstallDestination()
-                     {
-                         $retval = null;
-                         if(!empty(self::$_components[$this->_id]['installDestination'])) {
-                             $retval = self::$_components[$this->_id]['installDestination'];
-                         }
-                         return $retval;
-                     }
-                     /**
-                      * Get the type of the dependency
-                      *
-                      * @return String
-                      */
-                      public function getType()
-                      {
-                          return self::$_components[$this->_id]['type'];
-                      }
-
-                      /**
-                       * Get the type of the dependency
-                       *
-                       * @return String
-                       */
-                       public function isMandatory()
-                       {
-                           $retval = null;
-
-                           if(!empty(self::$_components[$this->_id]['mandatory'])) {
-                               $retval = true;
+                           if (!file_exists($filePath)) {
+                               echo "TEST";
+                               $_singleReturns = false;
+                               // The component has NOT been found. Return error message.
+                               $errmsg .= sprintf(_("File %s not found"), $filePath);
+                               break;
                            }
-
-                           return $retval;
                        }
 
-                       public function install(&$errorMsg = null){
-                           $installSourceUrl = $this->getInstallSourceUrl();
-                           $installDestinationPathOrig = $this->getInstallDestination();
-                           if(!$installSourceUrl || !$installDestinationPathOrig) {
-                               $errorMsg .= "<em style=\"color:red\">Error:</em>Either the install source or destination path is missing<br/>\n";
+                       $returnValue = $_singleReturns;
+                   }
+                   else {
+                       $filePath = WIFIDOG_ABS_FILE_PATH . self::$_components[$component]["detectFiles"];
+
+                       if (file_exists($filePath)) {
+                           // The component has been found.
+                           $returnValue = true;
+                       }
+                       else {
+                           // The component has NOT been found. Return error message.
+                           $errmsg .= sprintf(_("File %s not found"), $filePath);
+                       }
+                   }
+               }
+               else if (self::$_components[$component]["type"] == "pearStandard" || self::$_components[$component]["type"] == "pearCustom") {
+                   if (is_array(self::$_components[$component]["detectFiles"])) {
+                       $_singleReturns = true;
+
+                       foreach (self::$_components[$component]["detectFiles"] as $_fileNames) {
+                           // We need to use a custom file_exists to also check in the include path
+                           if (!self::file_exists_incpath($_fileNames)) {
+                               $_singleReturns = false;
+
+                               // The component has NOT been found. Return error message.
+                               $errmsg .= sprintf(_("File %s not found in %s"), $_fileNames, get_include_path());
+                           }
+                       }
+
+                       $returnValue = $_singleReturns;
+                   } else {
+                       // We need to use a custom file_exists to also check in the include path
+                       if (self::file_exists_incpath(self::$_components[$component]["detectFiles"])) {
+                           // The component has been found.
+                           $returnValue = true;
+                       }
+                       else {
+
+                           // The component has NOT been found. Return error message.
+                           $errmsg .= sprintf(_("File %s not found in %s"), self::$_components[$component]["detectFiles"], get_include_path());
+                       }
+                   }
+               }
+               else {
+                   throw new Exception(sprintf("Unknown component type: %s", self::$_components[$component]["type"]));
+               }
+           } else {
+               // The requested component has not been defined in this class.
+               throw new Exception("Component not found");
+           }
+
+           return $returnValue;
+       }
+
+       /**
+        * Checks if one of the mandatory components is missing.
+        *
+        * @param string $errmsg    Reference of a string which would contain an
+        *                          error message.
+        *
+        * @return boolean Returns false if any components are missing.
+        */
+       public static function checkMandatoryComponents(&$errmsg = null)
+       {
+           // Init values
+           $returnValue = true;
+           $components = self::getDependencies();
+           foreach($components as $component) {
+               if($component->isMandatory()) {
+                   $returnValue &= self::check($component->getId(), $errmsg);
+               }
+           }
+
+           return $returnValue;
+       }
+
+       /** Use PHP internal functions to download a file */
+       static public function downloadFile($remoteURL, $localPath) {
+           set_time_limit(1500); // 25 minutes timeout
+           return copy($remoteURL, $localPath);
+       }
+       /**
+        * Get a UI to install the component
+        *
+        * @return html markup.
+        */
+       public function getInstallUI()
+       {
+           // Init values
+           $html = false;
+
+           // Check, if the requested component can be found.
+           if (self::check($this->getId())) {
+               //Component already installed
+           }
+           else {
+               // What are we checking for?
+               $type = $this->getType();
+               switch ($type) {
+                   case "phpExtension":
+                       $html .= sprintf(_("To install this standard PHP extension, look for a package with a similar name in your distribution's package manager.  Ex: For Debian based distributions, you may try 'sudo apt-get install php5-%s'"), $this->getId());
+
+                       break;
+                   case "localLib":
+                       if($this->getInstallSourceUrl()) {
+                           $name = $this->getId().'_install';
+                           $value = sprintf(_("Install %s"), $this->getId());
+                           $html .= sprintf("<input type='submit' name='%s' value='%s'/>", $name, $value);
+
+                       }
+                       else {
+                           $html .= sprintf(_("Sorry, i couldn't find the source for %s in installSourceUrl"),
+                           $this->getId());
+                       }
+                       break;
+                        
+                        
+                   case "pearStandard":
+                       if($this->getInstallSourceUrl()) {
+                           $installSource=$this->getInstallSourceUrl();
+                       }
+                       else {
+                           $installSource=$this->getId();
+                       }
+                       $html .= sprintf(_("To install this standard PEAR extension, try 'sudo pear install --onlyreqdeps %s'"), $installSource);
+                       break;
+                        
+                        
+                   case "peclStandard":
+                       if($this->getInstallSourceUrl()) {
+                           $installSource=$this->getInstallSourceUrl();
+                       }
+                       else {
+                           $installSource=$this->getId();
+                       }
+                       $html .= sprintf(_("To install this standard PEAR extension, try 'sudo pecl install %s'"), $installSource);
+                       break;
+                        
+                        
+                   case "pearCustom":
+                       if($this->getInstallSourceUrl()) {
+                           $installSource=$this->getInstallSourceUrl();
+                       }
+                       else {
+                           $installSource=sprintf(_("url_to_the_tarball (Sorry, i couldn't find the source for %s in installSourceUrl)"), $this->getId());
+                       }
+                       $html .= sprintf(_("To install this custom PEAR extension, use 'sudo pear install %s'"), $installSource);
+                       break;
+                        
+                        
+                   default:
+                       $html .= sprintf(_("Sorry, I don't know how to install a %s extension"), $type);
+               }
+           }
+           return $html;
+       }
+
+       /**
+        * Get a UI to install the component
+        *
+        * @return true if something was processed.
+        */
+       public function processInstallUI(&$errMsg=null)
+       {
+
+           $retval = false;
+           $name = $this->getId().'_install';
+           if(!empty($_REQUEST[$name]))
+           {
+               $this->install($errMsg);
+           }
+            
+           return $retval;
+       }
+       /**
+        * Retreives the id of the object
+        *
+        * @return The id, a string
+        */
+       public function getId() {
+           return $this->_id;
+       }
+
+       /**
+        * Get an instance of the object
+        *
+        * @param string $id The object id
+        *
+        * @return mixed The Content object, or null if there was an error
+        *               (an exception is also thrown)
+        *
+        * @see GenericObject
+        * @static
+        * @access public
+        */
+       public static function &getObject($id)
+       {
+           if(!isset(self::$instanceArray[$id])) {
+               self::$instanceArray[$id] = new self($id);
+           }
+
+           return self::$instanceArray[$id];
+       }
+
+       /**
+        * Get website URL for the dependency (if available)
+        *
+        * @return URL or null
+        */
+       public function getWebsiteURL()
+       {
+           $retval = null;
+
+           if(self::$_components[$this->_id]["type"] == "phpExtension") {
+               $retval = "http://www.php.net/" . $this->_id . "/";
+           } else if(self::$_components[$this->_id]["type"] == "pearStandard") {
+               $retval = "http://pear.php.net/package/" . $this->_id . "/";
+           } else if(self::$_components[$this->_id]["type"] == "peclStandard") {
+               $retval = "http://pecl.php.net/package/" . $this->_id . "/";
+           } else {
+               if(!empty(self::$_components[$this->_id]['website'])) {
+                   $retval = self::$_components[$this->_id]['website'];
+               }
+           }
+
+           return $retval;
+       }
+
+       /**
+        * Get the description of the dependency (if available)
+        *
+        * @return String or null
+        */
+       public function getDescription()
+       {
+           $retval = null;
+
+           if(!empty(self::$_components[$this->_id]['description'])) {
+               $retval = self::$_components[$this->_id]['description'];
+           }
+
+           return $retval;
+       }
+
+
+       /**
+        * Get the source URL where the package can be downloaded.  It's meaning depends on the install method (for example, it may be a svn source)
+        *
+        * @return String or null
+        */
+       public function getInstallSourceUrl()
+       {
+           $retval = null;
+           if(!empty(self::$_components[$this->_id]['installSourceUrl'])) {
+               $retval = self::$_components[$this->_id]['installSourceUrl'];
+           }
+           return $retval;
+       }
+       /**
+        * Get the install method for this dependency (only for those that can be directly installed by the auth server)                  *
+        * @return String or null
+        */
+       public function getInstallMethod()
+       {
+           $retval = null;
+           if(!empty(self::$_components[$this->_id]['installMethod'])) {
+               $retval = self::$_components[$this->_id]['installMethod'];
+           }
+           return $retval;
+       }
+
+       /**
+        * Get the install destination.  Interpretation depends on the install method.  Usisally the parameter to be passed to tar or SVN                 *
+        * @return String or null
+        */
+       public function getInstallDestination()
+       {
+           $retval = null;
+           if(!empty(self::$_components[$this->_id]['installDestination'])) {
+               $retval = self::$_components[$this->_id]['installDestination'];
+           }
+           return $retval;
+       }
+       /**
+        * Get the type of the dependency
+        *
+        * @return String
+        */
+       public function getType()
+       {
+           return self::$_components[$this->_id]['type'];
+       }
+
+       /**
+        * Get the type of the dependency
+        *
+        * @return String
+        */
+       public function isMandatory()
+       {
+           $retval = null;
+
+           if(!empty(self::$_components[$this->_id]['mandatory'])) {
+               $retval = true;
+           }
+
+           return $retval;
+       }
+
+       public function install(&$errorMsg = null){
+           $installSourceUrl = $this->getInstallSourceUrl();
+           $installDestinationPathOrig = $this->getInstallDestination();
+           if(!$installSourceUrl || !$installDestinationPathOrig) {
+               $errorMsg .= "<em style=\"color:red\">Error:</em>Either the install source or destination path is missing<br/>\n";
+           }
+           else {
+               $installDestinationPath = WIFIDOG_ABS_FILE_PATH . "lib/" .$installDestinationPathOrig;
+               $installMethod = $this->getInstallMethod();
+               switch($installMethod) {
+                   case "svn":
+                       self::execVerbose("svn co ".escapeshellarg($installSourceUrl)." ".escapeshellarg      ($installDestinationPath), $output, $return, $errorMsg);
+
+
+                       break;
+
+                   case "tarball":
+                       $downloadPath = WIFIDOG_ABS_FILE_PATH . "tmp/";
+                       chdir($downloadPath);
+                       if(!empty(self::$_components[$this->_id]['filename'])) {
+                           $filename = self::$_components[$this->_id]['filename'];
+                       }
+                       else {
+                           $filename_array = preg_split("/\//", $installSourceUrl);
+                           $filename = array_pop($filename_array);
+                       }
+
+
+                       if (!file_exists($downloadPath . $filename)){
+                           $errorMsg .= "Downloading tarball ($installSourceUrl) : ";
+                           //execVerbose("wget \"$phlickr_full_url\" 2>&1", $output, $return);
+                           self::downloadFile($installSourceUrl, $downloadPath . $filename);
+
+                           if (!file_exists($downloadPath . $filename)) { # Error occured, print output of wget
+                               $errorMsg .= sprintf("<em style=\"color:red\">Error:</em> Unable to download $installSourceUrl to $destinationPath<br/>\n");
+                               return false;
                            }
                            else {
-                               $installDestinationPath = WIFIDOG_ABS_FILE_PATH . "lib/" .$installDestinationPathOrig;
-                               $installMethod = $this->getInstallMethod();
-                               switch($installMethod) {
-                                   case "svn":
-                                       self::execVerbose("svn co ".escapeshellarg($installSourceUrl)." ".escapeshellarg      ($installDestinationPath), $output, $return, $errorMsg);
-
-
-                                       break;
-
-                                   case "tarball":
-                                       $downloadPath = WIFIDOG_ABS_FILE_PATH . "tmp/";
-                                       chdir($downloadPath);
-                                        if(!empty(self::$_components[$this->_id]['filename'])) {
-                                            $filename = self::$_components[$this->_id]['filename'];
-                                        }
-                                        else {
-                                            $filename_array = preg_split("/\//", $installSourceUrl);
-                                            $filename = array_pop($filename_array);
-                                        }
-
-
-                                       if (!file_exists($downloadPath . $filename)){
-                                           $errorMsg .= "Downloading tarball ($installSourceUrl) : ";
-                                           //execVerbose("wget \"$phlickr_full_url\" 2>&1", $output, $return);
-                                           self::downloadFile($installSourceUrl, $downloadPath . $filename);
-
-                                           if (!file_exists($downloadPath . $filename)) { # Error occured, print output of wget
-                                               $errorMsg .= sprintf("<em style=\"color:red\">Error:</em> Unable to download $installSourceUrl to $destinationPath<br/>\n");
-                                               return false;
-                                           }
-                                           else {
-                                               $errorMsg .= "OK<br/>";
-                                           }
-                                       }
-                                       else {
-                                           $errorMsg .= "Tarball $filename already present<br/>\n";
-                                       }
-                                       chdir($installDestinationPath);
-                                       //pretty_print_r($installDestinationPath);
-                                       if(preg_match("/(.tgz$)|(.tar.gz$)/",$filename)) {
-                                           $errorMsg .= "Archive is in gzip format<br/>";
-                                           $params = "-zxf";
-                                       }
-                                       else if(preg_match("/\.bz2$/",$filename)) {
-                                           $errorMsg .= "Archive is in bz2 format<br/>";
-                                                                                      $params = "-jxf";
-                                       }
-                                       else {
-                                           $errorMsg .= "Unable to determine the archive format from the filemname<br/>";
-                                           return;
-                                       }
-                                       $errorMsg .= "Uncompressing : ";
-                                       $execRetval = self::execVerbose("tar $params ".$downloadPath . $filename, $output, $return, $errorMsg);
-                                       if($execRetval==0) {
-                                           $errorMsg .= "OK<br/>";
-                                       }
-                                       else {
-                                           $errorMsg .= "<em style=\"color:red\">Decompression failed</em><br/>";
-                                           return;
-                                       }
-                                       break;
-                                   default:
-                                       $errorMsg .= "Unknown install method $installMethod<br/>";
-                               }//End switch
+                               $errorMsg .= "OK<br/>";
                            }
                        }
+                       else {
+                           $errorMsg .= "Tarball $filename already present<br/>\n";
+                       }
+                       chdir($installDestinationPath);
+                       //pretty_print_r($installDestinationPath);
+                       if(preg_match("/(.tgz$)|(.tar.gz$)/",$filename)) {
+                           $errorMsg .= "Archive is in gzip format<br/>";
+                           $params = "-zxf";
+                       }
+                       else if(preg_match("/\.bz2$/",$filename)) {
+                           $errorMsg .= "Archive is in bz2 format<br/>";
+                           $params = "-jxf";
+                       }
+                       else {
+                           $errorMsg .= "Unable to determine the archive format from the filemname<br/>";
+                           return;
+                       }
+                       $errorMsg .= "Uncompressing : ";
+                       $execRetval = self::execVerbose("tar $params ".$downloadPath . $filename, $output, $return, $errorMsg);
+                       if($execRetval==0) {
+                           $errorMsg .= "OK<br/>";
+                       }
+                       else {
+                           $errorMsg .= "<em style=\"color:red\">Decompression failed</em><br/>";
+                           return;
+                       }
+                       break;
+                   default:
+                       $errorMsg .= "Unknown install method $installMethod<br/>";
+               }//End switch
+           }
+       }
 
 
-  }
+}
 
-  /*
-   * Local variables:
-   * tab-width: 4
-   * c-basic-offset: 4
-   * c-hanging-comment-ender-p: nil
-   * End:
-   */
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * c-hanging-comment-ender-p: nil
+ * End:
+ */

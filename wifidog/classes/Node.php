@@ -457,16 +457,7 @@ class Node implements GenericObject
         }
 
         if ($network) {
-            try {
-                if (!$network->DEPRECATEDhasAdminAccess(User :: getCurrentUser())) {
-                    throw new Exception(_("Access denied"));
-                }
-            } catch (Exception $e) {
-                $ui = MainUI::getObject();
-                $ui->displayError($e->getMessage(), false);
-                exit;
-            }
-
+            Security::requirePermission(Permission::P('NETWORK_PERM_ADD_NEW_NODE'), $network);
             $retval = self::createNewObject($gw_id, $network);
         }
 
@@ -1630,6 +1621,12 @@ class Node implements GenericObject
                 'url' => BASE_URL_PATH.htmlspecialchars("admin/generic_object_admin.php?object_class=Node&action=edit&object_id=$nodeId")
                 );
             }
+        }
+            if(Security::hasPermission(Permission::P('NETWORK_PERM_ADD_NEW_NODE'))){
+            $items[] = array('path' => 'node/node_add_new',
+                'title' => sprintf(_("Add a new node")),
+                'url' => BASE_URL_PATH.htmlspecialchars("admin/generic_object_admin.php?object_class=Node&action=new_ui")
+            );
         }
         $items[] = array('path' => 'node',
         'title' => _('Node administration'),

@@ -77,7 +77,6 @@ $smarty->assign('sectionMAINCONTENT', false);
 
 // Init ALL smarty values
 $smarty->assign('DEPRECATEDisSuperAdmin', false);
-$smarty->assign('DEPRECATEDisOwner', false);
 $smarty->assign('selectNetworkUI', null);
 
 /**
@@ -88,7 +87,6 @@ $smarty->assign('selectNetworkUI', null);
  * access levels.
  */
 $smarty->assign('DEPRECATEDisSuperAdmin', $currentUser && $currentUser->DEPRECATEDisSuperAdmin());
-$smarty->assign('DEPRECATEDisOwner', $currentUser && $currentUser->DEPRECATEDisOwner());
 
 /*
  * Header JavaScripts

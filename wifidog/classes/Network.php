@@ -53,7 +53,7 @@ require_once('classes/Node.php');
 require_once('classes/GisPoint.php');
 require_once('classes/Cache.php');
 require_once('classes/ThemePack.php');
-
+require_once('classes/Security.php');
 
 /**
  * Abstract a Network.
@@ -189,11 +189,12 @@ class Network extends GenericDataObject
             throw new Exception(_('Unable to insert the new network in the database!'));
         }
         $object = self::getObject($network_id);
+        require_once('classes/Stakeholder.php');
+        Stakeholder::add(null, Role::getObject('NETWORK_OWNER'), $object);
         return $object;
-
     }
 
-     /**
+    /**
      * Get an interface to pick an object of this class
      *
      * If there is only one server available, no interface is actually shown
@@ -220,7 +221,7 @@ class Network extends GenericDataObject
      * @param string $user_prefix          A identifier provided by the
      *                                     programmer to recognise it's
      *                                     generated html form
-     * 
+     *
      * @param string $userData=null Array of contextual data optionally sent to the method.
      *  The function must still function if none of it is present.
      *
@@ -238,9 +239,9 @@ class Network extends GenericDataObject
         $name = $user_prefix;
         //pretty_print_r($userData);
         !empty($userData['preSelectedObject'])?$selected_id=$userData['preSelectedObject']->getId():$selected_id=self::getDefaultNetwork()->getId();
-		!empty($userData['additionalWhere'])?$additional_where=$userData['additionalWhere']:$additional_where=null;
-		!empty($userData['allowEmpty'])?$allow_empty=$userData['allowEmpty']:$allow_empty=false;
-		
+        !empty($userData['additionalWhere'])?$additional_where=$userData['additionalWhere']:$additional_where=null;
+        !empty($userData['allowEmpty'])?$allow_empty=$userData['allowEmpty']:$allow_empty=false;
+
         $db = AbstractDb::getObject();
         $sql = "SELECT network_id, name FROM networks WHERE 1=1 $additional_where";
         $network_rows = null;
@@ -332,16 +333,7 @@ class Network extends GenericDataObject
             $network_id = $_REQUEST[$name];
 
             if ($network_id) {
-                try {
-                    if (!User::getCurrentUser()->DEPRECATEDisSuperAdmin()) {
-                        throw new Exception(_("Access denied"));
-                    }
-                } catch (Exception $e) {
-                    $ui = MainUI::getObject();
-                    $ui->displayError($e->getMessage(), false);
-                    exit;
-                }
-
+                Security::requirePermission(Permission::P('SERVER_PERM_ADD_NEW_NETWORK'), Server::getServer());
                 $retval = self::createNewObject($network_id);
             }
         }
@@ -962,7 +954,7 @@ class Network extends GenericDataObject
      */
     public function setGisLocation($pt)
     {
-            $retval=false;
+        $retval=false;
         $db = AbstractDb::getObject();
 
         if (!empty ($pt)) {
@@ -972,7 +964,7 @@ class Network extends GenericDataObject
 
             if (!empty ($lat) && !empty ($long) && !empty ($alt)) {
                 $db->execSqlUpdate("UPDATE networks SET gmaps_initial_latitude = $lat, gmaps_initial_longitude = $long, gmaps_initial_zoom_level = $alt WHERE network_id = '{$this->getId()}'");
-            $retval=true;
+                $retval=true;
             }
             else {
                 $db->execSqlUpdate("UPDATE networks SET gmaps_initial_latitude = NULL, gmaps_initial_longitude = NULL, gmaps_initial_zoom_level = NULL WHERE network_id = '{$this->getId()}'");
@@ -1412,31 +1404,6 @@ class Network extends GenericDataObject
     }
 
     /**
-     * Does the user have admin access to this network?
-     *
-     * @return bool true our false
-     *
-     * @access public
-     */
-    public function DEPRECATEDhasAdminAccess(User $user)
-    {
-
-        $db = AbstractDb::getObject();
-
-        // Init values
-        $row = null;
-        $retval = false;
-
-        if ($user != null) {
-                if ($user->DEPRECATEDisSuperAdmin()) {
-                    $retval = true;
-                }
-        }
-
-        return $retval;
-    }
-
-    /**
      * Get an array of all Content linked to the network
      *
      * @param bool   $exclude_subscribed_content Exclude subscribed content?
@@ -1480,6 +1447,7 @@ class Network extends GenericDataObject
      */
     public function getAdminUI()
     {
+        Security::requirePermission(Permission::P('NETWORK_PERM_EDIT_NETWORK_CONFIG'), $this);
         require_once('classes/InterfaceElements.php');
         // Init values
         $html = '';
@@ -1668,7 +1636,7 @@ class Network extends GenericDataObject
             // Build section
             $html .= InterfaceElements::generateAdminSectionContainer("network_gis_data", _("GIS data"), implode(null, $html_network_gis_data));
         }
-        
+
         // Profile templates
         $title = _("Network profile templates");
         $name = "network_".$this->_id."_profile_templates";
@@ -1690,11 +1658,7 @@ class Network extends GenericDataObject
      */
     public function processAdminUI()
     {
-        $user = User::getCurrentUser();
-
-        if (!$this->DEPRECATEDhasAdminAccess($user)) {
-            throw new Exception(_('Access denied!'));
-        }
+        Security::requirePermission(Permission::P('NETWORK_PERM_EDIT_NETWORK_CONFIG'), $this);
 
         // Content management
         $name = "network_".$this->_id."_content";
@@ -1758,14 +1722,14 @@ class Network extends GenericDataObject
         //  allow_custom_portal_redirect
         $name = "network_".$this->getId()."_allow_custom_portal_redirect";
         $this->setCustomPortalRedirectAllowed(empty ($_REQUEST[$name]) ? false : true);
-        
+
         // Access rights
-            require_once('classes/Stakeholder.php');
+        require_once('classes/Stakeholder.php');
         Stakeholder::processAssignStakeholdersUI($this, $errMsg);
         if(!empty($errMsg)) {
-        echo $errMsg;
+            echo $errMsg;
         }
-        
+
         // GIS data
         if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED == true) {
             $gis_lat_name = "network_".$this->getId()."_gis_latitude";
@@ -1776,7 +1740,7 @@ class Network extends GenericDataObject
             $name = "network_".$this->getId()."_gmaps_map_type";
             $this->setGisMapType($_REQUEST[$name]);
         }
-        
+
         // Profile templates
         $name = "network_".$this->_id."_profile_templates";
         ProfileTemplate :: processLinkedProfileTemplateUI($name, 'network_has_profile_templates', 'network_id', $this->_id);
@@ -1891,23 +1855,19 @@ class Network extends GenericDataObject
     {
         // Init values
         $retval = false;
-
-        $user = User :: getCurrentUser();
-        if (!$user->DEPRECATEDisSuperAdmin()) {
-            $errmsg = _('Access denied (must have super admin access)');
+        Security::requirePermission(Permission::P('NETWORK_PERM_DELETE_NETWORK'), $this);
+        if ($this->isDefaultNetwork() === true) {
+            $errmsg = _('Cannot delete default network, create another one and select it before you remove this one.');
         } else {
-            if ($this->isDefaultNetwork() === true) {
-                $errmsg = _('Cannot delete default network, create another one and select it before remove this one.');
+            $db = AbstractDb::getObject();
+            $id = $db->escapeString($this->getId());
+            if (!$db->execSqlUpdate("DELETE FROM networks WHERE network_id='{$id}'", false)) {
+                $errmsg = _('Could not delete network!');
             } else {
-                $db = AbstractDb::getObject();
-                $id = $db->escapeString($this->getId());
-                if (!$db->execSqlUpdate("DELETE FROM networks WHERE network_id='{$id}'", false)) {
-                    $errmsg = _('Could not delete network!');
-                } else {
-                    $retval = true;
-                }
+                $retval = true;
             }
         }
+
 
         return $retval;
     }
@@ -1924,26 +1884,30 @@ class Network extends GenericDataObject
     {
         $this->__construct($this->_id);
     }
-    
+
     /** Menu hook function */
     static public function hookMenu() {
         $items = array();
-        if($networks = Security::getObjectsWithPermission(Permission::P('NETWORK_PERM_EDIT_NETWORK_CONFIG')))
-        {
-                    foreach ($networks as $networkId => $network) {
+        if($networks = Security::getObjectsWithPermission(Permission::P('NETWORK_PERM_EDIT_NETWORK_CONFIG'))) {
+            foreach ($networks as $networkId => $network) {
                 $items[] = array('path' => 'network/network_'.$networkId.'edit',
                 'title' => sprintf(_("Edit %s"), $network->getName()),
                 'url' => BASE_URL_PATH.htmlspecialchars("admin/generic_object_admin.php?object_class=Network&action=edit&object_id=$networkId")
                 );
             }
         }
-                $items[] = array('path' => 'network',
+        if(Security::hasPermission(Permission::P('SERVER_PERM_ADD_NEW_NETWORK'), Server::getServer())){
+            $items[] = array('path' => 'network/network_add_new',
+                'title' => sprintf(_("Add a new network on this server")),
+                'url' => BASE_URL_PATH.htmlspecialchars("admin/generic_object_admin.php?object_class=Network&action=new_ui")
+            );
+        }
+        $items[] = array('path' => 'network',
                 'title' => _('Network administration'),
                 'type' => MENU_ITEM_GROUPING);
-            
-            return $items; 
-        }
-    
+        return $items;
+    }
+
     /**
      * Assigns values about network to be processed by the Smarty engine.
      *

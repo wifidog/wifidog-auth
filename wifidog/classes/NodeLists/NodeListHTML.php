@@ -161,7 +161,6 @@ class NodeListHTML extends NodeList{
 
         // Init ALL smarty values
         $this->_smarty->assign('DEPRECATEDisSuperAdmin', false);
-        $this->_smarty->assign('DEPRECATEDisOwner', false);
         $this->_smarty->assign('GMapsEnabled', false);
         $this->_smarty->assign('nodes', array());
         $this->_smarty->assign('num_deployed_nodes', 0);
@@ -175,7 +174,6 @@ class NodeListHTML extends NodeList{
          * access levels.
          */
         $this->_smarty->assign('DEPRECATEDisSuperAdmin', $this->_currentUser && $this->_currentUser->DEPRECATEDisSuperAdmin());
-        $this->_smarty->assign('DEPRECATEDisOwner', $this->_currentUser && $this->_currentUser->DEPRECATEDisOwner());
 
         if (defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED == true) {
             $this->_smarty->assign('GMapsEnabled', true);

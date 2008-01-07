@@ -85,16 +85,19 @@ class Permission extends GenericDataObject
             $PERMISSIONS['NETWORK_PERM_VIEW_ONLINE_USERS'] = array(_("User is allowed to view online users troughout the network"), StakeholderType::Network, true);
             $PERMISSIONS['NETWORK_PERM_EDIT_ANY_USER'] = array(_("User is allowed to edit any user for this network"), StakeholderType::Network, true);
             $PERMISSIONS['NETWORK_PERM_EDIT_NETWORK_CONFIG'] = array(_("User is allowed to edit the configuration of this network"), StakeholderType::Network, true);
+            $PERMISSIONS['NETWORK_PERM_DELETE_NETWORK'] = array(_("User is allowed to delete this network"), StakeholderType::Network, true);
             $PERMISSIONS['NETWORK_PERM_VIEW_STATISTICS'] = array(_("User is allowed to view all statistics for this network"), StakeholderType::Network, true);
             $PERMISSIONS['NETWORK_PERM_EDIT_ANY_NODE_CONFIG'] = array(_("User is allowed to edit any configuration of any node on the network"), StakeholderType::Network, true);
-
+            $PERMISSIONS['NETWORK_PERM_ADD_NEW_NODE'] = array(_("User is allowed to create a new Node on this network"), StakeholderType::Server, true);
+            
             $PERMISSIONS['SERVER_PERM_EDIT_ROLES'] = array(_("User is allowed to edit user role definitions"), StakeholderType::Server, true);
             $PERMISSIONS['SERVER_PERM_EDIT_ANY_VIRTUAL_HOST'] = array(_("User is allowed to edit any virtual host definition"), StakeholderType::Server, true);
             $PERMISSIONS['SERVER_PERM_EDIT_SERVER_CONFIG'] = array(_("User is allowed to edit general server configuration"), StakeholderType::Server, true);
             $PERMISSIONS['SERVER_PERM_EDIT_PROFILE_TEMPLATES'] = array(_("User is allowed to edit the profile templates"), StakeholderType::Server, true);
             $PERMISSIONS['SERVER_PERM_EDIT_CONTENT_TYPE_FILTERS'] = array(_("User is allowed to edit the content type filters on the network"), StakeholderType::Server, true);
             $PERMISSIONS['SERVER_PERM_EDIT_CONTENT_LIBRARY'] = array(_("User is allowed to create reusable content"), StakeholderType::Server, true);
-
+            $PERMISSIONS['SERVER_PERM_ADD_NEW_NETWORK'] = array(_("User is allowed to create a new Network on this server"), StakeholderType::Server, true);
+            
             $PERMISSIONS['NODE_PERM_EDIT_GATEWAY_ID'] = array(_("User is allowed to change the gateway id of this node"), StakeholderType::Node, false);
             $PERMISSIONS['NODE_PERM_EDIT_CONFIG'] = array(_("TEMPORARY:  User is allowed to edit general configuration for this node.  This will be replaced with more granular permissions in the future"), StakeholderType::Node, false);
 
@@ -171,7 +174,7 @@ class Permission extends GenericDataObject
 
 
     /** Instantiate a user object
-     * @param $id The user id of the requested user
+     * @param $id The id of the requested permission
      * @return a Permission object, or null if there was an error
      */
     public static function &getObject($id) {
@@ -182,7 +185,7 @@ class Permission extends GenericDataObject
         return self::$instanceArray[$id];
     }
     /** Shorthand for getObject
-     * @param $id The user id of the requested user
+     * @param $id The id of the requested permission
      * @return a Permission object, or null if there was an error
      */
     public static function &P($id) {

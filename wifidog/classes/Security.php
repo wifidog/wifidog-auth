@@ -236,7 +236,7 @@ abstract class Security
         return $retval;
     }
 
-    /* Check if the current user has the requested role on the target object
+    /* Check if the current user has the requested role on the target object.  Be carefull, all access control logic should be based on permissions, nor roles, UNLESS the role is a system role.  Typically OBJECTTYPE_OWNER, which implies that the stakeholder can assign other roles to that object. (and nothing else) 
      * @param role The role object to check
      * @param $targetObject The Object on which the permssion applies (Network, Server, etc.)
      * @param user User object, optional, if unspecified, the current user is used.  Note that there may be no current user (annonymous)

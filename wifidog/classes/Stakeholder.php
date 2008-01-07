@@ -47,6 +47,7 @@
  */
 require_once('classes/Session.php');
 require_once('classes/User.php');
+require_once('classes/Role.php');
 
 /**
  * This class represent the different stakeholder types for permissions.
@@ -102,6 +103,33 @@ class Stakeholder
         }
         return $html;
     }
+
+    /**
+     * Process the interface to assign stakeholders to objects
+     * @param &$errMsg An error message will be appended to this is the username is not empty, but the user doesn't exist.
+     *
+     * @return null
+     *
+     * @param $targetObject The Object on which the permssion applies (Network, Server, etc.)
+     */
+    static public function add($user=null, Role $role, $targetObject)
+    {
+        $db = AbstractDb::getObject();
+        $object_id = $db->escapeString($targetObject->getId());
+        $object_class = get_class($targetObject);
+        $table = strtolower($object_class).'_stakeholders';
+        if(!$user) {
+            $user = User::getCurrentUser();
+        }
+         
+        if(Security::hasRole($role, $targetObject, $user)){
+            throw new Exception(_("User %s already has role %s for this object"), $user->getUsername(), $role->getId());
+        }
+        else {// the user doesn't already have that role
+            $sql = "INSERT INTO $table (object_id, user_id, role_id) VALUES ('$object_id', '{$user->getId()}', '{$role->getId()}');";
+            $db->execSqlUpdate($sql, false);
+        }
+    }
     /**
      * Process the interface to assign stakeholders to objects
      * @param &$errMsg An error message will be appended to this is the username is not empty, but the user doesn't exist.
@@ -112,7 +140,6 @@ class Stakeholder
      */
     static public function processAssignStakeholdersUI($targetObject, &$errMsg)
     {
-        require_once('classes/Role.php');
         $db = AbstractDb::getObject();
         $object_id = $db->escapeString($targetObject->getId());
         $object_class = get_class($targetObject);
@@ -131,22 +158,22 @@ class Stakeholder
 
             }
         }
-                    $stakeholder_rows = null;
-            $sql = "SELECT * FROM $table JOIN roles USING (role_id) WHERE object_id = '$object_id';";
-            $db->execSql($sql, $stakeholder_rows, false);
-            if($stakeholder_rows) {
-                foreach ($stakeholder_rows as $stakeholder_row) {
-                    $user = User::getObject($stakeholder_row['user_id']);
-                    $name = $object_id . "_stakeholder_" . $stakeholder_row['user_id'] . "_". $stakeholder_row['role_id'] . "_remove";
-                    if(!empty($_REQUEST[$name])) {
-                        $userIdStr=$db->escapeString($stakeholder_row['user_id']);
-                        $roleIdStr=$db->escapeString($stakeholder_row['role_id']);
-                        $sql = "DELETE FROM $table WHERE object_id='$object_id' AND user_id='$userIdStr' AND role_id = '$roleIdStr';";
-                        $db->execSqlUpdate($sql, false);
-                    }
+        $stakeholder_rows = null;
+        $sql = "SELECT * FROM $table JOIN roles USING (role_id) WHERE object_id = '$object_id';";
+        $db->execSql($sql, $stakeholder_rows, false);
+        if($stakeholder_rows) {
+            foreach ($stakeholder_rows as $stakeholder_row) {
+                $user = User::getObject($stakeholder_row['user_id']);
+                $name = $object_id . "_stakeholder_" . $stakeholder_row['user_id'] . "_". $stakeholder_row['role_id'] . "_remove";
+                if(!empty($_REQUEST[$name])) {
+                    $userIdStr=$db->escapeString($stakeholder_row['user_id']);
+                    $roleIdStr=$db->escapeString($stakeholder_row['role_id']);
+                    $sql = "DELETE FROM $table WHERE object_id='$object_id' AND user_id='$userIdStr' AND role_id = '$roleIdStr';";
+                    $db->execSqlUpdate($sql, false);
                 }
             }
-        
+        }
+
         return null;
     }
 

@@ -505,18 +505,6 @@ class User implements GenericObject {
 
     }
 
-    /**
-     * Tells if the current user is owner of at least one hotspot.
-     */
-    public function DEPRECATEDisOwner() {
-        $db = AbstractDb::getObject();
-        $db->execSql("SELECT * FROM node_stakeholders WHERE role_id = 'NODE_OWNER' AND user_id='{$this->getId()}'", $row, false);
-        if ($row != null)
-        return true;
-        return false;
-
-    }
-
     /** Is this user the Splash Only User() */
     public function isSplashOnlyUser() {
         if ($this->_row['username'] == "SPLASH_ONLY_USER") {
@@ -745,7 +733,7 @@ class User implements GenericObject {
         $currentUser = self :: getCurrentUser();
         $userPreferencesItems = array();
         $finalHtml = '';
-        if($this->getNetwork()->DEPRECATEDhasAdminAccess($currentUser)) {
+        if(Security::hasPermission(Permission::P('NETWORK_PERM_VIEW_STATISTICS'), $this->getNetwork())) {
             /* Statistics */
             $content = "<a href='".BASE_SSL_PATH."admin/stats.php?Statistics=".$this->getNetwork()->getId()."&distinguish_users_by=user_id&stats_selected_users=".$this->getUsername()."&UserReport=on&user_id=".$this->getId()."&action=generate'>"._("Get user statistics")."</a>\n";
             $administrationItems[] = InterfaceElements::genSectionItem($content);
@@ -761,7 +749,7 @@ class User implements GenericObject {
             $finalHtml .= InterfaceElements::genSection($administrationItems, _("Administrative options"));
         }
 
-        if (($this == $currentUser && !$this->isSplashOnlyUser() )|| $this->getNetwork()->DEPRECATEDhasAdminAccess($currentUser)) {
+        if (($this == $currentUser && !$this->isSplashOnlyUser() )|| Security::hasPermission(Permission::P('NETWORK_PERM_EDIT_ANY_USER'), $this->getNetwork())) {
             /* Username */
             $title = _("Username");
             $name = "user_" . $this->getId() . "_username";
@@ -825,14 +813,14 @@ class User implements GenericObject {
     public function processAdminUI() {
         $db = AbstractDb::getObject();
         $currentUser = self :: getCurrentUser();
-        if ($this->getNetwork()->DEPRECATEDhasAdminAccess($currentUser)) {
+        if (Security::hasPermission(Permission::P('NETWORK_PERM_EDIT_ANY_USER'), $this->getNetwork())) {
             /* Account status */
             $name = "user_" . $this->getId() . "_accountstatus";
             $status = FormSelectGenerator::getResult($name, null);
             $this->setAccountStatus($status);
         }
 
-        if ($this == $currentUser || $this->getNetwork()->DEPRECATEDhasAdminAccess($currentUser)) {
+        if ($this == $currentUser || Security::requirePermission(Permission::P('NETWORK_PERM_EDIT_ANY_USER'), $this->getNetwork())) {
             /* Username */
             $name = "user_" . $this->getId() . "_username";
             $this->setUsername($_REQUEST[$name]);
@@ -985,7 +973,6 @@ class User implements GenericObject {
          */
         $smarty->assign('userIsValid', $user && !$user->isSplashOnlyUser() ? true : false);
         $smarty->assign('userDEPRECATEDisSuperAdmin', $user && $user->DEPRECATEDisSuperAdmin());
-        $smarty->assign('userIsANodeOwner', $user && $user->DEPRECATEDisOwner());
 
         if (isset ($_REQUEST['debug_request']) && ($user && $user->DEPRECATEDisSuperAdmin())) {
             // Tell Smarty everything it needs to know

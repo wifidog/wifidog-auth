@@ -836,8 +836,8 @@ EndHTML;
             $user_id = $created_user->getId();
 
             # Add user to admin table, hide his username and set his account status to 1 (allowed)
-            $sql = "INSERT INTO server_stakeholders (user_id, role_id, object_id) VALUES ('$user_id', 'SERVER_SYSADMIN', 'SERVER_ID');\n";
-            $sql .= "INSERT INTO network_stakeholders (user_id, role_id, object_id) VALUES ('$user_id', 'NETWORK_SYSADMIN', 'default-network');\n";
+            $sql = "INSERT INTO server_stakeholders (user_id, role_id, object_id) VALUES ('$user_id', 'SERVER_OWNER', 'SERVER_ID');\n";
+            $sql .= "INSERT INTO network_stakeholders (user_id, role_id, object_id) VALUES ('$user_id', 'NETWORK_OWNER', 'default-network');\n";
             $sql .= "UPDATE users SET account_status='1' WHERE user_id='$user_id'";
             $result = pg_query($connection, $sql);
         }

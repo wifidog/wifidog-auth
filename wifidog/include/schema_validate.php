@@ -47,7 +47,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 57);
+define('REQUIRED_SCHEMA_VERSION', 58);
 /** Used to test a new shecma version before modyfying the database */
 define('SCHEMA_UPDATE_TEST_MODE', false);
 /**
@@ -72,8 +72,8 @@ function validate_schema() {
 
     if (empty ($row)) {
         echo "<html><body>";
-                      echo "<h1>" . _("I am unable to retrieve the schema version. Either the wifidog database hasn't been created yet, the postgresql server is down, or pg_hba.conf does not allow your web server to connect to the wifidog database.") . "</h1>";
-        
+        echo "<h1>" . _("I am unable to retrieve the schema version. Either the wifidog database hasn't been created yet, the postgresql server is down, or pg_hba.conf does not allow your web server to connect to the wifidog database.") . "</h1>";
+
         echo "<h2>" . _("Try running the") . " <a href='" . BASE_URL_PATH . "install.php'>" . _("installation script") . "</a>.</h2>\n";
         echo "</html></body>";
         exit ();
@@ -569,7 +569,7 @@ function real_update_schema($targetSchema) {
                 $db->execSql("SELECT user_id FROM node_stakeholders WHERE is_owner = true AND node_id='".$node->getId()."'", $ownersRow, false);
                 if ($ownersRow != null) {
                     foreach ($ownersRow as $owner_row) {
-                    $sql .= "INSERT INTO content_has_owners (content_id, user_id) VALUES ('$content_id', '" . $owner_row['user_id'] . "');\n";
+                        $sql .= "INSERT INTO content_has_owners (content_id, user_id) VALUES ('$content_id', '" . $owner_row['user_id'] . "');\n";
                     }
                 }
                 $sql .= "INSERT INTO node_has_content (content_id, node_id) VALUES ('$content_id', '" . $row['node_id'] . "');\n";
@@ -754,7 +754,7 @@ function real_update_schema($targetSchema) {
                 $db->execSql("SELECT user_id FROM node_stakeholders WHERE is_owner = true AND node_id='".$node->getId()."'", $ownersRow, false);
                 if ($ownersRow != null) {
                     foreach ($ownersRow as $owner_row) {
-                    $sql .= "INSERT INTO content_has_owners (content_id, user_id) VALUES ('$content_id', '" . $owner_row['user_id'] . "');\n";
+                        $sql .= "INSERT INTO content_has_owners (content_id, user_id) VALUES ('$content_id', '" . $owner_row['user_id'] . "');\n";
                     }
                 }
                 $sql .= "INSERT INTO node_has_content (content_id, node_id, display_location) VALUES ('$content_id', '" . $row['node_id'] . "', 'login_page');\n";
@@ -1270,10 +1270,10 @@ function real_update_schema($targetSchema) {
         }
 
     }
-     $new_schema_version = 55;
-     if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
-     printUpdateVersion($new_schema_version);
-     $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+    $new_schema_version = 55;
+    if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
+        printUpdateVersion($new_schema_version);
+        $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
         $sql .= "ALTER TABLE nodes ADD COLUMN last_heartbeat_sys_uptime INTEGER;\n";//68 years of uptime should be enough for anybody ;)
         $sql .= "ALTER TABLE nodes ALTER COLUMN last_heartbeat_sys_uptime SET DEFAULT NULL;\n";
         $sql .= "ALTER TABLE nodes ADD COLUMN last_heartbeat_wifidog_uptime INTEGER;\n";//68 years of uptime should be enough for anybody ;)
@@ -1282,22 +1282,36 @@ function real_update_schema($targetSchema) {
         $sql .= "ALTER TABLE nodes ALTER COLUMN last_heartbeat_sys_memfree SET DEFAULT NULL;\n";
         $sql .= "ALTER TABLE nodes ADD COLUMN last_heartbeat_sys_load real;\n";
         $sql .= "ALTER TABLE nodes ALTER COLUMN last_heartbeat_sys_load SET DEFAULT NULL;\n";
-     }
+    }
      
-     $new_schema_version = 56;
-     if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
-     printUpdateVersion($new_schema_version);
-     $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+    $new_schema_version = 56;
+    if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
+        printUpdateVersion($new_schema_version);
+        $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
         $sql .= "CREATE INDEX idx_connections_timestamp_in ON connections (timestamp_in);\n";
-     }
+    }
 
-     $new_schema_version = 57;
-     if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
-     printUpdateVersion($new_schema_version);
-     $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+    $new_schema_version = 57;
+    if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
+        printUpdateVersion($new_schema_version);
+        $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
         $sql .= "ALTER TABLE users ADD COLUMN open_id_url text;\n";
         $sql .= "CREATE INDEX idx_users_topen_id_url ON users (open_id_url);\n";
-     }
+    }
+
+    $new_schema_version = 58;
+    if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
+        printUpdateVersion($new_schema_version);
+        $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+        $sql .= "ALTER TABLE network_stakeholders ADD CONSTRAINT fk_roles FOREIGN KEY (role_id) REFERENCES roles (role_id) ON UPDATE CASCADE ON DELETE CASCADE;\n";
+        $sql .= "ALTER TABLE node_stakeholders ADD CONSTRAINT fk_roles FOREIGN KEY (role_id) REFERENCES roles (role_id) ON UPDATE CASCADE ON DELETE CASCADE;\n";
+        $sql .= "ALTER TABLE server_stakeholders ADD CONSTRAINT fk_roles FOREIGN KEY (role_id) REFERENCES roles (role_id) ON UPDATE CASCADE ON DELETE CASCADE;\n";
+        $sql .= "UPDATE roles SET role_id='SERVER_OWNER', is_system_role=true WHERE role_id='SERVER_SYSADMIN';\n";
+        $sql .= "UPDATE roles SET role_id='NETWORK_OWNER', is_system_role=true WHERE role_id='NETWORK_SYSADMIN';\n";
+        $sql .= "UPDATE roles SET is_system_role=true WHERE role_id='NODE_OWNER';\n";
+        $sql .= "INSERT into roles (role_id, stakeholder_type_id, is_system_role) VALUES ('CONTENT_OWNER', 'Content', true);\n";
+    }
+
     /*
      $new_schema_version = ;
      if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {

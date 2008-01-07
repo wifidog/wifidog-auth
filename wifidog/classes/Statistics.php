@@ -374,7 +374,7 @@ $from_presets = array (
         if (!isset ($user)) {
             throw new Exception(_('Access denied!'));
         } else
-        if ((!$user->DEPRECATEDisSuperAdmin() && !$user->DEPRECATEDisOwner())) {
+        if ((!$user->DEPRECATEDisSuperAdmin())) {
             throw new Exception(_('Access denied!'));
         }
 

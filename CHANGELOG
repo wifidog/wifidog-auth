@@ -1,4 +1,7 @@
 # $Id$
+2008-01-06 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Some more work on the permission system.  At long last, close #358
+	
 2008-01-05 Benoit Grégoire  <bock@step.polymtl.ca>
 	* French translation update from Frederic Sheedy (sheedf@gmail.com).  Closes #411
 
