@@ -47,6 +47,7 @@
  */
 require_once ('lib/PHPMailer/class.phpmailer.php');
 require_once ('lib/PHPMailer/class.smtp.php');
+require_once ('lib/PHPMailer/phpmailer.lang-en.php');
 
 /**
  * This a wrapper class conforming RFC822 capable of sending valid UTF-8 MIME
@@ -384,9 +385,11 @@ class Mail {
     public function send() {
         $mail = new PHPMailer();
         $mail->CharSet = "utf-8";
+        # $mail->SMTPDebug=TRUE;
 
         $mail->Mailer = EMAIL_MAILER;
         if (EMAIL_MAILER == 'smtp') {
+            $mail->IsSMTP();
             $mail->Host = EMAIL_HOST;
             $mail->SMTPAuth = EMAIL_AUTH;
 
