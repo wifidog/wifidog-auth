@@ -58,6 +58,7 @@
         {/foreach}
 		<script src="{$base_url_path}js/formutils.js" type="text/javascript"></script>
 		<script src="{$base_url_path}js/addEvent.js"  type="text/javascript"></script>
+		<script src="{$base_url_path}js/menu.js"  type="text/javascript"></script>
     </head>
     <body id='page' class='{$page_name}'>
     	{if !empty($contentDisplayArray.page_header) || $debugRequested}
@@ -68,7 +69,7 @@
 			{if !empty($contentDisplayArray.page_header)}
 				{$contentDisplayArray.page_header}
         	{/if}
-        	</div>
+            </div>
     	{/if}
         <div id="page_body">
         {if !empty($contentDisplayArray.left_area_top) ||  !empty($contentDisplayArray.left_area_middle) ||  !empty($contentDisplayArray.left_area_middle)}
@@ -94,7 +95,8 @@
                 <div id="main_area">
 	                {if !empty($contentDisplayArray.main_area_top)}
 	                <div id="main_area_top">
-	                    {$contentDisplayArray.main_area_top}
+	                    {$siteMenu}
+                        {$contentDisplayArray.main_area_top}
 	                </div>
 	                {/if}
 	                {if !empty($contentDisplayArray.main_area_middle)}

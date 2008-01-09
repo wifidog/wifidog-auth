@@ -558,9 +558,7 @@ class MainUI {
             $this->addContent('left_area_top', $this->getToolContent());
             //Display main menu
             require_once('classes/Menu.php');
-            $menu = Menu::getObject();
-            $this->addContent('main_area_top', $menu->getUserUI());
-                        $this->appendHtmlHeadContent(Menu::getIEWorkaroundJS());
+            $this->smarty->assign('siteMenu', Menu::getObject()->getUserUI());
         }
 
         $this->addEverywhereContent();

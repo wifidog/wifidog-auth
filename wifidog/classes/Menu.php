@@ -205,29 +205,30 @@ class Menu {
      *
      * @return HTML markup
      */
-    static public function getIEWorkaroundJS() {
-        $html = <<<EOT
-        <script type="text/javascript"><!--//--><![CDATA[//><!--
+//     static public function getIEWorkaroundJS() {
+//         $html = <<<EOT
+//         <script type="text/javascript"><!--//--><![CDATA[//><!--
+// 
+// sfHover = function() {
+//  var sfEls = document.getElementById("nav").getElementsByTagName("LI");
+//  for (var i=0; i<sfEls.length; i++) {
+//      sfEls[i].onmouseover=function() {
+//          this.className+=" sfhover";
+//      }
+//      sfEls[i].onmouseout=function() {
+//          //alert(this.className);
+//          this.className=this.className.replace(new RegExp(" sfhover"), "");
+//          //alert(this.className);
+//      }
+//  }
+// }
+// if (window.attachEvent) window.attachEvent("onload", sfHover);
+// 
+// //--><!]]></script>
+// EOT;
+//         return $html;
+//     }
 
-sfHover = function() {
-	var sfEls = document.getElementById("nav").getElementsByTagName("LI");
-	for (var i=0; i<sfEls.length; i++) {
-		sfEls[i].onmouseover=function() {
-			this.className+=" sfhover";
-		}
-		sfEls[i].onmouseout=function() {
-			//alert(this.className);
-			this.className=this.className.replace(new RegExp(" sfhover"), "");
-			//alert(this.className);
-		}
-	}
-}
-if (window.attachEvent) window.attachEvent("onload", sfHover);
-
-//--><!]]></script>
-EOT;
-        return $html;
-    }
     public function getUserUI()
     {
         $this->initMenu();
