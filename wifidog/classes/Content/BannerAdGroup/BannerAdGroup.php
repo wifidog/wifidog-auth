@@ -134,7 +134,7 @@ class BannerAdGroup extends ContentGroup {
 
         /*max_width*/
         $html .= "<li class='admin_element_item_container'>\n";
-        $html .= "<div class='admin_element_label'>" . ("Width") . ": </div>\n";
+        $html .= "<div class='admin_element_label'>" . _("Width") . ": </div>\n";
         $html .= "<div class='admin_element_data'>\n";
         $name = "banner_add_group_{this->getId()}_max_width";
         $html .= "<input type='text' size='6' value='$max_width' name='$name'>\n";
@@ -143,7 +143,7 @@ class BannerAdGroup extends ContentGroup {
 
         /*max_height*/
         $html .= "<li class='admin_element_item_container'>\n";
-        $html .= "<div class='admin_element_label'>" . ("Height") . ": </div>\n";
+        $html .= "<div class='admin_element_label'>" . _("Height") . ": </div>\n";
         $html .= "<div class='admin_element_data'>\n";
         $name = "banner_add_group_{this->getId()}_max_height";
         $html .= "<input type='text' size='6' value='$max_height' name='$name'>\n";

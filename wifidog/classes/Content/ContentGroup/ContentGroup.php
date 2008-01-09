@@ -58,24 +58,12 @@ require_once ('classes/ContentTypeFilter.php');
  * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class ContentGroup extends Content {
-
-    private $CONTENT_ORDERING_MODES = array (
-        'RANDOM' => "Pick content elements randomly",
-        'PSEUDO_RANDOM' => "Pick content elements randomly, but not twice until all elements have been seen",
-        'SEQUENTIAL' => "Pick content elements in sequential order"
-    );
-    private $CONTENT_CHANGES_ON_MODES = array (
-        'ALWAYS' => "Content always rotates",
-        'NEXT_DAY' => "Content rotates once per day",
-        'NEXT_LOGIN' => "Content rotates once per session",
-        'NEXT_NODE' => "Content rotates each time you change node",
-        'NEVER' => "Content never rotates.  Usefull when showing all elements simultaneously in a specific order."
-    );
-    private $ALLOW_REPEAT_MODES = array (
-        'YES' => "Content can be shown more than once",
-        'NO' => "Content can only be shown once",
-        'ONCE_PER_NODE' => "Content can be shown more than once, but not at the same node"
-    );
+    /** See contructor for value */
+    private $CONTENT_ORDERING_MODES;
+    /** See contructor for value */
+    private $CONTENT_CHANGES_ON_MODES;
+    /** See contructor for value */
+    private $ALLOW_REPEAT_MODES;
 
     // is_expandable is ONLY for internal use, it use normally only set by the constructor
     private $is_expandable = true;
@@ -94,8 +82,24 @@ class ContentGroup extends Content {
 
         // Init values
         $row = null;
-
         parent :: __construct($content_id);
+        $this->CONTENT_ORDERING_MODES = array (
+        'RANDOM' => _("Pick content elements randomly"),
+        'PSEUDO_RANDOM' => _("Pick content elements randomly, but not twice until all elements have been seen"),
+       'SEQUENTIAL' => _("Pick content elements in sequential order")
+        );
+        $this->CONTENT_CHANGES_ON_MODES = array (
+        'ALWAYS' => _("Content always rotates"),
+        'NEXT_DAY' => _("Content rotates once per day"),
+        'NEXT_LOGIN' => _("Content rotates once per session"),
+        'NEXT_NODE' => _("Content rotates each time you change node"),
+        'NEVER' => _("Content never rotates.  Usefull when showing all elements simultaneously in a specific order.")
+        );
+        $this->ALLOW_REPEAT_MODES = array (
+        'YES' => _("Content can be shown more than once"),
+        'NO' => _("Content can only be shown once"),
+        'ONCE_PER_NODE' => _("Content can be shown more than once, but not at the same node")
+        );
 
         $content_id = $db->escapeString($content_id);
 
@@ -120,14 +124,14 @@ class ContentGroup extends Content {
     }
 
     /** Set the allowed content types for the group,
-    * @param $allowed_content_types ContentTypeFilter*/
+     * @param $allowed_content_types ContentTypeFilter*/
     public function setAllowedContentTypes(ContentTypeFilter $allowed_content_types) {
         $this->allowed_content_types = $allowed_content_types;
 
     }
 
     /** In what order is the content displayed to the user
-    * @return string, a key of CONTENT_SELECTION_MODES */
+     * @return string, a key of CONTENT_SELECTION_MODES */
     public function getContentOrderingMode() {
         return $this->content_group_row['content_ordering_mode'];
     }
@@ -156,7 +160,7 @@ class ContentGroup extends Content {
     }
 
     /** When does the content rotate?
-    * @return string, a key of CONTENT_SELECTION_MODES */
+     * @return string, a key of CONTENT_SELECTION_MODES */
     public function getContentChangesOnMode() {
         return $this->content_group_row['content_changes_on_mode'];
     }
@@ -214,18 +218,18 @@ class ContentGroup extends Content {
     }
 
     /** How many element should be picked for display at once?
-    * @return integer */
+     * @return integer */
     public function getDisplayNumElements() {
         if ($this->temporary_display_num_elements == null)
-            return $this->content_group_row['display_num_elements'];
+        return $this->content_group_row['display_num_elements'];
         else
-            return $this->temporary_display_num_elements;
+        return $this->temporary_display_num_elements;
     }
 
     /** How many element should be picked for display at once?
-    * @param $display_num_elements integer, must be greater than zero.
-    * @return true if successfull
-    * */
+     * @param $display_num_elements integer, must be greater than zero.
+     * @return true if successfull
+     * */
     protected function setDisplayNumElements($display_num_elements, & $errormsg = null) {
         $retval = false;
         if (($display_num_elements > 0) && $display_num_elements != $this->getDisplayNumElements()) /* Only update database if the mode is valid and there is an actual change */ {
@@ -288,7 +292,7 @@ class ContentGroup extends Content {
 
         /*display_num_elements*/
         $html .= "<li class='admin_element_item_container'>\n";
-        $html .= "<div class='admin_element_label'>" . ("Pick how many elements for each display?") . ": </div>\n";
+        $html .= "<div class='admin_element_label'>" . _("Pick how many elements for each display?") . ": </div>\n";
         $html .= "<div class='admin_element_data'>\n";
         $name = "content_group_" . $this->id . "_display_num_elements";
         $value = $this->getDisplayNumElements();
@@ -323,7 +327,7 @@ class ContentGroup extends Content {
         $html .= "<input type='hidden' name='$name' id='$name' value='$showExpired'>\n";
         $name = "content_group_" . $this->id . "_expired_elements_shown";
         $html .= "<input type='hidden' name='$name' id='$name' value='$showExpired'>\n";
-        
+
         $html .= "<ul class='admin_element_list'>\n";
         foreach ($this->getElements($additionalWhere) as $element) {
             $html .= "<li class='admin_element_item_container'>\n";
@@ -370,12 +374,12 @@ class ContentGroup extends Content {
             $this->setDisplayNumElements($_REQUEST[$name]);
 
             /* content_group_element */
-         $name = "content_group_" . $this->id . "_expired_elements_shown";
-        if (empty ($_REQUEST[$name])) {
-            $additionalWhere = "AND (valid_until_timestamp IS NULL OR valid_until_timestamp >= CURRENT_TIMESTAMP) \n";
-        } else {
-            $additionalWhere = null;
-       }
+            $name = "content_group_" . $this->id . "_expired_elements_shown";
+            if (empty ($_REQUEST[$name])) {
+                $additionalWhere = "AND (valid_until_timestamp IS NULL OR valid_until_timestamp >= CURRENT_TIMESTAMP) \n";
+            } else {
+                $additionalWhere = null;
+            }
             foreach ($this->getElements($additionalWhere) as $element) {
                 $name = "content_group_" . $this->id . "_element_" . $element->GetId() . "_erase";
                 if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true) {
@@ -414,7 +418,7 @@ class ContentGroup extends Content {
     }
 
     /**Get the next element or elements to be displayed, depending on the display mode
-    * @return an array of ContentGroupElement or an empty arrray */
+     * @return an array of ContentGroupElement or an empty arrray */
     function getDisplayElements() {
         //This function is very expensive, cache the results
         if (!is_array($this->display_elements)) {
@@ -476,7 +480,7 @@ class ContentGroup extends Content {
                     foreach ($redisplay_rows as $redisplay_row) {
                         $object = self :: getObject($redisplay_row['content_group_element_id']);
                         if ($object->isDisplayableAt(Node :: GetCurrentNode()) == true) /** Only content available at this hotspot are considered */
-                            {
+                        {
                             $redisplay_objects[] = $object;
                         }
                     }
@@ -549,7 +553,7 @@ class ContentGroup extends Content {
                 foreach ($element_rows as $element_row) {
                     $object = self :: getObject($element_row['content_group_element_id']);
                     if ($object->isDisplayableAt(Node :: GetCurrentNode()) == true) /** Only content available at this hotspot are considered */
-                        {
+                    {
                         $new_objects[] = $object;
                     }
                 }
@@ -570,13 +574,13 @@ class ContentGroup extends Content {
                 $num_to_pick = $display_num_elements -count($redisplay_objects);
                 $new_objects = array_slice($new_objects, 0, $num_to_pick);
             }
-            
+
             /*echo "<pre>Redisplay: ";
-            print_r($redisplay_objects);
-            echo "New objects: ";
-            print_r($new_objects);
-            echo "</pre>";*/
-            
+             print_r($redisplay_objects);
+             echo "New objects: ";
+             print_r($new_objects);
+             echo "</pre>";*/
+
             $retval = array_merge($new_objects, $redisplay_objects);
             //echo count($retval).' returned <br>';
             $this->display_elements = $retval;
@@ -591,7 +595,7 @@ class ContentGroup extends Content {
      */
     protected function setIsExpandable($status) {
         if (is_bool($status))
-            $this->is_expandable = $status;
+        $this->is_expandable = $status;
     }
 
     /**
@@ -609,9 +613,9 @@ class ContentGroup extends Content {
         if ($this->isExpandable() && is_bool($status)) {
             //TODO: Try to find a better solution to this problem...
             if ($status == true)
-                $this->setTemporaryDisplayNumElements(3000);
+            $this->setTemporaryDisplayNumElements(3000);
             else
-                $this->setTemporaryDisplayNumElements(null);
+            $this->setTemporaryDisplayNumElements(null);
             $this->expand_status = $status;
         }
     }
@@ -624,7 +628,7 @@ class ContentGroup extends Content {
      */
     public function getExpandStatus() {
         if ($this->expand_status == null)
-            return false;
+        return false;
         return $this->expand_status;
     }
 
@@ -654,14 +658,14 @@ class ContentGroup extends Content {
                 foreach ($display_elements as $display_element) {
                     // If the content group logging is disabled, all the children will inherit this property temporarly
                     if ($this->getLoggingStatus() == false)
-                        $display_element->setLoggingStatus(false);
+                    $display_element->setLoggingStatus(false);
                     $html .= $display_element->getUserUI();
                 }
             } else {
                 //$html .= '<p class="warningmsg">' . _("Sorry, this content-group is empty") . "</p>\n";
             }
         }
-		$this->setUserUIMainDisplayContent($html);
+        $this->setUserUIMainDisplayContent($html);
         return parent :: getUserUI();
     }
 
@@ -696,8 +700,8 @@ class ContentGroup extends Content {
     }
 
     /** Reloads the object from the database.  Should normally be called after a set operation.
-    * This function is private because calling it from a subclass will call the
-    * constructor from the wrong scope */
+     * This function is private because calling it from a subclass will call the
+     * constructor from the wrong scope */
     private function refresh() {
         $this->__construct($this->id);
     }
