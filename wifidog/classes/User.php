@@ -46,7 +46,6 @@
  * Load required classes
  */
 require_once ('classes/Network.php');
-require_once ('classes/Mail.php');
 require_once ('classes/InterfaceElements.php');
 require_once ('classes/ProfileTemplate.php');
 require_once ('classes/Profile.php');
@@ -575,6 +574,7 @@ class User implements GenericObject {
 
     function sendLostUsername() {
         $network = $this->getNetwork();
+        require_once ('classes/Mail.php');
         $mail = new Mail();
         $mail->setSenderName(_("Registration system"));
         $mail->setSenderEmail($network->getValidationEmailFromAddress());
@@ -592,7 +592,7 @@ class User implements GenericObject {
                 throw new Exception(_("The validation token is empty."));
             } else {
                 $network = $this->getNetwork();
-
+                require_once ('classes/Mail.php');
                 $mail = new Mail();
                 $mail->setSenderName(_("Registration system"));
                 $mail->setSenderEmail($network->getValidationEmailFromAddress());
@@ -609,7 +609,7 @@ class User implements GenericObject {
         $network = $this->getNetwork();
         $new_password = $this->randomPass();
         $this->setPassword($new_password);
-
+        require_once ('classes/Mail.php');
         $mail = new Mail();
         $mail->setSenderName(_("Registration system"));
         $mail->setSenderEmail($network->getValidationEmailFromAddress());

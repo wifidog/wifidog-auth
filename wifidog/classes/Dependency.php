@@ -91,7 +91,7 @@ class Dependency
      * 						For pearStandard, either the required alpha or beta name like "Image_Canvas-alpha" or the fulle channel URL like: "channel://pear.php.net/Image_graph-0.7.2" ( normally not used for dependencies in standard pear repositories)
      * 'installMethod' => For localLib, the protocol to be used to download and install the dependency.  Currently, allowed values are:
      * 	'tarball': Decompress a tarball in wifidog/lib
-     * 'installDestination' => For localLib, the path, relative to wifidog/lib where the dependency should be installed
+     * 'installDestination' => For localLib, the path, relative to wifidog/lib where the dependency should be installed.  Usually / if the tarball creates a folder.
      * 'filename' => temp download filename if sourceurl does not meet preg requirements.
      *
      * @var array
@@ -124,7 +124,17 @@ class Dependency
        'installMethod' => "tarball",
        'installDestination' => "/"
        ),
-
+       "PHPMailer" => array (
+       'mandatory' => true,
+       "type" => "localLib",
+       "detectFiles" => "lib/PHPMailer_v2.0.0/class.phpmailer.php",
+       'description' => "Required for sending mail",
+       'website' => "http://phpmailer.codeworxtech.com/",
+       'installSourceUrl' => "http://superb-west.dl.sourceforge.net/sourceforge/phpmailer/PHPMailer_v2.0.0.tar.gz",
+       'installMethod' => "tarball",
+       'installDestination' => "/"
+       ),
+       
        /* PHP extensions (optional) */
        "simplepie" => array (
        "type" => "localLib",

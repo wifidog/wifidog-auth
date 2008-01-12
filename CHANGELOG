@@ -1,4 +1,7 @@
 # $Id$
+2008-01-11 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Use the Dependency system to include PHPMailer and tweak Mail.php.  You'll need to re-run the Dpenedency stage of the install script. This allows:  Translating PHPMailer error messages, Actually having PHPMailer error messages, and displaying them properly.
+	
 2008-01-09 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Add gettext calls, fixes #413
 	
