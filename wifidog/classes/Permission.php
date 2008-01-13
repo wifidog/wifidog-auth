@@ -88,7 +88,7 @@ class Permission extends GenericDataObject
             $PERMISSIONS['NETWORK_PERM_DELETE_NETWORK'] = array(_("User is allowed to delete this network"), StakeholderType::Network, true);
             $PERMISSIONS['NETWORK_PERM_VIEW_STATISTICS'] = array(_("User is allowed to view all statistics for this network"), StakeholderType::Network, true);
             $PERMISSIONS['NETWORK_PERM_EDIT_ANY_NODE_CONFIG'] = array(_("User is allowed to edit any configuration of any node on the network"), StakeholderType::Network, true);
-            $PERMISSIONS['NETWORK_PERM_ADD_NEW_NODE'] = array(_("User is allowed to create a new Node on this network"), StakeholderType::Server, true);
+            $PERMISSIONS['NETWORK_PERM_ADD_NODE'] = array(_("User is allowed to create a new Node on this network"), StakeholderType::Network, true);
             
             $PERMISSIONS['SERVER_PERM_EDIT_ROLES'] = array(_("User is allowed to edit user role definitions"), StakeholderType::Server, true);
             $PERMISSIONS['SERVER_PERM_EDIT_ANY_VIRTUAL_HOST'] = array(_("User is allowed to edit any virtual host definition"), StakeholderType::Server, true);

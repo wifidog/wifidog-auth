@@ -1,4 +1,7 @@
 # $Id$
+2008-01-13 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Permission.php:  Fix typo that caused "Tried to check if an object of class Server has a permission of type Network" errors.  Changed the id from NETWORK_PERM_ADD_NEW_NODE to NETWORK_PERM_ADD_NODE so it will auto-delete the corrupted permission.
+	
 2008-01-11 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Use the Dependency system to include PHPMailer and tweak Mail.php.  You'll need to re-run the Dpenedency stage of the install script. This allows:  Translating PHPMailer error messages, Actually having PHPMailer error messages, and displaying them properly.
 	

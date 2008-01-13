@@ -457,7 +457,7 @@ class Node implements GenericObject
         }
 
         if ($network) {
-            Security::requirePermission(Permission::P('NETWORK_PERM_ADD_NEW_NODE'), $network);
+            Security::requirePermission(Permission::P('NETWORK_PERM_ADD_NODE'), $network);
             $retval = self::createNewObject($gw_id, $network);
         }
 
@@ -1622,7 +1622,7 @@ class Node implements GenericObject
                 );
             }
         }
-            if(Security::hasPermission(Permission::P('NETWORK_PERM_ADD_NEW_NODE'))){
+            if(Security::hasPermission(Permission::P('NETWORK_PERM_ADD_NODE'))){
             $items[] = array('path' => 'node/node_add_new',
                 'title' => sprintf(_("Add a new node")),
                 'url' => BASE_URL_PATH.htmlspecialchars("admin/generic_object_admin.php?object_class=Node&action=new_ui")
