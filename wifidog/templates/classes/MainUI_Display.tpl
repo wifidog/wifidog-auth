@@ -93,7 +93,7 @@
         {/if}
         {if !empty($contentDisplayArray.main_area_top) ||  !empty($contentDisplayArray.main_area_middle) ||  !empty($contentDisplayArray.main_area_middle)}
                 <div id="main_area">
-	                {if !empty($contentDisplayArray.main_area_top)}
+	                {if !empty($contentDisplayArray.main_area_top) || !empty($siteMenu)}
 	                <div id="main_area_top">
 	                    {$siteMenu}
                         {$contentDisplayArray.main_area_top}
