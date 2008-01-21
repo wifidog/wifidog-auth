@@ -1034,6 +1034,7 @@ class Node implements GenericObject
         $permArray[]=array(Permission::P('NETWORK_PERM_EDIT_ANY_NODE_CONFIG'), $this->getNetwork());
         $permArray[]=array(Permission::P('NODE_PERM_EDIT_CONFIG'), $this);
         $permArray[]=array(Permission::P('NODE_PERM_EDIT_GATEWAY_ID'), $this);
+        $permArray[]=array(Permission::P('NODE_PERM_EDIT_DEPLOYMENT_DATE'), $this);
         Security::requireAnyPermission($permArray);
         require_once('classes/InterfaceElements.php');
         require_once('classes/Stakeholder.php');
@@ -1094,13 +1095,26 @@ class Node implements GenericObject
         $html .= InterfaceElements::generateAdminSectionContainer("node_content", $_title, $_data);
 
         // Name
-        $_title = _("Name");
-        $_data = InterfaceElements::generateInputText("node_" . $node_id . "_name", $this->getName(), "node_name_input");
-        $_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_name", $_title, $_data);
+        $permArray = null;
+        $permArray[]=array(Permission::P('NETWORK_PERM_EDIT_ANY_NODE_CONFIG'), $network);
+        $permArray[]=array(Permission::P('NODE_PERM_EDIT_NAME'), $this);
+        if (Security::hasAnyPermission($permArray)) {
+            $_title = _("Name");
+            $_data = InterfaceElements::generateInputText("node_" . $node_id . "_name", $this->getName(), "node_name_input");
+            $_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_name", $_title, $_data);
+        }
+        else {
+           $_title = _("Name");
+            $_data = $this->getName();
+            $_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_name", $_title, $_data);
+        }
 
         // Creation date
         $_title = _("Creation date");
-        if ($_userIsAdmin) {
+        $permArray = null;
+        $permArray[]=array(Permission::P('NETWORK_PERM_EDIT_ANY_NODE_CONFIG'), $network);
+        $permArray[]=array(Permission::P('NODE_PERM_EDIT_DEPLOYMENT_DATE'), $this);
+        if (Security::hasAnyPermission($permArray)) {
             $_data = DateTimeWD::getSelectDateTimeUI(new DateTimeWD($this->getCreationDate()), "node_" . $node_id . "_creation_date", DateTimeWD::INTERFACE_DATETIME_FIELD, "node_creation_date_input");
         } else {
             $_data  = htmlspecialchars($this->getCreationDate(), ENT_QUOTES);
@@ -1263,6 +1277,7 @@ class Node implements GenericObject
         $permArray[]=array(Permission::P('NETWORK_PERM_EDIT_ANY_NODE_CONFIG'), $this->getNetwork());
         $permArray[]=array(Permission::P('NODE_PERM_EDIT_CONFIG'), $this);
         $permArray[]=array(Permission::P('NODE_PERM_EDIT_GATEWAY_ID'), $this);
+        $permArray[]=array(Permission::P('NODE_PERM_EDIT_DEPLOYMENT_DATE'), $this);
         Security::requireAnyPermission($permArray);
         // Check if user is a admin
         $_userIsAdmin = User::getCurrentUser()->DEPRECATEDisSuperAdmin();
@@ -1284,19 +1299,21 @@ class Node implements GenericObject
         Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id);
 
         // Name
-        if ($_userIsAdmin) {
+        $permArray = null;
+        $permArray[]=array(Permission::P('NETWORK_PERM_EDIT_ANY_NODE_CONFIG'), $network);
+        $permArray[]=array(Permission::P('NODE_PERM_EDIT_NAME'), $this);
+        if (Security::hasAnyPermission($permArray)) {
             $name = "node_".$node_id."_name";
             $this->setName($_REQUEST[$name]);
-        } else {
-            $this->setName($this->getName());
         }
 
         // Creation date
-        if ($_userIsAdmin) {
+       $permArray = null;
+        $permArray[]=array(Permission::P('NETWORK_PERM_EDIT_ANY_NODE_CONFIG'), $network);
+        $permArray[]=array(Permission::P('NODE_PERM_EDIT_DEPLOYMENT_DATE'), $this);
+        if (Security::hasAnyPermission($permArray)) {
             $name = "node_".$node_id."_creation_date";
             $this->setCreationDate(DateTimeWD::processSelectDateTimeUI($name, DateTimeWD :: INTERFACE_DATETIME_FIELD)->getIso8601FormattedString());
-        } else {
-            $this->setCreationDate($this->getCreationDate());
         }
 
         // Homepage URL
@@ -1622,7 +1639,7 @@ class Node implements GenericObject
                 );
             }
         }
-            if(Security::hasPermission(Permission::P('NETWORK_PERM_ADD_NODE'))){
+        if(Security::hasPermission(Permission::P('NETWORK_PERM_ADD_NODE'))){
             $items[] = array('path' => 'node/node_add_new',
                 'title' => sprintf(_("Add a new node")),
                 'url' => BASE_URL_PATH.htmlspecialchars("admin/generic_object_admin.php?object_class=Node&action=new_ui")

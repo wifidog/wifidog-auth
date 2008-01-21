@@ -1,4 +1,8 @@
 # $Id$
+
+2008-01-16 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Fix #42 (Node cannot be renamed)
+	
 2008-01-16 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Temporary patch for problem introduced in [1319]:  the menu did not display where main_area_top is empty (which is actually most places in the admin interface).  This shouldn't have been done in the first place, as it doesn't fix the problem the menu cause of theming, and worse causes people to edit MainUI_Display.tpl, causing such errors.  A network config option should have been provided to allow selecting in what area the menu goes.
 

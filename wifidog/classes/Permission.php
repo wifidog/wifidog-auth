@@ -99,6 +99,9 @@ class Permission extends GenericDataObject
             $PERMISSIONS['SERVER_PERM_ADD_NEW_NETWORK'] = array(_("User is allowed to create a new Network on this server"), StakeholderType::Server, true);
             
             $PERMISSIONS['NODE_PERM_EDIT_GATEWAY_ID'] = array(_("User is allowed to change the gateway id of this node"), StakeholderType::Node, false);
+            $PERMISSIONS['NODE_PERM_EDIT_NAME'] = array(_("User is allowed to change the public name of this node"), StakeholderType::Node, false);
+            $PERMISSIONS['NODE_PERM_EDIT_DEPLOYMENT_DATE'] = array(_("User is allowed to change the deployment date of this node"), StakeholderType::Node, false);
+            
             $PERMISSIONS['NODE_PERM_EDIT_CONFIG'] = array(_("TEMPORARY:  User is allowed to edit general configuration for this node.  This will be replaced with more granular permissions in the future"), StakeholderType::Node, false);
 
             self::$_permissionArray = $PERMISSIONS;
