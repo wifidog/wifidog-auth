@@ -54,6 +54,8 @@
       $db = AbstractDb::getObject();
       $last_heartbeat = strtotime($nodeObject->getLastHeartbeatTimestamp());
 $time = time();
+    $downtime = round((time() - $last_heartbeat)/60, 0);
+    $paged_addresses = "";
 
       if ($time - $last_heartbeat > 60*$minutes) {//If hostpot is down for longuer than the requested average interval
           $lastPaged = strtotime($nodeObject->getLastPaged());
@@ -77,10 +79,10 @@ $time = time();
                   $mail->setSenderEmail($network->getTechSupportEmail());
                   $mail->setRecipientEmail($officer->getEmail());
                   $mail->setMessageSubject($minutes . " - " . $network->getName()." "._("node")." ".$nodeObject->getName());
+                  $mail->setHighPriority(true);
                   $mail->setMessageBody(sprintf(_("Node %s (%s) has been down for %d minutes (since %s)"), $nodeObject->getName(), $nodeObject->getId(), $minutes, date("r", $last_heartbeat)));
                   $mailRetval = $mail->send();
                   $usersMsg .= sprintf("%s: %s", $officer->getUsername(), $mailRetval?_("Success"):_("Failed sending mail"))."\n";
-
               }
               $msg = sprintf("Node %s has been DOWN for %d minutes, we mailed the following %d user(s):\n%s", $nodeObject->getName(), ($time-$last_heartbeat)/60, count($usersToPage), $usersMsg) ;
               throw new exception($msg);
@@ -98,13 +100,27 @@ $time = time();
       if ($nodes_results == null)
       throw new Exception(_("No deployed nodes could not be found in the database"));
 
+      echo "<html>\n<head>\n";
+      echo "<title>Node Monitoring System</title>\n</head>\n";
+      echo "<style>\n";
+      echo "table {border: 1px solid black;}\n";
+      echo "td {padding: 4px;}\n";
+      echo "tr {border: 1px solid black;}\n";
+      echo ".alert {background: #ffaaaa;}\n";
+      echo "</style>";
+      echo "<body>\n";
+      echo "<p>Current server time: " . date("r") . "</p>";
+      echo "<table>\n<tr><th>Node</th><th>Last Heartbeat</th><th>Last IP Address</th><th>Status Message</th></tr>\n";
       foreach ($nodes_results as $node_row)
       {
-          $nodeObject = Node :: getObject($node_row['node_id']);
-          #echo $nodeObject->getName();
-          #echo " - ";
-          #echo $nodeObject->getLastHeartbeatTimestamp();
-          #echo " - ";
+      	$nodeObject = Node :: getObject($node_row['node_id']);
+          echo "<tr><td>";
+          echo $nodeObject->getName();
+          echo "</td><td>";
+          echo $nodeObject->getLastHeartbeatTimestamp();
+          echo "</td><td>";
+          echo $nodeObject->getLastHeartbeatIP();
+          echo "</td>";
           try {
               page_if_down_since($nodeObject, 43200);//A month
               page_if_down_since($nodeObject, 10080);//A week
@@ -112,18 +128,19 @@ $time = time();
               page_if_down_since($nodeObject, 120);//Two hours
               page_if_down_since($nodeObject, 30);//30 min
               page_if_down_since($nodeObject, 5);//5 min
+              echo "<td>ok</td>";
           } catch (Exception $e) {
               # Do nothing, we cronned this
-              echo $e->getMessage();
+              echo "<td class=\"alert\">";
+              echo $e->getMessage() . "<br>";
+              echo "</td>";
           }
-          #echo "<br>";
-          #echo "<hr>";
-          #echo "\n";
+          echo "</tr>\n";
       }
+      echo "</table></body></html>\n";
   } catch (Exception $e) {
       echo $e;
   }
-
   /*
    * Local variables:
    * tab-width: 4
@@ -131,5 +148,4 @@ $time = time();
    * c-hanging-comment-ender-p: nil
    * End:
    */
-
    ?>
