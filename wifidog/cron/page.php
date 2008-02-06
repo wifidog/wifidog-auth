@@ -49,6 +49,7 @@
 
   require_once('classes/Network.php');
   require_once('classes/Node.php');
+  require_once('classes/Mail.php');
 
   function page_if_down_since($nodeObject, $minutes) {
       $db = AbstractDb::getObject();
