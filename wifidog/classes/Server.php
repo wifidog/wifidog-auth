@@ -35,7 +35,7 @@
 
 /**
  * @package    WiFiDogAuthServer
- * @author     Max Horvath <max.horvath@maxspot.de>
+ * @author     Max Horvath <max.horvath@freenet.de>
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @copyright  2007 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id: $
@@ -68,7 +68,7 @@ class Server extends GenericDataObject
      */
     private function __construct($p_server_id)
     {
-         
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -136,7 +136,7 @@ class Server extends GenericDataObject
      */
     public static function createNewObject($server_id = null)
     {
-         
+
         $db = AbstractDb::getObject();
 
         if (empty($server_id)) {
@@ -187,7 +187,7 @@ class Server extends GenericDataObject
      */
     public function setDefaultVirtualHost(VirtualHost $vhost)
     {
-         
+
         $db = AbstractDb::getObject();
         $vhostIdStr = $db->escapeString($vhost->getId());
         // Init values
@@ -260,7 +260,7 @@ class Server extends GenericDataObject
         $date_default_timezone_get = 'date_default_timezone_get';
         is_callable($date_default_timezone_get)?$phpTimezone = date_default_timezone_get():$phpTimezone = "Requires PHP 5.1 to tell";
         $html .= " ".sprintf(_("Timezone from PHP: %s"), $phpTimezone)."</p>"; // Version < 5.0.0
-         
+
         $html .= "</div>\n";
         $html .= "</li>\n";
 

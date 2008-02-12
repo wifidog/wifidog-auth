@@ -1,33 +1,38 @@
 # $Id$
 
+2008-02-12 Max Horváth  <max.horvath@freenet.de>
+    * Fixed issue in install.php when POSIX is unavailable to PHP
+    * Fixed package name of Cache_Lite in Dependency class
+    * Updated mail address of Max Horváth
+
 2008-01-16 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix #42 (Node cannot be renamed)
-	
+
 2008-01-16 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Temporary patch for problem introduced in [1319]:  the menu did not display where main_area_top is empty (which is actually most places in the admin interface).  This shouldn't have been done in the first place, as it doesn't fix the problem the menu cause of theming, and worse causes people to edit MainUI_Display.tpl, causing such errors.  A network config option should have been provided to allow selecting in what area the menu goes.
 
 2008-01-13 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Permission.php:  Fix typo that caused "Tried to check if an object of class Server has a permission of type Network" errors.  Changed the id from NETWORK_PERM_ADD_NEW_NODE to NETWORK_PERM_ADD_NODE so it will auto-delete the corrupted permission.
-	
+
 2008-01-11 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Use the Dependency system to include PHPMailer and tweak Mail.php.  You'll need to re-run the Dpenedency stage of the install script. This allows:  Translating PHPMailer error messages, Actually having PHPMailer error messages, and displaying them properly.
 
 2008-01-09 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Add gettext calls, fixes #413
-	
+
 2008-01-06 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Some more work on the permission system.  At long last, close #358
-	
+
 2008-01-05 Benoit Grégoire  <bock@step.polymtl.ca>
 	* French translation update from Frederic Sheedy (sheedf@gmail.com).  Closes #411
 
 2007-12-30 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Workaround IE6 braindeadness in the base theme.  Closes  #406.  Credit goes to Frederic Sheedy (sheedf@gmail.com)
-	
+
 2007-12-23 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Node.php:  Fix bug in setCurrentNode() reported by Vacio
 	* install.php, Dependency.php:  Commit install script improvements by Robin Jones
-	
+
 2007-11-29 Benoit Grégoire  <bock@step.polymtl.ca>
 	* signup.tpl, lost_username.tpl, lost_password.tpl, resend_validation.tpl:  Move the error div near the button for coherence with the login page (and for the same reason).  In fact it was worse than the login page used to be:  the error message during signup could appear completely below the page for a user with a low resolution screeen (or big font), giving the form the apereance of doing absolutely nothing (it stumped even me as I was trying to help a user).
 
@@ -39,10 +44,10 @@
 
 2007-11-05 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Commit most of Robin Jones install script improvements.
-		
+
 2007-10-22 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Major security fix:  Fix the authenticator for a security breach where a user could get Internet access using an empty username.  LocalUser and LDAP were definitely vulnerable, RADIUS may have been.
-	
+
 2007-10-01 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Remove Array type hinting in Security.php. It's not supported in PHP < 5.1.  Fixes  #393
 
@@ -58,7 +63,7 @@
 
 2007-09-20 Benoit Grégoire  <bock@step.polymtl.ca>
 	* install.php:  Hopefully fix #384, and remove pages unlikely to be implemented for 1.0
-	
+
 2007-09-18 Benoit Grégoire  <bock@step.polymtl.ca>
 	* portal/index.php:  Add a call to garbage_collect() to fix #367
 
@@ -66,20 +71,20 @@
 	* SmartyWifidog:  If ANY of the mandatory dependencies (not just smarty) are missing, user will be redirected to the install script
 	* Move Smarty detection and install to common framework.  Take this opportunity to move to upgrade to latest Smarty since people will have to re-run the install script anyway.
 	* Fix #381 by applying patch from leandro@texnet.it, mea-culpa, I didn't know I broke the install script.
-	
+
 2007-09-12 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Scratch a few itches:  Fix the link from node admin to stats, minor CSS fixes
 
 2007-09-11 Benoit Grégoire  <bock@step.polymtl.ca>
 	* VitrualHost.php: Close #373: Apply patch from leandro@texnet.it to fix mispelled table name in delete() method
-	* Close #374:  Add preliminary italian translation from leandro@texnet.it 
-	
+	* Close #374:  Add preliminary italian translation from leandro@texnet.it
+
 2007-09-10 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix #370:  Dropdown Javascript menus didn't retract in Internet Explorer.  My thanks to Robin Jones for at least proposing a solution to the problem, even if it didn't work in this case.  The problem turned out to be a wrong regex in the IE workaround javascript.
-	
+
 2007-09-09 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Early OpenID support.  The auth server can now be used as an identity provider, with your profile page as the identity URL
-	
+
 2007-09-08 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Dependencies installation:  Improve layout, add embryo of unified install sytem (currently works for tarballs).  Improve error output.
 	* Add dependencies for future OpenId support
@@ -90,7 +95,7 @@
 	* fix typo in Node::DEPRECATEDgetTechnicalOfficers(), that prevented getting the users to page in case a node is down.
 	* Delete leftover login.tpl
 	* Apply patch from leandro@texnet.it to fix #371
-	
+
 2007-08-30 Benoit Grégoire  <bock@step.polymtl.ca>
 	* install.php:  Experimental fix for #353
 
@@ -100,19 +105,19 @@
 2007-08-27 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Added vacuum_last_resort_fix_backup_restore_database.sh.  This is DANGEROUS, and should only be run when your neglected (or had problem with) your VACCUMs,
 	your database has become slow as molases, and VACUUM FULL is not an option because your db has grown too big.
-	
+
 2007-08-27 Benoit Grégoire  <bock@step.polymtl.ca>
-	* install.php:  Fix #368: Correct the svn source for SimplePie 1.0, the 1.0b2 branch was unexpectedly renamed.  
+	* install.php:  Fix #368: Correct the svn source for SimplePie 1.0, the 1.0b2 branch was unexpectedly renamed.
 	Note that this forces a rather disruptive change.  To update an existing install, you'll need to run the following commands:
 	cd lib/simplepie
 	svn switch http://svn.simplepie.org/simplepie/branches/1.0/
 	But this also requires a recent feedpressreview (revision 13), so you'll also need to run:
 	cd lib/feedpressreview
 	svn update
-	
+
 2007-08-06 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Allow users with NETWORK_PERM_EDIT_ANY_NODE_CONFIG to edit gateway id's
-	
+
 2007-08-05 Damien Raude-Morvan <drazzib@drazzib.com>
 	* Security.php : A permission can be acquired by a user via multiples roles, this means
 	that, for the moment, we have to use DISTINCT to check if a user had correct permission
@@ -123,14 +128,14 @@
 2007-08-04 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Portugese (from portugal) translation contributed by MiguelCMA
 	* locale/gen.sh:  Major change to .po file generation.  Now uses msgmerge so we won't completely throw away previous efforts by translators (will preserve comments, and use fuzzy translation).  It's also much faster (seconds instead of minutes), and produces less strings to translate.
-	
+
 2007-08-03 Damien Raude-Morvan <drazzib@drazzib.com>
 	* init_php.php : Fix #363 by applying patch from Leandro to correctly set timezone info in Wifidog
 	if set in configuration (allow Wifidog to work not only in Canada :).
 
 2007-07-26 Benoit Grégoire  <bock@step.polymtl.ca>
 	* DependenciesList::hook_menu():  Fix menu path conflict with Server::hook_menu();
-	* Server::getAdminUI(): Add output to help debug timezone problems.  	
+	* Server::getAdminUI(): Add output to help debug timezone problems.
 
 2007-07-25 Benoit Grégoire  <bock@step.polymtl.ca>
 	* VirtualHost.php:  Fix critical problem preventing new Virtual Hosts from being created.  Thanks to Miguel for pointing this out!ssss
@@ -139,41 +144,41 @@
 	* Statistics::getDateRangeUI():  Make days end a minute before midnight, not a minute before noon, DOH!
 	* import_user_database.php:  Fix permission call systax error.  That does't mean the script works as a whole, it hasn't been maintained for years.
 	* DependenciesList.php:  Make it extend GenericDataObject after all.  Fixes problem displaying it in the generic editor.
-	
+
 2007-07-22 Benoit Grégoire  <bock@step.polymtl.ca>
 	* generic_object_admin.pgp:  Fix problems when creating new content objects.  Fix problems including the content type classes.
 	* Avatar.php:  Make the resampling code support any format available to GD, not just jpeg.
-	
+
 2007-07-22 Benoit Grégoire  <bock@step.polymtl.ca>
 	* More schema compatibility defensive coding.  Comment out all SET commands in the schema
-	
+
 2007-07-22 Benoit Grégoire  <bock@step.polymtl.ca>
 	* install.php:  Fix #215
 
 2007-07-21 Benoit Grégoire  <bock@step.polymtl.ca>
 	* AnonymisedDataExport.php:  Work around the huge memory requirements this report used to have.
 	* install.php:  Strip create procedural language from schema, that requires superuser anyway.
-					Strip a few other things to hopefully allow it to work again with postgresql 7.4, but I need the full output of the commant "psql -f wifidog-postgres-schema.sql", run from the sql directory of a svn checkout, from someone still running 7.4, otherwise I can't do much. 
+					Strip a few other things to hopefully allow it to work again with postgresql 7.4, but I need the full output of the commant "psql -f wifidog-postgres-schema.sql", run from the sql directory of a svn checkout, from someone still running 7.4, otherwise I can't do much.
 	* DependenciesList.php:  New class.  Allow seeing the dependency list once the server is installed.  A small step towards centralized dependency installation.
 
 2007-07-20 Benoit Grégoire  <bock@step.polymtl.ca>
 	* At long last, implement #9:  Automatic new node creation.  When attempting to login from an unknown node, the user (if he has the permissions) will be prompted to create the node, or "steal" en existing one (for hardware swaps).
 	* Refactor Node:getSelectNodeUI().
 	* Menu.php:  Fix small oversight causing menu not to clear.
-	
+
 2007-07-19 Benoit Grégoire  <bock@step.polymtl.ca>
 	UIUserList fixes:
 	* Node::getRecentUsers():  Get the 5 most recent users, not some random users in the last week.  Also, exclude users currently logged-in.
-	* Node::getActiveUsers():  Function was unbearably slow, now limit the search space to the last 3 months.  Get the 5 user who connected on the most differents days, instead of users with the worst wireless card ;) 
+	* Node::getActiveUsers():  Function was unbearably slow, now limit the search space to the last 3 months.  Get the 5 user who connected on the most differents days, instead of users with the worst wireless card ;)
 	* schema_validate.php: Add index for timestamp_in on connection table.
-	
+
 2007-07-17 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Use last_heartbeat_sys_uptime untill #354 is fixed
 
 2007-07-16  Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix display of wifidog uptime in node list
 	* Preliminary skinning of the menu
-	* Network::getNumOnlineUsers():  Fix #40 by counting active connexion tokens, not distinct user id's.  That way users logged in twice (splash-only, or username if allowed in network config) will be counted twice. 
+	* Network::getNumOnlineUsers():  Fix #40 by counting active connexion tokens, not distinct user id's.  That way users logged in twice (splash-only, or username if allowed in network config) will be counted twice.
 	* UIUserList_getUserUI.tpl:  Fix #337
 	* Node.php:  Improve getCurrentRealNode()
 	* Implement #4:  Allow the user to easily come back to the portal by typing in the root auth server adress from a hotspot.
@@ -182,28 +187,28 @@
 	* node_list.html:  Include wifidog_uptime if the hotspot is up.
 	* Menu.php:  Sort menus alphabetically according to the user's locale.  TODO:  Implement menu weights.
 	* NodeLists:  Only list node types that have dependencies met in the menu.  Refactor the NodeLists for proper object-orientation.
-	
+
 2007-07-12  Benoit Grégoire  <bock@step.polymtl.ca>
 	* MainUI.php:  Fix label problem in language chooser.
-	
+
 2007-07-12  Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix #291 by adding a proper warning and location of documentation
 	* Fix #336:  Add Swedish translation by Christian Svensson <blue ATT cmd.nu>
 
 2007-07-12  Benoit Grégoire  <bock@step.polymtl.ca>
-	-This is a behemoth "the road to 1.0"  commit.  I've been working on this for 6 months, 
+	-This is a behemoth "the road to 1.0"  commit.  I've been working on this for 6 months,
 	and it's reached the point where others can help.  Those are very far reaching changes, please
 	notify me if anything isn't working right (and im sure I can't have caught everything).
     * Completely revamp exception handling, all exceptions are now trapped and handled centrally.
     * Major changes in the login process to allow repeating a request after a time out or missing permission exception.
     * New user roles architecture,  as described in https://dev.wifidog.org/wiki/doc/developer/UserRolesArchitecture
- 	Mostly complete.  Missing parts are Content stakeholders, system roles and "su" functionnality. 
+ 	Mostly complete.  Missing parts are Content stakeholders, system roles and "su" functionnality.
  	I need help replacing all the DEPRECATED* methods.  Please read the wiki page above for instructions.
 	* generic_object_admin.php:  More work towards making it generic once again.
 	* GenericDataObject:  New class.  Eventually, most classes should extend this, instead of directly implementing GenericObject
-	* Menu.php:  Finally a uniform Menuing system to replace the mismatch of links that made wifidog 
+	* Menu.php:  Finally a uniform Menuing system to replace the mismatch of links that made wifidog
 	impossible to navigate.  It's not very sophisticated yet, but it IS permission aware
-	Loosely inspired from Drupal's menuing system.  HTML is slightly modified "Son of suckerfish", 
+	Loosely inspired from Drupal's menuing system.  HTML is slightly modified "Son of suckerfish",
 	so will be easy to style (althouh I haven't had time yet).
 	Actual menus are added in the hook_menu methods of each class.
 	* VirtualHost.php:  Finally properly split off Virtual Hosts, and make Server a singleton.
@@ -213,7 +218,7 @@
     * Unbreak signup link for non-javascript enabled devices
 	* FlickrPhotostream:  Check CURL, which is a mandatory dependency of Flickr
     * AbstractDb:  Improve debuging features
-    * *:getObject():  Hopefully improve performance of class caching by making sure 
+    * *:getObject():  Hopefully improve performance of class caching by making sure
     that we do not manipulate different objects.  Otherwise copies would be generated as soon as we change properties, wasting much memory.
 	* Add dependency check for XSL module for hotspot_status.php.
 	* Some work towards respecting the coding style: http://dev.wifidog.org/wiki/doc/developer/CodingStandard
@@ -233,7 +238,7 @@
 	* Apply patch from tdb@timothy86.orangehome.co.uk, fixes #334
 
 2007-05-30  Benoit Gréoire  <bock@step.polymtl.ca>
-	* VisitsPerMonth.php, VisitePerWeekday.php:  Fix small sql bug when selecting a single user 
+	* VisitsPerMonth.php, VisitePerWeekday.php:  Fix small sql bug when selecting a single user
 
 2007-05-28  Benoit Gréoire  <bock@step.polymtl.ca>
 	* ActiveUserReport.php:  Merge new report from my development tree.  Gives a breakdown of how many users actually use the network.
@@ -241,7 +246,7 @@
 2007-05-22  Benoit Gréoire  <bock@step.polymtl.ca>
 	* Reverse part of [1230], hotspot_network_name was already available as standardised variable networkName, and hotspot_network_url as networkWebSiteURL.
 	* Reverse part of [1231]:  remove script tag, banning it was the reason the sag striping code was put in in the first place.  We may want to consider creating a RawHTMLContent Content Type.
-	
+
 2007-05-22  Benoit Gréoire  <bock@step.polymtl.ca>
     * locales/el/: Add new greek translation contributed by Nikola Petrov
 

@@ -118,7 +118,7 @@ print<<<EndHTML
       //alert(document.myform.config.value);  // DEBUG
     }
   </SCRIPT>
-  
+
 <link rel="stylesheet" type="text/css" href="/media/base_theme/stylesheet.css" />
 </HEAD>
 <BODY id='page' class='{$page}'>
@@ -147,23 +147,23 @@ border-collapse: collapse;
 <INPUT TYPE="HIDDEN" NAME="debug">
 <INPUT TYPE="HIDDEN" NAME="config">
 <div id="page_body">
-	<div id="left_area">
-		<div id="left_area_top">
-			<h1>Installation status</h1>
-			
+    <div id="left_area">
+        <div id="left_area_top">
+            <h1>Installation status</h1>
+
 EndHTML;
 $pageindex = array("Welcome"=>"Welcome",
-		   "Prerequisites"=>"Prerequisites",
-		   "Permissions"=>"Permissions",
-	           "Dependencies"=> "Dependencies",		   
-	           "Database Access"=> "Database",
-		   "Database Connection"=>"testdatabase",
-		   "Database Initialisation"=>"dbinit",
-		   "Global Options"=>"options",
-		   "Language Locale"=>"languages",
-		   "User Creation"=>"admin",
-		   "Review"=>"Review",
-		   "Finish"=>"finish",);
+        "Prerequisites"=>"Prerequisites",
+        "Permissions"=>"Permissions",
+            "Dependencies"=> "Dependencies",
+            "Database Access"=> "Database",
+        "Database Connection"=>"testdatabase",
+        "Database Initialisation"=>"dbinit",
+        "Global Options"=>"options",
+        "Language Locale"=>"languages",
+        "User Creation"=>"admin",
+        "Review"=>"Review",
+        "Finish"=>"finish",);
 foreach($pageindex as $pagekey => $pagevalue){
     if ($pagevalue != $page){
         print "$pagekey <br>";
@@ -173,18 +173,18 @@ foreach($pageindex as $pagekey => $pagevalue){
     }
 }
 print<<<EndHTML
-		</div>
-		<div id="left_area_bottom">
-			<p><a href="../CHANGELOG">Change Log</a><BR>
-			<a href="http://dev.wifidog.org/report/10">Known issues</a></p>
-		</div>
-	</div>
+        </div>
+        <div id="left_area_bottom">
+            <p><a href="../CHANGELOG">Change Log</a><BR>
+            <a href="http://dev.wifidog.org/report/10">Known issues</a></p>
+        </div>
+    </div>
 <div id="main_area">
-	
-	<div id="main_area_top">
-		<table align="center"><tr><td><img src="/media/base_theme/images/wifidog_logo_banner.png" /></td></tr></table>
-	</div>
-	<div id="main_area_middle">
+
+    <div id="main_area_top">
+        <table align="center"><tr><td><img src="/media/base_theme/images/wifidog_logo_banner.png" /></td></tr></table>
+    </div>
+    <div id="main_area_middle">
 EndHTML;
 
 //print "<pre>";      # DEBUG
@@ -382,23 +382,28 @@ switch ($page) {
     case 'Permissions' :
         print "<h1>Permissions</h1>";
 
-        $process_info_user_id = posix_getpwuid(posix_getuid());
-
-        if($process_info_user_id){
-            $process_username = $process_info_user_id['name'];
+        if (function_exists(posix_getpwuid)) {
+            $process_info_user_id = posix_getpwuid(posix_getuid());
         }
-        else {
-            //Posix functions aren't available on windows
+
+        if ($process_info_user_id) {
+            $process_username = $process_info_user_id['name'];
+        } else {
+            // Posix functions aren't available on windows or couldn't be read
             $process_username = 'unknown_user';
         }
-        $process_info_group_id = posix_getgrgid(posix_getegid());
-        if($process_info_group_id){
-            $process_group = $process_info_group_id['name'];
+
+        if (function_exists(posix_getgrgid)) {
+            $process_info_group_id = posix_getgrgid(posix_getegid());
         }
-        else {
-            //Posix functions aren't available on windows
+
+        if ($process_info_group_id) {
+            $process_group = $process_info_group_id['name'];
+        } else {
+            //Posix functions aren't available on windows or couldn't be read
             $process_group = 'unknown_group';
         }
+
         $cmd_mkdir = '';
         $cmd_chown = '';
         $error = 0;
@@ -417,24 +422,27 @@ switch ($page) {
                 continue;
             }
 
-            $dir_info = posix_getpwuid(fileowner(WIFIDOG_ABS_FILE_PATH . "$dir"));
-            if($dir_info) {
-                $dir_owner_username = $dir_info['name'];
+            if (function_exists(posix_getpwuid)) {
+                $dir_info = posix_getpwuid(fileowner(WIFIDOG_ABS_FILE_PATH . "$dir"));
             }
-            else {
-                //Posix functions aren't available on windows
+
+            if ($dir_info) {
+                $dir_owner_username = $dir_info['name'];
+            } else {
+                //Posix functions aren't available on windows or couldn't be read
                 $dir_owner_username = fileowner(WIFIDOG_ABS_FILE_PATH . "$dir");
             }
+
             print "<td>$dir_owner_username</td>";
 
             if (is_writable(WIFIDOG_ABS_FILE_PATH . "$dir")) {
                 print "<td>YES</td>";
-            }
-            else {
+            } else {
                 print "<td>NO</td>";
                 $cmd_chown .= WIFIDOG_ABS_FILE_PATH . "$dir ";
                 $error = 1;
             }
+
             print "</tr>\n";
         }
         print "</table>\n";
@@ -763,12 +771,12 @@ EndHTML;
 
 
         print<<<EndHTML
-  
+
       <p>Please select the Authentication Servers default language and locale</p>
 
        <div class="language">
                <div>Default Server Locale:
-	<select name="default_locale" onchange="newConfig('DEFAULT_LANG=' + this.options[this.selectedIndex].value);">
+    <select name="default_locale" onchange="newConfig('DEFAULT_LANG=' + this.options[this.selectedIndex].value);">
 EndHTML;
         #for each language in the array get the language code and the friendly name
         foreach ($AVAIL_LOCALE_ARRAY as $_langIds => $_langNames) {
@@ -782,19 +790,19 @@ EndHTML;
             echo'<option value="' . $_langIds . '"' . $_selected . '>'.$_langNames[1].'</option>';
         }
         print<<<EndHTML
-		</select>
+        </select>
                </div>
        </div>
 
 
 
- 
+
 <br><br><br><br>
 <strong>Common Error message:</strong> <BR>
 <p>This is an example of message you may see in the top of your working auth-server IF the languagepacks on your server have not been installed. In most Unix/Linux system, you could use locale -a to list all available locales on the server and run "apt-get install locales-all" for full language support</p>
 
 <DIV style="border:solid black;">Warning: language.php: Unable to setlocale() to fr, return value: , current locale: LC_CTYPE=en_US.UTF-8;LC_NUMERIC=C; [...]</DIV>
- 
+
 
 EndHTML;
 
@@ -877,11 +885,11 @@ EndHTML;
 
         <script type="text/javascript"> // TODO: check whether user already exists
           function submitValue() {
-	    if (document.myform.username.value == '') {
+        if (document.myform.username.value == '') {
               alert('Please enter a username');
               exit();
             }
-	    if (document.myform.password.value != document.myform.password2.value) {
+        if (document.myform.password.value != document.myform.password2.value) {
               alert('Password mismatch, Please retry');
               exit();
             }
@@ -889,7 +897,7 @@ EndHTML;
               alert('Please enter a valid password');
               exit();
             }
-		re = /^[0-9a-zA-Z]{6,}$/;
+        re = /^[0-9a-zA-Z]{6,}$/;
             if (!re.test(document.myform.password.value)) {
               alert('Your password does not meet complexity requirements. 6 letters and/or numbers ');
               exit();

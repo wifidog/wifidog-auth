@@ -35,9 +35,9 @@
 
 /**
  * @package    WiFiDogAuthServer
- * @author     Max Horvath <max.horvath@maxspot.de>
+ * @author     Max Horvath <max.horvath@freenet.de>
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
- * @copyright  2006 Max Horvath, maxspot GmbH
+ * @copyright  2006 Max Horvath
  * @copyright  2007 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id: $
  * @link       http://www.wifidog.org/
@@ -88,7 +88,7 @@ class VirtualHost implements GenericObject
      */
     private function __construct($p_server_id)
     {
-         
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -147,7 +147,7 @@ class VirtualHost implements GenericObject
      */
     public static function getAllServers()
     {
-         
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -180,7 +180,7 @@ class VirtualHost implements GenericObject
      */
     public static function &getDefaultVirtualHost()
     {
-         
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -213,7 +213,7 @@ class VirtualHost implements GenericObject
         {
             return null; //We were probably called from the command line
         }
-         
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -246,7 +246,7 @@ class VirtualHost implements GenericObject
      */
     public static function createNewObject($hostname)
     {
-         
+
         $db = AbstractDb::getObject();
 
         if (empty($id)) {
@@ -468,7 +468,7 @@ class VirtualHost implements GenericObject
      */
     public function setHostname($value)
     {
-         
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -526,7 +526,7 @@ class VirtualHost implements GenericObject
      */
     public function setSSLAvailable($value)
     {
-         
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -565,7 +565,7 @@ class VirtualHost implements GenericObject
      */
     public function setGoogleAPIKey($value)
     {
-         
+
         $db = AbstractDb::getObject();
 
         // Init values

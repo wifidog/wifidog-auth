@@ -134,7 +134,7 @@ class Dependency
        'installMethod' => "tarball",
        'installDestination' => "/"
        ),
-       
+
        /* PHP extensions (optional) */
        "simplepie" => array (
        "type" => "localLib",
@@ -224,7 +224,7 @@ JpGraph is not currently used by Wifidog (it will be use for statistic graphs in
        'installMethod' => "tarball",
        'installDestination' => "/",
        ),
-        
+
        "FPDF" => array (
        "type" => "localLib",
        "detectFiles" => "lib/fpdf153/fpdf.php",
@@ -263,7 +263,7 @@ JpGraph is not currently used by Wifidog (it will be use for statistic graphs in
        "detectFiles" => "Crypt/CHAP.php",
        'description' => "Required by the optional Radius Authenticator"
        ),
-       "Cache" => array (
+       "Cache_Lite" => array (
        "type" => "pearStandard",
        "detectFiles" => "Cache/Lite.php", #unsure whether this file still exists.
        'description' => "Required if you want to turn on the experimental USE_CACHE_LITE in config.php",
@@ -531,8 +531,8 @@ JpGraph is not currently used by Wifidog (it will be use for statistic graphs in
                            $this->getId());
                        }
                        break;
-                        
-                        
+
+
                    case "pearStandard":
                        if($this->getInstallSourceUrl()) {
                            $installSource=$this->getInstallSourceUrl();
@@ -542,8 +542,8 @@ JpGraph is not currently used by Wifidog (it will be use for statistic graphs in
                        }
                        $html .= sprintf(_("To install this standard PEAR extension, try 'sudo pear install --onlyreqdeps %s'"), $installSource);
                        break;
-                        
-                        
+
+
                    case "peclStandard":
                        if($this->getInstallSourceUrl()) {
                            $installSource=$this->getInstallSourceUrl();
@@ -553,8 +553,8 @@ JpGraph is not currently used by Wifidog (it will be use for statistic graphs in
                        }
                        $html .= sprintf(_("To install this standard PEAR extension, try 'sudo pecl install %s'"), $installSource);
                        break;
-                        
-                        
+
+
                    case "pearCustom":
                        if($this->getInstallSourceUrl()) {
                            $installSource=$this->getInstallSourceUrl();
@@ -564,8 +564,8 @@ JpGraph is not currently used by Wifidog (it will be use for statistic graphs in
                        }
                        $html .= sprintf(_("To install this custom PEAR extension, use 'sudo pear install %s'"), $installSource);
                        break;
-                        
-                        
+
+
                    default:
                        $html .= sprintf(_("Sorry, I don't know how to install a %s extension"), $type);
                }
@@ -587,7 +587,7 @@ JpGraph is not currently used by Wifidog (it will be use for statistic graphs in
            {
                $this->install($errMsg);
            }
-            
+
            return $retval;
        }
        /**
