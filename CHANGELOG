@@ -1,5 +1,8 @@
 # $Id$
 
+2008-02-27 Damien Raude-Morvan <drazzib@drazzib.com>
+    * Update french translation
+
 2008-02-12 Max Horváth  <max.horvath@freenet.de>
     * Fixed issue in install.php when POSIX is unavailable to PHP
     * Fixed package name of Cache_Lite in Dependency class
