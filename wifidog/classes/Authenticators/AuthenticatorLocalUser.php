@@ -207,13 +207,13 @@ class AuthenticatorLocalUser extends Authenticator
     }
 
     /**
-     * The basic AuthenticatorLocalUser allows user signup
+     * If the authenticator allows new users to register new account, this must return the URL at which they must do so.
      *
-     * @return bool Returns if the class allows registration
+     * @return text The URL to register at or NULL.  NULL means that the Authenticator does not allow new users to self-register.
      */
-    public function isRegistrationPermitted()
+    public function getSignupUrl()
     {
-        return true;
+        return BASE_NON_SSL_PATH.'signup.php';
     }
 
 }

@@ -150,8 +150,22 @@ abstract class Authenticator
         // Set error message
         $smarty->assign('error', self::$_loginLastError);
 
+        // Check if one of the network allow signup
+        $network_array=Network::getAllNetworks();
+
+        $networksAllowingSignup = null;
+        foreach ($network_array as $network) {
+            if ($network->getAuthenticator()->isRegistrationPermitted()) {
+                $networksAllowingSignup[] = $network;
+            }
+        }
+        //pretty_print_r($networksAllowingSignup);
+        if (count($networksAllowingSignup)>0){
+            //FIXME:  This is far from ideal, it assumes that all networks use the same signup URL, or that only one network allows signup.  
+            $smarty->assign('signupUrl', $networksAllowingSignup[0]->getAuthenticator()->getSignupUrl());
+        }
         // Compile HTML code
-        $html = self::ArrayToHiddenInput($_POST);//This must remain BEFORE the actual form
+        $html = self::ArrayToHiddenInput($_POST);//This must remain BEFORE the actual form. It allws repeating the request if the login attempt is causes by a session timeout or insufficient permissions.
         $html .= $smarty->fetch("templates/classes/Authenticator_getLoginForm.tpl");
         return $html;
     }
@@ -341,11 +355,19 @@ abstract class Authenticator
      *
      * @return bool Returns if the class allows registration
      */
-    public function isRegistrationPermitted()
+    final public function isRegistrationPermitted()
     {
-        return false;
+        return $this->getSignupUrl()?true:false;
     }
-
+    /**
+     * If the authenticator allows new users to register new account, this must return the URL at which they must do so.
+     *
+     * @return text The URL to register at or NULL.  NULL means that the Authenticator does not allow new users to self-register.
+     */
+    public function getSignupUrl()
+    {
+        return null;
+    }
 }
 
 /*

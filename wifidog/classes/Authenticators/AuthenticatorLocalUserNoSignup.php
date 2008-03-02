@@ -59,13 +59,13 @@ require_once('classes/User.php');
 class AuthenticatorLocalUserNoSignup extends AuthenticatorLocalUser
 {
     /**
-     * The AuthenticatorLocalUserNoSignup does not allow user signup
+     * If the authenticator allows new users to register new account, this must return the URL at which they must do so.
      *
-     * @return bool Returns if the class allows registration
+     * @return text The URL to register at or NULL.  NULL means that the Authenticator does not allow new users to self-register.
      */
-    function isRegistrationPermitted()
+    public function getSignupUrl()
     {
-        return false;
+        return null;
     }
 
 }

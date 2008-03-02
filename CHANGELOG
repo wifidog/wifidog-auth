@@ -1,4 +1,6 @@
 # $Id$
+2008-03-02 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Fix #431: Don't even display the Signup button if none of the networks allow signing up.  Allow Authenticators to define the signup URL themselves.
 
 2008-02-27 Damien Raude-Morvan <drazzib@drazzib.com>
     * Update french translation
