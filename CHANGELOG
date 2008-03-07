@@ -1,4 +1,9 @@
 # $Id$
+2008-03-06 Benoit Grégoire  <bock@step.polymtl.ca>
+    * Fix #438.  Not Node::getNumOnlineUsers() will count every users connected (once for every account), except the splash-only user + every mac adresses connecting as the splash-only user.
+	* Network::getNumOnlineUsers() use the same counting method
+	* Network.php:  Reformat variables names according to coding standards.
+	
 2008-03-02 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix #431: Don't even display the Signup button if none of the networks allow signing up.  Allow Authenticators to define the signup URL themselves.
 

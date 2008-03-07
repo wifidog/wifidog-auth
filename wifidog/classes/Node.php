@@ -1104,7 +1104,7 @@ class Node implements GenericObject
             $_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_name", $_title, $_data);
         }
         else {
-           $_title = _("Name");
+            $_title = _("Name");
             $_data = $this->getName();
             $_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_name", $_title, $_data);
         }
@@ -1308,7 +1308,7 @@ class Node implements GenericObject
         }
 
         // Creation date
-       $permArray = null;
+        $permArray = null;
         $permArray[]=array(Permission::P('NETWORK_PERM_EDIT_ANY_NODE_CONFIG'), $network);
         $permArray[]=array(Permission::P('NODE_PERM_EDIT_DEPLOYMENT_DATE'), $this);
         if (Security::hasAnyPermission($permArray)) {
@@ -1572,25 +1572,20 @@ class Node implements GenericObject
 
     /**
      * Find out how many users are online this specific Node
-     *
+     * Counts every user account connected (once for every account), except the splash-only user + every mac adresses connecting as the splash-only user
      * @return int Number of online users
      *
      * @access public
      */
     public function getNumOnlineUsers()
     {
-         
         $db = AbstractDb::getObject();
-
         // Init values
         $retval = array ();
         $row = null;
-
-        if (!$this->isConfiguredSplashOnly()) {
-            $db->execSqlUniqueRes("SELECT COUNT(DISTINCT users.user_id) as count FROM users,connections WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}'", $row, false);
-        } else {
-            $db->execSqlUniqueRes("SELECT COUNT(DISTINCT connections.user_mac) as count FROM connections WHERE connections.token_status='".TOKEN_INUSE."' AND connections.node_id='{$this->id}'", $row, false);
-        }
+        $splashOnlyUserId = $this->getNetwork()->getSplashOnlyUser()->getId();
+        $sql = "SELECT ((SELECT COUNT(DISTINCT users.user_id) as count FROM users,connections WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}' AND users.user_id!='{$splashOnlyUserId}') + (SELECT COUNT(DISTINCT connections.user_mac) as count FROM users,connections WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}' AND users.user_id='{$splashOnlyUserId}')) AS count";
+        $db->execSqlUniqueRes($sql, $row, false);
 
         return $row['count'];
     }

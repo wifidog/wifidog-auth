@@ -506,15 +506,15 @@ class Network extends GenericDataObject
         $db = AbstractDb::getObject();
 
         // Init values
-        $_retVal = true;
+        $retVal = true;
 
         if ($value != $this->getCreationDate()) {
             $value = $db->escapeString($value);
-            $_retVal = $db->execSqlUpdate("UPDATE networks SET creation_date = '{$value}' WHERE network_id = '{$this->getId()}'", false);
+            $retVal = $db->execSqlUpdate("UPDATE networks SET creation_date = '{$value}' WHERE network_id = '{$this->getId()}'", false);
             $this->refresh();
         }
 
-        return $_retVal;
+        return $retVal;
     }
 
     /**
@@ -654,61 +654,61 @@ class Network extends GenericDataObject
     public static function getAvailableAuthenticators()
     {
         // Init values
-        $_authenticators = array ();
-        $_useCache = false;
-        $_cachedData = null;
+        $authenticators = array ();
+        $useCache = false;
+        $cachedData = null;
 
         // Create new cache object with a lifetime of one week
-        $_cache = new Cache("AuthenticatorClasses", "ClassFileCaches", 604800);
+        $cache = new Cache("AuthenticatorClasses", "ClassFileCaches", 604800);
 
         // Check if caching has been enabled.
-        if ($_cache->isCachingEnabled) {
-            $_cachedData = $_cache->getCachedData("mixed");
+        if ($cache->isCachingEnabled) {
+            $cachedData = $cache->getCachedData("mixed");
 
-            if ($_cachedData) {
+            if ($cachedData) {
                 // Return cached data.
-                $_useCache = true;
-                $_authenticators = $_cachedData;
+                $useCache = true;
+                $authenticators = $cachedData;
             }
         }
 
-        if (!$_useCache) {
-            $_dir = WIFIDOG_ABS_FILE_PATH."classes/Authenticators";
-            $_dirHandle = @ opendir($_dir);
+        if (!$useCache) {
+            $dir = WIFIDOG_ABS_FILE_PATH."classes/Authenticators";
+            $dirHandle = @ opendir($dir);
 
-            if ($_dirHandle) {
+            if ($dirHandle) {
                 // Loop over the directory
-                while (false !== ($_filename = readdir($_dirHandle))) {
+                while (false !== ($filename = readdir($dirHandle))) {
                     // Loop through sub-directories of Content
-                    if ($_filename != '.' && $_filename != '..') {
-                        $_matches = null;
+                    if ($filename != '.' && $filename != '..') {
+                        $matches = null;
 
-                        if (preg_match("/^(.*)\.php$/", $_filename, $_matches) > 0) {
+                        if (preg_match("/^(.*)\.php$/", $filename, $matches) > 0) {
                             // Only add files containing a corresponding Authenticator class
-                            if (is_file("{$_dir}/{$_matches[0]}")) {
-                                $_authenticators[] = $_matches[1];
+                            if (is_file("{$dir}/{$matches[0]}")) {
+                                $authenticators[] = $matches[1];
                             }
                         }
                     }
                 }
 
-                closedir($_dirHandle);
+                closedir($dirHandle);
             }
             else {
-                throw new Exception(_('Unable to open directory ').$_dir);
+                throw new Exception(_('Unable to open directory ').$dir);
             }
 
             // Sort the result array
-            sort($_authenticators);
+            sort($authenticators);
 
             // Check if caching has been enabled.
-            if ($_cache->isCachingEnabled) {
+            if ($cache->isCachingEnabled) {
                 // Save results into cache, because it wasn't saved into cache before.
-                $_cache->saveCachedData($_authenticators, "mixed");
+                $cache->saveCachedData($authenticators, "mixed");
             }
         }
 
-        return $_authenticators;
+        return $authenticators;
     }
 
     /**
@@ -729,24 +729,24 @@ class Network extends GenericDataObject
         $db = AbstractDb::getObject();
 
         // Init values
-        $_authenticators = array ();
+        $authenticators = array ();
 
-        foreach (self :: getAvailableAuthenticators() as $_authenticator) {
-            $_authenticators[] = array ($_authenticator, $_authenticator);
+        foreach (self :: getAvailableAuthenticators() as $authenticator) {
+            $authenticators[] = array ($authenticator, $authenticator);
         }
 
-        $_name = $user_prefix;
+        $name = $user_prefix;
 
         if ($pre_selected_authenticator) {
-            $_selectedID = $pre_selected_authenticator;
+            $selectedID = $pre_selected_authenticator;
         }
         else {
-            $_selectedID = null;
+            $selectedID = null;
         }
 
-        $_html = FormSelectGenerator :: generateFromArray($_authenticators, $_selectedID, $_name, null, false);
+        $html = FormSelectGenerator :: generateFromArray($authenticators, $selectedID, $name, null, false);
 
-        return $_html;
+        return $html;
     }
 
     /**
@@ -1025,20 +1025,20 @@ class Network extends GenericDataObject
         $db = AbstractDb::getObject();
 
         // Init values
-        $_map_types = array (array ("G_NORMAL_MAP", _("Map")), array ("G_SATELLITE_MAP", _("Satellite")), array ("G_HYBRID_MAP", _("Hybrid")));
+        $map_types = array (array ("G_NORMAL_MAP", _("Map")), array ("G_SATELLITE_MAP", _("Satellite")), array ("G_HYBRID_MAP", _("Hybrid")));
 
-        $_name = $user_prefix;
+        $name = $user_prefix;
 
         if ($pre_selected_map_type) {
-            $_selectedID = $pre_selected_map_type;
+            $selectedID = $pre_selected_map_type;
         }
         else {
-            $_selectedID = null;
+            $selectedID = null;
         }
 
-        $_html = FormSelectGenerator :: generateFromArray($_map_types, $_selectedID, $_name, null, false);
+        $html = FormSelectGenerator :: generateFromArray($map_types, $selectedID, $name, null, false);
 
-        return $_html;
+        return $html;
     }
 
     /**
@@ -1077,41 +1077,41 @@ class Network extends GenericDataObject
         $db = AbstractDb::getObject();
 
         // Init values
-        $_retval = 0;
-        $_row = null;
-        $_useCache = false;
-        $_cachedData = null;
+        $retval = 0;
+        $row = null;
+        $useCache = false;
+        $cachedData = null;
 
         // Create new cache objects (valid for 1 minute)
-        $_cache = new Cache('network_'.$this->_id.'_num_users', $this->_id, 60);
+        $cache = new Cache('network_'.$this->_id.'_num_users', $this->_id, 60);
 
         // Check if caching has been enabled.
-        if ($_cache->isCachingEnabled) {
-            $_cachedData = $_cache->getCachedData();
+        if ($cache->isCachingEnabled) {
+            $cachedData = $cache->getCachedData();
 
-            if ($_cachedData) {
+            if ($cachedData) {
                 // Return cached data.
-                $_useCache = true;
-                $_retval = $_cachedData;
+                $useCache = true;
+                $retval = $cachedData;
             }
         }
 
-        if (!$_useCache) {
+        if (!$useCache) {
             // Get number of users
-            $_network_id = $db->escapeString($this->_id);
-            $db->execSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_origin='$_network_id'", $_row, false);
+            $network_id = $db->escapeString($this->_id);
+            $db->execSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_origin='$network_id'", $row, false);
 
             // String has been found
-            $_retval = $_row['count'];
+            $retval = $row['count'];
 
             // Check if caching has been enabled.
-            if ($_cache->isCachingEnabled) {
+            if ($cache->isCachingEnabled) {
                 // Save data into cache, because it wasn't saved into cache before.
-                $_cache->saveCachedData($_retval);
+                $cache->saveCachedData($retval);
             }
         }
 
-        return $_retval;
+        return $retval;
     }
 
     /**
@@ -1125,46 +1125,45 @@ class Network extends GenericDataObject
         $db = AbstractDb::getObject();
 
         // Init values
-        $_retval = 0;
-        $_row = null;
-        $_useCache = false;
-        $_cachedData = null;
+        $retval = 0;
+        $row = null;
+        $useCache = false;
+        $cachedData = null;
 
         // Create new cache objects (valid for 1 minute)
-        $_cache = new Cache('network_'.$this->_id.'_num_valid_users', $this->_id, 60);
+        $cache = new Cache('network_'.$this->_id.'_num_valid_users', $this->_id, 60);
 
         // Check if caching has been enabled.
-        if ($_cache->isCachingEnabled) {
-            $_cachedData = $_cache->getCachedData();
+        if ($cache->isCachingEnabled) {
+            $cachedData = $cache->getCachedData();
 
-            if ($_cachedData) {
+            if ($cachedData) {
                 // Return cached data.
-                $_useCache = true;
-                $_retval = $_cachedData;
+                $useCache = true;
+                $retval = $cachedData;
             }
         }
 
-        if (!$_useCache) {
+        if (!$useCache) {
             // Get number of valid users
-            $_network_id = $db->escapeString($this->_id);
-            $db->execSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_status = ".ACCOUNT_STATUS_ALLOWED." AND account_origin='$_network_id'", $_row, false);
+            $network_id = $db->escapeString($this->_id);
+            $db->execSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_status = ".ACCOUNT_STATUS_ALLOWED." AND account_origin='$network_id'", $row, false);
             // String has been found
-            $_retval = $_row['count'];
+            $retval = $row['count'];
 
             // Check if caching has been enabled.
-            if ($_cache->isCachingEnabled) {
+            if ($cache->isCachingEnabled) {
                 // Save data into cache, because it wasn't saved into cache before.
-                $_cache->saveCachedData($_retval);
+                $cache->saveCachedData($retval);
             }
         }
 
-        return $_retval;
+        return $retval;
     }
 
     /**
-     * Find out how many users are online on the entire network or at a
-     * specific Hotspot on the network
-     *
+     * Find out how many users are connected on the entire network
+     * Counts every user account connected (once for every account), except the splash-only user + every mac adresses connecting as the splash-only user
      * @return int Number of online users
      */
     public function getNumOnlineUsers()
@@ -1173,41 +1172,42 @@ class Network extends GenericDataObject
         $db = AbstractDb::getObject();
 
         // Init values
-        $_retval = 0;
-        $_row = null;
-        $_useCache = false;
-        $_cachedData = null;
+        $retval = 0;
+        $row = null;
+        $useCache = false;
+        $cachedData = null;
 
         // Create new cache objects (valid for 1 minute)
-        $_cache = new Cache('network_'.$this->_id.'_num_online_users', $this->_id, 60);
+        $cache = new Cache('network_'.$this->_id.'_num_online_users', $this->_id, 60);
 
         // Check if caching has been enabled.
-        if ($_cache->isCachingEnabled) {
-            $_cachedData = $_cache->getCachedData();
+        if ($cache->isCachingEnabled) {
+            $cachedData = $cache->getCachedData();
 
-            if ($_cachedData) {
+            if ($cachedData) {
                 // Return cached data.
-                $_useCache = true;
-                $_retval = $_cachedData;
+                $useCache = true;
+                $retval = $cachedData;
             }
         }
 
-        if (!$_useCache) {
+        if (!$useCache) {
             // Get number of online users
-            $_network_id = $db->escapeString($this->_id);
-            $db->execSqlUniqueRes("SELECT COUNT(conn_id) FROM connections NATURAL JOIN nodes JOIN networks ON (nodes.network_id=networks.network_id AND networks.network_id='$_network_id') "."WHERE connections.token_status='".TOKEN_INUSE."' ", $_row, false);
+            $network_id = $db->escapeString($this->_id);
+            $splashOnlyUserId = $this->getSplashOnlyUser()->getId();
+            $sql = "SELECT ((SELECT COUNT(DISTINCT users.user_id) as count FROM users,connections NATURAL JOIN nodes JOIN networks ON (nodes.network_id=networks.network_id AND networks.network_id='$network_id') WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND users.user_id!='{$splashOnlyUserId}') + (SELECT COUNT(DISTINCT connections.user_mac) as count FROM users,connections NATURAL JOIN nodes JOIN networks ON (nodes.network_id=networks.network_id AND networks.network_id='$network_id') WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND users.user_id='{$splashOnlyUserId}')) AS count";
+            $db->execSqlUniqueRes($sql, $row, false);
 
-            // String has been found
-            $_retval = $_row['count'];
+            $retval = $row['count'];
 
             // Check if caching has been enabled.
-            if ($_cache->isCachingEnabled) {
+            if ($cache->isCachingEnabled) {
                 // Save data into cache, because it wasn't saved into cache before.
-                $_cache->saveCachedData($_retval);
+                $cache->saveCachedData($retval);
             }
         }
 
-        return $_retval;
+        return $retval;
     }
 
     /**
@@ -1221,41 +1221,41 @@ class Network extends GenericDataObject
         $db = AbstractDb::getObject();
 
         // Init values
-        $_retval = 0;
-        $_row = null;
-        $_useCache = false;
-        $_cachedData = null;
+        $retval = 0;
+        $row = null;
+        $useCache = false;
+        $cachedData = null;
 
         // Create new cache objects (valid for 5 minutes)
-        $_cache = new Cache('network_'.$this->_id.'_num_nodes', $this->_id, 300);
+        $cache = new Cache('network_'.$this->_id.'_num_nodes', $this->_id, 300);
 
         // Check if caching has been enabled.
-        if ($_cache->isCachingEnabled) {
-            $_cachedData = $_cache->getCachedData();
+        if ($cache->isCachingEnabled) {
+            $cachedData = $cache->getCachedData();
 
-            if ($_cachedData) {
+            if ($cachedData) {
                 // Return cached data.
-                $_useCache = true;
-                $_retval = $_cachedData;
+                $useCache = true;
+                $retval = $cachedData;
             }
         }
 
-        if (!$_useCache) {
+        if (!$useCache) {
             // Get number of nodes
-            $_network_id = $db->escapeString($this->_id);
-            $db->execSqlUniqueRes("SELECT COUNT(node_id) FROM nodes WHERE network_id = '$_network_id'", $_row, false);
+            $network_id = $db->escapeString($this->_id);
+            $db->execSqlUniqueRes("SELECT COUNT(node_id) FROM nodes WHERE network_id = '$network_id'", $row, false);
 
             // String has been found
-            $_retval = $_row['count'];
+            $retval = $row['count'];
 
             // Check if caching has been enabled.
-            if ($_cache->isCachingEnabled) {
+            if ($cache->isCachingEnabled) {
                 // Save data into cache, because it wasn't saved into cache before.
-                $_cache->saveCachedData($_retval);
+                $cache->saveCachedData($retval);
             }
         }
 
-        return $_retval;
+        return $retval;
     }
 
     /**
@@ -1269,41 +1269,41 @@ class Network extends GenericDataObject
         $db = AbstractDb::getObject();
 
         // Init values
-        $_retval = 0;
-        $_row = null;
-        $_useCache = false;
-        $_cachedData = null;
+        $retval = 0;
+        $row = null;
+        $useCache = false;
+        $cachedData = null;
 
         // Create new cache objects (valid for 5 minutes)
-        $_cache = new Cache('network_'.$this->_id.'_num_deployed_nodes', $this->_id, 300);
+        $cache = new Cache('network_'.$this->_id.'_num_deployed_nodes', $this->_id, 300);
 
         // Check if caching has been enabled.
-        if ($_cache->isCachingEnabled) {
-            $_cachedData = $_cache->getCachedData();
+        if ($cache->isCachingEnabled) {
+            $cachedData = $cache->getCachedData();
 
-            if ($_cachedData) {
+            if ($cachedData) {
                 // Return cached data.
-                $_useCache = true;
-                $_retval = $_cachedData;
+                $useCache = true;
+                $retval = $cachedData;
             }
         }
 
-        if (!$_useCache) {
+        if (!$useCache) {
             // Get number of deployed nodes
-            $_network_id = $db->escapeString($this->_id);
-            $db->execSqlUniqueRes("SELECT COUNT(node_id) FROM nodes WHERE network_id = '$_network_id' AND (node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE')", $_row, false);
+            $network_id = $db->escapeString($this->_id);
+            $db->execSqlUniqueRes("SELECT COUNT(node_id) FROM nodes WHERE network_id = '$network_id' AND (node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE')", $row, false);
 
             // String has been found
-            $_retval = $_row['count'];
+            $retval = $row['count'];
 
             // Check if caching has been enabled.
-            if ($_cache->isCachingEnabled) {
+            if ($cache->isCachingEnabled) {
                 // Save data into cache, because it wasn't saved into cache before.
-                $_cache->saveCachedData($_retval);
+                $cache->saveCachedData($retval);
             }
         }
 
-        return $_retval;
+        return $retval;
     }
 
     /**
@@ -1319,50 +1319,50 @@ class Network extends GenericDataObject
         $db = AbstractDb::getObject();
 
         // Init values
-        $_retval = 0;
-        $_row = null;
-        $_useCache = false;
-        $_cachedData = null;
+        $retval = 0;
+        $row = null;
+        $useCache = false;
+        $cachedData = null;
 
         // Create new cache objects (valid for 5 minutes)
         if ($nonMonitoredOnly) {
-            $_cache = new Cache('network_'.$this->_id.'_num_online_nodes_non_monitored', $this->_id, 300);
+            $cache = new Cache('network_'.$this->_id.'_num_online_nodes_non_monitored', $this->_id, 300);
         } else {
-            $_cache = new Cache('network_'.$this->_id.'_num_online_nodes', $this->_id, 300);
+            $cache = new Cache('network_'.$this->_id.'_num_online_nodes', $this->_id, 300);
         }
 
         // Check if caching has been enabled.
-        if ($_cache->isCachingEnabled) {
-            $_cachedData = $_cache->getCachedData();
+        if ($cache->isCachingEnabled) {
+            $cachedData = $cache->getCachedData();
 
-            if ($_cachedData) {
+            if ($cachedData) {
                 // Return cached data.
-                $_useCache = true;
-                $_retval = $_cachedData;
+                $useCache = true;
+                $retval = $cachedData;
             }
         }
 
-        if (!$_useCache) {
+        if (!$useCache) {
             // Get number of online nodes
-            $_network_id = $db->escapeString($this->_id);
+            $network_id = $db->escapeString($this->_id);
 
             if ($nonMonitoredOnly) {
-                $db->execSqlUniqueRes("SELECT COUNT(node_id) FROM nodes WHERE network_id = '$_network_id' AND node_deployment_status = 'NON_WIFIDOG_NODE' AND ((CURRENT_TIMESTAMP-last_heartbeat_timestamp) >= interval '5 minutes')", $_row, false);
+                $db->execSqlUniqueRes("SELECT COUNT(node_id) FROM nodes WHERE network_id = '$network_id' AND node_deployment_status = 'NON_WIFIDOG_NODE' AND ((CURRENT_TIMESTAMP-last_heartbeat_timestamp) >= interval '5 minutes')", $row, false);
             } else {
-                $db->execSqlUniqueRes("SELECT COUNT(node_id) FROM nodes WHERE network_id = '$_network_id' AND (node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE') AND ((CURRENT_TIMESTAMP-last_heartbeat_timestamp) < interval '5 minutes')", $_row, false);
+                $db->execSqlUniqueRes("SELECT COUNT(node_id) FROM nodes WHERE network_id = '$network_id' AND (node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE') AND ((CURRENT_TIMESTAMP-last_heartbeat_timestamp) < interval '5 minutes')", $row, false);
             }
 
             // String has been found
-            $_retval = $_row['count'];
+            $retval = $row['count'];
 
             // Check if caching has been enabled.
-            if ($_cache->isCachingEnabled) {
+            if ($cache->isCachingEnabled) {
                 // Save data into cache, because it wasn't saved into cache before.
-                $_cache->saveCachedData($_retval);
+                $cache->saveCachedData($retval);
             }
         }
 
-        return $_retval;
+        return $retval;
     }
 
     /**
