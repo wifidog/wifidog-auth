@@ -119,7 +119,7 @@ print<<<EndHTML
     }
   </SCRIPT>
 
-<link rel="stylesheet" type="text/css" href="/media/base_theme/stylesheet.css" />
+<link rel="stylesheet" type="text/css" href="media/base_theme/stylesheet.css" />
 </HEAD>
 <BODY id='page' class='{$page}'>
 
@@ -182,7 +182,7 @@ print<<<EndHTML
 <div id="main_area">
 
     <div id="main_area_top">
-        <table align="center"><tr><td><img src="/media/base_theme/images/wifidog_logo_banner.png" /></td></tr></table>
+        <table align="center"><tr><td><img src="media/base_theme/images/wifidog_logo_banner.png" /></td></tr></table>
     </div>
     <div id="main_area_middle">
 EndHTML;
