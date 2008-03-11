@@ -1002,7 +1002,7 @@ EndHTML;
         echo "<table>\n";
         echo "<tr><td>Absolute path to the /wifidog directory (WIFIDOG_ABS_FILE_PATH):</td><td>" . WIFIDOG_ABS_FILE_PATH . "</td></tr>\n";
         echo "<tr><td>URL path to reach the /wifidog directory with a web browser (SYSTEM_PATH): </td><td>" . SYSTEM_PATH . "</td></tr>\n";
-        echo "<tr><td colspan=2><em>Please verify the two values above.</em> They should be autodetected correctly by wifidog using path_defines_base.php.  If there is a bug and they are not, you will need to override them manually in config.php (or find the bug), or your auth server will not work properly.  </td></tr></table>\n";
+        echo "<tr><td colspan=2><em>Please verify the two values above.</em> They should be autodetected correctly by wifidog using include/path_defines_base.php.  If there is a bug and they are not, you will need to override them manually in config.php (or find the bug), or your auth server will not work properly.  </td></tr></table>\n";
 
 
         navigation(array (
