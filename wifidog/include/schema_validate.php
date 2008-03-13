@@ -1317,6 +1317,7 @@ function real_update_schema($targetSchema) {
         printUpdateVersion($new_schema_version);
         $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
         $sql .= "CREATE INDEX idx_content_display_log ON content_display_log (last_display_timestamp);\n";
+        $sql .= "CREATE INDEX idx_nodes_node_deployment_status ON nodes (node_deployment_status);\n";
     }
     
     /*
