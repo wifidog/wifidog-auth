@@ -1433,7 +1433,7 @@ class Content implements GenericObject {
         $node ? $node_sql = " AND node_id='{$node->getId()}' " : $node_sql = '';
         $db = AbstractDb :: getObject();
 
-        $sql = "SELECT EXTRACT('epoch' FROM last_display_timestamp) as last_display_timestamp FROM content_display_log WHERE content_id='$this->id' $user_sql $node_sql ORDER BY last_display_timestamp DESC limit 1";
+        $sql = "SELECT EXTRACT('epoch' FROM MAX(last_display_timestamp)) as last_display_timestamp FROM content_display_log WHERE content_id='$this->id' $user_sql $node_sql";
         $db->execSqlUniqueRes($sql, $log_row, false);
         if ($log_row != null) {
             $retval = $log_row['last_display_timestamp'];
@@ -1522,7 +1522,7 @@ class Content implements GenericObject {
                 $criteria_array = array (
                 array (
                 'isSimpleContent'
-                        )
+                )
                 );
                 $metadada_allowed_content_types = ContentTypeFilter :: getObject($criteria_array);
 
@@ -1969,7 +1969,7 @@ class Content implements GenericObject {
             $items[] = array('path' => 'server/content_library',
             'title' => _("Reusable content library"),
             'url' => BASE_URL_PATH.htmlspecialchars("admin/generic_object_admin.php?object_class=Content&action=list")
-		);
+            );
         }
 
         return $items;

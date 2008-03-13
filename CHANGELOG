@@ -1,4 +1,8 @@
 # $Id$
+2008-03-12 Benoit Grégoire  <bock@step.polymtl.ca>
+    * Major performance improvement in content manager for content groups picking items with limits on how many times they can be displayed.
+	* Improve performance of Content::getLastDisplayedTimestamp(), will mostly show when using the RSS aggregator, especially when postgres has little memory
+	
 2008-03-06 Benoit Grégoire  <bock@step.polymtl.ca>
     * Fix #438.  Not Node::getNumOnlineUsers() will count every users connected (once for every account), except the splash-only user + every mac adresses connecting as the splash-only user.
 	* Network::getNumOnlineUsers() use the same counting method

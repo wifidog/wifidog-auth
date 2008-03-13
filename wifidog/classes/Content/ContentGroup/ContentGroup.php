@@ -494,20 +494,21 @@ class ContentGroup extends Content {
             if (count($redisplay_objects) < $display_num_elements) {
                 /* There aren't enough elements to redisplay, We need new content */
 
-                $sql_base = "SELECT content_group_element_id FROM content_group_element WHERE content_group_id='$this->id' \n";
-                $sql_base .= $sql_time_restrictions;
-                $sql = $sql_base;
-
                 /*'YES' => "Content can be shown more than once", 'NO' => "Content can only be shown once", 'ONCE_PER_NODE' => "Content can be shown more than once, but not at the same node"*/
                 $allow_repeat = $this->getAllowRepeat();
                 if ($allow_repeat == 'NO') {
-                    $sql_repeat = "AND content_group_element_id NOT IN (SELECT content_id FROM content_display_log WHERE user_id = '$user_id') \n";
+                     $sql_repeat_join = " LEFT JOIN content_display_log ON (content_group_element_id = content_display_log.content_id AND content_display_log.user_id = '$user_id') \n";
+                    $sql_repeat = " AND content_display_log.content_id  IS NULL \n";
                 }
                 elseif ($allow_repeat == 'ONCE_PER_NODE') {
-                    $sql_repeat = "AND content_group_element_id NOT IN (SELECT content_id FROM content_display_log WHERE user_id = '$user_id' AND  node_id = '$node_id') \n";
+                     $sql_repeat_join = " LEFT JOIN content_display_log ON (content_group_element_id = content_display_log.content_id AND content_display_log.user_id = '$user_id' AND content_display_log.node_id = '$node_id') \n";
+                    $sql_repeat = " AND content_display_log.content_id  IS NULL \n";
                 } else {
+                    $sql_repeat_join = null;
                     $sql_repeat = null;
                 }
+                $sql = "SELECT content_group_element_id FROM content_group_element $sql_repeat_join WHERE content_group_id='$this->id' \n";
+                $sql .= $sql_time_restrictions;
                 $sql .= $sql_repeat;
                 if ($sql_redisplay) {
                     //We don't want the same content twice...
@@ -540,8 +541,11 @@ class ContentGroup extends Content {
                 $element_rows = null;
                 if ($content_ordering_mode == 'PSEUDO_RANDOM') {
                     //Special case, first get only the rows that haven't been displayed before'
-                    $sql_no_repeat = " AND content_group_element_id NOT IN (SELECT content_id FROM content_display_log WHERE user_id = '$user_id') \n";
-                    $db->execSql($sql_base . $sql_no_repeat, $element_rows, false);
+                    $sql_no_repeat_join = " LEFT JOIN content_display_log ON (content_group_element_id = content_display_log.content_id AND content_display_log.user_id = '$user_id') \n";
+                    $sql_no_repeat_and = " AND content_display_log.content_id  IS NULL \n";
+                    $sql_no_repeat = "SELECT content_group_element_id FROM content_group_element $sql_no_repeat_join WHERE content_group_id='$this->id' $sql_no_repeat_and \n";
+                    
+                    $db->execSql($sql_no_repeat, $element_rows, false);
                 }
                 //Normal case, or there wasn't any undisplayed content in PSEUDO_RANDOM
                 if ($element_rows == null) {

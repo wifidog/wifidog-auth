@@ -47,7 +47,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 58);
+define('REQUIRED_SCHEMA_VERSION', 59);
 /** Used to test a new shecma version before modyfying the database */
 define('SCHEMA_UPDATE_TEST_MODE', false);
 /**
@@ -1312,6 +1312,13 @@ function real_update_schema($targetSchema) {
         $sql .= "INSERT into roles (role_id, stakeholder_type_id, is_system_role) VALUES ('CONTENT_OWNER', 'Content', true);\n";
     }
 
+    $new_schema_version = 59;
+    if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
+        printUpdateVersion($new_schema_version);
+        $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+        $sql .= "CREATE INDEX idx_content_display_log ON content_display_log (last_display_timestamp);\n";
+    }
+    
     /*
      $new_schema_version = ;
      if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
