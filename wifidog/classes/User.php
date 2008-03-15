@@ -103,13 +103,16 @@ class User implements GenericObject {
     public static function getCurrentUser() {
         require_once ('classes/Session.php');
         $session = Session::getObject();
+        $sessCurrentUserId = $session->get(SESS_USER_ID_VAR);
         $user = null;
-        try {
-            $user = self :: getObject($session->get(SESS_USER_ID_VAR));
-            //$user = new User($session->get(SESS_USER_ID_VAR));
-        } catch (Exception $e) {
-            /**If any problem occurs, the user should be considered logged out*/
-            $session->set(SESS_USER_ID_VAR, null);
+        if(!empty($sessCurrentUserId)){
+            try {
+                $user = self :: getObject($sessCurrentUserId);
+                //$user = new User($session->get(SESS_USER_ID_VAR));
+            } catch (Exception $e) {
+                /**If any problem occurs, the user should be considered logged out*/
+                $session->set(SESS_USER_ID_VAR, null);
+            }
         }
         return $user;
     }

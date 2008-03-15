@@ -1069,11 +1069,11 @@ class Content implements GenericObject {
      * @return content a content sub-class
      */
     public function getTitle() {
-        try {
-            return self :: getObject($this->content_row['title']);
-        } catch (Exception $e) {
-            return null;
+        $retval = null;
+        if(!empty($this->content_row['title'])){
+            $retval = self :: getObject($this->content_row['title']);
         }
+        return $retval;
     }
 
     /**
@@ -1081,11 +1081,11 @@ class Content implements GenericObject {
      * @return content a content sub-class
      */
     public function getDescription() {
-        try {
-            return self :: getObject($this->content_row['description']);
-        } catch (Exception $e) {
-            return null;
+        $retval = null;
+        if(!empty($this->content_row['description'])){
+            $retval = self :: getObject($this->content_row['description']);
         }
+        return $retval;
     }
 
     /**
@@ -1093,11 +1093,11 @@ class Content implements GenericObject {
      * @return content a content sub-class
      */
     public function getLongDescription() {
-        try {
-            return self :: getObject($this->content_row['long_description']);
-        } catch (Exception $e) {
-            return null;
+        $retval = null;
+        if(!empty($this->content_row['long_description'])){
+            $retval = self :: getObject($this->content_row['long_description']);
         }
+        return $retval;
     }
 
     /**
@@ -1105,11 +1105,11 @@ class Content implements GenericObject {
      * @return content a content sub-class
      */
     public function getProjectInfo() {
-        try {
-            return self :: getObject($this->content_row['project_info']);
-        } catch (Exception $e) {
-            return null;
+        $retval = null;
+        if(!empty($this->content_row['project_info'])){
+            $retval = self :: getObject($this->content_row['project_info']);
         }
+        return $retval;
     }
 
     /** Set the object type of this object

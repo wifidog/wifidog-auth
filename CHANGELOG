@@ -1,4 +1,8 @@
 # $Id$
+2008-03-15 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Content.php:  Eliminate the generation of a large number of useless SQL queries when getting Content metadata.
+	* User.php: Do the same thing for getCurrentUser()
+	
 2008-03-12 Benoit Grégoire  <bock@step.polymtl.ca>
     * Major performance improvement in content manager for content groups picking items with limits on how many times they can be displayed.
 	* Improve performance of Content::getLastDisplayedTimestamp(), will mostly show when using the RSS aggregator, especially when postgres has little memory
