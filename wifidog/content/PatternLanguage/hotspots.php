@@ -47,7 +47,7 @@
 require_once('../../include/common.php');
 
 require_once('classes/MainUI.php');
-require_once('classes/Content/PatternLanguage.php');
+require_once('classes/Content/PatternLanguage/PatternLanguage.php');
 $smarty = SmartyWifidog::getObject();
 $session = Session::getObject();
 // This trick is done to allow displaying of Pattern Language right away if there is only one available.

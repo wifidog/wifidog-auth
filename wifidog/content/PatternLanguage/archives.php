@@ -47,7 +47,7 @@
 require_once('../../include/common.php');
 
 require_once('classes/User.php');
-require_once('classes/Content/PatternLanguage.php');
+require_once('classes/Content/PatternLanguage/PatternLanguage.php');
 require_once('classes/MainUI.php');
 $smarty = SmartyWifidog::getObject();
 $session = Session::getObject();
