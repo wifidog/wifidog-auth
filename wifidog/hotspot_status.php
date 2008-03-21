@@ -85,11 +85,11 @@ if ($network) {
     // If a XSL transform stylesheet has been specified, try to use it.
     if ($format == "XML" && !empty($_REQUEST['xslt'])) {
         if(Dependency::check("xsl")) {// Load the XSLT
-            if($xslt_dom = @DomDocument::load($_REQUEST['xslt']) === false) {
+            if(($xslt_dom = @DomDocument::load(trim($_REQUEST['xslt']))) === false) {
                 echo sprintf("Unable to load XSTL : %s", $_REQUEST['xslt']);
             }
             else {
-                $xslt_proc = new XsltProcessor();
+                $xslt_proc = new XSLTProcessor();
                 $xslt_proc->importStyleSheet($xslt_dom);
 
                 // Prepare HTML

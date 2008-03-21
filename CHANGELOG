@@ -1,4 +1,7 @@
 # $Id$
+2008-03-21 Benoit Grégoire  <bock@step.polymtl.ca>
+	* hotspot_status.php:  Fix bug in XSLT procesing.
+
 2008-03-15 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Content.php:  Eliminate the generation of a large number of useless SQL queries when getting Content metadata.
 	* User.php: Do the same thing for getCurrentUser()
