@@ -1,5 +1,8 @@
 # $Id$
 2008-03-21 Benoit Grégoire  <bock@step.polymtl.ca>
+	* generic_object_admin.php (and others):  Fix bug reported by  Jerry DeFoe (ProfileTemplates couldn't be created) + some UI tweaks.
+	
+2008-03-21 Benoit Grégoire  <bock@step.polymtl.ca>
 	* hotspot_status.php:  Fix bug in XSLT procesing.
 
 2008-03-15 Benoit Grégoire  <bock@step.polymtl.ca>

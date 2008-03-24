@@ -230,7 +230,7 @@ class Role extends GenericDataObject
         $name = "new_role_stakeholder_type";
         $stakeholderTypeSelect = StakeholderType::getSelectUI($name);
         $name = "new_role_id";
-        $idInput = "<input type='text' name='{$name}'/><br/>";
+        $idInput = "<input type='text' name='{$name}'/>\n";
         $html .= sprintf(_("Add a new role of type %s with id %s"),$stakeholderTypeSelect,$idInput);
         return $html;
     }

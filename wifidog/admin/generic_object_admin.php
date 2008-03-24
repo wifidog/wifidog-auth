@@ -273,8 +273,6 @@ switch ($_REQUEST['action']) {
             case "Node" :
                 $userData['typeInterface'] = "table";
                 $displayEditButton = false;
-            case "Network" :
-                $disableCreateNewButton = true;
             default :
                 $newLongText = $addLongText;
                 $objectSelector = call_user_func(array (
@@ -283,14 +281,6 @@ switch ($_REQUEST['action']) {
                 ), 'object_id'
                 , $userData);
                 break;
-        }
-
-        if($disableCreateNewButton == false && method_exists($_REQUEST['object_class'],'getCreateNewObjectUI')) {
-            $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
-            $html .= "<input type='hidden' name='object_class' value='$class'>";
-            $html .= "<input type='hidden' name='action' value='new_ui'>";
-            $html .= "<input type='submit' name='new_submit' value='$newLongText'>\n";
-            $html .= '</form>';
         }
 
         if ($displayShowAllButton) {
@@ -319,6 +309,17 @@ switch ($_REQUEST['action']) {
             } else {
                 $html .= $objectSelector;
             }
+        }
+        
+        if($disableCreateNewButton == false 
+        && method_exists($_REQUEST['object_class'],'getCreateNewObjectUI') 
+        && null != $newUi = call_user_func(array ($_REQUEST['object_class'], 'getCreateNewObjectUI'))) {
+            $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>\n";
+            $html .= "<input type='hidden' name='object_class' value='$class'>\n";
+            $html .= $newUi;
+            $html .= "<input type='hidden' name='action' value='process_new_ui'>\n";
+            $html .= "<input type='submit' name='new_submit' value='$newLongText'>\n";
+            $html .= "</form>\n";
         }
         break;
 

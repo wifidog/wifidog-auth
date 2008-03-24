@@ -217,7 +217,8 @@ class ContentTypeFilter implements GenericObject {
 
 		$name = "new_content_type_filter_rules";
 
-		$html .= "<b>"._("Add a new content type filter with these rules") . ": </b><br/>";
+		$html .= "<p><b>"._("Add a new content type filter with these rules") . ": </b></p>";
+		$html .= _("Example:")."<br/>";
 		$html .= "<pre>array (\r\n\tarray('isContentType',\r\n\t\tarray (\r\n\t\t\tarray (\r\n\t\t\t\t'SimplePicture'\r\n\t)\r\n\t\t)\r\n\t)\r\n)</pre><br/>";
 		$html .= "<textarea cols='50' rows='10' name='{$name}'></textarea><br/>";
 

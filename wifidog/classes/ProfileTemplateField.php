@@ -47,7 +47,7 @@
 require_once ('classes/ProfileTemplate.php');
 require_once ('classes/Content.php');
 
-class ProfileTemplateField implements GenericObject {
+class ProfileTemplateField extends GenericDataObject {
 	private static $instanceArray = array();
 	
     private $profile_template_field_row;
@@ -84,16 +84,6 @@ class ProfileTemplateField implements GenericObject {
         }
         return self::$instanceArray[$id];
     }
-    
-    /**
-     * Retreives the Id of the object
-     *
-     * @return string The Id
-     */
-	public function getId()
-	{
-		return $this->id;
-	}
     
     public static function createNewObject() {}
     public static function getCreateNewObjectUI() {}

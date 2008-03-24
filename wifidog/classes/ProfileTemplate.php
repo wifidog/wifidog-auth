@@ -39,38 +39,38 @@
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
  * @author     François Proulx <francois.proulx@gmail.com>
- * @copyright  2007 François Proulx
+ * @copyright  2007 François Proulx, 2008 Technologies Coeus inc.
  * @link       http://www.wifidog.org/
  */
 
 require_once ('classes/ProfileTemplateField.php');
 require_once ('classes/ContentTypeFilter.php');
 
-class ProfileTemplate implements GenericObject {
-	/** Object cache for the object factory (getObject())*/
+class ProfileTemplate extends GenericDataObject {
+    /** Object cache for the object factory (getObject())*/
     private static $instanceArray = array();
-    
+
     private $id = null;
     private $_row;
-    
+
     private function __construct($profile_template_id)
-	{
-		$db = AbstractDb::getObject();
+    {
+        $db = AbstractDb::getObject();
 
-		// Init values
-		$row = null;
+        // Init values
+        $row = null;
 
-		$profile_template_id = $db->escapeString($profile_template_id);
-		$sql = "SELECT * FROM profile_templates WHERE profile_template_id = '{$profile_template_id}';";
-		$db->execSqlUniqueRes($sql, $row, false);
+        $profile_template_id = $db->escapeString($profile_template_id);
+        $sql = "SELECT * FROM profile_templates WHERE profile_template_id = '{$profile_template_id}';";
+        $db->execSqlUniqueRes($sql, $row, false);
 
-		if ($row == null) {
-			throw new Exception("The profile template with id {$profile_template_id} could not be found in the database!");
-		}
+        if ($row == null) {
+            throw new Exception("The profile template with id {$profile_template_id} could not be found in the database!");
+        }
 
-		$this->_row = $row;
-		$this->id = $db->escapeString($row['profile_template_id']);
-	}
+        $this->_row = $row;
+        $this->id = $db->escapeString($row['profile_template_id']);
+    }
 
     /**
      * Get an instance of the object
@@ -86,52 +86,52 @@ class ProfileTemplate implements GenericObject {
      */
     public static function &getObject($id)
     {
-    	if(!isset(self::$instanceArray[$id]))
+        if(!isset(self::$instanceArray[$id]))
         {
-        	self::$instanceArray[$id] = new self($id);
+            self::$instanceArray[$id] = new self($id);
         }
         return self::$instanceArray[$id];
     }
-    
-    
+
+
     /**
      * Get all profile templates ( can be restricted to a network )
      * @param $network_id
      */
     public static function getAllProfileTemplates($network = null) {
-    	$db = AbstractDb :: getObject();
+        $db = AbstractDb :: getObject();
 
-    	// Init values
-    	$whereClause = "";
-    	$rows = null;
-    	$objects = array ();
+        // Init values
+        $whereClause = "";
+        $rows = null;
+        $objects = array ();
 
-    	if (!empty ($network) && get_class($network) == "Network") {
-    		$db->execSql("SELECT profile_template_id FROM network_has_profile_templates WHERE network_id = '{$network->getId()}'", $rows, false);
-    	} else {
-    		$db->execSql("SELECT profile_template_id FROM profile_templates", $rows, false);
-    	}
+        if (!empty ($network) && get_class($network) == "Network") {
+            $db->execSql("SELECT profile_template_id FROM network_has_profile_templates WHERE network_id = '{$network->getId()}'", $rows, false);
+        } else {
+            $db->execSql("SELECT profile_template_id FROM profile_templates", $rows, false);
+        }
 
-    	if ($rows) {
-    		foreach ($rows as $row) {
-    			$objects[] = self :: getObject($row['profile_template_id']);
-    		}
-    	}
+        if ($rows) {
+            foreach ($rows as $row) {
+                $objects[] = self :: getObject($row['profile_template_id']);
+            }
+        }
 
-    	return $objects;
+        return $objects;
     }
-    
+
     /**
      * Retreives the Id of the object
      *
      * @return string The Id
      */
-	public function getId()
-	{
-		return $this->id;
-	}
-	
-	/**
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Retrieves the profile template's label
      *
      * @return string profile template's label
@@ -152,7 +152,7 @@ class ProfileTemplate implements GenericObject {
      */
     public function setLabel($value)
     {
-        
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -166,7 +166,7 @@ class ProfileTemplate implements GenericObject {
 
         return $_retVal;
     }
-	
+
     /**
      * Retrieves the profile template's creation date
      *
@@ -188,7 +188,7 @@ class ProfileTemplate implements GenericObject {
      */
     public function setCreationDate($value)
     {
-        
+
         $db = AbstractDb::getObject();
 
         // Init values
@@ -202,20 +202,20 @@ class ProfileTemplate implements GenericObject {
 
         return $_retVal;
     }
-    
+
     /* Create a new ProfileTemplate object in the database
-	 *
-	 * @param string $profile_template_id The id of the new object. If absent,
-	 * will be assigned a guid.
-	 *
-	 * @return mixed The newly created object, or null if there was an error
-	 *
-	 * @see GenericObject
-	 *
-	 * @static
-	 * @access public
-	 */
-	public static function createNewObject($profile_template_id = null)
+     *
+     * @param string $profile_template_id The id of the new object. If absent,
+     * will be assigned a guid.
+     *
+     * @return mixed The newly created object, or null if there was an error
+     *
+     * @see GenericObject
+     *
+     * @static
+     * @access public
+     */
+    public static function createNewObject($profile_template_id = null)
     {
         $db = AbstractDb::getObject();
         if (empty ($profile_template_id)) {
@@ -231,13 +231,19 @@ class ProfileTemplate implements GenericObject {
         $object = self::getObject($profile_template_id);
         return $object;
     }
-	
-	/* Get an interface to create a new ProfileTemplate
+
+    /* Get an interface to create a new ProfileTemplate
      * @return string HTML markup
      */
-	public static function getCreateNewObjectUI() {}
-	
-	
+    public static function getCreateNewObjectUI() {
+        $html = '';
+        $html .= _("Add a new profile template with ID")." \n";
+        $name = "new_profile_template_id";
+        $html .= "<input type='text' size='30' name='{$name}'>\n";
+        return $html;
+    }
+
+
     /**
      * Process the new object interface.
      *
@@ -247,13 +253,31 @@ class ProfileTemplate implements GenericObject {
      * @return string The ProfileTemplate object or null if no new ProfileTemplate was created
 
      */
-	public static function processCreateNewObjectUI() {}
-	
-	/**
-	 * Get an interface to pick an object of this class
-	 *
-	 * If there is only one server available, no interface is actually shown
-	 *
+    public static function processCreateNewObjectUI()
+    {
+        // Init values
+        $retval = null;
+        $name = "new_profile_template_id";
+
+        if (!empty ($_REQUEST[$name])) {
+            $newId = $_REQUEST[$name];
+        }
+        else
+        {
+            $newId = null;
+        }
+        Security::requirePermission(Permission::P('SERVER_PERM_EDIT_PROFILE_TEMPLATES'), Server::getServer());
+        $retval = self::createNewObject($newId);
+
+        return $retval;
+    }
+
+
+    /**
+     * Get an interface to pick an object of this class
+     *
+     * If there is only one server available, no interface is actually shown
+     *
      * @param string $user_prefix         A identifier provided by the
      *                                    programmer to recognise it's generated
      *                                    html form
@@ -269,62 +293,62 @@ class ProfileTemplate implements GenericObject {
 
      */
     public static function getSelectUI($user_prefix, $userData=null)
-    { 
-		$db = AbstractDb::getObject();
+    {
+        $db = AbstractDb::getObject();
 
         // Init values
-		$_html = "";
-		$_profile_template_rows = null;
-		
-		!empty($userData['preSelectedId'])?$selectedId=$userData['preSelectedId']:$selectedId=null;
-		!empty($userData['additionalWhere'])?$additional_where=$userData['additionalWhere']:$additional_where=null;
-		!empty($userData['typeInterface'])?$type_interface=$userData['typeInterface']:$type_interface=null;
-		
-		$sql = "SELECT * FROM profile_templates WHERE 1=1 $additional_where ORDER BY profile_template_label ASC";
-		$db->execSql($sql, $_profile_template_rows, false);
+        $_html = "";
+        $_profile_template_rows = null;
 
-		if ($_profile_template_rows != null) {
-			$_name = $user_prefix;
+        !empty($userData['preSelectedId'])?$selectedId=$userData['preSelectedId']:$selectedId=null;
+        !empty($userData['additionalWhere'])?$additional_where=$userData['additionalWhere']:$additional_where=null;
+        !empty($userData['typeInterface'])?$type_interface=$userData['typeInterface']:$type_interface=null;
 
-			$_html .= _("Profile template").": \n";
-	
-			$_i = 0;
-			foreach ($_profile_template_rows as $_profile_template_row) {
-				$_tab[$_i][0] = $_profile_template_row['profile_template_id'];
-				$_tab[$_i][1] = empty($_profile_template_row['profile_template_label']) ? "["._("No label")."] - ".$_profile_template_row['profile_template_id'] : $_profile_template_row['profile_template_label'];
-				$_i ++;
-			}
+        $sql = "SELECT * FROM profile_templates WHERE 1=1 $additional_where ORDER BY profile_template_label ASC";
+        $db->execSql($sql, $_profile_template_rows, false);
 
-			$_html .= FormSelectGenerator::generateFromArray($_tab, $selectedId, $_name, null, false);
-			
-			if ($type_interface == "add") {
-    			if (isset ($_tab)) {
-    				$name = "{$user_prefix}_add";
-    				$value = _("Add");
-    				$_html .= "<div class='admin_element_tools'>";
-    				$_html .= '<input type="submit" class="submit" name="' . $name . '" value="' . $value . '">';
-    				$_html .= "</div>";
-    			}
-    		}
-		}
-		
-		return $_html;
-	}
-	
-	
+        if ($_profile_template_rows != null) {
+            $_name = $user_prefix;
+
+            $_html .= _("Profile template").": \n";
+
+            $_i = 0;
+            foreach ($_profile_template_rows as $_profile_template_row) {
+                $_tab[$_i][0] = $_profile_template_row['profile_template_id'];
+                $_tab[$_i][1] = empty($_profile_template_row['profile_template_label']) ? "["._("No label")."] - ".$_profile_template_row['profile_template_id'] : $_profile_template_row['profile_template_label'];
+                $_i ++;
+            }
+
+            $_html .= FormSelectGenerator::generateFromArray($_tab, $selectedId, $_name, null, false);
+             
+            if ($type_interface == "add") {
+                if (isset ($_tab)) {
+                    $name = "{$user_prefix}_add";
+                    $value = _("Add");
+                    $_html .= "<div class='admin_element_tools'>";
+                    $_html .= '<input type="submit" class="submit" name="' . $name . '" value="' . $value . '">';
+                    $_html .= "</div>";
+                }
+            }
+        }
+
+        return $_html;
+    }
+
+
     /** Get the selected ProfileTemplate object.
      * @param $user_prefix A identifier provided by the programmer to recognise it's generated form
      * @return the ProfileTemplate object
      */
     static function processSelectProfileTemplateUI($user_prefix) {
-    	$name = "{$user_prefix}";
-    	if (!empty ($_REQUEST[$name]))
-    		return ProfileTemplate :: getObject($_REQUEST[$name]);
-    	else
-    		return null;
+        $name = "{$user_prefix}";
+        if (!empty ($_REQUEST[$name]))
+        return ProfileTemplate :: getObject($_REQUEST[$name]);
+        else
+        return null;
     }
-	
-	/**
+
+    /**
      * Get a flexible interface to manage a profile template linked to a node, a network
      * or anything else
      *
@@ -337,93 +361,93 @@ class ProfileTemplate implements GenericObject {
      * @param string $default_display_page
      * @param string $default_display_area
      * @return string HTML markup
-    
+
      */
     public static function getLinkedProfileTemplateUI($user_prefix, $link_table, $link_table_obj_key_col, $link_table_obj_key) {
 
-    	$db = AbstractDb :: getObject();
+        $db = AbstractDb :: getObject();
 
-    	// Init values
-    	$html = "";
+        // Init values
+        $html = "";
 
-    	$link_table = $db->escapeString($link_table);
-    	$link_table_obj_key_col = $db->escapeString($link_table_obj_key_col);
-    	$link_table_obj_key = $db->escapeString($link_table_obj_key);
+        $link_table = $db->escapeString($link_table);
+        $link_table_obj_key_col = $db->escapeString($link_table_obj_key_col);
+        $link_table_obj_key = $db->escapeString($link_table_obj_key);
 
-    	/* Profile templates already linked */
-    	$current_profile_templates_sql = "SELECT * FROM $link_table WHERE $link_table_obj_key_col = '$link_table_obj_key'";
-    	$rows = null;
-    	$db->execSql($current_profile_templates_sql, $rows, false);
+        /* Profile templates already linked */
+        $current_profile_templates_sql = "SELECT * FROM $link_table WHERE $link_table_obj_key_col = '$link_table_obj_key'";
+        $rows = null;
+        $db->execSql($current_profile_templates_sql, $rows, false);
 
-    	$html .= "<table class='content_management_tools'>\n";
-    	$html .= "<th>" . _('Profile template label') . '</th><th>' . _('Actions') . '</th>' . "\n";
-    	if ($rows)
-    	foreach ($rows as $row) {
-    		$profile_template = self :: getObject($row['profile_template_id']);
-    		$html .= "<tr class='already_linked_content'>\n";
-    		$html .= "<td>\n";
-    		$html .= $profile_template->getLabel();
-    		$html .= "</td>\n";
-    		$html .= "<td>\n";
-    		$name = "{$user_prefix}_" . $profile_template->GetId() . "_edit";
-    		$html .= "<input type='button' class='submit' name='$name' value='" . _("Edit") . "' onClick='window.open(\"" . GENERIC_OBJECT_ADMIN_ABS_HREF . "?object_class=ProfileTemplate&action=edit&object_id=" . $profile_template->GetId() . "\");'>\n";
-    		$name = "{$user_prefix}_" . $profile_template->GetId() . "_erase";
-    		$html .= "<input type='submit' class='submit' name='$name' value='" . _("Remove") . "'>";
-    		$html .= "</td>\n";
-    		$html .= "</tr>\n";
-    	}
+        $html .= "<table class='content_management_tools'>\n";
+        $html .= "<th>" . _('Profile template label') . '</th><th>' . _('Actions') . '</th>' . "\n";
+        if ($rows)
+        foreach ($rows as $row) {
+            $profile_template = self :: getObject($row['profile_template_id']);
+            $html .= "<tr class='already_linked_content'>\n";
+            $html .= "<td>\n";
+            $html .= $profile_template->getLabel();
+            $html .= "</td>\n";
+            $html .= "<td>\n";
+            $name = "{$user_prefix}_" . $profile_template->GetId() . "_edit";
+            $html .= "<input type='button' class='submit' name='$name' value='" . _("Edit") . "' onClick='window.open(\"" . GENERIC_OBJECT_ADMIN_ABS_HREF . "?object_class=ProfileTemplate&action=edit&object_id=" . $profile_template->GetId() . "\");'>\n";
+            $name = "{$user_prefix}_" . $profile_template->GetId() . "_erase";
+            $html .= "<input type='submit' class='submit' name='$name' value='" . _("Remove") . "'>";
+            $html .= "</td>\n";
+            $html .= "</tr>\n";
+        }
 
-    	/* Add a profile template */
-    	$html .= "<tr class='add_existing_content'>\n";
-    	$html .= "<td colspan ='2'>\n";
-    	$name = "{$user_prefix}_new_existing";
-    	$profileTemplateSelector = self :: getSelectUI($name, Array('additionalWhere' => "AND profile_template_id NOT IN (SELECT profile_template_id FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key')", 'typeInterface' => "add"));
-    	$html .= $profileTemplateSelector;
-    	$html .= "</td>\n";
-    	$html .= "</tr>\n";
+        /* Add a profile template */
+        $html .= "<tr class='add_existing_content'>\n";
+        $html .= "<td colspan ='2'>\n";
+        $name = "{$user_prefix}_new_existing";
+        $profileTemplateSelector = self :: getSelectUI($name, Array('additionalWhere' => "AND profile_template_id NOT IN (SELECT profile_template_id FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key')", 'typeInterface' => "add"));
+        $html .= $profileTemplateSelector;
+        $html .= "</td>\n";
+        $html .= "</tr>\n";
 
-    	$html .= "</table>\n";
-    	return $html;
+        $html .= "</table>\n";
+        return $html;
     }
-    
+
     /** Get the selected ProfileTemplate object
      * @param $user_prefix A identifier provided by the programmer to recognise it's generated form
      * @return the ProfileTemplate object or null
      */
     static function processLinkedProfileTemplateUI($user_prefix, $link_table, $link_table_obj_key_col, $link_table_obj_key) {
-    	$db = AbstractDb :: getObject();
-    	$link_table = $db->escapeString($link_table);
-    	$link_table_obj_key_col = $db->escapeString($link_table_obj_key_col);
-    	$link_table_obj_key = $db->escapeString($link_table_obj_key);
-    	
-    	// Profile templates already linked
-    	$current_content_sql = "SELECT * FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key'";
-    	$rows = null;
-    	$db->execSql($current_content_sql, $rows, false);
-    	if ($rows)
-    	foreach ($rows as $row) {
-    		$profile_template = ProfileTemplate :: getObject($row['profile_template_id']);
-    		$profile_template_id = $db->escapeString($profile_template->getId());
-    		$name = "{$user_prefix}_" . $profile_template->GetId() . "_erase";
-    		if (!empty ($_REQUEST[$name])) {
-    			$sql = "DELETE FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key' AND profile_template_id = '$profile_template_id';\n";
-    			$db->execSqlUpdate($sql, false);
-    		}
-    	}
-    	// Link an existing profile template
-    	$name = "{$user_prefix}_new_existing_add";
-    	if (!empty ($_REQUEST[$name])) {
-    		$name = "{$user_prefix}_new_existing";
-    		$profile_template = ProfileTemplate :: processSelectProfileTemplateUI($name);
-    		if ($profile_template) {
-    			$profile_template_id = $db->escapeString($profile_template->getId());
-    			$sql = "INSERT INTO $link_table (profile_template_id, $link_table_obj_key_col) VALUES ('$profile_template_id', '$link_table_obj_key');\n";
-    			$db->execSqlUpdate($sql, false);
-    		}
-    	}
+        $db = AbstractDb :: getObject();
+        $link_table = $db->escapeString($link_table);
+        $link_table_obj_key_col = $db->escapeString($link_table_obj_key_col);
+        $link_table_obj_key = $db->escapeString($link_table_obj_key);
+         
+        // Profile templates already linked
+        $current_content_sql = "SELECT * FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key'";
+        $rows = null;
+        $db->execSql($current_content_sql, $rows, false);
+        if ($rows)
+        foreach ($rows as $row) {
+            $profile_template = ProfileTemplate :: getObject($row['profile_template_id']);
+            $profile_template_id = $db->escapeString($profile_template->getId());
+            $name = "{$user_prefix}_" . $profile_template->GetId() . "_erase";
+            if (!empty ($_REQUEST[$name])) {
+                $sql = "DELETE FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key' AND profile_template_id = '$profile_template_id';\n";
+                $db->execSqlUpdate($sql, false);
+            }
+        }
+        // Link an existing profile template
+        $name = "{$user_prefix}_new_existing_add";
+        if (!empty ($_REQUEST[$name])) {
+            $name = "{$user_prefix}_new_existing";
+            $profile_template = ProfileTemplate :: processSelectProfileTemplateUI($name);
+            if ($profile_template) {
+                $profile_template_id = $db->escapeString($profile_template->getId());
+                $sql = "INSERT INTO $link_table (profile_template_id, $link_table_obj_key_col) VALUES ('$profile_template_id', '$link_table_obj_key');\n";
+                $db->execSqlUpdate($sql, false);
+            }
+        }
     }
-	
-	/**Get all fields
+
+    /**Get all fields
      * @return an array of ProfileTemplateField or an empty arrray */
     function getFields($additional_where = null) {
         $db = AbstractDb :: getObject();
@@ -440,62 +464,62 @@ class ProfileTemplate implements GenericObject {
         }
         return $retval;
     }
-	
+
     /**
      * Retreives the admin interface of this object
      *
      * @return string The HTML fragment for this interface
      */
-	public function getAdminUI()
-	{
-	    Security::requirePermission(Permission::P('SERVER_PERM_EDIT_PROFILE_TEMPLATES'), Server::getServer());
-	    $db = AbstractDb::getObject();
-	    $sql = "SELECT COUNT(*) as num_used_profiles FROM profile_templates JOIN profiles USING (profile_template_id) WHERE profile_template_id = '" . $this->getId() . "'";
-	    $db->execSqlUniqueRes($sql, $num_used_profiles, false);
-	     
-	    // Init values
-		$html = '';
+    public function getAdminUI()
+    {
+        Security::requirePermission(Permission::P('SERVER_PERM_EDIT_PROFILE_TEMPLATES'), Server::getServer());
+        $db = AbstractDb::getObject();
+        $sql = "SELECT COUNT(*) as num_used_profiles FROM profile_templates JOIN profiles USING (profile_template_id) WHERE profile_template_id = '" . $this->getId() . "'";
+        $db->execSqlUniqueRes($sql, $num_used_profiles, false);
 
-		$html .= "<fieldset class='admin_container ".get_class($this)."'>\n";
-		$html .= "<legend>"._("Profile template management")."</legend>\n";
+        // Init values
+        $html = '';
+
+        $html .= "<fieldset class='admin_container ".get_class($this)."'>\n";
+        $html .= "<legend>"._("Profile template management")."</legend>\n";
         $html .= "<ul class='admin_element_list'>\n";
-        
-		// profile_template_id
-		$_value = htmlspecialchars($this->getId(), ENT_QUOTES);
 
-		$html .= "<li class='admin_element_item_container'>\n";
-		$html .= "<div class='admin_element_label'>" . _("ProfileTemplate ID") . ":</div>\n";
-		$html .= "<div class='admin_element_data'>\n";
-		$html .= $_value;
-		$html .= "</div>\n";
-		$html .= "</li>\n";
+        // profile_template_id
+        $_value = htmlspecialchars($this->getId(), ENT_QUOTES);
 
-		// label
-		$_name = "profile_template_" . $this->getId() . "_label";
-		$_value = htmlspecialchars($this->getLabel(), ENT_QUOTES);
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>" . _("ProfileTemplate ID") . ":</div>\n";
+        $html .= "<div class='admin_element_data'>\n";
+        $html .= $_value;
+        $html .= "</div>\n";
+        $html .= "</li>\n";
 
-		$html .= "<li class='admin_element_item_container'>\n";
-		$html .= "<div class='admin_element_label'>" . _("Label") . ":</div>\n";
-		$html .= "<div class='admin_element_data'>\n";
-		$html .= "<input type='text' size='50' value='$_value' name='$_name'>\n";
-		$html .= "</div>\n";
-		$html .= "</li>\n";
+        // label
+        $_name = "profile_template_" . $this->getId() . "_label";
+        $_value = htmlspecialchars($this->getLabel(), ENT_QUOTES);
 
-		// creation date
-		$_value = htmlspecialchars($this->getCreationDate(), ENT_QUOTES);
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>" . _("Label") . ":</div>\n";
+        $html .= "<div class='admin_element_data'>\n";
+        $html .= "<input type='text' size='50' value='$_value' name='$_name'>\n";
+        $html .= "</div>\n";
+        $html .= "</li>\n";
 
-		$html .= "<li class='admin_element_item_container'>\n";
-		$html .= "<div class='admin_element_label'>" . _("Creation date") . ":</div>\n";
-		$html .= "<div class='admin_element_data'>\n";
-		$html .= $_value;
-		$html .= "</div>\n";
-		$html .= "</li>\n";
+        // creation date
+        $_value = htmlspecialchars($this->getCreationDate(), ENT_QUOTES);
 
-		// profile template fields
-		$html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<li class='admin_element_item_container'>\n";
+        $html .= "<div class='admin_element_label'>" . _("Creation date") . ":</div>\n";
+        $html .= "<div class='admin_element_data'>\n";
+        $html .= $_value;
+        $html .= "</div>\n";
+        $html .= "</li>\n";
+
+        // profile template fields
+        $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<fieldset class='admin_element_group'>\n";
         $html .= "<legend>"._("Profile template fields")."</legend>\n";
-        
+
         $html .= "<ul class='admin_element_list'>\n";
         foreach ($this->getFields() as $field) {
             $html .= "<li class='admin_element_item_container'>\n";
@@ -514,29 +538,29 @@ class ProfileTemplate implements GenericObject {
         $html .= "</ul>\n";
         $html .= "</fieldset>\n";
         $html .= "</li>\n";
-        
+
         $html .= "</ul>\n";
         $html .= "</fieldset>\n";
-		return $html;
-	}
+        return $html;
+    }
 
     /**
      * Process admin interface of this object
      *
      * @return void
      */
-	public function processAdminUI()
-	{
-	    	    Security::requirePermission(Permission::P('SERVER_PERM_EDIT_PROFILE_TEMPLATES'), Server::getServer());
+    public function processAdminUI()
+    {
+        Security::requirePermission(Permission::P('SERVER_PERM_EDIT_PROFILE_TEMPLATES'), Server::getServer());
         require_once('classes/User.php');
-        
+
         $errmsg = "";
-        
-		// label
-		$_name = "profile_template_" . $this->getId() . "_label";
-		$this->setLabel($_REQUEST[$_name]);	
-		
-		foreach ($this->getFields() as $field) {
+
+        // label
+        $_name = "profile_template_" . $this->getId() . "_label";
+        $this->setLabel($_REQUEST[$_name]);
+
+        foreach ($this->getFields() as $field) {
             $name = "profile_template_" . $this->id . "_field_" . $field->GetId() . "_erase";
             if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true) {
                 $field->delete($errmsg);
@@ -546,7 +570,7 @@ class ProfileTemplate implements GenericObject {
         }
 
         ProfileTemplateField :: processCreateFieldUI("profile_template_{$this->id}_new_field", $this);
-	}
+    }
 
     /**
      * Delete this Object form the it's storage mechanism
@@ -555,42 +579,44 @@ class ProfileTemplate implements GenericObject {
      *
      * @return bool True on success, false on failure or access denied
      */
-	public function delete(&$errmsg)
-	{
-	    require_once('classes/User.php');
-        
-		$db = AbstractDb::getObject();
+    public function delete(&$errmsg)
+    {
+        require_once('classes/User.php');
 
-	    // Init values
-		$_retVal = false;
+        $db = AbstractDb::getObject();
 
-		if (Security::hasPermission(Permission::P('SERVER_PERM_EDIT_PROFILE_TEMPLATES'), Server::getServer())) {
-			$errmsg = _('Access denied');
-		} else {
-			$_id = $db->escapeString($this->getId());
+        // Init values
+        $_retVal = false;
 
-			if (!$db->execSqlUpdate("DELETE FROM profile_templates WHERE profile_template_id = '{$_id}'", false)) {
-				$errmsg = _('Could not delete ProfileTemplate!');
-			} else {
-				$_retVal = true;
-			}
-		}
+        if (Security::hasPermission(Permission::P('SERVER_PERM_EDIT_PROFILE_TEMPLATES'), Server::getServer())) {
+            $_id = $db->escapeString($this->getId());
 
-		return $_retVal;
-	}
-	
-	
+            if (!$db->execSqlUpdate("DELETE FROM profile_templates WHERE profile_template_id = '{$_id}'", false)) {
+                $errmsg = _('Could not delete ProfileTemplate!');
+            }
+            else {
+                $_retVal = true;
+            }
+        }
+        else {
+            $errmsg = _('Access denied');
+        }
+
+        return $_retVal;
+    }
+
+
     /**
      * Reloads the object from the database
      *
      * Should normally be called after a set operation
      *
      * @return void     */
-	protected function refresh()
-	{
-		$this->__construct($this->getId());
-	}
-    
+    protected function refresh()
+    {
+        $this->__construct($this->getId());
+    }
+
     /** Menu hook function */
     static public function hookMenu() {
         $items = array();
@@ -600,7 +626,7 @@ class ProfileTemplate implements GenericObject {
             $items[] = array('path' => 'server/profile_templates',
             'title' => _("Profile templates"),
             'url' => BASE_URL_PATH.htmlspecialchars("admin/generic_object_admin.php?object_class=ProfileTemplate&action=list")
-		);            
+            );
         }
         return $items;
     }
