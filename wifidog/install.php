@@ -175,7 +175,7 @@ foreach($pageindex as $pagekey => $pagevalue){
 print<<<EndHTML
         </div>
         <div id="left_area_bottom">
-            <p><a href="../CHANGELOG">Change Log</a><BR>
+		<p><A HREF="#" ONCLICK="javascript: document.myform.page.value='changelog'; document.myform.submit();">Change Log</A><BR>
             <a href="http://dev.wifidog.org/report/10">Known issues</a></p>
         </div>
     </div>
@@ -380,7 +380,7 @@ function saveConfig($data) {
  *********************************************************************************/
 switch ($page) {
     case 'Permissions' :
-        print "<h1>Permissions</h1>";
+        print "<h1>Folder Permissions</h1>";
 
         if (function_exists(posix_getpwuid)) {
             $process_info_user_id = posix_getpwuid(posix_getuid());
@@ -415,7 +415,7 @@ switch ($page) {
         foreach ($dir_array as $dir) {
             print "<tr><td>$dir</td>";
             if (!file_exists(WIFIDOG_ABS_FILE_PATH . "$dir")) {
-                print "<TD COLSPAN=\"2\" STYLE=\"text-align:center;\">Missing</td></tr>\n";
+                print "<TD COLSPAN=\"2\" STYLE=\"text-align:center; background:red;\">Missing</td></tr>\n";
                 $cmd_mkdir .= WIFIDOG_ABS_FILE_PATH . "$dir ";
                 $cmd_chown .= WIFIDOG_ABS_FILE_PATH . "$dir ";
                 $error = 1;
@@ -436,9 +436,9 @@ switch ($page) {
             print "<td>$dir_owner_username</td>";
 
             if (is_writable(WIFIDOG_ABS_FILE_PATH . "$dir")) {
-                print "<td>YES</td>";
+                print "<td STYLE='background:lime;'>YES</td>";
             } else {
-                print "<td>NO</td>";
+                print "<td STYLE='background:red;'>NO</td>";
                 $cmd_chown .= WIFIDOG_ABS_FILE_PATH . "$dir ";
                 $error = 1;
             }
@@ -1018,6 +1018,24 @@ EndHTML;
                 break;
 
                 ###########################################
+
+
+    case 'changelog' :
+        echo "<h1>Change log</h1>";
+
+print"<pre>";
+        include WIFIDOG_ABS_FILE_PATH . '../CHANGELOG';
+print"</pre>";
+
+        navigation(array (
+        array (
+                "title" => "Back",
+                "page" => "Welcome"
+                ),
+               ));
+               break;
+                ###########################################
+                
     default :
         $WIFIDOG_VERSION = $configArray['WIFIDOG_VERSION'];
         print<<<EndHTML

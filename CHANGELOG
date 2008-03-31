@@ -1,4 +1,7 @@
 # $Id$
+2008-3-31 Robin Jones
+        * Minor install script improvements, including making changelog accessible and colour in the permissions tables
+
 2008-03-21 Benoit Grégoire  <bock@step.polymtl.ca>
 	* generic_object_admin.php (and others):  Fix bug reported by  Jerry DeFoe (ProfileTemplates couldn't be created) + some UI tweaks.
 	
