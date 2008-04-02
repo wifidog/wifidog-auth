@@ -1,6 +1,9 @@
 # $Id$
-2008-3-31 Robin Jones
-        * Minor install script improvements, including making changelog accessible and colour in the permissions tables
+2008-04-01 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Apply patch from dc.ml@oxys.net to allow commas in authentication parameter strings.  This is sometimes necessary for LDAP, and fixes #342
+
+2008-03-31 Robin Jones
+    * Minor install script improvements, including making changelog accessible and colour in the permissions tables
 
 2008-03-21 Benoit Grégoire  <bock@step.polymtl.ca>
 	* generic_object_admin.php (and others):  Fix bug reported by  Jerry DeFoe (ProfileTemplates couldn't be created) + some UI tweaks.

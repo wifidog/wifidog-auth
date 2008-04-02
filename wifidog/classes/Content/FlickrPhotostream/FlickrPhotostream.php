@@ -448,7 +448,7 @@ $api = $this->getFlickrApi();
             $html .= "<div class='admin_element_label'>"._("Flickr API key")." <a href='http://www.flickr.com/services/api/misc.api_keys.html'>(?)</a> : </div>\n";
             $html .= "<div class='admin_element_data'>\n";
             $name = "flickr_photostream_".$this->id."_api_key";
-            $html .= "<input type='text' name='$name' value='".$this->getApiKey()."'\n";
+            $html .= "<input type='text' name='$name' size=40 value='".$this->getApiKey()."'\n";
             $html .= "</div>\n";
             $html .= "</li>\n";
 
@@ -593,8 +593,7 @@ $api = $this->getFlickrApi();
                 }
                 catch (Phlickr_ConnectionException $e)
                 {
-                    $html .= _("Unable to connect to Flickr API.");
-                    echo $e;
+                    $html .= sprintf(_("Unable to connect to Flickr API: %s"), "<pre>$e</pre>");
                 }
                 catch (Phlickr_MethodFailureException $e)
                 {
@@ -850,7 +849,7 @@ $api = $this->getFlickrApi();
                 }
                 catch (Phlickr_ConnectionException $e)
                 {
-                    $html .= _("Unable to connect to Flickr API.");
+                   $html .= sprintf(_("Unable to connect to Flickr API: %s"), "<pre>$e</pre>");
                 }
                 catch (Phlickr_MethodFailureException $e)
                 {

@@ -642,7 +642,28 @@ class Network extends GenericDataObject
             throw new Exception("Network::getAuthenticator(): Security error: The parameters passed to the constructor of the authenticator are potentially unsafe");
         }
 
-        return call_user_func_array(array (new ReflectionClass($this->_row['network_authenticator_class']), 'newInstance'), explode(",", str_replace(array ("'", '"'), "", str_replace(", ", ",", $this->_row['network_authenticator_params']))));
+        $string=$this->_row['network_authenticator_params'];
+         
+        $params = explode(',', $string);
+        for ($i = 0; $i < count($params); $i++) {
+            $nquotes = substr_count($params[$i], '\'');
+            if ($nquotes %2 == 1) {
+                for ($j = $i+1; $j < count($params); $j++) {
+                    if (substr_count($params[$j], '\'') > 0) {
+                        array_splice($params, $i, $j-$i+1,
+                        implode(',', array_slice($params, $i, $j-$i+1)));
+                        break;
+                    }
+                }
+            }
+            if ($nquotes > 0) {
+                $qstr =& $params[$i];
+                $qstr = substr_replace($qstr, '', strpos($qstr, '\''), 1);
+                $qstr = substr_replace($qstr, '', strrpos($qstr, '\''), 1);
+            }
+        }
+        return call_user_func_array(array (new ReflectionClass($this->_row['network_authenticator_class']), 'newInstance'), $params);
+
     }
 
     /**

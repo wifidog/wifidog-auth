@@ -142,7 +142,7 @@ class AuthenticatorLDAP extends Authenticator
      * @param string $username    Username of user
      * @param string $password    Clear text password of user
      * @param string $ldap_server Hostname of LDAP server
-     * @param strong $o           The base dn of the LDAP server
+     * @param strong $o           The base dn string of the LDAP server (possibly including o=)
      * @param string $f           It's the field that will be used in the
      *                            LDAP search, i.e.: uid, mail, name server
      * @param string $errmsg      Reference of error message
