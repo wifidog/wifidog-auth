@@ -118,7 +118,7 @@ print<<<EndHTML
       //alert(document.myform.config.value);  // DEBUG
     }
   </SCRIPT>
-
+		<script src="js/formutils.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="media/base_theme/stylesheet.css" />
 </HEAD>
 <BODY id='page' class='{$page}'>
@@ -182,7 +182,7 @@ print<<<EndHTML
 <div id="main_area">
 
     <div id="main_area_top">
-        <table align="center"><tr><td><img src="media/base_theme/images/wifidog_logo_banner.png" /></td></tr></table>
+        <table align="center"><tr><td><img src="media/base_theme/images/wifidog_install_banner.png" /></td></tr></table>
     </div>
     <div id="main_area_middle">
 EndHTML;
@@ -557,7 +557,7 @@ EndHTML;
             print "<p>Please go back and retry with correct values, or fix your server configuration.</p>";
             refreshButton();
             navigation(array(array("title" => "Back", "page" => "Database")));
-            die();
+            #die(); - causes inability go go back and change values
             break;
         }
         print "</li>";
@@ -883,9 +883,12 @@ EndHTML;
         </tr>
         </table>
 
-        <script type="text/javascript"> // TODO: check whether user already exists
-          function submitValue() {
-        if (document.myform.username.value == '') {
+        <script type="text/javascript">
+          
+        
+        function submitValue() {
+
+        if (isEmpty(document.myform.username)) {
               alert('Please enter a username');
               exit();
             }
@@ -893,23 +896,23 @@ EndHTML;
               alert('Password mismatch, Please retry');
               exit();
             }
-            if (document.myform.password.value == '') {
+        if (isEmpty(document.myform.password)) {
               alert('Please enter a valid password');
               exit();
             }
-        re = /^[0-9a-zA-Z]{6,}$/;
-            if (!re.test(document.myform.password.value)) {
+
+        if (!isValidPassword(document.myform.password)) {
               alert('Your password does not meet complexity requirements. 6 letters and/or numbers ');
               exit();
             }
 
-            if (document.myform.email.value == '') {
+        if (!isValidEmail(document.myform.email)) {
               alert('Please enter a valid email address');
               exit();
             }
-            document.myform.page.value='admin';
-            document.myform.action.value='create';
-            document.myform.submit();
+        document.myform.page.value='admin';
+        document.myform.action.value='create';
+        document.myform.submit();
           }
         </script>
 EndHTML;
