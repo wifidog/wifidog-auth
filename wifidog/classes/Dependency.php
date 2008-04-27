@@ -141,7 +141,7 @@ class Dependency
        "detectFiles" => "lib/simplepie/simplepie.inc",
        'description' => "SimplePie is a dependency that provides an RSS parser in PHP. It is required for RssPressReview.  It is is recommended to install it, if you do not, RSS feed options will be disabled.",
        'website' => "http://simplepie.org/",
-       'installSourceUrl' => "http://svn.simplepie.org/simplepie/branches/1.0/",
+       'installSourceUrl' => "http://svn.simplepie.org/simplepie/branches/1.1/",
        'installMethod' => "svn",
        'installDestination' => "simplepie"
        ),

@@ -1,5 +1,8 @@
 # $Id$
-
+2008-04-27 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Fixed dependencies on simplepie.  Simplepie removed a stable branch from their SVN.  Why on earth would one do that!?!?
+	* For an existing install, you may want to remove the feedpressreview and simplepie directories and re-install them from the Dependencies page under the "Server" menu.  
+	
 2008-04-02 Robin Jones
         * Fixed #325 password validation
         * Added a new banner for the install script
