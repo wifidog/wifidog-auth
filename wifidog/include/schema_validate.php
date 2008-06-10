@@ -47,7 +47,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 59);
+define('REQUIRED_SCHEMA_VERSION', 60);
 /** Used to test a new shecma version before modyfying the database */
 define('SCHEMA_UPDATE_TEST_MODE', false);
 /**
@@ -1319,7 +1319,73 @@ function real_update_schema($targetSchema) {
         $sql .= "CREATE INDEX idx_content_display_log ON content_display_log (last_display_timestamp);\n";
         $sql .= "CREATE INDEX idx_nodes_node_deployment_status ON nodes (node_deployment_status);\n";
     }
-    
+
+    $new_schema_version = 60;
+    if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
+        printUpdateVersion($new_schema_version);
+        $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+        $sql .= "CREATE TABLE token_templates \n";
+        $sql .= "( \n";
+        $sql .= "token_template_id text PRIMARY KEY, \n";
+        $sql .= "token_template_network text REFERENCES networks (network_id) ON UPDATE CASCADE ON DELETE CASCADE NOT NULL, -- (Note:  Server-wide tokens aren't supported, but the code will look up the tokens of networks you peer with) \n";
+        $sql .= "token_template_creation_date timestamp NOT NULL DEFAULT now(),\n";
+        $sql .= "token_max_incoming_data integer, -- Ex: Allows capping bandwidth \n";
+        $sql .= "token_max_outgoing_data integer, -- Ex: Allows capping bandwidth \n";
+        $sql .= "token_max_total_data integer, -- Ex: Allows capping bandwidth \n";
+        $sql .= "token_max_connection_duration interval, -- Ex: Allows limiting the length of a single connection \n";
+        $sql .= "token_max_usage_duration interval, -- Ex: Allows selling access by the hour (counting only when in use) \n";
+        $sql .= "token_max_wall_clock_duration interval, -- Ex:  Allows selling daily, weekly or monthly passes (starting the count as soon as the token is first used) \n";
+        $sql .= "token_max_age interval, -- Ex:  Allow setting a maximum time before expiration (starting the count as soon as the token is issued) \n";
+        $sql .= "token_is_reusable boolean DEFAULT true --  Can a user connect again using this token? (normally, yes) \n";
+
+        $sql .= ");\n\n";
+
+        $sql .= "CREATE TABLE tokens_template_valid_nodes -- (Unfortunately, for hotels selling 24h access to their clients, we have to consider that their network may consist of more than one node.  If the token has no entry in this table, it's considered valid everywhere on the Network (and it's peers)) \n";
+        $sql .= "( \n";
+        $sql .= "token_template_id text REFERENCES token_templates (token_template_id) ON UPDATE CASCADE ON DELETE CASCADE NOT NULL, \n";
+        $sql .= "token_valid_at_node text REFERENCES nodes (node_id) ON UPDATE CASCADE ON DELETE CASCADE NOT NULL, \n";
+        $sql .= "PRIMARY KEY (token_template_id, token_valid_at_node) \n";
+        $sql .= ");\n\n";
+
+        $sql .= "CREATE TABLE token_lots \n";
+        $sql .= "( \n";
+        $sql .= "token_lot_id text PRIMARY KEY, \n";
+        $sql .= "token_lot_comment text, -- A free-form comment about the lot text \n";
+        $sql .= "token_lot_creation_date timestamp NOT NULL DEFAULT now()\n";
+        $sql .= ");\n\n";
+
+        $sql .= "CREATE TABLE tokens \n";
+        $sql .= "( \n";
+        $sql .= "token_id text PRIMARY KEY, \n";
+        $sql .= "token_template_id text REFERENCES token_templates (token_template_id) ON UPDATE CASCADE ON DELETE CASCADE, \n";
+        $sql .= "token_status text REFERENCES token_status (token_status)  ON UPDATE CASCADE ON DELETE RESTRICT, \n";
+        $sql .= "token_lot_id text REFERENCES token_lots (token_lot_id) ON UPDATE CASCADE ON DELETE CASCADE, \n";
+        $sql .= "token_creation_date timestamp NOT NULL DEFAULT now(), -- (not the same as connection start time) \n";
+        $sql .= "token_issuer text REFERENCES users (user_id) ON UPDATE CASCADE ON DELETE CASCADE NOT NULL, -- A user in the system.  User responsible for the creation of the token (not necessarily the same as the one using it), \n";
+        $sql .= "token_owner text REFERENCES users (user_id) ON UPDATE CASCADE ON DELETE CASCADE -- The user that can USE the token, anyone if empty.\n";
+        $sql .= ");\n\n";
+
+        $sql .= "INSERT INTO tokens (token_id, token_status, token_creation_date, token_issuer, token_owner) SELECT token AS token_id, token_status, timestamp_in AS token_creation_date, user_id AS token_issuer, user_id AS token_owner FROM connections; \n";
+        $sql .= "CREATE INDEX idx_token_status ON tokens (token_status);\n";   
+        $sql .= "ALTER TABLE connections ADD CONSTRAINT fk_tokens FOREIGN KEY (token) REFERENCES tokens (token_id) ON UPDATE CASCADE ON DELETE RESTRICT; \n";
+
+        $sql .= "ALTER TABLE connections DROP column token_status; \n";
+        $sql .= "ALTER TABLE connections ADD COLUMN max_total_bytes integer;\n";
+        $sql .= "ALTER TABLE connections ALTER COLUMN max_total_bytes SET DEFAULT NULL;\n";
+        $sql .= "ALTER TABLE connections ADD COLUMN max_incoming_bytes integer;\n";
+        $sql .= "ALTER TABLE connections ALTER COLUMN max_incoming_bytes SET DEFAULT NULL;\n";
+        $sql .= "ALTER TABLE connections ADD COLUMN max_outgoing_bytes integer;\n";
+        $sql .= "ALTER TABLE connections ALTER COLUMN max_outgoing_bytes SET DEFAULT NULL;\n";
+        $sql .= "ALTER TABLE connections ADD COLUMN expiration_date timestamp;\n";
+        $sql .= "ALTER TABLE connections ALTER COLUMN expiration_date SET DEFAULT NULL;\n";
+        $sql .= "ALTER TABLE connections ADD COLUMN logout_reason integer;\n";
+        $sql .= "ALTER TABLE connections ALTER COLUMN logout_reason SET DEFAULT NULL;\n";
+        $sql .= "ALTER TABLE connections RENAME COLUMN token TO token_id;\n";     
+    }
+    /*
+
+
+    */
     /*
      $new_schema_version = ;
      if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {

@@ -171,7 +171,7 @@ function garbage_collect() {
 
     // 10 minutes
     $expiration = '10 minutes';
-    $db->execSqlUpdate("UPDATE connections SET token_status='" . TOKEN_USED . "' WHERE last_updated < (CURRENT_TIMESTAMP - interval '$expiration') AND token_status = '" . TOKEN_INUSE . "';", false);
+    $db->execSqlUpdate("UPDATE tokens SET token_status='" . TOKEN_USED . "' FROM connections WHERE connections.token_id=tokens.token_id AND last_updated < (CURRENT_TIMESTAMP - interval '$expiration') AND token_status = '" . TOKEN_INUSE . "';", false);
 }
 
 /** Return a 32 byte guid valid for database use */

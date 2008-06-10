@@ -321,6 +321,7 @@ $from_presets = array (
         $sql .= "SELECT $select_columns \n";
 
         $sql .= "FROM connections  \n";
+        $sql .= "JOIN tokens USING (token_id) \n";
         $sql .= "JOIN nodes ON (connections.node_id = nodes.node_id) \n";
         $sql .= "$join_users_sql \n";
         $sql .= "WHERE (incoming!=0 OR outgoing!=0) \n";

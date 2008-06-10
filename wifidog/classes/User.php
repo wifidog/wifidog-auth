@@ -151,7 +151,7 @@ class User implements GenericObject {
     /** Instantiate a user object
      * @param $username The username of the user
      * @param $account_origin Network:  The account origin
-     * @param &$errMsg An error message will be appended to this is the username is not empty, but the user doesn't exist.
+     * @param &$errMsg An error message will be appended to this if the username is not empty, but the user doesn't exist.
      * @return a User object, or null if there was an error
      */
     public static function getUserByUsernameAndOrigin($username, Network $account_origin, &$errMsg = null) {
@@ -535,7 +535,17 @@ class User implements GenericObject {
             if ($session && $node_ip && $session->get(SESS_NODE_ID_VAR)) {
                 //echo "$session && $node_ip && {$session->get(SESS_NODE_ID_VAR)}";
                 $node_id = $db->escapeString($session->get(SESS_NODE_ID_VAR));
-                $db->execSqlUpdate("INSERT INTO connections (user_id, token, token_status, timestamp_in, node_id, node_ip, last_updated) VALUES ('" . $this->getId() . "', '$token', '" . TOKEN_UNUSED . "', CURRENT_TIMESTAMP, '$node_id', '$node_ip', CURRENT_TIMESTAMP)", false);
+
+                /*
+                 * Delete all unused tokens for this user, so we don't fill the database
+                 * with them
+                 */
+                $sql = "DELETE FROM connections USING tokens "."WHERE tokens.token_id=connections.token_id AND token_status='".TOKEN_UNUSED."' AND user_id = '".$this->getId()."';\n";
+                // TODO:  Try to find a reusable token before creating a brand new one!
+                
+                $sql .= "INSERT INTO tokens (token_owner, token_issuer, token_id, token_status) VALUES ('" . $this->getId() . "', '" . $this->getId() . "', '$token', '" . TOKEN_UNUSED . "');\n";
+                $sql .= "INSERT INTO connections (user_id, token_id, timestamp_in, node_id, node_ip, last_updated) VALUES ('" . $this->getId() . "', '$token', CURRENT_TIMESTAMP, '$node_id', '$node_ip', CURRENT_TIMESTAMP)";
+                $db->execSqlUpdate($sql, false);
                 $retval = $token;
             } else
             $retval = false;

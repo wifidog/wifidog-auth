@@ -1078,11 +1078,17 @@ class Network extends GenericDataObject
     public function getSplashOnlyUser()
     {
         $username = 'SPLASH_ONLY_USER';
-
-        $user = User :: getUserByUsernameAndOrigin($username, $this);
-        if (!$user) {
-            $user = User :: createUser(get_guid(), $username, $this, '', '');
-            $user->setAccountStatus(ACCOUNT_STATUS_ALLOWED);
+        if(!empty($this->splashOnlyUser)) {
+            $user = $this->splashOnlyUser;
+        }
+        else
+        {
+            $user = User :: getUserByUsernameAndOrigin($username, $this);
+            if (!$user) {
+                $user = User :: createUser(get_guid(), $username, $this, '', '');
+                $user->setAccountStatus(ACCOUNT_STATUS_ALLOWED);
+            }
+            $this->splashOnlyUser = $user;
         }
         return $user;
     }
@@ -1216,7 +1222,7 @@ class Network extends GenericDataObject
             // Get number of online users
             $network_id = $db->escapeString($this->_id);
             $splashOnlyUserId = $this->getSplashOnlyUser()->getId();
-            $sql = "SELECT ((SELECT COUNT(DISTINCT users.user_id) as count FROM users,connections NATURAL JOIN nodes JOIN networks ON (nodes.network_id=networks.network_id AND networks.network_id='$network_id') WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND users.user_id!='{$splashOnlyUserId}') + (SELECT COUNT(DISTINCT connections.user_mac) as count FROM users,connections NATURAL JOIN nodes JOIN networks ON (nodes.network_id=networks.network_id AND networks.network_id='$network_id') WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND users.user_id='{$splashOnlyUserId}')) AS count";
+            $sql = "SELECT ((SELECT COUNT(DISTINCT users.user_id) as count FROM users,connections JOIN tokens USING (token_id) NATURAL JOIN nodes JOIN networks ON (nodes.network_id=networks.network_id AND networks.network_id='$network_id') WHERE tokens.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND users.user_id!='{$splashOnlyUserId}') + (SELECT COUNT(DISTINCT connections.user_mac) as count FROM users,connections JOIN tokens USING (token_id) NATURAL JOIN nodes JOIN networks ON (nodes.network_id=networks.network_id AND networks.network_id='$network_id') WHERE tokens.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND users.user_id='{$splashOnlyUserId}')) AS count";
             $db->execSqlUniqueRes($sql, $row, false);
 
             $retval = $row['count'];

@@ -54,7 +54,7 @@ Security::requirePermission(Permission::P('NETWORK_PERM_VIEW_ONLINE_USERS'), Net
 $db = AbstractDb::getObject();
 $smarty = SmartyWifidog::getObject();
 $online_users = null;
-$db->execSql("SELECT connections.user_id, name, username, account_origin, timestamp_in, incoming, outgoing FROM connections,users,nodes WHERE token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND nodes.node_id=connections.node_id ORDER BY account_origin, timestamp_in DESC", $online_users);
+$db->execSql("SELECT connections.user_id, name, username, account_origin, timestamp_in, incoming, outgoing FROM users,nodes,connections JOIN tokens USING (token_id) WHERE token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND nodes.node_id=connections.node_id ORDER BY account_origin, timestamp_in DESC", $online_users);
 $smarty->assign("users_array", $online_users);
 
 $ui = MainUI::getObject();

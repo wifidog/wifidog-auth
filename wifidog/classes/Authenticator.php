@@ -228,7 +228,7 @@ abstract class Authenticator
 
             if ($splash_user_id != $user->getId() && $node = Node::getCurrentNode()) {
                 // Try to destroy all connections tied to the current node
-                $sql = "SELECT conn_id FROM connections WHERE user_id = '{$user->getId()}' AND node_id='{$node->getId()}' AND token_status='".TOKEN_INUSE."';";
+                $sql = "SELECT conn_id FROM connections JOIN tokens USING (token_id) WHERE user_id = '{$user->getId()}' AND node_id='{$node->getId()}' AND token_status='".TOKEN_INUSE."';";
                 $conn_rows = null;
                 $db->execSql($sql, $conn_rows, false);
 
@@ -246,7 +246,7 @@ abstract class Authenticator
              * not allow multiple logins. Logging in with a new token implies
              * that all other active tokens should expire
              */
-            $sql = "SELECT conn_id FROM connections WHERE user_id = '{$user->getId()}' AND token_status='".TOKEN_INUSE."';";
+            $sql = "SELECT conn_id FROM connections JOIN tokens USING (token_id) WHERE user_id = '{$user->getId()}' AND token_status='".TOKEN_INUSE."';";
             $conn_rows = null;
             $db->execSql($sql, $conn_rows, false);
 
@@ -284,7 +284,11 @@ abstract class Authenticator
         // Login the user
         $mac = $db->escapeString($_REQUEST['mac']);
         $ip = $db->escapeString($_REQUEST['ip']);
-        $sql = "UPDATE connections SET token_status='".TOKEN_INUSE."',user_mac='$mac',user_ip='$ip',last_updated=CURRENT_TIMESTAMP WHERE conn_id='{$conn_id}';";
+        $sql = "BEGIN;\n";
+        $sql .= "UPDATE connections SET user_mac='$mac',user_ip='$ip',last_updated=CURRENT_TIMESTAMP WHERE conn_id='{$conn_id}';";
+        $sql .= "UPDATE tokens SET token_status='".TOKEN_INUSE."' FROM connections WHERE connections.token_id=tokens.token_id AND conn_id='{$conn_id}';";
+        $sql .= "COMMIT;\n";
+        
         $db->execSqlUpdate($sql, false);
 
         if ($splash_user_id != $info['user_id'] && $network->getMultipleLoginAllowed() === false) {
@@ -294,7 +298,7 @@ abstract class Authenticator
              * that all other active tokens should expire
              */
             $token = $db->escapeString($_REQUEST['token']);
-            $sql = "SELECT * FROM connections WHERE user_id = '{$info['user_id']}' AND token_status='".TOKEN_INUSE."' AND token!='$token';";
+            $sql = "SELECT * FROM connections JOIN tokens USING (token_id) WHERE user_id = '{$info['user_id']}' AND token_status='".TOKEN_INUSE."' AND token_id!='$token';";
             $conn_rows = array ();
             $db->execSql($sql, $conn_rows, false);
 
@@ -304,13 +308,6 @@ abstract class Authenticator
                 }
             }
         }
-
-        /*
-         * Delete all unused tokens for this user, so we don't fill the database
-         * with them
-         */
-        $sql = "DELETE FROM connections "."WHERE token_status='".TOKEN_UNUSED."' AND user_id = '{$info['user_id']}';";
-        $db->execSqlUpdate($sql, false);
     }
 
     /**

@@ -1542,7 +1542,7 @@ class Node implements GenericObject
     }
 
     private function getOnlineUsersSql() {
-        return "SELECT users.user_id FROM users,connections WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}'";
+        return "SELECT users.user_id FROM users,connections JOIN tokens USING (token_id) WHERE tokens.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}'";
     }
     /**
      * The list of users online at this node
@@ -1584,7 +1584,7 @@ class Node implements GenericObject
         $retval = array ();
         $row = null;
         $splashOnlyUserId = $this->getNetwork()->getSplashOnlyUser()->getId();
-        $sql = "SELECT ((SELECT COUNT(DISTINCT users.user_id) as count FROM users,connections WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}' AND users.user_id!='{$splashOnlyUserId}') + (SELECT COUNT(DISTINCT connections.user_mac) as count FROM users,connections WHERE connections.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}' AND users.user_id='{$splashOnlyUserId}')) AS count";
+        $sql = "SELECT ((SELECT COUNT(DISTINCT users.user_id) as count FROM users,connections JOIN tokens USING (token_id) WHERE tokens.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}' AND users.user_id!='{$splashOnlyUserId}') + (SELECT COUNT(DISTINCT connections.user_mac) as count FROM users,connections JOIN tokens USING (token_id) WHERE tokens.token_status='".TOKEN_INUSE."' AND users.user_id=connections.user_id AND connections.node_id='{$this->id}' AND users.user_id='{$splashOnlyUserId}')) AS count";
         $db->execSqlUniqueRes($sql, $row, false);
 
         return $row['count'];
