@@ -24,13 +24,6 @@ SET client_min_messages = warning;
 SET escape_string_warning = off;
 
 --
--- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON SCHEMA public IS 'Standard public schema';
-
-
---
 -- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: -; Owner: -
 --
 
@@ -49,8 +42,7 @@ SET default_with_oids = true;
 
 CREATE TABLE connections (
     conn_id integer NOT NULL,
-    token character varying(32) DEFAULT ''::character varying NOT NULL,
-    token_status character varying(10) DEFAULT 'UNUSED'::character varying NOT NULL,
+    token_id character varying(32) DEFAULT ''::character varying NOT NULL,
     timestamp_in timestamp without time zone,
     node_id character varying(32),
     node_ip character varying(15),
@@ -60,26 +52,13 @@ CREATE TABLE connections (
     user_ip character varying(16),
     last_updated timestamp without time zone NOT NULL,
     incoming bigint,
-    outgoing bigint
+    outgoing bigint,
+    max_total_bytes integer,
+    max_incoming_bytes integer,
+    max_outgoing_bytes integer,
+    expiration_date timestamp without time zone,
+    logout_reason integer
 );
-
-
---
--- Name: connections_conn_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE connections_conn_id_seq
-    INCREMENT BY 1
-    NO MAXVALUE
-    NO MINVALUE
-    CACHE 1;
-
-
---
--- Name: connections_conn_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE connections_conn_id_seq OWNED BY connections.conn_id;
 
 
 --
@@ -294,7 +273,7 @@ SET default_with_oids = false;
 
 CREATE TABLE content_key_value_pairs (
     content_id text NOT NULL,
-    "key" text NOT NULL,
+    key text NOT NULL,
     value text
 );
 
@@ -450,6 +429,11 @@ CREATE TABLE networks (
     gmaps_initial_zoom_level integer,
     gmaps_map_type text DEFAULT 'G_NORMAL_MAP'::text NOT NULL,
     theme_pack text,
+    connection_limit_window interval,
+    connection_limit_network_max_total_bytes integer,
+    connection_limit_network_max_usage_duration interval,
+    connection_limit_node_max_total_bytes integer,
+    connection_limit_node_max_usage_duration interval,
     CONSTRAINT networks_gmaps_map_type CHECK ((gmaps_map_type <> ''::text)),
     CONSTRAINT networks_name CHECK ((name <> ''::text)),
     CONSTRAINT networks_network_authenticator_class CHECK ((network_authenticator_class <> ''::text)),
@@ -535,7 +519,9 @@ CREATE TABLE nodes (
     last_heartbeat_sys_uptime integer,
     last_heartbeat_wifidog_uptime integer,
     last_heartbeat_sys_memfree integer,
-    last_heartbeat_sys_load real
+    last_heartbeat_sys_load real,
+    connection_limit_node_max_total_bytes_override integer,
+    connection_limit_node_max_usage_duration_override interval
 );
 
 
@@ -671,6 +657,17 @@ CREATE TABLE stakeholder_types (
 );
 
 
+--
+-- Name: token_lots; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE token_lots (
+    token_lot_id text NOT NULL,
+    token_lot_comment text,
+    token_lot_creation_date timestamp without time zone DEFAULT now() NOT NULL
+);
+
+
 SET default_with_oids = true;
 
 --
@@ -681,6 +678,54 @@ CREATE TABLE token_status (
     token_status character varying(10) NOT NULL
 );
 
+
+SET default_with_oids = false;
+
+--
+-- Name: token_templates; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE token_templates (
+    token_template_id text NOT NULL,
+    token_template_network text NOT NULL,
+    token_template_creation_date timestamp without time zone DEFAULT now() NOT NULL,
+    token_max_incoming_data integer,
+    token_max_outgoing_data integer,
+    token_max_total_data integer,
+    token_max_connection_duration interval,
+    token_max_usage_duration interval,
+    token_max_wall_clock_duration interval,
+    token_max_age interval,
+    token_is_reusable boolean DEFAULT true
+);
+
+
+--
+-- Name: tokens; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE tokens (
+    token_id text NOT NULL,
+    token_template_id text,
+    token_status text,
+    token_lot_id text,
+    token_creation_date timestamp without time zone DEFAULT now() NOT NULL,
+    token_issuer text NOT NULL,
+    token_owner text
+);
+
+
+--
+-- Name: tokens_template_valid_nodes; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE tokens_template_valid_nodes (
+    token_template_id text NOT NULL,
+    token_valid_at_node text NOT NULL
+);
+
+
+SET default_with_oids = true;
 
 --
 -- Name: user_has_content; Type: TABLE; Schema: public; Owner: -; Tablespace: 
@@ -722,6 +767,7 @@ CREATE TABLE users (
     account_origin text NOT NULL,
     never_show_username boolean DEFAULT false,
     prefered_locale text,
+    open_id_url text,
     CONSTRAINT check_user_not_empty CHECK (((user_id)::text <> ''::text))
 );
 
@@ -760,6 +806,24 @@ CREATE TABLE virtual_hosts (
     default_network text NOT NULL,
     CONSTRAINT virtual_hosts_hostname_check CHECK ((hostname <> ''::text))
 );
+
+
+--
+-- Name: connections_conn_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE connections_conn_id_seq
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+--
+-- Name: connections_conn_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE connections_conn_id_seq OWNED BY connections.conn_id;
 
 
 --
@@ -846,7 +910,7 @@ ALTER TABLE ONLY content_has_owners
 --
 
 ALTER TABLE ONLY content_key_value_pairs
-    ADD CONSTRAINT content_key_value_pairs_pkey PRIMARY KEY (content_id, "key");
+    ADD CONSTRAINT content_key_value_pairs_pkey PRIMARY KEY (content_id, key);
 
 
 --
@@ -1098,11 +1162,43 @@ ALTER TABLE ONLY stakeholders
 
 
 --
+-- Name: token_lots_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY token_lots
+    ADD CONSTRAINT token_lots_pkey PRIMARY KEY (token_lot_id);
+
+
+--
 -- Name: token_status_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY token_status
     ADD CONSTRAINT token_status_pkey PRIMARY KEY (token_status);
+
+
+--
+-- Name: token_templates_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY token_templates
+    ADD CONSTRAINT token_templates_pkey PRIMARY KEY (token_template_id);
+
+
+--
+-- Name: tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY tokens
+    ADD CONSTRAINT tokens_pkey PRIMARY KEY (token_id);
+
+
+--
+-- Name: tokens_template_valid_nodes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY tokens_template_valid_nodes
+    ADD CONSTRAINT tokens_template_valid_nodes_pkey PRIMARY KEY (token_template_id, token_valid_at_node);
 
 
 --
@@ -1182,6 +1278,13 @@ CREATE INDEX idx_connections_user_mac ON connections USING btree (user_mac);
 
 
 --
+-- Name: idx_content_display_log; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX idx_content_display_log ON content_display_log USING btree (last_display_timestamp);
+
+
+--
 -- Name: idx_content_group_element_content_group_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1210,17 +1313,24 @@ CREATE UNIQUE INDEX idx_gw_id ON nodes USING btree (gw_id);
 
 
 --
+-- Name: idx_nodes_node_deployment_status; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX idx_nodes_node_deployment_status ON nodes USING btree (node_deployment_status);
+
+
+--
 -- Name: idx_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX idx_token ON connections USING btree (token);
+CREATE INDEX idx_token ON connections USING btree (token_id);
 
 
 --
--- Name: idx_token_status_and_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: idx_token_status; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX idx_token_status_and_user_id ON connections USING btree (token_status, user_id);
+CREATE INDEX idx_token_status ON tokens USING btree (token_status);
 
 
 --
@@ -1231,18 +1341,17 @@ CREATE UNIQUE INDEX idx_unique_username_and_account_origin ON users USING btree 
 
 
 --
+-- Name: idx_users_topen_id_url; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX idx_users_topen_id_url ON users USING btree (open_id_url);
+
+
+--
 -- Name: profile_template_fields_semantic_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX profile_template_fields_semantic_id ON profile_template_fields USING btree (semantic_id);
-
-
---
--- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY connections
-    ADD CONSTRAINT "$1" FOREIGN KEY (token_status) REFERENCES token_status(token_status);
 
 
 --
@@ -1606,6 +1715,38 @@ ALTER TABLE ONLY node_stakeholders
 
 
 --
+-- Name: fk_roles; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY network_stakeholders
+    ADD CONSTRAINT fk_roles FOREIGN KEY (role_id) REFERENCES roles(role_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_roles; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY node_stakeholders
+    ADD CONSTRAINT fk_roles FOREIGN KEY (role_id) REFERENCES roles(role_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_roles; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY server_stakeholders
+    ADD CONSTRAINT fk_roles FOREIGN KEY (role_id) REFERENCES roles(role_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_tokens; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY connections
+    ADD CONSTRAINT fk_tokens FOREIGN KEY (token_id) REFERENCES tokens(token_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
 -- Name: fk_users; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1787,6 +1928,70 @@ ALTER TABLE ONLY stakeholders
 
 ALTER TABLE ONLY stakeholders
     ADD CONSTRAINT stakeholders_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: token_templates_token_template_network_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY token_templates
+    ADD CONSTRAINT token_templates_token_template_network_fkey FOREIGN KEY (token_template_network) REFERENCES networks(network_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: tokens_template_valid_nodes_token_template_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tokens_template_valid_nodes
+    ADD CONSTRAINT tokens_template_valid_nodes_token_template_id_fkey FOREIGN KEY (token_template_id) REFERENCES token_templates(token_template_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: tokens_template_valid_nodes_token_valid_at_node_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tokens_template_valid_nodes
+    ADD CONSTRAINT tokens_template_valid_nodes_token_valid_at_node_fkey FOREIGN KEY (token_valid_at_node) REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: tokens_token_issuer_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tokens
+    ADD CONSTRAINT tokens_token_issuer_fkey FOREIGN KEY (token_issuer) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: tokens_token_lot_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tokens
+    ADD CONSTRAINT tokens_token_lot_id_fkey FOREIGN KEY (token_lot_id) REFERENCES token_lots(token_lot_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: tokens_token_owner_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tokens
+    ADD CONSTRAINT tokens_token_owner_fkey FOREIGN KEY (token_owner) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: tokens_token_status_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tokens
+    ADD CONSTRAINT tokens_token_status_fkey FOREIGN KEY (token_status) REFERENCES token_status(token_status) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: tokens_token_template_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tokens
+    ADD CONSTRAINT tokens_token_template_id_fkey FOREIGN KEY (token_template_id) REFERENCES token_templates(token_template_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

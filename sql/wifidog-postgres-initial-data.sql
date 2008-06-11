@@ -196,8 +196,8 @@ INSERT INTO networks (network_id, network_authenticator_class, network_authentic
 INSERT INTO nodes (network_id, node_id, gw_id, name) VALUES ('default-network', 'default', 'default', 'My first node');
 INSERT INTO virtual_hosts (virtual_host_id, hostname, default_network) VALUES ('DEFAULT_VHOST', 'localhost', 'default-network');
 INSERT INTO server (server_id, default_virtual_host) VALUES ('SERVER_ID', 'DEFAULT_VHOST');
-INSERT into roles (role_id, stakeholder_type_id) VALUES ('SERVER_SYSADMIN', 'Server');
-INSERT into roles (role_id, stakeholder_type_id) VALUES ('NETWORK_SYSADMIN', 'Network');
+INSERT into roles (role_id, stakeholder_type_id) VALUES ('SERVER_OWNER', 'Server');
+INSERT into roles (role_id, stakeholder_type_id) VALUES ('NETWORK_OWNER', 'Network');
 --
 -- PostgreSQL database dump
 --
@@ -214,7 +214,7 @@ SET search_path = public, pg_catalog;
 -- Data for Name: schema_info; Type: TABLE DATA; Schema: public; Owner: wifidog
 --
 
-INSERT INTO schema_info (tag, value) VALUES ('schema_version', '56');
+INSERT INTO schema_info (tag, value) VALUES ('schema_version', '61');
 
 
 --

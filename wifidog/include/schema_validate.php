@@ -47,7 +47,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 60);
+define('REQUIRED_SCHEMA_VERSION', 61);
 /** Used to test a new shecma version before modyfying the database */
 define('SCHEMA_UPDATE_TEST_MODE', false);
 /**
@@ -1382,10 +1382,29 @@ function real_update_schema($targetSchema) {
         $sql .= "ALTER TABLE connections ALTER COLUMN logout_reason SET DEFAULT NULL;\n";
         $sql .= "ALTER TABLE connections RENAME COLUMN token TO token_id;\n";     
     }
-    /*
+    $new_schema_version = 61;
+    if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
+        printUpdateVersion($new_schema_version);
+        $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
 
+        $sql .= "ALTER TABLE networks ADD column connection_limit_window interval; \n";
+        $sql .= "ALTER TABLE networks ALTER COLUMN connection_limit_window SET DEFAULT NULL;\n";
+        $sql .= "ALTER TABLE networks ADD COLUMN connection_limit_network_max_total_bytes integer;\n";
+        $sql .= "ALTER TABLE networks ALTER COLUMN connection_limit_network_max_total_bytes SET DEFAULT NULL;\n";
+        $sql .= "ALTER TABLE networks ADD COLUMN connection_limit_network_max_usage_duration interval;\n";
+        $sql .= "ALTER TABLE networks ALTER COLUMN connection_limit_network_max_usage_duration SET DEFAULT NULL;\n";
+        $sql .= "ALTER TABLE networks ADD COLUMN connection_limit_node_max_total_bytes integer;\n";
+        $sql .= "ALTER TABLE networks ALTER COLUMN connection_limit_node_max_total_bytes SET DEFAULT NULL;\n";
+        $sql .= "ALTER TABLE networks ADD COLUMN connection_limit_node_max_usage_duration interval;\n";
+        $sql .= "ALTER TABLE networks ALTER COLUMN connection_limit_node_max_usage_duration SET DEFAULT NULL;\n";
 
-    */
+        $sql .= "ALTER TABLE nodes ADD COLUMN connection_limit_node_max_total_bytes_override integer;\n";
+        $sql .= "ALTER TABLE nodes ALTER COLUMN connection_limit_node_max_total_bytes_override SET DEFAULT NULL;\n";
+        $sql .= "ALTER TABLE nodes ADD COLUMN connection_limit_node_max_usage_duration_override interval;\n";
+        $sql .= "ALTER TABLE nodes ALTER COLUMN connection_limit_node_max_usage_duration_override SET DEFAULT NULL;\n";
+        
+    }
+    
     /*
      $new_schema_version = ;
      if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {

@@ -1430,42 +1430,154 @@ class Network extends GenericDataObject
         return $retval;
     }
 
-    /**
-     * Get an array of all Content linked to the network
+    /** The length of the window during which the user must not have exceeded the limits below.
      *
-     * @param bool   $exclude_subscribed_content Exclude subscribed content?
-     * @param object $subscriber                 The User object used to
-     *                                           discriminate the content
-     *
-     * @return array An array of Content or an empty array
+     * @return string Interval as returned by postgresql
      */
-    /*public function getAllContent($exclude_subscribed_content = false, $subscriber = null)
-     {
+    public function getConnectionLimitWindow()
+    {
+        return $this->_row['connection_limit_window'];
+    }
 
-    	$db = AbstractDb::getObject();
+    /**
+     * Set the network's creation date
+     *
+     * @param string $value The new creation date
+     *
+     * @return bool True on success, false on failure
+     */
+    public function setConnectionLimitWindow($value)
+    {
+        $db = AbstractDb::getObject();
+        // Init values
+        $retVal = true;
 
-    	// Init values
-    	$content_rows = null;
-    	$retval = array ();
+        if ($value != $this->getConnectionLimitWindow()) {
+            $value?$value_sql="'".$db->escapeString($value)."'":$value_sql="NULL";
+            $retVal = $db->execSqlUpdate("UPDATE networks SET connection_limit_window = $value_sql WHERE network_id = '{$this->getId()}'", false);
+            $this->refresh();
+        }
+        return $retVal;
+    }
 
-    	// Get all network, but exclude user subscribed content if asked
-    	if ($exclude_subscribed_content == true && $subscriber) {
-    	$sql = "SELECT content_id FROM network_has_content WHERE network_id='$this->_id' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$subscriber->getId()}') ORDER BY subscribe_timestamp DESC";
-    	} else {
-    	$sql = "SELECT content_id FROM network_has_content WHERE network_id='$this->_id' ORDER BY subscribe_timestamp DESC";
-    	}
+    /** Maximum data transfer during the abuse control window, in bytes
+     *
+     * @return integer Number of bytes
+     */
+    public function getConnectionLimitNetworkMaxTotalBytes()
+    {
+        return $this->_row['connection_limit_network_max_total_bytes'];
+    }
 
-    	$db->execSql($sql, $content_rows, false);
+    /**
+     * Maximum data transfer during the abuse control window, in bytes
+     *
+     * @param $value integer Number of bytes
+     *
+     * @return bool True on success, false on failure
+     */
+    public function setConnectionLimitNetworkMaxTotalBytes($value)
+    {
+        $db = AbstractDb::getObject();
+        // Init values
+        $retVal = true;
 
-    	if ($content_rows != null) {
-    	foreach ($content_rows as $content_row) {
-    	$retval[] = Content :: getObject($content_row['content_id']);
-    	}
-    	}
+        if ($value != $this->getConnectionLimitNetworkMaxTotalBytes()) {
+            $value?$value_sql="'".$db->escapeString($value)."'":$value_sql="NULL";
+            $retVal = $db->execSqlUpdate("UPDATE networks SET connection_limit_network_max_total_bytes = $value_sql WHERE network_id = '{$this->getId()}'", false);
+            $this->refresh();
+        }
+        return $retVal;
+    }
 
-    	return $retval;
-    	}
-    	*/
+    /** Maximum connection duration during the abuse control window
+     *
+     * @return string Interval as returned by postgresql
+     */
+    public function getConnectionLimitNetworkMaxDuration()
+    {
+        return $this->_row['connection_limit_network_max_usage_duration'];
+    }
+
+    /** Maximum connection duration during the abuse control window
+     *
+     * @param string $value The new creation date
+     *
+     * @return bool True on success, false on failure
+     */
+    public function setConnectionLimitNetworkMaxDuration($value)
+    {
+        $db = AbstractDb::getObject();
+        // Init values
+        $retVal = true;
+
+        if ($value != $this->getConnectionLimitNetworkMaxDuration()) {
+            $value?$value_sql="'".$db->escapeString($value)."'":$value_sql="NULL";
+            $retVal = $db->execSqlUpdate("UPDATE networks SET connection_limit_network_max_usage_duration = $value_sql WHERE network_id = '{$this->getId()}'", false);
+            $this->refresh();
+        }
+        return $retVal;
+    }
+
+    /** Maximum data transfer during the abuse control window, in bytes
+     *
+     * @return integer Number of bytes
+     */
+    public function getConnectionLimitNodeMaxTotalBytes()
+    {
+        return $this->_row['connection_limit_node_max_total_bytes'];
+    }
+
+    /**
+     * Maximum data transfer during the abuse control window, in bytes
+     *
+     * @param $value integer Number of bytes
+     *
+     * @return bool True on success, false on failure
+     */
+    public function setConnectionLimitNodeMaxTotalBytes($value)
+    {
+        $db = AbstractDb::getObject();
+        // Init values
+        $retVal = true;
+
+        if ($value != $this->getConnectionLimitNodeMaxTotalBytes()) {
+            $value?$value_sql="'".$db->escapeString($value)."'":$value_sql="NULL";
+            $retVal = $db->execSqlUpdate("UPDATE networks SET connection_limit_node_max_total_bytes = $value_sql WHERE network_id = '{$this->getId()}'", false);
+            $this->refresh();
+        }
+        return $retVal;
+    }
+
+    /** Maximum connection duration during the abuse control window
+     *
+     * @return string Interval as returned by postgresql
+     */
+    public function getConnectionLimitNodeMaxDuration()
+    {
+        return $this->_row['connection_limit_node_max_usage_duration'];
+    }
+
+    /** Maximum connection duration during the abuse control window
+     *
+     * @param string $value The new creation date
+     *
+     * @return bool True on success, false on failure
+     */
+    public function setConnectionLimitNodeMaxDuration($value)
+    {
+        $db = AbstractDb::getObject();
+        // Init values
+        $retVal = true;
+
+        if ($value != $this->getConnectionLimitNodeMaxDuration()) {
+            $value?$value_sql="'".$db->escapeString($value)."'":$value_sql="NULL";
+            $retVal = $db->execSqlUpdate("UPDATE networks SET connection_limit_node_max_usage_duration = $value_sql WHERE network_id = '{$this->getId()}'", false);
+            $this->refresh();
+        }
+        return $retVal;
+    }
+
 
     /**
      * Retreives the admin interface of this object
@@ -1613,6 +1725,49 @@ class Network extends GenericDataObject
         $html .= InterfaceElements::generateAdminSectionContainer("network_user_verification", _("Network's user verification"), implode(null, $html_network_user_verification));
 
         /*
+         * Dynamic abuse control
+         */
+        $html_dynamic_abuse_control = array();
+        $permArray=null;
+        $permArray[]=array(Permission::P('NETWORK_PERM_EDIT_DYNAMIC_ABUSE_CONTROL'), $this);
+        if (Security::hasAnyPermission($permArray)) {
+            //  connection_limit_window
+            $title = _("Abuse control window");
+            $help = _("The length of the window (in seconds) during which the user must not have exceeded the limits below.  Typically a month (259200 s) or a week (604800s).  A user who exceeds the limits will be denied access until his usage falls below the limits.");
+            $data = InterfaceElements::generateInputText("network_" . $this->getId() . "_connection_limit_window", $this->getConnectionLimitWindow(), "network_connection_limit_window_input");
+            $html_dynamic_abuse_control[] = InterfaceElements::generateAdminSectionContainer("network_connection_limit_window", $title, $data, $help);
+
+            //  connection_limit_network_max_total_bytes
+            $title = _("Network max total bytes transfered");
+            $help = _("Maximum data transfer during the abuse control window");
+            $data = InterfaceElements::generateInputText("network_" . $this->getId() . "_connection_limit_network_max_total_bytes", $this->getConnectionLimitNetworkMaxTotalBytes(), "network_connection_limit_network_max_total_bytes");
+            $html_dynamic_abuse_control[] = InterfaceElements::generateAdminSectionContainer("network_connection_limit_network_max_total_bytes", $title, $data, $help);
+
+            //  connection_limit_network_max_usage_duration
+            $title = _("Network max connection duration");
+            $help = _("Maximum connection duration during the abuse control window");
+            $data = InterfaceElements::generateInputText("network_" . $this->getId() . "_connection_limit_network_max_usage_duration", $this->getConnectionLimitNetworkMaxDuration(), "network_connection_limit_network_max_usage_duration");
+            $html_dynamic_abuse_control[] = InterfaceElements::generateAdminSectionContainer("network_connection_limit_network_max_usage_duration", $title, $data, $help);
+
+            //  connection_limit_node_max_total_bytes
+            $title = _("Node max total bytes transfered");
+            $help = _("Maximum data transfer during the abuse control window");
+            $data = InterfaceElements::generateInputText("network_" . $this->getId() . "_connection_limit_node_max_total_bytes", $this->getConnectionLimitNodeMaxTotalBytes(), "network_connection_limit_node_max_total_bytes");
+            $html_dynamic_abuse_control[] = InterfaceElements::generateAdminSectionContainer("network_connection_limit_node_max_total_bytes", $title, $data, $help);
+
+            //  connection_limit_node_max_usage_duration
+            $title = _("Node max connection duration");
+            $help = _("Maximum connection duration during the abuse control window");
+            $data = InterfaceElements::generateInputText("network_" . $this->getId() . "_connection_limit_node_max_usage_duration", $this->getConnectionLimitNodeMaxDuration(), "network_connection_limit_node_max_usage_duration");
+            $html_dynamic_abuse_control[] = InterfaceElements::generateAdminSectionContainer("network_connection_limit_node_max_usage_duration", $title, $data, $help);
+        }
+        else{
+            $html_dynamic_abuse_control[] = _("You do not have access to edit these options");
+        }
+        // Build section
+        $html .= InterfaceElements::generateAdminSectionContainer("network_user_verification", _("Dynamic abuse control"), implode(null, $html_dynamic_abuse_control));
+
+        /*
          * Access management
          */
         $html_access_rights = array();
@@ -1750,6 +1905,34 @@ class Network extends GenericDataObject
         $name = "network_".$this->getId()."_allow_custom_portal_redirect";
         $this->setCustomPortalRedirectAllowed(empty ($_REQUEST[$name]) ? false : true);
 
+        /*
+         * Dynamic abuse control
+         */
+        $html_dynamic_abuse_control = array();
+        $permArray=null;
+        $permArray[]=array(Permission::P('NETWORK_PERM_EDIT_DYNAMIC_ABUSE_CONTROL'), $this);
+        if (Security::hasAnyPermission($permArray)) {
+            //  connection_limit_window
+            $name = "network_" . $this->getId() . "_connection_limit_window";
+            $this->setConnectionLimitWindow($_REQUEST[$name]);
+
+            //  connection_limit_network_max_total_bytes
+            $name = "network_" . $this->getId() . "_connection_limit_network_max_total_bytes";
+            $this->setConnectionLimitNetworkMaxTotalBytes($_REQUEST[$name]);
+
+            //  connection_limit_network_max_usage_duration
+            $name = "network_" . $this->getId() . "_connection_limit_network_max_usage_duration";
+            $this->setConnectionLimitNetworkMaxDuration($_REQUEST[$name]);
+
+            //  connection_limit_node_max_total_bytes
+            $name = "network_" . $this->getId() . "_connection_limit_node_max_total_bytes";
+            $this->setConnectionLimitNodeMaxTotalBytes($_REQUEST[$name]);
+
+            //  connection_limit_node_max_usage_duration
+            $name = "network_" . $this->getId() . "_connection_limit_node_max_usage_duration";
+            $this->setConnectionLimitNodeMaxDuration($_REQUEST[$name]);
+        }
+         
         // Access rights
         require_once('classes/Stakeholder.php');
         Stakeholder::processAssignStakeholdersUI($this, $errMsg);

@@ -373,9 +373,6 @@ switch ($_REQUEST['action']) {
                             case "Server" :
                             case "ProfileTemplate" :
                             case "ContentTypeFilter" :
-                                if (!User :: getCurrentUser()->DEPRECATEDisSuperAdmin()) {
-                                    $supportsDeletion = false;
-                                }
                                 break;
 
                             default :

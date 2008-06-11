@@ -1031,6 +1031,7 @@ class Node implements GenericObject
      */
     public function getAdminUI()
     {
+        $permArray=null;
         $permArray[]=array(Permission::P('NETWORK_PERM_EDIT_ANY_NODE_CONFIG'), $this->getNetwork());
         $permArray[]=array(Permission::P('NODE_PERM_EDIT_CONFIG'), $this);
         $permArray[]=array(Permission::P('NODE_PERM_EDIT_GATEWAY_ID'), $this);
@@ -1043,10 +1044,7 @@ class Node implements GenericObject
 
         // Get information about the network
         $network = $this->getNetwork();
-
-        // Check if user is a admin
-        $_userIsAdmin = User::getCurrentUser()->DEPRECATEDisSuperAdmin();
-
+        
         $node_id = $this->getId();
 
         /*
@@ -1248,7 +1246,7 @@ class Node implements GenericObject
         /*
          * Access rights
          */
-        if ($_userIsAdmin) {
+        if (User::getCurrentUser()->DEPRECATEDisSuperAdmin()) {
             require_once('classes/Stakeholder.php');
             $html_access_rights = Stakeholder::getAssignStakeholdersUI($this);
             $html .= InterfaceElements::generateAdminSectionContainer("access_rights", _("Access rights"), $html_access_rights);

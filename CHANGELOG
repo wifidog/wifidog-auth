@@ -1,5 +1,11 @@
 # $Id$
 2008-06-10 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Authenticator.php:  Fix SQL error closing connections.
+	* auth/index.php:  Probably fix the "Access denied" message when user click twice problem that resurfaced.
+	* At long last, implement operational Dynamic abuse control (out of the embryo of the token architecture)!  Configurable in Network preferences if you have the permissions.  Unlike static limits, this is a sliding window (typically a month) during which user have a bandwidth and connection duration limit, per node, and totalled throughout the network.
+	* UIAllowedBandwidth:  New, simplistic content type to show the user how much of his allocation he consumed.  Off course, the goal is actually to make it into a pretty graph....
+
+2008-06-10 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Begin implementing http://dev.wifidog.org/wiki/doc/developer/TokenArchitecture.  This is a first step:  SQL schema changes, and adapt the current functionnality to the new schema to have a baseline.  Everything should work as before, please notify me if you notice anything strange...
 
 2008-04-27 Benoit Grégoire  <bock@step.polymtl.ca>

@@ -344,7 +344,10 @@ abstract class Authenticator
 
         // Stop traffic counters update
         $conn_id = $db->escapeString($conn_id);
-        $db->execSqlUpdate("UPDATE connections SET "."timestamp_out=CURRENT_TIMESTAMP,"."token_status='".TOKEN_USED."' "."WHERE conn_id='{$conn_id}';\n", false);
+        $sql = "UPDATE connections SET timestamp_out=CURRENT_TIMESTAMP WHERE conn_id='{$conn_id}';\n";
+        $sql .= "UPDATE tokens SET token_status='".TOKEN_USED."' FROM connections WHERE connections.token_id=tokens.token_id AND conn_id='{$conn_id}';\n";
+        
+        $db->execSqlUpdate($sql, false);
     }
 
     /**

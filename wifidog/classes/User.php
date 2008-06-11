@@ -520,6 +520,89 @@ class User implements GenericObject {
         return $this->_row['validation_token'];
     }
 
+    /** Retrieves the connection history necessary for abuse control
+
+    * @return false if abuse control is disabled */
+
+    static function getAbuseControlConnectionHistory($user = null, $mac = null, $node = null) {
+        if (!$user) {
+            $user = User::getCurrentUser();
+        }
+        if (!$node) {
+            $node = Node::getCurrentNode();//Maybe this should be getCurrentRealNode, but it would make debuging harder
+        }
+        $network = $node->getNetwork();
+
+        $db = AbstractDb::getObject();
+
+        if ($network->getConnectionLimitWindow()) {
+            //$sql =  " SELECT * from connections \n";//For debugging
+            $sql =  " SELECT \n";
+            $sql .= " SUM (incoming+outgoing) AS network_total_bytes, \n";
+            $sql .= " SUM (CASE WHEN node_id = '".$node->getId()."' THEN (incoming+outgoing) END) AS node_total_bytes, \n";
+            $sql .= " SUM (timestamp_out - timestamp_in) AS network_duration, \n";
+            $sql .= " SUM (CASE WHEN node_id = '".$node->getId()."' THEN (timestamp_out - timestamp_in) END) AS node_duration \n";//For real
+            $sql .= " FROM connections \n";//For real
+            $sql .= " JOIN nodes USING (node_id) \n";
+            $sql .= " JOIN networks USING (network_id) \n";
+            $sql .= " JOIN tokens ON (tokens.token_id = connections.token_id) \n";
+            $sql .= " WHERE 1=1 \n";
+
+            if ($mac) {
+                //Catch some cheaters
+                $mac = $db->escapeString($mac);
+                $mac_sql_or = " OR connections.user_mac = '$mac' ";
+            }
+            else {
+                $mac_sql_or = null;
+            }
+            $sql .= " AND (connections.user_id = '".$user->getId()."' $mac_sql_or ) \n";
+
+            $sql .= " AND (timestamp_in > CURRENT_TIMESTAMP - networks.connection_limit_window OR tokens.token_status = '".TOKEN_INUSE."')";  //Get every connection within the window plus any still active connection, even if it started before the window
+
+            $subselect = $sql;
+            $sql =  " SELECT subselect.*, \n";
+            $sql .= " networks.connection_limit_window, \n";
+            $sql .= " networks.connection_limit_network_max_total_bytes, COALESCE(network_total_bytes>networks.connection_limit_network_max_total_bytes, false) AS network_total_bytes_exceeded_limit, \n";
+            $sql .= " networks.connection_limit_node_max_total_bytes, COALESCE(node_total_bytes>networks.connection_limit_node_max_total_bytes, false) AS node_total_bytes_exceeded_limit, \n";
+            $sql .= " networks.connection_limit_network_max_usage_duration, COALESCE(network_duration>networks.connection_limit_network_max_usage_duration, false) AS network_duration_exceeded_limit, \n";
+            $sql .= " networks.connection_limit_node_max_usage_duration, COALESCE(node_duration>networks.connection_limit_node_max_usage_duration, false) AS node_duration_exceeded_limit \n";
+
+            $sql .= " FROM ($subselect) AS subselect JOIN networks ON (network_id = '".$network->getId()."')";
+
+            $db->execSqlUniqueRes($sql, $connection_limits_report, false);
+            return $connection_limits_report;
+        }
+        else {
+            return false;
+        }
+    }
+
+    /** Takes the same paramaters as getAbuseControlConnectionHistory, and tells you if the abuse limits are busted
+
+    * @return false if abuse control respected, else a string containing the reason(s) for the bust  */
+
+    static function isAbuseControlViolated($user = null, $mac = null, $node = null) {
+        $retval = false;
+        $abuseControlReport = self::getAbuseControlConnectionHistory($user, $mac, $node);
+        if($abuseControlReport) {
+            //pretty_print_r($abuseControlReport);
+
+            if($abuseControlReport['network_total_bytes_exceeded_limit']=='t') {
+                $retval .= sprintf(_("During the last %s period, you transfered %d bytes throughout the network, which exceeds the %d bytes limit."), $abuseControlReport['connection_limit_window'], $abuseControlReport['network_total_bytes'], $abuseControlReport['connection_limit_network_max_total_bytes']);
+            }
+            if($abuseControlReport['node_total_bytes_exceeded_limit']=='t') {
+                $retval .= sprintf(_("During the last %s period, you transfered %d bytes at this node, which exceeds the %d bytes limit."), $abuseControlReport['connection_limit_window'], $abuseControlReport['node_total_bytes'], $abuseControlReport['connection_limit_node_max_total_bytes']);
+            }
+            if($abuseControlReport['network_duration_exceeded_limit']=='t') {
+                $retval .= sprintf(_("During the last %s period, you were online for a duration of %s throughout the network, which exceeds the %s limit."), $abuseControlReport['connection_limit_window'], $abuseControlReport['network_duration'], $abuseControlReport['connection_limit_network_max_usage_duration']);
+            }
+            if($abuseControlReport['node_duration_exceeded_limit']=='t') {
+                $retval .= sprintf(_("During the last %s period, you were online for a duration of %s at this node, which exceeds the %s limit."), $abuseControlReport['connection_limit_window'], $abuseControlReport['node_duration'], $abuseControlReport['connection_limit_node_max_usage_duration']);
+            }
+        }
+        return $retval;
+    }
     /** Generate a token in the connection table so the user can actually use the internet
     @return true on success, false on failure
     */
@@ -535,21 +618,27 @@ class User implements GenericObject {
             if ($session && $node_ip && $session->get(SESS_NODE_ID_VAR)) {
                 //echo "$session && $node_ip && {$session->get(SESS_NODE_ID_VAR)}";
                 $node_id = $db->escapeString($session->get(SESS_NODE_ID_VAR));
-
+                $abuseControlFault = User::isAbuseControlViolated($this, null, Node::getObject($node_id));
+                if($abuseControlFault) {
+                    throw new Exception ($abuseControlFault);
+                }
                 /*
                  * Delete all unused tokens for this user, so we don't fill the database
                  * with them
                  */
                 $sql = "DELETE FROM connections USING tokens "."WHERE tokens.token_id=connections.token_id AND token_status='".TOKEN_UNUSED."' AND user_id = '".$this->getId()."';\n";
                 // TODO:  Try to find a reusable token before creating a brand new one!
-                
+
                 $sql .= "INSERT INTO tokens (token_owner, token_issuer, token_id, token_status) VALUES ('" . $this->getId() . "', '" . $this->getId() . "', '$token', '" . TOKEN_UNUSED . "');\n";
                 $sql .= "INSERT INTO connections (user_id, token_id, timestamp_in, node_id, node_ip, last_updated) VALUES ('" . $this->getId() . "', '$token', CURRENT_TIMESTAMP, '$node_id', '$node_ip', CURRENT_TIMESTAMP)";
                 $db->execSqlUpdate($sql, false);
                 $retval = $token;
-            } else
-            $retval = false;
-        } else {
+            }
+            else {
+                $retval = false;
+            }
+        }
+        else {
             $retval = false;
         }
         return $retval;

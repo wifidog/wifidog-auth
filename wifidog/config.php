@@ -107,7 +107,7 @@ define('LOG_SQL_QUERIES', false);
  * Caching
  * =======
  *
- * Experimental:  If you installed PEAR::Cache_Lite and set this value to true, caching
+ * Experimental:  If you installed PEAR::Cache_Lite and set this value to true, additional caching
  * will be enabled.
  *
  * If you haven't installed PEAR::Cache_Lite, caching won't be enabled at all.
