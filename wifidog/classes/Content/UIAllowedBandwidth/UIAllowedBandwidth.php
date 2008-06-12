@@ -56,6 +56,7 @@ require_once('classes/Locale.php');
  */
 class UIAllowedBandwidth extends Content
 {
+
     /**
      * Constructor
      *
@@ -87,7 +88,13 @@ class UIAllowedBandwidth extends Content
         }
         return Content :: getAdminUI($html, $title);
     }
-
+    /* Format human readable filesize */
+    static function formatSize($size, $round = 0) {
+        //Size must be bytes!
+        $sizes = array(_('B'), _('kB'), _('MB'), _('GB'), _('TB'), _('PB'), _('EB'), _('ZB'), _('YB'));
+        for ($i=0; $size > 1024 && $i < count($sizes) - 1; $i++) $size /= 1024;
+        return round($size,$round).$sizes[$i];
+    }
     /**
      * Retreives the user interface of this object.
      *
@@ -102,34 +109,36 @@ class UIAllowedBandwidth extends Content
         $html = null;
 
         $user = User::getCurrentUser();
-         
-        if($current_node){
-            $abuseControlReport = User::getAbuseControlConnectionHistory($user, null, $current_node);
-            if($abuseControlReport) {
-                //pretty_print_r($abuseControlReport);
+        if ($user) {
+            if($current_node){
+                $abuseControlReport = User::getAbuseControlConnectionHistory($user, null, $current_node);
+                if($abuseControlReport) {
+                    //pretty_print_r($abuseControlReport);
+                    $db = AbstractDb::getObject();
+                    $html .= sprintf(_("During the last %s period, you transfered %s / %s and were connected %s / %s at this node.  Throughout the network, you transfered %s / %s and were connected %s / %s"),
+                    $abuseControlReport['connection_limit_window']?$db->GetIntervalStrFromDurationArray($db->GetDurationArrayFromIntervalStr($abuseControlReport['connection_limit_window'])):_("Unknown"),
+                    self::formatSize($abuseControlReport['node_total_bytes']),
+                    $abuseControlReport['connection_limit_node_max_total_bytes']?self::formatSize($abuseControlReport['connection_limit_node_max_total_bytes']):_("Unlimited"),
+                    $abuseControlReport['node_duration']?$abuseControlReport['node_duration']:_("None"),
+                    $abuseControlReport['connection_limit_node_max_usage_duration']?$abuseControlReport['connection_limit_node_max_usage_duration']:_("Unlimited"),
+                    self::formatSize($abuseControlReport['network_total_bytes']),
+                    $abuseControlReport['connection_limit_network_max_total_bytes']?self::formatSize($abuseControlReport['connection_limit_network_max_total_bytes']):_("Unlimited"),
+                    $abuseControlReport['network_duration']?$abuseControlReport['network_duration']:_("None"),
+                    $abuseControlReport['connection_limit_network_max_usage_duration']?$abuseControlReport['connection_limit_network_max_usage_duration']:_("Unlimited")
+                    );
 
-                $html .= sprintf(_("During the last %s period, you transfered %s / %s bytes and were connected %s / %s at this node.  Throughout the network, you transfered %s / %s bytes and were connected %s / %s"),
-                $abuseControlReport['connection_limit_window']?$abuseControlReport['connection_limit_window']:_("Unknown"),
-                $abuseControlReport['node_total_bytes']?$abuseControlReport['node_total_bytes']:_("Unknown"),
-                $abuseControlReport['connection_limit_node_max_total_bytes']?$abuseControlReport['connection_limit_node_max_total_bytes']:_("Unlimited"),
-                $abuseControlReport['node_duration']?$abuseControlReport['node_duration']:_("Unknown"),
-                $abuseControlReport['connection_limit_node_max_usage_duration']?$abuseControlReport['connection_limit_node_max_usage_duration']:_("Unlimited"),
-                $abuseControlReport['network_total_bytes']?$abuseControlReport['network_total_bytes']:_("Unknown"),
-                $abuseControlReport['connection_limit_network_max_total_bytes']?$abuseControlReport['connection_limit_network_max_total_bytes']:_("Unlimited"),
-                $abuseControlReport['network_duration']?$abuseControlReport['network_duration']:_("Unknown"),
-                $abuseControlReport['connection_limit_network_max_usage_duration']?$abuseControlReport['connection_limit_network_max_usage_duration']:_("Unlimited")
-                );
-
+                }
+                else {
+                    $html .= _("Abuse control is currently disabled");
+                }
             }
             else {
-                $html .= _("Abuse control is currently disabled");
+                $html .= _("Unable to retrieve node specific restrictions (you are not at a node)");
             }
+            $this->setUserUIMainDisplayContent($html);
+
+            return Content :: getUserUI();
         }
-        else {
-            $html .= _("Unable to retrieve node specific restrictions (you are not at a node)");
-        }
-        $this->setUserUIMainDisplayContent($html);
-        return Content :: getUserUI();
     }
 
     /**

@@ -544,19 +544,19 @@ class AbstractDb
      * @param $duration The source Duration object
      * @return a string suitable for storage in the database's interval datatype
      */
-    function GetIntervalStrFromDuration($duration)
+    function GetIntervalStrFromDurationArray($duration)
     {
         $str = '';
-        if ($duration->GetYears() != 0)
-        $str .= $duration->GetYears().' years ';
-        if ($duration->GetMonths() != 0)
-        $str .= $duration->GetMonths().' months ';
-        if ($duration->GetDays() != 0)
-        $str .= $duration->GetDays().' days ';
+        if ($duration['years'] != 0)
+        $str .= $duration['years'].' years ';
+        if ($duration['months'] != 0)
+        $str .= $duration['months'].' months ';
+        if ($duration['days'] != 0)
+        $str .= $duration['days'].' days ';
 
-        if ($duration->GetHours() != 0 || $duration->GetMinutes() != 0 || $duration->GetSeconds() != 0)
+        if ($duration['hours'] != 0 || $duration['minutes'] != 0 || $duration['seconds'] != 0)
         {
-            $str .= $duration->GetHours().':'.$duration->GetMinutes().':'.$duration->GetSeconds();
+            $str .= $duration['hours'].':'.$duration['minutes'].':'.$duration['seconds'];
         }
         return $str;
     }

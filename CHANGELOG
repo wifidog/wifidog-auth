@@ -1,4 +1,8 @@
 # $Id$
+2008-06-12 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Use bigint for dynamic abuse control byte values
+	* UIAllowedBandwidth:  Format values in a human-readable way
+
 2008-06-10 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Authenticator.php:  Fix SQL error closing connections.
 	* auth/index.php:  Probably fix the "Access denied" message when user click twice problem that resurfaced.
