@@ -1733,7 +1733,7 @@ class Network extends GenericDataObject
         if (Security::hasAnyPermission($permArray)) {
             //  connection_limit_window
             $title = _("Abuse control window");
-            $help = _("The length of the window (in seconds) during which the user must not have exceeded the limits below.  Typically a month (259200 s) or a week (604800s).  A user who exceeds the limits will be denied access until his usage falls below the limits.");
+            $help = _("The length of the window during which the user must not have exceeded the limits below.  Any valid postgresql interval expression is acceptable, typically '1 month' '1 week'.  A user who exceeds the limits will be denied access until his usage falls below the limits.");
             $data = InterfaceElements::generateInputText("network_" . $this->getId() . "_connection_limit_window", $this->getConnectionLimitWindow(), "network_connection_limit_window_input");
             $html_dynamic_abuse_control[] = InterfaceElements::generateAdminSectionContainer("network_connection_limit_window", $title, $data, $help);
 
@@ -1745,7 +1745,7 @@ class Network extends GenericDataObject
 
             //  connection_limit_network_max_usage_duration
             $title = _("Network max connection duration");
-            $help = _("Maximum connection duration during the abuse control window");
+            $help = _("Maximum connection duration during the abuse control window.  Any valid postgresql interval expression is acceptable, such as hh:mm:ss");
             $data = InterfaceElements::generateInputText("network_" . $this->getId() . "_connection_limit_network_max_usage_duration", $this->getConnectionLimitNetworkMaxDuration(), "network_connection_limit_network_max_usage_duration");
             $html_dynamic_abuse_control[] = InterfaceElements::generateAdminSectionContainer("network_connection_limit_network_max_usage_duration", $title, $data, $help);
 
@@ -1757,7 +1757,7 @@ class Network extends GenericDataObject
 
             //  connection_limit_node_max_usage_duration
             $title = _("Node max connection duration");
-            $help = _("Maximum connection duration during the abuse control window");
+            $help = _("Maximum connection duration during the abuse control window.  Any valid postgresql interval expression is acceptable, such as hh:mm:ss");
             $data = InterfaceElements::generateInputText("network_" . $this->getId() . "_connection_limit_node_max_usage_duration", $this->getConnectionLimitNodeMaxDuration(), "network_connection_limit_node_max_usage_duration");
             $html_dynamic_abuse_control[] = InterfaceElements::generateAdminSectionContainer("network_connection_limit_node_max_usage_duration", $title, $data, $help);
         }
