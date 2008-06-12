@@ -119,11 +119,11 @@ class UIAllowedBandwidth extends Content
                     $abuseControlReport['connection_limit_window']?$db->GetIntervalStrFromDurationArray($db->GetDurationArrayFromIntervalStr($abuseControlReport['connection_limit_window'])):_("Unknown"),
                     self::formatSize($abuseControlReport['node_total_bytes']),
                     $abuseControlReport['connection_limit_node_max_total_bytes']?self::formatSize($abuseControlReport['connection_limit_node_max_total_bytes']):_("Unlimited"),
-                    $abuseControlReport['node_duration']?$abuseControlReport['node_duration']:_("None"),
+                    $abuseControlReport['node_duration']?$db->GetIntervalStrFromDurationArray($db->GetDurationArrayFromIntervalStr($abuseControlReport['node_duration'])):_("None"),
                     $abuseControlReport['connection_limit_node_max_usage_duration']?$abuseControlReport['connection_limit_node_max_usage_duration']:_("Unlimited"),
                     self::formatSize($abuseControlReport['network_total_bytes']),
                     $abuseControlReport['connection_limit_network_max_total_bytes']?self::formatSize($abuseControlReport['connection_limit_network_max_total_bytes']):_("Unlimited"),
-                    $abuseControlReport['network_duration']?$abuseControlReport['network_duration']:_("None"),
+                    $abuseControlReport['network_duration']?$db->GetIntervalStrFromDurationArray($db->GetDurationArrayFromIntervalStr($abuseControlReport['network_duration'])):_("None"),
                     $abuseControlReport['connection_limit_network_max_usage_duration']?$abuseControlReport['connection_limit_network_max_usage_duration']:_("Unlimited")
                     );
 
