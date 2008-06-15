@@ -586,19 +586,27 @@ class User implements GenericObject {
         $retval = false;
         $abuseControlReport = self::getAbuseControlConnectionHistory($user, $mac, $node);
         if($abuseControlReport) {
+            if (!$user) {
+                $user = User::getCurrentUser();
+            }
             //pretty_print_r($abuseControlReport);
-
-            if($abuseControlReport['network_total_bytes_exceeded_limit']=='t') {
-                $retval .= sprintf(_("During the last %s period, you transfered %d bytes throughout the network, which exceeds the %d bytes limit."), $abuseControlReport['connection_limit_window'], $abuseControlReport['network_total_bytes'], $abuseControlReport['connection_limit_network_max_total_bytes']);
+            if($node && Security::hasPermission(Permission::P('NODE_PERM_BYPASS_DYNAMIC_ABUSE_CONTROL'), $node, $user)) {
+                $retval = false;
             }
-            if($abuseControlReport['node_total_bytes_exceeded_limit']=='t') {
-                $retval .= sprintf(_("During the last %s period, you transfered %d bytes at this node, which exceeds the %d bytes limit."), $abuseControlReport['connection_limit_window'], $abuseControlReport['node_total_bytes'], $abuseControlReport['connection_limit_node_max_total_bytes']);
-            }
-            if($abuseControlReport['network_duration_exceeded_limit']=='t') {
-                $retval .= sprintf(_("During the last %s period, you were online for a duration of %s throughout the network, which exceeds the %s limit."), $abuseControlReport['connection_limit_window'], $abuseControlReport['network_duration'], $abuseControlReport['connection_limit_network_max_usage_duration']);
-            }
-            if($abuseControlReport['node_duration_exceeded_limit']=='t') {
-                $retval .= sprintf(_("During the last %s period, you were online for a duration of %s at this node, which exceeds the %s limit."), $abuseControlReport['connection_limit_window'], $abuseControlReport['node_duration'], $abuseControlReport['connection_limit_node_max_usage_duration']);
+            else {
+                require_once('classes/Content/UIAllowedBandwidth/UIAllowedBandwidth.php');
+                if($abuseControlReport['network_total_bytes_exceeded_limit']=='t') {
+                    $retval .= sprintf(_("During the last %s period, you transfered %s bytes throughout the network, which exceeds the %s bytes limit for the entire network."), $abuseControlReport['connection_limit_window'], UIAllowedBandwidth::formatSize($abuseControlReport['network_total_bytes']), UIAllowedBandwidth::formatSize($abuseControlReport['connection_limit_network_max_total_bytes']));
+                }
+                if($abuseControlReport['node_total_bytes_exceeded_limit']=='t') {
+                    $retval .= sprintf(_("During the last %s period, you transfered %s bytes at this node, which exceeds the %s bytes limit for this node."), $abuseControlReport['connection_limit_window'], UIAllowedBandwidth::formatSize($abuseControlReport['node_total_bytes']), UIAllowedBandwidth::formatSize($abuseControlReport['connection_limit_node_max_total_bytes']));
+                }
+                if($abuseControlReport['network_duration_exceeded_limit']=='t') {
+                    $retval .= sprintf(_("During the last %s period, you were online for a duration of %s throughout the network, which exceeds the %s limit for the entire network."), $abuseControlReport['connection_limit_window'], $abuseControlReport['network_duration'], $abuseControlReport['connection_limit_network_max_usage_duration']);
+                }
+                if($abuseControlReport['node_duration_exceeded_limit']=='t') {
+                    $retval .= sprintf(_("During the last %s period, you were online for a duration of %s at this node, which exceeds the %s limit for this node."), $abuseControlReport['connection_limit_window'], $abuseControlReport['node_duration'], $abuseControlReport['connection_limit_node_max_usage_duration']);
+                }
             }
         }
         return $retval;

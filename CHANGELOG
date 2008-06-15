@@ -1,5 +1,9 @@
 # $Id$
 2008-06-12 Benoit Grégoire  <bock@step.polymtl.ca>
+	* Add NODE_PERM_BYPASS_DYNAMIC_ABUSE_CONTROL permission.  User is allowed to exceed dynamic abuse control limits at this node.
+	* Stakeholder selector UI tweaks
+
+2008-06-12 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Use bigint for dynamic abuse control byte values
 	* UIAllowedBandwidth:  Format values in a human-readable way
 

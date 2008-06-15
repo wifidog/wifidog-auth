@@ -110,6 +110,7 @@ class StakeholderType extends GenericDataObject
         $name = $user_prefix;
         $i = 0;
         foreach ($rows as $row) {
+            
             $tab[$i][0] = $row['stakeholder_type_id'];
             $tab[$i][1] = $row['stakeholder_type_id'];
             $i ++;

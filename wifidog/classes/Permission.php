@@ -104,7 +104,8 @@ class Permission extends GenericDataObject
             $PERMISSIONS['NODE_PERM_EDIT_DEPLOYMENT_DATE'] = array(_("User is allowed to change the deployment date of this node"), StakeholderType::Node, false);
             
             $PERMISSIONS['NODE_PERM_EDIT_CONFIG'] = array(_("TEMPORARY:  User is allowed to edit general configuration for this node.  This will be replaced with more granular permissions in the future"), StakeholderType::Node, false);
-
+            $PERMISSIONS['NODE_PERM_BYPASS_DYNAMIC_ABUSE_CONTROL'] = array(_("User is allowed to exceed dynamic abuse control limits at this node"), StakeholderType::Node, false);
+            
             self::$_permissionArray = $PERMISSIONS;
         }
         else {

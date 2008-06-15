@@ -89,7 +89,7 @@ class UIAllowedBandwidth extends Content
         return Content :: getAdminUI($html, $title);
     }
     /* Format human readable filesize */
-    static function formatSize($size, $round = 0) {
+    static public function formatSize($size, $round = 0) {
         //Size must be bytes!
         $sizes = array(_('B'), _('kB'), _('MB'), _('GB'), _('TB'), _('PB'), _('EB'), _('ZB'), _('YB'));
         for ($i=0; $size > 1024 && $i < count($sizes) - 1; $i++) $size /= 1024;

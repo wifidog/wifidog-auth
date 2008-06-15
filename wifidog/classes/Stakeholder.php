@@ -82,13 +82,8 @@ class Stakeholder
             if($stakeholder_rows) {
                 foreach ($stakeholder_rows as $stakeholder_row) {
                     $user = User::getObject($stakeholder_row['user_id']);
-                    if(!empty($stakeholder_row['role_description'])) {
-                        $title = htmlspecialchars($stakeholder_row['role_description']);
-                        $roleStr = "<a href='#' title='$title'>".$stakeholder_row['role_id'] ."</a>\n";
-                    }
-                    else {
-                        $roleStr = $stakeholder_row['role_id'];
-                    }
+                    $role = Role::getObject($stakeholder_row['role_id']);
+                    $roleStr = htmlspecialchars($role->getLabelStr());
                     $name = $object_id . "_stakeholder_" . $stakeholder_row['user_id'] . "_". $stakeholder_row['role_id'] . "_remove";
                     $listDataContents = InterfaceElements::generateAdminSection("", $user->getListUI() . ' '. $roleStr, InterfaceElements::generateInputSubmit($name, _("Remove stakeholder")));
                     $listData .= "<li class='admin_element_item_container node_owner_list'>".$listDataContents."</li>\n";

@@ -144,7 +144,7 @@ class Role extends GenericDataObject
         !empty($userData['preSelectedId'])?$selected_id=$userData['preSelectedId']:$selected_id=null;
         !empty($userData['stakeholderTypeId'])?$targetObjectClassSql = " AND stakeholder_type_id = '".$db->escapeString($userData['stakeholderTypeId'])."' ":$targetObjectClassSql=null;
 
-        $sql = "SELECT role_id, stakeholder_type_id FROM roles WHERE 1=1 $targetObjectClassSql ORDER BY stakeholder_type_id, role_id";
+        $sql = "SELECT role_id, role_description_content_id, stakeholder_type_id FROM roles WHERE 1=1 $targetObjectClassSql ORDER BY stakeholder_type_id, role_id";
         $role_rows = null;
         $db->execSql($sql, $role_rows, false);
         if ($role_rows == null) {
@@ -154,9 +154,11 @@ class Role extends GenericDataObject
             if (count($role_rows) > 1) {
                 $i = 0;
                 foreach ($role_rows as $role_row) {
+                    $role = self::getObject($role_row['role_id']);
                     $tab[$i][0] = $role_row['role_id'];
                     empty($userData['stakeholderTypeId'])?$tab[$i][1]=$role_row['stakeholder_type_id'].'; ':$tab[$i][1]=null;
-                    $tab[$i][1] .= $role_row['role_id'];
+                    
+                    $tab[$i][1] .= $role->getLabelStr();
                     $i ++;
                 }
                 $html .= _("Role:")." \n";
@@ -175,6 +177,15 @@ class Role extends GenericDataObject
         return $html;
     }
 
+    function getLabelStr() {
+        if($this->_row['role_description_content_id']) {
+            $description = Content::getObject($this->_row['role_description_content_id'])->__toString() . ' ';
+        }
+        else {
+            $description = null;
+        }
+        return sprintf("%s (%s) ", $description, $this->id);
+    }
 
     /**
      * Get the selected Role object.
@@ -328,7 +339,7 @@ class Role extends GenericDataObject
         $criteria_array = array (
         array (
         'isSimpleContent'
-                        )
+        )
         );
         $description_allowed_content_types = ContentTypeFilter :: getObject($criteria_array);
 
@@ -471,7 +482,7 @@ class Role extends GenericDataObject
     }
     public function delete(& $errmsg)
     {
-                
+
         $retval = false;
         if (Security::hasPermission('SERVER_PERM_EDIT_ROLES', Server::getServer())) {
             $db = AbstractDb::getObject();
@@ -501,7 +512,7 @@ class Role extends GenericDataObject
             $items[] = array('path' => 'server/roles',
             'title' => _("User roles"),
             'url' => BASE_URL_PATH.htmlspecialchars("admin/generic_object_admin.php?object_class=Role&action=list")
-		);
+            );
         }
         return $items;
     }
