@@ -430,9 +430,9 @@ CREATE TABLE networks (
     gmaps_map_type text DEFAULT 'G_NORMAL_MAP'::text NOT NULL,
     theme_pack text,
     connection_limit_window interval,
-    connection_limit_network_max_total_bytes integer,
+    connection_limit_network_max_total_bytes bigint,
     connection_limit_network_max_usage_duration interval,
-    connection_limit_node_max_total_bytes integer,
+    connection_limit_node_max_total_bytes bigint,
     connection_limit_node_max_usage_duration interval,
     CONSTRAINT networks_gmaps_map_type CHECK ((gmaps_map_type <> ''::text)),
     CONSTRAINT networks_name CHECK ((name <> ''::text)),
@@ -520,7 +520,7 @@ CREATE TABLE nodes (
     last_heartbeat_wifidog_uptime integer,
     last_heartbeat_sys_memfree integer,
     last_heartbeat_sys_load real,
-    connection_limit_node_max_total_bytes_override integer,
+    connection_limit_node_max_total_bytes_override bigint,
     connection_limit_node_max_usage_duration_override interval
 );
 
