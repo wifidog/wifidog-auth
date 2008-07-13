@@ -65,7 +65,8 @@ function getAvailableLanguageArray() {
     'el_GR' => array('Greek',_("Greek")),
     'bg_BG' => array('Български език',_("Bulgarian")),
     'sv_SE' => array('Svenska',_("Swedish")),
-    'it_IT' => array('Italiano', _("Italian")) 
+    'it_IT' => array('Italiano', _("Italian")),
+    'ca_ES' => array('Català', _("Catalan"))
     );
     return $retval;
 }
