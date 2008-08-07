@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-13 15:52-0400\n"
+"POT-Creation-Date: 2008-08-07 12:13-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -123,51 +123,6 @@ msgstr "Die Karte wird geladen ..."
 #: ../hotspots_map.php:158
 msgid "Hotspots status map"
 msgstr "Hotspot-Status-Karte"
-
-#: ../config_available_locales.php:58
-msgid "French"
-msgstr "Französisch"
-
-#: ../config_available_locales.php:59
-msgid "English"
-msgstr "Englisch"
-
-#: ../config_available_locales.php:60
-msgid "German"
-msgstr "Deutsch"
-
-#: ../config_available_locales.php:61
-msgid "Spanish"
-msgstr ""
-
-#: ../config_available_locales.php:62
-#, fuzzy
-msgid "Brazilian Portuguese"
-msgstr "Portugiesisch"
-
-#: ../config_available_locales.php:63
-msgid "Portuguese"
-msgstr "Portugiesisch"
-
-#: ../config_available_locales.php:64
-msgid "Japanese"
-msgstr ""
-
-#: ../config_available_locales.php:65
-msgid "Greek"
-msgstr ""
-
-#: ../config_available_locales.php:66
-msgid "Bulgarian"
-msgstr ""
-
-#: ../config_available_locales.php:67
-msgid "Swedish"
-msgstr ""
-
-#: ../config_available_locales.php:68
-msgid "Italian"
-msgstr ""
 
 #: ../resend_validation.php:104
 msgid "Please specify a username"
@@ -284,9 +239,8 @@ msgstr ""
 
 #: ../gw_message.php:67
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:895
-#: ../classes/Role.php:501 ../classes/Statistics.php:376
-#: ../classes/Statistics.php:379 ../classes/Content.php:901
-#: ../classes/Node.php:219
+#: ../classes/Statistics.php:376 ../classes/Statistics.php:379
+#: ../classes/Content.php:901 ../classes/Node.php:219 ../classes/Role.php:501
 msgid "Access denied!"
 msgstr "Zugriff verweigert!"
 
@@ -329,6 +283,55 @@ msgstr ""
 msgid "No message has been specified! (this is probably an error)"
 msgstr ""
 "Es wurde keine Nachricht festgelegt (dies ist warscheinlich ein Fehler)"
+
+#: ../config_available_locales.php:58
+msgid "French"
+msgstr "Französisch"
+
+#: ../config_available_locales.php:59
+msgid "English"
+msgstr "Englisch"
+
+#: ../config_available_locales.php:60
+msgid "German"
+msgstr "Deutsch"
+
+#: ../config_available_locales.php:61
+msgid "Spanish"
+msgstr ""
+
+#: ../config_available_locales.php:62
+#, fuzzy
+msgid "Brazilian Portuguese"
+msgstr "Portugiesisch"
+
+#: ../config_available_locales.php:63
+msgid "Portuguese"
+msgstr "Portugiesisch"
+
+#: ../config_available_locales.php:64
+msgid "Japanese"
+msgstr ""
+
+#: ../config_available_locales.php:65
+msgid "Greek"
+msgstr ""
+
+#: ../config_available_locales.php:66
+msgid "Bulgarian"
+msgstr ""
+
+#: ../config_available_locales.php:67
+msgid "Swedish"
+msgstr ""
+
+#: ../config_available_locales.php:68
+msgid "Italian"
+msgstr ""
+
+#: ../config_available_locales.php:69
+msgid "Catalan"
+msgstr ""
 
 #: ../admin/generic_object_admin.php:80
 msgid "Sorry, the 'object_class' parameter must be specified"
@@ -386,7 +389,7 @@ msgstr "Vorschau des Inhalts vom Hotspot "
 #: ../classes/StatisticReport/UserReport.php:182
 #: ../classes/StatisticReport/RegistrationLog.php:120
 #: ../classes/StatisticReport/MostPopularNodes.php:109
-#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:110
+#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:118
 msgid "Node"
 msgstr "Hotspot"
 
@@ -395,8 +398,8 @@ msgstr "Hotspot"
 msgid "Preview"
 msgstr "Vorschau"
 
-#: ../admin/generic_object_admin.php:217 ../classes/ProfileTemplate.php:393
-#: ../classes/Content.php:736
+#: ../admin/generic_object_admin.php:217 ../classes/Content.php:736
+#: ../classes/ProfileTemplate.php:393
 msgid "Edit"
 msgstr "Bearbeiten"
 
@@ -613,17 +616,17 @@ msgstr ""
 msgid "I'm having difficulties:"
 msgstr ""
 
-#: ../login/index.php:263 smarty.txt:52 smarty.txt:69 smarty.txt:80
+#: ../login/index.php:263 smarty.txt:42 smarty.txt:59 smarty.txt:70
 #: smarty.txt:94 smarty.txt:102
 msgid "I Forgot my username"
 msgstr "Ich habe meinen Benutzernamen vergessen"
 
-#: ../login/index.php:264 smarty.txt:53 smarty.txt:70 smarty.txt:81
+#: ../login/index.php:264 smarty.txt:43 smarty.txt:60 smarty.txt:71
 #: smarty.txt:95 smarty.txt:103
 msgid "I Forgot my password"
 msgstr "Ich habe mein Passwort vergessen"
 
-#: ../login/index.php:265 smarty.txt:54 smarty.txt:82 smarty.txt:96
+#: ../login/index.php:265 smarty.txt:44 smarty.txt:72 smarty.txt:96
 #: smarty.txt:104
 msgid "Re-send the validation email"
 msgstr "Bestätigungs-E-Mail nochmals senden"
@@ -863,12 +866,12 @@ msgid "Deployment date"
 msgstr "Zeitpunkt der Auslieferung"
 
 #: ../classes/StatisticReport/NodeStatus.php:168 ../classes/Content.php:925
-#: ../classes/Node.php:1124 ../classes/DependenciesList.php:173 smarty.txt:73
+#: ../classes/Node.php:1124 ../classes/DependenciesList.php:173 smarty.txt:63
 msgid "Description"
 msgstr "Beschreibung"
 
 #: ../classes/StatisticReport/NodeStatus.php:172
-#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:120
+#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:114
 msgid "Network"
 msgstr "Netzwerk"
 
@@ -877,7 +880,7 @@ msgid "GIS Location"
 msgstr "GPS-Position"
 
 #: ../classes/StatisticReport/NodeStatus.php:181 ../classes/Network.php:1049
-#: smarty.txt:78
+#: smarty.txt:68
 msgid "Map"
 msgstr "Karte"
 
@@ -886,8 +889,8 @@ msgid "NOT SET"
 msgstr "NICHT EINGESTELLT"
 
 #: ../classes/StatisticReport/NodeStatus.php:194
-#: ../classes/NodeLists/NodeListPDF.php:1083
 #: ../classes/NodeLists/NodeListRSS.php:324
+#: ../classes/NodeLists/NodeListPDF.php:1083
 #: ../classes/NodeLists/NodeListKML.php:238
 msgid "Address"
 msgstr "Adresse"
@@ -950,7 +953,7 @@ msgstr "Die Benutzer-Kennung %S wurde nicht in der Datenbank gefunden"
 #: ../classes/StatisticReport/RegistrationLog.php:123
 #: ../classes/StatisticReport/ConnectionLog.php:115
 #: ../classes/StatisticReport/ConnectionLog.php:164 ../classes/User.php:810
-#: ../classes/User.php:815 ../classes/User.php:864 smarty.txt:111
+#: ../classes/User.php:815 ../classes/User.php:864 smarty.txt:113
 #: smarty.txt:119
 msgid "Username"
 msgstr "Benutzername"
@@ -964,7 +967,7 @@ msgid "Member since"
 msgstr "Mitglied seit"
 
 #: ../classes/StatisticReport/UserReport.php:147 ../classes/User.php:852
-#: smarty.txt:122
+#: smarty.txt:116
 msgid "Account Status"
 msgstr "Status des Zugangs"
 
@@ -1069,9 +1072,10 @@ msgid "Sorry, this report requires you to select individual networks"
 msgstr ""
 "Um diesen Report zu erzeugen, müssen Sie ein bestimmtes Netzwerk wählen"
 
-#: ../classes/StatisticReport/NetworkStatus.php:104 ../classes/Role.php:369
-#: ../classes/ProfileTemplate.php:512 ../classes/Server.php:246
-#: ../classes/Node.php:1111 ../classes/VirtualHost.php:603
+#: ../classes/StatisticReport/NetworkStatus.php:104
+#: ../classes/VirtualHost.php:603 ../classes/Server.php:246
+#: ../classes/Node.php:1111 ../classes/ProfileTemplate.php:512
+#: ../classes/Role.php:369
 msgid "Creation date"
 msgstr "Erstellt am"
 
@@ -1111,18 +1115,6 @@ msgstr "Anzahl verifizierter Benutzer"
 msgid "Number of users currently online"
 msgstr "Anzahl aktuell angemeldeter Benutzer"
 
-#: ../classes/StatisticReport/AnonymisedDataExport.php:65
-msgid "Anonymised SQL data export (for academic research)"
-msgstr ""
-
-#: ../classes/StatisticReport/AnonymisedDataExport.php:97
-#: ../classes/StatisticReport/ConnectionLog.php:89
-#: ../classes/ContentTypeFilter.php:254 ../classes/ContentTypeFilter.php:439
-#: ../classes/ProfileTemplate.php:602 ../classes/VirtualHost.php:403
-#: ../classes/VirtualHost.php:735
-msgid "Access denied"
-msgstr "Zugriff verweigert"
-
 #: ../classes/StatisticReport/MostPopularNodes.php:65
 msgid "Most popular nodes, by visit"
 msgstr "Beliebteste Hotspots (nach Anzahl der Besuche)"
@@ -1134,6 +1126,14 @@ msgstr "Besuche"
 #: ../classes/StatisticReport/ConnectionLog.php:64
 msgid "Connection Log"
 msgstr "Verbindungsprotokoll"
+
+#: ../classes/StatisticReport/ConnectionLog.php:89
+#: ../classes/StatisticReport/AnonymisedDataExport.php:97
+#: ../classes/VirtualHost.php:403 ../classes/VirtualHost.php:735
+#: ../classes/ProfileTemplate.php:602 ../classes/ContentTypeFilter.php:254
+#: ../classes/ContentTypeFilter.php:439
+msgid "Access denied"
+msgstr "Zugriff verweigert"
 
 #: ../classes/StatisticReport/ConnectionLog.php:109
 msgid "Number of unique Users:"
@@ -1270,6 +1270,10 @@ msgid ""
 "includes non-validated users who successfully connected."
 msgstr ""
 
+#: ../classes/StatisticReport/AnonymisedDataExport.php:65
+msgid "Anonymised SQL data export (for academic research)"
+msgstr ""
+
 #: ../classes/StatisticReport/ActiveUserReport.php:62
 msgid "Breakdown of how many users actually use the network"
 msgstr ""
@@ -1329,6 +1333,31 @@ msgstr ""
 #: ../classes/StatisticReport/ActiveUserReport.php:198
 msgid "warning:  This report does not count connections at Splash-Only nodes"
 msgstr ""
+
+#: ../classes/NodeLists/NodeListRSS.php:157
+#: ../classes/NodeLists/NodeListHTML.php:211
+msgid "Newest Hotspots"
+msgstr "Neuste Hotspots"
+
+#: ../classes/NodeLists/NodeListRSS.php:169
+msgid "List of the most recent Hotspots opened by the network: "
+msgstr "Liste der neusten Hotspots von "
+
+#: ../classes/NodeLists/NodeListRSS.php:190
+msgid "Copyright "
+msgstr "Copyright "
+
+#: ../classes/NodeLists/NodeListRSS.php:358
+msgid "See Map"
+msgstr "Karte ansehen"
+
+#: ../classes/NodeLists/NodeListRSS.php:371
+msgid "Contact"
+msgstr "Kontakt"
+
+#: ../classes/NodeLists/NodeListHTML.php:210
+msgid "Hotspot list"
+msgstr "Hotspot-Liste"
 
 #: ../classes/NodeLists/NodeListPDF.php:792
 msgid ""
@@ -1400,41 +1429,16 @@ msgstr ""
 "Die PDF-Datei kann nicht erzeugt werden, da die FPDF Bibliotheknicht "
 "installiert ist!"
 
-#: ../classes/NodeLists/NodeListRSS.php:157
-#: ../classes/NodeLists/NodeListHTML.php:211
-msgid "Newest Hotspots"
-msgstr "Neuste Hotspots"
-
-#: ../classes/NodeLists/NodeListRSS.php:169
-msgid "List of the most recent Hotspots opened by the network: "
-msgstr "Liste der neusten Hotspots von "
-
-#: ../classes/NodeLists/NodeListRSS.php:190
-msgid "Copyright "
-msgstr "Copyright "
-
-#: ../classes/NodeLists/NodeListRSS.php:358
-msgid "See Map"
-msgstr "Karte ansehen"
-
-#: ../classes/NodeLists/NodeListRSS.php:371
-msgid "Contact"
-msgstr "Kontakt"
-
-#: ../classes/NodeLists/NodeListHTML.php:210
-msgid "Hotspot list"
-msgstr "Hotspot-Liste"
-
 #: ../classes/NodeLists/NodeListKML.php:240
 #: ../classes/Content/RssAggregator/RssAggregator.php:752
 msgid "URL"
 msgstr "Adresse"
 
 #: ../classes/Content/File/File.php:131
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:92
-#: ../classes/Content/ContentGroup/ContentGroup.php:115
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:131
 #: ../classes/Content/IFrame/IFrame.php:89
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:92
+#: ../classes/Content/ContentGroup/ContentGroup.php:115
 #: ../classes/Content/Picture/Picture.php:103 ../classes/Content.php:124
 #: ../classes/Content.php:275
 msgid "The content with the following id could not be found in the database: "
@@ -1507,328 +1511,6 @@ msgid "Could not delete this file, since it is persistent"
 msgstr ""
 "Die Datei kann nicht gelöscht werden, da sie als wieder verwendbar markiert "
 "ist. Entfernen Sie dieses Attribut, um die Datei zu löschen."
-
-#: ../classes/Content/SimpleString/SimpleString.php:130
-#: ../classes/Content/Langstring/Langstring.php:285
-msgid "Only these HTML tags are allowed : "
-msgstr "Folgende HTML-Tags sind erlaubt:"
-
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:102
-msgid "Subscribe to Pattern Language"
-msgstr "Bei Pattern Language anmelden"
-
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:103
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:118
-msgid "Read narratives archives"
-msgstr "Archiv der Erzählungen lesen"
-
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:117
-msgid "Read my narrative"
-msgstr "Meine Erzählungen lesen"
-
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:119
-msgid "Unsubscribe"
-msgstr "Abmelden"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:172
-msgid "Embedded content"
-msgstr "Eingebauter Inhalt"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:190
-msgid "Attributes"
-msgstr "Attribute"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:192
-msgid ""
-"It is recommended to specify at least <b>width='x' height='y'</b> as "
-"attributes"
-msgstr ""
-"Es wird empfohlen, wenigstens <b>width='x' height='y'</b> als Attribute "
-"anzugeben"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:198
-msgid "Parameters"
-msgstr "Parameter"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:212
-msgid ""
-"Fallback content (Can be another embedded content to create a fallback "
-"hierarchy)"
-msgstr ""
-"Reserve-Inhalt (wird als anderer eingebauter Inhalt benutzt, um ein "
-"Sicherungssystem für Inhalte zu haben)"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:261
-msgid "You MUST choose a File object or any of its siblings."
-msgstr "Sie MÜSSEN ein Dateiobjekt oder eine Ableitung des davon auswählen"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:397
-#: ../classes/Content/Langstring/Langstring.php:531
-#: ../classes/Content.php:1924
-msgid ""
-"Content is persistent (you must make it non persistent before you can delete "
-"it)"
-msgstr ""
-"Der Inhalt wurde als wieder verwendbar markiert. Wieder verwendbarer Inhalt "
-"kann nicht gelöscht werden. Um ihn zu löschen, muss dieses Attribut entfernt "
-"werden."
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:219
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:225
-msgid "Unable to insert new content group element into database!"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:291
-#, php-format
-msgid "%s %d display conditions"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:301
-msgid "(Ignored if display type is random)"
-msgstr "(Ignoriert, falls die Anzeigeart zufällig ist)"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:307
-msgid ""
-"Content can be displayed at any date if no start or end date is specified.  "
-"Warning:  If you do not specify a specific time of day, midnight is assumed."
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:308
-msgid "Only display from"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:334
-msgid "Only display at node(s):"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:349
-#: ../classes/ProfileTemplate.php:395 ../classes/Content.php:738
-msgid "Remove"
-msgstr "Entfernen"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:361
-msgid "Add new allowed node"
-msgstr "Zugelassenen Hotspot hinzufügen"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:364
-msgid ""
-"(Content can be displayed at ANY node unless one or more nodes are selected)"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:381
-#, php-format
-msgid "%s %d displayed content (%s)"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:87
-msgid "Pick content elements randomly"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:88
-msgid ""
-"Pick content elements randomly, but not twice until all elements have been "
-"seen"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:89
-msgid "Pick content elements in sequential order"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:92
-msgid "Content always rotates"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:93
-msgid "Content rotates once per day"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:94
-msgid "Content rotates once per session"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:95
-msgid "Content rotates each time you change node"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:96
-msgid ""
-"Content never rotates.  Usefull when showing all elements simultaneously in "
-"a specific order."
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:99
-#, fuzzy
-msgid "Content can be shown more than once"
-msgstr ""
-"Darf ein Inhalt einem gleichen Benutzer mehr als einmal angezeigt werden?"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:100
-msgid "Content can only be shown once"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:101
-#, fuzzy
-msgid "Content can be shown more than once, but not at the same node"
-msgstr ""
-"Darf ein Inhalt einem gleichen Benutzer mehr als einmal angezeigt werden?"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:153
-msgid "Invalid content selection mode (must be part of CONTENT_ORDERING_MODES)"
-msgstr ""
-"Ungültiger Auswahlmodus des Inhalts (muss ein Teil von "
-"CONTENT_ORDERING_MODES sein)"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:182
-msgid ""
-"Invalid content selection mode (must be part of CONTENT_CHANGES_ON_MODES)"
-msgstr ""
-"Ungültiger Auswahlmodus des Inhalts (muss ein Teil von "
-"CONTENT_CHANGES_ON_MODES sein)"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:211
-msgid "Invalid content selection mode (must be part of ALLOW_REPEAT_MODES)"
-msgstr ""
-"Ungültiger Auswahlmodus des Inhalts (muss ein Teil von ALLOW_REPEAT_MODES)"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:243
-#: ../classes/Content/RssAggregator/RssAggregator.php:198
-msgid "You must display at least one element"
-msgstr "Sie müssen mindestens ein Element auswählen"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:264
-#, php-format
-msgid "%s configuration"
-msgstr "%s Konfiguration"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:268
-msgid "In what order should the content displayed?"
-msgstr "In welcher Reihenfolge soll der Inhalt angezeigt werden?"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:277
-msgid "When does the content rotate?"
-msgstr "Wann wechselt der Inhalt?"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:286
-msgid "Can content be shown more than once to the same user?"
-msgstr ""
-"Darf ein Inhalt einem gleichen Benutzer mehr als einmal angezeigt werden?"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:295
-msgid "Pick how many elements for each display?"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:310
-#, php-format
-msgid "%s display element list"
-msgstr "%s Darstellungsliste"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:317
-msgid "Show expired group elements"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:323
-msgid "Hide expired group elements"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:334
-#: ../classes/ProfileTemplate.php:526
-#, php-format
-msgid "%s %d"
-msgstr "%s %d"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:337
-#, php-format
-msgid "Delete %s %d"
-msgstr "%s %d löschen"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:82
-msgid "300x250 - IAB Medium Rectangle"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:83
-msgid "250x250 - IAB Square Pop-Up"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:84
-msgid "240x400 - IAB Vertical Rectangle"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:85
-msgid "336x280 - IAB Large Rectangle"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:86
-msgid "180x150 - IAB Rectangle"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:88
-msgid "468x60  - IAB Full Banner"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:89
-msgid "234x60  - IAB Half Banner"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:90
-msgid "88x31   - IAB Micro Bar"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:91
-msgid "120x90  - IAB Button 1"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:92
-msgid "120x60  - IAB Button 2"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:93
-msgid "120x240 - IAB Vertical Banner"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:94
-msgid "125x125 - IAB Square Button"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:95
-msgid "728x90  - IAB Leaderboard"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:97
-msgid "160x600 - IAB Wide Skyscraper"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:98
-msgid "120x600 - IAB Skyscraper"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:99
-msgid "300x600 - IAB Half Page Ad"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:128
-msgid "Maximum display size"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:131
-msgid "Use the values below for width and height"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:137
-msgid "Width"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:146
-msgid "Height"
-msgstr ""
-
-#: ../classes/Content/Stylesheet/Stylesheet.php:106
-msgid ""
-"Hints:  Note that the order in which Stylesheets are assigned relative to "
-"other content doesn't matter (except relative to other Stylesheets).  "
-"Stylesheets will be linked to the page in the order they are assigned, but "
-"always after the base stylesheet and network theme pack (if applicable).  "
-"They must be written as patches to those stylesheets."
-msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:198
 msgid "Illegal Flickr Photostream selection mode."
@@ -2040,6 +1722,23 @@ msgstr ""
 "das letzte Mal dem Benutzer angezeigt wurde. Falls das IFrame dem Benutzer "
 "noch nie angezeigt wurde, wird nichts angezeigt."
 
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:102
+msgid "Subscribe to Pattern Language"
+msgstr "Bei Pattern Language anmelden"
+
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:103
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:118
+msgid "Read narratives archives"
+msgstr "Archiv der Erzählungen lesen"
+
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:117
+msgid "Read my narrative"
+msgstr "Meine Erzählungen lesen"
+
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:119
+msgid "Unsubscribe"
+msgstr "Abmelden"
+
 #: ../classes/Content/IFrame/IFrame.php:231
 msgid "Width (suggested width is 600 (pixels))"
 msgstr "Breite (empfohlen sind 622 Pixel)"
@@ -2056,6 +1755,217 @@ msgstr "Adresse des Inhalts"
 msgid "Your browser does not support IFrames."
 msgstr "Ihr Browser unterstüzt keine IFrames."
 
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:172
+msgid "Embedded content"
+msgstr "Eingebauter Inhalt"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:190
+msgid "Attributes"
+msgstr "Attribute"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:192
+msgid ""
+"It is recommended to specify at least <b>width='x' height='y'</b> as "
+"attributes"
+msgstr ""
+"Es wird empfohlen, wenigstens <b>width='x' height='y'</b> als Attribute "
+"anzugeben"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:198
+msgid "Parameters"
+msgstr "Parameter"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:212
+msgid ""
+"Fallback content (Can be another embedded content to create a fallback "
+"hierarchy)"
+msgstr ""
+"Reserve-Inhalt (wird als anderer eingebauter Inhalt benutzt, um ein "
+"Sicherungssystem für Inhalte zu haben)"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:261
+msgid "You MUST choose a File object or any of its siblings."
+msgstr "Sie MÜSSEN ein Dateiobjekt oder eine Ableitung des davon auswählen"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:397
+#: ../classes/Content/Langstring/Langstring.php:531
+#: ../classes/Content.php:1924
+msgid ""
+"Content is persistent (you must make it non persistent before you can delete "
+"it)"
+msgstr ""
+"Der Inhalt wurde als wieder verwendbar markiert. Wieder verwendbarer Inhalt "
+"kann nicht gelöscht werden. Um ihn zu löschen, muss dieses Attribut entfernt "
+"werden."
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:219
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:225
+msgid "Unable to insert new content group element into database!"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:291
+#, php-format
+msgid "%s %d display conditions"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:301
+msgid "(Ignored if display type is random)"
+msgstr "(Ignoriert, falls die Anzeigeart zufällig ist)"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:307
+msgid ""
+"Content can be displayed at any date if no start or end date is specified.  "
+"Warning:  If you do not specify a specific time of day, midnight is assumed."
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:308
+msgid "Only display from"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:334
+msgid "Only display at node(s):"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:349
+#: ../classes/Content.php:738 ../classes/ProfileTemplate.php:395
+msgid "Remove"
+msgstr "Entfernen"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:361
+msgid "Add new allowed node"
+msgstr "Zugelassenen Hotspot hinzufügen"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:364
+msgid ""
+"(Content can be displayed at ANY node unless one or more nodes are selected)"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:381
+#, php-format
+msgid "%s %d displayed content (%s)"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:87
+msgid "Pick content elements randomly"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:88
+msgid ""
+"Pick content elements randomly, but not twice until all elements have been "
+"seen"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:89
+msgid "Pick content elements in sequential order"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:92
+msgid "Content always rotates"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:93
+msgid "Content rotates once per day"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:94
+msgid "Content rotates once per session"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:95
+msgid "Content rotates each time you change node"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:96
+msgid ""
+"Content never rotates.  Usefull when showing all elements simultaneously in "
+"a specific order."
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:99
+#, fuzzy
+msgid "Content can be shown more than once"
+msgstr ""
+"Darf ein Inhalt einem gleichen Benutzer mehr als einmal angezeigt werden?"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:100
+msgid "Content can only be shown once"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:101
+#, fuzzy
+msgid "Content can be shown more than once, but not at the same node"
+msgstr ""
+"Darf ein Inhalt einem gleichen Benutzer mehr als einmal angezeigt werden?"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:153
+msgid "Invalid content selection mode (must be part of CONTENT_ORDERING_MODES)"
+msgstr ""
+"Ungültiger Auswahlmodus des Inhalts (muss ein Teil von "
+"CONTENT_ORDERING_MODES sein)"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:182
+msgid ""
+"Invalid content selection mode (must be part of CONTENT_CHANGES_ON_MODES)"
+msgstr ""
+"Ungültiger Auswahlmodus des Inhalts (muss ein Teil von "
+"CONTENT_CHANGES_ON_MODES sein)"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:211
+msgid "Invalid content selection mode (must be part of ALLOW_REPEAT_MODES)"
+msgstr ""
+"Ungültiger Auswahlmodus des Inhalts (muss ein Teil von ALLOW_REPEAT_MODES)"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:243
+#: ../classes/Content/RssAggregator/RssAggregator.php:198
+msgid "You must display at least one element"
+msgstr "Sie müssen mindestens ein Element auswählen"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:264
+#, php-format
+msgid "%s configuration"
+msgstr "%s Konfiguration"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:268
+msgid "In what order should the content displayed?"
+msgstr "In welcher Reihenfolge soll der Inhalt angezeigt werden?"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:277
+msgid "When does the content rotate?"
+msgstr "Wann wechselt der Inhalt?"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:286
+msgid "Can content be shown more than once to the same user?"
+msgstr ""
+"Darf ein Inhalt einem gleichen Benutzer mehr als einmal angezeigt werden?"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:295
+msgid "Pick how many elements for each display?"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:310
+#, php-format
+msgid "%s display element list"
+msgstr "%s Darstellungsliste"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:317
+msgid "Show expired group elements"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:323
+msgid "Hide expired group elements"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:334
+#: ../classes/ProfileTemplate.php:526
+#, php-format
+msgid "%s %d"
+msgstr "%s %d"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:337
+#, php-format
+msgid "Delete %s %d"
+msgstr "%s %d löschen"
+
 #: ../classes/Content/Langstring/Langstring.php:131
 #, php-format
 msgid "(Empty %s)"
@@ -2064,7 +1974,7 @@ msgstr ""
 #: ../classes/Content/Langstring/Langstring.php:215
 #: ../classes/Content/Langstring/Langstring.php:341
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:112
-#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:24
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:19
 msgid "Language"
 msgstr "Sprache"
 
@@ -2072,6 +1982,11 @@ msgstr "Sprache"
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:145
 msgid "Add new string"
 msgstr "Neue Zeichenfolge hinzufügen"
+
+#: ../classes/Content/Langstring/Langstring.php:285
+#: ../classes/Content/SimpleString/SimpleString.php:130
+msgid "Only these HTML tags are allowed : "
+msgstr "Folgende HTML-Tags sind erlaubt:"
 
 #: ../classes/Content/Langstring/Langstring.php:352
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:209
@@ -2187,8 +2102,8 @@ msgid "Type URL manually"
 msgstr "Adresse manuell eingeben"
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:654
-#: ../classes/ProfileTemplateField.php:137 ../classes/ProfileTemplate.php:327
 #: ../classes/Content.php:545 ../classes/Content.php:967
+#: ../classes/ProfileTemplate.php:327 ../classes/ProfileTemplateField.php:137
 msgid "Add"
 msgstr "Hinzufügen"
 
@@ -2271,6 +2186,123 @@ msgstr "Der RSS-Feed konnte nicht empfangen werden: %S"
 msgid "RSS support is disabled"
 msgstr "Die RSS-Unterstützung ist deaktiviert"
 
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:227
+msgid "FCKeditor is not installed"
+msgstr "FCKeditor ist nicht installiert"
+
+#: ../classes/Content/Picture/Picture.php:272
+msgid "Hyperlink URL (leave empty if you don't need it)"
+msgstr ""
+
+#: ../classes/Content/Picture/Picture.php:280
+msgid "Width (leave empty if you want to keep original width)"
+msgstr "Breite (leer lassen, falls in die Originalbreite benutzt werden soll)"
+
+#: ../classes/Content/Picture/Picture.php:287
+msgid "Height (leave empty if you want to keep original height)"
+msgstr "Höhe (leer lassen, falls die Originalhöhe benutzt werden soll)"
+
+#: ../classes/Content/Stylesheet/Stylesheet.php:106
+msgid ""
+"Hints:  Note that the order in which Stylesheets are assigned relative to "
+"other content doesn't matter (except relative to other Stylesheets).  "
+"Stylesheets will be linked to the page in the order they are assigned, but "
+"always after the base stylesheet and network theme pack (if applicable).  "
+"They must be written as patches to those stylesheets."
+msgstr ""
+
+#: ../classes/Content/SmartyTemplate/SmartyTemplate.php:85
+#, php-format
+msgid ""
+"To list the available Smarty variables, put %s in the input field, save and "
+"then click preview"
+msgstr ""
+
+#: ../classes/Content/SmartyTemplate/SmartyTemplate.php:86
+#, php-format
+msgid "There are also a few custom Smarty modifiers available: %s"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:82
+msgid "300x250 - IAB Medium Rectangle"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:83
+msgid "250x250 - IAB Square Pop-Up"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:84
+msgid "240x400 - IAB Vertical Rectangle"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:85
+msgid "336x280 - IAB Large Rectangle"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:86
+msgid "180x150 - IAB Rectangle"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:88
+msgid "468x60  - IAB Full Banner"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:89
+msgid "234x60  - IAB Half Banner"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:90
+msgid "88x31   - IAB Micro Bar"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:91
+msgid "120x90  - IAB Button 1"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:92
+msgid "120x60  - IAB Button 2"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:93
+msgid "120x240 - IAB Vertical Banner"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:94
+msgid "125x125 - IAB Square Button"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:95
+msgid "728x90  - IAB Leaderboard"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:97
+msgid "160x600 - IAB Wide Skyscraper"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:98
+msgid "120x600 - IAB Skyscraper"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:99
+msgid "300x600 - IAB Half Page Ad"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:128
+msgid "Maximum display size"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:131
+msgid "Use the values below for width and height"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:137
+msgid "Width"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:146
+msgid "Height"
+msgstr ""
+
 #: ../classes/Content/ShoutBox/ShoutBox.php:240
 msgid "Shout button 'onclick=' value (optionnal):"
 msgstr ""
@@ -2283,11 +2315,11 @@ msgid ""
 "text in Javascript with: %s"
 msgstr ""
 
-#: ../classes/Content/ShoutBox/ShoutBox.php:251
+#: ../classes/Content/ShoutBox/ShoutBox.php:251 ../classes/Content.php:1553
+#: ../classes/Content.php:1572 ../classes/Content.php:1589
+#: ../classes/Content.php:1606 ../classes/Role.php:359
 #: ../classes/ProfileTemplateField.php:444
-#: ../classes/ProfileTemplateField.php:462 ../classes/Role.php:359
-#: ../classes/Content.php:1553 ../classes/Content.php:1572
-#: ../classes/Content.php:1589 ../classes/Content.php:1606
+#: ../classes/ProfileTemplateField.php:462
 #, php-format
 msgid "Delete %s (%s)"
 msgstr "%s löschen (%s)"
@@ -2311,34 +2343,6 @@ msgstr ""
 
 #: ../classes/Content/ShoutBox/ShoutBox.php:372
 msgid "Sorry, I am unable to determine your current node"
-msgstr ""
-
-#: ../classes/Content/Picture/Picture.php:272
-msgid "Hyperlink URL (leave empty if you don't need it)"
-msgstr ""
-
-#: ../classes/Content/Picture/Picture.php:280
-msgid "Width (leave empty if you want to keep original width)"
-msgstr "Breite (leer lassen, falls in die Originalbreite benutzt werden soll)"
-
-#: ../classes/Content/Picture/Picture.php:287
-msgid "Height (leave empty if you want to keep original height)"
-msgstr "Höhe (leer lassen, falls die Originalhöhe benutzt werden soll)"
-
-#: ../classes/Content/HTMLeditor/HTMLeditor.php:227
-msgid "FCKeditor is not installed"
-msgstr "FCKeditor ist nicht installiert"
-
-#: ../classes/Content/SmartyTemplate/SmartyTemplate.php:85
-#, php-format
-msgid ""
-"To list the available Smarty variables, put %s in the input field, save and "
-"then click preview"
-msgstr ""
-
-#: ../classes/Content/SmartyTemplate/SmartyTemplate.php:86
-#, php-format
-msgid "There are also a few custom Smarty modifiers available: %s"
 msgstr ""
 
 #: ../classes/Content/Avatar/Avatar.php:103
@@ -2436,6 +2440,60 @@ msgstr "Ihr Zugang wurde freigeschaltet."
 msgid "Unable to retrieve node specific restrictions (you are not at a node)"
 msgstr ""
 
+#: ../classes/VirtualHost.php:162
+msgid "Server::getAllServers: Fatal error: No servers in the database!"
+msgstr "Server::getAllServers: Kein Server in der Datenbank gefunden!"
+
+#: ../classes/VirtualHost.php:262 ../classes/Server.php:151
+msgid "Unable to insert the new server in the database!"
+msgstr "Der neue Server konnte nicht in der Datenbank erfaßt werden!"
+
+#: ../classes/VirtualHost.php:298
+msgid "Virtual host:"
+msgstr ""
+
+#: ../classes/VirtualHost.php:375
+msgid "Add a new virtual host for hostname"
+msgstr ""
+
+#: ../classes/VirtualHost.php:595
+msgid "Virtual hosts management"
+msgstr ""
+
+#: ../classes/VirtualHost.php:614
+msgid "Hostname"
+msgstr "Hostname"
+
+#: ../classes/VirtualHost.php:622
+msgid "Default network for this vhost"
+msgstr ""
+
+#: ../classes/VirtualHost.php:639
+msgid "Make this Virtual Host the server's default?"
+msgstr ""
+
+#: ../classes/VirtualHost.php:655
+msgid "Use SSL on this server?"
+msgstr "SSL auf diesem Server verwenden?"
+
+#: ../classes/VirtualHost.php:667
+msgid "Google public API key"
+msgstr "Google API Schlüssel"
+
+#: ../classes/VirtualHost.php:738
+msgid ""
+"Cannot delete default virtual host, create another one and select it before "
+"removing this one."
+msgstr ""
+
+#: ../classes/VirtualHost.php:743
+msgid "Could not delete server!"
+msgstr "Server konnte nicht gelöscht werden!"
+
+#: ../classes/VirtualHost.php:771
+msgid "Virtual Hosts"
+msgstr ""
+
 #: ../classes/Profile.php:206
 msgid "Unable to insert the new profile in the database!"
 msgstr ""
@@ -2470,6 +2528,26 @@ msgstr "Zugriff verweigert (Sie müssen volle Administratorrechte besitzen)"
 #: ../classes/Profile.php:451
 msgid "Could not delete Profile!"
 msgstr ""
+
+#: ../classes/Security.php:205
+#, php-format
+msgid "%s (%s) on  %s: %s"
+msgstr ""
+
+#: ../classes/Security.php:205
+msgid "Any"
+msgstr ""
+
+#: ../classes/Security.php:208
+msgid ""
+"Some (possibly all) of the following permission(s) you don't have are "
+"required to perform the operation your requested:"
+msgstr ""
+
+#: ../classes/FormSelectGenerator.php:103
+#: ../classes/FormSelectGenerator.php:112
+msgid " (Empty langstring, ID is displayed)"
+msgstr " (Leeres Textfeld, ID wird angezeigt)"
 
 #: ../classes/User.php:169
 #, php-format
@@ -2711,344 +2789,6 @@ msgstr ""
 msgid "User administration"
 msgstr "Benutzerverwaltung"
 
-#: ../classes/ProfileTemplateField.php:118
-#: ../classes/ProfileTemplateField.php:427
-#: ../classes/ContentTypeFilter.php:310 ../classes/ProfileTemplate.php:318
-msgid "No label"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:122
-msgid "Add new profile template field filtered by"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:131
-msgid "Sorry, no content type filter exists."
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:176 ../classes/Content.php:189
-msgid "Unable to insert new content into database!"
-msgstr "Der neue Inhalt konnte nicht in der Datenbank gesichert werden!"
-
-#: ../classes/ProfileTemplateField.php:404
-msgid "Display order"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:422
-msgid "Sorry, content type filter is missing."
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:424
-#: ../classes/ContentTypeFilter.php:302
-msgid "Content type filter"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:434
-msgid "Display label"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:440
-#, php-format
-msgid "%s display label (%s)"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:444
-msgid "display label"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:451
-msgid "Admin label"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:458
-#, php-format
-msgid "%s admin label (%s)"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:462
-msgid "admin label"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:469
-msgid "Semantic ID"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:477
-msgid "Full name"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:478
-msgid "Nickname"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:479
-msgid "E-mail"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:480
-msgid "Hashed e-mail"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:481
-msgid "Picture"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:482
-msgid "URL of a blog"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:483
-msgid "URL of a homepage"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:598
-msgid "Could not delete ProfileTemplateField!"
-msgstr ""
-
-#: ../classes/Role.php:151
-#, php-format
-msgid "Sorry: No available roles in the database for stakeholder type: %s!"
-msgstr ""
-
-#: ../classes/Role.php:164 ../classes/Role.php:170
-msgid "Role:"
-msgstr ""
-
-#: ../classes/Role.php:228 ../classes/ContentTypeFilter.php:199
-msgid "Unable to insert the new ContentTypeFilter in the database!"
-msgstr ""
-
-#: ../classes/Role.php:245
-#, php-format
-msgid "Add a new role of type %s with id %s"
-msgstr ""
-
-#: ../classes/Role.php:309
-msgid "User roles management"
-msgstr ""
-
-#: ../classes/Role.php:316
-msgid "Stakeholder type"
-msgstr ""
-
-#: ../classes/Role.php:325
-msgid "This role is a system role"
-msgstr ""
-
-#: ../classes/Role.php:332
-msgid "Role ID"
-msgstr ""
-
-#: ../classes/Role.php:351 ../classes/Role.php:355 ../classes/Content.php:1564
-#: ../classes/Content.php:1568
-msgid "Description:"
-msgstr "Beschreibung:"
-
-#: ../classes/Role.php:359 ../classes/Content.php:1572
-msgid "description"
-msgstr "Beschreibung"
-
-#: ../classes/Role.php:386
-msgid "Permissions"
-msgstr ""
-
-#: ../classes/Role.php:492
-msgid "Could not delete object!"
-msgstr ""
-
-#: ../classes/Role.php:513
-msgid "User roles"
-msgstr ""
-
-#: ../classes/Security.php:205
-#, php-format
-msgid "%s (%s) on  %s: %s"
-msgstr ""
-
-#: ../classes/Security.php:205
-msgid "Any"
-msgstr ""
-
-#: ../classes/Security.php:208
-msgid ""
-"Some (possibly all) of the following permission(s) you don't have are "
-"required to perform the operation your requested:"
-msgstr ""
-
-#: ../classes/FormSelectGenerator.php:103
-#: ../classes/FormSelectGenerator.php:112
-msgid " (Empty langstring, ID is displayed)"
-msgstr " (Leeres Textfeld, ID wird angezeigt)"
-
-#: ../classes/Mail.php:405
-#, php-format
-msgid "PHPMailer couldn't sent mail.  Error was: %s"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:220
-msgid "Add a new content type filter with these rules"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:221
-msgid "Example:"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:357
-msgid "ContentTypeFilter management"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:364
-msgid "ContentTypeFilter ID"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:375 ../classes/ProfileTemplate.php:502
-msgid "Label"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:386
-msgid "Rules (must be a valid array definition)"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:418
-msgid "The rules must be given as a PHP array declaration."
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:444
-msgid "Could not delete ContentTypeFilter!"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:472
-msgid "Content type filters"
-msgstr ""
-
-#: ../classes/Statistics.php:85
-msgid "Usernames"
-msgstr "Benutzernamen"
-
-#: ../classes/Statistics.php:86
-msgid "MAC addresses"
-msgstr ""
-
-#: ../classes/Statistics.php:124 ../classes/Network.php:719
-#: ../classes/Content.php:335 ../classes/NodeList.php:138
-msgid "Unable to open directory "
-msgstr "Folgendes verzeichnis konnte nicht geöffnet werden: "
-
-#: ../classes/Statistics.php:152 ../classes/Statistics.php:156
-msgid "No restriction..."
-msgstr "Keine Einschränkungen..."
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "yesterday"
-msgstr "gestern"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "today"
-msgstr "heute"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "2 days ago"
-msgstr "vorgestern"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "3 days ago"
-msgstr "vor 3 Tagen"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "1 week ago"
-msgstr "vor einer Woche"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "2 weeks ago"
-msgstr "vor 2 Wochen"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "3 weeks ago"
-msgstr "vor 3 Wochen"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "1 month ago"
-msgstr "vor einem Monat"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "2 months ago"
-msgstr "vor 2 Monaten"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "6 months ago"
-msgstr "vor 6 Monaten"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "1 year ago"
-msgstr "vor einem Jahr"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "Select from and to..."
-msgstr "Von und bis auswählen..."
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "yesterday (whole day)"
-msgstr "gestern (ganzer Tag)"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "today (whole day)"
-msgstr "heute (ganzer Tag)"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "this month"
-msgstr "dieser Monat"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "last month"
-msgstr "letzter Monat"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "this year"
-msgstr "dieses Jahr"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "forever"
-msgstr "von Anfang an"
-
-#: ../classes/Statistics.php:161
-msgid "From"
-msgstr "Von"
-
-#: ../classes/Statistics.php:176
-msgid "To"
-msgstr "Bis"
-
-#: ../classes/Statistics.php:456
-msgid "Invalid parameter"
-msgstr "Ungültiger Paramter"
-
-#: ../classes/Statistics.php:494
-msgid "Username or MAC address, depending on selection above"
-msgstr ""
-
-#: ../classes/Statistics.php:590
-msgid "Report configuration"
-msgstr "Report anpassen"
-
-#: ../classes/Statistics.php:613
-msgid "Restrict the time range for which statistics will be computed"
-msgstr "Zeitspanne der Statistik einschränken"
-
-#: ../classes/Statistics.php:621
-msgid "Restrict stats to the following nodes"
-msgstr "Auf folgende Hotspots beschränken"
-
-#: ../classes/Statistics.php:631
-msgid "Distinguish users by"
-msgstr "Benutzer unterscheiden durch"
-
-#: ../classes/Statistics.php:640
-msgid "Restrict stats to the selected users"
-msgstr "Auf folgende Benutzer beschränken"
-
-#: ../classes/Statistics.php:649
-msgid "Selected reports"
-msgstr "Reporte auswählen"
-
 #: ../classes/Network.php:112 ../classes/Network.php:250
 msgid "Network::getAllNetworks:  Fatal error: No networks in the database!"
 msgstr ""
@@ -3066,6 +2806,11 @@ msgstr "Netzwerk:"
 #: ../classes/Network.php:308
 msgid "Create a new network with ID"
 msgstr "Netzwerk mit folgender ID erstellen"
+
+#: ../classes/Network.php:719 ../classes/Statistics.php:124
+#: ../classes/Content.php:335 ../classes/NodeList.php:138
+msgid "Unable to open directory "
+msgstr "Folgendes verzeichnis konnte nicht geöffnet werden: "
 
 #: ../classes/Network.php:1049
 msgid "Satellite"
@@ -3328,130 +3073,129 @@ msgstr "SSL auf diesem Server verwenden?"
 msgid "Network administration"
 msgstr "Netzwerkverwaltung"
 
-#: ../classes/ProfileTemplate.php:229
-msgid "Unable to insert the new profile template in the database!"
+#: ../classes/Statistics.php:85
+msgid "Usernames"
+msgstr "Benutzernamen"
+
+#: ../classes/Statistics.php:86
+msgid "MAC addresses"
 msgstr ""
 
-#: ../classes/ProfileTemplate.php:240
-#, fuzzy
-msgid "Add a new profile template with ID"
-msgstr "Neuen Hotspot mit folgender ID hinzufügen"
+#: ../classes/Statistics.php:152 ../classes/Statistics.php:156
+msgid "No restriction..."
+msgstr "Keine Einschränkungen..."
 
-#: ../classes/ProfileTemplate.php:313
-msgid "Profile template"
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "yesterday"
+msgstr "gestern"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "today"
+msgstr "heute"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "2 days ago"
+msgstr "vorgestern"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "3 days ago"
+msgstr "vor 3 Tagen"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "1 week ago"
+msgstr "vor einer Woche"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "2 weeks ago"
+msgstr "vor 2 Wochen"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "3 weeks ago"
+msgstr "vor 3 Wochen"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "1 month ago"
+msgstr "vor einem Monat"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "2 months ago"
+msgstr "vor 2 Monaten"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "6 months ago"
+msgstr "vor 6 Monaten"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "1 year ago"
+msgstr "vor einem Jahr"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "Select from and to..."
+msgstr "Von und bis auswählen..."
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "yesterday (whole day)"
+msgstr "gestern (ganzer Tag)"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "today (whole day)"
+msgstr "heute (ganzer Tag)"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "this month"
+msgstr "dieser Monat"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "last month"
+msgstr "letzter Monat"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "this year"
+msgstr "dieses Jahr"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "forever"
+msgstr "von Anfang an"
+
+#: ../classes/Statistics.php:161
+msgid "From"
+msgstr "Von"
+
+#: ../classes/Statistics.php:176
+msgid "To"
+msgstr "Bis"
+
+#: ../classes/Statistics.php:456
+msgid "Invalid parameter"
+msgstr "Ungültiger Paramter"
+
+#: ../classes/Statistics.php:494
+msgid "Username or MAC address, depending on selection above"
 msgstr ""
 
-#: ../classes/ProfileTemplate.php:383
-msgid "Profile template label"
-msgstr ""
+#: ../classes/Statistics.php:590
+msgid "Report configuration"
+msgstr "Report anpassen"
 
-#: ../classes/ProfileTemplate.php:383 ../classes/Content.php:719
-msgid "Actions"
-msgstr "Vorgänge"
+#: ../classes/Statistics.php:613
+msgid "Restrict the time range for which statistics will be computed"
+msgstr "Zeitspanne der Statistik einschränken"
 
-#: ../classes/ProfileTemplate.php:484
-msgid "Profile template management"
-msgstr ""
+#: ../classes/Statistics.php:621
+msgid "Restrict stats to the following nodes"
+msgstr "Auf folgende Hotspots beschränken"
 
-#: ../classes/ProfileTemplate.php:491
-msgid "ProfileTemplate ID"
-msgstr ""
+#: ../classes/Statistics.php:631
+msgid "Distinguish users by"
+msgstr "Benutzer unterscheiden durch"
 
-#: ../classes/ProfileTemplate.php:521
-msgid "Profile template fields"
-msgstr ""
+#: ../classes/Statistics.php:640
+msgid "Restrict stats to the selected users"
+msgstr "Auf folgende Benutzer beschränken"
 
-#: ../classes/ProfileTemplate.php:531
-#, php-format
-msgid "Delete %s %d, used in %d/%d profiles"
-msgstr ""
-
-#: ../classes/ProfileTemplate.php:595
-msgid "Could not delete ProfileTemplate!"
-msgstr ""
-
-#: ../classes/ProfileTemplate.php:627
-msgid "Profile templates"
-msgstr ""
-
-#: ../classes/ThemePack.php:87
-#, php-format
-msgid "Theme pack %s cannot be found in %s"
-msgstr ""
-
-#: ../classes/ThemePack.php:94
-#, php-format
-msgid "%s (Theme did not include a name.txt file)"
-msgstr ""
-
-#: ../classes/ThemePack.php:100
-#, php-format
-msgid "%s (Theme did not include a description.txt file)"
-msgstr ""
-
-#: ../classes/ThemePack.php:121
-msgid "Theme pack:"
-msgstr "Theme Pack:"
-
-#: ../classes/ThemePack.php:144
-msgid "Unable to open the network theme packs directory"
-msgstr ""
-
-#: ../classes/ThemePack.php:151
-#, php-format
-msgid "No network theme packs available in %s"
-msgstr ""
-
-#: ../classes/ProfileField.php:251
-msgid "Unable to insert the new profile fields in the database!"
-msgstr ""
-
-#: ../classes/ProfileField.php:281
-#, php-format
-msgid "Delete %s"
-msgstr ""
-
-#: ../classes/ProfileField.php:368
-msgid "Could not delete ProfileField!"
-msgstr ""
-
-#: ../classes/Server.php:91
-msgid "Main server object"
-msgstr ""
-
-#: ../classes/Server.php:151 ../classes/VirtualHost.php:262
-msgid "Unable to insert the new server in the database!"
-msgstr "Der neue Server konnte nicht in der Datenbank erfaßt werden!"
-
-#: ../classes/Server.php:229
-msgid "Server management"
-msgstr "Serververwaltung"
-
-#: ../classes/Server.php:255
-msgid "Timezone check:  The following must be in the same timezone"
-msgstr ""
-
-#: ../classes/Server.php:259
-#, php-format
-msgid "Timezone from postgresql: %s"
-msgstr ""
-
-#: ../classes/Server.php:262
-#, php-format
-msgid "Timezone from PHP: %s"
-msgstr ""
-
-#: ../classes/Server.php:309
-msgid "The server can never be deleted!"
-msgstr ""
-
-#: ../classes/Server.php:319
-msgid "Server access control"
-msgstr ""
-
-#: ../classes/Server.php:324
-msgid "Server administration"
-msgstr "Serververwaltung"
+#: ../classes/Statistics.php:649
+msgid "Selected reports"
+msgstr "Reporte auswählen"
 
 #: ../classes/AbstractDb.php:93
 msgid "It appears the postgresql module isn't loaded"
@@ -3521,6 +3265,40 @@ msgstr "Die Datenbankabfrage verarbeitete %d Objekte."
 msgid "Elapsed time for query execution : %6f second(s)"
 msgstr "Dauer der Datenbankabfrage: %.6f Sekunde(n)"
 
+#: ../classes/Server.php:91
+msgid "Main server object"
+msgstr ""
+
+#: ../classes/Server.php:229
+msgid "Server management"
+msgstr "Serververwaltung"
+
+#: ../classes/Server.php:255
+msgid "Timezone check:  The following must be in the same timezone"
+msgstr ""
+
+#: ../classes/Server.php:259
+#, php-format
+msgid "Timezone from postgresql: %s"
+msgstr ""
+
+#: ../classes/Server.php:262
+#, php-format
+msgid "Timezone from PHP: %s"
+msgstr ""
+
+#: ../classes/Server.php:309
+msgid "The server can never be deleted!"
+msgstr ""
+
+#: ../classes/Server.php:319
+msgid "Server access control"
+msgstr ""
+
+#: ../classes/Server.php:324
+msgid "Server administration"
+msgstr "Serververwaltung"
+
 #: ../classes/Content.php:150
 msgid "Untitled content"
 msgstr "Unbenannter Inhalt"
@@ -3528,6 +3306,10 @@ msgstr "Unbenannter Inhalt"
 #: ../classes/Content.php:181
 msgid "Content type is optionnal, but cannot be empty!"
 msgstr "Die Art des Inhalts ist optional, darf aber nicht leer sein!"
+
+#: ../classes/Content.php:189 ../classes/ProfileTemplateField.php:176
+msgid "Unable to insert new content into database!"
+msgstr "Der neue Inhalt konnte nicht in der Datenbank gesichert werden!"
 
 #: ../classes/Content.php:221
 msgid "It appears that you have not installed any Content plugin !"
@@ -3565,6 +3347,10 @@ msgstr "Reihenfolge"
 #: ../classes/Content.php:719
 msgid "Content"
 msgstr "Inhalt"
+
+#: ../classes/Content.php:719 ../classes/ProfileTemplate.php:383
+msgid "Actions"
+msgstr "Vorgänge"
 
 #: ../classes/Content.php:911
 msgid "Select from reusable content library"
@@ -3630,6 +3416,15 @@ msgstr "Titel:"
 #: ../classes/Content.php:1553
 msgid "title"
 msgstr "Bezeichnung"
+
+#: ../classes/Content.php:1564 ../classes/Content.php:1568
+#: ../classes/Role.php:351 ../classes/Role.php:355
+msgid "Description:"
+msgstr "Beschreibung:"
+
+#: ../classes/Content.php:1572 ../classes/Role.php:359
+msgid "description"
+msgstr "Beschreibung"
 
 #: ../classes/Content.php:1581 ../classes/Content.php:1585
 msgid "Long description:"
@@ -3738,7 +3533,7 @@ msgstr "%s ist kein gültiger Anzeigebereich"
 msgid "%s Login"
 msgstr "%s Anmeldung"
 
-#: ../classes/MainUI.php:642 smarty.txt:23 smarty.txt:28
+#: ../classes/MainUI.php:642 smarty.txt:18 smarty.txt:28
 msgid "Login"
 msgstr "Anmelden"
 
@@ -3753,6 +3548,11 @@ msgid ""
 msgstr ""
 "Beim Wechsel vom SSL-verschlüsselten Zugriff auf den  unverschlüsselten "
 "Zugriff kann der Browser eine Fehlermeldung anzeigen."
+
+#: ../classes/Mail.php:405
+#, php-format
+msgid "PHPMailer couldn't sent mail.  Error was: %s"
+msgstr ""
 
 #: ../classes/Node.php:210
 msgid "Could not delete node!"
@@ -3957,129 +3757,258 @@ msgstr "Neuen Hotspot hinzufügen"
 msgid "Node administration"
 msgstr "Hotspotverwaltung"
 
-#: ../classes/VirtualHost.php:162
-msgid "Server::getAllServers: Fatal error: No servers in the database!"
-msgstr "Server::getAllServers: Kein Server in der Datenbank gefunden!"
-
-#: ../classes/VirtualHost.php:298
-msgid "Virtual host:"
+#: ../classes/ProfileTemplate.php:229
+msgid "Unable to insert the new profile template in the database!"
 msgstr ""
 
-#: ../classes/VirtualHost.php:375
-msgid "Add a new virtual host for hostname"
+#: ../classes/ProfileTemplate.php:240
+#, fuzzy
+msgid "Add a new profile template with ID"
+msgstr "Neuen Hotspot mit folgender ID hinzufügen"
+
+#: ../classes/ProfileTemplate.php:313
+msgid "Profile template"
 msgstr ""
 
-#: ../classes/VirtualHost.php:595
-msgid "Virtual hosts management"
+#: ../classes/ProfileTemplate.php:318 ../classes/ContentTypeFilter.php:310
+#: ../classes/ProfileTemplateField.php:118
+#: ../classes/ProfileTemplateField.php:427
+msgid "No label"
 msgstr ""
 
-#: ../classes/VirtualHost.php:614
-msgid "Hostname"
-msgstr "Hostname"
-
-#: ../classes/VirtualHost.php:622
-msgid "Default network for this vhost"
+#: ../classes/ProfileTemplate.php:383
+msgid "Profile template label"
 msgstr ""
 
-#: ../classes/VirtualHost.php:639
-msgid "Make this Virtual Host the server's default?"
+#: ../classes/ProfileTemplate.php:484
+msgid "Profile template management"
 msgstr ""
 
-#: ../classes/VirtualHost.php:655
-msgid "Use SSL on this server?"
-msgstr "SSL auf diesem Server verwenden?"
-
-#: ../classes/VirtualHost.php:667
-msgid "Google public API key"
-msgstr "Google API Schlüssel"
-
-#: ../classes/VirtualHost.php:738
-msgid ""
-"Cannot delete default virtual host, create another one and select it before "
-"removing this one."
+#: ../classes/ProfileTemplate.php:491
+msgid "ProfileTemplate ID"
 msgstr ""
 
-#: ../classes/VirtualHost.php:743
-msgid "Could not delete server!"
-msgstr "Server konnte nicht gelöscht werden!"
-
-#: ../classes/VirtualHost.php:771
-msgid "Virtual Hosts"
+#: ../classes/ProfileTemplate.php:502 ../classes/ContentTypeFilter.php:375
+msgid "Label"
 msgstr ""
 
-#: ../classes/GenericDataObject.php:124
+#: ../classes/ProfileTemplate.php:521
+msgid "Profile template fields"
+msgstr ""
+
+#: ../classes/ProfileTemplate.php:531
 #, php-format
-msgid "Delete not supported on class %s"
+msgid "Delete %s %d, used in %d/%d profiles"
 msgstr ""
 
-#: ../classes/Stakeholder.php:88
-msgid "Remove stakeholder"
+#: ../classes/ProfileTemplate.php:595
+msgid "Could not delete ProfileTemplate!"
 msgstr ""
 
-#: ../classes/Stakeholder.php:94
-msgid "Add stakeholder"
+#: ../classes/ProfileTemplate.php:627
+msgid "Profile templates"
 msgstr ""
 
-#: ../classes/Stakeholder.php:121 ../classes/Stakeholder.php:147
+#: ../classes/ThemePack.php:87
 #, php-format
-msgid "User %s already has role %s for this object"
+msgid "Theme pack %s cannot be found in %s"
 msgstr ""
 
-#: ../classes/Dependency.php:414 ../classes/Dependency.php:430
+#: ../classes/ThemePack.php:94
 #, php-format
-msgid "File %s not found"
+msgid "%s (Theme did not include a name.txt file)"
 msgstr ""
 
-#: ../classes/Dependency.php:444 ../classes/Dependency.php:458
+#: ../classes/ThemePack.php:100
 #, php-format
-msgid "File %s not found in %s"
+msgid "%s (Theme did not include a description.txt file)"
 msgstr ""
 
-#: ../classes/Dependency.php:519
-#, php-format
-msgid ""
-"To install this standard PHP extension, look for a package with a similar "
-"name in your distribution's package manager.  Ex: For Debian based "
-"distributions, you may try 'sudo apt-get install php5-%s'"
+#: ../classes/ThemePack.php:121
+msgid "Theme pack:"
+msgstr "Theme Pack:"
+
+#: ../classes/ThemePack.php:144
+msgid "Unable to open the network theme packs directory"
 msgstr ""
 
-#: ../classes/Dependency.php:525
-#, fuzzy, php-format
-msgid "Install %s"
-msgstr "Insgesamt"
-
-#: ../classes/Dependency.php:530
+#: ../classes/ThemePack.php:151
 #, php-format
-msgid "Sorry, i couldn't find the source for %s in installSourceUrl"
+msgid "No network theme packs available in %s"
 msgstr ""
 
-#: ../classes/Dependency.php:543
+#: ../classes/Role.php:151
 #, php-format
-msgid ""
-"To install this standard PEAR extension, try 'sudo pear install --"
-"onlyreqdeps %s'"
+msgid "Sorry: No available roles in the database for stakeholder type: %s!"
 msgstr ""
 
-#: ../classes/Dependency.php:554
-#, php-format
-msgid "To install this standard PEAR extension, try 'sudo pecl install %s'"
+#: ../classes/Role.php:164 ../classes/Role.php:170
+msgid "Role:"
 msgstr ""
 
-#: ../classes/Dependency.php:563
-#, php-format
-msgid ""
-"url_to_the_tarball (Sorry, i couldn't find the source for %s in "
-"installSourceUrl)"
+#: ../classes/Role.php:228 ../classes/ContentTypeFilter.php:199
+msgid "Unable to insert the new ContentTypeFilter in the database!"
 msgstr ""
 
-#: ../classes/Dependency.php:565
+#: ../classes/Role.php:245
 #, php-format
-msgid "To install this custom PEAR extension, use 'sudo pear install %s'"
+msgid "Add a new role of type %s with id %s"
 msgstr ""
 
-#: ../classes/Dependency.php:570
+#: ../classes/Role.php:309
+msgid "User roles management"
+msgstr ""
+
+#: ../classes/Role.php:316
+msgid "Stakeholder type"
+msgstr ""
+
+#: ../classes/Role.php:325
+msgid "This role is a system role"
+msgstr ""
+
+#: ../classes/Role.php:332
+msgid "Role ID"
+msgstr ""
+
+#: ../classes/Role.php:386
+msgid "Permissions"
+msgstr ""
+
+#: ../classes/Role.php:492
+msgid "Could not delete object!"
+msgstr ""
+
+#: ../classes/Role.php:513
+msgid "User roles"
+msgstr ""
+
+#: ../classes/ContentTypeFilter.php:220
+msgid "Add a new content type filter with these rules"
+msgstr ""
+
+#: ../classes/ContentTypeFilter.php:221
+msgid "Example:"
+msgstr ""
+
+#: ../classes/ContentTypeFilter.php:302
+#: ../classes/ProfileTemplateField.php:424
+msgid "Content type filter"
+msgstr ""
+
+#: ../classes/ContentTypeFilter.php:357
+msgid "ContentTypeFilter management"
+msgstr ""
+
+#: ../classes/ContentTypeFilter.php:364
+msgid "ContentTypeFilter ID"
+msgstr ""
+
+#: ../classes/ContentTypeFilter.php:386
+msgid "Rules (must be a valid array definition)"
+msgstr ""
+
+#: ../classes/ContentTypeFilter.php:418
+msgid "The rules must be given as a PHP array declaration."
+msgstr ""
+
+#: ../classes/ContentTypeFilter.php:444
+msgid "Could not delete ContentTypeFilter!"
+msgstr ""
+
+#: ../classes/ContentTypeFilter.php:472
+msgid "Content type filters"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:122
+msgid "Add new profile template field filtered by"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:131
+msgid "Sorry, no content type filter exists."
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:404
+msgid "Display order"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:422
+msgid "Sorry, content type filter is missing."
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:434
+msgid "Display label"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:440
 #, php-format
-msgid "Sorry, I don't know how to install a %s extension"
+msgid "%s display label (%s)"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:444
+msgid "display label"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:451
+msgid "Admin label"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:458
+#, php-format
+msgid "%s admin label (%s)"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:462
+msgid "admin label"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:469
+msgid "Semantic ID"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:477
+msgid "Full name"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:478
+msgid "Nickname"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:479
+msgid "E-mail"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:480
+msgid "Hashed e-mail"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:481
+msgid "Picture"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:482
+msgid "URL of a blog"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:483
+msgid "URL of a homepage"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:598
+msgid "Could not delete ProfileTemplateField!"
+msgstr ""
+
+#: ../classes/ProfileField.php:251
+msgid "Unable to insert the new profile fields in the database!"
+msgstr ""
+
+#: ../classes/ProfileField.php:281
+#, php-format
+msgid "Delete %s"
+msgstr ""
+
+#: ../classes/ProfileField.php:368
+msgid "Could not delete ProfileField!"
 msgstr ""
 
 #: ../classes/Permission.php:85
@@ -4167,6 +4096,81 @@ msgstr ""
 msgid "User is allowed to exceed dynamic abuse control limits at this node"
 msgstr ""
 
+#: ../classes/Stakeholder.php:88
+msgid "Remove stakeholder"
+msgstr ""
+
+#: ../classes/Stakeholder.php:94
+msgid "Add stakeholder"
+msgstr ""
+
+#: ../classes/Stakeholder.php:121 ../classes/Stakeholder.php:147
+#, php-format
+msgid "User %s already has role %s for this object"
+msgstr ""
+
+#: ../classes/GenericDataObject.php:124
+#, php-format
+msgid "Delete not supported on class %s"
+msgstr ""
+
+#: ../classes/Dependency.php:414 ../classes/Dependency.php:430
+#, php-format
+msgid "File %s not found"
+msgstr ""
+
+#: ../classes/Dependency.php:444 ../classes/Dependency.php:458
+#, php-format
+msgid "File %s not found in %s"
+msgstr ""
+
+#: ../classes/Dependency.php:519
+#, php-format
+msgid ""
+"To install this standard PHP extension, look for a package with a similar "
+"name in your distribution's package manager.  Ex: For Debian based "
+"distributions, you may try 'sudo apt-get install php5-%s'"
+msgstr ""
+
+#: ../classes/Dependency.php:525
+#, fuzzy, php-format
+msgid "Install %s"
+msgstr "Insgesamt"
+
+#: ../classes/Dependency.php:530
+#, php-format
+msgid "Sorry, i couldn't find the source for %s in installSourceUrl"
+msgstr ""
+
+#: ../classes/Dependency.php:543
+#, php-format
+msgid ""
+"To install this standard PEAR extension, try 'sudo pear install --"
+"onlyreqdeps %s'"
+msgstr ""
+
+#: ../classes/Dependency.php:554
+#, php-format
+msgid "To install this standard PEAR extension, try 'sudo pecl install %s'"
+msgstr ""
+
+#: ../classes/Dependency.php:563
+#, php-format
+msgid ""
+"url_to_the_tarball (Sorry, i couldn't find the source for %s in "
+"installSourceUrl)"
+msgstr ""
+
+#: ../classes/Dependency.php:565
+#, php-format
+msgid "To install this custom PEAR extension, use 'sudo pear install %s'"
+msgstr ""
+
+#: ../classes/Dependency.php:570
+#, php-format
+msgid "Sorry, I don't know how to install a %s extension"
+msgstr ""
+
 #: ../classes/DependenciesList.php:105
 #, php-format
 msgid "Version %s needed"
@@ -4239,7 +4243,7 @@ msgstr "Lokaler Inhalt"
 msgid "Opened on"
 msgstr "Eröffnet am"
 
-#: smarty.txt:9 smarty.txt:109
+#: smarty.txt:9 smarty.txt:117
 msgid "Online users"
 msgstr "Angemeldete Benutzer"
 
@@ -4256,41 +4260,41 @@ msgid "Portal page"
 msgstr "Portal"
 
 #: smarty.txt:14
-msgid "user is online at this hotspot"
-msgstr "Benutzer ist online an diesem Hotspot"
-
-#: smarty.txt:15
-msgid "users are online at this hotspot"
-msgstr "Benutzer sind online an diesem Hotspot"
-
-#: smarty.txt:16
-msgid "Nobody is online at this hotspot"
-msgstr "Niemand ist an diesem Hotspot online"
-
-#: smarty.txt:17
-msgid "Recent Users:"
-msgstr ""
-
-#: smarty.txt:18
-msgid "Most Active Users:"
-msgstr ""
-
-#: smarty.txt:19
 msgid "Logged in as"
 msgstr "Angemeldet als"
 
-#: smarty.txt:20
+#: smarty.txt:15
 #, fuzzy
 msgid "Profile / Settings"
 msgstr "Bundenland"
 
-#: smarty.txt:21
+#: smarty.txt:16
 msgid "Logout"
 msgstr "Abmelden"
 
-#: smarty.txt:22
+#: smarty.txt:17
 msgid "I am not logged in."
 msgstr "Sie sind nicht angemeldet."
+
+#: smarty.txt:20
+msgid "user is online at this hotspot"
+msgstr "Benutzer ist online an diesem Hotspot"
+
+#: smarty.txt:21
+msgid "users are online at this hotspot"
+msgstr "Benutzer sind online an diesem Hotspot"
+
+#: smarty.txt:22
+msgid "Nobody is online at this hotspot"
+msgstr "Niemand ist an diesem Hotspot online"
+
+#: smarty.txt:23
+msgid "Recent Users:"
+msgstr ""
+
+#: smarty.txt:24
+msgid "Most Active Users:"
+msgstr ""
 
 #: smarty.txt:25
 msgid "Login or Signup here"
@@ -4300,7 +4304,7 @@ msgstr "Anmeldung"
 msgid "Username (or email)"
 msgstr "Benutzername (oder E-Mail-Adresse)"
 
-#: smarty.txt:27 smarty.txt:58
+#: smarty.txt:27 smarty.txt:48
 msgid "Password"
 msgstr "Passwort"
 
@@ -4345,84 +4349,35 @@ msgstr "Hotspot ist inaktiv"
 msgid "not monitored"
 msgstr "Hotspot wird nicht überwacht"
 
-#: smarty.txt:41
-#, php-format
-msgid "The %s network currently has one valid user."
-msgstr "Das %s Nettzwerk hat einen Benutzer."
-
-#: smarty.txt:42
-#, php-format
-msgid "The %s network currently has %d valid users."
-msgstr "Das %s Netzwerk hat %d Benutzer."
-
-#: smarty.txt:43
-msgid "One user is currently online."
-msgstr "Ein Benutzer ist gerade an einem Hotspot online."
-
-#: smarty.txt:44
-#, php-format
-msgid "%d users are currently online."
-msgstr "%d Benutzer sind gerade an einem Hotspot online."
-
-#: smarty.txt:45
-msgid "This network currently has 1 deployed hotspot."
-msgstr "Momentan ist ein Hotspot verfügbar."
-
-#: smarty.txt:46
-#, php-format
-msgid "This network currently has %d deployed hotspots."
-msgstr "Momentan sind %d Hotspots verfügbar, "
-
-#: smarty.txt:47
-msgid "One hotspot is currently operational."
-msgstr ""
-
-#: smarty.txt:48
-#, php-format
-msgid "%d hotspots are currently operational."
-msgstr ""
-
-#: smarty.txt:49
-msgid ""
-"One hotspot isn't monitored so we don't know if it's currently operational."
-msgstr ""
-
-#: smarty.txt:50
-#, php-format
-msgid ""
-"%d hotspots aren't monitored so we don't know if they are currently "
-"operational."
-msgstr ""
-
-#: smarty.txt:51 smarty.txt:79 smarty.txt:93 smarty.txt:101
+#: smarty.txt:41 smarty.txt:69 smarty.txt:93 smarty.txt:101
 msgid "I'm having difficulties"
 msgstr "Ich habe Probleme"
 
-#: smarty.txt:55
+#: smarty.txt:45
 msgid "Register a free account with"
 msgstr "Einen neuen Zugang registrieren bei"
 
-#: smarty.txt:56
+#: smarty.txt:46
 msgid "Username desired"
 msgstr "Gewünschter Benutzername"
 
-#: smarty.txt:57 smarty.txt:85 smarty.txt:106
+#: smarty.txt:47 smarty.txt:75 smarty.txt:106
 msgid "Your email address"
 msgstr "Ihre E-Mail-Adresse"
 
-#: smarty.txt:59
+#: smarty.txt:49
 msgid "Password (again)"
 msgstr "Passwort (wiederholen)"
 
-#: smarty.txt:60
+#: smarty.txt:50
 msgid "Sign-up"
 msgstr "Anmelden"
 
-#: smarty.txt:61
+#: smarty.txt:51
 msgid "Please note"
 msgstr "Bitte beachten Sie"
 
-#: smarty.txt:62
+#: smarty.txt:52
 msgid ""
 "While accounts are free, we <em>strongly</em> suggest that you use your "
 "previously created account if you have one."
@@ -4430,7 +4385,7 @@ msgstr ""
 "Obwohl die Zugänge kostenlos sind, <b>empfehlen wir ihnen</b>, ihren u.U. "
 "bereits bestehenden Zugang zu nutzen."
 
-#: smarty.txt:63
+#: smarty.txt:53
 msgid ""
 "<b>Your email address must be valid</b> in order for your account to be "
 "activated."
@@ -4438,21 +4393,21 @@ msgstr ""
 "Zur Freischaltung Ihres Zugangs <b>müssen Sie sich mit einer gültigen E-Mail-"
 "Adresse anmelden</b>."
 
-#: smarty.txt:64
+#: smarty.txt:54
 msgid "A validation email will be sent to that email address."
 msgstr "Nach der Registrierung erhalten Sie von uns eine E-Mail."
 
-#: smarty.txt:65
+#: smarty.txt:55
 msgid "To fully activate your account you must respond to that email."
 msgstr ""
 "Um Ihren Zugang freizuschalten, müssen Sie auf den Link in dieser E-Mail "
 "klicken."
 
-#: smarty.txt:66
+#: smarty.txt:56
 msgid "Note to free web-based email users"
 msgstr "Hinweis an Nutzer von kostenlosen E-Mail-Anbietern"
 
-#: smarty.txt:67
+#: smarty.txt:57
 msgid ""
 "Sometimes our validation email ends up in the 'spam' folder of some "
 "providers. If you have not received any email with the validation URL 5 "
@@ -4463,79 +4418,128 @@ msgstr ""
 "empfangen haben, schauen Sie bitte im SPAM-Ordner nach, ob sich die E-Mail "
 "dort befindet."
 
-#: smarty.txt:68
+#: smarty.txt:58
 msgid "You can also use the following links if you need help"
 msgstr "Sie können auch die folgenden Links nutzen, falls Sie Hilfe benötigen"
 
-#: smarty.txt:71
+#: smarty.txt:61
 #, php-format
 msgid "Status of the %d open %s Hotspots"
 msgstr "Status der %d aktiven %s Hotspots"
 
-#: smarty.txt:72
+#: smarty.txt:62
 msgid "Hotspot / Status"
 msgstr "Hotspot /Status"
 
-#: smarty.txt:74
+#: smarty.txt:64
 msgid "Location"
 msgstr "Adresse"
 
-#: smarty.txt:75
+#: smarty.txt:65
 msgid "Hotspot in testing phase"
 msgstr "Hotspot befindet sich in Testphase"
 
-#: smarty.txt:76
+#: smarty.txt:66
 msgid "Hotspot not monitored"
 msgstr "Hotspot wird nicht überwacht"
 
-#: smarty.txt:77
+#: smarty.txt:67
 #, php-format
 msgid "Opened on %s"
 msgstr "Eröffnet am %s"
 
-#: smarty.txt:83
+#: smarty.txt:73
 msgid "Lost password"
 msgstr "Vergessenes Passwort"
 
-#: smarty.txt:84 smarty.txt:98
+#: smarty.txt:74 smarty.txt:98
 msgid "Your username"
 msgstr "Ihr Benutzername"
 
-#: smarty.txt:86
+#: smarty.txt:76
 msgid "Reset my password"
 msgstr "Passwort zurücksetzen"
 
-#: smarty.txt:87
+#: smarty.txt:77
 msgid "Please enter your username or email address to reset your password"
 msgstr ""
 "Geben Sie bitte ihren Benutzernamen oder ihre E-Mail-Adresse ein, um ihr "
 "Passwort zurückzusetzen"
 
+#: smarty.txt:78
+#, php-format
+msgid "The %s network currently has one valid user."
+msgstr "Das %s Nettzwerk hat einen Benutzer."
+
+#: smarty.txt:79
+#, php-format
+msgid "The %s network currently has %d valid users."
+msgstr "Das %s Netzwerk hat %d Benutzer."
+
+#: smarty.txt:80
+msgid "One user is currently online."
+msgstr "Ein Benutzer ist gerade an einem Hotspot online."
+
+#: smarty.txt:81
+#, php-format
+msgid "%d users are currently online."
+msgstr "%d Benutzer sind gerade an einem Hotspot online."
+
+#: smarty.txt:82
+msgid "This network currently has 1 deployed hotspot."
+msgstr "Momentan ist ein Hotspot verfügbar."
+
+#: smarty.txt:83
+#, php-format
+msgid "This network currently has %d deployed hotspots."
+msgstr "Momentan sind %d Hotspots verfügbar, "
+
+#: smarty.txt:84
+msgid "One hotspot is currently operational."
+msgstr ""
+
+#: smarty.txt:85
+#, php-format
+msgid "%d hotspots are currently operational."
+msgstr ""
+
+#: smarty.txt:86
+msgid ""
+"One hotspot isn't monitored so we don't know if it's currently operational."
+msgstr ""
+
+#: smarty.txt:87
+#, php-format
+msgid ""
+"%d hotspots aren't monitored so we don't know if they are currently "
+"operational."
+msgstr ""
+
 #: smarty.txt:88
+msgid "Please get in touch with "
+msgstr "Support-Meldungen bitte an folgende E-Mail-Adresse richten: "
+
+#: smarty.txt:89
 msgid ""
 "We are a not-for-profit group dedicated to making no-fee wireless Internet "
 "access generally available."
 msgstr ""
 
-#: smarty.txt:89
+#: smarty.txt:90
 msgid ""
 "Our aim is to encourage the growth of wireless networking and to build "
 "community in interesting and innovative ways."
 msgstr ""
 
-#: smarty.txt:90
+#: smarty.txt:91
 msgid ""
 "We do this by setting up wireless Internet networks in parks, cafés, "
 "restaurants, bars and other publically-accessible locations across the city."
 msgstr ""
 
-#: smarty.txt:91
+#: smarty.txt:92
 msgid "For a complete and up-to-date listing of our nodes, visit"
 msgstr ""
-
-#: smarty.txt:92
-msgid "Please get in touch with "
-msgstr "Support-Meldungen bitte an folgende E-Mail-Adresse richten: "
 
 #: smarty.txt:97
 msgid "Re-send validation email"
@@ -4567,37 +4571,37 @@ msgstr ""
 "Geben Sie bitte ihre E-Mail-Adresse ein, um ihren Benutzernamen wieder zu "
 "erlangen"
 
-#: smarty.txt:112
-msgid "Origin"
-msgstr "Herkunft"
-
-#: smarty.txt:113
-msgid "Logged in Since"
-msgstr "Angemeldet seit"
-
-#: smarty.txt:114
-msgid "Traffic IN/OUT"
-msgstr "Transfervolumen (Download / Upload)"
-
-#: smarty.txt:115
+#: smarty.txt:109
 msgid "User list"
 msgstr "Benutzerliste"
 
-#: smarty.txt:116
+#: smarty.txt:110
 msgid "Sort by:"
 msgstr "Sortiert nach:"
 
-#: smarty.txt:117
+#: smarty.txt:111
 msgid "Direction:"
 msgstr "Anordnung"
 
-#: smarty.txt:118
+#: smarty.txt:112
 msgid "Sort"
 msgstr "Sortieren"
 
-#: smarty.txt:121
+#: smarty.txt:115
 msgid "Registered On"
 msgstr "Registriert am"
+
+#: smarty.txt:120
+msgid "Origin"
+msgstr "Herkunft"
+
+#: smarty.txt:121
+msgid "Logged in Since"
+msgstr "Angemeldet seit"
+
+#: smarty.txt:122
+msgid "Traffic IN/OUT"
+msgstr "Transfervolumen (Download / Upload)"
 
 #~ msgid "Component %s is not installed (not found in %s)"
 #~ msgstr "%s ist nicht installiert (Suchpfad: %s)"

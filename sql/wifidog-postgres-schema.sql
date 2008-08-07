@@ -24,6 +24,13 @@ SET client_min_messages = warning;
 SET escape_string_warning = off;
 
 --
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON SCHEMA public IS 'Standard public schema';
+
+
+--
 -- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: -; Owner: -
 --
 
@@ -59,6 +66,24 @@ CREATE TABLE connections (
     expiration_date timestamp without time zone,
     logout_reason integer
 );
+
+
+--
+-- Name: connections_conn_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE connections_conn_id_seq
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+--
+-- Name: connections_conn_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE connections_conn_id_seq OWNED BY connections.conn_id;
 
 
 --
@@ -273,7 +298,7 @@ SET default_with_oids = false;
 
 CREATE TABLE content_key_value_pairs (
     content_id text NOT NULL,
-    key text NOT NULL,
+    "key" text NOT NULL,
     value text
 );
 
@@ -809,24 +834,6 @@ CREATE TABLE virtual_hosts (
 
 
 --
--- Name: connections_conn_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE connections_conn_id_seq
-    INCREMENT BY 1
-    NO MAXVALUE
-    NO MINVALUE
-    CACHE 1;
-
-
---
--- Name: connections_conn_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE connections_conn_id_seq OWNED BY connections.conn_id;
-
-
---
 -- Name: conn_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -910,7 +917,7 @@ ALTER TABLE ONLY content_has_owners
 --
 
 ALTER TABLE ONLY content_key_value_pairs
-    ADD CONSTRAINT content_key_value_pairs_pkey PRIMARY KEY (content_id, key);
+    ADD CONSTRAINT content_key_value_pairs_pkey PRIMARY KEY (content_id, "key");
 
 
 --
