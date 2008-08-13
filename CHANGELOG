@@ -1,4 +1,7 @@
 # $Id$
+2008-08-13 Robin Jones
+	*fixed dependancy change for Smarty reported by cristian@lalineapeluda.com
+
 2008-08-07 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Updated spanish translation by jlms77@gmail.com
 

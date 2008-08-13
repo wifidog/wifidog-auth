@@ -119,8 +119,8 @@ class Dependency
        "type" => "localLib",
        "detectFiles" => "lib/Smarty-2.6.18/libs/Smarty.class.php",
        'description' => "Required for all parts of wifidog",
-       'website' => "http://smarty.php.net/",
-       'installSourceUrl' => "http://smarty.php.net/do_download.php?download_file=Smarty-2.6.18.tar.gz",
+       'website' => "http://smarty.net/",
+       'installSourceUrl' => "http://smarty.net/do_download.php?download_file=Smarty-2.6.18.tar.gz",
        'installMethod' => "tarball",
        'installDestination' => "/"
        ),
