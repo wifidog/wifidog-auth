@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-13 15:52-0400\n"
+"POT-Creation-Date: 2008-08-07 12:13-0400\n"
 "PO-Revision-Date: 2008-07-07 19:38+0100\n"
 "Last-Translator: Cristian Lorenzo <cristian@lalineapeluda.com>\n"
 "Language-Team: LANGUAGE <cristian@lalineapeluda.com>\n"
@@ -128,50 +128,6 @@ msgstr "Carregant, si us plau espera..."
 msgid "Hotspots status map"
 msgstr "Mapa de l'estat dels Hotspots"
 
-#: ../config_available_locales.php:58
-msgid "French"
-msgstr "Francès"
-
-#: ../config_available_locales.php:59
-msgid "English"
-msgstr "Anglès"
-
-#: ../config_available_locales.php:60
-msgid "German"
-msgstr "Alemany"
-
-#: ../config_available_locales.php:61
-msgid "Spanish"
-msgstr "Espanyol"
-
-#: ../config_available_locales.php:62
-msgid "Brazilian Portuguese"
-msgstr "Portuguès del Brasil"
-
-#: ../config_available_locales.php:63
-msgid "Portuguese"
-msgstr "Portuguès"
-
-#: ../config_available_locales.php:64
-msgid "Japanese"
-msgstr "Japonès"
-
-#: ../config_available_locales.php:65
-msgid "Greek"
-msgstr "Grec"
-
-#: ../config_available_locales.php:66
-msgid "Bulgarian"
-msgstr "Búlgar"
-
-#: ../config_available_locales.php:67
-msgid "Swedish"
-msgstr "Suec"
-
-#: ../config_available_locales.php:68
-msgid "Italian"
-msgstr "Italià"
-
 #: ../resend_validation.php:104
 msgid "Please specify a username"
 msgstr "Si us plau, indica un nom d'usuari"
@@ -290,9 +246,8 @@ msgstr "Si us plau, valida el teu compte des d'un altre lloc o crea una nova."
 
 #: ../gw_message.php:67
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:895
-#: ../classes/Role.php:501 ../classes/Statistics.php:376
-#: ../classes/Statistics.php:379 ../classes/Content.php:901
-#: ../classes/Node.php:219
+#: ../classes/Statistics.php:376 ../classes/Statistics.php:379
+#: ../classes/Content.php:901 ../classes/Node.php:219 ../classes/Role.php:501
 msgid "Access denied!"
 msgstr "Accés denegat!"
 
@@ -329,6 +284,55 @@ msgstr "S'ha indicat un missatge desconegut! (això és probablement un error)"
 #: ../gw_message.php:85
 msgid "No message has been specified! (this is probably an error)"
 msgstr "No has especificat cap missatge! (això és possiblement un error)"
+
+#: ../config_available_locales.php:58
+msgid "French"
+msgstr "Francès"
+
+#: ../config_available_locales.php:59
+msgid "English"
+msgstr "Anglès"
+
+#: ../config_available_locales.php:60
+msgid "German"
+msgstr "Alemany"
+
+#: ../config_available_locales.php:61
+msgid "Spanish"
+msgstr "Espanyol"
+
+#: ../config_available_locales.php:62
+msgid "Brazilian Portuguese"
+msgstr "Portuguès del Brasil"
+
+#: ../config_available_locales.php:63
+msgid "Portuguese"
+msgstr "Portuguès"
+
+#: ../config_available_locales.php:64
+msgid "Japanese"
+msgstr "Japonès"
+
+#: ../config_available_locales.php:65
+msgid "Greek"
+msgstr "Grec"
+
+#: ../config_available_locales.php:66
+msgid "Bulgarian"
+msgstr "Búlgar"
+
+#: ../config_available_locales.php:67
+msgid "Swedish"
+msgstr "Suec"
+
+#: ../config_available_locales.php:68
+msgid "Italian"
+msgstr "Italià"
+
+#: ../config_available_locales.php:69
+#, fuzzy
+msgid "Catalan"
+msgstr "Italià"
 
 #: ../admin/generic_object_admin.php:80
 msgid "Sorry, the 'object_class' parameter must be specified"
@@ -386,7 +390,7 @@ msgstr "Mostrant la previsualització tal com hauria d'aparèixer"
 #: ../classes/StatisticReport/UserReport.php:182
 #: ../classes/StatisticReport/RegistrationLog.php:120
 #: ../classes/StatisticReport/MostPopularNodes.php:109
-#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:110
+#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:118
 msgid "Node"
 msgstr "Node"
 
@@ -395,8 +399,8 @@ msgstr "Node"
 msgid "Preview"
 msgstr "Previsualització"
 
-#: ../admin/generic_object_admin.php:217 ../classes/ProfileTemplate.php:393
-#: ../classes/Content.php:736
+#: ../admin/generic_object_admin.php:217 ../classes/Content.php:736
+#: ../classes/ProfileTemplate.php:393
 msgid "Edit"
 msgstr "Edita"
 
@@ -624,17 +628,17 @@ msgstr "No puc generar el testimoni de l'usuari %s"
 msgid "I'm having difficulties:"
 msgstr "Necessito ajuda:"
 
-#: ../login/index.php:263 smarty.txt:52 smarty.txt:69 smarty.txt:80
+#: ../login/index.php:263 smarty.txt:42 smarty.txt:59 smarty.txt:70
 #: smarty.txt:94 smarty.txt:102
 msgid "I Forgot my username"
 msgstr "He oblidat el meu nom d'usuari"
 
-#: ../login/index.php:264 smarty.txt:53 smarty.txt:70 smarty.txt:81
+#: ../login/index.php:264 smarty.txt:43 smarty.txt:60 smarty.txt:71
 #: smarty.txt:95 smarty.txt:103
 msgid "I Forgot my password"
 msgstr "He oblidat la meva contrasenya"
 
-#: ../login/index.php:265 smarty.txt:54 smarty.txt:82 smarty.txt:96
+#: ../login/index.php:265 smarty.txt:44 smarty.txt:72 smarty.txt:96
 #: smarty.txt:104
 msgid "Re-send the validation email"
 msgstr "Torna'm a enviar el correu de validació"
@@ -876,12 +880,12 @@ msgid "Deployment date"
 msgstr "Data d'instal·lació "
 
 #: ../classes/StatisticReport/NodeStatus.php:168 ../classes/Content.php:925
-#: ../classes/Node.php:1124 ../classes/DependenciesList.php:173 smarty.txt:73
+#: ../classes/Node.php:1124 ../classes/DependenciesList.php:173 smarty.txt:63
 msgid "Description"
 msgstr "Descripció"
 
 #: ../classes/StatisticReport/NodeStatus.php:172
-#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:120
+#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:114
 msgid "Network"
 msgstr "Xarxa"
 
@@ -890,7 +894,7 @@ msgid "GIS Location"
 msgstr "Localització GIS"
 
 #: ../classes/StatisticReport/NodeStatus.php:181 ../classes/Network.php:1049
-#: smarty.txt:78
+#: smarty.txt:68
 msgid "Map"
 msgstr "Mapa"
 
@@ -899,8 +903,8 @@ msgid "NOT SET"
 msgstr "SENSE CONFIGURAR"
 
 #: ../classes/StatisticReport/NodeStatus.php:194
-#: ../classes/NodeLists/NodeListPDF.php:1083
 #: ../classes/NodeLists/NodeListRSS.php:324
+#: ../classes/NodeLists/NodeListPDF.php:1083
 #: ../classes/NodeLists/NodeListKML.php:238
 msgid "Address"
 msgstr "Adreça"
@@ -963,7 +967,7 @@ msgstr "ID d'usuari: %s no el trobo a la base de dades"
 #: ../classes/StatisticReport/RegistrationLog.php:123
 #: ../classes/StatisticReport/ConnectionLog.php:115
 #: ../classes/StatisticReport/ConnectionLog.php:164 ../classes/User.php:810
-#: ../classes/User.php:815 ../classes/User.php:864 smarty.txt:111
+#: ../classes/User.php:815 ../classes/User.php:864 smarty.txt:113
 #: smarty.txt:119
 msgid "Username"
 msgstr "Nom d'usuari"
@@ -977,7 +981,7 @@ msgid "Member since"
 msgstr "Membre des de"
 
 #: ../classes/StatisticReport/UserReport.php:147 ../classes/User.php:852
-#: smarty.txt:122
+#: smarty.txt:116
 msgid "Account Status"
 msgstr "Estat del compte"
 
@@ -1081,9 +1085,10 @@ msgstr "Informació de l'estat de la xarxa"
 msgid "Sorry, this report requires you to select individual networks"
 msgstr "Ho sento, aquest informe necessita que seleccionis una xarxa"
 
-#: ../classes/StatisticReport/NetworkStatus.php:104 ../classes/Role.php:369
-#: ../classes/ProfileTemplate.php:512 ../classes/Server.php:246
-#: ../classes/Node.php:1111 ../classes/VirtualHost.php:603
+#: ../classes/StatisticReport/NetworkStatus.php:104
+#: ../classes/VirtualHost.php:603 ../classes/Server.php:246
+#: ../classes/Node.php:1111 ../classes/ProfileTemplate.php:512
+#: ../classes/Role.php:369
 msgid "Creation date"
 msgstr "Data de creació"
 
@@ -1123,19 +1128,6 @@ msgstr "Nombre d'usuaris validats"
 msgid "Number of users currently online"
 msgstr "Nombre d'usuaris connectats"
 
-#: ../classes/StatisticReport/AnonymisedDataExport.php:65
-msgid "Anonymised SQL data export (for academic research)"
-msgstr ""
-"Exportar les dades SQL sense dades personals (per la recerca acadèmica)"
-
-#: ../classes/StatisticReport/AnonymisedDataExport.php:97
-#: ../classes/StatisticReport/ConnectionLog.php:89
-#: ../classes/ContentTypeFilter.php:254 ../classes/ContentTypeFilter.php:439
-#: ../classes/ProfileTemplate.php:602 ../classes/VirtualHost.php:403
-#: ../classes/VirtualHost.php:735
-msgid "Access denied"
-msgstr "Accés denegat"
-
 #: ../classes/StatisticReport/MostPopularNodes.php:65
 msgid "Most popular nodes, by visit"
 msgstr "Nodes més populars per visites"
@@ -1147,6 +1139,14 @@ msgstr "Visites"
 #: ../classes/StatisticReport/ConnectionLog.php:64
 msgid "Connection Log"
 msgstr "Registre de connexions"
+
+#: ../classes/StatisticReport/ConnectionLog.php:89
+#: ../classes/StatisticReport/AnonymisedDataExport.php:97
+#: ../classes/VirtualHost.php:403 ../classes/VirtualHost.php:735
+#: ../classes/ProfileTemplate.php:602 ../classes/ContentTypeFilter.php:254
+#: ../classes/ContentTypeFilter.php:439
+msgid "Access denied"
+msgstr "Accés denegat"
 
 #: ../classes/StatisticReport/ConnectionLog.php:109
 msgid "Number of unique Users:"
@@ -1291,6 +1291,11 @@ msgstr ""
 "d'usuaris hi ha hagut a cada hotspot considerant les restriccions dels "
 "informes. Inclou els usuaris sense validar que s'han connectat amb èxit."
 
+#: ../classes/StatisticReport/AnonymisedDataExport.php:65
+msgid "Anonymised SQL data export (for academic research)"
+msgstr ""
+"Exportar les dades SQL sense dades personals (per la recerca acadèmica)"
+
 #: ../classes/StatisticReport/ActiveUserReport.php:62
 msgid "Breakdown of how many users actually use the network"
 msgstr ""
@@ -1351,6 +1356,31 @@ msgstr "Informe d'activitat dels %d usuaris no-validats"
 msgid "warning:  This report does not count connections at Splash-Only nodes"
 msgstr ""
 "advertència: Aquest informe no conta les connexions als nodes sense sortida"
+
+#: ../classes/NodeLists/NodeListRSS.php:157
+#: ../classes/NodeLists/NodeListHTML.php:211
+msgid "Newest Hotspots"
+msgstr "Els Hotspots més recents"
+
+#: ../classes/NodeLists/NodeListRSS.php:169
+msgid "List of the most recent Hotspots opened by the network: "
+msgstr "Llista dels últims Hotspots instal·lats a la xarxa:"
+
+#: ../classes/NodeLists/NodeListRSS.php:190
+msgid "Copyright "
+msgstr "Copyright "
+
+#: ../classes/NodeLists/NodeListRSS.php:358
+msgid "See Map"
+msgstr "Veure Mapa"
+
+#: ../classes/NodeLists/NodeListRSS.php:371
+msgid "Contact"
+msgstr "Contacte"
+
+#: ../classes/NodeLists/NodeListHTML.php:210
+msgid "Hotspot list"
+msgstr "LLista de Hotspots"
 
 #: ../classes/NodeLists/NodeListPDF.php:792
 msgid ""
@@ -1423,41 +1453,16 @@ msgid "PDF file cannot be created because the FPDF library is not installed!"
 msgstr ""
 "No puc crear l'arxiu PDF perquè la biblioteca FPDF no es troba instal·lada!"
 
-#: ../classes/NodeLists/NodeListRSS.php:157
-#: ../classes/NodeLists/NodeListHTML.php:211
-msgid "Newest Hotspots"
-msgstr "Els Hotspots més recents"
-
-#: ../classes/NodeLists/NodeListRSS.php:169
-msgid "List of the most recent Hotspots opened by the network: "
-msgstr "Llista dels últims Hotspots instal·lats a la xarxa:"
-
-#: ../classes/NodeLists/NodeListRSS.php:190
-msgid "Copyright "
-msgstr "Copyright "
-
-#: ../classes/NodeLists/NodeListRSS.php:358
-msgid "See Map"
-msgstr "Veure Mapa"
-
-#: ../classes/NodeLists/NodeListRSS.php:371
-msgid "Contact"
-msgstr "Contacte"
-
-#: ../classes/NodeLists/NodeListHTML.php:210
-msgid "Hotspot list"
-msgstr "LLista de Hotspots"
-
 #: ../classes/NodeLists/NodeListKML.php:240
 #: ../classes/Content/RssAggregator/RssAggregator.php:752
 msgid "URL"
 msgstr "URL"
 
 #: ../classes/Content/File/File.php:131
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:92
-#: ../classes/Content/ContentGroup/ContentGroup.php:115
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:131
 #: ../classes/Content/IFrame/IFrame.php:89
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:92
+#: ../classes/Content/ContentGroup/ContentGroup.php:115
 #: ../classes/Content/Picture/Picture.php:103 ../classes/Content.php:124
 #: ../classes/Content.php:275
 msgid "The content with the following id could not be found in the database: "
@@ -1525,332 +1530,6 @@ msgstr "Última actualització"
 #: ../classes/Content/File/File.php:708
 msgid "Could not delete this file, since it is persistent"
 msgstr "No puc esborrar aquest arxiu, ja que és persistent"
-
-#: ../classes/Content/SimpleString/SimpleString.php:130
-#: ../classes/Content/Langstring/Langstring.php:285
-msgid "Only these HTML tags are allowed : "
-msgstr "Els únics marcadors HTML permesos són:"
-
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:102
-msgid "Subscribe to Pattern Language"
-msgstr "Subscriure's als Patrons de Llenguatge"
-
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:103
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:118
-msgid "Read narratives archives"
-msgstr "Llegir els arxius de narratives"
-
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:117
-msgid "Read my narrative"
-msgstr "Llegir la meva narrativa"
-
-#: ../classes/Content/PatternLanguage/PatternLanguage.php:119
-msgid "Unsubscribe"
-msgstr "Cancel·lar la subscripció"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:172
-msgid "Embedded content"
-msgstr "Contingut incrustat"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:190
-msgid "Attributes"
-msgstr "Atributs"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:192
-msgid ""
-"It is recommended to specify at least <b>width='x' height='y'</b> as "
-"attributes"
-msgstr ""
-"Es recomana especificar, com a mínim, <b>width='x' height='y'</b>com atributs"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:198
-msgid "Parameters"
-msgstr "Paràmetres"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:212
-msgid ""
-"Fallback content (Can be another embedded content to create a fallback "
-"hierarchy)"
-msgstr ""
-"Contingut alternatiu (Pot ser un altre contingut incrustat per a crear una "
-"jerarquia alternativa)"
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:261
-msgid "You MUST choose a File object or any of its siblings."
-msgstr ""
-"Has de seleccionar un Objecte tipus arxiu o qualsevol del seus germans."
-
-#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:397
-#: ../classes/Content/Langstring/Langstring.php:531
-#: ../classes/Content.php:1924
-msgid ""
-"Content is persistent (you must make it non persistent before you can delete "
-"it)"
-msgstr ""
-"El contingut és persistent (has de convertir-ho en no persistent abans "
-"d'esborrar-ho)"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:219
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:225
-msgid "Unable to insert new content group element into database!"
-msgstr "No puc inserir un nou grup de continguts a la base de dades!"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:291
-#, php-format
-msgid "%s %d display conditions"
-msgstr "%s %d condicions per visualitzar"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:301
-msgid "(Ignored if display type is random)"
-msgstr "(Ignorar si el tipus de visualització es a l'atzar)"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:307
-msgid ""
-"Content can be displayed at any date if no start or end date is specified.  "
-"Warning:  If you do not specify a specific time of day, midnight is assumed."
-msgstr ""
-"El contingut pot ésser mostrat a qualsevol data si no s'especifica una data "
-"d'inici i una data de finalització. Si no especifiqueu una hora concreta, "
-"s'assumirà la mitjanit."
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:308
-msgid "Only display from"
-msgstr "Mostrar únicament des de"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:334
-msgid "Only display at node(s):"
-msgstr "Mostrar únicament als nodes:"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:349
-#: ../classes/ProfileTemplate.php:395 ../classes/Content.php:738
-msgid "Remove"
-msgstr "Elimina"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:361
-msgid "Add new allowed node"
-msgstr "Afegir un nou node autoritzat"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:364
-msgid ""
-"(Content can be displayed at ANY node unless one or more nodes are selected)"
-msgstr ""
-"(El contingut pot ser mostrat a QUALSEVOL node si no es seleccionen un o més "
-"nodes)"
-
-#: ../classes/Content/ContentGroup/ContentGroupElement.php:381
-#, php-format
-msgid "%s %d displayed content (%s)"
-msgstr "%s %d contingut mostrat (%s)"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:87
-#, fuzzy
-msgid "Pick content elements randomly"
-msgstr "Informe d'agrupacions de contiguts"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:88
-msgid ""
-"Pick content elements randomly, but not twice until all elements have been "
-"seen"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:89
-msgid "Pick content elements in sequential order"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:92
-#, fuzzy
-msgid "Content always rotates"
-msgstr "Filtre per tipus de contingut"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:93
-msgid "Content rotates once per day"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:94
-msgid "Content rotates once per session"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:95
-msgid "Content rotates each time you change node"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:96
-msgid ""
-"Content never rotates.  Usefull when showing all elements simultaneously in "
-"a specific order."
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:99
-#, fuzzy
-msgid "Content can be shown more than once"
-msgstr "Puc mostrar el contingut més d'un cop al mateix usuari?"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:100
-msgid "Content can only be shown once"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:101
-#, fuzzy
-msgid "Content can be shown more than once, but not at the same node"
-msgstr "Puc mostrar el contingut més d'un cop al mateix usuari?"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:153
-msgid "Invalid content selection mode (must be part of CONTENT_ORDERING_MODES)"
-msgstr ""
-"El mode de selecció de continguts no és vàlid (ha de ser part de "
-"CONTENT_ORDERING_MODES)"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:182
-msgid ""
-"Invalid content selection mode (must be part of CONTENT_CHANGES_ON_MODES)"
-msgstr ""
-"El mode de selecció de continguts no és vàlid (ha de ser part de "
-"CONTENT_CHANGES_MODES)"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:211
-msgid "Invalid content selection mode (must be part of ALLOW_REPEAT_MODES)"
-msgstr ""
-"El mode de selecció de continguts no és vàlid (ha de ser part de "
-"ALLOW_REPEAT_MODES)"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:243
-#: ../classes/Content/RssAggregator/RssAggregator.php:198
-msgid "You must display at least one element"
-msgstr "Has de mostrat com a mínim un element"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:264
-#, php-format
-msgid "%s configuration"
-msgstr "%s configuració"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:268
-msgid "In what order should the content displayed?"
-msgstr "En quin ordre he de mostrar el contingut?"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:277
-msgid "When does the content rotate?"
-msgstr "Quan rota el contingut?"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:286
-msgid "Can content be shown more than once to the same user?"
-msgstr "Puc mostrar el contingut més d'un cop al mateix usuari?"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:295
-msgid "Pick how many elements for each display?"
-msgstr ""
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:310
-#, php-format
-msgid "%s display element list"
-msgstr "%s llista d'elements a mostrar"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:317
-msgid "Show expired group elements"
-msgstr "Mostra els grups d'elements vençuts"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:323
-msgid "Hide expired group elements"
-msgstr "Amaga els grups d'elements vençuts"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:334
-#: ../classes/ProfileTemplate.php:526
-#, php-format
-msgid "%s %d"
-msgstr "%s %d"
-
-#: ../classes/Content/ContentGroup/ContentGroup.php:337
-#, php-format
-msgid "Delete %s %d"
-msgstr "Esborra %s %d"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:82
-msgid "300x250 - IAB Medium Rectangle"
-msgstr "300x250 - IAB Rectangle Mitjà"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:83
-msgid "250x250 - IAB Square Pop-Up"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:84
-msgid "240x400 - IAB Vertical Rectangle"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:85
-msgid "336x280 - IAB Large Rectangle"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:86
-msgid "180x150 - IAB Rectangle"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:88
-msgid "468x60  - IAB Full Banner"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:89
-msgid "234x60  - IAB Half Banner"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:90
-msgid "88x31   - IAB Micro Bar"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:91
-msgid "120x90  - IAB Button 1"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:92
-msgid "120x60  - IAB Button 2"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:93
-msgid "120x240 - IAB Vertical Banner"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:94
-msgid "125x125 - IAB Square Button"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:95
-msgid "728x90  - IAB Leaderboard"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:97
-msgid "160x600 - IAB Wide Skyscraper"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:98
-msgid "120x600 - IAB Skyscraper"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:99
-msgid "300x600 - IAB Half Page Ad"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:128
-msgid "Maximum display size"
-msgstr "Mida màxima de visualització"
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:131
-msgid "Use the values below for width and height"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:137
-msgid "Width"
-msgstr ""
-
-#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:146
-msgid "Height"
-msgstr ""
-
-#: ../classes/Content/Stylesheet/Stylesheet.php:106
-msgid ""
-"Hints:  Note that the order in which Stylesheets are assigned relative to "
-"other content doesn't matter (except relative to other Stylesheets).  "
-"Stylesheets will be linked to the page in the order they are assigned, but "
-"always after the base stylesheet and network theme pack (if applicable).  "
-"They must be written as patches to those stylesheets."
-msgstr ""
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:198
 msgid "Illegal Flickr Photostream selection mode."
@@ -2067,6 +1746,23 @@ msgstr ""
 "contingut per última vegada, o per una cadena buida si l'usuari mai l'ha "
 "visualitzat amb aquest IFrame."
 
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:102
+msgid "Subscribe to Pattern Language"
+msgstr "Subscriure's als Patrons de Llenguatge"
+
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:103
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:118
+msgid "Read narratives archives"
+msgstr "Llegir els arxius de narratives"
+
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:117
+msgid "Read my narrative"
+msgstr "Llegir la meva narrativa"
+
+#: ../classes/Content/PatternLanguage/PatternLanguage.php:119
+msgid "Unsubscribe"
+msgstr "Cancel·lar la subscripció"
+
 #: ../classes/Content/IFrame/IFrame.php:231
 msgid "Width (suggested width is 600 (pixels))"
 msgstr "Amplada (l'amplada recomanada és de 600 (píxels))"
@@ -2083,6 +1779,221 @@ msgstr "URL del contingut HTML"
 msgid "Your browser does not support IFrames."
 msgstr "El teu navegador no admet IFrames."
 
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:172
+msgid "Embedded content"
+msgstr "Contingut incrustat"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:190
+msgid "Attributes"
+msgstr "Atributs"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:192
+msgid ""
+"It is recommended to specify at least <b>width='x' height='y'</b> as "
+"attributes"
+msgstr ""
+"Es recomana especificar, com a mínim, <b>width='x' height='y'</b>com atributs"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:198
+msgid "Parameters"
+msgstr "Paràmetres"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:212
+msgid ""
+"Fallback content (Can be another embedded content to create a fallback "
+"hierarchy)"
+msgstr ""
+"Contingut alternatiu (Pot ser un altre contingut incrustat per a crear una "
+"jerarquia alternativa)"
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:261
+msgid "You MUST choose a File object or any of its siblings."
+msgstr ""
+"Has de seleccionar un Objecte tipus arxiu o qualsevol del seus germans."
+
+#: ../classes/Content/EmbeddedContent/EmbeddedContent.php:397
+#: ../classes/Content/Langstring/Langstring.php:531
+#: ../classes/Content.php:1924
+msgid ""
+"Content is persistent (you must make it non persistent before you can delete "
+"it)"
+msgstr ""
+"El contingut és persistent (has de convertir-ho en no persistent abans "
+"d'esborrar-ho)"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:219
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:225
+msgid "Unable to insert new content group element into database!"
+msgstr "No puc inserir un nou grup de continguts a la base de dades!"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:291
+#, php-format
+msgid "%s %d display conditions"
+msgstr "%s %d condicions per visualitzar"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:301
+msgid "(Ignored if display type is random)"
+msgstr "(Ignorar si el tipus de visualització es a l'atzar)"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:307
+msgid ""
+"Content can be displayed at any date if no start or end date is specified.  "
+"Warning:  If you do not specify a specific time of day, midnight is assumed."
+msgstr ""
+"El contingut pot ésser mostrat a qualsevol data si no s'especifica una data "
+"d'inici i una data de finalització. Si no especifiqueu una hora concreta, "
+"s'assumirà la mitjanit."
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:308
+msgid "Only display from"
+msgstr "Mostrar únicament des de"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:334
+msgid "Only display at node(s):"
+msgstr "Mostrar únicament als nodes:"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:349
+#: ../classes/Content.php:738 ../classes/ProfileTemplate.php:395
+msgid "Remove"
+msgstr "Elimina"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:361
+msgid "Add new allowed node"
+msgstr "Afegir un nou node autoritzat"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:364
+msgid ""
+"(Content can be displayed at ANY node unless one or more nodes are selected)"
+msgstr ""
+"(El contingut pot ser mostrat a QUALSEVOL node si no es seleccionen un o més "
+"nodes)"
+
+#: ../classes/Content/ContentGroup/ContentGroupElement.php:381
+#, php-format
+msgid "%s %d displayed content (%s)"
+msgstr "%s %d contingut mostrat (%s)"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:87
+#, fuzzy
+msgid "Pick content elements randomly"
+msgstr "Informe d'agrupacions de contiguts"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:88
+msgid ""
+"Pick content elements randomly, but not twice until all elements have been "
+"seen"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:89
+msgid "Pick content elements in sequential order"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:92
+#, fuzzy
+msgid "Content always rotates"
+msgstr "Filtre per tipus de contingut"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:93
+msgid "Content rotates once per day"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:94
+msgid "Content rotates once per session"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:95
+msgid "Content rotates each time you change node"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:96
+msgid ""
+"Content never rotates.  Usefull when showing all elements simultaneously in "
+"a specific order."
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:99
+#, fuzzy
+msgid "Content can be shown more than once"
+msgstr "Puc mostrar el contingut més d'un cop al mateix usuari?"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:100
+msgid "Content can only be shown once"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:101
+#, fuzzy
+msgid "Content can be shown more than once, but not at the same node"
+msgstr "Puc mostrar el contingut més d'un cop al mateix usuari?"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:153
+msgid "Invalid content selection mode (must be part of CONTENT_ORDERING_MODES)"
+msgstr ""
+"El mode de selecció de continguts no és vàlid (ha de ser part de "
+"CONTENT_ORDERING_MODES)"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:182
+msgid ""
+"Invalid content selection mode (must be part of CONTENT_CHANGES_ON_MODES)"
+msgstr ""
+"El mode de selecció de continguts no és vàlid (ha de ser part de "
+"CONTENT_CHANGES_MODES)"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:211
+msgid "Invalid content selection mode (must be part of ALLOW_REPEAT_MODES)"
+msgstr ""
+"El mode de selecció de continguts no és vàlid (ha de ser part de "
+"ALLOW_REPEAT_MODES)"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:243
+#: ../classes/Content/RssAggregator/RssAggregator.php:198
+msgid "You must display at least one element"
+msgstr "Has de mostrat com a mínim un element"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:264
+#, php-format
+msgid "%s configuration"
+msgstr "%s configuració"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:268
+msgid "In what order should the content displayed?"
+msgstr "En quin ordre he de mostrar el contingut?"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:277
+msgid "When does the content rotate?"
+msgstr "Quan rota el contingut?"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:286
+msgid "Can content be shown more than once to the same user?"
+msgstr "Puc mostrar el contingut més d'un cop al mateix usuari?"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:295
+msgid "Pick how many elements for each display?"
+msgstr ""
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:310
+#, php-format
+msgid "%s display element list"
+msgstr "%s llista d'elements a mostrar"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:317
+msgid "Show expired group elements"
+msgstr "Mostra els grups d'elements vençuts"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:323
+msgid "Hide expired group elements"
+msgstr "Amaga els grups d'elements vençuts"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:334
+#: ../classes/ProfileTemplate.php:526
+#, php-format
+msgid "%s %d"
+msgstr "%s %d"
+
+#: ../classes/Content/ContentGroup/ContentGroup.php:337
+#, php-format
+msgid "Delete %s %d"
+msgstr "Esborra %s %d"
+
 #: ../classes/Content/Langstring/Langstring.php:131
 #, php-format
 msgid "(Empty %s)"
@@ -2091,7 +2002,7 @@ msgstr "(Buida %s)"
 #: ../classes/Content/Langstring/Langstring.php:215
 #: ../classes/Content/Langstring/Langstring.php:341
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:112
-#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:24
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:19
 msgid "Language"
 msgstr "Llengua"
 
@@ -2099,6 +2010,11 @@ msgstr "Llengua"
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:145
 msgid "Add new string"
 msgstr "Afegir una nova cadena"
+
+#: ../classes/Content/Langstring/Langstring.php:285
+#: ../classes/Content/SimpleString/SimpleString.php:130
+msgid "Only these HTML tags are allowed : "
+msgstr "Els únics marcadors HTML permesos són:"
 
 #: ../classes/Content/Langstring/Langstring.php:352
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:209
@@ -2213,8 +2129,8 @@ msgid "Type URL manually"
 msgstr "Teclegi l'URL manualment"
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:654
-#: ../classes/ProfileTemplateField.php:137 ../classes/ProfileTemplate.php:327
 #: ../classes/Content.php:545 ../classes/Content.php:967
+#: ../classes/ProfileTemplate.php:327 ../classes/ProfileTemplateField.php:137
 msgid "Add"
 msgstr "Afegir"
 
@@ -2307,6 +2223,123 @@ msgstr "No puc obtenir el canal RSS: %s"
 msgid "RSS support is disabled"
 msgstr "L'us de RSS es troba inhabilitat "
 
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:227
+msgid "FCKeditor is not installed"
+msgstr "FCKeditor no es troba instal·lat"
+
+#: ../classes/Content/Picture/Picture.php:272
+msgid "Hyperlink URL (leave empty if you don't need it)"
+msgstr "URL de l'enllaç (deixa'l buit si no el necessites)"
+
+#: ../classes/Content/Picture/Picture.php:280
+msgid "Width (leave empty if you want to keep original width)"
+msgstr "Ample (buit per a mantenir l'ample original)"
+
+#: ../classes/Content/Picture/Picture.php:287
+msgid "Height (leave empty if you want to keep original height)"
+msgstr "Alçada (buit per a mantenir l'alçada original)"
+
+#: ../classes/Content/Stylesheet/Stylesheet.php:106
+msgid ""
+"Hints:  Note that the order in which Stylesheets are assigned relative to "
+"other content doesn't matter (except relative to other Stylesheets).  "
+"Stylesheets will be linked to the page in the order they are assigned, but "
+"always after the base stylesheet and network theme pack (if applicable).  "
+"They must be written as patches to those stylesheets."
+msgstr ""
+
+#: ../classes/Content/SmartyTemplate/SmartyTemplate.php:85
+#, php-format
+msgid ""
+"To list the available Smarty variables, put %s in the input field, save and "
+"then click preview"
+msgstr ""
+
+#: ../classes/Content/SmartyTemplate/SmartyTemplate.php:86
+#, php-format
+msgid "There are also a few custom Smarty modifiers available: %s"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:82
+msgid "300x250 - IAB Medium Rectangle"
+msgstr "300x250 - IAB Rectangle Mitjà"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:83
+msgid "250x250 - IAB Square Pop-Up"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:84
+msgid "240x400 - IAB Vertical Rectangle"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:85
+msgid "336x280 - IAB Large Rectangle"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:86
+msgid "180x150 - IAB Rectangle"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:88
+msgid "468x60  - IAB Full Banner"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:89
+msgid "234x60  - IAB Half Banner"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:90
+msgid "88x31   - IAB Micro Bar"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:91
+msgid "120x90  - IAB Button 1"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:92
+msgid "120x60  - IAB Button 2"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:93
+msgid "120x240 - IAB Vertical Banner"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:94
+msgid "125x125 - IAB Square Button"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:95
+msgid "728x90  - IAB Leaderboard"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:97
+msgid "160x600 - IAB Wide Skyscraper"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:98
+msgid "120x600 - IAB Skyscraper"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:99
+msgid "300x600 - IAB Half Page Ad"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:128
+msgid "Maximum display size"
+msgstr "Mida màxima de visualització"
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:131
+msgid "Use the values below for width and height"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:137
+msgid "Width"
+msgstr ""
+
+#: ../classes/Content/BannerAdGroup/BannerAdGroup.php:146
+msgid "Height"
+msgstr ""
+
 #: ../classes/Content/ShoutBox/ShoutBox.php:240
 msgid "Shout button 'onclick=' value (optionnal):"
 msgstr ""
@@ -2319,11 +2352,11 @@ msgid ""
 "text in Javascript with: %s"
 msgstr ""
 
-#: ../classes/Content/ShoutBox/ShoutBox.php:251
+#: ../classes/Content/ShoutBox/ShoutBox.php:251 ../classes/Content.php:1553
+#: ../classes/Content.php:1572 ../classes/Content.php:1589
+#: ../classes/Content.php:1606 ../classes/Role.php:359
 #: ../classes/ProfileTemplateField.php:444
-#: ../classes/ProfileTemplateField.php:462 ../classes/Role.php:359
-#: ../classes/Content.php:1553 ../classes/Content.php:1572
-#: ../classes/Content.php:1589 ../classes/Content.php:1606
+#: ../classes/ProfileTemplateField.php:462
 #, php-format
 msgid "Delete %s (%s)"
 msgstr "Esborrar %s (%s)"
@@ -2347,34 +2380,6 @@ msgstr "Els últims %d missatges:"
 
 #: ../classes/Content/ShoutBox/ShoutBox.php:372
 msgid "Sorry, I am unable to determine your current node"
-msgstr ""
-
-#: ../classes/Content/Picture/Picture.php:272
-msgid "Hyperlink URL (leave empty if you don't need it)"
-msgstr "URL de l'enllaç (deixa'l buit si no el necessites)"
-
-#: ../classes/Content/Picture/Picture.php:280
-msgid "Width (leave empty if you want to keep original width)"
-msgstr "Ample (buit per a mantenir l'ample original)"
-
-#: ../classes/Content/Picture/Picture.php:287
-msgid "Height (leave empty if you want to keep original height)"
-msgstr "Alçada (buit per a mantenir l'alçada original)"
-
-#: ../classes/Content/HTMLeditor/HTMLeditor.php:227
-msgid "FCKeditor is not installed"
-msgstr "FCKeditor no es troba instal·lat"
-
-#: ../classes/Content/SmartyTemplate/SmartyTemplate.php:85
-#, php-format
-msgid ""
-"To list the available Smarty variables, put %s in the input field, save and "
-"then click preview"
-msgstr ""
-
-#: ../classes/Content/SmartyTemplate/SmartyTemplate.php:86
-#, php-format
-msgid "There are also a few custom Smarty modifiers available: %s"
 msgstr ""
 
 #: ../classes/Content/Avatar/Avatar.php:103
@@ -2472,6 +2477,61 @@ msgstr "El seu compte és valid."
 msgid "Unable to retrieve node specific restrictions (you are not at a node)"
 msgstr ""
 
+#: ../classes/VirtualHost.php:162
+msgid "Server::getAllServers: Fatal error: No servers in the database!"
+msgstr ""
+"Server::getAllServers: Error fatal: No hi ha cap servidor a la base de dades!"
+
+#: ../classes/VirtualHost.php:262 ../classes/Server.php:151
+msgid "Unable to insert the new server in the database!"
+msgstr "No puc inserir un nou servidor a la base de dades!"
+
+#: ../classes/VirtualHost.php:298
+msgid "Virtual host:"
+msgstr ""
+
+#: ../classes/VirtualHost.php:375
+msgid "Add a new virtual host for hostname"
+msgstr ""
+
+#: ../classes/VirtualHost.php:595
+msgid "Virtual hosts management"
+msgstr ""
+
+#: ../classes/VirtualHost.php:614
+msgid "Hostname"
+msgstr "Nom del servidor"
+
+#: ../classes/VirtualHost.php:622
+msgid "Default network for this vhost"
+msgstr "Xarxa per defecte d'aquest vhost"
+
+#: ../classes/VirtualHost.php:639
+msgid "Make this Virtual Host the server's default?"
+msgstr ""
+
+#: ../classes/VirtualHost.php:655
+msgid "Use SSL on this server?"
+msgstr "Emprar SSL en aquest servidor?"
+
+#: ../classes/VirtualHost.php:667
+msgid "Google public API key"
+msgstr "Clau de l'API públic de Google"
+
+#: ../classes/VirtualHost.php:738
+msgid ""
+"Cannot delete default virtual host, create another one and select it before "
+"removing this one."
+msgstr ""
+
+#: ../classes/VirtualHost.php:743
+msgid "Could not delete server!"
+msgstr "No puc esborrar el servidor!"
+
+#: ../classes/VirtualHost.php:771
+msgid "Virtual Hosts"
+msgstr ""
+
 #: ../classes/Profile.php:206
 msgid "Unable to insert the new profile in the database!"
 msgstr "No puc inserir el nou perfil a la base de dades!"
@@ -2506,6 +2566,26 @@ msgstr "Accés denegat (necessites accedir com a super administrador)"
 #: ../classes/Profile.php:451
 msgid "Could not delete Profile!"
 msgstr "No puc esborrar el Perfil!"
+
+#: ../classes/Security.php:205
+#, php-format
+msgid "%s (%s) on  %s: %s"
+msgstr "%s (%s) a  %s: %s"
+
+#: ../classes/Security.php:205
+msgid "Any"
+msgstr "Qualsevol"
+
+#: ../classes/Security.php:208
+msgid ""
+"Some (possibly all) of the following permission(s) you don't have are "
+"required to perform the operation your requested:"
+msgstr ""
+
+#: ../classes/FormSelectGenerator.php:103
+#: ../classes/FormSelectGenerator.php:112
+msgid " (Empty langstring, ID is displayed)"
+msgstr " (Langstring buit, es mostrarà la ID)"
 
 #: ../classes/User.php:169
 #, php-format
@@ -2744,346 +2824,6 @@ msgstr "Administració de l'usuari"
 msgid "User administration"
 msgstr "Administració d'usuaris"
 
-#: ../classes/ProfileTemplateField.php:118
-#: ../classes/ProfileTemplateField.php:427
-#: ../classes/ContentTypeFilter.php:310 ../classes/ProfileTemplate.php:318
-msgid "No label"
-msgstr "Sense etiqueta"
-
-#: ../classes/ProfileTemplateField.php:122
-msgid "Add new profile template field filtered by"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:131
-msgid "Sorry, no content type filter exists."
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:176 ../classes/Content.php:189
-msgid "Unable to insert new content into database!"
-msgstr "No puc inserir nou contingut a la base de dades!"
-
-#: ../classes/ProfileTemplateField.php:404
-msgid "Display order"
-msgstr "Ordre de visualització"
-
-#: ../classes/ProfileTemplateField.php:422
-msgid "Sorry, content type filter is missing."
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:424
-#: ../classes/ContentTypeFilter.php:302
-msgid "Content type filter"
-msgstr "Filtre per tipus de contingut"
-
-#: ../classes/ProfileTemplateField.php:434
-msgid "Display label"
-msgstr "Etiqueta de visualització"
-
-#: ../classes/ProfileTemplateField.php:440
-#, php-format
-msgid "%s display label (%s)"
-msgstr "%s etiqueta de visualització (%s)"
-
-#: ../classes/ProfileTemplateField.php:444
-msgid "display label"
-msgstr "etiqueta de visualització"
-
-#: ../classes/ProfileTemplateField.php:451
-msgid "Admin label"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:458
-#, php-format
-msgid "%s admin label (%s)"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:462
-msgid "admin label"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:469
-msgid "Semantic ID"
-msgstr "ID semàntic"
-
-#: ../classes/ProfileTemplateField.php:477
-msgid "Full name"
-msgstr "Nom complet"
-
-#: ../classes/ProfileTemplateField.php:478
-msgid "Nickname"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:479
-msgid "E-mail"
-msgstr "Correu electrònic"
-
-#: ../classes/ProfileTemplateField.php:480
-msgid "Hashed e-mail"
-msgstr "Correu de dispersió"
-
-#: ../classes/ProfileTemplateField.php:481
-msgid "Picture"
-msgstr ""
-
-#: ../classes/ProfileTemplateField.php:482
-msgid "URL of a blog"
-msgstr "URL d'un bloc"
-
-#: ../classes/ProfileTemplateField.php:483
-msgid "URL of a homepage"
-msgstr "URL de la pàgina d'inici"
-
-#: ../classes/ProfileTemplateField.php:598
-msgid "Could not delete ProfileTemplateField!"
-msgstr "No puc esborrar el camp de Plantilla de perfil!"
-
-#: ../classes/Role.php:151
-#, php-format
-msgid "Sorry: No available roles in the database for stakeholder type: %s!"
-msgstr ""
-
-#: ../classes/Role.php:164 ../classes/Role.php:170
-msgid "Role:"
-msgstr ""
-
-#: ../classes/Role.php:228 ../classes/ContentTypeFilter.php:199
-msgid "Unable to insert the new ContentTypeFilter in the database!"
-msgstr ""
-"No puc inserir el nou filtre per tipus de contingut a la base de dades!"
-
-#: ../classes/Role.php:245
-#, php-format
-msgid "Add a new role of type %s with id %s"
-msgstr ""
-
-#: ../classes/Role.php:309
-msgid "User roles management"
-msgstr "Administració de rols d'usuaris"
-
-#: ../classes/Role.php:316
-msgid "Stakeholder type"
-msgstr "Tipus de promotor"
-
-#: ../classes/Role.php:325
-msgid "This role is a system role"
-msgstr "Aquest rol és un rol del sistema"
-
-#: ../classes/Role.php:332
-msgid "Role ID"
-msgstr "ID del rol"
-
-#: ../classes/Role.php:351 ../classes/Role.php:355 ../classes/Content.php:1564
-#: ../classes/Content.php:1568
-msgid "Description:"
-msgstr "Descripció:"
-
-#: ../classes/Role.php:359 ../classes/Content.php:1572
-msgid "description"
-msgstr "descripció"
-
-#: ../classes/Role.php:386
-msgid "Permissions"
-msgstr ""
-
-#: ../classes/Role.php:492
-msgid "Could not delete object!"
-msgstr "No puc esborrar l'objecte!"
-
-#: ../classes/Role.php:513
-msgid "User roles"
-msgstr "Rols dels usuaris"
-
-#: ../classes/Security.php:205
-#, php-format
-msgid "%s (%s) on  %s: %s"
-msgstr "%s (%s) a  %s: %s"
-
-#: ../classes/Security.php:205
-msgid "Any"
-msgstr "Qualsevol"
-
-#: ../classes/Security.php:208
-msgid ""
-"Some (possibly all) of the following permission(s) you don't have are "
-"required to perform the operation your requested:"
-msgstr ""
-
-#: ../classes/FormSelectGenerator.php:103
-#: ../classes/FormSelectGenerator.php:112
-msgid " (Empty langstring, ID is displayed)"
-msgstr " (Langstring buit, es mostrarà la ID)"
-
-#: ../classes/Mail.php:405
-#, php-format
-msgid "PHPMailer couldn't sent mail.  Error was: %s"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:220
-msgid "Add a new content type filter with these rules"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:221
-msgid "Example:"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:357
-msgid "ContentTypeFilter management"
-msgstr "Administració dels Filtres per Tipus de Contingut"
-
-#: ../classes/ContentTypeFilter.php:364
-msgid "ContentTypeFilter ID"
-msgstr "ID del Filtre per tipus de contingut"
-
-#: ../classes/ContentTypeFilter.php:375 ../classes/ProfileTemplate.php:502
-msgid "Label"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:386
-msgid "Rules (must be a valid array definition)"
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:418
-msgid "The rules must be given as a PHP array declaration."
-msgstr ""
-
-#: ../classes/ContentTypeFilter.php:444
-msgid "Could not delete ContentTypeFilter!"
-msgstr "No puc esborrar el Filtre de tipus de contingut!"
-
-#: ../classes/ContentTypeFilter.php:472
-msgid "Content type filters"
-msgstr "Filtre per tipus de contingut"
-
-#: ../classes/Statistics.php:85
-msgid "Usernames"
-msgstr "Noms d'usuari"
-
-#: ../classes/Statistics.php:86
-msgid "MAC addresses"
-msgstr "Adreça MAC"
-
-#: ../classes/Statistics.php:124 ../classes/Network.php:719
-#: ../classes/Content.php:335 ../classes/NodeList.php:138
-msgid "Unable to open directory "
-msgstr "No puc obrir el directori"
-
-#: ../classes/Statistics.php:152 ../classes/Statistics.php:156
-msgid "No restriction..."
-msgstr "Sense restriccions..."
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "yesterday"
-msgstr "ahir"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "today"
-msgstr "avui"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "2 days ago"
-msgstr "fa 2 dies"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "3 days ago"
-msgstr "fa 3 dies"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "1 week ago"
-msgstr "fa 1 setmana"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "2 weeks ago"
-msgstr "fa 2 setmanes"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "3 weeks ago"
-msgstr "fa 3 setmanes"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "1 month ago"
-msgstr "fa 1 mes"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "2 months ago"
-msgstr "fa 2 mesos"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "6 months ago"
-msgstr "fa 6 mesos"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "1 year ago"
-msgstr "fa 1 any"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "Select from and to..."
-msgstr "Selecciona des de fins..."
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "yesterday (whole day)"
-msgstr "Ahir (tot el dia)"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "today (whole day)"
-msgstr "avui (tot el dia)"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "this month"
-msgstr "aquest mes"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "last month"
-msgstr "el darrer mes"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "this year"
-msgstr "Aquest any"
-
-#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
-msgid "forever"
-msgstr "sempre"
-
-#: ../classes/Statistics.php:161
-msgid "From"
-msgstr "De"
-
-#: ../classes/Statistics.php:176
-msgid "To"
-msgstr "Per"
-
-#: ../classes/Statistics.php:456
-msgid "Invalid parameter"
-msgstr "Paràmetre invàlid"
-
-#: ../classes/Statistics.php:494
-msgid "Username or MAC address, depending on selection above"
-msgstr ""
-
-#: ../classes/Statistics.php:590
-msgid "Report configuration"
-msgstr "Configuració de l'informe"
-
-#: ../classes/Statistics.php:613
-msgid "Restrict the time range for which statistics will be computed"
-msgstr ""
-"Restringir la franja temporal en que les estadístiques seran processades"
-
-#: ../classes/Statistics.php:621
-msgid "Restrict stats to the following nodes"
-msgstr "Restringir les estadístiques als següents nodes"
-
-#: ../classes/Statistics.php:631
-msgid "Distinguish users by"
-msgstr "Diferencia els usuaris per"
-
-#: ../classes/Statistics.php:640
-msgid "Restrict stats to the selected users"
-msgstr "Restringir les estadístiques als usuaris seleccionats"
-
-#: ../classes/Statistics.php:649
-msgid "Selected reports"
-msgstr "Informes seleccionats"
-
 #: ../classes/Network.php:112 ../classes/Network.php:250
 msgid "Network::getAllNetworks:  Fatal error: No networks in the database!"
 msgstr ""
@@ -3100,6 +2840,11 @@ msgstr "Xarxa"
 #: ../classes/Network.php:308
 msgid "Create a new network with ID"
 msgstr "Crear una nova xarxa amb la ID"
+
+#: ../classes/Network.php:719 ../classes/Statistics.php:124
+#: ../classes/Content.php:335 ../classes/NodeList.php:138
+msgid "Unable to open directory "
+msgstr "No puc obrir el directori"
 
 #: ../classes/Network.php:1049
 msgid "Satellite"
@@ -3358,130 +3103,130 @@ msgstr "Emprar SSL en aquest servidor?"
 msgid "Network administration"
 msgstr "Administració de la xarxa"
 
-#: ../classes/ProfileTemplate.php:229
-msgid "Unable to insert the new profile template in the database!"
+#: ../classes/Statistics.php:85
+msgid "Usernames"
+msgstr "Noms d'usuari"
+
+#: ../classes/Statistics.php:86
+msgid "MAC addresses"
+msgstr "Adreça MAC"
+
+#: ../classes/Statistics.php:152 ../classes/Statistics.php:156
+msgid "No restriction..."
+msgstr "Sense restriccions..."
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "yesterday"
+msgstr "ahir"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "today"
+msgstr "avui"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "2 days ago"
+msgstr "fa 2 dies"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "3 days ago"
+msgstr "fa 3 dies"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "1 week ago"
+msgstr "fa 1 setmana"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "2 weeks ago"
+msgstr "fa 2 setmanes"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "3 weeks ago"
+msgstr "fa 3 setmanes"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "1 month ago"
+msgstr "fa 1 mes"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "2 months ago"
+msgstr "fa 2 mesos"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "6 months ago"
+msgstr "fa 6 mesos"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "1 year ago"
+msgstr "fa 1 any"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "Select from and to..."
+msgstr "Selecciona des de fins..."
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "yesterday (whole day)"
+msgstr "Ahir (tot el dia)"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "today (whole day)"
+msgstr "avui (tot el dia)"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "this month"
+msgstr "aquest mes"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "last month"
+msgstr "el darrer mes"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "this year"
+msgstr "Aquest any"
+
+#: ../classes/Statistics.php:153 ../classes/Statistics.php:157
+msgid "forever"
+msgstr "sempre"
+
+#: ../classes/Statistics.php:161
+msgid "From"
+msgstr "De"
+
+#: ../classes/Statistics.php:176
+msgid "To"
+msgstr "Per"
+
+#: ../classes/Statistics.php:456
+msgid "Invalid parameter"
+msgstr "Paràmetre invàlid"
+
+#: ../classes/Statistics.php:494
+msgid "Username or MAC address, depending on selection above"
 msgstr ""
 
-#: ../classes/ProfileTemplate.php:240
-#, fuzzy
-msgid "Add a new profile template with ID"
-msgstr "Agrega un nuevo nodo con ID"
+#: ../classes/Statistics.php:590
+msgid "Report configuration"
+msgstr "Configuració de l'informe"
 
-#: ../classes/ProfileTemplate.php:313
-msgid "Profile template"
+#: ../classes/Statistics.php:613
+msgid "Restrict the time range for which statistics will be computed"
 msgstr ""
+"Restringir la franja temporal en que les estadístiques seran processades"
 
-#: ../classes/ProfileTemplate.php:383
-msgid "Profile template label"
-msgstr ""
+#: ../classes/Statistics.php:621
+msgid "Restrict stats to the following nodes"
+msgstr "Restringir les estadístiques als següents nodes"
 
-#: ../classes/ProfileTemplate.php:383 ../classes/Content.php:719
-msgid "Actions"
-msgstr "Accions"
+#: ../classes/Statistics.php:631
+msgid "Distinguish users by"
+msgstr "Diferencia els usuaris per"
 
-#: ../classes/ProfileTemplate.php:484
-msgid "Profile template management"
-msgstr ""
+#: ../classes/Statistics.php:640
+msgid "Restrict stats to the selected users"
+msgstr "Restringir les estadístiques als usuaris seleccionats"
 
-#: ../classes/ProfileTemplate.php:491
-msgid "ProfileTemplate ID"
-msgstr "ID de la Plantilla de Perfil"
-
-#: ../classes/ProfileTemplate.php:521
-msgid "Profile template fields"
-msgstr ""
-
-#: ../classes/ProfileTemplate.php:531
-#, php-format
-msgid "Delete %s %d, used in %d/%d profiles"
-msgstr ""
-
-#: ../classes/ProfileTemplate.php:595
-msgid "Could not delete ProfileTemplate!"
-msgstr "No puc esborrar la Plantilla de Perfil (ProfileTemplate)!"
-
-#: ../classes/ProfileTemplate.php:627
-msgid "Profile templates"
-msgstr ""
-
-#: ../classes/ThemePack.php:87
-#, php-format
-msgid "Theme pack %s cannot be found in %s"
-msgstr "El paquet del tema %s no es troba a %s"
-
-#: ../classes/ThemePack.php:94
-#, php-format
-msgid "%s (Theme did not include a name.txt file)"
-msgstr "%s (El tema no inclou l'arxiu name.txt)"
-
-#: ../classes/ThemePack.php:100
-#, php-format
-msgid "%s (Theme did not include a description.txt file)"
-msgstr "%s (El tema no inclou l'arxiu description.txt)"
-
-#: ../classes/ThemePack.php:121
-msgid "Theme pack:"
-msgstr "Paquet de tema:"
-
-#: ../classes/ThemePack.php:144
-msgid "Unable to open the network theme packs directory"
-msgstr "No puc obrir el directori de paquets de temes"
-
-#: ../classes/ThemePack.php:151
-#, php-format
-msgid "No network theme packs available in %s"
-msgstr "No hi ha paquets de temes per la xarxa a %s"
-
-#: ../classes/ProfileField.php:251
-msgid "Unable to insert the new profile fields in the database!"
-msgstr ""
-
-#: ../classes/ProfileField.php:281
-#, php-format
-msgid "Delete %s"
-msgstr "Esborra %s"
-
-#: ../classes/ProfileField.php:368
-msgid "Could not delete ProfileField!"
-msgstr "No puc esborrar el Camp de Perfil (ProfileField)!"
-
-#: ../classes/Server.php:91
-msgid "Main server object"
-msgstr "Objecte del servidor principal"
-
-#: ../classes/Server.php:151 ../classes/VirtualHost.php:262
-msgid "Unable to insert the new server in the database!"
-msgstr "No puc inserir un nou servidor a la base de dades!"
-
-#: ../classes/Server.php:229
-msgid "Server management"
-msgstr "Administració del servidor"
-
-#: ../classes/Server.php:255
-msgid "Timezone check:  The following must be in the same timezone"
-msgstr ""
-
-#: ../classes/Server.php:259
-#, php-format
-msgid "Timezone from postgresql: %s"
-msgstr "Fus horari de postgresql: %s"
-
-#: ../classes/Server.php:262
-#, php-format
-msgid "Timezone from PHP: %s"
-msgstr "Fus horari del PHP: %s"
-
-#: ../classes/Server.php:309
-msgid "The server can never be deleted!"
-msgstr ""
-
-#: ../classes/Server.php:319
-msgid "Server access control"
-msgstr "Control d'accés al servidor"
-
-#: ../classes/Server.php:324
-msgid "Server administration"
-msgstr "Administració de servidors"
+#: ../classes/Statistics.php:649
+msgid "Selected reports"
+msgstr "Informes seleccionats"
 
 #: ../classes/AbstractDb.php:93
 msgid "It appears the postgresql module isn't loaded"
@@ -3549,6 +3294,40 @@ msgstr "%d filas afectades per la cerca SQL"
 msgid "Elapsed time for query execution : %6f second(s)"
 msgstr "Temps emprat en l'execució de la cerca: %.6f segons"
 
+#: ../classes/Server.php:91
+msgid "Main server object"
+msgstr "Objecte del servidor principal"
+
+#: ../classes/Server.php:229
+msgid "Server management"
+msgstr "Administració del servidor"
+
+#: ../classes/Server.php:255
+msgid "Timezone check:  The following must be in the same timezone"
+msgstr ""
+
+#: ../classes/Server.php:259
+#, php-format
+msgid "Timezone from postgresql: %s"
+msgstr "Fus horari de postgresql: %s"
+
+#: ../classes/Server.php:262
+#, php-format
+msgid "Timezone from PHP: %s"
+msgstr "Fus horari del PHP: %s"
+
+#: ../classes/Server.php:309
+msgid "The server can never be deleted!"
+msgstr ""
+
+#: ../classes/Server.php:319
+msgid "Server access control"
+msgstr "Control d'accés al servidor"
+
+#: ../classes/Server.php:324
+msgid "Server administration"
+msgstr "Administració de servidors"
+
 #: ../classes/Content.php:150
 msgid "Untitled content"
 msgstr "Contingut sense títol"
@@ -3556,6 +3335,10 @@ msgstr "Contingut sense títol"
 #: ../classes/Content.php:181
 msgid "Content type is optionnal, but cannot be empty!"
 msgstr "El tipus de contingut es opcional, però no pot romandre buit!"
+
+#: ../classes/Content.php:189 ../classes/ProfileTemplateField.php:176
+msgid "Unable to insert new content into database!"
+msgstr "No puc inserir nou contingut a la base de dades!"
 
 #: ../classes/Content.php:221
 msgid "It appears that you have not installed any Content plugin !"
@@ -3593,6 +3376,10 @@ msgstr "Ordre"
 #: ../classes/Content.php:719
 msgid "Content"
 msgstr "Contingut"
+
+#: ../classes/Content.php:719 ../classes/ProfileTemplate.php:383
+msgid "Actions"
+msgstr "Accions"
 
 #: ../classes/Content.php:911
 msgid "Select from reusable content library"
@@ -3658,6 +3445,15 @@ msgstr "Ttítol"
 #: ../classes/Content.php:1553
 msgid "title"
 msgstr "títol"
+
+#: ../classes/Content.php:1564 ../classes/Content.php:1568
+#: ../classes/Role.php:351 ../classes/Role.php:355
+msgid "Description:"
+msgstr "Descripció:"
+
+#: ../classes/Content.php:1572 ../classes/Role.php:359
+msgid "description"
+msgstr "descripció"
 
 #: ../classes/Content.php:1581 ../classes/Content.php:1585
 msgid "Long description:"
@@ -3769,7 +3565,7 @@ msgstr "%s no es una àrea estructural de visualització vàlida"
 msgid "%s Login"
 msgstr "%s Inicia sessió"
 
-#: ../classes/MainUI.php:642 smarty.txt:23 smarty.txt:28
+#: ../classes/MainUI.php:642 smarty.txt:18 smarty.txt:28
 msgid "Login"
 msgstr "Inicia la sessió"
 
@@ -3784,6 +3580,11 @@ msgid ""
 msgstr ""
 "El retorn de la connexió d'inici segura al http convencional pot generar un "
 "missatge d'advertència"
+
+#: ../classes/Mail.php:405
+#, php-format
+msgid "PHPMailer couldn't sent mail.  Error was: %s"
+msgstr ""
 
 #: ../classes/Node.php:210
 msgid "Could not delete node!"
@@ -3985,131 +3786,260 @@ msgstr "Agregar un nuevo nodo"
 msgid "Node administration"
 msgstr "Administració de nodes"
 
-#: ../classes/VirtualHost.php:162
-msgid "Server::getAllServers: Fatal error: No servers in the database!"
-msgstr ""
-"Server::getAllServers: Error fatal: No hi ha cap servidor a la base de dades!"
-
-#: ../classes/VirtualHost.php:298
-msgid "Virtual host:"
+#: ../classes/ProfileTemplate.php:229
+msgid "Unable to insert the new profile template in the database!"
 msgstr ""
 
-#: ../classes/VirtualHost.php:375
-msgid "Add a new virtual host for hostname"
+#: ../classes/ProfileTemplate.php:240
+#, fuzzy
+msgid "Add a new profile template with ID"
+msgstr "Agrega un nuevo nodo con ID"
+
+#: ../classes/ProfileTemplate.php:313
+msgid "Profile template"
 msgstr ""
 
-#: ../classes/VirtualHost.php:595
-msgid "Virtual hosts management"
+#: ../classes/ProfileTemplate.php:318 ../classes/ContentTypeFilter.php:310
+#: ../classes/ProfileTemplateField.php:118
+#: ../classes/ProfileTemplateField.php:427
+msgid "No label"
+msgstr "Sense etiqueta"
+
+#: ../classes/ProfileTemplate.php:383
+msgid "Profile template label"
 msgstr ""
 
-#: ../classes/VirtualHost.php:614
-msgid "Hostname"
-msgstr "Nom del servidor"
-
-#: ../classes/VirtualHost.php:622
-msgid "Default network for this vhost"
-msgstr "Xarxa per defecte d'aquest vhost"
-
-#: ../classes/VirtualHost.php:639
-msgid "Make this Virtual Host the server's default?"
+#: ../classes/ProfileTemplate.php:484
+msgid "Profile template management"
 msgstr ""
 
-#: ../classes/VirtualHost.php:655
-msgid "Use SSL on this server?"
-msgstr "Emprar SSL en aquest servidor?"
+#: ../classes/ProfileTemplate.php:491
+msgid "ProfileTemplate ID"
+msgstr "ID de la Plantilla de Perfil"
 
-#: ../classes/VirtualHost.php:667
-msgid "Google public API key"
-msgstr "Clau de l'API públic de Google"
-
-#: ../classes/VirtualHost.php:738
-msgid ""
-"Cannot delete default virtual host, create another one and select it before "
-"removing this one."
+#: ../classes/ProfileTemplate.php:502 ../classes/ContentTypeFilter.php:375
+msgid "Label"
 msgstr ""
 
-#: ../classes/VirtualHost.php:743
-msgid "Could not delete server!"
-msgstr "No puc esborrar el servidor!"
-
-#: ../classes/VirtualHost.php:771
-msgid "Virtual Hosts"
+#: ../classes/ProfileTemplate.php:521
+msgid "Profile template fields"
 msgstr ""
 
-#: ../classes/GenericDataObject.php:124
+#: ../classes/ProfileTemplate.php:531
 #, php-format
-msgid "Delete not supported on class %s"
+msgid "Delete %s %d, used in %d/%d profiles"
 msgstr ""
 
-#: ../classes/Stakeholder.php:88
-msgid "Remove stakeholder"
-msgstr "Treu un promotor"
+#: ../classes/ProfileTemplate.php:595
+msgid "Could not delete ProfileTemplate!"
+msgstr "No puc esborrar la Plantilla de Perfil (ProfileTemplate)!"
 
-#: ../classes/Stakeholder.php:94
-msgid "Add stakeholder"
-msgstr "Afegeix un promotor"
-
-#: ../classes/Stakeholder.php:121 ../classes/Stakeholder.php:147
-#, php-format
-msgid "User %s already has role %s for this object"
+#: ../classes/ProfileTemplate.php:627
+msgid "Profile templates"
 msgstr ""
 
-#: ../classes/Dependency.php:414 ../classes/Dependency.php:430
+#: ../classes/ThemePack.php:87
 #, php-format
-msgid "File %s not found"
-msgstr "No trobo l'arxiu %s"
+msgid "Theme pack %s cannot be found in %s"
+msgstr "El paquet del tema %s no es troba a %s"
 
-#: ../classes/Dependency.php:444 ../classes/Dependency.php:458
+#: ../classes/ThemePack.php:94
 #, php-format
-msgid "File %s not found in %s"
-msgstr "Arxiu %s no trobat a %s"
+msgid "%s (Theme did not include a name.txt file)"
+msgstr "%s (El tema no inclou l'arxiu name.txt)"
 
-#: ../classes/Dependency.php:519
+#: ../classes/ThemePack.php:100
 #, php-format
-msgid ""
-"To install this standard PHP extension, look for a package with a similar "
-"name in your distribution's package manager.  Ex: For Debian based "
-"distributions, you may try 'sudo apt-get install php5-%s'"
+msgid "%s (Theme did not include a description.txt file)"
+msgstr "%s (El tema no inclou l'arxiu description.txt)"
+
+#: ../classes/ThemePack.php:121
+msgid "Theme pack:"
+msgstr "Paquet de tema:"
+
+#: ../classes/ThemePack.php:144
+msgid "Unable to open the network theme packs directory"
+msgstr "No puc obrir el directori de paquets de temes"
+
+#: ../classes/ThemePack.php:151
+#, php-format
+msgid "No network theme packs available in %s"
+msgstr "No hi ha paquets de temes per la xarxa a %s"
+
+#: ../classes/Role.php:151
+#, php-format
+msgid "Sorry: No available roles in the database for stakeholder type: %s!"
 msgstr ""
 
-#: ../classes/Dependency.php:525
-#, php-format
-msgid "Install %s"
-msgstr "Instal·la %s"
-
-#: ../classes/Dependency.php:530
-#, php-format
-msgid "Sorry, i couldn't find the source for %s in installSourceUrl"
+#: ../classes/Role.php:164 ../classes/Role.php:170
+msgid "Role:"
 msgstr ""
 
-#: ../classes/Dependency.php:543
+#: ../classes/Role.php:228 ../classes/ContentTypeFilter.php:199
+msgid "Unable to insert the new ContentTypeFilter in the database!"
+msgstr ""
+"No puc inserir el nou filtre per tipus de contingut a la base de dades!"
+
+#: ../classes/Role.php:245
 #, php-format
-msgid ""
-"To install this standard PEAR extension, try 'sudo pear install --"
-"onlyreqdeps %s'"
+msgid "Add a new role of type %s with id %s"
 msgstr ""
 
-#: ../classes/Dependency.php:554
-#, php-format
-msgid "To install this standard PEAR extension, try 'sudo pecl install %s'"
+#: ../classes/Role.php:309
+msgid "User roles management"
+msgstr "Administració de rols d'usuaris"
+
+#: ../classes/Role.php:316
+msgid "Stakeholder type"
+msgstr "Tipus de promotor"
+
+#: ../classes/Role.php:325
+msgid "This role is a system role"
+msgstr "Aquest rol és un rol del sistema"
+
+#: ../classes/Role.php:332
+msgid "Role ID"
+msgstr "ID del rol"
+
+#: ../classes/Role.php:386
+msgid "Permissions"
 msgstr ""
 
-#: ../classes/Dependency.php:563
-#, php-format
-msgid ""
-"url_to_the_tarball (Sorry, i couldn't find the source for %s in "
-"installSourceUrl)"
+#: ../classes/Role.php:492
+msgid "Could not delete object!"
+msgstr "No puc esborrar l'objecte!"
+
+#: ../classes/Role.php:513
+msgid "User roles"
+msgstr "Rols dels usuaris"
+
+#: ../classes/ContentTypeFilter.php:220
+msgid "Add a new content type filter with these rules"
 msgstr ""
 
-#: ../classes/Dependency.php:565
-#, php-format
-msgid "To install this custom PEAR extension, use 'sudo pear install %s'"
+#: ../classes/ContentTypeFilter.php:221
+msgid "Example:"
 msgstr ""
 
-#: ../classes/Dependency.php:570
-#, php-format
-msgid "Sorry, I don't know how to install a %s extension"
+#: ../classes/ContentTypeFilter.php:302
+#: ../classes/ProfileTemplateField.php:424
+msgid "Content type filter"
+msgstr "Filtre per tipus de contingut"
+
+#: ../classes/ContentTypeFilter.php:357
+msgid "ContentTypeFilter management"
+msgstr "Administració dels Filtres per Tipus de Contingut"
+
+#: ../classes/ContentTypeFilter.php:364
+msgid "ContentTypeFilter ID"
+msgstr "ID del Filtre per tipus de contingut"
+
+#: ../classes/ContentTypeFilter.php:386
+msgid "Rules (must be a valid array definition)"
 msgstr ""
+
+#: ../classes/ContentTypeFilter.php:418
+msgid "The rules must be given as a PHP array declaration."
+msgstr ""
+
+#: ../classes/ContentTypeFilter.php:444
+msgid "Could not delete ContentTypeFilter!"
+msgstr "No puc esborrar el Filtre de tipus de contingut!"
+
+#: ../classes/ContentTypeFilter.php:472
+msgid "Content type filters"
+msgstr "Filtre per tipus de contingut"
+
+#: ../classes/ProfileTemplateField.php:122
+msgid "Add new profile template field filtered by"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:131
+msgid "Sorry, no content type filter exists."
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:404
+msgid "Display order"
+msgstr "Ordre de visualització"
+
+#: ../classes/ProfileTemplateField.php:422
+msgid "Sorry, content type filter is missing."
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:434
+msgid "Display label"
+msgstr "Etiqueta de visualització"
+
+#: ../classes/ProfileTemplateField.php:440
+#, php-format
+msgid "%s display label (%s)"
+msgstr "%s etiqueta de visualització (%s)"
+
+#: ../classes/ProfileTemplateField.php:444
+msgid "display label"
+msgstr "etiqueta de visualització"
+
+#: ../classes/ProfileTemplateField.php:451
+msgid "Admin label"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:458
+#, php-format
+msgid "%s admin label (%s)"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:462
+msgid "admin label"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:469
+msgid "Semantic ID"
+msgstr "ID semàntic"
+
+#: ../classes/ProfileTemplateField.php:477
+msgid "Full name"
+msgstr "Nom complet"
+
+#: ../classes/ProfileTemplateField.php:478
+msgid "Nickname"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:479
+msgid "E-mail"
+msgstr "Correu electrònic"
+
+#: ../classes/ProfileTemplateField.php:480
+msgid "Hashed e-mail"
+msgstr "Correu de dispersió"
+
+#: ../classes/ProfileTemplateField.php:481
+msgid "Picture"
+msgstr ""
+
+#: ../classes/ProfileTemplateField.php:482
+msgid "URL of a blog"
+msgstr "URL d'un bloc"
+
+#: ../classes/ProfileTemplateField.php:483
+msgid "URL of a homepage"
+msgstr "URL de la pàgina d'inici"
+
+#: ../classes/ProfileTemplateField.php:598
+msgid "Could not delete ProfileTemplateField!"
+msgstr "No puc esborrar el camp de Plantilla de perfil!"
+
+#: ../classes/ProfileField.php:251
+msgid "Unable to insert the new profile fields in the database!"
+msgstr ""
+
+#: ../classes/ProfileField.php:281
+#, php-format
+msgid "Delete %s"
+msgstr "Esborra %s"
+
+#: ../classes/ProfileField.php:368
+msgid "Could not delete ProfileField!"
+msgstr "No puc esborrar el Camp de Perfil (ProfileField)!"
 
 #: ../classes/Permission.php:85
 msgid "User is allowed to view online users troughout the network"
@@ -4196,6 +4126,81 @@ msgstr ""
 msgid "User is allowed to exceed dynamic abuse control limits at this node"
 msgstr ""
 
+#: ../classes/Stakeholder.php:88
+msgid "Remove stakeholder"
+msgstr "Treu un promotor"
+
+#: ../classes/Stakeholder.php:94
+msgid "Add stakeholder"
+msgstr "Afegeix un promotor"
+
+#: ../classes/Stakeholder.php:121 ../classes/Stakeholder.php:147
+#, php-format
+msgid "User %s already has role %s for this object"
+msgstr ""
+
+#: ../classes/GenericDataObject.php:124
+#, php-format
+msgid "Delete not supported on class %s"
+msgstr ""
+
+#: ../classes/Dependency.php:414 ../classes/Dependency.php:430
+#, php-format
+msgid "File %s not found"
+msgstr "No trobo l'arxiu %s"
+
+#: ../classes/Dependency.php:444 ../classes/Dependency.php:458
+#, php-format
+msgid "File %s not found in %s"
+msgstr "Arxiu %s no trobat a %s"
+
+#: ../classes/Dependency.php:519
+#, php-format
+msgid ""
+"To install this standard PHP extension, look for a package with a similar "
+"name in your distribution's package manager.  Ex: For Debian based "
+"distributions, you may try 'sudo apt-get install php5-%s'"
+msgstr ""
+
+#: ../classes/Dependency.php:525
+#, php-format
+msgid "Install %s"
+msgstr "Instal·la %s"
+
+#: ../classes/Dependency.php:530
+#, php-format
+msgid "Sorry, i couldn't find the source for %s in installSourceUrl"
+msgstr ""
+
+#: ../classes/Dependency.php:543
+#, php-format
+msgid ""
+"To install this standard PEAR extension, try 'sudo pear install --"
+"onlyreqdeps %s'"
+msgstr ""
+
+#: ../classes/Dependency.php:554
+#, php-format
+msgid "To install this standard PEAR extension, try 'sudo pecl install %s'"
+msgstr ""
+
+#: ../classes/Dependency.php:563
+#, php-format
+msgid ""
+"url_to_the_tarball (Sorry, i couldn't find the source for %s in "
+"installSourceUrl)"
+msgstr ""
+
+#: ../classes/Dependency.php:565
+#, php-format
+msgid "To install this custom PEAR extension, use 'sudo pear install %s'"
+msgstr ""
+
+#: ../classes/Dependency.php:570
+#, php-format
+msgid "Sorry, I don't know how to install a %s extension"
+msgstr ""
+
 #: ../classes/DependenciesList.php:105
 #, php-format
 msgid "Version %s needed"
@@ -4263,7 +4268,7 @@ msgstr "Demo del contingut local"
 msgid "Opened on"
 msgstr "Obert el"
 
-#: smarty.txt:9 smarty.txt:109
+#: smarty.txt:9 smarty.txt:117
 msgid "Online users"
 msgstr "Usuaris connectats"
 
@@ -4280,40 +4285,40 @@ msgid "Portal page"
 msgstr "Pàgina del portal"
 
 #: smarty.txt:14
-msgid "user is online at this hotspot"
-msgstr "usuari actiu a aquest node"
-
-#: smarty.txt:15
-msgid "users are online at this hotspot"
-msgstr "usuaris connectats a aquest node"
-
-#: smarty.txt:16
-msgid "Nobody is online at this hotspot"
-msgstr "No hi ha cap usuari connectat"
-
-#: smarty.txt:17
-msgid "Recent Users:"
-msgstr "Usuaris recents:"
-
-#: smarty.txt:18
-msgid "Most Active Users:"
-msgstr "Els usuaris més actius:"
-
-#: smarty.txt:19
 msgid "Logged in as"
 msgstr "Connectat com"
 
-#: smarty.txt:20
+#: smarty.txt:15
 msgid "Profile / Settings"
 msgstr "Perfil / Paràmetres"
 
-#: smarty.txt:21
+#: smarty.txt:16
 msgid "Logout"
 msgstr "Tanca la sessió"
 
-#: smarty.txt:22
+#: smarty.txt:17
 msgid "I am not logged in."
 msgstr "No estic connectat"
+
+#: smarty.txt:20
+msgid "user is online at this hotspot"
+msgstr "usuari actiu a aquest node"
+
+#: smarty.txt:21
+msgid "users are online at this hotspot"
+msgstr "usuaris connectats a aquest node"
+
+#: smarty.txt:22
+msgid "Nobody is online at this hotspot"
+msgstr "No hi ha cap usuari connectat"
+
+#: smarty.txt:23
+msgid "Recent Users:"
+msgstr "Usuaris recents:"
+
+#: smarty.txt:24
+msgid "Most Active Users:"
+msgstr "Els usuaris més actius:"
 
 #: smarty.txt:25
 msgid "Login or Signup here"
@@ -4323,7 +4328,7 @@ msgstr "Inicia la sessió o registra't aquí"
 msgid "Username (or email)"
 msgstr "Nom d'usuari (o correu electrònic)"
 
-#: smarty.txt:27 smarty.txt:58
+#: smarty.txt:27 smarty.txt:48
 msgid "Password"
 msgstr "Contrasenya"
 
@@ -4367,88 +4372,35 @@ msgstr "el hotspot no és actiu"
 msgid "not monitored"
 msgstr "no monitoritzat"
 
-#: smarty.txt:41
-#, php-format
-msgid "The %s network currently has one valid user."
-msgstr "La xarxa %s té actualment 1 usuari vàlid."
-
-#: smarty.txt:42
-#, php-format
-msgid "The %s network currently has %d valid users."
-msgstr "La xarxa %s actualment té %d usuaris vàlids."
-
-#: smarty.txt:43
-msgid "One user is currently online."
-msgstr "Un usuari connectat"
-
-#: smarty.txt:44
-#, php-format
-msgid "%d users are currently online."
-msgstr "%d usuaris connectats"
-
-#: smarty.txt:45
-msgid "This network currently has 1 deployed hotspot."
-msgstr "Aquesta xarxa té 1 node operatiu."
-
-#: smarty.txt:46
-#, php-format
-msgid "This network currently has %d deployed hotspots."
-msgstr "Aquesta xarxa te %d hotspots operatius"
-
-#: smarty.txt:47
-msgid "One hotspot is currently operational."
-msgstr "Un hotspot operatiu a hores d'ara"
-
-#: smarty.txt:48
-#, php-format
-msgid "%d hotspots are currently operational."
-msgstr "%d hotspots operatius a hores d'ara"
-
-#: smarty.txt:49
-msgid ""
-"One hotspot isn't monitored so we don't know if it's currently operational."
-msgstr ""
-"Un hotspot no és monitoritzat, per aquesta raó, no sé si en aquest moment és "
-"actiu."
-
-#: smarty.txt:50
-#, php-format
-msgid ""
-"%d hotspots aren't monitored so we don't know if they are currently "
-"operational."
-msgstr ""
-"%d hotspots no són monitoritzats, per aquesta raó, no sé si en aquest moment "
-"són actius."
-
-#: smarty.txt:51 smarty.txt:79 smarty.txt:93 smarty.txt:101
+#: smarty.txt:41 smarty.txt:69 smarty.txt:93 smarty.txt:101
 msgid "I'm having difficulties"
 msgstr "Tinc dificultats"
 
-#: smarty.txt:55
+#: smarty.txt:45
 msgid "Register a free account with"
 msgstr "Registra un compte gratuït amb"
 
-#: smarty.txt:56
+#: smarty.txt:46
 msgid "Username desired"
 msgstr "Nom d'usuari desitjat"
 
-#: smarty.txt:57 smarty.txt:85 smarty.txt:106
+#: smarty.txt:47 smarty.txt:75 smarty.txt:106
 msgid "Your email address"
 msgstr "El teu correu electrònic"
 
-#: smarty.txt:59
+#: smarty.txt:49
 msgid "Password (again)"
 msgstr "Contrasenya (un altre cop)"
 
-#: smarty.txt:60
+#: smarty.txt:50
 msgid "Sign-up"
 msgstr "Registrar-se"
 
-#: smarty.txt:61
+#: smarty.txt:51
 msgid "Please note"
 msgstr "Si us plau, recorda"
 
-#: smarty.txt:62
+#: smarty.txt:52
 msgid ""
 "While accounts are free, we <em>strongly</em> suggest that you use your "
 "previously created account if you have one."
@@ -4456,7 +4408,7 @@ msgstr ""
 "Essent els comptes gratuïts, et recomanem <em>ferventment</em> que empris, "
 "si en tens, un creat anteriorment."
 
-#: smarty.txt:63
+#: smarty.txt:53
 msgid ""
 "<b>Your email address must be valid</b> in order for your account to be "
 "activated."
@@ -4464,21 +4416,21 @@ msgstr ""
 "Necessites una <b>adreça vàlida de correu electrònic</b> per activar el teu "
 "compte."
 
-#: smarty.txt:64
+#: smarty.txt:54
 msgid "A validation email will be sent to that email address."
 msgstr ""
 "Enviaré un correu electrònic de validació a la teva adreça de correu "
 "electrònic."
 
-#: smarty.txt:65
+#: smarty.txt:55
 msgid "To fully activate your account you must respond to that email."
 msgstr "Has de respondre aquest correu per activar el teu compte."
 
-#: smarty.txt:66
+#: smarty.txt:56
 msgid "Note to free web-based email users"
 msgstr "Avís per usuaris que empren correus web gratuïts"
 
-#: smarty.txt:67
+#: smarty.txt:57
 msgid ""
 "Sometimes our validation email ends up in the 'spam' folder of some "
 "providers. If you have not received any email with the validation URL 5 "
@@ -4488,55 +4440,112 @@ msgstr ""
 "la safata de correu brossa si no has rebut el correu amb l'URL de validació "
 "5 minuts després d'enviar aquest formulari."
 
-#: smarty.txt:68
+#: smarty.txt:58
 msgid "You can also use the following links if you need help"
 msgstr "També pots emprar els següents enllaços si necessites ajuda"
 
-#: smarty.txt:71
+#: smarty.txt:61
 #, php-format
 msgid "Status of the %d open %s Hotspots"
 msgstr "Estat dels %d Hotspots de la xarxa %s"
 
-#: smarty.txt:72
+#: smarty.txt:62
 msgid "Hotspot / Status"
 msgstr "Hotspot / Estat"
 
-#: smarty.txt:74
+#: smarty.txt:64
 msgid "Location"
 msgstr "Ubicació"
 
-#: smarty.txt:75
+#: smarty.txt:65
 msgid "Hotspot in testing phase"
 msgstr "Hotspot en proves"
 
-#: smarty.txt:76
+#: smarty.txt:66
 msgid "Hotspot not monitored"
 msgstr "Hotspot sense monitoritzar"
 
-#: smarty.txt:77
+#: smarty.txt:67
 #, php-format
 msgid "Opened on %s"
 msgstr "Obert el %s"
 
-#: smarty.txt:83
+#: smarty.txt:73
 msgid "Lost password"
 msgstr "Contrasenya perduda"
 
-#: smarty.txt:84 smarty.txt:98
+#: smarty.txt:74 smarty.txt:98
 msgid "Your username"
 msgstr "El teu nom d'usuari"
 
-#: smarty.txt:86
+#: smarty.txt:76
 msgid "Reset my password"
 msgstr "Canvia la meva contrasenya"
 
-#: smarty.txt:87
+#: smarty.txt:77
 msgid "Please enter your username or email address to reset your password"
 msgstr ""
 "Si us plau, introdueixi el seu nom d'usuari o adreça de correu electrònic "
 "per a resetejar la vostra contrasenya."
 
+#: smarty.txt:78
+#, php-format
+msgid "The %s network currently has one valid user."
+msgstr "La xarxa %s té actualment 1 usuari vàlid."
+
+#: smarty.txt:79
+#, php-format
+msgid "The %s network currently has %d valid users."
+msgstr "La xarxa %s actualment té %d usuaris vàlids."
+
+#: smarty.txt:80
+msgid "One user is currently online."
+msgstr "Un usuari connectat"
+
+#: smarty.txt:81
+#, php-format
+msgid "%d users are currently online."
+msgstr "%d usuaris connectats"
+
+#: smarty.txt:82
+msgid "This network currently has 1 deployed hotspot."
+msgstr "Aquesta xarxa té 1 node operatiu."
+
+#: smarty.txt:83
+#, php-format
+msgid "This network currently has %d deployed hotspots."
+msgstr "Aquesta xarxa te %d hotspots operatius"
+
+#: smarty.txt:84
+msgid "One hotspot is currently operational."
+msgstr "Un hotspot operatiu a hores d'ara"
+
+#: smarty.txt:85
+#, php-format
+msgid "%d hotspots are currently operational."
+msgstr "%d hotspots operatius a hores d'ara"
+
+#: smarty.txt:86
+msgid ""
+"One hotspot isn't monitored so we don't know if it's currently operational."
+msgstr ""
+"Un hotspot no és monitoritzat, per aquesta raó, no sé si en aquest moment és "
+"actiu."
+
+#: smarty.txt:87
+#, php-format
+msgid ""
+"%d hotspots aren't monitored so we don't know if they are currently "
+"operational."
+msgstr ""
+"%d hotspots no són monitoritzats, per aquesta raó, no sé si en aquest moment "
+"són actius."
+
 #: smarty.txt:88
+msgid "Please get in touch with "
+msgstr "Si us plau, contacta amb"
+
+#: smarty.txt:89
 msgid ""
 "We are a not-for-profit group dedicated to making no-fee wireless Internet "
 "access generally available."
@@ -4544,7 +4553,7 @@ msgstr ""
 "Som una associació sense ànim de lucre dedicada a establir conexions "
 "gratuïtes sense fils a Internet d'accés públic."
 
-#: smarty.txt:89
+#: smarty.txt:90
 msgid ""
 "Our aim is to encourage the growth of wireless networking and to build "
 "community in interesting and innovative ways."
@@ -4552,7 +4561,7 @@ msgstr ""
 "El nostre objectiu és promocionar el creixement de xarxes sense fils i fer "
 "comunitat d'una forma innovadora i interessant"
 
-#: smarty.txt:90
+#: smarty.txt:91
 msgid ""
 "We do this by setting up wireless Internet networks in parks, cafés, "
 "restaurants, bars and other publically-accessible locations across the city."
@@ -4560,13 +4569,9 @@ msgstr ""
 "Ho fem instal·lant conexions públiques sense fils en parcs, cafeteries, "
 "restaurants, bars i d'altres llocs d'accés públic de la ciutat."
 
-#: smarty.txt:91
+#: smarty.txt:92
 msgid "For a complete and up-to-date listing of our nodes, visit"
 msgstr "Per una llista completa i actualitzada dels nuestres nodes, visita"
-
-#: smarty.txt:92
-msgid "Please get in touch with "
-msgstr "Si us plau, contacta amb"
 
 #: smarty.txt:97
 msgid "Re-send validation email"
@@ -4598,37 +4603,37 @@ msgstr ""
 "Si us plau, introdueix la teva dreça de correu electrònic per recuperar el "
 "teu nom d'usuari"
 
-#: smarty.txt:112
-msgid "Origin"
-msgstr "Origen"
-
-#: smarty.txt:113
-msgid "Logged in Since"
-msgstr "Connectat des de"
-
-#: smarty.txt:114
-msgid "Traffic IN/OUT"
-msgstr "Tràfic d'ENTRADA/SORTIDA"
-
-#: smarty.txt:115
+#: smarty.txt:109
 msgid "User list"
 msgstr "Llista d'usuari"
 
-#: smarty.txt:116
+#: smarty.txt:110
 msgid "Sort by:"
 msgstr "Ordena per:"
 
-#: smarty.txt:117
+#: smarty.txt:111
 msgid "Direction:"
 msgstr "Adreça"
 
-#: smarty.txt:118
+#: smarty.txt:112
 msgid "Sort"
 msgstr "Ordena"
 
-#: smarty.txt:121
+#: smarty.txt:115
 msgid "Registered On"
 msgstr "Registrat el"
+
+#: smarty.txt:120
+msgid "Origin"
+msgstr "Origen"
+
+#: smarty.txt:121
+msgid "Logged in Since"
+msgstr "Connectat des de"
+
+#: smarty.txt:122
+msgid "Traffic IN/OUT"
+msgstr "Tràfic d'ENTRADA/SORTIDA"
 
 #~ msgid "Component %s is not installed (not found in %s)"
 #~ msgstr "El componente %s no esta instalado( no encuentrado en %s)"

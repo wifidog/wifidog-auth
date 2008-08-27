@@ -784,32 +784,6 @@ class Network extends GenericDataObject
     }
 
     /**
-     * Set as the default network.
-     *
-     * The can only be one default network, so this method will unset
-     * is_default_network for all other network
-     *
-     * @return bool True on success, false on failure
-     *
-     * @access public
-     */
-    public function setAsDefaultNetwork()
-    {
-        // Init values
-        $retval = true;
-
-        if (!$this->isDefaultNetwork()) {
-            $db = AbstractDb::getObject();
-            $sql = "UPDATE networks SET is_default_network = FALSE;\n";
-            $sql .= "UPDATE networks SET is_default_network = TRUE WHERE network_id = '{$this->getId()}';\n";
-            $retval = $db->execSqlUpdate($sql, false);
-            $this->refresh();
-        }
-
-        return $retval;
-    }
-
-    /**
      * Retreives the network's validation grace period
      *
      * @return int Network's validation grace period in seconds
@@ -1665,11 +1639,6 @@ class Network extends GenericDataObject
          * Network properties
          */
         $html_network_properties = array();
-
-        //  is_default_network
-        $title = _("Is this network the default network?");
-        $data = InterfaceElements::generateInputCheckbox("network_" . $this->getId() . "_is_default_network", "", _("Yes"), $this->isDefaultNetwork(), "network_is_default_network_radio");
-        $html_network_properties[] = InterfaceElements::generateAdminSectionContainer("network_is_default_network", $title, $data);
 
         //  theme_pack
         $title = _("Selected theme pack for this network");
