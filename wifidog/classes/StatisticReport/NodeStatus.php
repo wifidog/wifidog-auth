@@ -101,10 +101,10 @@ class NodeStatus extends StatisticReport
 
                 $db->execSql("SELECT node_id, name, (CURRENT_TIMESTAMP-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((CURRENT_TIMESTAMP-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up, creation_date FROM nodes WHERE node_id = '{$node_id}'", $rows, false);
 
-                $html .= ($rows[0]['is_up'] == 't') ? "<tr class='even'>" : "<tr class='red'>";
+                $html .= ($rows[0]['is_up'] == 't') ? "<tr class='even up'>" : "<tr class='even down'>";
                 $html .= "  <th>"._("WifiDog status")."</th>";
                 $html .= "  <td>";
-                $html .= ($rows[0]['is_up'] == 't') ? "UP" : "<span class='red'>DOWN</span>";
+                $html .= ($rows[0]['is_up'] == 't') ? "UP" : "<span class='down'>DOWN</span>";
                 $html .= "</td>";
                 $html .= "<tr class='odd'>";
                 $html .= "  <th>"._("Last heartbeat")."</th>";

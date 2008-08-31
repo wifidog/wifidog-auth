@@ -19,7 +19,7 @@
 	<th>{"Account Status"|_}</th>
 </tr>
 {section name=i loop=$users_array}
-<tr>
+<tr class="{cycle values="odd,even"}">
                     
 
 	<td><a href="{$base_ssl_path}admin/generic_object_admin.php?object_id={$users_array[i].user_id}&object_class=User&action=edit">{$users_array[i].username}</a></td>

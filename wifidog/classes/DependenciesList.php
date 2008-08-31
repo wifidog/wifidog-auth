@@ -137,9 +137,11 @@
            $html .= "<th>"._("Status")."</th>\n";
            $html .= "<th>"._("Information")."</th>\n";
            $html .= "</tr>\n";
-
+           
+           $even_odd =  "odd";
            foreach ($components as $dependency) {
-               $html .= "<tr>\n";
+               $even_odd = ( 'odd' != $even_odd ) ? 'odd' : 'even';        
+               $html .= "<tr class=" . $even_odd . ">\n";
                $websiteUrl = $dependency->getWebsiteURL();
                $component_key = $dependency->getId();
                $description = $dependency->getDescription();

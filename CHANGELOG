@@ -1,4 +1,7 @@
 # $Id$
+2008-08-31 Robin Jones
+	* Updated some table row elements to support Odd/Even CSS. This also closes #382
+
 2008-08-28 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix #492
 
