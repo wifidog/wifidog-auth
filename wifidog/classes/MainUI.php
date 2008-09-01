@@ -542,13 +542,47 @@ class MainUI {
     public function display() {
         $db = AbstractDb :: getObject();
         // Init values
-        // Asign base CSS and theme pack CSS stylesheet
-        $this->appendStylesheetURL(BASE_THEME_URL . STYLESHEET_NAME);
-                $this->appendStylesheetURL(BASE_THEME_URL . PRINT_STYLESHEET_NAME, 'print');
+        // Asign base CSS and theme pack CSS stylesheet and optional config
         $networkThemePack = Network :: getCurrentNetwork()->getThemePack();
+        if ($networkThemePack) {	
+		$ThemeConfig = $networkThemePack->getThemeConfigPath();
+	}
+	// Checks to see if the theme file exists and if so, loads it.	
+	if (!empty($ThemeConfig) && file_exists($ThemeConfig)) {
+		require_once ($ThemeConfig);
+	}
+	// Checks to see if the theme file exists and if so, checks whether it should load the Base theme.
+	if (!defined('INHERIT_BASE_CSS') || defined('INHERIT_BASE_CSS' == true)) {
+        $this->appendStylesheetURL(BASE_THEME_URL . STYLESHEET_NAME);
+        $this->appendStylesheetURL(BASE_THEME_URL . PRINT_STYLESHEET_NAME, 'print');
+	}
+	//If there is a theme pack, load the CSS file
         if ($networkThemePack) {
-            $this->appendStylesheetURL($networkThemePack->getStylesheetUrl());
+	    $this->appendStylesheetURL($networkThemePack->getStylesheetUrl());
         }
+	// Checks to see if the theme file exists and if so, checks whether it should always show the page header.
+	if (defined('ALWAYS_SHOW_HEADER') && ALWAYS_SHOW_HEADER == true) {
+        $this->smarty->assign('alwaysShowHeader', true);
+	} else {
+		$this->smarty->assign('alwaysShowHeader', false);
+	}
+	// Checks to see if the theme file exists and if so, checks whether it should always show the page footer.
+	if (defined('ALWAYS_SHOW_FOOTER') && (ALWAYS_SHOW_FOOTER == true)) {
+        	$this->smarty->assign('alwaysShowFooter', true);
+	} else {
+		$this->smarty->assign('alwaysShowFooter', false);
+	}
+	// Checks to see if the theme file exists and if so, checks where the site menu should be positioned.
+	if (defined('MENU_POSITION') && MENU_POSITION == "all") {
+        $this->smarty->assign('siteMenuPlaceAll', true);
+	} else {
+		if (defined('MENU_POSITION') && MENU_POSITION == "left") {
+        		$this->smarty->assign('siteMenuPlaceLeft', true);
+		} else {
+			$this->smarty->assign('siteMenuPlaceMain', true);
+			}
+		}
+
 
         //Handle content (must be done before headers and anything else is handled)
         /*

@@ -61,7 +61,8 @@
 		<script src="{$base_url_path}js/menu.js"  type="text/javascript"></script>
     </head>
     <body id='page' class='{$page_name}'>
-    	{if !empty($contentDisplayArray.page_header) || $debugRequested}
+    <div id="wrap">
+    	{if !empty($contentDisplayArray.page_header) || $debugRequested || $alwaysShowHeader}
         	<div id='page_header'>
             {if $debugRequested}
             	<pre>{$debugOutput}</pre>
@@ -72,11 +73,22 @@
             </div>
     	{/if}
         <div id="page_body">
+	          {if !empty($siteMenu) && $siteMenuPlaceAll}
+	                <div id="site_menu">
+	                    {$siteMenu}
+	                </div>
+	          {/if}
+        <div id="content-wrap">
         {if !empty($contentDisplayArray.left_area_top) ||  !empty($contentDisplayArray.left_area_middle) ||  !empty($contentDisplayArray.left_area_middle)}
                 <div id="left_area">
-	                {if !empty($contentDisplayArray.left_area_top)}
+	                {if !empty($contentDisplayArray.left_area_top)  || (!empty($siteMenu) && $siteMenuPlaceLeft)}
 	                <div id="left_area_top">
-	                    {$contentDisplayArray.left_area_top}
+                    {if !empty($siteMenu) && $siteMenuPlaceLeft}    	                
+                    <div id="site_menu">
+	                    {$siteMenu}
+	                </div>	 
+                    {/if}
+                        {$contentDisplayArray.left_area_top}
 	                </div>
 	                {/if}
 	                {if !empty($contentDisplayArray.left_area_middle)}
@@ -93,9 +105,13 @@
         {/if}
         {if !empty($contentDisplayArray.main_area_top) ||  !empty($contentDisplayArray.main_area_middle) ||  !empty($contentDisplayArray.main_area_middle)}
                 <div id="main_area">
-	                {if !empty($contentDisplayArray.main_area_top) || !empty($siteMenu)}
+	                {if !empty($contentDisplayArray.main_area_top) || (!empty($siteMenu) && $siteMenuPlaceMain)}
 	                <div id="main_area_top">
+                    {if !empty($siteMenu) && $siteMenuPlaceMain}    	                
+                    <div id="site_menu">
 	                    {$siteMenu}
+	                </div>
+	                {/if}
                         {$contentDisplayArray.main_area_top}
 	                </div>
 	                {/if}
@@ -131,7 +147,8 @@
                 </div>
         {/if}
         </div>
-    {if !empty($contentDisplayArray.page_footer)}
+    </div>
+    {if !empty($contentDisplayArray.page_footer) || $alwaysShowFooter}
         <div id='page_footer'>
 			{$contentDisplayArray.page_footer}
         </div>
@@ -140,5 +157,6 @@
         {foreach from=$footerScripts item=currScript}
           {$currScript}
         {/foreach}
+    </div>
     </body>
 </html>

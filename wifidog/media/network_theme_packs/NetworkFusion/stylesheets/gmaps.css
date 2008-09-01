@@ -1,0 +1,57 @@
+/********** Google map section **********/
+#map_title {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font: Bold 125% Verdana, 'Trebuchet MS', Sans-serif;
+	color: #88ac0b;
+	padding: 5px 0 5px 25px; 	
+	background: #FFF url(../images/square-green.png) no-repeat 3px 50%;	
+}
+
+#map_toolbox {
+	display: inline;
+	float: right;
+}
+
+#map_postalcode_overlay {
+	position: absolute;
+	display: none;
+	z-index: 10;
+	background-color: #E9F6FF;
+	border: 1px solid #B4DFFF;
+	padding: 10px;
+	font-size: 10pt;
+	font-weight: bold;
+}
+
+#map_legend {
+	background-color: none;
+	border: 1px solid #B4DFFF;
+	padding: 5px;
+	margin: 10px;
+	font-size: 10pt;
+	color: #37678A;
+	vertical-align: middle;
+}
+
+#map_outer_hotspots_list {
+	position: relative;
+	width: 33%;
+	height: 400px;
+	background-color: #FFFFFF;
+	overflow: auto;
+	float: right;
+}
+
+#map_hotspots_list {
+	padding: 10px;
+}
+
+#map_frame {
+	position: relative;
+	width: 66%;
+	height: 400px;
+	font-size: 10pt;
+}
+
+/********** End Google map section **********/

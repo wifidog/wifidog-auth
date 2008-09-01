@@ -5,5 +5,5 @@ theme_pack_id/		A directory, it's name becomes the theme pack's id
 |- description.txt	The content of this file become the theme pack's description (displayed in the help)
 |- stylesheet.css	Mandatory:  the stylesheet used by the theme, will be applied after the stylesheet in base_theme
 |- images/		Images used by this theme's stylesheet
-
+|- themeconfig.php	The content of this file is optional, but can define the menu position, CSS inheritence and header/footer values.
 Important note:  The encoding for name.txt and description.txt is assumed to be UTF-8

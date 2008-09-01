@@ -1,0 +1,153 @@
+/********** Page specific CSS section **********/
+.portal {
+	
+}
+
+.login {
+	
+}
+
+
+/* The login form (including header) */
+#login_form {
+	float: left;
+	text-align: center;
+}
+
+#login_form form {
+	padding-left: 5px;
+}
+
+/* The help text for the login form */
+#login_help {
+float: right;
+}
+
+/*********************************************************************/
+.clearbr {
+	clear: both;
+}
+
+/******************************* Messages ****************************/ 
+
+.errormsg {
+	font-weight: bold;
+	color: #CC0000;
+}
+
+.warningmsg {
+	font-weight: bold;
+	color: orange;
+}
+
+.successmsg {
+	font-weight: bold;
+	color: #00CC00;
+}
+
+.msg {
+	font-weight: bold;
+	color: black;
+}
+
+/* This is the warning message area ( Alerting the user to validation his account ASAP ) */
+#warning_message_area {
+	background-color: #CC0000;
+	color: white;
+	font-size: large;
+	font-weight: bold;
+	text-align: center;
+}
+
+
+
+.list_ui_container {
+	display: inline;
+}
+
+.download_button {
+	padding: 10px 10px 10px 10px;
+	background-color: #cafd84;
+	color: #336600;
+	font-weight: bold;
+	border: outset #999999;
+}
+
+
+
+/* UIUserList */
+.UIUserList ul {
+	list-style-type: none;
+}
+
+.langstring {
+	text-align: justify;
+}
+
+
+table.content_admin {
+	margin-top: 5px;
+	border: 1px solid grey;
+}
+
+table.content_admin th {
+	background-color: lightgrey;
+}
+
+table.content_admin td {
+	border: 1px solid grey;
+}
+
+
+
+.popup {
+	background-color: white;
+	border: solid darkblue;
+	text-align: left
+}
+
+.link {
+	color: blue;
+	text-decoration: underline
+}
+
+
+
+/*
+
+fieldset {
+	background-color: #E9F6FF;
+	border: 1px solid #B4DFFF;
+}
+
+fieldset legend {
+	color: #37678A;
+	font-size: 1em;
+	font-weight: bold;
+}
+
+fieldset table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+fieldset tr.odd {
+	background-color: #fff;
+}
+
+fieldset th {
+	text-align: left;
+}
+*/
+fieldset .red {
+	background-color: #CC0000;
+}
+
+.smaller {
+	font-size: 80%;
+}
+
+
+
+
+

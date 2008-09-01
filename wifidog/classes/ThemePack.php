@@ -205,6 +205,16 @@ class ThemePack {
         return BASE_URL_PATH . NETWORK_THEME_PACKS_DIR . $this->_id . '/stylesheet.css';
     }
 
+    /**
+     * Retreives the url of this theme's config file (if exists
+     *
+     * @return string URL of this theme's config
+     */
+    public function getThemeConfigPath() {
+        return WIFIDOG_ABS_FILE_PATH . NETWORK_THEME_PACKS_DIR . $this->_id . '/themeconfig.php';
+    }
+
+
 }
 
 /*

@@ -1,0 +1,1448 @@
+/* Important note:  You may not assume ANYTHING about the path to images or media
+that isn't under this file's theme pack.  In other words, no ../ none links. */
+	/********** General HTML elements redefinition section **********/
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Verdana, Tahoma, arial, sans-serif;
+	color: inherit;
+	font-size: 100%;
+	background-color: transparent;
+}
+
+a {
+	color: inherit;
+	font-size: 100%;
+	text-decoration: none;
+}
+
+img {
+	border: 0;
+}
+
+a:hover {
+	color: inherit;
+}
+
+h1 {
+	color: inherit;
+	font-size: 100%;
+}
+
+input {
+	border: 0;
+}
+
+input:hover {
+	border: 0;
+}
+
+input:focus {
+	border: 0;
+}
+
+select {
+	color: inherit;
+	border: 0;
+	background: transparent;
+}
+
+/********** End General HTML elements redefinitionsection **********/
+	/********** Main structure section **********/
+#page_header {
+	padding: 0;
+	background: transparent;
+	margin: 0;
+	border-bottom: 0;
+	min-height: 100%;
+}
+
+#page_header .welcome_msg {
+	
+}
+
+#page_header .welcome_msg_inner {
+	margin-top: 0;
+	font-size: 100%;
+	color: inherit;
+	font-weight: normal;
+}
+
+#page_header .welcome_msg_inner em {
+	font-size: 100%;
+	color: inherit;
+}
+
+#page_header .welcome_msg_inner span {
+	display: inline;
+	font-size: 100%;
+}
+
+#page_body {
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	float: normal;
+}
+
+#page_body h1 {
+	background: transparent;
+	padding-left: 0;
+}
+
+#left_area {
+	position: static; /* Necessary to work around IE6's stupidity */
+	width: 100%;
+	float: normal;
+	margin: 0;
+	padding: 0;
+}
+
+#left_area_top {
+	position: static;
+	width: 100%;
+	background: transparent;
+	margin: 0;
+	padding: 0;
+	border-right: 0;
+	border-bottom: 0;
+	border-left: 0;
+	float: normal;
+}
+
+#left_area_middle {
+	position: static;
+	width: 100%;
+	background: transparent;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	float: normal;
+}
+
+#left_area_middle ul {
+	margin: 0;
+	padding: 0;
+	text-align: left;
+}
+
+#left_area_bottom {
+	position: static;
+	width: 100%;
+	background: transparent;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	float: normal;
+}
+
+#left_area_bottom .user_ui_main_outer {
+	background: transparent;
+	border: 0;
+	color: inherit;
+}
+
+#main_area {
+	width: 100%;
+	float: normal;
+	margin: 0;
+	padding: 0;
+	/*border: 1px solid #E9E9E9;*/
+}
+
+* html #main_area { /* Stupid IE hack */
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#main_area_top {
+	background: transparent;
+	margin: 0;
+	padding: 0;
+	border-right: 0;
+	border-bottom: 0;
+	border-left: 0;
+	float: normal;
+}
+
+#main_area_middle {
+	position: static;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	float: normal;
+}
+
+#main_area_bottom {
+	position: static;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	float: normal;
+}
+
+#right_area {
+	
+}
+
+#right_area_top {
+	
+}
+
+#right_area_middle {
+	
+}
+
+#right_area_bottom {
+	
+}
+
+#page_footer {
+	
+}
+
+/********** End Main structure section **********/
+	/********** Page specific CSS section **********/
+.portal {
+	
+}
+
+.login {
+	
+}
+
+/********** End Page specific CSS section **********/
+	/********** End Main structure section **********/
+div.tool_user_info {
+	margin: 0;
+	padding: 0;
+}
+
+div.language {
+	
+}
+
+form.language {
+	padding: 0;
+	text-align: left;
+}
+
+.tool_content {
+	padding: 0;
+}
+
+div.avis {
+	padding: 0;
+	background-image: none;
+	background-repeat: none;
+	background-position: static;
+	background-color: transparent;
+}
+
+span.avis {
+	padding-top: none;
+}
+
+div.anysection {
+	padding: 0;
+	color: inherit;
+	text-align: left;
+}
+
+div.test {
+	text-align: left;
+	vertical-align: baseline;
+}
+
+/* The login form (including header) */
+#login_form {
+	float: normal;
+	text-align: left;
+}
+
+#login_form form {
+	padding-left: 0;
+}
+
+/* The help text for the login form */
+#login_help {
+	float: normal;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+#logout_link IMG {
+	vertical-align: baseline;
+}
+
+#preferences_link IMG {
+	vertical-align: baseline;
+}
+
+/*********************************************************************/
+.clearbr {
+	clear: none;
+}
+
+/** Messages */ /* Fading Tooltips By Dustin Diaz*/
+body div#toolTip {
+	position: static;
+	z-index: 0;
+	width: 100%;
+	background: transparent;
+	text-align: left;
+	padding: 0;
+	min-height: 100%;
+	-webkit-border-radius: none;
+	-moz-border-radius: none;
+}
+
+body div#toolTip p {
+	margin: 0;
+	padding: 0;
+	color: inherit;
+	font-size: 100%;
+}
+
+body div#toolTip p em {
+	display: inline;
+	margin-top: 0;
+	color: inherit;
+	font-style: none;
+	font-weight: normal;
+}
+
+body div#toolTip p em span {
+	font-weight: normal;
+	color: inherit;
+}
+
+.errormsg {
+	font-weight: normal;
+	color: inherit;
+}
+
+.warningmsg {
+	font-weight: normal;
+	color: inherit;
+}
+
+.successmsg {
+	font-weight: normal;
+	color: inherit;
+}
+
+.msg {
+	font-weight: normal;
+	color: inherit;
+}
+
+/* The content container */
+.content {
+	border: 0;
+	width: 100%;
+}
+
+/********** generic object admin interface **********/
+	/* Fieldset, wraps every output of displyAdminUI.
+All admin_container are also admin_element_group (to ensure that
+ nesting will be explicit) and include the classname of the object as
+ the object class (such as 'Langstring')*/
+.admin_container {
+	border-left: 0;
+	border-top: 0;
+	border-bottom: 0;
+}
+
+/* noramlly a fieldset, logically wraps groups of related
+options.*/
+.admin_element_group {
+	border-left: 0;
+	border-top: 0;
+	border-bottom: 0;
+}
+
+.admin_container,.admin_element_group {
+	display: inline;
+	border-right: 0;
+	background-color: transparent;
+	margin: 0;
+	padding-right: 0;
+	width: 100%;
+}
+
+fieldset.admin_container legend {
+	font-size: 100%;
+}
+
+/* Contains a list of administrative properties of an object */
+.admin_element_list { /*background-color: red;*/
+	margin: 0;
+	padding: 0;
+}
+
+/* Contains an administrative property (possibly a complex, nested one) of an object */
+.admin_element_item_container { /*background-color: lightnone;*/
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+li.admin_element_item_container {
+	display: inline;
+}
+
+tr.admin_element_item_container {
+	
+}
+
+/* The label of the admin element. Optional */
+.admin_element_label {
+	font-weight: normal;
+}
+
+div.admin_element_label {
+	display: inline;
+}
+
+td.admin_element_label,th.admin_element_label {
+	
+}
+
+/* The actual admin element data.  Can contain another admin_element_group */
+div.admin_element_data {
+	display: inline;
+}
+
+td.admin_element_data,th.admin_element_data {
+	
+}
+
+/* Interaction elements (buttons mostly) are in this container.  Optional */
+.admin_element_tools {
+	border: 0;
+	margin: 0;
+}
+
+div.admin_element_tools {
+	display: inline;
+}
+
+td.admin_element_tools,th.admin_element_tools {
+	
+}
+
+/* Get it touching the border to the admin container it's relevant for */
+.admin_element_tools .submit {
+	border: 0;
+	margin: 0;
+}
+
+.submit {
+	border: 0;
+}
+
+.submit:hover {
+	border: 0;
+	background-color: transparent;
+}
+
+.submit_disabled {
+	border: 0;
+}
+
+/********** End generic object admin interface **********/
+.user_select_user_ui_container div {
+	display: inline;
+}
+
+.user_select_user_ui_container .submit {
+	display: inline;
+}
+
+.role_select_role_ui_container div {
+	display: inline;
+}
+
+.content_management_tools {
+	border: 0;
+	background-color: transparent;
+}
+
+/** Content management tools */
+.content_management_tools th {
+	background-color: transparent;
+	color: inherit;
+	text-align: left;
+}
+
+.already_linked_content {
+	
+}
+
+.add_existing_content {
+	font-weight: normal;
+}
+
+.add_new_content {
+	font-weight: normal;
+}
+
+#NodeSelector select {
+	width: 100%;
+}
+
+.generic_object_admin_edit input {
+	float: normal;
+}
+
+/* This is the warning message area ( Alerting the user to validation his account ASAP ) */
+#warning_message_area {
+	background-color: transparent;
+	color: inherit;
+	font-size: 100%;
+	font-weight: normal;
+	text-align: left;
+}
+
+.user_ui_main_outer { /*	display: inline;*/
+	display: inline;
+	color: inherit;
+	background: transparent;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	width: 100%; /* Will this fuck up in explorer? */
+}
+
+.user_ui_main_outer .user_ui_main_outer { /*	display: inline;*/
+	margin: 0;
+	padding: 0;
+}
+
+.hasDisplayableMetadata {
+	/*Defined at same level as user_ui_main_outer*/
+	background: transparent;
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+.user_ui_title .user_ui_main_outer,.user_ui_description .user_ui_main_outer
+	{
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.user_ui_main_inner {
+	display: inline;
+	/*	border: 0;*/
+}
+
+.user_ui_container {
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+.user_ui_title {
+	display: inline;
+	font-size: 100%;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+}
+
+.user_ui_title a {
+	font-size: 100%;
+	font-weight: normal;
+}
+
+.user_ui_authors {
+	display: inline;
+	font-weight: normal;
+	color: inherit;
+	padding: 0;
+	background: transparent;
+	margin: 0;
+	padding: 0;
+}
+
+.user_ui_description {
+	text-align: left;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+}
+
+.user_ui_footer {
+	display: inline;
+	padding: 0;
+	background-color: transparent;
+}
+
+.user_ui_picture {
+	height: 100%;
+}
+
+.user_ui_projet_info {
+	background-color: transparent;
+}
+
+.list_ui_container {
+	display: inline;
+}
+
+.download_button {
+	padding: 0;
+	background-color: transparent;
+	color: inherit;
+	font-weight: normal;
+	border: 0;
+}
+
+/* Portal */
+#portal_container {
+	margin: 0;
+}
+
+.portal_network_section { /*	background-color:	#CFDCE6;*/
+	margin: 0;
+}
+
+.portal_node_section { /*	background-color:	#CFDCE6;*/
+	margin: 0;
+}
+
+.portal_node_section h1,.portal_node_section h1 a {
+	color: inherit;
+	font-size: 100%;
+}
+
+.portal_network_section h1,.portal_network_section h1 a {
+	color: inherit;
+	font-size: 100%;
+}
+
+.portal_user_section { /*	background-color:	#CFDCE6;*/
+	margin: 0;
+}
+
+.portal_section_title,.portal_section_title a {
+	font-size: 100%;
+}
+
+.portal_section_logo {
+	padding: 0;
+	display: inline;
+}
+
+/********** Content type section **********/ /* MainMenu */
+#nav,#nav ul { /* all lists */
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	line-height: 100%;
+	/* WD specific */
+	float: normal;
+	width: 100%;
+	background: transparent;
+	font-weight: normal;
+	border: 0;
+	border-width: 100%;
+	z-index: 0;
+}
+
+#nav {
+	/* WD specific, this must be after the #nav,#nav ul, it will apply only to the top menu items */
+	background: transparent;
+	margin: 0;
+	border: 0;
+	clear: none;
+	display: inline;
+	float: normal;
+}
+
+#nav a { /* WD specific */
+	display: inline;
+	width: 100%;
+	text-decoration: none;
+	padding: 0;
+}
+
+#nav li { /* all list items */
+	float: normal;
+	width: 100%; /* width needed or else Opera goes nuts */
+	/* WD specific */
+	padding: 0;
+}
+
+#nav>li { /* WD specific */
+	border-left: 0;
+	border-right: 0;
+	border-bottom: 0;
+}
+
+#nav li li { /* WD specific */
+	padding-right: 0;
+	width: 100%;
+}
+
+#nav li ul a { /* WD specific */
+	width: 100%;
+}
+
+#nav li ul { /* second-level lists */
+	position: static;
+	width: 100%;
+	left: none;
+	/* using none; instead of display to hide menus because display: none isn't read by screen readers */
+	/* WD specific */
+	height: 100%;
+	font-weight: normal;
+	border-width: 100%;
+	margin: 0;
+}
+
+#nav li:hover ul { /* WD specific */
+	left: none;
+}
+
+#nav li ul ul { /* third-and-above-level lists */
+	margin: 0;
+}
+
+#nav li:hover ul ul,#nav li:hover ul ul ul,#nav li.sfhover ul ul,#nav li.sfhover ul ul ul
+	{
+	left: none;
+}
+
+#nav li:hover ul,#nav li li:hover ul,#nav li li li:hover ul,#nav li.sfhover ul,#nav li li.sfhover ul,#nav li li li.sfhover ul
+	{ /* lists nested under hovered list items */
+	left: none;
+}
+
+#nav li:hover,#nav li.sfhover { /* WD specific */
+	background: transparent;
+}
+
+/* UIUserList */
+.UIUserList ul {
+	list-style-type: none;
+}
+
+.langstring {
+	text-align: left;
+}
+
+/* RssAggregator */
+.fpr_item_title {
+	display: inline;
+}
+
+.fpr_feed_title {
+	display: inline;
+}
+
+.fpr_title_date {
+	font-weight: normal;
+}
+
+.fpr_title_str {
+	display: inline;
+	font-size: 100%;
+	color: inherit;
+}
+
+.fpr_item_title .fpr_title_str {
+	
+}
+
+.fpr_list {
+	padding: 0;
+	margin: 0;
+}
+
+.fpr_item {
+	list-style-type: none;
+	display: inline;
+}
+
+fpr_empty_feeds {
+	
+}
+
+.fpr_mouseover {
+	display: inline;
+}
+
+.fpr_item_link { /*font-size: 1.none;*/
+	color: inherit;
+}
+
+.fpr_expand_switch {
+	text-decoration: none;
+}
+
+.fpr_popup_inner_div {
+	padding: 0;
+	visibility: none;
+	position: static;
+	left: none;
+	top: none;
+	width: 100%;
+	z-index: 0;
+	opacity: none;
+	filter: none;
+	-webkit-border-radius: none;
+	-moz-border-radius: none;
+	border-radius: none;
+	background-color: transparent;
+	color: inherit;
+	border: 0;
+}
+
+.fpr_popup_inner_div_expanded {
+	margin: 0;
+	padding: 0;
+	/* Color of background around the text: #E9F6FF */
+	border-top: 0;
+	border-right: 0;
+	border-bottom: 0;
+	border-left: 0;
+	color: inherit;
+	background-color: transparent;
+}
+
+.fpr_popup_outer_div {
+	position: static;
+}
+
+.fpr_feed_image {
+	float: normal;
+}
+
+.fpr_text {
+	display: inline;
+}
+
+.fpr_text P {
+	
+}
+
+.fpr_text img {
+	float: normal;
+}
+
+.fpr_enclosure {
+	max-width: 100%;
+	max-height: 100%;
+	display: inline;
+	float: normal;
+}
+
+.fpr_enclosure_inner {
+	display: inline;
+}
+
+.fpr_clear {
+	clear: none;
+}
+
+.fpr_enclosure_download {
+	text-align: left;
+}
+
+.fpr_item_metadata {
+	float: normal;
+}
+
+.flickr_photo {
+	background: transparent;
+	background: transparent;
+	margin: 0;
+	margin: 0;
+}
+
+.flickr_photo img {
+	display: inline;
+	position: static;
+	background-color: transparent;
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+.flickr_photo img:hover {
+	display: inline;
+	position: static;
+	background-color: transparent;
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+.flickr_photo_hover {
+	display: inline;
+}
+
+.flickr_title {
+	color: inherit;
+	width: 100%;
+	background: transparent;
+}
+
+.flickr_title a {
+	color: inherit;
+}
+
+.flickr_title h3 {
+	color: inherit;
+	padding: 0;
+	margin: 0;
+}
+
+.flickr_tags {
+	visibility: none;
+	background-color: transparent;
+	color: inherit;
+	width: 100%;
+}
+
+.flickr_tags h3 {
+	padding-left: 0;
+	margin: 0;
+}
+
+.flickr_tags ul {
+	margin-left: 0;
+	margin-top: 0;
+	padding: 0;
+}
+
+.flickr_tags li {
+	list-style: none;
+	list-style-image: none;
+}
+
+.flickr_tags li a {
+	color: inherit;
+	/* font-size: 100%; - invalid? */
+	text-decoration: none;
+}
+
+.flickr_tags li a:hover {
+	text-decoration: none;
+}
+
+.flickr_description {
+	color: inherit;
+	width: 100%;
+	background: transparent;
+}
+
+.flickr_description a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.pattern_language_menu {
+	list-style-type: none;
+}
+
+.pattern_language_big_links {
+	color: inherit;
+	font-size: 100%;
+	font-weight: normal;
+}
+
+.pattern_language_big_links:hover {
+	color: inherit;
+	font-size: 100%;
+	font-weight: normal;
+}
+
+.pattern_language_body {
+	border: 0;
+	background: transparent;
+	margin: 0;
+	padding: 0;
+	text-align: left;
+}
+
+.pattern_language_credits {
+	border: 0;
+	background: transparent;
+	margin: 0;
+	padding: 0;
+}
+
+/* Shoutbox */
+.ShoutBox .message {
+	display: inline;
+}
+
+.ShoutBox ul {
+	list-style-type: none;
+	padding-left: 0;
+}
+
+table.content_admin {
+	margin-top: 0;
+	border: 0;
+}
+
+table.content_admin th {
+	background-color: transparent;
+}
+
+table.content_admin td {
+	border: 0;
+}
+
+.Avatar {
+	display: inline;
+	vertical-align: baseline;
+	margin: 0;
+	padding: 0;
+}
+
+.Avatar div {
+	display: inline;
+}
+
+.Avatar img {
+	max-width: 100%;
+	max-height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.Profile .Avatar img {
+	float: normal;
+}
+
+.user_nickname {
+	font-size: 100%;
+	font-weight: normal;
+}
+
+.user_edit_profile_link {
+	display: inline;
+}
+
+.user_ui_profile_field {
+	
+}
+
+.profile_field_label {
+	font-size: 100%;
+	font-weight: normal;
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+.foaf\:nick .profile_field_label {
+	display: inline;
+}
+
+.foaf\:name .profile_field_label {
+	display: inline;
+}
+
+.foaf\:img .profile_field_label {
+	display: inline;
+}
+
+.profile_field_label div {
+	margin: 0;
+	padding: 0;
+}
+
+.profile_field_label div {
+	display: inline;
+}
+
+.profile_field_content {
+	display: inline;
+}
+
+.foaf\:nick .profile_field_content {
+	font-size: 100%;
+	font-weight: normal;
+}
+
+.foaf\:name .profile_field_content {
+	font-size: 100%;
+	font-weight: normal;
+}
+
+.profile_field_content div {
+	display: inline;
+}
+
+/********** End Content type section **********/
+.popup {
+	background-color: transparent;
+	border: 0;
+	text-align: left;
+}
+
+.link {
+	color: inherit;
+	text-decoration: none;
+}
+
+#node_list {
+	
+}
+
+#node_list table {
+	background-color: transparent;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#node_list tr {
+	background-color: transparent;
+	border: 0;
+}
+
+#node_list tr.even {
+	background-color: transparent;
+}
+
+#node_list tr.odd {
+	background-color: transparent;
+}
+
+#node_list td {
+	margin: 0;
+	text-align: left;
+	color: inherit;
+}
+
+#node_list td.status {
+	width: 100%;
+	text-align: left;
+	font-size: 100%;
+}
+
+#node_list a {
+	color: inherit;
+}
+
+#hotspot_status {
+	
+}
+
+#hotspot_status table {
+	background-color: transparent;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#hotspot_status tr {
+	vertical-align: baseline;
+	font-size: 100%;
+	font-family: Verdana, Tahoma, arial, sans-serif;
+	background-color: transparent;
+	border: 0;
+}
+
+#hotspot_status tr.even {
+	background-color: transparent;
+}
+
+#hotspot_status tr.odd {
+	background-color: transparent;
+}
+
+#hotspot_status td {
+	margin: 0;
+	color: inherit;
+}
+
+#hotspot_status a {
+	color: inherit;
+}
+
+#hotspot_log {
+	margin: 0;
+}
+
+#hotspot_log table {
+	background-color: transparent;
+	border-collapse: collapse;
+}
+
+#hotspot_log th {
+	background-color: transparent;
+	border: 0;
+	text-align: left;
+}
+
+#hotspot_log tr {
+	background-color: transparent;
+	border: 0;
+}
+
+#hotspot_log td {
+	margin: 0;
+	color: inherit;
+}
+
+#hotspot_log td.status {
+	width: 100%;
+	text-align: left;
+	font-size: 100%;
+}
+
+#hotspot_log a {
+	color: inherit;
+}
+
+#user_stats {
+	
+}
+
+#user_stats table {
+	background-color: transparent;
+	border-collapse: collapse;
+}
+
+#user_stats th {
+	background-color: transparent;
+	border: 0;
+}
+
+#user_stats tr {
+	background-color: transparent;
+	border: 0;
+}
+
+#user_stats td {
+	margin: 0;
+	color: inherit;
+}
+
+#user_stats td.status {
+	width: 100%;
+	text-align: left;
+	font-size: 100%;
+}
+
+#user_stats a {
+	color: inherit;
+}
+
+#std_table {
+	
+}
+
+#std_table table {
+	border: 0;
+}
+
+#std_table th {
+	font-size: 100%;
+	background-color: transparent;
+}
+
+#std_table td.item {
+	font-weight: normal;
+}
+
+fieldset {
+	background-color: transparent;
+	border: 0;
+}
+
+fieldset legend {
+	color: inherit;
+	font-size: 100%;
+	font-weight: normal;
+}
+
+fieldset table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+fieldset tr.odd {
+	background-color: transparent;
+}
+
+fieldset th {
+	text-align: left;
+}
+
+fieldset .red {
+	background-color: transparent;
+}
+
+.smaller {
+	font-size: 100%;
+}
+
+/********** Google map section **********/
+#map_title {
+	background-color: transparent;
+	border: 0;
+	margin-top: 0;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+	font-weight: normal;
+}
+
+#map_toolbox {
+	display: inline;
+	float: normal;
+}
+
+#map_postalcode_overlay {
+	position: static;
+	display: inline;
+	z-index: 0;
+	background-color: transparent;
+	border: 0;
+	padding: 0;
+	font-size: 100%;
+	font-weight: normal;
+}
+
+#map_legend {
+	background-color: transparent;
+	border: 0;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+	vertical-align: baseline;
+}
+
+#map_outer_hotspots_list {
+	position: static;
+	width: 100%;
+	height: 100%;
+	background-color: transparent;
+	overflow: visible;
+	float: normal;
+}
+
+#map_hotspots_list {
+	padding: 0;
+}
+
+#map_frame {
+	position: static;
+	width: 100%;
+	height: 100%;
+	font-size: 100%;
+}
+
+/********** End Google map section **********/
+	/********** Scrollable Table Section ********/
+#node_list_div {
+	background: transparent;
+	overflow: visible;
+	height: 100%;
+	width: 100%;
+	min-width: 100%;
+	text-align: left;
+	border: 0;
+}
+
+#node_list_div table.scrollable>tbody {
+	/* child selector syntax which IE6 and older do not support */
+	overflow: visible;
+	height: 100%;
+	width: 100%;
+}
+
+\html
+div.tableContainer table { /* */
+	margin: 0;
+}
+
+\html
+div.tableContainer { /* */
+	padding: 0;
+}
+
+table.scrollable thead tr {
+	position: static;
+}
+
+html>body thead tr {
+	width: 100%;
+}
+
+table.scrollable {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+table.scrollable thead th {
+	font-weight: normal;
+	text-align: left;
+	border-top: 0;
+	border-bottom: 0;
+	background-color: transparent;
+	color: inherit;
+	width: 100%;
+}
+
+table.scrollable tr.row:hover,tr.hover {
+	background-color: transparent;
+	color: inherit;
+}
+
+table.scrollable tr {
+	cursor: auto;
+}
+
+table.scrollable td {
+	color: inherit;
+	padding-left: 0;
+	font-size: 100%;
+	text-align: left;
+}
+
+table.scrollable thead td:last-child {
+	padding-right: 0;
+}
+
+table.scrollable thead th:last-child {
+	padding-right: 0;
+}
+
+/******* End Scrollable Table Section ********/
+	/********** Sortable Table Section ***********/
+table.sortable a.sortheader {
+	background-color: transparent;
+	color: inherit;
+	font-weight: normal;
+	text-decoration: none;
+	display: inline;
+	font-size: 100%;
+}
+
+table.sortable span.sortarrow {
+	color: inherit;
+	text-decoration: none;
+}
+
+table.sortable tr.odd {
+	background-color: transparent;
+}
+
+table.sortable tr.even {
+	background-color: transparent;
+}
+/****** End Sortable Table Section ***********/

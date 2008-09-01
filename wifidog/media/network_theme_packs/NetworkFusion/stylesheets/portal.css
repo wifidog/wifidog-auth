@@ -1,0 +1,35 @@
+/* Portal */
+#portal_container {
+	margin: 3px;
+}
+
+.portal_network_section {
+	margin: 3px;
+}
+
+.portal_node_section {
+	margin: 3px;
+}
+
+.portal_node_section h1,.portal_node_section h1 a {
+	color: #88AA4B;
+	font-size: 14px;
+}
+
+.portal_network_section h1,.portal_network_section h1 a {
+	color: #88AA4B;
+	font-size: 1.2em;
+}
+
+.portal_user_section {
+	margin: 3px;
+}
+
+.portal_section_title,.portal_section_title a {
+	font-size: medium;
+}
+
+.portal_section_logo {
+	padding: 2px;
+	display: inline;
+}

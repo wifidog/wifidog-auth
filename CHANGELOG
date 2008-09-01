@@ -1,18 +1,22 @@
 # $Id$
 2008-08-31 Robin Jones
+	* Created ability to have a themes setting file to define commonly asked for features.
+	* Created a new "Network Theme Pack" to show off the settings file and improve the user experience.
+
+2008-08-31 Robin Jones
 	* Updated some table row elements to support Odd/Even CSS. This also closes #382
 
 2008-08-28 Benoit Grégoire  <bock@step.polymtl.ca>
 	* Fix #492
 
 2008-08-13 Robin Jones
-	* Fixed dependancy change for Smarty reported by cristian@lalineapeluda.com
+	* Fixed dependency change for Smarty reported by cristian@lalineapeluda.com
 
 2008-08-07 Benoit Grégoire  <bock@step.polymtl.ca>
-	* Updated spanish translation by jlms77@gmail.com
+	* Updated Spanish translation by jlms77@gmail.com
 
 2008-07-13 Benoit Grégoire  <bock@step.polymtl.ca>
-	* Add new catalan translation by Christian Lorenzo cristian@lalineapeluda.com
+	* Add new Catalan translation by Christian Lorenzo cristian@lalineapeluda.com
 	* Rebuild transaltions and initial schema.
 
 2008-06-12 Benoit Grégoire  <bock@step.polymtl.ca>

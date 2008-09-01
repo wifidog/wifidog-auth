@@ -1,0 +1,144 @@
+/* Table elements */
+table {
+	border-collapse: collapse;
+}
+
+table a, table a:visited {
+	background: none;
+	color: #4F82CB;
+}
+
+table td {
+	margin: 0 0 0 0;
+	text-align: center;
+	color: #000;
+}
+
+table th {
+	font-weight: bold;
+	text-decoration: none;
+	font-size: 12px;
+	background-color: none;
+	background: transparent url(../images/headerbg.gif) repeat-x left bottom;
+	text-align: center;
+}
+
+table th, table th a {
+	color:  #4F82CB;
+}
+
+table tr.odd {
+	background-color: #FFFFFF;
+}
+
+table tr.even {
+	background-color: #EFEFEF;
+}
+
+table tr.up {
+	background-color: green;
+}
+
+table tr.down {
+	background-color: red;
+}
+
+
+/********** Sortable Table Section ***********/
+
+#node_list_div {
+	overflow: auto;
+	height: 400px;
+	width: 97%;
+	min-width: 500px;
+	text-align: center;
+
+}
+
+#node_list_div table.scrollable>tbody {
+	/* child selector syntax which IE6 and older do not support */
+	overflow: auto;
+	height: 378px;
+	width: 100%;
+}
+
+
+div.tableContainer table {
+	margin: 0 -16px 0 0;
+}
+
+
+div.tableContainer {
+	padding: 0 16px 0 0;
+}
+
+table.scrollable thead tr {
+	position: relative;
+}
+
+html>body thead tr {
+	width: 100%;
+}
+
+table.scrollable {
+	width: 99%;
+	border-collapse: collapse;
+	border-spacing: 0px;
+}
+
+table.scrollable thead th {
+	font-weight: bold;
+	text-align: center;
+	width: 200px;
+}
+
+table.scrollable tr.row:hover,tr.hover {
+	background-color: #2175bc;
+	color: #ff0000;
+}
+
+table.scrollable tr {
+	cursor: pointer;
+}
+
+table.scrollable td {
+	color: #000000;
+	padding-left: 5px;
+	font-size: 12px;
+	text-align: left;
+}
+
+table.scrollable thead td:last-child {
+	padding-right: 25px;
+}
+
+table.scrollable thead th:last-child {
+	padding-right: 25px;
+}
+
+
+/********** Sortable Table Section ***********/
+table.sortable a.sortheader {
+
+}
+
+table.sortable span.sortarrow {
+	color: black;
+	text-decoration: none;
+}
+
+
+
+/****** Node Status Table Tweeks *************/
+
+#node_list td.status {
+	width: 15em;
+	text-align: left;
+	
+}
+
+#node_list td.status img {
+	vertical-align: middle;
+	float: left;
+}
+

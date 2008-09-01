@@ -1,0 +1,10 @@
+/* Shoutbox */
+.ShoutBox .message {
+	display: inline;
+}
+
+.ShoutBox ul {
+	list-style-type: none;
+	padding-left: 0.5em;
+}
+

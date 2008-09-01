@@ -1,0 +1,147 @@
+/********************************************
+   LAYOUT
+********************************************/ 
+#wrap {
+	width: 820px;
+	background: #CCC url(../images/content.jpg) repeat-y center top;
+	margin: 0 auto;
+	text-align: left;
+}
+#content-wrap {
+	clear: both;
+	width: 760px;
+	padding: 0; 
+	margin: 0 auto;
+}
+#page_header {
+	width: 820px;
+	position: relative;
+	height: 106px;
+	background: #CCC url(../images/header.jpg) no-repeat center top;
+	padding: 0;
+	font-size: 14px;
+	color: #FFF;
+
+}
+#page_header .welcome_msg {
+	
+}
+#page_header .welcome_msg_inner em {
+	position: absolute;
+	margin: 0; padding: 0;
+	font: bolder 3em 'Trebuchet MS', Arial, Sans-serif;
+	letter-spacing: -2px;
+	color: #FFF;
+	text-transform: none;
+	
+	/* change the values of top and left to adjust the position of the logo*/
+	top: 44px; left: 58px;
+}
+#page_header .welcome_msg_inner span {
+	position: absolute;
+	margin: 0; padding: 0;
+	font: normal 1em 'Trebuchet MS', Arial, Sans-serif;
+	text-transform: none;
+	color: #FFF;
+	
+	/* change the values of top and left to adjust the position of the slogan*/	top: 32px; left: 50px;		
+}
+
+
+/* Main Column */
+#main_area {
+	float: right;
+	width: 72%;
+	padding: 0; margin: 0;
+}
+#main_area h1 {
+	margin-top: 10px;
+	font: Bold 125% Verdana, 'Trebuchet MS', Sans-serif;
+	color: #88ac0b;
+	padding: 5px 0 5px 25px; 	
+	border-bottom: 1px solid #EFF0F1;
+	background: #FFF url(../images/square-green.png) no-repeat 3px 50%;	
+}
+
+.post-footer {
+	background-color: #FAFAFA;
+	padding: 5px; margin: 20px 10px 0 10px;
+	border: 1px solid #f2f2f2;
+	font-size: 95%;	
+}
+.post-footer .date {
+	background: url(../images/clock.gif) no-repeat left center;
+	padding-left: 20px; margin: 0 10px 0 5px;
+}
+.post-footer .comments {
+	background: url(../images/comment.gif) no-repeat left center;
+	padding-left: 20px; margin: 0 10px 0 5px;
+}
+.post-footer .readmore {
+	background: url(../images/page.gif) no-repeat left center;
+	padding-left: 20px; margin: 0 10px 0 5px;
+}
+
+/* Sidebar */	
+#left_area {
+	float: left;
+	width: 26.5%;
+	padding: 0; margin: 0;	
+}	
+
+#left_area_top {
+	position: relative;	
+	border: 1px solid #EFF0F1; 
+	margin: 10px 5px;	
+}
+#left_area_middle {
+	position: relative;
+	border: 1px solid #EFF0F1; 
+	margin: 0 0 5px 0;	
+}
+#left_area_bottom {
+	position: relative;
+	border: 1px solid #EFF0F1; 
+	margin: 0 0 5px 0;	
+}
+
+#left_area ul {
+	list-style: none;
+	text-align: left;
+	margin: 3px 0 8px 0; padding: 0;
+	text-decoration: none;		
+}
+
+#left_area ul li {
+	border-bottom: 1px solid #EFF0F1;
+	background: url(../images/go.gif) no-repeat 5px 5px;	
+	padding: 2px 0 2px 25px;
+	margin: 0 2px;	
+}
+#left_area a {
+	font-weight: bolder;
+	text-decoration: none;	
+	background-image: none;	
+}
+
+/* Footer */	
+#page_footer {
+	color: #666666;
+	background: #CCC url(../images/footer.jpg) no-repeat center top;
+	clear: both;
+	width: 820px;
+	height: 55px;
+	text-align: center;	
+	font-size: 92%;
+}
+#page_footer a { text-decoration: none; }
+
+/* alignment classes */
+.float-left  { float: left; }
+.float-right { float: right; }
+.align-left  { text-align: left; }
+.align-right { text-align: right; }
+
+/* display and additional classes */
+.clear { clear: both; }
+.gray { color: #CCC; }
