@@ -40,36 +40,47 @@
  * @subpackage Templates
  * @author     Max Horváth <max.horvath@freenet.de>
  * @copyright  2006 Max Horváth, Horvath Web Consulting
+ * @copyright  2008 Robin Jones, NetworkFusion
  * @version    Subversion $Id: $
  * @link       http://www.wifidog.org/
  */
 
 *}
-                <h1>{"Login or Signup here"|_}:</h1>
-			<p>
+<div id="login_signup">
+    <h1>{"Login or Signup here"|_}:</h1>
+    <div id="loginbox">
+        <h2>{"Login Here"|_}:</h2>
+        <div id="networkselection">
             {$selectNetworkUI}
-            </p>
-			{if $user_id}
-			    <input type="hidden" name="user_id" id="form_user_id" value="{$user_id}"/>
-			{else}
-            	{"Username (or email)"|_}:<br/>
-            	<input type="text" name="username" id="form_username" tabindex="1" value="{$username}" size="20" /><br/>
+        </div>
+        <div id="loginselection">
+		    {if $user_id}
+		        <input type="hidden" name="user_id" id="form_user_id" value="{$user_id}"/>
+		    {else}
+                {"Username (or email)"|_}:<br/>
+                <input type="text" name="username" id="form_username" tabindex="1" value="{$username}" size="20" /><br/>
             {/if}
             {"Password"|_}:<br/>
             <input type="password" name="password" id="form_password" tabindex="2" size="20" /><br/>
+        </div>
+        <div id="form_errormsg" class="errormsg">
+		    {if $error == null}
+		    	&nbsp;
+		    {else}
+		    	{$error}
+		    {/if}
+		</div>
 
-            <div id="form_errormsg" class="errormsg">
-			{if $error == null}
-			  &nbsp;
-			{else}
-			  {$error}
-			{/if}
-			</div>
+        <input class="submit" type="submit" tabindex="3" name="login_form_submit" value="{"Login"|_}" onclick="return validateForm(this.form);"/>&nbsp;
+    </div>
+    {if $signupUrl}
+    <div id="signupbox">
+        <h2>{"Signup Here"|_}:</h2>
+		    <input class="submit" type="submit" tabindex="4" name="form_signup" value="{"Create a free account"|_}" onclick="location.href='{$signupUrl}';" />
+    </div>
+    {/if}
 
-            <input class="submit" type="submit" tabindex="3" name="login_form_submit" value="{"Login"|_}" onclick="return validateForm(this.form);"/>&nbsp;
-            {if $signupUrl}
-			   <input class="submit" type="submit" tabindex="4" name="form_signup" value="{"Create a free account"|_}" onclick="location.href='{$signupUrl}';" />
-            {/if}
+</div>
             <script type="text/javascript">
         <!--
 		{literal}

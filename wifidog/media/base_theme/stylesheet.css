@@ -270,6 +270,10 @@ div.test {
 	padding-left: 1em;
 }
 
+#loginbox_signup, h2 {
+	display: none;
+}
+
 /* The help text for the login form */
 #login_help {
 	float: left;

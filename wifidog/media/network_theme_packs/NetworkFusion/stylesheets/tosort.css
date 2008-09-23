@@ -8,20 +8,7 @@
 }
 
 
-/* The login form (including header) */
-#login_form {
-	float: left;
-	text-align: center;
-}
 
-#login_form form {
-	padding-left: 5px;
-}
-
-/* The help text for the login form */
-#login_help {
-float: right;
-}
 
 /*********************************************************************/
 .clearbr {

@@ -1,4 +1,7 @@
 # $Id$
+2008-09-23 Robin Jones
+	* Made Login template easier to edit using CSS and added example to NetworkFusion theme pack, This closes #343 .
+
 2008-08-31 Robin Jones
 	* Created ability to have a themes setting file to define commonly asked for features.
 	* Created a new "Network Theme Pack" to show off the settings file and improve the user experience.

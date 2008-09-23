@@ -15,6 +15,7 @@
  @import url("stylesheets/form.css");
  @import url("stylesheets/gmaps.css");
  @import url("stylesheets/toolcontent.css");
+ @import url("stylesheets/loginform.css");
  /****************** Admin functions split *************************/
  @import url("stylesheets/contentmanagement.css");
  @import url("stylesheets/admin.css");
