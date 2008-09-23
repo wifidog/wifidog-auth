@@ -1,5 +1,8 @@
 # $Id$
 2008-09-23 Robin Jones
+	* Oops, forgot to include new style sheet into the previous commit.
+
+2008-09-23 Robin Jones
 	* Made Login template easier to edit using CSS and added example to NetworkFusion theme pack, This closes #343 .
 
 2008-08-31 Robin Jones
