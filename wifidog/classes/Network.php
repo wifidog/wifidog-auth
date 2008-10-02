@@ -1404,6 +1404,45 @@ class Network extends GenericDataObject
         return $retval;
     }
 
+      /** 
+      * Are nodes allowed to redirect users to the original requested web page instead of 
+      * the portal? 
+      * 
+      * @return bool True or false 
+      * 
+      * @access public 
+      */ 
+     public function getPortalOriginalUrlAllowed() 
+     { 
+         return (($this->_row['allow_original_url_redirect'] == 't') ? true : false); 
+     } 
+  
+     /** 
+      * Set if nodes are allowed to redirect users to the original requested web page 
+      * instead of the portal? 
+      * 
+      * @param bool $value The new value, true or false 
+      * 
+      * @return bool True on success, false on failure 
+      * 
+      * @access public 
+      */ 
+     public function setPortalOriginalUrlAllowed($value) 
+     { 
+         // Init values 
+         $retval = true; 
+  
+         if ($value != $this->getPortalOriginalUrlAllowed()) { 
+             $db = AbstractDb::getObject(); 
+             $value ? $value = 'TRUE' : $value = 'FALSE'; 
+             $retval = $db->execSqlUpdate("UPDATE networks SET allow_original_url_redirect = {$value} WHERE network_id = '{$this->getId()}'", false); 
+             $this->refresh(); 
+         } 
+  
+         return $retval; 
+     } 
+
+
     /** The length of the window during which the user must not have exceeded the limits below.
      *
      * @return string Interval as returned by postgresql
@@ -1665,6 +1704,12 @@ class Network extends GenericDataObject
         $data = InterfaceElements::generateInputCheckbox("network_" . $this->getId() . "_allow_custom_portal_redirect", "", _("Yes"), $this->getCustomPortalRedirectAllowed(), "network_allow_custom_portal_redirect_radio");
         $html_network_node_properties[] = InterfaceElements::generateAdminSectionContainer("network_allow_custom_portal_redirect", $title, $data, $help);
 
+        //  allow_original_URL_redirect
+        $title = _("Original URL redirection");
+        $help = _("Are nodes allowed to redirect users to the web page they originally requested instead of the portal?");
+        $data = InterfaceElements::generateInputCheckbox("network_" . $this->getId() . "_allow_original_URL_redirect", "", _("Yes"), $this->getPortalOriginalUrlAllowed(), "network_allow_original_URL_redirect_radio");
+        $html_network_node_properties[] = InterfaceElements::generateAdminSectionContainer("network_allow_original_URL_redirect", $title, $data, $help);
+
         // Build section
         $html .= InterfaceElements::generateAdminSectionContainer("network_node_properties", _("Network's node properties"), implode(null, $html_network_node_properties));
 
@@ -1873,6 +1918,10 @@ class Network extends GenericDataObject
         //  allow_custom_portal_redirect
         $name = "network_".$this->getId()."_allow_custom_portal_redirect";
         $this->setCustomPortalRedirectAllowed(empty ($_REQUEST[$name]) ? false : true);
+
+        //  'allow_original_URL_redirect
+        $name = "network_".$this->getId()."_allow_original_URL_redirect";
+        $this->setPortalOriginalUrlAllowed(empty ($_REQUEST[$name]) ? false : true);
 
         /*
          * Dynamic abuse control

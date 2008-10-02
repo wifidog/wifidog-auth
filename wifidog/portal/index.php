@@ -108,6 +108,24 @@ if (isset ($session)) {
 }
 
 /*
+ * If this node allows redirection to original URL, and the network config allows it,
+ * redirect to original URL
+ */
+$session_original_url = $session->get(SESS_ORIGINAL_URL_VAR);
+
+if ($node->getPortalOriginalUrlAllowed() && $network->getPortalOriginalUrlAllowed() && !empty ($session_original_url))
+    /**
+     * If the database doesn't get cleaned up by a cron job, we'll do now (normally this is done in ManiUI, but for custom URLs, MainUI may never be instanciated
+     */
+    if (CONF_USE_CRON_FOR_DB_CLEANUP == false) {
+        garbage_collect();
+    }
+    header("Location: {$session_original_url}");
+    exit;
+}
+
+
+/*
  * If this node has a custom portal defined, and the network config allows it,
  * redirect to the custom portal
  */

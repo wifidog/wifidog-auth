@@ -1019,6 +1019,32 @@ class Node implements GenericObject
         return $retval;
     }
 
+   /** redirect users to the original requested web page instead of portal 
+      Must be enabled in the Network configuration to have any effect 
+      @return a string */ 
+     function getPortalOriginalUrlAllowed() 
+     { 
+         return (($this->_row['allow_original_url_redirect'] == 't') ? true : false); 
+     } 
+  
+     /** redirect users to the original requested web page instead of portal 
+      Must be enabled in the Network configuration to have any effect 
+      @return true on success, false on failure */ 
+     function setPortalOriginalUrlAllowed($value) 
+     { 
+         $retval = true; 
+         if ($value != $this->getPortalOriginalUrlAllowed()) 
+         { 
+             $db = AbstractDb::getObject(); 
+             $value ? $value = 'TRUE' : $value = 'FALSE';
+             $retval = $db->execSqlUpdate("UPDATE nodes SET allow_original_url_redirect = '{$value}' WHERE node_id = '{$this->getId()}'", false); 
+             $this->refresh(); 
+         } 
+         return $retval; 
+     } 
+
+
+
     /**
      * Retrieves the admin interface of this object
      *
@@ -1240,6 +1266,12 @@ class Node implements GenericObject
             $_html_node_config[] = InterfaceElements::generateAdminSectionContainer("node_custom_portal_redirect_url", $_title, $_data);
         }
 
+        //  allow_original_URL_redirect
+        $title = _("Original URL redirection");
+        $help = _("Are nodes allowed to redirect users to the web page they originally requested instead of the portal? this will overide the custom portal URL");
+        $data = InterfaceElements::generateInputCheckbox("node_" . $node_id . "_allow_original_URL_redirect", "", _("Yes"), $this->getPortalOriginalUrlAllowed(), "node_allow_original_URL_redirect_radio");
+        $_html_node_config[] = InterfaceElements::generateAdminSectionContainer("node_allow_original_URL_redirect", $title, $data, $help);
+
         // Build section
         $html .= InterfaceElements::generateAdminSectionContainer("node_config", _("Node configuration"), implode(null, $_html_node_config));
 
@@ -1422,6 +1454,13 @@ class Node implements GenericObject
         {
             $name = "node_".$node_id."_custom_portal_redirect_url";
             $this->setCustomPortalRedirectUrl($_REQUEST[$name]);
+        }
+
+        // allow_original_URL_redirect
+        if ($network->getPortalOriginalUrlAllowed())
+        {
+            $name = "node_" . $node_id . "_allow_original_URL_redirect";
+            $this->setPortalOriginalUrlAllowed(empty ($_REQUEST[$name]) ? false : true);
         }
 
         // End Node configuration section

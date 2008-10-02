@@ -47,7 +47,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 62);
+define('REQUIRED_SCHEMA_VERSION', 63);
 /** Used to test a new shecma version before modyfying the database */
 define('SCHEMA_UPDATE_TEST_MODE', false);
 /**
@@ -1414,6 +1414,17 @@ function real_update_schema($targetSchema) {
 
         $sql .= "ALTER TABLE nodes ALTER COLUMN connection_limit_node_max_total_bytes_override TYPE bigint;\n";
         
+    }
+    $new_schema_version = 63;
+    if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
+        printUpdateVersion($new_schema_version);
+     $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+
+        $sql .= "ALTER TABLE networks ADD column allow_original_url_redirect bool; \n";
+        $sql .= "ALTER TABLE networks ALTER COLUMN allow_original_url_redirect SET DEFAULT FALSE;\n";
+
+        $sql .= "ALTER TABLE nodes ADD column allow_original_URL_redirect bool; \n";
+        $sql .= "ALTER TABLE nodes ALTER COLUMN allow_original_URL_redirect SET DEFAULT FALSE;\n";
     }
     /*
      $new_schema_version = ;
