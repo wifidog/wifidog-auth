@@ -113,7 +113,7 @@ if (isset ($session)) {
  */
 $session_original_url = $session->get(SESS_ORIGINAL_URL_VAR);
 
-if ($node->getPortalOriginalUrlAllowed() && $network->getPortalOriginalUrlAllowed() && !empty ($session_original_url))
+if ($node->getPortalOriginalUrlAllowed() && $network->getPortalOriginalUrlAllowed() && !empty ($session_original_url)) {
     /**
      * If the database doesn't get cleaned up by a cron job, we'll do now (normally this is done in ManiUI, but for custom URLs, MainUI may never be instanciated
      */

@@ -1,4 +1,7 @@
 # $Id$
+2008-10-13 Robin Jones
+	* fixed #498 curley brace missing in portal.php
+
 2008-10-02 Robin Jones
 	* Support for redirecting to the users original URL instead of portal
 
