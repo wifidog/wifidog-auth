@@ -235,12 +235,15 @@ class Network extends GenericDataObject
      */
     public static function getSelectUI($user_prefix, $userData=null)
     {
+        $userData=$userData===null?array():$userData;
         $html = '';
         $name = $user_prefix;
         //pretty_print_r($userData);
-        !empty($userData['preSelectedObject'])?$selected_id=$userData['preSelectedObject']->getId():$selected_id=self::getDefaultNetwork()->getId();
+        array_key_exists('preSelectedObject',$userData)?(empty($userData['preSelectedObject'])?$selected_id=null:$selected_id=$userData['preSelectedObject']->getId()):$selected_id=self::getDefaultNetwork()->getId();
         !empty($userData['additionalWhere'])?$additional_where=$userData['additionalWhere']:$additional_where=null;
         !empty($userData['allowEmpty'])?$allow_empty=$userData['allowEmpty']:$allow_empty=false;
+        !empty($userData['nullCaptionString'])?$nullCaptionString=$userData['nullCaptionString']:$nullCaptionString=null;
+        !empty($userData['onChange'])?$onChangeString=$userData['onChange']:$onChangeString="";
 
         $db = AbstractDb::getObject();
         $sql = "SELECT network_id, name FROM networks WHERE 1=1 $additional_where";
@@ -259,7 +262,7 @@ class Network extends GenericDataObject
                 $i ++;
             }
             $html .= _("Network:")." \n";
-            $html .= FormSelectGenerator :: generateFromArray($tab, $selected_id, $name, null, $allow_empty);
+            $html .= FormSelectGenerator :: generateFromArray($tab, $selected_id, $name, null, $allow_empty, $nullCaptionString, "onchange='$onChangeString'");
 
         } else {
             foreach ($network_rows as $network_row) //iterates only once...
@@ -354,6 +357,9 @@ class Network extends GenericDataObject
     {
         $db = AbstractDb::getObject();
         $network_id_str = $db->escapeString($p_network_id);
+        if ($network_id_str == "")
+            $network_id_str = $db->escapeString(self::getDefaultNetwork()->getId());
+
         $sql = "SELECT *, EXTRACT(EPOCH FROM validation_grace_time) as validation_grace_time_seconds FROM networks WHERE network_id='$network_id_str'";
         $row = null;
         $db->execSqlUniqueRes($sql, $row, false);

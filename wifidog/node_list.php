@@ -97,16 +97,35 @@ if ($sort_by_using_sql === true) {
     else {
         $sort_by_param_sql = $sort_by_param;
     }
-    $sql = "SELECT node_id, gw_id, name, last_heartbeat_user_agent, (CURRENT_TIMESTAMP-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((CURRENT_TIMESTAMP-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS online, creation_date, node_deployment_status, last_heartbeat_wifidog_uptime, last_heartbeat_sys_uptime FROM nodes WHERE node_deployment_status != 'PERMANENTLY_CLOSED' ORDER BY {$sort_by_param_sql}";
+} else {
+	$sort_by_param_sql = DEFAULT_SORT_BY_PARAM;
 }
-else {
-    $sql = "SELECT node_id, gw_id, name, last_heartbeat_user_agent, (CURRENT_TIMESTAMP-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((CURRENT_TIMESTAMP-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS online, creation_date, node_deployment_status, last_heartbeat_wifidog_uptime, last_heartbeat_sys_uptime FROM nodes WHERE node_deployment_status != 'PERMANENTLY_CLOSED' ORDER BY " . DEFAULT_SORT_BY_PARAM;
+
+if (isset ($_REQUEST["network_id"])) {
+	$network_id = $_REQUEST["network_id"];
+    if($network_id == ""){
+        $network = null;
+    } else {
+        try {
+            $network = Network::getObject($network_id);
+        } catch (Exception $e) {
+            $network = Network::getDefaultNetwork();
+        }
+    }
+} else {
+	$network = Network::getDefaultNetwork();
 }
+$network_id_sql = $network===null?"":"AND network_id = '{$network->getId()}'";
+
+$sql = "SELECT node_id, gw_id, name, last_heartbeat_user_agent, (CURRENT_TIMESTAMP-last_heartbeat_timestamp) AS since_last_heartbeat, last_heartbeat_ip, CASE WHEN ((CURRENT_TIMESTAMP-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS online, creation_date, node_deployment_status, last_heartbeat_wifidog_uptime, last_heartbeat_sys_uptime FROM nodes WHERE node_deployment_status != 'PERMANENTLY_CLOSED' $network_id_sql ORDER BY {$sort_by_param_sql}";
 $nodes_results = null;
 $db->execSql($sql, $nodes_results, false);
 
-if ($nodes_results == null)
-throw new Exception(_("No nodes could not be found in the database"));
+//Possible to select empty networks, not an error
+if ($nodes_results === null)
+    $nodes_results = array();
+//throw new Exception(_("No nodes could not be found in the database"));
+
 
 $deploymentStatuses = array (
 "DEPLOYED" => _("Deployed"
@@ -147,6 +166,12 @@ if ($sort_by_using_sql === false) {
 }
 
 // Pass values to Smarty
+$smarty->assign('selectNetworkUI', Network::getSelectUI('network_id', array('preSelectedObject' => $network, 'allowEmpty' => true, 'nullCaptionString' => _("All"), 'onChange' => "submit.click();") ) . (count(Network::getAllNetworks()) > 1 ? '<input class="submit" type="submit" name="submit" value="' . _("Change network") . '">' : ""));
+if ($network !== null ) {
+    $smarty->assign('selectedNetwork', $network->getName());
+} else {
+    $smarty->assign('allNetworks', _("All networks"));
+}
 $smarty->assign("nodes", $nodes_list);
 $smarty->assign("sort_by_param", $sort_by_param);
 

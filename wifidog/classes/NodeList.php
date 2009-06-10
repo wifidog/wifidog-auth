@@ -58,6 +58,8 @@ require_once('classes/Cache.php');
 /**
  * Directory of NodeList classes
  */   define ('NODE_LIST_CLASSES_DIR', WIFIDOG_ABS_FILE_PATH . "classes/NodeLists");
+
+interface AcceptsNullNetwork { }
 abstract class NodeList {
 
 
@@ -84,6 +86,28 @@ abstract class NodeList {
         // Set header of node list if node list class supports it
         $nodeList->setHeader();
         return $nodeList;
+    }
+
+    /**
+     * Indicates if the specified type of node list accepts null as the network
+     * argument in the constructor
+     *
+     * @param string $nodeListType Type of node list
+     *
+     * @return bool
+     */
+    public static function getAllowsNullNetwork($nodeListType)
+    {
+        // Check if node list type exists
+        if (in_array($nodeListType, self::getAvailableNodeListTypes())) {
+            require_once(NODE_LIST_CLASSES_DIR . "/NodeList" . $nodeListType . ".php");
+        } else {
+            return false;
+        }
+
+        $nodeListClass = "NodeList" . $nodeListType;
+        $ifaces = class_implements($nodeListClass);
+        return in_array("AcceptsNullNetwork", $ifaces);
     }
 
     /**

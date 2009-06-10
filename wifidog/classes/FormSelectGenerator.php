@@ -192,8 +192,9 @@ class FormSelectGenerator
 	 * @param $additionalSelectAttribute will be appended inside the select tag.  For example: "onclick='submit();'"
 	 * @return string The HTML SELECT element definition string For example: "onclick='submit();'
 	 */
-	public static function generateFromArray($array, $selectedPrimaryKey, $userPrefix, $objectPrefix, $allowNullValues, $nullCaptionString = ' - - - ', $additionalSelectAttribute = "", $max_length = -1)
+	public static function generateFromArray($array, $selectedPrimaryKey, $userPrefix, $objectPrefix, $allowNullValues, $nullCaptionString = null, $additionalSelectAttribute = "", $max_length = -1)
 	{
+        $nullCaptionString = $nullCaptionString===null?' - - - ':$nullCaptionString;
 	    $retval = "";
 	    $retval .= "<select id='{$userPrefix}{$objectPrefix}' name='{$userPrefix}{$objectPrefix}' {$additionalSelectAttribute}>\n";
 	    if ($allowNullValues == true)

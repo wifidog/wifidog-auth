@@ -47,7 +47,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 63);
+define('REQUIRED_SCHEMA_VERSION', 64);
 /** Used to test a new shecma version before modyfying the database */
 define('SCHEMA_UPDATE_TEST_MODE', false);
 /**
@@ -1366,7 +1366,7 @@ function real_update_schema($targetSchema) {
         $sql .= ");\n\n";
 
         $sql .= "INSERT INTO tokens (token_id, token_status, token_creation_date, token_issuer, token_owner) SELECT token AS token_id, token_status, timestamp_in AS token_creation_date, user_id AS token_issuer, user_id AS token_owner FROM connections; \n";
-        $sql .= "CREATE INDEX idx_token_status ON tokens (token_status);\n";   
+        $sql .= "CREATE INDEX idx_token_status ON tokens (token_status);\n";
         $sql .= "ALTER TABLE connections ADD CONSTRAINT fk_tokens FOREIGN KEY (token) REFERENCES tokens (token_id) ON UPDATE CASCADE ON DELETE RESTRICT; \n";
 
         $sql .= "ALTER TABLE connections DROP column token_status; \n";
@@ -1380,7 +1380,7 @@ function real_update_schema($targetSchema) {
         $sql .= "ALTER TABLE connections ALTER COLUMN expiration_date SET DEFAULT NULL;\n";
         $sql .= "ALTER TABLE connections ADD COLUMN logout_reason integer;\n";
         $sql .= "ALTER TABLE connections ALTER COLUMN logout_reason SET DEFAULT NULL;\n";
-        $sql .= "ALTER TABLE connections RENAME COLUMN token TO token_id;\n";     
+        $sql .= "ALTER TABLE connections RENAME COLUMN token TO token_id;\n";
     }
     $new_schema_version = 61;
     if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
@@ -1402,7 +1402,7 @@ function real_update_schema($targetSchema) {
         $sql .= "ALTER TABLE nodes ALTER COLUMN connection_limit_node_max_total_bytes_override SET DEFAULT NULL;\n";
         $sql .= "ALTER TABLE nodes ADD COLUMN connection_limit_node_max_usage_duration_override interval;\n";
         $sql .= "ALTER TABLE nodes ALTER COLUMN connection_limit_node_max_usage_duration_override SET DEFAULT NULL;\n";
-        
+
     }
     $new_schema_version = 62;
     if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
@@ -1413,18 +1413,24 @@ function real_update_schema($targetSchema) {
         $sql .= "ALTER TABLE networks ALTER COLUMN connection_limit_node_max_total_bytes TYPE bigint;\n";
 
         $sql .= "ALTER TABLE nodes ALTER COLUMN connection_limit_node_max_total_bytes_override TYPE bigint;\n";
-        
+
     }
     $new_schema_version = 63;
     if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
         printUpdateVersion($new_schema_version);
-     $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+        $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
 
         $sql .= "ALTER TABLE networks ADD column allow_original_url_redirect bool; \n";
         $sql .= "ALTER TABLE networks ALTER COLUMN allow_original_url_redirect SET DEFAULT FALSE;\n";
 
         $sql .= "ALTER TABLE nodes ADD column allow_original_URL_redirect bool; \n";
         $sql .= "ALTER TABLE nodes ALTER COLUMN allow_original_URL_redirect SET DEFAULT FALSE;\n";
+    }
+    $new_schema_version = 64;
+    if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
+        printUpdateVersion($new_schema_version);
+        $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+        $sql .= "ALTER TABLE server ADD use_global_auth bool NOT NULL DEFAULT FALSE;\n";
     }
     /*
      $new_schema_version = ;

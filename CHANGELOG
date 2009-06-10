@@ -1,4 +1,8 @@
 # $Id$
+2009-06-09 Benoit Grégoire <benoitg@coeus.ca>
+	* Commit slightly modified patch contributed by Zap Sherbrooke:  Allow using the multiple account feature while keeping a common userbase.  Enabled in server configuration.
+
+
 2008-10-13 Robin Jones
 	* fixed #498 curley brace missing in portal.php
 

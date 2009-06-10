@@ -183,7 +183,12 @@ if (isset($_REQUEST["auth_source"])) {
     $smarty->assign('selected_auth_source', $_REQUEST["auth_source"]);
 }
 
-$smarty->assign('SelectNetworkUI', Network::getSelectUI('auth_source'));
+if (Server::getServer()->getUseGlobalUserAccounts()) {
+    $default_network_param = Network::getDefaultNetwork()->getId();
+    $smarty->assign('SelectNetworkUI', "<input type=\"hidden\" name=\"auth_source\" value='$default_network_param' />");
+} else {
+    $smarty->assign('SelectNetworkUI', Network::getSelectUI('auth_source'));
+}
 
 // Compile HTML code
 $html_body = $smarty->fetch("templates/sites/resend_validation.tpl");

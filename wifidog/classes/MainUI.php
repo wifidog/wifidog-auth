@@ -228,7 +228,11 @@ class MainUI {
         $this->smarty = SmartyWifidog :: getObject();
 
         // Set default title
-        $this->title = Network :: getCurrentNetwork()->getName() . ' ' . _("authentication server");
+        if(Server::getServer()->getUseGlobalUserAccounts()) {
+            $this->title = _("authentication server");
+        } else {
+            $this->title = Network :: getCurrentNetwork()->getName() . ' ' . _("authentication server");
+        }
         // Init the content array
         $current_content_sql = "SELECT display_area FROM content_available_display_areas\n";
         $rows = array ();

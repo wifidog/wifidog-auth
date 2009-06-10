@@ -628,6 +628,22 @@ class Node implements GenericObject
         return $_REQUEST[$name];
     }
 
+    /**
+     * Get the selected network ID
+     *
+     * @param string $user_prefix An identifier provided by the programmer to
+     *                            recognise it's generated form
+     *
+     * @return string The deployment status
+
+     */
+    public function processSelectNetworkId($user_prefix)
+    {
+        $object = null;
+        $name = "{$user_prefix}";
+        return $_REQUEST[$name];
+    }
+
     /** @param $id The id of the node
      * @param $idType 'NODE_ID' or 'GATEWAY_ID'*/
     private function __construct($id, $idType='NODE_ID')
@@ -705,6 +721,15 @@ class Node implements GenericObject
         return Network :: getObject($this->_row['network_id']);
     }
 
+    
+    function setNetwork(Network $network)
+    {
+        $net = $this->mDb->escapeString($network->getId());
+        $this->mDb->execSqlUpdate("UPDATE nodes SET network_id = '{$net}' WHERE node_id = '{$this->getId()}'");
+        $this->refresh();
+    }
+    
+    
     /** Get a GisPoint object ; altide is not supported yet
      */
     function getGisLocation()
@@ -1019,29 +1044,29 @@ class Node implements GenericObject
         return $retval;
     }
 
-   /** redirect users to the original requested web page instead of portal 
-      Must be enabled in the Network configuration to have any effect 
-      @return a string */ 
-     function getPortalOriginalUrlAllowed() 
-     { 
-         return (($this->_row['allow_original_url_redirect'] == 't') ? true : false); 
-     } 
-  
-     /** redirect users to the original requested web page instead of portal 
-      Must be enabled in the Network configuration to have any effect 
-      @return true on success, false on failure */ 
-     function setPortalOriginalUrlAllowed($value) 
-     { 
-         $retval = true; 
-         if ($value != $this->getPortalOriginalUrlAllowed()) 
-         { 
-             $db = AbstractDb::getObject(); 
-             $value ? $value = 'TRUE' : $value = 'FALSE';
-             $retval = $db->execSqlUpdate("UPDATE nodes SET allow_original_url_redirect = '{$value}' WHERE node_id = '{$this->getId()}'", false); 
-             $this->refresh(); 
-         } 
-         return $retval; 
-     } 
+    /** redirect users to the original requested web page instead of portal
+     Must be enabled in the Network configuration to have any effect
+     @return a string */
+    function getPortalOriginalUrlAllowed()
+    {
+        return (($this->_row['allow_original_url_redirect'] == 't') ? true : false);
+    }
+
+    /** redirect users to the original requested web page instead of portal
+     Must be enabled in the Network configuration to have any effect
+     @return true on success, false on failure */
+    function setPortalOriginalUrlAllowed($value)
+    {
+        $retval = true;
+        if ($value != $this->getPortalOriginalUrlAllowed())
+        {
+            $db = AbstractDb::getObject();
+            $value ? $value = 'TRUE' : $value = 'FALSE';
+            $retval = $db->execSqlUpdate("UPDATE nodes SET allow_original_url_redirect = '{$value}' WHERE node_id = '{$this->getId()}'", false);
+            $this->refresh();
+        }
+        return $retval;
+    }
 
 
 
@@ -1070,7 +1095,7 @@ class Node implements GenericObject
 
         // Get information about the network
         $network = $this->getNetwork();
-        
+
         $node_id = $this->getId();
 
         /*
@@ -1250,6 +1275,11 @@ class Node implements GenericObject
         $_title = _("Node deployment status");
         $_data = $this->getSelectDeploymentStatus("node_" . $node_id . "_deployment_status");
         $_html_node_config[] = InterfaceElements::generateAdminSectionContainer("node_deployment_status", $_title, $_data);
+
+        // Network selection
+        $_title = _("Node Network");
+        $_data = Network::getSelectUI("node_" . $node_id . "_network_id", array('preSelectedObject'=>$this->getNetwork()));
+        $_html_node_config[] = InterfaceElements::generateAdminSectionContainer("node_network", $_title, $_data);
 
         //  is_splash_only_node
         if ($network->getSplashOnlyNodesAllowed()) {
@@ -1442,6 +1472,14 @@ class Node implements GenericObject
         $name = "node_".$node_id."_deployment_status";
         $this->setDeploymentStatus(self :: processSelectDeploymentStatus($name));
 
+        // Network selection
+        $name = "node_".$node_id."_network_id";
+        $new_network=Network :: processSelectUI($name);
+        if($new_network!=$this->getNetwork()) {
+            Security::requirePermission(Permission::P('NETWORK_PERM_ADD_NODE'), $new_network);
+            $this->setNetwork($new_network);
+        }
+
         //  is_splash_only_node
         if ($network->getSplashOnlyNodesAllowed())
         {
@@ -1609,7 +1647,7 @@ class Node implements GenericObject
 
     /**
      * Find out how many users are online this specific Node
-     * Counts every user account connected (once for every account), except the splash-only user + every mac adresses connecting as the splash-only user
+     * Counts every user account connected (once for every connection)
      * @return int Number of online users
      *
      * @access public
@@ -1626,6 +1664,7 @@ class Node implements GenericObject
 
         return $row['count'];
     }
+
 
     /** The list of all Technical officers of this node.
      * Technical officers are displayed highlited and in the online user's list,

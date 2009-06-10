@@ -63,13 +63,22 @@ if (!empty ($_REQUEST['format'])) {
     $format = "HTML";
 }
 
-if (!empty ($_REQUEST['network_id'])) {
-    $network = Network::getObject($db->escapeString($_REQUEST['network_id']));
+if (isset ($_REQUEST["network_id"])) {
+	$network_id = $_REQUEST["network_id"];
+    if($network_id == ""){
+        $network = null;
+    } else {
+        try {
+            $network = Network::getObject($network_id);
+        } catch (Exception $e) {
+            $network = Network::getDefaultNetwork();
+        }
+    }
 } else {
-    $network = Network::getDefaultNetwork(true);
+	$network = Network::getDefaultNetwork();
 }
 
-if ($network) {
+if ($network or NodeList::getAllowsNullNetwork($format)) {
     // Init node list type
     $nodeList = NodeList::getObject($format, $network);
     /**

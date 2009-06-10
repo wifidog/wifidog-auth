@@ -1,5 +1,18 @@
+{if $selectNetworkUI}
+<form name="hotspots_form" method="post">
+        {$selectNetworkUI}
+</form>
+{/if}
 <div id="node_list">
-	<h3>{"Status of all nodes of the"|_} {$networkName} {"network"|_}</h3>
+    {if $allNetworks }
+        <h3>{"Status of all nodes on "|_} {$allNetworks}</h3>
+    {else}
+        {if $selectedNetwork}
+            <h3>{"Status of all nodes of the "|_} {$selectedNetwork} {"network"|_}</h3>
+        {else}
+            <h3>{"Status of all nodes of the"|_} {$networkName} {"network"|_}</h3>
+        {/if}
+    {/if}
 	<table>
 		<thead>
 		<tr>

@@ -142,7 +142,18 @@ abstract class Authenticator
 
         $smarty=SmartyWiFiDog::getObject();
         // Set network selector
-        $smarty->assign('selectNetworkUI', Network::getSelectUI('auth_source', $networkUserData));
+        $network_array = Network::getAllNetworks();
+        $default_network = Network::getDefaultNetwork();
+ 
+        foreach ($network_array as $network) {
+                if ($network->getName() == $default_network)
+                        $default_network_param = $network->getId();
+        }
+	if (Server::getServer()->getUseGlobalUserAccounts())
+		$smarty->assign('selectNetworkUI', "<input type=\"hidden\" name=\"auth_source\" value='$default_network_param' />");
+	else
+		$smarty->assign('selectNetworkUI', Network::getSelectUI('auth_source', $networkUserData));
+
         // Set user details
         $smarty->assign('user_id', $selectedUser ? $selectedUser->getId() : "");
         $smarty->assign('username', $selectedUser ? $selectedUser->getUsername() : "");

@@ -50,11 +50,18 @@
 {*
     BEGIN section MAINCONTENT
 *}
+
+    <form name="hotspots_form" method="post">
+	<input type="hidden" name="format" value="HTML" />
+        {$selectNetworkUI}
+    </form>
+    <br />
+
     <div id="hotspot_status">
         <table>
             <thead>
                 <tr>
-                    <th colspan="6">{"Status of the %d open %s Hotspots"|_|sprintf:$num_deployed_nodes:$networkName}</th>
+			<th colspan="6">{"Status of the %d open %s Hotspots"|_|sprintf:$num_deployed_nodes:$selectedNetworkName}</th>
                 </tr>
                 <tr>
                     <th>{"Hotspot / Status"|_}</th>

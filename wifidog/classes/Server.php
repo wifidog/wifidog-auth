@@ -264,8 +264,14 @@ class Server extends GenericDataObject
         $html .= "</div>\n";
         $html .= "</li>\n";
 
+	/*
+	 * Authentication options
+         */
+	$title = _("Authentication");
+	$data = InterfaceElements::generateInputCheckbox("use_global_auth","", _("Use the users of default Virtual Host's network across all networks on the server."), $this->getUseGlobalUserAccounts(), "use_global_auth");
 
-
+	$html .= InterfaceElements::generateAdminSectionContainer("server_authentication_options",$title, $data);
+	
         /*
          * Access rights
          */
@@ -274,7 +280,7 @@ class Server extends GenericDataObject
             $html_access_rights = Stakeholder::getAssignStakeholdersUI($this);
             $html .= InterfaceElements::generateAdminSectionContainer("access_rights", _("Access rights"), $html_access_rights);
         }
-
+	
         $html .= "</ul>\n";
         $html .= "</fieldset>\n";
         return $html;
@@ -289,6 +295,11 @@ class Server extends GenericDataObject
     {
         require_once('classes/User.php');
         Security::requirePermission(Permission::P('SERVER_PERM_EDIT_SERVER_CONFIG'), $this);
+	// Authentication
+	if (isset($_REQUEST['use_global_auth']))
+		$this->setUseGlobalUserAccounts($_REQUEST['use_global_auth']);
+	else
+		$this->setUseGlobalUserAccounts(false);
         // Access rights
         require_once('classes/Stakeholder.php');
         Stakeholder::processAssignStakeholdersUI($this, $errMsg);
@@ -316,7 +327,7 @@ class Server extends GenericDataObject
         if(Security::hasPermission(Permission::P('SERVER_PERM_EDIT_SERVER_CONFIG'), $server))
         {
             $items[] = array('path' => 'server/admin',
-            'title' => _("Server access control"),
+            'title' => _("Server configuration"),
             'url' => BASE_URL_PATH.htmlspecialchars("admin/generic_object_admin.php?object_class=Server&action=edit&object_id=".SERVER_ID."")
 		);
         }
@@ -337,6 +348,214 @@ class Server extends GenericDataObject
         $this->__construct($this->_id);
     }
 
+    /**
+     * Getter for UseGlobalUserAccounts
+     *
+     * @return bool
+     */
+    public function getUseGlobalUserAccounts()
+    {
+	if (array_key_exists('use_global_auth',$this->_row))
+		return $this->_row['use_global_auth']=='t';
+	else
+		return False;
+    } 
+
+    /**
+     * Setter for UseGlobalUserAccounts
+     *
+     * @param bool $value	New value
+     *
+     * @return bool True on success, false on failure
+     */
+    public function setUseGlobalUserAccounts($value)
+    {
+        $db = AbstractDb::getObject();
+	$value = $value? true:false;
+        // Init values
+        $retVal = true;
+
+        if ($value != $this->getUseGlobalUserAccounts()) {
+            $value = $value ? 'true' : 'false';
+            $retVal = $db->execSqlUpdate("UPDATE server SET use_global_auth = {$value} WHERE server_id = '{$this->getId()}'", false);
+            $this->refresh();
+        }
+
+        return $retVal;
+    } 
+
+    /**
+     * Find out how many users are online on the whole server
+     * Counts every user account connected (once for every connection)
+     * @return int Number of online users
+     *
+     * @access public
+     */
+    public function getTotalNumOnlineUsers()
+    {
+        $db = AbstractDb::getObject();
+        // Init values
+        $retval = array ();
+        $row = null;
+        $sql = "SELECT COUNT(*) FROM active_connections;";
+        $db->execSqlUniqueRes($sql, $row, false);
+
+        return $row['count'];
+    }
+
+    /**
+     * Find out how many users are valid in this server's database
+     *
+     * @return int Number of valid users
+     */
+    public function getTotalNumValidUsers()
+    {
+
+        $db = AbstractDb::getObject();
+
+        // Init values
+        $retval = 0;
+        $row = null;
+        $useCache = false;
+        $cachedData = null;
+
+        // Create new cache objects (valid for 1 minute)
+        $cache = new Cache('server_num_valid_users', "default", 60);
+
+        // Check if caching has been enabled.
+        if ($cache->isCachingEnabled) {
+            $cachedData = $cache->getCachedData();
+
+            if ($cachedData) {
+                // Return cached data.
+                $useCache = true;
+                $retval = $cachedData;
+            }
+        }
+
+        if (!$useCache) {
+            // Get number of valid users
+            $network_id = $db->escapeString($this->_id);
+            $db->execSqlUniqueRes("SELECT COUNT(user_id) FROM users WHERE account_status = ".ACCOUNT_STATUS_ALLOWED, $row, false);
+            // String has been found
+            $retval = $row['count'];
+
+            // Check if caching has been enabled.
+            if ($cache->isCachingEnabled) {
+                // Save data into cache, because it wasn't saved into cache before.
+                $cache->saveCachedData($retval);
+            }
+        }
+
+        return $retval;
+    }
+
+    /**
+     * Find out how many nodes are deployed in this server's database
+     *
+     * @return int Number of deployed nodes
+     */
+    public function getTotalNumDeployedNodes()
+    {
+
+        $db = AbstractDb::getObject();
+
+        // Init values
+        $retval = 0;
+        $row = null;
+        $useCache = false;
+        $cachedData = null;
+
+        // Create new cache objects (valid for 5 minutes)
+        $cache = new Cache('server_num_deployed_nodes', "default", 300);
+
+        // Check if caching has been enabled.
+        if ($cache->isCachingEnabled) {
+            $cachedData = $cache->getCachedData();
+
+            if ($cachedData) {
+                // Return cached data.
+                $useCache = true;
+                $retval = $cachedData;
+            }
+        }
+
+        if (!$useCache) {
+            // Get number of deployed nodes
+            $network_id = $db->escapeString($this->_id);
+            $db->execSqlUniqueRes("SELECT COUNT(node_id) FROM nodes WHERE (node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE')", $row, false);
+
+            // String has been found
+            $retval = $row['count'];
+
+            // Check if caching has been enabled.
+            if ($cache->isCachingEnabled) {
+                // Save data into cache, because it wasn't saved into cache before.
+                $cache->saveCachedData($retval);
+            }
+        }
+
+        return $retval;
+    }
+
+    /**
+     * Find out how many deployed nodes are online in this server's database
+     *
+     * @param bool $nonMonitoredOnly Return number of non-monitored nodes only
+     *
+     * @return int Number of deployed nodes which are online
+     */
+    public function getNumOnlineNodes($nonMonitoredOnly = false)
+    {
+
+        $db = AbstractDb::getObject();
+
+        // Init values
+        $retval = 0;
+        $row = null;
+        $useCache = false;
+        $cachedData = null;
+
+        // Create new cache objects (valid for 5 minutes)
+        if ($nonMonitoredOnly) {
+            $cache = new Cache('server_num_online_nodes_non_monitored', "default", 300);
+        } else {
+            $cache = new Cache('server_num_online_nodes', "default", 300);
+        }
+
+        // Check if caching has been enabled.
+        if ($cache->isCachingEnabled) {
+            $cachedData = $cache->getCachedData();
+
+            if ($cachedData) {
+                // Return cached data.
+                $useCache = true;
+                $retval = $cachedData;
+            }
+        }
+
+        if (!$useCache) {
+            // Get number of online nodes
+            $network_id = $db->escapeString($this->_id);
+
+            if ($nonMonitoredOnly) {
+                $db->execSqlUniqueRes("SELECT COUNT(node_id) FROM nodes WHERE node_deployment_status = 'NON_WIFIDOG_NODE' AND ((CURRENT_TIMESTAMP-last_heartbeat_timestamp) >= interval '5 minutes')", $row, false);
+            } else {
+                $db->execSqlUniqueRes("SELECT COUNT(node_id) FROM nodes WHERE (node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE') AND ((CURRENT_TIMESTAMP-last_heartbeat_timestamp) < interval '5 minutes')", $row, false);
+            }
+
+            // String has been found
+            $retval = $row['count'];
+
+            // Check if caching has been enabled.
+            if ($cache->isCachingEnabled) {
+                // Save data into cache, because it wasn't saved into cache before.
+                $cache->saveCachedData($retval);
+            }
+        }
+
+        return $retval;
+    }
 }
 
 /*

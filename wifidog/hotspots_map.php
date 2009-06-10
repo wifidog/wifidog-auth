@@ -109,7 +109,8 @@ $smarty->assign('sectionMAINCONTENT', true);
 
 // Set network selector
 $preSelectedObject = (!empty($_REQUEST['network_map']) ? Network::getObject($_REQUEST['network_map']) : Network::getCurrentNetwork());
-$selectNetworkUI = Network::getSelectUI('network_map', array('preSelectedObject' => $preSelectedObject));
+//$selectNetworkUI = Network::getSelectUI('network_map', array('preSelectedObject' => $preSelectedObject, 'onChange' => "javascript: document.lang_form.submit();"));
+$selectNetworkUI = Network::getSelectUI('network_map', array('preSelectedObject' => $preSelectedObject, 'onChange' => "submit.click();"));
 $smarty->assign('selectNetworkUI', $selectNetworkUI . (count(Network::getAllNetworks()) > 1 ? '<input class="submit" type="submit" name="submit" value="' . _("Change network") . '">' : ""));
 
 // Compile HTML code

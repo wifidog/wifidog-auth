@@ -63,7 +63,7 @@ require_once('classes/User.php');
  * @author     Max Horváth <max.horvath@freenet.de>
  * @copyright  2006 Max Horváth, Horvath Web Consulting
  */
-class NodeListHTML extends NodeList{
+class NodeListHTML extends NodeList implements AcceptsNullNetwork {
 
     /**
      * Smarty object
@@ -121,15 +121,17 @@ class NodeListHTML extends NodeList{
 
         // Init network
         $this->_network = $network;
-
+        
         // Init user
         $this->_currentUser = User::getCurrentUser();
 
         // Init MainUI class
         $this->_mainUI = MainUI::getObject();
 
+        $network_where_sql = $network === null?"":"network_id = '" . $db->escapeString($this->_network->getId()) . "' AND ";
+
         // Query the database, sorting by node name
-        $db->execSql("SELECT *, (CURRENT_TIMESTAMP-last_heartbeat_timestamp) AS since_last_heartbeat, EXTRACT(epoch FROM creation_date) as creation_date_epoch, CASE WHEN ((CURRENT_TIMESTAMP-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up FROM nodes WHERE network_id = '" . $db->escapeString($this->_network->getId()) . "' AND (node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE') ORDER BY lower(name)", $this->_nodes, false);
+        $db->execSql("SELECT *, (CURRENT_TIMESTAMP-last_heartbeat_timestamp) AS since_last_heartbeat, EXTRACT(epoch FROM creation_date) as creation_date_epoch, CASE WHEN ((CURRENT_TIMESTAMP-last_heartbeat_timestamp) < interval '5 minutes') THEN true ELSE false END AS is_up FROM nodes WHERE $network_where_sql (node_deployment_status = 'DEPLOYED' OR node_deployment_status = 'NON_WIFIDOG_NODE') ORDER BY lower(name)", $this->_nodes, false);
     }
 
     /**
@@ -165,6 +167,14 @@ class NodeListHTML extends NodeList{
         $this->_smarty->assign('nodes', array());
         $this->_smarty->assign('num_deployed_nodes', 0);
         $this->_smarty->assign('PdfSupported', false);
+
+        $userData['preSelectedObject'] = $this->_network;
+        $userData['allowEmpty'] = true;
+        $userData['nullCaptionString'] = _("All");
+        $userData['onChange'] = "submit.click();";
+        $this->_smarty->assign('selectNetworkUI', Network::getSelectUI('network_id', $userData) . (count(Network::getAllNetworks()) > 1 ? '<input class="submit" type="submit" name="submit" value="' . _("Change network") . '">' : ""));
+        $this->_smarty->assign('selectedNetworkName', $this->_network === null?_("All networks"):$this->_network->getName());
+
 
         /**
          * Define user security levels for the template
@@ -208,7 +218,7 @@ class NodeListHTML extends NodeList{
          * Compile HTML output
          */
         $this->_mainUI->setTitle(_("Hotspot list"));
-        $this->_mainUI->appendHtmlHeadContent('<link rel="alternate" type="application/rss+xml" title="' . $this->_network->getName() . ": " . _("Newest Hotspots") . '" href="' . BASE_SSL_PATH . 'hotspot_status.php?format=RSS">');
+        $this->_mainUI->appendHtmlHeadContent('<link rel="alternate" type="application/rss+xml" title="' . ($this->_network === null?_("All networks"):$this->_network->getName()) . ": " . _("Newest Hotspots") . '" href="' . BASE_SSL_PATH . 'hotspot_status.php?format=RSS">');
         $this->_mainUI->addContent('left_area_middle', $_html);
         $this->_mainUI->addContent('main_area_middle', $_html_body);
 

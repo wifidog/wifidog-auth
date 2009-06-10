@@ -1,4 +1,4 @@
-<?php
+{*
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
@@ -37,80 +37,53 @@
  * WiFiDog Authentication Server home page
  *
  * @package    WiFiDogAuthServer
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @subpackage Templates
  * @author     Max Horváth <max.horvath@freenet.de>
- * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  * @copyright  2006 Max Horváth, Horvath Web Consulting
- * @version    Subversion $Id$
+ * @version    Subversion $Id: $
  * @link       http://www.wifidog.org/
  */
 
-/**
- * Don't change the first require_once() as we didn't add WiFiDogs installation
- * path to the global include_path variable of PHP, yet!
- */
-require_once(dirname(__FILE__) . '/include/common.php');
+*}
 
-require_once('classes/MainUI.php');
-require_once('classes/Network.php');
-require_once('classes/Node.php');
-require_once('classes/User.php');
+{if $sectionMAINCONTENT}
+{*
+    BEGIN section MAINCONTENT
+*}
+	<p>
+		{if $serverNumValidUsers == 1}
+			{"The server currently has one valid user."|_|sprintf}
+		{else}
+			{"The server currently has %d valid users."|_|sprintf:$serverNumValidUsers}
+		{/if}
 
-$smarty = SmartyWifidog::getObject();
+		{if $serverNumOnlineUsers == 1}
+			{"One user is currently online."|_|sprintf:$serverNumOnlineUsers}
+		{else}
+			{"%d users are currently online."|_|sprintf:$serverNumOnlineUsers}
+		{/if}
+		<br/>
+		{if $serverNumDeployedNodes == 1}
+        		{"This network currently has 1 deployed hotspot."|_}
+        {else}
+        		{"This network currently has %d deployed hotspots."|_|sprintf:$serverNumDeployedNodes}
+        {/if}
 
-// Init ALL smarty values
-$smarty->assign('googleMapsEnabled', false);
+        {if $serverNumOnlineNodes == 1}
+            {"One hotspot is currently operational."|_}
+        {else}
+            {"%d hotspots are currently operational."|_|sprintf:$serverNumOnlineNodes}
+        {/if}
 
-// Get information about network
-$network = Network::getCurrentNetwork();
-
-/*
- * Main content
- */
-// Set section of Smarty template
-$smarty->assign('sectionMAINCONTENT', true);
-
-// Set Google maps information
-$smarty->assign('googleMapsEnabled', defined('GMAPS_HOTSPOTS_MAP_ENABLED') && GMAPS_HOTSPOTS_MAP_ENABLED);
-
-if(Server::getServer()->getUseGlobalUserAccounts()) {
-    $server = Server::getServer();
-    $smarty->assign('serverNumValidUsers', $server ? $server->getTotalNumValidUsers() : 0);
-    $smarty->assign('serverNumOnlineUsers', $server ? $server->getTotalNumOnlineUsers() : 0);
-    $smarty->assign('serverNumDeployedNodes', $server ? $server->getTotalNumDeployedNodes() : 0);
-    $smarty->assign('serverNumOnlineNodes', $server ? $server->getNumOnlineNodes() : 0);
-    $smarty->assign('serverNumNonMonitoredNodes', $server ? $server->getNumOnlineNodes(true) : 0);
-    // Compile HTML code
-    $html_body = $smarty->fetch("templates/sites/indexglobaluser.tpl");
-} else {
-    $net = Network::getCurrentNetwork();
-    $smarty->assign('networkNumValidUsers', $net ? $net->getNumValidUsers() : 0);
-    // Compile HTML code
-    $html_body = $smarty->fetch("templates/sites/index.tpl");
-}
-
-/*
- * Don't redirect on the index page
- *
-$currentNode = Node::getCurrentRealNode();
-if($currentNode){
-    header("Location: ".BASE_URL_PATH."portal/?node_id=".$currentNode->getId());
-    exit();
-}
-*/
-/*
- * Render output
- */
-$ui = MainUI::getObject();
-$ui->addContent('main_area_top', $html_body);
-$ui->display();
-
-/*
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * c-hanging-comment-ender-p: nil
- * End:
- */
-
-?>
+        {if $serverNumNonMonitoredNodes > 0}
+            {if $serverNumNonMonitoredNodes == 1}
+                {"One hotspot isn't monitored so we don't know if it's currently operational."|_}
+            {else}
+                {"%d hotspots aren't monitored so we don't know if they are currently operational."|_|sprintf:$serverNumNonMonitoredNodes}
+            {/if}
+        {/if}
+    </p>
+{*
+    END section MAINCONTENT
+*}
+{/if}
