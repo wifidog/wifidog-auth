@@ -385,8 +385,8 @@ class Server extends GenericDataObject
     } 
 
     /**
-     * Find out how many users are online on the whole server
-     * Counts every user account connected (once for every connection)
+     * Find out how many users are online on the whole server (Actually the number of active connections.
+     * This result is possibly incorrect, as it donesn't treat annonymous connections, or multiple connections differently
      * @return int Number of online users
      *
      * @access public
@@ -397,9 +397,8 @@ class Server extends GenericDataObject
         // Init values
         $retval = array ();
         $row = null;
-        $sql = "SELECT COUNT(*) FROM active_connections;";
+        $sql = "SELECT COUNT(token_id) as count FROM tokens JOIN connections USING (token_id) WHERE tokens.token_status='".TOKEN_INUSE."'";      
         $db->execSqlUniqueRes($sql, $row, false);
-
         return $row['count'];
     }
 
