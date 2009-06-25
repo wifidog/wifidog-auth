@@ -1,4 +1,7 @@
 # $Id$
+2009-06-25 Benoit Grégoire <benoitg@coeus.ca>
+	* Fix #559
+
 2009-06-23 Benoit Grégoire <benoitg@coeus.ca>
 	* Commit another slightly modified patch contributed by Zap Sherbrooke:  Allow generating publicly accessible statistics for the various nodes.  Enabled node per node.  Note that a cron must be setup for those stats to actually be generated.
 

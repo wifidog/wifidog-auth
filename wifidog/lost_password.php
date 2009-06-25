@@ -113,12 +113,17 @@ if (isset($_REQUEST['form_request'])) {
         /*
          * Get a list of users associated with either a username of an e-mail
          */
-        if ($username) {
+        if ($username && $email){
+            throw new Exception(_("Please specify EITHER your username or your email, not both"));
+        }
+        else if ($username) {
             $user = User::getUserByUsernameAndOrigin($username, $account_origin);
         }
-
-        if ($email) {
+        else if ($email) {
             $user = User::getUserByEmailAndOrigin($email, $account_origin);
+        }
+        else {
+            throw new Exception(_("You need to specify your username or your email"));
         }
 
         /*
