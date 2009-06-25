@@ -92,6 +92,18 @@ class Network extends GenericDataObject
         return self::$instanceArray[$id];
     }
 
+    /** Free an instanciated object
+     * @param $id The id to free
+     * Thanks and so long for all the ram.
+     */
+    public static function freeObject($id)
+    {
+        if(isset(self::$instanceArray[$id]))
+        {
+            unset(self::$instanceArray[$id]);
+        }
+    }
+
     /**
      * Get all the Networks configured on this server
      *

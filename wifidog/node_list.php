@@ -149,6 +149,10 @@ foreach ($nodes_results as $node_row) {
     $node_row['num_online_users'] = $node->getNumOnlineUsers();
     $nodeDeploymentStatus = $node_row['node_deployment_status'];
     $node_row['node_deployment_status'] = $deploymentStatuses["$nodeDeploymentStatus"];
+
+    if ($node->getAllowsPublicStats() && $node->hasPublicStats())
+        $node_row['public_stats_file'] = $node->getPublicStatsFile();
+
     $nodes_list[] = $node_row;
 }
 

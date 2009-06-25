@@ -99,6 +99,18 @@ class Node implements GenericObject
         return self::$instanceArray[$id];
     }
 
+    /** Free an instanciated object
+     * @param $id The id to free
+     * Thanks and so long for all the ram.
+     */
+    public static function freeObject($id)
+    {
+        if(isset(self::$instanceArray[$id]))
+        {
+            unset(self::$instanceArray[$id]);
+        }
+    }
+
     /** Instantiate a node object using it's gateway id
      * @param $gwId The id of the requested node
      * @return a Node object, or null if there was an error
@@ -721,15 +733,15 @@ class Node implements GenericObject
         return Network :: getObject($this->_row['network_id']);
     }
 
-    
+
     function setNetwork(Network $network)
     {
         $net = $this->mDb->escapeString($network->getId());
         $this->mDb->execSqlUpdate("UPDATE nodes SET network_id = '{$net}' WHERE node_id = '{$this->getId()}'");
         $this->refresh();
     }
-    
-    
+
+
     /** Get a GisPoint object ; altide is not supported yet
      */
     function getGisLocation()
@@ -935,6 +947,36 @@ class Node implements GenericObject
         $this->refresh();
     }
 
+    function getAllowsPublicStats()
+    {
+        return (($this->_row['allows_public_stats'] == 't') ? true : false);
+    }
+
+    function setAllowsPublicStats($allowed)
+    {
+        $allowed = $allowed ? 't':'f';
+        $allowed = $this->mDb->escapeString($allowed);
+        $this->mDb->execSqlUpdate("UPDATE nodes SET allows_public_stats = BOOL('$allowed') WHERE node_id = '{$this->getId()}'");
+        $this->refresh();
+
+        //FIXME: Delete the folder if necessary?
+    }
+
+    function hasPublicStats()
+    {
+        return file_exists($this->getPublicStatsDir() . $this->getPublicStatsFile());
+    }
+
+    function getPublicStatsDir()
+    {
+        return WIFIDOG_ABS_FILE_PATH . NODE_PUBLIC_STATS_DIR . $this->getId() . "/";
+    }
+
+    function getPublicStatsFile()
+    {
+        return "index.html";
+    }
+
     function getLastPaged()
     {
         return $this->_row['last_paged'];
@@ -1115,9 +1157,15 @@ class Node implements GenericObject
         /*
          * Display stats
          */
-        $_title = _("Statistics");
-        $_data = InterfaceElements::generateInputSubmit("node_" . $this->id . "_get_stats", _("Get access statistics"), "node_get_stats_submit");
-        $html .= InterfaceElements::generateAdminSectionContainer("node_get_stats", $_title, $_data);
+        $permArray = null;
+        $permArray[]=array(Permission::P('NETWORK_PERM_EDIT_ANY_NODE_CONFIG'), $network);
+        $permArray[]=array(Permission::P('NODE_PERM_ALLOW_GENERATING_PUBLIC_STATS'), $this);
+        if (Security::hasAnyPermission($permArray)) {
+            $_title = _("Statistics");
+            $_data = InterfaceElements::generateInputCheckbox("allows_public_stats","", _("Allow public access to some node statistics."), $this->getAllowsPublicStats(), "allows_public_stats");
+            $_data .= InterfaceElements::generateInputSubmit("node_" . $this->id . "_get_stats", _("Get access statistics"), "node_get_stats_submit");
+            $html .= InterfaceElements::generateAdminSectionContainer("node_get_stats", $_title, $_data);
+        }
 
         /*
          * Information about the node
@@ -1463,7 +1511,18 @@ class Node implements GenericObject
         $name = "node_{$this->id}_get_stats";
         if (!empty ($_REQUEST[$name]))
         header("Location: stats.php?".urlencode("selected_nodes[]")."=".urlencode($this->getId()));
+        $permArray = null;
+        $permArray[]=array(Permission::P('NETWORK_PERM_EDIT_ANY_NODE_CONFIG'), $network);
+        $permArray[]=array(Permission::P('NODE_PERM_ALLOW_GENERATING_PUBLIC_STATS'), $this);
+        if (Security::hasAnyPermission($permArray)) {
 
+            if (isset($_REQUEST['allows_public_stats'])){
+                $this->setAllowsPublicStats($_REQUEST['allows_public_stats']=='on');
+            } else {
+                $this->setAllowsPublicStats(false);
+            }
+        }
+         
         // Node configuration section
 
         $network = $this->getNetwork();
@@ -1647,7 +1706,7 @@ class Node implements GenericObject
 
     /**
      * Find out how many users are online this specific Node
-     * Counts every user account connected (once for every connection)
+     * Counts every user account connected (once for every account), except the splash-only user + every mac adresses connecting as the splash-only user
      * @return int Number of online users
      *
      * @access public

@@ -47,7 +47,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 64);
+define('REQUIRED_SCHEMA_VERSION', 65);
 /** Used to test a new shecma version before modyfying the database */
 define('SCHEMA_UPDATE_TEST_MODE', false);
 /**
@@ -1432,6 +1432,14 @@ function real_update_schema($targetSchema) {
         $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
         $sql .= "ALTER TABLE server ADD use_global_auth bool NOT NULL DEFAULT FALSE;\n";
     }
+    
+    $new_schema_version = 65;
+    if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
+        printUpdateVersion($new_schema_version);
+        $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+        $sql .= "ALTER TABLE nodes ADD COLUMN allows_public_stats boolean NOT NULL DEFAULT false;\n";
+    }
+    
     /*
      $new_schema_version = ;
      if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {

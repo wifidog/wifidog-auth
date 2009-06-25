@@ -144,6 +144,7 @@ else {
  * Define URLs
  */
 define('COMMON_IMAGES_URL', BASE_URL_PATH.'media/common_images/');
+define('BASE_PUBLIC_STATS_URL', BASE_URL_PATH.NODE_PUBLIC_STATS_DIR);
 define('BASE_THEME_URL', BASE_URL_PATH.'media/base_theme/');
 
 // define('GENERIC_OBJECT_ADMIN_ABS_HREF', BASE_URL_PATH.'admin/generic_object_admin.php');

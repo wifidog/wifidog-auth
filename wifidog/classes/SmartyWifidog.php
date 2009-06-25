@@ -166,6 +166,7 @@ class SmartyWifidog extends Smarty {
 	$this->assign('base_ssl_path', BASE_SSL_PATH);
     $this->assign('base_non_ssl_path', BASE_NON_SSL_PATH);
     $this->assign('common_images_url', COMMON_IMAGES_URL);
+    $this->assign('base_public_stats_url', BASE_PUBLIC_STATS_URL);
     $this->assign('base_theme_url', BASE_THEME_URL);
    }
 

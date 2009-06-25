@@ -59,10 +59,10 @@ require_once ('include/common.php');
 class Statistics {
     /** An array of the of the selected networks.
      * The key is the network_id, the value is the Network object. */
-    private $report_selected_networks = array ();
-    private $report_date_min; /**< Minimum timestamp */
+    protected $report_selected_networks = array ();
+    protected $report_date_min; /**< Minimum timestamp, iso format */
     /** Maximum timestamp */
-    private $report_date_max;
+    protected $report_date_max;
     /** How to distinguish unique users.  Either 'user_mac' (MAC addresses) or 'user_id' */
     private $report_distinguish_users_by = 'user_id';
 
@@ -70,8 +70,8 @@ class Statistics {
     private $user_distinguish_by_options = array ();
 
     /** An array of the node_ids to which the statistics should be restricted.
-     * The key is the network_id, the value is the Network object.*/
-    private $report_selected_nodes = array ();
+     * The key is the node_id, the value is the Node object.*/
+    protected $report_selected_nodes = array ();
     /** An array of the selected reports to be generated.
      *  The key is the classname, the value is the report object */
     private $report_selected_reports = array ();

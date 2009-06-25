@@ -86,29 +86,31 @@ class VisitsPerMonth extends StatisticGraph
     /** Return the actual Image data
      * Classes must override this.
      * @param $child_html The child method's return value
+     * @param $param mixed: used for $Graph->done()
      * @return A html fragment
      */
-    public function showImageData()
+    public function showImageData($child_html='', $param=false)
     {
         require_once ("Image/Graph.php");
         $db = AbstractDb::getObject();
-$Graph =& Image_Graph::factory("Image_Graph", array(600, 200));
-$Plotarea =& $Graph->add(Image_Graph::factory("Image_Graph_Plotarea"));
-$Dataset =& Image_Graph::factory("Image_Graph_Dataset_Trivial");
-$Bar =& Image_Graph::factory("Image_Graph_Plot_Bar", $Dataset);
-$Bar->setFillColor("#9db8d2");
-$Plot =& $Plotarea->add($Bar);
+        $Graph =& Image_Graph::factory("Image_Graph", array(600, 200));
+        $Plotarea =& $Graph->add(Image_Graph::factory("Image_Graph_Plotarea"));
+        $Dataset =& Image_Graph::factory("Image_Graph_Dataset_Trivial");
+        $Bar =& Image_Graph::factory("Image_Graph_Plot_Bar", $Dataset);
+        $Bar->setFillColor("#9db8d2");
+        $Plot =& $Plotarea->add($Bar);
 
-        $candidate_connections_sql = self :: $stats->getSqlCandidateConnectionsQuery("COUNT(DISTINCT connections.user_id||connections.node_id) AS daily_connections, date_trunc('day', timestamp_in) AS date");
-$db->execSql("SELECT SUM(daily_connections) AS connections, date_trunc('month', date) AS month FROM ($candidate_connections_sql GROUP BY date) AS daily_connections_table GROUP BY month ORDER BY month", $results, false);
-if ($results != null) {
-    foreach($results as $row) {
-        /* Cut xxxx-xx-xx xx:xx:Xx to yy-mm */
-        $Dataset->addPoint( substr($row['month'],0,7), $row['connections']);
-    }
-}
+                $candidate_connections_sql = self :: $stats->getSqlCandidateConnectionsQuery("COUNT(DISTINCT connections.user_id||connections.node_id) AS daily_connections, date_trunc('day', timestamp_in) AS date");
+        $db->execSql("SELECT SUM(daily_connections) AS connections, date_trunc('month', date) AS month FROM ($candidate_connections_sql GROUP BY date) AS daily_connections_table GROUP BY month ORDER BY month", $results, false);
+        if ($results != null) {
+            foreach($results as $row) {
+                /* Cut xxxx-xx-xx xx:xx:Xx to yy-mm */
+                $Dataset->addPoint( substr($row['month'],0,7), $row['connections']);
+            }
+        }
 
-        $Graph->done();
+        $Graph->done($param);
+        unset( $Graph, $Plot, $Bar, $Plotarea, $Dataset, $row, $results );
     }
 
 }

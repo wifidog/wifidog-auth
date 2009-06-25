@@ -205,6 +205,7 @@ define('STYLESHEET_NAME', 'stylesheet.css');
 define('PRINT_STYLESHEET_NAME', 'printer.css');
 define('LOGIN_PAGE_NAME', 'login.html');
 define('HOTSPOT_STATUS_PAGE', 'hotspot_status.php');
+define('NODE_PUBLIC_STATS_DIR', "public_stats/");
 
 // Source URL for the hotspot status page
 define('GMAPS_XML_SOURCE_URL', 'hotspot_status.php?format=XML');

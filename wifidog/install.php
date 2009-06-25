@@ -195,6 +195,7 @@ EndHTML;
 
 #Begin Perquisite Array 	(Needed files/directories with write access)
 $dir_array = array (
+'',
 'tmp',
 'tmp/simplepie_cache',
 'lib/',

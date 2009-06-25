@@ -1,0 +1,9 @@
+generate_public_stats.php will generate the publicly accessible statistics of Nodes (if enable in the node's configuration).  Should be run once a day or once a week.  
+
+Can be from the command line with:
+
+sudo -u www-data php generate_public_stats.php
+
+For debugging:
+sudo -u www-data php generate_public_stats.php -v=true
+
