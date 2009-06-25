@@ -73,6 +73,9 @@ if (file_exists(dirname(__FILE__) . "/local.config.php")) {
 // Host of the database server.
 define('CONF_DATABASE_HOST', 'localhost');
 
+// Port of the database server.
+define('CONF_DATABASE_PORT', '5432');
+
 // Username for database access.
 define('CONF_DATABASE_USER', 'wifidog');
 

@@ -87,7 +87,7 @@ class AbstractDb
         $db_name = CONF_DATABASE_NAME;
 
         // Build connection string
-        $conn_string = "host=".CONF_DATABASE_HOST." dbname=$db_name user=".CONF_DATABASE_USER." password=".CONF_DATABASE_PASSWORD."";
+        $conn_string = "host=".CONF_DATABASE_HOST." port=".CONF_DATABASE_PORT." dbname=$db_name user=".CONF_DATABASE_USER." password=".CONF_DATABASE_PASSWORD."";
         // Try connecting and hide warning, errors
         if ( !dependency::check('pgsql') )
         throw new Exception(_("It appears the postgresql module isn't loaded"));
@@ -96,7 +96,7 @@ class AbstractDb
 
         // Throw an exception if anything went wrong
         if ($ptr_connexion == FALSE)
-        throw new Exception(sprintf(_("Unable to connect to database on %s"), CONF_DATABASE_HOST));
+        throw new Exception(sprintf(_("Unable to connect to the database at %s"), "host=".CONF_DATABASE_HOST." port=".CONF_DATABASE_PORT." dbname=$db_name user=".CONF_DATABASE_USER." password=*********"));
 
         return $ptr_connexion;
     }

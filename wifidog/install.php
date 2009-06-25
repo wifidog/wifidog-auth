@@ -269,6 +269,7 @@ foreach ($contentArray as $line) {
 //echo '<pre>';print_r($configArray);echo '</pre>';
 # Database connections variables
 $CONF_DATABASE_HOST = $configArray['CONF_DATABASE_HOST'];
+$CONF_DATABASE_PORT = $configArray['CONF_DATABASE_PORT'];
 $CONF_DATABASE_NAME = $configArray['CONF_DATABASE_NAME'];
 $CONF_DATABASE_USER = $configArray['CONF_DATABASE_USER'];
 $CONF_DATABASE_PASSWORD = $configArray['CONF_DATABASE_PASSWORD'];
@@ -510,6 +511,7 @@ switch ($page) {
 <BR>
 <table border="1">
   <tr><td>Host</td><td><INPUT type="text" name="CONF_DATABASE_HOST" value="$CONF_DATABASE_HOST"></td></tr>
+  <tr><td>Port</td><td><INPUT type="text" name="CONF_DATABASE_PORT" value="$CONF_DATABASE_PORT"></td></tr>
   <tr><td>DB Name</td><td><INPUT type="text" name="CONF_DATABASE_NAME" value="$CONF_DATABASE_NAME"></td></tr>
   <tr><td>Username</td><td><INPUT type="text" name="CONF_DATABASE_USER" value="$CONF_DATABASE_USER"></td></tr>
   <tr><td>Password</td><td><INPUT type="text" name="CONF_DATABASE_PASSWORD" value="$CONF_DATABASE_PASSWORD"></td></tr>
@@ -520,6 +522,7 @@ switch ($page) {
 <script type="text/javascript">
   function submitDatabaseValue() {
     newConfig("CONF_DATABASE_HOST='" + document.myform.CONF_DATABASE_HOST.value + "'");
+    newConfig("CONF_DATABASE_PORT='" + document.myform.CONF_DATABASE_PORT.value + "'");
     newConfig("CONF_DATABASE_NAME='" + document.myform.CONF_DATABASE_NAME.value + "'");
     newConfig("CONF_DATABASE_USER='" + document.myform.CONF_DATABASE_USER.value + "'");
     newConfig("CONF_DATABASE_PASSWORD='" + document.myform.CONF_DATABASE_PASSWORD.value + "'");
@@ -547,14 +550,14 @@ EndHTML;
 
         print "<UL><LI>Trying to open a Postgresql database connection : ";
 
-        $conn_string = "host=$CONF_DATABASE_HOST dbname=$CONF_DATABASE_NAME user=$CONF_DATABASE_USER password=$CONF_DATABASE_PASSWORD";
+        $conn_string = "host=$CONF_DATABASE_HOST port=$CONF_DATABASE_PORT dbname=$CONF_DATABASE_NAME user=$CONF_DATABASE_USER password=$CONF_DATABASE_PASSWORD";
         $ptr_connexion = pg_connect($conn_string);
 
         if ($ptr_connexion == TRUE) {
             print "Success!<BR>";
         }
         else {
-            printf ("<p>Unable to connect to database!  Please make sure the server is online and the database \"%s\" exists. Also 'postgresql.conf' and 'pg_hba.conf' must allow the user \"%s\" to open a connection to it on host \"%s\" to continue.  See the error above for clues on what the problem may be.</p>", $CONF_DATABASE_NAME, $CONF_DATABASE_USER, $CONF_DATABASE_HOST);
+            printf ("<p>Unable to connect to database!  Please make sure the server is online and the database \"%s\" exists. Also 'postgresql.conf' and 'pg_hba.conf' must allow the user \"%s\" to open a connection to it on host \"%s\" port %d to continue.  See the error above for clues on what the problem may be.</p>", $CONF_DATABASE_NAME, $CONF_DATABASE_PORT, $CONF_DATABASE_USER, $CONF_DATABASE_HOST);
             print "<p>Please go back and retry with correct values, or fix your server configuration.</p>";
             refreshButton();
             navigation(array(array("title" => "Back", "page" => "Database")));
@@ -611,7 +614,7 @@ EndHTML;
         $db_schema_version = ''; # Schema version query from database
         $file_schema_version = ''; # Schema version from define(REQUIRED_SCHEMA_VERSION) in schema_validate.php
 
-        $conn_string = "host=$CONF_DATABASE_HOST dbname=$CONF_DATABASE_NAME user=$CONF_DATABASE_USER password=$CONF_DATABASE_PASSWORD";
+        $conn_string = "host=$CONF_DATABASE_HOST port=$CONF_DATABASE_PORT dbname=$CONF_DATABASE_NAME user=$CONF_DATABASE_USER password=$CONF_DATABASE_PASSWORD";
         $connection = pg_connect($conn_string) or die(); # or die("Couldn't Connect ==".pg_last_error()."==<BR>");
 
         if (preg_match("/\('schema_version', '(\d+)'\);/", $content_data, $matchesArray)) # Get schema_version from initial data file
@@ -650,7 +653,7 @@ EndHTML;
             $result_array = pg_fetch_all($result);
             $db_shema_version = $result_array[0]['value'];
 
-            print "<p>On <em>$CONF_DATABASE_HOST</em>, Database <em>$CONF_DATABASE_NAME</em> exists and is ";
+            print "<p>On <em>$CONF_DATABASE_HOST:$CONF_DATABASE_PORT</em>, Database <em>$CONF_DATABASE_NAME</em> exists and is ";
             if ($db_shema_version == $file_schema_version) {
                 print "up to date (shema version <em>$db_shema_version</em>).";
             }
@@ -828,7 +831,7 @@ EndHTML;
         empty ($_REQUEST['password2']) ? $password2 = '' : $password2 = $_REQUEST['password2'];
         empty ($_REQUEST['email']) ? $email = $_SERVER['SERVER_ADMIN'] : $email = $_REQUEST['email'];
 
-        $conn_string = "host=$CONF_DATABASE_HOST dbname=$CONF_DATABASE_NAME user=$CONF_DATABASE_USER password=$CONF_DATABASE_PASSWORD";
+        $conn_string = "host=$CONF_DATABASE_HOST port=$CONF_DATABASE_PORT dbname=$CONF_DATABASE_NAME user=$CONF_DATABASE_USER password=$CONF_DATABASE_PASSWORD";
         $connection = pg_connect($conn_string) or die();
 
         $sql = "SELECT * FROM users NATURAL JOIN server_stakeholders";

@@ -344,7 +344,7 @@ if (isset($_REQUEST["auth_source"])) {
 if (Server::getServer()->getUseGlobalUserAccounts())
 	$smarty->assign('SelectNetworkUI', "<input type=\"hidden\" name=\"auth_source\" value='$default_network_param' />");
 else
-	$smarty->assign('SelectNetworkUI', Network::getSelectUI('network_id', array('preSelectedObject' => $network)) );
+	$smarty->assign('SelectNetworkUI', Network::getSelectUI('auth_source', array('preSelectedObject' => $network)) );
 
 // Compile HTML code
 $html_body = $smarty->fetch("templates/sites/signup.tpl");

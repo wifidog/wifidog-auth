@@ -68,15 +68,16 @@ function validate_schema() {
     }
     catch (Exception $e) {
         /* Be quiet */
-    }
-
-    if (empty ($row)) {
         echo "<html><body>";
         echo "<h1>" . _("I am unable to retrieve the schema version. Either the wifidog database hasn't been created yet, the postgresql server is down, or pg_hba.conf does not allow your web server to connect to the wifidog database.") . "</h1>";
-
+        echo "<h2>Error was: ". $e->getMessage() . "</h2>";
         echo "<h2>" . _("Try running the") . " <a href='" . BASE_URL_PATH . "install.php'>" . _("installation script") . "</a>.</h2>\n";
         echo "</html></body>";
         exit ();
+    }
+
+    if (empty ($row)) {
+
     }
     else {
         if ($row['value'] < REQUIRED_SCHEMA_VERSION) {
