@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-07 12:13-0400\n"
+"POT-Creation-Date: 2009-06-26 11:47-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,33 +16,44 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../node_list.php:109
-msgid "No nodes could not be found in the database"
-msgstr "Няма възли в базата данни"
-
-#: ../node_list.php:112 ../classes/Node.php:311 ../classes/Node.php:657
+#: ../node_list.php:131 ../classes/Node.php:323 ../classes/Node.php:685
 msgid "Deployed"
 msgstr "В действие(внедрен)"
 
-#: ../node_list.php:113 ../classes/Node.php:312 ../classes/Node.php:658
+#: ../node_list.php:132 ../classes/Node.php:324 ../classes/Node.php:686
 msgid "In planning"
 msgstr "В процес на планиране"
 
-#: ../node_list.php:113 ../classes/Node.php:313 ../classes/Node.php:659
+#: ../node_list.php:132 ../classes/Node.php:325 ../classes/Node.php:687
 msgid "In testing"
 msgstr "В процес на тестване"
 
-#: ../node_list.php:113 ../classes/Node.php:314 ../classes/Node.php:660
+#: ../node_list.php:132 ../classes/Node.php:326 ../classes/Node.php:688
 msgid "Non-Wifidog node"
 msgstr "Възел, различен от Wifidog"
 
-#: ../node_list.php:113 ../classes/Node.php:315 ../classes/Node.php:661
+#: ../node_list.php:132 ../classes/Node.php:327 ../classes/Node.php:689
 msgid "Permanently closed"
 msgstr "Постоянно затворен"
 
-#: ../node_list.php:113 ../classes/Node.php:316 ../classes/Node.php:662
+#: ../node_list.php:132 ../classes/Node.php:328 ../classes/Node.php:690
 msgid "Temporarily closed"
 msgstr "Временно затворен"
+
+#: ../node_list.php:173 ../classes/NodeLists/NodeListHTML.php:173
+msgid "All"
+msgstr ""
+
+#: ../node_list.php:173 ../hotspots_map.php:114
+#: ../classes/NodeLists/NodeListHTML.php:175
+msgid "Change network"
+msgstr "Смяна на мрежата"
+
+#: ../node_list.php:177 ../classes/NodeLists/NodeListHTML.php:176
+#: ../classes/NodeLists/NodeListHTML.php:221
+#, fuzzy
+msgid "All networks"
+msgstr "мрежа"
 
 #: ../validate.php:58
 msgid "No token specified!"
@@ -83,13 +94,23 @@ msgstr "Съжалявам, тази мрежа не съществува!"
 msgid "Please specify a username or email address"
 msgstr "Моля уточнете потребителско име или и-мейл адрес"
 
-#: ../lost_password.php:131
+#: ../lost_password.php:117
+#, fuzzy
+msgid "Please specify EITHER your username or your email, not both"
+msgstr "Моля уточнете потребителско име или и-мейл адрес"
+
+#: ../lost_password.php:126
+#, fuzzy
+msgid "You need to specify your username or your email"
+msgstr "Вие трябва да уточните вашето потребителско име и парола"
+
+#: ../lost_password.php:136
 msgid "This username or email could not be found in our database"
 msgstr ""
 "Това потребителско име или и-мейл не може да бъдат намерени в нашата база "
 "данни"
 
-#: ../lost_password.php:134
+#: ../lost_password.php:139
 msgid "A new password has been emailed to you."
 msgstr "Нова парола ви бе изпратена по електронната поща."
 
@@ -99,28 +120,24 @@ msgid ""
 "the current hostname"
 msgstr ""
 
-#: ../hotspots_map.php:113
-msgid "Change network"
-msgstr "Смяна на мрежата"
-
-#: ../hotspots_map.php:144
+#: ../hotspots_map.php:145
 msgid "Sorry, your browser does not support Google Maps."
 msgstr "Съжаляваме, но вашия браузър не поддържа Google Maps."
 
-#: ../hotspots_map.php:144 ../classes/StatisticReport/NodeStatus.php:190
+#: ../hotspots_map.php:145 ../classes/StatisticReport/NodeStatus.php:190
 #: ../classes/StatisticReport/NetworkStatus.php:109
 msgid "Homepage"
 msgstr "Собствена интернет страница"
 
-#: ../hotspots_map.php:144
+#: ../hotspots_map.php:145
 msgid "Show me on the map"
 msgstr "Покажи ме на картата"
 
-#: ../hotspots_map.php:144 smarty.txt:36
+#: ../hotspots_map.php:145 smarty.txt:41
 msgid "Loading, please wait..."
 msgstr "Зарежда се, моля изчакайте..."
 
-#: ../hotspots_map.php:158
+#: ../hotspots_map.php:159
 msgid "Hotspots status map"
 msgstr "Карта със състоянието на хотспотове"
 
@@ -196,7 +213,7 @@ msgstr ""
 msgid "Sorry, a user account is already associated to this email address."
 msgstr "Съжалявам, потребителски акаунт вече има за този и-мейл адрес."
 
-#: ../signup.php:229 ../portal/index.php:145
+#: ../signup.php:229 ../portal/index.php:163
 #, php-format
 msgid ""
 "Your account has been granted %s minutes of access to retrieve your email "
@@ -238,7 +255,7 @@ msgstr "Моля валидирайте вашия акаунт от друго 
 #: ../gw_message.php:67
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:895
 #: ../classes/Statistics.php:376 ../classes/Statistics.php:379
-#: ../classes/Content.php:901 ../classes/Node.php:219 ../classes/Role.php:501
+#: ../classes/Content.php:901 ../classes/Node.php:231 ../classes/Role.php:501
 msgid "Access denied!"
 msgstr "Достъпа е отказан!"
 
@@ -361,8 +378,8 @@ msgstr "Показване на всички %s"
 msgid "Show only persistant %s"
 msgstr "Показване само на непроменливите %s"
 
-#: ../admin/generic_object_admin.php:99 ../classes/Network.php:2104
-#: ../classes/Node.php:1630
+#: ../admin/generic_object_admin.php:99 ../classes/Network.php:2140
+#: ../classes/Node.php:1767
 #, php-format
 msgid "Edit %s"
 msgstr "Редактиране %s"
@@ -383,7 +400,7 @@ msgstr "Показване на преглед, така както би изг�
 #: ../classes/StatisticReport/UserReport.php:182
 #: ../classes/StatisticReport/RegistrationLog.php:120
 #: ../classes/StatisticReport/MostPopularNodes.php:109
-#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:118
+#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:133
 msgid "Node"
 msgstr "Хотспот"
 
@@ -556,22 +573,22 @@ msgstr ""
 msgid "No deployed nodes could not be found in the database"
 msgstr "Не може да се намерят действащи възли (хотспотове в базата данни."
 
-#: ../include/schema_validate.php:75
+#: ../include/schema_validate.php:72
 msgid ""
 "I am unable to retrieve the schema version. Either the wifidog database "
 "hasn't been created yet, the postgresql server is down, or pg_hba.conf does "
 "not allow your web server to connect to the wifidog database."
 msgstr ""
 
-#: ../include/schema_validate.php:77
+#: ../include/schema_validate.php:74
 msgid "Try running the"
 msgstr "Опитайте се да стартирате"
 
-#: ../include/schema_validate.php:77
+#: ../include/schema_validate.php:74
 msgid "installation script"
 msgstr "инсталационен скрипт"
 
-#: ../include/schema_validate.php:105
+#: ../include/schema_validate.php:106
 msgid ""
 "No user matches the default network, a new user admin/admin will be created. "
 "Change the password as soon as possible !"
@@ -580,15 +597,15 @@ msgstr ""
 "създаден нов потребител с администраторски права. Сменете паролата възможно "
 "най-скоро!"
 
-#: ../include/schema_validate.php:117
+#: ../include/schema_validate.php:118
 msgid "Could not get a default network!"
 msgstr "Не може да се изведе мрежа по подразбиране!"
 
-#: ../include/schema_validate.php:149
+#: ../include/schema_validate.php:150
 msgid "Trying to update the database schema."
 msgstr "Опитваме се да актуализираме схемата с база данни."
 
-#: ../include/schema_validate.php:154
+#: ../include/schema_validate.php:155
 msgid ""
 "Unable to retrieve schema version.  The database schema is too old to be "
 "updated."
@@ -617,18 +634,18 @@ msgstr "Не може да се генерира справка за потре�
 msgid "I'm having difficulties:"
 msgstr ""
 
-#: ../login/index.php:263 smarty.txt:42 smarty.txt:59 smarty.txt:70
-#: smarty.txt:94 smarty.txt:102
+#: ../login/index.php:263 smarty.txt:47 smarty.txt:64 smarty.txt:75
+#: smarty.txt:99 smarty.txt:107
 msgid "I Forgot my username"
 msgstr "Забравих си  потребителското име.."
 
-#: ../login/index.php:264 smarty.txt:43 smarty.txt:60 smarty.txt:71
-#: smarty.txt:95 smarty.txt:103
+#: ../login/index.php:264 smarty.txt:48 smarty.txt:65 smarty.txt:76
+#: smarty.txt:100 smarty.txt:108
 msgid "I Forgot my password"
 msgstr "Забравих си   паролата.."
 
-#: ../login/index.php:265 smarty.txt:44 smarty.txt:72 smarty.txt:96
-#: smarty.txt:104
+#: ../login/index.php:265 smarty.txt:49 smarty.txt:77 smarty.txt:101
+#: smarty.txt:109
 msgid "Re-send the validation email"
 msgstr "Повторно изпращане на имейл за валидация."
 
@@ -641,7 +658,7 @@ msgstr "%s страница за влизане за %s"
 msgid "Offsite login page"
 msgstr "Офсайт страница за влизане"
 
-#: ../login/index.php:282 ../portal/index.php:139
+#: ../login/index.php:282 ../portal/index.php:157
 msgid "Welcome to"
 msgstr "Добре дошли в"
 
@@ -649,19 +666,19 @@ msgstr "Добре дошли в"
 msgid "No Hotspot specified!"
 msgstr "Няма уточнен Хотспот!"
 
-#: ../portal/index.php:134
+#: ../portal/index.php:152
 #, php-format
 msgid "%s portal for %s"
 msgstr "%s портал за %s"
 
-#: ../portal/index.php:144
+#: ../portal/index.php:162
 msgid ""
 "You NEED to confirm your account.  An email with confirmation instructions "
 "was sent to your email address.  If you don't see it in your inbox, make "
 "sure to look in your spam folder."
 msgstr ""
 
-#: ../portal/index.php:206
+#: ../portal/index.php:224
 msgid "Show all available contents for this hotspot"
 msgstr "Покожи всичкото налично съдържание за този Хотспот"
 
@@ -798,7 +815,7 @@ msgstr ""
 "Съжаляваме, този доклад има нужда от уточняването на индивидуални хотспотове"
 
 #: ../classes/StatisticReport/NodeStatus.php:99
-#: ../classes/DependenciesList.php:137 smarty.txt:3
+#: ../classes/DependenciesList.php:137 smarty.txt:5
 msgid "Status"
 msgstr "Статус"
 
@@ -850,8 +867,8 @@ msgid "Profile"
 msgstr "Профил"
 
 #: ../classes/StatisticReport/NodeStatus.php:152
-#: ../classes/StatisticReport/NetworkStatus.php:99 ../classes/Node.php:1100
-#: ../classes/Node.php:1105 smarty.txt:6
+#: ../classes/StatisticReport/NetworkStatus.php:99 ../classes/Node.php:1199
+#: ../classes/Node.php:1204 smarty.txt:8
 msgid "Name"
 msgstr "Име"
 
@@ -859,7 +876,7 @@ msgstr "Име"
 msgid "Node ID"
 msgstr "Идентификационен номер на хотспота"
 
-#: ../classes/StatisticReport/NodeStatus.php:160 ../classes/Node.php:368
+#: ../classes/StatisticReport/NodeStatus.php:160 ../classes/Node.php:380
 msgid "Deployment Status"
 msgstr "Статус на разгръщане"
 
@@ -868,12 +885,12 @@ msgid "Deployment date"
 msgstr "Дата на разгръщане"
 
 #: ../classes/StatisticReport/NodeStatus.php:168 ../classes/Content.php:925
-#: ../classes/Node.php:1124 ../classes/DependenciesList.php:173 smarty.txt:63
+#: ../classes/Node.php:1223 ../classes/DependenciesList.php:175 smarty.txt:68
 msgid "Description"
 msgstr "Описание"
 
 #: ../classes/StatisticReport/NodeStatus.php:172
-#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:114
+#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:129
 msgid "Network"
 msgstr "Мрежа"
 
@@ -881,8 +898,8 @@ msgstr "Мрежа"
 msgid "GIS Location"
 msgstr "GPS позиция"
 
-#: ../classes/StatisticReport/NodeStatus.php:181 ../classes/Network.php:1049
-#: smarty.txt:68
+#: ../classes/StatisticReport/NodeStatus.php:181 ../classes/Network.php:1041
+#: smarty.txt:73
 msgid "Map"
 msgstr "Карта"
 
@@ -914,7 +931,7 @@ msgid "Transit Info"
 msgstr "Транзитна информация"
 
 #: ../classes/StatisticReport/NodeStatus.php:220 ../classes/User.php:1058
-#: ../classes/Node.php:1067
+#: ../classes/Node.php:1164 smarty.txt:16
 msgid "Statistics"
 msgstr "Статистика"
 
@@ -955,8 +972,8 @@ msgstr "ИН на потребителя: %s не може да се намер�
 #: ../classes/StatisticReport/RegistrationLog.php:123
 #: ../classes/StatisticReport/ConnectionLog.php:115
 #: ../classes/StatisticReport/ConnectionLog.php:164 ../classes/User.php:810
-#: ../classes/User.php:815 ../classes/User.php:864 smarty.txt:113
-#: smarty.txt:119
+#: ../classes/User.php:815 ../classes/User.php:864 smarty.txt:128
+#: smarty.txt:134
 msgid "Username"
 msgstr "Потребителско име"
 
@@ -969,7 +986,7 @@ msgid "Member since"
 msgstr "Член от"
 
 #: ../classes/StatisticReport/UserReport.php:147 ../classes/User.php:852
-#: smarty.txt:116
+#: smarty.txt:131
 msgid "Account Status"
 msgstr "Статус на акаунта"
 
@@ -1075,7 +1092,7 @@ msgstr "Съжаляваме, този доклад ви кара да избе�
 
 #: ../classes/StatisticReport/NetworkStatus.php:104
 #: ../classes/VirtualHost.php:603 ../classes/Server.php:246
-#: ../classes/Node.php:1111 ../classes/ProfileTemplate.php:512
+#: ../classes/Node.php:1210 ../classes/ProfileTemplate.php:512
 #: ../classes/Role.php:369
 msgid "Creation date"
 msgstr "Дата на създаване"
@@ -1344,7 +1361,7 @@ msgid "warning:  This report does not count connections at Splash-Only nodes"
 msgstr ""
 
 #: ../classes/NodeLists/NodeListRSS.php:157
-#: ../classes/NodeLists/NodeListHTML.php:211
+#: ../classes/NodeLists/NodeListHTML.php:221
 msgid "Newest Hotspots"
 msgstr "Най-нови хотспотове"
 
@@ -1364,7 +1381,7 @@ msgstr "Вижте карта"
 msgid "Contact"
 msgstr "Контакт"
 
-#: ../classes/NodeLists/NodeListHTML.php:210
+#: ../classes/NodeLists/NodeListHTML.php:220
 msgid "Hotspot list"
 msgstr "Списък на хотспотове"
 
@@ -1418,19 +1435,19 @@ msgstr "Последно актуализиран на: %s"
 msgid "Hotspot"
 msgstr "Хотспот"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1150
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1249
 msgid "Postal code"
 msgstr "Пощенски код"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1140
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1239
 msgid "City"
 msgstr "Град"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1145
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1244
 msgid "Province / State"
 msgstr "Провинция / Щат"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1170
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1269
 msgid "Homepage URL"
 msgstr "Домашна страница"
 
@@ -1995,7 +2012,7 @@ msgstr "(Празно %s)"
 #: ../classes/Content/Langstring/Langstring.php:215
 #: ../classes/Content/Langstring/Langstring.php:341
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:112
-#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:19
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:22
 msgid "Language"
 msgstr "Език"
 
@@ -2571,9 +2588,10 @@ msgstr ""
 msgid "Should this profile be publicly visible?"
 msgstr ""
 
-#: ../classes/Profile.php:311 ../classes/Network.php:1671
-#: ../classes/Network.php:1690 ../classes/Network.php:1696
-#: ../classes/Network.php:1721 ../classes/Node.php:1231
+#: ../classes/Profile.php:311 ../classes/Network.php:1716
+#: ../classes/Network.php:1722 ../classes/Network.php:1728
+#: ../classes/Network.php:1753 ../classes/Node.php:1335
+#: ../classes/Node.php:1350
 msgid "Yes"
 msgstr "Да"
 
@@ -2854,72 +2872,72 @@ msgstr ""
 msgid "User administration"
 msgstr "Потребителкса администрация"
 
-#: ../classes/Network.php:112 ../classes/Network.php:250
+#: ../classes/Network.php:124 ../classes/Network.php:265
 msgid "Network::getAllNetworks:  Fatal error: No networks in the database!"
 msgstr "Мрежа::Всички мрежи: Фатална грешка: Няма мрежи в базата данни!"
 
-#: ../classes/Network.php:189
+#: ../classes/Network.php:201
 msgid "Unable to insert the new network in the database!"
 msgstr "Не е възможно да се вмъкне новата мрежа в базата данни!"
 
-#: ../classes/Network.php:261 ../classes/Network.php:267
+#: ../classes/Network.php:276 ../classes/Network.php:282
 msgid "Network:"
 msgstr "Мрежа:"
 
-#: ../classes/Network.php:308
+#: ../classes/Network.php:323
 msgid "Create a new network with ID"
 msgstr "Създаване на нова мрежа с ИН"
 
-#: ../classes/Network.php:719 ../classes/Statistics.php:124
-#: ../classes/Content.php:335 ../classes/NodeList.php:138
+#: ../classes/Network.php:737 ../classes/Statistics.php:124
+#: ../classes/Content.php:335 ../classes/NodeList.php:162
 msgid "Unable to open directory "
 msgstr "Не може да се отвори директорията"
 
-#: ../classes/Network.php:1049
+#: ../classes/Network.php:1041
 msgid "Satellite"
 msgstr "Сателит"
 
-#: ../classes/Network.php:1049
+#: ../classes/Network.php:1041
 msgid "Hybrid"
 msgstr "Хибрид"
 
-#: ../classes/Network.php:1598
+#: ../classes/Network.php:1629
 msgid "Network management"
 msgstr "Управление на мрежата"
 
-#: ../classes/Network.php:1604
+#: ../classes/Network.php:1635
 msgid "Network content"
 msgstr "мрежово съдържание"
 
-#: ../classes/Network.php:1615
+#: ../classes/Network.php:1646
 msgid "Network ID"
 msgstr "Идентификация на мрежата"
 
-#: ../classes/Network.php:1620
+#: ../classes/Network.php:1651
 msgid "Network name"
 msgstr "Име на мрежата"
 
-#: ../classes/Network.php:1625
+#: ../classes/Network.php:1656
 msgid "Network creation date"
 msgstr "Дата на създаване на мрежата"
 
-#: ../classes/Network.php:1630
+#: ../classes/Network.php:1661
 msgid "Network's web site"
 msgstr "Интернет адрес на мрежата"
 
-#: ../classes/Network.php:1635
+#: ../classes/Network.php:1666
 msgid "Technical support email"
 msgstr "Имейл за техническа поддръжка"
 
-#: ../classes/Network.php:1640
+#: ../classes/Network.php:1671
 msgid "Information about the network"
 msgstr "Информация за мрежата"
 
-#: ../classes/Network.php:1648
+#: ../classes/Network.php:1679
 msgid "Network authenticator class"
 msgstr "Валидиращ мрежов клас"
 
-#: ../classes/Network.php:1649
+#: ../classes/Network.php:1680
 msgid ""
 "The subclass of Authenticator to be used for user authentication. Example: "
 "AuthenticatorRadius"
@@ -2927,11 +2945,11 @@ msgstr ""
 "Подкласа на валидатора трябва да се използва за автентикация на потребителя. "
 "Например: AuthenticatorRadius"
 
-#: ../classes/Network.php:1656
+#: ../classes/Network.php:1687
 msgid "Authenticator parameters"
 msgstr "Параметри на валидатора"
 
-#: ../classes/Network.php:1657
+#: ../classes/Network.php:1688
 #, fuzzy
 msgid ""
 "The explicit parameters to be passed to the authenticator. You MUST read the "
@@ -2942,37 +2960,33 @@ msgstr ""
 "Изричните параметри ще се предадат на валидатора. Например: 'my_network_id', "
 "'192.168.0.11', 1812, 1813, 'secret_key', 'CHAP_MD5'"
 
-#: ../classes/Network.php:1662
+#: ../classes/Network.php:1693
 msgid "Network Authentication"
 msgstr "Валидация на мрежата"
 
-#: ../classes/Network.php:1670
-msgid "Is this network the default network?"
-msgstr "Тази ли е мрежата по подразбиране?"
-
-#: ../classes/Network.php:1675
+#: ../classes/Network.php:1701
 msgid "Selected theme pack for this network"
 msgstr "Селектиран тематичен пакет за тази мрежа"
 
-#: ../classes/Network.php:1680
+#: ../classes/Network.php:1706
 msgid "Network properties"
 msgstr "Свойства на мрежата"
 
-#: ../classes/Network.php:1688
+#: ../classes/Network.php:1714
 msgid "Splash-only nodes"
 msgstr "Само хотспотове от вида Splash(информационни, без регистрация)"
 
-#: ../classes/Network.php:1689
+#: ../classes/Network.php:1715
 msgid "Are nodes allowed to be set as splash-only (no login)?"
 msgstr ""
 "Позволено ли е на хотспотовете да бъдат настроени само като 'SPLASH\" (без "
 "задължително влизане)?"
 
-#: ../classes/Network.php:1694
+#: ../classes/Network.php:1720
 msgid "Portal page redirection"
 msgstr "Пренасочване към порталната страница"
 
-#: ../classes/Network.php:1695
+#: ../classes/Network.php:1721
 msgid ""
 "Are nodes allowed to redirect users to an arbitrary web page instead of the "
 "portal?"
@@ -2980,15 +2994,29 @@ msgstr ""
 "Позволено ли е на хотспотовете да пренасочват потребителите към случайна "
 "интернет страница, вместо към портала?"
 
-#: ../classes/Network.php:1700
+#: ../classes/Network.php:1726 ../classes/Node.php:1348
+#, fuzzy
+msgid "Original URL redirection"
+msgstr "Пренасочване към порталната страница"
+
+#: ../classes/Network.php:1727
+#, fuzzy
+msgid ""
+"Are nodes allowed to redirect users to the web page they originally "
+"requested instead of the portal?"
+msgstr ""
+"Позволено ли е на хотспотовете да пренасочват потребителите към случайна "
+"интернет страница, вместо към портала?"
+
+#: ../classes/Network.php:1732
 msgid "Network's node properties"
 msgstr "Свойства на мрежовите точки"
 
-#: ../classes/Network.php:1708
+#: ../classes/Network.php:1740
 msgid "Validation grace period"
 msgstr "Период на отложена валидация"
 
-#: ../classes/Network.php:1709
+#: ../classes/Network.php:1741
 msgid ""
 "The length of the validation grace period in seconds.  A new user is granted "
 "Internet access for this period check his email and validate his account."
@@ -2997,27 +3025,27 @@ msgstr ""
 "му се дава интернет достъп за времето през което да провери имейла си и "
 "потвърди акаунта си."
 
-#: ../classes/Network.php:1714
+#: ../classes/Network.php:1746
 msgid "This will be the from address of the validation email"
 msgstr "Това ще е обратния адрес на и-мейла за валидация"
 
-#: ../classes/Network.php:1719
+#: ../classes/Network.php:1751
 msgid "Multiple connections"
 msgstr "Множество връзки"
 
-#: ../classes/Network.php:1720
+#: ../classes/Network.php:1752
 msgid "Can an account be connected more than once at the same time?"
 msgstr "Може ли един акаунт да се свърже повече от веднъж в едно и също време?"
 
-#: ../classes/Network.php:1725
+#: ../classes/Network.php:1757
 msgid "Network's user verification"
 msgstr "Валидация на потребителя в мрежата"
 
-#: ../classes/Network.php:1735
+#: ../classes/Network.php:1767
 msgid "Abuse control window"
 msgstr ""
 
-#: ../classes/Network.php:1736
+#: ../classes/Network.php:1768
 msgid ""
 "The length of the window during which the user must not have exceeded the "
 "limits below.  Any valid postgresql interval expression is acceptable, "
@@ -3025,96 +3053,96 @@ msgid ""
 "access until his usage falls below the limits."
 msgstr ""
 
-#: ../classes/Network.php:1741
+#: ../classes/Network.php:1773
 msgid "Network max total bytes transfered"
 msgstr ""
 
-#: ../classes/Network.php:1742 ../classes/Network.php:1754
+#: ../classes/Network.php:1774 ../classes/Network.php:1786
 msgid "Maximum data transfer during the abuse control window"
 msgstr ""
 
-#: ../classes/Network.php:1747
+#: ../classes/Network.php:1779
 #, fuzzy
 msgid "Network max connection duration"
 msgstr "Дата на създаване на мрежата"
 
-#: ../classes/Network.php:1748 ../classes/Network.php:1760
+#: ../classes/Network.php:1780 ../classes/Network.php:1792
 msgid ""
 "Maximum connection duration during the abuse control window.  Any valid "
 "postgresql interval expression is acceptable, such as hh:mm:ss"
 msgstr ""
 
-#: ../classes/Network.php:1753
+#: ../classes/Network.php:1785
 msgid "Node max total bytes transfered"
 msgstr ""
 
-#: ../classes/Network.php:1759
+#: ../classes/Network.php:1791
 #, fuzzy
 msgid "Node max connection duration"
 msgstr "Конфигурация на хотспота"
 
-#: ../classes/Network.php:1765
+#: ../classes/Network.php:1797
 #, fuzzy
 msgid "You do not have access to edit these options"
 msgstr "(Вие нямате достъп, за да променяте тази част от съдържанието)"
 
-#: ../classes/Network.php:1768
+#: ../classes/Network.php:1800
 msgid "Dynamic abuse control"
 msgstr ""
 
-#: ../classes/Network.php:1781 ../classes/Server.php:275
-#: ../classes/Node.php:1252
+#: ../classes/Network.php:1813 ../classes/Server.php:281
+#: ../classes/Node.php:1362
 msgid "Access rights"
 msgstr "Права на достъп"
 
-#: ../classes/Network.php:1797
+#: ../classes/Network.php:1829
 msgid "Note that to be valid, all 3 values must be present."
 msgstr ""
 
-#: ../classes/Network.php:1798 ../classes/Node.php:1189
+#: ../classes/Network.php:1830 ../classes/Node.php:1288
 msgid "Latitude"
 msgstr "Географска ширина"
 
-#: ../classes/Network.php:1799
+#: ../classes/Network.php:1831
 #, fuzzy
 msgid "Center latitude for the area covered by your wireless network"
 msgstr "Централна географска ширина на площта на вашата безжична мрежа"
 
-#: ../classes/Network.php:1803 ../classes/Node.php:1194
+#: ../classes/Network.php:1835 ../classes/Node.php:1293
 msgid "Longitude"
 msgstr "Географска дължина"
 
-#: ../classes/Network.php:1804
+#: ../classes/Network.php:1836
 #, fuzzy
 msgid "Center longitude for the area covered by your wireless network"
 msgstr "Централна географска дължина на площта на вашата безжична мрежа"
 
-#: ../classes/Network.php:1808
+#: ../classes/Network.php:1840
 msgid "Zoomlevel"
 msgstr "Ниво на приближение"
 
-#: ../classes/Network.php:1809
+#: ../classes/Network.php:1841
 #, fuzzy
 msgid "Zoomlevel of the Google Map.  12 is a typical value."
 msgstr "Степен на приближение на Goggle Map за площта на вашата безжична мрежа"
 
-#: ../classes/Network.php:1813
+#: ../classes/Network.php:1845
 msgid "Map type"
 msgstr "Тип на картата"
 
-#: ../classes/Network.php:1814
+#: ../classes/Network.php:1846
 msgid "Default Google Map type for your the area of your wireless network"
 msgstr "Вид на Google Map по подразбиране за площта на вашата безжична мрежа"
 
-#: ../classes/Network.php:1819 ../classes/Node.php:1216
+#: ../classes/Network.php:1851 ../classes/Node.php:1315
 msgid "GIS data"
 msgstr "Географска информация"
 
-#: ../classes/Network.php:1823
+#: ../classes/Network.php:1855
 msgid "Network profile templates"
 msgstr ""
 
-#: ../classes/Network.php:2070
+#: ../classes/Network.php:2106
 #, fuzzy
 msgid ""
 "Cannot delete default network, create another one and select it before you "
@@ -3123,16 +3151,16 @@ msgstr ""
 "Не е възможно премахването на мрежата по подразбиране, създайте още една "
 "мрежа и я изберете преди да изтриете тази."
 
-#: ../classes/Network.php:2075
+#: ../classes/Network.php:2111
 msgid "Could not delete network!"
 msgstr "Не може да се премахне мрежата!"
 
-#: ../classes/Network.php:2111
+#: ../classes/Network.php:2147
 #, fuzzy, php-format
 msgid "Add a new network on this server"
 msgstr "Използвате ли SSL на този сървър?"
 
-#: ../classes/Network.php:2116
+#: ../classes/Network.php:2152
 msgid "Network administration"
 msgstr "Мрежова администрация"
 
@@ -3267,8 +3295,8 @@ msgid "It appears the postgresql module isn't loaded"
 msgstr ""
 
 #: ../classes/AbstractDb.php:99
-#, php-format
-msgid "Unable to connect to database on %s"
+#, fuzzy, php-format
+msgid "Unable to connect to the database at %s"
 msgstr "Невъзможност за връзка с базата данни на %s"
 
 #: ../classes/AbstractDb.php:121 ../classes/AbstractDb.php:214
@@ -3351,15 +3379,27 @@ msgstr ""
 msgid "Timezone from PHP: %s"
 msgstr ""
 
-#: ../classes/Server.php:309
+#: ../classes/Server.php:270
+#, fuzzy
+msgid "Authentication"
+msgstr "Валидация на мрежата"
+
+#: ../classes/Server.php:271
+msgid ""
+"Use the users of default Virtual Host's network across all networks on the "
+"server."
+msgstr ""
+
+#: ../classes/Server.php:320
 msgid "The server can never be deleted!"
 msgstr ""
 
-#: ../classes/Server.php:319
-msgid "Server access control"
-msgstr ""
+#: ../classes/Server.php:330
+#, fuzzy
+msgid "Server configuration"
+msgstr "Конфигурация на доклада"
 
-#: ../classes/Server.php:324
+#: ../classes/Server.php:335
 msgid "Server administration"
 msgstr "Сървърна администрация"
 
@@ -3537,20 +3577,20 @@ msgstr "Не е възможно да се настрои като автор в
 msgid "Reusable content library"
 msgstr ""
 
-#: ../classes/NodeList.php:186 smarty.txt:35
+#: ../classes/NodeList.php:210 smarty.txt:40
 msgid "Deployed HotSpots map"
 msgstr "Карта на действащи Хотспотове"
 
-#: ../classes/NodeList.php:197
+#: ../classes/NodeList.php:221
 #, php-format
 msgid "List in %s format"
 msgstr ""
 
-#: ../classes/NodeList.php:203
+#: ../classes/NodeList.php:227
 msgid "Full node technical status (includes non-deployed nodes)"
 msgstr "Пълен технически статус на възела(включва не задействани възли)"
 
-#: ../classes/NodeList.php:207
+#: ../classes/NodeList.php:231
 #, fuzzy
 msgid "Find Hotspots"
 msgstr "Откриване на още хотспотове"
@@ -3585,30 +3625,30 @@ msgstr ""
 msgid "Detailed error was:  Uncaught %s %s (%s) thrown in file %s, line %d"
 msgstr ""
 
-#: ../classes/MainUI.php:231
+#: ../classes/MainUI.php:232 ../classes/MainUI.php:234
 msgid "authentication server"
 msgstr "Сървър за автентикация"
 
-#: ../classes/MainUI.php:258
+#: ../classes/MainUI.php:262
 #, php-format
 msgid "%s is not a valid structural display area"
 msgstr "%s невалидна структурна  повърхност за изображение"
 
-#: ../classes/MainUI.php:642
+#: ../classes/MainUI.php:680
 #, php-format
 msgid "%s Login"
 msgstr "%s Влизане (login)"
 
-#: ../classes/MainUI.php:642 smarty.txt:18 smarty.txt:28
+#: ../classes/MainUI.php:680 smarty.txt:21 smarty.txt:32
 msgid "Login"
 msgstr "Влизане (login)"
 
-#: ../classes/MainUI.php:646
+#: ../classes/MainUI.php:684
 #, php-format
 msgid "Click <a href='%s'>here</a> to continue"
 msgstr "Кликнете <a href='%s'>тук</a>, за да продължите"
 
-#: ../classes/MainUI.php:646
+#: ../classes/MainUI.php:684
 msgid ""
 "The transfer from secure login back to regular http may cause a warning."
 msgstr ""
@@ -3620,169 +3660,178 @@ msgstr ""
 msgid "PHPMailer couldn't sent mail.  Error was: %s"
 msgstr ""
 
-#: ../classes/Node.php:210
+#: ../classes/Node.php:222
 msgid "Could not delete node!"
 msgstr "Не може да се премахне хотспота!"
 
-#: ../classes/Node.php:243
+#: ../classes/Node.php:255
 msgid "PUT_GATEWAY_ID_HERE"
 msgstr "ВЪВЕДЕТЕ_ИДЕНТИФИКАЦИОНЕН НОМЕР НА ШЛЮЗА_ТУК"
 
-#: ../classes/Node.php:259
+#: ../classes/Node.php:271
 msgid "New node"
 msgstr "Нов хотспот"
 
-#: ../classes/Node.php:268
+#: ../classes/Node.php:280
 #, php-format
 msgid "Sorry, a node for the gateway %s already exists."
 msgstr "Съжалявам, точка за този шлюз %s вече съществува."
 
-#: ../classes/Node.php:274
+#: ../classes/Node.php:286
 msgid "Unable to insert new node into database!"
 msgstr "Не може да се вмъкне нов хотспот в базата данни!"
 
-#: ../classes/Node.php:358
+#: ../classes/Node.php:370
 msgid "Filter:"
 msgstr "Филтър:"
 
-#: ../classes/Node.php:366
+#: ../classes/Node.php:378
 msgid "Node Name"
 msgstr "Име на точката"
 
-#: ../classes/Node.php:367 ../classes/Node.php:1077
+#: ../classes/Node.php:379 ../classes/Node.php:1176
 msgid "Gateway ID"
 msgstr "Идентификационен номер на входа (Gateway)"
 
-#: ../classes/Node.php:390
+#: ../classes/Node.php:402
 msgid "Sorry, no nodes available in the database"
 msgstr "Съжаляваме, няма никакви хотспотове налични в базата данни"
 
-#: ../classes/Node.php:415
+#: ../classes/Node.php:427
 msgid "Add a new node for the gateway ID"
 msgstr "Прибавете нова точка за идентификационния номер на този шлюз "
 
-#: ../classes/Node.php:425
+#: ../classes/Node.php:437
 msgid "in "
 msgstr "в "
 
-#: ../classes/Node.php:481
+#: ../classes/Node.php:493
 msgid "Here is what you can do to fix this:"
 msgstr ""
 
-#: ../classes/Node.php:485
+#: ../classes/Node.php:497
 #, php-format
 msgid ""
 "You can create a new node with %s as it's associated gateway id.  This is "
 "typical for new installations."
 msgstr ""
 
-#: ../classes/Node.php:498
+#: ../classes/Node.php:510
 #, fuzzy, php-format
 msgid "Add a new node in %s"
 msgstr "Прибавяне на нов хотспот"
 
-#: ../classes/Node.php:500
+#: ../classes/Node.php:512
 #, fuzzy
 msgid "Add node"
 msgstr "Прибавяне на нов хотспот"
 
-#: ../classes/Node.php:507
+#: ../classes/Node.php:519
 #, php-format
 msgid ""
 "You can \"steal\" an existing node.  The node's gateway id will be replaced "
 "with %s.  This is typical when replacing hardware."
 msgstr ""
 
-#: ../classes/Node.php:526
+#: ../classes/Node.php:538
 #, fuzzy
 msgid "Steal node"
 msgstr "Нов хотспот"
 
-#: ../classes/Node.php:602
+#: ../classes/Node.php:614
 msgid "No deployment statuses could be found in the database"
 msgstr "Няма състояния на проявяване в базата данни"
 
-#: ../classes/Node.php:653
+#: ../classes/Node.php:681
 #, php-format
 msgid "The node with %s: %s could not be found in the database!"
 msgstr "Точката с %s: %s не може да бъде намерена в базата данни!"
 
-#: ../classes/Node.php:1061
+#: ../classes/Node.php:1154
 msgid "Edit a node"
 msgstr "Редактиране на хотспот"
 
-#: ../classes/Node.php:1068
+#: ../classes/Node.php:1165
+msgid "Allow public access to some node statistics."
+msgstr ""
+
+#: ../classes/Node.php:1166
 msgid "Get access statistics"
 msgstr "Получаване на статистика за достъпа"
 
-#: ../classes/Node.php:1091
+#: ../classes/Node.php:1190
 msgid "Node content"
 msgstr "Съдържание на хотспота"
 
-#: ../classes/Node.php:1130
+#: ../classes/Node.php:1229
 msgid "Civic number"
 msgstr "Граждански номер"
 
-#: ../classes/Node.php:1135
+#: ../classes/Node.php:1234
 msgid "Street name"
 msgstr "Име на улица"
 
-#: ../classes/Node.php:1155
+#: ../classes/Node.php:1254
 msgid "Country"
 msgstr "Държава"
 
-#: ../classes/Node.php:1160
+#: ../classes/Node.php:1259
 msgid "Public phone number"
 msgstr "Обществен телефонен номер"
 
-#: ../classes/Node.php:1165
+#: ../classes/Node.php:1264
 msgid "Public email"
 msgstr "Обществен и-мейл"
 
-#: ../classes/Node.php:1175
+#: ../classes/Node.php:1274
 msgid "Mass transit info"
 msgstr "Информация за масов транзит"
 
-#: ../classes/Node.php:1180
+#: ../classes/Node.php:1279
 msgid "Information about the node"
 msgstr "Информация за хотспота"
 
-#: ../classes/Node.php:1200 ../classes/Node.php:1204
+#: ../classes/Node.php:1299 ../classes/Node.php:1303
 msgid "Geocode the address or postal code above"
 msgstr "Да се геокодира адреса или горния пощенски код"
 
-#: ../classes/Node.php:1201
+#: ../classes/Node.php:1300
 msgid "Check using Google Maps"
 msgstr "Провери с Google Maps"
 
-#: ../classes/Node.php:1202
+#: ../classes/Node.php:1301
 msgid ""
 "Use a geocoding service, then use Google Maps to pinpoint the exact location."
 msgstr ""
 "Използвайте геокодираща услуга, след което изполвайте картата на Google, за "
 "да определите точното местоположение."
 
-#: ../classes/Node.php:1205
+#: ../classes/Node.php:1304
 msgid "Use a geocoding service"
 msgstr "Използване на геокодираща услуга"
 
-#: ../classes/Node.php:1211
+#: ../classes/Node.php:1310
 msgid "Map URL"
 msgstr "Карта на интернет адреса"
 
-#: ../classes/Node.php:1224
+#: ../classes/Node.php:1323
 msgid "Node deployment status"
 msgstr "Състояние на внедряването на хотспотове"
 
-#: ../classes/Node.php:1230
+#: ../classes/Node.php:1328
+#, fuzzy
+msgid "Node Network"
+msgstr "Мрежа"
+
+#: ../classes/Node.php:1334
 msgid "Is this node splash-only (no login)?"
 msgstr "Този хотспот само \"SPLASH\" ли е (без Login)?"
 
-#: ../classes/Node.php:1237
+#: ../classes/Node.php:1341
 msgid "URL to show instead of the portal"
 msgstr "Интернет страницата ще се покаже вместо портала"
 
-#: ../classes/Node.php:1239
+#: ../classes/Node.php:1343
 msgid ""
 "If this is not empty, the portal will be disabled and this URL will be shown "
 "instead"
@@ -3790,11 +3839,20 @@ msgstr ""
 "Ако това поле не е празно, портала ще се деактивира и вместо това ще се "
 "покаже тази интернет страница."
 
-#: ../classes/Node.php:1244
+#: ../classes/Node.php:1349
+#, fuzzy
+msgid ""
+"Are nodes allowed to redirect users to the web page they originally "
+"requested instead of the portal? this will overide the custom portal URL"
+msgstr ""
+"Позволено ли е на хотспотовете да пренасочват потребителите към случайна "
+"интернет страница, вместо към портала?"
+
+#: ../classes/Node.php:1354
 msgid "Node configuration"
 msgstr "Конфигурация на хотспота"
 
-#: ../classes/Node.php:1382
+#: ../classes/Node.php:1492
 msgid ""
 "It appears that the Geocoder could not be reached or could not geocode the "
 "given address."
@@ -3802,26 +3860,26 @@ msgstr ""
 "По всичко личи, че Геокода не може да се достигне и не може да геокодира "
 "дадения адрес."
 
-#: ../classes/Node.php:1385
+#: ../classes/Node.php:1495
 msgid "You must enter a valid address."
 msgstr "Вие трябва да въведете валиден адрес."
 
-#: ../classes/Node.php:1389
+#: ../classes/Node.php:1499
 msgid "Unable to create geocoder.  Are you sure you set the country?"
 msgstr ""
 "Не е възможно създаването на геокодер. Сигурни ли сте, че направихте "
 "съответните настройки за съответната страна?"
 
-#: ../classes/Node.php:1622
+#: ../classes/Node.php:1759
 msgid "Edit nodes"
 msgstr ""
 
-#: ../classes/Node.php:1637
+#: ../classes/Node.php:1774
 #, php-format
 msgid "Add a new node"
 msgstr "Прибавяне на нов хотспот"
 
-#: ../classes/Node.php:1642
+#: ../classes/Node.php:1779
 msgid "Node administration"
 msgstr "Администрация на хотспота"
 
@@ -4164,6 +4222,13 @@ msgstr ""
 msgid "User is allowed to exceed dynamic abuse control limits at this node"
 msgstr ""
 
+#: ../classes/Permission.php:108
+#, fuzzy
+msgid ""
+"User is allowed to turn on publicly accessible aggregate statistics for this "
+"node"
+msgstr "Потребителят е вече притежател на този хотспот."
+
 #: ../classes/Stakeholder.php:88
 msgid "Remove stakeholder"
 msgstr ""
@@ -4272,181 +4337,201 @@ msgstr ""
 msgid "Information"
 msgstr "информация за проекта"
 
-#: ../classes/DependenciesList.php:176
+#: ../classes/DependenciesList.php:178
 msgid "Install message"
 msgstr ""
 
-#: ../classes/DependenciesList.php:179
+#: ../classes/DependenciesList.php:181
 #, fuzzy
 msgid "Detection message"
 msgstr "Съобщение на грешка"
 
-#: ../classes/DependenciesList.php:182
+#: ../classes/DependenciesList.php:184
 #, fuzzy
 msgid "To install"
 msgstr "Общо"
 
-#: ../classes/DependenciesList.php:204
+#: ../classes/DependenciesList.php:206
 msgid "Dependencies"
 msgstr ""
 
 #: smarty.txt:2
-msgid "Status of all nodes of the"
+#, fuzzy
+msgid "Status of all nodes on "
+msgstr "Статус на всички хотспотове на"
+
+#: smarty.txt:3
+#, fuzzy
+msgid "Status of all nodes of the "
 msgstr "Статус на всички хотспотове на"
 
 #: smarty.txt:4
+msgid "Status of all nodes of the"
+msgstr "Статус на всички хотспотове на"
+
+#: smarty.txt:6
 #, fuzzy
 msgid "Node id"
 msgstr "Хотспот:"
 
-#: smarty.txt:5
+#: smarty.txt:7
 #, fuzzy
 msgid "Gateway id"
 msgstr "Идентификационен номер на входа (Gateway)"
 
-#: smarty.txt:7
+#: smarty.txt:9
 msgid "Local content demo"
 msgstr "Демо с местно съдържание"
 
-#: smarty.txt:8
+#: smarty.txt:10
 msgid "Opened on"
 msgstr "Отворено на"
 
-#: smarty.txt:9 smarty.txt:117
+#: smarty.txt:11 smarty.txt:132
 msgid "Online users"
 msgstr "Онлайн потребители"
 
-#: smarty.txt:10 smarty.txt:11
+#: smarty.txt:12 smarty.txt:13
 msgid "days"
 msgstr "дни"
 
-#: smarty.txt:12
+#: smarty.txt:14
 msgid "Login page"
 msgstr "Страница за влизане (login)"
 
-#: smarty.txt:13
+#: smarty.txt:15
 msgid "Portal page"
 msgstr "Портална страница"
 
-#: smarty.txt:14
+#: smarty.txt:17
 msgid "Logged in as"
 msgstr "Влязъл съм като"
 
-#: smarty.txt:15
+#: smarty.txt:18
 #, fuzzy
 msgid "Profile / Settings"
 msgstr "Провинция / Щат"
 
-#: smarty.txt:16
+#: smarty.txt:19
 msgid "Logout"
 msgstr "Изход (logout)"
 
-#: smarty.txt:17
+#: smarty.txt:20
 msgid "I am not logged in."
 msgstr "Не съм влязъл в системата."
 
-#: smarty.txt:20
+#: smarty.txt:23
 msgid "user is online at this hotspot"
 msgstr "потребителя е онлайн при този хотспот"
 
-#: smarty.txt:21
+#: smarty.txt:24
 msgid "users are online at this hotspot"
 msgstr "потребителите са онлайн при този хотспот"
 
-#: smarty.txt:22
+#: smarty.txt:25
 msgid "Nobody is online at this hotspot"
 msgstr "Никой не е онлайн при този хотспот"
 
-#: smarty.txt:23
+#: smarty.txt:26
 msgid "Recent Users:"
 msgstr ""
 
-#: smarty.txt:24
+#: smarty.txt:27
 msgid "Most Active Users:"
 msgstr ""
 
-#: smarty.txt:25
+#: smarty.txt:28
 msgid "Login or Signup here"
 msgstr "Влезте или направете нова регистрация"
 
-#: smarty.txt:26
+#: smarty.txt:29
+#, fuzzy
+msgid "Login Here"
+msgstr "Страница за влизане (login)"
+
+#: smarty.txt:30
 msgid "Username (or email)"
 msgstr "Потребителско име (или електронен пощенски адрес)"
 
-#: smarty.txt:27 smarty.txt:48
+#: smarty.txt:31 smarty.txt:53
 msgid "Password"
 msgstr "Парола"
 
-#: smarty.txt:29
+#: smarty.txt:33
+#, fuzzy
+msgid "Signup Here"
+msgstr "Записване"
+
+#: smarty.txt:34
 msgid "Create a free account"
 msgstr "Създаване на безплатен акаунт"
 
-#: smarty.txt:30
+#: smarty.txt:35
 #, fuzzy
 msgid "You must specify your username and password"
 msgstr "Вие трябва да уточните вашето потребителско име и парола"
 
-#: smarty.txt:31
+#: smarty.txt:36
 msgid "Show me the closest hotspot"
 msgstr "Покажете ми най-близкия хотспот"
 
-#: smarty.txt:32
+#: smarty.txt:37
 msgid "Enter your postal code"
 msgstr "Въведете вашия пощенски код"
 
-#: smarty.txt:33
+#: smarty.txt:38
 msgid "Show"
 msgstr "Покажи"
 
-#: smarty.txt:34
+#: smarty.txt:39
 msgid "Refresh map"
 msgstr "Актуализирай картата"
 
-#: smarty.txt:37
+#: smarty.txt:42
 msgid "Legend"
 msgstr "Легенда"
 
-#: smarty.txt:38
+#: smarty.txt:43
 msgid "the hotspot is operational"
 msgstr "Този хотспот работи"
 
-#: smarty.txt:39
+#: smarty.txt:44
 msgid "the hotspot is down"
 msgstr "Този хотспот не работи"
 
-#: smarty.txt:40
+#: smarty.txt:45
 msgid "not monitored"
 msgstr "не се наблюдава"
 
-#: smarty.txt:41 smarty.txt:69 smarty.txt:93 smarty.txt:101
+#: smarty.txt:46 smarty.txt:74 smarty.txt:98 smarty.txt:106
 msgid "I'm having difficulties"
 msgstr "Имам проблеми.."
 
-#: smarty.txt:45
+#: smarty.txt:50
 msgid "Register a free account with"
 msgstr "Регистриране на безплатен акаунт с "
 
-#: smarty.txt:46
+#: smarty.txt:51
 msgid "Username desired"
 msgstr "Желано потребителско име"
 
-#: smarty.txt:47 smarty.txt:75 smarty.txt:106
+#: smarty.txt:52 smarty.txt:80 smarty.txt:111
 msgid "Your email address"
 msgstr "Вашия имейл адрес"
 
-#: smarty.txt:49
+#: smarty.txt:54
 msgid "Password (again)"
 msgstr "Парола (отново)"
 
-#: smarty.txt:50
+#: smarty.txt:55
 msgid "Sign-up"
 msgstr "Записване"
 
-#: smarty.txt:51
+#: smarty.txt:56
 msgid "Please note"
 msgstr "Моля отбележете"
 
-#: smarty.txt:52
+#: smarty.txt:57
 msgid ""
 "While accounts are free, we <em>strongly</em> suggest that you use your "
 "previously created account if you have one."
@@ -4454,7 +4539,7 @@ msgstr ""
 "Докато акаунтите са безплатни, ние <b>горещо</b> препоръчваме да използвате "
 "ваш предишно създаден акаунт, ако имате такъв."
 
-#: smarty.txt:53
+#: smarty.txt:58
 msgid ""
 "<b>Your email address must be valid</b> in order for your account to be "
 "activated."
@@ -4462,21 +4547,21 @@ msgstr ""
 "<b>Вашият имейл адрес трябва да е валиден,</b> за да може да се активира "
 "вашия акаунт."
 
-#: smarty.txt:54
+#: smarty.txt:59
 msgid "A validation email will be sent to that email address."
 msgstr "Имейл за валидиране  ще се изпрати на този имейл адрес."
 
-#: smarty.txt:55
+#: smarty.txt:60
 msgid "To fully activate your account you must respond to that email."
 msgstr ""
 "За да активирате вашия акаунт напълно, вие трябва да отговорите на този "
 "имейл."
 
-#: smarty.txt:56
+#: smarty.txt:61
 msgid "Note to free web-based email users"
 msgstr "Бележка към до потребители, използващи безплатни уеб базирани имейли"
 
-#: smarty.txt:57
+#: smarty.txt:62
 msgid ""
 "Sometimes our validation email ends up in the 'spam' folder of some "
 "providers. If you have not received any email with the validation URL 5 "
@@ -4486,108 +4571,108 @@ msgstr ""
 "доставчици. Ако не сте получили още такъв имейл в рамките на 5 минути след "
 "предаването на формата, моля вижте в папката за спам."
 
-#: smarty.txt:58
+#: smarty.txt:63
 msgid "You can also use the following links if you need help"
 msgstr "Вие можете още да използвате следните линкове, ако ви е нужна помощ"
 
-#: smarty.txt:61
+#: smarty.txt:66
 #, php-format
 msgid "Status of the %d open %s Hotspots"
 msgstr "Статус на %d активните %s хотспотове"
 
-#: smarty.txt:62
+#: smarty.txt:67
 msgid "Hotspot / Status"
 msgstr "Хотспот / Статус"
 
-#: smarty.txt:64
+#: smarty.txt:69
 msgid "Location"
 msgstr "Адрес"
 
-#: smarty.txt:65
+#: smarty.txt:70
 msgid "Hotspot in testing phase"
 msgstr "Хотспот в изпитателна фаза"
 
-#: smarty.txt:66
+#: smarty.txt:71
 msgid "Hotspot not monitored"
 msgstr "Хотспотове не се отчитат"
 
-#: smarty.txt:67
+#: smarty.txt:72
 #, php-format
 msgid "Opened on %s"
 msgstr "Отворен на %s"
 
-#: smarty.txt:73
+#: smarty.txt:78
 msgid "Lost password"
 msgstr "Загубена парола"
 
-#: smarty.txt:74 smarty.txt:98
+#: smarty.txt:79 smarty.txt:103
 msgid "Your username"
 msgstr "Вашето потребителско име"
 
-#: smarty.txt:76
+#: smarty.txt:81
 msgid "Reset my password"
 msgstr "Промени моята парола"
 
-#: smarty.txt:77
+#: smarty.txt:82
 msgid "Please enter your username or email address to reset your password"
 msgstr ""
 "Моля въведете вашето потребителско име или имейл адрес, за да се промени "
 "вашата парола"
 
-#: smarty.txt:78
+#: smarty.txt:83
 #, php-format
 msgid "The %s network currently has one valid user."
 msgstr "Мрежата %s в момента има един валиден потребител."
 
-#: smarty.txt:79
+#: smarty.txt:84
 #, php-format
 msgid "The %s network currently has %d valid users."
 msgstr "Мрежата %s в момента има %d валидни потребителя."
 
-#: smarty.txt:80
+#: smarty.txt:85 smarty.txt:116
 msgid "One user is currently online."
 msgstr "Един потребител в момента е онлайн."
 
-#: smarty.txt:81
+#: smarty.txt:86 smarty.txt:117
 #, php-format
 msgid "%d users are currently online."
 msgstr "%d потребителя в момента са онлайн."
 
-#: smarty.txt:82
+#: smarty.txt:87 smarty.txt:118
 msgid "This network currently has 1 deployed hotspot."
 msgstr "Тази мрежа в момента има 1 действащ хотспот."
 
-#: smarty.txt:83
+#: smarty.txt:88 smarty.txt:119
 #, php-format
 msgid "This network currently has %d deployed hotspots."
 msgstr "Тази мрежа в момента има %d действащи хотспота. "
 
-#: smarty.txt:84
+#: smarty.txt:89 smarty.txt:120
 msgid "One hotspot is currently operational."
 msgstr ""
 
-#: smarty.txt:85
+#: smarty.txt:90 smarty.txt:121
 #, php-format
 msgid "%d hotspots are currently operational."
 msgstr ""
 
-#: smarty.txt:86
+#: smarty.txt:91 smarty.txt:122
 msgid ""
 "One hotspot isn't monitored so we don't know if it's currently operational."
 msgstr ""
 
-#: smarty.txt:87
+#: smarty.txt:92 smarty.txt:123
 #, php-format
 msgid ""
 "%d hotspots aren't monitored so we don't know if they are currently "
 "operational."
 msgstr ""
 
-#: smarty.txt:88
+#: smarty.txt:93
 msgid "Please get in touch with "
 msgstr "Моля свържете се с: "
 
-#: smarty.txt:89
+#: smarty.txt:94
 msgid ""
 "We are a not-for-profit group dedicated to making no-fee wireless Internet "
 "access generally available."
@@ -4595,7 +4680,7 @@ msgstr ""
 "Ние сме организация с идеална цел, посветена на осъществяването на безтаксов "
 "безжичен интернет достъп,който да е достъпен за всички."
 
-#: smarty.txt:90
+#: smarty.txt:95
 msgid ""
 "Our aim is to encourage the growth of wireless networking and to build "
 "community in interesting and innovative ways."
@@ -4603,7 +4688,7 @@ msgstr ""
 "Наша цел е да насърчим разстежа на безжичната мрежа и да изградим една "
 "общност по един интересен и иновативен начин."
 
-#: smarty.txt:91
+#: smarty.txt:96
 msgid ""
 "We do this by setting up wireless Internet networks in parks, cafés, "
 "restaurants, bars and other publically-accessible locations across the city."
@@ -4612,19 +4697,19 @@ msgstr ""
 "паркове, заведения, ресторанти, барове и други обществено достъпни "
 "местоположения в рамките на града."
 
-#: smarty.txt:92
+#: smarty.txt:97
 msgid "For a complete and up-to-date listing of our nodes, visit"
 msgstr "За пълен и актуален списък на наши точки за достъп, посетете"
 
-#: smarty.txt:97
+#: smarty.txt:102
 msgid "Re-send validation email"
 msgstr "Повторно изпращане на имейл за валидация"
 
-#: smarty.txt:99
+#: smarty.txt:104
 msgid "Re-send"
 msgstr "Повторно изпращане"
 
-#: smarty.txt:100
+#: smarty.txt:105
 msgid ""
 "Please enter your username and the validation email will be resent to your "
 "email address"
@@ -4632,50 +4717,66 @@ msgstr ""
 "Моля въведете вашето потребителско име и имейл за валидация ще бъде изпратен "
 "повторно на вашия имейл адрес."
 
-#: smarty.txt:105
+#: smarty.txt:110
 msgid "Lost username"
 msgstr "Загубено потребителско име"
 
-#: smarty.txt:107
+#: smarty.txt:112
 msgid "Retrieve"
 msgstr "Извличам"
 
-#: smarty.txt:108
+#: smarty.txt:113
 msgid "Please enter your email address to recover your username"
 msgstr ""
 "Моля въведете вашия имейл адрес, за да възстановите вашето потребителско име"
 
-#: smarty.txt:109
+#: smarty.txt:114
+#, fuzzy
+msgid "The server currently has one valid user."
+msgstr "Мрежата %s в момента има един валиден потребител."
+
+#: smarty.txt:115
+#, fuzzy, php-format
+msgid "The server currently has %d valid users."
+msgstr "Мрежата %s в момента има %d валидни потребителя."
+
+#: smarty.txt:124
 msgid "User list"
 msgstr "Списък с потребители"
 
-#: smarty.txt:110
+#: smarty.txt:125
 msgid "Sort by:"
 msgstr "Сортиране по:"
 
-#: smarty.txt:111
+#: smarty.txt:126
 msgid "Direction:"
 msgstr "Посока:"
 
-#: smarty.txt:112
+#: smarty.txt:127
 msgid "Sort"
 msgstr "Сортиране"
 
-#: smarty.txt:115
+#: smarty.txt:130
 msgid "Registered On"
 msgstr "Регистриран на"
 
-#: smarty.txt:120
+#: smarty.txt:135
 msgid "Origin"
 msgstr "Произход"
 
-#: smarty.txt:121
+#: smarty.txt:136
 msgid "Logged in Since"
 msgstr "Логнат От"
 
-#: smarty.txt:122
+#: smarty.txt:137
 msgid "Traffic IN/OUT"
 msgstr "Трафик ВХОДЯЩ/ИЗХОДЯЩ"
+
+#~ msgid "No nodes could not be found in the database"
+#~ msgstr "Няма възли в базата данни"
+
+#~ msgid "Is this network the default network?"
+#~ msgstr "Тази ли е мрежата по подразбиране?"
 
 #~ msgid "Component %s is not installed (not found in %s)"
 #~ msgstr "Компонент %s не е инсталиран (не е намерен в: %s)"
@@ -5243,9 +5344,6 @@ msgstr "Трафик ВХОДЯЩ/ИЗХОДЯЩ"
 
 #~ msgid "is unknown to this authentication server."
 #~ msgstr "не е познато на сървъра за автентикация."
-
-#~ msgid "network"
-#~ msgstr "мрежа"
 
 #~ msgid "Id"
 #~ msgstr "Идентификационен номер"

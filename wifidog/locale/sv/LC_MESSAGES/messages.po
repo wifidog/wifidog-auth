@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-07 12:13-0400\n"
+"POT-Creation-Date: 2009-06-26 11:47-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,33 +16,44 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../node_list.php:109
-msgid "No nodes could not be found in the database"
-msgstr "Inga Hotspots kunde hittas i databasen"
-
-#: ../node_list.php:112 ../classes/Node.php:311 ../classes/Node.php:657
+#: ../node_list.php:131 ../classes/Node.php:323 ../classes/Node.php:685
 msgid "Deployed"
 msgstr "Utrullad"
 
-#: ../node_list.php:113 ../classes/Node.php:312 ../classes/Node.php:658
+#: ../node_list.php:132 ../classes/Node.php:324 ../classes/Node.php:686
 msgid "In planning"
 msgstr "Planeras"
 
-#: ../node_list.php:113 ../classes/Node.php:313 ../classes/Node.php:659
+#: ../node_list.php:132 ../classes/Node.php:325 ../classes/Node.php:687
 msgid "In testing"
 msgstr "Testas"
 
-#: ../node_list.php:113 ../classes/Node.php:314 ../classes/Node.php:660
+#: ../node_list.php:132 ../classes/Node.php:326 ../classes/Node.php:688
 msgid "Non-Wifidog node"
 msgstr "Icke WiFiDog-nod"
 
-#: ../node_list.php:113 ../classes/Node.php:315 ../classes/Node.php:661
+#: ../node_list.php:132 ../classes/Node.php:327 ../classes/Node.php:689
 msgid "Permanently closed"
 msgstr "Permanent nerstängd"
 
-#: ../node_list.php:113 ../classes/Node.php:316 ../classes/Node.php:662
+#: ../node_list.php:132 ../classes/Node.php:328 ../classes/Node.php:690
 msgid "Temporarily closed"
 msgstr "Temporärt nerstängd"
+
+#: ../node_list.php:173 ../classes/NodeLists/NodeListHTML.php:173
+msgid "All"
+msgstr ""
+
+#: ../node_list.php:173 ../hotspots_map.php:114
+#: ../classes/NodeLists/NodeListHTML.php:175
+msgid "Change network"
+msgstr "Byt nätverk"
+
+#: ../node_list.php:177 ../classes/NodeLists/NodeListHTML.php:176
+#: ../classes/NodeLists/NodeListHTML.php:221
+#, fuzzy
+msgid "All networks"
+msgstr "nätverket"
 
 #: ../validate.php:58
 msgid "No token specified!"
@@ -84,11 +95,21 @@ msgstr "Detta nätverk finns inte!"
 msgid "Please specify a username or email address"
 msgstr "Var vänlig och fyll i ett användarnamn eller en emailadress"
 
-#: ../lost_password.php:131
+#: ../lost_password.php:117
+#, fuzzy
+msgid "Please specify EITHER your username or your email, not both"
+msgstr "Var vänlig och fyll i ett användarnamn eller en emailadress"
+
+#: ../lost_password.php:126
+#, fuzzy
+msgid "You need to specify your username or your email"
+msgstr "Du måste ange ditt användarnamn och lösenord"
+
+#: ../lost_password.php:136
 msgid "This username or email could not be found in our database"
 msgstr "Användarnamnet eller emailadressen kunde inte hittas"
 
-#: ../lost_password.php:134
+#: ../lost_password.php:139
 msgid "A new password has been emailed to you."
 msgstr "Ett nytt lösenord har skickats till dig."
 
@@ -98,28 +119,24 @@ msgid ""
 "the current hostname"
 msgstr ""
 
-#: ../hotspots_map.php:113
-msgid "Change network"
-msgstr "Byt nätverk"
-
-#: ../hotspots_map.php:144
+#: ../hotspots_map.php:145
 msgid "Sorry, your browser does not support Google Maps."
 msgstr "Tyvärr, men din webbläsare stödjer inte Google Maps."
 
-#: ../hotspots_map.php:144 ../classes/StatisticReport/NodeStatus.php:190
+#: ../hotspots_map.php:145 ../classes/StatisticReport/NodeStatus.php:190
 #: ../classes/StatisticReport/NetworkStatus.php:109
 msgid "Homepage"
 msgstr "Hemsida"
 
-#: ../hotspots_map.php:144
+#: ../hotspots_map.php:145
 msgid "Show me on the map"
 msgstr "Visa mig på kartan"
 
-#: ../hotspots_map.php:144 smarty.txt:36
+#: ../hotspots_map.php:145 smarty.txt:41
 msgid "Loading, please wait..."
 msgstr "Kartan laddas, var vänlig vänta"
 
-#: ../hotspots_map.php:158
+#: ../hotspots_map.php:159
 msgid "Hotspots status map"
 msgstr "Hotspot-statuskarta"
 
@@ -192,7 +209,7 @@ msgstr "Användarnamnet används redan, välj ett annat."
 msgid "Sorry, a user account is already associated to this email address."
 msgstr "En annan användare är registrerad på denna emailadressen."
 
-#: ../signup.php:229 ../portal/index.php:145
+#: ../signup.php:229 ../portal/index.php:163
 #, php-format
 msgid ""
 "Your account has been granted %s minutes of access to retrieve your email "
@@ -236,7 +253,7 @@ msgstr ""
 #: ../gw_message.php:67
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:895
 #: ../classes/Statistics.php:376 ../classes/Statistics.php:379
-#: ../classes/Content.php:901 ../classes/Node.php:219 ../classes/Role.php:501
+#: ../classes/Content.php:901 ../classes/Node.php:231 ../classes/Role.php:501
 msgid "Access denied!"
 msgstr "Tillträde nekad!"
 
@@ -359,8 +376,8 @@ msgstr "Visa alla %s"
 msgid "Show only persistant %s"
 msgstr "Visa bara permanenta %s"
 
-#: ../admin/generic_object_admin.php:99 ../classes/Network.php:2104
-#: ../classes/Node.php:1630
+#: ../admin/generic_object_admin.php:99 ../classes/Network.php:2140
+#: ../classes/Node.php:1767
 #, php-format
 msgid "Edit %s"
 msgstr "Modifiera %s"
@@ -381,7 +398,7 @@ msgstr "Förhandsgranskar som det skulle se ut på "
 #: ../classes/StatisticReport/UserReport.php:182
 #: ../classes/StatisticReport/RegistrationLog.php:120
 #: ../classes/StatisticReport/MostPopularNodes.php:109
-#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:118
+#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:133
 msgid "Node"
 msgstr "Hotspot"
 
@@ -549,22 +566,22 @@ msgstr ""
 msgid "No deployed nodes could not be found in the database"
 msgstr "Inga utrullade Hotspots kunde hittas i databasen"
 
-#: ../include/schema_validate.php:75
+#: ../include/schema_validate.php:72
 msgid ""
 "I am unable to retrieve the schema version. Either the wifidog database "
 "hasn't been created yet, the postgresql server is down, or pg_hba.conf does "
 "not allow your web server to connect to the wifidog database."
 msgstr ""
 
-#: ../include/schema_validate.php:77
+#: ../include/schema_validate.php:74
 msgid "Try running the"
 msgstr "Försök att köra"
 
-#: ../include/schema_validate.php:77
+#: ../include/schema_validate.php:74
 msgid "installation script"
 msgstr "installationsskriptet"
 
-#: ../include/schema_validate.php:105
+#: ../include/schema_validate.php:106
 msgid ""
 "No user matches the default network, a new user admin/admin will be created. "
 "Change the password as soon as possible !"
@@ -572,15 +589,15 @@ msgstr ""
 "Ingen användare matchar standardnätverket, en ny användare admin/admin "
 "kommer attskapas. Byt lösenord så snabbt som möjligt!"
 
-#: ../include/schema_validate.php:117
+#: ../include/schema_validate.php:118
 msgid "Could not get a default network!"
 msgstr "Kunde inte hämta standardnätverket!"
 
-#: ../include/schema_validate.php:149
+#: ../include/schema_validate.php:150
 msgid "Trying to update the database schema."
 msgstr "Försöker uppdatera databasschemat."
 
-#: ../include/schema_validate.php:154
+#: ../include/schema_validate.php:155
 msgid ""
 "Unable to retrieve schema version.  The database schema is too old to be "
 "updated."
@@ -609,18 +626,18 @@ msgstr "Kunde inte generera nyckel för användaren %s"
 msgid "I'm having difficulties:"
 msgstr ""
 
-#: ../login/index.php:263 smarty.txt:42 smarty.txt:59 smarty.txt:70
-#: smarty.txt:94 smarty.txt:102
+#: ../login/index.php:263 smarty.txt:47 smarty.txt:64 smarty.txt:75
+#: smarty.txt:99 smarty.txt:107
 msgid "I Forgot my username"
 msgstr "Jag har glömt mitt användarnamn"
 
-#: ../login/index.php:264 smarty.txt:43 smarty.txt:60 smarty.txt:71
-#: smarty.txt:95 smarty.txt:103
+#: ../login/index.php:264 smarty.txt:48 smarty.txt:65 smarty.txt:76
+#: smarty.txt:100 smarty.txt:108
 msgid "I Forgot my password"
 msgstr "Jag har glömt mitt lösenord"
 
-#: ../login/index.php:265 smarty.txt:44 smarty.txt:72 smarty.txt:96
-#: smarty.txt:104
+#: ../login/index.php:265 smarty.txt:49 smarty.txt:77 smarty.txt:101
+#: smarty.txt:109
 msgid "Re-send the validation email"
 msgstr "Skicka ett nytt valideringsmail"
 
@@ -633,7 +650,7 @@ msgstr "%s inloggningssida för %s"
 msgid "Offsite login page"
 msgstr "Inloggningssida"
 
-#: ../login/index.php:282 ../portal/index.php:139
+#: ../login/index.php:282 ../portal/index.php:157
 msgid "Welcome to"
 msgstr "Välkommen till"
 
@@ -641,19 +658,19 @@ msgstr "Välkommen till"
 msgid "No Hotspot specified!"
 msgstr "Ingen Hotspot angiven!"
 
-#: ../portal/index.php:134
+#: ../portal/index.php:152
 #, php-format
 msgid "%s portal for %s"
 msgstr "%s portal för %s"
 
-#: ../portal/index.php:144
+#: ../portal/index.php:162
 msgid ""
 "You NEED to confirm your account.  An email with confirmation instructions "
 "was sent to your email address.  If you don't see it in your inbox, make "
 "sure to look in your spam folder."
 msgstr ""
 
-#: ../portal/index.php:206
+#: ../portal/index.php:224
 msgid "Show all available contents for this hotspot"
 msgstr "Visa all tillgängligt innehåll för denna hotspot"
 
@@ -787,7 +804,7 @@ msgstr ""
 "Den rapport du har valt kräver att du väljer individuella Hotspot-noder"
 
 #: ../classes/StatisticReport/NodeStatus.php:99
-#: ../classes/DependenciesList.php:137 smarty.txt:3
+#: ../classes/DependenciesList.php:137 smarty.txt:5
 msgid "Status"
 msgstr "Status"
 
@@ -839,8 +856,8 @@ msgid "Profile"
 msgstr "Profil"
 
 #: ../classes/StatisticReport/NodeStatus.php:152
-#: ../classes/StatisticReport/NetworkStatus.php:99 ../classes/Node.php:1100
-#: ../classes/Node.php:1105 smarty.txt:6
+#: ../classes/StatisticReport/NetworkStatus.php:99 ../classes/Node.php:1199
+#: ../classes/Node.php:1204 smarty.txt:8
 msgid "Name"
 msgstr "Namn"
 
@@ -848,7 +865,7 @@ msgstr "Namn"
 msgid "Node ID"
 msgstr "Hotspot-ID"
 
-#: ../classes/StatisticReport/NodeStatus.php:160 ../classes/Node.php:368
+#: ../classes/StatisticReport/NodeStatus.php:160 ../classes/Node.php:380
 msgid "Deployment Status"
 msgstr "Utrullningsstatus"
 
@@ -857,12 +874,12 @@ msgid "Deployment date"
 msgstr "Utrullningsdatum"
 
 #: ../classes/StatisticReport/NodeStatus.php:168 ../classes/Content.php:925
-#: ../classes/Node.php:1124 ../classes/DependenciesList.php:173 smarty.txt:63
+#: ../classes/Node.php:1223 ../classes/DependenciesList.php:175 smarty.txt:68
 msgid "Description"
 msgstr "Beskrivning"
 
 #: ../classes/StatisticReport/NodeStatus.php:172
-#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:114
+#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:129
 msgid "Network"
 msgstr "Nätverk"
 
@@ -870,8 +887,8 @@ msgstr "Nätverk"
 msgid "GIS Location"
 msgstr "GIS-position"
 
-#: ../classes/StatisticReport/NodeStatus.php:181 ../classes/Network.php:1049
-#: smarty.txt:68
+#: ../classes/StatisticReport/NodeStatus.php:181 ../classes/Network.php:1041
+#: smarty.txt:73
 msgid "Map"
 msgstr "Karta"
 
@@ -903,7 +920,7 @@ msgid "Transit Info"
 msgstr "Information om offentliga nätverk"
 
 #: ../classes/StatisticReport/NodeStatus.php:220 ../classes/User.php:1058
-#: ../classes/Node.php:1067
+#: ../classes/Node.php:1164 smarty.txt:16
 msgid "Statistics"
 msgstr "Statistik"
 
@@ -944,8 +961,8 @@ msgstr "Kunde inte hitta användar-ID %s i databasen"
 #: ../classes/StatisticReport/RegistrationLog.php:123
 #: ../classes/StatisticReport/ConnectionLog.php:115
 #: ../classes/StatisticReport/ConnectionLog.php:164 ../classes/User.php:810
-#: ../classes/User.php:815 ../classes/User.php:864 smarty.txt:113
-#: smarty.txt:119
+#: ../classes/User.php:815 ../classes/User.php:864 smarty.txt:128
+#: smarty.txt:134
 msgid "Username"
 msgstr "Användarnamn"
 
@@ -958,7 +975,7 @@ msgid "Member since"
 msgstr "Medlem sedan"
 
 #: ../classes/StatisticReport/UserReport.php:147 ../classes/User.php:852
-#: smarty.txt:116
+#: smarty.txt:131
 msgid "Account Status"
 msgstr "Kontostatus"
 
@@ -1064,7 +1081,7 @@ msgstr "Denna rapport kräver att du väljer individuella nätverk"
 
 #: ../classes/StatisticReport/NetworkStatus.php:104
 #: ../classes/VirtualHost.php:603 ../classes/Server.php:246
-#: ../classes/Node.php:1111 ../classes/ProfileTemplate.php:512
+#: ../classes/Node.php:1210 ../classes/ProfileTemplate.php:512
 #: ../classes/Role.php:369
 msgid "Creation date"
 msgstr "Skapelsedatum"
@@ -1334,7 +1351,7 @@ msgstr ""
 "noder"
 
 #: ../classes/NodeLists/NodeListRSS.php:157
-#: ../classes/NodeLists/NodeListHTML.php:211
+#: ../classes/NodeLists/NodeListHTML.php:221
 msgid "Newest Hotspots"
 msgstr "Nyaste Hotspot:arna"
 
@@ -1354,7 +1371,7 @@ msgstr "Se karta"
 msgid "Contact"
 msgstr "Kontakt"
 
-#: ../classes/NodeLists/NodeListHTML.php:210
+#: ../classes/NodeLists/NodeListHTML.php:220
 msgid "Hotspot list"
 msgstr "Hotspot-lista"
 
@@ -1408,19 +1425,19 @@ msgstr "Senast uppdaterad: %s"
 msgid "Hotspot"
 msgstr "Hotspot"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1150
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1249
 msgid "Postal code"
 msgstr "Postnummer"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1140
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1239
 msgid "City"
 msgstr "Ort"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1145
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1244
 msgid "Province / State"
 msgstr "Landskap"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1170
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1269
 msgid "Homepage URL"
 msgstr "Hemsida"
 
@@ -1971,7 +1988,7 @@ msgstr "(Tom %s)"
 #: ../classes/Content/Langstring/Langstring.php:215
 #: ../classes/Content/Langstring/Langstring.php:341
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:112
-#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:19
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:22
 msgid "Language"
 msgstr "Språk"
 
@@ -2511,9 +2528,10 @@ msgstr "Kunde inte lägga till en ny profil i databasen!"
 msgid "Should this profile be publicly visible?"
 msgstr "Skall denna profilen vara synlig för alla?"
 
-#: ../classes/Profile.php:311 ../classes/Network.php:1671
-#: ../classes/Network.php:1690 ../classes/Network.php:1696
-#: ../classes/Network.php:1721 ../classes/Node.php:1231
+#: ../classes/Profile.php:311 ../classes/Network.php:1716
+#: ../classes/Network.php:1722 ../classes/Network.php:1728
+#: ../classes/Network.php:1753 ../classes/Node.php:1335
+#: ../classes/Node.php:1350
 msgid "Yes"
 msgstr "Ja"
 
@@ -2802,72 +2820,72 @@ msgstr "Användarhantering"
 msgid "User administration"
 msgstr "Användaradministration"
 
-#: ../classes/Network.php:112 ../classes/Network.php:250
+#: ../classes/Network.php:124 ../classes/Network.php:265
 msgid "Network::getAllNetworks:  Fatal error: No networks in the database!"
 msgstr "Network::getAllNetworks: Kritiskt fel: Inga nätverk i databasen!"
 
-#: ../classes/Network.php:189
+#: ../classes/Network.php:201
 msgid "Unable to insert the new network in the database!"
 msgstr "Kan inte lägga till det nya nätverket i databasen!"
 
-#: ../classes/Network.php:261 ../classes/Network.php:267
+#: ../classes/Network.php:276 ../classes/Network.php:282
 msgid "Network:"
 msgstr "Nätverk:"
 
-#: ../classes/Network.php:308
+#: ../classes/Network.php:323
 msgid "Create a new network with ID"
 msgstr "Skapa ett nytt nätverk med ID"
 
-#: ../classes/Network.php:719 ../classes/Statistics.php:124
-#: ../classes/Content.php:335 ../classes/NodeList.php:138
+#: ../classes/Network.php:737 ../classes/Statistics.php:124
+#: ../classes/Content.php:335 ../classes/NodeList.php:162
 msgid "Unable to open directory "
 msgstr "Kunde inte öppna mappen "
 
-#: ../classes/Network.php:1049
+#: ../classes/Network.php:1041
 msgid "Satellite"
 msgstr "Satellit"
 
-#: ../classes/Network.php:1049
+#: ../classes/Network.php:1041
 msgid "Hybrid"
 msgstr "Blandning"
 
-#: ../classes/Network.php:1598
+#: ../classes/Network.php:1629
 msgid "Network management"
 msgstr "Nätverkshantering"
 
-#: ../classes/Network.php:1604
+#: ../classes/Network.php:1635
 msgid "Network content"
 msgstr "Nätverksinnehåll"
 
-#: ../classes/Network.php:1615
+#: ../classes/Network.php:1646
 msgid "Network ID"
 msgstr "Nätverks-ID"
 
-#: ../classes/Network.php:1620
+#: ../classes/Network.php:1651
 msgid "Network name"
 msgstr "Nätverksnamn"
 
-#: ../classes/Network.php:1625
+#: ../classes/Network.php:1656
 msgid "Network creation date"
 msgstr "Nätverkets skapelsedatum"
 
-#: ../classes/Network.php:1630
+#: ../classes/Network.php:1661
 msgid "Network's web site"
 msgstr "Hemsida för nätverket"
 
-#: ../classes/Network.php:1635
+#: ../classes/Network.php:1666
 msgid "Technical support email"
 msgstr "Email för teknisk support"
 
-#: ../classes/Network.php:1640
+#: ../classes/Network.php:1671
 msgid "Information about the network"
 msgstr "Information om nätverket"
 
-#: ../classes/Network.php:1648
+#: ../classes/Network.php:1679
 msgid "Network authenticator class"
 msgstr "Nätverkets autentiseringklass"
 
-#: ../classes/Network.php:1649
+#: ../classes/Network.php:1680
 msgid ""
 "The subclass of Authenticator to be used for user authentication. Example: "
 "AuthenticatorRadius"
@@ -2875,11 +2893,11 @@ msgstr ""
 "Underklassen av Authenticator för användning vid användarautentisering. T."
 "ex: AuthenticatorRadius"
 
-#: ../classes/Network.php:1656
+#: ../classes/Network.php:1687
 msgid "Authenticator parameters"
 msgstr "Authenticator parametrar"
 
-#: ../classes/Network.php:1657
+#: ../classes/Network.php:1688
 #, fuzzy
 msgid ""
 "The explicit parameters to be passed to the authenticator. You MUST read the "
@@ -2890,37 +2908,33 @@ msgstr ""
 "Parametrar som skall skickas vidare till autentiseringsklassen (t.ex. "
 "'mitt_nätverk', '192.168.0.11', 1812, 1813, 'radius_nyckel', 'CHAP_MD5')"
 
-#: ../classes/Network.php:1662
+#: ../classes/Network.php:1693
 msgid "Network Authentication"
 msgstr "Nätverksautentisering"
 
-#: ../classes/Network.php:1670
-msgid "Is this network the default network?"
-msgstr "Är detta standard-nätverket?"
-
-#: ../classes/Network.php:1675
+#: ../classes/Network.php:1701
 msgid "Selected theme pack for this network"
 msgstr "Välj tema för detta nätverk"
 
-#: ../classes/Network.php:1680
+#: ../classes/Network.php:1706
 msgid "Network properties"
 msgstr "Nätverksegenskaper"
 
-#: ../classes/Network.php:1688
+#: ../classes/Network.php:1714
 msgid "Splash-only nodes"
 msgstr "'Splash-only' Hotspots"
 
-#: ../classes/Network.php:1689
+#: ../classes/Network.php:1715
 msgid "Are nodes allowed to be set as splash-only (no login)?"
 msgstr ""
 "Kan hotspots (noder) sättas som 'splash-only', alltså att bara visa en sida "
 "och ingen inloggning?"
 
-#: ../classes/Network.php:1694
+#: ../classes/Network.php:1720
 msgid "Portal page redirection"
 msgstr "Omdirigering av portalsida"
 
-#: ../classes/Network.php:1695
+#: ../classes/Network.php:1721
 msgid ""
 "Are nodes allowed to redirect users to an arbitrary web page instead of the "
 "portal?"
@@ -2928,15 +2942,29 @@ msgstr ""
 "Får noderna skicka vidare användaren till godtycklig sida istället för "
 "portalen?"
 
-#: ../classes/Network.php:1700
+#: ../classes/Network.php:1726 ../classes/Node.php:1348
+#, fuzzy
+msgid "Original URL redirection"
+msgstr "Omdirigering av portalsida"
+
+#: ../classes/Network.php:1727
+#, fuzzy
+msgid ""
+"Are nodes allowed to redirect users to the web page they originally "
+"requested instead of the portal?"
+msgstr ""
+"Får noderna skicka vidare användaren till godtycklig sida istället för "
+"portalen?"
+
+#: ../classes/Network.php:1732
 msgid "Network's node properties"
 msgstr "Nätverkets Hotspotegenskaper"
 
-#: ../classes/Network.php:1708
+#: ../classes/Network.php:1740
 msgid "Validation grace period"
 msgstr "Tid som ges till användaren för validering"
 
-#: ../classes/Network.php:1709
+#: ../classes/Network.php:1741
 msgid ""
 "The length of the validation grace period in seconds.  A new user is granted "
 "Internet access for this period check his email and validate his account."
@@ -2944,27 +2972,27 @@ msgstr ""
 "Längden på den period som användaren får på sig att verifiera sitt nya konto."
 "Under denna period har användaren fullständig tillgång till Internet."
 
-#: ../classes/Network.php:1714
+#: ../classes/Network.php:1746
 msgid "This will be the from address of the validation email"
 msgstr "Avsändare för valideringsmailet"
 
-#: ../classes/Network.php:1719
+#: ../classes/Network.php:1751
 msgid "Multiple connections"
 msgstr "Multipla anslutningar"
 
-#: ../classes/Network.php:1720
+#: ../classes/Network.php:1752
 msgid "Can an account be connected more than once at the same time?"
 msgstr "Kan ett konto ansluta mer än en gång samtidigt?"
 
-#: ../classes/Network.php:1725
+#: ../classes/Network.php:1757
 msgid "Network's user verification"
 msgstr "Nätverkets användarverifikation"
 
-#: ../classes/Network.php:1735
+#: ../classes/Network.php:1767
 msgid "Abuse control window"
 msgstr ""
 
-#: ../classes/Network.php:1736
+#: ../classes/Network.php:1768
 msgid ""
 "The length of the window during which the user must not have exceeded the "
 "limits below.  Any valid postgresql interval expression is acceptable, "
@@ -2972,96 +3000,96 @@ msgid ""
 "access until his usage falls below the limits."
 msgstr ""
 
-#: ../classes/Network.php:1741
+#: ../classes/Network.php:1773
 msgid "Network max total bytes transfered"
 msgstr ""
 
-#: ../classes/Network.php:1742 ../classes/Network.php:1754
+#: ../classes/Network.php:1774 ../classes/Network.php:1786
 msgid "Maximum data transfer during the abuse control window"
 msgstr ""
 
-#: ../classes/Network.php:1747
+#: ../classes/Network.php:1779
 #, fuzzy
 msgid "Network max connection duration"
 msgstr "Nätverkets skapelsedatum"
 
-#: ../classes/Network.php:1748 ../classes/Network.php:1760
+#: ../classes/Network.php:1780 ../classes/Network.php:1792
 msgid ""
 "Maximum connection duration during the abuse control window.  Any valid "
 "postgresql interval expression is acceptable, such as hh:mm:ss"
 msgstr ""
 
-#: ../classes/Network.php:1753
+#: ../classes/Network.php:1785
 msgid "Node max total bytes transfered"
 msgstr ""
 
-#: ../classes/Network.php:1759
+#: ../classes/Network.php:1791
 #, fuzzy
 msgid "Node max connection duration"
 msgstr "Hotspot-konfiguration"
 
-#: ../classes/Network.php:1765
+#: ../classes/Network.php:1797
 #, fuzzy
 msgid "You do not have access to edit these options"
 msgstr "(Du har inte behörighet att ändra denna del av innehållet)"
 
-#: ../classes/Network.php:1768
+#: ../classes/Network.php:1800
 msgid "Dynamic abuse control"
 msgstr ""
 
-#: ../classes/Network.php:1781 ../classes/Server.php:275
-#: ../classes/Node.php:1252
+#: ../classes/Network.php:1813 ../classes/Server.php:281
+#: ../classes/Node.php:1362
 msgid "Access rights"
 msgstr "Behörigheter"
 
-#: ../classes/Network.php:1797
+#: ../classes/Network.php:1829
 msgid "Note that to be valid, all 3 values must be present."
 msgstr ""
 
-#: ../classes/Network.php:1798 ../classes/Node.php:1189
+#: ../classes/Network.php:1830 ../classes/Node.php:1288
 msgid "Latitude"
 msgstr "Latitud"
 
-#: ../classes/Network.php:1799
+#: ../classes/Network.php:1831
 #, fuzzy
 msgid "Center latitude for the area covered by your wireless network"
 msgstr "Latitud för centrum på ditt trådlösa nätverk"
 
-#: ../classes/Network.php:1803 ../classes/Node.php:1194
+#: ../classes/Network.php:1835 ../classes/Node.php:1293
 msgid "Longitude"
 msgstr "Longitud"
 
-#: ../classes/Network.php:1804
+#: ../classes/Network.php:1836
 #, fuzzy
 msgid "Center longitude for the area covered by your wireless network"
 msgstr "Longitud för centrum på ditt trådlösa nätverk"
 
-#: ../classes/Network.php:1808
+#: ../classes/Network.php:1840
 msgid "Zoomlevel"
 msgstr "Zoomnivå"
 
-#: ../classes/Network.php:1809
+#: ../classes/Network.php:1841
 #, fuzzy
 msgid "Zoomlevel of the Google Map.  12 is a typical value."
 msgstr "Inzoomingsnivå för Google Maps för området vid ditt trådlösa nätverk"
 
-#: ../classes/Network.php:1813
+#: ../classes/Network.php:1845
 msgid "Map type"
 msgstr "Karttyp"
 
-#: ../classes/Network.php:1814
+#: ../classes/Network.php:1846
 msgid "Default Google Map type for your the area of your wireless network"
 msgstr "Standard Google Map-typ för området vid ditt trådlösa nätverk"
 
-#: ../classes/Network.php:1819 ../classes/Node.php:1216
+#: ../classes/Network.php:1851 ../classes/Node.php:1315
 msgid "GIS data"
 msgstr "GIS-information"
 
-#: ../classes/Network.php:1823
+#: ../classes/Network.php:1855
 msgid "Network profile templates"
 msgstr "Nätverkprofilmall"
 
-#: ../classes/Network.php:2070
+#: ../classes/Network.php:2106
 #, fuzzy
 msgid ""
 "Cannot delete default network, create another one and select it before you "
@@ -3070,16 +3098,16 @@ msgstr ""
 "Kan inte ta bort standardnätverket, skapa ett annat och välj det som "
 "standard och försök sedan igen."
 
-#: ../classes/Network.php:2075
+#: ../classes/Network.php:2111
 msgid "Could not delete network!"
 msgstr "Kunde inte ta bort nätverket!"
 
-#: ../classes/Network.php:2111
+#: ../classes/Network.php:2147
 #, fuzzy, php-format
 msgid "Add a new network on this server"
 msgstr "Lägg till en ny repeater för Hotspoten"
 
-#: ../classes/Network.php:2116
+#: ../classes/Network.php:2152
 msgid "Network administration"
 msgstr "Nätverksadministration"
 
@@ -3213,8 +3241,8 @@ msgid "It appears the postgresql module isn't loaded"
 msgstr ""
 
 #: ../classes/AbstractDb.php:99
-#, php-format
-msgid "Unable to connect to database on %s"
+#, fuzzy, php-format
+msgid "Unable to connect to the database at %s"
 msgstr "Kan inte ansluta till databasen på %s"
 
 #: ../classes/AbstractDb.php:121 ../classes/AbstractDb.php:214
@@ -3297,15 +3325,27 @@ msgstr ""
 msgid "Timezone from PHP: %s"
 msgstr ""
 
-#: ../classes/Server.php:309
+#: ../classes/Server.php:270
+#, fuzzy
+msgid "Authentication"
+msgstr "Nätverksautentisering"
+
+#: ../classes/Server.php:271
+msgid ""
+"Use the users of default Virtual Host's network across all networks on the "
+"server."
+msgstr ""
+
+#: ../classes/Server.php:320
 msgid "The server can never be deleted!"
 msgstr ""
 
-#: ../classes/Server.php:319
-msgid "Server access control"
-msgstr ""
+#: ../classes/Server.php:330
+#, fuzzy
+msgid "Server configuration"
+msgstr "Repeaterkonfiguration"
 
-#: ../classes/Server.php:324
+#: ../classes/Server.php:335
 msgid "Server administration"
 msgstr "Serveradministration"
 
@@ -3481,20 +3521,20 @@ msgstr "Kan inte välja som ägare i databasen."
 msgid "Reusable content library"
 msgstr "Återanvändbara innehåll"
 
-#: ../classes/NodeList.php:186 smarty.txt:35
+#: ../classes/NodeList.php:210 smarty.txt:40
 msgid "Deployed HotSpots map"
 msgstr "Karta över aktiva Hotspots"
 
-#: ../classes/NodeList.php:197
+#: ../classes/NodeList.php:221
 #, php-format
 msgid "List in %s format"
 msgstr ""
 
-#: ../classes/NodeList.php:203
+#: ../classes/NodeList.php:227
 msgid "Full node technical status (includes non-deployed nodes)"
 msgstr "Detaljerad teknisk nodinformation"
 
-#: ../classes/NodeList.php:207
+#: ../classes/NodeList.php:231
 #, fuzzy
 msgid "Find Hotspots"
 msgstr "Hitta fler Hotspots"
@@ -3529,30 +3569,30 @@ msgstr ""
 msgid "Detailed error was:  Uncaught %s %s (%s) thrown in file %s, line %d"
 msgstr ""
 
-#: ../classes/MainUI.php:231
+#: ../classes/MainUI.php:232 ../classes/MainUI.php:234
 msgid "authentication server"
 msgstr "portal"
 
-#: ../classes/MainUI.php:258
+#: ../classes/MainUI.php:262
 #, php-format
 msgid "%s is not a valid structural display area"
 msgstr "%s är inte en giltigt visningsregion"
 
-#: ../classes/MainUI.php:642
+#: ../classes/MainUI.php:680
 #, php-format
 msgid "%s Login"
 msgstr "%s Inloggning"
 
-#: ../classes/MainUI.php:642 smarty.txt:18 smarty.txt:28
+#: ../classes/MainUI.php:680 smarty.txt:21 smarty.txt:32
 msgid "Login"
 msgstr "Logga in"
 
-#: ../classes/MainUI.php:646
+#: ../classes/MainUI.php:684
 #, php-format
 msgid "Click <a href='%s'>here</a> to continue"
 msgstr "<a href='%s'>Klicka här</a> för att fortsätta"
 
-#: ../classes/MainUI.php:646
+#: ../classes/MainUI.php:684
 msgid ""
 "The transfer from secure login back to regular http may cause a warning."
 msgstr ""
@@ -3564,169 +3604,178 @@ msgstr ""
 msgid "PHPMailer couldn't sent mail.  Error was: %s"
 msgstr ""
 
-#: ../classes/Node.php:210
+#: ../classes/Node.php:222
 msgid "Could not delete node!"
 msgstr "Kunde inte ta bort Hotspot:en!"
 
-#: ../classes/Node.php:243
+#: ../classes/Node.php:255
 msgid "PUT_GATEWAY_ID_HERE"
 msgstr "FYLL_I_GATEWAY_ID_HÄR"
 
-#: ../classes/Node.php:259
+#: ../classes/Node.php:271
 msgid "New node"
 msgstr "Ny Hotspot-nod"
 
-#: ../classes/Node.php:268
+#: ../classes/Node.php:280
 #, php-format
 msgid "Sorry, a node for the gateway %s already exists."
 msgstr "En Hotspot för Gateway:en %s finns redan."
 
-#: ../classes/Node.php:274
+#: ../classes/Node.php:286
 msgid "Unable to insert new node into database!"
 msgstr "Kan inte lägga till den nya Hotspot:en i databasen!"
 
-#: ../classes/Node.php:358
+#: ../classes/Node.php:370
 msgid "Filter:"
 msgstr "Filter:"
 
-#: ../classes/Node.php:366
+#: ../classes/Node.php:378
 msgid "Node Name"
 msgstr "Hotspotnamn"
 
-#: ../classes/Node.php:367 ../classes/Node.php:1077
+#: ../classes/Node.php:379 ../classes/Node.php:1176
 msgid "Gateway ID"
 msgstr "Gateway-ID"
 
-#: ../classes/Node.php:390
+#: ../classes/Node.php:402
 msgid "Sorry, no nodes available in the database"
 msgstr "Kunde inte hitta några Hotspot-noder i databasen"
 
-#: ../classes/Node.php:415
+#: ../classes/Node.php:427
 msgid "Add a new node for the gateway ID"
 msgstr "Lägg till en ny Hotspot för Gateway-ID:t"
 
-#: ../classes/Node.php:425
+#: ../classes/Node.php:437
 msgid "in "
 msgstr "i "
 
-#: ../classes/Node.php:481
+#: ../classes/Node.php:493
 msgid "Here is what you can do to fix this:"
 msgstr ""
 
-#: ../classes/Node.php:485
+#: ../classes/Node.php:497
 #, php-format
 msgid ""
 "You can create a new node with %s as it's associated gateway id.  This is "
 "typical for new installations."
 msgstr ""
 
-#: ../classes/Node.php:498
+#: ../classes/Node.php:510
 #, fuzzy, php-format
 msgid "Add a new node in %s"
 msgstr "Lägg till en ny Hotspot"
 
-#: ../classes/Node.php:500
+#: ../classes/Node.php:512
 #, fuzzy
 msgid "Add node"
 msgstr "Lägg till en ny Hotspot"
 
-#: ../classes/Node.php:507
+#: ../classes/Node.php:519
 #, php-format
 msgid ""
 "You can \"steal\" an existing node.  The node's gateway id will be replaced "
 "with %s.  This is typical when replacing hardware."
 msgstr ""
 
-#: ../classes/Node.php:526
+#: ../classes/Node.php:538
 #, fuzzy
 msgid "Steal node"
 msgstr "Ny Hotspot-nod"
 
-#: ../classes/Node.php:602
+#: ../classes/Node.php:614
 msgid "No deployment statuses could be found in the database"
 msgstr "Ingen utrullningsstatus kunde hittas i databasen"
 
-#: ../classes/Node.php:653
+#: ../classes/Node.php:681
 #, php-format
 msgid "The node with %s: %s could not be found in the database!"
 msgstr "Noden med %s: %s kunde inte hittas i databasen!"
 
-#: ../classes/Node.php:1061
+#: ../classes/Node.php:1154
 msgid "Edit a node"
 msgstr "Modifiera Hotspot"
 
-#: ../classes/Node.php:1068
+#: ../classes/Node.php:1165
+msgid "Allow public access to some node statistics."
+msgstr ""
+
+#: ../classes/Node.php:1166
 msgid "Get access statistics"
 msgstr "Hämta användnings-statistik"
 
-#: ../classes/Node.php:1091
+#: ../classes/Node.php:1190
 msgid "Node content"
 msgstr "Innehåll på Hotspot:en"
 
-#: ../classes/Node.php:1130
+#: ../classes/Node.php:1229
 msgid "Civic number"
 msgstr "Husnummer"
 
-#: ../classes/Node.php:1135
+#: ../classes/Node.php:1234
 msgid "Street name"
 msgstr "Gatunamn"
 
-#: ../classes/Node.php:1155
+#: ../classes/Node.php:1254
 msgid "Country"
 msgstr "Land"
 
-#: ../classes/Node.php:1160
+#: ../classes/Node.php:1259
 msgid "Public phone number"
 msgstr "Offentligt telefonnummer"
 
-#: ../classes/Node.php:1165
+#: ../classes/Node.php:1264
 msgid "Public email"
 msgstr "Offentlig emailadress"
 
-#: ../classes/Node.php:1175
+#: ../classes/Node.php:1274
 msgid "Mass transit info"
 msgstr "Information om offentliga nätverk"
 
-#: ../classes/Node.php:1180
+#: ../classes/Node.php:1279
 msgid "Information about the node"
 msgstr "Information om denna Hotspot"
 
-#: ../classes/Node.php:1200 ../classes/Node.php:1204
+#: ../classes/Node.php:1299 ../classes/Node.php:1303
 msgid "Geocode the address or postal code above"
 msgstr "Använd 'Geocode' på adressen ovan"
 
-#: ../classes/Node.php:1201
+#: ../classes/Node.php:1300
 msgid "Check using Google Maps"
 msgstr "Visa med Google Maps"
 
-#: ../classes/Node.php:1202
+#: ../classes/Node.php:1301
 msgid ""
 "Use a geocoding service, then use Google Maps to pinpoint the exact location."
 msgstr ""
 "Använd en geocode-tjänst och använd sedan Google Maps för att välja exakt "
 "plats."
 
-#: ../classes/Node.php:1205
+#: ../classes/Node.php:1304
 msgid "Use a geocoding service"
 msgstr "Använd en Geocode-tjänst"
 
-#: ../classes/Node.php:1211
+#: ../classes/Node.php:1310
 msgid "Map URL"
 msgstr "URL för karta"
 
-#: ../classes/Node.php:1224
+#: ../classes/Node.php:1323
 msgid "Node deployment status"
 msgstr "Utrullningsstatus på Hotspot:"
 
-#: ../classes/Node.php:1230
+#: ../classes/Node.php:1328
+#, fuzzy
+msgid "Node Network"
+msgstr "Nätverk"
+
+#: ../classes/Node.php:1334
 msgid "Is this node splash-only (no login)?"
 msgstr "Är denna Hotspot 'splash-only'?"
 
-#: ../classes/Node.php:1237
+#: ../classes/Node.php:1341
 msgid "URL to show instead of the portal"
 msgstr "URL att visa istället för portalen"
 
-#: ../classes/Node.php:1239
+#: ../classes/Node.php:1343
 msgid ""
 "If this is not empty, the portal will be disabled and this URL will be shown "
 "instead"
@@ -3734,11 +3783,20 @@ msgstr ""
 "Om detta fält inte är tomt så kommer portalen att inaktiveras och denna URL "
 "kommer att visas istället"
 
-#: ../classes/Node.php:1244
+#: ../classes/Node.php:1349
+#, fuzzy
+msgid ""
+"Are nodes allowed to redirect users to the web page they originally "
+"requested instead of the portal? this will overide the custom portal URL"
+msgstr ""
+"Får noderna skicka vidare användaren till godtycklig sida istället för "
+"portalen?"
+
+#: ../classes/Node.php:1354
 msgid "Node configuration"
 msgstr "Hotspot-konfiguration"
 
-#: ../classes/Node.php:1382
+#: ../classes/Node.php:1492
 msgid ""
 "It appears that the Geocoder could not be reached or could not geocode the "
 "given address."
@@ -3746,24 +3804,24 @@ msgstr ""
 "Geocode-tjänsten kunde inte kontaktas eller kunde inte hantera den "
 "angivnaadressen"
 
-#: ../classes/Node.php:1385
+#: ../classes/Node.php:1495
 msgid "You must enter a valid address."
 msgstr "Du måste ange en giltig adress."
 
-#: ../classes/Node.php:1389
+#: ../classes/Node.php:1499
 msgid "Unable to create geocoder.  Are you sure you set the country?"
 msgstr "Kunde inte skapa en geocoder. Är du säger på att du fyllde i Land?"
 
-#: ../classes/Node.php:1622
+#: ../classes/Node.php:1759
 msgid "Edit nodes"
 msgstr ""
 
-#: ../classes/Node.php:1637
+#: ../classes/Node.php:1774
 #, php-format
 msgid "Add a new node"
 msgstr "Lägg till en ny Hotspot"
 
-#: ../classes/Node.php:1642
+#: ../classes/Node.php:1779
 msgid "Node administration"
 msgstr "Hotspotadministration"
 
@@ -4106,6 +4164,13 @@ msgstr ""
 msgid "User is allowed to exceed dynamic abuse control limits at this node"
 msgstr ""
 
+#: ../classes/Permission.php:108
+#, fuzzy
+msgid ""
+"User is allowed to turn on publicly accessible aggregate statistics for this "
+"node"
+msgstr "Användaren är redan en ägare av denna Hotspot."
+
 #: ../classes/Stakeholder.php:88
 msgid "Remove stakeholder"
 msgstr ""
@@ -4214,178 +4279,198 @@ msgstr ""
 msgid "Information"
 msgstr "Projektinformation"
 
-#: ../classes/DependenciesList.php:176
+#: ../classes/DependenciesList.php:178
 #, fuzzy
 msgid "Install message"
 msgstr "Senaste %d meddelanden:"
 
-#: ../classes/DependenciesList.php:179
+#: ../classes/DependenciesList.php:181
 #, fuzzy
 msgid "Detection message"
 msgstr "Felmeddelande"
 
-#: ../classes/DependenciesList.php:182
+#: ../classes/DependenciesList.php:184
 #, fuzzy
 msgid "To install"
 msgstr "Totalt"
 
-#: ../classes/DependenciesList.php:204
+#: ../classes/DependenciesList.php:206
 msgid "Dependencies"
 msgstr ""
 
 #: smarty.txt:2
-msgid "Status of all nodes of the"
+#, fuzzy
+msgid "Status of all nodes on "
+msgstr "Status för alla Hotspots i "
+
+#: smarty.txt:3
+#, fuzzy
+msgid "Status of all nodes of the "
 msgstr "Status för alla Hotspots i "
 
 #: smarty.txt:4
+msgid "Status of all nodes of the"
+msgstr "Status för alla Hotspots i "
+
+#: smarty.txt:6
 msgid "Node id"
 msgstr "Hotspot-ID"
 
-#: smarty.txt:5
+#: smarty.txt:7
 msgid "Gateway id"
 msgstr "Gateway-ID"
 
-#: smarty.txt:7
+#: smarty.txt:9
 msgid "Local content demo"
 msgstr "Demo av lokalt innehåll"
 
-#: smarty.txt:8
+#: smarty.txt:10
 msgid "Opened on"
 msgstr "Öppnades"
 
-#: smarty.txt:9 smarty.txt:117
+#: smarty.txt:11 smarty.txt:132
 msgid "Online users"
 msgstr "Användare online"
 
-#: smarty.txt:10 smarty.txt:11
+#: smarty.txt:12 smarty.txt:13
 msgid "days"
 msgstr "dagar"
 
-#: smarty.txt:12
+#: smarty.txt:14
 msgid "Login page"
 msgstr "Inloggningssida"
 
-#: smarty.txt:13
+#: smarty.txt:15
 msgid "Portal page"
 msgstr "Portal"
 
-#: smarty.txt:14
+#: smarty.txt:17
 msgid "Logged in as"
 msgstr "Inloggad som"
 
-#: smarty.txt:15
+#: smarty.txt:18
 msgid "Profile / Settings"
 msgstr "Profil / Inställningar"
 
-#: smarty.txt:16
+#: smarty.txt:19
 msgid "Logout"
 msgstr "Logga ut"
 
-#: smarty.txt:17
+#: smarty.txt:20
 msgid "I am not logged in."
 msgstr "Jag är inte inloggad."
 
-#: smarty.txt:20
+#: smarty.txt:23
 msgid "user is online at this hotspot"
 msgstr "användare är online på denna Hotspot"
 
-#: smarty.txt:21
+#: smarty.txt:24
 msgid "users are online at this hotspot"
 msgstr "användare är online på denna Hotspot"
 
-#: smarty.txt:22
+#: smarty.txt:25
 msgid "Nobody is online at this hotspot"
 msgstr "Ingen är online på denna Hotspot"
 
-#: smarty.txt:23
+#: smarty.txt:26
 msgid "Recent Users:"
 msgstr "Nyligen anslutna användare:"
 
-#: smarty.txt:24
+#: smarty.txt:27
 msgid "Most Active Users:"
 msgstr "Mest aktiva användare:"
 
-#: smarty.txt:25
+#: smarty.txt:28
 msgid "Login or Signup here"
 msgstr "Logga in eller registrera"
 
-#: smarty.txt:26
+#: smarty.txt:29
+#, fuzzy
+msgid "Login Here"
+msgstr "Inloggningssida"
+
+#: smarty.txt:30
 msgid "Username (or email)"
 msgstr "Användarnamn (eller emailadress)"
 
-#: smarty.txt:27 smarty.txt:48
+#: smarty.txt:31 smarty.txt:53
 msgid "Password"
 msgstr "Lösenord"
 
-#: smarty.txt:29
+#: smarty.txt:33
+#, fuzzy
+msgid "Signup Here"
+msgstr "Anmäl"
+
+#: smarty.txt:34
 msgid "Create a free account"
 msgstr "Skapa ett konto gratis"
 
-#: smarty.txt:30
+#: smarty.txt:35
 msgid "You must specify your username and password"
 msgstr "Du måste ange ditt användarnamn och lösenord"
 
-#: smarty.txt:31
+#: smarty.txt:36
 msgid "Show me the closest hotspot"
 msgstr "Visa mig närmsta Hotspot"
 
-#: smarty.txt:32
+#: smarty.txt:37
 msgid "Enter your postal code"
 msgstr "Fyll i ditt postnummer"
 
-#: smarty.txt:33
+#: smarty.txt:38
 msgid "Show"
 msgstr "Visa"
 
-#: smarty.txt:34
+#: smarty.txt:39
 msgid "Refresh map"
 msgstr "Uppdatera karta"
 
-#: smarty.txt:37
+#: smarty.txt:42
 msgid "Legend"
 msgstr "Symbolbetydelser"
 
-#: smarty.txt:38
+#: smarty.txt:43
 msgid "the hotspot is operational"
 msgstr "Hotspot:en är aktiv"
 
-#: smarty.txt:39
+#: smarty.txt:44
 msgid "the hotspot is down"
 msgstr "Hotspot:en är inaktiv"
 
-#: smarty.txt:40
+#: smarty.txt:45
 msgid "not monitored"
 msgstr "Hotspot:en är inte övervakad"
 
-#: smarty.txt:41 smarty.txt:69 smarty.txt:93 smarty.txt:101
+#: smarty.txt:46 smarty.txt:74 smarty.txt:98 smarty.txt:106
 msgid "I'm having difficulties"
 msgstr "Jag har problem"
 
-#: smarty.txt:45
+#: smarty.txt:50
 msgid "Register a free account with"
 msgstr "Registrera ett gratis konto med"
 
-#: smarty.txt:46
+#: smarty.txt:51
 msgid "Username desired"
 msgstr "Önskat användarnamn"
 
-#: smarty.txt:47 smarty.txt:75 smarty.txt:106
+#: smarty.txt:52 smarty.txt:80 smarty.txt:111
 msgid "Your email address"
 msgstr "Din emailadress"
 
-#: smarty.txt:49
+#: smarty.txt:54
 msgid "Password (again)"
 msgstr "Lösenord (igen)"
 
-#: smarty.txt:50
+#: smarty.txt:55
 msgid "Sign-up"
 msgstr "Anmäl"
 
-#: smarty.txt:51
+#: smarty.txt:56
 msgid "Please note"
 msgstr "Notera"
 
-#: smarty.txt:52
+#: smarty.txt:57
 msgid ""
 "While accounts are free, we <em>strongly</em> suggest that you use your "
 "previously created account if you have one."
@@ -4394,7 +4479,7 @@ msgstr ""
 "använder ett befintligt om du har ett. Detta underlättar för både kundtjänst "
 "och dig själv."
 
-#: smarty.txt:53
+#: smarty.txt:58
 msgid ""
 "<b>Your email address must be valid</b> in order for your account to be "
 "activated."
@@ -4402,21 +4487,21 @@ msgstr ""
 "<b>Du måste ange en giltig emailadress</b> för att du skall kunna aktivera "
 "ditt konto."
 
-#: smarty.txt:54
+#: smarty.txt:59
 msgid "A validation email will be sent to that email address."
 msgstr ""
 "Ett valideringsmail kommer att skickas till den emailadressen du angav."
 
-#: smarty.txt:55
+#: smarty.txt:60
 msgid "To fully activate your account you must respond to that email."
 msgstr ""
 "För att aktivera och validera ditt konto, följ länken i valideringsmailet."
 
-#: smarty.txt:56
+#: smarty.txt:61
 msgid "Note to free web-based email users"
 msgstr "Notering till användare av gratis webb-baserade emailtjänster:"
 
-#: smarty.txt:57
+#: smarty.txt:62
 msgid ""
 "Sometimes our validation email ends up in the 'spam' folder of some "
 "providers. If you have not received any email with the validation URL 5 "
@@ -4426,97 +4511,97 @@ msgstr ""
 "tjänsterna. Om du inte har fått något mail från oss på 5 minuter så kolla "
 "din skräppostmapp."
 
-#: smarty.txt:58
+#: smarty.txt:63
 msgid "You can also use the following links if you need help"
 msgstr "Du kan också använda följande länkar som kan vara till hjälp"
 
-#: smarty.txt:61
+#: smarty.txt:66
 #, php-format
 msgid "Status of the %d open %s Hotspots"
 msgstr "Status för %d aktiva %s Hotspots"
 
-#: smarty.txt:62
+#: smarty.txt:67
 msgid "Hotspot / Status"
 msgstr "Hotspot / Status"
 
-#: smarty.txt:64
+#: smarty.txt:69
 msgid "Location"
 msgstr "Adress"
 
-#: smarty.txt:65
+#: smarty.txt:70
 msgid "Hotspot in testing phase"
 msgstr "Hotspot i testningsfas"
 
-#: smarty.txt:66
+#: smarty.txt:71
 msgid "Hotspot not monitored"
 msgstr "Hotspot:en är inte övervakad"
 
-#: smarty.txt:67
+#: smarty.txt:72
 #, php-format
 msgid "Opened on %s"
 msgstr "Aktiverad %s"
 
-#: smarty.txt:73
+#: smarty.txt:78
 msgid "Lost password"
 msgstr "Borttappat lösenord"
 
-#: smarty.txt:74 smarty.txt:98
+#: smarty.txt:79 smarty.txt:103
 msgid "Your username"
 msgstr "Ditt användarnamn"
 
-#: smarty.txt:76
+#: smarty.txt:81
 msgid "Reset my password"
 msgstr "Återställ mitt lösenord"
 
-#: smarty.txt:77
+#: smarty.txt:82
 msgid "Please enter your username or email address to reset your password"
 msgstr ""
 "Fyll i ditt användarnamn eller emailadress för att återställa ditt lösenord"
 
-#: smarty.txt:78
+#: smarty.txt:83
 #, php-format
 msgid "The %s network currently has one valid user."
 msgstr "%s nätverket har för tillfället en validerad användare."
 
-#: smarty.txt:79
+#: smarty.txt:84
 #, php-format
 msgid "The %s network currently has %d valid users."
 msgstr "%s nätverket har för tillfället %d validerade användare."
 
-#: smarty.txt:80
+#: smarty.txt:85 smarty.txt:116
 msgid "One user is currently online."
 msgstr "En användare är online för tillfället."
 
-#: smarty.txt:81
+#: smarty.txt:86 smarty.txt:117
 #, php-format
 msgid "%d users are currently online."
 msgstr "%d användare är online för tillfället."
 
-#: smarty.txt:82
+#: smarty.txt:87 smarty.txt:118
 msgid "This network currently has 1 deployed hotspot."
 msgstr "Detta nätverk har för tillfället en utrullad Hotspot, "
 
-#: smarty.txt:83
+#: smarty.txt:88 smarty.txt:119
 #, php-format
 msgid "This network currently has %d deployed hotspots."
 msgstr "Detta nätverk har för tillfället %d utrullade Hotspots, "
 
-#: smarty.txt:84
+#: smarty.txt:89 smarty.txt:120
 msgid "One hotspot is currently operational."
 msgstr "En Hotspot är för tillfället fungerande"
 
-#: smarty.txt:85
+#: smarty.txt:90 smarty.txt:121
 #, php-format
 msgid "%d hotspots are currently operational."
 msgstr "%d Hotspots är för tillfället fungerande"
 
-#: smarty.txt:86
+#: smarty.txt:91 smarty.txt:122
 msgid ""
 "One hotspot isn't monitored so we don't know if it's currently operational."
 msgstr ""
 "En Hotspot är inte övervakad så vi vet inte om den fungerar för närvarande."
 
-#: smarty.txt:87
+#: smarty.txt:92 smarty.txt:123
 #, php-format
 msgid ""
 "%d hotspots aren't monitored so we don't know if they are currently "
@@ -4524,11 +4609,11 @@ msgid ""
 msgstr ""
 "%d Hotspots är inte övervakade så vi vet inte om de fungerar för närvarande."
 
-#: smarty.txt:88
+#: smarty.txt:93
 msgid "Please get in touch with "
 msgstr "Kontakta "
 
-#: smarty.txt:89
+#: smarty.txt:94
 msgid ""
 "We are a not-for-profit group dedicated to making no-fee wireless Internet "
 "access generally available."
@@ -4536,7 +4621,7 @@ msgstr ""
 "Vi är en icke-vinstdrivande grupp dedicerade att skapa ett fullständigt "
 "gratis trådlöst Internet för alla att använda."
 
-#: smarty.txt:90
+#: smarty.txt:95
 msgid ""
 "Our aim is to encourage the growth of wireless networking and to build "
 "community in interesting and innovative ways."
@@ -4544,7 +4629,7 @@ msgstr ""
 "Vårt mål är att uppmuntra tillväxten av trådlösa nätverk och att bygga en "
 "gemenskap i både intressanta och innovativa vägar."
 
-#: smarty.txt:91
+#: smarty.txt:96
 msgid ""
 "We do this by setting up wireless Internet networks in parks, cafés, "
 "restaurants, bars and other publically-accessible locations across the city."
@@ -4552,19 +4637,19 @@ msgstr ""
 "Detta gör vi genom att sätta upp Hotspots i parker, caféer, resturanger, "
 "barer och andra offentliga platser runtom i staden."
 
-#: smarty.txt:92
+#: smarty.txt:97
 msgid "For a complete and up-to-date listing of our nodes, visit"
 msgstr "För en fullständig och uppdaterad lista över våra Hotspots, besök"
 
-#: smarty.txt:97
+#: smarty.txt:102
 msgid "Re-send validation email"
 msgstr "Skicka valideringsmail igen"
 
-#: smarty.txt:99
+#: smarty.txt:104
 msgid "Re-send"
 msgstr "Skicka igen"
 
-#: smarty.txt:100
+#: smarty.txt:105
 msgid ""
 "Please enter your username and the validation email will be resent to your "
 "email address"
@@ -4572,49 +4657,65 @@ msgstr ""
 "Fyll i ditt användarnamn så kommer ditt valideringsmail att skickas till "
 "din  emailadress."
 
-#: smarty.txt:105
+#: smarty.txt:110
 msgid "Lost username"
 msgstr "Borttappat användarnamn"
 
-#: smarty.txt:107
+#: smarty.txt:112
 msgid "Retrieve"
 msgstr "Hämta"
 
-#: smarty.txt:108
+#: smarty.txt:113
 msgid "Please enter your email address to recover your username"
 msgstr "Fyll i vilken emailadress för att hämta ditt användarnamn"
 
-#: smarty.txt:109
+#: smarty.txt:114
+#, fuzzy
+msgid "The server currently has one valid user."
+msgstr "%s nätverket har för tillfället en validerad användare."
+
+#: smarty.txt:115
+#, fuzzy, php-format
+msgid "The server currently has %d valid users."
+msgstr "%s nätverket har för tillfället %d validerade användare."
+
+#: smarty.txt:124
 msgid "User list"
 msgstr "Användarlista"
 
-#: smarty.txt:110
+#: smarty.txt:125
 msgid "Sort by:"
 msgstr "Sortera efter:"
 
-#: smarty.txt:111
+#: smarty.txt:126
 msgid "Direction:"
 msgstr "Riktning:"
 
-#: smarty.txt:112
+#: smarty.txt:127
 msgid "Sort"
 msgstr "Sortera"
 
-#: smarty.txt:115
+#: smarty.txt:130
 msgid "Registered On"
 msgstr "Registrerad"
 
-#: smarty.txt:120
+#: smarty.txt:135
 msgid "Origin"
 msgstr "Ursprung"
 
-#: smarty.txt:121
+#: smarty.txt:136
 msgid "Logged in Since"
 msgstr "Inloggad sedan"
 
-#: smarty.txt:122
+#: smarty.txt:137
 msgid "Traffic IN/OUT"
 msgstr "Trafik (Nerladdat / Uppladdat)"
+
+#~ msgid "No nodes could not be found in the database"
+#~ msgstr "Inga Hotspots kunde hittas i databasen"
+
+#~ msgid "Is this network the default network?"
+#~ msgstr "Är detta standard-nätverket?"
 
 #~ msgid "Component %s is not installed (not found in %s)"
 #~ msgstr "%s är inte installerad (Hittades inte i %s)"
@@ -5100,9 +5201,6 @@ msgstr "Trafik (Nerladdat / Uppladdat)"
 #~ msgid "is unknown to this authentication server."
 #~ msgstr "är okänd för denna autentiseringsserver."
 
-#~ msgid "network"
-#~ msgstr "nätverket"
-
 #~ msgid "Id"
 #~ msgstr "ID"
 
@@ -5562,9 +5660,6 @@ msgstr "Trafik (Nerladdat / Uppladdat)"
 
 #~ msgid "Repeater deployment status"
 #~ msgstr "Utrullningsstatus för repeatern"
-
-#~ msgid "Repeater configuration"
-#~ msgstr "Repeaterkonfiguration"
 
 #~ msgid "Repeaters"
 #~ msgstr "Repeatrar "

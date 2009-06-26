@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-07 12:13-0400\n"
+"POT-Creation-Date: 2009-06-26 11:47-0400\n"
 "PO-Revision-Date: 2008-07-07 19:38+0100\n"
 "Last-Translator: Cristian Lorenzo <cristian@lalineapeluda.com>\n"
 "Language-Team: LANGUAGE <cristian@lalineapeluda.com>\n"
@@ -17,33 +17,44 @@ msgstr ""
 "X-Poedit-Language: Catalan\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: ../node_list.php:109
-msgid "No nodes could not be found in the database"
-msgstr "No trobo cap node a la base de dades"
-
-#: ../node_list.php:112 ../classes/Node.php:311 ../classes/Node.php:657
+#: ../node_list.php:131 ../classes/Node.php:323 ../classes/Node.php:685
 msgid "Deployed"
 msgstr "Instal·lat"
 
-#: ../node_list.php:113 ../classes/Node.php:312 ../classes/Node.php:658
+#: ../node_list.php:132 ../classes/Node.php:324 ../classes/Node.php:686
 msgid "In planning"
 msgstr "En planificació"
 
-#: ../node_list.php:113 ../classes/Node.php:313 ../classes/Node.php:659
+#: ../node_list.php:132 ../classes/Node.php:325 ../classes/Node.php:687
 msgid "In testing"
 msgstr "En proves"
 
-#: ../node_list.php:113 ../classes/Node.php:314 ../classes/Node.php:660
+#: ../node_list.php:132 ../classes/Node.php:326 ../classes/Node.php:688
 msgid "Non-Wifidog node"
 msgstr "Node no Wifidog"
 
-#: ../node_list.php:113 ../classes/Node.php:315 ../classes/Node.php:661
+#: ../node_list.php:132 ../classes/Node.php:327 ../classes/Node.php:689
 msgid "Permanently closed"
 msgstr "Permanentment tancat"
 
-#: ../node_list.php:113 ../classes/Node.php:316 ../classes/Node.php:662
+#: ../node_list.php:132 ../classes/Node.php:328 ../classes/Node.php:690
 msgid "Temporarily closed"
 msgstr "Temporalment tancat"
+
+#: ../node_list.php:173 ../classes/NodeLists/NodeListHTML.php:173
+msgid "All"
+msgstr ""
+
+#: ../node_list.php:173 ../hotspots_map.php:114
+#: ../classes/NodeLists/NodeListHTML.php:175
+msgid "Change network"
+msgstr "Canviar de xarxa"
+
+#: ../node_list.php:177 ../classes/NodeLists/NodeListHTML.php:176
+#: ../classes/NodeLists/NodeListHTML.php:221
+#, fuzzy
+msgid "All networks"
+msgstr "red"
 
 #: ../validate.php:58
 msgid "No token specified!"
@@ -87,11 +98,21 @@ msgstr "Ho sento, aquesta xarxa no existeix!"
 msgid "Please specify a username or email address"
 msgstr "Si us plau, indica un nom d'usuari o adreça de correu electrònic"
 
-#: ../lost_password.php:131
+#: ../lost_password.php:117
+#, fuzzy
+msgid "Please specify EITHER your username or your email, not both"
+msgstr "Si us plau, indica un nom d'usuari o adreça de correu electrònic"
+
+#: ../lost_password.php:126
+#, fuzzy
+msgid "You need to specify your username or your email"
+msgstr "Has d'indicar el teu nom d'usuari i contrasenya"
+
+#: ../lost_password.php:136
 msgid "This username or email could not be found in our database"
 msgstr "Aquest nom d'usuari o correu electrònic no es troba a la base de dades"
 
-#: ../lost_password.php:134
+#: ../lost_password.php:139
 msgid "A new password has been emailed to you."
 msgstr "He enviat una nova contrasenya al teu correu electrònic"
 
@@ -103,28 +124,24 @@ msgstr ""
 "No puc recuperar la clau de l'API de coogle en no trobar cap vhost amb el "
 "nom actual del servidor"
 
-#: ../hotspots_map.php:113
-msgid "Change network"
-msgstr "Canviar de xarxa"
-
-#: ../hotspots_map.php:144
+#: ../hotspots_map.php:145
 msgid "Sorry, your browser does not support Google Maps."
 msgstr "Ho sento, el teu navegador no admet Google Maps."
 
-#: ../hotspots_map.php:144 ../classes/StatisticReport/NodeStatus.php:190
+#: ../hotspots_map.php:145 ../classes/StatisticReport/NodeStatus.php:190
 #: ../classes/StatisticReport/NetworkStatus.php:109
 msgid "Homepage"
 msgstr "Pàgina d'inici"
 
-#: ../hotspots_map.php:144
+#: ../hotspots_map.php:145
 msgid "Show me on the map"
 msgstr "Ensenya'm on sóc al mapa"
 
-#: ../hotspots_map.php:144 smarty.txt:36
+#: ../hotspots_map.php:145 smarty.txt:41
 msgid "Loading, please wait..."
 msgstr "Carregant, si us plau espera..."
 
-#: ../hotspots_map.php:158
+#: ../hotspots_map.php:159
 msgid "Hotspots status map"
 msgstr "Mapa de l'estat dels Hotspots"
 
@@ -205,7 +222,7 @@ msgstr ""
 "Ho sento, però ja existeix un compte associat a aquesta adreça de correu "
 "electrònic."
 
-#: ../signup.php:229 ../portal/index.php:145
+#: ../signup.php:229 ../portal/index.php:163
 #, php-format
 msgid ""
 "Your account has been granted %s minutes of access to retrieve your email "
@@ -247,7 +264,7 @@ msgstr "Si us plau, valida el teu compte des d'un altre lloc o crea una nova."
 #: ../gw_message.php:67
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:895
 #: ../classes/Statistics.php:376 ../classes/Statistics.php:379
-#: ../classes/Content.php:901 ../classes/Node.php:219 ../classes/Role.php:501
+#: ../classes/Content.php:901 ../classes/Node.php:231 ../classes/Role.php:501
 msgid "Access denied!"
 msgstr "Accés denegat!"
 
@@ -368,8 +385,8 @@ msgstr "Mostrar tots els %s"
 msgid "Show only persistant %s"
 msgstr "Mostra únicament els %s persistents"
 
-#: ../admin/generic_object_admin.php:99 ../classes/Network.php:2104
-#: ../classes/Node.php:1630
+#: ../admin/generic_object_admin.php:99 ../classes/Network.php:2140
+#: ../classes/Node.php:1767
 #, php-format
 msgid "Edit %s"
 msgstr "Edita %s"
@@ -390,7 +407,7 @@ msgstr "Mostrant la previsualització tal com hauria d'aparèixer"
 #: ../classes/StatisticReport/UserReport.php:182
 #: ../classes/StatisticReport/RegistrationLog.php:120
 #: ../classes/StatisticReport/MostPopularNodes.php:109
-#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:118
+#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:133
 msgid "Node"
 msgstr "Node"
 
@@ -564,7 +581,7 @@ msgstr "No he aconseguit enviar el correu"
 msgid "No deployed nodes could not be found in the database"
 msgstr "No puc trobar nodes instal·lats a la base de dades"
 
-#: ../include/schema_validate.php:75
+#: ../include/schema_validate.php:72
 msgid ""
 "I am unable to retrieve the schema version. Either the wifidog database "
 "hasn't been created yet, the postgresql server is down, or pg_hba.conf does "
@@ -575,15 +592,15 @@ msgstr ""
 "pg_hba.conf no permet al teu servidor web connectar a la base de dades de "
 "wifidog."
 
-#: ../include/schema_validate.php:77
+#: ../include/schema_validate.php:74
 msgid "Try running the"
 msgstr "Intenta executa el"
 
-#: ../include/schema_validate.php:77
+#: ../include/schema_validate.php:74
 msgid "installation script"
 msgstr "script d'instal·lació"
 
-#: ../include/schema_validate.php:105
+#: ../include/schema_validate.php:106
 msgid ""
 "No user matches the default network, a new user admin/admin will be created. "
 "Change the password as soon as possible !"
@@ -591,15 +608,15 @@ msgstr ""
 "No existeixen usuaris a la xarxa per defecte. Es crearà un nou admin/admin. "
 "Canvia la contrasenya tan aviat com sigui possible!"
 
-#: ../include/schema_validate.php:117
+#: ../include/schema_validate.php:118
 msgid "Could not get a default network!"
 msgstr "No puc obtenir una xarxa per defecte!"
 
-#: ../include/schema_validate.php:149
+#: ../include/schema_validate.php:150
 msgid "Trying to update the database schema."
 msgstr "Intentant actualitzar l'estructura de la base de dades."
 
-#: ../include/schema_validate.php:154
+#: ../include/schema_validate.php:155
 msgid ""
 "Unable to retrieve schema version.  The database schema is too old to be "
 "updated."
@@ -628,18 +645,18 @@ msgstr "No puc generar el testimoni de l'usuari %s"
 msgid "I'm having difficulties:"
 msgstr "Necessito ajuda:"
 
-#: ../login/index.php:263 smarty.txt:42 smarty.txt:59 smarty.txt:70
-#: smarty.txt:94 smarty.txt:102
+#: ../login/index.php:263 smarty.txt:47 smarty.txt:64 smarty.txt:75
+#: smarty.txt:99 smarty.txt:107
 msgid "I Forgot my username"
 msgstr "He oblidat el meu nom d'usuari"
 
-#: ../login/index.php:264 smarty.txt:43 smarty.txt:60 smarty.txt:71
-#: smarty.txt:95 smarty.txt:103
+#: ../login/index.php:264 smarty.txt:48 smarty.txt:65 smarty.txt:76
+#: smarty.txt:100 smarty.txt:108
 msgid "I Forgot my password"
 msgstr "He oblidat la meva contrasenya"
 
-#: ../login/index.php:265 smarty.txt:44 smarty.txt:72 smarty.txt:96
-#: smarty.txt:104
+#: ../login/index.php:265 smarty.txt:49 smarty.txt:77 smarty.txt:101
+#: smarty.txt:109
 msgid "Re-send the validation email"
 msgstr "Torna'm a enviar el correu de validació"
 
@@ -652,7 +669,7 @@ msgstr "%s pàgina d'inici de sessió per %s"
 msgid "Offsite login page"
 msgstr "Enllaços externs a la pàgina d'inici de sessió"
 
-#: ../login/index.php:282 ../portal/index.php:139
+#: ../login/index.php:282 ../portal/index.php:157
 msgid "Welcome to"
 msgstr "Benvingut a"
 
@@ -660,12 +677,12 @@ msgstr "Benvingut a"
 msgid "No Hotspot specified!"
 msgstr "No has seleccionat cap Hotspot!"
 
-#: ../portal/index.php:134
+#: ../portal/index.php:152
 #, php-format
 msgid "%s portal for %s"
 msgstr "%s portal de %s"
 
-#: ../portal/index.php:144
+#: ../portal/index.php:162
 msgid ""
 "You NEED to confirm your account.  An email with confirmation instructions "
 "was sent to your email address.  If you don't see it in your inbox, make "
@@ -675,7 +692,7 @@ msgstr ""
 "instruccions a la teva adreça. Si no el trobes a la safata d'entrada, "
 "consulta la carpeta de correu brossa."
 
-#: ../portal/index.php:206
+#: ../portal/index.php:224
 msgid "Show all available contents for this hotspot"
 msgstr "Mostra tot el contingut disponible en aquest hotspot"
 
@@ -811,7 +828,7 @@ msgid "Sorry, this report requires you to select individual nodes"
 msgstr "Ho sento, aquest informe necessita que seleccionis nodes individuals"
 
 #: ../classes/StatisticReport/NodeStatus.php:99
-#: ../classes/DependenciesList.php:137 smarty.txt:3
+#: ../classes/DependenciesList.php:137 smarty.txt:5
 msgid "Status"
 msgstr "Estat"
 
@@ -862,8 +879,8 @@ msgid "Profile"
 msgstr "Perfil"
 
 #: ../classes/StatisticReport/NodeStatus.php:152
-#: ../classes/StatisticReport/NetworkStatus.php:99 ../classes/Node.php:1100
-#: ../classes/Node.php:1105 smarty.txt:6
+#: ../classes/StatisticReport/NetworkStatus.php:99 ../classes/Node.php:1199
+#: ../classes/Node.php:1204 smarty.txt:8
 msgid "Name"
 msgstr "Nom"
 
@@ -871,7 +888,7 @@ msgstr "Nom"
 msgid "Node ID"
 msgstr "ID del Node"
 
-#: ../classes/StatisticReport/NodeStatus.php:160 ../classes/Node.php:368
+#: ../classes/StatisticReport/NodeStatus.php:160 ../classes/Node.php:380
 msgid "Deployment Status"
 msgstr "Estat de la instal·lació"
 
@@ -880,12 +897,12 @@ msgid "Deployment date"
 msgstr "Data d'instal·lació "
 
 #: ../classes/StatisticReport/NodeStatus.php:168 ../classes/Content.php:925
-#: ../classes/Node.php:1124 ../classes/DependenciesList.php:173 smarty.txt:63
+#: ../classes/Node.php:1223 ../classes/DependenciesList.php:175 smarty.txt:68
 msgid "Description"
 msgstr "Descripció"
 
 #: ../classes/StatisticReport/NodeStatus.php:172
-#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:114
+#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:129
 msgid "Network"
 msgstr "Xarxa"
 
@@ -893,8 +910,8 @@ msgstr "Xarxa"
 msgid "GIS Location"
 msgstr "Localització GIS"
 
-#: ../classes/StatisticReport/NodeStatus.php:181 ../classes/Network.php:1049
-#: smarty.txt:68
+#: ../classes/StatisticReport/NodeStatus.php:181 ../classes/Network.php:1041
+#: smarty.txt:73
 msgid "Map"
 msgstr "Mapa"
 
@@ -926,7 +943,7 @@ msgid "Transit Info"
 msgstr "Informació de tràfic"
 
 #: ../classes/StatisticReport/NodeStatus.php:220 ../classes/User.php:1058
-#: ../classes/Node.php:1067
+#: ../classes/Node.php:1164 smarty.txt:16
 msgid "Statistics"
 msgstr "Estadístiques"
 
@@ -967,8 +984,8 @@ msgstr "ID d'usuari: %s no el trobo a la base de dades"
 #: ../classes/StatisticReport/RegistrationLog.php:123
 #: ../classes/StatisticReport/ConnectionLog.php:115
 #: ../classes/StatisticReport/ConnectionLog.php:164 ../classes/User.php:810
-#: ../classes/User.php:815 ../classes/User.php:864 smarty.txt:113
-#: smarty.txt:119
+#: ../classes/User.php:815 ../classes/User.php:864 smarty.txt:128
+#: smarty.txt:134
 msgid "Username"
 msgstr "Nom d'usuari"
 
@@ -981,7 +998,7 @@ msgid "Member since"
 msgstr "Membre des de"
 
 #: ../classes/StatisticReport/UserReport.php:147 ../classes/User.php:852
-#: smarty.txt:116
+#: smarty.txt:131
 msgid "Account Status"
 msgstr "Estat del compte"
 
@@ -1087,7 +1104,7 @@ msgstr "Ho sento, aquest informe necessita que seleccionis una xarxa"
 
 #: ../classes/StatisticReport/NetworkStatus.php:104
 #: ../classes/VirtualHost.php:603 ../classes/Server.php:246
-#: ../classes/Node.php:1111 ../classes/ProfileTemplate.php:512
+#: ../classes/Node.php:1210 ../classes/ProfileTemplate.php:512
 #: ../classes/Role.php:369
 msgid "Creation date"
 msgstr "Data de creació"
@@ -1358,7 +1375,7 @@ msgstr ""
 "advertència: Aquest informe no conta les connexions als nodes sense sortida"
 
 #: ../classes/NodeLists/NodeListRSS.php:157
-#: ../classes/NodeLists/NodeListHTML.php:211
+#: ../classes/NodeLists/NodeListHTML.php:221
 msgid "Newest Hotspots"
 msgstr "Els Hotspots més recents"
 
@@ -1378,7 +1395,7 @@ msgstr "Veure Mapa"
 msgid "Contact"
 msgstr "Contacte"
 
-#: ../classes/NodeLists/NodeListHTML.php:210
+#: ../classes/NodeLists/NodeListHTML.php:220
 msgid "Hotspot list"
 msgstr "LLista de Hotspots"
 
@@ -1432,19 +1449,19 @@ msgstr "Última actualització a: %s"
 msgid "Hotspot"
 msgstr "Hotspot"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1150
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1249
 msgid "Postal code"
 msgstr "Codi postal"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1140
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1239
 msgid "City"
 msgstr "Ciutat"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1145
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1244
 msgid "Province / State"
 msgstr "Província / Estat"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1170
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1269
 msgid "Homepage URL"
 msgstr "URL de la pàgina d'inici"
 
@@ -2002,7 +2019,7 @@ msgstr "(Buida %s)"
 #: ../classes/Content/Langstring/Langstring.php:215
 #: ../classes/Content/Langstring/Langstring.php:341
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:112
-#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:19
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:22
 msgid "Language"
 msgstr "Llengua"
 
@@ -2540,9 +2557,10 @@ msgstr "No puc inserir el nou perfil a la base de dades!"
 msgid "Should this profile be publicly visible?"
 msgstr ""
 
-#: ../classes/Profile.php:311 ../classes/Network.php:1671
-#: ../classes/Network.php:1690 ../classes/Network.php:1696
-#: ../classes/Network.php:1721 ../classes/Node.php:1231
+#: ../classes/Profile.php:311 ../classes/Network.php:1716
+#: ../classes/Network.php:1722 ../classes/Network.php:1728
+#: ../classes/Network.php:1753 ../classes/Node.php:1335
+#: ../classes/Node.php:1350
 msgid "Yes"
 msgstr "Sí"
 
@@ -2824,73 +2842,73 @@ msgstr "Administració de l'usuari"
 msgid "User administration"
 msgstr "Administració d'usuaris"
 
-#: ../classes/Network.php:112 ../classes/Network.php:250
+#: ../classes/Network.php:124 ../classes/Network.php:265
 msgid "Network::getAllNetworks:  Fatal error: No networks in the database!"
 msgstr ""
 "Network::getAllNetworks: Error Fatal: No hi ha xarxes la base de dades!"
 
-#: ../classes/Network.php:189
+#: ../classes/Network.php:201
 msgid "Unable to insert the new network in the database!"
 msgstr "No puc inserir la nova xarxa a la base de dades!"
 
-#: ../classes/Network.php:261 ../classes/Network.php:267
+#: ../classes/Network.php:276 ../classes/Network.php:282
 msgid "Network:"
 msgstr "Xarxa"
 
-#: ../classes/Network.php:308
+#: ../classes/Network.php:323
 msgid "Create a new network with ID"
 msgstr "Crear una nova xarxa amb la ID"
 
-#: ../classes/Network.php:719 ../classes/Statistics.php:124
-#: ../classes/Content.php:335 ../classes/NodeList.php:138
+#: ../classes/Network.php:737 ../classes/Statistics.php:124
+#: ../classes/Content.php:335 ../classes/NodeList.php:162
 msgid "Unable to open directory "
 msgstr "No puc obrir el directori"
 
-#: ../classes/Network.php:1049
+#: ../classes/Network.php:1041
 msgid "Satellite"
 msgstr "Satèl·lit"
 
-#: ../classes/Network.php:1049
+#: ../classes/Network.php:1041
 msgid "Hybrid"
 msgstr "Hibrid"
 
-#: ../classes/Network.php:1598
+#: ../classes/Network.php:1629
 msgid "Network management"
 msgstr "Administració de la xarxa"
 
-#: ../classes/Network.php:1604
+#: ../classes/Network.php:1635
 msgid "Network content"
 msgstr "Contingut de la xarxa"
 
-#: ../classes/Network.php:1615
+#: ../classes/Network.php:1646
 msgid "Network ID"
 msgstr "ID de la xarxa"
 
-#: ../classes/Network.php:1620
+#: ../classes/Network.php:1651
 msgid "Network name"
 msgstr "Nom de la xarxa"
 
-#: ../classes/Network.php:1625
+#: ../classes/Network.php:1656
 msgid "Network creation date"
 msgstr "Data de creació de la xarxa"
 
-#: ../classes/Network.php:1630
+#: ../classes/Network.php:1661
 msgid "Network's web site"
 msgstr "Lloc web de la xarxa"
 
-#: ../classes/Network.php:1635
+#: ../classes/Network.php:1666
 msgid "Technical support email"
 msgstr "Correu de suport tècnic"
 
-#: ../classes/Network.php:1640
+#: ../classes/Network.php:1671
 msgid "Information about the network"
 msgstr "Informació sobre la xarxa"
 
-#: ../classes/Network.php:1648
+#: ../classes/Network.php:1679
 msgid "Network authenticator class"
 msgstr "Classe d'autenticació de la xarxa"
 
-#: ../classes/Network.php:1649
+#: ../classes/Network.php:1680
 msgid ""
 "The subclass of Authenticator to be used for user authentication. Example: "
 "AuthenticatorRadius"
@@ -2898,11 +2916,11 @@ msgstr ""
 "La subclasse d'autenticació que serà emprada per autenticar els usuaris. Per "
 "exemple: AuthenticatorRadius"
 
-#: ../classes/Network.php:1656
+#: ../classes/Network.php:1687
 msgid "Authenticator parameters"
 msgstr "Paràmetres d'autenticació"
 
-#: ../classes/Network.php:1657
+#: ../classes/Network.php:1688
 #, fuzzy
 msgid ""
 "The explicit parameters to be passed to the authenticator. You MUST read the "
@@ -2913,35 +2931,31 @@ msgstr ""
 "Los parametros explicitos que seran pasados al autenticador. Por "
 "ejemplo:'my_network_id', '192.168.0.11', 1812, 1813, 'secret_key', 'CHAP_MD5'"
 
-#: ../classes/Network.php:1662
+#: ../classes/Network.php:1693
 msgid "Network Authentication"
 msgstr "Autenticació de la xarxa"
 
-#: ../classes/Network.php:1670
-msgid "Is this network the default network?"
-msgstr "És aquesta la xarxa per defecte?"
-
-#: ../classes/Network.php:1675
+#: ../classes/Network.php:1701
 msgid "Selected theme pack for this network"
 msgstr "Paquet de tema seleccionat per aquesta xarxa"
 
-#: ../classes/Network.php:1680
+#: ../classes/Network.php:1706
 msgid "Network properties"
 msgstr "Propietats de la xarxa"
 
-#: ../classes/Network.php:1688
+#: ../classes/Network.php:1714
 msgid "Splash-only nodes"
 msgstr "Node sense inici de sessió (Splash-only)"
 
-#: ../classes/Network.php:1689
+#: ../classes/Network.php:1715
 msgid "Are nodes allowed to be set as splash-only (no login)?"
 msgstr ""
 
-#: ../classes/Network.php:1694
+#: ../classes/Network.php:1720
 msgid "Portal page redirection"
 msgstr "Redreçament de la pàgina del portal"
 
-#: ../classes/Network.php:1695
+#: ../classes/Network.php:1721
 msgid ""
 "Are nodes allowed to redirect users to an arbitrary web page instead of the "
 "portal?"
@@ -2949,41 +2963,55 @@ msgstr ""
 "Permetre als nodes redreçar als usuaris a d'altres pàgines web en lloc del "
 "portal?"
 
-#: ../classes/Network.php:1700
+#: ../classes/Network.php:1726 ../classes/Node.php:1348
+#, fuzzy
+msgid "Original URL redirection"
+msgstr "Redreçament de la pàgina del portal"
+
+#: ../classes/Network.php:1727
+#, fuzzy
+msgid ""
+"Are nodes allowed to redirect users to the web page they originally "
+"requested instead of the portal?"
+msgstr ""
+"Permetre als nodes redreçar als usuaris a d'altres pàgines web en lloc del "
+"portal?"
+
+#: ../classes/Network.php:1732
 msgid "Network's node properties"
 msgstr "Propietats del node de la xarxa"
 
-#: ../classes/Network.php:1708
+#: ../classes/Network.php:1740
 msgid "Validation grace period"
 msgstr "Tiempo de gracia para  validaci&oacute;n"
 
-#: ../classes/Network.php:1709
+#: ../classes/Network.php:1741
 msgid ""
 "The length of the validation grace period in seconds.  A new user is granted "
 "Internet access for this period check his email and validate his account."
 msgstr ""
 
-#: ../classes/Network.php:1714
+#: ../classes/Network.php:1746
 msgid "This will be the from address of the validation email"
 msgstr "Aquesta serà l'adreça d'origen del correu de validació"
 
-#: ../classes/Network.php:1719
+#: ../classes/Network.php:1751
 msgid "Multiple connections"
 msgstr "Connexions múltiples"
 
-#: ../classes/Network.php:1720
+#: ../classes/Network.php:1752
 msgid "Can an account be connected more than once at the same time?"
 msgstr "Permetre connexions simultànies d'un mateix compte?"
 
-#: ../classes/Network.php:1725
+#: ../classes/Network.php:1757
 msgid "Network's user verification"
 msgstr "Verificació dels usuaris de la xarxa"
 
-#: ../classes/Network.php:1735
+#: ../classes/Network.php:1767
 msgid "Abuse control window"
 msgstr ""
 
-#: ../classes/Network.php:1736
+#: ../classes/Network.php:1768
 msgid ""
 "The length of the window during which the user must not have exceeded the "
 "limits below.  Any valid postgresql interval expression is acceptable, "
@@ -2991,96 +3019,96 @@ msgid ""
 "access until his usage falls below the limits."
 msgstr ""
 
-#: ../classes/Network.php:1741
+#: ../classes/Network.php:1773
 msgid "Network max total bytes transfered"
 msgstr ""
 
-#: ../classes/Network.php:1742 ../classes/Network.php:1754
+#: ../classes/Network.php:1774 ../classes/Network.php:1786
 msgid "Maximum data transfer during the abuse control window"
 msgstr ""
 
-#: ../classes/Network.php:1747
+#: ../classes/Network.php:1779
 #, fuzzy
 msgid "Network max connection duration"
 msgstr "Data de creació de la xarxa"
 
-#: ../classes/Network.php:1748 ../classes/Network.php:1760
+#: ../classes/Network.php:1780 ../classes/Network.php:1792
 msgid ""
 "Maximum connection duration during the abuse control window.  Any valid "
 "postgresql interval expression is acceptable, such as hh:mm:ss"
 msgstr ""
 
-#: ../classes/Network.php:1753
+#: ../classes/Network.php:1785
 msgid "Node max total bytes transfered"
 msgstr ""
 
-#: ../classes/Network.php:1759
+#: ../classes/Network.php:1791
 #, fuzzy
 msgid "Node max connection duration"
 msgstr "Configuració del node"
 
-#: ../classes/Network.php:1765
+#: ../classes/Network.php:1797
 #, fuzzy
 msgid "You do not have access to edit these options"
 msgstr "(No te accés per editar aquest contingut)"
 
-#: ../classes/Network.php:1768
+#: ../classes/Network.php:1800
 msgid "Dynamic abuse control"
 msgstr ""
 
-#: ../classes/Network.php:1781 ../classes/Server.php:275
-#: ../classes/Node.php:1252
+#: ../classes/Network.php:1813 ../classes/Server.php:281
+#: ../classes/Node.php:1362
 msgid "Access rights"
 msgstr "Drets d'accés"
 
-#: ../classes/Network.php:1797
+#: ../classes/Network.php:1829
 msgid "Note that to be valid, all 3 values must be present."
 msgstr ""
 
-#: ../classes/Network.php:1798 ../classes/Node.php:1189
+#: ../classes/Network.php:1830 ../classes/Node.php:1288
 msgid "Latitude"
 msgstr "Latitud"
 
-#: ../classes/Network.php:1799
+#: ../classes/Network.php:1831
 #, fuzzy
 msgid "Center latitude for the area covered by your wireless network"
 msgstr "Latitud Central de l'àrea de la seva xarxa sense fils"
 
-#: ../classes/Network.php:1803 ../classes/Node.php:1194
+#: ../classes/Network.php:1835 ../classes/Node.php:1293
 msgid "Longitude"
 msgstr "Longitud"
 
-#: ../classes/Network.php:1804
+#: ../classes/Network.php:1836
 #, fuzzy
 msgid "Center longitude for the area covered by your wireless network"
 msgstr "Longitud central de l'àrea de la seva xarxa sense fils"
 
-#: ../classes/Network.php:1808
+#: ../classes/Network.php:1840
 msgid "Zoomlevel"
 msgstr "Nivell de Zoom"
 
-#: ../classes/Network.php:1809
+#: ../classes/Network.php:1841
 #, fuzzy
 msgid "Zoomlevel of the Google Map.  12 is a typical value."
 msgstr "Nivell de zoom del Google Maps a l'àrea de la seva xarxa sense fils"
 
-#: ../classes/Network.php:1813
+#: ../classes/Network.php:1845
 msgid "Map type"
 msgstr "Tipus de mapa"
 
-#: ../classes/Network.php:1814
+#: ../classes/Network.php:1846
 msgid "Default Google Map type for your the area of your wireless network"
 msgstr "Tipus de Mapa Google per defecte a l'àrea de la seva xarxa sense fils"
 
-#: ../classes/Network.php:1819 ../classes/Node.php:1216
+#: ../classes/Network.php:1851 ../classes/Node.php:1315
 msgid "GIS data"
 msgstr "Dada del GIS"
 
-#: ../classes/Network.php:1823
+#: ../classes/Network.php:1855
 msgid "Network profile templates"
 msgstr "Plantilles de perfil de la xarxa"
 
-#: ../classes/Network.php:2070
+#: ../classes/Network.php:2106
 #, fuzzy
 msgid ""
 "Cannot delete default network, create another one and select it before you "
@@ -3090,16 +3118,16 @@ msgstr ""
 "nova xarxa i marca-la como xarxa per defecte abans d'esborrar la xarxa per "
 "defecte actual."
 
-#: ../classes/Network.php:2075
+#: ../classes/Network.php:2111
 msgid "Could not delete network!"
 msgstr "No puc esborrar la xarxa!"
 
-#: ../classes/Network.php:2111
+#: ../classes/Network.php:2147
 #, fuzzy, php-format
 msgid "Add a new network on this server"
 msgstr "Emprar SSL en aquest servidor?"
 
-#: ../classes/Network.php:2116
+#: ../classes/Network.php:2152
 msgid "Network administration"
 msgstr "Administració de la xarxa"
 
@@ -3233,8 +3261,8 @@ msgid "It appears the postgresql module isn't loaded"
 msgstr ""
 
 #: ../classes/AbstractDb.php:99
-#, php-format
-msgid "Unable to connect to database on %s"
+#, fuzzy, php-format
+msgid "Unable to connect to the database at %s"
 msgstr "No puc connectar a la base de dades a %s"
 
 #: ../classes/AbstractDb.php:121 ../classes/AbstractDb.php:214
@@ -3316,15 +3344,27 @@ msgstr "Fus horari de postgresql: %s"
 msgid "Timezone from PHP: %s"
 msgstr "Fus horari del PHP: %s"
 
-#: ../classes/Server.php:309
+#: ../classes/Server.php:270
+#, fuzzy
+msgid "Authentication"
+msgstr "Autenticació de la xarxa"
+
+#: ../classes/Server.php:271
+msgid ""
+"Use the users of default Virtual Host's network across all networks on the "
+"server."
+msgstr ""
+
+#: ../classes/Server.php:320
 msgid "The server can never be deleted!"
 msgstr ""
 
-#: ../classes/Server.php:319
-msgid "Server access control"
-msgstr "Control d'accés al servidor"
+#: ../classes/Server.php:330
+#, fuzzy
+msgid "Server configuration"
+msgstr "Configuració de l'informe"
 
-#: ../classes/Server.php:324
+#: ../classes/Server.php:335
 msgid "Server administration"
 msgstr "Administració de servidors"
 
@@ -3502,22 +3542,22 @@ msgstr "No es pot establir l'autor de la base de dades"
 msgid "Reusable content library"
 msgstr "Biblioteca de contingut reutilitzable"
 
-#: ../classes/NodeList.php:186 smarty.txt:35
+#: ../classes/NodeList.php:210 smarty.txt:40
 msgid "Deployed HotSpots map"
 msgstr "Mapa dels Hotspots instal·lats"
 
-#: ../classes/NodeList.php:197
+#: ../classes/NodeList.php:221
 #, php-format
 msgid "List in %s format"
 msgstr "Llista en format %s"
 
-#: ../classes/NodeList.php:203
+#: ../classes/NodeList.php:227
 msgid "Full node technical status (includes non-deployed nodes)"
 msgstr ""
 "Informe de l'estat operatiu de tots els nodes (inclou els nodes sense "
 "instal·lar)"
 
-#: ../classes/NodeList.php:207
+#: ../classes/NodeList.php:231
 msgid "Find Hotspots"
 msgstr "Cerca Hotspots"
 
@@ -3551,30 +3591,30 @@ msgstr ""
 msgid "Detailed error was:  Uncaught %s %s (%s) thrown in file %s, line %d"
 msgstr ""
 
-#: ../classes/MainUI.php:231
+#: ../classes/MainUI.php:232 ../classes/MainUI.php:234
 msgid "authentication server"
 msgstr "servidor d'autentificació"
 
-#: ../classes/MainUI.php:258
+#: ../classes/MainUI.php:262
 #, php-format
 msgid "%s is not a valid structural display area"
 msgstr "%s no es una àrea estructural de visualització vàlida"
 
-#: ../classes/MainUI.php:642
+#: ../classes/MainUI.php:680
 #, php-format
 msgid "%s Login"
 msgstr "%s Inicia sessió"
 
-#: ../classes/MainUI.php:642 smarty.txt:18 smarty.txt:28
+#: ../classes/MainUI.php:680 smarty.txt:21 smarty.txt:32
 msgid "Login"
 msgstr "Inicia la sessió"
 
-#: ../classes/MainUI.php:646
+#: ../classes/MainUI.php:684
 #, php-format
 msgid "Click <a href='%s'>here</a> to continue"
 msgstr "Fes clic<a href='%s'>aquí</a> per continuar"
 
-#: ../classes/MainUI.php:646
+#: ../classes/MainUI.php:684
 msgid ""
 "The transfer from secure login back to regular http may cause a warning."
 msgstr ""
@@ -3586,167 +3626,176 @@ msgstr ""
 msgid "PHPMailer couldn't sent mail.  Error was: %s"
 msgstr ""
 
-#: ../classes/Node.php:210
+#: ../classes/Node.php:222
 msgid "Could not delete node!"
 msgstr "No puc esborrar el node!"
 
-#: ../classes/Node.php:243
+#: ../classes/Node.php:255
 msgid "PUT_GATEWAY_ID_HERE"
 msgstr ""
 
-#: ../classes/Node.php:259
+#: ../classes/Node.php:271
 msgid "New node"
 msgstr "Nou node"
 
-#: ../classes/Node.php:268
+#: ../classes/Node.php:280
 #, php-format
 msgid "Sorry, a node for the gateway %s already exists."
 msgstr ""
 
-#: ../classes/Node.php:274
+#: ../classes/Node.php:286
 msgid "Unable to insert new node into database!"
 msgstr "No puc inserir un nou node a la base de dades!"
 
-#: ../classes/Node.php:358
+#: ../classes/Node.php:370
 msgid "Filter:"
 msgstr "Filtre:"
 
-#: ../classes/Node.php:366
+#: ../classes/Node.php:378
 msgid "Node Name"
 msgstr "Nom del node"
 
-#: ../classes/Node.php:367 ../classes/Node.php:1077
+#: ../classes/Node.php:379 ../classes/Node.php:1176
 msgid "Gateway ID"
 msgstr "ID de la pasarel·la"
 
-#: ../classes/Node.php:390
+#: ../classes/Node.php:402
 msgid "Sorry, no nodes available in the database"
 msgstr "Ho sentim, no hi ha nodes disponibles la base de dades"
 
-#: ../classes/Node.php:415
+#: ../classes/Node.php:427
 msgid "Add a new node for the gateway ID"
 msgstr ""
 
-#: ../classes/Node.php:425
+#: ../classes/Node.php:437
 msgid "in "
 msgstr "a"
 
-#: ../classes/Node.php:481
+#: ../classes/Node.php:493
 msgid "Here is what you can do to fix this:"
 msgstr ""
 
-#: ../classes/Node.php:485
+#: ../classes/Node.php:497
 #, php-format
 msgid ""
 "You can create a new node with %s as it's associated gateway id.  This is "
 "typical for new installations."
 msgstr ""
 
-#: ../classes/Node.php:498
+#: ../classes/Node.php:510
 #, php-format
 msgid "Add a new node in %s"
 msgstr "Afegeix un nou node a %s"
 
-#: ../classes/Node.php:500
+#: ../classes/Node.php:512
 msgid "Add node"
 msgstr "Afegeix un node"
 
-#: ../classes/Node.php:507
+#: ../classes/Node.php:519
 #, php-format
 msgid ""
 "You can \"steal\" an existing node.  The node's gateway id will be replaced "
 "with %s.  This is typical when replacing hardware."
 msgstr ""
 
-#: ../classes/Node.php:526
+#: ../classes/Node.php:538
 msgid "Steal node"
 msgstr "Node Steal"
 
-#: ../classes/Node.php:602
+#: ../classes/Node.php:614
 msgid "No deployment statuses could be found in the database"
 msgstr "Els estats operatius no es poden trobar a la base de dades"
 
-#: ../classes/Node.php:653
+#: ../classes/Node.php:681
 #, php-format
 msgid "The node with %s: %s could not be found in the database!"
 msgstr "No trobo el node amb %s:%s a la base de dades!"
 
-#: ../classes/Node.php:1061
+#: ../classes/Node.php:1154
 msgid "Edit a node"
 msgstr "Edita un node"
 
-#: ../classes/Node.php:1068
+#: ../classes/Node.php:1165
+msgid "Allow public access to some node statistics."
+msgstr ""
+
+#: ../classes/Node.php:1166
 msgid "Get access statistics"
 msgstr "Obté les estadístiques del node"
 
-#: ../classes/Node.php:1091
+#: ../classes/Node.php:1190
 msgid "Node content"
 msgstr "Continguts del node"
 
-#: ../classes/Node.php:1130
+#: ../classes/Node.php:1229
 msgid "Civic number"
 msgstr "Número cívic"
 
-#: ../classes/Node.php:1135
+#: ../classes/Node.php:1234
 msgid "Street name"
 msgstr "Nom del carrer"
 
-#: ../classes/Node.php:1155
+#: ../classes/Node.php:1254
 msgid "Country"
 msgstr "País"
 
-#: ../classes/Node.php:1160
+#: ../classes/Node.php:1259
 msgid "Public phone number"
 msgstr "Número de telèfon públic"
 
-#: ../classes/Node.php:1165
+#: ../classes/Node.php:1264
 msgid "Public email"
 msgstr "Email públic"
 
-#: ../classes/Node.php:1175
+#: ../classes/Node.php:1274
 msgid "Mass transit info"
 msgstr "Informació sobre el transport públic"
 
-#: ../classes/Node.php:1180
+#: ../classes/Node.php:1279
 msgid "Information about the node"
 msgstr "Informació sobre el node"
 
-#: ../classes/Node.php:1200 ../classes/Node.php:1204
+#: ../classes/Node.php:1299 ../classes/Node.php:1303
 msgid "Geocode the address or postal code above"
 msgstr ""
 
-#: ../classes/Node.php:1201
+#: ../classes/Node.php:1300
 msgid "Check using Google Maps"
 msgstr "Revisar emprant Google Maps"
 
-#: ../classes/Node.php:1202
+#: ../classes/Node.php:1301
 msgid ""
 "Use a geocoding service, then use Google Maps to pinpoint the exact location."
 msgstr ""
 "Empri un servei de geolocalització, després faci servir Google Maps per "
 "marcar la localització exacta."
 
-#: ../classes/Node.php:1205
+#: ../classes/Node.php:1304
 msgid "Use a geocoding service"
 msgstr "Empri un servei de geolocalització "
 
-#: ../classes/Node.php:1211
+#: ../classes/Node.php:1310
 msgid "Map URL"
 msgstr "URL del mapa"
 
-#: ../classes/Node.php:1224
+#: ../classes/Node.php:1323
 msgid "Node deployment status"
 msgstr "Estat operatiu del node"
 
-#: ../classes/Node.php:1230
+#: ../classes/Node.php:1328
+#, fuzzy
+msgid "Node Network"
+msgstr "Xarxa"
+
+#: ../classes/Node.php:1334
 msgid "Is this node splash-only (no login)?"
 msgstr "És aquest node splash-only (sense inici de sessió)?"
 
-#: ../classes/Node.php:1237
+#: ../classes/Node.php:1341
 msgid "URL to show instead of the portal"
 msgstr "URL que es mostrarà en lloc del portal"
 
-#: ../classes/Node.php:1239
+#: ../classes/Node.php:1343
 msgid ""
 "If this is not empty, the portal will be disabled and this URL will be shown "
 "instead"
@@ -3754,35 +3803,44 @@ msgstr ""
 "Si no es buida, el portal serà inutilitzat i es mostrarà aquesta adreça en "
 "el seu lloc"
 
-#: ../classes/Node.php:1244
+#: ../classes/Node.php:1349
+#, fuzzy
+msgid ""
+"Are nodes allowed to redirect users to the web page they originally "
+"requested instead of the portal? this will overide the custom portal URL"
+msgstr ""
+"Permetre als nodes redreçar als usuaris a d'altres pàgines web en lloc del "
+"portal?"
+
+#: ../classes/Node.php:1354
 msgid "Node configuration"
 msgstr "Configuració del node"
 
-#: ../classes/Node.php:1382
+#: ../classes/Node.php:1492
 msgid ""
 "It appears that the Geocoder could not be reached or could not geocode the "
 "given address."
 msgstr ""
 "No es pot accedir al Geocoder o no es pot geocodificar l'adreça facilitada."
 
-#: ../classes/Node.php:1385
+#: ../classes/Node.php:1495
 msgid "You must enter a valid address."
 msgstr "Déu introduir una adreça vàlida"
 
-#: ../classes/Node.php:1389
+#: ../classes/Node.php:1499
 msgid "Unable to create geocoder.  Are you sure you set the country?"
 msgstr ""
 
-#: ../classes/Node.php:1622
+#: ../classes/Node.php:1759
 msgid "Edit nodes"
 msgstr "Edita els nodes"
 
-#: ../classes/Node.php:1637
+#: ../classes/Node.php:1774
 #, php-format
 msgid "Add a new node"
 msgstr "Agregar un nuevo nodo"
 
-#: ../classes/Node.php:1642
+#: ../classes/Node.php:1779
 msgid "Node administration"
 msgstr "Administració de nodes"
 
@@ -4126,6 +4184,13 @@ msgstr ""
 msgid "User is allowed to exceed dynamic abuse control limits at this node"
 msgstr ""
 
+#: ../classes/Permission.php:108
+#, fuzzy
+msgid ""
+"User is allowed to turn on publicly accessible aggregate statistics for this "
+"node"
+msgstr "Este usuario ya es due&ntilde;o en este nodo."
+
 #: ../classes/Stakeholder.php:88
 msgid "Remove stakeholder"
 msgstr "Treu un promotor"
@@ -4232,175 +4297,195 @@ msgstr "Tipus"
 msgid "Information"
 msgstr "Informació"
 
-#: ../classes/DependenciesList.php:176
+#: ../classes/DependenciesList.php:178
 msgid "Install message"
 msgstr "Missatge d'instal·lació"
 
-#: ../classes/DependenciesList.php:179
+#: ../classes/DependenciesList.php:181
 msgid "Detection message"
 msgstr "Missatge de detecció"
 
-#: ../classes/DependenciesList.php:182
+#: ../classes/DependenciesList.php:184
 msgid "To install"
 msgstr "Per instal·lar"
 
-#: ../classes/DependenciesList.php:204
+#: ../classes/DependenciesList.php:206
 msgid "Dependencies"
 msgstr "Dependències"
 
 #: smarty.txt:2
-msgid "Status of all nodes of the"
+#, fuzzy
+msgid "Status of all nodes on "
+msgstr "Estat de tots els nodes de"
+
+#: smarty.txt:3
+#, fuzzy
+msgid "Status of all nodes of the "
 msgstr "Estat de tots els nodes de"
 
 #: smarty.txt:4
+msgid "Status of all nodes of the"
+msgstr "Estat de tots els nodes de"
+
+#: smarty.txt:6
 msgid "Node id"
 msgstr "ID del Node"
 
-#: smarty.txt:5
+#: smarty.txt:7
 msgid "Gateway id"
 msgstr "ID de la passarel·la"
 
-#: smarty.txt:7
+#: smarty.txt:9
 msgid "Local content demo"
 msgstr "Demo del contingut local"
 
-#: smarty.txt:8
+#: smarty.txt:10
 msgid "Opened on"
 msgstr "Obert el"
 
-#: smarty.txt:9 smarty.txt:117
+#: smarty.txt:11 smarty.txt:132
 msgid "Online users"
 msgstr "Usuaris connectats"
 
-#: smarty.txt:10 smarty.txt:11
+#: smarty.txt:12 smarty.txt:13
 msgid "days"
 msgstr "dies"
 
-#: smarty.txt:12
+#: smarty.txt:14
 msgid "Login page"
 msgstr "Pàgina d'inici de sessió"
 
-#: smarty.txt:13
+#: smarty.txt:15
 msgid "Portal page"
 msgstr "Pàgina del portal"
 
-#: smarty.txt:14
+#: smarty.txt:17
 msgid "Logged in as"
 msgstr "Connectat com"
 
-#: smarty.txt:15
+#: smarty.txt:18
 msgid "Profile / Settings"
 msgstr "Perfil / Paràmetres"
 
-#: smarty.txt:16
+#: smarty.txt:19
 msgid "Logout"
 msgstr "Tanca la sessió"
 
-#: smarty.txt:17
+#: smarty.txt:20
 msgid "I am not logged in."
 msgstr "No estic connectat"
 
-#: smarty.txt:20
+#: smarty.txt:23
 msgid "user is online at this hotspot"
 msgstr "usuari actiu a aquest node"
 
-#: smarty.txt:21
+#: smarty.txt:24
 msgid "users are online at this hotspot"
 msgstr "usuaris connectats a aquest node"
 
-#: smarty.txt:22
+#: smarty.txt:25
 msgid "Nobody is online at this hotspot"
 msgstr "No hi ha cap usuari connectat"
 
-#: smarty.txt:23
+#: smarty.txt:26
 msgid "Recent Users:"
 msgstr "Usuaris recents:"
 
-#: smarty.txt:24
+#: smarty.txt:27
 msgid "Most Active Users:"
 msgstr "Els usuaris més actius:"
 
-#: smarty.txt:25
+#: smarty.txt:28
 msgid "Login or Signup here"
 msgstr "Inicia la sessió o registra't aquí"
 
-#: smarty.txt:26
+#: smarty.txt:29
+#, fuzzy
+msgid "Login Here"
+msgstr "Pàgina d'inici de sessió"
+
+#: smarty.txt:30
 msgid "Username (or email)"
 msgstr "Nom d'usuari (o correu electrònic)"
 
-#: smarty.txt:27 smarty.txt:48
+#: smarty.txt:31 smarty.txt:53
 msgid "Password"
 msgstr "Contrasenya"
 
-#: smarty.txt:29
+#: smarty.txt:33
+#, fuzzy
+msgid "Signup Here"
+msgstr "Registrar-se"
+
+#: smarty.txt:34
 msgid "Create a free account"
 msgstr "Crea un compte gratuït"
 
-#: smarty.txt:30
+#: smarty.txt:35
 msgid "You must specify your username and password"
 msgstr "Has d'indicar el teu nom d'usuari i contrasenya"
 
-#: smarty.txt:31
+#: smarty.txt:36
 msgid "Show me the closest hotspot"
 msgstr "Mostram el Hotspot més proper"
 
-#: smarty.txt:32
+#: smarty.txt:37
 msgid "Enter your postal code"
 msgstr "Escriu el teu codi postal"
 
-#: smarty.txt:33
+#: smarty.txt:38
 msgid "Show"
 msgstr "Mostra"
 
-#: smarty.txt:34
+#: smarty.txt:39
 msgid "Refresh map"
 msgstr "Refresca el mapa"
 
-#: smarty.txt:37
+#: smarty.txt:42
 msgid "Legend"
 msgstr "Llegenda"
 
-#: smarty.txt:38
+#: smarty.txt:43
 msgid "the hotspot is operational"
 msgstr "el hotspot és actiu"
 
-#: smarty.txt:39
+#: smarty.txt:44
 msgid "the hotspot is down"
 msgstr "el hotspot no és actiu"
 
-#: smarty.txt:40
+#: smarty.txt:45
 msgid "not monitored"
 msgstr "no monitoritzat"
 
-#: smarty.txt:41 smarty.txt:69 smarty.txt:93 smarty.txt:101
+#: smarty.txt:46 smarty.txt:74 smarty.txt:98 smarty.txt:106
 msgid "I'm having difficulties"
 msgstr "Tinc dificultats"
 
-#: smarty.txt:45
+#: smarty.txt:50
 msgid "Register a free account with"
 msgstr "Registra un compte gratuït amb"
 
-#: smarty.txt:46
+#: smarty.txt:51
 msgid "Username desired"
 msgstr "Nom d'usuari desitjat"
 
-#: smarty.txt:47 smarty.txt:75 smarty.txt:106
+#: smarty.txt:52 smarty.txt:80 smarty.txt:111
 msgid "Your email address"
 msgstr "El teu correu electrònic"
 
-#: smarty.txt:49
+#: smarty.txt:54
 msgid "Password (again)"
 msgstr "Contrasenya (un altre cop)"
 
-#: smarty.txt:50
+#: smarty.txt:55
 msgid "Sign-up"
 msgstr "Registrar-se"
 
-#: smarty.txt:51
+#: smarty.txt:56
 msgid "Please note"
 msgstr "Si us plau, recorda"
 
-#: smarty.txt:52
+#: smarty.txt:57
 msgid ""
 "While accounts are free, we <em>strongly</em> suggest that you use your "
 "previously created account if you have one."
@@ -4408,7 +4493,7 @@ msgstr ""
 "Essent els comptes gratuïts, et recomanem <em>ferventment</em> que empris, "
 "si en tens, un creat anteriorment."
 
-#: smarty.txt:53
+#: smarty.txt:58
 msgid ""
 "<b>Your email address must be valid</b> in order for your account to be "
 "activated."
@@ -4416,21 +4501,21 @@ msgstr ""
 "Necessites una <b>adreça vàlida de correu electrònic</b> per activar el teu "
 "compte."
 
-#: smarty.txt:54
+#: smarty.txt:59
 msgid "A validation email will be sent to that email address."
 msgstr ""
 "Enviaré un correu electrònic de validació a la teva adreça de correu "
 "electrònic."
 
-#: smarty.txt:55
+#: smarty.txt:60
 msgid "To fully activate your account you must respond to that email."
 msgstr "Has de respondre aquest correu per activar el teu compte."
 
-#: smarty.txt:56
+#: smarty.txt:61
 msgid "Note to free web-based email users"
 msgstr "Avís per usuaris que empren correus web gratuïts"
 
-#: smarty.txt:57
+#: smarty.txt:62
 msgid ""
 "Sometimes our validation email ends up in the 'spam' folder of some "
 "providers. If you have not received any email with the validation URL 5 "
@@ -4440,99 +4525,99 @@ msgstr ""
 "la safata de correu brossa si no has rebut el correu amb l'URL de validació "
 "5 minuts després d'enviar aquest formulari."
 
-#: smarty.txt:58
+#: smarty.txt:63
 msgid "You can also use the following links if you need help"
 msgstr "També pots emprar els següents enllaços si necessites ajuda"
 
-#: smarty.txt:61
+#: smarty.txt:66
 #, php-format
 msgid "Status of the %d open %s Hotspots"
 msgstr "Estat dels %d Hotspots de la xarxa %s"
 
-#: smarty.txt:62
+#: smarty.txt:67
 msgid "Hotspot / Status"
 msgstr "Hotspot / Estat"
 
-#: smarty.txt:64
+#: smarty.txt:69
 msgid "Location"
 msgstr "Ubicació"
 
-#: smarty.txt:65
+#: smarty.txt:70
 msgid "Hotspot in testing phase"
 msgstr "Hotspot en proves"
 
-#: smarty.txt:66
+#: smarty.txt:71
 msgid "Hotspot not monitored"
 msgstr "Hotspot sense monitoritzar"
 
-#: smarty.txt:67
+#: smarty.txt:72
 #, php-format
 msgid "Opened on %s"
 msgstr "Obert el %s"
 
-#: smarty.txt:73
+#: smarty.txt:78
 msgid "Lost password"
 msgstr "Contrasenya perduda"
 
-#: smarty.txt:74 smarty.txt:98
+#: smarty.txt:79 smarty.txt:103
 msgid "Your username"
 msgstr "El teu nom d'usuari"
 
-#: smarty.txt:76
+#: smarty.txt:81
 msgid "Reset my password"
 msgstr "Canvia la meva contrasenya"
 
-#: smarty.txt:77
+#: smarty.txt:82
 msgid "Please enter your username or email address to reset your password"
 msgstr ""
 "Si us plau, introdueixi el seu nom d'usuari o adreça de correu electrònic "
 "per a resetejar la vostra contrasenya."
 
-#: smarty.txt:78
+#: smarty.txt:83
 #, php-format
 msgid "The %s network currently has one valid user."
 msgstr "La xarxa %s té actualment 1 usuari vàlid."
 
-#: smarty.txt:79
+#: smarty.txt:84
 #, php-format
 msgid "The %s network currently has %d valid users."
 msgstr "La xarxa %s actualment té %d usuaris vàlids."
 
-#: smarty.txt:80
+#: smarty.txt:85 smarty.txt:116
 msgid "One user is currently online."
 msgstr "Un usuari connectat"
 
-#: smarty.txt:81
+#: smarty.txt:86 smarty.txt:117
 #, php-format
 msgid "%d users are currently online."
 msgstr "%d usuaris connectats"
 
-#: smarty.txt:82
+#: smarty.txt:87 smarty.txt:118
 msgid "This network currently has 1 deployed hotspot."
 msgstr "Aquesta xarxa té 1 node operatiu."
 
-#: smarty.txt:83
+#: smarty.txt:88 smarty.txt:119
 #, php-format
 msgid "This network currently has %d deployed hotspots."
 msgstr "Aquesta xarxa te %d hotspots operatius"
 
-#: smarty.txt:84
+#: smarty.txt:89 smarty.txt:120
 msgid "One hotspot is currently operational."
 msgstr "Un hotspot operatiu a hores d'ara"
 
-#: smarty.txt:85
+#: smarty.txt:90 smarty.txt:121
 #, php-format
 msgid "%d hotspots are currently operational."
 msgstr "%d hotspots operatius a hores d'ara"
 
-#: smarty.txt:86
+#: smarty.txt:91 smarty.txt:122
 msgid ""
 "One hotspot isn't monitored so we don't know if it's currently operational."
 msgstr ""
 "Un hotspot no és monitoritzat, per aquesta raó, no sé si en aquest moment és "
 "actiu."
 
-#: smarty.txt:87
+#: smarty.txt:92 smarty.txt:123
 #, php-format
 msgid ""
 "%d hotspots aren't monitored so we don't know if they are currently "
@@ -4541,11 +4626,11 @@ msgstr ""
 "%d hotspots no són monitoritzats, per aquesta raó, no sé si en aquest moment "
 "són actius."
 
-#: smarty.txt:88
+#: smarty.txt:93
 msgid "Please get in touch with "
 msgstr "Si us plau, contacta amb"
 
-#: smarty.txt:89
+#: smarty.txt:94
 msgid ""
 "We are a not-for-profit group dedicated to making no-fee wireless Internet "
 "access generally available."
@@ -4553,7 +4638,7 @@ msgstr ""
 "Som una associació sense ànim de lucre dedicada a establir conexions "
 "gratuïtes sense fils a Internet d'accés públic."
 
-#: smarty.txt:90
+#: smarty.txt:95
 msgid ""
 "Our aim is to encourage the growth of wireless networking and to build "
 "community in interesting and innovative ways."
@@ -4561,7 +4646,7 @@ msgstr ""
 "El nostre objectiu és promocionar el creixement de xarxes sense fils i fer "
 "comunitat d'una forma innovadora i interessant"
 
-#: smarty.txt:91
+#: smarty.txt:96
 msgid ""
 "We do this by setting up wireless Internet networks in parks, cafés, "
 "restaurants, bars and other publically-accessible locations across the city."
@@ -4569,19 +4654,19 @@ msgstr ""
 "Ho fem instal·lant conexions públiques sense fils en parcs, cafeteries, "
 "restaurants, bars i d'altres llocs d'accés públic de la ciutat."
 
-#: smarty.txt:92
+#: smarty.txt:97
 msgid "For a complete and up-to-date listing of our nodes, visit"
 msgstr "Per una llista completa i actualitzada dels nuestres nodes, visita"
 
-#: smarty.txt:97
+#: smarty.txt:102
 msgid "Re-send validation email"
 msgstr "Reenviar el correu de validació"
 
-#: smarty.txt:99
+#: smarty.txt:104
 msgid "Re-send"
 msgstr "Reenviar"
 
-#: smarty.txt:100
+#: smarty.txt:105
 msgid ""
 "Please enter your username and the validation email will be resent to your "
 "email address"
@@ -4589,51 +4674,70 @@ msgstr ""
 "Si us plau, introdueix el teu nom d'usuari i enviarem de nou el correu de "
 "validació a la teva adreça de correu"
 
-#: smarty.txt:105
+#: smarty.txt:110
 msgid "Lost username"
 msgstr "Nom d'usuari perdut"
 
-#: smarty.txt:107
+#: smarty.txt:112
 msgid "Retrieve"
 msgstr "Recupera"
 
-#: smarty.txt:108
+#: smarty.txt:113
 msgid "Please enter your email address to recover your username"
 msgstr ""
 "Si us plau, introdueix la teva dreça de correu electrònic per recuperar el "
 "teu nom d'usuari"
 
-#: smarty.txt:109
+#: smarty.txt:114
+#, fuzzy
+msgid "The server currently has one valid user."
+msgstr "La xarxa %s té actualment 1 usuari vàlid."
+
+#: smarty.txt:115
+#, fuzzy, php-format
+msgid "The server currently has %d valid users."
+msgstr "La xarxa %s actualment té %d usuaris vàlids."
+
+#: smarty.txt:124
 msgid "User list"
 msgstr "Llista d'usuari"
 
-#: smarty.txt:110
+#: smarty.txt:125
 msgid "Sort by:"
 msgstr "Ordena per:"
 
-#: smarty.txt:111
+#: smarty.txt:126
 msgid "Direction:"
 msgstr "Adreça"
 
-#: smarty.txt:112
+#: smarty.txt:127
 msgid "Sort"
 msgstr "Ordena"
 
-#: smarty.txt:115
+#: smarty.txt:130
 msgid "Registered On"
 msgstr "Registrat el"
 
-#: smarty.txt:120
+#: smarty.txt:135
 msgid "Origin"
 msgstr "Origen"
 
-#: smarty.txt:121
+#: smarty.txt:136
 msgid "Logged in Since"
 msgstr "Connectat des de"
 
-#: smarty.txt:122
+#: smarty.txt:137
 msgid "Traffic IN/OUT"
 msgstr "Tràfic d'ENTRADA/SORTIDA"
+
+#~ msgid "No nodes could not be found in the database"
+#~ msgstr "No trobo cap node a la base de dades"
+
+#~ msgid "Is this network the default network?"
+#~ msgstr "És aquesta la xarxa per defecte?"
+
+#~ msgid "Server access control"
+#~ msgstr "Control d'accés al servidor"
 
 #~ msgid "Component %s is not installed (not found in %s)"
 #~ msgstr "El componente %s no esta instalado( no encuentrado en %s)"
@@ -5065,9 +5169,6 @@ msgstr "Tràfic d'ENTRADA/SORTIDA"
 #~ msgstr ""
 #~ "Por favor introduzca su usuario actual, su clave actual y su nueva clave "
 #~ "(con confirmacion)"
-
-#~ msgid "network"
-#~ msgstr "red"
 
 #~ msgid "Frequently Asked Questions"
 #~ msgstr "Preguntas frecuentemente preguntadas"

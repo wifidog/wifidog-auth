@@ -1,48 +1,59 @@
-# SOME DESCRIPTIVE TITLE.
+# translation of messages.po to Greek
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
+# Stratos Zolotas <strzol@gmail.com>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-07 12:13-0400\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2009-06-26 12:22-0400\n"
+"PO-Revision-Date: 2009-03-24 21:16+0200\n"
+"Last-Translator: Stratos Zolotas <strzol@gmail.com>\n"
+"Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
 
-#: ../node_list.php:109
-msgid "No nodes could not be found in the database"
-msgstr "Δεν βρέθηκε κανένας κόμβος σε αυτήν την βάση δεδομένων"
-
-#: ../node_list.php:112 ../classes/Node.php:311 ../classes/Node.php:657
+#: ../node_list.php:131 ../classes/Node.php:323 ../classes/Node.php:685
 msgid "Deployed"
 msgstr "Ανεπτυγμένος"
 
-#: ../node_list.php:113 ../classes/Node.php:312 ../classes/Node.php:658
+#: ../node_list.php:132 ../classes/Node.php:324 ../classes/Node.php:686
 msgid "In planning"
 msgstr "Σε σχεδιασμό"
 
-#: ../node_list.php:113 ../classes/Node.php:313 ../classes/Node.php:659
+#: ../node_list.php:132 ../classes/Node.php:325 ../classes/Node.php:687
 msgid "In testing"
 msgstr "Σε έλεγχο"
 
-#: ../node_list.php:113 ../classes/Node.php:314 ../classes/Node.php:660
+#: ../node_list.php:132 ../classes/Node.php:326 ../classes/Node.php:688
 msgid "Non-Wifidog node"
 msgstr "Κόμβος μη-WifiDog "
 
-#: ../node_list.php:113 ../classes/Node.php:315 ../classes/Node.php:661
+#: ../node_list.php:132 ../classes/Node.php:327 ../classes/Node.php:689
 msgid "Permanently closed"
 msgstr "Μόνιμα κλειστό"
 
-#: ../node_list.php:113 ../classes/Node.php:316 ../classes/Node.php:662
+#: ../node_list.php:132 ../classes/Node.php:328 ../classes/Node.php:690
 msgid "Temporarily closed"
 msgstr "Προσωρινά κλειστό"
+
+#: ../node_list.php:173 ../classes/NodeLists/NodeListHTML.php:173
+msgid "All"
+msgstr ""
+
+#: ../node_list.php:173 ../hotspots_map.php:114
+#: ../classes/NodeLists/NodeListHTML.php:175
+msgid "Change network"
+msgstr "Αλλαγή Δικτύου"
+
+#: ../node_list.php:177 ../classes/NodeLists/NodeListHTML.php:176
+#: ../classes/NodeLists/NodeListHTML.php:221
+#, fuzzy
+msgid "All networks"
+msgstr "Δίκτυο"
 
 #: ../validate.php:58
 msgid "No token specified!"
@@ -85,13 +96,24 @@ msgid "Please specify a username or email address"
 msgstr ""
 "Παρακαλούμε, προσδιορίστε ένα όνομα χρήστη και μία ηλεκτρονική διεύθυνση"
 
-#: ../lost_password.php:131
+#: ../lost_password.php:117
+#, fuzzy
+msgid "Please specify EITHER your username or your email, not both"
+msgstr ""
+"Παρακαλούμε, προσδιορίστε ένα όνομα χρήστη και μία ηλεκτρονική διεύθυνση"
+
+#: ../lost_password.php:126
+#, fuzzy
+msgid "You need to specify your username or your email"
+msgstr "Πρέπει να πληκτρολογήσετε τον κωδικό πρόσβασης δύο φορές. "
+
+#: ../lost_password.php:136
 msgid "This username or email could not be found in our database"
 msgstr ""
 "Το όνομα χρήστη ή/και η ηλεκτρονική διεύθυνση δεν βρέθηκαν στην βάση "
 "δεδομένων μας"
 
-#: ../lost_password.php:134
+#: ../lost_password.php:139
 msgid "A new password has been emailed to you."
 msgstr "Ένας νέος κωδικός χρήστη έχει σταλεί στην ηλεκτρονική σας διεύθυνση."
 
@@ -99,30 +121,26 @@ msgstr "Ένας νέος κωδικός χρήστη έχει σταλεί στ
 msgid ""
 "Unable to get the google API key, because I couldn't find a vhost matching "
 "the current hostname"
-msgstr ""
+msgstr "Δεν ήταν δυνατή η λήψη του google API key."
 
-#: ../hotspots_map.php:113
-msgid "Change network"
-msgstr "Αλλαγή Δικτύου"
-
-#: ../hotspots_map.php:144
+#: ../hotspots_map.php:145
 msgid "Sorry, your browser does not support Google Maps."
 msgstr "Λυπούμαστε, ο πλοηγός σας δεν υποστηρίζει τους χάρτες του Google"
 
-#: ../hotspots_map.php:144 ../classes/StatisticReport/NodeStatus.php:190
+#: ../hotspots_map.php:145 ../classes/StatisticReport/NodeStatus.php:190
 #: ../classes/StatisticReport/NetworkStatus.php:109
 msgid "Homepage"
 msgstr "Αρχική Σελίδα"
 
-#: ../hotspots_map.php:144
+#: ../hotspots_map.php:145
 msgid "Show me on the map"
 msgstr "Δείξε μου στον χάρτη"
 
-#: ../hotspots_map.php:144 smarty.txt:36
+#: ../hotspots_map.php:145 smarty.txt:41
 msgid "Loading, please wait..."
 msgstr "Φόρτωση, παρακαλώ περιμένετε..."
 
-#: ../hotspots_map.php:158
+#: ../hotspots_map.php:159
 msgid "Hotspots status map"
 msgstr "Χάρτης κατάστασης Σημείων Ασύρματης Πρόσβασης"
 
@@ -204,13 +222,13 @@ msgstr ""
 "Λυπούμαστε, υπάρχει ήδη ένας λογαριασμός χρήστη με αυτήν την ηλεκτρονική "
 "διεύθυνση. "
 
-#: ../signup.php:229 ../portal/index.php:145
+#: ../signup.php:229 ../portal/index.php:163
 #, php-format
 msgid ""
 "Your account has been granted %s minutes of access to retrieve your email "
 "and validate your account."
 msgstr ""
-"Ο λογαριασμός σας διαθέτει % λεπτά πρόσβασης για να ανακτήσετε την "
+"Ο λογαριασμός σας διαθέτει %s λεπτά πρόσβασης για να ανακτήσετε την "
 "ηλεκτρονική σας διεύθυνση και να επικυρώσετε τον λογαριασμό σας."
 
 #: ../signup.php:230
@@ -248,7 +266,7 @@ msgstr ""
 #: ../gw_message.php:67
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:895
 #: ../classes/Statistics.php:376 ../classes/Statistics.php:379
-#: ../classes/Content.php:901 ../classes/Node.php:219 ../classes/Role.php:501
+#: ../classes/Content.php:901 ../classes/Node.php:231 ../classes/Role.php:501
 msgid "Access denied!"
 msgstr "Άρνηση πρόσβασης!"
 
@@ -345,38 +363,38 @@ msgstr ""
 #: ../admin/generic_object_admin.php:93
 #, php-format
 msgid "Create %s"
-msgstr "Δημιουργία %"
+msgstr "Δημιουργία %s"
 
 #: ../admin/generic_object_admin.php:94
 #, php-format
 msgid "Add %s"
-msgstr "Προσθήκη %"
+msgstr "Προσθήκη %s"
 
 #: ../admin/generic_object_admin.php:95
 #, php-format
 msgid "Create a new %s"
-msgstr "Δημιουργία ενός νέου %"
+msgstr "Δημιουργία ενός νέου %s"
 
 #: ../admin/generic_object_admin.php:96
 #, php-format
 msgid "Add a new %s"
-msgstr "Προσθήκη ενός νέου %"
+msgstr "Προσθήκη ενός νέου %s"
 
 #: ../admin/generic_object_admin.php:97
 #, php-format
 msgid "Show all %s"
-msgstr "Δείξε όλα τα %"
+msgstr "Δείξε όλα τα %s"
 
 #: ../admin/generic_object_admin.php:98
 #, php-format
 msgid "Show only persistant %s"
-msgstr "Δείξε μόνο τα επαναλαμβανόμενα %"
+msgstr "Δείξε μόνο τα επαναλαμβανόμενα %s"
 
-#: ../admin/generic_object_admin.php:99 ../classes/Network.php:2104
-#: ../classes/Node.php:1630
+#: ../admin/generic_object_admin.php:99 ../classes/Network.php:2140
+#: ../classes/Node.php:1767
 #, php-format
 msgid "Edit %s"
-msgstr "Επεξεργασία των %"
+msgstr "Επεξεργασία των %s"
 
 #: ../admin/generic_object_admin.php:149
 msgid ""
@@ -394,7 +412,7 @@ msgstr "Εμφάνιση προεπισκόπησης, όπως θα εμφαν�
 #: ../classes/StatisticReport/UserReport.php:182
 #: ../classes/StatisticReport/RegistrationLog.php:120
 #: ../classes/StatisticReport/MostPopularNodes.php:109
-#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:118
+#: ../classes/StatisticReport/UserRegistrationReport.php:131 smarty.txt:133
 msgid "Node"
 msgstr "Κόμβος"
 
@@ -550,7 +568,7 @@ msgstr "κόμβος"
 #: ../cron/page.php:84
 #, php-format
 msgid "Node %s (%s) has been down for %d minutes (since %s)"
-msgstr "Ο κόμβος % (%) είναι πεσμένος εδώ και % λεπτά (από %)"
+msgstr "Ο κόμβος %s (%s) είναι εκτός λειτουργίας εδώ και %d λεπτά (από %s)"
 
 #: ../cron/page.php:86
 msgid "Success"
@@ -558,28 +576,28 @@ msgstr ""
 
 #: ../cron/page.php:86
 msgid "Failed sending mail"
-msgstr ""
+msgstr "Η αποστολή του email απέτυχε"
 
 #: ../cron/page.php:102
 msgid "No deployed nodes could not be found in the database"
 msgstr "Δεν βρέθηκαν ανεπτυγμένοι κόμβοι σε αυτήν την βάση δεδομένων."
 
-#: ../include/schema_validate.php:75
+#: ../include/schema_validate.php:72
 msgid ""
 "I am unable to retrieve the schema version. Either the wifidog database "
 "hasn't been created yet, the postgresql server is down, or pg_hba.conf does "
 "not allow your web server to connect to the wifidog database."
 msgstr ""
 
-#: ../include/schema_validate.php:77
+#: ../include/schema_validate.php:74
 msgid "Try running the"
 msgstr "Δοκιμάστε να εκτελέσετε το "
 
-#: ../include/schema_validate.php:77
+#: ../include/schema_validate.php:74
 msgid "installation script"
 msgstr "Γραφή εγκατάστασης"
 
-#: ../include/schema_validate.php:105
+#: ../include/schema_validate.php:106
 msgid ""
 "No user matches the default network, a new user admin/admin will be created. "
 "Change the password as soon as possible !"
@@ -588,15 +606,15 @@ msgstr ""
 "admin/admin θα δημιουργηθεί. Αλλάξτε κωδικό πρόσβασης όσο το δυνατόν "
 "συντομότερα. "
 
-#: ../include/schema_validate.php:117
+#: ../include/schema_validate.php:118
 msgid "Could not get a default network!"
 msgstr "Δεν βρέθηκε προεπιλεγμένο δίκτυο!"
 
-#: ../include/schema_validate.php:149
+#: ../include/schema_validate.php:150
 msgid "Trying to update the database schema."
 msgstr "Προσπάθεια ενημέρωσης της βάσης δεδομένων σχήματος"
 
-#: ../include/schema_validate.php:154
+#: ../include/schema_validate.php:155
 msgid ""
 "Unable to retrieve schema version.  The database schema is too old to be "
 "updated."
@@ -619,57 +637,60 @@ msgstr "Έχει χρησιμοποιηθεί"
 #: ../login/index.php:211
 #, php-format
 msgid "Unable to generate token for user %s"
-msgstr "Δεν είναι δυνατή η δημιουργία αδειοδοτικού για τον χρήστη %"
+msgstr "Δεν είναι δυνατή η δημιουργία αδειοδοτικού για τον χρήστη %s"
 
 #: ../login/index.php:261
 msgid "I'm having difficulties:"
-msgstr ""
+msgstr "Αντιμετωπίζω δυσκολίες"
 
-#: ../login/index.php:263 smarty.txt:42 smarty.txt:59 smarty.txt:70
-#: smarty.txt:94 smarty.txt:102
+#: ../login/index.php:263 smarty.txt:47 smarty.txt:64 smarty.txt:75
+#: smarty.txt:99 smarty.txt:107
 msgid "I Forgot my username"
-msgstr ""
+msgstr "Ξέχασα το όνομα χρήστη"
 
-#: ../login/index.php:264 smarty.txt:43 smarty.txt:60 smarty.txt:71
-#: smarty.txt:95 smarty.txt:103
+#: ../login/index.php:264 smarty.txt:48 smarty.txt:65 smarty.txt:76
+#: smarty.txt:100 smarty.txt:108
 msgid "I Forgot my password"
-msgstr ""
+msgstr "Ξέχασα τον κωδικό"
 
-#: ../login/index.php:265 smarty.txt:44 smarty.txt:72 smarty.txt:96
-#: smarty.txt:104
+#: ../login/index.php:265 smarty.txt:49 smarty.txt:77 smarty.txt:101
+#: smarty.txt:109
 msgid "Re-send the validation email"
-msgstr ""
+msgstr "Ξαναστείλε το email ενεργοποίησης"
 
 #: ../login/index.php:271
 #, php-format
 msgid "%s login page for %s"
-msgstr "% σελίδα σύνδεσης για %"
+msgstr "%s σελίδα σύνδεσης για %s"
 
 #: ../login/index.php:273
 msgid "Offsite login page"
 msgstr "Σελίδα σύνδεσης εκτός διεύθυνσης"
 
-#: ../login/index.php:282 ../portal/index.php:139
+#: ../login/index.php:282 ../portal/index.php:157
 msgid "Welcome to"
-msgstr "Καλώς ήρθατε σε"
+msgstr "Καλώς ήρθατε στο δίκτυο"
 
 #: ../portal/index.php:97
 msgid "No Hotspot specified!"
 msgstr "Δεν έχει καθοριστεί Σημείο Ασύρματης Πρόσβασης"
 
-#: ../portal/index.php:134
+#: ../portal/index.php:152
 #, php-format
 msgid "%s portal for %s"
-msgstr "% πύλη για %"
+msgstr "%s πύλη για %s"
 
-#: ../portal/index.php:144
+#: ../portal/index.php:162
 msgid ""
 "You NEED to confirm your account.  An email with confirmation instructions "
 "was sent to your email address.  If you don't see it in your inbox, make "
 "sure to look in your spam folder."
 msgstr ""
+"Είναι απαραίτητο να επιβεβαιώσετε τον λογαριασμό σας. Ένα email με τις "
+"απαραίτητες οδηγίες έχει σταλεί στην διεύθυνση σας. Εάν δεν το βρίσκετε στα "
+"εισερχόμενα μηνύματα, ελέξτε τον φάκελο με την ανεπιθύμητη αλληλογραφία."
 
-#: ../portal/index.php:206
+#: ../portal/index.php:224
 msgid "Show all available contents for this hotspot"
 msgstr ""
 "Επίδειξη όλου του διαθέσιμου περιεχομένου σε αυτό το Σημείο Ασύρματης "
@@ -710,9 +731,9 @@ msgid "Number of new connections opening per hour of the day"
 msgstr "Νούμερο νέων συνδέσεων κάθε ώρα της ημέρας"
 
 #: ../classes/Authenticators/AuthenticatorLocalUser.php:117
-#, fuzzy, php-format
+#, php-format
 msgid "Fatal error:  Username cannot be empty"
-msgstr "Το URL δεν μπορεί να είναι άδειο!"
+msgstr "Το όνομα χρήστη δεν μπορεί να είναι άδειο!"
 
 #: ../classes/Authenticators/AuthenticatorLocalUser.php:132
 #: ../classes/Authenticators/AuthenticatorLDAP.php:257
@@ -776,7 +797,7 @@ msgstr ""
 #: ../classes/StatisticReport/MostMobileUsers.php:65
 #, php-format
 msgid "%d most mobile users"
-msgstr "% οι περισσότεροι χρήστες κινητών"
+msgstr "%d οι περισσότεροι χρήστες κινητών"
 
 #: ../classes/StatisticReport/MostMobileUsers.php:97
 #: ../classes/StatisticReport/MostFrequentUsers.php:98
@@ -813,7 +834,7 @@ msgid "Sorry, this report requires you to select individual nodes"
 msgstr "Λυπούμαστε, αυτή η αναφορά απαιτεί να επιλέξετε μεμονωμένους κόμβους"
 
 #: ../classes/StatisticReport/NodeStatus.php:99
-#: ../classes/DependenciesList.php:137 smarty.txt:3
+#: ../classes/DependenciesList.php:137 smarty.txt:5
 msgid "Status"
 msgstr "Κατάσταση"
 
@@ -828,7 +849,7 @@ msgstr "Τελευταίο διάστημα παλμών"
 #: ../classes/StatisticReport/NodeStatus.php:111
 #, php-format
 msgid "%s ago"
-msgstr "Πριν από %"
+msgstr "Πριν από %s"
 
 #: ../classes/StatisticReport/NodeStatus.php:115
 msgid "WifiDog version"
@@ -865,8 +886,8 @@ msgid "Profile"
 msgstr "Προφίλ"
 
 #: ../classes/StatisticReport/NodeStatus.php:152
-#: ../classes/StatisticReport/NetworkStatus.php:99 ../classes/Node.php:1100
-#: ../classes/Node.php:1105 smarty.txt:6
+#: ../classes/StatisticReport/NetworkStatus.php:99 ../classes/Node.php:1199
+#: ../classes/Node.php:1204 smarty.txt:8
 msgid "Name"
 msgstr "Όνομα"
 
@@ -874,7 +895,7 @@ msgstr "Όνομα"
 msgid "Node ID"
 msgstr "Ταυτότητα Κόμβου"
 
-#: ../classes/StatisticReport/NodeStatus.php:160 ../classes/Node.php:368
+#: ../classes/StatisticReport/NodeStatus.php:160 ../classes/Node.php:380
 msgid "Deployment Status"
 msgstr "Κατάσταση Ανάπτυξης"
 
@@ -883,12 +904,12 @@ msgid "Deployment date"
 msgstr "Ημερομηνία ανάπτυξης"
 
 #: ../classes/StatisticReport/NodeStatus.php:168 ../classes/Content.php:925
-#: ../classes/Node.php:1124 ../classes/DependenciesList.php:173 smarty.txt:63
+#: ../classes/Node.php:1223 ../classes/DependenciesList.php:175 smarty.txt:68
 msgid "Description"
 msgstr "Περιγραφή"
 
 #: ../classes/StatisticReport/NodeStatus.php:172
-#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:114
+#: ../classes/StatisticReport/UserReport.php:132 smarty.txt:129
 msgid "Network"
 msgstr "Δίκτυο"
 
@@ -896,8 +917,8 @@ msgstr "Δίκτυο"
 msgid "GIS Location"
 msgstr "Τοποθεσία GIS"
 
-#: ../classes/StatisticReport/NodeStatus.php:181 ../classes/Network.php:1049
-#: smarty.txt:68
+#: ../classes/StatisticReport/NodeStatus.php:181 ../classes/Network.php:1041
+#: smarty.txt:73
 msgid "Map"
 msgstr "Χάρτης"
 
@@ -929,7 +950,7 @@ msgid "Transit Info"
 msgstr "Πληροφορίες μεταφοράς"
 
 #: ../classes/StatisticReport/NodeStatus.php:220 ../classes/User.php:1058
-#: ../classes/Node.php:1067
+#: ../classes/Node.php:1164 smarty.txt:16
 msgid "Statistics"
 msgstr "Στατιστικά στοιχεία"
 
@@ -963,15 +984,15 @@ msgstr "Αναφορά μεμονωμένου χρήστη"
 #: ../classes/StatisticReport/UserReport.php:111 ../classes/User.php:259
 #, php-format
 msgid "User id: %s could not be found in the database"
-msgstr "Ταυτότητα χρήστη: % δεν μπόρεσε να βρεθεί στην βάση δεδομένων"
+msgstr "Ταυτότητα χρήστη: %s δεν μπόρεσε να βρεθεί στην βάση δεδομένων"
 
 #: ../classes/StatisticReport/UserReport.php:122
 #: ../classes/StatisticReport/UserReport.php:284
 #: ../classes/StatisticReport/RegistrationLog.php:123
 #: ../classes/StatisticReport/ConnectionLog.php:115
 #: ../classes/StatisticReport/ConnectionLog.php:164 ../classes/User.php:810
-#: ../classes/User.php:815 ../classes/User.php:864 smarty.txt:113
-#: smarty.txt:119
+#: ../classes/User.php:815 ../classes/User.php:864 smarty.txt:128
+#: smarty.txt:134
 msgid "Username"
 msgstr "Όνομα χρήστη"
 
@@ -984,7 +1005,7 @@ msgid "Member since"
 msgstr "Μέλος από "
 
 #: ../classes/StatisticReport/UserReport.php:147 ../classes/User.php:852
-#: smarty.txt:116
+#: smarty.txt:131
 msgid "Account Status"
 msgstr "Κατάσταση λογαριασμού"
 
@@ -995,7 +1016,7 @@ msgstr "Προτιμητέα τοποθεσία"
 #: ../classes/StatisticReport/UserReport.php:165
 #, php-format
 msgid "%d Connections"
-msgstr "% συνδέσεις"
+msgstr "%d συνδέσεις"
 
 #: ../classes/StatisticReport/UserReport.php:179
 msgid "Logged in"
@@ -1037,7 +1058,7 @@ msgstr "Σύνολο"
 #: ../classes/StatisticReport/UserReport.php:244
 #, php-format
 msgid "%d MAC addresses"
-msgstr "% διευθύνσεις MAC"
+msgstr "%d διευθύνσεις MAC"
 
 #: ../classes/StatisticReport/UserReport.php:248
 #: ../classes/StatisticReport/ConnectionLog.php:165
@@ -1053,12 +1074,12 @@ msgstr "Μέτρηση"
 #: ../classes/StatisticReport/UserReport.php:280
 #, php-format
 msgid "%d users"
-msgstr "% χρηστών"
+msgstr "%d χρηστών"
 
 #: ../classes/StatisticReport/MostFrequentUsers.php:66
 #, php-format
 msgid "%d most frequent users"
-msgstr "% πιο συχνοί χρήστες"
+msgstr "%d πιο συχνοί χρήστες"
 
 #: ../classes/StatisticReport/MostFrequentUsers.php:102
 msgid "Different days connected"
@@ -1090,7 +1111,7 @@ msgstr "Λυπούμαστε, αυτή η αναφορά απαιτεί την �
 
 #: ../classes/StatisticReport/NetworkStatus.php:104
 #: ../classes/VirtualHost.php:603 ../classes/Server.php:246
-#: ../classes/Node.php:1111 ../classes/ProfileTemplate.php:512
+#: ../classes/Node.php:1210 ../classes/ProfileTemplate.php:512
 #: ../classes/Role.php:369
 msgid "Creation date"
 msgstr "Ημερομηνία δημιουργίας"
@@ -1191,7 +1212,7 @@ msgstr "Γράφημα της χρήσης δικτύου ανά ώρα, ημέ�
 #: ../classes/StatisticReport/HighestBandwidthUsers.php:65
 #, php-format
 msgid "%d highest bandwidth consumers"
-msgstr "% καταναλωτές υψηλότερου εύρους ζώνης"
+msgstr "%d καταναλωτές υψηλότερου εύρους ζώνης"
 
 #: ../classes/StatisticReport/ContentReport.php:63
 msgid "Content display and clickthrough report"
@@ -1359,7 +1380,7 @@ msgid "warning:  This report does not count connections at Splash-Only nodes"
 msgstr ""
 
 #: ../classes/NodeLists/NodeListRSS.php:157
-#: ../classes/NodeLists/NodeListHTML.php:211
+#: ../classes/NodeLists/NodeListHTML.php:221
 msgid "Newest Hotspots"
 msgstr "Νεώτερα Σημεία Ασύρματης Πρόσβασης"
 
@@ -1381,7 +1402,7 @@ msgstr "Βλέπε Χάρτη"
 msgid "Contact"
 msgstr "Επικοινωνία"
 
-#: ../classes/NodeLists/NodeListHTML.php:210
+#: ../classes/NodeLists/NodeListHTML.php:220
 msgid "Hotspot list"
 msgstr "Κατάλογος Σημείων Ασύρματης Πρόσβασης"
 
@@ -1420,36 +1441,36 @@ msgstr "Όνομα"
 #, php-format
 msgid "This list contains all Hotspots of %s sorted by %s."
 msgstr ""
-"Αυτός ο κατάλογος περιέχει όλα τα Σημεία Ασύρματης Πρόσβασης του %, "
-"ταξινομημένα ανά %."
+"Αυτός ο κατάλογος περιέχει όλα τα Σημεία Ασύρματης Πρόσβασης του %s, "
+"ταξινομημένα ανά %s."
 
 #: ../classes/NodeLists/NodeListPDF.php:1068
 #, php-format
 msgid "Number of Hotspots: %d"
-msgstr "Αριθμός Σημείων Ασύρματης Πρόσβασης: %"
+msgstr "Αριθμός Σημείων Ασύρματης Πρόσβασης: %d"
 
 #: ../classes/NodeLists/NodeListPDF.php:1071
 #, php-format
 msgid "Last updated on: %s"
-msgstr "Τελευταία ενημέρωση την: %"
+msgstr "Τελευταία ενημέρωση την: %s"
 
 #: ../classes/NodeLists/NodeListPDF.php:1083
 msgid "Hotspot"
 msgstr "Σημείο Ασύρματης Πρόσβασης"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1150
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1249
 msgid "Postal code"
 msgstr "Ταχυδρομικός Κώδικας"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1140
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1239
 msgid "City"
 msgstr "Πόλη"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1145
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1244
 msgid "Province / State"
 msgstr "Επαρχία/Χώρα"
 
-#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1170
+#: ../classes/NodeLists/NodeListPDF.php:1083 ../classes/Node.php:1269
 msgid "Homepage URL"
 msgstr "Διεύθυνση Αρχικής Σελίδας"
 
@@ -1553,7 +1574,7 @@ msgstr "Η τρόπος εμφάνισης του Flickr Photostream είναι 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:441
 #, php-format
 msgid "%s: Options"
-msgstr "%: Επιλογές"
+msgstr "%s: Επιλογές"
 
 #: ../classes/Content/FlickrPhotostream/FlickrPhotostream.php:448
 msgid "Flickr API key"
@@ -1840,7 +1861,7 @@ msgstr ""
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:291
 #, php-format
 msgid "%s %d display conditions"
-msgstr "% % συνθήκες παρουσίασης"
+msgstr "%s %d συνθήκες παρουσίασης"
 
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:301
 msgid "(Ignored if display type is random)"
@@ -1882,7 +1903,7 @@ msgstr ""
 #: ../classes/Content/ContentGroup/ContentGroupElement.php:381
 #, php-format
 msgid "%s %d displayed content (%s)"
-msgstr "% % παρουσίαση περιεχομένου (%)"
+msgstr "%s %d παρουσίαση περιεχομένου (%s)"
 
 #: ../classes/Content/ContentGroup/ContentGroup.php:87
 #, fuzzy
@@ -1966,7 +1987,7 @@ msgstr "Πρέπει να παρουσιάσετε τουλάχιστον ένα
 #: ../classes/Content/ContentGroup/ContentGroup.php:264
 #, php-format
 msgid "%s configuration"
-msgstr "% ρύθμιση"
+msgstr "%s ρύθμιση"
 
 #: ../classes/Content/ContentGroup/ContentGroup.php:268
 msgid "In what order should the content displayed?"
@@ -1989,7 +2010,7 @@ msgstr ""
 #: ../classes/Content/ContentGroup/ContentGroup.php:310
 #, php-format
 msgid "%s display element list"
-msgstr "% εμφάνιση καταλόγου στοιχείων"
+msgstr "%s εμφάνιση καταλόγου στοιχείων"
 
 #: ../classes/Content/ContentGroup/ContentGroup.php:317
 msgid "Show expired group elements"
@@ -2003,22 +2024,22 @@ msgstr "Απόκρυψη στοιχείων ομάδας που έχουν λή�
 #: ../classes/ProfileTemplate.php:526
 #, php-format
 msgid "%s %d"
-msgstr "% %"
+msgstr "%s %d"
 
 #: ../classes/Content/ContentGroup/ContentGroup.php:337
 #, php-format
 msgid "Delete %s %d"
-msgstr "Διαγραφή % % "
+msgstr "Διαγραφή %s %d "
 
 #: ../classes/Content/Langstring/Langstring.php:131
 #, php-format
 msgid "(Empty %s)"
-msgstr "(Άδειο %)"
+msgstr "(Άδειο %s)"
 
 #: ../classes/Content/Langstring/Langstring.php:215
 #: ../classes/Content/Langstring/Langstring.php:341
 #: ../classes/Content/HTMLeditor/HTMLeditor.php:112
-#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:19
+#: ../classes/Content/HTMLeditor/HTMLeditor.php:182 smarty.txt:22
 msgid "Language"
 msgstr "Γλώσσα"
 
@@ -2160,7 +2181,7 @@ msgstr ""
 #: ../classes/Content/RssAggregator/RssAggregator.php:645
 #, php-format
 msgid "%s, used %d times"
-msgstr "%, χρησιμοποιήθηκε % φορές"
+msgstr "%s, χρησιμοποιήθηκε %d φορές"
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:651
 msgid "Type URL manually"
@@ -2183,7 +2204,7 @@ msgstr ""
 #: ../classes/Content/RssAggregator/RssAggregator.php:775
 #, php-format
 msgid "The feed publishes an item every %.2f day(s)"
-msgstr "Η τροφοδοσία δημοσιεύει ένα αντικείκειμενο κάθε % μέρα"
+msgstr "Η τροφοδοσία δημοσιεύει ένα αντικείκειμενο κάθε %.2f μέρα"
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:777
 msgid ""
@@ -2258,7 +2279,7 @@ msgstr "-"
 #: ../classes/Content/RssAggregator/RssAggregator.php:942
 #, php-format
 msgid "Could not get RSS feed: %s"
-msgstr "Δεν ήταν δυνατή η λήψη της τροφοδοσίας RSS: %"
+msgstr "Δεν ήταν δυνατή η λήψη της τροφοδοσίας RSS: %s"
 
 #: ../classes/Content/RssAggregator/RssAggregator.php:948
 msgid "RSS support is disabled"
@@ -2437,7 +2458,7 @@ msgstr ""
 #: ../classes/ProfileTemplateField.php:462
 #, php-format
 msgid "Delete %s (%s)"
-msgstr "Διαγραφή % (%)"
+msgstr "Διαγραφή %s (%s)"
 
 #: ../classes/Content/ShoutBox/ShoutBox.php:251
 msgid "onclick parameter"
@@ -2619,9 +2640,10 @@ msgstr ""
 msgid "Should this profile be publicly visible?"
 msgstr ""
 
-#: ../classes/Profile.php:311 ../classes/Network.php:1671
-#: ../classes/Network.php:1690 ../classes/Network.php:1696
-#: ../classes/Network.php:1721 ../classes/Node.php:1231
+#: ../classes/Profile.php:311 ../classes/Network.php:1716
+#: ../classes/Network.php:1722 ../classes/Network.php:1728
+#: ../classes/Network.php:1753 ../classes/Node.php:1335
+#: ../classes/Node.php:1350
 msgid "Yes"
 msgstr "Ναι"
 
@@ -2669,7 +2691,7 @@ msgstr "(Άδεια ακολουθία χαρακτήρων, εμφάνιση τ
 #: ../classes/User.php:169
 #, php-format
 msgid "There is no user with username %s"
-msgstr ""
+msgstr "Δεν υπάρχει χρήστης με το όνομα %s"
 
 #: ../classes/User.php:280
 msgid "Guest"
@@ -2682,7 +2704,7 @@ msgstr ""
 #: ../classes/User.php:361
 #, php-format
 msgid "Sorry, the username %s is not available"
-msgstr "Λυπούμαστε, το όνομα χρήστη % δεν είναι διαθέσιμο"
+msgstr "Λυπούμαστε, το όνομα χρήστη %s δεν είναι διαθέσιμο"
 
 #: ../classes/User.php:407
 msgid "Could not update email address."
@@ -2890,74 +2912,74 @@ msgstr ""
 msgid "User administration"
 msgstr "Διαχείριση Χρήστη"
 
-#: ../classes/Network.php:112 ../classes/Network.php:250
+#: ../classes/Network.php:124 ../classes/Network.php:265
 msgid "Network::getAllNetworks:  Fatal error: No networks in the database!"
 msgstr ""
 "Δίκτυο: λήψη όλων των δικτύων: Ανεπανόρθωτο σφάλμα: Κανένα δίκτυο στην βάση "
 "δεδομένων!"
 
-#: ../classes/Network.php:189
+#: ../classes/Network.php:201
 msgid "Unable to insert the new network in the database!"
 msgstr "Αδύνατο να εισαχθεί νέο δίκτυο στην βάση δεδομένων!"
 
-#: ../classes/Network.php:261 ../classes/Network.php:267
+#: ../classes/Network.php:276 ../classes/Network.php:282
 msgid "Network:"
 msgstr "Δίκτυο:"
 
-#: ../classes/Network.php:308
+#: ../classes/Network.php:323
 msgid "Create a new network with ID"
 msgstr "Δημιουργία νέου δικτύου με ταυτότητα"
 
-#: ../classes/Network.php:719 ../classes/Statistics.php:124
-#: ../classes/Content.php:335 ../classes/NodeList.php:138
+#: ../classes/Network.php:737 ../classes/Statistics.php:124
+#: ../classes/Content.php:335 ../classes/NodeList.php:162
 msgid "Unable to open directory "
 msgstr "Δεν ήταν δυνατό το άνοιγμα του ευρετηρίου"
 
-#: ../classes/Network.php:1049
+#: ../classes/Network.php:1041
 msgid "Satellite"
 msgstr "Δορυφόρος"
 
-#: ../classes/Network.php:1049
+#: ../classes/Network.php:1041
 msgid "Hybrid"
 msgstr "Υβριδικός"
 
-#: ../classes/Network.php:1598
+#: ../classes/Network.php:1629
 msgid "Network management"
 msgstr "Διαχείριση Δικτύου"
 
-#: ../classes/Network.php:1604
+#: ../classes/Network.php:1635
 msgid "Network content"
 msgstr "Περιεχόμενο Δικτύου"
 
-#: ../classes/Network.php:1615
+#: ../classes/Network.php:1646
 msgid "Network ID"
 msgstr "Ταυτότητα Δικτύου"
 
-#: ../classes/Network.php:1620
+#: ../classes/Network.php:1651
 msgid "Network name"
 msgstr "Όνομα Δικτύου"
 
-#: ../classes/Network.php:1625
+#: ../classes/Network.php:1656
 msgid "Network creation date"
 msgstr "Ημερομηνία δημιουργίας δικτύου"
 
-#: ../classes/Network.php:1630
+#: ../classes/Network.php:1661
 msgid "Network's web site"
 msgstr "Ιστοσελίδα δικτύου"
 
-#: ../classes/Network.php:1635
+#: ../classes/Network.php:1666
 msgid "Technical support email"
 msgstr "Ηλεκτρονική διεύθυνση τεχνικής υποστήριξης"
 
-#: ../classes/Network.php:1640
+#: ../classes/Network.php:1671
 msgid "Information about the network"
 msgstr "Πληροφορίες για το δίκτυο"
 
-#: ../classes/Network.php:1648
+#: ../classes/Network.php:1679
 msgid "Network authenticator class"
 msgstr "Κλάση Υπηρεσίας ελέγχου ταυτότητας δικτύου"
 
-#: ../classes/Network.php:1649
+#: ../classes/Network.php:1680
 msgid ""
 "The subclass of Authenticator to be used for user authentication. Example: "
 "AuthenticatorRadius"
@@ -2965,11 +2987,11 @@ msgstr ""
 "Υπο-κλάση Υπηρεσίας ελέγχου ταυτότητας που θα χρησιμοποιηθεί για τον έλεγχο "
 "ταυτότητας του χρήστη. Παράδειγμα:AuthenticatorRadius"
 
-#: ../classes/Network.php:1656
+#: ../classes/Network.php:1687
 msgid "Authenticator parameters"
 msgstr "Παράμετροι υπηρεσίας ελέγχου ταυτότητας"
 
-#: ../classes/Network.php:1657
+#: ../classes/Network.php:1688
 #, fuzzy
 msgid ""
 "The explicit parameters to be passed to the authenticator. You MUST read the "
@@ -2981,37 +3003,33 @@ msgstr ""
 "Παράδειγμα: 'ταυτότητα_δικτύου', '192.168.0.11', 1812,1813, "
 "'μυστικό_κλειδί', 'CHAP_MD5'"
 
-#: ../classes/Network.php:1662
+#: ../classes/Network.php:1693
 msgid "Network Authentication"
 msgstr "Έλεγχος ταυτότητας δικτύου"
 
-#: ../classes/Network.php:1670
-msgid "Is this network the default network?"
-msgstr "Αυτό το Δίκτυο είναι το προεπιλεγμένο δίκτυο;"
-
-#: ../classes/Network.php:1675
+#: ../classes/Network.php:1701
 msgid "Selected theme pack for this network"
 msgstr "Επιλέξτε θεματικό πακέτο για αυτό το δίκτυο "
 
-#: ../classes/Network.php:1680
+#: ../classes/Network.php:1706
 msgid "Network properties"
 msgstr "Ιδιότητες Δικτύου"
 
-#: ../classes/Network.php:1688
+#: ../classes/Network.php:1714
 msgid "Splash-only nodes"
 msgstr "Κόμβοι ελεύθερης πρόσβασης μόνο"
 
-#: ../classes/Network.php:1689
+#: ../classes/Network.php:1715
 msgid "Are nodes allowed to be set as splash-only (no login)?"
 msgstr ""
 "Μπορούν αυτοί οι κόμβοι να οριστούν ως ελεύθερης πρόσβασης (χωρίς διαδικασία "
 "σύνδεσης);"
 
-#: ../classes/Network.php:1694
+#: ../classes/Network.php:1720
 msgid "Portal page redirection"
 msgstr "Ανακατεύθυνση της πύλης"
 
-#: ../classes/Network.php:1695
+#: ../classes/Network.php:1721
 msgid ""
 "Are nodes allowed to redirect users to an arbitrary web page instead of the "
 "portal?"
@@ -3019,15 +3037,29 @@ msgstr ""
 "Επιτρέπεται οι κόμβοι να ανακατευθύνουν τους χρήστες σε τυχαίες ιστοσελίσες "
 "αντί της πύλης;"
 
-#: ../classes/Network.php:1700
+#: ../classes/Network.php:1726 ../classes/Node.php:1348
+#, fuzzy
+msgid "Original URL redirection"
+msgstr "Ανακατεύθυνση της πύλης"
+
+#: ../classes/Network.php:1727
+#, fuzzy
+msgid ""
+"Are nodes allowed to redirect users to the web page they originally "
+"requested instead of the portal?"
+msgstr ""
+"Επιτρέπεται οι κόμβοι να ανακατευθύνουν τους χρήστες σε τυχαίες ιστοσελίσες "
+"αντί της πύλης;"
+
+#: ../classes/Network.php:1732
 msgid "Network's node properties"
 msgstr "Ιδιότητες του κόμβου του δικτύου"
 
-#: ../classes/Network.php:1708
+#: ../classes/Network.php:1740
 msgid "Validation grace period"
 msgstr "Περίοδος χάριτος προς επικύρωση"
 
-#: ../classes/Network.php:1709
+#: ../classes/Network.php:1741
 msgid ""
 "The length of the validation grace period in seconds.  A new user is granted "
 "Internet access for this period check his email and validate his account."
@@ -3036,30 +3068,30 @@ msgstr ""
 "χρήστης αποκτά πρόσβαση στο Διαδίκτυο για αυτό το διάστημα για να ελέγξει τα "
 "ηλεκτρονικά του μηνύματα και να επικυρώσει τον λογαριασμό του. "
 
-#: ../classes/Network.php:1714
+#: ../classes/Network.php:1746
 msgid "This will be the from address of the validation email"
 msgstr ""
 "Αυτή θα είναι η διεύθυνση αποστολής του ηλεκτρονικού μηνύματος επικύρωσης"
 
-#: ../classes/Network.php:1719
+#: ../classes/Network.php:1751
 msgid "Multiple connections"
 msgstr "Πολλαπλές συνδέσεις"
 
-#: ../classes/Network.php:1720
+#: ../classes/Network.php:1752
 msgid "Can an account be connected more than once at the same time?"
 msgstr ""
 "Μπορεί ένας λογαριασμός να είναι συνδεδεμένος περισσότερες από μία φορές "
 "ταυτόχρονα;"
 
-#: ../classes/Network.php:1725
+#: ../classes/Network.php:1757
 msgid "Network's user verification"
 msgstr "Επαλήθευση χρήστη δικτύου"
 
-#: ../classes/Network.php:1735
+#: ../classes/Network.php:1767
 msgid "Abuse control window"
 msgstr ""
 
-#: ../classes/Network.php:1736
+#: ../classes/Network.php:1768
 msgid ""
 "The length of the window during which the user must not have exceeded the "
 "limits below.  Any valid postgresql interval expression is acceptable, "
@@ -3067,100 +3099,100 @@ msgid ""
 "access until his usage falls below the limits."
 msgstr ""
 
-#: ../classes/Network.php:1741
+#: ../classes/Network.php:1773
 msgid "Network max total bytes transfered"
 msgstr ""
 
-#: ../classes/Network.php:1742 ../classes/Network.php:1754
+#: ../classes/Network.php:1774 ../classes/Network.php:1786
 msgid "Maximum data transfer during the abuse control window"
 msgstr ""
 
-#: ../classes/Network.php:1747
+#: ../classes/Network.php:1779
 #, fuzzy
 msgid "Network max connection duration"
 msgstr "Ημερομηνία δημιουργίας δικτύου"
 
-#: ../classes/Network.php:1748 ../classes/Network.php:1760
+#: ../classes/Network.php:1780 ../classes/Network.php:1792
 msgid ""
 "Maximum connection duration during the abuse control window.  Any valid "
 "postgresql interval expression is acceptable, such as hh:mm:ss"
 msgstr ""
 
-#: ../classes/Network.php:1753
+#: ../classes/Network.php:1785
 msgid "Node max total bytes transfered"
 msgstr ""
 
-#: ../classes/Network.php:1759
+#: ../classes/Network.php:1791
 #, fuzzy
 msgid "Node max connection duration"
 msgstr "Ρυθμίσεις κόμβου"
 
-#: ../classes/Network.php:1765
+#: ../classes/Network.php:1797
 #, fuzzy
 msgid "You do not have access to edit these options"
 msgstr "(Δεν έχετε πρόσβαση για να επεξεργαστείτε αυτήν την πληροφορία)"
 
-#: ../classes/Network.php:1768
+#: ../classes/Network.php:1800
 msgid "Dynamic abuse control"
 msgstr ""
 
-#: ../classes/Network.php:1781 ../classes/Server.php:275
-#: ../classes/Node.php:1252
+#: ../classes/Network.php:1813 ../classes/Server.php:281
+#: ../classes/Node.php:1362
 msgid "Access rights"
 msgstr "Δικαιώματα πρόσβασης"
 
-#: ../classes/Network.php:1797
+#: ../classes/Network.php:1829
 msgid "Note that to be valid, all 3 values must be present."
 msgstr ""
 
-#: ../classes/Network.php:1798 ../classes/Node.php:1189
+#: ../classes/Network.php:1830 ../classes/Node.php:1288
 msgid "Latitude"
 msgstr "Γεωγραφικό πλάτος"
 
-#: ../classes/Network.php:1799
+#: ../classes/Network.php:1831
 #, fuzzy
 msgid "Center latitude for the area covered by your wireless network"
 msgstr "Κέντρο του γεωγραφικού πλάτους της περιοχής του ασύρματου δικτύου σας"
 
-#: ../classes/Network.php:1803 ../classes/Node.php:1194
+#: ../classes/Network.php:1835 ../classes/Node.php:1293
 msgid "Longitude"
 msgstr "Γεωγραφικό μήκος"
 
-#: ../classes/Network.php:1804
+#: ../classes/Network.php:1836
 #, fuzzy
 msgid "Center longitude for the area covered by your wireless network"
 msgstr "Κέντρο του γεωγραφικού μήκους της περιοχής του ασύρματου δικτύου σας"
 
-#: ../classes/Network.php:1808
+#: ../classes/Network.php:1840
 msgid "Zoomlevel"
 msgstr "Επίπεδο εστίασης"
 
-#: ../classes/Network.php:1809
+#: ../classes/Network.php:1841
 #, fuzzy
 msgid "Zoomlevel of the Google Map.  12 is a typical value."
 msgstr ""
 "Επίπεδο εστίασης του Χάρτη του Google για την περιοχή του ασύρματου δικτύου "
 "σας"
 
-#: ../classes/Network.php:1813
+#: ../classes/Network.php:1845
 msgid "Map type"
 msgstr "Τύπος χάρτη"
 
-#: ../classes/Network.php:1814
+#: ../classes/Network.php:1846
 msgid "Default Google Map type for your the area of your wireless network"
 msgstr ""
 "Προεπιλεγμένος τύπος Χάρτη του Google για την περιοχή του ασύρματου δικτύου "
 "σας"
 
-#: ../classes/Network.php:1819 ../classes/Node.php:1216
+#: ../classes/Network.php:1851 ../classes/Node.php:1315
 msgid "GIS data"
 msgstr "Δεδομένα GIS"
 
-#: ../classes/Network.php:1823
+#: ../classes/Network.php:1855
 msgid "Network profile templates"
 msgstr ""
 
-#: ../classes/Network.php:2070
+#: ../classes/Network.php:2106
 #, fuzzy
 msgid ""
 "Cannot delete default network, create another one and select it before you "
@@ -3169,16 +3201,16 @@ msgstr ""
 "Δεν είναι δυνατή η διαγραφή του προεπιλεγμένου δικτύου, δημιουργήστε ένα "
 "καινούριο και επιλέξτε το προτού μετακινήσετε αυτό."
 
-#: ../classes/Network.php:2075
+#: ../classes/Network.php:2111
 msgid "Could not delete network!"
 msgstr "Δεν ήταν δυνατή η διαγραφή του δικτύου!"
 
-#: ../classes/Network.php:2111
+#: ../classes/Network.php:2147
 #, fuzzy, php-format
 msgid "Add a new network on this server"
 msgstr "Να χρησιμοποιήθεί SSL σε αυτόν τον  διακομιστή;"
 
-#: ../classes/Network.php:2116
+#: ../classes/Network.php:2152
 msgid "Network administration"
 msgstr "Διαχείριση δικτύου"
 
@@ -3313,9 +3345,9 @@ msgid "It appears the postgresql module isn't loaded"
 msgstr ""
 
 #: ../classes/AbstractDb.php:99
-#, php-format
-msgid "Unable to connect to database on %s"
-msgstr "Δεν ήταν δυνατή η σύνδεση με την βάση δεδομένων σε %"
+#, fuzzy, php-format
+msgid "Unable to connect to the database at %s"
+msgstr "Δεν ήταν δυνατή η σύνδεση με την βάση δεδομένων σε %s"
 
 #: ../classes/AbstractDb.php:121 ../classes/AbstractDb.php:214
 #: ../classes/AbstractDb.php:402 ../classes/AbstractDb.php:475
@@ -3331,7 +3363,7 @@ msgstr "Πλάνο ερωτημάτων"
 #, php-format
 msgid "Elapsed time for query execution : %.6f second(s)"
 msgstr ""
-"Χρόνος που έχει διανυθεί για την πραγματοποίηση του ερωτήματος: %.6 "
+"Χρόνος που έχει διανυθεί για την πραγματοποίηση του ερωτήματος: %.6f "
 "δευτερόλεπτο(α)"
 
 #: ../classes/AbstractDb.php:148 ../classes/AbstractDb.php:241
@@ -3353,30 +3385,30 @@ msgstr ""
 #: ../classes/AbstractDb.php:173
 #, php-format
 msgid "The query returned %d results"
-msgstr "Το ερώτημα επέστρεψε % αποτελέσματα"
+msgstr "Το ερώτημα επέστρεψε %d αποτελέσματα"
 
 #: ../classes/AbstractDb.php:427
 #, php-format
 msgid ""
 "The query returned %d results, although there should have been only one."
 msgstr ""
-"Το ερώτημα επέστρεψε % αποτελέσματα, παρόλο που θα έπρεπε να είναι μόνο ένα"
+"Το ερώτημα επέστρεψε %d αποτελέσματα, παρόλο που θα έπρεπε να είναι μόνο ένα"
 
 #: ../classes/AbstractDb.php:435
 #, php-format
 msgid "The query returned %d result(s)"
-msgstr "Το ερώτημα επέστρεψε % αποτελέσμα (τα)"
+msgstr "Το ερώτημα επέστρεψε %d αποτελέσμα (τα)"
 
 #: ../classes/AbstractDb.php:484 ../classes/AbstractDb.php:502
 #, php-format
 msgid "%d rows affected by the SQL query."
-msgstr "% σειρών επηρεάστηκαν από το ερώτημα SQL "
+msgstr "%d σειρών επηρεάστηκαν από το ερώτημα SQL "
 
 #: ../classes/AbstractDb.php:485
 #, php-format
 msgid "Elapsed time for query execution : %6f second(s)"
 msgstr ""
-"Χρόνος που έχει διανυθεί για την πραγματοποίηση του ερωτήματος %.6f "
+"Χρόνος που έχει διανυθεί για την πραγματοποίηση του ερωτήματος %6f "
 "δευτερόλεπτο(α)"
 
 #: ../classes/Server.php:91
@@ -3401,15 +3433,27 @@ msgstr ""
 msgid "Timezone from PHP: %s"
 msgstr ""
 
-#: ../classes/Server.php:309
+#: ../classes/Server.php:270
+#, fuzzy
+msgid "Authentication"
+msgstr "Έλεγχος ταυτότητας δικτύου"
+
+#: ../classes/Server.php:271
+msgid ""
+"Use the users of default Virtual Host's network across all networks on the "
+"server."
+msgstr ""
+
+#: ../classes/Server.php:320
 msgid "The server can never be deleted!"
 msgstr ""
 
-#: ../classes/Server.php:319
-msgid "Server access control"
-msgstr ""
+#: ../classes/Server.php:330
+#, fuzzy
+msgid "Server configuration"
+msgstr "Ρυθμίσεις αναφοράς"
 
-#: ../classes/Server.php:324
+#: ../classes/Server.php:335
 msgid "Server administration"
 msgstr "Διαχείριση  Διακομιστή "
 
@@ -3447,7 +3491,7 @@ msgstr "Κανένας τύπος περιεχομένου δεν ταιριάζ
 #: ../classes/Content.php:543
 #, php-format
 msgid "Add a %s"
-msgstr "Προσθήκη %"
+msgstr "Προσθήκη %s"
 
 #: ../classes/Content.php:719
 msgid "Display page"
@@ -3520,7 +3564,7 @@ msgstr "(Δεν έχετε πρόσβαση για να επεξεργαστεί
 #: ../classes/Content.php:1532
 #, php-format
 msgid "%s MetaData"
-msgstr "% Μεταδεδομένα"
+msgstr "%s Μεταδεδομένα"
 
 #: ../classes/Content.php:1535
 msgid "Display the title?"
@@ -3562,7 +3606,7 @@ msgstr "πληροφορίες έργου"
 #: ../classes/Content.php:1620
 #, php-format
 msgid "%s access control"
-msgstr "% έλεγχος πρόσβασης"
+msgstr "%s έλεγχος πρόσβασης"
 
 #: ../classes/Content.php:1624
 msgid "Is part of reusable content library (protected from deletion)?"
@@ -3590,21 +3634,20 @@ msgstr "Δεν είναι δυνατός ο ορισμός συντάκτη στ
 msgid "Reusable content library"
 msgstr ""
 
-#: ../classes/NodeList.php:186 smarty.txt:35
+#: ../classes/NodeList.php:210 smarty.txt:40
 msgid "Deployed HotSpots map"
 msgstr "Χάρτης ανεπτυγμένων Σημείων Ασύρματης Πρόσβασης"
 
-#: ../classes/NodeList.php:197
+#: ../classes/NodeList.php:221
 #, php-format
 msgid "List in %s format"
 msgstr ""
 
-#: ../classes/NodeList.php:203
+#: ../classes/NodeList.php:227
 msgid "Full node technical status (includes non-deployed nodes)"
 msgstr ""
 
-#: ../classes/NodeList.php:207
-#, fuzzy
+#: ../classes/NodeList.php:231
 msgid "Find Hotspots"
 msgstr "Σημεία Ασύρματης Πρόσβασης"
 
@@ -3638,30 +3681,30 @@ msgstr ""
 msgid "Detailed error was:  Uncaught %s %s (%s) thrown in file %s, line %d"
 msgstr ""
 
-#: ../classes/MainUI.php:231
+#: ../classes/MainUI.php:232 ../classes/MainUI.php:234
 msgid "authentication server"
 msgstr "Διακομιστής ελέγχου ταυτότητας"
 
-#: ../classes/MainUI.php:258
+#: ../classes/MainUI.php:262
 #, php-format
 msgid "%s is not a valid structural display area"
-msgstr "% δεν είναι έγκυρη περιοχή επίδειξης δομής"
+msgstr "%s δεν είναι έγκυρη περιοχή επίδειξης δομής"
 
-#: ../classes/MainUI.php:642
+#: ../classes/MainUI.php:680
 #, php-format
 msgid "%s Login"
-msgstr "% Σύνδεση"
+msgstr "%s Σύνδεση"
 
-#: ../classes/MainUI.php:642 smarty.txt:18 smarty.txt:28
+#: ../classes/MainUI.php:680 smarty.txt:21 smarty.txt:32
 msgid "Login"
 msgstr "Σύνδεση"
 
-#: ../classes/MainUI.php:646
+#: ../classes/MainUI.php:684
 #, php-format
 msgid "Click <a href='%s'>here</a> to continue"
 msgstr "Πατήστε <a href='%s'> εδώ </a> για να συνεχίσετε"
 
-#: ../classes/MainUI.php:646
+#: ../classes/MainUI.php:684
 msgid ""
 "The transfer from secure login back to regular http may cause a warning."
 msgstr ""
@@ -3673,182 +3716,200 @@ msgstr ""
 msgid "PHPMailer couldn't sent mail.  Error was: %s"
 msgstr ""
 
-#: ../classes/Node.php:210
+#: ../classes/Node.php:222
 msgid "Could not delete node!"
 msgstr "Δεν ήταν δυνατή η διαγραφή του κόμβου!"
 
-#: ../classes/Node.php:243
+#: ../classes/Node.php:255
 msgid "PUT_GATEWAY_ID_HERE"
 msgstr "ΤΟΠΟΘΕΤΗΣΗ_ΤΑΥΤΟΤΗΤΑΣ_ΠΥΛΗΣ_ΕΔΩ"
 
-#: ../classes/Node.php:259
+#: ../classes/Node.php:271
 msgid "New node"
 msgstr "Νέος Κόμβος"
 
-#: ../classes/Node.php:268
+#: ../classes/Node.php:280
 #, php-format
 msgid "Sorry, a node for the gateway %s already exists."
-msgstr "Λυπούμαστε, ο κόμβος για την πύλη % υπάρχει ήδη. "
+msgstr "Λυπούμαστε, ο κόμβος για την πύλη %s υπάρχει ήδη. "
 
-#: ../classes/Node.php:274
+#: ../classes/Node.php:286
 msgid "Unable to insert new node into database!"
 msgstr "Δεν είναι δυνατή η προσθήκη νέου κόμβου στην βάση δεδομένων!"
 
-#: ../classes/Node.php:358
+#: ../classes/Node.php:370
 msgid "Filter:"
 msgstr "Φίλτρο:"
 
-#: ../classes/Node.php:366
+#: ../classes/Node.php:378
 msgid "Node Name"
 msgstr "Όνομα κόμβου"
 
-#: ../classes/Node.php:367 ../classes/Node.php:1077
+#: ../classes/Node.php:379 ../classes/Node.php:1176
 msgid "Gateway ID"
 msgstr "Ταυτότητα Πύλης"
 
-#: ../classes/Node.php:390
+#: ../classes/Node.php:402
 msgid "Sorry, no nodes available in the database"
 msgstr "Λυπούμαστε, δεν υπάρχουν διαθέσιμοι κόμβοι στην βάση δεδομένων"
 
-#: ../classes/Node.php:415
+#: ../classes/Node.php:427
 msgid "Add a new node for the gateway ID"
 msgstr "Προσθήκη νέου κόμβου για την ταυτότητα πύλης "
 
-#: ../classes/Node.php:425
+#: ../classes/Node.php:437
 msgid "in "
 msgstr "σε"
 
-#: ../classes/Node.php:481
+#: ../classes/Node.php:493
 msgid "Here is what you can do to fix this:"
 msgstr ""
 
-#: ../classes/Node.php:485
+#: ../classes/Node.php:497
 #, php-format
 msgid ""
 "You can create a new node with %s as it's associated gateway id.  This is "
 "typical for new installations."
 msgstr ""
 
-#: ../classes/Node.php:498
+#: ../classes/Node.php:510
 #, fuzzy, php-format
 msgid "Add a new node in %s"
 msgstr "Προσθήκη ενός νέου %"
 
-#: ../classes/Node.php:500
+#: ../classes/Node.php:512
 #, fuzzy
 msgid "Add node"
 msgstr "Προσθήκη κατόχου"
 
-#: ../classes/Node.php:507
+#: ../classes/Node.php:519
 #, php-format
 msgid ""
 "You can \"steal\" an existing node.  The node's gateway id will be replaced "
 "with %s.  This is typical when replacing hardware."
 msgstr ""
 
-#: ../classes/Node.php:526
+#: ../classes/Node.php:538
 #, fuzzy
 msgid "Steal node"
 msgstr "Ταχυδρομικός Κώδικας"
 
-#: ../classes/Node.php:602
+#: ../classes/Node.php:614
 msgid "No deployment statuses could be found in the database"
 msgstr "Καμία κατάσταση ανάπτυξης δεν βρέθηκε στην βάση δεδομένων"
 
-#: ../classes/Node.php:653
+#: ../classes/Node.php:681
 #, php-format
 msgid "The node with %s: %s could not be found in the database!"
-msgstr "Ο κόμβος με %: % δεν βρέθηκε στην βάση δεδομένων!"
+msgstr "Ο κόμβος με %s: %s δεν βρέθηκε στην βάση δεδομένων!"
 
-#: ../classes/Node.php:1061
+#: ../classes/Node.php:1154
 msgid "Edit a node"
 msgstr "Επεξεργασία κόμβου"
 
-#: ../classes/Node.php:1068
+#: ../classes/Node.php:1165
+msgid "Allow public access to some node statistics."
+msgstr ""
+
+#: ../classes/Node.php:1166
 msgid "Get access statistics"
 msgstr "Λήψη στατιστικών στοιχείων πρόσβασης"
 
-#: ../classes/Node.php:1091
+#: ../classes/Node.php:1190
 msgid "Node content"
 msgstr "Περιεχόμενο κόμβου"
 
-#: ../classes/Node.php:1130
+#: ../classes/Node.php:1229
 msgid "Civic number"
 msgstr "Αστικός αριθμός"
 
-#: ../classes/Node.php:1135
+#: ../classes/Node.php:1234
 msgid "Street name"
 msgstr "Όνομα οδού"
 
-#: ../classes/Node.php:1155
+#: ../classes/Node.php:1254
 msgid "Country"
 msgstr "Χώρα"
 
-#: ../classes/Node.php:1160
+#: ../classes/Node.php:1259
 msgid "Public phone number"
 msgstr "Αριθμός δημόσιου τηλεφώνου"
 
-#: ../classes/Node.php:1165
+#: ../classes/Node.php:1264
 msgid "Public email"
 msgstr "Δημόσια ηλεκτρονική διεύθυνση"
 
-#: ../classes/Node.php:1175
+#: ../classes/Node.php:1274
 msgid "Mass transit info"
 msgstr "Πληροφορίες μαζικής μεταφοράς"
 
-#: ../classes/Node.php:1180
+#: ../classes/Node.php:1279
 msgid "Information about the node"
 msgstr "Πληροφορίες για τον κόμβο"
 
-#: ../classes/Node.php:1200 ../classes/Node.php:1204
+#: ../classes/Node.php:1299 ../classes/Node.php:1303
 msgid "Geocode the address or postal code above"
 msgstr ""
 "Δώστε γεωγραφικό κωδικό για την ανωτέρω διεύθυνση ή ταχυδρομικό κωδικό "
 
-#: ../classes/Node.php:1201
+#: ../classes/Node.php:1300
 msgid "Check using Google Maps"
 msgstr "Έλεγχος με χρήση των χαρτών του Google"
 
-#: ../classes/Node.php:1202
+#: ../classes/Node.php:1301
 msgid ""
 "Use a geocoding service, then use Google Maps to pinpoint the exact location."
 msgstr ""
 "Χρησιμοποιήστε υπηρεσία γεωγραφικής κωδικοποίησης, και στην συνέχεια "
 "χρησιμοποιήστε τους χάρτες του Google για να επισημάνετε την ακριβή τοποθεσία"
 
-#: ../classes/Node.php:1205
+#: ../classes/Node.php:1304
 msgid "Use a geocoding service"
 msgstr "Χρησιμοποιήστε υπηρεσία γεωγραφικής κωδικοποίησης"
 
-#: ../classes/Node.php:1211
+#: ../classes/Node.php:1310
 msgid "Map URL"
 msgstr "URL χάρτης"
 
-#: ../classes/Node.php:1224
+#: ../classes/Node.php:1323
 msgid "Node deployment status"
 msgstr "Κατάσταση ανάπτυξης του κόμβου"
 
-#: ../classes/Node.php:1230
+#: ../classes/Node.php:1328
+#, fuzzy
+msgid "Node Network"
+msgstr "Δίκτυο"
+
+#: ../classes/Node.php:1334
 msgid "Is this node splash-only (no login)?"
 msgstr ""
 "Αυτός ο κόμβος επιτρέπει ελεύθερη πρόσβαση (χωρίς διαδικασία σύνδεσης);"
 
-#: ../classes/Node.php:1237
+#: ../classes/Node.php:1341
 msgid "URL to show instead of the portal"
 msgstr "URL που θα εμφανιστεί σντί της πύλης"
 
-#: ../classes/Node.php:1239
+#: ../classes/Node.php:1343
 msgid ""
 "If this is not empty, the portal will be disabled and this URL will be shown "
 "instead"
 msgstr ""
 "Εάν δεν είναι άδειο, η πύλη θα απενεργοποιηθεί και θα εμφανιστεί αυτό το URL"
 
-#: ../classes/Node.php:1244
+#: ../classes/Node.php:1349
+#, fuzzy
+msgid ""
+"Are nodes allowed to redirect users to the web page they originally "
+"requested instead of the portal? this will overide the custom portal URL"
+msgstr ""
+"Επιτρέπεται οι κόμβοι να ανακατευθύνουν τους χρήστες σε τυχαίες ιστοσελίσες "
+"αντί της πύλης;"
+
+#: ../classes/Node.php:1354
 msgid "Node configuration"
 msgstr "Ρυθμίσεις κόμβου"
 
-#: ../classes/Node.php:1382
+#: ../classes/Node.php:1492
 msgid ""
 "It appears that the Geocoder could not be reached or could not geocode the "
 "given address."
@@ -3856,26 +3917,26 @@ msgstr ""
 "Φαίνεται ότι ο γεωγραφικός κωδικοποιητής δεν είναι προσβάσιμος ή ότι δεν "
 "μπόρεσε να δώσει γεωγραφικκό κωδικό για την συγκεκριμένη διεύθυνση."
 
-#: ../classes/Node.php:1385
+#: ../classes/Node.php:1495
 msgid "You must enter a valid address."
 msgstr "Πρέπει να εισάγετε μία έγκυρη διεύθυνση."
 
-#: ../classes/Node.php:1389
+#: ../classes/Node.php:1499
 msgid "Unable to create geocoder.  Are you sure you set the country?"
 msgstr ""
 "Αδύνατη η δημιουργία γεωγραφικού κωδικού. Είστε σίγουροι ότι ορίσατε την "
 "χώρα;"
 
-#: ../classes/Node.php:1622
+#: ../classes/Node.php:1759
 msgid "Edit nodes"
 msgstr ""
 
-#: ../classes/Node.php:1637
+#: ../classes/Node.php:1774
 #, fuzzy, php-format
 msgid "Add a new node"
 msgstr "Προσθήκη ενός νέου %"
 
-#: ../classes/Node.php:1642
+#: ../classes/Node.php:1779
 msgid "Node administration"
 msgstr "Διαχείριση Κόμβου"
 
@@ -3934,17 +3995,17 @@ msgstr ""
 #: ../classes/ThemePack.php:87
 #, php-format
 msgid "Theme pack %s cannot be found in %s"
-msgstr "Το θεματικό πακέτο δεν βρέθηκε στα %"
+msgstr "Το θεματικό πακέτο %s δεν βρέθηκε στα %s"
 
 #: ../classes/ThemePack.php:94
 #, php-format
 msgid "%s (Theme did not include a name.txt file)"
-msgstr "% (θέμα δεν περιλαμβάνει όνομα.txt file)"
+msgstr "%s (θέμα δεν περιλαμβάνει όνομα.txt file)"
 
 #: ../classes/ThemePack.php:100
 #, php-format
 msgid "%s (Theme did not include a description.txt file)"
-msgstr "% (θέμα δεν περιλαμβάνει περιγραφή.txt file)"
+msgstr "%s (θέμα δεν περιλαμβάνει περιγραφή.txt file)"
 
 #: ../classes/ThemePack.php:121
 msgid "Theme pack:"
@@ -3958,7 +4019,7 @@ msgstr ""
 #: ../classes/ThemePack.php:151
 #, php-format
 msgid "No network theme packs available in %s"
-msgstr "Δεν υπάρχουν διαθέσιμα θεματικά πακέτα δικτύου σε %"
+msgstr "Δεν υπάρχουν διαθέσιμα θεματικά πακέτα δικτύου σε %s"
 
 #: ../classes/Role.php:151
 #, php-format
@@ -4219,6 +4280,13 @@ msgstr ""
 msgid "User is allowed to exceed dynamic abuse control limits at this node"
 msgstr ""
 
+#: ../classes/Permission.php:108
+#, fuzzy
+msgid ""
+"User is allowed to turn on publicly accessible aggregate statistics for this "
+"node"
+msgstr "Ο χρήστης είναι ήδη κάτοχος αυτού του κόμβου"
+
 #: ../classes/Stakeholder.php:88
 msgid "Remove stakeholder"
 msgstr ""
@@ -4327,186 +4395,206 @@ msgstr ""
 msgid "Information"
 msgstr "πληροφορίες έργου"
 
-#: ../classes/DependenciesList.php:176
+#: ../classes/DependenciesList.php:178
 msgid "Install message"
 msgstr ""
 
-#: ../classes/DependenciesList.php:179
+#: ../classes/DependenciesList.php:181
 #, fuzzy
 msgid "Detection message"
 msgstr "Μήνυμα λάθους"
 
-#: ../classes/DependenciesList.php:182
+#: ../classes/DependenciesList.php:184
 #, fuzzy
 msgid "To install"
 msgstr "Σύνολο"
 
-#: ../classes/DependenciesList.php:204
+#: ../classes/DependenciesList.php:206
 msgid "Dependencies"
 msgstr ""
 
 #: smarty.txt:2
-msgid "Status of all nodes of the"
+#, fuzzy
+msgid "Status of all nodes on "
+msgstr "Κατάσταση όλων των κόμβων του "
+
+#: smarty.txt:3
+#, fuzzy
+msgid "Status of all nodes of the "
 msgstr "Κατάσταση όλων των κόμβων του "
 
 #: smarty.txt:4
+msgid "Status of all nodes of the"
+msgstr "Κατάσταση όλων των κόμβων του "
+
+#: smarty.txt:6
 #, fuzzy
 msgid "Node id"
 msgstr "Κόμβος"
 
-#: smarty.txt:5
+#: smarty.txt:7
 #, fuzzy
 msgid "Gateway id"
 msgstr "Ταυτότητα Πύλης"
 
-#: smarty.txt:7
+#: smarty.txt:9
 msgid "Local content demo"
 msgstr "Πρόγραμμα επίδειξης τοπικού περιεχομένου"
 
-#: smarty.txt:8
+#: smarty.txt:10
 #, fuzzy
 msgid "Opened on"
 msgstr "Άνοιξε την %"
 
-#: smarty.txt:9 smarty.txt:117
+#: smarty.txt:11 smarty.txt:132
 msgid "Online users"
 msgstr "Συνδεδεμένοι χρήστες"
 
-#: smarty.txt:10 smarty.txt:11
+#: smarty.txt:12 smarty.txt:13
 msgid "days"
 msgstr "Μέρες"
 
-#: smarty.txt:12
+#: smarty.txt:14
 #, fuzzy
 msgid "Login page"
 msgstr "Σύνδεση"
 
-#: smarty.txt:13
+#: smarty.txt:15
 #, fuzzy
 msgid "Portal page"
 msgstr "Ανακατεύθυνση της πύλης"
 
-#: smarty.txt:14
+#: smarty.txt:17
 msgid "Logged in as"
 msgstr "Σύνδεση ως"
 
-#: smarty.txt:15
+#: smarty.txt:18
 #, fuzzy
 msgid "Profile / Settings"
 msgstr "Επαρχία/Χώρα"
 
-#: smarty.txt:16
+#: smarty.txt:19
 msgid "Logout"
 msgstr ""
 
-#: smarty.txt:17
+#: smarty.txt:20
 msgid "I am not logged in."
 msgstr "Δεν έχω συνδεθεί"
 
-#: smarty.txt:20
+#: smarty.txt:23
 msgid "user is online at this hotspot"
 msgstr "Χρήστης που είναι συνδεδεμένος σε αυτό το Σημείο Ασύρματης Πρόσβασης"
 
-#: smarty.txt:21
+#: smarty.txt:24
 msgid "users are online at this hotspot"
 msgstr "Χρήστες που είναι συνδεδεμένοι σε αυτό το Σημείο Ασύρματης Πρόσβασης"
 
-#: smarty.txt:22
+#: smarty.txt:25
 msgid "Nobody is online at this hotspot"
 msgstr "Κανείς δεν είναι συνδεδεμένος σε αυτό το Σημείο Ασύρματης Πρόσβασης. "
 
-#: smarty.txt:23
+#: smarty.txt:26
 msgid "Recent Users:"
 msgstr ""
 
-#: smarty.txt:24
+#: smarty.txt:27
 msgid "Most Active Users:"
 msgstr ""
 
-#: smarty.txt:25
+#: smarty.txt:28
 msgid "Login or Signup here"
 msgstr "Σύνδεση ή εγγραφή εδώ"
 
-#: smarty.txt:26
+#: smarty.txt:29
+#, fuzzy
+msgid "Login Here"
+msgstr "Σύνδεση"
+
+#: smarty.txt:30
 msgid "Username (or email)"
 msgstr "Όνομα χρήστη (ή ηλεκτρονική διεύθυνση)"
 
-#: smarty.txt:27 smarty.txt:48
+#: smarty.txt:31 smarty.txt:53
 msgid "Password"
 msgstr "Κωδικός πρόσβασης"
 
-#: smarty.txt:29
+#: smarty.txt:33
+#, fuzzy
+msgid "Signup Here"
+msgstr "Σύνδεση ή εγγραφή εδώ"
+
+#: smarty.txt:34
 msgid "Create a free account"
 msgstr "Δημιουργήστε έναν δωρεάν λογαριασμό"
 
-#: smarty.txt:30
+#: smarty.txt:35
 #, fuzzy
 msgid "You must specify your username and password"
 msgstr "Πρέπει να πληκτρολογήσετε τον κωδικό πρόσβασης δύο φορές. "
 
-#: smarty.txt:31
+#: smarty.txt:36
 msgid "Show me the closest hotspot"
 msgstr "Δείξτε μου το κοντινότερο Σημείο Ασύρματης Πρόσβασης"
 
-#: smarty.txt:32
+#: smarty.txt:37
 msgid "Enter your postal code"
 msgstr "Εισάγετε τον ταχυδρομικό σας κώδικα"
 
-#: smarty.txt:33
+#: smarty.txt:38
 msgid "Show"
 msgstr "Δείξτε"
 
-#: smarty.txt:34
+#: smarty.txt:39
 msgid "Refresh map"
 msgstr "Ανανέωση χάρτη"
 
-#: smarty.txt:37
+#: smarty.txt:42
 msgid "Legend"
 msgstr "Υπόμνημα"
 
-#: smarty.txt:38
+#: smarty.txt:43
 #, fuzzy
 msgid "the hotspot is operational"
 msgstr "Ένα Σημείο Ασύρματης Πρόσβασης είναι αυτή τη στιγμή λειτουργικό."
 
-#: smarty.txt:39
+#: smarty.txt:44
 msgid "the hotspot is down"
 msgstr ""
 
-#: smarty.txt:40
+#: smarty.txt:45
 #, fuzzy
 msgid "not monitored"
 msgstr "Σημείο Ασύρματης Πρόσβασης που δεν παρακολουθείται"
 
-#: smarty.txt:41 smarty.txt:69 smarty.txt:93 smarty.txt:101
+#: smarty.txt:46 smarty.txt:74 smarty.txt:98 smarty.txt:106
 msgid "I'm having difficulties"
 msgstr "Συναντάω δυσκολίες"
 
-#: smarty.txt:45
+#: smarty.txt:50
 msgid "Register a free account with"
-msgstr "Καταχώριση δωρεάν λογαριασμού με"
+msgstr "Καταχώριση δωρεάν λογαριασμού στο δίκτυο των"
 
-#: smarty.txt:46
+#: smarty.txt:51
 msgid "Username desired"
 msgstr "Επιθυμητό Όνομα χρήστη"
 
-#: smarty.txt:47 smarty.txt:75 smarty.txt:106
+#: smarty.txt:52 smarty.txt:80 smarty.txt:111
 msgid "Your email address"
 msgstr "Η ηλεκτρονική σας διεύθυνση"
 
-#: smarty.txt:49
+#: smarty.txt:54
 msgid "Password (again)"
 msgstr "Κωδικός πρόσβασης (ξανά)"
 
-#: smarty.txt:50
+#: smarty.txt:55
 msgid "Sign-up"
-msgstr ""
+msgstr "Εγγραφή"
 
-#: smarty.txt:51
+#: smarty.txt:56
 msgid "Please note"
 msgstr "Παρακαλούμε, σημειώστε"
 
-#: smarty.txt:52
+#: smarty.txt:57
 msgid ""
 "While accounts are free, we <em>strongly</em> suggest that you use your "
 "previously created account if you have one."
@@ -4514,30 +4602,31 @@ msgstr ""
 "Αν και οι λογαριασμοί είναι δωρεάν, συνιστάται να χρησιμοποιείτε τον "
 "λογαριασμό που έχετε ήδη δημιουργήσει, εάν έχετε. "
 
-#: smarty.txt:53
+#: smarty.txt:58
 msgid ""
 "<b>Your email address must be valid</b> in order for your account to be "
 "activated."
 msgstr ""
 "Για να ενεργοποιηθεί ο λογαριασμός σας πρέπει η ηλεκτρονική σας διεύθυνση να "
-"είναι έγκυρη"
+"είναι έγκυρη."
 
-#: smarty.txt:54
+#: smarty.txt:59
 msgid "A validation email will be sent to that email address."
 msgstr ""
-"Ένα ηλεκτρονικό μήνυμα επικύρωσης θα σταλεί στην ηλεκτρονική σας διεύθυνση"
+"Ένα ηλεκτρονικό μήνυμα επικύρωσης θα σταλεί στην ηλεκτρονική σας διεύθυνση."
 
-#: smarty.txt:55
+#: smarty.txt:60
 msgid "To fully activate your account you must respond to that email."
 msgstr ""
 "Για να ενεργοποιήσετε πλήρως τον λογαριασμό σας, πρέπει να απαντήσετε σε "
 "αυτό το ηλεκτρονικό μήνυμα"
 
-#: smarty.txt:56
+#: smarty.txt:61
 msgid "Note to free web-based email users"
-msgstr "Σημείωση στους χρήστες ελεύθερου ηλεκτρονικού ταχυδρομίου στο δίκτυο"
+msgstr ""
+"Σημείωση για τους χρήστες ελεύθερου ηλεκτρονικού ταχυδρομίου στο δίκτυο"
 
-#: smarty.txt:57
+#: smarty.txt:62
 msgid ""
 "Sometimes our validation email ends up in the 'spam' folder of some "
 "providers. If you have not received any email with the validation URL 5 "
@@ -4547,115 +4636,114 @@ msgstr ""
 "άχρηστα. Εάν δεν έχετε λάβει το μήνυμα επικύρωσης πέντε λεπτά από την "
 "υποβολή της φόρμας, παρακαλούμε ελέγξτε τον φάκελο με τα άχρηστα."
 
-#: smarty.txt:58
+#: smarty.txt:63
 msgid "You can also use the following links if you need help"
 msgstr ""
-"Μπορείτε να χρεισιμοποιήσετε τις ακόλουθες υπερσυνδέσεις αν χρειάζεστε "
-"βοήθεια"
+"Μπορείτε να χρησιμοποιήσετε τις ακόλουθες υπερσυνδέσεις αν χρειάζεστε βοήθεια"
 
-#: smarty.txt:61
+#: smarty.txt:66
 #, php-format
 msgid "Status of the %d open %s Hotspots"
-msgstr "Κατάσταση των % ανοιχτών % Σημείων Ασύρματης Πρόσβασης"
+msgstr "Κατάσταση των %d ανοιχτών %s Σημείων Ασύρματης Πρόσβασης"
 
-#: smarty.txt:62
+#: smarty.txt:67
 msgid "Hotspot / Status"
 msgstr "Σημείο Ασύρματης Πρόσβασης / Κατάσταση"
 
-#: smarty.txt:64
+#: smarty.txt:69
 msgid "Location"
 msgstr "Τοποθεσία"
 
-#: smarty.txt:65
+#: smarty.txt:70
 msgid "Hotspot in testing phase"
 msgstr "Σημείο Ασύρματης Πρόσβασης σε φάση ελέγχου"
 
-#: smarty.txt:66
+#: smarty.txt:71
 msgid "Hotspot not monitored"
 msgstr "Σημείο Ασύρματης Πρόσβασης που δεν παρακολουθείται"
 
-#: smarty.txt:67
+#: smarty.txt:72
 #, php-format
 msgid "Opened on %s"
-msgstr "Άνοιξε την %"
+msgstr "Άνοιξε την %s"
 
-#: smarty.txt:73
+#: smarty.txt:78
 msgid "Lost password"
 msgstr "Χαμένος κωδικός πρόσβασης"
 
-#: smarty.txt:74 smarty.txt:98
+#: smarty.txt:79 smarty.txt:103
 msgid "Your username"
 msgstr "Το όνομα χρήστη σας"
 
-#: smarty.txt:76
+#: smarty.txt:81
 #, fuzzy
 msgid "Reset my password"
 msgstr "Αλλαγή κωδικού πρόσβασης"
 
-#: smarty.txt:77
+#: smarty.txt:82
 msgid "Please enter your username or email address to reset your password"
 msgstr ""
 "Παρακαλούμε, εισάγετε το όνομα χρήστη ή την ηλεκτρονική σας διεύθυνση για να "
 "αλλάξετε τον κωδικό σας"
 
-#: smarty.txt:78
+#: smarty.txt:83
 #, php-format
 msgid "The %s network currently has one valid user."
-msgstr "Το % δίκτυο έχει έναν έγκυρο χρήστη."
+msgstr "Το %s δίκτυο έχει έναν έγκυρο χρήστη."
 
-#: smarty.txt:79
+#: smarty.txt:84
 #, php-format
 msgid "The %s network currently has %d valid users."
-msgstr "Το % δίκτυο έχει % έγκυρους χρήστες. "
+msgstr "Το %s δίκτυο έχει %d έγκυρους χρήστες. "
 
-#: smarty.txt:80
+#: smarty.txt:85 smarty.txt:116
 msgid "One user is currently online."
 msgstr "Ένας χρήστης είναι αυτή τη στιγμή συνδεδεμένος."
 
-#: smarty.txt:81
+#: smarty.txt:86 smarty.txt:117
 #, php-format
 msgid "%d users are currently online."
-msgstr "% χρήστες είναι αυτή την στιγμή συνδεδεμένοι. "
+msgstr "%d χρήστες είναι αυτή την στιγμή συνδεδεμένοι. "
 
-#: smarty.txt:82
+#: smarty.txt:87 smarty.txt:118
 msgid "This network currently has 1 deployed hotspot."
 msgstr ""
 "Αυτό το δίκτυο έχει αυτή την στιγμή ένα ανεπτυγμένο Σημείο Ασύρματης "
 "Πρόσβασης "
 
-#: smarty.txt:83
+#: smarty.txt:88 smarty.txt:119
 #, php-format
 msgid "This network currently has %d deployed hotspots."
 msgstr ""
-"Αυτό το δίκτυο έχει αυτή την στιγμή %  ανεπτυγμένα Σημεία Ασύρματης "
+"Αυτό το δίκτυο έχει αυτή την στιγμή %d  ανεπτυγμένα Σημεία Ασύρματης "
 "Πρόσβασης "
 
-#: smarty.txt:84
+#: smarty.txt:89 smarty.txt:120
 msgid "One hotspot is currently operational."
 msgstr ""
 
-#: smarty.txt:85
+#: smarty.txt:90 smarty.txt:121
 #, php-format
 msgid "%d hotspots are currently operational."
 msgstr ""
 
-#: smarty.txt:86
+#: smarty.txt:91 smarty.txt:122
 msgid ""
 "One hotspot isn't monitored so we don't know if it's currently operational."
 msgstr ""
 
-#: smarty.txt:87
+#: smarty.txt:92 smarty.txt:123
 #, php-format
 msgid ""
 "%d hotspots aren't monitored so we don't know if they are currently "
 "operational."
 msgstr ""
 
-#: smarty.txt:88
+#: smarty.txt:93
 msgid "Please get in touch with "
 msgstr "Παρακαλούμε επικοινωνήστε με"
 
-#: smarty.txt:89
+#: smarty.txt:94
 msgid ""
 "We are a not-for-profit group dedicated to making no-fee wireless Internet "
 "access generally available."
@@ -4663,7 +4751,7 @@ msgstr ""
 "Είμαστε μία μη κερδοσκοπική ομάδα αφοσιωμένη στο να κάνουμε την δωρεάν "
 "πρόσβαση στο ασύρματο διαδίκτυο γενικότερα διαθέσιμη."
 
-#: smarty.txt:90
+#: smarty.txt:95
 msgid ""
 "Our aim is to encourage the growth of wireless networking and to build "
 "community in interesting and innovative ways."
@@ -4671,7 +4759,7 @@ msgstr ""
 "Στόχος μας είναι να ενθαρρύνουμε την ανάπτυξη του ασύρματου δικτύου και να "
 "δημιουργήσουμε μία κοινότητα με νέους ενδιαφέροντες τρόπους."
 
-#: smarty.txt:91
+#: smarty.txt:96
 msgid ""
 "We do this by setting up wireless Internet networks in parks, cafés, "
 "restaurants, bars and other publically-accessible locations across the city."
@@ -4679,20 +4767,20 @@ msgstr ""
 "Αυτό το κάνουμε με την εγκατάσταση ασύρματου δικτύου σε πάρκα, καφετέρειες, "
 "εστιατόρεια, μπαρ, και άλλους δημόσιους χώρους στην πόλη. "
 
-#: smarty.txt:92
+#: smarty.txt:97
 msgid "For a complete and up-to-date listing of our nodes, visit"
 msgstr "Για έναν πλήρη και ενημερωμένο κατάλογο των κόμβων μας, επισκεφτείτε"
 
-#: smarty.txt:97
+#: smarty.txt:102
 msgid "Re-send validation email"
 msgstr "Στείλτε ξανά το ηλεκτρονικό μήνυμα επικύρωσης"
 
-#: smarty.txt:99
+#: smarty.txt:104
 #, fuzzy
 msgid "Re-send"
 msgstr "Υπόμνημα"
 
-#: smarty.txt:100
+#: smarty.txt:105
 msgid ""
 "Please enter your username and the validation email will be resent to your "
 "email address"
@@ -4700,310 +4788,61 @@ msgstr ""
 "Παρακαλούμε, εισάγετε το όνομα χρήστη και ένα μήνυμα επικύρωσης θα σταλεί "
 "ξανά στην ηλεκτρονική σας διεύθυνση"
 
-#: smarty.txt:105
+#: smarty.txt:110
 msgid "Lost username"
 msgstr "Απώλεια ονόματος χρήστη"
 
-#: smarty.txt:107
+#: smarty.txt:112
 msgid "Retrieve"
 msgstr ""
 
-#: smarty.txt:108
+#: smarty.txt:113
 msgid "Please enter your email address to recover your username"
 msgstr ""
 "Παρακαλώ, εισάγετε την ηλεκτρονική σας διεύθυνση για να ανακτήσετε το όνομα "
 "χρήστη "
 
-#: smarty.txt:109
+#: smarty.txt:114
+#, fuzzy
+msgid "The server currently has one valid user."
+msgstr "Το %s δίκτυο έχει έναν έγκυρο χρήστη."
+
+#: smarty.txt:115
+#, fuzzy, php-format
+msgid "The server currently has %d valid users."
+msgstr "Το %s δίκτυο έχει %d έγκυρους χρήστες. "
+
+#: smarty.txt:124
 msgid "User list"
 msgstr "Κατάλογος χρηστών"
 
-#: smarty.txt:110
+#: smarty.txt:125
 msgid "Sort by:"
 msgstr "Ταξινόμηση ανά:"
 
-#: smarty.txt:111
+#: smarty.txt:126
 msgid "Direction:"
 msgstr "Κατεύθυνση:"
 
-#: smarty.txt:112
+#: smarty.txt:127
 msgid "Sort"
 msgstr "Ταξινόμηση"
 
-#: smarty.txt:115
+#: smarty.txt:130
 msgid "Registered On"
 msgstr "Καταχωρημένος σε"
 
-#: smarty.txt:120
+#: smarty.txt:135
 msgid "Origin"
 msgstr "Προέλευση"
 
-#: smarty.txt:121
+#: smarty.txt:136
 msgid "Logged in Since"
 msgstr "Συνδεδεμένος από"
 
-#: smarty.txt:122
+#: smarty.txt:137
 msgid "Traffic IN/OUT"
 msgstr "Κυκλοφορία ΜΕΣΑ/ΕΞΩ"
 
-#~ msgid "Component %s is not installed (not found in %s)"
-#~ msgstr "Το συστατικό % δεν είναι εγκατεστημένο (δεν βρέθηκε σε %)"
-
-#, fuzzy
-#~ msgid "Message"
-#~ msgstr "Μήνυμα λάθους"
-
-#~ msgid "You must login before you can change your password."
-#~ msgstr "Πρέπει να συνδεθείτε προτού αλλάξετε τον κωδικό πρόσβασης"
-
-#~ msgid "You MUST fill in all the fields."
-#~ msgstr "ΠΡΕΠΕΙ να συμπληρώσετε όλα τα πεδία"
-
-#~ msgid "Your password has been changed succesfully."
-#~ msgstr "Ο κωδικός πρόσβασης άλλαξε με επιτυχία."
-
-#~ msgid "Sorry, user %s does not exist !"
-#~ msgstr "Λυπάμαι, ο χρήστης % δεν υπάρχει!"
-
-#~ msgid "The password for %s has been successfully changed."
-#~ msgstr "Ο κωδικός πρόσβασης του % άλλαξε με επιτυχία."
-
-#~ msgid "Sorry, invalid change password request !"
-#~ msgstr "Λυπούμαστε, μη έγκυρο αίτημα για αλλαγή κωδικού πρόσβασης!"
-
-#~ msgid ""
-#~ "Unable to retrieve schema version. The database schema is too old to be "
-#~ "updated."
-#~ msgstr ""
-#~ "Αδύνατη η ανάκτηση της έκδοσης σχήματος. Η σχηματική βάση δεδομένων είναι "
-#~ "πολύ παλιά για να ενημερωθεί. "
-
-#~ msgid ""
-#~ "For some reason, we were unable to determine the web site you initially "
-#~ "wanted to see.  You should now enter a web address in your URL bar."
-#~ msgstr ""
-#~ "Για κάποιο λόγο, δεν ήταν δυνατό να προσδιορίσουμε την σελίδα που θέλετε "
-#~ "να δείτε. Πρέπει να εισάγετε μία νέα διεύθυνση."
-
-#~ msgid "Real Name"
-#~ msgstr "Πραγματικό όνομα"
-
-#~ msgid "Website"
-#~ msgstr "Ιστοσελίδα"
-
-#~ msgid ""
-#~ "Sorry, no elements available at this hotspot or all elements of the "
-#~ "content group have already been shown"
-#~ msgstr ""
-#~ "Λυπούμαστε, δεν υπάρχουν διαθέσιμα στοιχεία σε αυτό το Σημείο Ασύρματης "
-#~ "Πρόσβασης, ή όλα τα στοιχεία της ομάδας περιεχομένου έχουν ήδη "
-#~ "παρουσιαστεί"
-
-#~ msgid "Picture preview"
-#~ msgstr "Προεπισκόπηση εικόνας"
-
-#~ msgid "You do not have administrator privileges"
-#~ msgstr "Δεν έχετε τα δικαιώματα του διαχειριστή"
-
-#~ msgid "You do not have owner privileges"
-#~ msgstr "Δεν έχετε τα δικαιώματα του κατόχου"
-
-#~ msgid ""
-#~ "Sorry, your %.0f minutes grace period to retrieve your email and validate "
-#~ "your account has now expired. You will have to connect to the internet "
-#~ "and validate your account from another location. For more help, please %s "
-#~ "click here %s."
-#~ msgstr ""
-#~ "Λυπούμαστε, τα % λεπτά της περιόδου χάριτος για να ανακτήσσετε το "
-#~ "ηλεκτρονικό σας μήνυμα και να επικυρώσετε τον λογαριασμό σας πέρασαν. Θα "
-#~ "πρέπει να να συνδεθείτε στο διαδίκτυο και να επικυρώσετε τον λογαριασμό "
-#~ "σας από κάποια άλλη τοποθεσία. Για βοήθεια, παρακαλούμε % πατήστε εδώ %"
-
-#~ msgid ""
-#~ "\n"
-#~ "\n"
-#~ "\n"
-#~ "Have a nice day,\n"
-#~ "The Team"
-#~ msgstr ""
-#~ "\n"
-#~ "// Καλημέρα, // Η Ομάδα"
-
-#~ msgid ""
-#~ "\n"
-#~ "Hello,\n"
-#~ "Please follow the link below to validate your account.\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Γεια σας, Παρακαλούμε να ακολουθήσετε την παρακάτω υπερσύνδεση για να "
-#~ "επικυρώσετε τον λογαριασμό σας.//\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "\n"
-#~ "Password: "
-#~ msgstr ""
-#~ "\n"
-#~ " //Κωδικός εισόδου:"
-
-#~ msgid ""
-#~ "Network::getDefaultNetwork:  Fatal error: Unable to find the default "
-#~ "network!"
-#~ msgstr ""
-#~ "Δίκτυο: λήψη του προεπιλεγμένου δικτύου: Ανεπανόρθωτο σφάλμα: Δεν είναι "
-#~ "δυνατό να βρεθεί το προεπιλεγμένο δίκτυο!"
-
-#~ msgid "Network stakeholders"
-#~ msgstr "Μέτοχοι δικτύου"
-
-#~ msgid ""
-#~ "Server::getDefaultServer: Fatal error: Unable to find the default server!"
-#~ msgstr ""
-#~ "Διακομιστής:::λήψη ΠροεπιλεγμένουΔιακομιστή: Ανεπανόρθωτο σφάλμα: Δεν "
-#~ "είναι δυνατή η εύρεση του προεπιλεγμένου διακομιστή !"
-
-#~ msgid ""
-#~ "Server::getCurrentServer: Fatal error: Unable to find a server matching "
-#~ "hostname %s in the database!"
-#~ msgstr ""
-#~ "Διακομιστής:::λήψηΤρέχονταΔιακομιστή: Ανεπανόρθωτο Σφάλμα: Δεν είναι "
-#~ "δυνατή η εύρεση διακομιστή που να ταιριάζει με το όνομα του κεντρικού "
-#~ "υπολογιστή % στην βάση δεδομένων!"
-
-#~ msgid "Server:"
-#~ msgstr "Διακομιστής:"
-
-#~ msgid "Server::getSelectServerUI: Fatal error: No servers in the database!"
-#~ msgstr ""
-#~ "Διακομιστής:::λήψηΕπιλογήΔιακομιστήUI:Ανεπανόρθωτο Σφάλμα: Δεν υπάρχουν "
-#~ "διακομιστές στην βάση δεδομένων!"
-
-#~ msgid "Server ID"
-#~ msgstr "Ταυτότητα διακομιστή "
-
-#~ msgid "Server name"
-#~ msgstr "Ονομα  διακομιστή "
-
-#~ msgid "Is this server the default server?"
-#~ msgstr "Αυτός ο  διακομιστής είναι ο προεπιλεγμένος;"
-
-#~ msgid ""
-#~ "Cannot delete default server, create another one and select it before "
-#~ "removing this one."
-#~ msgstr ""
-#~ "Δεν είναι δυνατή η διαγραφή του προεπιλεγμένου  διακομιστή, δημιουργήστε "
-#~ "έναν άλλον και επιλέξτε τον πριν μεταφέρετε αυτόν."
-
-#~ msgid "Unknown section:"
-#~ msgstr "Άγνωστο τμήμα:"
-
-#~ msgid "Node owners"
-#~ msgstr "Κάτοχοι κόμβου"
-
-#~ msgid "Remove technical officer"
-#~ msgstr "Μεταφορά τενχικού υπαλλήλου"
-
-#~ msgid "Add technical officer"
-#~ msgstr "Προσθήκη τεχνικού υπαλλήλου"
-
-#~ msgid "Technical officers"
-#~ msgstr "Τεχνικοί υπάλληλοι"
-
-#~ msgid "Invalid user!"
-#~ msgstr "Μη έγκυρος χρήστης!"
-
-#~ msgid "The user is already a technical officer of this node."
-#~ msgstr "Ο χρήστης είναι ήδη τεχνικός υπάλληλος αυτού του κόμβου"
-
-#~ msgid "Could not add owner"
-#~ msgstr "Δεν ήταν δυνατή η προσθήκη κατόχου"
-
-#~ msgid "Could not add tech officer"
-#~ msgstr "Δεν ήταν δυνατή η προσθήκη τεχνικού υπαλλήλου"
-
-#~ msgid "Could not set existing user as tech officer"
-#~ msgstr ""
-#~ "Δεν ήταν δυνατός ο ορισμός του υπάρχοντος χρήστη ως τεχνικού υπαλλήλου"
-
-#~ msgid "Could not remove owner"
-#~ msgstr "Δεν ήταν δυνατή η μεταφορά κατόχου"
-
-#~ msgid "Could not remove tech officer"
-#~ msgstr "Δεν ήταν δυνατή η μεταφορά του τεχνικού υπαλλήλου "
-
-#~ msgid ""
-#~ "Please enter your current username, your current password, and your new "
-#~ "password (with confirmation)"
-#~ msgstr ""
-#~ "Παρακαλώ εισάγετε το τρέχον όνομα χρήστη, τον τρέχοντα κωδικό πρόσβασης "
-#~ "και τον νέο σας κωδικό πρόσβασης (με επιβεβαίωση)"
-
-#~ msgid "Frequently Asked Questions"
-#~ msgstr "Συνήθεις Ερωτήσεις"
-
-#~ msgid "Q:"
-#~ msgstr "Ε:"
-
-#~ msgid "A:"
-#~ msgstr "Α:"
-
-#~ msgid ""
-#~ "Pick a username, enter your email address, and enter the password you "
-#~ "would like. An email will be sent to you with a link you can click to "
-#~ "validate your account"
-#~ msgstr ""
-#~ "Επιλέξτε ένα όνομα χρήστη, εισάγετε την ηλεκτρονική σας διεύθυνση και τον "
-#~ "κωδικό πρόσβασης που θέλετε. Θα λάβετε ένα ηλεκτρονικό μήνυμα με μία "
-#~ "υπερσύνδεση στην οποία μπορείτε να επικυρώσετε τον λογαριασμό σας."
-
-#~ msgid ""
-#~ "Once the account is created, you need Internet access in order to check "
-#~ "your email and click the validation link. In order to get temporary "
-#~ "access to the Internet during your validation period, visit any URL (for "
-#~ "example www.google.com) to get the login page again"
-#~ msgstr ""
-#~ "Μόλις δημιουργηθεί ο λογαριασμός σας, χρειάζεστε πρόσβαση στο Διαδίκτυο "
-#~ "για να ελέγξετε τα ηλεκτρονικά σας μηνύματα και να συνδεθείτε με την "
-#~ "υπερσύνδεση επικύρωσης. Για να λάβετε προσωρινή σύνδεση στο διαδίκτυο "
-#~ "κατά την διάρκεια της περιόδου επικύρωσης, επισκεφθείτε οποιαδήποτε "
-#~ "σελίδα (για παράδειγμα www.google.com) κσι θα δείτε ξανά την σελίδα "
-#~ "σύνδεσης."
-
-#~ msgid ""
-#~ "Enter your login information. You will be given 15 minutes of Internet "
-#~ "access, plenty of time to check your email and click on the link"
-#~ msgstr ""
-#~ "Εισάγετε τις πληροφορίες σύνδεσης. Θα σας δωθούν 15 λεπτά πρόσβασης στο "
-#~ "Διαδίκτυο, αρκετός χρόνος για να ελέγξετε τα ηλεκτρονικά σας μηνύματα και "
-#~ "να επισκεφθείτε την υπερσύνδεση. "
-
-#~ msgid "Once that last step is done, you will have full free Internet access"
-#~ msgstr ""
-#~ "Μόλις πραγματοποιηθεί το τελευταίο βήμα, θα έχετε δωρεάν σύνδεση στο "
-#~ "Διαδίκτυο"
-
-#~ msgid "Get this list as a PDF file"
-#~ msgstr "Λήψη αυτής της λίστας ως αρχείο PDF"
-
-#~ msgid "Get this list as a RSS feed"
-#~ msgstr "Λ'ηψη αυτής της λίστας ως τροφοδοσία RSS  "
-
-#~ msgid "Get this list for Google Earth"
-#~ msgstr "Λήψη αυτής της λίστας για το Google Earth"
-
-#~ msgid "%d hotspots are currently operationnal."
-#~ msgstr "% Σημεία Ασύρματης Πρόσβασης είναι αυτή τη στιγμή λειτουργικά."
-
-#~ msgid ""
-#~ "Because of one hotspot not being monitored we don't know if it is "
-#~ "currently operationnal."
-#~ msgstr ""
-#~ "Επειδή ένα Σημείο Ασύρματης Πρόσβασης δεν παρακολουθείται δεν γνωρίζουμε "
-#~ "εάν είναι αυτήν την στιγμή λειτουργικό ."
-
-#~ msgid ""
-#~ "Because of %d hotspots not being monitored we don't know if they are "
-#~ "currently operationnal."
-#~ msgstr ""
-#~ "Επειδή % Σημεία  Ασύρματης Πρόσβασης δεν παρακολουθούνται δεν γνωρίζουμε "
-#~ "εάν είναι αυτήν την στιγμή λειτουργικά. "
+#~ msgid "No nodes could not be found in the database"
+#~ msgstr "Δεν βρέθηκε κανένας κόμβος σε αυτήν την βάση δεδομένων"
