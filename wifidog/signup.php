@@ -321,15 +321,10 @@ $sources = array ();
 $network_array = Network::getAllNetworks();
 $default_network = Network::getDefaultNetwork();
 
-
-foreach ($network_array as $network) {
-    if ($network->getAuthenticator()->isRegistrationPermitted()) {
-        $sources[$network->getId()] = $network->getName();
+foreach ($network_array as $networkObject) {
+    if ($networkObject->getAuthenticator()->isRegistrationPermitted()) {
+        $sources[$networkObject->getId()] = $networkObject->getName();
     }
-     if ($network->getName() == $default_network)
-        $default_network_param = $network->getId();
-        //$default_network_param = $network->getAuthenticatorConstructorParams();
-
 }
 
 if (isset($sources)) {
@@ -342,7 +337,7 @@ if (isset($_REQUEST["auth_source"])) {
 }
 
 if (Server::getServer()->getUseGlobalUserAccounts())
-	$smarty->assign('SelectNetworkUI', "<input type=\"hidden\" name=\"auth_source\" value='$default_network_param' />");
+	$smarty->assign('SelectNetworkUI', "<input type=\"hidden\" name=\"auth_source\" value='".$default_network->getId()."' />");
 else
 	$smarty->assign('SelectNetworkUI', Network::getSelectUI('auth_source', array('preSelectedObject' => $network)) );
 
