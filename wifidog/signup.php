@@ -41,7 +41,7 @@
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @author     Max Horváth <max.horvath@freenet.de>
  * @copyright  2004-2006 Philippe April
- * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
+ * @copyright  2004-2009 Benoit Grégoire, Technologies Coeus inc.
  * @copyright  2006 Max Horváth, Horvath Web Consulting
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
@@ -147,10 +147,6 @@ function validate_passwords($password, $password_again)
  * Process signing up
  */
 
-// Init ALL smarty SWITCH values
-$smarty->assign('sectionTOOLCONTENT', false);
-$smarty->assign('sectionMAINCONTENT', false);
-
 // Init ALL smarty values
 $smarty->assign('username', "");
 $smarty->assign('email', "");
@@ -159,8 +155,9 @@ $smarty->assign('auth_sources', "");
 $smarty->assign('selected_auth_source', "");
 $smarty->assign('SelectNetworkUI', "");
 
+/* Signup was requested */
 if (isset ($_REQUEST["form_request"]) && $_REQUEST["form_request"] == "signup") {
-    // Secure entered values
+    // Sanitize user-entered values
     $username = trim($_REQUEST['username']);
     $email = trim($_REQUEST['email']);
     $password = trim($_REQUEST['password']);
@@ -169,35 +166,27 @@ if (isset ($_REQUEST["form_request"]) && $_REQUEST["form_request"] == "signup") 
     $smarty->assign('username', $username);
     $smarty->assign('email', $email);
 
-    $network = Network::getObject($_REQUEST['auth_source']);
+    $selectedNetwork = Network::getObject($_REQUEST['auth_source']);
 
     try {
         /*
          * Tool content
          */
 
-        // Set section of Smarty template
+        // Retrieve the TOOLCONTENT section of the Smarty template
         $smarty->assign('sectionTOOLCONTENT', true);
-
-        // Compile HTML code
-        $html = $smarty->fetch("templates/sites/signup.tpl");
+        $smarty->assign('sectionMAINCONTENT', false);
+        $htmlToolContent = $smarty->fetch("templates/sites/signup.tpl");
 
         /*
          * Main content
          */
 
-        // Reset ALL smarty SWITCH values
-        $smarty->assign('sectionTOOLCONTENT', false);
-        $smarty->assign('sectionMAINCONTENT', false);
-
-        // Set section of Smarty template
-        $smarty->assign('sectionMAINCONTENT', true);
-
-        if (!isset($network)) {
+        if (!isset($selectedNetwork)) {
             throw new Exception(_("Sorry, this network does not exist !"));
         }
 
-        if (!$network->getAuthenticator()->isRegistrationPermitted()) {
+        if (!$selectedNetwork->getAuthenticator()->isRegistrationPermitted()) {
             throw new Exception(_("Sorry, this network does not accept new user registration !"));
         }
 
@@ -207,31 +196,31 @@ if (isset ($_REQUEST["form_request"]) && $_REQUEST["form_request"] == "signup") 
         validate_passwords($password, $password_again);
 
         // Check if user exists
-        if (User::getUserByUsernameAndOrigin($username, $network)) {
+        if (User::getUserByUsernameAndOrigin($username, $selectedNetwork)) {
             throw new Exception(_("Sorry, a user account is already associated to this username. Pick another one."));
         }
 
-        if (User::getUserByEmailAndOrigin($email, $network)) {
+        if (User::getUserByEmailAndOrigin($email, $selectedNetwork)) {
             throw new Exception(_("Sorry, a user account is already associated to this email address."));
         }
 
         // Create user and send him the validation email
-        $created_user = User::createUser(get_guid(), $username, $network, $email, $password);
+        $created_user = User::createUser(get_guid(), $username, $selectedNetwork, $email, $password);
         $created_user->sendValidationEmail();
 
-		// Authenticate this new user automatically
-		$errmsg = "";
-		$authenticated_user = $network->getAuthenticator()->login($username, $password, $errmsg);
+        // Authenticate this new user automatically
+        $errmsg = "";
+        $authenticated_user = $selectedNetwork->getAuthenticator()->login($username, $password, $errmsg);
 
-		// While in validation period, alert user that he should validate his account ASAP
-		$validationMsgHtml = "<div id='warning_message_area'>\n";
-		$validationMsgHtml .= _("An email with confirmation instructions was sent to your email address.");
-		$validationMsgHtml .= sprintf(_("Your account has been granted %s minutes of access to retrieve your email and validate your account."), ($network->getValidationGraceTime() / 60));
-		$validationMsgHtml .= _('You may now open a browser window or start your email client and go to any remote Internet address to obtain the validation email.');
-		$validationMsgHtml .= "</div>\n";
+        // While in validation period, alert user that he should validate his account ASAP
+        $validationMsgHtml = "<div id='warning_message_area'>\n";
+        $validationMsgHtml .= _("An email with confirmation instructions was sent to your email address.");
+        $validationMsgHtml .= sprintf(_("Your account has been granted %s minutes of access to retrieve your email and validate your account."), ($selectedNetwork->getValidationGraceTime() / 60));
+        $validationMsgHtml .= _('You may now open a browser window or start your email client and go to any remote Internet address to obtain the validation email.');
+        $validationMsgHtml .= "</div>\n";
 
-        // If the user is at a REAL hotspot, give him his sign-up minutes right away
-		$session = Session::getObject();
+        // If the user is at a REAL hotspot, login the user and give him his sign-up minutes right away
+        $session = Session::getObject();
         $gw_id = $session->get(SESS_GW_ID_VAR);
         $gw_address = $session->get(SESS_GW_ADDRESS_VAR);
         $gw_port = $session->get(SESS_GW_PORT_VAR);
@@ -246,39 +235,36 @@ if (isset ($_REQUEST["form_request"]) && $_REQUEST["form_request"] == "signup") 
                 $redirURL = BASE_NON_SSL_PATH;
             }
 
-			MainUI::redirect($redirURL, 0);
+            MainUI::redirect($redirURL, 0);
         }
-
+        // Set section of Smarty template
+        $smarty->assign('sectionTOOLCONTENT', false);
+        $smarty->assign('sectionMAINCONTENT', true);
         // Compile HTML code
-        $html_body = $smarty->fetch("templates/sites/signup.tpl");
+        $htmlMainContent = $smarty->fetch("templates/sites/signup.tpl");
 
         /*
-         * Render output
+         * Render output (siggess message)
          */
         $ui = MainUI::getObject();
 
-        $ui->addContent('left_area_middle', $html);
-        $ui->addContent('main_area_middle', $html_body);
+        $ui->addContent('left_area_middle', $htmlToolContent);
+        $ui->addContent('main_area_middle', $htmlMainContent);
 
-		// $ui->addContent('page_header', $validationMsgHtml);
-		$ui->addContent('main_area_top', $validationMsgHtml);
+        // $ui->addContent('page_header', $validationMsgHtml);
+        $ui->addContent('main_area_top', $validationMsgHtml);
 
         $ui->display();
 
         // We're done ...
         exit;
     }
-
     catch (Exception $e) {
         $smarty->assign('error', $e->getMessage());
 
         // Reset HTML output
-        $html = "";
-        $html_body = "";
-
-        // Reset ALL smarty SWITCH values
-        $smarty->assign('sectionTOOLCONTENT', false);
-        $smarty->assign('sectionMAINCONTENT', false);
+        $htmlToolContent = "";
+        $htmlMainContent = "";
     }
 }
 
@@ -286,70 +272,45 @@ if (isset ($_REQUEST["form_request"]) && $_REQUEST["form_request"] == "signup") 
  * Tool content
  */
 
-if (isset ($_REQUEST["form_request"]) && $_REQUEST["form_request"] == "login") {
-    $username = trim($_REQUEST['username']);
-	if (strpos($username, "@") === false)
-		$smarty->assign('username', $username);
-	else {
-		$email = $username;
-		$username = "";
-		$smarty->assign('email', $email);
-	}
-}
-
 // Set section of Smarty template
 $smarty->assign('sectionTOOLCONTENT', true);
+$smarty->assign('sectionMAINCONTENT', false);
 
 // Compile HTML code
-$html = $smarty->fetch("templates/sites/signup.tpl");
+$htmlToolContent = $smarty->fetch("templates/sites/signup.tpl");
 
 /*
  * Main content
  */
 
-// Reset ALL smarty SWITCH values
-$smarty->assign('sectionTOOLCONTENT', false);
-$smarty->assign('sectionMAINCONTENT', false);
+// Use the account_origin along, if it was set (it may be set in case there was an error processing the form).
+if (isset($_REQUEST["auth_source"])) {
+    $selectedNetwork = Network::getObject($_REQUEST['auth_source']);
+}
+else {
+    $selectedNetwork = Network::getDefaultNetwork();
+}
+
+if (Server::getServer()->getUseGlobalUserAccounts()){
+    $smarty->assign('SelectNetworkUI', "<input type=\"hidden\" name=\"auth_source\" value='".$selectedNetwork->getId()."' />");
+}
+else {
+    //Make sure to only list networks whose authenticator allows user self-signup
+    $smarty->assign('SelectNetworkUI', Network::getSelectUI('auth_source', array('preSelectedObject' => $selectedNetwork, 'onlyNetwoksAllowingSignup' => true)) );
+}
 
 // Set section of Smarty template
+$smarty->assign('sectionTOOLCONTENT', false);
 $smarty->assign('sectionMAINCONTENT', true);
-
-// Add the auth servers list to smarty variables
-$sources = array ();
-
-// Preserve keys
-$network_array = Network::getAllNetworks();
-$default_network = Network::getDefaultNetwork();
-
-foreach ($network_array as $networkObject) {
-    if ($networkObject->getAuthenticator()->isRegistrationPermitted()) {
-        $sources[$networkObject->getId()] = $networkObject->getName();
-    }
-}
-
-if (isset($sources)) {
-    $smarty->assign('auth_sources', $sources);
-}
-
-// Pass the account_origin along, if it's set
-if (isset($_REQUEST["auth_source"])) {
-    $smarty->assign('selected_auth_source', $_REQUEST["auth_source"]);
-}
-
-if (Server::getServer()->getUseGlobalUserAccounts())
-	$smarty->assign('SelectNetworkUI', "<input type=\"hidden\" name=\"auth_source\" value='".$default_network->getId()."' />");
-else
-	$smarty->assign('SelectNetworkUI', Network::getSelectUI('auth_source', array('preSelectedObject' => $network)) );
-
 // Compile HTML code
-$html_body = $smarty->fetch("templates/sites/signup.tpl");
+$htmlMainContent = $smarty->fetch("templates/sites/signup.tpl");
 
 /*
- * Render output
+ * Render final output
  */
 $ui = MainUI::getObject();
-$ui->addContent('left_area_middle', $html);
-$ui->addContent('main_area_middle', $html_body);
+$ui->addContent('left_area_middle', $htmlToolContent);
+$ui->addContent('main_area_middle', $htmlMainContent);
 $ui->display();
 
 /*
@@ -359,5 +320,3 @@ $ui->display();
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
-?>

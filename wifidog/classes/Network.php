@@ -242,6 +242,7 @@ class Network extends GenericDataObject
      *	$userData['additionalWhere'] Additional SQL conditions for the
      *                                    objects to select
      *	$userData['allowEmpty'] boolean Allow not selecting any object
+     *  $userData['onlyNetwoksAllowingSignup'] boolean Only list networks allowing user self-signup
      * @return string HTML markup
 
      */
@@ -256,6 +257,7 @@ class Network extends GenericDataObject
         !empty($userData['allowEmpty'])?$allow_empty=$userData['allowEmpty']:$allow_empty=false;
         !empty($userData['nullCaptionString'])?$nullCaptionString=$userData['nullCaptionString']:$nullCaptionString=null;
         !empty($userData['onChange'])?$onChangeString=$userData['onChange']:$onChangeString="";
+        !empty($userData['onlyNetwoksAllowingSignup'])?$onlyNetwoksAllowingSignup=$userData['onlyNetwoksAllowingSignup']:$onlyNetwoksAllowingSignup=false;
 
         $db = AbstractDb::getObject();
         $sql = "SELECT network_id, name FROM networks WHERE 1=1 $additional_where";
@@ -269,9 +271,12 @@ class Network extends GenericDataObject
         if ($number_of_networks > 1) {
             $i = 0;
             foreach ($network_rows as $network_row) {
-                $tab[$i][0] = $network_row['network_id'];
-                $tab[$i][1] = $network_row['name'];
-                $i ++;
+                
+                if($onlyNetwoksAllowingSignup==false || (self::getObject($network_row['network_id'])->getAuthenticator()->isRegistrationPermitted())==true){
+                    $tab[$i][0] = $network_row['network_id'];
+                    $tab[$i][1] = $network_row['name'];
+                    $i ++;
+                }
             }
             $html .= _("Network:")." \n";
             $html .= FormSelectGenerator :: generateFromArray($tab, $selected_id, $name, null, $allow_empty, $nullCaptionString, "onchange='$onChangeString'");
@@ -370,7 +375,7 @@ class Network extends GenericDataObject
         $db = AbstractDb::getObject();
         $network_id_str = $db->escapeString($p_network_id);
         if ($network_id_str == "")
-            $network_id_str = $db->escapeString(self::getDefaultNetwork()->getId());
+        $network_id_str = $db->escapeString(self::getDefaultNetwork()->getId());
 
         $sql = "SELECT *, EXTRACT(EPOCH FROM validation_grace_time) as validation_grace_time_seconds FROM networks WHERE network_id='$network_id_str'";
         $row = null;
@@ -1422,43 +1427,43 @@ class Network extends GenericDataObject
         return $retval;
     }
 
-      /** 
-      * Are nodes allowed to redirect users to the original requested web page instead of 
-      * the portal? 
-      * 
-      * @return bool True or false 
-      * 
-      * @access public 
-      */ 
-     public function getPortalOriginalUrlAllowed() 
-     { 
-         return (($this->_row['allow_original_url_redirect'] == 't') ? true : false); 
-     } 
-  
-     /** 
-      * Set if nodes are allowed to redirect users to the original requested web page 
-      * instead of the portal? 
-      * 
-      * @param bool $value The new value, true or false 
-      * 
-      * @return bool True on success, false on failure 
-      * 
-      * @access public 
-      */ 
-     public function setPortalOriginalUrlAllowed($value) 
-     { 
-         // Init values 
-         $retval = true; 
-  
-         if ($value != $this->getPortalOriginalUrlAllowed()) { 
-             $db = AbstractDb::getObject(); 
-             $value ? $value = 'TRUE' : $value = 'FALSE'; 
-             $retval = $db->execSqlUpdate("UPDATE networks SET allow_original_url_redirect = {$value} WHERE network_id = '{$this->getId()}'", false); 
-             $this->refresh(); 
-         } 
-  
-         return $retval; 
-     } 
+    /**
+     * Are nodes allowed to redirect users to the original requested web page instead of
+     * the portal?
+     *
+     * @return bool True or false
+     *
+     * @access public
+     */
+    public function getPortalOriginalUrlAllowed()
+    {
+        return (($this->_row['allow_original_url_redirect'] == 't') ? true : false);
+    }
+
+    /**
+     * Set if nodes are allowed to redirect users to the original requested web page
+     * instead of the portal?
+     *
+     * @param bool $value The new value, true or false
+     *
+     * @return bool True on success, false on failure
+     *
+     * @access public
+     */
+    public function setPortalOriginalUrlAllowed($value)
+    {
+        // Init values
+        $retval = true;
+
+        if ($value != $this->getPortalOriginalUrlAllowed()) {
+            $db = AbstractDb::getObject();
+            $value ? $value = 'TRUE' : $value = 'FALSE';
+            $retval = $db->execSqlUpdate("UPDATE networks SET allow_original_url_redirect = {$value} WHERE network_id = '{$this->getId()}'", false);
+            $this->refresh();
+        }
+
+        return $retval;
+    }
 
 
     /** The length of the window during which the user must not have exceeded the limits below.

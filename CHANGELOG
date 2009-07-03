@@ -1,4 +1,7 @@
 # $Id$
+2009-07-03 Benoit Grégoire <benoitg@coeus.ca>
+	* Refactor signup.php.  The code flow is still annoyingly unclear complex, but the file is shorter and hopefully easier to debug (and hopefully fixes #593)
+
 2009-06-26 Benoit Grégoire <benoitg@coeus.ca>
 	* Updated greek translation by bill@e-texnologia.gr and strzol@gmail.com, still needs some work.
 	
