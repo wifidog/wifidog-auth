@@ -211,6 +211,9 @@ if (isset ($_REQUEST["form_request"]) && $_REQUEST["form_request"] == "signup") 
         // Authenticate this new user automatically
         $errmsg = "";
         $authenticated_user = $selectedNetwork->getAuthenticator()->login($username, $password, $errmsg);
+        if (!empty($authenticated_user)) {
+            throw new Exception(_("Unable to authenticate newly created user.  Please report this bug.  Error was: $errmsg"));
+        }
 
         // While in validation period, alert user that he should validate his account ASAP
         $validationMsgHtml = "<div id='warning_message_area'>\n";
