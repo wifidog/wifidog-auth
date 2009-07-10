@@ -53,8 +53,6 @@ class ProfileTemplateField extends GenericDataObject {
     private $profile_template_field_row;
     private $display_label_content = null;
     private $content_type_filter = null;
-    
-    private $id = null;
 
     /**
      * Constructor
@@ -72,7 +70,7 @@ class ProfileTemplateField extends GenericDataObject {
         $sql = "SELECT * FROM profile_template_fields WHERE profile_template_field_id = '{$profile_template_field_id}'";
         $db->execSqlUniqueRes($sql, $row, false);
 
-		$this->id = $row['profile_template_field_id'];
+		$this->_id = $row['profile_template_field_id'];
         $this->profile_template_field_row = $row;
     }
     
@@ -253,7 +251,7 @@ class ProfileTemplateField extends GenericDataObject {
             $new_admin_label_content_id_sql = "NULL";
         }
 
-        $db->execSqlUpdate("UPDATE profile_template_fields SET admin_label_content_id = $new_admin_label_content_id_sql WHERE profile_template_field_id = '$this->id'", false);
+        $db->execSqlUpdate("UPDATE profile_template_fields SET admin_label_content_id = $new_admin_label_content_id_sql WHERE profile_template_field_id = '$this->_id'", false);
 
         if ($old_admin_label_content != null) {
             $old_admin_label_content->delete($errmsg);
@@ -301,7 +299,7 @@ class ProfileTemplateField extends GenericDataObject {
             $this->display_label_content = null;
         }
 
-        $db->execSqlUpdate("UPDATE profile_template_fields SET display_label_content_id = $new_display_label_content_id_sql WHERE profile_template_field_id = '$this->id'", false);
+        $db->execSqlUpdate("UPDATE profile_template_fields SET display_label_content_id = $new_display_label_content_id_sql WHERE profile_template_field_id = '$this->_id'", false);
 
         if ($old_display_label_content != null) {
             $old_display_label_content->delete($errmsg);
@@ -347,7 +345,7 @@ class ProfileTemplateField extends GenericDataObject {
              * Only update database if there is an actual change
              */
             $order = $db->escapeString($order);
-            $db->execSqlUpdate("UPDATE profile_template_fields SET display_order = $order WHERE profile_template_field_id = '$this->id'", false);
+            $db->execSqlUpdate("UPDATE profile_template_fields SET display_order = $order WHERE profile_template_field_id = '$this->_id'", false);
             $this->refresh();
         }
     }
@@ -377,7 +375,7 @@ class ProfileTemplateField extends GenericDataObject {
              * Only update database if there is an actual change
              */
             $semantic_id = $db->escapeString($semantic_id);
-            $db->execSqlUpdate("UPDATE profile_template_fields SET semantic_id = '{$semantic_id}' WHERE profile_template_field_id = '$this->id'", false);
+            $db->execSqlUpdate("UPDATE profile_template_fields SET semantic_id = '{$semantic_id}' WHERE profile_template_field_id = '$this->_id'", false);
             $this->refresh();
         }
     }
@@ -403,7 +401,7 @@ class ProfileTemplateField extends GenericDataObject {
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<div class='admin_element_label'>"._("Display order").":</div>\n";
         $html .= "<div class='admin_element_data'>\n";
-        $name = "profile_template_field_{$this->id}_display_order";
+        $name = "profile_template_field_{$this->_id}_display_order";
         $html .= "<input type='text' name='$name' value='" . $this->getDisplayOrder() . "' size='2'>\n";
         $html .= "</div>\n";
         $html .= "</li>\n";
@@ -433,14 +431,14 @@ class ProfileTemplateField extends GenericDataObject {
         $html .= "<li class='admin_element_item_container'>\n";
         $html .= "<div class='admin_element_label'>" . _("Display label") . ":</div>\n";
         if (empty ($this->profile_template_field_row['display_label_content_id'])) {
-            $html .= Content :: getNewContentUI("profile_template_field_{$this->id}_new_display_label_content", $metadada_allowed_content_types);
+            $html .= Content :: getNewContentUI("profile_template_field_{$this->_id}_new_display_label_content", $metadada_allowed_content_types);
 	        $html .= "</li>\n";
         } else {
             $display_label_content = Content :: getObject($this->profile_template_field_row['display_label_content_id']);
             $html .= $display_label_content->getAdminUI(null, sprintf(_("%s display label (%s)"), get_class($this), get_class($display_label_content)));
             
             $html .= "<div class='admin_element_tools'>\n";
-            $name = "profile_template_field_{$this->id}_erase_display_label_content";
+            $name = "profile_template_field_{$this->_id}_erase_display_label_content";
             $html .= "<input type='submit' name='$name' value='".sprintf(_("Delete %s (%s)"), _("display label"), get_class($display_label_content))."'>";
             $html .= "</div>\n";
         }
@@ -451,14 +449,14 @@ class ProfileTemplateField extends GenericDataObject {
         $html .= "<div class='admin_element_label'>" . _("Admin label") . ":</div>\n";
         if (empty ($this->profile_template_field_row['admin_label_content_id'])) {
             $html .= "<li class='admin_element_item_container'>\n";
-            $html .= Content :: getNewContentUI("profile_template_field_{$this->id}_new_admin_label_content", $metadada_allowed_content_types);
+            $html .= Content :: getNewContentUI("profile_template_field_{$this->_id}_new_admin_label_content", $metadada_allowed_content_types);
 	        $html .= "</li>\n";
         } else {
             $admin_label_content = Content :: getObject($this->profile_template_field_row['admin_label_content_id']);
             $html .= $admin_label_content->getAdminUI(null, sprintf(_("%s admin label (%s)"), get_class($this), get_class($admin_label_content)));
             
             $html .= "<div class='admin_element_tools'>\n";
-            $name = "profile_template_field_{$this->id}_erase_admin_label_content";
+            $name = "profile_template_field_{$this->_id}_erase_admin_label_content";
             $html .= "<input type='submit' name='$name' value='".sprintf(_("Delete %s (%s)"), _("admin label"), get_class($admin_label_content))."'>";
             $html .= "</div>\n";
         }
@@ -469,7 +467,7 @@ class ProfileTemplateField extends GenericDataObject {
         $html .= "<div class='admin_element_label'>"._("Semantic ID").":</div>\n";
         $html .= "<div class='admin_element_data'>\n";
         
-        $name = "profile_template_field_{$this->id}_semantic_id";
+        $name = "profile_template_field_{$this->_id}_semantic_id";
         $html .= "<input type='text' name='$name' value='" . $this->getSemanticId() . "' size='15'>\n";
         
         $semantic_id_presets = array (
@@ -513,13 +511,13 @@ class ProfileTemplateField extends GenericDataObject {
         $errmsg = "";
 
         // display_order 
-        $name = "profile_template_field_{$this->id}_display_order";
+        $name = "profile_template_field_{$this->_id}_display_order";
         $this->setDisplayOrder($_REQUEST[$name]);
 
         // display_label_content_id 
         if (empty($this->profile_template_field_row['display_label_content_id'])) {
             // Could be either a new content or existing content ( try both successively )
-            $display_label_content = Content :: processNewContentUI("profile_template_field_{$this->id}_new_display_label_content");
+            $display_label_content = Content :: processNewContentUI("profile_template_field_{$this->_id}_new_display_label_content");
 
             if ($display_label_content != null) {
             	$this->replaceDisplayLabelContent($display_label_content);
@@ -527,7 +525,7 @@ class ProfileTemplateField extends GenericDataObject {
         } else {
             $display_label_content = Content :: getObject($this->profile_template_field_row['display_label_content_id']);
             
-            $name = "profile_template_field_{$this->id}_erase_display_label_content";
+            $name = "profile_template_field_{$this->_id}_erase_display_label_content";
             if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true) {
             	$this->replaceDisplayLabelContent(null);
             } else {
@@ -538,7 +536,7 @@ class ProfileTemplateField extends GenericDataObject {
         // admin_label_content_id 
         if (empty($this->profile_template_field_row['admin_label_content_id'])) {
             // Could be either a new content or existing content ( try both successively )
-            $admin_label_content = Content :: processNewContentUI("profile_template_field_{$this->id}_new_admin_label_content");
+            $admin_label_content = Content :: processNewContentUI("profile_template_field_{$this->_id}_new_admin_label_content");
 
             if ($admin_label_content != null) {
             	$this->replaceAdminLabelContent($admin_label_content);
@@ -546,7 +544,7 @@ class ProfileTemplateField extends GenericDataObject {
         } else {
             $admin_label_content = Content :: getObject($this->profile_template_field_row['admin_label_content_id']);
             
-            $name = "profile_template_field_{$this->id}_erase_admin_label_content";
+            $name = "profile_template_field_{$this->_id}_erase_admin_label_content";
             if (!empty ($_REQUEST[$name]) && $_REQUEST[$name] == true) {
             	$this->replaceAdminLabelContent(null);
             } else {
@@ -555,7 +553,7 @@ class ProfileTemplateField extends GenericDataObject {
         }
         
         // semantic_id 
-        $name = "profile_template_field_{$this->id}_semantic_id";
+        $name = "profile_template_field_{$this->_id}_semantic_id";
         $this->setSemanticId($_REQUEST[$name]);
         
         $this->refresh();
@@ -605,7 +603,7 @@ class ProfileTemplateField extends GenericDataObject {
     }
     /** Reloads the object from the database.  Should normally be called after a set operation */
     protected function refresh() {
-        $this->__construct($this->id);
+        $this->__construct($this->_id);
     }
 }
 

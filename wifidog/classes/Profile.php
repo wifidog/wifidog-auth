@@ -319,10 +319,13 @@ class Profile implements GenericObject {
         $template = $this->getTemplate();
         // Aggregate the fields UI
         $profileFields = $this->getFields();
+        //var_dump($profileFields);
         foreach ($template->getFields() as $templateField) {
+            //var_dump($templateField);
             if(!empty($profileFields[$templateField->getId()])) {
                 //We already have a real field instanciated
                 $field=$profileFields[$templateField->getId()];
+                //var_dump($field);
                 $profileFieldsUI[] = InterfaceElements::genSectionItem($field->getAdminUI());
             }
             else {
