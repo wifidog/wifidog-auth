@@ -87,7 +87,7 @@ class Langstring extends Content {
      * Returns the first available string in the user's language, faling that in the
      * same major language (first part of the locale), failing that the first available
      * string
-     * @param bool verbose : Should the function verbose when a string is empty ?
+     * @param bool verbose : Should the function be verbose when a string is empty ?
      * @return UTF-8 string
      */
     public function getString($verbose = true) {

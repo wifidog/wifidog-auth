@@ -172,8 +172,9 @@ class SimpleString extends Langstring
      *
      * @return string Returns the content
      */
-    public function __toString($verbose = true)
+    public function __toString()
     {
+        $verbose = true;
         return strip_tags($this->getString($verbose));
     }
 
