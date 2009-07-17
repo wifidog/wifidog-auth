@@ -160,13 +160,13 @@ class User implements GenericObject {
 
         $username_str = $db->escapeString($username);
         $account_origin_str = $db->escapeString($account_origin->getId());
-        $db->execSqlUniqueRes("SELECT user_id FROM users WHERE username = '$username_str' AND account_origin = '$account_origin_str'", $user_info, false);
+        $db->execSqlUniqueRes("SELECT user_id FROM users WHERE username = '$username_str' OR email = '$username_str' AND account_origin = '$account_origin_str'", $user_info, false);
 
         if ($user_info != null) {
             $object = self::getObject($user_info['user_id']);
         }
         else if (!empty($username)) {
-            $errMsg .= sprintf(_("There is no user with username %s"),$username);
+            $errMsg .= sprintf(_("There is no user with username or email %s"),$username);
         }
         return $object;
     }
@@ -812,9 +812,9 @@ class User implements GenericObject {
             ));
             $userSelector .= InterfaceElements :: generateInputSubmit($add_button_name, $add_button_value);
         } else {
-            $userSelector = _("Username") . ": " . InterfaceElements :: generateInputText("select_user_" . $user_prefix . "_username");
+            $userSelector = _("Search for Username or Email Address") . ": " . InterfaceElements :: generateInputText("select_user_" . $user_prefix . "_username");
         }
-        $html = "<div class='user_select_user_ui_container'>".$networkSelector . $userSelector . "</div>\n";
+        $html = "<div class='user_select_user_ui_container'>".$networkSelector . "<br>" . $userSelector . "</div>\n";
         return $html;
     }
 
@@ -864,8 +864,18 @@ class User implements GenericObject {
             $title = _("Username");
             $name = "user_" . $this->getId() . "_username";
             $content = "<input type='text' name='$name' value='" . htmlentities($this->getUsername()) . "' size=30><br/>\n";
-            $content .= _("Be carefull when changing this: it's the username you use to log in!");
+            $content .= _("Be careful when changing this: it's the username you use to log in!");
             $userPreferencesItems[] = InterfaceElements::genSectionItem($content, $title);
+
+
+	    /* Email */
+            $title = _("Email");
+            $name = "email_" . $this->getId() . "_email";
+            $content = "<input type='text' name='$name' disabled='disabled' value='" . htmlentities($this->getEmail()) . "' size=30><br/>\n";
+            $content .= _("If you wish to change this address, please Email Support!");
+            $userPreferencesItems[] = InterfaceElements::genSectionItem($content, $title);
+
+
 
             /* Change password */
             $changePasswordItems=array();
