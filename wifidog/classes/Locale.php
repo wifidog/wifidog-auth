@@ -43,30 +43,7 @@
 
 error_reporting(E_ALL);
 
-// Detect Gettext support.
-if (!function_exists('gettext')) {
-    /**
-     * Define Gettext has NOT been found on the system
-     */
-    define('GETTEXT_AVAILABLE', false);
-
-    // Redefine the gettext functions if gettext isn't installed.
-
-    function gettext($string) {
-        return $string;
-    }
-
-    function _($string) {
-        return $string;
-    }
-} else {
-    /**
-     * Define Gettext has been found on the system
-     *
-     * @ignore
-     */
-    define('GETTEXT_AVAILABLE', true);
-}
+require_once('classes/LocaleList.php');//Must be included here so gettext availability is managed properly
 require_once('classes/Session.php');
 /**
  * Designates a human language, possibly localized ie fr_CA
@@ -92,7 +69,7 @@ class Locale {
         $this->mLang = $matches[1];
 
         if ($this->mLang == null) {
-            throw new Exception(_("Locale(): Could not a locale matching $locale"), EXCEPTION_CREATE_OBJECT_FAILED);
+            throw new Exception(_("Locale(): Could not find a locale matching $locale"), EXCEPTION_CREATE_OBJECT_FAILED);
         }
 
         if (empty ($matches[2])) {

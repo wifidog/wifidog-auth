@@ -40,7 +40,30 @@
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
  */
+// Detect Gettext support.
+if (!function_exists('gettext')) {
+    /**
+     * Define Gettext has NOT been found on the system
+     */
+    define('GETTEXT_AVAILABLE', false);
 
+    // Redefine the gettext functions if gettext isn't installed.
+
+    function gettext($string) {
+        return $string;
+    }
+
+    function _($string) {
+        return $string;
+    }
+} else {
+    /**
+     * Define Gettext has been found on the system
+     *
+     * @ignore
+     */
+    define('GETTEXT_AVAILABLE', true);
+}
 /**
  * Représente une liste de tous les languages humains en usage dans le système,
  * selon les différentes normes internationales.
