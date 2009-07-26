@@ -1,5 +1,13 @@
 # $Id$
 
+2009-07-26 Robin Jones
+	* Addded New Geocoders Yahoo and Google.
+	* Geocoder now defaults to google if no country specific Geocoder is found (in future, this will be made selectable by network)
+	* Fixed Postcode search on Find Hotspot Map #436
+	* Added search for user by email closes #417
+	* Added validation to networkID to stop database errors, closes #458
+	
+
 2009-07-10 Benoit Grégoire <benoitg@coeus.ca>
 	* Fix bug editing user profiles introduced in [1339].
 

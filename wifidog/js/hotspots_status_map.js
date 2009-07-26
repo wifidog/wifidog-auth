@@ -41,6 +41,9 @@
  * @link       http://www.wifidog.org/
  */
 
+// Create a Global array that will contain refs to markers
+var markers = new Array();
+
 // Translations
 function HotspotsMapTranslations(browser_support, homepage, show_on_map, loading)
 {
@@ -63,7 +66,7 @@ function HotspotsMap(viewport, external_object_name, translations, images_path)
         this.map.addControl(new GMapTypeControl());
 
         // Create the array that will contain refs to markers
-        this.markers = Array();
+        //markers = Array();
 
         // Init source url
         this.xml_source = null;
@@ -84,31 +87,40 @@ HotspotsMap.prototype.getGPointFromPostalCode = function(postal_code)
     // Save the reference to "this" in a global var for async needs
     var self = this;
     GDownloadUrl("geocoder.php?postal_code=" + postal_code, function(data, responseCode) {
-	    var root_node = GXml.parse(data).documentElement
+        // To ensure against HTTP errors that result in null or bad data,
+        // always check status code is equal to 200 before processing the data
+        if(responseCode == 200) {
+	        var root_node = GXml.parse(data).documentElement
 	    	self.findClosestHotspotByCoords(new GLatLng(GXml.value(root_node.getElementsByTagName("lat")[0]), GXml.value(root_node.getElementsByTagName("long")[0])));
+        }else if(responseCode == -1) {
+    alert("Data request timed out. Please try later.");
+  } else { 
+    alert("Request resulted in error. Check XML file is retrievable.");
+  }
+
 	});
 }
 
+
 HotspotsMap.prototype.findClosestHotspotByPostalCode = function(postal_code)
 {
-    if (postal_code != undefined && this.markers.length > 0) {
+    if (postal_code != undefined && markers.length > 0) {
         this.getGPointFromPostalCode(postal_code);
     }
 }
 
 HotspotsMap.prototype.findClosestHotspotByCoords = function(coord)
 {
-    if (coord != null && this.markers.length > 0) {
+    if (coord != null && markers.length > 0) {
         // Init values
         var dist = null;
         var hotspot_id = null;
 
         // For each registered markers
-        for(i in this.markers) {
-        	   if(this.markers[i] && this.markers[i].getPoint) {
+        for(i in markers) {
+        	   if(markers[i] && markers[i].getPoint) {
 	            // Compute the distance in meters between the two points
-	            tmp = coord.distanceFrom( this.markers[i].getPoint());
-
+	            tmp = coord.distanceFrom( markers[i].getPoint());
 	            if(dist == null || tmp < dist) {
 	                dist = tmp
 	                hotspot_id = i;
@@ -260,7 +272,7 @@ HotspotsMap.prototype.createInfoBubble = function(point, icon, html)
 HotspotsMap.prototype.openInfoBubble = function(bubbleId)
 {
     // Trigger click ( NB. markers is a global var )
-    GEvent.trigger(this.markers[bubbleId], "click");
+    GEvent.trigger(markers[bubbleId], "click");
 }
 
 HotspotsMap.prototype.loadHotspotsStatus = function()
@@ -334,13 +346,14 @@ HotspotsMap.prototype.parseHotspotsStatus = function(xml_doc)
 
             // Prepare fragment that will go in the sidebar
             var html = this.buildHtmlFromHotspot(hotspots[i], markerIcon);
-            html_list += html + "<br /><br /><a href=\"javascript:" + this.external_object_name +".openInfoBubble('" + GXml.value(hotspotId[0]) + "');\">" + this.translations.show_on_map + "</a><hr width='95%'/>";
+            html_list += html + "<br /><br /><a href=\"javascript:" + this.external_object_name +".openInfoBubble('" + markers.length + "');\">" + this.translations.show_on_map + "</a><hr width='95%'/>";
 
             // Create, save as ID and add the marker
             var marker = this.createInfoBubble(point, markerIcon, html);
 
             // markers is a global var
-            this.markers[GXml.value(hotspotId[0])] = marker;
+            //markers[GXml.value(hotspotId[0])] = marker;
+            markers[markers.length] = marker;
             this.map.addOverlay(marker);
         }
     }
@@ -351,8 +364,8 @@ HotspotsMap.prototype.parseHotspotsStatus = function(xml_doc)
 
 HotspotsMap.prototype.redraw = function()
 {
-    for (i = 0;i < this.markers.length;i++) {
-        this.map.removeOverlay(this.markers[i]);
+    for (i = 0;i < markers.length;i++) {
+        this.map.removeOverlay(markers[i]);
     }
 
     this.hotspots_info_list.innerHTML = this.translations.loading;

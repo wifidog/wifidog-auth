@@ -172,6 +172,28 @@ class User implements GenericObject {
     }
 
     /** Instantiate a user object
+     * @param $usernameOrEmail The username or the email address of the user
+     * @param &$errMsg An error message will be appended to this if the username is not empty, but the user doesn't exist.
+     * @return a User object, or null if there was an error
+     */
+    public static function getUserByUsernameOrEmail($usernameOrEmail, &$errMsg = null) {
+        $db = AbstractDb::getObject();
+        $object = null;
+
+        $usernameOrEmail_str = $db->escapeString($usernameOrEmail);
+        $db->execSqlUniqueRes("SELECT user_id FROM users WHERE username ILike '$usernameOrEmail_str' OR email ILike '$usernameOrEmail_str'", $user_info, false);
+
+        if ($user_info != null) {
+            $object = self::getObject($user_info['user_id']);
+        }
+        else if (!empty($usernameOrEmail)) {
+            $errMsg .= sprintf(_("There is no user with username or email %s"),$usernameOrEmail);
+        }
+        return $object;
+    }
+ 
+
+   /** Instantiate a user object
      * @param $url The OpenId url
      * @return a User object, or null if none matched
      */
@@ -812,9 +834,9 @@ class User implements GenericObject {
             ));
             $userSelector .= InterfaceElements :: generateInputSubmit($add_button_name, $add_button_value);
         } else {
-            $userSelector = _("Username") . ": " . InterfaceElements :: generateInputText("select_user_" . $user_prefix . "_username");
+            $userSelector = _("Search for Username or Email Address") . ": " . InterfaceElements :: generateInputText("select_user_" . $user_prefix . "_username");
         }
-        $html = "<div class='user_select_user_ui_container'>".$networkSelector . $userSelector . "</div>\n";
+        $html = "<div class='user_select_user_ui_container'>".$networkSelector . "<br>" . $userSelector . "</div>\n";
         return $html;
     }
 
@@ -830,7 +852,7 @@ class User implements GenericObject {
             $name = "select_user_{$user_prefix}_username";
             if (!empty ($_REQUEST[$name])) {
                 $username = $_REQUEST[$name];
-                return self :: getUserByUsernameAndOrigin($username, $network, $errMsg);
+                return self :: getUserByUsernameOrEmail($username, $errMsg);
             } else
             return null;
         } catch (Exception $e) {
@@ -864,8 +886,18 @@ class User implements GenericObject {
             $title = _("Username");
             $name = "user_" . $this->getId() . "_username";
             $content = "<input type='text' name='$name' value='" . htmlentities($this->getUsername()) . "' size=30><br/>\n";
-            $content .= _("Be carefull when changing this: it's the username you use to log in!");
+            $content .= _("Be careful when changing this: it's the username you use to log in!");
             $userPreferencesItems[] = InterfaceElements::genSectionItem($content, $title);
+
+
+	    /* Email */
+            $title = _("Email");
+            $name = "email_" . $this->getId() . "_email";
+            $content = "<input type='text' name='$name' disabled='disabled' value='" . htmlentities($this->getEmail()) . "' size=30><br/>\n";
+            $content .= _("If you wish to change this address, please Email Support!");
+            $userPreferencesItems[] = InterfaceElements::genSectionItem($content, $title);
+
+
 
             /* Change password */
             $changePasswordItems=array();

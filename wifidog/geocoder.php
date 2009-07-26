@@ -54,7 +54,7 @@ header("Content-Type: text/xml");
 
 if(!empty($_REQUEST["postal_code"]))
 {
-    $geocoder = AbstractGeocoder::getGeocoder("Canada");
+    $geocoder = AbstractGeocoder::getGeocoder("Earth");
     $geocoder->setPostalCode($_REQUEST["postal_code"]);
     $long = $geocoder->getLongitude();
     $lat = $geocoder->getLatitude();

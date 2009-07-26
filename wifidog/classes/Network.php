@@ -328,7 +328,6 @@ class Network extends GenericDataObject
         $html .= _("Create a new network with ID")." \n";
         $name = "new_network_id";
         $html .= "<input type='text' size='10' name='{$name}'>\n";
-
         return $html;
     }
 
@@ -351,6 +350,11 @@ class Network extends GenericDataObject
 
         if (!empty($_REQUEST[$name])) {
             $network_id = $_REQUEST[$name];
+
+            if (!preg_match('/^[0-9a-zA-Z_-]+$/', $network_id)) {
+            throw new Exception(_("The Network ID entered was not valid. It must only contain Alphanumerical Characters, Hyphens and Underscores e.g. My_Network-6"));
+            return;
+            }
 
             if ($network_id) {
                 Security::requirePermission(Permission::P('SERVER_PERM_ADD_NEW_NETWORK'), Server::getServer());

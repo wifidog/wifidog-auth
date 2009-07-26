@@ -1476,7 +1476,11 @@ class Node implements GenericObject
         // Get a geocoder for a given country
         if (!empty ($_REQUEST['geocode_only']))
         {
-            $geocoder = AbstractGeocoder :: getGeocoder($this->getCountry());
+            if ($geocoder = AbstractGeocoder :: getGeocoder($this->getCountry()) != null)
+                $geocoder = AbstractGeocoder :: getGeocoder($this->getCountry());          
+            else
+                $geocoder = AbstractGeocoder :: getGeocoder('Earth');
+
             if ($geocoder != null)
             {
                 $geocoder->setCivicNumber($this->getCivicNumber());
@@ -1484,7 +1488,7 @@ class Node implements GenericObject
                 $geocoder->setCity($this->getCity());
                 $geocoder->setProvince($this->getProvince());
                 $geocoder->setPostalCode($this->getPostalCode());
-                if ($geocoder->validateAddress() === true)
+                if ($geocoder->validateAddress() == true)
                 {
                     if (($point = $geocoder->getGisLocation()) !== null)
                     $this->setGisLocation($point);

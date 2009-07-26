@@ -67,11 +67,12 @@ abstract class AbstractGeocoder
 
     // Implementation attributes
     private $endpoint_url;
+    private $APIKey;
     // This value is only used to prevent from running to same query twice
     private $execute_query = true;
 
     // Factory method hash map
-    private static $implementations_map = array ("Canada" => "GeocoderCanada", "USA" => "GeocoderUsa");
+    private static $implementations_map = array ("Canada" => "GeocoderCanada", "USA" => "GeocoderUsa", "UK" => "GeocoderYahooGlobal", "Earth" => "GeocoderGoogleGlobal");
 
     /** Returns a list of countries for which we provide a geocoder implementation
      * @return array Array of string keys
@@ -204,6 +205,17 @@ abstract class AbstractGeocoder
     {
         $this->execute_query = false;
     }
+
+    protected function setAPIKey($APIKey)
+    {
+        $this->APIKey = $APIKey;
+    }
+
+    public function getAPIKey()
+    {
+        return $this->APIKey;
+    }
+
 
     abstract public function validateAddress();
     abstract public function getLatitude();
