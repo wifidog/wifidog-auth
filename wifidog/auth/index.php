@@ -67,7 +67,7 @@ if (!empty ($_REQUEST['token']))
 }
 else {
     $auth_message .= "| Error: no connection token provided. ";
-    $auth_response = ACCOUNT_STATUS_ERROR;
+    $auth_response = ACCOUNT_STATUS_DENIED;
 }
 
 if ($info != null)
@@ -188,7 +188,7 @@ if ($info != null)
 else
 {
     $auth_message .= "| Error: couldn't find the requested token: $token. ";
-    $auth_response = ACCOUNT_STATUS_ERROR;
+    $auth_response = ACCOUNT_STATUS_DENIED;
 }
 
 echo "Auth: $auth_response\n";
