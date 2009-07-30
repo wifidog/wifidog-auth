@@ -54,14 +54,21 @@ require_once('classes/User.php');
 $db = AbstractDb::getObject();
 $auth_response = ACCOUNT_STATUS_DENIED;
 $auth_message = '';
-
+$info=null;
 $token = null;
 if (!empty ($_REQUEST['token']))
 {
     $token = $db->escapeString($_REQUEST['token']);
+    $dbRetval = $db->execSqlUniqueRes("SELECT CURRENT_TIMESTAMP, *, CASE WHEN ((CURRENT_TIMESTAMP - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN tokens USING (token_id) JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.token_id='$token'", $info, false);
+    if($dbRetval==false){
+        $auth_message .= "| Error: couldn't retrieve the requested token: $token because of a SQL error. ";
+        $auth_response = ACCOUNT_STATUS_ERROR;
+    }
 }
-
-$db->execSqlUniqueRes("SELECT CURRENT_TIMESTAMP, *, CASE WHEN ((CURRENT_TIMESTAMP - reg_date) > networks.validation_grace_time) THEN true ELSE false END AS validation_grace_time_expired FROM connections JOIN tokens USING (token_id) JOIN users ON (users.user_id=connections.user_id) JOIN networks ON (users.account_origin = networks.network_id) WHERE connections.token_id='$token'", $info, false);
+else {
+    $auth_message .= "| Error: no connection token provided. ";
+    $auth_response = ACCOUNT_STATUS_ERROR;
+}
 
 if ($info != null)
 {
@@ -180,7 +187,7 @@ if ($info != null)
 }
 else
 {
-    $auth_message .= "| Error: couldn't find the requested token. ";
+    $auth_message .= "| Error: couldn't find the requested token: $token. ";
     $auth_response = ACCOUNT_STATUS_ERROR;
 }
 
