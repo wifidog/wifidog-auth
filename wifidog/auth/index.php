@@ -163,6 +163,8 @@ if ($info != null)
                         if($abuseControlFault) {
                             $auth_response = ACCOUNT_STATUS_DENIED;
                             $auth_message .= "| $abuseControlFault ";
+                            $authenticator->logout($info['conn_id']);
+                            $auth_message .= "| User is now logged out. ";
                         }
                         else {
                             $auth_response = $info['account_status'];

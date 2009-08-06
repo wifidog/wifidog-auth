@@ -269,6 +269,7 @@ abstract class Authenticator
         }
 
         // Try to destroy current session
+        // TODO:  This will not work if ultimately called from the gateway (ex: after abuse control was reached).  This creates a UI problem (the portal still shows the user as connected)
         if (method_exists($session, "destroy")) {
             $session->destroy();
         }
