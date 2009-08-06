@@ -47,7 +47,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 65);
+define('REQUIRED_SCHEMA_VERSION', 66);
 /** Used to test a new shecma version before modyfying the database */
 define('SCHEMA_UPDATE_TEST_MODE', false);
 /**
@@ -1439,6 +1439,13 @@ function real_update_schema($targetSchema) {
         printUpdateVersion($new_schema_version);
         $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
         $sql .= "ALTER TABLE nodes ADD COLUMN allows_public_stats boolean NOT NULL DEFAULT false;\n";
+    }
+    
+    $new_schema_version = 66;
+    if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
+        printUpdateVersion($new_schema_version);
+        $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+        $sql .= "UPDATE connections SET logout_reason=0, timestamp_out=timestamp_in FROM tokens WHERE connections.token_id=tokens.token_id AND timestamp_out IS NULL AND (token_status = 'USED' OR token_status = 'UNUSED');\n";
     }
     
     /*

@@ -149,7 +149,13 @@ define('STAGE_COUNTERS', "counters");
 
 define('ONLINE_STATUS_ONLINE', 1);
 define('ONLINE_STATUS_OFFLINE', 2);
+
 /* End Constant shared with the gateway*/
+
+/* Other constants */
+define('LOGOUT_REASON_GARBAGE_COLLECTED', 3);
+define('LOGOUT_REASON_UNKNOWN', 0);
+/* End of Other constants */
 
 /** Convert a password hash form a NoCat passwd file into the same format as get_password_hash().
  * @return The 32 character hash.
@@ -171,7 +177,12 @@ function garbage_collect() {
 
     // 10 minutes
     $expiration = '10 minutes';
-    $db->execSqlUpdate("UPDATE tokens SET token_status='" . TOKEN_USED . "' FROM connections WHERE connections.token_id=tokens.token_id AND last_updated < (CURRENT_TIMESTAMP - interval '$expiration') AND token_status = '" . TOKEN_INUSE . "';", false);
+    $sql = null;
+    $sql .= "BEGIN;\n"; 
+    $sql .= "UPDATE connections SET logout_reason=" . LOGOUT_REASON_GARBAGE_COLLECTED . ", timestamp_out=(CURRENT_TIMESTAMP - interval '$expiration') FROM tokens WHERE connections.token_id=tokens.token_id AND last_updated < (CURRENT_TIMESTAMP - interval '$expiration') AND token_status = '" . TOKEN_INUSE . "';";
+    $sql .= "UPDATE tokens SET token_status='" . TOKEN_USED . "' FROM connections WHERE connections.token_id=tokens.token_id AND last_updated < (CURRENT_TIMESTAMP - interval '$expiration') AND token_status = '" . TOKEN_INUSE . "';";
+    $sql .= "COMMIT;\n";
+    $db->execSqlUpdate($sql, false);
 }
 
 /** Return a 32 byte guid valid for database use */

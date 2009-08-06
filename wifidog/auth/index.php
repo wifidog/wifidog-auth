@@ -158,7 +158,7 @@ if ($info != null)
                     }
                     else
                     {
-                        /* TODO:  This is a bit hackish, is't a shortcut untill the Token architecture uniform connection limit calculations are in place. */
+                        /* TODO:  This is a bit hackish, it's a shortcut untill the Token architecture uniform connection limit calculations are in place. */
                         $abuseControlFault = User::isAbuseControlViolated(User::getObject($info['user_id']), $info['user_mac'], Node::getObject($info['node_id']));
                         if($abuseControlFault) {
                             $auth_response = ACCOUNT_STATUS_DENIED;
