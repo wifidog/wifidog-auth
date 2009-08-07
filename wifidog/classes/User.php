@@ -562,7 +562,7 @@ class User implements GenericObject {
             $sql =  " SELECT \n";
             $sql .= " SUM (incoming+outgoing) AS network_total_bytes, \n";
             $sql .= " SUM (CASE WHEN node_id = '".$node->getId()."' THEN (incoming+outgoing) END) AS node_total_bytes, \n";
-            $sql .= " SUM (timestamp_out - timestamp_in) AS network_duration, \n";
+            $sql .= " SUM (COALESCE(timestamp_out,last_updated) - timestamp_in) AS network_duration, \n";
             $sql .= " SUM (CASE WHEN node_id = '".$node->getId()."' THEN (COALESCE(timestamp_out,last_updated) - timestamp_in) END) AS node_duration \n";//For real //The coalesce is to make sure the substraction returns a value for active conections, since active connections do not yet have a timestamp_out.  Do NOT coalesce with CURRENT_TIMESTAMP, it could cause real problems for users in case of gateway crash.
             $sql .= " FROM connections \n";//For real
             $sql .= " JOIN nodes USING (node_id) \n";
