@@ -55,7 +55,8 @@ empty ($_REQUEST['config']) ? $config = '' : $config = $_REQUEST['config']; # St
 # Security : Minimal access validation is use by asking user to retreive a random password in a local file. This prevent remote user to access unprotected installation script. It's dummy, easy to implement and better than nothing.
 
 # Random password generator
-$password_file = '/tmp/dog_cookie.txt';
+$temp_dir = sys_get_temp_dir ( );
+$password_file = $temp_dir . '/dog_cookie.txt';
 $random_password = null;
 if (!file_exists($password_file)) {
     srand(date("s"));

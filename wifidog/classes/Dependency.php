@@ -147,11 +147,11 @@ class Dependency
        ),
        'jpgraph' => array (
        "type" => "localLib",
-       "detectFiles" => "lib/jpgraph-1.22/src/jpgraph.php",
+       "detectFiles" => "lib/jpgraph-1.27/src/jpgraph.php",
        'description' => "JpGraph is a Object-Oriented Graph creating library for PHP.
 JpGraph is not currently used by Wifidog (it will be use for statistic graphs in a later version). You can skip this installation if your not a developper.",
        'website' => "http://www.aditus.nu/jpgraph/",
-       'installSourceUrl' => "http://hem.bredband.net/jpgraph/jpgraph-1.22.tar.gz",
+       'installSourceUrl' => "http://hem.bredband.net/jpgraph/jpgraph-1.27.tar.gz",
        'installMethod' => "tarball",
        'installDestination' => "/"
        ),
@@ -298,7 +298,7 @@ JpGraph is not currently used by Wifidog (it will be use for statistic graphs in
        "detectFiles" => "Phlickr/Api.php",
        'description' => "Required by content type FlickrPhotostream",
        'website' => "http://drewish.com/projects/phlickr/",
-       'installSourceUrl' => "http://superb-east.dl.sourceforge.net/sourceforge/phlickr/Phlickr-0.2.7.tgz"
+       'installSourceUrl' => "http://ovh.dl.sourceforge.net/sourceforge/phlickr/Phlickr-0.2.7.tgz"
        ),
        );
 
