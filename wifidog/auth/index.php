@@ -96,17 +96,16 @@ if ($info != null)
                 {
                     // Start accounting
                     if ($authenticator->acctStart($info['conn_id'], $auth_message))
-                    $auth_response = ACCOUNT_STATUS_ALLOWED;
+                        $auth_response = ACCOUNT_STATUS_ALLOWED;
                     else
-                    $auth_response = ACCOUNT_STATUS_DENIED;
+                        $auth_response = ACCOUNT_STATUS_DENIED;
 
                 }
             }
-            else
-            if ($info['token_status'] == TOKEN_INUSE &&
-            $info['gw_id'] && isset($_REQUEST['gw_id']) && $info['gw_id'] == $_REQUEST['gw_id'] &&
-            $info['user_mac'] && isset($_REQUEST['mac']) && $info['user_mac'] == $_REQUEST['mac'] &&
-            $info['user_ip'] && isset($_REQUEST['ip']) && $info['user_ip'] == $_REQUEST['ip'])
+            else if ($info['token_status'] == TOKEN_INUSE &&
+                $info['gw_id'] && isset($_REQUEST['gw_id']) && $info['gw_id'] == $_REQUEST['gw_id'] &&
+                $info['user_mac'] && isset($_REQUEST['mac']) && $info['user_mac'] == $_REQUEST['mac'] &&
+                $info['user_ip'] && isset($_REQUEST['ip']) && $info['user_ip'] == $_REQUEST['ip'])
             {
                 // This solves the bug where the user clicks twice before getting the portal page
                 $auth_response = ACCOUNT_STATUS_ALLOWED;
@@ -116,8 +115,7 @@ if ($info != null)
                 $auth_message .= "| Tried to login with a token that wasn't TOKEN_UNUSED. ";
             }
         }
-        else
-        if ($_REQUEST['stage'] == STAGE_LOGOUT || $_REQUEST['stage'] == STAGE_COUNTERS)
+        else if ($_REQUEST['stage'] == STAGE_LOGOUT || $_REQUEST['stage'] == STAGE_COUNTERS)
         {
             if (!empty ($_REQUEST['incoming']) || !empty ($_REQUEST['outgoing']))
             {

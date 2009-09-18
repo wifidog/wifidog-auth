@@ -151,9 +151,9 @@ class Profile implements GenericObject {
     public function isVisible()
     {
         if($this->_row['is_visible'] == "f")
-        return false;
+            return false;
         else
-        return true;
+            return true;
     }
 
     /**
@@ -172,9 +172,9 @@ class Profile implements GenericObject {
 
         if ($value != $this->isVisible()) {
             if($value == true)
-            $_retVal = $db->execSqlUpdate("UPDATE profiles SET is_visible = true WHERE profile_id = '{$this->getId()}'", false);
+                $_retVal = $db->execSqlUpdate("UPDATE profiles SET is_visible = true WHERE profile_id = '{$this->getId()}'", false);
             else
-            $_retVal = $db->execSqlUpdate("UPDATE profiles SET is_visible = false WHERE profile_id = '{$this->getId()}'", false);
+                $_retVal = $db->execSqlUpdate("UPDATE profiles SET is_visible = false WHERE profile_id = '{$this->getId()}'", false);
             $this->refresh();
         }
 

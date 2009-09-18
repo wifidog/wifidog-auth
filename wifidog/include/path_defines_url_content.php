@@ -88,7 +88,6 @@ if ($_SERVER['SERVER_PORT'] != 80 && $_SERVER['SERVER_PORT'] != 443) {
 
 
 //echo "<pre>";print_r($_SERVER);echo "</pre>";
-
 $current_url = 'http';
 if ($_SERVER['SERVER_PORT'] == '443') {
     $current_url .= 's';
@@ -107,7 +106,12 @@ if (SSL_AVAILABLE) {
     /**
      * Define base web address to use (this time using SLL)
      */
-    define('BASE_SSL_PATH', 'https://'.$_SERVER['SERVER_NAME'].SYSTEM_PATH);
+  //  define('BASE_SSL_PATH', 'https://'.$_SERVER['SERVER_NAME'].SYSTEM_PATH);
+    if ($_SERVER['SERVER_PORT'] != 80 && $_SERVER['SERVER_PORT'] != 443) { 
+        define('BASE_SSL_PATH', 'https://'.$_SERVER['SERVER_NAME'] . ':'.$_SERVER['SERVER_PORT']. SYSTEM_PATH); 
+    } else { 
+        define('BASE_SSL_PATH', 'https://'.$_SERVER['SERVER_NAME'] . SYSTEM_PATH); 
+    } 
 }
 else {
     /**

@@ -758,9 +758,9 @@ class Node implements GenericObject
             $long = $this->mDb->escapeString($pt->getLongitude());
 
             if (!empty ($lat) && !empty ($long))
-            $this->mDb->execSqlUpdate("UPDATE nodes SET latitude = $lat, longitude = $long WHERE node_id = '{$this->getId()}'");
+                $this->mDb->execSqlUpdate("UPDATE nodes SET latitude = $lat, longitude = $long WHERE node_id = '{$this->getId()}'");
             else
-            $this->mDb->execSqlUpdate("UPDATE nodes SET latitude = NULL, longitude = NULL WHERE node_id = '{$this->getId()}'");
+                $this->mDb->execSqlUpdate("UPDATE nodes SET latitude = NULL, longitude = NULL WHERE node_id = '{$this->getId()}'");
             $this->refresh();
         }
     }

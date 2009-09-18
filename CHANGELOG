@@ -1,5 +1,13 @@
 # $Id$
 
+2009-09-18 Geneviève Bastien <gbastien@versatic.net>
+  * Fixed #502 (Note: this fix works only if all gateways have config value SSLAvailable Yes, or else the server determines that even though the connection originated from HTTP by those gateways, it should use SSL and in this case, the port is not right.  Should need a way to specify port in Wifidog Virtual Hosts or get the apache port)
+  * Some realignment of tabs while documenting
+
+2009-08-20 Genevieve Bastien <gbastien@versatic.net>
+  * Updated dependencies  #599
+  * Now gets the temp dir of the OS instead of hardcoding the /tmp dir in the install script #588
+
 2009-07-26 Robin Jones
 	* Addded New Geocoders Yahoo and Google.
 	* Geocoder now defaults to google if no country specific Geocoder is found (in future, this will be made selectable by network)

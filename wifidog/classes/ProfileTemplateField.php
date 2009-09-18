@@ -70,7 +70,7 @@ class ProfileTemplateField extends GenericDataObject {
         $sql = "SELECT * FROM profile_template_fields WHERE profile_template_field_id = '{$profile_template_field_id}'";
         $db->execSqlUniqueRes($sql, $row, false);
 
-		$this->_id = $row['profile_template_field_id'];
+        $this->_id = $row['profile_template_field_id'];
         $this->profile_template_field_row = $row;
     }
     
@@ -178,10 +178,10 @@ class ProfileTemplateField extends GenericDataObject {
             $name = "get_new_profile_template_field_{$user_prefix}_content_type_filter";
             $content_type_filter_ui_result = FormSelectGenerator :: getResult($name, null);
 
-			if(empty($content_type_filter_ui_result))
-			{
-				throw new exception("Unable to retrieve the content type filter to associate with the new field");
-			}
+            if(empty($content_type_filter_ui_result))
+            {
+                throw new exception("Unable to retrieve the content type filter to associate with the new field");
+            }
 			
             $content_type_filter = ContentTypeFilter :: getObject($content_type_filter_ui_result);
             $profile_template_field_object->replaceContentTypeFilter($content_type_filter);
@@ -580,26 +580,26 @@ class ProfileTemplateField extends GenericDataObject {
      * @todo Implement proper access control
      */
     public function delete(& $errmsg) {
-    	require_once('classes/User.php');
+        require_once('classes/User.php');
         
-		$db = AbstractDb::getObject();
+        $db = AbstractDb::getObject();
 
-	    // Init values
-		$_retVal = false;
+        // Init values
+        $_retVal = false;
 
-		if (!User::getCurrentUser()->DEPRECATEDisSuperAdmin()) {
-			$errmsg = _('Access denied (must have super admin access)');
-		} else {
-			$_id = $db->escapeString($this->getId());
+        if (!User::getCurrentUser()->DEPRECATEDisSuperAdmin()) {
+            $errmsg = _('Access denied (must have super admin access)');
+        } else {
+            $_id = $db->escapeString($this->getId());
 
-			if (!$db->execSqlUpdate("DELETE FROM profile_template_fields WHERE profile_template_field_id = '{$_id}'", false)) {
-				$errmsg = _('Could not delete ProfileTemplateField!');
-			} else {
-				$_retVal = true;
-			}
-		}
+            if (!$db->execSqlUpdate("DELETE FROM profile_template_fields WHERE profile_template_field_id = '{$_id}'", false)) {
+                $errmsg = _('Could not delete ProfileTemplateField!');
+            } else {
+                $_retVal = true;
+            }
+        }
 
-		return $_retVal;
+        return $_retVal;
     }
     /** Reloads the object from the database.  Should normally be called after a set operation */
     protected function refresh() {

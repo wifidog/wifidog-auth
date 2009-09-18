@@ -276,11 +276,11 @@ class MainUI {
         return ($a['display_order'] < $b['display_order']) ? -1 : 1;
     }
 
-    /** Main processing function do generate the final content.
+    /** Main processing function to generate the final content.
      * It will successively call prepareGetUserUI() on all content objects,
      * and then getUserUI() on all objects.  Note that the point of calling
      * prepareGetUserUI is to allow that function to call methods of MainUI
-     * (such ans changing headers, etc.).  However, please note that you should not
+     * (such as changing headers, etc.).  However, please note that you should not
      * call MainUI::addContent() from prepareGetUserUI, as prepareGetUserUI() wouldn't
      * in turn get called on objects added this way.
      * Orders the content and put it in the _contentDisplayArray array
@@ -348,7 +348,6 @@ class MainUI {
                 }
             }
         }
-
     }
 
     /**
@@ -534,7 +533,7 @@ class MainUI {
     }
 
     /**
-     * Display the main page
+     * Display the main page.  This is where are called the functions to build the menu, and tool sections
      *
      * @return void
      *
@@ -549,43 +548,43 @@ class MainUI {
         // Asign base CSS and theme pack CSS stylesheet and optional config
         $networkThemePack = Network :: getCurrentNetwork()->getThemePack();
         if ($networkThemePack) {	
-		$ThemeConfig = $networkThemePack->getThemeConfigPath();
-	}
-	// Checks to see if the theme file exists and if so, loads it.	
-	if (!empty($ThemeConfig) && file_exists($ThemeConfig)) {
-		require_once ($ThemeConfig);
-	}
-	// Checks to see if the theme file exists and if so, checks whether it should load the Base theme.
-	if (!defined('INHERIT_BASE_CSS') || defined('INHERIT_BASE_CSS' == true)) {
-        $this->appendStylesheetURL(BASE_THEME_URL . STYLESHEET_NAME);
-        $this->appendStylesheetURL(BASE_THEME_URL . PRINT_STYLESHEET_NAME, 'print');
-	}
-	//If there is a theme pack, load the CSS file
-        if ($networkThemePack) {
-	    $this->appendStylesheetURL($networkThemePack->getStylesheetUrl());
+            $ThemeConfig = $networkThemePack->getThemeConfigPath();
+	      }
+        // Checks to see if the theme file exists and if so, loads it.	
+        if (!empty($ThemeConfig) && file_exists($ThemeConfig)) {
+            require_once ($ThemeConfig);
         }
-	// Checks to see if the theme file exists and if so, checks whether it should always show the page header.
-	if (defined('ALWAYS_SHOW_HEADER') && ALWAYS_SHOW_HEADER == true) {
-        $this->smarty->assign('alwaysShowHeader', true);
-	} else {
-		$this->smarty->assign('alwaysShowHeader', false);
-	}
-	// Checks to see if the theme file exists and if so, checks whether it should always show the page footer.
-	if (defined('ALWAYS_SHOW_FOOTER') && (ALWAYS_SHOW_FOOTER == true)) {
-        	$this->smarty->assign('alwaysShowFooter', true);
-	} else {
-		$this->smarty->assign('alwaysShowFooter', false);
-	}
-	// Checks to see if the theme file exists and if so, checks where the site menu should be positioned.
-	if (defined('MENU_POSITION') && MENU_POSITION == "all") {
-        $this->smarty->assign('siteMenuPlaceAll', true);
-	} else {
-		if (defined('MENU_POSITION') && MENU_POSITION == "left") {
-        		$this->smarty->assign('siteMenuPlaceLeft', true);
-		} else {
-			$this->smarty->assign('siteMenuPlaceMain', true);
-			}
-		}
+        // Checks to see if the theme file exists and if so, checks whether it should load the Base theme.
+        if (!defined('INHERIT_BASE_CSS') || defined('INHERIT_BASE_CSS' == true)) {
+            $this->appendStylesheetURL(BASE_THEME_URL . STYLESHEET_NAME);
+            $this->appendStylesheetURL(BASE_THEME_URL . PRINT_STYLESHEET_NAME, 'print');
+        }
+        //If there is a theme pack, load the CSS file
+        if ($networkThemePack) {
+            $this->appendStylesheetURL($networkThemePack->getStylesheetUrl());
+        }
+        // Checks to see if the theme file exists and if so, checks whether it should always show the page header.
+        if (defined('ALWAYS_SHOW_HEADER') && ALWAYS_SHOW_HEADER == true) {
+            $this->smarty->assign('alwaysShowHeader', true);
+        } else {
+            $this->smarty->assign('alwaysShowHeader', false);
+        }
+        // Checks to see if the theme file exists and if so, checks whether it should always show the page footer.
+        if (defined('ALWAYS_SHOW_FOOTER') && (ALWAYS_SHOW_FOOTER == true)) {
+            $this->smarty->assign('alwaysShowFooter', true);
+        } else {
+            $this->smarty->assign('alwaysShowFooter', false);
+        }
+        // Checks to see if the theme file exists and if so, checks where the site menu should be positioned.
+        if (defined('MENU_POSITION') && MENU_POSITION == "all") {
+            $this->smarty->assign('siteMenuPlaceAll', true);
+        } else {
+            if (defined('MENU_POSITION') && MENU_POSITION == "left") {
+                $this->smarty->assign('siteMenuPlaceLeft', true);
+            } else {
+                $this->smarty->assign('siteMenuPlaceMain', true);
+            }
+        }
 
 
         //Handle content (must be done before headers and anything else is handled)

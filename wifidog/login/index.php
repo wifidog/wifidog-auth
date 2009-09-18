@@ -278,48 +278,49 @@ if($node){
     $name = $node->getName();
 }
 else {
-    $name = $network->getName();}
-    $welcome_msg = sprintf("<span>%s</span> <em>%s</em>",_("Welcome to"), $name);
-    $ui->addContent('page_header', "<div class='welcome_msg'><div class='welcome_msg_inner'>$welcome_msg</div></div>");
-    $ui->addContent('main_area_top', $html);
+    $name = $network->getName();
+}
+$welcome_msg = sprintf("<span>%s</span> <em>%s</em>",_("Welcome to"), $name);
+$ui->addContent('page_header', "<div class='welcome_msg'><div class='welcome_msg_inner'>$welcome_msg</div></div>");
+$ui->addContent('main_area_top', $html);
 
-    /*
-     * Main content (login form)
-     */
+/*
+ * Main content (login form)
+ */
 
-    // Get all network content and node "login" content
-    $content_rows = null;
-    $network_id = $network->getId();
-    $sql_network = "(SELECT content_id, display_area, display_order, subscribe_timestamp FROM network_has_content WHERE network_id='$network_id'  AND display_page='login') ";
-    $sql_node = null;
-    if ($node) {
-        // Get all node content
-        $node_id = $db->escapeString($node->getId());
-        $sql_node = "UNION (SELECT content_id, display_area, display_order, subscribe_timestamp FROM node_has_content WHERE node_id='$node_id'  AND display_page='login')";
-    }
-    $sql = "SELECT * FROM ($sql_network $sql_node) AS content_everywhere ORDER BY display_area, display_order, subscribe_timestamp DESC";
+// Get all network content and node "login" content
+$content_rows = null;
+$network_id = $network->getId();
+$sql_network = "(SELECT content_id, display_area, display_order, subscribe_timestamp FROM network_has_content WHERE network_id='$network_id'  AND display_page='login') ";
+$sql_node = null;
+if ($node) {
+    // Get all node content
+    $node_id = $db->escapeString($node->getId());
+    $sql_node = "UNION (SELECT content_id, display_area, display_order, subscribe_timestamp FROM node_has_content WHERE node_id='$node_id'  AND display_page='login')";
+}
+$sql = "SELECT * FROM ($sql_network $sql_node) AS content_everywhere ORDER BY display_area, display_order, subscribe_timestamp DESC";
 
-    $db->execSql($sql, $content_rows, false);
-    if ($content_rows) {
-        foreach ($content_rows as $content_row) {
-            $content = Content :: getObject($content_row['content_id']);
-            if ($content->isDisplayableAt($node)) {
-                $ui->addContent($content_row['display_area'], $content, $content_row['display_order']);
-            }
+$db->execSql($sql, $content_rows, false);
+if ($content_rows) {
+    foreach ($content_rows as $content_row) {
+        $content = Content :: getObject($content_row['content_id']);
+        if ($content->isDisplayableAt($node)) {
+            $ui->addContent($content_row['display_area'], $content, $content_row['display_order']);
         }
     }
+}
 
-    /*
-     * Render output
-     */
-    $ui->display();
+/*
+ * Render output
+ */
+$ui->display();
 
-    /*
-     * Local variables:
-     * tab-width: 4
-     * c-basic-offset: 4
-     * c-hanging-comment-ender-p: nil
-     * End:
-     */
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * c-hanging-comment-ender-p: nil
+ * End:
+ */
 
-    ?>
+?>

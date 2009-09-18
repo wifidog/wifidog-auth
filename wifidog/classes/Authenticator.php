@@ -94,7 +94,7 @@ abstract class Authenticator
     /**
      * Attempts to login a user against the authentication source
      *
-     * If successfull, returns a User object.
+     * If successfull, returns a User object and must call User::setCurrentUser($user) at the end
      */
     public function login()
     {
@@ -149,10 +149,10 @@ abstract class Authenticator
                 if ($network->getName() == $default_network)
                         $default_network_param = $network->getId();
         }
-	if (Server::getServer()->getUseGlobalUserAccounts())
-		$smarty->assign('selectNetworkUI', "<input type=\"hidden\" name=\"auth_source\" value='$default_network_param' />");
-	else
-		$smarty->assign('selectNetworkUI', Network::getSelectUI('auth_source', $networkUserData));
+        if (Server::getServer()->getUseGlobalUserAccounts())
+            $smarty->assign('selectNetworkUI', "<input type=\"hidden\" name=\"auth_source\" value='$default_network_param' />");
+        else
+            $smarty->assign('selectNetworkUI', Network::getSelectUI('auth_source', $networkUserData));
 
         // Set user details
         $smarty->assign('user_id', $selectedUser ? $selectedUser->getId() : "");

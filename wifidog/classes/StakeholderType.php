@@ -80,7 +80,7 @@ class StakeholderType extends GenericDataObject
     }
     
     private function __construct($id) {
-    $this->_id=$id;
+        $this->_id=$id;
     }
     /**
      * Get an interface to pick a ContentTypeFilter
