@@ -35,7 +35,7 @@
 
 /**
  * @package    WiFiDogAuthServer
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @author     Max Horváth <max.horvath@freenet.de>
  * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  * @copyright  2006 Max Horváth, Horvath Web Consulting
@@ -61,7 +61,7 @@ require_once('classes/Security.php');
  * A network is an administrative entity with it's own users, nodes and authenticator.
  *
  * @package    WiFiDogAuthServer
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @author     Max Horváth <max.horvath@freenet.de>
  * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  * @copyright  2006 Max Horváth, Horvath Web Consulting

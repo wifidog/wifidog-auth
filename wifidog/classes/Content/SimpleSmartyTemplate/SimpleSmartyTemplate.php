@@ -36,7 +36,7 @@
 /**
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2007 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id: TrivialLangstring.php 1094 2006-09-07 12:23:08Z benoitg $
  * @link       http://www.wifidog.org/
@@ -52,7 +52,7 @@ require_once('classes/Content/SmartyTemplate/SmartyTemplate.php');
  *
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class SimpleSmartyTemplate extends SmartyTemplate

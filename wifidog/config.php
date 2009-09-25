@@ -40,7 +40,7 @@
  * file or make a local copy of it named local.config.php.
  *
  * @package    WiFiDogAuthServer
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @author     Max Horváth <max.horvath@freenet.de>
  * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  * @copyright  2005-2006 Max Horváth, Horvath Web Consulting

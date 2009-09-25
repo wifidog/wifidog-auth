@@ -35,7 +35,7 @@
 
 /**
  * @package    WiFiDogAuthServer
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
@@ -49,7 +49,7 @@ require_once('classes/Session.php');
  * Designates a human language, possibly localized ie fr_CA
  *
  * @package    WiFiDogAuthServer
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class Locale {

@@ -37,7 +37,7 @@
  * Network status page
  *
  * @package    WiFiDogAuthServer
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @author     Francois Proulx <francois.proulx@gmail.com>
  * @author     Max Horváth <max.horvath@freenet.de>
  * @copyright  2004-2007 Benoit Grégoire, Technologies Coeus inc.

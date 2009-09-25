@@ -38,7 +38,7 @@
  * Network status page
  *
  * @package    WiFiDogAuthServer
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/

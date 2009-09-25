@@ -55,7 +55,7 @@
   * @package    WiFiDogAuthServer
   * @author     Philippe April
   * @author     Max Horváth <max.horvath@freenet.de>
-  * @author     Benoit Grégoire <bock@step.polymtl.ca>
+  * @author     Benoit Grégoire <benoitg@coeus.ca>
   * @copyright  2005-2007 Philippe April
   * @copyright  2005-2007 Max Horváth, Horvath Web Consulting
   * @copyright  2006-2007 Benoit Grégoire, Technologies Coeus inc.

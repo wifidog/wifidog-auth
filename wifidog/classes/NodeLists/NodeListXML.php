@@ -36,7 +36,7 @@
 /**
  * @package    WiFiDogAuthServer
  * @subpackage NodeLists
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @author     Francois Proulx <francois.proulx@gmail.com>
  * @author     Max Horváth <max.horvath@freenet.de>
  * @copyright  2004-2007 Benoit Grégoire, Technologies Coeus inc.
@@ -57,7 +57,7 @@ require_once('classes/Node.php');
  *
  * @package    WiFiDogAuthServer
  * @subpackage NodeLists
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @author     Francois Proulx <francois.proulx@gmail.com>
  * @author     Max Horváth <max.horvath@freenet.de>
  * @copyright  2004-2007 Benoit Grégoire, Technologies Coeus inc.
@@ -130,7 +130,7 @@ class NodeListXML extends NodeList{
      *
      * @return string The XML output
      *
-     * @author     Benoit Grégoire <bock@step.polymtl.ca>
+     * @author     Benoit Grégoire <benoitg@coeus.ca>
      * @author     Francois Proulx <francois.proulx@gmail.com>
      * @author     Max Horváth <max.horvath@freenet.de>
      * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.

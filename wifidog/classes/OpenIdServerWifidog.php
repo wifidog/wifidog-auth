@@ -33,7 +33,7 @@
 
 /**
  * @package    WiFiDogAuthServer
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  Copyright 2006,2007 Internet Brands (http://www.internetbrands.com/)
  * @copyright  2007 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id: $

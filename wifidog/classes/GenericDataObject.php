@@ -35,7 +35,7 @@
 
 /**
  * @package    WiFiDogAuthServer
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2007 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id: GenericObject.php 1042 2006-05-20 20:28:27Z benoitg $
  * @link       http://www.wifidog.org/
@@ -49,7 +49,7 @@ require_once ('classes/GenericObject.php');
  * Any object that implement this interface can be administered in a generic way.
  *
  * @package    WiFiDogAuthServer
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  */
 abstract class GenericDataObject implements GenericObject

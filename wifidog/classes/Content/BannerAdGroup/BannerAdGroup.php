@@ -37,7 +37,7 @@
 /**
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2006 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id: TrivialLangstring.php 1031 2006-05-10 18:56:02Z benoitg $
  * @link       http://www.wifidog.org/
@@ -52,7 +52,7 @@ require_once ('classes/Content/ContentGroup/ContentGroup.php');
  *
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class BannerAdGroup extends ContentGroup {

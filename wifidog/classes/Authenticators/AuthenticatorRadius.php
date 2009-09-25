@@ -40,7 +40,7 @@
  *
  * @package    WiFiDogAuthServer
  * @subpackage Authenticators
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @author     Francois Proulx <francois.proulx@gmail.com>
  * @author     Max Horváth <max.horvath@freenet.de>
  * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
@@ -62,7 +62,7 @@ require_once('classes/User.php');
  *
  * @package    WiFiDogAuthServer
  * @subpackage Authenticators
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @author     Francois Proulx <francois.proulx@gmail.com>
  * @author     Max Horváth <max.horvath@freenet.de>
  * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.

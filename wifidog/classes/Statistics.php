@@ -37,7 +37,7 @@
 /**
  * @package    WiFiDogAuthServer
  * @subpackage Statistics
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
@@ -53,7 +53,7 @@ require_once ('include/common.php');
  *
  * @package    WiFiDogAuthServer
  * @subpackage Statistics
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class Statistics {

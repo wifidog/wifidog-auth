@@ -36,7 +36,7 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Max Horvath <max.horvath@freenet.de>
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2006 Max Horvath
  * @copyright  2007 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id: $
@@ -54,7 +54,7 @@ require_once('classes/Server.php');
  *
  * @package    WiFiDogAuthServer
  * @author     Max Horvath <max.horvath@maxspot.de>
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2006 Max Horvath, maxspot GmbH
  * @copyright  2007 Benoit Grégoire, Technologies Coeus inc.
  */

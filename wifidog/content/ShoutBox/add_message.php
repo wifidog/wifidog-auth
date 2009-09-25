@@ -34,7 +34,7 @@
 
 /**
  * @package    WiFiDogAuthServer
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id: validate.php 1031 2006-05-10 18:56:02Z benoitg $
  * @link       http://www.wifidog.org/

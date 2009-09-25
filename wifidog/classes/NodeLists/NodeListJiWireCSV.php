@@ -121,7 +121,7 @@ class NodeListJiWireCSV extends NodeList {
      *
      * @return string The XML output
      *
-     * @author     Benoit Grégoire <bock@step.polymtl.ca>
+     * @author     Benoit Grégoire <benoitg@coeus.ca>
      * @author     Francois Proulx <francois.proulx@gmail.com>
      * @author     Max Horváth <max.horvath@freenet.de>
      * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.

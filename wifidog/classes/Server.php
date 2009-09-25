@@ -36,7 +36,7 @@
 /**
  * @package    WiFiDogAuthServer
  * @author     Max Horvath <max.horvath@freenet.de>
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2007 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id: $
  * @link       http://www.wifidog.org/
@@ -52,7 +52,7 @@ define('SERVER_ID', 'SERVER_ID');
  * Administration interface for configuring Server wide settings for the server WiFiDog is running on
  *
  * @package    WiFiDogAuthServer
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2007 Benoit Grégoire, Technologies Coeus inc.
  */
 class Server extends GenericDataObject

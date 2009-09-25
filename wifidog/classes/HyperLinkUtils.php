@@ -37,7 +37,7 @@
 /**
  * @package    WiFiDogAuthServer
 
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2006 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id: Content.php 1074 2006-06-18 09:53:56Z fproulx $
  * @link       http://www.wifidog.org/
@@ -52,7 +52,7 @@ require_once ('classes/User.php');
  * Abstraction and utilities to handle HyperLinks
  *
  * @package    WiFiDogAuthServer
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class HyperLinkUtils {

@@ -126,7 +126,7 @@ class NodeListKML extends NodeList{
      *
      * @return void
      *
-     * @author     Benoit Gregoire <bock@step.polymtl.ca>
+     * @author     Benoit Gregoire <benoitg@coeus.ca>
      * @author     Francois Proulx <francois.proulx@gmail.com>
      * @author     Max Horváth <max.horvath@freenet.de>
 	 * @author     Joe Bowser <bowserj@resist.ca>

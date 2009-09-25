@@ -37,7 +37,7 @@
  * Configuration file to list the available locales in the WiFiDog Authentication Server
  *
  * @package    WiFiDogAuthServer
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2007 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id: $
  * @link       http://www.wifidog.org/

@@ -35,7 +35,7 @@
 
 /**
  * @package    WiFiDogAuthServer
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2006 Benoit Grégoire, Technologies Coeus inc.
  * @copyright  2007 François Proulx
  * @link       http://www.wifidog.org/
@@ -45,7 +45,7 @@
  * Defines any type of content
  *
  * @package    WiFiDogAuthServer
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @author  2007 François Proulx
  * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  * @copyright  2007 François Proulx

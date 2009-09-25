@@ -37,7 +37,7 @@
 /**
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id$
  * @link       http://www.wifidog.org/
@@ -56,7 +56,7 @@ require_once ('classes/LocaleList.php');
  *
  * @package    WiFiDogAuthServer
  * @subpackage ContentClasses
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class Langstring extends Content {

@@ -53,37 +53,37 @@
 2008-08-31 Robin Jones
 	* Updated some table row elements to support Odd/Even CSS. This also closes #382
 
-2008-08-28 Benoit Grégoire  <bock@step.polymtl.ca>
+2008-08-28 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix #492
 
 2008-08-13 Robin Jones
 	* Fixed dependency change for Smarty reported by cristian@lalineapeluda.com
 
-2008-08-07 Benoit Grégoire  <bock@step.polymtl.ca>
+2008-08-07 Benoit Grégoire  <benoitg@coeus.ca>
 	* Updated Spanish translation by jlms77@gmail.com
 
-2008-07-13 Benoit Grégoire  <bock@step.polymtl.ca>
+2008-07-13 Benoit Grégoire  <benoitg@coeus.ca>
 	* Add new Catalan translation by Christian Lorenzo cristian@lalineapeluda.com
 	* Rebuild transaltions and initial schema.
 
-2008-06-12 Benoit Grégoire  <bock@step.polymtl.ca>
+2008-06-12 Benoit Grégoire  <benoitg@coeus.ca>
 	* Add NODE_PERM_BYPASS_DYNAMIC_ABUSE_CONTROL permission.  User is allowed to exceed dynamic abuse control limits at this node.
 	* Stakeholder selector UI tweaks
 
-2008-06-12 Benoit Grégoire  <bock@step.polymtl.ca>
+2008-06-12 Benoit Grégoire  <benoitg@coeus.ca>
 	* Use bigint for dynamic abuse control byte values
 	* UIAllowedBandwidth:  Format values in a human-readable way
 
-2008-06-10 Benoit Grégoire  <bock@step.polymtl.ca>
+2008-06-10 Benoit Grégoire  <benoitg@coeus.ca>
 	* Authenticator.php:  Fix SQL error closing connections.
 	* auth/index.php:  Probably fix the "Access denied" message when user click twice problem that resurfaced.
 	* At long last, implement operational Dynamic abuse control (out of the embryo of the token architecture)!  Configurable in Network preferences if you have the permissions.  Unlike static limits, this is a sliding window (typically a month) during which user have a bandwidth and connection duration limit, per node, and totalled throughout the network.
 	* UIAllowedBandwidth:  New, simplistic content type to show the user how much of his allocation he consumed.  Off course, the goal is actually to make it into a pretty graph....
 
-2008-06-10 Benoit Grégoire  <bock@step.polymtl.ca>
+2008-06-10 Benoit Grégoire  <benoitg@coeus.ca>
 	* Begin implementing http://dev.wifidog.org/wiki/doc/developer/TokenArchitecture.  This is a first step:  SQL schema changes, and adapt the current functionnality to the new schema to have a baseline.  Everything should work as before, please notify me if you notice anything strange...
 
-2008-04-27 Benoit Grégoire  <bock@step.polymtl.ca>
+2008-04-27 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fixed dependencies on simplepie.  Simplepie removed a stable branch from their SVN.  Why on earth would one do that!?!?
 	* For an existing install, you may want to remove the feedpressreview and simplepie directories and re-install them from the Dependencies page under the "Server" menu.  
 	
@@ -91,32 +91,32 @@
         * Fixed #325 password validation
         * Added a new banner for the install script
 
-2008-04-01 Benoit Grégoire  <bock@step.polymtl.ca>
+2008-04-01 Benoit Grégoire  <benoitg@coeus.ca>
 	* Apply patch from dc.ml@oxys.net to allow commas in authentication parameter strings.  This is sometimes necessary for LDAP, and fixes #342
 
 2008-03-31 Robin Jones
         * Minor install script improvements, including making changelog accessible and colour in the permissions tables
 
-2008-03-21 Benoit Grégoire  <bock@step.polymtl.ca>
+2008-03-21 Benoit Grégoire  <benoitg@coeus.ca>
 	* generic_object_admin.php (and others):  Fix bug reported by  Jerry DeFoe (ProfileTemplates couldn't be created) + some UI tweaks.
 	
-2008-03-21 Benoit Grégoire  <bock@step.polymtl.ca>
+2008-03-21 Benoit Grégoire  <benoitg@coeus.ca>
 	* hotspot_status.php:  Fix bug in XSLT procesing.
 
-2008-03-15 Benoit Grégoire  <bock@step.polymtl.ca>
+2008-03-15 Benoit Grégoire  <benoitg@coeus.ca>
 	* Content.php:  Eliminate the generation of a large number of useless SQL queries when getting Content metadata.
 	* User.php: Do the same thing for getCurrentUser()
 	
-2008-03-12 Benoit Grégoire  <bock@step.polymtl.ca>
+2008-03-12 Benoit Grégoire  <benoitg@coeus.ca>
     * Major performance improvement in content manager for content groups picking items with limits on how many times they can be displayed.
 	* Improve performance of Content::getLastDisplayedTimestamp(), will mostly show when using the RSS aggregator, especially when postgres has little memory
 	
-2008-03-06 Benoit Grégoire  <bock@step.polymtl.ca>
+2008-03-06 Benoit Grégoire  <benoitg@coeus.ca>
     * Fix #438.  Not Node::getNumOnlineUsers() will count every users connected (once for every account), except the splash-only user + every mac adresses connecting as the splash-only user.
 	* Network::getNumOnlineUsers() use the same counting method
 	* Network.php:  Reformat variables names according to coding standards.
 	
-2008-03-02 Benoit Grégoire  <bock@step.polymtl.ca>
+2008-03-02 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix #431: Don't even display the Signup button if none of the networks allow signing up.  Allow Authenticators to define the signup URL themselves.
 
 2008-02-27 Damien Raude-Morvan <drazzib@drazzib.com>
@@ -127,108 +127,108 @@
     * Fixed package name of Cache_Lite in Dependency class
     * Updated mail address of Max Horváth
 
-2008-01-16 Benoit Grégoire  <bock@step.polymtl.ca>
+2008-01-16 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix #42 (Node cannot be renamed)
 
-2008-01-16 Benoit Grégoire  <bock@step.polymtl.ca>
+2008-01-16 Benoit Grégoire  <benoitg@coeus.ca>
 	* Temporary patch for problem introduced in [1319]:  the menu did not display where main_area_top is empty (which is actually most places in the admin interface).  This shouldn't have been done in the first place, as it doesn't fix the problem the menu cause of theming, and worse causes people to edit MainUI_Display.tpl, causing such errors.  A network config option should have been provided to allow selecting in what area the menu goes.
 
-2008-01-13 Benoit Grégoire  <bock@step.polymtl.ca>
+2008-01-13 Benoit Grégoire  <benoitg@coeus.ca>
 	* Permission.php:  Fix typo that caused "Tried to check if an object of class Server has a permission of type Network" errors.  Changed the id from NETWORK_PERM_ADD_NEW_NODE to NETWORK_PERM_ADD_NODE so it will auto-delete the corrupted permission.
 
-2008-01-11 Benoit Grégoire  <bock@step.polymtl.ca>
+2008-01-11 Benoit Grégoire  <benoitg@coeus.ca>
 	* Use the Dependency system to include PHPMailer and tweak Mail.php.  You'll need to re-run the Dpenedency stage of the install script. This allows:  Translating PHPMailer error messages, Actually having PHPMailer error messages, and displaying them properly.
 
-2008-01-09 Benoit Grégoire  <bock@step.polymtl.ca>
+2008-01-09 Benoit Grégoire  <benoitg@coeus.ca>
 	* Add gettext calls, fixes #413
 
-2008-01-06 Benoit Grégoire  <bock@step.polymtl.ca>
+2008-01-06 Benoit Grégoire  <benoitg@coeus.ca>
 	* Some more work on the permission system.  At long last, close #358
 
-2008-01-05 Benoit Grégoire  <bock@step.polymtl.ca>
+2008-01-05 Benoit Grégoire  <benoitg@coeus.ca>
 	* French translation update from Frederic Sheedy (sheedf@gmail.com).  Closes #411
 
-2007-12-30 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-12-30 Benoit Grégoire  <benoitg@coeus.ca>
 	* Workaround IE6 braindeadness in the base theme.  Closes  #406.  Credit goes to Frederic Sheedy (sheedf@gmail.com)
 
-2007-12-23 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-12-23 Benoit Grégoire  <benoitg@coeus.ca>
 	* Node.php:  Fix bug in setCurrentNode() reported by Vacio
 	* install.php, Dependency.php:  Commit install script improvements by Robin Jones
 
-2007-11-29 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-11-29 Benoit Grégoire  <benoitg@coeus.ca>
 	* signup.tpl, lost_username.tpl, lost_password.tpl, resend_validation.tpl:  Move the error div near the button for coherence with the login page (and for the same reason).  In fact it was worse than the login page used to be:  the error message during signup could appear completely below the page for a user with a low resolution screeen (or big font), giving the form the apereance of doing absolutely nothing (it stumped even me as I was trying to help a user).
 
-2007-11-23 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-11-23 Benoit Grégoire  <benoitg@coeus.ca>
 	* UIUserList.php: Don't force it to be persistent, it prevented users from deleting it.
 
-2007-11-15 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-11-15 Benoit Grégoire  <benoitg@coeus.ca>
 	* Menu.php: Make individual submenus, and individual menu items CSS-targetable.
 
-2007-11-05 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-11-05 Benoit Grégoire  <benoitg@coeus.ca>
 	* Commit most of Robin Jones install script improvements.
 
-2007-10-22 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-10-22 Benoit Grégoire  <benoitg@coeus.ca>
 	* Major security fix:  Fix the authenticator for a security breach where a user could get Internet access using an empty username.  LocalUser and LDAP were definitely vulnerable, RADIUS may have been.
 
-2007-10-01 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-10-01 Benoit Grégoire  <benoitg@coeus.ca>
 	* Remove Array type hinting in Security.php. It's not supported in PHP < 5.1.  Fixes  #393
 
-2007-10-01 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-10-01 Benoit Grégoire  <benoitg@coeus.ca>
 	* Commited slightly modified patch by Robin Jones to implement #184
 
-2007-09-25 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-09-25 Benoit Grégoire  <benoitg@coeus.ca>
 	* Menu.php:  Fix a number of improper call time pass by reference
 
-2007-09-24 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-09-24 Benoit Grégoire  <benoitg@coeus.ca>
 	* locale/gensmarty.pl:  Heads up translators:  There was a bug in the regex; about 20 strings in the smarty templates were missed.
 	* Updated french translation
 
-2007-09-20 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-09-20 Benoit Grégoire  <benoitg@coeus.ca>
 	* install.php:  Hopefully fix #384, and remove pages unlikely to be implemented for 1.0
 
-2007-09-18 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-09-18 Benoit Grégoire  <benoitg@coeus.ca>
 	* portal/index.php:  Add a call to garbage_collect() to fix #367
 
-2007-09-17 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-09-17 Benoit Grégoire  <benoitg@coeus.ca>
 	* SmartyWifidog:  If ANY of the mandatory dependencies (not just smarty) are missing, user will be redirected to the install script
 	* Move Smarty detection and install to common framework.  Take this opportunity to move to upgrade to latest Smarty since people will have to re-run the install script anyway.
 	* Fix #381 by applying patch from leandro@texnet.it, mea-culpa, I didn't know I broke the install script.
 
-2007-09-12 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-09-12 Benoit Grégoire  <benoitg@coeus.ca>
 	* Scratch a few itches:  Fix the link from node admin to stats, minor CSS fixes
 
-2007-09-11 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-09-11 Benoit Grégoire  <benoitg@coeus.ca>
 	* VitrualHost.php: Close #373: Apply patch from leandro@texnet.it to fix mispelled table name in delete() method
 	* Close #374:  Add preliminary italian translation from leandro@texnet.it
 
-2007-09-10 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-09-10 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix #370:  Dropdown Javascript menus didn't retract in Internet Explorer.  My thanks to Robin Jones for at least proposing a solution to the problem, even if it didn't work in this case.  The problem turned out to be a wrong regex in the IE workaround javascript.
 
-2007-09-09 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-09-09 Benoit Grégoire  <benoitg@coeus.ca>
 	* Early OpenID support.  The auth server can now be used as an identity provider, with your profile page as the identity URL
 
-2007-09-08 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-09-08 Benoit Grégoire  <benoitg@coeus.ca>
 	* Dependencies installation:  Improve layout, add embryo of unified install sytem (currently works for tarballs).  Improve error output.
 	* Add dependencies for future OpenId support
 	* AbstractDb:  Make sure to throw an exception, avoiding a blank page when trying to access the index page on a auth server that hasn't been setup.  Patch by Mathieu Bruno.
 
-2007-09-04 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-09-04 Benoit Grégoire  <benoitg@coeus.ca>
 	* cron/page.php:  Improve script to output what it did.
 	* fix typo in Node::DEPRECATEDgetTechnicalOfficers(), that prevented getting the users to page in case a node is down.
 	* Delete leftover login.tpl
 	* Apply patch from leandro@texnet.it to fix #371
 
-2007-08-30 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-08-30 Benoit Grégoire  <benoitg@coeus.ca>
 	* install.php:  Experimental fix for #353
 
-2007-08-28 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-08-28 Benoit Grégoire  <benoitg@coeus.ca>
 	* install.php:  Fix bug that would manifest as a blank page at the "Checking Dependency" stage if PHP's postgres module was not installed.  Thanks to drfense for providing an account on a server where the bug occured.
 
-2007-08-27 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-08-27 Benoit Grégoire  <benoitg@coeus.ca>
 	* Added vacuum_last_resort_fix_backup_restore_database.sh.  This is DANGEROUS, and should only be run when your neglected (or had problem with) your VACCUMs,
 	your database has become slow as molases, and VACUUM FULL is not an option because your db has grown too big.
 
-2007-08-27 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-08-27 Benoit Grégoire  <benoitg@coeus.ca>
 	* install.php:  Fix #368: Correct the svn source for SimplePie 1.0, the 1.0b2 branch was unexpectedly renamed.
 	Note that this forces a rather disruptive change.  To update an existing install, you'll need to run the following commands:
 	cd lib/simplepie
@@ -237,7 +237,7 @@
 	cd lib/feedpressreview
 	svn update
 
-2007-08-06 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-08-06 Benoit Grégoire  <benoitg@coeus.ca>
 	* Allow users with NETWORK_PERM_EDIT_ANY_NODE_CONFIG to edit gateway id's
 
 2007-08-05 Damien Raude-Morvan <drazzib@drazzib.com>
@@ -247,7 +247,7 @@
 	* Locale.php : If the browser send Accept-Value header without any quality (i.e. q=x.y)
 	we have to use order of the locales to select between them (and don't use a rand() number).
 
-2007-08-04 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-08-04 Benoit Grégoire  <benoitg@coeus.ca>
 	* Portugese (from portugal) translation contributed by MiguelCMA
 	* locale/gen.sh:  Major change to .po file generation.  Now uses msgmerge so we won't completely throw away previous efforts by translators (will preserve comments, and use fuzzy translation).  It's also much faster (seconds instead of minutes), and produces less strings to translate.
 
@@ -255,11 +255,11 @@
 	* init_php.php : Fix #363 by applying patch from Leandro to correctly set timezone info in Wifidog
 	if set in configuration (allow Wifidog to work not only in Canada :).
 
-2007-07-26 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-07-26 Benoit Grégoire  <benoitg@coeus.ca>
 	* DependenciesList::hook_menu():  Fix menu path conflict with Server::hook_menu();
 	* Server::getAdminUI(): Add output to help debug timezone problems.
 
-2007-07-25 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-07-25 Benoit Grégoire  <benoitg@coeus.ca>
 	* VirtualHost.php:  Fix critical problem preventing new Virtual Hosts from being created.  Thanks to Miguel for pointing this out!ssss
 	* StatisticGraph.php:  Fix a bad return by reference that prevented graphs from being displayed.  Thanks to Daniel Lemay for finding it.
 	* Content.php:  Fix warning when selecting owners. Fix dangling metadata objects when deleting an object.
@@ -267,37 +267,37 @@
 	* import_user_database.php:  Fix permission call systax error.  That does't mean the script works as a whole, it hasn't been maintained for years.
 	* DependenciesList.php:  Make it extend GenericDataObject after all.  Fixes problem displaying it in the generic editor.
 
-2007-07-22 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-07-22 Benoit Grégoire  <benoitg@coeus.ca>
 	* generic_object_admin.pgp:  Fix problems when creating new content objects.  Fix problems including the content type classes.
 	* Avatar.php:  Make the resampling code support any format available to GD, not just jpeg.
 
-2007-07-22 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-07-22 Benoit Grégoire  <benoitg@coeus.ca>
 	* More schema compatibility defensive coding.  Comment out all SET commands in the schema
 
-2007-07-22 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-07-22 Benoit Grégoire  <benoitg@coeus.ca>
 	* install.php:  Fix #215
 
-2007-07-21 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-07-21 Benoit Grégoire  <benoitg@coeus.ca>
 	* AnonymisedDataExport.php:  Work around the huge memory requirements this report used to have.
 	* install.php:  Strip create procedural language from schema, that requires superuser anyway.
 					Strip a few other things to hopefully allow it to work again with postgresql 7.4, but I need the full output of the commant "psql -f wifidog-postgres-schema.sql", run from the sql directory of a svn checkout, from someone still running 7.4, otherwise I can't do much.
 	* DependenciesList.php:  New class.  Allow seeing the dependency list once the server is installed.  A small step towards centralized dependency installation.
 
-2007-07-20 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-07-20 Benoit Grégoire  <benoitg@coeus.ca>
 	* At long last, implement #9:  Automatic new node creation.  When attempting to login from an unknown node, the user (if he has the permissions) will be prompted to create the node, or "steal" en existing one (for hardware swaps).
 	* Refactor Node:getSelectNodeUI().
 	* Menu.php:  Fix small oversight causing menu not to clear.
 
-2007-07-19 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-07-19 Benoit Grégoire  <benoitg@coeus.ca>
 	UIUserList fixes:
 	* Node::getRecentUsers():  Get the 5 most recent users, not some random users in the last week.  Also, exclude users currently logged-in.
 	* Node::getActiveUsers():  Function was unbearably slow, now limit the search space to the last 3 months.  Get the 5 user who connected on the most differents days, instead of users with the worst wireless card ;)
 	* schema_validate.php: Add index for timestamp_in on connection table.
 
-2007-07-17 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-07-17 Benoit Grégoire  <benoitg@coeus.ca>
 	* Use last_heartbeat_sys_uptime untill #354 is fixed
 
-2007-07-16  Benoit Grégoire  <bock@step.polymtl.ca>
+2007-07-16  Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix display of wifidog uptime in node list
 	* Preliminary skinning of the menu
 	* Network::getNumOnlineUsers():  Fix #40 by counting active connexion tokens, not distinct user id's.  That way users logged in twice (splash-only, or username if allowed in network config) will be counted twice.
@@ -310,14 +310,14 @@
 	* Menu.php:  Sort menus alphabetically according to the user's locale.  TODO:  Implement menu weights.
 	* NodeLists:  Only list node types that have dependencies met in the menu.  Refactor the NodeLists for proper object-orientation.
 
-2007-07-12  Benoit Grégoire  <bock@step.polymtl.ca>
+2007-07-12  Benoit Grégoire  <benoitg@coeus.ca>
 	* MainUI.php:  Fix label problem in language chooser.
 
-2007-07-12  Benoit Grégoire  <bock@step.polymtl.ca>
+2007-07-12  Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix #291 by adding a proper warning and location of documentation
 	* Fix #336:  Add Swedish translation by Christian Svensson <blue ATT cmd.nu>
 
-2007-07-12  Benoit Grégoire  <bock@step.polymtl.ca>
+2007-07-12  Benoit Grégoire  <benoitg@coeus.ca>
 	-This is a behemoth "the road to 1.0"  commit.  I've been working on this for 6 months,
 	and it's reached the point where others can help.  Those are very far reaching changes, please
 	notify me if anything isn't working right (and im sure I can't have caught everything).
@@ -346,30 +346,30 @@
 	* Some work towards respecting the coding style: http://dev.wifidog.org/wiki/doc/developer/CodingStandard
 	* wifidog/admin/index.php:  Delete admin page.  There is no longuer a concept of a separate admin section.  Menu will depend on your access level.
 
-2007-07-11  Benoit Gréoire  <bock@step.polymtl.ca>
+2007-07-11  Benoit Gréoire  <benoitg@coeus.ca>
 	* path_defines_url_content.php: Fix #348
 
-2007-07-03  Benoit Gréoire  <bock@step.polymtl.ca>
+2007-07-03  Benoit Gréoire  <benoitg@coeus.ca>
 	* wifidog/signup.php:  Notify the user of the allowed characters.
 	* Add Bulgarian translation from "Nikola Petrov" <nvp.online A T gmail.com>
 	* config_available_languages:  Centralize the list there so that there is only one to modify everytime we add a translation
 
-2007-06-12  Benoit Gréoire  <bock@step.polymtl.ca>
+2007-06-12  Benoit Gréoire  <benoitg@coeus.ca>
 	* IE6 layout workarounds (not perfect, but better)
 	* HTML validation of the login and portal pages
 	* Apply patch from tdb@timothy86.orangehome.co.uk, fixes #334
 
-2007-05-30  Benoit Gréoire  <bock@step.polymtl.ca>
+2007-05-30  Benoit Gréoire  <benoitg@coeus.ca>
 	* VisitsPerMonth.php, VisitePerWeekday.php:  Fix small sql bug when selecting a single user
 
-2007-05-28  Benoit Gréoire  <bock@step.polymtl.ca>
+2007-05-28  Benoit Gréoire  <benoitg@coeus.ca>
 	* ActiveUserReport.php:  Merge new report from my development tree.  Gives a breakdown of how many users actually use the network.
 
-2007-05-22  Benoit Gréoire  <bock@step.polymtl.ca>
+2007-05-22  Benoit Gréoire  <benoitg@coeus.ca>
 	* Reverse part of [1230], hotspot_network_name was already available as standardised variable networkName, and hotspot_network_url as networkWebSiteURL.
 	* Reverse part of [1231]:  remove script tag, banning it was the reason the sag striping code was put in in the first place.  We may want to consider creating a RawHTMLContent Content Type.
 
-2007-05-22  Benoit Gréoire  <bock@step.polymtl.ca>
+2007-05-22  Benoit Gréoire  <benoitg@coeus.ca>
     * locales/el/: Add new greek translation contributed by Nikola Petrov
 
 2007-05-17 François Proulx <francois.proulx@gmail.com>
@@ -383,23 +383,23 @@
 	* Updates profiles template
 	* TODO: Add getNewUI et processNewUI to FavoriteHotspots to simplify input
 
-2007-05-03  Benoit Gréoire  <bock@step.polymtl.ca>
+2007-05-03  Benoit Gréoire  <benoitg@coeus.ca>
     * MainUI_ToolContent.tpl: Make preferences_link, login_link, and logout_link CSS targetable.  Get rid of some deprecated CSS.
 
-2007-04-25  Benoit Gréoire  <bock@step.polymtl.ca>
+2007-04-25  Benoit Gréoire  <benoitg@coeus.ca>
     * ShoutBox.php:  The shout form wasn't displayed whent there weren't any Shouts yet, doh!
 
-2007-04-24 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-04-24 Benoit Grégoire  <benoitg@coeus.ca>
 	* AuthenticatorRadius.php:  Fix RADIUS dependency detection bug related to case sensitivity
 
-2007-04-19  Benoit Grégoire  <bock@step.polymtl.ca>
+2007-04-19  Benoit Grégoire  <benoitg@coeus.ca>
 	* RssAggregator.php:  Fix bug saving the max item age.
 	* Forgot to remove a bunch of links to faq.php.
 
-2007-04-03 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-04-03 Benoit Grégoire  <benoitg@coeus.ca>
 	* AnonymisedDataExport.php:  New report.  Adds the ability to export anonymised SQL data for academic research.
 
-2007-03-20 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-03-20 Benoit Grégoire  <benoitg@coeus.ca>
 	* Shoutbox.php: Allow limiting the number of characters entered for a shout.
 	(Ideally, this would also need to be enforced at db write level).
 	Move the shout form in the list.
@@ -408,26 +408,26 @@
 	Put the date of the shout before the username.
 	* User.php:  Make the entire "edit profile" link CSS targetable, including the parentesis.
 
-2007-03-20 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-03-20 Benoit Grégoire  <benoitg@coeus.ca>
 	* ProfileTemplateField.php:  Only allow simple content types as metadata.
 	* Langstring.php:  Fix bug:  one couldn't change the language of a string without changing the actual text.
 	* Content.php:  Add isExactContentType() method.
 	* Profile-related visual and UI tweaks
 
-2007-03-20 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-03-20 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix #304:  For some reason the Smarty assignement to userName used getListUI() instead of getUsername()???
 	* Add HyperLink content type
 	* Add UIUserList content type (work towards #158)
 	* portal/index.php:  Finish refactoring Smarty usage.
 
-2007-03-17 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-03-17 Benoit Grégoire  <benoitg@coeus.ca>
 	* install.php: Make sure we are in the right directory when uncompressing Smarty
 	* Avatar.php:  Don't allow user to hyperlink the image.
 	* ProfileTemplate:  Display how many profiles will be affected when deleting a template field.
 	* User.php:  Don't show the profile creation button if the network has no profile template.
 	 Don't hyperlink the username if the user has no profile.
 
-2007-03-16 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-03-16 Benoit Grégoire  <benoitg@coeus.ca>
 	* Lots of work on profiles.  The HTML and CSS are not final, but #18 can be considered closed.
 	* ProfileField::getContentField():  Fix bug where the object wouldn't refresh properly.
 	* Content:  Delicate refactoring of the UI to create new content.
@@ -451,7 +451,7 @@
 	<a class="administration" href="{$networkWebSiteURL}"><img class="administration" src="{$common_images_url}lien_ext.gif">&nbsp;{$networkName}</a>
 	* ContentTypeFilter:  Saving still wasn't neutral.  Strip the array indexes to fix it.
 
-2007-03-03 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-03-03 Benoit Grégoire  <benoitg@coeus.ca>
 	* CSS tweaks for RSS feeds.
 	* Fix detection of HTML Safe.
 	* Avatar.php:  Don't allow editing the picture size.
@@ -469,7 +469,7 @@
         * Updated dependencies list (completion of all required components)
         * Dramatic speedup of PEAR and PECL modules detection by dependencies class
 
-2007-02-25 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-02-25 Benoit Grégoire  <benoitg@coeus.ca>
 	-* rev [1182], [1183], [1184]  are repository fix commits.  If anyone have problem with their lib directory when upgrading, contact me.
 
 2007-02-24 Max Horvath <max.horvath@freenet.de>
@@ -489,11 +489,11 @@
 	* First iteration of user profiles completed.
 	* Need to improve Avatar admin UI
 
-2007-01-19 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-01-19 Benoit Grégoire  <benoitg@coeus.ca>
 	* dump_initial_data_postgres.sh:  Initial node wasn't setup correctly.
 	* INSTALL:  Fix some obsolete instructions for database backup and restore
 
-2007-01-18 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-01-18 Benoit Grégoire  <benoitg@coeus.ca>
 	* Updated french translation curtesy of http://zapquebec.org
 
 2007-01-16 François Proulx <francois.proulx@gmail.com>
@@ -503,7 +503,7 @@
 	* Network, User : Added support for profiles (not implemented for Network)
 	* TODO: Integration in portal
 
-2007-01-16 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-01-16 Benoit Grégoire  <benoitg@coeus.ca>
 	* A few more steps towards a real user manager
 	* Move password change to preferences.
 	* InterfaceElements:  Begin moving away from a raw HTML generator and towards a more semantic one as discussed with Max Horvath.
@@ -512,15 +512,15 @@
 	* SmartyWifidog.php:  Fix #282 with a slightly dirty workround to the chicken and the egg smarty variables assignment problem.
 		We now extend the fetch method and do our assignment there instead of in the constructor.
 
-2007-01-15 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-01-15 Benoit Grégoire  <benoitg@coeus.ca>
 	* Sync initial schema and translations
 	* Minor spelling fixes
 
-2007-01-14 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-01-14 Benoit Grégoire  <benoitg@coeus.ca>
 	* Dependencies.php, AuthenticatorRadius.php:  Fix bug #287 (Dependencies not being detected properly)
 	* Content.php: Make hasDisplayableMetadata() consider Authors, and make it a bit faster.
 
-2007-01-13 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-01-13 Benoit Grégoire  <benoitg@coeus.ca>
 	* Content.php:  Add setUserUIMainDisplayContent() and setUserUIMainInteractionArea()
 	to simplify writing subclasses and port all content subclasses to the new API.
 	* Content.php:  Add a new callcack method, isTextualContent(), to be used by
@@ -542,12 +542,12 @@
 	* SimpleSmartyTemplate:  Add a simple version of the SmartyTemplate content
 	type
 
-2007-01-03 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-01-03 Benoit Grégoire  <benoitg@coeus.ca>
 	* FormSelectGenerator.php: Fix incorrect $this reference in isPresent().  The bug would only manifest
 	 itself from the FlickrPhotostream's admin interface.
 	* page.php:  Fix missing retrieval of DB instance.
 
-2007-01-03 Benoit Grégoire  <bock@step.polymtl.ca>
+2007-01-03 Benoit Grégoire  <benoitg@coeus.ca>
 	* Yet more Smarty cleanup, add some docs, add Smarty variables to access the physical node a user is connected to.
 	* RssAggregator.php:  Fix bug in setMaxItemAge() method when setting a null value
 	* Cache.php:  Performance optimization when caching is disabled.
@@ -556,39 +556,39 @@
 2007-01-02 François Proulx <francois.proulx@gmail.com>
 	* Updated the SQL schema initial schema
 
-2006-12-31 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-12-31 Benoit Grégoire  <benoitg@coeus.ca>
 	* More Smarty cleanup
 	* Content.php:  Bugfix:  metadata wasn't deleted along with the rest of the
 	content upon deletion.
 
-2006-12-30 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-12-30 Benoit Grégoire  <benoitg@coeus.ca>
 	* install.php:  Move path verification to the first page, and make it clearer.  Fix PHP warnings.
 	* wifidog/include/smarty.resource.string.php:  A smarty resource plugin to parse a smarty template from a string
 	* SmartyTemplate:  Very basic but functionnal commit of the new Smarty content type.
 	IMPORTANT NOTE:  This will eventually obsolete IFrameRest, which will be removed.
 	* Continue cleaning-up/standardizing Smarty variable usage.
 
-2006-12-12 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-12-12 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix all PHP 5.2 compatibility issues I could find.  This needs further testing
 
 2006-12-12 Pascal Charest <pascal.charest@gmail.com>
 	* install.php: Remove obsolete Phlickr installation references
 
-2006-12-12 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-12-12 Benoit Grégoire  <benoitg@coeus.ca>
 	* install.php, Dependencies.php:  Centralize Dependency detection (next is to centralize
 	dependency installation code).
 	* config.php: Remove more obsolete config directives.
 
-2006-12-11 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-12-11 Benoit Grégoire  <benoitg@coeus.ca>
 	* install.php:  Fix a few problems caused by obsolete magpierss detection code.
 	* install.php, config.php:  Remove the obsolete PHLICKR_SUPPORT option.
 
-2006-11-30 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-11-30 Benoit Grégoire  <benoitg@coeus.ca>
 	* schema_validate.php:  Mute annoying ob_flush() notices.
 	* Node.php:  Add missing default parameter to getSelectNodeUI()
 	* get_stylesheet:  Fix date calculations that broke download.
 
-2006-11-29 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-11-29 Benoit Grégoire  <benoitg@coeus.ca>
 	Sync with my main developpement environement:
 	* Performance optimization pass:  Collect a few low hagning fruits
 	by implementing basic instance caching for classes Server, Network, Nodes, Content and User.
@@ -608,22 +608,22 @@
 	having to modify the schema.  See the Content class documentation.
 	* Fix various small UI issues.
 
-2006-11-29 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-11-29 Benoit Grégoire  <benoitg@coeus.ca>
 	* common.php:  Fix the value of SESS_NODE_ID_VAR, it got overwritten by SESS_GW_ID_VAR.
 	Caused problems with logout.
 
-2006-11-27 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-11-27 Benoit Grégoire  <benoitg@coeus.ca>
 	* Try to fix #270:
 	* DateTime.php:  Rename class to DateTimeWD because of the stunt they pulled in PHP 5.2
 	* Content and derived classes:  Make all constructors protected.
 
-2006-11-26 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-11-26 Benoit Grégoire  <benoitg@coeus.ca>
 	* lost_username.tpl, lost_password.tpl, resend_validation.tpl:  Fix #259 by commenting out
 	all Javascript. I hate removing outside contributions, but the lost_username,
 	lost password and re-send validation email have been broken for months and no one
 	stepped-in to fix it.
 
-2006-11-23 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-11-23 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix bug in node creation
 	* Add error message for geocoder when you didn't set the country
 	* Clarify error messages and description for the geocoder.
@@ -631,15 +631,15 @@
 	  This change makes it usable when you didn't use the geocoder first.
 	* Show the gateway id in the technical nodelist.
 
-2006-11-22 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-11-22 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix minor problems with template using obsolete constants
 	* Delete a bunch of unused templates
 
-2006-11-22 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-11-22 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix broken auth
 	* Fix broken portal when called from gateway
 
-2006-11-22 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-11-22 Benoit Grégoire  <benoitg@coeus.ca>
 	* Major schema update (this one is going to make your database grind for a while, sorry
 	about that...)
 	Fix a long standing design problem with the node table, where the ID could be changed.
@@ -648,14 +648,14 @@
 	 finish the JiWire output.
 	* Stylesheet.php:  New content type.  Takes advantage of two pass content display to create stylesheets to be used only at a specific node, or with a specific content.
 
-2006-11-21 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-11-21 Benoit Grégoire  <benoitg@coeus.ca>
 	* Change schema update method.  Will now do one transaction
 	 per schema version, allowing each schema to assume that
 	  the current schema is the previous one.  Also allows not
 	  starting over when there is a problem.
 	  Fixes schema update problems with the last commit
 
-2006-11-21 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-11-21 Benoit Grégoire  <benoitg@coeus.ca>
 	* RssAggregator.php:  At long last, sync with FeedPressReview 2.0
 	 http://projects.coeus.ca/feedpressreview/ (formerly rsspressreview)  and
 	  make most of it's features directly available from the web interface.
@@ -672,13 +672,13 @@
 	Warning: This changes the dependencies of the auth server.  Your RSS feeds will be disabled untill you re-run the install script.
 	* gw_message.php:  Fix validation period not being displayed.
 
-2006-11-14 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-11-14 Benoit Grégoire  <benoitg@coeus.ca>
 	* MainUI.php:  Allow displaying any object with a getUserUI() method directly as content.
 
-2006-11-14 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-11-14 Benoit Grégoire  <benoitg@coeus.ca>
 	* generic_object_admin.php:  Fix interface options for the user object, but this is the wrong way to go about it.  THese options should be class properties.
 
-2006-11-14 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-11-14 Benoit Grégoire  <benoitg@coeus.ca>
 	* File.php:  Clickthrough weren't logged, DOH!
 	* User.php:  Error message on validation expired didn't properly output the validation grace time.
 	* Statistics.php:  Fix #271: Getting statistics for a single MAC address was broken.
@@ -692,7 +692,7 @@
 		Same with number of clickthrough for File content types and derivatives (picture, etc.).
 	* ContentReport.php:  Add content report (does not support most options yet, but still very usefull).
 
-2006-11-13 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-11-13 Benoit Grégoire  <benoitg@coeus.ca>
 	* Make the MainUI, SmartyWifidog and Session and AbstractDb classes singletons
 	* Implement two pass content display.  All Content can now implement a prepareGetUserUI(), allowing them to interact with MainUI and other Content before display.
 	  Allow creating content such as stylesheets, feed accumulators, etc.
@@ -700,38 +700,38 @@
 	* New Content type:  Stylesheet.  Allows specific nodes, or even specific content groups to have custom stylesheets.
 	* Langstring.php:  Make getAdminUI calling conventions coherent with other content types.
 
-2006-11-11 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-11-11 Benoit Grégoire  <benoitg@coeus.ca>
 	* Authenticator.php:  Critical: Fix SQL query syntax in acctStart()
 
-2006-11-07 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-11-07 Benoit Grégoire  <benoitg@coeus.ca>
 	* install.php:  Fix password generation I inadvertently broke.  Remove misleading info about SSL
 
-2006-11-07 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-11-07 Benoit Grégoire  <benoitg@coeus.ca>
 	* install.php:  Put an end of line after the password, make it easier to read.
 	Make the install script check the permissions of lib/smarty/plugins directory to avoid smarty errors
 	* Statistics.php:  A little gift for France wireless:  Make aggregate statistics available across networks
 
-2006-11-07 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-11-07 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix # 268, #269 as well as greg's problems by moving all token and registration date arithmetics
 	 to the database, and standardize on SQL-standard CURRENT_TIMESTAMP.
 	Fixes operational problems when PHP and PostGres don't have the same timezone
 	(which appears to be the case on Fedora by default).
 	Note that the page.php script still has PHP date arithmetics, but at least should be self-consistent.
 
-2006-10-24 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-10-24 Benoit Grégoire  <benoitg@coeus.ca>
 	* auth/index.php: Add some defensive coding and debug output when the token is invalid.
 
 2006-10-24 Damien Raude-Morvan <drazzib@drazzib.com>
 	* Fix french translation used for account validation to use same number of token as original message.
 	* Only show language combo when there is more than one language to select.
 
-2006-10-24 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-10-24 Benoit Grégoire  <benoitg@coeus.ca>
 	* EmbeddedContent.php:  Fix content type selection (admin interface of EmbeddedContent was broken)
 	* Full spanish translation curtesy of jguevara @@ unitec.edu (closes #254)
 	* Some documentation updates for content filters
 	* Content.php:  Add isNotContentType() method.
 
-2006-09-07 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-09-07 Benoit Grégoire  <benoitg@coeus.ca>
 	* Access to the Content manager was broken for normal users, again.
 
 2006-09-11 François Proulx <francois.proulx@gmail.com>
@@ -739,24 +739,24 @@
 	* ContentTypeFilter.php fixed the method checking function
 	* Fixed errors in French translation file
 
-2006-09-07 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-09-07 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix PHPMailer that I've broken earlier
 
-2006-09-07 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-09-07 Benoit Grégoire  <benoitg@coeus.ca>
 	* Slightly rework SSL detection so that it uses the default server if a current one isn't available.
 		Fixes server passing passwords in the clear if the hostname disn't match (DOH!).
 		We really should properly split the Server class into a singleton Server class and multiple VirtualHost classes.
 	* Re-apply fixed HTMLeditor patch.  (Original description:  Make HTMLeditor inherit from Langstring.  Allowed a massive reduction of
 	  line count and will stop the codebases from needlessly drifting apart.)
 
-2006-09-07 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-09-07 Benoit Grégoire  <benoitg@coeus.ca>
 	* Add missing require of Statistics.php in stats.php
 
-2006-09-07 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-09-07 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix non persistent content being available to add to nodes, networks and content groups.
 	* Prevent a user from entering the same language twice in a langstring.  Fixes #226
 
-2006-09-06 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-09-06 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix #63
 	* Fix problem with my Splash only user fix (I used match on the user_id instead of the username).
 	* Prevent the Splash only user from logging out, wrecking havock in the tokens.
@@ -770,7 +770,7 @@ Usability and UI fixes:
 	* Content linked to nodes and networks now edits in a new window.
 	* Remove "Add new node" menu item for consistency.
 
-2006-09-06 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-09-06 Benoit Grégoire  <benoitg@coeus.ca>
 	* Remove most inclusions of MainUI in classes.
 	That completely broke authentication (circular dependencies).
 	Fixes 245.
@@ -779,7 +779,7 @@ Usability and UI fixes:
     first place.
 	* HyperLink.php:  Fix bug where a link with identical text as it's link would see the text replaced by the clickthrough-tracked equivalent.
 
-2006-09-06 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-09-06 Benoit Grégoire  <benoitg@coeus.ca>
 	* ContentTypeFilter:  New class, implements #159.  Allows to filter content type according to various criteria.  Will be used more extensively in the profile manager.
 	* Content manager:  Use content type filter to only allow Simple content types (Content without metadata) to be used for metadata.
 	* New content type BannerAdGroup.  Used (primarily) to display banner adds, or any other image rotation.  Size constraints not yet implemented
@@ -824,14 +824,14 @@ Usability and UI fixes:
 	* templates/sites/index.tpl: fix wrong user count (fixes #236)
 	* Added more trash mail services to the black list (fixes #149)
 
-2006-09-01 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-09-01 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix #189, #173
 
 
-2006-09-01 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-09-01 Benoit Grégoire  <benoitg@coeus.ca>
 	* Content.php:  Improve handling of simple but persistent content.
 
-2006-08-31 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-08-31 Benoit Grégoire  <benoitg@coeus.ca>
 	* Server.php:  Make sure getCurrentServer returns the default server if the
 	  hostname isn't recognised.
 	* Content manager:
@@ -854,7 +854,7 @@ Usability and UI fixes:
 	* Updated portuguese translation, thanks to Gabriel Hahmann
 	* Added spanish translation, thanks to Ricardo Jose Guevara Ochoa
 
-2006-08-28 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-08-28 Benoit Grégoire  <benoitg@coeus.ca>
 	* Add SimplePicture content type
 	* Fix #225 (For both nodes and networks)
 
@@ -863,7 +863,7 @@ Usability and UI fixes:
 	* Integrated PDF node list export
 	* Updated Sprintf formatted strings in some Smarty templates
 
-2006-08-27 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-08-27 Benoit Grégoire  <benoitg@coeus.ca>
 	* clickthrough.php, HyperLink.php:  Implement working hyperlink
 	  clickthrough tracking (no reporting yet).
 	  Works for Langstring, FlickrPhotoStream, Picture, RssAggregator and their
@@ -879,13 +879,13 @@ Usability and UI fixes:
 	  example in templates/sites/index.tpl).
 	* Integrated back the SQL profiling functions
 
-2006-07-20 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-07-20 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix a bug where having an empty username would break statistics.
 
-2006-07-07 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-07-07 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix a bug in some reports when selecting a single user.
 
-2006-07-05 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-07-05 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix #175.
 	* Fix the "Registration Log" and "User registration report" reports giving
 	  incorrect statistics
@@ -910,10 +910,10 @@ Usability and UI fixes:
 	* Fully working, but Excel doesn't seem to handle well UTF-8
 	  investigation in progress.
 
-2006-06-08 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-06-08 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix #151.  It was still around after all.
 
-2006-06-08 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-06-08 Benoit Grégoire  <benoitg@coeus.ca>
 	* Completely refactor the look and html of the content manager, statistics
 	  and most object's administrative interfaces.
 	  Should be much simpler and clearer now.
@@ -934,7 +934,7 @@ Usability and UI fixes:
 	* Simplified Google Maps JS code to use more of the v2 abstraction
 	* Improved admin panels CSS classes
 
-2006-05-23 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-05-23 Benoit Grégoire  <benoitg@coeus.ca>
 	* config.php:  Disable USE_CACHE_LITE, it's definitely not stable, and
 	  causes very hard to track down problems with Internet Explorer.
 
@@ -974,11 +974,11 @@ Usability and UI fixes:
 	  specific theme pack
 	* Fixed a few layout bugs
 
-2006-05-20 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-05-20 Benoit Grégoire  <benoitg@coeus.ca>
 	* USE_BASE_NON_SSL_PATH for hotspot map, else internet explorer whines
 	  endlessly
 
-2006-05-20 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-05-20 Benoit Grégoire  <benoitg@coeus.ca>
 	* index.tpl:  Fix link to the map not being displayed at a hotspot, even
 	  when you are logged in.  There needs to be much better logick before we
 	  export such things to smarty templates.
@@ -992,18 +992,18 @@ Usability and UI fixes:
 		* Simply use in this manner :
 		  http://wifidog-server.org/hotspot_status.php?format=XML&xslt=http://wifidog-server.org/contrib/xslt/hotspot_status_browser.xsl
 
-2006-05-20 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-05-20 Benoit Grégoire  <benoitg@coeus.ca>
 	* page.php:  Fix bugs in various files preventing the system from working
 	  from the command line.
 
-2006-05-20 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-05-20 Benoit Grégoire  <benoitg@coeus.ca>
 	* More install script fixes:  Phlickr wouldn't install, and the permissions
 	  of wifidog/tmp/smarty/cache weren't checked.
 
-2006-05-20 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-05-20 Benoit Grégoire  <benoitg@coeus.ca>
 	* More stylesheet and HTML work
 
-2006-05-18 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-05-18 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix loging form incorrectly attempting to validate the password,
 	  preventing many existing accounts from logging-in.
 	* Interim commit, begin simplifying the html ans stylesheets, and re-doing
@@ -1025,7 +1025,7 @@ Usability and UI fixes:
 	* Fixed usort bug in MainUI
 	* Fixed download (wget) in install.php
 
-2006-05-09 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-05-09 Benoit Grégoire  <benoitg@coeus.ca>
 	* Working (if slightly basic) theme manager.  You can pick the theme in the
 	  network configuration.
 	  To add your own theme, read wifidog/media/network_theme_packs/README.txt
@@ -1035,7 +1035,7 @@ Usability and UI fixes:
 	  defines and config variables.
 	* Get rid of PHP generated stylesheets
 
-2006-05-09 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-05-09 Benoit Grégoire  <benoitg@coeus.ca>
 	* Finish content assignation system
 	* Content ordering is now global (network, nodes and everywhere content cand
 	  now be in mixed order).
@@ -1045,7 +1045,7 @@ Usability and UI fixes:
 2006-04-28 François Proulx <francois.proulx@gmail.com>
 	* Fixed error in initial data script
 
-2006-04-28 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-04-28 Benoit Grégoire  <benoitg@coeus.ca>
 	* wifidog/login/index.php: Correctly use DEFAULT_NODE_ID from config.php
 	  instead of hardcoded 'default'
 
@@ -1057,18 +1057,18 @@ Usability and UI fixes:
 	* v2 will now provide full maps of European countries and is a bit faster
 	* Updated the schema accordingly with new GMaps values
 
-2006-04-24 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-04-24 Benoit Grégoire  <benoitg@coeus.ca>
 	* Dependencies.php:  Small fix in case gettext isn't installed
 
-2006-04-24 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-04-24 Benoit Grégoire  <benoitg@coeus.ca>
 	* AuthenticatorLDAP.php:  Merge patch from jguevara@unitec.edu.  Fixes #125
 
-2006-04-24 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-04-24 Benoit Grégoire  <benoitg@coeus.ca>
 	* Major system locale handling overhaull.  Hopefully abstract out the UTF8
 	  problems once and for all, allowing everyone to define them the same way.
 	  Fix a few bugs along the way. Should also be a little faster.
 
-2006-04-24 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-04-24 Benoit Grégoire  <benoitg@coeus.ca>
 	* Revert Rob's SYSTEM_PATH change.  Sorry about that.  The devs spent hours
 	  to finally get the PATH stuff consistent and fixing the countless bugs
 	  that this process introduced.
@@ -1096,20 +1096,20 @@ Usability and UI fixes:
 	  entering in their password for the old password.
 	* page_header div defined and positioned in MainUI
 
-2006-04-04 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-04-04 Benoit Grégoire  <benoitg@coeus.ca>
 	* /classes/Content/IFrame/IFrame.php: Change a few methods from private
 	  to protected as the private methods broke IFrameRest
 
 2006-04-01 François Proulx <francois.proulx@gmail.com>
 	* Dumped initial schema from working install
 
-2006-03-31 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-03-31 Benoit Grégoire  <benoitg@coeus.ca>
 	* dump_initial_data_postgres.sh:  Add the content_available_display_pages
 	  table to the dump, can someone re-generate the initial data from a
 	  working install
 	* Remove the ?> tags from all the classes.
 
-2006-03-27 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-03-27 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix bug where right_area_bottom content wouldn't be displayed.
 	* Minor CSS cleanup
 
@@ -1120,7 +1120,7 @@ Usability and UI fixes:
 	* Fixed schema 37 : left_area_top
 	* Updated initial schema
 
-2006-03-27 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-03-27 Benoit Grégoire  <benoitg@coeus.ca>
 	* First step in massive simplification of CSS and templates
 	* Implement the new main CSS structure
   	* Implement working content assignation interface and content ordering for
@@ -1132,7 +1132,7 @@ Usability and UI fixes:
 	  "Use the Internet" link that will not get you out of your working tab
 	* Fix #118
 
-2006-03-26 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-03-26 Benoit Grégoire  <benoitg@coeus.ca>
 	* init_php.php: Fix stripslashes_cb() so it actually works, this means the
 	  auth server should work properly with auth servers with magic quotes
 	  turned on.
@@ -1147,7 +1147,7 @@ Usability and UI fixes:
 	  the outgoing URLs do.
 	* Removed lost echo in Locale.php
 
-2006-03-21 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-03-21 Benoit Grégoire  <benoitg@coeus.ca>
 	* login/index.php: Remove huge security hole introduced by stylistic
 	  changes in the file. A user could login to any hotspot by simply filling
 	  a blank form because of a gratuitous change from empty to is_null
@@ -1186,10 +1186,10 @@ Usability and UI fixes:
 	* the link to and the Google hotspots map as is won't be shown to an
 	  unauthenticated user at a real hotspot
 
-2006-03-16 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-03-16 Benoit Grégoire  <benoitg@coeus.ca>
 	* hotspots_map.tpl:  Use base_url_path instead of base_ssl_path
 
-2006-03-09 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-03-09 Benoit Grégoire  <benoitg@coeus.ca>
 	* init_php.php: Try to fix #102 by inspection
 	* Delete AbstractDbMySql.php, and collapse AbstractDbPostgres.php
 	  into AbstractDb.php to prepare for eventual switch to PDO file.
@@ -1399,14 +1399,14 @@ Usability and UI fixes:
     * cron/cleanup.php needed new way to call common.php
 	* added cron/vacuum.php to round things out
 
-2006-02-07 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-02-07 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix a bunch of file inclusion bugs in the statistics subsystem.
 	  This is only a ad-hac fix. It seems the requires for just about every
 	  class have been stripped off. This must be fixed, all classes should
 	  require_once all classes or include that they need that isn't included by
 	  a parent class.
 
-2006-02-06 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-02-06 Benoit Grégoire  <benoitg@coeus.ca>
 	* wifidog/local_content/default/hotspot_logo.jpg: Delete deprecated file
 	* wifidog/local_content/default/hotspot_logo_banner.jpg: Delete deprecated
 	  file
@@ -1438,7 +1438,7 @@ Usability and UI fixes:
 	* updated installation file to represent all the new modules that can be
 	  installed to use all WiFiDog features
 
-2006-01-31 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-01-31 Benoit Grégoire  <benoitg@coeus.ca>
 	* path_defines_base.php:  Fix syntax errors in the exception thrown. Add
 	  more meaningfull output
 
@@ -1463,7 +1463,7 @@ Usability and UI fixes:
 	  in config.php named DATE_TIMEZONE. Set it to your local timezone.
 	  Don't forget to update your local.config.php in case you're using it.
 
-2006-01-24 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-01-24 Benoit Grégoire  <benoitg@coeus.ca>
 	* Dependencies.php:  We missed one more instance of non-unifrom code for
 	  path detection. The Dependencies class now uses the code in
 	  include/path_defines_base.php like the rest of the system. Also make it
@@ -1486,7 +1486,7 @@ Usability and UI fixes:
 	* Configuration file (config.php) will be read before path detection is
 	  being started (otherwise there was no chance to set a manual SYSTEM_PATH)
 
-2006-01-22 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-01-22 Benoit Grégoire  <benoitg@coeus.ca>
 	* common.php: Real fix for Ticket #59 ;)
 	* common.php: Untested fix for Ticket #59
 
@@ -1501,7 +1501,7 @@ Usability and UI fixes:
 2006-01-09 Max Horváth <max.horvath@freenet.de>
 	* createDoc.sh: added description of how to install requirements
 
-2006-01-08 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-01-08 Benoit Grégoire  <benoitg@coeus.ca>
  	* common.php: Improve path detection code, and start moving PATH detection
  	  back to a central location. You should NEVER go to any $_SERVER[]
  	  variables for path related stuff, all you need is already available
@@ -1509,7 +1509,7 @@ Usability and UI fixes:
  	* UserReport.php: Remove dangling reference to BASEPATH.
  	* install.php: Use centralised path detection.
 
-2006-01-04 Benoit Grégoire  <bock@step.polymtl.ca>
+2006-01-04 Benoit Grégoire  <benoitg@coeus.ca>
 	* config.php, common.php: Completely remove SYSTEM_PATH from config.php,
 	  making one less config option to manage.  It is now autodetected.
 
@@ -1604,7 +1604,7 @@ Usability and UI fixes:
 2005-12-05 Max Horváth <max.horvath@freenet.de>
 	* fixed bug when calling the preview version of a login page
 
-2005-11-30 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-11-30 Benoit Grégoire  <benoitg@coeus.ca>
 	* User.php: Fix a bug in the sql query in isUserValid(). Checked that the
 	  change works with postgresql 7.4 and 8. It is still not understood why
 	  ISF doesn't encounter this bug on it's production server.
@@ -1666,7 +1666,7 @@ Usability and UI fixes:
 2005-10-25 Francois Proulx <francois.proulx@gmail.com>
 	* AuthenticatorRadius : Fixed legacy variable misuse
 
-2005-10-24 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-10-24 Benoit Grégoire  <benoitg@coeus.ca>
 	* AuthenticatorRadius:  Fix bug reported by kouete, by inspection. Fix not
 	  actually tested. Guys, read the documentation of the function parameters
 	  when you code, it's there to help you ;)
@@ -1687,7 +1687,7 @@ Usability and UI fixes:
 2005-10-07 Philippe April  <philippe@ilesansfil.org>
 	* Released wifidog-auth-1.0.0_m2
 
-2005-10-06 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-10-06 Benoit Grégoire  <benoitg@coeus.ca>
 	* AuthenticatorLocalUserNoSignup:  Make a new authenticator, identical to
 	  AuthenticatorLocalUser but disalowing new user signup.  When setting up
 	  a server, you can add your users, and then change the authenticator class
@@ -1701,7 +1701,7 @@ Usability and UI fixes:
 	* Added link to install script, when the database is empty.
 	* Fixed initial data dump script
 
-2005-10-04 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-10-04 Benoit Grégoire  <benoitg@coeus.ca>
 	* Remove a bunch of deprecated methods from the Node object,
 	  document undocumented methods.
 	* Make the node id editable.  This allows the gateway "MAC address as node
@@ -1718,7 +1718,7 @@ Usability and UI fixes:
 2005-10-04 Francois Proulx <francois.proulx@gmail.com>
 	* Translated signup page messages
 
-2005-09-27 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-09-27 Benoit Grégoire  <benoitg@coeus.ca>
 	* Partial login page content manager support (Node only for now)
 
 2005-09-27 Philippe April  <philippe@ilesansfil.org>
@@ -1728,7 +1728,7 @@ Usability and UI fixes:
 2005-09-26 Francois Proulx <francois.proulx@gmail.com>
 	* Translated the few new sentences on the login page
 
-2005-09-26 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-09-26 Benoit Grégoire  <benoitg@coeus.ca>
 	* login/index.php, stylesheet.css:  Make the create new account bigger, and
 	  remove unnecessary words.
 
@@ -1744,7 +1744,7 @@ Usability and UI fixes:
 	* wrote basic "Find the closest hotspot" widget for canada geocoding only...
 	* fixed broken xml, damn blank lines...
 
-2005-09-25 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-09-25 Benoit Grégoire  <benoitg@coeus.ca>
 	* Statistics:  At long last, the monster statistics commit.
 	  We finally have a stable, documented and uniform codebase for statistics.
 	  This resulted is removal of several functions in other classes too.
@@ -1797,7 +1797,7 @@ Usability and UI fixes:
 2005-09-13 Francois Proulx <francois.proulx@gmail.com>
 	* Added access permissions for statistics.
 
-2005-09-12 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-09-12 Benoit Grégoire  <benoitg@coeus.ca>
 	* schema_validate.php:  Fix a bug version 26.  The conversion of the old
 	  account_origin as a parameter to the authenticator was wrong.  To fix it
 	  manually if you already ran the script, you must quote the parameter in
@@ -1825,7 +1825,7 @@ Usability and UI fixes:
 	* added more checks, for dates etc...
 	* changed sorting mode
 
-2005-09-10 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-09-10 Benoit Grégoire  <benoitg@coeus.ca>
 	* Add UI to add a new Network
 	* Improve UI to add a new Node and new Content
 
@@ -1849,18 +1849,18 @@ Usability and UI fixes:
 	* Changed the UI a bit to reflect this change
 	* Updated stylesheet
 
-2005-09-08 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-09-08 Benoit Grégoire  <benoitg@coeus.ca>
 	* portal/index.php:  Custom portal redirect now operational.
 
-2005-09-08 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-09-08 Benoit Grégoire  <benoitg@coeus.ca>
 	* MainUI:  Move call to garbage_collect() here.
 	* portal/index.php:  New feature:  Custom portal redirect.
 	* rework much of the logout code
 
-2005-09-07 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-09-07 Benoit Grégoire  <benoitg@coeus.ca>
 	* login/index.php:  Fix getSplashOnlyUser() method call.
 
-2005-09-07 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-09-07 Benoit Grégoire  <benoitg@coeus.ca>
 	* RssPressReview.php:  Fix z-index so the hovers will overlap the expanded
 	  news.
 	* login/index.php:  Reorganise code to make it more legible and comment what
@@ -1872,7 +1872,7 @@ Usability and UI fixes:
 	  configuration
 	* New feature (in testing): Splash-only node support
 
-2005-09-05 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-09-05 Benoit Grégoire  <benoitg@coeus.ca>
 	* include/common.php:  Add code to undo the effect of magic_quote if enabled
 	  in the server config.  It is still strongly recommended to disable
 	  magic_quote
@@ -1889,7 +1889,7 @@ Usability and UI fixes:
 	* s/Networt/Network/
 	* Fixed signing up and validation, typos
 
-2005-09-01 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-09-01 Benoit Grégoire  <benoitg@coeus.ca>
 	WARNING:  DO NOT use the CVS auth server in production until further notice.
 	Massive internal changes are underway.
 	Use the release tagged 1.0m1 in production.
@@ -1910,7 +1910,7 @@ Usability and UI fixes:
 
 NOTE:  the 1.0m1 release was tagged here
 
-2005-08-31 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-08-31 Benoit Grégoire  <benoitg@coeus.ca>
 	* Node.php:  Fix node creation
 
 2005-08-31 Francois Proulx <francois.proulx@gmail.com>
@@ -1941,7 +1941,7 @@ NOTE:  the 1.0m1 release was tagged here
 	* Minor bug fixes in Geocoder
 	* Merged node_owners and node_tech_officers table into node_stakeholders
 
-2005-08-19 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-08-19 Benoit Grégoire  <benoitg@coeus.ca>
 	* New schema version
 	* install.php, tmp/magpie_cache/:  Move all magpie caches
 	  to a central location, adjust install script to match.
@@ -1958,10 +1958,10 @@ NOTE:  the 1.0m1 release was tagged here
 2005-08-17 Pascal Leclerc  <pascal@plec.ca>
     * Added install script + minor changes in schema_validate.php
 
-2005-08-15 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-08-15 Benoit Grégoire  <benoitg@coeus.ca>
 	* Re-Run sync_sql_for_cvs.sh, did not run to completion last time.
 
-2005-08-15 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-08-15 Benoit Grégoire  <benoitg@coeus.ca>
 	* Run sync_sql_for_cvs.sh
 	* sql/dump_initial_data_postgres.sh:  Fix a hardcoded reference to rss_url
 	  which no longer exists
@@ -1985,7 +1985,7 @@ NOTE:  the 1.0m1 release was tagged here
 	* I will try to keep the streetAddress field intact so I won't break
 	  backward compat.
 
-2005-08-12 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-08-12 Benoit Grégoire  <benoitg@coeus.ca>
 	* classes/MainUI.php: Move the call to schema_validate() in MainUI's
 	  constructor
 	* lib/RssPressReview/RssPressReview.php: Finish rewrite. Move there to
@@ -2037,7 +2037,7 @@ NOTE:  the 1.0m1 release was tagged here
 	* Changed link to hotspots map using NON ssl because Google Keys are
 	  sensitive to the whole path.
 
-2005-07-11 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-07-11 Benoit Grégoire  <benoitg@coeus.ca>
 	* classes/RssPressReview.php: Begin rewrite.
 	* classes/MainUI.php: Add addFooterScript() function.
 	* venues_map.php:  Workaround the IE DOM problem.
@@ -2074,12 +2074,12 @@ NOTE:  the 1.0m1 release was tagged here
 2005-06-17 Francois Proulx <francois.proulx@gmail.com>
 	* Added IFrame and SimpleIFrame content types.
 
-2005-06-28 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-06-28 Benoit Grégoire  <benoitg@coeus.ca>
 	* classes/Content/Langstring.php:  Bug fix:  Langstring was always
 	  non-persistent, no matter the checkbox.  Move the code to
 	  TrivialLangstring.php where it belongs.
 
-2005-06-21 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-06-21 Benoit Grégoire  <benoitg@coeus.ca>
 	* portal/inted.php:  Implement the start button functionnality (maybe it
 	  would be better to call it "use the Internet").  From now on, once
 	  authenticated and when pressing the start button on the portal, the user
@@ -2141,7 +2141,7 @@ NOTE:  the 1.0m1 release was tagged here
 	  validate as soon as possible
 	* Fixed translation typos
 
-2005-05-26 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-05-26 Benoit Grégoire  <benoitg@coeus.ca>
 	* Someone moved the fallback gettext functions definition (for when gettext
 	  isn't installed) inside the static setCurrentLocale method, completely
 	  breaking the system when PHP doesn't have gettext support.  This is an
@@ -2303,16 +2303,16 @@ NOTE:  the 1.0m1 release was tagged here
 	* Added a link in portal pages to go to /content/
 	* Added Show all contents button in content_admin.php
 
-2005-04-27 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-04-27 Benoit Grégoire  <benoitg@coeus.ca>
 	* Content.php, ContentGroup.php:  All Content now implement the
 	  isDisplayableAt($node).  Used by the portal, if content has nothing
 	  displayabel, the entire content is skipped.
 
-2005-04-27 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-04-27 Benoit Grégoire  <benoitg@coeus.ca>
 	* FlickrPhotostream.php:  Fix the object so it doesn't crash when flicker is
 	  disabled.
 
-2005-04-27 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-04-27 Benoit Grégoire  <benoitg@coeus.ca>
 	* ContentGroup.php:  Fully functionnal content rotation engine, with all
 	  options supported. Rotation based on session may not be reliable if the
 	  user isn't truly logged in (from a node).
@@ -2324,7 +2324,7 @@ NOTE:  the 1.0m1 release was tagged here
 	* Changed back File to non trivial
 	* portal page stylesheet
 
-2005-04-26 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-04-26 Benoit Grégoire  <benoitg@coeus.ca>
 	* ContentGroupElement.php:  It shouldn't be allowed to create a new content
 	  element in isolation.  Unfortunately the UI allows if for now.  Such
 	  content will now be deleted.
@@ -2340,13 +2340,13 @@ NOTE:  the 1.0m1 release was tagged here
 2005-04-25 François Proulx <francois.proulx@gmail.com>
 	* Portal page styling
 
-2005-04-26 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-04-26 Benoit Grégoire  <benoitg@coeus.ca>
 	* ContentGroup.php:  Previous fix didn't work.  New fix.
 
-2005-04-26 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-04-26 Benoit Grégoire  <benoitg@coeus.ca>
 	* ContentGroup.php:  Make bad selection mode eror non-fatal.
 
-2005-04-25 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-04-25 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix bug in ContentGroup enumeration
 
 2005-04-25 François Proulx <francois.proulx@gmail.com>
@@ -2355,7 +2355,7 @@ NOTE:  the 1.0m1 release was tagged here
 2005-04-25 François Proulx <francois.proulx@gmail.com>
 	* Much better stylesheet
 
-2005-04-25 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-04-25 Benoit Grégoire  <benoitg@coeus.ca>
 	* UI fully functionnal
 
 2005-04-25 François Proulx <francois.proulx@gmail.com
@@ -2364,7 +2364,7 @@ NOTE:  the 1.0m1 release was tagged here
 2005-04-25 François Proulx <francois.proulx@gmail.com
 	* Completed integration of new interface with new objects
 
-2005-04-25 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-04-25 Benoit Grégoire  <benoitg@coeus.ca>
 	* Integration merge, should work, but there will be display problems
 	  everywhere.  Expect further commits today.
 	* Almost 100% complete Network abstraction
@@ -2410,42 +2410,42 @@ NOTE:  the 1.0m1 release was tagged here
 	* Added Flickr content support
 	* Part of File object is done
 
-2005-04-19 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-04-19 Benoit Grégoire  <benoitg@coeus.ca>
 	* Working (beta...) content manager and portal.
 	* Add content preview mode
 
-2005-04-18 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-04-18 Benoit Grégoire  <benoitg@coeus.ca>
 	* Hotspot and network content association, continue access control work.
 	* hotspot_owner.php: Fix wrong assignement of user_id that prevented the
 	  script from working.
 	* All files:  Remove whitespace and carriage return after the ?> closing
 	  tags.
 
-2005-04-18 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-04-18 Benoit Grégoire  <benoitg@coeus.ca>
 	* Much more complete admin, initial access control work.
 
-2005-04-15 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-04-15 Benoit Grégoire  <benoitg@coeus.ca>
 	* Support more of the content object model, do a half-decent CSS for the
 	  admin interface.
 
-2005-04-14 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-04-14 Benoit Grégoire  <benoitg@coeus.ca>
 	* Content.php:  Use full langstring interface by default;
 
-2005-04-14 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-04-14 Benoit Grégoire  <benoitg@coeus.ca>
 	* Content.php:  Fix db reference;
 
-2005-04-14 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-04-14 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix Content object enumeration preventing usage of admin interface
 	* Partial fix for RSS feed encoding (multiple feed aggregation still broken)
 
-2005-04-14 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-04-14 Benoit Grégoire  <benoitg@coeus.ca>
 	* First part of the future content delivery infrastructure. Many files added
 
 2005-04-01 François Proulx  <francois.proulx@gmail.com>
 	* Modified gen.sh script to match UTF-8
 	* Added PAP RADIUS encryption support ( asked by Paris Sans Fil )
 
-2005-04-01 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-04-01 Benoit Grégoire  <benoitg@coeus.ca>
 	* wifidog/templates/auth_sources_selection.html:  Add missing file from
 	  Francois's commit.
 
@@ -2461,7 +2461,7 @@ NOTE:  the 1.0m1 release was tagged here
 	* Added select boxes ( or hidden ) html form elements to choose the network
 	  for signup, lost password, username
 
-2005-04-01 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-04-01 Benoit Grégoire  <benoitg@coeus.ca>
 	* Add constraints to account_origin to detect errors on inserts.
 	* Remove IDRC test server
 
@@ -2470,14 +2470,14 @@ NOTE:  the 1.0m1 release was tagged here
 	* Tagged v0_1_0_alpha1
 	* Removed spaces in AuthenticatorLocalUser.php
 
-2005-03-31 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-03-31 Benoit Grégoire  <benoitg@coeus.ca>
 	* Remove spaces after php blocks in various files.
 	* Temporarily fix single authentication source not present bug in login
 	  smarty template.  All other places where we select the network will be
 	  fixed tommorow.
 	* Fix initial schema errors.
 
-2005-03-31 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-03-31 Benoit Grégoire  <benoitg@coeus.ca>
 	* More RADIUS install documentation.
 	* Fix schema_validate.php
 
@@ -2516,11 +2516,11 @@ NOTE:  the 1.0m1 release was tagged here
 	  unique constraint on emails... )
 	* TODO : Heavy testing possibly with remote RADIUS servers
 
-2005-03-28 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-03-28 Benoit Grégoire  <benoitg@coeus.ca>
 	* sql:  Put initial data in a transaction, and specify the wifidog user so
 	  you do not have to su to it while using sync_sql_for_svs
 
-2005-03-28 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-03-28 Benoit Grégoire  <benoitg@coeus.ca>
 	* common.php:  Add get_guid() function
 	* validate_schema.php: New auto-upgrade script to allow autaumatic schema
 	  upgrade.  Note that you must still update dump_initial_data_postgres.sh
@@ -2528,7 +2528,7 @@ NOTE:  the 1.0m1 release was tagged here
 	* New class Authenticator (and subclasses):  Begin virtualizing the login
 	  process.
 
-2005-03-24 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-03-24 Benoit Grégoire  <benoitg@coeus.ca>
 	* Statistics.php: Fix getMostGreedyUsers returning bad values when incoming
 	  and outgoing for all connections from a user have null values.
 	* wifidog/local_content/default/portal.html: Fix layout so it resizes
@@ -2553,7 +2553,7 @@ NOTE:  the 1.0m1 release was tagged here
     * ./classes/RssPressReview.inc: if rss_source['url'] is blank, ignore the
       feed.
 
-2005-02-22 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-02-22 Benoit Grégoire  <benoitg@coeus.ca>
 	* sql/dump_initial_data_postgres.sh, wifidog-postgres-initial-data.sql,
 	  wifidog-postgres-schema.sql:-Widen the connections size to fix int4
 	  wraparound problems.  To update a running server, execute the following
@@ -2583,7 +2583,7 @@ NOTE:  the 1.0m1 release was tagged here
 	  gettext from smarty properly.
 	* Updated TODO with ideas on making config better
 
-2005-01-31 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-01-31 Benoit Grégoire  <benoitg@coeus.ca>
 	* wifidog/templates/hotspot_status.html:  Restore the number of nodes
 	* wifidog/hotspot_status.php: Restore the number of nodes, add formatting
 	  and more information to the RSS feed.
@@ -2594,7 +2594,7 @@ NOTE:  the 1.0m1 release was tagged here
 	* Modified all files to work with the classes.
 	* Remove mgmt_helpers (all done in User class now)
 
-2005-01-25 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-01-25 Benoit Grégoire  <benoitg@coeus.ca>
 	* classes/Node.php:  New file, untested code example
 	* wifidog/admin/admin_common.php: Remove double-defined BASEPATH
 
@@ -2616,7 +2616,7 @@ NOTE:  the 1.0m1 release was tagged here
 2005-01-12 Philippe April <isf_lists@philippeapril.com>
 	* i18n and smarty'ized parts
 
-2005-01-11 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-01-11 Benoit Grégoire  <benoitg@coeus.ca>
 	* INSTALL: Mandate PHP5
 	* wifidog/hotspot_status.php: Allow export of the list as a RSS feed
 	* wifidog/classes/RssPressReview.inc:  Make it truly functionnal.
@@ -2628,7 +2628,7 @@ NOTE:  the 1.0m1 release was tagged here
 	  cut, it will not appear at all.
 	* wifidog/templates/hotspot_status.html:  Add link to the RSS version.
 
-2005-01-11 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-01-11 Benoit Grégoire  <benoitg@coeus.ca>
 	* wifidog/config.php:  Add list of hotspot to network rss feed list (not yet
 	  functionnal)
 	* wifidog/hotspot_status.php:  Allow RSS export of the list of deployed
@@ -2640,7 +2640,7 @@ NOTE:  the 1.0m1 release was tagged here
 	* wifidog/portal/index.php: Preliminary work to enable smart press review
 	  of multiple RSS feeds.
 
-2005-01-10 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-01-10 Benoit Grégoire  <benoitg@coeus.ca>
 	* include/common.php: Fix SSL security warnings.  If SSL is enabled and the
 	  page was actually served over SSL, all media in the file will be served
 	  over SSL. Add a new define (BASE_NON_SSL_PATH) to allow us to make links
@@ -2648,11 +2648,11 @@ NOTE:  the 1.0m1 release was tagged here
 	  BASE_URL_PATH in most circumstance, BASE_SSL_PATH to enter SSL mode,
 	  and BASE_URL_PATH to break out of it.
 
-2005-01-10 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-01-10 Benoit Grégoire  <benoitg@coeus.ca>
 	* admin/user_stats.php: Add three top tens to the statistics:  Top ten
 	  apetite for bandwidth, top ten travelers, most addicted users.
 
-2005-01-04 Benoit Grégoire  <bock@step.polymtl.ca>
+2005-01-04 Benoit Grégoire  <benoitg@coeus.ca>
 	* wifidog/local_content/default/hotspot_logo_banner.jpg: Make it much
 	  thinner.
 	* wifidog/local_content/default/login.html: Remove announcements
@@ -2664,13 +2664,13 @@ NOTE:  the 1.0m1 release was tagged here
 	* wifidog/index.php: Make the distinction between the two hotspot status
 	  pages clearer.
 
-2004-12-08 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-12-08 Benoit Grégoire  <benoitg@coeus.ca>
 	* wifidog/index.php: Add menu
 	* wifidog/include/user_management_menu.php: Editorial change, make
 	  translateable
 	* wifidog/portal/index.php:  Fix RSS feeds
 
-2004-12-03 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-12-03 Benoit Grégoire  <benoitg@coeus.ca>
 	* wifidog/admin/user_stats.php,  wifidog/classes/Statistics.php:  Embryonic
 	  aggregate user stats.  Currently allows you to find out the rate at which
 	  your users subscribe.
@@ -2681,7 +2681,7 @@ NOTE:  the 1.0m1 release was tagged here
 	* wifidog/admin/hotspot_log.php: Stats now need admin privileges
 	* wifidog/index.php: Cosmetic.
 
-2004-11-19 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-11-19 Benoit Grégoire  <benoitg@coeus.ca>
 	* TODO: Add email domains to blacklist
 	* wifidog/config.php, wifidog/include/user_management_menu.php: Add tech
 	  support email address
@@ -2697,17 +2697,17 @@ NOTE:  the 1.0m1 release was tagged here
 	* sql/wifidog-postgres-initial-data.sql, wifidog-postgres-schema.sql:
 	  Update with new node information structures.
 
-2004-11-04 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-11-04 Benoit Grégoire  <benoitg@coeus.ca>
 	* wifidog/admin/hotspot_log.php: Add number of currently connected users
 	  here as well.
 
-2004-11-03 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-11-03 Benoit Grégoire  <benoitg@coeus.ca>
 	* wifidog/ping/index.php: Log user-agent
 	* extensive statistics work
 	* sql/wifidog-postgres-schema.sql: Add description field for hotspots and
 	  log user-agent
 
-2004-10-28 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-10-28 Benoit Grégoire  <benoitg@coeus.ca>
 	* sql/wifidog-postgres-schema.sql:  Add constraints to avoid empty string
 	  in email or user_id.
 	* Some statistics fixes
@@ -2723,24 +2723,24 @@ NOTE:  the 1.0m1 release was tagged here
 	* wifidog/include/common.php: Added commented code (not executing) for
 	  further testing with language/localization issues.
 
-2004-09-27 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-09-27 Benoit Grégoire  <benoitg@coeus.ca>
 	* sql/wifidog-postgres-schema.sql:  Remove non SQL standard "COMMENT ON"
 	  comments
 
-2004-09-27 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-09-27 Benoit Grégoire  <benoitg@coeus.ca>
 	* sql/wifidog-postgres-schema.sql:  Drop procedural language stuff
 
-2004-09-27 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-09-27 Benoit Grégoire  <benoitg@coeus.ca>
 	* sql/wifidog-postgres-schema.sql:  Fix layout for the node_owners table
 	* Begin integrating Patrick Tanguay's new layout and generate the css
 	  dynamically to allow for background images.
 
-2004-09-22 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-09-22 Benoit Grégoire  <benoitg@coeus.ca>
 	* portal/index.php:  Fix users appearing online at every hotspot.
 	* wifidog/classes/Style.php, wifidog/login/index.php:  Fix some potential
 	  cache problems and help with validation.
 
-2004-09-18 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-09-18 Benoit Grégoire  <benoitg@coeus.ca>
 	* wifidog/config.php:  Add VALIDATION_GRACE_TIME configuration parameter.
 	* wifidog/auth/index.php:  Move grace time date arithmetics to the database,
 	  fixes validation period not working.  Stop storing VALIDATION_FAILES
@@ -2752,12 +2752,12 @@ NOTE:  the 1.0m1 release was tagged here
 	  gateway.
 	* wifidog/user_management/index.php:  Fix SQL error at new user registration.
 
-2004-09-02 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-09-02 Benoit Grégoire  <benoitg@coeus.ca>
 	* wifidog/node_list.php: Complete the status page
 	* Add images
 	* Add hotspot creation date
 
-2004-08-31 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-08-31 Benoit Grégoire  <benoitg@coeus.ca>
 	* sql/: Update the postgres schemas and add scripts to ease maintaining it.
 	* sql/sync_sql_for_cvs.sh: Should you modify the schema in your db, run this
 	  script to the chances will be available in the cvs schemas and initial
@@ -2767,7 +2767,7 @@ NOTE:  the 1.0m1 release was tagged here
 	  a new table requiring initial data.
 	* INSTALL:  Update for postgres.  Somebody please test this.
 
-2004-08-31 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-08-31 Benoit Grégoire  <benoitg@coeus.ca>
 	* wifidog/ping/index.php: Implement logging of which hotspot sent the
 	  heartbeat, from which ip and when.
 	* wifidog/node_list.php:  Primitive but functionnal hotspot status page.
@@ -2778,15 +2778,15 @@ NOTE:  the 1.0m1 release was tagged here
 	* wifidog/user_management/index.php:  Display the menu, will eventually
 	  allow us to present proper help text.
 
-2004-08-30 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-08-30 Benoit Grégoire  <benoitg@coeus.ca>
 	* Add link to original requested site.
 	* wifidog/node_list.php:  New file.  Will become the main node status page.
 
-2004-08-28 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-08-28 Benoit Grégoire  <benoitg@coeus.ca>
 	* Primitive network status available form the index page
 	* Administrative security is implemented.
 
-2004-08-28 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-08-28 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix big gaping security hole in login page (password would be ignored if
 	  the username was used to login)
 	* PostgreSql port
@@ -2800,7 +2800,7 @@ NOTE:  the 1.0m1 release was tagged here
 	  it is visible in debug level 6.
 	* wifidog/auth/index.php:   Fix code injection vulnerability.
 
-2004-08-27 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-08-27 Benoit Grégoire  <benoitg@coeus.ca>
 	* SSL support and RSS improvement
 	* Last commit tested with mysql support
 
@@ -2808,7 +2808,7 @@ NOTE:  the 1.0m1 release was tagged here
 	* wifidog/admin/user_log.php: Add total to incoming and outgoing
 	* Replace all SERVER_NAME by HTTP_HOST to fix non-standard server ports
 
-2004-08-11 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-08-11 Benoit Grégoire  <benoitg@coeus.ca>
 	* wifidog/config.php: Add USER_MANAGEMENT_PAGE
 	* wifidog/include/user_management_menu.php:  Code meant to deal with
 	  non-standard ports broke the menu.  Hopefully fixed.
@@ -2818,7 +2818,7 @@ NOTE:  the 1.0m1 release was tagged here
 	* wifidog/ping/index.php: will now reply if the wifidog auth server is up.
 	  To be used by wifidog to do heartbeats.
 
-2004-08-07 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-08-07 Benoit Grégoire  <benoitg@coeus.ca>
 	* Add code to import a NoCat user database (passwd).  The username will be
 	  generated from the first part of the email if the name was en email.
 	* Change password hashing algorithm to make it compatible with NoCat (For
@@ -2834,15 +2834,15 @@ NOTE:  the 1.0m1 release was tagged here
 	* wifidog/classes/AbstractDb.php: Add class=warning for better display
 	* wifidog/config.php: Add SYSTEM_PATH and test/fix non-standard server ports
 
-2004-08-03 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-08-03 Benoit Grégoire  <benoitg@coeus.ca>
 	* Make gettext support optionnal, and define GETTEXT_AVAILABLE, will be set
 	  to true if gettext is available.  If false, blank _() and gettext()
 	  functions will be defined so the system still works.
 
-2004-08-03 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-08-03 Benoit Grégoire  <benoitg@coeus.ca>
 	* Fix BASE_URL_PATH to properly detect non-standard server ports (hopefully).
 
-2004-08-02 Benoit Grégoire  <bock@step.polymtl.ca>
+2004-08-02 Benoit Grégoire  <benoitg@coeus.ca>
 	* wifidog-auth lives! New since the dark ages
 	* Demo page to allow people to hack more easely on it
 	* Support for multiple nodes.  TODO:  Merge with the database project.

@@ -36,7 +36,7 @@
 
 /** This file contains the code for the MainUI class, as well as GUI exception handling.
  * @package    WiFiDogAuthServer
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2005-2007 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id: MainUI.php 1246 2007-07-03 16:35:09Z benoitg $
  * @link       http://www.wifidog.org/
@@ -53,7 +53,7 @@ define('MENU_ITEM_GROUPING','MENU_ITEM_GROUPING');
  * Singleton class for managing menu.
  *
  * @package    WiFiDogAuthServer
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  */
 class Menu {

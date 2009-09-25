@@ -36,7 +36,7 @@
 /**
  * @package    WiFiDogAuthServer
  * @subpackage Statistics
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id: ConnectionLog.php 1127 2006-11-14 20:11:42 +0000 (Tue, 14 Nov 2006) benoitg $
  * @link       http://www.wifidog.org/

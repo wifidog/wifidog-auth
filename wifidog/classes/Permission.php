@@ -36,7 +36,7 @@
 /**
  * @package    WiFiDogAuthServer
  * @subpackage Security
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2007 Benoit Grégoire, Technologies Coeus inc.
  * @version    Subversion $Id: $
  * @link       http://www.wifidog.org/
@@ -52,7 +52,7 @@ require_once('classes/StakeholderType.php');
  *
  * @package    WiFiDogAuthServer
  * @subpackage Security
- * @author     Benoit Grégoire <bock@step.polymtl.ca>
+ * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2007 Benoit Grégoire, Technologies Coeus inc.
  */
 class Permission extends GenericDataObject
