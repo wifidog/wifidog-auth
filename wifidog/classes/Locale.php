@@ -217,7 +217,7 @@ class Locale {
             $lang_only_locale_id = substr ($locale_id, 0 , 2);
                    if(!isset($AVAIL_LOCALE_ARRAY[$locale_id]) && !isset($AVAIL_LOCALE_ARRAY[$lang_only_locale_id]))
                    {
-                     echo sprintf("Warning in /classes/Locale.php setCurentLocale: Neither %s or %s are available in AVAIL_LOCALE_ARRAY", $locale_id, $lang_only_locale_id)."<br/>";
+                     echo sprintf("Warning in /classes/Locale.php setCurrentLocale: Neither %s or %s are available in AVAIL_LOCALE_ARRAY", $locale_id, $lang_only_locale_id)."<br/>";
                    }
             // Try to set locale
             $candidate_locale_array[] = str_ireplace('.UTF8', '', $locale_id).'.UTF-8';
@@ -231,7 +231,7 @@ class Locale {
 
             // Test it against current PHP locale
             if (substr ($current_locale, 0 , 2) != $lang_only_locale_id) {
-                echo sprintf("Warning in /classes/Locale.php setCurentLocale: Unable to setlocale() to %s: %s.  I tried %s, %s, %s, %s, and got return value: %s, current locale is: %s",$q, $locale_id, $candidate_locale_array[0], $candidate_locale_array[1], $candidate_locale_array[2], $candidate_locale_array[3], $current_locale, setlocale(LC_ALL, 0))."<br/>";
+                echo sprintf("Warning in /classes/Locale.php setCurrentLocale: Unable to setlocale() to %s: %s.  I tried %s, %s, %s, %s, and got return value: %s, current locale is: %s",$q, $locale_id, $candidate_locale_array[0], $candidate_locale_array[1], $candidate_locale_array[2], $candidate_locale_array[3], $current_locale, setlocale(LC_ALL, 0))."<br/>";
                 $retval = false;
             } else {
                 bindtextdomain('messages', WIFIDOG_ABS_FILE_PATH . 'locale');

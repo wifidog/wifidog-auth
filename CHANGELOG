@@ -1,5 +1,9 @@
 # $Id$
 
+2009-10-02 Geneviève Bastien <gbastien@versatic.net>
+  * Email address format now corresponds to newer standard RFC2822 (#624)
+  * Corrected typos and tab alignment
+
 2009-09-18 Geneviève Bastien <gbastien@versatic.net>
   * Fixed #502 (Note: this fix works only if all gateways have config value SSLAvailable Yes, or else the server determines that even though the connection originated from HTTP by those gateways, it should use SSL and in this case, the port is not right.  Should need a way to specify port in Wifidog Virtual Hosts or get the apache port)
   * Some realignment of tabs while documenting

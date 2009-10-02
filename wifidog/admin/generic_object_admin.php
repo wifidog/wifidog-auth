@@ -323,116 +323,116 @@ switch ($_REQUEST['action']) {
         }
         break;
 
-            case "new_ui" :
-                switch ($_REQUEST['object_class']) {
-                    case "Node" :
-                    case "Server" :
-                    case "Content" :
-                    case "ContentTypeFilter" :
-                    case "ProfileTemplate" :
-                        $newText = $addText;
-                        break;
-
-                    default :
-                        break;
-                }
-
-                $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
-                $html .= "<input type='hidden' name='object_class' value='$class'>";
-                $html .= call_user_func(array (
-                $class,
-                'getCreateNewObjectUI'
-                ));
-                $html .= "<input type='hidden' name='action' value='process_new_ui'>";
-                $html .= "<input type=submit name='new_ui_submit' value='$newText'>";
-                $html .= '</form>';
+    case "new_ui" :
+        switch ($_REQUEST['object_class']) {
+            case "Node" :
+            case "Server" :
+            case "Content" :
+            case "ContentTypeFilter" :
+            case "ProfileTemplate" :
+                $newText = $addText;
                 break;
 
-                    case "edit" :
-                        // Process preview abilities
-                        switch ($_REQUEST['object_class']) {
-                            case "Network" :
-                            case "Server" :
-                            case "User" :
-                            case "ContentTypeFilter" :
-                            case "ProfileTemplate" :
-                                $supportsPreview = false;
-                                break;
+            default :
+                break;
+        }
 
-                            default :
-                                break;
-                        }
+        $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
+        $html .= "<input type='hidden' name='object_class' value='$class'>";
+        $html .= call_user_func(array (
+            $class,
+            'getCreateNewObjectUI'
+            ));
+        $html .= "<input type='hidden' name='action' value='process_new_ui'>";
+        $html .= "<input type=submit name='new_ui_submit' value='$newText'>";
+        $html .= '</form>';
+        break;
 
-                        // Process deletion abilities
-                        switch ($_REQUEST['object_class']) {
-                            case "User" :
-                                $supportsDeletion = false;
-                                break;
-                            case "Network" :
-                            case "Node" :
-                            case "Server" :
-                            case "ProfileTemplate" :
-                            case "ContentTypeFilter" :
-                                break;
+    case "edit" :
+        // Process preview abilities
+        switch ($_REQUEST['object_class']) {
+            case "Network" :
+            case "Server" :
+            case "User" :
+            case "ContentTypeFilter" :
+            case "ProfileTemplate" :
+                $supportsPreview = false;
+                break;
 
-                            default :
-                                break;
-                        }
+            default :
+                break;
+        }
 
-                        if (!$object) {
-                            echo "<div class='errormsg'>" . _("Sorry, the 'object_id' parameter must be specified") . "</div>";
-                            exit;
-                        }
+        // Process deletion abilities
+        switch ($_REQUEST['object_class']) {
+            case "User" :
+                $supportsDeletion = false;
+                break;
+            case "Network" :
+            case "Node" :
+            case "Server" :
+            case "ProfileTemplate" :
+            case "ContentTypeFilter" :
+                break;
 
-                        if (!empty ($_REQUEST['debug'])) {
-                            $common_input .= "<input type='hidden' name='debug' value='true'>";
-                        }
+            default :
+                break;
+        }
 
-                        $common_input .= "<input type='hidden' name='object_id' value='" . $object->getId() . "'>";
-                        $common_input .= "<input type='hidden' name='object_class' value='" . get_class($object) . "'>";
+        if (!$object) {
+            echo "<div class='errormsg'>" . _("Sorry, the 'object_id' parameter must be specified") . "</div>";
+            exit;
+        }
 
-                        $html .= "<form name='generic_object_form' enctype='multipart/form-data' action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
-                        $html .= $common_input;
-                        $html .= $object->getAdminUI();
-                        $html .= "<div class='generic_object_admin_edit'>";
-                        $html .= "<input type='hidden' name='action' value='save'>";
-                        $html .= "<input type='submit' class='submit' name='save_submit' value='" . _("Save") . " " . get_class($object) . "'>";
+        if (!empty ($_REQUEST['debug'])) {
+            $common_input .= "<input type='hidden' name='debug' value='true'>";
+        }
 
-                        if ($supportsDeletion) {
-                            $html .= "<script type='text/javascript'>";
-                            $html .= "document.write(\"<input type='hidden' name='action_delete' value='no' id='form_action_delete' />\");";
-                            $html .= "document.write(\"<input type='submit' class='submit' name='action_delete_submit' onmouseup='document.getElementById(\\\"form_action_delete\\\").value = \\\"delete\\\"' onkeyup='document.getElementById(\\\"form_action_delete\\\").value = \\\"delete\\\"' value='" . _("Delete") . " " . get_class($object) . "' />\");";
-                            $html .= "</script>";
-                        }
+        $common_input .= "<input type='hidden' name='object_id' value='" . $object->getId() . "'>";
+        $common_input .= "<input type='hidden' name='object_class' value='" . get_class($object) . "'>";
 
-                        $html .= '</form>';
+        $html .= "<form name='generic_object_form' enctype='multipart/form-data' action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
+        $html .= $common_input;
+        $html .= $object->getAdminUI();
+        $html .= "<div class='generic_object_admin_edit'>";
+        $html .= "<input type='hidden' name='action' value='save'>";
+        $html .= "<input type='submit' class='submit' name='save_submit' value='" . _("Save") . " " . get_class($object) . "'>";
 
-                        if ($supportsPreview) {
-                            $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' target='_blank' method='post'>";
-                            $html .= $common_input;
-                            $html .= "<input type='hidden' name='action' value='preview'>";
-                            $html .= "<input type='submit' class='submit' name='preview_submit' value='" . _("Preview") . " " . get_class($object) . "'>";
-                            $html .= '</form>';
-                        }
+        if ($supportsDeletion) {
+            $html .= "<script type='text/javascript'>";
+            $html .= "document.write(\"<input type='hidden' name='action_delete' value='no' id='form_action_delete' />\");";
+            $html .= "document.write(\"<input type='submit' class='submit' name='action_delete_submit' onmouseup='document.getElementById(\\\"form_action_delete\\\").value = \\\"delete\\\"' onkeyup='document.getElementById(\\\"form_action_delete\\\").value = \\\"delete\\\"' value='" . _("Delete") . " " . get_class($object) . "' />\");";
+            $html .= "</script>";
+        }
 
-                        // Display delete button (without check for unchecked persitant switch) only if JavaScript has been disabled
-                        if ($supportsDeletion) {
-                            $html .= "<noscript>";
-                            $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
-                            $html .= $common_input;
-                            $html .= "<input type='hidden' name='action' value='delete'>";
-                            $html .= "<input type='submit' class='submit'  name='delete_submit' value='" . _("Delete") . " " . get_class($object) . "'>";
-                            $html .= '</form>';
-                            $html .= "</noscript>";
-                        }
+        $html .= '</form>';
 
-                        $html .= "<div class='clearbr'></div>";
-                        $html .= "</div>";
-                        break;
+        if ($supportsPreview) {
+            $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' target='_blank' method='post'>";
+            $html .= $common_input;
+            $html .= "<input type='hidden' name='action' value='preview'>";
+            $html .= "<input type='submit' class='submit' name='preview_submit' value='" . _("Preview") . " " . get_class($object) . "'>";
+            $html .= '</form>';
+        }
 
-                            default :
-                                // Do nothing
-                                break;
+        // Display delete button (without check for unchecked persitant switch) only if JavaScript has been disabled
+        if ($supportsDeletion) {
+            $html .= "<noscript>";
+            $html .= "<form action='" . GENERIC_OBJECT_ADMIN_ABS_HREF . "' method='post'>";
+            $html .= $common_input;
+            $html .= "<input type='hidden' name='action' value='delete'>";
+            $html .= "<input type='submit' class='submit'  name='delete_submit' value='" . _("Delete") . " " . get_class($object) . "'>";
+            $html .= '</form>';
+            $html .= "</noscript>";
+        }
+
+        $html .= "<div class='clearbr'></div>";
+        $html .= "</div>";
+        break;
+
+    default :
+        // Do nothing
+        break;
 }
 
 /*

@@ -410,8 +410,11 @@ class Mail {
         /**
          * Validates an email address
          *
-         * This function will make sure an e-mail is RFC822 compliant
+         * This function will make sure an e-mail is RFC2822 compliant
          * and is not black listed.
+         * 
+         * The regex was taken from  http://www.regular-expressions.info/email.html
+         * Read also http://www.linuxjournal.com/article/9585 for more on email validation
          *
          * @param string $mail The email address to validate
          *
@@ -426,14 +429,27 @@ class Mail {
             $_retVal = false;
 
             // Test if the email address is valid
-            $regex = "/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i";
+            // $regex = "/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i";
+            // The full regex is 
+            // /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i
+            // We will check it in two parts: domain and local
+						
+            $atIndex = strrpos($email, "@");
+            if ($atIndex !== false)
+            {
+                $domain = substr($email, $atIndex+1);
+                $local = substr($email, 0, $atIndex);
+	
+                // Verify local part
+                if (preg_match("/^[a-z0-9!#$%&'*+\\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\\/=?^_`{|}~-]+)*$/i",$local) &&
+                    preg_match("/^(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i",$domain) ) 
+                {
 
-            if (preg_match_all($regex, $email, $_matches)) {
-                // If the hostname is black listed, reject the email address
-                $full_hostname = $_matches[2][0] . "." . $_matches[3][0];
-
-                if (!in_array(strtolower($full_hostname), self :: $_hosts_black_list)) {
-                    $_retVal = true;
+                    if (!in_array(strtolower($domain), self :: $_hosts_black_list)) {
+                        if (checkdnsrr($domain,"MX") || checkdnsrr($domain,"A")) {
+                            $_retVal = true;
+                        }
+                    }
                 }
             }
 
