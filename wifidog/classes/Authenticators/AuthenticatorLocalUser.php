@@ -118,10 +118,13 @@ class AuthenticatorLocalUser extends Authenticator
             $retval = false;
         }
         else{
+            /* gbastien: this is not reusable!!, why not use password directly? */
+            //$password_hash = User::passwordHash($_REQUEST['password']);
+            $password_hash = User::passwordHash($password);
             $password = $db->escapeString($password);
-            $password_hash = User::passwordHash($_REQUEST['password']);
-
-            $sql = "SELECT user_id FROM users WHERE (username='$username' OR email='$username') AND account_origin='".$this->getNetwork()->getId()."' AND pass='$password_hash'";
+            
+            $comparison = ($this->getNetwork()->getUsernamesCaseSensitive()? ' = ': ' ILike ');
+            $sql = "SELECT user_id FROM users WHERE (username$comparison'$username' OR email$comparison'$username') AND account_origin='".$this->getNetwork()->getId()."' AND pass='$password_hash'";
             $db->execSqlUniqueRes($sql, $user_info, false);
 
             if ($user_info != null) {
@@ -140,7 +143,7 @@ class AuthenticatorLocalUser extends Authenticator
                  * non-existent user or a wrong password.
                  */
                 $user_info = null;
-                $db->execSqlUniqueRes("SELECT * FROM users WHERE (username='$username' OR email='$username') AND account_origin='".$this->getNetwork()->getId()."'", $user_info, false);
+                $db->execSqlUniqueRes("SELECT * FROM users WHERE (username$comparison'$username' OR email$comparison'$username') AND account_origin='".$this->getNetwork()->getId()."'", $user_info, false);
 
                 if ($user_info == null) {
                     $errmsg = _('Unknown username or email');

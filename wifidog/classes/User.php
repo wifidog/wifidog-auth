@@ -159,8 +159,9 @@ class User implements GenericObject {
         $object = null;
 
         $username_str = $db->escapeString($username);
+        $comparison = ($account_origin->getUsernamesCaseSensitive()? '=': 'ILike');
         $account_origin_str = $db->escapeString($account_origin->getId());
-        $db->execSqlUniqueRes("SELECT user_id FROM users WHERE username = '$username_str' AND account_origin = '$account_origin_str'", $user_info, false);
+        $db->execSqlUniqueRes("SELECT user_id FROM users WHERE username {$comparison} '$username_str' AND account_origin = '$account_origin_str'", $user_info, false);
 
         if ($user_info != null) {
             $object = self::getObject($user_info['user_id']);
@@ -181,7 +182,7 @@ class User implements GenericObject {
         $object = null;
 
         $usernameOrEmail_str = $db->escapeString($usernameOrEmail);
-        $db->execSqlUniqueRes("SELECT user_id FROM users WHERE username ILike '$usernameOrEmail_str' OR email ILike '$usernameOrEmail_str'", $user_info, false);
+        $db->execSqlUniqueRes("SELECT user_id FROM users WHERE username = '$usernameOrEmail_str' OR email ILike '$usernameOrEmail_str'", $user_info, false);
 
         if ($user_info != null) {
             $object = self::getObject($user_info['user_id']);
@@ -220,7 +221,7 @@ class User implements GenericObject {
 
         $email_str = $db->escapeString($email);
         $account_origin_str = $db->escapeString($account_origin->getId());
-        $db->execSqlUniqueRes("SELECT user_id FROM users WHERE email = '$email_str' AND account_origin = '$account_origin_str'", $user_info, false);
+        $db->execSqlUniqueRes("SELECT user_id FROM users WHERE email ILike '$email_str' AND account_origin = '$account_origin_str'", $user_info, false);
 
         if ($user_info != null)
         $object = self::getObject($user_info['user_id']);
@@ -377,11 +378,12 @@ class User implements GenericObject {
         $retval = true;
         if ($value != $this->getUsername()) {
             $db = AbstractDb::getObject();
-            $value = $db->escapeString($value);
-            $retval = @ $db->execSqlUpdate("UPDATE users SET username = '{$value}' WHERE user_id='{$this->id}'", false);
-            if (!$retval) {
+            $otherUser = User::getUserByUsernameAndOrigin($value, $this->getNetwork());
+            if (!is_null($otherUser)) {
                 throw new exception(sprintf(_("Sorry, the username %s is not available"), $value));
             }
+            $value = $db->escapeString($value);
+            $retval = @ $db->execSqlUpdate("UPDATE users SET username = '{$value}' WHERE user_id='{$this->id}'", false);
             $this->refresh();
         }
         return $retval;

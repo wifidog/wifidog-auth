@@ -141,7 +141,7 @@ class AbstractDb
         $sql_timetaken = $this->logQueries($sql, 'SELECT', $sql_starttime, $sql_endtime);
 
         if ($debug == TRUE)
-        echo "<p>".sprintf(_("Elapsed time for query execution : %.6f second(s)"), $sql_timetaken)."</p>\n";
+            echo "<p>".sprintf(_("Elapsed time for query execution : %.6f second(s)"), $sql_timetaken)."</p>\n";
 
         if ($result == FALSE)
         {
@@ -316,7 +316,7 @@ class AbstractDb
     public function getSqlQueriesLog()
     {
         $retval = "";
-
+        
         /* PHP time */
         $parts_of_starttime = explode(' ', $this->construct_start_time);
         $php_starttime = $parts_of_starttime[0] + $parts_of_starttime[1];

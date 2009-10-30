@@ -207,32 +207,29 @@ abstract class NodeList {
         $items = array();
 
         $items[] = array('path' => 'node_lists/map',
-        'title' => _("Deployed HotSpots map"),
-        'url' => BASE_URL_PATH."hotspots_map.php"
-		);
+            'title' => _("Deployed HotSpots map"),
+            'url' => BASE_URL_PATH."hotspots_map.php"
+       );
 
         $listTypes=self::getAvailableNodeListTypes();
         //pretty_print_r($listTypes);
         foreach ($listTypes as $type) {
-                    $nodeListClass = "NodeList" . $type;
-                    require_once("classes/NodeLists/NodeList{$type}.php");
+            $nodeListClass = "NodeList" . $type;
+            require_once("classes/NodeLists/NodeList{$type}.php");
             if(call_user_func(array($nodeListClass, 'isAvailable'))) {
-            $items[] = array('path' => 'node_lists/'.$type,
-            'title' => sprintf(_("List in %s format"), $type),
-            'url' => BASE_URL_PATH."hotspot_status.php?format=$type"
-            );
+                $items[] = array('path' => 'node_lists/'.$type,
+                    'title' => sprintf(_("List in %s format"), $type),
+                    'url' => BASE_URL_PATH."hotspot_status.php?format=$type"
+                );
             }
         }
         $items[] = array('path' => 'node_lists/technical_status',
-        'title' => _("Full node technical status (includes non-deployed nodes)"),
-        'url' => BASE_URL_PATH."node_list.php"
-		);
+            'title' => _("Full node technical status (includes non-deployed nodes)"),
+            'url' => BASE_URL_PATH."node_list.php"
+        );
         $items[] = array('path' => 'node_lists',
-        'title' => _('Find Hotspots'),
-        'type' => MENU_ITEM_GROUPING);
-
-
-
+            'title' => _('Find Hotspots'),
+            'type' => MENU_ITEM_GROUPING);
 
         return $items;
     }

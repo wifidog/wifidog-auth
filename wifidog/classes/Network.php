@@ -1617,6 +1617,53 @@ class Network extends GenericDataObject
         }
         return $retVal;
     }
+    
+ 	  /** Are usernames on this network case sensitive or not
+     *
+     * @return bool true or false
+     */
+    public function getUsernamesCaseSensitive()
+    {
+        return (($this->_row['usernames_case_sensitive'] == 't') ? true : false);
+    }
+
+    /** Are usernames on this network case sensitive or not
+     * If set to false, we need to verify if some users have name-clash and propose actions
+     *
+     * @param string $value The new creation date
+     *
+     * @return bool True on success, false on failure
+     */
+    public function setUsernamesCaseSensitive($value)
+    {
+        // Init values
+        $retval = true;
+
+        if ($value != $this->getUsernamesCaseSensitive()) {
+            $db = AbstractDb::getObject();
+            // Verify if usernames differing by case exists
+            if (!$value) {
+                $sql = "Select username, email from users where 
+                    lower(username) in (Select lower(username) as uname from users where account_origin = '{$this->getId()}' group by lower(username) having count(user_id) > 1)
+                    or lower(email) in (Select lower(email) from users where account_origin = '{$this->getId()}' group by lower(email) having count(user_id) > 1) order by username";
+                if (!$db->execSql($sql, $duplicates)) 
+                    $retval = false;
+                if (!empty($duplicates)) {
+                    $duplicatenames = array();
+                    foreach($duplicates as $duplicate) $duplicatenames[] = "{$duplicate['username']} ({$duplicate['email']})";
+                    $this->errorMsg = _("You cannot change the case sensitivity of this network because some users would have duplicate names or emails.  Some action must be performed before.<br/>Here is a list of duplicate usernames: " . implode(', ', $duplicatenames));
+                    $retval = false;
+                }
+            }
+            if ($retval) {
+                $value ? $value = 'TRUE' : $value = 'FALSE';
+                $retval = $db->execSqlUpdate("UPDATE networks SET usernames_case_sensitive = {$value} WHERE network_id = '{$this->getId()}'", false);
+                $this->refresh();
+            }
+        }
+
+        return $retval;
+    }
 
 
     /**
@@ -1630,6 +1677,13 @@ class Network extends GenericDataObject
         require_once('classes/InterfaceElements.php');
         // Init values
         $html = '';
+        
+        /*
+         * Verify if an error message was registered before outputting the form
+         */
+        if (isset($this->errorMsg)) {
+             $html .= "<div class='errormsg'>" . $this->errorMsg . "</div>";
+        }
 
         /*
          * Begin with admin interface
@@ -1710,7 +1764,7 @@ class Network extends GenericDataObject
         $title = _("Selected theme pack for this network");
         $data = ThemePack::getSelectUI("network_" . $this->getId() . "_theme_pack", $this->getThemePack());
         $html_network_properties[] = InterfaceElements::generateAdminSectionContainer("network_theme_pack", $title, $data);
-
+      
         // Build section
         $html .= InterfaceElements::generateAdminSectionContainer("network_properties", _("Network properties"), implode(null, $html_network_properties));
 
@@ -1735,7 +1789,7 @@ class Network extends GenericDataObject
         $title = _("Original URL redirection");
         $help = _("Are nodes allowed to redirect users to the web page they originally requested instead of the portal?");
         $data = InterfaceElements::generateInputCheckbox("network_" . $this->getId() . "_allow_original_URL_redirect", "", _("Yes"), $this->getPortalOriginalUrlAllowed(), "network_allow_original_URL_redirect_radio");
-        $html_network_node_properties[] = InterfaceElements::generateAdminSectionContainer("network_allow_original_URL_redirect", $title, $data, $help);
+        $html_network_node_properties[] = InterfaceElements::generateAdminSectionContainer("network_allow_original_URL_redirect", $title, $data, $help);   
 
         // Build section
         $html .= InterfaceElements::generateAdminSectionContainer("network_node_properties", _("Network's node properties"), implode(null, $html_network_node_properties));
@@ -1761,6 +1815,13 @@ class Network extends GenericDataObject
         $help = _("Can an account be connected more than once at the same time?");
         $data = InterfaceElements::generateInputCheckbox("network_" . $this->getId() . "_allow_multiple_login", "", _("Yes"), $this->getMultipleLoginAllowed(), "network_allow_multiple_login_radio");
         $html_network_user_verification[] = InterfaceElements::generateAdminSectionContainer("network_allow_multiple_login", $title, $data, $help);
+        
+          
+        //  network_authenticator_params
+        $title = _("Case sensitivity");
+        $help = _("Are usernames case sensitive?");
+        $data = InterfaceElements::generateInputCheckbox("network_" . $this->getId() . "_usernames_case_sensitive","", _("Yes"), $this->getUsernamesCaseSensitive(), "network_usernames_case_sensitive");
+        $html_network_user_verification[] = InterfaceElements::generateAdminSectionContainer("network_usernames_case_sensitive", $title, $data, $help);
 
         // Build section
         $html .= InterfaceElements::generateAdminSectionContainer("network_user_verification", _("Network's user verification"), implode(null, $html_network_user_verification));
@@ -1923,6 +1984,9 @@ class Network extends GenericDataObject
         //  validation_email_from_address
         $name = "network_".$this->getId()."_validation_email_from_address";
         $this->setValidationEmailFromAddress($_REQUEST[$name]);
+        
+        $name = "network_" . $this->getId() . "_usernames_case_sensitive";
+        $this->setUsernamesCaseSensitive(empty ($_REQUEST[$name]) ? false : true);
 
         //  theme_pack
         $name = "network_".$this->getId()."_theme_pack";

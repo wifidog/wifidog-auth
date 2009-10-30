@@ -44,7 +44,7 @@ function isValidUsername(elem) {
 function isValidEmail(elem) {
   var str = elem.value;
   //var re = /^[\w-+]+(\.[\w+-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-  var re = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+  var re = /^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/;
   if (!str.match(re)) {
 	focusElement(elem.form.name, elem.name);
 	return false;

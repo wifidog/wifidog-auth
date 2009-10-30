@@ -346,15 +346,15 @@ if (defined("EVENT_LOGGING") && EVENT_LOGGING == true) {
             }
 
             return $string;
+        }
     }
-}
-$myLogfile = !defined('WIFIDOG_LOGFILE') ? "tmp/wifidog.log" : constant('WIFIDOG_LOGFILE');
-if (!empty ($myLogfile)) {
-    if (substr($myLogfile, 0, 1) != '/')
-    $myLogfile = WIFIDOG_ABS_FILE_PATH . $myLogfile;
+    $myLogfile = !defined('WIFIDOG_LOGFILE') ? "tmp/wifidog.log" : constant('WIFIDOG_LOGFILE');
+    if (!empty ($myLogfile)) {
+        if (substr($myLogfile, 0, 1) != '/')
+            $myLogfile = WIFIDOG_ABS_FILE_PATH . $myLogfile;
 
-    EventLogging :: stAddChannel(new FileChannel($myLogfile, new WifidogSyslogFormatter(), 'warning,notice'), 'logfile');
-}
+        EventLogging :: stAddChannel(new FileChannel($myLogfile, new WifidogSyslogFormatter(), 'warning,notice'), 'logfile');
+    }
 
 // trigger_error("here i am", E_USER_NOTICE);
 }

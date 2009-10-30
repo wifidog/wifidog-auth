@@ -1,5 +1,9 @@
 # $Id$
 
+2009-10-30 Geneviève Bastien <gbastien@versatic.net>
+  * Network can now be set as case insensitive.  Emails are now never case sensitive and usernames' case sensitivity is consistent with network settings (#616)
+  * Yet again some tab alignment
+  
 2009-10-02 Geneviève Bastien <gbastien@versatic.net>
   * Email address format now corresponds to newer standard RFC2822 (#624)
   * Corrected typos and tab alignment
