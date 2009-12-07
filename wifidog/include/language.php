@@ -49,7 +49,14 @@ require_once('classes/Locale.php');
 if (!empty ($_REQUEST['wifidog_language'])) {
         $session = Session::getObject();
             //echo "Setting to $_REQUEST[wifidog_language]<br/>";
-        $session->set(SESS_LANGUAGE_VAR, $_REQUEST['wifidog_language']);
+        $AVAIL_LOCALE_ARRAY = LocaleList::getAvailableLanguageArray();
+        /* Try to guess the lang */
+        if (!empty($AVAIL_LOCALE_ARRAY[$_REQUEST['wifidog_language']])) {
+            $session->set(SESS_LANGUAGE_VAR, $_REQUEST['wifidog_language']);
+        }
+        else {
+            throw new Exception(htmlspecialchars($_REQUEST['wifidog_language'])." is not a valid locale");
+        }
 }
 
 $locale = Locale::getCurrentLocale();

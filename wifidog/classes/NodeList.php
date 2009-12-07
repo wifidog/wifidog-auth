@@ -77,7 +77,7 @@ abstract class NodeList {
         if (in_array($nodeListType, self::getAvailableNodeListTypes())) {
             require_once(NODE_LIST_CLASSES_DIR . "/NodeList" . $nodeListType . ".php");
         } else {
-            throw new Exception(_("The node list type '$nodeListType' is not supported!"));
+            throw new Exception(sprintf(_("The node list type '%s' is not supported!"), htmlspecialchars($nodeListType)));
         }
 
         $nodeListClass = "NodeList" . $nodeListType;
