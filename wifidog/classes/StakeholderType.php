@@ -63,6 +63,8 @@ class StakeholderType extends GenericDataObject
     const Network = 'Network';
     const Server = 'Server';
     const Content = 'Content';
+    const NodeGroup = 'NodeGroup';
+    
     /**
      * Get an instance of the object
      *

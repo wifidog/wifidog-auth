@@ -54,6 +54,7 @@ require_once('classes/GisPoint.php');
 require_once('classes/Cache.php');
 require_once('classes/ThemePack.php');
 require_once('classes/Security.php');
+require_once('classes/HotspotGraphElement.php');
 
 /**
  * Abstract a Network.
@@ -70,6 +71,7 @@ class Network extends GenericDataObject
 {
     /** Object cache for the object factory (getObject())*/
     private static $instanceArray = array();
+    protected $_hotspotGraphElement;
 
     /**
      * Get an instance of the object
@@ -200,6 +202,9 @@ class Network extends GenericDataObject
         if (!$db->execSqlUpdate($sql, false)) {
             throw new Exception(_('Unable to insert the new network in the database!'));
         }
+        
+        HotspotGraphElement::createNewObject($network_id, 'Network');
+        
         $object = self::getObject($network_id);
         require_once('classes/Stakeholder.php');
         Stakeholder::add(null, Role::getObject('NETWORK_OWNER'), $object);
@@ -377,9 +382,9 @@ class Network extends GenericDataObject
     private function __construct($p_network_id)
     {
         $db = AbstractDb::getObject();
+        if ($p_network_id == "")
+            $p_network_id = self::getDefaultNetwork()->getId();
         $network_id_str = $db->escapeString($p_network_id);
-        if ($network_id_str == "")
-        $network_id_str = $db->escapeString(self::getDefaultNetwork()->getId());
 
         $sql = "SELECT *, EXTRACT(EPOCH FROM validation_grace_time) as validation_grace_time_seconds FROM networks WHERE network_id='$network_id_str'";
         $row = null;
@@ -389,6 +394,7 @@ class Network extends GenericDataObject
         }
         $this->_row = $row;
         $this->_id = $p_network_id;
+        $this->_hotspotGraphElement = HotspotGraphElement::getObject($this->_id,'Network');
     }
 
     public function __toString()
@@ -1695,10 +1701,12 @@ class Network extends GenericDataObject
         /*
          * Content management
          */
-        $title = _("Network content");
+       /* $title = _("Network content");
         $name = "network_".$this->_id."_content";
         $data = Content::getLinkedContentUI($name, "network_has_content", "network_id", $this->_id, $display_page = "portal");
-        $html .= InterfaceElements::generateAdminSectionContainer("network_content", $title, $data);
+        $html .= InterfaceElements::generateAdminSectionContainer("network_content", $title, $data);*/
+        if (!is_null($this->_hotspotGraphElement))
+            $html .= $this->_hotspotGraphElement->getContentAdminUI();
 
         /*
          * Network information
@@ -1926,6 +1934,10 @@ class Network extends GenericDataObject
         $name = "network_".$this->_id."_profile_templates";
         $data = ProfileTemplate::getLinkedProfileTemplateUI($name, "network_has_profile_templates", "network_id", $this->_id);
         $html .= InterfaceElements::generateAdminSectionContainer("network_profile_templates", $title, $data);
+        
+        // objects hierarchy
+        if (!is_null($this->_hotspotGraphElement))
+            $html .= $this->_hotspotGraphElement->getGraphAdminUI($this);
 
         $html .= "</ul>\n";
         $html .= "</fieldset>";
@@ -1945,8 +1957,10 @@ class Network extends GenericDataObject
         Security::requirePermission(Permission::P('NETWORK_PERM_EDIT_NETWORK_CONFIG'), $this);
 
         // Content management
-        $name = "network_".$this->_id."_content";
-        Content :: processLinkedContentUI($name, 'network_has_content', 'network_id', $this->_id);
+        if (!is_null($this->_hotspotGraphElement))
+            $this->_hotspotGraphElement->processContentAdminUI();
+        /* $name = "network_".$this->_id."_content";
+        Content :: processLinkedContentUI($name, 'network_has_content', 'network_id', $this->_id);*/
 
         // name
         $name = "network_".$this->getId()."_name";
@@ -2063,6 +2077,13 @@ class Network extends GenericDataObject
         // Profile templates
         $name = "network_".$this->_id."_profile_templates";
         ProfileTemplate :: processLinkedProfileTemplateUI($name, 'network_has_profile_templates', 'network_id', $this->_id);
+        
+        if (!is_null($this->_hotspotGraphElement))
+            $this->_hotspotGraphElement->processGraphAdminUI($errMsg, $this);
+        if(!empty($errMsg)) {
+            echo $errMsg;
+            $errMsg = null;
+        }
 
         // Node creation
         $new_node = Node :: processCreateNewObjectUI();

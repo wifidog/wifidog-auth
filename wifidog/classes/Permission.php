@@ -88,8 +88,11 @@ class Permission extends GenericDataObject
             $PERMISSIONS['NETWORK_PERM_DELETE_NETWORK'] = array(_("User is allowed to delete this network"), StakeholderType::Network, true);
             $PERMISSIONS['NETWORK_PERM_VIEW_STATISTICS'] = array(_("User is allowed to view all statistics for this network"), StakeholderType::Network, true);
             $PERMISSIONS['NETWORK_PERM_EDIT_ANY_NODE_CONFIG'] = array(_("User is allowed to edit any configuration of any node on the network"), StakeholderType::Network, true);
+            $PERMISSIONS['NETWORK_PERM_EDIT_ANY_NODEGROUP_CONFIG'] = array(_("User is allowed to edit any configuration of any node group on the network"), StakeholderType::Network, true);
             $PERMISSIONS['NETWORK_PERM_ADD_NODE'] = array(_("User is allowed to create a new Node on this network"), StakeholderType::Network, true);
+            $PERMISSIONS['NETWORK_PERM_ADD_NODEGROUP'] = array(_("User is allowed to create a new Node Group on this network"), StakeholderType::Network, true);
             $PERMISSIONS['NETWORK_PERM_EDIT_DYNAMIC_ABUSE_CONTROL'] = array(_("User is allowed to set dynamic abuse control options for the network"), StakeholderType::Network, false);
+            $PERMISSIONS['NETWORK_PERM_ALLOW_GROUP_NODE'] = array(_("User is allowed group nodes into virtual node groups"), StakeholderType::Network, false);
 
             $PERMISSIONS['SERVER_PERM_EDIT_ROLES'] = array(_("User is allowed to edit user role definitions"), StakeholderType::Server, true);
             $PERMISSIONS['SERVER_PERM_EDIT_ANY_VIRTUAL_HOST'] = array(_("User is allowed to edit any virtual host definition"), StakeholderType::Server, true);
@@ -106,6 +109,11 @@ class Permission extends GenericDataObject
             $PERMISSIONS['NODE_PERM_EDIT_CONFIG'] = array(_("TEMPORARY:  User is allowed to edit general configuration for this node.  This will be replaced with more granular permissions in the future"), StakeholderType::Node, false);
             $PERMISSIONS['NODE_PERM_BYPASS_DYNAMIC_ABUSE_CONTROL'] = array(_("User is allowed to exceed dynamic abuse control limits at this node"), StakeholderType::Node, false);
             $PERMISSIONS['NODE_PERM_ALLOW_GENERATING_PUBLIC_STATS'] = array(_("User is allowed to turn on publicly accessible aggregate statistics for this node"), StakeholderType::Node, false);
+            
+            $PERMISSIONS['NODEGROUP_PERM_DELETE_NODEGROUP'] = array(_("User is allowed to delete this node group"), StakeholderType::NodeGroup, true);
+            $PERMISSIONS['NODEGROUP_PERM_EDIT_ANY_NODEGROUP_CONFIG'] = array(_("User is allowed to edit any configuration of any node group on the network"), StakeholderType::NodeGroup, true);
+            $PERMISSIONS['NODEGROUP_PERM_EDIT_NODEGROUP_CONFIG'] = array(_("User is allowed to edit any configuration of this node group"), StakeholderType::NodeGroup, true);
+            $PERMISSIONS['NODEGROUP_PERM_ADD_NODEGROUP'] = array(_("User is allowed to create a new Node Group on this network"), StakeholderType::NodeGroup, true);
             
             self::$_permissionArray = $PERMISSIONS;
         }

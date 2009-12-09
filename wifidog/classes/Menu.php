@@ -187,6 +187,7 @@ class Menu {
     public function initMenu() {
         $this->processHookMenu('Server');
         $this->processHookMenu('Node');
+        $this->processHookMenu('NodeGroup');
         $this->processHookMenu('Network');
         $this->processHookMenu('User');
         $this->processHookMenu('Content');

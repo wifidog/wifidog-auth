@@ -787,6 +787,7 @@ class Content implements GenericObject {
         $current_content_sql = "SELECT * FROM $link_table WHERE $link_table_obj_key_col='$link_table_obj_key'";
         $rows = null;
         $db->execSql($current_content_sql, $rows, false);
+     
         if ($rows)
         foreach ($rows as $row) {
             $content = Content :: getObject($row['content_id']);

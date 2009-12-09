@@ -466,6 +466,7 @@ class MainUI {
         $_gwId = null;
         $_gwAddress = null;
         $_gwPort = null;
+        $_mac = null;
         $_selected = "";
         $_languageChooser = array ();
 
@@ -498,10 +499,11 @@ class MainUI {
             $_gwId = $session->get(SESS_GW_ID_VAR);
             $_gwAddress = $session->get(SESS_GW_ADDRESS_VAR);
             $_gwPort = $session->get(SESS_GW_PORT_VAR);
+            $_mac = $session->get(SESS_USER_MAC_VAR);
 
             // If gateway information could be detected tell them to Smarty
             if ($_gwId && $_gwAddress && $_gwPort) {
-                $this->smarty->assign('logoutParameters', "&amp;gw_id=" . $_gwId . "&amp;gw_address=" . $_gwAddress . "&amp;gw_port=" . $_gwPort);
+                $this->smarty->assign('logoutParameters', "&amp;gw_id=" . $_gwId . "&amp;gw_address=" . $_gwAddress . "&amp;gw_port=" . $_gwPort . ($_mac? "&amp;mac=".$_mac:""));
             }
         } else {
         }

@@ -165,14 +165,47 @@ if ($current_user && $current_user->getAccountStatus() == ACCOUNT_STATUS_VALIDAT
     $ui->addContent('page_header', $validationMsgHtml);
 }
 
+// Get all the parent objects of the node
+$parents = HotspotGraph::getAllParents(HotspotGraphElement::getObjectFor($node));
+
+// Get the contents for all elements parents of and including the node, but exclude user subscribed content if user is known
+foreach($parents as $parentid) {
+    $content_rows = array ();
+    $parent_id = $db->escapeString($parentid);
+    if ($current_user) {
+        $user_id = $db->escapeString($current_user->getId());
+        $sql = "SELECT content_id, display_area, display_order FROM hotspot_graph_element_has_content hgehc ";
+        $sql .= "INNER JOIN hotspot_graph_elements hge on hgehc.hotspot_graph_element_id = hge.hotspot_graph_element_id ";
+        $sql .= "WHERE hge.hotspot_graph_element_id='$parent_id' AND display_page='portal' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$user_id}') ORDER BY display_area, display_order, subscribe_timestamp DESC";
+    } else {
+        $sql = "SELECT content_id, display_area, display_order FROM hotspot_graph_element_has_content hgehc ";
+        $sql .= "INNER JOIN hotspot_graph_elements hge on hgehc.hotspot_graph_element_id = hge.hotspot_graph_element_id ";
+        $sql .= "WHERE hge.hotspot_graph_element_id='$parent_id' AND display_page='portal' ORDER BY display_area, display_order, subscribe_timestamp DESC";
+    }
+    $db->execSql($sql, $content_rows, false);
+    if ($content_rows) {
+        foreach ($content_rows as $content_row) {
+            $content = Content :: getObject($content_row['content_id']);
+            if ($content->isDisplayableAt($node)) {
+                $ui->addContent($content_row['display_area'], $content, $content_row['display_order']);
+            }
+        }
+    }
+}
+$showMoreLink = false;
+
 // Get all network content, but exclude user subscribed content if user is known
-$content_rows = array ();
+/*$content_rows = array ();
 $network_id = $db->escapeString($network->getId());
 if ($current_user) {
     $user_id = $db->escapeString($current_user->getId());
-    $sql = "SELECT content_id, display_area, display_order FROM network_has_content WHERE network_id='$network_id' AND display_page='portal' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$user_id}') ORDER BY display_area, display_order, subscribe_timestamp DESC";
+    $sql = "SELECT content_id, display_area, display_order FROM hotspot_graph_element_has_content hgehc ";
+    $sql .= "INNER JOIN hotspot_graph_elements hge on hgehc.hotspot_graph_element_id = hge.hotspot_graph_element_id ";
+    $sql .= "WHERE hge.element_id='$network_id' AND hge.element_type = 'Network' AND display_page='portal' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$user_id}') ORDER BY display_area, display_order, subscribe_timestamp DESC";
 } else {
-    $sql = "SELECT content_id, display_area, display_order FROM network_has_content WHERE network_id='$network_id'  AND display_page='portal' ORDER BY display_area, display_order, subscribe_timestamp DESC";
+    $sql = "SELECT content_id, display_area, display_order FROM hotspot_graph_element_has_content hgehc ";
+    $sql .= "INNER JOIN hotspot_graph_elements hge on hgehc.hotspot_graph_element_id = hge.hotspot_graph_element_id ";
+    $sql .= "WHERE hge.element_id='$network_id' AND hge.element_type = 'Network' AND display_page='portal' ORDER BY display_area, display_order, subscribe_timestamp DESC";
 }
 $db->execSql($sql, $content_rows, false);
 if ($content_rows) {
@@ -182,16 +215,20 @@ if ($content_rows) {
             $ui->addContent($content_row['display_area'], $content, $content_row['display_order']);
         }
     }
-}
+}*/
 
 // Get all node content and EXCLUDE user subscribed content
-$content_rows = array ();
+/*$content_rows = array ();
 $node_id = $db->escapeString($node->getId());
 if ($current_user) {
     $user_id = $db->escapeString($current_user->getId());
-    $sql = "SELECT content_id, display_area, display_order FROM node_has_content WHERE node_id='$node_id' AND display_page='portal' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$user_id}') ORDER BY display_area, display_order, subscribe_timestamp DESC";
+    $sql = "SELECT content_id, display_area, display_order FROM hotspot_graph_element_has_content hgehc ";
+    $sql .= "INNER JOIN hotspot_graph_elements hge on hgehc.hotspot_graph_element_id = hge.hotspot_graph_element_id ";
+    $sql .= "WHERE hge.element_id='$node_id' AND hge.element_type = 'Node' AND display_page='portal' AND content_id NOT IN (SELECT content_id FROM user_has_content WHERE user_id = '{$user_id}') ORDER BY display_area, display_order, subscribe_timestamp DESC";
 } else {
-    $sql = "SELECT content_id, display_area, display_order FROM node_has_content WHERE node_id='$node_id'  AND display_page='portal' ORDER BY display_area, display_order, subscribe_timestamp DESC";
+    $sql = "SELECT content_id, display_area, display_order FROM hotspot_graph_element_has_content hgehc ";
+    $sql .= "INNER JOIN hotspot_graph_elements hge on hgehc.hotspot_graph_element_id = hge.hotspot_graph_element_id ";
+    $sql .= "WHERE hge.element_id='$node_id' AND hge.element_type = 'Node' AND display_page='portal' ORDER BY display_area, display_order, subscribe_timestamp DESC";
 }
 $db->execSql($sql, $content_rows, false);
 $showMoreLink = false;
@@ -202,7 +239,7 @@ if ($content_rows) {
             $ui->addContent($content_row['display_area'], $content, $content_row['display_order']);
         }
     }
-}
+}*/
 
 // Get all user content
 $content_rows = array ();

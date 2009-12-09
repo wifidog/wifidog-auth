@@ -638,7 +638,7 @@ class User implements GenericObject {
     /** Generate a token in the connection table so the user can actually use the internet
     @return true on success, false on failure
     */
-    function generateConnectionToken() {
+    function generateConnectionToken($mac = null) {
         if ($this->isUserValid()) {
             $db = AbstractDb::getObject();
             $session = Session::getObject();
@@ -647,13 +647,15 @@ class User implements GenericObject {
             if ($_SERVER['REMOTE_ADDR']) {
                 $node_ip = $db->escapeString($_SERVER['REMOTE_ADDR']);
             }
+            
             if ($session && $node_ip && $session->get(SESS_NODE_ID_VAR)) {
                 //echo "$session && $node_ip && {$session->get(SESS_NODE_ID_VAR)}";
                 $node_id = $db->escapeString($session->get(SESS_NODE_ID_VAR));
-                $abuseControlFault = User::isAbuseControlViolated($this, null, Node::getObject($node_id));
+                $abuseControlFault = User::isAbuseControlViolated($this, $mac, Node::getObject($node_id));
                 if($abuseControlFault) {
                     throw new Exception ($abuseControlFault);
                 }
+                $mac = (is_null($mac)?'': $db->escapeString($mac));
                 /*
                  * Delete all unused tokens for this user, so we don't fill the database
                  * with them
@@ -662,7 +664,7 @@ class User implements GenericObject {
                 // TODO:  Try to find a reusable token before creating a brand new one!
 
                 $sql .= "INSERT INTO tokens (token_owner, token_issuer, token_id, token_status) VALUES ('" . $this->getId() . "', '" . $this->getId() . "', '$token', '" . TOKEN_UNUSED . "');\n";
-                $sql .= "INSERT INTO connections (user_id, token_id, timestamp_in, node_id, node_ip, last_updated) VALUES ('" . $this->getId() . "', '$token', CURRENT_TIMESTAMP, '$node_id', '$node_ip', CURRENT_TIMESTAMP)";
+                $sql .= "INSERT INTO connections (user_id, token_id, timestamp_in, node_id, node_ip, last_updated, user_mac) VALUES ('" . $this->getId() . "', '$token', CURRENT_TIMESTAMP, '$node_id', '$node_ip', CURRENT_TIMESTAMP, '$mac')";
                 $db->execSqlUpdate($sql, false);
                 $retval = $token;
             }

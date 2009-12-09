@@ -127,10 +127,10 @@ class Dependency
        "PHPMailer" => array (
        'mandatory' => true,
        "type" => "localLib",
-       "detectFiles" => "lib/PHPMailer_v2.0.0/class.phpmailer.php",
+       "detectFiles" => "lib/PHPMailer_v5.1/class.phpmailer.php",
        'description' => "Required for sending mail",
        'website' => "http://phpmailer.codeworxtech.com/",
-       'installSourceUrl' => "http://superb-west.dl.sourceforge.net/sourceforge/phpmailer/PHPMailer_v2.0.0.tar.gz",
+       'installSourceUrl' => "http://iweb.dl.sourceforge.net/sourceforge/phpmailer/PHPMailer_v5.1.tar.gz",
        'installMethod' => "tarball",
        'installDestination' => "/"
        ),

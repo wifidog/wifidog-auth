@@ -1,5 +1,9 @@
 # $Id$
-
+2009-12-08
+ * Added the concept of node group and hierarchy (in a not too clean way to start with, I will refactor the code before adding new functionalities to nodes and groups) (#246)
+ * Login and signup and logout script now receive the mac address as parameter (#675)
+ * Initial abuse control verification now made with the mac address (#676)
+ 
 2009-10-30 Geneviève Bastien <gbastien@versatic.net>
   * Network can now be set as case insensitive.  Emails are now never case sensitive and usernames' case sensitivity is consistent with network settings (#616)
   * Yet again some tab alignment

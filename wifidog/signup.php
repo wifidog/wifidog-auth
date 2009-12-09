@@ -227,11 +227,12 @@ if (isset ($_REQUEST["form_request"]) && $_REQUEST["form_request"] == "signup") 
         $gw_id = $session->get(SESS_GW_ID_VAR);
         $gw_address = $session->get(SESS_GW_ADDRESS_VAR);
         $gw_port = $session->get(SESS_GW_PORT_VAR);
+        $mac = $session->get(SESS_USER_MAC_VAR);
 
         if ($gw_id && $gw_address && $gw_port) {
             // Make sure the user IDs match
             if(($created_user->getId() == $authenticated_user->getId())) {
-                $token = $created_user->generateConnectionToken();
+                $token = $created_user->generateConnectionToken($mac);
 
                 $redirURL = "http://" . $gw_address . ":" . $gw_port . "/wifidog/auth?token=" . $token;
             } else {

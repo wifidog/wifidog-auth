@@ -49,6 +49,7 @@ require_once('classes/GisPoint.php');
 require_once('classes/AbstractGeocoder.php');
 require_once('classes/Utils.php');
 require_once('classes/DateTimeWD.php');
+require_once('classes/HotspotGraphElement.php');
 
 /**
  * Abstract a Node.  A Node is an actual physical transmitter.
@@ -68,6 +69,7 @@ class Node implements GenericObject
     private $mdB; /**< An AbstractDb instance */
     private $id;
     private static $currentNode = null;
+    protected $_hotspotGraphElement;
 
     /**
      * List of deployment statuses
@@ -286,6 +288,8 @@ class Node implements GenericObject
             throw new Exception(_('Unable to insert new node into database!'));
         }
 
+        HotspotGraphElement::createNewObject($node_id, 'Node');
+        
         $object = self::getObject($node_id);
 
         return $object;
@@ -692,6 +696,8 @@ class Node implements GenericObject
 
         $this->_row = $row;
         $this->id = $row['node_id'];
+        
+        $this->_hotspotGraphElement = HotspotGraphElement::getObject($this->id, 'Node');
     }
 
     function __toString() {
@@ -1186,11 +1192,13 @@ class Node implements GenericObject
         $_html_node_information[] = InterfaceElements::generateAdminSectionContainer("gateway_id", $_title, $_data);
 
         //Node content
-        $_html_content = array();
+        /*$_html_content = array();
         $_title = _("Node content");
         $_data = Content::getLinkedContentUI("node_" . $node_id . "_content", "node_has_content", "node_id", $this->id, "portal");
-        $html .= InterfaceElements::generateAdminSectionContainer("node_content", $_title, $_data);
-
+        $html .= InterfaceElements::generateAdminSectionContainer("node_content", $_title, $_data);*/
+        if (!is_null($this->_hotspotGraphElement))
+            $html .= $this->_hotspotGraphElement->getContentAdminUI();
+            
         // Name
         $permArray = null;
         $permArray[]=array(Permission::P('NETWORK_PERM_EDIT_ANY_NODE_CONFIG'), $network);
@@ -1361,6 +1369,10 @@ class Node implements GenericObject
             $html_access_rights = Stakeholder::getAssignStakeholdersUI($this);
             $html .= InterfaceElements::generateAdminSectionContainer("access_rights", _("Access rights"), $html_access_rights);
         }
+        
+        //Node hierarchy
+        if (!is_null($this->_hotspotGraphElement))
+            $html .= $this->_hotspotGraphElement->getGraphAdminUI($network);
 
         $html .= "</ul>\n";
         $html .= "</fieldset>";
@@ -1403,8 +1415,10 @@ class Node implements GenericObject
             $this->setGatewayId($_REQUEST[$name]);
         }
         // Content processing
-        $name = "node_{$node_id}_content";
-        Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id);
+        if (!is_null($this->_hotspotGraphElement))
+            $this->_hotspotGraphElement->processContentAdminUI();
+        /*$name = "node_{$node_id}_content";
+        Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id);*/
 
         // Name
         $permArray = null;
@@ -1565,6 +1579,13 @@ class Node implements GenericObject
         }
 
         // End Node configuration section
+        
+        if (!is_null($this->_hotspotGraphElement))
+            $this->_hotspotGraphElement->processGraphAdminUI($errMsg, $network);
+        if(!empty($errMsg)) {
+            echo $errMsg;
+            $errMsg = null;
+        }
 
         // Access rights
         Stakeholder::processAssignStakeholdersUI($this, $errMsg);

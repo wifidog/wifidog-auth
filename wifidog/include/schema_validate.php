@@ -47,7 +47,7 @@
 /**
  * Define current database schema version
  */
-define('REQUIRED_SCHEMA_VERSION', 67);
+define('REQUIRED_SCHEMA_VERSION', 68);
 /** Used to test a new shecma version before modyfying the database */
 define('SCHEMA_UPDATE_TEST_MODE', false);
 /**
@@ -1454,6 +1454,76 @@ function real_update_schema($targetSchema) {
         $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
         $sql .= "\n\nALTER TABLE networks ADD COLUMN usernames_case_sensitive boolean NOT NULL DEFAULT true;\n";
     }
+    
+    $new_schema_version = 68;
+    if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
+        printUpdateVersion($new_schema_version);
+        $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+        
+        $sql .= "CREATE TABLE node_groups \n";
+        $sql .= "( \n";
+        $sql .= "node_group_id character varying(32) PRIMARY KEY, \n";
+        $sql .= "name text, \n";
+        $sql .= "description text , \n";
+        $sql .= "group_creation_date timestamp NOT NULL DEFAULT now() \n";
+        $sql .= ");\n\n";
+        
+        $sql .= "CREATE TABLE hotspot_graph_elements \n";
+        $sql .= "( \n";
+        $sql .= "hotspot_graph_element_id character varying(32) PRIMARY KEY, \n";
+        $sql .= "element_id text, \n";
+        $sql .= "element_type character varying(16) \n";
+        $sql .= ");\n\n";
+        
+        $sql .= "CREATE TABLE hotspot_graph \n";
+        $sql .= "( \n";
+        $sql .= "child_element_id character varying(32) REFERENCES hotspot_graph_elements (hotspot_graph_element_id) ON UPDATE CASCADE ON DELETE CASCADE NOT NULL , \n";
+        $sql .= "parent_element_id character varying(32) REFERENCES hotspot_graph_elements (hotspot_graph_element_id) ON UPDATE CASCADE ON DELETE CASCADE NOT NULL , \n";
+        $sql .= "link_order integer DEFAULT 1 , \n";
+        $sql .= "PRIMARY KEY(child_element_id, parent_element_id) \n";
+        $sql .= ");\n\n";
+        
+        $sql .= "CREATE TABLE hotspot_graph_element_has_content (\n";
+				$sql .= "hotspot_graph_element_id character varying(32) REFERENCES hotspot_graph_elements (hotspot_graph_element_id) ON UPDATE CASCADE ON DELETE CASCADE NOT NULL ,\n";
+        $sql .= "content_id text NOT NULL,\n";
+    		$sql .= "subscribe_timestamp timestamp without time zone DEFAULT now() NOT NULL,\n";
+        $sql .= "display_page text DEFAULT 'portal'::text NOT NULL,\n";
+   			$sql .= "display_area text DEFAULT 'main_area_middle'::text NOT NULL,\n";
+        $sql .= "display_order integer DEFAULT 1 NOT NULL\n";
+				$sql .= ");\n\n";
+        
+        $sql .= "INSERT INTO stakeholder_types (stakeholder_type_id) VALUES ('NodeGroup');\n";
+        
+        //$networks = Network::getAllNetworks();
+        $networks = array();
+        $db->execSql("Select network_id from networks", $networks, false);
+        foreach ($networks as $network) {
+            $new_guid = get_guid();
+            $sql .= "INSERT INTO hotspot_graph_elements values('{$new_guid}', '{$network['network_id']}', 'Network' );\n ";
+            $nodes = array();
+            $db->execSql("SELECT node_id FROM nodes where network_id = '{$network['network_id']}'", $nodes, false);
+            foreach ($nodes as $node) {
+                $node_guid = get_guid();
+                $sql .= "INSERT INTO hotspot_graph_elements values('{$node_guid}', '{$node['node_id']}', 'Node' );\n ";
+                $sql .= "INSERT INTO hotspot_graph(child_element_id, parent_element_id) VALUES ('{$node_guid}', '{$new_guid}');\n";
+            }
+        }
+        
+        $sql .= "INSERT INTO hotspot_graph_element_has_content (\n";
+        $sql .= "SELECT hge.hotspot_graph_element_id, content_id, subscribe_timestamp, display_page, display_area, display_order \n";
+        $sql .= "FROM hotspot_graph_elements hge inner join network_has_content nhc on nhc.network_id = hge.element_id \n";
+        $sql .= "WHERE hge.element_type = 'Network');\n\n";
+        
+        $sql .= "INSERT INTO hotspot_graph_element_has_content (\n";
+        $sql .= "SELECT hge.hotspot_graph_element_id, content_id, subscribe_timestamp, display_page, display_area, display_order \n";
+        $sql .= "FROM hotspot_graph_elements hge inner join node_has_content nhc on nhc.node_id = hge.element_id \n";
+        $sql .= "WHERE hge.element_type = 'Node');\n\n";
+        
+        $sql .= "CREATE TABLE nodegroup_stakeholders (\n";
+				$sql .= ")\n";
+        $sql .= "INHERITS (stakeholders);\n\n";
+    }
+    
     
     /*
      $new_schema_version = ;

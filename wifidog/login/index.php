@@ -87,6 +87,7 @@ $password = null;
 $gw_address = null;
 $gw_port = null;
 $gw_id = null;
+$mac = null;
 $logout = null;
 
 /*
@@ -117,6 +118,12 @@ if (isset($_REQUEST["form_signup"])) {
     MainUI::redirect(BASE_URL_PATH . "signup.php");
     exit;
 }
+
+if (isset($_REQUEST["mac"])) {
+    $session->set(SESS_USER_MAC_VAR, $_REQUEST['mac']);
+    $mac = $_REQUEST['mac'];
+}
+
 
 /*
  * Store original URL typed by user
@@ -181,7 +188,7 @@ if (!empty($node) && $node->isSplashOnly()) {
     if (!empty($gw_address) && !empty($gw_port)) {
         // Login from a gateway, redirect to the gateway to activate the token
         $user = $network->getSplashOnlyUser();
-        $token = $user->generateConnectionToken();
+        $token = $user->generateConnectionToken($mac);
         User::setCurrentUser($user);
         header("Location: http://" . $gw_address . ":" . $gw_port . "/wifidog/auth?token=" . $token);
     } else {
@@ -205,7 +212,7 @@ if (!empty($_REQUEST["login_form_submit"])) {
     if ($user != null) {
         if (!empty($gw_address) && !empty($gw_port)) {
             // Login from a gateway, redirect to the gateway to activate the token
-            $token = $user->generateConnectionToken();
+            $token = $user->generateConnectionToken($mac);
             if(!$token)
             {
                 throw new exception(sprintf(_("Unable to generate token for user %s"),$user->getUsername()));
@@ -244,6 +251,7 @@ if ((!empty($logout) && $logout) && ($user = User::getCurrentUser()) != null  &&
 $smarty->assign('gw_address', $gw_address);
 $smarty->assign('gw_port', $gw_port);
 $smarty->assign('gw_id', $gw_id);
+$smarty->assign('mac', $mac);
 
 // Get the login form
 $html = "";
@@ -255,6 +263,8 @@ if ($gw_port != null)
 $html .= "<input type='hidden' name='gw_port' value='{$gw_port}'>\n";
 if ($gw_id != null)
 $html .= "<input type='hidden' name='gw_id' value='{$gw_id}'>\n";
+if ($mac != null)
+$html .= "<input type='hidden' name='mac' value='{$mac}'>\n";
 $html .= Authenticator::getLoginUI();
 $html .= "</form>\n";
 $html .= "<div id='login_help'>\n";
