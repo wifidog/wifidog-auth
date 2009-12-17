@@ -166,7 +166,7 @@ if ($current_user && $current_user->getAccountStatus() == ACCOUNT_STATUS_VALIDAT
 }
 
 // Get all the parent objects of the node
-$parents = HotspotGraph::getAllParents(HotspotGraphElement::getObjectFor($node));
+$parents = HotspotGraph::getAllParents($node);
 
 // Get the contents for all elements parents of and including the node, but exclude user subscribed content if user is known
 foreach($parents as $parentid) {

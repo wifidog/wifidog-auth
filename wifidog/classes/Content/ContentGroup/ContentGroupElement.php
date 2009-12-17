@@ -331,7 +331,7 @@ class ContentGroupElement extends Content {
 
         /* content_group_element_has_allowed_nodes */
         $html .= "<li class='admin_element_item_container'>\n";
-        $html .= "<div class='admin_element_label'>" . _("Only display at node(s):") . "</div>\n";
+        $html .= "<div class='admin_element_label'>" . _("Only display at node(s):") . _(" (DEPRECATED should use NodeGroups instead)") . "</div>\n";
         $html .= "<ul class='admin_element_list'>\n";
 
         $sql = "SELECT * FROM content_group_element_has_allowed_nodes WHERE content_group_element_id='$this->id'";

@@ -61,15 +61,13 @@ require_once('classes/HotspotGraphElement.php');
  * @author     Benoit Grégoire <bock@step.polymtl.ca>
  * @copyright  2005 Benoit Grégoire, Technologies Coeus inc.
  */
-class Node implements GenericObject
+class Node extends HotspotGraphElement
 {
     /** Object cache for the object factory (getObject())*/
-    private static $instanceArray = array();
-    private $_row;
-    private $mdB; /**< An AbstractDb instance */
-    private $id;
-    private static $currentNode = null;
-    protected $_hotspotGraphElement;
+    protected $_row;
+    protected $mdB; /**< An AbstractDb instance */
+    protected $id;
+    protected static $currentNode = null;
 
     /**
      * List of deployment statuses
@@ -77,7 +75,7 @@ class Node implements GenericObject
      * @var array
      * @access private
      */
-    private $_deploymentStatuses = array();
+    protected $_deploymentStatuses = array();
 
     /**
      * Defines a warning message
@@ -86,7 +84,7 @@ class Node implements GenericObject
      *
      * @access private
      */
-    private $_warningMessage;
+    protected $_warningMessage;
 
     /** Instantiate a node object
      * @param $id The id of the requested node
@@ -94,11 +92,7 @@ class Node implements GenericObject
      */
     public static function &getObject($id)
     {
-        if(!isset(self::$instanceArray[$id]))
-        {
-            self::$instanceArray[$id] = new self($id);
-        }
-        return self::$instanceArray[$id];
+        return HotspotGraphElement::getObject($id, 'Node');
     }
 
     /** Free an instanciated object
@@ -107,10 +101,7 @@ class Node implements GenericObject
      */
     public static function freeObject($id)
     {
-        if(isset(self::$instanceArray[$id]))
-        {
-            unset(self::$instanceArray[$id]);
-        }
+        HotspotGraphElement::freeObject($id, 'Node');
     }
 
     /** Instantiate a node object using it's gateway id
@@ -225,6 +216,7 @@ class Node implements GenericObject
             }
             else
             {
+                parent::_delete($errmsg);
                 $retval = true;
             }
         }
@@ -662,7 +654,7 @@ class Node implements GenericObject
 
     /** @param $id The id of the node
      * @param $idType 'NODE_ID' or 'GATEWAY_ID'*/
-    private function __construct($id, $idType='NODE_ID')
+    protected function __construct($id, $idType='NODE_ID')
     {
         $db = AbstractDb::getObject();
         $this->mDb = & $db;
@@ -697,7 +689,7 @@ class Node implements GenericObject
         $this->_row = $row;
         $this->id = $row['node_id'];
         
-        $this->_hotspotGraphElement = HotspotGraphElement::getObject($this->id, 'Node');
+        parent::__construct($this->id, 'Node');
     }
 
     function __toString() {
@@ -1196,8 +1188,7 @@ class Node implements GenericObject
         $_title = _("Node content");
         $_data = Content::getLinkedContentUI("node_" . $node_id . "_content", "node_has_content", "node_id", $this->id, "portal");
         $html .= InterfaceElements::generateAdminSectionContainer("node_content", $_title, $_data);*/
-        if (!is_null($this->_hotspotGraphElement))
-            $html .= $this->_hotspotGraphElement->getContentAdminUI();
+        $html .= parent::getContentAdminUI();
             
         // Name
         $permArray = null;
@@ -1371,8 +1362,7 @@ class Node implements GenericObject
         }
         
         //Node hierarchy
-        if (!is_null($this->_hotspotGraphElement))
-            $html .= $this->_hotspotGraphElement->getGraphAdminUI($network);
+        $html .= parent::getGraphAdminUI($network);
 
         $html .= "</ul>\n";
         $html .= "</fieldset>";
@@ -1415,8 +1405,7 @@ class Node implements GenericObject
             $this->setGatewayId($_REQUEST[$name]);
         }
         // Content processing
-        if (!is_null($this->_hotspotGraphElement))
-            $this->_hotspotGraphElement->processContentAdminUI();
+        parent::processContentAdminUI();
         /*$name = "node_{$node_id}_content";
         Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id);*/
 
@@ -1580,8 +1569,7 @@ class Node implements GenericObject
 
         // End Node configuration section
         
-        if (!is_null($this->_hotspotGraphElement))
-            $this->_hotspotGraphElement->processGraphAdminUI($errMsg, $network);
+        parent::processGraphAdminUI($errMsg, $network);
         if(!empty($errMsg)) {
             echo $errMsg;
             $errMsg = null;
@@ -1601,23 +1589,23 @@ class Node implements GenericObject
     }
 
     /** Add content to this node */
-    public function addContent(Content $content)
+   /* public function addContent(Content $content)
     {
         $db = AbstractDb::getObject();
         $content_id = $db->escapeString($content->getId());
         $sql = "INSERT INTO node_has_content (node_id, content_id) VALUES ('$this->id','$content_id')";
         $db->execSqlUpdate($sql, false);
         exit;
-    }
+    }*/
 
     /** Remove content from this node */
-    public function removeContent(Content $content)
+   /* public function removeContent(Content $content)
     {
         $db = AbstractDb::getObject();
         $content_id = $db->escapeString($content->getId());
         $sql = "DELETE FROM node_has_content WHERE node_id='$this->id' AND content_id='$content_id'";
         $db->execSqlUpdate($sql, false);
-    }
+    }*/
 
     /**
      * The list of the 5 most recent users who have logged into this node in the past week,
@@ -1831,6 +1819,32 @@ class Node implements GenericObject
         $smarty->assign('realNodeName', $node ? $node->getName() : '');
         $smarty->assign('realNodeLastHeartbeatIP', $node ? $node->getLastHeartbeatIP() : '');
     }
+    
+    /**
+     * Get the type of graph element (read-only for now)
+     * 
+     * @return string
+     */
+    protected function getType() {
+        return 'Node';
+    }
+  
+    /**
+     * Return whether this element is a root or has parent (Network is root)
+     * @return boolean
+     */
+    public function isRoot(){
+        return false;
+    }
+    
+		/**
+     * Return whether this element is a leaf or has children (Node is leaf)
+     * @return boolean
+     */
+    public function isLeaf() {
+        return true;
+    }
+    
 }
 
 /*

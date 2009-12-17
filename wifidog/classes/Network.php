@@ -46,10 +46,10 @@
 /**
  * Load required classes
  */
-require_once('classes/GenericDataObject.php');
 require_once('classes/Content.php');
 require_once('classes/User.php');
 require_once('classes/Node.php');
+require_once('classes/NodeGroup.php');
 require_once('classes/GisPoint.php');
 require_once('classes/Cache.php');
 require_once('classes/ThemePack.php');
@@ -67,11 +67,9 @@ require_once('classes/HotspotGraphElement.php');
  * @copyright  2005-2006 Benoit Grégoire, Technologies Coeus inc.
  * @copyright  2006 Max Horváth, Horvath Web Consulting
  */
-class Network extends GenericDataObject
+class Network extends HotspotGraphElement
 {
     /** Object cache for the object factory (getObject())*/
-    private static $instanceArray = array();
-    protected $_hotspotGraphElement;
 
     /**
      * Get an instance of the object
@@ -87,11 +85,7 @@ class Network extends GenericDataObject
      */
     public static function &getObject($id)
     {
-        if(!isset(self::$instanceArray[$id]))
-        {
-            self::$instanceArray[$id] = new self($id);
-        }
-        return self::$instanceArray[$id];
+        return HotspotGraphElement::getObject($id, 'Network');
     }
 
     /** Free an instanciated object
@@ -100,10 +94,7 @@ class Network extends GenericDataObject
      */
     public static function freeObject($id)
     {
-        if(isset(self::$instanceArray[$id]))
-        {
-            unset(self::$instanceArray[$id]);
-        }
+        HotspotGraphElement::freeObject($id, 'Network');
     }
 
     /**
@@ -191,6 +182,7 @@ class Network extends GenericDataObject
      */
     public static function createNewObject($network_id = null)
     {
+        
         $db = AbstractDb::getObject();
         if (empty ($network_id)) {
             $network_id = get_guid();
@@ -379,7 +371,7 @@ class Network extends GenericDataObject
      *
      * @access private
      */
-    private function __construct($p_network_id)
+    protected function __construct($p_network_id)
     {
         $db = AbstractDb::getObject();
         if ($p_network_id == "")
@@ -394,7 +386,7 @@ class Network extends GenericDataObject
         }
         $this->_row = $row;
         $this->_id = $p_network_id;
-        $this->_hotspotGraphElement = HotspotGraphElement::getObject($this->_id,'Network');
+        parent::__construct($this->_id, 'Network');
     }
 
     public function __toString()
@@ -1705,8 +1697,8 @@ class Network extends GenericDataObject
         $name = "network_".$this->_id."_content";
         $data = Content::getLinkedContentUI($name, "network_has_content", "network_id", $this->_id, $display_page = "portal");
         $html .= InterfaceElements::generateAdminSectionContainer("network_content", $title, $data);*/
-        if (!is_null($this->_hotspotGraphElement))
-            $html .= $this->_hotspotGraphElement->getContentAdminUI();
+        
+        $html .= parent::getContentAdminUI();
 
         /*
          * Network information
@@ -1936,8 +1928,7 @@ class Network extends GenericDataObject
         $html .= InterfaceElements::generateAdminSectionContainer("network_profile_templates", $title, $data);
         
         // objects hierarchy
-        if (!is_null($this->_hotspotGraphElement))
-            $html .= $this->_hotspotGraphElement->getGraphAdminUI($this);
+        $html .= parent::getGraphAdminUI($this);
 
         $html .= "</ul>\n";
         $html .= "</fieldset>";
@@ -1957,8 +1948,7 @@ class Network extends GenericDataObject
         Security::requirePermission(Permission::P('NETWORK_PERM_EDIT_NETWORK_CONFIG'), $this);
 
         // Content management
-        if (!is_null($this->_hotspotGraphElement))
-            $this->_hotspotGraphElement->processContentAdminUI();
+        parent::processContentAdminUI();
         /* $name = "network_".$this->_id."_content";
         Content :: processLinkedContentUI($name, 'network_has_content', 'network_id', $this->_id);*/
 
@@ -2078,8 +2068,7 @@ class Network extends GenericDataObject
         $name = "network_".$this->_id."_profile_templates";
         ProfileTemplate :: processLinkedProfileTemplateUI($name, 'network_has_profile_templates', 'network_id', $this->_id);
         
-        if (!is_null($this->_hotspotGraphElement))
-            $this->_hotspotGraphElement->processGraphAdminUI($errMsg, $this);
+        parent::processGraphAdminUI($errMsg, $this);
         if(!empty($errMsg)) {
             echo $errMsg;
             $errMsg = null;
@@ -2102,14 +2091,14 @@ class Network extends GenericDataObject
      *
      * @access public
      */
-    public function addContent(Content $content)
+ /*   public function addContent(Content $content)
     {
         $db = AbstractDb::getObject();
 
         $content_id = $db->escapeString($content->getId());
         $sql = "INSERT INTO network_has_content (network_id, content_id) VALUES ('$this->_id','$content_id')";
         $db->execSqlUpdate($sql, false);
-    }
+    }*/
 
     /**
      * Remove network-wide content from this network
@@ -2120,14 +2109,14 @@ class Network extends GenericDataObject
      *
      * @access public
      */
-    public function removeContent(Content $content)
+ /*   public function removeContent(Content $content)
     {
         $db = AbstractDb::getObject();
 
         $content_id = $db->escapeString($content->getId());
         $sql = "DELETE FROM network_has_content WHERE network_id='$this->_id' AND content_id='$content_id'";
         $db->execSqlUpdate($sql, false);
-    }
+    }*/
 
 
     /**
@@ -2204,6 +2193,7 @@ class Network extends GenericDataObject
             if (!$db->execSqlUpdate("DELETE FROM networks WHERE network_id='{$id}'", false)) {
                 $errmsg = _('Could not delete network!');
             } else {
+                parent::_delete($errmsg);
                 $retval = true;
             }
         }
@@ -2272,6 +2262,31 @@ class Network extends GenericDataObject
         $smarty->assign('networkNumDeployedNodes', $net ? $net->getNumDeployedNodes() : 0);
         $smarty->assign('networkNumOnlineNodes', $net ? $net->getNumOnlineNodes() : 0);
         $smarty->assign('networkNumNonMonitoredNodes', $net ? $net->getNumOnlineNodes(true) : 0);
+    }
+    
+/**
+     * Get the type of graph element (read-only for now)
+     * 
+     * @return string
+     */
+    protected function getType() {
+        return 'Network';
+    }
+  
+    /**
+     * Return whether this element is a root or has parent (Network is root)
+     * @return boolean
+     */
+    public function isRoot(){
+        return true;
+    }
+    
+		/**
+     * Return whether this element is a leaf or has children (Node is leaf)
+     * @return boolean
+     */
+    public function isLeaf() {
+        return false;
     }
 }
 

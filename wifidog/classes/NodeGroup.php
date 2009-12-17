@@ -57,14 +57,12 @@ require_once('classes/HotspotGraphElement.php');
  * @author     Geneviève Bastien <gbastien@versatic.net>
  * @copyright  2005 Benoit Grégoire, Technologies Coeus inc.
  */
-class NodeGroup implements GenericObject
+class NodeGroup extends HotspotGraphElement
 {
     /** Object cache for the object factory (getObject())*/
-    private static $instanceArray = array();
-    private $_row;
-    private $mdB; /**< An AbstractDb instance */
-    private $id;
-    protected $_hotspotGraphElement;
+    protected $_row;
+    protected $mdB; /**< An AbstractDb instance */
+    protected $id;
     
     /**
      * Defines a warning message
@@ -73,7 +71,7 @@ class NodeGroup implements GenericObject
      *
      * @access private
      */
-    private $_warningMessage;
+    protected $_warningMessage;
 
     /** Instantiate a nodeGroup object
      * @param $id The id of the requested node group
@@ -81,11 +79,7 @@ class NodeGroup implements GenericObject
      */
     public static function &getObject($id)
     {
-        if(!isset(self::$instanceArray[$id]))
-        {
-            self::$instanceArray[$id] = new self($id);
-        }
-        return self::$instanceArray[$id];
+        return HotspotGraphElement::getObject($id, 'NodeGroup');
     }
 
     /** Free an instanciated object
@@ -94,10 +88,7 @@ class NodeGroup implements GenericObject
      */
     public static function freeObject($id)
     {
-        if(isset(self::$instanceArray[$id]))
-        {
-            unset(self::$instanceArray[$id]);
-        }
+        HotspotGraphElement::freeObject($id, 'NodeGroup');
     }
     
 
@@ -315,7 +306,7 @@ class NodeGroup implements GenericObject
 
     /** @param $id The id of the node group
      * @param $idType 'GROUP_ID' or 'NAME'*/
-    private function __construct($id, $idType='GROUP_ID')
+    protected function __construct($id, $idType='GROUP_ID')
     {
         $db = AbstractDb::getObject();
         $this->mDb = & $db;
@@ -341,7 +332,7 @@ class NodeGroup implements GenericObject
         $this->_row = $row;
         $this->id = $row['node_group_id'];
         
-        $this->_hotspotGraphElement = HotspotGraphElement::getObject($this->id, 'NodeGroup');
+        parent::__construct($this->id, 'NodeGroup');
     }
 
     function __toString() {
@@ -463,12 +454,10 @@ class NodeGroup implements GenericObject
         $_html_node_information[] = InterfaceElements::generateAdminSectionContainer("node_creation_date", $_title, $_data);
 
         //Node content
-        if (!is_null($this->_hotspotGraphElement))
-            $html .= $this->_hotspotGraphElement->getContentAdminUI();
+        $html .= parent::getContentAdminUI();
             
         //Node hierarchy
-        if (!is_null($this->_hotspotGraphElement))
-            $html .= $this->_hotspotGraphElement->getGraphAdminUI();
+        $html .= parent::getGraphAdminUI();
             
         // Build section
         $html .= InterfaceElements::generateAdminSectionContainer("node_group_information", _("Information about the node group"), implode(null, $_html_node_information));
@@ -514,8 +503,7 @@ class NodeGroup implements GenericObject
         $ng_id = $this->getId();
 
         // Content processing
-        if (!is_null($this->_hotspotGraphElement))
-            $this->_hotspotGraphElement->processContentAdminUI();
+        parent::processContentAdminUI();
 
         // Name
         $permArray = null;
@@ -534,8 +522,7 @@ class NodeGroup implements GenericObject
         $name = "node_".$ng_id."_description";
         $this->setDescription($_REQUEST[$name]);
 
-        if (!is_null($this->_hotspotGraphElement))
-            $this->_hotspotGraphElement->processGraphAdminUI($errMsg);
+        parent::processGraphAdminUI($errMsg);
         if(!empty($errMsg)) {
             echo $errMsg;
             $errMsg = null;
@@ -551,23 +538,23 @@ class NodeGroup implements GenericObject
     }
 
     /** Add content to this node */
-    public function addContent(Content $content)
+   /* public function addContent(Content $content)
     {
         $db = AbstractDb::getObject();
         $content_id = $db->escapeString($content->getId());
         $sql = "INSERT INTO node_has_content (node_id, content_id) VALUES ('$this->id','$content_id')";
         $db->execSqlUpdate($sql, false);
         exit;
-    }
+    }*/
 
     /** Remove content from this node */
-    public function removeContent(Content $content)
+  /*  public function removeContent(Content $content)
     {
         $db = AbstractDb::getObject();
         $content_id = $db->escapeString($content->getId());
         $sql = "DELETE FROM node_has_content WHERE node_id='$this->id' AND content_id='$content_id'";
         $db->execSqlUpdate($sql, false);
-    }
+    }*/
 
 
     /** Reloads the object from the database.  Should normally be called after a set operation */
@@ -632,6 +619,31 @@ class NodeGroup implements GenericObject
         $smarty->assign('realNodeId', $node ? $node->getId() : '');
         $smarty->assign('realNodeName', $node ? $node->getName() : '');
         $smarty->assign('realNodeLastHeartbeatIP', $node ? $node->getLastHeartbeatIP() : '');
+    }
+    
+	/**
+     * Get the type of graph element (read-only for now)
+     * 
+     * @return string
+     */
+    protected function getType() {
+        return 'NodeGroup';
+    }
+  
+    /**
+     * Return whether this element is a root or has parent (Network is root)
+     * @return boolean
+     */
+    public function isRoot(){
+        return false;
+    }
+    
+		/**
+     * Return whether this element is a leaf or has children (Node is leaf)
+     * @return boolean
+     */
+    public function isLeaf() {
+        return false;
     }
 }
 

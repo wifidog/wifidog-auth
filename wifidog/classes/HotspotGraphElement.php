@@ -46,9 +46,6 @@
 require_once('classes/GenericDataObject.php');
 require_once('classes/Content.php');
 require_once('classes/User.php');
-require_once('classes/Node.php');
-require_once('classes/Network.php');
-require_once('classes/NodeGroup.php');
 require_once('classes/HotspotGraph.php');
 
 /**
@@ -59,17 +56,13 @@ require_once('classes/HotspotGraph.php');
  *
  * @package    WiFiDogAuthServer
  * @author     Geneviève Bastien <gbastien@versatic.net>
- * @todo   		 Logically, Network, Node and NodeGroup should inherit from HotspotGraphElement, the base class, but one change
- *             at a time.  First we'll add the possibility to group nodes easily and add contents to those groups.
- *             For this purpose at this point, Hotspot graph element will be rather considered as a part of the child instead of its parent.
- *             If reactions are good to those additions, the logic of the interface will be changed to make the graph more central and have
- *             Networks, nodes and nodeGroups just elements types.
  */
-class HotspotGraphElement extends GenericDataObject
+abstract class HotspotGraphElement extends GenericDataObject
 {
     /** Object cache for the object factory (getObject())*/
     protected static $instanceArray = array('Network' => array(), 'Node' => array(), 'NodeGroup' => array());
-    protected static $possibleTypes = array('Network', 'Node', 'NodeGroup');
+    protected $_hgeid;
+    protected $_hgerow;
 
     /**
      * Get an instance of the object
@@ -87,81 +80,26 @@ class HotspotGraphElement extends GenericDataObject
      */
     public static function &getObject($id, $type = 'Node')
     {
+        if (!(class_exists($type) && (get_parent_class($type) == 'HotspotGraphElement')))
+            throw new Exception(_("HotspotGraphElement::getObject, parameter type has a wrong value.  Should be the name of a child class."));
         if(!isset(self::$instanceArray[$type][$id]))
         {
-            self::$instanceArray[$type][$id] = new self($type, $id);
+            self::$instanceArray[$type][$id] = new $type($id);
         }
         return self::$instanceArray[$type][$id];
-    }
-    
-		/**
-     * Get an instance of the child object of this graph element (the element represented by this)
-     *
-     * 
-     * @param string $id The object id
-     * @param string $type The type of graph element: Node, Network or NodeGroup
-     *
-     * @return mixed An object of type Network, Node or NodeGroup
-     *
-     * @see GenericObject
-     * @static
-     * @access public
-     */
-    public static function &getChildObject($id, $type = 'Node')
-    {
-        $object = null;
-        switch($type) {
-            case 'Network': $object = Network::getObject($id);
-                break;
-            case 'NodeGroup': $object = NodeGroup::getObject($id);
-                break;
-            case 'Node': $object = Node::getObject($id);
-                break;
-
-        }
-        return $object;
-    }
-    
-		/**
-     * Get an instance of this class for a child object
-     *
-     * 
-     * @param object $object The object id
-     * @param string $type The type of graph element: Node, Network or NodeGroup
-     *
-     * @return mixed An object of type Network, Node or NodeGroup
-     *
-     * @see GenericObject
-     * @static
-     * @access public
-     */
-    public static function &getObjectFor($object)
-    {
-        $object_id = $object->getId();
-        if ($object instanceof Network) {
-            return self::getObject($object_id, 'Network');
-        }
-        elseif ($object instanceof NodeGroup) {
-            return self::getObject($object_id, 'NodeGroup');
-        }
-        elseif ($object instanceof Node) {
-            return self::getObject($object_id, 'Node');
-        }
-        else {
-            throw new Exception(_('HotspotGraphElement: getObjectFor an object of a wrong class'));
-        }
-        return null;
     }
 
     /** Free an instanciated object
      * @param $id The id to free
      * Thanks and so long for all the ram.
      */
-    public static function freeObject($id)
+    public static function freeObject($id, $type)
     {
-        if(isset(self::$instanceArray[$id]))
+        if (!(class_exists($type) && (get_parent_class($type) == 'HotspotGraphElement')))
+            throw new Exception(_("HotspotGraphElement::freeObject, parameter type has a wrong value.  Should be the name of a child class."));
+        if(isset(self::$instanceArray[$type][$id]))
         {
-            unset(self::$instanceArray[$id]);
+            unset(self::$instanceArray[$type][$id]);
         }
     }
 
@@ -182,13 +120,13 @@ class HotspotGraphElement extends GenericDataObject
         $db = AbstractDb::getObject();
         $graph_element_id = get_guid();
         
-        if (!in_array($element_type, self::$possibleTypes))
+         if (!(class_exists($element_type) && (get_parent_class($element_type) == 'HotspotGraphElement')))
             throw new Exception(_('Cannot add element to hotspot graph. Wrong type specified: ').$element_type);
        
         $sql = "INSERT INTO hotspot_graph_elements (hotspot_graph_element_id, element_id, element_type) VALUES ('$graph_element_id', '$element_id', '$element_type')";
 
         if (!$db->execSqlUpdate($sql, false)) {
-            throw new Exception(_('Unable to insert the new network in the database!'));
+            throw new Exception(_('Unable to insert the new element in the database!'));
         }
         $object = self::getObject($element_id, $element_type);
         return $object;
@@ -363,7 +301,7 @@ class HotspotGraphElement extends GenericDataObject
      *
      * @access private
      */
-    private function __construct($type, $id)
+    protected function __construct($id, $type)
     {
         $db = AbstractDb::getObject();
         $element_id_str = $db->escapeString($id);
@@ -374,39 +312,34 @@ class HotspotGraphElement extends GenericDataObject
         if ($row == null) {
             throw new Exception("The element of type $type with id $element_id_str could not be found in the database");
         }
-        $this->_row = $row;
-        $this->_id = $row['hotspot_graph_element_id'];
+        $this->_hgerow = $row;
+        $this->_hgeid = $row['hotspot_graph_element_id'];
     }
 
-    public function __toString()
-    {
-        return $this->getId();
+    public function getHgeId() {
+        return $this->_hgeid;
     }
+    
+    public abstract function __toString();
 
     /**
      * Get the type of graph element (read-only for now)
      * 
      * @return string
      */
-    protected function getType() {
-        return $this->_row['element_type'];
-    }
+    protected abstract function getType();
   
     /**
      * Return whether this element is a root or has parent (Network is root)
      * @return boolean
      */
-    public function isRoot() {
-        return ($this->getType() == 'Network');
-    }
+    public abstract function isRoot() ;
     
 		/**
      * Return whether this element is a leaf or has children (Node is leaf)
      * @return boolean
      */
-    public function isLeaf() {
-        return ($this->getType() == 'Node');
-    }
+    public abstract function isLeaf();
 
     /**
      * Retreives the admin interface of this object
@@ -420,11 +353,11 @@ class HotspotGraphElement extends GenericDataObject
         require_once('classes/InterfaceElements.php');
         require_once('classes/Stakeholder.php');
         
-        $hge_id = $this->getId();
-        
+        $hge_id = $this->getHgeId();
+
         $_html_content = array();
         $_title = _("Node content");
-        $_data = Content::getLinkedContentUI("hge_" . $hge_id . "_content", "hotspot_graph_element_has_content", "hotspot_graph_element_id", $this->_id, "portal");
+        $_data = Content::getLinkedContentUI("hge_" . $hge_id . "_content", "hotspot_graph_element_has_content", "hotspot_graph_element_id", $hge_id, "portal");
         $html .= InterfaceElements::generateAdminSectionContainer("node_content", $_title, $_data);
         
         
@@ -440,10 +373,10 @@ class HotspotGraphElement extends GenericDataObject
      */
     public function processContentAdminUI()
     {
-        $hge_id = $this->getId();
+        $hge_id = $this->getHgeId();
         
         $name = "hge_{$hge_id}_content";
-        Content::processLinkedContentUI($name, 'hotspot_graph_element_has_content', 'hotspot_graph_element_id', $this->_id);
+        Content::processLinkedContentUI($name, 'hotspot_graph_element_has_content', 'hotspot_graph_element_id', $hge_id);
         
     }
     
@@ -463,7 +396,7 @@ class HotspotGraphElement extends GenericDataObject
         
         // Group section
         if (is_null($network) || Security::hasPermission(Permission::P('NETWORK_PERM_ALLOW_GROUP_NODE'), $network)) {
-            $hge_id = $this->getId();
+            $hge_id = $this->getHgeId();
         
             $_html_content = array();
             $_title = _("Hierarchy");
@@ -483,7 +416,7 @@ class HotspotGraphElement extends GenericDataObject
      */
     public function processGraphAdminUI(&$errMsg, $network = null)
     {
-        $hge_id = $this->getId();
+        $hge_id = $this->getHgeId();
         
         if (is_null($network) || Security::hasPermission(Permission::P('NETWORK_PERM_ALLOW_GROUP_NODE'), $network)) {
             $name = "hge_{$hge_id}_graph";
@@ -579,8 +512,8 @@ class HotspotGraphElement extends GenericDataObject
     {
         $db = AbstractDb::getObject();
 
-        $content_id = $db->escapeString($content->getId());
-        $sql = "INSERT INTO hotspot_graph_element_has_content (hotspot_graph_element_id, content_id) VALUES ('$this->_id','$content_id')";
+        $content_id = $db->escapeString($content->getHgeId());
+        $sql = "INSERT INTO hotspot_graph_element_has_content (hotspot_graph_element_id, content_id) VALUES ('$this->_hgeid','$content_id')";
         $db->execSqlUpdate($sql, false);
     }
 
@@ -597,36 +530,37 @@ class HotspotGraphElement extends GenericDataObject
     {
         $db = AbstractDb::getObject();
 
-        $content_id = $db->escapeString($content->getId());
-        $sql = "DELETE FROM hotspot_graph_element_has_content WHERE hotspot_graph_element_id='$this->_id' AND content_id='$content_id'";
+        $content_id = $db->escapeString($content->getHgeId());
+        $sql = "DELETE FROM hotspot_graph_element_has_content WHERE hotspot_graph_element_id='$this->_hgeid' AND content_id='$content_id'";
         $db->execSqlUpdate($sql, false);
+    }
+    
+    
+    /** Delete this Object form it's storage mechanism
+     * @param &$errmsg Appends an explanation of the error on failure
+     * @return true on success, false on failure or access denied */
+    public function delete(& $errmsg) {
+        $errmsg .= sprintf(_("Delete not supported on class %s"),get_class($this));
+        return false;
     }
 
     /**
-     * Delete this Object form the it's storage mechanism
-     *
-     * @param string &$errmsg Returns an explanation of the error on failure
-     *
-     * @return bool true on success, false on failure or access denied
-     *
-     * @access public
+     * Function called by the children of this class to delete the parent element form the graph
+     * @param unknown_type $errmsg
+     * @return unknown_type
      */
-    public function delete(& $errmsg)
+    protected function _delete(& $errmsg)
     {
         // Init values
         $retval = false;
-        if ($this->isDefaultNetwork() === true) {
-            $errmsg = _('Cannot delete default network, create another one and select it before you remove this one.');
+        
+        $db = AbstractDb::getObject();
+        $id = $db->escapeString($this->getHgeId());
+        if (!$db->execSqlUpdate("DELETE FROM hotspot_graph_elements WHERE hotspot_graph_element_id='{$id}'", false)) {
+            $errmsg = _('Could not delete graph element!');
         } else {
-            $db = AbstractDb::getObject();
-            $id = $db->escapeString($this->getId());
-            if (!$db->execSqlUpdate("DELETE FROM hotspot_graph_elements WHERE hotspot_graph_element_id='{$id}'", false)) {
-                $errmsg = _('Could not delete graph element!');
-            } else {
-                $retval = true;
-            }
+            $retval = true;
         }
-
 
         return $retval;
     }
@@ -643,6 +577,8 @@ class HotspotGraphElement extends GenericDataObject
     {
         //$this->__construct($this->_id);
     }
+    
+
 
     /** Menu hook function */
     static public function hookMenu() {

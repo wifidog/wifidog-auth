@@ -1,4 +1,8 @@
 # $Id$
+
+2009-12-17
+ * Code refactoring: Network, NodeGroup, Node inherit from HotspotGraphElement (#677)
+
 2009-12-08
  * Added the concept of node group and hierarchy (in a not too clean way to start with, I will refactor the code before adding new functionalities to nodes and groups) (#246)
  * Login and signup and logout script now receive the mac address as parameter (#675)
