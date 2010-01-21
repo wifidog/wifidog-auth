@@ -1,9 +1,15 @@
 # $Id$
 
-2009-12-17
+2010-01-21 Geneviève Bastien <gbastien@versatic.net>
+ * Permission error when deleting user role (#689)
+ * Patch by Steven Kurylo to remove white spaces from authenticator arguments (#612)
+ * Search for stakeholders has now same case-sensitivity as the user's network (#662)
+ * Corrected (#613) patch by Hélène Gauthier
+
+2009-12-17 Geneviève Bastien <gbastien@versatic.net>
  * Code refactoring: Network, NodeGroup, Node inherit from HotspotGraphElement (#677)
 
-2009-12-08
+2009-12-08 Geneviève Bastien <gbastien@versatic.net>
  * Added the concept of node group and hierarchy (in a not too clean way to start with, I will refactor the code before adding new functionalities to nodes and groups) (#246)
  * Login and signup and logout script now receive the mac address as parameter (#675)
  * Initial abuse control verification now made with the mac address (#676)

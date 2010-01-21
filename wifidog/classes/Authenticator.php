@@ -146,7 +146,7 @@ abstract class Authenticator
         $default_network = Network::getDefaultNetwork();
  
         foreach ($network_array as $network) {
-                if ($network->getName() == $default_network)
+                if ($network->getName() == $default_network->getName())
                         $default_network_param = $network->getId();
         }
         if (Server::getServer()->getUseGlobalUserAccounts())

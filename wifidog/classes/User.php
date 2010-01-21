@@ -171,6 +171,30 @@ class User implements GenericObject {
         }
         return $object;
     }
+    
+		/** Instantiate a user object
+     * @param $username The username of the user
+     * @param $account_origin Network:  The account origin
+     * @param &$errMsg An error message will be appended to this if the username is not empty, but the user doesn't exist.
+     * @return a User object, or null if there was an error
+     */
+    public static function getUserByUsernameOrEmailAndOrigin($usernameOrEmail, Network $account_origin, &$errMsg = null) {
+        $db = AbstractDb::getObject();
+        $object = null;
+
+        $username_str = $db->escapeString($usernameOrEmail);
+        $comparison = ($account_origin->getUsernamesCaseSensitive()? '=': 'ILike');
+        $account_origin_str = $db->escapeString($account_origin->getId());
+        $db->execSqlUniqueRes("SELECT user_id FROM users WHERE (username {$comparison} '$username_str' OR email ILike '$username_str') AND account_origin = '$account_origin_str'", $user_info, false);
+
+        if ($user_info != null) {
+            $object = self::getObject($user_info['user_id']);
+        }
+        else if (!empty($usernameOrEmail)) {
+            $errMsg .= sprintf(_("There is no user with username or email %s"),$usernameOrEmail);
+        }
+        return $object;
+    }
 
     /** Instantiate a user object
      * @param $usernameOrEmail The username or the email address of the user
@@ -856,7 +880,7 @@ class User implements GenericObject {
             $name = "select_user_{$user_prefix}_username";
             if (!empty ($_REQUEST[$name])) {
                 $username = $_REQUEST[$name];
-                return self :: getUserByUsernameOrEmail($username, $errMsg);
+                return self :: getUserByUsernameOrEmailAndOrigin($username, $network, $errMsg);
             } else
             return null;
         } catch (Exception $e) {

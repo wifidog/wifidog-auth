@@ -687,6 +687,7 @@ class Network extends HotspotGraphElement
                 $qstr = substr_replace($qstr, '', strrpos($qstr, '\''), 1);
             }
         }
+        $params = array_map('trim',$params);
         return call_user_func_array(array (new ReflectionClass($this->_row['network_authenticator_class']), 'newInstance'), $params);
 
     }

@@ -484,7 +484,7 @@ class Role extends GenericDataObject
     {
 
         $retval = false;
-        if (Security::hasPermission('SERVER_PERM_EDIT_ROLES', Server::getServer())) {
+        if (Security::hasPermission(Permission::P('SERVER_PERM_EDIT_ROLES'), Server::getServer())) {
             $db = AbstractDb::getObject();
             $id = $db->escapeString($this->getId());
             if (!$db->execSqlUpdate("DELETE FROM roles WHERE role_id='{$id}'", false))

@@ -367,7 +367,12 @@ class Mail {
          * @access public
          */
         public function send() {
-            $phpmailerPath = 'lib/PHPMailer_v2.0.0/';
+            $dir = new DirectoryIterator('lib');
+            foreach ($dir as $fileinfo) {
+                if ($fileinfo->isDir() && (substr($fileinfo->getFilename(), 0, 9) == 'PHPMailer')) {
+                    $phpmailerPath = 'lib/' . $fileinfo->getFilename() . '/';
+                }
+            }
             require_once ($phpmailerPath.'class.phpmailer.php');
             require_once ($phpmailerPath.'class.smtp.php');
             require_once ('classes/Session.php');
