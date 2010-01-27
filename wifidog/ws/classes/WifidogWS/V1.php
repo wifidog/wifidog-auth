@@ -42,13 +42,34 @@
 /**
  * Web service V1 class
  *
- * Actions are:
+ * mandatory parameters:
+ * action: get|list|auth
+ *
+ * Each action has its own set of parameters:
+ * 
  * get: get some information concerning a given object, identified by its id
+ * 		parameters: object_class  The class of the object to get
+ *               object_id  The id of the object
+ *               fields  The list of fields to fetch (absent: all the allowed fields)
+ *               id_type (o)  Not used yet
+ *               
  * list: get some informations concerning a list of objects
- * auth: verify the users credential. 
+ *    parameters:  object_class The class of objects to list
+ *               fields   The fields to list for each object
+ *               parent_class (o)  The class of the parent object (for the nodes of a network, the class would be network)
+ *               parent_id (o)  The id of the parent object
+ *               
+ * auth: verify the users credential. And in part authenticate the user
+ *    parameters: username  The username to authenticate
+ *               password   The password
+ *               gw_id (o)  The gateway id if the request comes from a gateway
+ *               gw_address (o)  The gateway address as sent in the original request from gateway
+ *               gw_port (o)  The gateway port as sent from the original request from gateway
+ *               from_ip (o)  The ip of the user, as can be got from the $_SERVER['REMOTE_ADDR'] variable
+ *               mac (o)  The user mac as sent in the original request from gateway
  *     NOTE: This action DOES NOT authenticate the user on the gateway and hence, DOES NOT grant access to the internet.
  *           There is an authentication protocol that needs to be respected (http://dev.wifidog.org/wiki/doc/developer/WiFiDogProtocol_V1)
- *           An authentication token must be generated and the response redirects to the gateway's auth server that redirects to the portal page
+ *           However, this action will return the url that should be used as a next step of this protocol, so the calling system may do what it must
  *
  * @package    WiFiDogAuthServer
  * @subpackage WebService
@@ -124,6 +145,17 @@ class WifidogWS_V1 extends WifidogWS
         parent::setParams($params);
     }
     
+    protected function mapFields($objectClass, $infields = array()) {
+        $fields = array()   ;    
+        foreach($infields as $field) {
+            if (isset(self::$_allowedFields[$objectClass][$field]))
+                $fields[] = self::$_allowedFields[$objectClass][$field];
+            else
+                $fields[] = "$field.forbidden";
+        }
+        return $fields;
+    }
+    
     /**
      * This function executes the action requested by the web service
      * For the requested action, it verifies if the necessary parameters are there and then calls the appropriate function to really execute the function
@@ -131,7 +163,7 @@ class WifidogWS_V1 extends WifidogWS
      */
     protected function executeAction() {
         if (!isset($this->_action)) {
-            throw new WSException("No action was specified.  Please use GET parameter 'action=list|get|auth' to specify an action"); 
+            throw new WSException("No action was specified.  Please use GET parameter 'action=list|get|auth' to specify an action", WSException::INVALID_PARAMETER); 
         }
         switch($this->_action) {
             case 'list':
@@ -150,13 +182,16 @@ class WifidogWS_V1 extends WifidogWS
                 break;
             case 'auth':
                 $gw_id = (isset($this->_params['gw_id']) ? $this->_params['gw_id']:null);
-                $gw_ip = (isset($this->_params['gw_ip']) ? $this->_params['gw_ip']:null);
+                $gw_address = (isset($this->_params['gw_address']) ? $this->_params['gw_address']:null);
+                $gw_port = (isset($this->_params['gw_port']) ? $this->_params['gw_port']:null);
+                $mac = (isset($this->_params['mac']) ? $this->_params['mac']:null);
+                $from = (isset($this->_params['from_ip']) ? $this->_params['from_ip']:null);
                 $username = (isset($this->_params['username']) ? $this->_params['username']:'');
                 $password = (isset($this->_params['password']) ? $this->_params['password']:'');
-                $this->executeAuth($username, $password, $gw_id, $gw_ip);
+                $this->executeAuth($username, $password, $gw_id, $gw_address, $mac, $gw_port, $from);
                 break;
             default:
-                throw new WSException("Action {$this->_action} is not defined.  Please use GET parameter 'action=list|get|auth' to specify an action");
+                throw new WSException("Action {$this->_action} is not defined.  Please use GET parameter 'action=list|get|auth' to specify an action", WSException::INVALID_PARAMETER);
                 break;
         }
         
@@ -170,7 +205,7 @@ class WifidogWS_V1 extends WifidogWS
      * @param $gw_ip   	  The gateway's ip addresss
      * @return unknown_type
      */
-    protected function executeAuth($username = null, $password = null, $gw_id = null, $gw_ip = null) {
+    protected function executeAuth($username = null, $password = null, $gw_id = null, $gw_ip = null, $mac = null, $gw_port = null, $from = null) {
         $this->_outputArr['auth'] = 0;
         
         require_once('classes/Node.php');
@@ -179,14 +214,14 @@ class WifidogWS_V1 extends WifidogWS
         require_once('classes/Authenticator.php');
         
         if (!is_null($gw_id)) {
-            if (is_null($gw_ip)) {
-                throw new WSException("Missing information on the gateway.  Must specify parameter 'gw_ip' if there is a gateway id.");
+            if (is_null($gw_ip) || is_null($gw_port) || is_null($from)) {
+                throw new WSException("Missing information on the gateway.  You must specify parameter 'gw_address' AND 'gw_port' AND 'from_ip' if the parameter 'gw_id' is specified.", WSException::INVALID_PARAMETER);
             }
             $node = Node::getObjectByGatewayId($gw_id);
             if ($node) {
                 $network = $node->getNetwork();
             } else {
-                throw new WSException("Node identified by $gw_id cannot be found");
+                throw new WSException("Node identified by $gw_id cannot be found", WSException::PROCESS_ERROR);
             }
         } else {
             // Gateway ID is not set ... virtual login
@@ -197,9 +232,12 @@ class WifidogWS_V1 extends WifidogWS
         /*
          * If this is a splash-only node, then the user is automatically authenticated
          */
+        $token = null;
         if (!empty($node) && $node->isSplashOnly()) {
             $this->_outputArr['auth'] = 1;
             $user = $network->getSplashOnlyUser();
+            $token = $user->generateConnectionTokenNoSession($node, $from, $mac);
+            if (!$token) throw new WSException("User authenticated but cannot generate connection token.", WSException::PROCESS_ERROR);
         } else {
             // Authenticate the user on the requested network
             $user = $network->getAuthenticator()->login($username, $password, $errMsg);
@@ -208,7 +246,15 @@ class WifidogWS_V1 extends WifidogWS
                 $this->_outputArr['explanation'] = $errMsg;
             } else {
                 $this->_outputArr['auth'] = 1;
+                if (!is_null($node)) {
+                    $token = $user->generateConnectionTokenNoSession($node, $from, $mac);
+                   
+                    if (!$token) throw new WSException("User authenticated but cannot generate connection token.", WSException::PROCESS_ERROR);
+                }
             }
+        }
+        if ($this->_outputArr['auth'] == 1 && !is_null($token)) {
+            $this->_outputArr['forwardTo'] = "http://" . $gw_ip . ":" . $gw_port . "/wifidog/auth?token=" . $token;
         }
     }
     
@@ -221,13 +267,13 @@ class WifidogWS_V1 extends WifidogWS
      */
     protected function executeGet($objectClass, $objectId, $fields = array(), $idtype = null) {
         if (is_null($objectClass)) {
-            throw new WSException("Missing parameter 'object_class' in the request.");
+            throw new WSException("Missing parameter 'object_class' in the request.", WSException::INVALID_PARAMETER);
         }
         if (is_null($objectId)) {
-            throw new WSException("Missing parameter 'object_id' in the request.");
+            throw new WSException("Missing parameter 'object_id' in the request.", WSException::INVALID_PARAMETER);
         }
         if (!in_array($objectClass,self::$_allowedObjectClass)) {
-            throw new WSException("Wrong object class '{$objectClass}' requested.  Possible values are " . implode(', ', self::$_allowedObjectClass));
+            throw new WSException("Wrong object class '{$objectClass}' requested.  Possible values are " . implode(', ', self::$_allowedObjectClass), WSException::INVALID_PARAMETER);
         }
         
         include_once('classes/'.$objectClass.'.php');
@@ -246,14 +292,17 @@ class WifidogWS_V1 extends WifidogWS
         }
         // IF the object still is not found, then return an error
         if (is_null($object)) {
-            throw new WSException("Object of class {$objectClass} with id {$objectId} not found");
+            throw new WSException("Object of class {$objectClass} with id {$objectId} not found", WSException::PROCESS_ERROR);
         }
   
+        $fields = $this->mapFields($objectClass, $fields);
         if (empty($fields)) {
             $fields = array_keys(self::$_allowedFields[$objectClass]);
         } 
         $allowedFields = self::$_allowedFields[$objectClass];
         
+        $this->_outputArr = self::filterRet($object, $fields);
+        /*
         foreach($fields as $field) {
             if (isset($allowedFields[ucfirst(strtolower($field))])) {
                 $methodName = 'get'.$allowedFields[ucfirst(strtolower($field))];
@@ -267,7 +316,7 @@ class WifidogWS_V1 extends WifidogWS
                 $this->_outputArr[$field] = 'Not allowed';
             }
         }
-        
+        */
         
     }
     
@@ -281,10 +330,10 @@ class WifidogWS_V1 extends WifidogWS
      */
     protected function executeList($objectClass, $fields = array(), $parentClass = null, $parentId = null) {
         if (is_null($objectClass)) {
-            throw new WSException("Missing parameter 'object_class' in the request.");
+            throw new WSException("Missing parameter 'object_class' in the request.", WSException::INVALID_PARAMETER);
         }
         if (!in_array($objectClass,self::$_allowedObjectClass)) {
-            throw new WSException("Wrong object class '{$objectClass}' requested.  Possible values are " . implode(', ', self::$_allowedObjectClass));
+            throw new WSException("Wrong object class '{$objectClass}' requested.  Possible values are " . implode(', ', self::$_allowedObjectClass), WSException::INVALID_PARAMETER);
         }
         
         include_once('classes/'.$objectClass.'.php');
@@ -293,12 +342,12 @@ class WifidogWS_V1 extends WifidogWS
         if (!is_null($parentClass)) {
             if (!is_null($parentId)) {
                 if (!in_array($parentClass,self::$_allowedObjectClass)) {
-                    throw new WSException("Wrong parent class '{$parentClass}' specified.  Possible values are " . implode(', ', self::$_allowedObjectClass));
+                    throw new WSException("Wrong parent class '{$parentClass}' specified.  Possible values are " . implode(', ', self::$_allowedObjectClass), WSException::INVALID_PARAMETER);
                 }
                 include_once('classes/'.$parentClass.'.php');
                 $parentObject = call_user_func($parentClass.'::getObject', $parentId);
             } else {
-                throw new WSException("If parent class is specified, must specify 'parent_id'");
+                throw new WSException("If parent class is specified, must specify 'parent_id'", WSException::INVALID_PARAMETER);
             }
         }
         
@@ -307,9 +356,10 @@ class WifidogWS_V1 extends WifidogWS
                 $objectList = call_user_func($objectClass.'::getAll'.$objectClass.'s');
             }
         }
+        $fields = $this->mapFields($objectClass, $fields);
         if (empty($fields)) {
             $fields = self::$_allowedFields[$objectClass];
-        }
+        } 
 
         $this->_outputArr = self::filterRet($objectList, $fields);
     }
@@ -325,6 +375,7 @@ class WifidogWS_V1 extends WifidogWS
             $retVals = array($retVals);
         }
         $filtered = array();
+
         foreach($retVals as $key => $value) {
             // If the return is one object we filter, return only the allowed fields
             if (is_object($value)) {
@@ -338,12 +389,17 @@ class WifidogWS_V1 extends WifidogWS
                     }
                     $retFields = array();
                     foreach ($fields as $field) {
-                        $methodName = 'get'.$field;
-                        if (method_exists($value, $methodName)) {
-                            $retFields[$field] = self::filterRet($value->$methodName());
-                        } else {
-                            $retFields[$field] = 'unknown';
-                        }
+                        $forbiddenfield = explode(".", $field);
+                        if (! (count($forbiddenfield) == 2)) {
+                            $methodName = 'get'.$field;
+                            if (method_exists($value, $methodName)) {
+                                
+                                $retFields[$field] = self::filterRet($value->$methodName());
+                            } else {
+                                $retFields[$field] = 'unknown';
+                            }
+                        } else
+                            $retFields[$forbiddenfield[0]] = 'Not allowed';
                     }
                     $filtered[] = $retFields;
                 }

@@ -94,10 +94,17 @@ function wifidog_exception_handler($e) {
     $output = $service->getOutput();
     $exceptionClass = get_class($e);
     if (!is_null($output)) {
-        echo $output->outputError(array('type' => $exceptionClass, 
+        if ($exceptionClass == 'WSException') {
+            echo $output->outputError(array('type' => $exceptionClass, 
+                                    'message' => sprintf(_("Web service exception:  %s (%s)"), $e->getMessage(), $e->getCode())));
+        } else
+            echo $output->outputError(array('type' => $exceptionClass, 
                                     'message' => sprintf(_("Detailed error was:  Uncaught %s %s (%s) thrown in file %s, line %d"),get_class($e), $e->getMessage(), $e->getCode(), $e->getFile(), $e->getLine())));
     } else {
-        echo sprintf(_("Detailed error was:  Uncaught %s %s (%s) thrown in file %s, line %d"),get_class($e), $e->getMessage(), $e->getCode(), $e->getFile(), $e->getLine());
+        if ($exceptionClass == 'WSException') {
+            echo sprintf(_("Web service exception:  %s => %s (%s)"),get_class($e), $e->getMessage(), $e->getCode(), $e->getFile(), $e->getLine());
+        } else
+            echo sprintf(_("Detailed error was:  Uncaught %s %s (%s) thrown in file %s, line %d"),get_class($e), $e->getMessage(), $e->getCode(), $e->getFile(), $e->getLine());
     }
 
 }

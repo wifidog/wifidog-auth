@@ -701,6 +701,44 @@ class User implements GenericObject {
         }
         return $retval;
     }
+    
+    /** Generate a token in the connection table so the user can actually use the internet
+    @return true on success, false on failure
+    */
+    function generateConnectionTokenNoSession($node, $node_ip = null, $mac = null ) {
+        if ($this->isUserValid()) {
+            $db = AbstractDb::getObject();
+            
+            $token = self :: generateToken();
+            if ($node_ip && $node) {
+                //echo "$session && $node_ip && {$session->get(SESS_NODE_ID_VAR)}";
+                $node_id = $node->getId();
+                $abuseControlFault = User::isAbuseControlViolated($this, $mac, $node);
+                if($abuseControlFault) {
+                    throw new Exception ($abuseControlFault);
+                }
+                $mac = (is_null($mac)?'': $db->escapeString($mac));
+                /*
+                 * Delete all unused tokens for this user, so we don't fill the database
+                 * with them
+                 */
+                $sql = "DELETE FROM connections USING tokens "."WHERE tokens.token_id=connections.token_id AND token_status='".TOKEN_UNUSED."' AND user_id = '".$this->getId()."';\n";
+                // TODO:  Try to find a reusable token before creating a brand new one!
+
+                $sql .= "INSERT INTO tokens (token_owner, token_issuer, token_id, token_status) VALUES ('" . $this->getId() . "', '" . $this->getId() . "', '$token', '" . TOKEN_UNUSED . "');\n";
+                $sql .= "INSERT INTO connections (user_id, token_id, timestamp_in, node_id, node_ip, last_updated, user_mac) VALUES ('" . $this->getId() . "', '$token', CURRENT_TIMESTAMP, '$node_id', '$node_ip', CURRENT_TIMESTAMP, '$mac')";
+                $db->execSqlUpdate($sql, false);
+                $retval = $token;
+            }
+            else {
+                $retval = false;
+            }
+        }
+        else {
+            $retval = false;
+        }
+        return $retval;
+    }
 
     function setPassword($password) {
         $db = AbstractDb::getObject();

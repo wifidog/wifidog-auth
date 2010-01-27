@@ -49,8 +49,12 @@
  */
 class WSException extends Exception
 {
+    CONST INVALID_PARAMETER = 8801;
+    CONST GENERIC_EXCEPTION = 8800;
+    CONST PROCESS_ERROR = 8802;
+    
     // Redefine the exception so message isn't optional
-    public function __construct($message, $code = 0) {
+    public function __construct($message, $code = 8800) {
         // some code
    
         // make sure everything is assigned properly
