@@ -1,5 +1,10 @@
 # $Id$
 
+2010-01-28 Geneviève Bastien <gbastien@versatic.net>
+ * Modification to the web service to include authentication
+ * Added function generateConnectionTokenNoSession in User.php for the web service to generate tokens
+ * Fixed #691, content for login page, introduced in [1435]
+
 2010-01-21 Geneviève Bastien <gbastien@versatic.net>
  * Permission error when deleting user role (#689)
  * Patch by Steven Kurylo to remove white spaces from authenticator arguments (#612)

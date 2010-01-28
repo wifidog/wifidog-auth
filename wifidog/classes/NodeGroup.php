@@ -537,26 +537,6 @@ class NodeGroup extends HotspotGraphElement
         }
     }
 
-    /** Add content to this node */
-   /* public function addContent(Content $content)
-    {
-        $db = AbstractDb::getObject();
-        $content_id = $db->escapeString($content->getId());
-        $sql = "INSERT INTO node_has_content (node_id, content_id) VALUES ('$this->id','$content_id')";
-        $db->execSqlUpdate($sql, false);
-        exit;
-    }*/
-
-    /** Remove content from this node */
-  /*  public function removeContent(Content $content)
-    {
-        $db = AbstractDb::getObject();
-        $content_id = $db->escapeString($content->getId());
-        $sql = "DELETE FROM node_has_content WHERE node_id='$this->id' AND content_id='$content_id'";
-        $db->execSqlUpdate($sql, false);
-    }*/
-
-
     /** Reloads the object from the database.  Should normally be called after a set operation */
     protected function refresh()
     {

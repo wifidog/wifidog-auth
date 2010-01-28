@@ -1694,10 +1694,6 @@ class Network extends HotspotGraphElement
         /*
          * Content management
          */
-       /* $title = _("Network content");
-        $name = "network_".$this->_id."_content";
-        $data = Content::getLinkedContentUI($name, "network_has_content", "network_id", $this->_id, $display_page = "portal");
-        $html .= InterfaceElements::generateAdminSectionContainer("network_content", $title, $data);*/
         
         $html .= parent::getContentAdminUI();
 
@@ -1950,8 +1946,6 @@ class Network extends HotspotGraphElement
 
         // Content management
         parent::processContentAdminUI();
-        /* $name = "network_".$this->_id."_content";
-        Content :: processLinkedContentUI($name, 'network_has_content', 'network_id', $this->_id);*/
 
         // name
         $name = "network_".$this->getId()."_name";
@@ -2082,43 +2076,6 @@ class Network extends HotspotGraphElement
             header("Location: {$url}");
         }
     }
-
-    /**
-     * Add network-wide content to this network
-     *
-     * @param object Content object
-     *
-     * @return void
-     *
-     * @access public
-     */
- /*   public function addContent(Content $content)
-    {
-        $db = AbstractDb::getObject();
-
-        $content_id = $db->escapeString($content->getId());
-        $sql = "INSERT INTO network_has_content (network_id, content_id) VALUES ('$this->_id','$content_id')";
-        $db->execSqlUpdate($sql, false);
-    }*/
-
-    /**
-     * Remove network-wide content from this network
-     *
-     * @param object Content object
-     *
-     * @return void
-     *
-     * @access public
-     */
- /*   public function removeContent(Content $content)
-    {
-        $db = AbstractDb::getObject();
-
-        $content_id = $db->escapeString($content->getId());
-        $sql = "DELETE FROM network_has_content WHERE network_id='$this->_id' AND content_id='$content_id'";
-        $db->execSqlUpdate($sql, false);
-    }*/
-
 
     /**
      * Add a profile template to this network

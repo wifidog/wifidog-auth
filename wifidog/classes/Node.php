@@ -1184,10 +1184,7 @@ class Node extends HotspotGraphElement
         $_html_node_information[] = InterfaceElements::generateAdminSectionContainer("gateway_id", $_title, $_data);
 
         //Node content
-        /*$_html_content = array();
-        $_title = _("Node content");
-        $_data = Content::getLinkedContentUI("node_" . $node_id . "_content", "node_has_content", "node_id", $this->id, "portal");
-        $html .= InterfaceElements::generateAdminSectionContainer("node_content", $_title, $_data);*/
+       
         $html .= parent::getContentAdminUI();
             
         // Name
@@ -1406,8 +1403,6 @@ class Node extends HotspotGraphElement
         }
         // Content processing
         parent::processContentAdminUI();
-        /*$name = "node_{$node_id}_content";
-        Content::processLinkedContentUI($name, 'node_has_content', 'node_id', $this->id);*/
 
         // Name
         $permArray = null;
@@ -1587,25 +1582,6 @@ class Node extends HotspotGraphElement
     {
         header("Location: ".BASE_SSL_PATH."portal/?node_id=".$this->getId());
     }
-
-    /** Add content to this node */
-   /* public function addContent(Content $content)
-    {
-        $db = AbstractDb::getObject();
-        $content_id = $db->escapeString($content->getId());
-        $sql = "INSERT INTO node_has_content (node_id, content_id) VALUES ('$this->id','$content_id')";
-        $db->execSqlUpdate($sql, false);
-        exit;
-    }*/
-
-    /** Remove content from this node */
-   /* public function removeContent(Content $content)
-    {
-        $db = AbstractDb::getObject();
-        $content_id = $db->escapeString($content->getId());
-        $sql = "DELETE FROM node_has_content WHERE node_id='$this->id' AND content_id='$content_id'";
-        $db->execSqlUpdate($sql, false);
-    }*/
 
     /**
      * The list of the 5 most recent users who have logged into this node in the past week,

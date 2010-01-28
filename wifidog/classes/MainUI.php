@@ -328,17 +328,27 @@ class MainUI {
         $db = AbstractDb :: getObject();
         // Get all network content and node "everywhere" content
         $content_rows = null;
-        $network_id = $db->escapeString(Network :: getCurrentNetwork()->getId());
-        $sql_network = "(SELECT content_id, display_area, display_order, subscribe_timestamp FROM network_has_content WHERE network_id='$network_id'  AND display_page='everywhere') ";
         $node = Node :: getCurrentNode();
-        $sql_node = null;
+        // Get all the parent objects of the node
         if ($node) {
-            // Get all node content
-            $node_id = $db->escapeString($node->getId());
-            $sql_node = "UNION (SELECT content_id, display_area, display_order, subscribe_timestamp FROM node_has_content WHERE node_id='$node_id'  AND display_page='everywhere')";
+            $parents = HotspotGraph::getAllParents($node);
+        } else {
+            $parents = array(Network :: getCurrentNetwork()->getHgeId());
         }
-        $sql = "SELECT * FROM ($sql_network $sql_node) AS content_everywhere ORDER BY display_area, display_order, subscribe_timestamp DESC";
-
+        
+        $first = $db->escapeString(array_shift($parents));
+        $sql_from = "(SELECT content_id, display_area, display_order, subscribe_timestamp 
+        			FROM hotspot_graph_element_has_content hgehc 
+        			WHERE hotspot_graph_element_id='$first' AND display_page='everywhere')";
+        
+        // Get the contents for all elements parents of and including the node, but exclude user subscribed content if user is known
+        foreach($parents as $parentid) {
+            $parent_id = $db->escapeString($parentid);
+            $sql_from .= " UNION (SELECT content_id, display_area, display_order, subscribe_timestamp 
+        			FROM hotspot_graph_element_has_content hgehc 
+        			WHERE hotspot_graph_element_id='$parent_id' AND display_page='everywhere')";
+        }
+        $sql = "SELECT * FROM ($sql_from) AS content_everywhere ORDER BY display_area, display_order, subscribe_timestamp DESC";
         $db->execSql($sql, $content_rows, false);
         if ($content_rows) {
             foreach ($content_rows as $content_row) {
