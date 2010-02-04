@@ -169,7 +169,7 @@ class NodeGroup extends HotspotGraphElement
             throw new Exception(_('Unable to insert new node group into database!'));
         }
         
-        HotspotGraphElement::createNewObject($node_group_id, 'NodeGroup');
+        HotspotGraphElement::createNewObject($node_group_id, 'NodeGroup', $network);
 
         $object = self::getObject($node_group_id);
 

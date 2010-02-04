@@ -115,7 +115,7 @@ abstract class HotspotGraphElement extends GenericDataObject
      * @static
      * @access public
      */
-    public static function createNewObject($element_id, $element_type)
+    public static function createNewObject($element_id, $element_type, $parent_element = null)
     {
         $db = AbstractDb::getObject();
         $graph_element_id = get_guid();
@@ -129,6 +129,15 @@ abstract class HotspotGraphElement extends GenericDataObject
             throw new Exception(_('Unable to insert the new element in the database!'));
         }
         $object = self::getObject($element_id, $element_type);
+        
+        if (!is_null($parent_element)) {
+            if (method_exists($parent_element, 'getHgeId')) {
+                $parentid = $parent_element->getHgeId();
+                $childid = $object->getHgeId();
+                HotspotGraph::addRelation($parentid, $childid);
+            }
+        }
+        
         return $object;
     }
 

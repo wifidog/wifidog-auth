@@ -111,7 +111,7 @@ function wifidog_exception_handler($e) {
 
 set_exception_handler('wifidog_exception_handler');
 
-throw (new WSException(_("The Wifidog API module is not fit for production yet.  The source code has been released to share ideas and help development, but it has not been thoroughly tested yet and may represent a security issue for now.  If you'd like to test the module, you can do so by commenting this line in the auth server's source code.  But it is highly not advised to do so in a production environment for now.  Please stay tuned for more development")));
+//throw (new WSException(_("The Wifidog API module is not fit for production yet.  The source code has been released to share ideas and help development, but it has not been thoroughly tested yet and may represent a security issue for now.  If you'd like to test the module, you can do so by commenting this line in the auth server's source code.  But it is highly not advised to do so in a production environment for now.  Please stay tuned for more development")));
 
 $service->setParams($_GET);
 

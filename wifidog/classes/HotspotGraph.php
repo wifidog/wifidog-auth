@@ -56,6 +56,19 @@ class HotspotGraph
 {
 
     /**
+     * Adds a relation to the hotspot graph
+     * @param parentId the id of the parent
+     * @param childId the id of the child
+     */
+    public static function addRelation($parentId, $childId) {
+        $db = AbstractDb :: getObject();
+        $parentIdStr = $db->escapeString($parentId);
+        $childIdStr = $db->escapeString($childId);
+        $sql = "INSERT INTO hotspot_graph (child_element_id, parent_element_id) VALUES ('{$childIdStr}', '{$parentIdStr}');";
+        $db->execSqlUpdate($sql, false);
+    }
+    
+    /**
      * Gets recursively all parents of the given object
      * 
      * @param HotspotGraphElement $object the object for which to get the parents
