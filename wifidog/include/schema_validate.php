@@ -1502,10 +1502,12 @@ function real_update_schema($targetSchema) {
             $sql .= "INSERT INTO hotspot_graph_elements values('{$new_guid}', '{$network['network_id']}', 'Network' );\n ";
             $nodes = array();
             $db->execSql("SELECT node_id FROM nodes where network_id = '{$network['network_id']}'", $nodes, false);
-            foreach ($nodes as $node) {
-                $node_guid = get_guid();
-                $sql .= "INSERT INTO hotspot_graph_elements values('{$node_guid}', '{$node['node_id']}', 'Node' );\n ";
-                $sql .= "INSERT INTO hotspot_graph(child_element_id, parent_element_id) VALUES ('{$node_guid}', '{$new_guid}');\n";
+            if ($nodes) {
+                foreach ($nodes as $node) {
+                    $node_guid = get_guid();
+                    $sql .= "INSERT INTO hotspot_graph_elements values('{$node_guid}', '{$node['node_id']}', 'Node' );\n ";
+                    $sql .= "INSERT INTO hotspot_graph(child_element_id, parent_element_id) VALUES ('{$node_guid}', '{$new_guid}');\n";
+                }
             }
         }
         
@@ -1528,6 +1530,7 @@ function real_update_schema($targetSchema) {
     if ($schema_version < $new_schema_version && $new_schema_version <= $targetSchema) {
         printUpdateVersion($new_schema_version);
         $sql .= "\n\nUPDATE schema_info SET value='$new_schema_version' WHERE tag='schema_version';\n";
+        $sql .= "\n\nDELETE FROM hotspot_graph_element_has_content WHERE content_id NOT IN (SELECT content_id from content);\n";
         $sql .= "\n\nALTER TABLE hotspot_graph_element_has_content ADD CONSTRAINT contentfk FOREIGN KEY (content_id) REFERENCES content(content_id) ON UPDATE CASCADE ON DELETE CASCADE;\n";
     }
    
