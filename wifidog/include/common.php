@@ -157,6 +157,26 @@ define('LOGOUT_REASON_GARBAGE_COLLECTED', 3);
 define('LOGOUT_REASON_UNKNOWN', 0);
 /* End of Other constants */
 
+/* defin error codes */
+define ('ERR_UNKNOWN_USERNAME', 20001);
+define ('ERR_WRONG_PASSWORD', 20002);
+define ('ERR_NO_USERNAME', 20003);
+define ('ERR_VALIDATION_EXPIRED', 20004);
+define ('ERR_ACCOUNT_INVALID', 20005);
+
+function getErrorText($errorCode) {
+    switch ($errorCode) {
+        case ERR_UNKNOWN_USERNAME: $text = _('Unknown username or email'); break;
+        case ERR_WRONG_PASSWORD: $text = _('Incorrect password (Maybe you have CAPS LOCK on?)'); break;
+        case ERR_NO_USERNAME: $text = _("Fatal error:  Username cannot be empty"); break;
+        case ERR_VALIDATION_EXPIRED: $text = _("Sorry, your %.0f minutes grace period to retrieve your email and validate your account has now expired. You will have to connect to the internet and validate your account from another location."); break;
+        case ERR_ACCOUNT_INVALID: $text = _("Sorry, your account is not valid: "); break;
+        default: $text = $errorCode; break;
+    }
+    return $text;
+}
+/* End error code definitions */
+
 /** Convert a password hash form a NoCat passwd file into the same format as get_password_hash().
  * @return The 32 character hash.
  */

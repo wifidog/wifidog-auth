@@ -330,6 +330,7 @@ class NodeListXML extends NodeList{
                     $_hotspotGis = $this->_xmldoc->createElement("gisCenterLatLong");
                     $_hotspotGis->setAttribute("lat", $_gisData->getLatitude());
                     $_hotspotGis->setAttribute("long", $_gisData->getLongitude());
+                    $_hotspotGis->setAttribute("show", $_node->showOnMap());
                     $_hotspot->appendChild($_hotspotGis);
                 }
             }

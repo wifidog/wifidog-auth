@@ -100,11 +100,12 @@ class AuthenticatorLocalUser extends Authenticator
      *                         and email are valid.
      * @param string $password Clear text password.
      * @param string $errmsg   Reference of error message
+     * @param int $errno       Reference to error code
      *
      * @return object The actual User object if login was successfull, false
      *                otherwise.
      */
-    public function login($username, $password, &$errmsg = null)
+    public function login($username, $password, &$errmsg = null, &$errno = 0)
     {
         //echo "DEBUG:  login($username, $password, $errmsg)<br/>";
         $db = AbstractDb::getObject();
@@ -114,7 +115,8 @@ class AuthenticatorLocalUser extends Authenticator
 
         $username = $db->escapeString($username);
         if (empty($username)) {
-            $errmsg .= sprintf(_("Fatal error:  Username cannot be empty"));
+            $errmsg .= sprintf(getErrorText(ERR_NO_USERNAME));
+            $errno = ERR_NO_USERNAME;
             $retval = false;
         }
         else{
@@ -130,7 +132,7 @@ class AuthenticatorLocalUser extends Authenticator
             if ($user_info != null) {
                 $user = User::getObject($user_info['user_id']);
 
-                if ($user->isUserValid($errmsg)) {
+                if ($user->isUserValid($errmsg, $errno)) {
                     $retval = &$user;
                     $errmsg = _("Login successfull");
                 } else {
@@ -146,9 +148,11 @@ class AuthenticatorLocalUser extends Authenticator
                 $db->execSqlUniqueRes("SELECT * FROM users WHERE (username$comparison'$username' OR email$comparison'$username') AND account_origin='".$this->getNetwork()->getId()."'", $user_info, false);
 
                 if ($user_info == null) {
-                    $errmsg = _('Unknown username or email');
+                    $errmsg = getErrorText(ERR_UNKNOWN_USERNAME);
+                    $errno = ERR_UNKNOWN_USERNAME;
                 } else {
-                    $errmsg = _('Incorrect password (Maybe you have CAPS LOCK on?)');
+                    $errmsg = getErrorText(ERR_WRONG_PASSWORD);
+                    $errno = ERR_WRONG_PASSWORD;
                 }
 
                 $retval = false;

@@ -102,7 +102,7 @@ class WifidogWS_V1 extends WifidogWS
                         'Id' => 'Id',
                         'NumOnlineUsers' => 'NumOnlineUsers',
                         'CreationDate' => 'CreationDate',
-                        'Status' => 'Status',
+                        'Status' => 'DeploymentStatus',
                         'OpeningDate' => 'CreationDate', 
         								'Connected_users' => 'OnlineUsers'),
         'User' => array('Username' => 'Username',
@@ -149,9 +149,9 @@ class WifidogWS_V1 extends WifidogWS
         $fields = array()   ;    
         foreach($infields as $field) {
             if (isset(self::$_allowedFields[$objectClass][$field]))
-                $fields[] = self::$_allowedFields[$objectClass][$field];
+                $fields[$field] = self::$_allowedFields[$objectClass][$field];
             else
-                $fields[] = "$field.forbidden";
+                $fields[$field] = "$field.forbidden";
         }
         return $fields;
     }
@@ -188,7 +188,8 @@ class WifidogWS_V1 extends WifidogWS
                 $from = (isset($this->_params['from_ip']) ? $this->_params['from_ip']:null);
                 $username = (isset($this->_params['username']) ? $this->_params['username']:'');
                 $password = (isset($this->_params['password']) ? $this->_params['password']:'');
-                $this->executeAuth($username, $password, $gw_id, $gw_address, $mac, $gw_port, $from);
+                $logout = (isset($this->_params['logout']) ? $this->_params['logout']:false);
+                $this->executeAuth($username, $password, $gw_id, $gw_address, $mac, $gw_port, $from, $logout);
                 break;
             default:
                 throw new WSException("Action {$this->_action} is not defined.  Please use GET parameter 'action=list|get|auth' to specify an action", WSException::INVALID_PARAMETER);
@@ -203,9 +204,13 @@ class WifidogWS_V1 extends WifidogWS
      * @param $pwdhash    The password hash
      * @param $gw_id      The gateway id
      * @param $gw_ip   	  The gateway's ip addresss
+     * @param $mac			  The mac address of the user
+     * @param $gw_port	  The port of the gateway's http server
+     * @param $from 			The ip address of the user on the node
+     * @param $logout			Whether the user wants to logout
      * @return unknown_type
      */
-    protected function executeAuth($username = null, $password = null, $gw_id = null, $gw_ip = null, $mac = null, $gw_port = null, $from = null) {
+    protected function executeAuth($username = null, $password = null, $gw_id = null, $gw_ip = null, $mac = null, $gw_port = null, $from = null, $logout = false) {
         $this->_outputArr['auth'] = 0;
         
         require_once('classes/Node.php');
@@ -239,18 +244,26 @@ class WifidogWS_V1 extends WifidogWS
             $token = $user->generateConnectionTokenNoSession($node, $from, $mac);
             if (!$token) throw new WSException("User authenticated but cannot generate connection token.", WSException::PROCESS_ERROR);
         } else {
-            // Authenticate the user on the requested network
-            $user = $network->getAuthenticator()->login($username, $password, $errMsg);
-            if (!$user) {
-                $this->_outputArr['auth'] = 0;
-                $this->_outputArr['explanation'] = $errMsg;
-            } else {
-                $this->_outputArr['auth'] = 1;
-                if (!is_null($node)) {
-                    $token = $user->generateConnectionTokenNoSession($node, $from, $mac);
-                   
-                    if (!$token) throw new WSException("User authenticated but cannot generate connection token.", WSException::PROCESS_ERROR);
+            if (!$logout) {
+                // Authenticate the user on the requested network
+                $user = $network->getAuthenticator()->login($username, $password, $errMsg, $errNo);
+                if (!$user) {
+                    $this->_outputArr['auth'] = 0;
+                    $this->_outputArr['explanation'] = $errMsg;
+                    $this->_outputArr['errorcode'] = $errNo;
+                } else {
+                    $this->_outputArr['auth'] = 1;
+                    if (!is_null($node)) {
+                        $token = $user->generateConnectionTokenNoSession($node, $from, $mac);
+                       
+                        if (!$token) throw new WSException("User authenticated but cannot generate connection token.", WSException::PROCESS_ERROR);
+                    }
                 }
+            } else {
+                $user = User::getUserByUsernameOrEmail($username);
+                User::setCurrentUser($user);
+                $network->getAuthenticator()->logout();
+                $this->_outputArr['auth'] = 1;
             }
         }
         if ($this->_outputArr['auth'] == 1 && !is_null($token)) {
@@ -297,7 +310,7 @@ class WifidogWS_V1 extends WifidogWS
   
         $fields = $this->mapFields($objectClass, $fields);
         if (empty($fields)) {
-            $fields = array_keys(self::$_allowedFields[$objectClass]);
+            $fields = self::$_allowedFields[$objectClass];
         } 
         $allowedFields = self::$_allowedFields[$objectClass];
         
@@ -361,6 +374,9 @@ class WifidogWS_V1 extends WifidogWS
             $fields = self::$_allowedFields[$objectClass];
         } 
 
+        if (!isset($objectList)) {
+            throw new WSException("Object list for '{$objectClass}' is not supported.", WSException::GENERIC_EXCEPTION);
+        }
         $this->_outputArr = self::filterRet($objectList, $fields);
     }
     
@@ -388,15 +404,14 @@ class WifidogWS_V1 extends WifidogWS
                         $fields = self::$_allowedFields[$object_class];
                     }
                     $retFields = array();
-                    foreach ($fields as $field) {
+                    foreach ($fields as $fkey => $field) {
                         $forbiddenfield = explode(".", $field);
                         if (! (count($forbiddenfield) == 2)) {
                             $methodName = 'get'.$field;
                             if (method_exists($value, $methodName)) {
-                                
-                                $retFields[$field] = self::filterRet($value->$methodName());
+                                $retFields[is_string($fkey)?$fkey:$field] = self::filterRet($value->$methodName());
                             } else {
-                                $retFields[$field] = 'unknown';
+                                $retFields[is_string($fkey)?$fkey:$field] = 'unknown';
                             }
                         } else
                             $retFields[$forbiddenfield[0]] = 'Not allowed';

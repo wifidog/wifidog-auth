@@ -98,64 +98,149 @@ class AnonymisedDataExport extends StatisticReport
         }
         else
         {
-            header('Content-Type: application/octet-stream');
-            header('Content-Disposition: inline; filename="anonymised_data.sql"');
-            header("Content-Transfer-Encoding: binary");
-
-            $html  .= <<<EOT
-            CREATE TABLE connections_anonymised
-            (
-            conn_id text NOT NULL,
-            timestamp_in timestamp,
-            node_id text,
-            timestamp_out timestamp,
-            user_id text NOT NULL DEFAULT '',
-            user_mac text,
-            incoming int8,
-            outgoing int8
-            );
+            /** Starting   sql file with geolocation data */
+            $tmpdir = sys_get_temp_dir();
+            $nodefile = tempnam($tmpdir, 'wd');
+            $nfilehndl = fopen($nodefile, 'w');
+            $datafile = tempnam($tmpdir, 'wd');
+            $datahndl = fopen($datafile, 'w');
+            
+            if (!$nfilehndl || !$datahndl) {
+                $html .= "<p class='error'>"._("Could not create files for anonymised data")."</p>";
+                
+            } else {
+                /* header('Content-Type: application/octet-stream');
+                header('Content-Disposition: inline; filename="anonymised_nodes.sql"');
+                header("Content-Transfer-Encoding: binary"); */
+                
+                $text  = <<<EOT
+                CREATE TABLE nodes_anonymised
+                (
+                node_id text NOT NULL,
+                latitude  NUMERIC(16, 6),
+                longitude  NUMERIC(16, 6)
+                );
 EOT;
-$html .= "\n";
-            echo $html;
-            $distinguish_users_by = $this->stats->getDistinguishUsersBy();
-
-            $candidate_connections_sql = $this->stats->getSqlCandidateConnectionsQuery("conn_id, users.user_id, nodes.node_id, connections.user_id, user_mac, timestamp_in, timestamp_out, incoming, outgoing ", true);
-
-            $sql = "$candidate_connections_sql ORDER BY timestamp_in DESC";
-            $db->execSqlRaw($sql, $resultHandle, false);
-            if($resultHandle) {
-                while($row=pg_fetch_array($resultHandle,null,PGSQL_ASSOC))
-                {
-
-                    $keys = null;
-                    $values = null;
-                    $first = true;
-                    foreach ($row as $key=>$value)
-                    {
-                        if($key == 'user_id' || $key == 'node_id' || $key == 'conn_id' || $key == 'user_mac' ) {
-                            $value = "'".$this->getNonRepeatableHash($value)."'";
+                $text .= "\n";
+    
+                fwrite($nfilehndl, $text);
+                
+                $node_constraint = $this->stats->getSqlNodeConstraint('nodes.node_id');
+                $network_constraint = $this->stats->getSqlNetworkConstraint('nodes.network_id');
+                $sql = "SELECT node_id, latitude, longitude \n";
+                $sql .= "FROM nodes \n";
+                $sql .= "WHERE 1=1 {$node_constraint} {$network_constraint}";
+                
+                $db->execSql($sql, $nodes);
+                
+                if ($nodes) {
+                    foreach($nodes as $row) {
+                        $keys = null;
+                        $values = null;
+                        $first = true;
+                        foreach ($row as $key=>$value)
+                        {
+                            if($key == 'user_id' || $key == 'node_id' || $key == 'conn_id' || $key == 'user_mac' ) {
+                                $value = "'".$this->getNonRepeatableHash($value)."'";
+                            }
+                            else if ($key == 'latitude' && empty ($value)) {
+                                $value = 'NULL';
+                            }
+                            else if ($key == 'longitude' && empty ($value)) {
+                                $value = 'NULL';
+                            }
+                            else {
+                                $value = "'$value'";
+                            }
+                            if(!$first) {
+                                $keys .= ', ';
+                                $values .= ', ';
+                            }
+                            else {
+                                $first = false;
+                            }
+                            $keys .= $key;
+                            $values .= $value;
                         }
-                        else if ($key == 'timestamp_out' && empty ($value)) {
-                            $value = 'NULL';
-                        }
-                        else {
-                            $value = "'$value'";
-                        }
-                        if(!$first) {
-                            $keys .= ', ';
-                            $values .= ', ';
-                        }
-                        else {
-                            $first = false;
-                        }
-                        $keys .= $key;
-                        $values .= $value;
+                        //fwrite($temp, "INSERT INTO connections_anonymised ($keys) VALUES ($values);\n");
+                        fwrite($nfilehndl, "INSERT INTO nodes_anonymised ($keys) VALUES ($values);\n");
                     }
-                    //fwrite($temp, "INSERT INTO connections_anonymised ($keys) VALUES ($values);\n");
-                    echo "INSERT INTO connections_anonymised ($keys) VALUES ($values);\n";
                 }
+                
+                
+                /** End sql file with node data */
+                
+                /** Get the sql file with anonymised connection data */
+              /*  header('Content-Type: application/octet-stream');
+                header('Content-Disposition: inline; filename="anonymised_data.sql"');
+                header("Content-Transfer-Encoding: binary");*/
+    
+                $text = <<<EOT
+                CREATE TABLE connections_anonymised
+                (
+                conn_id text NOT NULL,
+                timestamp_in timestamp,
+                node_id text,
+                timestamp_out timestamp,
+                user_id text NOT NULL DEFAULT '',
+                user_mac text,
+                incoming int8,
+                outgoing int8
+                );
+EOT;
+                $text .= "\n";
+            
+                fwrite($datahndl,  $text);
+                $distinguish_users_by = $this->stats->getDistinguishUsersBy();
+    
+                $candidate_connections_sql = $this->stats->getSqlCandidateConnectionsQuery("conn_id, users.user_id, nodes.node_id, connections.user_id, user_mac, timestamp_in, timestamp_out, incoming, outgoing ", true);
+    
+                $sql = "$candidate_connections_sql ORDER BY timestamp_in DESC";
+                $db->execSqlRaw($sql, $resultHandle, false);
+                if($resultHandle) {
+                    while($row=pg_fetch_array($resultHandle,null,PGSQL_ASSOC))
+                    {
+    
+                        $keys = null;
+                        $values = null;
+                        $first = true;
+                        foreach ($row as $key=>$value)
+                        {
+                            if($key == 'user_id' || $key == 'node_id' || $key == 'conn_id' || $key == 'user_mac' ) {
+                                $value = "'".$this->getNonRepeatableHash($value)."'";
+                            }
+                            else if ($key == 'timestamp_out' && empty ($value)) {
+                                $value = 'NULL';
+                            }
+                            else {
+                                $value = "'$value'";
+                            }
+                            if(!$first) {
+                                $keys .= ', ';
+                                $values .= ', ';
+                            }
+                            else {
+                                $first = false;
+                            }
+                            $keys .= $key;
+                            $values .= $value;
+                        }
+                        //fwrite($temp, "INSERT INTO connections_anonymised ($keys) VALUES ($values);\n");
+                        fwrite($datahndl, "INSERT INTO connections_anonymised ($keys) VALUES ($values);\n");
+                    }
+                }
+                fclose($datahndl);
+                fclose($nfilehndl);
+                
+                $html .= <<<EOS
+                <script type="text/javascript">
+                		window.open('/admin/stats.php?file=$nodefile&type=node', 'Node File');
+                		window.open('/admin/stats.php?file=$datafile&type=data', 'Data file');
+								</script>
+EOS;
+                
+                
             }
-            exit;
         }
         return $html;
     }

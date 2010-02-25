@@ -82,6 +82,33 @@ try
 		$networkObject = Network :: getObject($network_id);
 		$stats_title = _("Network information for")." '".$networkObject->getName()."'";
 	}
+	elseif (isset($_REQUEST['file']) && isset($_REQUEST['type'])) {
+	    $filename = $_REQUEST['file'];
+	    $type = $_REQUEST['type'];
+	    if (User :: getCurrentUser()->DEPRECATEDisSuperAdmin())  {
+    	    // The file is valid for one hour, because it contains sensitive data and we don't want to open a security breach
+    	    if (file_exists($filename) && (filectime($filename) > (time() - 60*60)) ) {
+    	        header('Content-Type: application/octet-stream');
+              header('Content-Disposition: inline; filename="anonymised_'.$type.'.sql"');
+              header("Content-Transfer-Encoding: binary");
+              header("Pragma: no-cache");
+              header("Expires: 0");
+              $fp=fopen($filename,"r");
+              print fread($fp,filesize($filename));
+              fclose($fp);
+              exit();
+    	    } else {
+    	        if (!file_exists($filename)) {
+    	            throw new Exception(sprintf(_("File %s does not exist"),  $filename));
+    	        }
+    	        if (filectime($filename) > (time() - 60*60)) {
+    	            throw new Exception(sprintf(_("The statistics file for anonymised_%s.sql has expired."), $type));
+    	        }
+    	    }
+	    } else {
+	        throw new Exception(_("These reports are only available to server administrators."));
+	    }
+	}
 	else {
 	    $stats_title = null;
 	}

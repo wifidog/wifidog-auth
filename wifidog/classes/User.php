@@ -515,8 +515,9 @@ class User implements GenericObject {
     }
 
     /** Is the user valid?  Valid means that the account is validated or hasn't exhausted it's validation period.
-     $errmsg: Returs the reason why the account is or isn't valid */
-    function isUserValid(& $errmsg = null) {
+     $errmsg: Returs the reason why the account is or isn't valid
+     $errno: Returns an error code identifying the error */
+    function isUserValid(& $errmsg = null, &$errno = 0) {
         global $account_status_to_text;
         $db = AbstractDb::getObject();
         $retval = false;
@@ -529,14 +530,16 @@ class User implements GenericObject {
             $db->execSqlUniqueRes($sql, $user_info, false);
 
             if ($user_info['validation_grace_time_expired'] == 't') {
-                $errmsg = sprintf(_("Sorry, your %.0f minutes grace period to retrieve your email and validate your account has now expired. You will have to connect to the internet and validate your account from another location."), $user_info['validation_grace_time']/60);
+                $errmsg = sprintf(getErrorText(ERR_VALIDATION_EXPIRED), $user_info['validation_grace_time']/60);
+                $errno = ERR_VALIDATION_EXPIRED;
                 $retval = false;
             } else {
                 $errmsg = _("Your account is currently valid.");
                 $retval = true;
             }
         } else {
-            $errmsg = _("Sorry, your account is not valid: ") . $account_status_to_text[$account_status];
+            $errmsg = getErrorText(ERR_ACCOUNT_INVALID) . $account_status_to_text[$account_status];
+            $errno = ERR_ACCOUNT_INVALID;
             $retval = false;
         }
         return $retval;

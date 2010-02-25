@@ -70,6 +70,7 @@
  * Load required files
  */
 require_once('../include/common.php');
+require_once('../include/language.php');
 require_once('ws/classes/WifidogWS.php');
 require_once('ws/classes/WSOutput.php');
 include_once('ws/classes/Exceptions/WSException.php');

@@ -824,7 +824,33 @@ class Node extends HotspotGraphElement
         $this->mDb->execSqlUpdate("UPDATE nodes SET map_url = '{$url}' WHERE node_id = '{$this->getId()}'");
         $this->refresh();
     }
+    
+    /**
+     * Returns whether the node should be shown on a map or is invisible
+     *
+     */
 
+    public function showOnMap()
+    {
+        return (($this->_row['show_node_on_map'] == 't') ? true : false);
+    }
+
+    /** Set if this node be shown on map
+     * @param $value The new value, true or false
+     * @return true on success, false on failure */
+    function setShowOnMap($value)
+    {
+        $retval = true;
+        if ($value != $this->showOnMap())
+        {
+            $db = AbstractDb::getObject();
+            $value ? $value = 'TRUE' : $value = 'FALSE';
+            $retval = $db->execSqlUpdate("UPDATE nodes SET show_node_on_map = {$value} WHERE node_id = '{$this->getId()}'", false);
+            $this->refresh();
+        }
+        return $retval;
+    }
+    
     public function getCivicNumber()
     {
         return $this->_row['civic_number'];
@@ -1306,6 +1332,11 @@ class Node extends HotspotGraphElement
         $_title = _("Map URL");
         $_data = InterfaceElements::generateInputText("node_" . $node_id . "_map_url", $this->getMapURL(), "node_map_url_input");
         $_html_node_gis_data[] = InterfaceElements::generateAdminSectionContainer("node_map_url", $_title, $_data);
+        
+        $_title = _("Show node on map");
+        $help = _("Should this node be visible on the map when deployed?");
+        $_data = InterfaceElements::generateInputCheckbox("node_" . $node_id . "_show_on_map", "", _("Yes"), $this->showOnMap(), "node_show_on_map_input");
+        $_html_node_gis_data[] = InterfaceElements::generateAdminSectionContainer("node_show_on_map", $_title, $_data, $help);
 
         // Build section
         $html .= InterfaceElements::generateAdminSectionContainer("node_gis_data", _("GIS data"), implode(null, $_html_node_gis_data));
@@ -1508,6 +1539,9 @@ class Node extends HotspotGraphElement
             $gis_long_name = "node_".$node_id."_gis_longitude";
             $this->setGisLocation(new GisPoint($_REQUEST[$gis_lat_name], $_REQUEST[$gis_long_name], .0));
         }
+        
+        $name = "node_".$node_id."_show_on_map";
+        $this->setShowOnMap(empty ($_REQUEST[$name]) ? false : true);
 
         // Statistics
         $name = "node_{$this->id}_get_stats";

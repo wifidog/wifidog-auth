@@ -320,7 +320,7 @@ HotspotsMap.prototype.parseHotspotsStatus = function(xml_doc)
         var hotspotId = hotspots[i].getElementsByTagName("hotspotId");
         var gis = hotspots[i].getElementsByTagName("gisCenterLatLong");
 
-        if (hotspotId.length == 1 && gis.length == 1 && gis[0].getAttribute("lat") != "" && gis[0].getAttribute("long") != "") {
+        if (hotspotId.length == 1 && gis.length == 1 && gis[0].getAttribute("lat") != "" && gis[0].getAttribute("long") != "" && gis[0].getAttribute("show") == "1") {
             // Extract GIS data
             var point = new GLatLng(parseFloat(gis[0].getAttribute("lat")), parseFloat(gis[0].getAttribute("long")));
             var status = hotspots[i].getElementsByTagName("globalStatus");

@@ -1,5 +1,13 @@
 # $Id$
 
+2010-02-25 Geneviève Bastien <gbastien@versatic.net>
+ * Added constraint to hotspot_graph_element_has_content (#701)
+ * Bug fix: when creating new nodes and node groups, they are now automatically added as children of the network in the new hierarchy structure.
+ * Added possibility to have a deployed geolocated node not show on map (quick fix) (#706)
+ * When producing anonymised data export, two files are produced, one for the geolocated nodes and one for the connections (#705)
+ * Additions and bug fixes to web service: can now logout and auth returns both error code and message
+ * Starting work on #707 as needed
+
 2010-01-28 Geneviève Bastien <gbastien@versatic.net>
  * Modification to the web service to include authentication
  * Added function generateConnectionTokenNoSession in User.php for the web service to generate tokens
