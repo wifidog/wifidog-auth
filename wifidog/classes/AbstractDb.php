@@ -63,6 +63,7 @@ class AbstractDb
     private $sql_num_update_querys;
     private $sql_update_total_time;
     private $sql_executed_queries_array;
+    private $_ptrconnection = null;
 
     private static $object;
 
@@ -82,6 +83,9 @@ class AbstractDb
     // Connects to PostgreSQL database
     function connect($db_name)
     {
+        if (!is_null($this->_ptrconnection))
+            return $this->_ptrconnection;
+            
         // Grab default database name from config file
         if ($db_name == NULL)
         $db_name = CONF_DATABASE_NAME;
@@ -96,8 +100,9 @@ class AbstractDb
 
         // Throw an exception if anything went wrong
         if ($ptr_connexion == FALSE)
-        throw new Exception(sprintf(_("Unable to connect to the database at %s"), "host=".CONF_DATABASE_HOST." port=".CONF_DATABASE_PORT." dbname=$db_name user=".CONF_DATABASE_USER." password=*********"));
+            throw new Exception(sprintf(_("Unable to connect to the database at %s"), "host=".CONF_DATABASE_HOST." port=".CONF_DATABASE_PORT." dbname=$db_name user=".CONF_DATABASE_USER." password=*********"));
 
+        $this->_ptrconnection = $ptr_connexion;
         return $ptr_connexion;
     }
 

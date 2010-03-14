@@ -229,6 +229,11 @@ TODO:  SSL is now configured in the DB, but should still be handled by the insta
 'title' => 'Google Maps Support',
 'depend' => 'return 1;',
 'message' => '&nbsp;'
+),
+'LOG_CONTENT_DISPLAY' => array (
+'title' => 'Log what content is displayed to users',
+'depend' => 'return 1;',
+'message' => '&nbsp;'
 )
 );
 

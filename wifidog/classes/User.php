@@ -158,10 +158,10 @@ class User implements GenericObject {
         $db = AbstractDb::getObject();
         $object = null;
 
-        $username_str = $db->escapeString($username);
-        $comparison = ($account_origin->getUsernamesCaseSensitive()? '=': 'ILike');
+        $username_str = ($account_origin->getUsernamesCaseSensitive()? $db->escapeString($username): strtolower($db->escapeString($username)));
+        $compareto = ($account_origin->getUsernamesCaseSensitive()? 'username': 'lower(username)');
         $account_origin_str = $db->escapeString($account_origin->getId());
-        $db->execSqlUniqueRes("SELECT user_id FROM users WHERE username {$comparison} '$username_str' AND account_origin = '$account_origin_str'", $user_info, false);
+        $db->execSqlUniqueRes("SELECT user_id FROM users WHERE $compareto = '$username_str' AND account_origin = '$account_origin_str'", $user_info, false);
 
         if ($user_info != null) {
             $object = self::getObject($user_info['user_id']);
@@ -182,10 +182,10 @@ class User implements GenericObject {
         $db = AbstractDb::getObject();
         $object = null;
 
-        $username_str = $db->escapeString($usernameOrEmail);
-        $comparison = ($account_origin->getUsernamesCaseSensitive()? '=': 'ILike');
+        $username_str = ($account_origin->getUsernamesCaseSensitive()? $db->escapeString($username): strtolower($db->escapeString($username)));
+        $compareto = ($account_origin->getUsernamesCaseSensitive()? 'username': 'lower(username)');
         $account_origin_str = $db->escapeString($account_origin->getId());
-        $db->execSqlUniqueRes("SELECT user_id FROM users WHERE (username {$comparison} '$username_str' OR email ILike '$username_str') AND account_origin = '$account_origin_str'", $user_info, false);
+        $db->execSqlUniqueRes("SELECT user_id FROM users WHERE ($compareto = '$username_str' OR lower(email) = '".strtolower($username_str)."') AND account_origin = '$account_origin_str'", $user_info, false);
 
         if ($user_info != null) {
             $object = self::getObject($user_info['user_id']);
@@ -205,8 +205,7 @@ class User implements GenericObject {
         $db = AbstractDb::getObject();
         $object = null;
 
-        $usernameOrEmail_str = $db->escapeString($usernameOrEmail);
-        $db->execSqlUniqueRes("SELECT user_id FROM users WHERE username = '$usernameOrEmail_str' OR email ILike '$usernameOrEmail_str'", $user_info, false);
+        $db->execSqlUniqueRes("SELECT user_id FROM users WHERE username = '$usernameOrEmail_str' OR lower(email) = '".strtolower($usernameOrEmail_str)."'", $user_info, false);
 
         if ($user_info != null) {
             $object = self::getObject($user_info['user_id']);
@@ -243,9 +242,9 @@ class User implements GenericObject {
         $db = AbstractDb::getObject();
         $object = null;
 
-        $email_str = $db->escapeString($email);
+        $email_str = strtolower($db->escapeString($email));
         $account_origin_str = $db->escapeString($account_origin->getId());
-        $db->execSqlUniqueRes("SELECT user_id FROM users WHERE email ILike '$email_str' AND account_origin = '$account_origin_str'", $user_info, false);
+        $db->execSqlUniqueRes("SELECT user_id FROM users WHERE lower(email) = '$email_str' AND account_origin = '$account_origin_str'", $user_info, false);
 
         if ($user_info != null)
         $object = self::getObject($user_info['user_id']);

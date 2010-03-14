@@ -102,6 +102,13 @@ define('CONF_USE_CRON_FOR_DB_CLEANUP', false);
 
 define('LOG_SQL_QUERIES', false);
 
+/**
+ * Log content display.  If set to true, every piece of content displayed to a user will
+ * be logged in a log table.
+ */
+
+define('LOG_CONTENT_DISPLAY', false);
+
 /********************************************************************\
  * WEBSERVER CONFIGURATION                                          *
 \********************************************************************/
