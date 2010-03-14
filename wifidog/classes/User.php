@@ -182,7 +182,7 @@ class User implements GenericObject {
         $db = AbstractDb::getObject();
         $object = null;
 
-        $username_str = ($account_origin->getUsernamesCaseSensitive()? $db->escapeString($username): strtolower($db->escapeString($username)));
+        $username_str = ($account_origin->getUsernamesCaseSensitive()? $db->escapeString($usernameOrEmail): strtolower($db->escapeString($usernameOrEmail)));
         $compareto = ($account_origin->getUsernamesCaseSensitive()? 'username': 'lower(username)');
         $account_origin_str = $db->escapeString($account_origin->getId());
         $db->execSqlUniqueRes("SELECT user_id FROM users WHERE ($compareto = '$username_str' OR lower(email) = '".strtolower($username_str)."') AND account_origin = '$account_origin_str'", $user_info, false);
