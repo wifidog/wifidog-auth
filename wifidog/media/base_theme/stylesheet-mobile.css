@@ -1,0 +1,38 @@
+#left_area {
+	width: 100%;
+	position: static;
+	float: none;
+}
+
+#left_area_top {
+	position: static;
+	float: none;
+}
+
+#left_area_middle {
+	position: static;
+	float: none;
+}
+
+form.language {
+	text-align: center;
+}
+
+#main_area {
+	width: 100%;
+	float: none;
+}
+
+#main_area_top {
+	float: left;
+}
+
+#main_area_middle {
+	position: relative;
+	float: left;
+}
+
+#login_form {
+	float: none;
+}
+

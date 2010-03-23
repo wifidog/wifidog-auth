@@ -51,6 +51,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta http-equiv="Pragma" content="no-cache">
         <meta http-equiv="Expires" content="-1">
+	{if $iPhoneUI}
+		<meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; user-scalable=no; width=device-width" />
+	{/if}
         {$htmlHeaders}
         <title>{$title}</title>
         {foreach from=$stylesheetUrlArray item=stylesheetUrl}

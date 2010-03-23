@@ -575,6 +575,12 @@ class MainUI {
         if ($networkThemePack) {
             $this->appendStylesheetURL($networkThemePack->getStylesheetUrl());
         }
+        // if we're an iPhone...
+        if(empty($agent)) $agent = $_SERVER['HTTP_USER_AGENT'];
+        if(stristr($agent,'iphone') or stristr($agent,'ipod')) {
+            $this->smarty->assign('iPhoneUI', true);
+            $this->appendStylesheetURL(BASE_THEME_URL . STYLESHEET_MOBILE_NAME);
+        }
         // Checks to see if the theme file exists and if so, checks whether it should always show the page header.
         if (defined('ALWAYS_SHOW_HEADER') && ALWAYS_SHOW_HEADER == true) {
             $this->smarty->assign('alwaysShowHeader', true);
