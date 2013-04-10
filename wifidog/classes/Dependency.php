@@ -56,7 +56,7 @@ if (!function_exists('gettext')) {
 require_once ('classes/Utils.php');
 
 define('OPENID_PATH', WIFIDOG_ABS_FILE_PATH.'lib/php-openid-2.0.0-rc2/');
-define('SMARTY_PATH', WIFIDOG_ABS_FILE_PATH.'lib/Smarty-2.6.18/libs/');
+define('SMARTY_PATH', WIFIDOG_ABS_FILE_PATH.'lib/Smarty-2.6.27/libs/');
 /**
  * This class checks the existence of components required by WiFiDog.
  * Note that it implicitely depends on the defines in include/path_defines_base.php
@@ -117,10 +117,10 @@ class Dependency
        "Smarty" => array (
        'mandatory' => true,
        "type" => "localLib",
-       "detectFiles" => "lib/Smarty-2.6.18/libs/Smarty.class.php",
+       "detectFiles" => "lib/Smarty-2.6.27/libs/Smarty.class.php",
        'description' => "Required for all parts of wifidog",
        'website' => "http://smarty.net/",
-       'installSourceUrl' => "http://smarty.net/do_download.php?download_file=Smarty-2.6.18.tar.gz",
+       'installSourceUrl' => "http://www.smarty.net/files/Smarty-2.6.27.tar.gz",
        'installMethod' => "tarball",
        'installDestination' => "/"
        ),
@@ -141,8 +141,10 @@ class Dependency
        "detectFiles" => "lib/simplepie/simplepie.inc",
        'description' => "SimplePie is a dependency that provides an RSS parser in PHP. It is required for RssPressReview.  It is is recommended to install it, if you do not, RSS feed options will be disabled.",
        'website' => "http://simplepie.org/",
-       'installSourceUrl' => "http://svn.simplepie.org/simplepie/branches/1.1/",
-       'installMethod' => "svn",
+       'installSourceUrl' => "git://github.com/simplepie/simplepie.git",
+       'gitCheckoutRev' => "1.1.3",
+       'filename' => "simplepie.tar.gz",
+       'installMethod' => "git",
        'installDestination' => "simplepie"
        ),
        'jpgraph' => array (
@@ -237,12 +239,13 @@ JpGraph is not currently used by Wifidog (it will be use for statistic graphs in
        ),
        "php-openid" => array (
        "type" => "localLib",
-       "detectFiles" => "lib/php-openid-2.0.0-rc2/CHANGELOG",
+       "detectFiles" => "lib/php-openid/NEWS",
        'description' => "Required for OpenID support (both as a consumer and Identity provider)",
        'website' => "http://www.openidenabled.com/php-openid/",
-       'installSourceUrl' => "http://openidenabled.com/files/php-openid/packages/php-openid-2.0.0-rc2.tar.bz2",
-       'installMethod' => "tarball",
-       'installDestination' => "/"
+       'installSourceUrl' => "git://github.com/openid/php-openid.git",
+       'gitCheckoutRev' => "2.2.2",
+       'installMethod' => "git",
+       'installDestination' => "php-openid"
        ),
        'gmp' => array (
        "type" => "phpExtension",
@@ -737,10 +740,21 @@ JpGraph is not currently used by Wifidog (it will be use for statistic graphs in
                switch($installMethod) {
                    case "svn":
                        self::execVerbose("svn co ".escapeshellarg($installSourceUrl)." ".escapeshellarg      ($installDestinationPath), $output, $return, $errorMsg);
-
-
                        break;
 
+                   case "git":
+                       if(!empty(self::$_components[$this->_id]['gitCheckoutRev'])) {
+                           $gitCheckoutRev = self::$_components[$this->_id]['gitCheckoutRev'];
+                           $branchArg = " --branch ".escapeshellarg($gitCheckoutRev)." ";
+                       }
+                       else {
+                           $branchArg = Null;
+                       }
+                           
+                       self::execVerbose("git clone ".escapeshellarg($installSourceUrl)." ".$branchArg." ".escapeshellarg($installDestinationPath), $output, $return, $errorMsg);
+
+                        
+                       break;
                    case "tarball":
                        $downloadPath = WIFIDOG_ABS_FILE_PATH . "tmp/";
                        chdir($downloadPath);
