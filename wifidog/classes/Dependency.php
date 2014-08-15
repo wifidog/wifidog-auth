@@ -127,12 +127,14 @@ class Dependency
        "PHPMailer" => array (
        'mandatory' => true,
        "type" => "localLib",
-       "detectFiles" => "lib/PHPMailer_v5.1/class.phpmailer.php",
+       "detectFiles" => "lib/PHPMailer_v5.2.8/class.phpmailer.php",
        'description' => "Required for sending mail",
-       'website' => "http://phpmailer.codeworxtech.com/",
-       'installSourceUrl' => "http://iweb.dl.sourceforge.net/sourceforge/phpmailer/PHPMailer_v5.1.tar.gz",
-       'installMethod' => "tarball",
-       'installDestination' => "/"
+       'website' => "https://github.com/PHPMailer/PHPMailer",
+       'installSourceUrl' => "git://github.com/PHPMailer/PHPMailer",
+       'gitCheckoutRev' => "v5.2.8",
+       'filename' => "PHPMailer.tar.gz",
+       'installMethod' => "git",
+       'installDestination' => "PHPMailer_v5.2.8"
        ),
 
        /* PHP extensions (optional) */
