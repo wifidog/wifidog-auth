@@ -81,8 +81,14 @@ function validate_username($username)
         throw new Exception(_('Username is required.'));
     }
 
-    if (!ereg("^[0-9a-zA-Z_]*$", $username)) {
-        throw new Exception(_('Username contains invalid characters.'));
+    if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
+        if (!preg_match("/^[0-9a-zA-Z_]*$/", $username)) {
+            throw new Exception(_("Username contains invalid characters."));
+        }
+    } else {
+        if (!ereg("^[0-9a-zA-Z_]*$", $username)) {
+            throw new Exception(_('Username contains invalid characters.'));
+        }
     }
 }
 
@@ -126,9 +132,15 @@ function validate_passwords($password, $password_again)
         throw new Exception(_("A password of at least 6 characters is required."));
     }
 
-    if (!ereg("^[0-9a-zA-Z]*$", $password)) {
-        throw new Exception(_("Password contains invalid characters.  Allowed characters are 0-9, a-z and A-Z"));
-    }
+    if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
+        if (!preg_match("/^[0-9a-zA-Z]*$/", $password)) {
+            throw new Exception(_("Password contains invalid characters.  Allowed characters are 0-9, a-z and A-Z"));
+        }
+    } else {
+        if (!ereg("^[0-9a-zA-Z]*$", $password)) {
+            throw new Exception(_("Password contains invalid characters.  Allowed characters are 0-9, a-z and A-Z"));
+        }
+    }        
 
     if (!isset ($password_again)) {
         throw new Exception(_("You must type your password twice."));
