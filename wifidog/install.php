@@ -341,13 +341,14 @@ function saveConfig($data) {
 
     foreach ($contentArray as $line) {
         #print "L=$line<BR>\n";
-        // remove possible existed blanks
-        $no_more_blanks_line = trim($line);
         // maybe more than one define stentences
-        $may_be_more_than_one_define_sentences = explode(";", $no_more_blanks_line );
+        $may_be_more_than_one_define_sentences = explode(";", $line );
         
         for($may_be_more_than_one_define_sentences as $line){
-            $line = $line . ";";
+            // remove possible existed blanks
+            $no_more_blanks_line = trim($line);
+            $line = $no_more_blanks_line . ";";
+            
             if (preg_match("/^define\((.+)\);/", $line, $matchesArray)) {
             	list ($key, $value) = explode(',', $matchesArray[1]);
             	$pattern = array (
