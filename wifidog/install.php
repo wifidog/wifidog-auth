@@ -344,7 +344,7 @@ function saveConfig($data) {
         // maybe more than one define stentences
         $may_be_more_than_one_define_sentences = explode(";", $line );
         
-        for($may_be_more_than_one_define_sentences as $line){
+        foreach($may_be_more_than_one_define_sentences as $line){
             // remove possible existed blanks
             $no_more_blanks_line = trim($line);
             $line = $no_more_blanks_line . ";";
