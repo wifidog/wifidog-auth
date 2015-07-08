@@ -341,15 +341,22 @@ function saveConfig($data) {
 
     foreach ($contentArray as $line) {
         #print "L=$line<BR>\n";
-        if (preg_match("/^define\((.+)\);/", $line, $matchesArray)) {
-            list ($key, $value) = explode(',', $matchesArray[1]);
-            $pattern = array (
-                "/^'/",
-                "/'$/"
-            );
-            $replacement = array (
-                '',
-                ''
+        // remove possible existed blanks
+        $no_more_blanks_line = trim($line);
+        // maybe more than one define stentences
+        $may_be_more_than_one_define_sentences = explode(";", $no_more_blanks_line );
+        
+        for($may_be_more_than_one_define_sentences as $line){
+            $line = $line . ";";
+            if (preg_match("/^define\((.+)\);/", $line, $matchesArray)) {
+            	list ($key, $value) = explode(',', $matchesArray[1]);
+            	$pattern = array (
+                    "/^'/",
+                    "/'$/"
+                );
+            	$replacement = array (
+                    '',
+                    ''
                 );
                 $key = preg_replace($pattern, $replacement, trim($key));
                 //$value = preg_replace($pattern, $replacement, trim($value));
@@ -372,10 +379,12 @@ function saveConfig($data) {
                 else { // The key does not exist (no new value to be saved)
                     fwrite($fd, $line); # Write the same line in config.php
                 }
+            }else {
+                fwrite($fd, $line); # Write the line (not a define line). Ex: Commented text
+            }
         }
-        else {
-            fwrite($fd, $line); # Write the line (not a define line). Ex: Commented text
-        }
+        
+       
     }
 }
 
