@@ -119,9 +119,9 @@ class HTMLeditor extends Langstring
 	        $_FCKeditor->BasePath = SYSTEM_PATH . "lib/FCKeditor/";
 	        $_FCKeditor->Config["CustomConfigurationsPath"] = BASE_URL_PATH . "js/HTMLeditor.js";
 	        $_FCKeditor->Config["AutoDetectLanguage"] = false;
-	        $_FCKeditor->Config["DefaultLanguage"] = substr(Locale::getCurrentLocale()->getId(), 0, 2);
-	        $_FCKeditor->Config["StylesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/css/" . substr(Locale::getCurrentLocale()->getId(), 0, 2) . ".xml";
-	        $_FCKeditor->Config["TemplatesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/templates/" . substr(Locale::getCurrentLocale()->getId(), 0, 2) . ".xml";
+	        $_FCKeditor->Config["DefaultLanguage"] = substr(WifiDogLocale::getCurrentLocale()->getId(), 0, 2);
+	        $_FCKeditor->Config["StylesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/css/" . substr(WifiDogLocale::getCurrentLocale()->getId(), 0, 2) . ".xml";
+	        $_FCKeditor->Config["TemplatesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/templates/" . substr(WifiDogLocale::getCurrentLocale()->getId(), 0, 2) . ".xml";
 	        $_FCKeditor->ToolbarSet = "WiFiDOG";
 
 	        $_FCKeditor->Value = "";
@@ -185,9 +185,9 @@ class HTMLeditor extends Langstring
                     $_FCKeditor->BasePath = SYSTEM_PATH . "lib/FCKeditor/";
                     $_FCKeditor->Config["CustomConfigurationsPath"] = BASE_URL_PATH . "js/HTMLeditor.js";
                     $_FCKeditor->Config["AutoDetectLanguage"] = false;
-                    $_FCKeditor->Config["DefaultLanguage"] = substr(Locale::getCurrentLocale()->getId(), 0, 2);
-                    $_FCKeditor->Config["StylesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/css/" . substr(Locale::getCurrentLocale()->getId(), 0, 2) . ".xml";
-                    $_FCKeditor->Config["TemplatesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/templates/" . substr(Locale::getCurrentLocale()->getId(), 0, 2) . ".xml";
+                    $_FCKeditor->Config["DefaultLanguage"] = substr(WifiDogLocale::getCurrentLocale()->getId(), 0, 2);
+                    $_FCKeditor->Config["StylesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/css/" . substr(WifiDogLocale::getCurrentLocale()->getId(), 0, 2) . ".xml";
+                    $_FCKeditor->Config["TemplatesXmlPath"] = BASE_URL_PATH . "templates/HTMLeditor/templates/" . substr(WifiDogLocale::getCurrentLocale()->getId(), 0, 2) . ".xml";
 
                     $_FCKeditor->ToolbarSet = "WiFiDOG";
 

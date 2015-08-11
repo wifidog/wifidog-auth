@@ -52,7 +52,7 @@ require_once('classes/Session.php');
  * @author     Benoit Grégoire <benoitg@coeus.ca>
  * @copyright  2004-2006 Benoit Grégoire, Technologies Coeus inc.
  */
-class Locale {
+class WifiDogLocale {
     // Private attributes
     private $mLang;
     private $mCountry;
@@ -270,7 +270,7 @@ class Locale {
      * @return A sql fragment
      */
     public static function getSqlCaseStringSelect($locale_id) {
-        $decomposed_locale = Locale :: decomposeLocaleId($locale_id);
+        $decomposed_locale = WifiDogLocale :: decomposeLocaleId($locale_id);
 
         // The case will rate locales and choose the best one.
 

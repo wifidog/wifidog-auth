@@ -59,8 +59,8 @@ if (!empty ($_REQUEST['wifidog_language'])) {
         }
 }
 
-$locale = Locale::getCurrentLocale();
-Locale::setCurrentLocale($locale);
+$locale = WifiDogLocale::getCurrentLocale();
+WifiDogLocale::setCurrentLocale($locale);
 $locale_id = $locale->getId();
 
 if (isset ($smarty)) {
