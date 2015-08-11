@@ -526,7 +526,7 @@ class MainUI {
         $this->smarty->assign('formAction', htmlspecialchars($_SERVER['REQUEST_URI']));
 
         foreach ($AVAIL_LOCALE_ARRAY as $_langIds => $_langNames) {
-            if (Locale :: getCurrentLocale()->getId() == $_langIds) {
+            if (WifiDogLocale :: getCurrentLocale()->getId() == $_langIds) {
                 $_selected = ' selected="selected"';
             } else {
                 $_selected = "";

@@ -98,7 +98,7 @@ class Langstring extends Content {
         $_cachedData = null;
 
         // Create new cache objects
-        $_cacheLanguage = new Cache('langstrings_' . $this->id . '_substring_' . substr(Locale :: getCurrentLocale()->getId(), 0, 2) . '_string', $this->id);
+        $_cacheLanguage = new Cache('langstrings_' . $this->id . '_substring_' . substr(WifiDogLocale :: getCurrentLocale()->getId(), 0, 2) . '_string', $this->id);
         $_cache = new Cache('langstrings_' . $this->id . '_substring__string', $this->id);
 
         // Check if caching has been enabled.
@@ -122,7 +122,7 @@ class Langstring extends Content {
         if (!$_useCache) {
             //Get user's prefered language
             $sql = "SELECT value, locales_id, \n";
-            $sql .= Locale :: getSqlCaseStringSelect(Locale :: getCurrentLocale()->getId());
+            $sql .= WifiDogLocale :: getSqlCaseStringSelect(WifiDogLocale :: getCurrentLocale()->getId());
             $sql .= " as score FROM content_langstring_entries WHERE content_langstring_entries.langstrings_id = '{$this->id}' AND value!='' ORDER BY score LIMIT 1";
             $this->mBd->execSqlUniqueRes($sql, $row, false);
 
@@ -165,7 +165,7 @@ class Langstring extends Content {
         $idSQL = $id;
 
         if ($locale) {
-            $language = new Locale($locale);
+            $language = new WifiDogLocale($locale);
             $id = $language->GetId();
             $idSQL = "'" . $id . "'";
         }

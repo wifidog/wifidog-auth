@@ -74,7 +74,7 @@ $time = time();
               $usersMsg = null;
               foreach ($usersToPage as $officer) {
                   # Doesn't work if called from cron
-                  #Locale :: setCurrentLocale(Locale::getObject($officer->getPreferedLocale()));
+                  #WifiDogLocale :: setCurrentLocale(WifiDogLocale::getObject($officer->getPreferedLocale()));
                   $mail = new Mail();
                   $mail->setSenderName(_("Monitoring system"));
                   $mail->setSenderEmail($network->getTechSupportEmail());
