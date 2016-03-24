@@ -224,7 +224,7 @@ JpGraph is not currently used by Wifidog (it will be use for statistic graphs in
        "detectFiles" => "lib/fckeditor/fckeditor.php",
        'description' => "Required by content type FCKEditor (WYSIWYG HTML)",
        'website' => "http://www.fckeditor.net/",
-       'installSourceUrl' => "http://easynews.dl.sourceforge.net/sourceforge/fckeditor/FCKeditor_2.5.tar.gz",
+       'installSourceUrl' => "http://downloads.sourceforge.net/sourceforge/fckeditor/FCKeditor_2.5.tar.gz",
        'installMethod' => "tarball",
        'installDestination' => "/",
        ),
