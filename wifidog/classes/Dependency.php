@@ -303,7 +303,7 @@ JpGraph is not currently used by Wifidog (it will be use for statistic graphs in
        "detectFiles" => "Phlickr/Api.php",
        'description' => "Required by content type FlickrPhotostream",
        'website' => "http://drewish.com/projects/phlickr/",
-       'installSourceUrl' => "http://ovh.dl.sourceforge.net/sourceforge/phlickr/Phlickr-0.2.7.tgz"
+       'installSourceUrl' => "http://downloads.sourceforge.net/sourceforge/phlickr/Phlickr-0.2.7.tgz"
        ),
        );
 
