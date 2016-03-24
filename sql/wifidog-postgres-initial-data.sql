@@ -192,7 +192,7 @@ INSERT INTO stakeholder_types (stakeholder_type_id) VALUES ('Content');
 -- PostgreSQL database dump complete
 --
 
-INSERT INTO networks (network_id, network_authenticator_class, network_authenticator_params) VALUES ('default-network', 'AuthenticatorLocalUser', '\'default-network\'');
+INSERT INTO networks (network_id, network_authenticator_class, network_authenticator_params) VALUES ('default-network', 'AuthenticatorLocalUser', 'default-network');
 INSERT INTO nodes (network_id, node_id, gw_id, name) VALUES ('default-network', 'default', 'default', 'My first node');
 INSERT INTO virtual_hosts (virtual_host_id, hostname, default_network) VALUES ('DEFAULT_VHOST', 'localhost', 'default-network');
 INSERT INTO server (server_id, default_virtual_host) VALUES ('SERVER_ID', 'DEFAULT_VHOST');
