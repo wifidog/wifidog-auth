@@ -181,6 +181,7 @@ return [
          * Third party Service Providers...
          */
         Collective\Html\HtmlServiceProvider::class,
+        App\Providers\ResponseMacroServiceProvider::class,
 
     ],
 
