@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use JWTAuth;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -26,22 +28,37 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Request $request)
     {
+        $data = [];
+        if ($request->has('gw_address') && $request->has('gw_port')) {
+            $data = [
+                'gw_address' => $request->input('gw_address'),
+                'gw_port' => $request->input('gw_port'),
+            ];
+        }
+        if ($request->has('url')) {
+            $data['url'] = $request->input('url');
+        }
+        if (!empty($data)) {
+            session($data);
+        }
         $this->middleware('guest', ['except' => 'logout']);
     }
 
     public function redirectTo()
     {
         $uri = '/home';
-        if (\Request::has('gw_address') && \Request::has('gw_port')) {
-            $uri = 'http://' . \Request::input('gw_address') . ':' . \Request::input('gw_port') . '/wifidog/auth?token=' . \Request::session()->get('_token');
+        $user = Auth::user();
+        $token = JWTAuth::fromUser($user);
+        if (session('gw_address') && session('gw_port')) {
+            $uri = 'http://' . session('gw_address') . ':' . session('gw_port') . '/wifidog/auth?token=' . $token;
         }
         return $uri;
     }
 
     public function showLoginForm()
     {
-        return view('auth.login', \Request::all());
+        return view('auth.login');
     }
 }

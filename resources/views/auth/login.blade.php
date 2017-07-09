@@ -50,15 +50,6 @@
 
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
-                                @isset($gw_address)
-                                    {{ Form::hidden('gw_address', $gw_address) }}
-                                @endisset
-                                @isset($gw_port)
-                                    {{ Form::hidden('gw_port', $gw_port) }}
-                                @endisset
-                                @isset($url)
-                                    {{ Form::hidden('url', $url) }}
-                                @endisset
                                 <button type="submit" class="btn btn-primary">
                                     Login
                                 </button>
