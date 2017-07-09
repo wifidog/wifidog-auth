@@ -1,0 +1,12 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/project
+    docker:
+      - image: composer
+    steps:
+      - checkout
+      - run:
+          command: |
+            composer install
+            ./phpunit.sh
