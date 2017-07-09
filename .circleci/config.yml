@@ -6,7 +6,7 @@ jobs:
       - image: composer
     steps:
       - checkout
-      - run: sudo apt install -y libsqlite3-dev
+      - run: apt install -y libsqlite3-dev
       - run: composer self-update
       - restore_cache:
           keys:
