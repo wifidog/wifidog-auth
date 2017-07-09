@@ -15,5 +15,9 @@ return [
 
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'denied' => 'Access denied',
+    'activate' => 'Please activate your account first.',
+    'failed_validation' => 'Verify your account failed.',
+    'logged_in' => 'You are logged in!',
 
 ];
