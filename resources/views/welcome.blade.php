@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>{{ config('app.name') }}</title>
 
         <!-- Styles -->
         <style>
@@ -60,6 +60,12 @@
                 margin-bottom: 30px;
             }
         </style>
+        <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('apple-touch-icon.png') }}" />
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}" />
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}" />
+        <link rel="manifest" href="{{ asset('manifest.json') }}" />
+        <link rel="mask-icon" href="{{ asset('safari-pinned-tab.svg') }}" color="#5bbad5">
+        <meta name="theme-color" content="#ffffff">
     </head>
     <body>
         <div class="flex-center position-ref full-height">
@@ -76,15 +82,12 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    {{ config('app.name') }}
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="http://dev.wifidog.org/wiki/doc/developer/WiFiDogProtocol_V1">Documentation</a>
+                    <a href="https://github.com/wifidog/wifidog-auth">GitHub</a>
                 </div>
             </div>
         </div>
