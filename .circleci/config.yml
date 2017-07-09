@@ -1,12 +1,12 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/project
     docker:
-      - image: composer
+      - image: notnoopci/php:7.1.5-browsers
+    working_directory: ~/laravel
     steps:
       - checkout
-      - run: apt install -y libsqlite3-dev
+      - run: sudo apt install -y libsqlite3-dev
       - run: composer self-update
       - restore_cache:
           keys:
