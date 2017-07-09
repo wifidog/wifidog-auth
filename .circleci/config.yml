@@ -17,7 +17,7 @@ jobs:
           key: composer-v1-{{ checksum "composer.json" }}
           paths:
             - vendor
-      - run: touch storage/database.sqlite
+      - run: touch database/database.sqlite
       - run: php artisan migrate --env=testing --force
       - run:
           command: |
