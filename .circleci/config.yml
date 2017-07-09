@@ -9,4 +9,5 @@ jobs:
       - run:
           command: |
             composer install
+            ./lint.sh
             ./phpunit.sh
