@@ -6,6 +6,19 @@ jobs:
       - image: composer
     steps:
       - checkout
+      - run: sudo apt install -y libsqlite3-dev
+      - run: composer self-update
+      - restore_cache:
+          keys:
+            - composer-v1-{{ checksum "composer.json" }}
+            - composer-v1-
+      - run: composer install -n --prefer-dist
+      - save_cache:
+          key: composer-v1-{{ checksum "composer.json" }}
+          paths:
+            - vendor
+      - run: touch storage/database.sqlite
+      - run: php artisan migrate --env=testing --database=wifidog_testing --force
       - run:
           command: |
             composer install
