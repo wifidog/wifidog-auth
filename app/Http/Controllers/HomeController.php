@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use JWTAuth;
+use Auth;
+use Meta;
 
 class HomeController extends Controller
 {
@@ -23,6 +26,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = Auth::user();
+        $token = JWTAuth::fromUser($user);
+        $data = [
+            'msg' => 'auth.logged_in',
+        ];
+        if (session('gw_address') && session('gw_port')) {
+            $data['wifidog_uri'] = 'http://' . session('gw_address') . ':' . session('gw_port') . '/wifidog/auth?token=' . $token;
+            Meta::set('wifidog-token', $token);
+        }
+        return view('home', $data);
     }
 }
