@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /home
+Disallow: /home/
+Disallow: /portal
+Disallow: /portal/
+Disallow: /auth
+Disallow: /auth/
+Disallow: /ping
+Disallow: /ping/

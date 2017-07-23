@@ -1,8 +1,0 @@
-@CHARSET "UTF-8";
-#left_area,#main_area_top {
-	display: none;
-}
-
-#main_area {
-	width: 100%;
-}

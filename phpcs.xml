@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<ruleset name="PSR2-laravel">
+ <description>The PSR2 standard, but ignore something for laravel.</description>
+ <!-- use preg_match https://github.com/squizlabs/PHP_CodeSniffer/issues/742#issuecomment-215250517 -->
+ <exclude-pattern>/bootstrap/cache/</exclude-pattern>
+ <exclude-pattern>/storage/</exclude-pattern>
+ <exclude-pattern>/vendor/</exclude-pattern>
+ <exclude-pattern>/_[a-zA-Z0-9\._]+\.php</exclude-pattern>
+ <exclude-pattern>/\.[a-zA-Z0-9\._]+\.php</exclude-pattern>
+ <exclude-pattern>*\.js</exclude-pattern>
+ <exclude-pattern>*\.css</exclude-pattern>
+
+ <!-- Include the whole PSR2 standard -->
+ <rule ref="PSR2"/>
+ 
+ <!-- Lines can be longer -->
+ <rule ref="Generic.Files.LineLength">
+  <properties>
+   <property name="lineLimit" value="9999"/>
+  </properties>
+ </rule>
+
+ <!-- ignore WARNING: A file should declare new symbols -->
+ <rule ref="PSR1.Files.SideEffects.FoundWithSymbols">
+  <exclude-pattern>/bootstrap/</exclude-pattern>
+ </rule>
+
+ <!-- ignore ERROR: Each class must be in a namespace of at least one level (a top-level vendor name) -->
+ <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+  <exclude-pattern>/database/migrations/</exclude-pattern>
+  <exclude-pattern>/database/seeds/</exclude-pattern>
+ </rule>
+
+ <rule ref="Internal.NoCodeFound">
+  <exclude-pattern>/resources/views/</exclude-pattern>
+ </rule>
+
+</ruleset>
