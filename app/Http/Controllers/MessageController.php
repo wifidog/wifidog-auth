@@ -9,7 +9,8 @@ class MessageController extends Controller
     /**
      * auth server error message
      *
-     * @example curl 'http://auth.wifidog.local/gw_message.php?message=denied
+     * @example curl 'http://wifidog-auth.lan/gw_message.php?message=denied'
+     * @example curl 'http://wifidog-auth.lan/messages/?message=denied'
      * @link http://dev.wifidog.org/wiki/doc/developer/WiFiDogProtocol_V1#GatewayheartbeatingPingProtocol
      *
      * @return \Illuminate\Http\Response

@@ -12,7 +12,7 @@ class GatewayController extends Controller
     /**
      * Gateway heartbeating (Ping Protocol)
      *
-     * @example curl 'http://auth.wifidog.local/ping?gw_id=001217DA42D2&sys_uptime=742725&sys_memfree=2604&sys_load=0.03&wifidog_uptime=3861'
+     * @example curl 'http://wifidog-auth.lan/ping?gw_id=001217DA42D2&sys_uptime=742725&sys_memfree=2604&sys_load=0.03&wifidog_uptime=3861'
      * @link http://dev.wifidog.org/wiki/doc/developer/WiFiDogProtocol_V1#GatewayheartbeatingPingProtocol
      *
      * @return \Illuminate\Http\Response

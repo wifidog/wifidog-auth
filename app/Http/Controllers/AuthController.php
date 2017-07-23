@@ -19,7 +19,7 @@ class AuthController extends Controller
      * 5 - AUTH_VALIDATION - Permit user access to email to get validation email under default rules. Client will access /gw_message.php?message=activate
      * -1 - AUTH_ERROR - An error occurred during the validation process. Gateway will show error in this page(gateway/wifidog/auth?token=xxx), no redirect.
      *
-     * @example curl 'http://auth.wifidog.local/auth/?stage=login&ip=192.168.199.123&mac=84:ef:18:ec:db:73&token=thisIsAToken&incoming=0&outgoing=0&gw_id=D4EE073700C2'
+     * @example curl 'http://wifidog-auth.lan/auth/?stage=login&ip=192.168.199.123&mac=84:ef:18:ec:db:73&token=thisIsAToken&incoming=0&outgoing=0&gw_id=D4EE073700C2'
      * @link http://dev.wifidog.org/wiki/doc/developer/WiFiDogProtocol_V1#Authserverauthenticationprotocol
      *
      * @return \Illuminate\Http\Response
